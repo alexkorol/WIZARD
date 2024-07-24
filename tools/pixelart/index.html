@@ -1,0 +1,148 @@
+<html><head><base href="https://cdn.jsdelivr.net/"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Pixel Art Creator</title><style>
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+input[type="color"] {
+  width: 50px;
+  height: 30px;
+}
+button, select {
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+#pixel-canvas {
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: crosshair;
+  image-rendering: pixelated;
+}
+</style></head>
+<body>
+  <h1>Pixel Art Creator</h1>
+  <div class="controls">
+    <input type="color" id="colorPicker" value="#000000" title="Choose color">
+    <select id="canvasSize">
+      <option value="16">16x16</option>
+      <option value="32">32x32</option>
+      <option value="64">64x64</option>
+    </select>
+    <button id="clearBtn">Clear Canvas</button>
+    <button id="saveBtn">Save Drawing</button>
+    <button id="toggleGridBtn">Toggle Grid</button>
+  </div>
+  <canvas id="pixel-canvas" width="512" height="512"></canvas>
+
+<script>
+const canvas = document.getElementById('pixel-canvas');
+const ctx = canvas.getContext('2d');
+const colorPicker = document.getElementById('colorPicker');
+const canvasSizeSelect = document.getElementById('canvasSize');
+const clearBtn = document.getElementById('clearBtn');
+const saveBtn = document.getElementById('saveBtn');
+const toggleGridBtn = document.getElementById('toggleGridBtn');
+
+let pixelSize = 32; // Default to 16x16 grid (512/16)
+let showGrid = true;
+let isDrawing = false;
+
+function initCanvas() {
+  const gridSize = parseInt(canvasSizeSelect.value);
+  pixelSize = canvas.width / gridSize;
+  clearCanvas();
+  drawGrid();
+}
+
+function drawGrid() {
+  if (!showGrid) return;
+  
+  ctx.strokeStyle = '#e0e0e0';
+  ctx.lineWidth = 1;
+
+  for (let i = 0; i <= canvas.width; i += pixelSize) {
+    ctx.beginPath();
+    ctx.moveTo(i, 0);
+    ctx.lineTo(i, canvas.height);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(0, i);
+    ctx.lineTo(canvas.width, i);
+    ctx.stroke();
+  }
+}
+
+function clearCanvas() {
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  drawGrid();
+}
+
+function startDrawing(e) {
+  isDrawing = true;
+  draw(e);
+}
+
+function draw(e) {
+  if (!isDrawing) return;
+
+  const rect = canvas.getBoundingClientRect();
+  const x = Math.floor((e.clientX - rect.left) / pixelSize) * pixelSize;
+  const y = Math.floor((e.clientY - rect.top) / pixelSize) * pixelSize;
+
+  ctx.fillStyle = colorPicker.value;
+  ctx.fillRect(x, y, pixelSize, pixelSize);
+
+  if (showGrid) {
+    ctx.strokeStyle = '#e0e0e0';
+    ctx.strokeRect(x, y, pixelSize, pixelSize);
+  }
+}
+
+function stopDrawing() {
+  isDrawing = false;
+}
+
+function saveCanvas() {
+  const link = document.createElement('a');
+  link.download = 'pixel_art.png';
+  link.href = canvas.toDataURL();
+  link.click();
+}
+
+function toggleGrid() {
+  showGrid = !showGrid;
+  clearCanvas();
+}
+
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('mouseleave', stopDrawing);
+
+clearBtn.addEventListener('click', clearCanvas);
+saveBtn.addEventListener('click', saveCanvas);
+toggleGridBtn.addEventListener('click', toggleGrid);
+canvasSizeSelect.addEventListener('change', initCanvas);
+
+initCanvas();
+</script>
+</body></html>
