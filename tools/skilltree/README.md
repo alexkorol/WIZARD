@@ -1,6 +1,6 @@
 # Interactive Skill Tree
 
-A node-based interactive skill tree visualization based on action RPG skill trees the esoteric tree of life. Part of the WIZARD project.
+A node-based interactive skill tree visualization based on action RPG skill trees the esoteric tree of life. This app is a part of the WIZARD project.
 
 ## Features
 - Interactive node selection/deselection
