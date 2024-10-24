@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      background: rgb(17, 24, 39);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .container {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .skill-points {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      font-size: 1.125rem;
+      z-index: 10;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .node {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .node circle {
+      stroke: #1a1a1a;
+      stroke-width: 1;
+      transition: all 0.3s ease;
+    }
+
+    .node text {
+      fill: white;
+      font-size: 1.5px;
+      font-weight: 300;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .node:hover text {
+      font-size: 1.75px;
+    }
+
+    .connection {
+      transition: all 0.3s ease;
+    }
+
+    .active-node circle {
+      fill: #F6AD55;
+      stroke: #C05621;
+      filter: drop-shadow(0 0 2px #F6AD55);
+    }
+
+    .inactive-node circle {
+      fill: #2D3748;
+      stroke: #1A202C;
+    }
+
+    .available-node circle {
+      fill: #4A5568;
+      stroke: #2D3748;
+      filter: drop-shadow(0 0 2px #4A5568);
+    }
+
+    .active-connection {
+      stroke: #ED8936;
+      stroke-width: 0.75;
+      filter: drop-shadow(0 0 1px #ED8936);
+    }
+
+    .inactive-connection {
+      stroke: #2D3748;
+      stroke-width: 0.5;
+    }
+
+    .highlighted-connection {
+      stroke: #F6AD55;
+      stroke-width: 1;
+      filter: drop-shadow(0 0 2px #F6AD55);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="skill-points">Skill Points: <span id="points">12</span></div>
+    <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <!-- Connections and nodes will be inserted here by JavaScript -->
+    </svg>
+  </div>
+
+  <script>
+    const skillTree = [
+      { id: 'malkuth', name: 'Malkuth', x: 50, y: 90, connections: ['yesod', 'hod', 'netzach'] },
+      { id: 'yesod', name: 'Yesod', x: 50, y: 75, connections: ['malkuth', 'hod', 'netzach', 'tipareth'] },
+      { id: 'hod', name: 'Hod', x: 25, y: 60, connections: ['malkuth', 'yesod', 'netzach', 'tipareth'] },
+      { id: 'netzach', name: 'Netzach', x: 75, y: 60, connections: ['malkuth', 'yesod', 'hod', 'tipareth'] },
+      { id: 'tipareth', name: 'Tipareth', x: 50, y: 45, connections: ['yesod', 'hod', 'netzach', 'geburah', 'chesed', 'daath'] },
+      { id: 'geburah', name: 'Geburah', x: 25, y: 30, connections: ['hod', 'tipareth', 'chesed', 'binah'] },
+      { id: 'chesed', name: 'Chesed', x: 75, y: 30, connections: ['netzach', 'tipareth', 'geburah', 'chokmah'] },
+      { id: 'daath', name: 'Daath', x: 50, y: 25, connections: ['tipareth', 'binah', 'chokmah'] },
+      { id: 'binah', name: 'Binah', x: 25, y: 15, connections: ['geburah', 'daath', 'chokmah', 'kether'] },
+      { id: 'chokmah', name: 'Chokmah', x: 75, y: 15, connections: ['chesed', 'daath', 'binah', 'kether'] },
+      { id: 'kether', name: 'Kether', x: 50, y: 5, connections: ['binah', 'chokmah'] }
+    ];
+
+    let activeNodes = ['malkuth'];
+    let skillPoints = 12;
+    let hoveredNode = null;
+
+    const svg = document.querySelector('svg');
+
+    // Create connections
+    skillTree.forEach(node => {
+      node.connections.forEach(connId => {
+        const connNode = skillTree.find(n => n.id === connId);
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute('x1', node.x);
+        line.setAttribute('y1', node.y);
+        line.setAttribute('x2', connNode.x);
+        line.setAttribute('y2', connNode.y);
+        line.setAttribute('stroke-width', '0.5');
+        line.setAttribute('class', 'connection inactive-connection');
+        line.setAttribute('data-from', node.id);
+        line.setAttribute('data-to', connId);
+        svg.appendChild(line);
+      });
+    });
+
+    // Create nodes
+    skillTree.forEach(node => {
+      const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      group.setAttribute('transform', `translate(${node.x},${node.y})`);
+      group.setAttribute('class', 'node');
+      group.setAttribute('data-id', node.id);
+
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute('r', '3');
+      circle.setAttribute('class', node.id === 'malkuth' ? 'active-node' : 'inactive-node');
+
+      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      text.setAttribute('y', '-4');
+      text.setAttribute('text-anchor', 'middle');
+      text.textContent = node.name;
+
+      group.appendChild(circle);
+      group.appendChild(text);
+      svg.appendChild(group);
+
+      // Add event listeners
+      group.addEventListener('mouseenter', () => handleNodeHover(node.id));
+      group.addEventListener('mouseleave', () => handleNodeHover(null));
+      group.addEventListener('click', () => handleNodeClick(node.id));
+    });
+
+    function handleNodeHover(nodeId) {
+      hoveredNode = nodeId;
+      updateVisuals();
+    }
+
+    function handleNodeClick(nodeId) {
+      if (nodeId === 'malkuth') return;
+      
+      if (activeNodes.includes(nodeId)) {
+        // Check if we can deactivate
+        const wouldDisconnect = activeNodes.some(id => {
+          if (id === nodeId || id === 'malkuth') return false;
+          const node = skillTree.find(n => n.id === id);
+          return !node.connections.some(conn => 
+            conn !== nodeId && activeNodes.includes(conn)
+          );
+        });
+        
+        if (!wouldDisconnect) {
+          activeNodes = activeNodes.filter(id => id !== nodeId);
+          skillPoints++;
+          document.getElementById('points').textContent = skillPoints;
+        }
+      } else if (skillPoints > 0) {
+        // Check if connected to an active node
+        const node = skillTree.find(n => n.id === nodeId);
+        const isConnected = node.connections.some(id => activeNodes.includes(id));
+        
+        if (isConnected) {
+          activeNodes.push(nodeId);
+          skillPoints--;
+          document.getElementById('points').textContent = skillPoints;
+        }
+      }
+      
+      updateVisuals();
+    }
+
+    function updateVisuals() {
+      // Update nodes
+      document.querySelectorAll('.node').forEach(nodeGroup => {
+        const nodeId = nodeGroup.getAttribute('data-id');
+        const circle = nodeGroup.querySelector('circle');
+        const isActive = activeNodes.includes(nodeId);
+        const canActivate = !isActive && skillPoints > 0 && 
+          skillTree.find(n => n.id === nodeId).connections.some(id => activeNodes.includes(id));
+        
+        circle.setAttribute('r', nodeId === hoveredNode ? '4' : '3');
+        circle.setAttribute('class', isActive ? 'active-node' : canActivate ? 'available-node' : 'inactive-node');
+      });
+
+      // Update connections
+      document.querySelectorAll('.connection').forEach(line => {
+        const fromId = line.getAttribute('data-from');
+        const toId = line.getAttribute('data-to');
+        const isActive = activeNodes.includes(fromId) && activeNodes.includes(toId);
+        const isHighlighted = hoveredNode && 
+          (hoveredNode === fromId || hoveredNode === toId) &&
+          (activeNodes.includes(fromId) || activeNodes.includes(toId));
+        
+        line.setAttribute('class', `connection ${
+          isHighlighted ? 'highlighted-connection' : 
+          isActive ? 'active-connection' : 
+          'inactive-connection'
+        }`);
+      });
+    }
+
+    // Initial visual update
+    updateVisuals();
+  </script>
+</body>
+</html>
