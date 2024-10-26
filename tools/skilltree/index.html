@@ -60,9 +60,10 @@
     }
 
     .active-node circle {
-      fill: #F6AD55;
-      stroke: #C05621;
-      filter: drop-shadow(0 0 2px #F6AD55);
+      fill: #60A5FA;
+      stroke: #2563EB;
+      filter: drop-shadow(0 0 3px #60A5FA);
+      animation: pulse 2s infinite;
     }
 
     .inactive-node circle {
@@ -71,15 +72,21 @@
     }
 
     .available-node circle {
-      fill: #4A5568;
-      stroke: #2D3748;
-      filter: drop-shadow(0 0 2px #4A5568);
+      fill: #34D399;
+      stroke: #059669;
+      filter: drop-shadow(0 0 2px #34D399);
+    }
+
+    @keyframes pulse {
+      0% { filter: drop-shadow(0 0 2px #60A5FA); }
+      50% { filter: drop-shadow(0 0 4px #60A5FA); }
+      100% { filter: drop-shadow(0 0 2px #60A5FA); }
     }
 
     .active-connection {
-      stroke: #ED8936;
+      stroke: #3B82F6;
       stroke-width: 0.75;
-      filter: drop-shadow(0 0 1px #ED8936);
+      filter: drop-shadow(0 0 1px #3B82F6);
     }
 
     .inactive-connection {
@@ -88,9 +95,16 @@
     }
 
     .highlighted-connection {
-      stroke: #F6AD55;
+      stroke: #60A5FA;
       stroke-width: 1;
-      filter: drop-shadow(0 0 2px #F6AD55);
+      filter: drop-shadow(0 0 3px #60A5FA);
+      animation: connectionPulse 1.5s infinite;
+    }
+
+    @keyframes connectionPulse {
+      0% { stroke-width: 0.75; }
+      50% { stroke-width: 1.25; }
+      100% { stroke-width: 0.75; }
     }
   </style>
 </head>
