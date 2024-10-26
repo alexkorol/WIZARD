@@ -60,7 +60,7 @@
     }
 
     /* Sephiroth-specific colors */
-    .active-node[data-id="kether"] circle {
+    .active-node[data-id="kether"] .node circle {
       fill: #FFFFFF;
       stroke: #E2E8F0;
       filter: drop-shadow(0 0 3px #FFFFFF);
@@ -126,12 +126,12 @@
       filter: drop-shadow(0 0 3px #6366F1);
     }
 
-    .inactive-node circle {
+    .inactive-node .node circle {
       fill: #2D3748;
       stroke: #1A202C;
     }
 
-    .available-node circle {
+    .available-node .node circle {
       fill: #4A5568;
       stroke: #2D3748;
       filter: drop-shadow(0 0 2px #4A5568);
@@ -241,7 +241,7 @@
       const isActive = activeNodes.includes(node.id);
       const canActivate = !isActive && skillPoints > 0 && 
         node.connections.some(id => activeNodes.includes(id));
-      circle.setAttribute('class', isActive ? 'active-node' : canActivate ? 'available-node' : 'inactive-node');
+      group.setAttribute('class', `node ${isActive ? 'active-node' : canActivate ? 'available-node' : 'inactive-node'}`);
 
       const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
       text.setAttribute('y', '-4');
