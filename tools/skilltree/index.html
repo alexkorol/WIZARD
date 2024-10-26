@@ -172,7 +172,12 @@
 
       const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       circle.setAttribute('r', '3');
-      circle.setAttribute('class', node.id === 'malkuth' ? 'active-node' : 'inactive-node');
+      
+      // Set initial class based on active state
+      const isActive = activeNodes.includes(node.id);
+      const canActivate = !isActive && skillPoints > 0 && 
+        node.connections.some(id => activeNodes.includes(id));
+      circle.setAttribute('class', isActive ? 'active-node' : canActivate ? 'available-node' : 'inactive-node');
 
       const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
       text.setAttribute('y', '-4');
