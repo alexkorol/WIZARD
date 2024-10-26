@@ -306,7 +306,7 @@
           skillTree.find(n => n.id === nodeId).connections.some(id => activeNodes.includes(id));
         
         circle.setAttribute('r', nodeId === hoveredNode ? '4' : '3');
-        circle.setAttribute('class', isActive ? 'active-node' : canActivate ? 'available-node' : 'inactive-node');
+        nodeGroup.setAttribute('class', `node ${isActive ? 'active-node' : canActivate ? 'available-node' : 'inactive-node'}`);
       });
 
       // Update connections
