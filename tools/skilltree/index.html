@@ -59,11 +59,71 @@
       transition: all 0.3s ease;
     }
 
-    .active-node circle {
+    /* Sephiroth-specific colors */
+    .active-node[data-id="kether"] circle {
+      fill: #FFFFFF;
+      stroke: #E2E8F0;
+      filter: drop-shadow(0 0 3px #FFFFFF);
+    }
+    
+    .active-node[data-id="chokmah"] circle {
       fill: #60A5FA;
       stroke: #2563EB;
       filter: drop-shadow(0 0 3px #60A5FA);
-      animation: pulse 2s infinite;
+    }
+    
+    .active-node[data-id="binah"] circle {
+      fill: #C084FC;
+      stroke: #7C3AED;
+      filter: drop-shadow(0 0 3px #C084FC);
+    }
+    
+    .active-node[data-id="daath"] circle {
+      fill: #4B5563;
+      stroke: #1F2937;
+      filter: drop-shadow(0 0 3px #4B5563);
+    }
+    
+    .active-node[data-id="chesed"] circle {
+      fill: #34D399;
+      stroke: #059669;
+      filter: drop-shadow(0 0 3px #34D399);
+    }
+    
+    .active-node[data-id="geburah"] circle {
+      fill: #EF4444;
+      stroke: #B91C1C;
+      filter: drop-shadow(0 0 3px #EF4444);
+    }
+    
+    .active-node[data-id="tipareth"] circle {
+      fill: #FCD34D;
+      stroke: #D97706;
+      filter: drop-shadow(0 0 3px #FCD34D);
+    }
+    
+    .active-node[data-id="netzach"] circle {
+      fill: #EC4899;
+      stroke: #BE185D;
+      filter: drop-shadow(0 0 3px #EC4899);
+    }
+    
+    .active-node[data-id="hod"] circle {
+      fill: #F97316;
+      stroke: #C2410C;
+      filter: drop-shadow(0 0 3px #F97316);
+    }
+    
+    .active-node[data-id="yesod"] circle {
+      fill: #818CF8;
+      stroke: #4F46E5;
+      filter: drop-shadow(0 0 3px #818CF8);
+    }
+    
+    .active-node[data-id="malkuth"] circle {
+      fill: #6366F1;
+      stroke: #4338CA;
+      filter: drop-shadow(0 0 3px #6366F1);
     }
 
     .inactive-node circle {
@@ -72,21 +132,25 @@
     }
 
     .available-node circle {
-      fill: #34D399;
-      stroke: #059669;
-      filter: drop-shadow(0 0 2px #34D399);
+      fill: #4A5568;
+      stroke: #2D3748;
+      filter: drop-shadow(0 0 2px #4A5568);
+    }
+
+    .active-node circle {
+      animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
-      0% { filter: drop-shadow(0 0 2px #60A5FA); }
-      50% { filter: drop-shadow(0 0 4px #60A5FA); }
-      100% { filter: drop-shadow(0 0 2px #60A5FA); }
+      0% { filter: drop-shadow(0 0 2px currentColor); }
+      50% { filter: drop-shadow(0 0 4px currentColor); }
+      100% { filter: drop-shadow(0 0 2px currentColor); }
     }
 
     .active-connection {
-      stroke: #3B82F6;
+      stroke: #6366F1;
       stroke-width: 0.75;
-      filter: drop-shadow(0 0 1px #3B82F6);
+      filter: drop-shadow(0 0 1px #6366F1);
     }
 
     .inactive-connection {
@@ -95,9 +159,9 @@
     }
 
     .highlighted-connection {
-      stroke: #60A5FA;
+      stroke: #818CF8;
       stroke-width: 1;
-      filter: drop-shadow(0 0 3px #60A5FA);
+      filter: drop-shadow(0 0 3px #818CF8);
       animation: connectionPulse 1.5s infinite;
     }
 
