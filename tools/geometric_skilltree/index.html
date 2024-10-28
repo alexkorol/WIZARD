@@ -45,14 +45,14 @@
 
     .node text {
       fill: white;
-      font-size: 1.5px;
+      font-size: 2px;
       font-weight: 300;
       transition: all 0.3s ease;
       text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
     }
 
     .node:hover text {
-      font-size: 1.75px;
+      font-size: 2.25px;
     }
 
     .arc {
@@ -91,19 +91,19 @@
 
     .available-arc {
       stroke: #4A5568;
-      stroke-width: 0.75;
+      stroke-width: 1;
       cursor: pointer;
     }
 
     .active-arc {
       stroke: #FCD34D;
-      stroke-width: 1.5;
+      stroke-width: 2;
       filter: drop-shadow(0 0 1px #FCD34D);
     }
 
     .highlighted-arc {
       stroke: #818CF8;
-      stroke-width: 1.25;
+      stroke-width: 1.5;
       filter: drop-shadow(0 0 3px #818CF8);
       animation: connectionPulse 1.5s infinite;
     }
@@ -121,105 +121,200 @@
       Node Points: <span id="nodePoints">10</span><br>
       Arc Points: <span id="arcPoints">10</span>
     </div>
-    <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-      <!-- Arcs and nodes will be inserted here by JavaScript -->
+    <svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
+      <!-- Circles, Arcs, and Nodes will be inserted here by JavaScript -->
     </svg>
   </div>
 
   <script>
-    const sqrt3 = Math.sqrt(3);
+    const svg = document.querySelector('svg');
+    const R = 30; // Radius of circles
+    const centerX = 100;
+    const centerY = 100;
 
-    const nodes = [
-      { id: 'n0', name: 'Center', x: 50, y: 50, connections: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6'] },
-      { id: 'n1', name: 'Node1', x: 65, y: 50, connections: ['n0', 'n2', 'n6', 'n7', 'n18'] },
-      { id: 'n2', name: 'Node2', x: 57.5, y: 50 + (15 * sqrt3 / 2), connections: ['n0', 'n1', 'n3', 'n8', 'n9'] },
-      { id: 'n3', name: 'Node3', x: 42.5, y: 50 + (15 * sqrt3 / 2), connections: ['n0', 'n2', 'n4', 'n9', 'n10'] },
-      { id: 'n4', name: 'Node4', x: 35, y: 50, connections: ['n0', 'n3', 'n5', 'n11', 'n12'] },
-      { id: 'n5', name: 'Node5', x: 42.5, y: 50 - (15 * sqrt3 / 2), connections: ['n0', 'n4', 'n6', 'n12', 'n13'] },
-      { id: 'n6', name: 'Node6', x: 57.5, y: 50 - (15 * sqrt3 / 2), connections: ['n0', 'n1', 'n5', 'n13', 'n14'] },
-      // Outer nodes
-      { id: 'n7', name: 'Node7', x: 80, y: 50, connections: ['n1', 'n8', 'n18'] },
-      { id: 'n8', name: 'Node8', x: 72.5, y: 50 + (30 * sqrt3 / 2), connections: ['n2', 'n7', 'n9'] },
-      { id: 'n9', name: 'Node9', x: 50, y: 50 + (30 * sqrt3), connections: ['n2', 'n3', 'n8', 'n10'] },
-      { id: 'n10', name: 'Node10', x: 27.5, y: 50 + (30 * sqrt3 / 2), connections: ['n3', 'n9', 'n11'] },
-      { id: 'n11', name: 'Node11', x: 20, y: 50, connections: ['n4', 'n10', 'n12'] },
-      { id: 'n12', name: 'Node12', x: 27.5, y: 50 - (30 * sqrt3 / 2), connections: ['n4', 'n5', 'n11', 'n13'] },
-      { id: 'n13', name: 'Node13', x: 50, y: 50 - (30 * sqrt3), connections: ['n5', 'n6', 'n12', 'n14'] },
-      { id: 'n14', name: 'Node14', x: 72.5, y: 50 - (30 * sqrt3 / 2), connections: ['n6', 'n13', 'n15'] },
-      { id: 'n15', name: 'Node15', x: 80, y: 50, connections: ['n7', 'n14', 'n16'] },
-      { id: 'n16', name: 'Node16', x: 72.5, y: 50 + (30 * sqrt3 / 2), connections: ['n8', 'n15', 'n17'] },
-      { id: 'n17', name: 'Node17', x: 50, y: 50 + (30 * sqrt3), connections: ['n9', 'n16'] },
-      { id: 'n18', name: 'Node18', x: 65, y: 50, connections: ['n1', 'n7', 'n15'] },
-    ];
-
-    const arcs = [];
-
-    // Generate arcs based on node connections
-    nodes.forEach(node => {
-      node.connections.forEach(connId => {
-        // To avoid duplicate arcs, ensure fromId < toId
-        if (node.id < connId) {
-          arcs.push({ id: `a_${node.id}_${connId}`, from: node.id, to: connId });
-        }
-      });
-    });
+    let nodeSkillPoints = 10;
+    let arcSkillPoints = 10;
 
     let allocatedNodes = ['n0'];
     let allocatedArcs = [];
-    let nodeSkillPoints = 10;
-    let arcSkillPoints = 10;
+
     let hoveredNode = null;
     let hoveredArc = null;
 
-    const svg = document.querySelector('svg');
+    const circles = [];
+    const nodes = [];
+    const arcs = [];
 
-    // Create arcs
-    arcs.forEach(arc => {
-      const fromNode = nodes.find(n => n.id === arc.from);
-      const toNode = nodes.find(n => n.id === arc.to);
+    // Positions of circles in the Flower of Life pattern
+    const circlePositions = [
+      { x: centerX, y: centerY }, // Center Circle
+      { x: centerX + R, y: centerY },
+      { x: centerX + R / 2, y: centerY + R * Math.sqrt(3) / 2 },
+      { x: centerX - R / 2, y: centerY + R * Math.sqrt(3) / 2 },
+      { x: centerX - R, y: centerY },
+      { x: centerX - R / 2, y: centerY - R * Math.sqrt(3) / 2 },
+      { x: centerX + R / 2, y: centerY - R * Math.sqrt(3) / 2 },
+      // Outer circles
+      { x: centerX + 2 * R, y: centerY },
+      { x: centerX + R, y: centerY + R * Math.sqrt(3) },
+      { x: centerX, y: centerY + 2 * R * Math.sqrt(3) / 2 },
+      { x: centerX - R, y: centerY + R * Math.sqrt(3) },
+      { x: centerX - 2 * R, y: centerY },
+      { x: centerX - R, y: centerY - R * Math.sqrt(3) },
+      { x: centerX, y: centerY - 2 * R * Math.sqrt(3) / 2 },
+      { x: centerX + R, y: centerY - R * Math.sqrt(3) },
+    ];
 
-      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      line.setAttribute('x1', fromNode.x);
-      line.setAttribute('y1', fromNode.y);
-      line.setAttribute('x2', toNode.x);
-      line.setAttribute('y2', toNode.y);
-      line.setAttribute('class', 'arc inactive-arc');
-      line.setAttribute('data-id', arc.id);
-      line.setAttribute('data-from', arc.from);
-      line.setAttribute('data-to', arc.to);
-
-      svg.appendChild(line);
-
-      // Add event listeners
-      line.addEventListener('mouseenter', () => handleArcHover(arc.id));
-      line.addEventListener('mouseleave', () => handleArcHover(null));
-      line.addEventListener('click', () => handleArcClick(arc.id));
+    // Draw circles
+    circlePositions.forEach((pos, index) => {
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute('cx', pos.x);
+      circle.setAttribute('cy', pos.y);
+      circle.setAttribute('r', R);
+      circle.setAttribute('fill', 'none');
+      circle.setAttribute('stroke', '#ffffff22');
+      svg.appendChild(circle);
+      circles.push({ id: `c${index}`, x: pos.x, y: pos.y });
     });
 
-    // Create nodes
+    // Function to calculate intersection points (nodes)
+    function calculateNodes() {
+      let nodeId = 0;
+      for (let i = 0; i < circles.length; i++) {
+        for (let j = i + 1; j < circles.length; j++) {
+          const intersections = circleCircleIntersection(
+            circles[i].x, circles[i].y, R,
+            circles[j].x, circles[j].y, R
+          );
+          intersections.forEach(point => {
+            nodes.push({
+              id: `n${nodeId++}`,
+              x: point.x,
+              y: point.y,
+              connections: [],
+              connectedArcs: []
+            });
+          });
+        }
+      }
+    }
+
+    // Function to calculate circle-circle intersection points
+    function circleCircleIntersection(x0, y0, r0, x1, y1, r1) {
+      const dx = x1 - x0;
+      const dy = y1 - y0;
+      const d = Math.sqrt(dx * dx + dy * dy);
+
+      // Check for no intersection
+      if (d > r0 + r1 || d < Math.abs(r0 - r1)) {
+        return [];
+      }
+
+      const a = (r0 * r0 - r1 * r1 + d * d) / (2 * d);
+      const h = Math.sqrt(r0 * r0 - a * a);
+      const xm = x0 + a * dx / d;
+      const ym = y0 + a * dy / d;
+      const xs1 = xm + h * dy / d;
+      const ys1 = ym - h * dx / d;
+      const xs2 = xm - h * dy / d;
+      const ys2 = ym + h * dx / d;
+
+      return [{ x: xs1, y: ys1 }, { x: xs2, y: ys2 }];
+    }
+
+    // Calculate nodes
+    calculateNodes();
+
+    // Remove duplicate nodes based on positions
+    const uniqueNodes = [];
     nodes.forEach(node => {
+      const exists = uniqueNodes.some(n => Math.hypot(n.x - node.x, n.y - node.y) < 0.1);
+      if (!exists) {
+        uniqueNodes.push(node);
+      }
+    });
+    nodes.length = 0;
+    nodes.push(...uniqueNodes);
+
+    // Draw nodes
+    nodes.forEach(node => {
+      node.connections = []; // Will be filled later
       const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
       group.setAttribute('transform', `translate(${node.x},${node.y})`);
-      group.setAttribute('class', 'node');
+      group.setAttribute('class', 'node inactive-node');
       group.setAttribute('data-id', node.id);
 
       const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      circle.setAttribute('r', '3');
+      circle.setAttribute('r', '2');
 
       const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      text.setAttribute('y', '-4');
+      text.setAttribute('y', '-3');
       text.setAttribute('text-anchor', 'middle');
-      text.textContent = node.name;
+      text.textContent = node.id;
 
       group.appendChild(circle);
-      group.appendChild(text);
+      // group.appendChild(text); // Uncomment to display node IDs
       svg.appendChild(group);
 
-      // Add event listeners
+      // Event listeners
       group.addEventListener('mouseenter', () => handleNodeHover(node.id));
       group.addEventListener('mouseleave', () => handleNodeHover(null));
       group.addEventListener('click', () => handleNodeClick(node.id));
     });
+
+    // Calculate arcs between nodes
+    function calculateArcs() {
+      let arcId = 0;
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+          // Nodes are connected if they are at a distance approximately equal to R
+          if (Math.abs(dist - R) < 0.5) {
+            const arc = {
+              id: `a${arcId++}`,
+              from: nodes[i].id,
+              to: nodes[j].id,
+              x1: nodes[i].x,
+              y1: nodes[i].y,
+              x2: nodes[j].x,
+              y2: nodes[j].y,
+              largeArc: 0
+            };
+            arcs.push(arc);
+            nodes[i].connections.push(nodes[j].id);
+            nodes[j].connections.push(nodes[i].id);
+          }
+        }
+      }
+    }
+
+    // Calculate arcs
+    calculateArcs();
+
+    // Draw arcs
+    arcs.forEach(arc => {
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      const d = describeArc(arc.x1, arc.y1, arc.x2, arc.y2);
+      path.setAttribute('d', d);
+      path.setAttribute('class', 'arc inactive-arc');
+      path.setAttribute('data-id', arc.id);
+      path.setAttribute('data-from', arc.from);
+      path.setAttribute('data-to', arc.to);
+      svg.insertBefore(path, svg.firstChild);
+
+      // Event listeners
+      path.addEventListener('mouseenter', () => handleArcHover(arc.id));
+      path.addEventListener('mouseleave', () => handleArcHover(null));
+      path.addEventListener('click', () => handleArcClick(arc.id));
+    });
+
+    function describeArc(x1, y1, x2, y2) {
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const dr = Math.sqrt(dx * dx + dy * dy);
+      const sweepFlag = 1;
+      return `M ${x1} ${y1} A ${dr / 2} ${dr / 2} 0 0 ${sweepFlag} ${x2} ${y2}`;
+    }
 
     function handleNodeHover(nodeId) {
       hoveredNode = nodeId;
@@ -232,8 +327,6 @@
     }
 
     function handleNodeClick(nodeId) {
-      if (nodeId === 'n0') return;
-
       const node = nodes.find(n => n.id === nodeId);
       const connectedArcs = arcs.filter(a =>
         (a.from === nodeId || a.to === nodeId) && allocatedArcs.includes(a.id)
@@ -273,13 +366,9 @@
 
       if (allocatedArcs.includes(arcId)) {
         // Deallocate arc if possible
-        const canDeallocate = true; // Implement any rules if needed
-
-        if (canDeallocate) {
-          allocatedArcs = allocatedArcs.filter(id => id !== arcId);
-          arcSkillPoints++;
-          document.getElementById('arcPoints').textContent = arcSkillPoints;
-        }
+        allocatedArcs = allocatedArcs.filter(id => id !== arcId);
+        arcSkillPoints++;
+        document.getElementById('arcPoints').textContent = arcSkillPoints;
       } else if (arcSkillPoints > 0 && (fromAllocated || toAllocated)) {
         allocatedArcs.push(arcId);
         arcSkillPoints--;
@@ -302,17 +391,17 @@
 
         const canActivate = !isActive && nodeSkillPoints > 0 && connectedAllocatedArcs.length > 0;
 
-        circle.setAttribute('r', nodeId === hoveredNode ? '4' : '3');
+        circle.setAttribute('r', nodeId === hoveredNode ? '3' : '2');
         nodeGroup.setAttribute('class', `node ${
           isActive ? 'active-node' : canActivate ? 'available-node' : 'inactive-node'
         }`);
       });
 
       // Update arcs
-      document.querySelectorAll('.arc').forEach(line => {
-        const arcId = line.getAttribute('data-id');
-        const fromId = line.getAttribute('data-from');
-        const toId = line.getAttribute('data-to');
+      document.querySelectorAll('.arc').forEach(path => {
+        const arcId = path.getAttribute('data-id');
+        const fromId = path.getAttribute('data-from');
+        const toId = path.getAttribute('data-to');
         const isActive = allocatedArcs.includes(arcId);
 
         const fromAllocated = allocatedNodes.includes(fromId);
@@ -320,7 +409,7 @@
 
         const canActivate = !isActive && arcSkillPoints > 0 && (fromAllocated || toAllocated);
 
-        line.setAttribute('class', `arc ${
+        path.setAttribute('class', `arc ${
           arcId === hoveredArc ? 'highlighted-arc' :
           isActive ? 'active-arc' :
           canActivate ? 'available-arc' :
