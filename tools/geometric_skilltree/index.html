@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      background: rgb(17, 24, 39);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .container {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .skill-points {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      font-size: 1.125rem;
+      z-index: 10;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .node {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .node circle {
+      stroke: #1a1a1a;
+      stroke-width: 1;
+      transition: all 0.3s ease;
+    }
+
+    .node text {
+      fill: white;
+      font-size: 1.5px;
+      font-weight: 300;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .node:hover text {
+      font-size: 1.75px;
+    }
+
+    .arc {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .inactive-node circle {
+      fill: #2D3748;
+      stroke: #1A202C;
+    }
+
+    .available-node circle {
+      fill: #4A5568;
+      stroke: #2D3748;
+      filter: drop-shadow(0 0 2px #4A5568);
+    }
+
+    .active-node circle {
+      fill: #6366F1;
+      stroke: #4338CA;
+      filter: drop-shadow(0 0 3px #6366F1);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { filter: drop-shadow(0 0 2px currentColor); }
+      50% { filter: drop-shadow(0 0 4px currentColor); }
+      100% { filter: drop-shadow(0 0 2px currentColor); }
+    }
+
+    .inactive-arc {
+      stroke: #2D3748;
+      stroke-width: 0.5;
+    }
+
+    .available-arc {
+      stroke: #4A5568;
+      stroke-width: 0.75;
+      cursor: pointer;
+    }
+
+    .active-arc {
+      stroke: #FCD34D;
+      stroke-width: 1.5;
+      filter: drop-shadow(0 0 1px #FCD34D);
+    }
+
+    .highlighted-arc {
+      stroke: #818CF8;
+      stroke-width: 1.25;
+      filter: drop-shadow(0 0 3px #818CF8);
+      animation: connectionPulse 1.5s infinite;
+    }
+
+    @keyframes connectionPulse {
+      0% { stroke-width: 1; }
+      50% { stroke-width: 1.5; }
+      100% { stroke-width: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="skill-points">
+      Node Points: <span id="nodePoints">10</span><br>
+      Arc Points: <span id="arcPoints">10</span>
+    </div>
+    <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+      <!-- Arcs and nodes will be inserted here by JavaScript -->
+    </svg>
+  </div>
+
+  <script>
+    const sqrt3 = Math.sqrt(3);
+
+    const nodes = [
+      { id: 'n0', name: 'Center', x: 50, y: 50, connections: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6'] },
+      { id: 'n1', name: 'Node1', x: 65, y: 50, connections: ['n0', 'n2', 'n6', 'n7', 'n18'] },
+      { id: 'n2', name: 'Node2', x: 57.5, y: 50 + (15 * sqrt3 / 2), connections: ['n0', 'n1', 'n3', 'n8', 'n9'] },
+      { id: 'n3', name: 'Node3', x: 42.5, y: 50 + (15 * sqrt3 / 2), connections: ['n0', 'n2', 'n4', 'n9', 'n10'] },
+      { id: 'n4', name: 'Node4', x: 35, y: 50, connections: ['n0', 'n3', 'n5', 'n11', 'n12'] },
+      { id: 'n5', name: 'Node5', x: 42.5, y: 50 - (15 * sqrt3 / 2), connections: ['n0', 'n4', 'n6', 'n12', 'n13'] },
+      { id: 'n6', name: 'Node6', x: 57.5, y: 50 - (15 * sqrt3 / 2), connections: ['n0', 'n1', 'n5', 'n13', 'n14'] },
+      // Outer nodes
+      { id: 'n7', name: 'Node7', x: 80, y: 50, connections: ['n1', 'n8', 'n18'] },
+      { id: 'n8', name: 'Node8', x: 72.5, y: 50 + (30 * sqrt3 / 2), connections: ['n2', 'n7', 'n9'] },
+      { id: 'n9', name: 'Node9', x: 50, y: 50 + (30 * sqrt3), connections: ['n2', 'n3', 'n8', 'n10'] },
+      { id: 'n10', name: 'Node10', x: 27.5, y: 50 + (30 * sqrt3 / 2), connections: ['n3', 'n9', 'n11'] },
+      { id: 'n11', name: 'Node11', x: 20, y: 50, connections: ['n4', 'n10', 'n12'] },
+      { id: 'n12', name: 'Node12', x: 27.5, y: 50 - (30 * sqrt3 / 2), connections: ['n4', 'n5', 'n11', 'n13'] },
+      { id: 'n13', name: 'Node13', x: 50, y: 50 - (30 * sqrt3), connections: ['n5', 'n6', 'n12', 'n14'] },
+      { id: 'n14', name: 'Node14', x: 72.5, y: 50 - (30 * sqrt3 / 2), connections: ['n6', 'n13', 'n15'] },
+      { id: 'n15', name: 'Node15', x: 80, y: 50, connections: ['n7', 'n14', 'n16'] },
+      { id: 'n16', name: 'Node16', x: 72.5, y: 50 + (30 * sqrt3 / 2), connections: ['n8', 'n15', 'n17'] },
+      { id: 'n17', name: 'Node17', x: 50, y: 50 + (30 * sqrt3), connections: ['n9', 'n16'] },
+      { id: 'n18', name: 'Node18', x: 65, y: 50, connections: ['n1', 'n7', 'n15'] },
+    ];
+
+    const arcs = [];
+
+    // Generate arcs based on node connections
+    nodes.forEach(node => {
+      node.connections.forEach(connId => {
+        // To avoid duplicate arcs, ensure fromId < toId
+        if (node.id < connId) {
+          arcs.push({ id: `a_${node.id}_${connId}`, from: node.id, to: connId });
+        }
+      });
+    });
+
+    let allocatedNodes = ['n0'];
+    let allocatedArcs = [];
+    let nodeSkillPoints = 10;
+    let arcSkillPoints = 10;
+    let hoveredNode = null;
+    let hoveredArc = null;
+
+    const svg = document.querySelector('svg');
+
+    // Create arcs
+    arcs.forEach(arc => {
+      const fromNode = nodes.find(n => n.id === arc.from);
+      const toNode = nodes.find(n => n.id === arc.to);
+
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute('x1', fromNode.x);
+      line.setAttribute('y1', fromNode.y);
+      line.setAttribute('x2', toNode.x);
+      line.setAttribute('y2', toNode.y);
+      line.setAttribute('class', 'arc inactive-arc');
+      line.setAttribute('data-id', arc.id);
+      line.setAttribute('data-from', arc.from);
+      line.setAttribute('data-to', arc.to);
+
+      svg.appendChild(line);
+
+      // Add event listeners
+      line.addEventListener('mouseenter', () => handleArcHover(arc.id));
+      line.addEventListener('mouseleave', () => handleArcHover(null));
+      line.addEventListener('click', () => handleArcClick(arc.id));
+    });
+
+    // Create nodes
+    nodes.forEach(node => {
+      const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      group.setAttribute('transform', `translate(${node.x},${node.y})`);
+      group.setAttribute('class', 'node');
+      group.setAttribute('data-id', node.id);
+
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute('r', '3');
+
+      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      text.setAttribute('y', '-4');
+      text.setAttribute('text-anchor', 'middle');
+      text.textContent = node.name;
+
+      group.appendChild(circle);
+      group.appendChild(text);
+      svg.appendChild(group);
+
+      // Add event listeners
+      group.addEventListener('mouseenter', () => handleNodeHover(node.id));
+      group.addEventListener('mouseleave', () => handleNodeHover(null));
+      group.addEventListener('click', () => handleNodeClick(node.id));
+    });
+
+    function handleNodeHover(nodeId) {
+      hoveredNode = nodeId;
+      updateVisuals();
+    }
+
+    function handleArcHover(arcId) {
+      hoveredArc = arcId;
+      updateVisuals();
+    }
+
+    function handleNodeClick(nodeId) {
+      if (nodeId === 'n0') return;
+
+      const node = nodes.find(n => n.id === nodeId);
+      const connectedArcs = arcs.filter(a =>
+        (a.from === nodeId || a.to === nodeId) && allocatedArcs.includes(a.id)
+      );
+
+      if (allocatedNodes.includes(nodeId)) {
+        // Deallocate node if possible
+        const connectedAllocatedArcs = arcs.filter(a =>
+          (a.from === nodeId || a.to === nodeId) && allocatedArcs.includes(a.id)
+        );
+
+        const connectedAllocatedNodes = connectedAllocatedArcs.map(a =>
+          a.from === nodeId ? a.to : a.from
+        ).filter(nId => allocatedNodes.includes(nId));
+
+        if (connectedAllocatedNodes.length === 0) {
+          allocatedNodes = allocatedNodes.filter(id => id !== nodeId);
+          nodeSkillPoints++;
+          document.getElementById('nodePoints').textContent = nodeSkillPoints;
+        } else {
+          alert('Cannot deallocate this node without disconnecting the tree.');
+        }
+      } else if (nodeSkillPoints > 0 && connectedArcs.length > 0) {
+        allocatedNodes.push(nodeId);
+        nodeSkillPoints--;
+        document.getElementById('nodePoints').textContent = nodeSkillPoints;
+      }
+
+      updateVisuals();
+    }
+
+    function handleArcClick(arcId) {
+      const arc = arcs.find(a => a.id === arcId);
+
+      const fromAllocated = allocatedNodes.includes(arc.from);
+      const toAllocated = allocatedNodes.includes(arc.to);
+
+      if (allocatedArcs.includes(arcId)) {
+        // Deallocate arc if possible
+        const canDeallocate = true; // Implement any rules if needed
+
+        if (canDeallocate) {
+          allocatedArcs = allocatedArcs.filter(id => id !== arcId);
+          arcSkillPoints++;
+          document.getElementById('arcPoints').textContent = arcSkillPoints;
+        }
+      } else if (arcSkillPoints > 0 && (fromAllocated || toAllocated)) {
+        allocatedArcs.push(arcId);
+        arcSkillPoints--;
+        document.getElementById('arcPoints').textContent = arcSkillPoints;
+      }
+
+      updateVisuals();
+    }
+
+    function updateVisuals() {
+      // Update nodes
+      document.querySelectorAll('.node').forEach(nodeGroup => {
+        const nodeId = nodeGroup.getAttribute('data-id');
+        const circle = nodeGroup.querySelector('circle');
+        const isActive = allocatedNodes.includes(nodeId);
+
+        const connectedAllocatedArcs = arcs.filter(a =>
+          (a.from === nodeId || a.to === nodeId) && allocatedArcs.includes(a.id)
+        );
+
+        const canActivate = !isActive && nodeSkillPoints > 0 && connectedAllocatedArcs.length > 0;
+
+        circle.setAttribute('r', nodeId === hoveredNode ? '4' : '3');
+        nodeGroup.setAttribute('class', `node ${
+          isActive ? 'active-node' : canActivate ? 'available-node' : 'inactive-node'
+        }`);
+      });
+
+      // Update arcs
+      document.querySelectorAll('.arc').forEach(line => {
+        const arcId = line.getAttribute('data-id');
+        const fromId = line.getAttribute('data-from');
+        const toId = line.getAttribute('data-to');
+        const isActive = allocatedArcs.includes(arcId);
+
+        const fromAllocated = allocatedNodes.includes(fromId);
+        const toAllocated = allocatedNodes.includes(toId);
+
+        const canActivate = !isActive && arcSkillPoints > 0 && (fromAllocated || toAllocated);
+
+        line.setAttribute('class', `arc ${
+          arcId === hoveredArc ? 'highlighted-arc' :
+          isActive ? 'active-arc' :
+          canActivate ? 'available-arc' :
+          'inactive-arc'
+        }`);
+      });
+    }
+
+    // Initial visual update
+    updateVisuals();
+  </script>
+</body>
+</html>
