@@ -5,76 +5,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WIZARD: Web-Integrated Zero-lag Adaptive Resource Dashboard</title>
     <style>
-        /* General styling */
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --background: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text: #ffffff;
+            --text-secondary: #b0b0b0;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
         }
 
-        header, footer {
-            background-color: #4CAF50;
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
             color: white;
             text-align: center;
-            padding: 1em 0;
+            padding: 3em 1em;
         }
 
-        header h1, footer p {
+        header h1 {
             margin: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        header p {
+            margin: 1em 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         main {
-            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2em;
         }
 
-        section {
-            background: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2em;
+            margin-top: 2em;
         }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5em;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        li {
-            margin-bottom: 10px;
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
         }
 
-        a {
-            color: #4CAF50;
+        .tool-card h3 {
+            margin: 0 0 0.5em;
+            color: var(--primary);
+            font-size: 1.4em;
+        }
+
+        .tool-card p {
+            margin: 0 0 1.5em;
+            color: var(--text-secondary);
+        }
+
+        .tool-link {
+            display: inline-block;
+            padding: 0.8em 1.5em;
+            background-color: var(--primary);
+            color: white;
             text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.2s;
         }
 
-        a:hover {
-            text-decoration: underline;
+        .tool-link:hover {
+            background-color: var(--primary-dark);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2em;
+            background-color: var(--card-bg);
+            margin-top: 4em;
+        }
+
+        footer p {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            color: var(--text);
+            text-decoration: none;
+            margin-top: 1em;
+        }
+
+        .github-link:hover {
+            color: var(--primary);
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>WIZARD: Web-Integrated Zero-lag Adaptive Resource Dashboard</h1>
-        <p>Welcome to WIZARD, a collection of versatile, LLM-aided tools and pages designed to test the capabilities of the latest generation of AI models.</p>
+        <h1>WIZARD</h1>
+        <p>Web-Integrated Zero-lag Adaptive Resource Dashboard</p>
+        <p>A collection of versatile, LLM-aided tools designed for web development and game design</p>
     </header>
+
     <main>
-        <section>
-            <h2>Available Tools</h2>
-            <ul>
-                <li><a href="tools/pixelart/index.html">Pixel Art Creator</a> - Create and customize pixel art</li>
-                <li><a href="tools/skilltree/index.html">Skill Tree Designer</a> - Create tree-based skill systems</li>
-                <li><a href="tools/geometric_skilltree/index.html">Geometric Skill Tree</a> - Design hexagonal grid-based skill systems</li>
-                <li><a href="tools/rpg_inventory/index.html">RPG Inventory System</a> - Manage game inventories with drag-and-drop</li>
-                <!-- Add more tools as necessary -->
-            </ul>
-        </section>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>Pixel Art Creator</h3>
+                <p>Create and customize pixel art with an intuitive grid-based interface. Features multiple canvas sizes, color picker, and PNG export.</p>
+                <a href="tools/pixelart/index.html" class="tool-link">Open Tool</a>
+            </div>
+
+            <div class="tool-card">
+                <h3>Skill Tree Designer</h3>
+                <p>Design tree-based skill systems inspired by the Tree of Life. Features interactive nodes, skill point management, and path dependencies.</p>
+                <a href="tools/skilltree/index.html" class="tool-link">Open Tool</a>
+            </div>
+
+            <div class="tool-card">
+                <h3>Geometric Skill Tree</h3>
+                <p>Create hexagonal grid-based skill systems inspired by Path of Exile. Features dual point system and connection visualization.</p>
+                <a href="tools/geometric_skilltree/index.html" class="tool-link">Open Tool</a>
+            </div>
+
+            <div class="tool-card">
+                <h3>RPG Inventory System</h3>
+                <p>Manage game inventories with drag-and-drop functionality. Features equipment slots, item stacking, and local storage persistence.</p>
+                <a href="tools/rpg_inventory/index.html" class="tool-link">Open Tool</a>
+            </div>
+        </div>
     </main>
+
     <footer>
         <p>&copy; 2024 Alexei Korol. All rights reserved.</p>
+        <a href="https://github.com/yourusername/wizard" class="github-link">
+            <svg height="24" width="24" viewBox="0 0 16 16">
+                <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+            </svg>
+            View on GitHub
+        </a>
     </footer>
 </body>
 </html>
