@@ -128,7 +128,7 @@
 
   <script>
     const svg = document.querySelector('svg');
-    const R = 30; // Radius of circles
+    const R = 20; // Radius of circles
     const centerX = 100;
     const centerY = 100;
 
@@ -141,29 +141,39 @@
     let hoveredNode = null;
     let hoveredArc = null;
 
-    const circles = [];
     const nodes = [];
     const arcs = [];
 
     // Positions of circles in the Flower of Life pattern
-    const circlePositions = [
-      { x: centerX, y: centerY }, // Center Circle
-      { x: centerX + R, y: centerY },
-      { x: centerX + R / 2, y: centerY + R * Math.sqrt(3) / 2 },
-      { x: centerX - R / 2, y: centerY + R * Math.sqrt(3) / 2 },
-      { x: centerX - R, y: centerY },
-      { x: centerX - R / 2, y: centerY - R * Math.sqrt(3) / 2 },
-      { x: centerX + R / 2, y: centerY - R * Math.sqrt(3) / 2 },
-      // Outer circles
-      { x: centerX + 2 * R, y: centerY },
-      { x: centerX + R, y: centerY + R * Math.sqrt(3) },
-      { x: centerX, y: centerY + 2 * R * Math.sqrt(3) / 2 },
-      { x: centerX - R, y: centerY + R * Math.sqrt(3) },
-      { x: centerX - 2 * R, y: centerY },
-      { x: centerX - R, y: centerY - R * Math.sqrt(3) },
-      { x: centerX, y: centerY - 2 * R * Math.sqrt(3) / 2 },
-      { x: centerX + R, y: centerY - R * Math.sqrt(3) },
-    ];
+    const circlePositions = [];
+
+    // Function to add circle positions in a hexagonal grid
+    function addCirclePositions(layers) {
+      const offsetX = R;
+      const offsetY = R * Math.sqrt(3) / 2;
+
+      // Center circle
+      circlePositions.push({ x: centerX, y: centerY });
+
+      for (let layer = 1; layer <= layers; layer++) {
+        for (let i = 0; i < 6; i++) {
+          const angle = Math.PI / 3 * i;
+          const x = centerX + layer * 2 * offsetX * Math.cos(angle);
+          const y = centerY + layer * 2 * offsetX * Math.sin(angle);
+          circlePositions.push({ x, y });
+
+          // Add circles in between main hex points
+          for (let j = 1; j < layer; j++) {
+            const innerX = centerX + (layer - j) * 2 * offsetX * Math.cos(angle) + j * 2 * offsetX * Math.cos(angle + Math.PI / 3);
+            const innerY = centerY + (layer - j) * 2 * offsetX * Math.sin(angle) + j * 2 * offsetX * Math.sin(angle + Math.PI / 3);
+            circlePositions.push({ x: innerX, y: innerY });
+          }
+        }
+      }
+    }
+
+    // Build the circle positions for the Flower of Life
+    addCirclePositions(2); // Adjust the number for more layers
 
     // Draw circles
     circlePositions.forEach((pos, index) => {
@@ -174,28 +184,36 @@
       circle.setAttribute('fill', 'none');
       circle.setAttribute('stroke', '#ffffff22');
       svg.appendChild(circle);
-      circles.push({ id: `c${index}`, x: pos.x, y: pos.y });
     });
 
-    // Function to calculate intersection points (nodes)
+    // Calculate nodes (intersection points)
     function calculateNodes() {
       let nodeId = 0;
-      for (let i = 0; i < circles.length; i++) {
-        for (let j = i + 1; j < circles.length; j++) {
+      const nodeMap = {};
+
+      for (let i = 0; i < circlePositions.length; i++) {
+        for (let j = i + 1; j < circlePositions.length; j++) {
           const intersections = circleCircleIntersection(
-            circles[i].x, circles[i].y, R,
-            circles[j].x, circles[j].y, R
+            circlePositions[i].x, circlePositions[i].y, R,
+            circlePositions[j].x, circlePositions[j].y, R
           );
           intersections.forEach(point => {
-            nodes.push({
-              id: `n${nodeId++}`,
-              x: point.x,
-              y: point.y,
-              connections: [],
-              connectedArcs: []
-            });
+            const key = `${Math.round(point.x * 1000) / 1000},${Math.round(point.y * 1000) / 1000}`;
+            if (!nodeMap[key]) {
+              nodeMap[key] = {
+                id: `n${nodeId++}`,
+                x: point.x,
+                y: point.y,
+                connections: []
+              };
+            }
           });
         }
+      }
+
+      // Convert nodeMap to array
+      for (const key in nodeMap) {
+        nodes.push(nodeMap[key]);
       }
     }
 
@@ -203,21 +221,21 @@
     function circleCircleIntersection(x0, y0, r0, x1, y1, r1) {
       const dx = x1 - x0;
       const dy = y1 - y0;
-      const d = Math.sqrt(dx * dx + dy * dy);
+      const d = Math.hypot(dx, dy);
 
       // Check for no intersection
-      if (d > r0 + r1 || d < Math.abs(r0 - r1)) {
+      if (d > r0 + r1 || d < Math.abs(r0 - r1) || d === 0) {
         return [];
       }
 
       const a = (r0 * r0 - r1 * r1 + d * d) / (2 * d);
       const h = Math.sqrt(r0 * r0 - a * a);
-      const xm = x0 + a * dx / d;
-      const ym = y0 + a * dy / d;
-      const xs1 = xm + h * dy / d;
-      const ys1 = ym - h * dx / d;
-      const xs2 = xm - h * dy / d;
-      const ys2 = ym + h * dx / d;
+      const xm = x0 + (a * dx) / d;
+      const ym = y0 + (a * dy) / d;
+      const xs1 = xm + (h * dy) / d;
+      const ys1 = ym - (h * dx) / d;
+      const xs2 = xm - (h * dy) / d;
+      const ys2 = ym + (h * dx) / d;
 
       return [{ x: xs1, y: ys1 }, { x: xs2, y: ys2 }];
     }
@@ -225,64 +243,31 @@
     // Calculate nodes
     calculateNodes();
 
-    // Remove duplicate nodes based on positions
-    const uniqueNodes = [];
-    nodes.forEach(node => {
-      const exists = uniqueNodes.some(n => Math.hypot(n.x - node.x, n.y - node.y) < 0.1);
-      if (!exists) {
-        uniqueNodes.push(node);
-      }
-    });
-    nodes.length = 0;
-    nodes.push(...uniqueNodes);
-
-    // Draw nodes
-    nodes.forEach(node => {
-      node.connections = []; // Will be filled later
-      const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      group.setAttribute('transform', `translate(${node.x},${node.y})`);
-      group.setAttribute('class', 'node inactive-node');
-      group.setAttribute('data-id', node.id);
-
-      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      circle.setAttribute('r', '2');
-
-      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      text.setAttribute('y', '-3');
-      text.setAttribute('text-anchor', 'middle');
-      text.textContent = node.id;
-
-      group.appendChild(circle);
-      // group.appendChild(text); // Uncomment to display node IDs
-      svg.appendChild(group);
-
-      // Event listeners
-      group.addEventListener('mouseenter', () => handleNodeHover(node.id));
-      group.addEventListener('mouseleave', () => handleNodeHover(null));
-      group.addEventListener('click', () => handleNodeClick(node.id));
-    });
-
-    // Calculate arcs between nodes
+    // Build connections between nodes (arcs)
     function calculateArcs() {
       let arcId = 0;
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+      const nodeCount = nodes.length;
+
+      for (let i = 0; i < nodeCount; i++) {
+        const nodeA = nodes[i];
+        for (let j = i + 1; j < nodeCount; j++) {
+          const nodeB = nodes[j];
+          const dist = Math.hypot(nodeA.x - nodeB.x, nodeA.y - nodeB.y);
+
           // Nodes are connected if they are at a distance approximately equal to R
-          if (Math.abs(dist - R) < 0.5) {
+          if (Math.abs(dist - R) < 0.1) {
             const arc = {
               id: `a${arcId++}`,
-              from: nodes[i].id,
-              to: nodes[j].id,
-              x1: nodes[i].x,
-              y1: nodes[i].y,
-              x2: nodes[j].x,
-              y2: nodes[j].y,
-              largeArc: 0
+              from: nodeA.id,
+              to: nodeB.id,
+              x1: nodeA.x,
+              y1: nodeA.y,
+              x2: nodeB.x,
+              y2: nodeB.y
             };
             arcs.push(arc);
-            nodes[i].connections.push(nodes[j].id);
-            nodes[j].connections.push(nodes[i].id);
+            nodeA.connections.push(nodeB.id);
+            nodeB.connections.push(nodeA.id);
           }
         }
       }
@@ -308,12 +293,38 @@
       path.addEventListener('click', () => handleArcClick(arc.id));
     });
 
+    // Draw nodes
+    nodes.forEach(node => {
+      const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      group.setAttribute('transform', `translate(${node.x},${node.y})`);
+      group.setAttribute('class', 'node inactive-node');
+      group.setAttribute('data-id', node.id);
+
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute('r', '2');
+
+      // Uncomment the following lines to display node IDs
+      // const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      // text.setAttribute('y', '-3');
+      // text.setAttribute('text-anchor', 'middle');
+      // text.textContent = node.id;
+
+      group.appendChild(circle);
+      // group.appendChild(text);
+      svg.appendChild(group);
+
+      // Event listeners
+      group.addEventListener('mouseenter', () => handleNodeHover(node.id));
+      group.addEventListener('mouseleave', () => handleNodeHover(null));
+      group.addEventListener('click', () => handleNodeClick(node.id));
+    });
+
     function describeArc(x1, y1, x2, y2) {
       const dx = x2 - x1;
       const dy = y2 - y1;
-      const dr = Math.sqrt(dx * dx + dy * dy);
+      const dr = Math.hypot(dx, dy);
       const sweepFlag = 1;
-      return `M ${x1} ${y1} A ${dr / 2} ${dr / 2} 0 0 ${sweepFlag} ${x2} ${y2}`;
+      return `M ${x1} ${y1} A ${dr} ${dr} 0 0 ${sweepFlag} ${x2} ${y2}`;
     }
 
     function handleNodeHover(nodeId) {
@@ -327,6 +338,8 @@
     }
 
     function handleNodeClick(nodeId) {
+      if (nodeId === 'n0') return;
+
       const node = nodes.find(n => n.id === nodeId);
       const connectedArcs = arcs.filter(a =>
         (a.from === nodeId || a.to === nodeId) && allocatedArcs.includes(a.id)
