@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>ARPG Inventory System</title>
+<title>Advanced ARPG Inventory System</title>
 <!-- Include Tailwind CSS via CDN -->
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <!-- Include React and ReactDOM via CDN -->
@@ -30,6 +30,20 @@
     border-radius: 0.25rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     pointer-events: none;
+  }
+  /* Grid background */
+  .grid-background {
+    background-image: linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 2.5rem 2.5rem;
+  }
+  /* Item outline */
+  .item-outline {
+    outline: 1px solid rgba(255,255,255,0.2);
+  }
+  /* Drag animation */
+  .dragging {
+    opacity: 0.5;
   }
 </style>
 </head>
@@ -67,7 +81,7 @@
       icon: '⚔️', 
       name: 'Ancient Broadsword', 
       width: 1, 
-      height: 3, 
+      height: 2, 
       type: 'weapon',
       rarity: 'rare',
       stats: '+45 Physical Damage\n+10% Attack Speed',
@@ -85,7 +99,7 @@
       icon: '🎽', 
       name: 'Plate Mail', 
       width: 2, 
-      height: 3, 
+      height: 2, 
       type: 'armor',
       rarity: 'rare',
       stats: '+150 Armor\n+20 Vitality',
@@ -147,8 +161,8 @@
     STAFF: { 
       icon: '🏑', 
       name: 'Magic Staff', 
-      width: 2, 
-      height: 4, 
+      width: 1, 
+      height: 3, 
       type: 'weapon',
       rarity: 'rare',
       stats: '+60 Magic Damage\n+15% Spell Casting Speed',
@@ -161,6 +175,42 @@
       type: 'offhand',
       rarity: 'rare',
       stats: '+25 Intelligence\n+10% Mana Regeneration',
+    },
+    DAGGER: { 
+      icon: '🗡️', 
+      name: 'Shadow Dagger', 
+      width: 1, 
+      height: 1, 
+      type: 'weapon',
+      rarity: 'rare',
+      stats: '+30 Physical Damage\n+20% Critical Strike Chance',
+    },
+    AXE: { 
+      icon: '🪓', 
+      name: 'Battle Axe', 
+      width: 2, 
+      height: 3, 
+      type: 'weapon',
+      rarity: 'uncommon',
+      stats: '+70 Physical Damage\n-5% Attack Speed',
+    },
+    MACE: { 
+      icon: '🔨', 
+      name: 'War Hammer', 
+      width: 2, 
+      height: 3, 
+      type: 'weapon',
+      rarity: 'rare',
+      stats: '+80 Physical Damage\n+10 Strength',
+    },
+    BOW: { 
+      icon: '🏹', 
+      name: 'Longbow', 
+      width: 2, 
+      height: 3, 
+      type: 'weapon',
+      rarity: 'uncommon',
+      stats: '+50 Physical Damage\n+15 Dexterity',
     },
   };
 
@@ -197,24 +247,29 @@
     onMouseEnter,
     onMouseLeave,
     isDraggingOver,
+    isRotatable = false,
+    rotateItem,
   }) => {
     return (
       <div
         className={`relative border ${
           isEquipSlot ? 'border-gray-600' : 'border-gray-800'
         } 
-        ${item ? 'bg-gray-700/50' : 'bg-gray-900/50'}
+        ${item ? 'bg-gray-700/50' : 'bg-gray-900/50'} grid-background item-outline
         ${isDraggingOver ? 'ring-2 ring-blue-400' : ''}
         hover:bg-gray-800/50 transition-colors`}
         style={{
           gridColumn: `span ${width}`,
           gridRow: `span ${height}`,
           minHeight: `${height * 2.5}rem`,
+          position: 'relative',
         }}
         onDragOver={(e) => onDragOver(e, slotId)}
         onDrop={(e) => onDropItem(e, slotId)}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        onTouchStart={(e) => onMouseEnter(e)}
+        onTouchEnd={onMouseLeave}
       >
         {label && (
           <span className="absolute -top-5 left-0 text-xs text-gray-400">
@@ -227,6 +282,8 @@
             draggable
             onDragStart={(e) => onDragStart(e, slotId)}
             onDragEnd={onDragEnd}
+            onTouchStart={(e) => onDragStart(e, slotId, true)}
+            onTouchEnd={onDragEnd}
           >
             <div className={`text-2xl mb-1 ${RARITY_COLORS[item.rarity]}`}>
               {item.icon}
@@ -236,6 +293,18 @@
               <div className="absolute bottom-0 right-1 text-xs bg-gray-900/80 px-1 rounded">
                 {item.count}
               </div>
+            )}
+            {isRotatable && (
+              <button
+                className="absolute top-0 right-0 text-xs bg-gray-800/70 px-1 rounded"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  rotateItem(slotId);
+                }}
+              >
+                🔄
+              </button>
             )}
           </div>
         )}
@@ -262,33 +331,60 @@
 
   // Main InventoryGrid component
   const InventoryGrid = () => {
-    const [equipped, setEquipped] = useState({
-      ring1: null,
-      ring2: null,
-      amulet: null,
-      helm: null,
-      armor: null,
-      gloves: null,
-      boots: null,
-      belt: null,
-      weapon: null,
-      offhand: null,
+    const [equipped, setEquipped] = useState(() => {
+      const savedEquipped = localStorage.getItem('equipped');
+      return savedEquipped ? JSON.parse(savedEquipped) : {
+        ring1: null,
+        ring2: null,
+        amulet: null,
+        helm: null,
+        armor: null,
+        gloves: null,
+        boots: null,
+        belt: null,
+        weapon: null,
+        offhand: null,
+      };
     });
 
     const initialBackpack = Array(72).fill(null);
+    // Add various equipable items for testing
     initialBackpack[0] = { ...ITEMS.POTION, count: 5 };
+    initialBackpack[1] = ITEMS.DAGGER;
+    initialBackpack[2] = ITEMS.AXE;
+    initialBackpack[3] = ITEMS.MACE;
+    initialBackpack[4] = ITEMS.BOW;
     initialBackpack[12] = ITEMS.SWORD;
     initialBackpack[24] = ITEMS.SHIELD;
     initialBackpack[36] = ITEMS.STAFF;
     initialBackpack[48] = ITEMS.BOOK;
     initialBackpack[60] = { ...ITEMS.POTION, count: 15 };
+    initialBackpack[61] = ITEMS.RING;
+    initialBackpack[62] = ITEMS.AMULET;
+    initialBackpack[63] = ITEMS.HELM;
+    initialBackpack[64] = ITEMS.BOOTS;
+    initialBackpack[65] = ITEMS.GLOVES;
+    initialBackpack[66] = ITEMS.BELT;
+    initialBackpack[67] = ITEMS.CHEST;
 
-    const [backpack, setBackpack] = useState(initialBackpack);
+    const [backpack, setBackpack] = useState(() => {
+      const savedBackpack = localStorage.getItem('backpack');
+      return savedBackpack ? JSON.parse(savedBackpack) : initialBackpack;
+    });
+
     const [draggedItem, setDraggedItem] = useState(null);
     const [draggedFromSlot, setDraggedFromSlot] = useState(null);
     const [isDraggingOver, setIsDraggingOver] = useState(null);
     const [tooltipItem, setTooltipItem] = useState(null);
     const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+
+    useEffect(() => {
+      localStorage.setItem('backpack', JSON.stringify(backpack));
+    }, [backpack]);
+
+    useEffect(() => {
+      localStorage.setItem('equipped', JSON.stringify(equipped));
+    }, [equipped]);
 
     // Get item in slot
     const getSlotContent = (slotId) => {
@@ -319,7 +415,7 @@
     };
 
     // Handle drag start
-    const handleDragStart = (e, slotId) => {
+    const handleDragStart = (e, slotId, isTouch = false) => {
       const item = getSlotContent(slotId);
       if (!item) {
         e.preventDefault();
@@ -327,7 +423,11 @@
       }
       setDraggedItem(item);
       setDraggedFromSlot(slotId);
-      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer?.setData('text/plain', '');
+      e.dataTransfer?.setDragImage(new Image(), 0, 0);
+      if (isTouch) {
+        e.target.classList.add('dragging');
+      }
     };
 
     // Handle drag over
@@ -341,6 +441,7 @@
       setDraggedItem(null);
       setDraggedFromSlot(null);
       setIsDraggingOver(null);
+      document.querySelectorAll('.dragging').forEach(el => el.classList.remove('dragging'));
     };
 
     // Handle drop
@@ -421,19 +522,35 @@
       }
     };
 
+    // Handle item rotation
+    const rotateItem = (slotId) => {
+      if (slotId.startsWith('backpack_')) {
+        const index = parseInt(slotId.split('_')[1]);
+        setBackpack((prev) => {
+          const newBackpack = [...prev];
+          const item = newBackpack[index];
+          if (item) {
+            [item.width, item.height] = [item.height, item.width];
+            newBackpack[index] = { ...item };
+          }
+          return newBackpack;
+        });
+      }
+    };
+
     // Render equipment slots
     const renderEquipmentSlots = () => {
       const equipmentLayout = [
-        { slot: 'helm', label: 'Helm', colStart: 3, rowStart: 1, width: 2, height: 2 },
-        { slot: 'amulet', label: 'Amulet', colStart: 5, rowStart: 1, width: 1, height: 1 },
-        { slot: 'weapon', label: 'Weapon', colStart: 1, rowStart: 2, width: 2, height: 3 },
-        { slot: 'armor', label: 'Armor', colStart: 3, rowStart: 2, width: 2, height: 3 },
-        { slot: 'offhand', label: 'Offhand', colStart: 5, rowStart: 2, width: 2, height: 3 },
-        { slot: 'gloves', label: 'Gloves', colStart: 1, rowStart: 5, width: 2, height: 2 },
-        { slot: 'belt', label: 'Belt', colStart: 3, rowStart: 5, width: 2, height: 1 },
-        { slot: 'ring1', label: 'Ring', colStart: 5, rowStart: 5, width: 1, height: 1 },
-        { slot: 'boots', label: 'Boots', colStart: 3, rowStart: 6, width: 2, height: 2 },
-        { slot: 'ring2', label: 'Ring', colStart: 5, rowStart: 6, width: 1, height: 1 },
+        { slot: 'helm', label: 'Helm', colStart: 3, rowStart: 1, width: 1, height: 1 },
+        { slot: 'amulet', label: 'Amulet', colStart: 4, rowStart: 1, width: 1, height: 1 },
+        { slot: 'weapon', label: 'Weapon', colStart: 1, rowStart: 2, width: 1, height: 2 },
+        { slot: 'armor', label: 'Armor', colStart: 3, rowStart: 2, width: 1, height: 2 },
+        { slot: 'offhand', label: 'Offhand', colStart: 5, rowStart: 2, width: 1, height: 2 },
+        { slot: 'gloves', label: 'Gloves', colStart: 1, rowStart: 4, width: 1, height: 1 },
+        { slot: 'belt', label: 'Belt', colStart: 3, rowStart: 4, width: 1, height: 1 },
+        { slot: 'ring1', label: 'Ring', colStart: 5, rowStart: 4, width: 1, height: 1 },
+        { slot: 'boots', label: 'Boots', colStart: 3, rowStart: 5, width: 1, height: 1 },
+        { slot: 'ring2', label: 'Ring', colStart: 5, rowStart: 5, width: 1, height: 1 },
       ];
 
       return equipmentLayout.map(({ slot, label, colStart, rowStart, width, height }) => (
@@ -475,13 +592,13 @@
 
     return (
       <div className="max-w-4xl mx-auto p-4 bg-gray-800 text-white rounded-lg">
-        <h2 className="text-xl font-bold mb-6">Character Inventory</h2>
+        <h2 className="text-xl font-bold mb-6">Advanced ARPG Inventory System</h2>
 
         {/* Character Equipment */}
         <div className="relative bg-gray-900/30 p-6 rounded-lg mb-4">
           <CharacterSilhouette />
 
-          <div className="grid grid-cols-6 grid-rows-8 gap-2 relative z-10">
+          <div className="grid grid-cols-5 grid-rows-5 gap-2 relative z-10">
             {renderEquipmentSlots()}
           </div>
         </div>
@@ -490,7 +607,7 @@
         <div className="bg-gray-900/30 p-2 rounded">
           <h3 className="text-lg font-semibold mb-2 px-2">Backpack</h3>
           <div
-            className="grid grid-cols-12 gap-1 inventory-grid"
+            className="grid grid-cols-8 gap-1 inventory-grid grid-background"
             style={{ maxHeight: '400px', overflowY: 'auto' }}
           >
             {backpack.map((item, index) => (
@@ -507,6 +624,8 @@
                 onMouseEnter={(e) => handleMouseEnter(e, item)}
                 onMouseLeave={handleMouseLeave}
                 isDraggingOver={isDraggingOver === `backpack_${index}`}
+                isRotatable={item?.width !== item?.height}
+                rotateItem={rotateItem}
               />
             ))}
           </div>

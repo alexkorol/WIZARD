@@ -22,6 +22,9 @@ WIZARD is a dynamic and adaptable resource dashboard that brings together a vari
 - **LLM-Aided**: Tools generated with the aid of advanced language models for high efficiency and accuracy.
 - **Customizable**: Easily modify and extend the tools to suit your specific needs.
 - **User-Friendly**: Intuitive interfaces and straightforward documentation for easy use.
+- **Interactive Skill Tree**: Design hexagonal grid-based skill systems.
+- **RPG Inventory System**: Manage game inventories with drag-and-drop.
+- **Pixel Art Creator**: Create and customize pixel art.
 
 ## Getting Started
 
