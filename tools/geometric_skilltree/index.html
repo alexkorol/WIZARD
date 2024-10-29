@@ -48,6 +48,7 @@
       cursor: grab;
     }
 
+    /* Node Styles */
     .node {
       cursor: pointer;
       transition: all 0.3s ease;
@@ -56,26 +57,22 @@
     .node circle {
       stroke: #1a1a1a;
       stroke-width: 1;
-      transition: all 0.3s ease;
+      transition: fill 0.3s ease, stroke 0.3s ease, r 0.3s ease;
     }
 
     .node text {
       fill: white;
-      font-size: 2px;
+      font-size: 4px; /* Increased font size */
       font-weight: 300;
       transition: all 0.3s ease;
       text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
     }
 
     .node:hover text {
-      font-size: 2.25px;
+      font-size: 5px; /* Adjusted hover size */
     }
 
-    .arc {
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
+    /* Node States */
     .inactive-node circle {
       fill: #2D3748;
       stroke: #1A202C;
@@ -88,46 +85,65 @@
     }
 
     .active-node circle {
-      fill: #6366F1;
-      stroke: #4338CA;
-      filter: drop-shadow(0 0 3px #6366F1);
+      fill: #34D399; /* Brighter color for visibility */
+      stroke: #059669; /* Complementary stroke color */
+      filter: drop-shadow(0 0 4px #34D399);
       animation: pulse 2s infinite;
     }
 
+    /* Pulse Animation for Active Nodes */
     @keyframes pulse {
-      0% { filter: drop-shadow(0 0 2px currentColor); }
-      50% { filter: drop-shadow(0 0 4px currentColor); }
-      100% { filter: drop-shadow(0 0 2px currentColor); }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* Arc Styles */
+    .arc {
+      transition: stroke 0.3s ease, filter 0.3s ease;
     }
 
     .inactive-arc {
       stroke: #4A5568; /* Adjusted for visibility */
-      stroke-width: 1; /* Increased stroke width */
     }
 
     .available-arc {
       stroke: #A0AEC0;
-      stroke-width: 1.5;
-      cursor: pointer;
     }
 
     .active-arc {
       stroke: #FCD34D;
-      stroke-width: 2;
       filter: drop-shadow(0 0 1px #FCD34D);
     }
 
     .highlighted-arc {
       stroke: #818CF8;
-      stroke-width: 1.5;
       filter: drop-shadow(0 0 3px #818CF8);
       animation: connectionPulse 1.5s infinite;
     }
 
     @keyframes connectionPulse {
-      0% { stroke-width: 1; }
-      50% { stroke-width: 1.5; }
-      100% { stroke-width: 1; }
+      0% { filter: drop-shadow(0 0 2px #818CF8); }
+      50% { filter: drop-shadow(0 0 4px #818CF8); }
+      100% { filter: drop-shadow(0 0 2px #818CF8); }
+    }
+
+    /* Tooltip Styles */
+    .tooltip {
+      position: absolute;
+      pointer-events: none;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 0.5rem;
+      border-radius: 0.3rem;
+      font-size: 0.875rem;
+      display: none;
+      z-index: 20;
+    }
+
+    /* Arc Hit Area Styles */
+    .arc-hit-area {
+      cursor: pointer;
     }
   </style>
 </head>
@@ -138,7 +154,8 @@
       Arc Points: <span id="arcPoints">10</span>
     </div>
     <div class="message" id="message"></div>
-    <svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
+    <div class="tooltip" id="tooltip"></div>
+    <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
       <!-- Circles, Arcs, and Nodes will be inserted here by JavaScript -->
     </svg>
   </div>
@@ -175,8 +192,8 @@
       if (isDragging) {
         const dx = e.clientX - lastX;
         const dy = e.clientY - lastY;
-        offsetX += dx / scale;
-        offsetY += dy / scale;
+        offsetX += dx; // 1:1 movement
+        offsetY += dy; // 1:1 movement
         lastX = e.clientX;
         lastY = e.clientY;
         updateTransform();
@@ -203,7 +220,6 @@
 
       // Adjust scale
       const delta = e.deltaY > 0 ? 0.9 : 1.1; // Reversed zoom direction
-      const oldScale = scale;
       scale *= delta;
       scale = Math.min(Math.max(0.5, scale), 5);
 
@@ -211,13 +227,18 @@
       const newCursorPt = pt.matrixTransform(mainGroup.getCTM().inverse());
 
       // Adjust offset to keep cursor point stationary
-      offsetX += (cursorPt.x - newCursorPt.x);
-      offsetY += (cursorPt.y - newCursorPt.y);
+      offsetX += (cursorPt.x - newCursorPt.x) * scale;
+      offsetY += (cursorPt.y - newCursorPt.y) * scale;
 
       updateTransform();
     });
 
     function updateTransform() {
+      // Optionally clamp offsets to prevent excessive panning
+      const maxOffset = 500; // Adjust based on SVG size
+      offsetX = Math.max(-maxOffset, Math.min(maxOffset, offsetX));
+      offsetY = Math.max(-maxOffset, Math.min(maxOffset, offsetY));
+
       mainGroup.setAttribute('transform',
           `translate(${offsetX},${offsetY}) scale(${scale})`);
     }
@@ -227,8 +248,8 @@
     document.body.style.overflow = 'hidden';
 
     const R = 20; // Radius of circles
-    const centerX = 100;
-    const centerY = 100;
+    const centerX = 150;
+    const centerY = 150;
 
     let nodeSkillPoints = 10;
     let arcSkillPoints = 10;
@@ -246,24 +267,47 @@
     const circlePositions = [];
 
     // Function to add circle positions in a hexagonal grid
-    function addCirclePositions() {
+    function addCirclePositions(layers) {
       // Clear existing positions
       circlePositions.length = 0;
 
-      // Center circle (first)
+      // Center circle (layer 0)
       circlePositions.push({ x: centerX, y: centerY });
 
-      // First ring of 6 circles
-      for (let i = 0; i < 6; i++) {
-        const angle = (i * Math.PI / 3); // Start from right, go counter-clockwise
-        const x = centerX + R * Math.cos(angle);
-        const y = centerY + R * Math.sin(angle);
-        circlePositions.push({ x, y });
+      // Directions in radians (60-degree increments)
+      const directions = [
+        0,
+        Math.PI / 3,
+        (2 * Math.PI) / 3,
+        Math.PI,
+        (4 * Math.PI) / 3,
+        (5 * Math.PI) / 3
+      ];
+
+      // Iterate through each layer
+      for (let layer = 1; layer <= layers; layer++) {
+        // For each direction
+        directions.forEach(direction => {
+          // Place 'step' number of circles in each direction
+          for (let step = 1; step <= layer; step++) {
+            const x = centerX + step * R * Math.cos(direction);
+            const y = centerY + step * R * Math.sin(direction);
+            circlePositions.push({ x, y });
+          }
+        });
       }
     }
 
-    // Build the circle positions for the Flower of Life
-    addCirclePositions();
+    // Function to generate nodes and arcs based on current circlePositions
+    function generateNodesAndArcs() {
+      calculateNodes();
+      calculateArcs();
+    }
+
+    // Define the number of layers you want (e.g., 2 for Flower of Life)
+    const numberOfLayers = 2;
+    addCirclePositions(numberOfLayers);
+    generateNodesAndArcs();
 
     // Draw circles
     circlePositions.forEach((pos, index) => {
@@ -340,9 +384,6 @@
       return [{ x: xs1, y: ys1 }, { x: xs2, y: ys2 }];
     }
 
-    // Calculate nodes
-    calculateNodes();
-
     // Build connections between nodes (arcs)
     function calculateArcs() {
       arcs.length = 0;
@@ -379,23 +420,16 @@
       });
     }
 
-    // Calculate arcs
-    calculateArcs();
-
-    // Function to describe an arc path between two points
-    function describeArc(x1, y1, x2, y2) {
-      const dx = x2 - x1;
-      const dy = y2 - y1;
-      const dr = Math.hypot(dx, dy);
-      const largeArcFlag = 0;
-      const sweepFlag = 1;
-      return `M ${x1} ${y1} A ${dr} ${dr} 0 ${largeArcFlag} ${sweepFlag} ${x2} ${y2}`;
+    // Function to describe a straight line between two points
+    function describeLine(x1, y1, x2, y2) {
+      return `M ${x1} ${y1} L ${x2} ${y2}`;
     }
 
-    // Draw arcs
+    // Draw arcs as straight lines with hit areas
     arcs.forEach(arc => {
+      // Visual arc
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      const d = describeArc(arc.x1, arc.y1, arc.x2, arc.y2);
+      const d = describeLine(arc.x1, arc.y1, arc.x2, arc.y2);
       path.setAttribute('d', d);
       path.setAttribute('class', 'arc inactive-arc');
       path.setAttribute('data-id', arc.id);
@@ -403,69 +437,121 @@
       path.setAttribute('data-to', arc.to);
       mainGroup.insertBefore(path, mainGroup.firstChild); // Insert into mainGroup
 
-      // Event listeners
-      path.addEventListener('mouseenter', () => handleArcHover(arc.id));
-      path.addEventListener('mouseleave', () => handleArcHover(null));
-      path.addEventListener('click', () => handleArcClick(arc.id));
+      // Invisible hit area
+      const hitPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      hitPath.setAttribute('d', d);
+      hitPath.setAttribute('stroke', 'transparent');
+      hitPath.setAttribute('stroke-width', '10'); // Wider stroke for easier hovering
+      hitPath.setAttribute('fill', 'none');
+      hitPath.classList.add('arc-hit-area');
+      hitPath.setAttribute('data-id', arc.id);
+      hitPath.setAttribute('data-from', arc.from);
+      hitPath.setAttribute('data-to', arc.to);
+      mainGroup.insertBefore(hitPath, mainGroup.firstChild);
+
+      // Event listeners on hit area
+      hitPath.addEventListener('mouseenter', () => handleArcHover(arc.id));
+      hitPath.addEventListener('mouseleave', () => handleArcHover(null));
+      hitPath.addEventListener('click', () => handleArcClick(arc.id));
     });
 
     // Draw nodes
     nodes.forEach(node => {
       const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
       group.setAttribute('transform', `translate(${node.x},${node.y})`);
-      group.setAttribute('class', 'node inactive-node');
+      group.classList.add('node', 'inactive-node');
       group.setAttribute('data-id', node.id);
 
       const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       circle.setAttribute('r', '3'); // Increased radius
 
+      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      text.setAttribute('y', '0');
+      text.setAttribute('text-anchor', 'middle');
+      text.textContent = node.id;
+
       group.appendChild(circle);
+      group.appendChild(text);
       mainGroup.appendChild(group);
 
-      // Event listeners
+      // Event listeners on nodes
       group.addEventListener('mouseenter', () => handleNodeHover(node.id));
       group.addEventListener('mouseleave', () => handleNodeHover(null));
       group.addEventListener('click', () => handleNodeClick(node.id));
     });
 
+    // Tooltip element
+    const tooltip = document.getElementById('tooltip');
+
     function handleNodeHover(nodeId) {
       hoveredNode = nodeId;
+      if (nodeId) {
+        const node = nodes.find(n => n.id === nodeId);
+        tooltip.textContent = node ? `Node ID: ${node.id}` : '';
+        tooltip.style.display = 'block';
+      } else {
+        tooltip.style.display = 'none';
+      }
       updateVisuals();
     }
 
     function handleArcHover(arcId) {
       hoveredArc = arcId;
+      if (arcId) {
+        const arc = arcs.find(a => a.id === arcId);
+        tooltip.textContent = arc ? `Arc ID: ${arc.id}\nConnects: ${arc.from} - ${arc.to}` : '';
+        tooltip.style.display = 'block';
+      } else {
+        tooltip.style.display = 'none';
+      }
       updateVisuals();
     }
+
+    // Update Tooltip Position
+    document.addEventListener('mousemove', (e) => {
+      if (tooltip.style.display === 'block') {
+        tooltip.style.left = `${e.pageX + 10}px`;
+        tooltip.style.top = `${e.pageY + 10}px`;
+      }
+    });
 
     function handleNodeClick(nodeId) {
       if (nodeId === 'n0') return;
 
       if (allocatedNodes.includes(nodeId)) {
         // Deallocate node if it doesn't disconnect the tree
-        // Simulate deallocation
         const tempAllocatedNodes = allocatedNodes.filter(id => id !== nodeId);
-
-        // Check connectivity from 'n0' to all other allocated nodes
         const isConnected = checkConnectivity(tempAllocatedNodes, allocatedArcs);
 
         if (isConnected) {
           allocatedNodes = tempAllocatedNodes;
           nodeSkillPoints++;
           document.getElementById('nodePoints').textContent = nodeSkillPoints;
+
+          // Optionally deallocate connected arcs if no longer needed
+          // Implement this based on your design
         } else {
           showMessage('Cannot deallocate this node as it would disconnect the tree from the origin.');
         }
       } else {
         // Allocate node if possible
-        const connectedArcs = arcs.filter(a =>
-          (a.from === nodeId || a.to === nodeId) && allocatedArcs.includes(a.id)
+        const connectingArcs = arcs.filter(a =>
+          (a.from === nodeId && allocatedNodes.includes(a.to)) ||
+          (a.to === nodeId && allocatedNodes.includes(a.from))
         );
 
-        if (nodeSkillPoints > 0 && connectedArcs.length > 0) {
+        if (nodeSkillPoints > 0 && connectingArcs.length > 0) {
           allocatedNodes.push(nodeId);
           nodeSkillPoints--;
           document.getElementById('nodePoints').textContent = nodeSkillPoints;
+
+          // Optionally allocate the first available connecting arc
+          const arcToAllocate = connectingArcs.find(a => !allocatedArcs.includes(a.id));
+          if (arcToAllocate && arcSkillPoints > 0) {
+            allocatedArcs.push(arcToAllocate.id);
+            arcSkillPoints--;
+            document.getElementById('arcPoints').textContent = arcSkillPoints;
+          }
         } else {
           showMessage('Cannot allocate this node. It must be connected via an allocated arc.');
         }
@@ -482,10 +568,7 @@
 
       if (allocatedArcs.includes(arcId)) {
         // Deallocate arc if it doesn't disconnect the tree
-        // Simulate deallocation
         const tempAllocatedArcs = allocatedArcs.filter(id => id !== arcId);
-
-        // Check connectivity from 'n0' to all other allocated nodes
         const isConnected = checkConnectivity(allocatedNodes, tempAllocatedArcs);
 
         if (isConnected) {
@@ -508,6 +591,8 @@
 
     // Function to check connectivity from 'n0' to all allocated nodes
     function checkConnectivity(nodesSet, arcsSet) {
+      if (nodesSet.length === 0) return true;
+
       const visited = new Set();
       const stack = ['n0'];
 
@@ -515,19 +600,20 @@
 
       while (stack.length > 0) {
         const currentNode = stack.pop();
-        visited.add(currentNode);
+        if (!visited.has(currentNode)) {
+          visited.add(currentNode);
 
-        // Get all adjacent nodes via allocated arcs
-        const adjacentNodes = arcs.filter(a =>
-          allocatedArcsSet.has(a.id) &&
-          (a.from === currentNode || a.to === currentNode)
-        ).map(a => (a.from === currentNode ? a.to : a.from));
+          // Get all adjacent nodes via allocated arcs
+          const adjacentNodes = arcs
+            .filter(a => allocatedArcsSet.has(a.id) && (a.from === currentNode || a.to === currentNode))
+            .map(a => (a.from === currentNode ? a.to : a.from));
 
-        adjacentNodes.forEach(nodeId => {
-          if (!visited.has(nodeId) && nodesSet.includes(nodeId)) {
-            stack.push(nodeId);
-          }
-        });
+          adjacentNodes.forEach(nodeId => {
+            if (!visited.has(nodeId)) {
+              stack.push(nodeId);
+            }
+          });
+        }
       }
 
       // Check if all allocated nodes are visited
@@ -541,37 +627,58 @@
         const circle = nodeGroup.querySelector('circle');
         const isActive = allocatedNodes.includes(nodeId);
 
+        // Determine if the node can be activated
         const connectedAllocatedArcs = arcs.filter(a =>
           (a.from === nodeId || a.to === nodeId) && allocatedArcs.includes(a.id)
         );
 
         const canActivate = !isActive && nodeSkillPoints > 0 && connectedAllocatedArcs.length > 0;
 
-        circle.setAttribute('r', nodeId === hoveredNode ? '4' : '3'); // Adjust radius on hover
-        nodeGroup.setAttribute('class', `node ${
-          isActive ? 'active-node' : canActivate ? 'available-node' : 'inactive-node'
-        }`);
+        // Adjust radius on hover
+        circle.setAttribute('r', nodeId === hoveredNode ? '4' : '3');
+
+        // Manage classes
+        nodeGroup.classList.remove('active-node', 'available-node', 'inactive-node');
+        if (isActive) {
+          nodeGroup.classList.add('active-node');
+        } else if (canActivate) {
+          nodeGroup.classList.add('available-node');
+        } else {
+          nodeGroup.classList.add('inactive-node');
+        }
       });
 
       // Update arcs
       document.querySelectorAll('.arc').forEach(path => {
         const arcId = path.getAttribute('data-id');
-        const fromId = path.getAttribute('data-from');
-        const toId = path.getAttribute('data-to');
         const isActive = allocatedArcs.includes(arcId);
+        const isHovered = arcId === hoveredArc;
 
-        const fromAllocated = allocatedNodes.includes(fromId);
-        const toAllocated = allocatedNodes.includes(toId);
+        // Remove all classes except 'arc'
+        path.classList.remove('active-arc', 'available-arc', 'inactive-arc', 'highlighted-arc');
 
-        const canActivate = !isActive && arcSkillPoints > 0 && (fromAllocated || toAllocated);
+        // Apply classes based on state
+        if (isActive) {
+          path.classList.add('active-arc');
+        } else if (canActivateArc(arcId)) {
+          path.classList.add('available-arc');
+        } else {
+          path.classList.add('inactive-arc');
+        }
 
-        path.setAttribute('class', `arc ${
-          arcId === hoveredArc ? 'highlighted-arc' :
-          isActive ? 'active-arc' :
-          canActivate ? 'available-arc' :
-          'inactive-arc'
-        }`);
+        if (isHovered) {
+          path.classList.add('highlighted-arc');
+        }
       });
+    }
+
+    // Helper function to determine if an arc can be activated
+    function canActivateArc(arcId) {
+      const arc = arcs.find(a => a.id === arcId);
+      if (!arc) return false;
+      const fromAllocated = allocatedNodes.includes(arc.from);
+      const toAllocated = allocatedNodes.includes(arc.to);
+      return !allocatedArcs.includes(arcId) && arcSkillPoints > 0 && (fromAllocated || toAllocated);
     }
 
     // Message display function
