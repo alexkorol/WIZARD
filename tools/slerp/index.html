@@ -118,6 +118,11 @@
             border-radius: 8px;
             margin-top: 1rem;
         }
+
+        .pixel-art-sample.with-sample {
+            background-image: url(sample_pixel_art.png);
+            background-size: cover;
+        }
     </style>
 </head>
 <body>
@@ -156,6 +161,7 @@
                     <button id="copyHex">Copy Hex Values</button>
                     <button id="savePalette">Save Palette</button>
                     <button id="loadPalette">Load Palette</button>
+                    <button id="addSamplePixelArt">Add Sample Pixel Art</button>
                 </div>
             </div>
         </div>
@@ -163,6 +169,7 @@
         <div class="sample-preview panel">
             <h2>Sample Preview</h2>
             <div class="pixel-art-sample" id="pixelArtSample"></div>
+            <button id="addSamplePixelArt">Add Sample Pixel Art</button>
         </div>
     </div>
 
@@ -291,6 +298,42 @@
                     alert(`Copied ${color} to clipboard!`);
                 };
                 preview.appendChild(colorStop);
+            });
+
+            // Save Palette Functionality
+            document.getElementById('savePalette').addEventListener('click', () => {
+                const palette = colors.join(',');
+                localStorage.setItem('savedPalette', palette);
+                alert('Palette saved!');
+            });
+
+            // Load Palette Functionality
+            document.getElementById('loadPalette').addEventListener('click', () => {
+                const savedPalette = localStorage.getItem('savedPalette');
+                if (savedPalette) {
+                    const loadedColors = savedPalette.split(',');
+                    loadedColors.forEach(color => {
+                        const colorStop = document.createElement('div');
+                        colorStop.className = 'color-stop';
+                        colorStop.style.backgroundColor = color;
+                        colorStop.title = color;
+                        colorStop.onclick = () => {
+                            navigator.clipboard.writeText(color);
+                            alert(`Copied ${color} to clipboard!`);
+                        };
+                        preview.appendChild(colorStop);
+                    });
+                    alert('Palette loaded!');
+                } else {
+                    alert('No saved palette found.');
+                }
+            });
+
+            // Add Sample Pixel Art Functionality
+            document.getElementById('addSamplePixelArt').addEventListener('click', () => {
+                const samplePixelArt = document.getElementById('pixelArtSample');
+                samplePixelArt.classList.add('with-sample');
+                alert('Sample pixel art added!');
             });
         }
 
