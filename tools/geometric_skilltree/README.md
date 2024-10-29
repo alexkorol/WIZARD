@@ -75,7 +75,7 @@ For a Seed of Life centered at the origin \((0,0)\) with radius \(r\), the cente
 C_n: \left(r\cos\left(\frac{2\pi n}{6}\right),\ r\sin\left(\frac{2\pi n}{6}\right)\right) \quad \text{where } n = 1,2,\ldots,6
 \]
 
-![Construction Diagram](./assets/construction_diagram.png)
+![Construction Diagram](https://github.com/alexkorol/WIZARD/blob/gh-pages/tools/geometric_skilltree/assets/construction_diagram.PNG)
 
 
 ### 2. Hexagonal Geometry
@@ -143,7 +143,7 @@ The Flower of Life extends the Seed of Life pattern:
 
 #### 1.1 Axial Coordinates
 
-![Coordinate System Diagram](./assets/coordinata-system-diagram.svg)
+![Coordinate System Diagram](https://raw.githubusercontent.com/alexkorol/WIZARD/7d4377edf6ec0ca25ff8c4821c15cea0d7632f81/tools/geometric_skilltree/assets/coordinate-system-diagram.svg)
 
 
 For a hexagonal grid, an axial coordinate system \((q, r)\) is used where:
@@ -205,7 +205,7 @@ function roundAxial(q, r) {
 
 ### 2. Node Organization
 
-![Interaction Diagram](tools\geometric_skilltree\assets\construction_diagram.PNG)
+![Interaction Diagram](https://github.com/alexkorol/WIZARD/blob/gh-pages/tools/geometric_skilltree/assets/interaction_diagram.PNG?raw=true)
 
 
 #### 2.1 Layer-based Indexing
@@ -576,7 +576,7 @@ class BranchSystem {
 
 ### 3. Advanced Rendering System
 
-![Render States Diagram](./assets/render_states-diagram.svg)
+![Render States Diagram](https://raw.githubusercontent.com/alexkorol/WIZARD/7d4377edf6ec0ca25ff8c4821c15cea0d7632f81/tools/geometric_skilltree/assets/render-states-diagram.svg)
 
 
 #### 3.1 Canvas Rendering Class
