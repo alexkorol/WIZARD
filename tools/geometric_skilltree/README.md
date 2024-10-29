@@ -205,7 +205,7 @@ function roundAxial(q, r) {
 
 ### 2. Node Organization
 
-![Interaction Diagram](./assets/interaction_diagram.png)
+![Interaction Diagram](tools\geometric_skilltree\assets\construction_diagram.PNG)
 
 
 #### 2.1 Layer-based Indexing
