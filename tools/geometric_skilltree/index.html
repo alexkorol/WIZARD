@@ -6,6 +6,7 @@
       margin: 0;
       background: rgb(17, 24, 39);
       font-family: system-ui, -apple-system, sans-serif;
+      overflow: hidden; /* Prevent page scrolling */
     }
 
     .container {
@@ -27,9 +28,24 @@
       z-index: 10;
     }
 
+    .message {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.9);
+      color: #1A202C;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      z-index: 10;
+      max-width: 300px;
+      display: none;
+    }
+
     svg {
       width: 100%;
       height: 100%;
+      cursor: grab;
     }
 
     .node {
@@ -121,6 +137,7 @@
       Node Points: <span id="nodePoints">10</span><br>
       Arc Points: <span id="arcPoints">10</span>
     </div>
+    <div class="message" id="message"></div>
     <svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
       <!-- Circles, Arcs, and Nodes will be inserted here by JavaScript -->
     </svg>
@@ -138,52 +155,77 @@
     const mainGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
     svg.appendChild(mainGroup);
 
-    // Add event listeners
-    svg.addEventListener('mousedown', (e) => {
-        if (e.button === 1 || e.button === 2) { // Middle or right click
-            isDragging = true;
-            lastX = e.clientX;
-            lastY = e.clientY;
-            e.preventDefault();
-        }
+    // Create a background rectangle to capture pan events
+    const bgRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    bgRect.setAttribute('width', '100%');
+    bgRect.setAttribute('height', '100%');
+    bgRect.setAttribute('fill', 'transparent');
+    svg.insertBefore(bgRect, svg.firstChild);
+
+    // Add event listeners for panning on background
+    bgRect.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      svg.style.cursor = 'grabbing';
+      e.preventDefault();
     });
 
-    svg.addEventListener('mousemove', (e) => {
-        if (isDragging) {
-            offsetX += (e.clientX - lastX) / scale;
-            offsetY += (e.clientY - lastY) / scale;
-            lastX = e.clientX;
-            lastY = e.clientY;
-            updateTransform();
-        }
-    });
-
-    svg.addEventListener('mouseup', () => isDragging = false);
-    svg.addEventListener('mouseleave', () => isDragging = false);
-    svg.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        const delta = e.deltaY > 0 ? 0.9 : 1.1;
-        const oldScale = scale;
-        scale *= delta;
-        scale = Math.min(Math.max(0.5, scale), 5);
-    
-        // Adjust offset to zoom toward mouse position
-        const rect = svg.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        offsetX += (mouseX / oldScale - mouseX / scale);
-        offsetY += (mouseY / oldScale - mouseY / scale);
-    
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        const dx = e.clientX - lastX;
+        const dy = e.clientY - lastY;
+        offsetX += dx / scale;
+        offsetY += dy / scale;
+        lastX = e.clientX;
+        lastY = e.clientY;
         updateTransform();
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+      svg.style.cursor = 'grab';
+    });
+
+    svg.addEventListener('wheel', (e) => {
+      e.preventDefault();
+
+      const rect = svg.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      // Convert mouse coordinates to SVG coordinates
+      const pt = svg.createSVGPoint();
+      pt.x = mouseX;
+      pt.y = mouseY;
+      const cursorPt = pt.matrixTransform(mainGroup.getCTM().inverse());
+
+      // Adjust scale
+      const delta = e.deltaY > 0 ? 0.9 : 1.1; // Reversed zoom direction
+      const oldScale = scale;
+      scale *= delta;
+      scale = Math.min(Math.max(0.5, scale), 5);
+
+      // Get new cursor point after scaling
+      const newCursorPt = pt.matrixTransform(mainGroup.getCTM().inverse());
+
+      // Adjust offset to keep cursor point stationary
+      offsetX += (cursorPt.x - newCursorPt.x);
+      offsetY += (cursorPt.y - newCursorPt.y);
+
+      updateTransform();
     });
 
     function updateTransform() {
-        mainGroup.setAttribute('transform', 
-            `translate(${offsetX},${offsetY}) scale(${scale})`);
+      mainGroup.setAttribute('transform',
+          `translate(${offsetX},${offsetY}) scale(${scale})`);
     }
 
-    // Prevent context menu
+    // Prevent context menu and page scrolling
     svg.addEventListener('contextmenu', e => e.preventDefault());
+    document.body.style.overflow = 'hidden';
+
     const R = 20; // Radius of circles
     const centerX = 100;
     const centerY = 100;
@@ -207,10 +249,10 @@
     function addCirclePositions() {
       // Clear existing positions
       circlePositions.length = 0;
-  
+
       // Center circle (first)
       circlePositions.push({ x: centerX, y: centerY });
-  
+
       // First ring of 6 circles
       for (let i = 0; i < 6; i++) {
         const angle = (i * Math.PI / 3); // Start from right, go counter-clockwise
@@ -238,7 +280,9 @@
     function calculateNodes() {
       nodes.length = 0;
       let nodeId = 0;
-  
+
+      const nodeMap = {};
+
       // First, add center node (n0)
       nodes.push({
         id: 'n0',
@@ -246,7 +290,8 @@
         y: centerY,
         connections: []
       });
-  
+      nodeMap[`${centerX.toFixed(3)},${centerY.toFixed(3)}`] = 'n0';
+
       // Then calculate intersections
       for (let i = 0; i < circlePositions.length; i++) {
         for (let j = i + 1; j < circlePositions.length; j++) {
@@ -254,16 +299,18 @@
             circlePositions[i].x, circlePositions[i].y, R,
             circlePositions[j].x, circlePositions[j].y, R
           );
-      
+
           intersections.forEach(point => {
-            // Skip points too close to existing nodes
-            if (!nodes.some(n => Math.hypot(n.x - point.x, n.y - point.y) < 0.5)) {
+            const key = `${point.x.toFixed(3)},${point.y.toFixed(3)}`;
+            if (!nodeMap[key]) {
+              const newId = `n${++nodeId}`;
               nodes.push({
-                id: `n${++nodeId}`,
+                id: newId,
                 x: point.x,
                 y: point.y,
                 connections: []
               });
+              nodeMap[key] = newId;
             }
           });
         }
@@ -300,20 +347,17 @@
     function calculateArcs() {
       arcs.length = 0;
       let arcId = 0;
-  
+
       // For each node
       nodes.forEach((nodeA, i) => {
         // Find all nodes at distance R
         nodes.forEach((nodeB, j) => {
-          if (i !== j) {
+          if (i < j) {
             const dist = Math.hypot(nodeA.x - nodeB.x, nodeA.y - nodeB.y);
             if (Math.abs(dist - R) < 0.5) {
-              // Create bidirectional arcs
-              const arcBase = `a${arcId++}`;
-          
-              // Forward arc
+              // Create an arc
               arcs.push({
-                id: `${arcBase}_f`,
+                id: `a${arcId++}`,
                 from: nodeA.id,
                 to: nodeB.id,
                 x1: nodeA.x,
@@ -321,18 +365,7 @@
                 x2: nodeB.x,
                 y2: nodeB.y
               });
-          
-              // Backward arc
-              arcs.push({
-                id: `${arcBase}_b`,
-                from: nodeB.id,
-                to: nodeA.id,
-                x1: nodeB.x,
-                y1: nodeB.y,
-                x2: nodeA.x,
-                y2: nodeA.y
-              });
-          
+
               // Add connections to nodes
               if (!nodeA.connections.includes(nodeB.id)) {
                 nodeA.connections.push(nodeB.id);
@@ -386,14 +419,7 @@
       const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       circle.setAttribute('r', '3'); // Increased radius
 
-      // Uncomment the following lines to display node IDs
-      // const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      // text.setAttribute('y', '-3');
-      // text.setAttribute('text-anchor', 'middle');
-      // text.textContent = node.id;
-
       group.appendChild(circle);
-      // group.appendChild(text);
       mainGroup.appendChild(group);
 
       // Event listeners
@@ -415,32 +441,34 @@
     function handleNodeClick(nodeId) {
       if (nodeId === 'n0') return;
 
-      const node = nodes.find(n => n.id === nodeId);
-      const connectedArcs = arcs.filter(a =>
-        (a.from === nodeId || a.to === nodeId) && allocatedArcs.includes(a.id)
-      );
-
       if (allocatedNodes.includes(nodeId)) {
-        // Deallocate node if possible
-        const connectedAllocatedArcs = arcs.filter(a =>
-          (a.from === nodeId || a.to === nodeId) && allocatedArcs.includes(a.id)
-        );
+        // Deallocate node if it doesn't disconnect the tree
+        // Simulate deallocation
+        const tempAllocatedNodes = allocatedNodes.filter(id => id !== nodeId);
 
-        const connectedAllocatedNodes = connectedAllocatedArcs.map(a =>
-          a.from === nodeId ? a.to : a.from
-        ).filter(nId => allocatedNodes.includes(nId));
+        // Check connectivity from 'n0' to all other allocated nodes
+        const isConnected = checkConnectivity(tempAllocatedNodes, allocatedArcs);
 
-        if (connectedAllocatedNodes.length === 0) {
-          allocatedNodes = allocatedNodes.filter(id => id !== nodeId);
+        if (isConnected) {
+          allocatedNodes = tempAllocatedNodes;
           nodeSkillPoints++;
           document.getElementById('nodePoints').textContent = nodeSkillPoints;
         } else {
-          alert('Cannot deallocate this node without disconnecting the tree.');
+          showMessage('Cannot deallocate this node as it would disconnect the tree from the origin.');
         }
-      } else if (nodeSkillPoints > 0 && connectedArcs.length > 0) {
-        allocatedNodes.push(nodeId);
-        nodeSkillPoints--;
-        document.getElementById('nodePoints').textContent = nodeSkillPoints;
+      } else {
+        // Allocate node if possible
+        const connectedArcs = arcs.filter(a =>
+          (a.from === nodeId || a.to === nodeId) && allocatedArcs.includes(a.id)
+        );
+
+        if (nodeSkillPoints > 0 && connectedArcs.length > 0) {
+          allocatedNodes.push(nodeId);
+          nodeSkillPoints--;
+          document.getElementById('nodePoints').textContent = nodeSkillPoints;
+        } else {
+          showMessage('Cannot allocate this node. It must be connected via an allocated arc.');
+        }
       }
 
       updateVisuals();
@@ -453,17 +481,57 @@
       const toAllocated = allocatedNodes.includes(arc.to);
 
       if (allocatedArcs.includes(arcId)) {
-        // Deallocate arc if possible
-        allocatedArcs = allocatedArcs.filter(id => id !== arcId);
-        arcSkillPoints++;
-        document.getElementById('arcPoints').textContent = arcSkillPoints;
+        // Deallocate arc if it doesn't disconnect the tree
+        // Simulate deallocation
+        const tempAllocatedArcs = allocatedArcs.filter(id => id !== arcId);
+
+        // Check connectivity from 'n0' to all other allocated nodes
+        const isConnected = checkConnectivity(allocatedNodes, tempAllocatedArcs);
+
+        if (isConnected) {
+          allocatedArcs = tempAllocatedArcs;
+          arcSkillPoints++;
+          document.getElementById('arcPoints').textContent = arcSkillPoints;
+        } else {
+          showMessage('Cannot deallocate this arc as it would disconnect the tree from the origin.');
+        }
       } else if (arcSkillPoints > 0 && (fromAllocated || toAllocated)) {
         allocatedArcs.push(arcId);
         arcSkillPoints--;
         document.getElementById('arcPoints').textContent = arcSkillPoints;
+      } else {
+        showMessage('Cannot allocate this arc. At least one connected node must be allocated.');
       }
 
       updateVisuals();
+    }
+
+    // Function to check connectivity from 'n0' to all allocated nodes
+    function checkConnectivity(nodesSet, arcsSet) {
+      const visited = new Set();
+      const stack = ['n0'];
+
+      const allocatedArcsSet = new Set(arcsSet);
+
+      while (stack.length > 0) {
+        const currentNode = stack.pop();
+        visited.add(currentNode);
+
+        // Get all adjacent nodes via allocated arcs
+        const adjacentNodes = arcs.filter(a =>
+          allocatedArcsSet.has(a.id) &&
+          (a.from === currentNode || a.to === currentNode)
+        ).map(a => (a.from === currentNode ? a.to : a.from));
+
+        adjacentNodes.forEach(nodeId => {
+          if (!visited.has(nodeId) && nodesSet.includes(nodeId)) {
+            stack.push(nodeId);
+          }
+        });
+      }
+
+      // Check if all allocated nodes are visited
+      return nodesSet.every(nodeId => visited.has(nodeId));
     }
 
     function updateVisuals() {
@@ -504,6 +572,17 @@
           'inactive-arc'
         }`);
       });
+    }
+
+    // Message display function
+    function showMessage(text) {
+      const messageDiv = document.getElementById('message');
+      messageDiv.textContent = text;
+      messageDiv.style.display = 'block';
+      clearTimeout(messageDiv.timeout);
+      messageDiv.timeout = setTimeout(() => {
+        messageDiv.style.display = 'none';
+      }, 3000);
     }
 
     // Initial visual update
