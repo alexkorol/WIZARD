@@ -2,8 +2,6 @@
 
 A hexagonal grid-based interactive skill tree visualization inspired by Path of Exile's passive skill system. This app is part of the **WIZARD** project.
 
-![Class Diagram](./assets/class_diagram.png)
-
 ## Table of Contents
 
 1. [Features](#features)
@@ -77,6 +75,9 @@ For a Seed of Life centered at the origin \((0,0)\) with radius \(r\), the cente
 C_n: \left(r\cos\left(\frac{2\pi n}{6}\right),\ r\sin\left(\frac{2\pi n}{6}\right)\right) \quad \text{where } n = 1,2,\ldots,6
 \]
 
+![Construction Diagram](./assets/construction_diagram.png)
+
+
 ### 2. Hexagonal Geometry
 
 #### 2.1 Regular Hexagon Properties
@@ -142,6 +143,9 @@ The Flower of Life extends the Seed of Life pattern:
 
 #### 1.1 Axial Coordinates
 
+![Coordinate System Diagram](./assets/coordinata-system-diagram.svg)
+
+
 For a hexagonal grid, an axial coordinate system \((q, r)\) is used where:
 
 - **\(q\)**: Position along the first axis (horizontal).
@@ -200,6 +204,9 @@ function roundAxial(q, r) {
 ```
 
 ### 2. Node Organization
+
+![Interaction Diagram](./assets/interaction_diagram.png)
+
 
 #### 2.1 Layer-based Indexing
 
@@ -568,6 +575,9 @@ class BranchSystem {
 ```
 
 ### 3. Advanced Rendering System
+
+![Render States Diagram](./assets/render_states-diagram.svg)
+
 
 #### 3.1 Canvas Rendering Class
 
