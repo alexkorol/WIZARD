@@ -205,34 +205,19 @@
 
     // Function to add circle positions in a hexagonal grid
     function addCirclePositions() {
-      // First circle at center
+      // Clear existing positions
+      circlePositions.length = 0;
+  
+      // Center circle (first)
       circlePositions.push({ x: centerX, y: centerY });
   
-      // Second circle - left of center
-      circlePositions.push({ x: centerX - R, y: centerY });
-  
-      // Third circle - upper intersection point of first two circles
-      const thirdX = centerX - (R/2);
-      const thirdY = centerY - (R * Math.sqrt(3)/2);
-      circlePositions.push({ x: thirdX, y: thirdY });
-  
-      // Fourth circle - upper right intersection
-      const fourthX = centerX + (R/2);
-      const fourthY = centerY - (R * Math.sqrt(3)/2);
-      circlePositions.push({ x: fourthX, y: fourthY });
-  
-      // Fifth circle - right of center
-      circlePositions.push({ x: centerX + R, y: centerY });
-  
-      // Sixth circle - lower right intersection
-      const sixthX = centerX + (R/2);
-      const sixthY = centerY + (R * Math.sqrt(3)/2);
-      circlePositions.push({ x: sixthX, y: sixthY });
-  
-      // Seventh circle - lower left intersection
-      const seventhX = centerX - (R/2);
-      const seventhY = centerY + (R * Math.sqrt(3)/2);
-      circlePositions.push({ x: seventhX, y: seventhY });
+      // First ring of 6 circles
+      for (let i = 0; i < 6; i++) {
+        const angle = (i * Math.PI / 3) - (Math.PI / 2); // Start from top, go clockwise
+        const x = centerX + R * Math.cos(angle);
+        const y = centerY + R * Math.sin(angle);
+        circlePositions.push({ x, y });
+      }
     }
 
     // Build the circle positions for the Flower of Life
@@ -251,32 +236,37 @@
 
     // Calculate nodes (intersection points)
     function calculateNodes() {
+      nodes.length = 0;
       let nodeId = 0;
-      const nodeMap = {};
-
+  
+      // First, add center node (n0)
+      nodes.push({
+        id: 'n0',
+        x: centerX,
+        y: centerY,
+        connections: []
+      });
+  
+      // Then calculate intersections clockwise from top
       for (let i = 0; i < circlePositions.length; i++) {
         for (let j = i + 1; j < circlePositions.length; j++) {
           const intersections = circleCircleIntersection(
             circlePositions[i].x, circlePositions[i].y, R,
             circlePositions[j].x, circlePositions[j].y, R
           );
+      
           intersections.forEach(point => {
-            const key = `${Math.round(point.x * 1000) / 1000},${Math.round(point.y * 1000) / 1000}`;
-            if (!nodeMap[key]) {
-              nodeMap[key] = {
-                id: `n${nodeId++}`,
+            // Skip points too close to existing nodes
+            if (!nodes.some(n => Math.hypot(n.x - point.x, n.y - point.y) < 0.1)) {
+              nodes.push({
+                id: `n${++nodeId}`,
                 x: point.x,
                 y: point.y,
                 connections: []
-              };
+              });
             }
           });
         }
-      }
-
-      // Convert nodeMap to array
-      for (const key in nodeMap) {
-        nodes.push(nodeMap[key]);
       }
     }
 
@@ -308,32 +298,52 @@
 
     // Build connections between nodes (arcs)
     function calculateArcs() {
+      arcs.length = 0;
       let arcId = 0;
-      const nodeCount = nodes.length;
-
-      for (let i = 0; i < nodeCount; i++) {
-        const nodeA = nodes[i];
-        for (let j = i + 1; j < nodeCount; j++) {
-          const nodeB = nodes[j];
-          const dist = Math.hypot(nodeA.x - nodeB.x, nodeA.y - nodeB.y);
-
-          // Nodes are connected if they are at a distance approximately equal to R
-          if (Math.abs(dist - R) < 0.1) {
-            const arc = {
-              id: `a${arcId++}`,
-              from: nodeA.id,
-              to: nodeB.id,
-              x1: nodeA.x,
-              y1: nodeA.y,
-              x2: nodeB.x,
-              y2: nodeB.y
-            };
-            arcs.push(arc);
-            nodeA.connections.push(nodeB.id);
-            nodeB.connections.push(nodeA.id);
+  
+      // For each node
+      nodes.forEach((nodeA, i) => {
+        // Find all nodes at distance R
+        nodes.forEach((nodeB, j) => {
+          if (i !== j) {
+            const dist = Math.hypot(nodeA.x - nodeB.x, nodeA.y - nodeB.y);
+            if (Math.abs(dist - R) < 0.1) {
+              // Create bidirectional arcs
+              const arcBase = `a${arcId++}`;
+          
+              // Forward arc
+              arcs.push({
+                id: `${arcBase}_f`,
+                from: nodeA.id,
+                to: nodeB.id,
+                x1: nodeA.x,
+                y1: nodeA.y,
+                x2: nodeB.x,
+                y2: nodeB.y
+              });
+          
+              // Backward arc
+              arcs.push({
+                id: `${arcBase}_b`,
+                from: nodeB.id,
+                to: nodeA.id,
+                x1: nodeB.x,
+                y1: nodeB.y,
+                x2: nodeA.x,
+                y2: nodeA.y
+              });
+          
+              // Add connections to nodes
+              if (!nodeA.connections.includes(nodeB.id)) {
+                nodeA.connections.push(nodeB.id);
+              }
+              if (!nodeB.connections.includes(nodeA.id)) {
+                nodeB.connections.push(nodeA.id);
+              }
+            }
           }
-        }
-      }
+        });
+      });
     }
 
     // Calculate arcs
