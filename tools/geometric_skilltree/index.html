@@ -148,32 +148,39 @@
     const circlePositions = [];
 
     // Function to add circle positions in a hexagonal grid
-    function addCirclePositions(layers) {
-      const offsetX = R;
-      const offsetY = R * Math.sqrt(3) / 2;
-
-      // Center circle
+    function addCirclePositions() {
+      // First circle at center
       circlePositions.push({ x: centerX, y: centerY });
-
-      for (let layer = 1; layer <= layers; layer++) {
-        for (let i = 0; i < 6; i++) {
-          const angle = Math.PI / 3 * i;
-          const x = centerX + layer * 2 * offsetX * Math.cos(angle);
-          const y = centerY + layer * 2 * offsetX * Math.sin(angle);
-          circlePositions.push({ x, y });
-
-          // Add circles in between main hex points
-          for (let j = 1; j < layer; j++) {
-            const innerX = centerX + (layer - j) * 2 * offsetX * Math.cos(angle) + j * 2 * offsetX * Math.cos(angle + Math.PI / 3);
-            const innerY = centerY + (layer - j) * 2 * offsetX * Math.sin(angle) + j * 2 * offsetX * Math.sin(angle + Math.PI / 3);
-            circlePositions.push({ x: innerX, y: innerY });
-          }
-        }
-      }
+  
+      // Second circle - left of center
+      circlePositions.push({ x: centerX - R, y: centerY });
+  
+      // Third circle - upper intersection point of first two circles
+      const thirdX = centerX - (R/2);
+      const thirdY = centerY - (R * Math.sqrt(3)/2);
+      circlePositions.push({ x: thirdX, y: thirdY });
+  
+      // Fourth circle - upper right intersection
+      const fourthX = centerX + (R/2);
+      const fourthY = centerY - (R * Math.sqrt(3)/2);
+      circlePositions.push({ x: fourthX, y: fourthY });
+  
+      // Fifth circle - right of center
+      circlePositions.push({ x: centerX + R, y: centerY });
+  
+      // Sixth circle - lower right intersection
+      const sixthX = centerX + (R/2);
+      const sixthY = centerY + (R * Math.sqrt(3)/2);
+      circlePositions.push({ x: sixthX, y: sixthY });
+  
+      // Seventh circle - lower left intersection
+      const seventhX = centerX - (R/2);
+      const seventhY = centerY + (R * Math.sqrt(3)/2);
+      circlePositions.push({ x: seventhX, y: seventhY });
     }
 
     // Build the circle positions for the Flower of Life
-    addCirclePositions(2); // Adjust the number for more layers
+    addCirclePositions();
 
     // Draw circles
     circlePositions.forEach((pos, index) => {
