@@ -85,13 +85,13 @@
     }
 
     .inactive-arc {
-      stroke: #2D3748;
-      stroke-width: 0.5;
+      stroke: #4A5568; /* Adjusted for visibility */
+      stroke-width: 1; /* Increased stroke width */
     }
 
     .available-arc {
-      stroke: #4A5568;
-      stroke-width: 1;
+      stroke: #A0AEC0;
+      stroke-width: 1.5;
       cursor: pointer;
     }
 
@@ -213,7 +213,7 @@
   
       // First ring of 6 circles
       for (let i = 0; i < 6; i++) {
-        const angle = (i * Math.PI / 3) - (Math.PI / 2); // Start from top, go clockwise
+        const angle = (i * Math.PI / 3); // Start from right, go counter-clockwise
         const x = centerX + R * Math.cos(angle);
         const y = centerY + R * Math.sin(angle);
         circlePositions.push({ x, y });
@@ -230,7 +230,7 @@
       circle.setAttribute('cy', pos.y);
       circle.setAttribute('r', R);
       circle.setAttribute('fill', 'none');
-      circle.setAttribute('stroke', '#ffffff22');
+      circle.setAttribute('stroke', '#ffffff44'); // Increased opacity
       mainGroup.appendChild(circle);
     });
 
@@ -247,7 +247,7 @@
         connections: []
       });
   
-      // Then calculate intersections clockwise from top
+      // Then calculate intersections
       for (let i = 0; i < circlePositions.length; i++) {
         for (let j = i + 1; j < circlePositions.length; j++) {
           const intersections = circleCircleIntersection(
@@ -257,7 +257,7 @@
       
           intersections.forEach(point => {
             // Skip points too close to existing nodes
-            if (!nodes.some(n => Math.hypot(n.x - point.x, n.y - point.y) < 0.1)) {
+            if (!nodes.some(n => Math.hypot(n.x - point.x, n.y - point.y) < 0.5)) {
               nodes.push({
                 id: `n${++nodeId}`,
                 x: point.x,
@@ -307,7 +307,7 @@
         nodes.forEach((nodeB, j) => {
           if (i !== j) {
             const dist = Math.hypot(nodeA.x - nodeB.x, nodeA.y - nodeB.y);
-            if (Math.abs(dist - R) < 0.1) {
+            if (Math.abs(dist - R) < 0.5) {
               // Create bidirectional arcs
               const arcBase = `a${arcId++}`;
           
@@ -349,6 +349,16 @@
     // Calculate arcs
     calculateArcs();
 
+    // Function to describe an arc path between two points
+    function describeArc(x1, y1, x2, y2) {
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const dr = Math.hypot(dx, dy);
+      const largeArcFlag = 0;
+      const sweepFlag = 1;
+      return `M ${x1} ${y1} A ${dr} ${dr} 0 ${largeArcFlag} ${sweepFlag} ${x2} ${y2}`;
+    }
+
     // Draw arcs
     arcs.forEach(arc => {
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -358,7 +368,7 @@
       path.setAttribute('data-id', arc.id);
       path.setAttribute('data-from', arc.from);
       path.setAttribute('data-to', arc.to);
-      svg.insertBefore(path, svg.firstChild);
+      mainGroup.insertBefore(path, mainGroup.firstChild); // Insert into mainGroup
 
       // Event listeners
       path.addEventListener('mouseenter', () => handleArcHover(arc.id));
@@ -374,7 +384,7 @@
       group.setAttribute('data-id', node.id);
 
       const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      circle.setAttribute('r', '2');
+      circle.setAttribute('r', '3'); // Increased radius
 
       // Uncomment the following lines to display node IDs
       // const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -391,14 +401,6 @@
       group.addEventListener('mouseleave', () => handleNodeHover(null));
       group.addEventListener('click', () => handleNodeClick(node.id));
     });
-
-    function describeArc(x1, y1, x2, y2) {
-      const dx = x2 - x1;
-      const dy = y2 - y1;
-      const dr = Math.hypot(dx, dy);
-      const sweepFlag = 1;
-      return `M ${x1} ${y1} A ${dr} ${dr} 0 0 ${sweepFlag} ${x2} ${y2}`;
-    }
 
     function handleNodeHover(nodeId) {
       hoveredNode = nodeId;
@@ -477,7 +479,7 @@
 
         const canActivate = !isActive && nodeSkillPoints > 0 && connectedAllocatedArcs.length > 0;
 
-        circle.setAttribute('r', nodeId === hoveredNode ? '3' : '2');
+        circle.setAttribute('r', nodeId === hoveredNode ? '4' : '3'); // Adjust radius on hover
         nodeGroup.setAttribute('class', `node ${
           isActive ? 'active-node' : canActivate ? 'available-node' : 'inactive-node'
         }`);
