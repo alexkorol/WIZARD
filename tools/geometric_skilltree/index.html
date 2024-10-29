@@ -94,8 +94,33 @@
     /* Pulse Animation for Active Nodes */
     @keyframes pulse {
       0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
+      50% { transform: scale(1.1); }
       100% { transform: scale(1); }
+    }
+
+    /* Extra Circle Styles */
+    .extra-circle {
+      fill: rgba(255, 127, 80, 0.5); /* Coral color with transparency */
+      stroke: rgba(255, 69, 0, 0.8); /* OrangeRed stroke with transparency */
+      stroke-width: 1;
+      opacity: 0.6;
+      transition: fill 0.3s ease, stroke 0.3s ease;
+    }
+
+    /* Extra Circle States */
+    .node.active-node .extra-circle {
+      fill: rgba(255, 99, 71, 0.6); /* Tomato color when node is active */
+      stroke: rgba(255, 69, 0, 0.8); /* Maintains OrangeRed stroke */
+    }
+
+    .node.available-node .extra-circle {
+      fill: rgba(255, 160, 122, 0.6); /* LightSalmon for available state */
+      stroke: rgba(255, 127, 80, 0.8); /* Coral stroke */
+    }
+
+    .node.inactive-node .extra-circle {
+      fill: rgba(205, 92, 92, 0.6); /* IndianRed for inactive state */
+      stroke: rgba(139, 0, 0, 0.8); /* DarkRed stroke */
     }
 
     /* Arc Styles */
@@ -263,6 +288,9 @@
     const nodes = [];
     const arcs = [];
 
+    // Define the nodes where extra circles should be added
+    const extraCircleNodes = ['n7', 'n8', 'n9', 'n10', 'n11', 'n12'];
+
     // Positions of circles in the Flower of Life pattern
     const circlePositions = [];
 
@@ -304,8 +332,8 @@
       calculateArcs();
     }
 
-    // Define the number of layers you want (e.g., 2 for Flower of Life)
-    const numberOfLayers = 2;
+    // Define the number of layers you want (e.g., 3 for more nodes)
+    const numberOfLayers = 3; // Increased to 3 to accommodate nodes n7-n12
     addCirclePositions(numberOfLayers);
     generateNodesAndArcs();
 
@@ -462,9 +490,11 @@
       group.classList.add('node', 'inactive-node');
       group.setAttribute('data-id', node.id);
 
+      // Base circle
       const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      circle.setAttribute('r', '3'); // Increased radius
+      circle.setAttribute('r', '3'); // Base radius
 
+      // Node label
       const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
       text.setAttribute('y', '0');
       text.setAttribute('text-anchor', 'middle');
@@ -472,6 +502,15 @@
 
       group.appendChild(circle);
       group.appendChild(text);
+
+      // Add extra circle if node is in the specified list
+      if (extraCircleNodes.includes(node.id)) {
+        const extraCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        extraCircle.setAttribute('r', '5'); // Larger radius for visibility
+        extraCircle.setAttribute('class', 'extra-circle');
+        group.insertBefore(extraCircle, circle); // Insert before base circle to layer behind
+      }
+
       mainGroup.appendChild(group);
 
       // Event listeners on nodes
