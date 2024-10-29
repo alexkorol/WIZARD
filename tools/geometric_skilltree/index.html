@@ -127,7 +127,63 @@
   </div>
 
   <script>
+    let scale = 1;
+    let offsetX = 0;
+    let offsetY = 0;
+    let isDragging = false;
+    let lastX = 0;
+    let lastY = 0;
+
     const svg = document.querySelector('svg');
+    const mainGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    svg.appendChild(mainGroup);
+
+    // Add event listeners
+    svg.addEventListener('mousedown', (e) => {
+        if (e.button === 1 || e.button === 2) { // Middle or right click
+            isDragging = true;
+            lastX = e.clientX;
+            lastY = e.clientY;
+            e.preventDefault();
+        }
+    });
+
+    svg.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            offsetX += (e.clientX - lastX) / scale;
+            offsetY += (e.clientY - lastY) / scale;
+            lastX = e.clientX;
+            lastY = e.clientY;
+            updateTransform();
+        }
+    });
+
+    svg.addEventListener('mouseup', () => isDragging = false);
+    svg.addEventListener('mouseleave', () => isDragging = false);
+    svg.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? 0.9 : 1.1;
+        const oldScale = scale;
+        scale *= delta;
+        scale = Math.min(Math.max(0.5, scale), 5);
+    
+        // Adjust offset to zoom toward mouse position
+        const rect = svg.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        offsetX += (mouseX / oldScale - mouseX / scale);
+        offsetY += (mouseY / oldScale - mouseY / scale);
+    
+        updateTransform();
+    });
+
+    function updateTransform() {
+        mainGroup.setAttribute('transform', 
+            `translate(${offsetX},${offsetY}) scale(${scale})`);
+    }
+
+    // Prevent context menu
+    svg.addEventListener('contextmenu', e => e.preventDefault());
     const R = 20; // Radius of circles
     const centerX = 100;
     const centerY = 100;
@@ -190,7 +246,7 @@
       circle.setAttribute('r', R);
       circle.setAttribute('fill', 'none');
       circle.setAttribute('stroke', '#ffffff22');
-      svg.appendChild(circle);
+      mainGroup.appendChild(circle);
     });
 
     // Calculate nodes (intersection points)
@@ -318,7 +374,7 @@
 
       group.appendChild(circle);
       // group.appendChild(text);
-      svg.appendChild(group);
+      mainGroup.appendChild(group);
 
       // Event listeners
       group.addEventListener('mouseenter', () => handleNodeHover(node.id));
