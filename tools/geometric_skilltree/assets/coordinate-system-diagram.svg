@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-250 -250 500 500">
+  <!-- Coordinate System Axes -->
+  <g stroke="#666" stroke-width="1" stroke-dasharray="5,5">
+    <!-- q axis -->
+    <line x1="-200" y1="0" x2="200" y2="0"/>
+    <text x="210" y="15" fill="#666">q</text>
+    
+    <!-- r axis -->
+    <line x1="0" y1="0" x2="100" y2="173.2"/>
+    <text x="110" y="190" fill="#666">r</text>
+    
+    <!-- s axis -->
+    <line x1="0" y1="0" x2="-100" y2="173.2"/>
+    <text x="-120" y="190" fill="#666">s</text>
+  </g>
+  
+  <!-- Grid Points -->
+  <g>
+    <!-- Layer 0 -->
+    <circle cx="0" cy="0" r="5" fill="#4CAF50"/>
+    
+    <!-- Layer 1 -->
+    <circle cx="100" cy="0" r="5" fill="#90CAF9"/>
+    <circle cx="50" cy="86.6" r="5" fill="#90CAF9"/>
+    <circle cx="-50" cy="86.6" r="5" fill="#9E9E9E"/>
+    <circle cx="-100" cy="0" r="5" fill="#9E9E9E"/>
+    <circle cx="-50" cy="-86.6" r="5" fill="#9E9E9E"/>
+    <circle cx="50" cy="-86.6" r="5" fill="#90CAF9"/>
+    
+    <!-- Connections -->
+    <g stroke-width="2">
+      <!-- Allocated -->
+      <line x1="0" y1="0" x2="100" y2="0" stroke="#4CAF50"/>
+      <line x1="0" y1="0" x2="50" y2="86.6" stroke="#4CAF50"/>
+      <line x1="0" y1="0" x2="50" y2="-86.6" stroke="#4CAF50"/>
+      
+      <!-- Available -->
+      <line x1="100" y1="0" x2="50" y2="86.6" stroke="#90CAF9" stroke-dasharray="5,5"/>
+      <line x1="50" y1="86.6" x2="-50" y2="86.6" stroke="#9E9E9E" opacity="0.4"/>
+    </g>
+  </g>
+  
+  <!-- Coordinate Labels -->
+  <g font-family="Arial" font-size="12" fill="#666">
+    <text x="110" y="10">(1,0)</text>
+    <text x="60" y="96">(0,1)</text>
+    <text x="-40" y="96">(-1,1)</text>
+    <text x="-120" y="10">(-1,0)</text>
+    <text x="-60" y="-76">(0,-1)</text>
+    <text x="40" y="-76">(1,-1)</text>
+  </g>
+  
+  <!-- Legend -->
+  <g transform="translate(-230, -230)">
+    <circle cx="0" cy="0" r="5" fill="#4CAF50"/>
+    <text x="15" y="5" fill="#666">Allocated</text>
+    
+    <circle cx="0" cy="20" r="5" fill="#90CAF9"/>
+    <text x="15" y="25" fill="#666">Available</text>
+    
+    <circle cx="0" cy="40" r="5" fill="#9E9E9E"/>
+    <text x="15" y="45" fill="#666">Unavailable</text>
+  </g>
+</svg>

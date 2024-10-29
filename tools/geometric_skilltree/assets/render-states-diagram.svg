@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-250 -250 500 500">
+    <!-- Background Grid -->
+    <defs>
+        <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+            <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#f0f0f0" stroke-width="1"/>
+        </pattern>
+    </defs>
+    <rect x="-250" y="-250" width="500" height="500" fill="url(#grid)"/>
+    
+    <!-- Allocated Path Example -->
+    <g transform="translate(-150, 0)">
+        <!-- Nodes -->
+        <circle cx="0" cy="0" r="20" fill="#4CAF50" stroke="#2E7D32" stroke-width="2"/>
+        <circle cx="0" cy="-60" r="20" fill="#4CAF50" stroke="#2E7D32" stroke-width="2"/>
+        <circle cx="60" cy="-60" r="20" fill="#4CAF50" stroke="#2E7D32" stroke-width="2"/>
+        
+        <!-- Connections -->
+        <line x1="0" y1="-20" x2="0" y2="-40" stroke="#2E7D32" stroke-width="3"/>
+        <line x1="0" y1="-60" x2="40" y2="-60" stroke="#2E7D32" stroke-width="3"/>
+        
+        <!-- Level Indicators -->
+        <text x="0" y="5" text-anchor="middle" fill="white" font-family="Arial" font-size="14">1</text>
+        <text x="0" y="-55" text-anchor="middle" fill="white" font-family="Arial" font-size="14">2</text>
+        <text x="60" y="-55" text-anchor="middle" fill="white" font-family="Arial" font-size="14">3</text>
+        
+        <text x="0" y="50" text-anchor="middle" fill="#666" font-family="Arial" font-size="12">Allocated Path</text>
+    </g>
+    
+    <!-- Available Nodes Example -->
+    <g transform="translate(0, 0)">
+        <!-- Nodes -->
+        <circle cx="0" cy="0" r="20" fill="#4CAF50" stroke="#2E7D32" stroke-width="2"/>
+        <circle cx="0" cy="-60" r="20" fill="#90CAF9" stroke="#1976D2" stroke-width="2"/>
+        <circle cx="60" cy="-60" r="20" fill="#9E9E9E" stroke="#616161" stroke-width="1" opacity="0.4"/>
+        
+        <!-- Connections -->
+        <line x1="0" y1="-20" x2="0" y2="-40" stroke="#1976D2" stroke-width="2" stroke-dasharray="5,5"/>
+        <line x1="0" y1="-60" x2="40" y2="-60" stroke="#616161" stroke-width="1" opacity="0.4"/>
+        
+        <text x="0" y="50" text-anchor="middle" fill="#666" font-family="Arial" font-size="12">Available Nodes</text>
+    </g>
+    
+    <!-- Animation Example -->
+    <g transform="translate(150, 0)">
+        <!-- Base Node -->
+        <circle cx="0" cy="0" r="20" fill="#4CAF50" stroke="#2E7D32" stroke-width="2"/>
+        
+        <!-- Animation Rings -->
+        <circle cx="0" cy="0" r="25" fill="none" stroke="#4CAF50" stroke-width="2" opacity="0.7"/>
+        <circle cx="0" cy="0" r="30" fill="none" stroke="#4CAF50" stroke-width="2" opacity="0.5"/>
+        <circle cx="0" cy="0" r="35" fill="none" stroke="#4CAF50" stroke-width="2" opacity="0.3"/>
+        
+        <text x="0" y="50" text-anchor="middle" fill="#666" font-family="Arial" font-size="12">Allocation Animation</text>
+    </g>
+    
+    <!-- Legend -->
+    <g transform="translate(-230, -230)">
+        <rect x="0" y="0" width="180" height="100" fill="white" stroke="#ccc"/>
+        <text x="10" y="20" fill="#666" font-family="Arial" font-size="12">Node States:</text>
+        
+        <circle cx="20" y1="40" r="5" fill="#4CAF50"/>
+        <text x="35" y="40" fill="#666" font-family="Arial" font-size="12">Allocated</text>
+        
+        <circle cx="20" y1="60" r="5" fill="#90CAF9"/>
+        <text x="35" y="60" fill="#666" font-family="Arial" font-size="12">Available</text>
+        
+        <circle cx="20" y1="80" r="5" fill="#9E9E9E" opacity="0.4"/>
+        <text x="35" y="80" fill="#666" font-family="Arial" font-size="12">Unavailable</text>
+    </g>
+</svg>
