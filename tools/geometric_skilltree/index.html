@@ -289,7 +289,7 @@
     const arcs = [];
 
     // Define the nodes where extra circles should be added
-    const extraCircleNodes = ['n7', 'n8', 'n9', 'n10', 'n11', 'n12'];
+    const extraCircleNodes = ['n7', 'n8', 'n9', 'n10', 'n11', 'n12', 'n13', 'n15'];
 
     // Positions of circles in the Flower of Life pattern
     const circlePositions = [];
@@ -332,8 +332,8 @@
       calculateArcs();
     }
 
-    // Define the number of layers you want (e.g., 3 for more nodes)
-    const numberOfLayers = 3; // Increased to 3 to accommodate nodes n7-n12
+    // Define the number of layers you want (e.g., 4 for more nodes)
+    const numberOfLayers = 4; // Increased from 3 to 4 to ensure nodes n13, n15 exist
     addCirclePositions(numberOfLayers);
     generateNodesAndArcs();
 
@@ -387,6 +387,9 @@
           });
         }
       }
+
+      // Optional: Log nodes to verify existence
+      console.log('Generated Nodes:', nodes.map(node => node.id));
     }
 
     // Function to calculate circle-circle intersection points
@@ -446,6 +449,9 @@
           }
         });
       });
+
+      // Optional: Log arcs to verify existence
+      console.log('Generated Arcs:', arcs.map(arc => arc.id));
     }
 
     // Function to describe a straight line between two points
@@ -567,8 +573,20 @@
           nodeSkillPoints++;
           document.getElementById('nodePoints').textContent = nodeSkillPoints;
 
-          // Optionally deallocate connected arcs if no longer needed
-          // Implement this based on your design
+          // Deallocate any arcs connected to the deallocated node that are no longer needed
+          const connectedArcs = arcs.filter(a => a.from === nodeId || a.to === nodeId);
+          connectedArcs.forEach(arc => {
+            if (allocatedArcs.includes(arc.id)) {
+              const otherNode = arc.from === nodeId ? arc.to : arc.from;
+              if (!allocatedNodes.includes(otherNode)) {
+                // Deallocate the arc
+                allocatedArcs = allocatedArcs.filter(id => id !== arc.id);
+                arcSkillPoints++;
+                document.getElementById('arcPoints').textContent = arcSkillPoints;
+              }
+            }
+          });
+
         } else {
           showMessage('Cannot deallocate this node as it would disconnect the tree from the origin.');
         }
@@ -584,7 +602,7 @@
           nodeSkillPoints--;
           document.getElementById('nodePoints').textContent = nodeSkillPoints;
 
-          // Optionally allocate the first available connecting arc
+          // Allocate the first available connecting arc
           const arcToAllocate = connectingArcs.find(a => !allocatedArcs.includes(a.id));
           if (arcToAllocate && arcSkillPoints > 0) {
             allocatedArcs.push(arcToAllocate.id);
