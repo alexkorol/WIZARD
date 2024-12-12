@@ -6,7 +6,7 @@
     <title>WordSphere - WIZARD</title>
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.22.17/babel.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -37,16 +37,58 @@
             cursor: pointer;
             text-decoration: none;
             transition: background-color 0.3s;
+            z-index: 1000;
         }
 
         .back-button:hover {
             background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .error-boundary {
+            padding: 20px;
+            color: #ff4444;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 20px;
         }
     </style>
 </head>
 <body>
     <a href="../../index.html" class="back-button">Back to Dashboard</a>
     <div id="root"></div>
-    <script type="text/babel" src="wordsphere.js"></script>
+    <script type="text/babel" data-type="module" data-presets="react">
+        // Error Boundary Component
+        class ErrorBoundary extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = { hasError: false, error: null };
+            }
+
+            static getDerivedStateFromError(error) {
+                return { hasError: true, error };
+            }
+
+            render() {
+                if (this.state.hasError) {
+                    return (
+                        <div className="error-boundary">
+                            <h2>Something went wrong.</h2>
+                            <pre>{this.state.error?.toString()}</pre>
+                        </div>
+                    );
+                }
+                return this.props.children;
+            }
+        }
+
+        // Wrap the WordSphere component with ErrorBoundary
+        ReactDOM.render(
+            <ErrorBoundary>
+                <WordSphere />
+            </ErrorBoundary>,
+            document.getElementById('root')
+        );
+    </script>
+    <script type="text/babel" data-presets="react" src="wordsphere.js"></script>
 </body>
 </html>

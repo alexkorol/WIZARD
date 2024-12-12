@@ -103,6 +103,23 @@ const rotatePoint = (point, angleX, angleY) => {
   };
 };
 
+// Define term relationships
+const termRelationships = {
+    'React': ['JavaScript', 'TypeScript', 'Redux', 'Material-UI'],
+    'Vue': ['JavaScript', 'TypeScript', 'Vuex'],
+    'Angular': ['TypeScript', 'RxJS', 'Material-UI'],
+    'Node.js': ['JavaScript', 'Express', 'MongoDB'],
+    'TypeScript': ['JavaScript', 'React', 'Vue', 'Angular'],
+    'JavaScript': ['React', 'Vue', 'Node.js', 'TypeScript'],
+    'MongoDB': ['Node.js', 'Express', 'GraphQL'],
+    'GraphQL': ['REST', 'MongoDB', 'Express'],
+    'Redux': ['React', 'JavaScript'],
+    'Vuex': ['Vue', 'JavaScript'],
+    'Express': ['Node.js', 'JavaScript', 'MongoDB'],
+    'Material-UI': ['React', 'Angular'],
+    'RxJS': ['Angular', 'TypeScript']
+};
+
 const WordSphere = () => {
   const [rotation, setRotation] = React.useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = React.useState(false);
@@ -122,9 +139,22 @@ const WordSphere = () => {
     'Git', 'CI/CD', 'DevOps', 'Agile', 'Scrum',
     'WebGL', 'Three.js', 'D3.js', 'SVG', 'Canvas',
     'Redux', 'Vuex', 'RxJS', 'WebSockets', 'PWA',
-    'Webpack', 'Babel', 'ESLint', 'Jest', 'Cypress',
-    'SASS', 'Tailwind', 'Bootstrap', 'Material-UI', 'Styled-Components'
+    'Webpack', 'Babel', 'ESLint', 'Jest', 'Express'
   ];
+    'React': ['JavaScript', 'TypeScript', 'Redux', 'Material-UI'],
+    'Vue': ['JavaScript', 'TypeScript', 'Vuex'],
+    'Angular': ['TypeScript', 'RxJS', 'Material-UI'],
+    'Node.js': ['JavaScript', 'Express', 'MongoDB'],
+    'TypeScript': ['JavaScript', 'React', 'Vue', 'Angular'],
+    'JavaScript': ['React', 'Vue', 'Node.js', 'TypeScript'],
+    'MongoDB': ['Node.js', 'Express', 'GraphQL'],
+    'GraphQL': ['REST', 'MongoDB', 'Express'],
+    'Redux': ['React', 'JavaScript'],
+    'Vuex': ['Vue', 'JavaScript'],
+    'Express': ['Node.js', 'JavaScript', 'MongoDB'],
+    'Material-UI': ['React', 'Angular'],
+    'RxJS': ['Angular', 'TypeScript']
+  };
 
   const vertexTerms = React.useMemo(() => {
     const termCount = terms.length;
@@ -132,15 +162,22 @@ const WordSphere = () => {
     const result = new Array(vertexCount).fill(null);
     
     // Only assign terms to vertices that are sufficiently far apart
-    const minDistance = radius * 0.4; // Minimum distance between vertices with terms
+    const minDistance = radius * 0.5; // Increased from 0.4 for better spacing
     const assignedVertices = new Set();
     
+    // Start with vertices closer to the equator for better distribution
+    const verticesWithScores = vertices.map((vertex, index) => ({
+      index,
+      // Score based on distance from equator (y=0 plane) and visibility (z position)
+      score: Math.abs(vertex.y) * 0.5 + vertex.z * 0.5
+    })).sort((a, b) => a.score - b.score);
+
     for (let i = 0; i < Math.min(termCount, vertexCount); i++) {
       // Find a suitable vertex for this term
       let bestVertex = -1;
       let maxMinDistance = 0;
       
-      for (let j = 0; j < vertexCount; j++) {
+      for (const {index: j} of verticesWithScores) {
         if (assignedVertices.has(j)) continue;
         
         // Calculate minimum distance to any already assigned vertex
@@ -160,14 +197,14 @@ const WordSphere = () => {
         }
       }
       
-      if (bestVertex !== -1) {
+      if (bestVertex !== -1 && maxMinDistance >= minDistance) {
         result[bestVertex] = terms[i];
         assignedVertices.add(bestVertex);
       }
     }
     
     return result;
-  }, [vertices.length, terms]);
+  }, [vertices.length, terms, radius]);
 
   const [momentum, setMomentum] = React.useState({ x: 0, y: 0.2 });
   const lastMousePosRef = React.useRef({ x: 0, y: 0 });
@@ -180,16 +217,17 @@ const WordSphere = () => {
       lastTimeRef.current = currentTime;
 
       if (!isDragging) {
-        // Apply momentum with damping
-        const damping = 0.98;
+        // Apply momentum with gentler damping
+        const damping = 0.995; // Increased from 0.99 for longer spin
         setMomentum(prev => ({
           x: prev.x * damping,
           y: prev.y * damping
         }));
 
+        // Increased rotation speed multiplier
         setRotation(prev => ({
-          x: prev.x + momentum.x * deltaTime * 5,
-          y: prev.y + momentum.y * deltaTime * 5
+          x: prev.x + momentum.x * deltaTime * 8,
+          y: prev.y + momentum.y * deltaTime * 8
         }));
       }
 
@@ -215,23 +253,23 @@ const WordSphere = () => {
 
   const handleMouseMove = React.useCallback((e) => {
     if (isDragging) {
-      const deltaX = (e.clientX - dragStart.x) * 0.01;
-      const deltaY = (e.clientY - dragStart.y) * 0.01;
-      
-      // Calculate instantaneous velocity
+      const deltaX = (e.clientX - dragStart.x);
+      const deltaY = (e.clientY - dragStart.y);
       const currentTime = Date.now();
-      const dt = (currentTime - lastTimeRef.current) / 1000;
-      const velocityX = (e.clientX - lastMousePosRef.current.x) / dt;
-      const velocityY = (e.clientY - lastMousePosRef.current.y) / dt;
+      const dt = Math.max((currentTime - lastTimeRef.current) / 1000, 0.016);
+      
+      // Calculate velocity with better scaling
+      const velocityX = deltaX / dt;
+      const velocityY = deltaY / dt;
       
       setMomentum({
-        x: velocityY * 0.0001,
-        y: velocityX * 0.0001
+        x: velocityY * 0.005, // Increased from 0.003
+        y: velocityX * 0.005  // Increased from 0.003
       });
       
       setRotation(prev => ({
-        x: prev.x + deltaY,
-        y: prev.y + deltaX
+        x: prev.x + deltaY * 0.01,
+        y: prev.y + deltaX * 0.01
       }));
       
       setDragStart({ x: e.clientX, y: e.clientY });
@@ -255,6 +293,11 @@ const WordSphere = () => {
     };
   }, [rotation]);
 
+  const getBackgroundOpacity = (projected) => {
+    const normalizedZ = (projected.z + radius) / (2 * radius);
+    return Math.pow(normalizedZ, 3) * 0.7;
+  };
+
   const getVertexOpacity = (projected) => {
     const normalizedZ = (projected.z + radius) / (2 * radius);
     return Math.pow(normalizedZ, 2.5);
@@ -262,23 +305,21 @@ const WordSphere = () => {
 
   const getVertexColor = (index, projected) => {
     const opacity = getVertexOpacity(projected);
+    const term = vertexTerms[index];
     
     if (index === activeVertex) {
       return `rgba(255, 255, 255, ${opacity})`;
     }
     
-    if (activeVertex !== null) {
-      const dist = Math.sqrt(
-        Math.pow(vertices[index].x - vertices[activeVertex].x, 2) +
-        Math.pow(vertices[index].y - vertices[activeVertex].y, 2) +
-        Math.pow(vertices[index].z - vertices[activeVertex].z, 2)
-      );
-      if (dist < radius * 0.8) {
-        return `rgba(255, 107, 107, ${opacity * (1 - dist / (radius * 0.8))})`;
+    if (activeVertex !== null && term) {
+      const activeTerm = vertexTerms[activeVertex];
+      if ((termRelationships[activeTerm] && termRelationships[activeTerm].includes(term)) || 
+          (termRelationships[term] && termRelationships[term].includes(activeTerm))) {
+        return `rgba(0, 191, 255, ${opacity})`;
       }
     }
     
-    return `rgba(100, 210, 255, ${opacity})`;
+    return `rgba(100, 210, 255, ${opacity * 0.7})`;
   };
 
   const getEdgeColor = (v1Index, v2Index, projected) => {
@@ -335,7 +376,8 @@ const WordSphere = () => {
       >
         <defs>
           <radialGradient id="textBackground" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-            <stop offset="0%" style={{ stopColor: '#1a1a1a', stopOpacity: 0.9 }} />
+            <stop offset="0%" style={{ stopColor: '#1a1a1a', stopOpacity: 1 }} />
+            <stop offset="70%" style={{ stopColor: '#1a1a1a', stopOpacity: 0.9 }} />
             <stop offset="100%" style={{ stopColor: '#1a1a1a', stopOpacity: 0 }} />
           </radialGradient>
         </defs>
@@ -359,12 +401,53 @@ const WordSphere = () => {
                   y2={projected[1].y}
                   stroke={getEdgeColor(i, j, projected)}
                   strokeWidth="1"
+                  opacity="0.3"
                 />
               );
             }
             return null;
           })}
           
+          {/* Relationship connections */}
+          {activeVertex !== null && vertices.map((vertex, index) => {
+            const term = vertexTerms[index];
+            const activeTerm = vertexTerms[activeVertex];
+            if (term && activeTerm && 
+                ((termRelationships[activeTerm] && termRelationships[activeTerm].includes(term)) || 
+                 (termRelationships[term] && termRelationships[term].includes(activeTerm)))) {
+              const startPos = project(vertices[activeVertex]);
+              const endPos = project(vertex);
+              if (startPos.z > -radius && endPos.z > -radius) {
+                const opacity = Math.min(
+                  getVertexOpacity(startPos),
+                  getVertexOpacity(endPos)
+                );
+                return (
+                  <g key={`connection-${index}`}>
+                    <line
+                      x1={startPos.x}
+                      y1={startPos.y}
+                      x2={endPos.x}
+                      y2={endPos.y}
+                      stroke="rgba(0, 191, 255, 0.8)"
+                      strokeWidth="2"
+                      strokeDasharray="5,5"
+                      opacity={opacity * 0.8}
+                    />
+                    <circle
+                      cx={endPos.x}
+                      cy={endPos.y}
+                      r="4"
+                      fill="rgba(0, 191, 255, 0.8)"
+                      opacity={opacity}
+                    />
+                  </g>
+                );
+              }
+            }
+            return null;
+          })}
+
           {vertices.map((vertex, index) => {
             const projected = project(vertex);
             if (projected.z > -radius && vertexTerms[index]) {
@@ -379,8 +462,11 @@ const WordSphere = () => {
                   <circle
                     cx={projected.x}
                     cy={projected.y}
-                    r={fontSize * 0.8}
+                    r={fontSize * 1.2}
                     fill="url(#textBackground)"
+                    style={{
+                      opacity: getBackgroundOpacity(projected)
+                    }}
                   />
                   <text
                     x={projected.x}
@@ -408,5 +494,8 @@ const WordSphere = () => {
     </div>
   );
 };
+
+// Export the component
+window.WordSphere = WordSphere;
 
 ReactDOM.render(<WordSphere />, document.getElementById('root'));
