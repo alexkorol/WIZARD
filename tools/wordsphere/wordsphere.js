@@ -129,25 +129,67 @@ const WordSphere = () => {
   const vertexTerms = React.useMemo(() => {
     const termCount = terms.length;
     const vertexCount = vertices.length;
-    const result = new Array(vertexCount);
+    const result = new Array(vertexCount).fill(null);
+    
+    // Only assign terms to vertices that are sufficiently far apart
+    const minDistance = radius * 0.4; // Minimum distance between vertices with terms
+    const assignedVertices = new Set();
     
     for (let i = 0; i < Math.min(termCount, vertexCount); i++) {
-      result[i] = terms[i];
+      // Find a suitable vertex for this term
+      let bestVertex = -1;
+      let maxMinDistance = 0;
+      
+      for (let j = 0; j < vertexCount; j++) {
+        if (assignedVertices.has(j)) continue;
+        
+        // Calculate minimum distance to any already assigned vertex
+        let minDistToOthers = Infinity;
+        for (const assignedVertex of assignedVertices) {
+          const dist = Math.sqrt(
+            Math.pow(vertices[j].x - vertices[assignedVertex].x, 2) +
+            Math.pow(vertices[j].y - vertices[assignedVertex].y, 2) +
+            Math.pow(vertices[j].z - vertices[assignedVertex].z, 2)
+          );
+          minDistToOthers = Math.min(minDistToOthers, dist);
+        }
+        
+        if (minDistToOthers > maxMinDistance) {
+          maxMinDistance = minDistToOthers;
+          bestVertex = j;
+        }
+      }
+      
+      if (bestVertex !== -1) {
+        result[bestVertex] = terms[i];
+        assignedVertices.add(bestVertex);
+      }
     }
     
     return result;
   }, [vertices.length, terms]);
 
+  const [momentum, setMomentum] = React.useState({ x: 0, y: 0.2 });
+  const lastMousePosRef = React.useRef({ x: 0, y: 0 });
+  const lastTimeRef = React.useRef(Date.now());
+
   React.useEffect(() => {
     const animate = () => {
       const currentTime = Date.now();
-      const deltaTime = (currentTime - lastUpdateTimeRef.current) / 1000;
-      lastUpdateTimeRef.current = currentTime;
+      const deltaTime = (currentTime - lastTimeRef.current) / 1000;
+      lastTimeRef.current = currentTime;
 
       if (!isDragging) {
+        // Apply momentum with damping
+        const damping = 0.98;
+        setMomentum(prev => ({
+          x: prev.x * damping,
+          y: prev.y * damping
+        }));
+
         setRotation(prev => ({
-          x: prev.x,
-          y: prev.y + deltaTime * 0.2
+          x: prev.x + momentum.x * deltaTime * 5,
+          y: prev.y + momentum.y * deltaTime * 5
         }));
       }
 
@@ -167,17 +209,34 @@ const WordSphere = () => {
     e.preventDefault();
     setIsDragging(true);
     setDragStart({ x: e.clientX, y: e.clientY });
+    lastMousePosRef.current = { x: e.clientX, y: e.clientY };
+    setMomentum({ x: 0, y: 0 });
   }, []);
 
   const handleMouseMove = React.useCallback((e) => {
     if (isDragging) {
       const deltaX = (e.clientX - dragStart.x) * 0.01;
       const deltaY = (e.clientY - dragStart.y) * 0.01;
+      
+      // Calculate instantaneous velocity
+      const currentTime = Date.now();
+      const dt = (currentTime - lastTimeRef.current) / 1000;
+      const velocityX = (e.clientX - lastMousePosRef.current.x) / dt;
+      const velocityY = (e.clientY - lastMousePosRef.current.y) / dt;
+      
+      setMomentum({
+        x: velocityY * 0.0001,
+        y: velocityX * 0.0001
+      });
+      
       setRotation(prev => ({
         x: prev.x + deltaY,
         y: prev.y + deltaX
       }));
+      
       setDragStart({ x: e.clientX, y: e.clientY });
+      lastMousePosRef.current = { x: e.clientX, y: e.clientY };
+      lastTimeRef.current = currentTime;
     }
   }, [isDragging, dragStart]);
 
@@ -274,6 +333,12 @@ const WordSphere = () => {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       >
+        <defs>
+          <radialGradient id="textBackground" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+            <stop offset="0%" style={{ stopColor: '#1a1a1a', stopOpacity: 0.9 }} />
+            <stop offset="100%" style={{ stopColor: '#1a1a1a', stopOpacity: 0 }} />
+          </radialGradient>
+        </defs>
         <rect 
           x="0" 
           y="0" 
@@ -311,6 +376,12 @@ const WordSphere = () => {
                   onMouseLeave={() => setActiveVertex(null)}
                   style={{ cursor: 'pointer' }}
                 >
+                  <circle
+                    cx={projected.x}
+                    cy={projected.y}
+                    r={fontSize * 0.8}
+                    fill="url(#textBackground)"
+                  />
                   <text
                     x={projected.x}
                     y={projected.y}

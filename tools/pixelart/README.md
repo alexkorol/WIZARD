@@ -1,79 +1,96 @@
 # Pixel Art Creator
 
-Welcome to the Pixel Art Creator, a web-based tool designed for creating pixel art with ease. This tool is part of the WIZARD project and offers a simple interface for drawing, saving, and managing your pixel art projects.
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Features](#features)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Introduction
-
-The Pixel Art Creator is a user-friendly tool that allows you to create pixel art directly in your web browser. It offers various features such as color selection, canvas size adjustment, grid toggling, and saving your creations.
+A web-based pixel art creation tool that offers an intuitive interface for drawing, editing, and exporting pixel art. Perfect for creating game assets, icons, or retro-style illustrations.
 
 ## Features
 
-- **Color Picker**: Choose any color to draw with.
-- **Canvas Size Options**: Select from 16x16, 32x32, or 64x64 grids.
-- **Clear Canvas**: Easily clear the entire canvas.
-- **Save Drawing**: Save your artwork as a PNG file.
-- **Toggle Grid**: Show or hide the grid lines for better visibility while drawing.
+- **Interactive Canvas**: Click and drag to draw pixels
+- **Color Selection**: Built-in color picker for precise color choices
+- **Multiple Canvas Sizes**: Support for 16x16, 32x32, and 64x64 grids
+- **Grid Toggle**: Show/hide grid lines for better visibility
+- **Export Options**: Save your artwork as PNG files
+- **Responsive Design**: Works across different screen sizes
 
-## Getting Started
+## Current State
 
-To use the Pixel Art Creator, simply navigate to the `tools/pixelart/` directory within the WIZARD project and open the `index.html` file in your web browser. You can do this by:
+The tool is stable and fully functional with core features implemented:
+- Basic drawing functionality
+- Color picker integration
+- Canvas size options
+- Grid visibility toggle
+- PNG export capability
 
-1. **Cloning the WIZARD Repository**:
-    ```bash
-    git clone https://github.com/yourusername/wizard.git
-    cd wizard/tools/pixelart
-    ```
+## TODOs and Future Improvements
 
-2. **Opening the File**:
-    Open `index.html` in your preferred web browser.
+1. Layer System
+   - [ ] Add support for multiple layers
+   - [ ] Implement layer opacity control
+   - [ ] Add layer blending modes
+   - [ ] Include layer reordering
+
+2. Drawing Tools
+   - [ ] Add line tool for straight lines
+   - [ ] Implement rectangle and circle tools
+   - [ ] Add flood fill tool
+   - [ ] Include selection tool for moving pixels
+
+3. History Management
+   - [ ] Implement undo/redo functionality
+   - [ ] Add action history panel
+   - [ ] Include snapshot system
+   - [ ] Add auto-save feature
+
+4. Animation Support
+   - [ ] Add animation frames
+   - [ ] Implement onion skinning
+   - [ ] Add frame preview
+   - [ ] Include animation export (GIF)
+
+5. Advanced Features
+   - [ ] Add symmetry tools
+   - [ ] Implement custom brushes
+   - [ ] Add palette management
+   - [ ] Include sprite sheet export
 
 ## Usage
 
-### Drawing
+The Pixel Art Creator can be accessed through:
+1. The main WIZARD dashboard
+2. Directly via `tools/pixelart/index.html`
 
-1. **Choose a Color**:
-   Use the color picker to select the color you want to draw with.
+### Drawing Guide
+1. Select a color using the color picker
+2. Choose your canvas size (16x16, 32x32, or 64x64)
+3. Click and drag on the canvas to draw
+4. Use the grid toggle for better precision
+5. Save your work as PNG when finished
 
-2. **Select Canvas Size**:
-   Use the dropdown to select the canvas size (16x16, 32x32, or 64x64).
+## Technical Details
 
-3. **Start Drawing**:
-   Click and drag on the canvas to start drawing your pixel art.
+Built using:
+- HTML5 Canvas for rendering
+- JavaScript for drawing logic
+- Native color picker integration
+- File API for saving artwork
 
-### Additional Controls
+## Integration
 
-- **Clear Canvas**:
-  Click the "Clear Canvas" button to erase all your drawings.
+To integrate this component into another project:
+1. Copy the necessary HTML, CSS, and JavaScript files
+2. Include the required dependencies
+3. Initialize the canvas with desired settings
+4. Customize styling as needed
 
-- **Save Drawing**:
-  Click the "Save Drawing" button to download your artwork as a PNG file.
+## Dependencies
 
-- **Toggle Grid**:
-  Click the "Toggle Grid" button to show or hide the grid lines.
+- Modern web browser with Canvas support
+- JavaScript enabled
+- File API support for saving
 
 ## Contributing
 
-We welcome contributions to the Pixel Art Creator! To contribute:
-
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature/YourFeature`).
-3. Commit your changes (`git commit -am 'Add YourFeature'`).
-4. Push to the branch (`git push origin feature/YourFeature`).
-5. Open a Pull Request.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+Contributions are welcome! Please check the main project README for contribution guidelines.
 
 ---
 
-Thank you for using the Pixel Art Creator! We hope it helps you create amazing pixel art with ease.
+For bug reports or feature requests, please use the GitHub issues system.

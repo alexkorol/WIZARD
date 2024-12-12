@@ -1,51 +1,60 @@
 # Geometric Skill Tree
 
-A hexagonal grid-based interactive skill tree visualization inspired by Path of Exile's passive skill system. This app is part of the **WIZARD** project.
-
-## Table of Contents
-
-1. [Features](#features)
-2. [Mathematical Foundations](#mathematical-foundations)
-    - [1. Circle Geometry and the Seed of Life](#1-circle-geometry-and-the-seed-of-life)
-    - [2. Hexagonal Geometry](#2-hexagonal-geometry)
-    - [3. Triangular Subdivision](#3-triangular-subdivision)
-    - [4. The Flower of Life Extension](#4-the-flower-of-life-extension)
-5. [Node Organization and Coordinate Systems](#node-organization-and-coordinate-systems)
-    - [1. Coordinate Systems](#1-coordinate-systems)
-        - [1.1 Axial Coordinates](#11-axial-coordinates)
-        - [1.2 Converting Between Coordinate Systems](#12-converting-between-coordinate-systems)
-    - [2. Node Organization](#2-node-organization)
-        - [2.1 Layer-based Indexing](#21-layer-based-indexing)
-        - [2.2 Connection Management](#22-connection-management)
-6. [Implementation Considerations](#implementation-considerations)
-    - [1. Coordinate Systems](#1-coordinate-systems-1)
-    - [2. Useful Functions](#2-useful-functions)
-7. [Advanced Skill Tree Implementation](#advanced-skill-tree-implementation)
-    - [1. Pathfinding Algorithms](#1-pathfinding-algorithms)
-        - [1.1 Breadth-First Search (BFS)](#11-breadth-first-search-bfs)
-        - [1.2 Dijkstra's Algorithm](#12-dijkstras-algorithm)
-    - [2. Prerequisite System](#2-prerequisite-system)
-        - [2.1 Prerequisite Graph](#21-prerequisite-graph)
-        - [2.2 Branch Management](#22-branch-management)
-    - [3. Advanced Rendering System](#3-advanced-rendering-system)
-        - [3.1 Canvas Rendering Class](#31-canvas-rendering-class)
-        - [3.2 Interactive Controls](#32-interactive-controls)
-8. [Usage](#usage)
-9. [Getting Started](#getting-started)
-10. [Contributing](#contributing)
-11. [License](#license)
-
----
+A hexagonal grid-based interactive skill tree visualization inspired by Path of Exile's passive skill system. Features a mathematically precise implementation based on circle geometry and hexagonal coordinates.
 
 ## Features
 
-- **Hexagonal Grid Layout**: Utilizes a hexagonal grid with intersecting circles to represent nodes.
-- **Interactive Node Selection**: Click to activate or deactivate nodes.
-- **Connection Visualization**: Visual lines connecting nodes based on their relationships.
-- **Dual Point System**: Manages both Node and Arc points for allocation.
-- **State Feedback**: Provides visual cues for available, active, and inactive nodes.
-- **Tooltip System**: Displays information about nodes on hover.
-- **Drag Animation Effects**: Smooth animations enhancing user interaction.
+- **Hexagonal Grid Layout**: Mathematically precise hexagonal grid system
+- **Interactive Nodes**: Click to activate/deactivate skills
+- **Dual Point System**: Separate node and arc point management
+- **Connection Visualization**: Clear visual representation of paths
+- **Mathematical Foundation**: Based on circle geometry and the Seed of Life
+- **Advanced Pathfinding**: Implements multiple pathfinding algorithms
+- **State Management**: Comprehensive prerequisite and branch systems
+- **Responsive Design**: Supports zooming and panning
+
+## Current State
+
+The tool is stable and functional with core features implemented:
+- Complete hexagonal grid system
+- Node activation/deactivation
+- Point allocation system
+- Connection management
+- Path validation
+- Interactive controls
+- Visual feedback system
+
+## TODOs and Future Improvements
+
+1. User Interface
+   - [ ] Add skill tooltips
+   - [ ] Implement skill search
+   - [ ] Add minimap navigation
+   - [ ] Include zoom controls UI
+
+2. Skill System
+   - [ ] Add skill categories
+   - [ ] Implement skill levels
+   - [ ] Add skill prerequisites
+   - [ ] Include skill descriptions
+
+3. Visual Enhancements
+   - [ ] Add node icons
+   - [ ] Implement connection animations
+   - [ ] Add allocation effects
+   - [ ] Include theme customization
+
+4. Data Management
+   - [ ] Add build saving
+   - [ ] Implement build sharing
+   - [ ] Add build templates
+   - [ ] Include export/import
+
+5. Advanced Features
+   - [ ] Add path optimization
+   - [ ] Implement build suggestions
+   - [ ] Add statistical analysis
+   - [ ] Include build validation
 
 ---
 
