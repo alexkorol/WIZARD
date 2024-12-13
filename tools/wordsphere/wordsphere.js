@@ -24,8 +24,18 @@ class SvgWordSphere {
 
         // Initialize handlers
         this.resizeHandler = () => {
-            this.svg?.setAttribute('viewBox', `0 0 ${window.innerWidth} ${window.innerHeight}`);
-            this.radius = Math.min(window.innerWidth, window.innerHeight) / 4;
+            const rect = this.container.getBoundingClientRect();
+            this.svg.setAttribute('viewBox', `0 0 ${rect.width} ${rect.height}`);
+            this.radius = Math.min(rect.width, rect.height) / 4;
+            
+            // Update light source position based on container
+            this.lightSource = {
+                x: rect.width / 2,
+                y: rect.height / 2,
+                z: 500
+            };
+            
+            this.render();
         };
 
         // Add event listeners
@@ -331,6 +341,9 @@ class SvgWordSphere {
         this.svg.setAttribute("width", "100%");
         this.svg.setAttribute("height", "100%");
         
+        // Get container dimensions
+        const containerRect = this.container.getBoundingClientRect();
+        
         // Add SVG rendering optimizations
         this.svg.style.transform = 'translateZ(0)';
         this.svg.style.backfaceVisibility = 'hidden';
@@ -342,8 +355,18 @@ class SvgWordSphere {
         
         // Add viewport attributes for better scaling
         this.svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-        this.svg.setAttribute('viewBox', `0 0 ${window.innerWidth} ${window.innerHeight}`);
+        this.svg.setAttribute('viewBox', `0 0 ${containerRect.width} ${containerRect.height}`);
         
+        // Update radius based on container size
+        this.radius = Math.min(containerRect.width, containerRect.height) / 4;
+        
+        // Initialize light source based on container
+        this.lightSource = {
+            x: containerRect.width / 2,
+            y: containerRect.height / 2,
+            z: 500
+        };
+
         // Add paint optimization attributes
         this.svg.style.contain = 'paint style layout';
         this.svg.style.isolation = 'isolate';
@@ -508,11 +531,13 @@ class SvgWordSphere {
 
     project(point) {
         const rotated = this.rotatePoint(point);
-        const focalLength = Math.max(window.innerWidth, window.innerHeight) * 1.5;
-        const scale = focalLength / (focalLength - rotated.z * 0.8);
+        const containerRect = this.container.getBoundingClientRect();
+        const focalLength = Math.max(containerRect.width, containerRect.height);
+        const scale = focalLength / (focalLength + rotated.z);
+        
         return {
-            x: rotated.x * scale + window.innerWidth / 2,
-            y: rotated.y * scale + window.innerHeight / 2,
+            x: rotated.x * scale + containerRect.width / 2,
+            y: rotated.y * scale + containerRect.height / 2,
             z: rotated.z
         };
     }
@@ -523,10 +548,18 @@ class SvgWordSphere {
             this.svg.removeChild(this.svg.lastChild);
         }
 
+        // Get current container dimensions
+        const containerRect = this.container.getBoundingClientRect();
+
+        // Update viewBox to match container
+        this.svg.setAttribute('viewBox', `0 0 ${containerRect.width} ${containerRect.height}`);
+
         // Draw background
         const background = document.createElementNS("http://www.w3.org/2000/svg", "rect");
         background.setAttribute("width", "100%");
         background.setAttribute("height", "100%");
+        background.setAttribute("x", "0");
+        background.setAttribute("y", "0");
         background.setAttribute("fill", "url(#sphereGradient)");
         this.svg.appendChild(background);
 
@@ -702,14 +735,16 @@ class SvgWordSphere {
     }
 
     animate() {
-        if (!this.animationFrame) return;
+        if (!this.animationFrame) {
+            this.animationFrame = requestAnimationFrame(() => this.animate());
+            return;
+        }
 
         const currentTime = Date.now();
-        const deltaTime = Math.min((currentTime - this.lastTime) / 1000, 0.016); // Cap at 60fps
+        const deltaTime = Math.min((currentTime - this.lastTime) / 1000, 0.016);
         this.lastTime = currentTime;
 
         if (!this.isDragging) {
-            // Apply continuous rotation with damping
             const damping = 0.98;
             this.momentum.x *= damping;
             this.momentum.y *= damping;
@@ -717,22 +752,23 @@ class SvgWordSphere {
             // Add minimum rotation to keep sphere moving
             this.momentum.y = Math.max(0.005, Math.abs(this.momentum.y)) * Math.sign(this.momentum.y || 1);
             
-            // Apply rotation
             this.rotation.x += this.momentum.x;
             this.rotation.y += this.momentum.y;
         }
 
-        // Update light source
-        this.lightPulsePhase += deltaTime * 0.5;
-        const radius = Math.min(window.innerWidth, window.innerHeight) * 0.3;
+        // Update light source position based on container
+        const rect = this.container.getBoundingClientRect();
+        const radius = Math.min(rect.width, rect.height) * 0.3;
         this.lightSource = {
-            x: window.innerWidth/2 + Math.cos(this.lightPulsePhase) * radius,
-            y: window.innerHeight/2 + Math.sin(this.lightPulsePhase * 0.7) * radius,
+            x: rect.width/2 + Math.cos(this.lightPulsePhase) * radius,
+            y: rect.height/2 + Math.sin(this.lightPulsePhase * 0.7) * radius,
             z: 500 + Math.sin(this.lightPulsePhase * 0.5) * 200
         };
 
-        requestAnimationFrame(() => this.animate());
+        this.lightPulsePhase += deltaTime * 0.5;
+        
         this.render();
+        this.animationFrame = requestAnimationFrame(() => this.animate());
     }
 
     destroy() {
