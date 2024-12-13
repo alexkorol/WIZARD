@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WordSphere - WIZARD</title>
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone@7.22.17/babel.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -14,34 +11,67 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             background-color: #1a1a1a;
             color: white;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
         }
         
         .container {
-            width: 100%;
+            width: 100vw;
             height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .back-button {
+        #root {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        #alt-container {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            position: relative;
+            overflow: hidden;
+            background-color: #0a0a1a;
+            background: radial-gradient(circle at center, #1a1a2a 0%, #0a0a1a 100%);
+        }
+
+        .back-button, .toggle-button {
             position: fixed;
-            top: 20px;
-            left: 20px;
             padding: 10px 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: none;
+            background-color: rgba(0, 150, 255, 0.1);
+            color: #00ffff;
+            border: 1px solid rgba(0, 150, 255, 0.3);
             border-radius: 5px;
             cursor: pointer;
             text-decoration: none;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
             z-index: 1000;
+            font-size: 14px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
         }
 
-        .back-button:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+        .back-button {
+            top: 20px;
+            left: 20px;
+        }
+
+        .toggle-button {
+            top: 20px;
+            right: 20px;
+        }
+
+        .back-button:hover, .toggle-button:hover {
+            background-color: rgba(0, 150, 255, 0.2);
+            border-color: rgba(0, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.2);
         }
 
         .error-boundary {
@@ -50,45 +80,166 @@
             background: rgba(255, 0, 0, 0.1);
             border-radius: 8px;
             margin: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Alt sphere styles */
+        .word {
+            position: absolute;
+            transform-origin: center;
+            user-select: none;
+            cursor: pointer;
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .word:hover {
+            color: #fff;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8),
+                        0 0 30px rgba(0, 255, 255, 0.6);
+        }
+
+        .connection {
+            position: absolute;
+            pointer-events: none;
+            background: linear-gradient(90deg, 
+                rgba(0, 255, 255, 0.3) 0%,
+                rgba(0, 150, 255, 0.1) 50%,
+                rgba(0, 255, 255, 0) 100%);
+            transform-origin: left;
+            height: 1px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Add animation styles */
+        @keyframes pulse {
+            0% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.2; transform: scale(1.05); }
+            100% { opacity: 0.4; transform: scale(1); }
+        }
+
+        .pulse-effect {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        svg {
+            display: block;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
     <a href="../../index.html" class="back-button">Back to Dashboard</a>
-    <div id="root"></div>
-    <script type="text/babel" data-type="module" data-presets="react">
-        // Error Boundary Component
-        class ErrorBoundary extends React.Component {
-            constructor(props) {
-                super(props);
-                this.state = { hasError: false, error: null };
-            }
+    <button class="toggle-button" onclick="toggleSphere()">Switch View</button>
+    <div id="main-container"></div>
+    <div id="alt-container"></div>
 
-            static getDerivedStateFromError(error) {
-                return { hasError: true, error };
-            }
+    <script>
+        // Shared words data
+        window.sphereWords = [
+            {text: "React", weight: 10},
+            {text: "Vue", weight: 8},
+            {text: "Angular", weight: 7},
+            {text: "Node.js", weight: 9},
+            {text: "TypeScript", weight: 8},
+            {text: "JavaScript", weight: 10},
+            {text: "HTML", weight: 7},
+            {text: "CSS", weight: 7},
+            {text: "GraphQL", weight: 6},
+            {text: "REST", weight: 6},
+            {text: "MongoDB", weight: 5},
+            {text: "PostgreSQL", weight: 5},
+            {text: "Docker", weight: 7},
+            {text: "Kubernetes", weight: 6},
+            {text: "AWS", weight: 8},
+            {text: "Git", weight: 7},
+            {text: "CI/CD", weight: 6},
+            {text: "Redux", weight: 5},
+            {text: "Webpack", weight: 4},
+            {text: "Testing", weight: 5}
+        ];
 
-            render() {
-                if (this.state.hasError) {
-                    return (
-                        <div className="error-boundary">
-                            <h2>Something went wrong.</h2>
-                            <pre>{this.state.error?.toString()}</pre>
-                        </div>
-                    );
+        let currentSphere = 'main';
+        let mainSphere = null;
+        let altSphere = null;
+
+        // Replace the DOMContentLoaded event listener with:
+        window.addEventListener('DOMContentLoaded', () => {
+            const mainContainer = document.getElementById('main-container');
+            const altContainer = document.getElementById('alt-container');
+            
+            // Ensure containers exist
+            if (!mainContainer || !altContainer) {
+                console.error('Required containers not found');
+                return;
+            }
+            
+            // Set initial display states
+            mainContainer.style.display = 'block';
+            altContainer.style.display = 'none';
+            
+            try {
+                // Initialize main sphere
+                mainSphere = new SvgWordSphere(mainContainer, window.sphereWords);
+                
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    if (currentSphere === 'main' && mainSphere) {
+                        mainSphere.destroy();
+                        mainSphere = new SvgWordSphere(mainContainer, window.sphereWords);
+                    } else if (currentSphere === 'alt' && altSphere) {
+                        altSphere.destroy();
+                        altSphere = new WordSphere(altContainer, window.sphereWords);
+                    }
+                });
+            } catch (error) {
+                console.error('Error initializing sphere:', error);
+                mainContainer.innerHTML = `<div class="error-boundary">Error initializing sphere: ${error.message}</div>`;
+            }
+        });
+
+        function toggleSphere() {
+            const mainContainer = document.getElementById('main-container');
+            const altContainer = document.getElementById('alt-container');
+            const toggleButton = document.querySelector('.toggle-button');
+            
+            if (currentSphere === 'main') {
+                mainContainer.style.display = 'none';
+                altContainer.style.display = 'block';
+                if (!altSphere) {
+                    altSphere = new WordSphere(altContainer, window.sphereWords);
                 }
-                return this.props.children;
+                if (mainSphere) {
+                    mainSphere.destroy();
+                    mainSphere = null;
+                }
+                currentSphere = 'alt';
+                toggleButton.textContent = 'Switch to Main View';
+            } else {
+                mainContainer.style.display = 'block';
+                altContainer.style.display = 'none';
+                if (!mainSphere) {
+                    mainSphere = new SvgWordSphere(mainContainer, window.sphereWords);
+                }
+                if (altSphere) {
+                    altSphere.destroy();
+                    altSphere = null;
+                }
+                currentSphere = 'main';
+                toggleButton.textContent = 'Switch to Alternative View';
             }
         }
-
-        // Wrap the WordSphere component with ErrorBoundary
-        ReactDOM.render(
-            <ErrorBoundary>
-                <WordSphere />
-            </ErrorBoundary>,
-            document.getElementById('root')
-        );
     </script>
-    <script type="text/babel" data-presets="react" src="wordsphere.js"></script>
+
+    <script src="wordsphere.js"></script>
+    <script src="alt-sphere.js"></script>
 </body>
 </html>
