@@ -82,6 +82,14 @@ WIZARD is a dynamic and adaptable resource dashboard that brings together a vari
   - [ ] Implement palette saving
   - [ ] Add batch processing
 
+### Wireframe Space Shooter
+- **Status**: Active Development
+- **Features**: 3D wireframe graphics, space combat, radar system
+- **TODOs**:
+  - [ ] Add more enemy types
+  - [ ] Implement power-ups
+  - [ ] Add sound effects
+
 ## Getting Started
 
 To get started with WIZARD, follow these steps:
@@ -110,6 +118,7 @@ wizard/
 |   +-- geometric_skilltree/  # Hexagonal skill system
 |   +-- rpg_inventory/  # Inventory management
 |   +-- slerp/         # Color interpolation tool
+|   +-- space_shooter/  # Wireframe space shooter game
 +-- assets/            # Common assets (images, CSS, JS)
 ```
 
