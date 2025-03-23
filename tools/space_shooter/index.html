@@ -88,6 +88,72 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
+        /* Cockpit overlay styles */
+        #cockpit {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .cockpit-frame {
+            position: absolute;
+            border: 2px solid #0f0;
+            opacity: 0.5;
+        }
+        #cockpit-top {
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 5%;
+            border-bottom: none;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+        #cockpit-bottom {
+            bottom: 0;
+            left: 5%;
+            right: 5%;
+            height: 15%;
+            border-top: none;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+        #cockpit-left {
+            top: 20%;
+            left: 0;
+            width: 5%;
+            bottom: 20%;
+            border-right: none;
+        }
+        #cockpit-right {
+            top: 20%;
+            right: 0;
+            width: 5%;
+            bottom: 20%;
+            border-left: none;
+        }
+        #speed-indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #0f0;
+            font-size: 14px;
+            text-align: center;
+            z-index: 10;
+        }
+        .target-indicator {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 1px solid #f00;
+            border-radius: 50%;
+            z-index: 5;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
     </style>
 </head>
 <body>
@@ -108,7 +174,17 @@
         <div class="player-blip"></div>
     </div>
     <div id="crosshair"></div>
-
+    
+    <!-- Add cockpit overlay -->
+    <div id="cockpit">
+        <div id="cockpit-top" class="cockpit-frame"></div>
+        <div id="cockpit-bottom" class="cockpit-frame"></div>
+        <div id="cockpit-left" class="cockpit-frame"></div>
+        <div id="cockpit-right" class="cockpit-frame"></div>
+    </div>
+    <div id="speed-indicator">SPEED: 0</div>
+    <div class="target-indicator"></div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         // Game variables
@@ -131,7 +207,6 @@
             
             // Create camera
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-            camera.position.z = 5;
             
             // Create renderer
             renderer = new THREE.WebGLRenderer({ 
@@ -212,6 +287,10 @@
             const material = new THREE.LineBasicMaterial({ color: 0x00ff00 });
             playerShip = new THREE.LineSegments(geometry, material);
             
+            // Position camera inside the ship for first-person view
+            camera.position.set(0, 0.5, -1);
+            playerShip.add(camera);
+            
             scene.add(playerShip);
         }
         
@@ -273,30 +352,49 @@
         
         function fireLaser() {
             const geometry = new THREE.BufferGeometry();
-            const vertices = new Float32Array([
-                0, 0, -4,
-                0, 0, -6
-            ]);
+            // Make lasers appear to come from slightly to the sides of the cockpit
+            // for a more immersive first-person effect
+            const leftLaser = new THREE.BufferGeometry();
+            const rightLaser = new THREE.BufferGeometry();
             
-            geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+            leftLaser.setAttribute('position', new THREE.Float32BufferAttribute([
+                -0.5, -0.2, -2,
+                -0.5, -0.2, -20
+            ], 3));
+            
+            rightLaser.setAttribute('position', new THREE.Float32BufferAttribute([
+                0.5, -0.2, -2,
+                0.5, -0.2, -20
+            ], 3));
             
             const material = new THREE.LineBasicMaterial({ color: 0x00ffff });
-            const laser = new THREE.Line(geometry, material);
+            const laserLeft = new THREE.Line(leftLaser, material);
+            const laserRight = new THREE.Line(rightLaser, material);
             
             // Position at ship's front
-            laser.position.copy(playerShip.position);
-            laser.rotation.copy(playerShip.rotation);
+            laserLeft.position.copy(playerShip.position);
+            laserLeft.rotation.copy(playerShip.rotation);
+            laserRight.position.copy(playerShip.position);
+            laserRight.rotation.copy(playerShip.rotation);
             
             // Set laser direction based on ship's orientation
             const direction = new THREE.Vector3(0, 0, -1);
             direction.applyQuaternion(playerShip.quaternion);
-            laser.userData = { 
+            
+            laserLeft.userData = { 
                 direction: direction,
                 distance: 0
             };
             
-            scene.add(laser);
-            lasers.push(laser);
+            laserRight.userData = { 
+                direction: direction,
+                distance: 0
+            };
+            
+            scene.add(laserLeft);
+            scene.add(laserRight);
+            lasers.push(laserLeft);
+            lasers.push(laserRight);
         }
         
         function updateRadar() {
@@ -352,22 +450,36 @@
                 const direction = new THREE.Vector3(0, 0, -1);
                 direction.applyQuaternion(playerShip.quaternion);
                 playerShip.position.addScaledVector(direction, moveSpeed);
+                currentSpeed = moveSpeed * 100; // Scale for display
+                isMoving = true;
             }
             if (keys['ArrowDown']) {
                 const direction = new THREE.Vector3(0, 0, 1);
                 direction.applyQuaternion(playerShip.quaternion);
                 playerShip.position.addScaledVector(direction, moveSpeed);
+                currentSpeed = moveSpeed * 100; // Scale for display
+                isMoving = true;
             }
             if (keys['ArrowLeft']) {
                 const direction = new THREE.Vector3(-1, 0, 0);
                 direction.applyQuaternion(playerShip.quaternion);
                 playerShip.position.addScaledVector(direction, moveSpeed);
+                isMoving = true;
             }
             if (keys['ArrowRight']) {
                 const direction = new THREE.Vector3(1, 0, 0);
                 direction.applyQuaternion(playerShip.quaternion);
                 playerShip.position.addScaledVector(direction, moveSpeed);
+                isMoving = true;
             }
+            
+            // Gradually decrease speed if not moving
+            if (!isMoving && currentSpeed > 0) {
+                currentSpeed = Math.max(0, currentSpeed - 2);
+            }
+            
+            // Update speed indicator
+            document.getElementById('speed-indicator').textContent = `SPEED: ${Math.round(currentSpeed)}`;
             
             // Shooting
             if (keys[' ']) {
