@@ -13,11 +13,13 @@ A 3D wireframe space shooter game inspired by the classic Elite from the 1980s. 
 
 ## Controls
 
-- **W/S**: Pitch up/down
-- **A/D**: Roll left/right
-- **Q/E**: Yaw left/right
-- **Arrow Keys**: Move forward/backward/left/right
+- **Mouse**: Aim and turn (pitch/yaw)
+- **W/S**: Move forward/backward
+- **A/D**: Strafe left/right
+- **Q/E**: Roll left/right
 - **Space**: Fire lasers
+- **M**: Lock/fire missile
+- **T**: Target nearest enemy
 - **R**: Restart game after game over
 
 ## How to Play

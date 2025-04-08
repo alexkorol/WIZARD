@@ -24,18 +24,17 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
-            background: radial-gradient(circle at center, #001133 0%, #000510 100%);
         }
 
         #root {
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             position: relative;
         }
 
         #alt-container {
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             display: none;
             position: relative;
             overflow: hidden;
@@ -43,25 +42,34 @@
             background: radial-gradient(circle at center, #1a1a2a 0%, #0a0a1a 100%);
         }
 
-        .toggle-button {
+        .back-button, .toggle-button {
             position: fixed;
-            top: 20px;
-            right: 20px;
             padding: 10px 20px;
-            background: rgba(0, 150, 255, 0.1);
+            background-color: rgba(0, 150, 255, 0.1);
             color: #00ffff;
-            border: 1px solid rgba(0, 255, 255, 0.3);
+            border: 1px solid rgba(0, 150, 255, 0.3);
             border-radius: 5px;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s ease;
             z-index: 1000;
+            font-size: 14px;
             text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
             backdrop-filter: blur(5px);
         }
 
-        .toggle-button:hover {
-            background: rgba(0, 150, 255, 0.2);
+        .back-button {
+            top: 20px;
+            left: 20px;
+        }
+
+        .toggle-button {
+            top: 20px;
+            right: 20px;
+        }
+
+        .back-button:hover, .toggle-button:hover {
+            background-color: rgba(0, 150, 255, 0.2);
             border-color: rgba(0, 255, 255, 0.5);
             box-shadow: 0 0 20px rgba(0, 150, 255, 0.2);
         }
@@ -129,9 +137,10 @@
     </style>
 </head>
 <body>
-    <div id="root"></div>
-    <div id="alt-container"></div>
+    <a href="../../index.html" class="back-button">Back to Dashboard</a>
     <button class="toggle-button" onclick="toggleSphere()">Switch View</button>
+    <div id="main-container"></div>
+    <div id="alt-container"></div>
 
     <script>
         // Shared words data
