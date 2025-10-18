@@ -296,33 +296,24 @@
 
     // Function to add circle positions in a hexagonal grid
     function addCirclePositions(layers) {
-      // Clear existing positions
       circlePositions.length = 0;
 
-      // Center circle (layer 0)
-      circlePositions.push({ x: centerX, y: centerY });
+      const seen = new Set();
+      const roundKey = (x, y) => `${x.toFixed(3)},${y.toFixed(3)}`;
 
-      // Directions in radians (60-degree increments)
-      const directions = [
-        0,
-        Math.PI / 3,
-        (2 * Math.PI) / 3,
-        Math.PI,
-        (4 * Math.PI) / 3,
-        (5 * Math.PI) / 3
-      ];
+      for (let q = -layers; q <= layers; q++) {
+        for (let r = -layers; r <= layers; r++) {
+          const s = -q - r;
+          if (Math.max(Math.abs(q), Math.abs(r), Math.abs(s)) > layers) continue;
 
-      // Iterate through each layer
-      for (let layer = 1; layer <= layers; layer++) {
-        // For each direction
-        directions.forEach(direction => {
-          // Place 'step' number of circles in each direction
-          for (let step = 1; step <= layer; step++) {
-            const x = centerX + step * R * Math.cos(direction);
-            const y = centerY + step * R * Math.sin(direction);
-            circlePositions.push({ x, y });
-          }
-        });
+          const x = centerX + (R * 1.5) * q;
+          const y = centerY + (R * Math.sqrt(3) / 2) * (2 * r + q);
+
+          const key = roundKey(x, y);
+          if (seen.has(key)) continue;
+          seen.add(key);
+          circlePositions.push({ x, y });
+        }
       }
     }
 
