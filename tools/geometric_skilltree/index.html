@@ -285,14 +285,19 @@
     let hoveredNode = null;
     let hoveredArc = null;
 
-    const nodes = [];
-    const arcs = [];
+    const POSITION_PRECISION = 3;
+    const ARC_DISTANCE_TOLERANCE = 1e-2;
+
+    let circlePositions = [];
+    let nodes = [];
+    let arcs = [];
 
     // Define the nodes where extra circles should be added
     const extraCircleNodes = ['n7', 'n8', 'n9', 'n10', 'n11', 'n12', 'n13', 'n15'];
 
-    // Positions of circles in the Flower of Life pattern
-    const circlePositions = [];
+    function snapCoordinate(value, precision = POSITION_PRECISION) {
+      return Number(value.toFixed(precision));
+    }
 
     // Function to add circle positions in a hexagonal grid
     function addCirclePositions(layers) {
@@ -315,72 +320,8 @@
           circlePositions.push({ x, y });
         }
       }
-    }
 
-    // Function to generate nodes and arcs based on current circlePositions
-    function generateNodesAndArcs() {
-      calculateNodes();
-      calculateArcs();
-    }
-
-    // Define the number of layers you want (e.g., 4 for more nodes)
-    const numberOfLayers = 4; // Increased from 3 to 4 to ensure nodes n13, n15 exist
-    addCirclePositions(numberOfLayers);
-    generateNodesAndArcs();
-
-    // Draw circles
-    circlePositions.forEach((pos, index) => {
-      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      circle.setAttribute('cx', pos.x);
-      circle.setAttribute('cy', pos.y);
-      circle.setAttribute('r', R);
-      circle.setAttribute('fill', 'none');
-      circle.setAttribute('stroke', '#ffffff44'); // Increased opacity
-      mainGroup.appendChild(circle);
-    });
-
-    // Calculate nodes (intersection points)
-    function calculateNodes() {
-      nodes.length = 0;
-      let nodeId = 0;
-
-      const nodeMap = {};
-
-      // First, add center node (n0)
-      nodes.push({
-        id: 'n0',
-        x: centerX,
-        y: centerY,
-        connections: []
-      });
-      nodeMap[`${centerX.toFixed(3)},${centerY.toFixed(3)}`] = 'n0';
-
-      // Then calculate intersections
-      for (let i = 0; i < circlePositions.length; i++) {
-        for (let j = i + 1; j < circlePositions.length; j++) {
-          const intersections = circleCircleIntersection(
-            circlePositions[i].x, circlePositions[i].y, R,
-            circlePositions[j].x, circlePositions[j].y, R
-          );
-
-          intersections.forEach(point => {
-            const key = `${point.x.toFixed(3)},${point.y.toFixed(3)}`;
-            if (!nodeMap[key]) {
-              const newId = `n${++nodeId}`;
-              nodes.push({
-                id: newId,
-                x: point.x,
-                y: point.y,
-                connections: []
-              });
-              nodeMap[key] = newId;
-            }
-          });
-        }
-      }
-
-      // Optional: Log nodes to verify existence
-      console.log('Generated Nodes:', nodes.map(node => node.id));
+      return positions;
     }
 
     // Function to calculate circle-circle intersection points
@@ -389,7 +330,6 @@
       const dy = y1 - y0;
       const d = Math.hypot(dx, dy);
 
-      // Check for no intersection
       if (d > r0 + r1 || d < Math.abs(r0 - r1) || d === 0) {
         return [];
       }
@@ -406,20 +346,66 @@
       return [{ x: xs1, y: ys1 }, { x: xs2, y: ys2 }];
     }
 
-    // Build connections between nodes (arcs)
-    function calculateArcs() {
-      arcs.length = 0;
+    function buildNodesFromCircleIntersections(circlePositions, radius, precision = POSITION_PRECISION) {
+      const generatedNodes = [];
+      const nodeMap = new Map();
+      let nodeId = 0;
+
+      const centerPoint = snapPoint(circlePositions[0], precision);
+      const centerKey = getPointKey(centerPoint, precision);
+      generatedNodes.push({
+        id: 'n0',
+        x: centerPoint.x,
+        y: centerPoint.y,
+        connections: []
+      });
+      nodeMap.set(centerKey, 'n0');
+
+      for (let i = 0; i < circlePositions.length; i++) {
+        for (let j = i + 1; j < circlePositions.length; j++) {
+          const intersections = circleCircleIntersection(
+            circlePositions[i].x,
+            circlePositions[i].y,
+            radius,
+            circlePositions[j].x,
+            circlePositions[j].y,
+            radius
+          );
+
+          intersections.forEach(point => {
+            const snappedPoint = snapPoint(point, precision);
+            const key = getPointKey(snappedPoint, precision);
+            if (!nodeMap.has(key)) {
+              const newId = `n${++nodeId}`;
+              generatedNodes.push({
+                id: newId,
+                x: snappedPoint.x,
+                y: snappedPoint.y,
+                connections: []
+              });
+              nodeMap.set(key, newId);
+            }
+          });
+        }
+      }
+
+      return generatedNodes;
+    }
+
+    function buildArcsFromNodes(nodes, radius, tolerance = ARC_DISTANCE_TOLERANCE) {
+      nodes.forEach(node => {
+        node.connections = [];
+      });
+
+      const generatedArcs = [];
       let arcId = 0;
 
-      // For each node
       nodes.forEach((nodeA, i) => {
-        // Find all nodes at distance R
         nodes.forEach((nodeB, j) => {
           if (i < j) {
             const dist = Math.hypot(nodeA.x - nodeB.x, nodeA.y - nodeB.y);
-            if (Math.abs(dist - R) < 0.5) {
-              // Create an arc
-              arcs.push({
+            if (Math.abs(dist - radius) <= tolerance) {
+              generatedArcs.push({
                 id: `a${arcId++}`,
                 from: nodeA.id,
                 to: nodeB.id,
@@ -429,7 +415,6 @@
                 y2: nodeB.y
               });
 
-              // Add connections to nodes
               if (!nodeA.connections.includes(nodeB.id)) {
                 nodeA.connections.push(nodeB.id);
               }
@@ -441,9 +426,33 @@
         });
       });
 
-      // Optional: Log arcs to verify existence
-      console.log('Generated Arcs:', arcs.map(arc => arc.id));
+      return generatedArcs;
     }
+
+    function initializeGeometry(layers) {
+      circlePositions = buildCirclePositions(centerX, centerY, R, layers);
+      nodes = buildNodesFromCircleIntersections(circlePositions, R, POSITION_PRECISION);
+      arcs = buildArcsFromNodes(nodes, R, ARC_DISTANCE_TOLERANCE);
+    }
+
+    // Define the number of layers you want (e.g., 4 for more nodes)
+    const numberOfLayers = 4; // Increased from 3 to 4 to ensure nodes n13, n15 exist
+    initializeGeometry(numberOfLayers);
+
+    // Draw circles
+    circlePositions.forEach((pos, index) => {
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute('cx', pos.x);
+      circle.setAttribute('cy', pos.y);
+      circle.setAttribute('r', R);
+      circle.setAttribute('fill', 'none');
+      circle.setAttribute('stroke', '#ffffff44'); // Increased opacity
+      mainGroup.appendChild(circle);
+    });
+
+    // Optional: Log nodes and arcs to verify existence
+    console.log('Generated Nodes:', nodes.map(node => node.id));
+    console.log('Generated Arcs:', arcs.map(arc => arc.id));
 
     // Function to describe a straight line between two points
     function describeLine(x1, y1, x2, y2) {
