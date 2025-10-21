@@ -299,37 +299,26 @@
       return Number(value.toFixed(precision));
     }
 
-    function snapPoint(point, precision = POSITION_PRECISION) {
-      return {
-        x: snapCoordinate(point.x, precision),
-        y: snapCoordinate(point.y, precision)
-      };
-    }
+    // Function to add circle positions in a hexagonal grid
+    function addCirclePositions(layers) {
+      circlePositions.length = 0;
 
-    function getPointKey(point, precision = POSITION_PRECISION) {
-      return `${point.x.toFixed(precision)},${point.y.toFixed(precision)}`;
-    }
+      const seen = new Set();
+      const roundKey = (x, y) => `${x.toFixed(3)},${y.toFixed(3)}`;
 
-    // Build circle positions in a hexagonal grid pattern
-    function buildCirclePositions(centerX, centerY, radius, layers) {
-      const positions = [{ x: centerX, y: centerY }];
-      const directions = [
-        0,
-        Math.PI / 3,
-        (2 * Math.PI) / 3,
-        Math.PI,
-        (4 * Math.PI) / 3,
-        (5 * Math.PI) / 3
-      ];
+      for (let q = -layers; q <= layers; q++) {
+        for (let r = -layers; r <= layers; r++) {
+          const s = -q - r;
+          if (Math.max(Math.abs(q), Math.abs(r), Math.abs(s)) > layers) continue;
 
-      for (let layer = 1; layer <= layers; layer++) {
-        directions.forEach(direction => {
-          for (let step = 1; step <= layer; step++) {
-            const x = centerX + step * radius * Math.cos(direction);
-            const y = centerY + step * radius * Math.sin(direction);
-            positions.push({ x, y });
-          }
-        });
+          const x = centerX + (R * 1.5) * q;
+          const y = centerY + (R * Math.sqrt(3) / 2) * (2 * r + q);
+
+          const key = roundKey(x, y);
+          if (seen.has(key)) continue;
+          seen.add(key);
+          circlePositions.push({ x, y });
+        }
       }
 
       return positions;
