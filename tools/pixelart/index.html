@@ -28,6 +28,19 @@ button, select {
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+button:hover, select:hover {
+  background-color: #e2e8f0;
+}
+
+button.active {
+  background-color: #3b82f6;
+  color: #fff;
+  border-color: #2563eb;
+  box-shadow: 0 0 6px rgba(37, 99, 235, 0.35);
 }
 #pixel-canvas {
   border: 1px solid #ccc;
@@ -42,13 +55,22 @@ button, select {
     <input type="color" id="colorPicker" value="#000000" title="Choose color">
     <select id="canvasSize">
       <option value="16">16x16</option>
-      <option value="32">32x32</option>
+      <option value="32" selected>32x32</option>
       <option value="64">64x64</option>
     </select>
-    <button id="clearBtn">Clear Canvas</button>
-    <button id="saveBtn">Save Drawing</button>
-    <button id="toggleGridBtn">Toggle Grid</button>
+    <button id="paintTool" class="active">Paint</button>
+    <button id="eraseTool">Erase</button>
+    <button id="eyedropperTool">Eyedropper</button>
+    <button id="mirrorXBtn">Mirror X</button>
+    <button id="mirrorYBtn">Mirror Y</button>
+    <button id="undoBtn">Undo</button>
+    <button id="redoBtn">Redo</button>
+    <button id="clearBtn">Clear</button>
+    <button id="saveBtn">Export PNG</button>
+    <button id="exportDataBtn">Export Data</button>
+    <button id="toggleGridBtn">Grid</button>
   </div>
+  <div id="palette" class="controls" style="margin-top: 10px; flex-wrap: wrap;"></div>
   <canvas id="pixel-canvas" width="512" height="512"></canvas>
 
 <script>
@@ -59,66 +81,153 @@ const canvasSizeSelect = document.getElementById('canvasSize');
 const clearBtn = document.getElementById('clearBtn');
 const saveBtn = document.getElementById('saveBtn');
 const toggleGridBtn = document.getElementById('toggleGridBtn');
+const undoBtn = document.getElementById('undoBtn');
+const redoBtn = document.getElementById('redoBtn');
+const exportDataBtn = document.getElementById('exportDataBtn');
+const mirrorXBtn = document.getElementById('mirrorXBtn');
+const mirrorYBtn = document.getElementById('mirrorYBtn');
+const paintTool = document.getElementById('paintTool');
+const eraseTool = document.getElementById('eraseTool');
+const eyedropperTool = document.getElementById('eyedropperTool');
+const paletteEl = document.getElementById('palette');
 
-let pixelSize = 32; // Default to 16x16 grid (512/16)
-let showGrid = true;
-let isDrawing = false;
+const state = {
+  gridSize: parseInt(canvasSizeSelect.value, 10),
+  pixelSize: canvas.width / parseInt(canvasSizeSelect.value, 10),
+  showGrid: true,
+  isDrawing: false,
+  currentTool: 'paint',
+  mirrorX: false,
+  mirrorY: false,
+  pixels: [],
+  history: [],
+  redoStack: []
+};
 
-function initCanvas() {
-  const gridSize = parseInt(canvasSizeSelect.value);
-  pixelSize = canvas.width / gridSize;
-  clearCanvas();
-  drawGrid();
+function createEmptyPixels() {
+  return Array.from({ length: state.gridSize }, () => Array(state.gridSize).fill('#ffffff'));
 }
 
-function drawGrid() {
-  if (!showGrid) return;
-  
-  ctx.strokeStyle = '#e0e0e0';
-  ctx.lineWidth = 1;
-
-  for (let i = 0; i <= canvas.width; i += pixelSize) {
-    ctx.beginPath();
-    ctx.moveTo(i, 0);
-    ctx.lineTo(i, canvas.height);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(0, i);
-    ctx.lineTo(canvas.width, i);
-    ctx.stroke();
-  }
-}
-
-function clearCanvas() {
+function drawAll() {
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  drawGrid();
-}
 
-function startDrawing(e) {
-  isDrawing = true;
-  draw(e);
-}
-
-function draw(e) {
-  if (!isDrawing) return;
-
-  const rect = canvas.getBoundingClientRect();
-  const x = Math.floor((e.clientX - rect.left) / pixelSize) * pixelSize;
-  const y = Math.floor((e.clientY - rect.top) / pixelSize) * pixelSize;
-
-  ctx.fillStyle = colorPicker.value;
-  ctx.fillRect(x, y, pixelSize, pixelSize);
-
-  if (showGrid) {
-    ctx.strokeStyle = '#e0e0e0';
-    ctx.strokeRect(x, y, pixelSize, pixelSize);
+  for (let y = 0; y < state.gridSize; y++) {
+    for (let x = 0; x < state.gridSize; x++) {
+      const color = state.pixels[y][x];
+      if (color !== '#ffffff') {
+        ctx.fillStyle = color;
+        ctx.fillRect(x * state.pixelSize, y * state.pixelSize, state.pixelSize, state.pixelSize);
+      }
+    }
   }
+
+  if (state.showGrid) {
+    ctx.strokeStyle = '#d1d5db';
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= state.gridSize; i++) {
+      ctx.beginPath();
+      ctx.moveTo(i * state.pixelSize, 0);
+      ctx.lineTo(i * state.pixelSize, canvas.height);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0, i * state.pixelSize);
+      ctx.lineTo(canvas.width, i * state.pixelSize);
+      ctx.stroke();
+    }
+  }
+
+  updatePalette();
+}
+
+function initCanvas() {
+  state.gridSize = parseInt(canvasSizeSelect.value, 10);
+  state.pixelSize = canvas.width / state.gridSize;
+  state.pixels = createEmptyPixels();
+  state.history = [];
+  state.redoStack = [];
+  drawAll();
+}
+
+function toGridCoordinate(evt) {
+  const rect = canvas.getBoundingClientRect();
+  const x = Math.floor((evt.clientX - rect.left) / state.pixelSize);
+  const y = Math.floor((evt.clientY - rect.top) / state.pixelSize);
+  return { x, y };
+}
+
+function pushHistory() {
+  const snapshot = state.pixels.map(row => [...row]);
+  state.history.push(snapshot);
+  if (state.history.length > 50) {
+    state.history.shift();
+  }
+  state.redoStack = [];
+}
+
+function restoreFromSnapshot(snapshot) {
+  state.pixels = snapshot.map(row => [...row]);
+  drawAll();
+}
+
+function applyTool(x, y) {
+  if (x < 0 || y < 0 || x >= state.gridSize || y >= state.gridSize) return;
+
+  if (state.currentTool === 'eyedropper') {
+    const sampled = state.pixels[y][x];
+    colorPicker.value = sampled;
+    setActiveTool('paint');
+    return;
+  }
+
+  const color = state.currentTool === 'erase' ? '#ffffff' : colorPicker.value;
+  setPixelWithMirrors(x, y, color);
+}
+
+function setPixelWithMirrors(x, y, color) {
+  const targets = [{ x, y }];
+  if (state.mirrorX) targets.push({ x: state.gridSize - 1 - x, y });
+  if (state.mirrorY) targets.push({ x, y: state.gridSize - 1 - y });
+  if (state.mirrorX && state.mirrorY) {
+    targets.push({ x: state.gridSize - 1 - x, y: state.gridSize - 1 - y });
+  }
+
+  targets.forEach(({ x: tx, y: ty }) => {
+    if (tx < 0 || ty < 0 || tx >= state.gridSize || ty >= state.gridSize) return;
+    state.pixels[ty][tx] = color;
+  });
+  drawAll();
+}
+
+function startDrawing(evt) {
+  state.isDrawing = true;
+  pushHistory();
+  handlePointer(evt);
 }
 
 function stopDrawing() {
-  isDrawing = false;
+  state.isDrawing = false;
+}
+
+function handlePointer(evt) {
+  if (!state.isDrawing && state.currentTool !== 'eyedropper') return;
+  const { x, y } = toGridCoordinate(evt);
+  applyTool(x, y);
+}
+
+function undo() {
+  if (state.history.length === 0) return;
+  const snapshot = state.history.pop();
+  state.redoStack.push(state.pixels.map(row => [...row]));
+  restoreFromSnapshot(snapshot);
+}
+
+function redo() {
+  if (state.redoStack.length === 0) return;
+  const snapshot = state.redoStack.pop();
+  state.history.push(state.pixels.map(row => [...row]));
+  restoreFromSnapshot(snapshot);
 }
 
 function saveCanvas() {
@@ -128,18 +237,84 @@ function saveCanvas() {
   link.click();
 }
 
-function toggleGrid() {
-  showGrid = !showGrid;
-  clearCanvas();
+function exportData() {
+  const data = {
+    gridSize: state.gridSize,
+    palette: [...new Set(state.pixels.flat().filter(color => color !== '#ffffff'))],
+    pixels: state.pixels
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'pixel_art.json';
+  link.click();
+  URL.revokeObjectURL(url);
 }
 
-canvas.addEventListener('mousedown', startDrawing);
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', stopDrawing);
-canvas.addEventListener('mouseleave', stopDrawing);
+function toggleGrid() {
+  state.showGrid = !state.showGrid;
+  drawAll();
+}
 
+function clearCanvas() {
+  pushHistory();
+  state.pixels = createEmptyPixels();
+  drawAll();
+}
+
+function toggleMirror(axis) {
+  if (axis === 'x') {
+    state.mirrorX = !state.mirrorX;
+    mirrorXBtn.classList.toggle('active', state.mirrorX);
+  } else {
+    state.mirrorY = !state.mirrorY;
+    mirrorYBtn.classList.toggle('active', state.mirrorY);
+  }
+}
+
+function setActiveTool(tool) {
+  state.currentTool = tool;
+  [paintTool, eraseTool, eyedropperTool].forEach(btn => btn.classList.remove('active'));
+  if (tool === 'paint') paintTool.classList.add('active');
+  if (tool === 'erase') eraseTool.classList.add('active');
+  if (tool === 'eyedropper') eyedropperTool.classList.add('active');
+}
+
+function updatePalette() {
+  const colors = [...new Set(state.pixels.flat())].filter(color => color !== '#ffffff');
+  paletteEl.innerHTML = '';
+  colors.slice(0, 16).forEach(color => {
+    const swatch = document.createElement('button');
+    swatch.style.background = color;
+    swatch.style.width = '32px';
+    swatch.style.height = '32px';
+    swatch.style.border = '1px solid #ccc';
+    swatch.style.cursor = 'pointer';
+    swatch.title = color;
+    swatch.addEventListener('click', () => {
+      colorPicker.value = color;
+      setActiveTool('paint');
+    });
+    paletteEl.appendChild(swatch);
+  });
+}
+
+canvas.addEventListener('pointerdown', startDrawing);
+canvas.addEventListener('pointermove', handlePointer);
+window.addEventListener('pointerup', stopDrawing);
+canvas.addEventListener('pointerleave', stopDrawing);
+
+paintTool.addEventListener('click', () => setActiveTool('paint'));
+eraseTool.addEventListener('click', () => setActiveTool('erase'));
+eyedropperTool.addEventListener('click', () => setActiveTool('eyedropper'));
+mirrorXBtn.addEventListener('click', () => toggleMirror('x'));
+mirrorYBtn.addEventListener('click', () => toggleMirror('y'));
+undoBtn.addEventListener('click', undo);
+redoBtn.addEventListener('click', redo);
 clearBtn.addEventListener('click', clearCanvas);
 saveBtn.addEventListener('click', saveCanvas);
+exportDataBtn.addEventListener('click', exportData);
 toggleGridBtn.addEventListener('click', toggleGrid);
 canvasSizeSelect.addEventListener('change', initCanvas);
 
