@@ -8,12 +8,23 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: #1a1a1a;
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at center, rgba(2, 10, 27, 0.9) 0%, rgba(1, 4, 14, 0.95) 40%, #01030a 100%);
             color: white;
             overflow: hidden;
             width: 100vw;
             height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: url('https://assets.codepen.io/1224665/space-noise.png');
+            opacity: 0.2;
+            mix-blend-mode: screen;
+            pointer-events: none;
+            animation: drift 120s linear infinite;
         }
         
         .container {
@@ -26,12 +37,6 @@
             overflow: hidden;
         }
 
-        #root {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-        }
-
         #alt-container {
             width: 100vw;
             height: 100vh;
@@ -42,20 +47,20 @@
             background: radial-gradient(circle at center, #1a1a2a 0%, #0a0a1a 100%);
         }
 
-        .back-button, .toggle-button {
+        .back-button, .toggle-button, .preset-button {
             position: fixed;
             padding: 10px 20px;
-            background-color: rgba(0, 150, 255, 0.1);
-            color: #00ffff;
-            border: 1px solid rgba(0, 150, 255, 0.3);
-            border-radius: 5px;
+            background: linear-gradient(135deg, rgba(0, 150, 255, 0.25), rgba(56, 189, 248, 0.1));
+            color: #7dd3fc;
+            border: 1px solid rgba(14, 165, 233, 0.5);
+            border-radius: 999px;
             cursor: pointer;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
             z-index: 1000;
             font-size: 14px;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-            backdrop-filter: blur(5px);
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+            backdrop-filter: blur(12px);
         }
 
         .back-button {
@@ -68,10 +73,16 @@
             right: 20px;
         }
 
-        .back-button:hover, .toggle-button:hover {
-            background-color: rgba(0, 150, 255, 0.2);
-            border-color: rgba(0, 255, 255, 0.5);
-            box-shadow: 0 0 20px rgba(0, 150, 255, 0.2);
+        .preset-button {
+            top: 20px;
+            right: 200px;
+        }
+
+        .back-button:hover, .toggle-button:hover, .preset-button:hover {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.4), rgba(6, 182, 212, 0.2));
+            border-color: rgba(191, 219, 254, 0.6);
+            box-shadow: 0 0 24px rgba(56, 189, 248, 0.25);
+            transform: translateY(-2px);
         }
 
         .error-boundary {
@@ -84,6 +95,11 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+        }
+
+        @keyframes drift {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(-50%, -50%, 0); }
         }
 
         /* Alt sphere styles */
@@ -139,107 +155,188 @@
 <body>
     <a href="../../index.html" class="back-button">Back to Dashboard</a>
     <button class="toggle-button" onclick="toggleSphere()">Switch View</button>
+    <button class="preset-button" onclick="cyclePreset()">Cycle Preset</button>
     <div id="main-container"></div>
     <div id="alt-container"></div>
 
     <script>
         // Shared words data
-        window.sphereWords = [
-            {text: "React", weight: 10},
-            {text: "Vue", weight: 8},
-            {text: "Angular", weight: 7},
-            {text: "Node.js", weight: 9},
-            {text: "TypeScript", weight: 8},
-            {text: "JavaScript", weight: 10},
-            {text: "HTML", weight: 7},
-            {text: "CSS", weight: 7},
-            {text: "GraphQL", weight: 6},
-            {text: "REST", weight: 6},
-            {text: "MongoDB", weight: 5},
-            {text: "PostgreSQL", weight: 5},
-            {text: "Docker", weight: 7},
-            {text: "Kubernetes", weight: 6},
-            {text: "AWS", weight: 8},
-            {text: "Git", weight: 7},
-            {text: "CI/CD", weight: 6},
-            {text: "Redux", weight: 5},
-            {text: "Webpack", weight: 4},
-            {text: "Testing", weight: 5}
-        ];
+        const spherePresets = {
+            core: [
+                {text: "React", weight: 10},
+                {text: "Vue", weight: 8},
+                {text: "Angular", weight: 7},
+                {text: "Node.js", weight: 9},
+                {text: "TypeScript", weight: 8},
+                {text: "JavaScript", weight: 10},
+                {text: "HTML", weight: 7},
+                {text: "CSS", weight: 7},
+                {text: "GraphQL", weight: 6},
+                {text: "REST", weight: 6},
+                {text: "MongoDB", weight: 5},
+                {text: "PostgreSQL", weight: 5},
+                {text: "Docker", weight: 7},
+                {text: "Kubernetes", weight: 6},
+                {text: "AWS", weight: 8},
+                {text: "Git", weight: 7},
+                {text: "CI/CD", weight: 6},
+                {text: "Redux", weight: 5},
+                {text: "Webpack", weight: 4},
+                {text: "Testing", weight: 5}
+            ],
+            rpg: [
+                {text: "Warrior", weight: 9},
+                {text: "Rogue", weight: 8},
+                {text: "Mage", weight: 9},
+                {text: "Paladin", weight: 7},
+                {text: "Necromancer", weight: 8},
+                {text: "Ranger", weight: 7},
+                {text: "Berserker", weight: 6},
+                {text: "Elementalist", weight: 7},
+                {text: "Summoner", weight: 7},
+                {text: "Bard", weight: 5},
+                {text: "Monk", weight: 6},
+                {text: "Druid", weight: 7},
+                {text: "Alchemist", weight: 6},
+                {text: "Artificer", weight: 6},
+                {text: "Chronomancer", weight: 5},
+                {text: "Templar", weight: 6},
+                {text: "Assassin", weight: 7},
+                {text: "Illusionist", weight: 5},
+                {text: "Beastmaster", weight: 6},
+                {text: "Battlemage", weight: 7}
+            ],
+            galaxies: [
+                {text: "Andromeda", weight: 9},
+                {text: "Sombrero", weight: 8},
+                {text: "Cartwheel", weight: 8},
+                {text: "Whirlpool", weight: 9},
+                {text: "Triangulum", weight: 7},
+                {text: "Messier 87", weight: 8},
+                {text: "Pinwheel", weight: 6},
+                {text: "Black Eye", weight: 6},
+                {text: "Cigar", weight: 5},
+                {text: "Sunflower", weight: 6},
+                {text: "Tadpole", weight: 5},
+                {text: "Hoag's Object", weight: 6},
+                {text: "Needle", weight: 5},
+                {text: "Centaurus A", weight: 6},
+                {text: "Sculptor", weight: 5},
+                {text: "Canis Major", weight: 6},
+                {text: "Large Magellanic", weight: 7},
+                {text: "Small Magellanic", weight: 6},
+                {text: "NGC 1300", weight: 6},
+                {text: "NGC 1672", weight: 5}
+            ]
+        };
 
         let currentSphere = 'main';
+        let currentPreset = 'core';
         let mainSphere = null;
         let altSphere = null;
 
-        // Replace the DOMContentLoaded event listener with:
-        window.addEventListener('DOMContentLoaded', () => {
+        function setWords(presetKey) {
+            window.sphereWords = spherePresets[presetKey] ?? spherePresets.core;
+        }
+
+        function initializeSpheres() {
             const mainContainer = document.getElementById('main-container');
             const altContainer = document.getElementById('alt-container');
-            
-            // Ensure containers exist
+
             if (!mainContainer || !altContainer) {
                 console.error('Required containers not found');
                 return;
             }
-            
-            // Set initial display states
+
             mainContainer.style.display = 'block';
             altContainer.style.display = 'none';
-            
+
             try {
-                // Initialize main sphere
+                setWords(currentPreset);
                 mainSphere = new SvgWordSphere(mainContainer, window.sphereWords);
-                
-                // Handle window resize
-                window.addEventListener('resize', () => {
-                    if (currentSphere === 'main' && mainSphere) {
-                        mainSphere.destroy();
-                        mainSphere = new SvgWordSphere(mainContainer, window.sphereWords);
-                    } else if (currentSphere === 'alt' && altSphere) {
-                        altSphere.destroy();
-                        altSphere = new WordSphere(altContainer, window.sphereWords);
-                    }
-                });
             } catch (error) {
                 console.error('Error initializing sphere:', error);
                 mainContainer.innerHTML = `<div class="error-boundary">Error initializing sphere: ${error.message}</div>`;
             }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initializeSpheres();
+
+            const presetButton = document.querySelector('.preset-button');
+            if (presetButton) {
+                presetButton.textContent = `Preset: ${currentPreset.charAt(0).toUpperCase() + currentPreset.slice(1)}`;
+            }
+
+            window.addEventListener('resize', () => {
+                if (currentSphere === 'main' && mainSphere) {
+                    mainSphere.handleResize();
+                } else if (currentSphere === 'alt' && altSphere && typeof altSphere.handleResize === 'function') {
+                    altSphere.handleResize();
+                }
+            });
         });
+
+        function rebuildActiveSphere() {
+            setWords(currentPreset);
+
+            if (currentSphere === 'main') {
+                const mainContainer = document.getElementById('main-container');
+                if (mainSphere) {
+                    mainSphere.destroy();
+                }
+                mainSphere = new SvgWordSphere(mainContainer, window.sphereWords);
+            } else {
+                const altContainer = document.getElementById('alt-container');
+                if (altSphere) {
+                    altSphere.destroy();
+                }
+                altSphere = new WordSphere(altContainer, window.sphereWords);
+            }
+        }
 
         function toggleSphere() {
             const mainContainer = document.getElementById('main-container');
             const altContainer = document.getElementById('alt-container');
             const toggleButton = document.querySelector('.toggle-button');
-            
+
             if (currentSphere === 'main') {
                 mainContainer.style.display = 'none';
                 altContainer.style.display = 'block';
-                if (!altSphere) {
-                    altSphere = new WordSphere(altContainer, window.sphereWords);
-                }
                 if (mainSphere) {
                     mainSphere.destroy();
                     mainSphere = null;
                 }
+                altSphere = new WordSphere(altContainer, window.sphereWords);
                 currentSphere = 'alt';
                 toggleButton.textContent = 'Switch to Main View';
             } else {
-                mainContainer.style.display = 'block';
                 altContainer.style.display = 'none';
-                if (!mainSphere) {
-                    mainSphere = new SvgWordSphere(mainContainer, window.sphereWords);
-                }
+                mainContainer.style.display = 'block';
                 if (altSphere) {
                     altSphere.destroy();
                     altSphere = null;
                 }
+                mainSphere = new SvgWordSphere(mainContainer, window.sphereWords);
                 currentSphere = 'main';
                 toggleButton.textContent = 'Switch to Alternative View';
             }
         }
+
+        function cyclePreset() {
+            const presetKeys = Object.keys(spherePresets);
+            const currentIndex = presetKeys.indexOf(currentPreset);
+            currentPreset = presetKeys[(currentIndex + 1) % presetKeys.length];
+            rebuildActiveSphere();
+
+            const presetButton = document.querySelector('.preset-button');
+            if (presetButton) {
+                presetButton.textContent = `Preset: ${currentPreset.charAt(0).toUpperCase() + currentPreset.slice(1)}`;
+            }
+        }
     </script>
 
-    <script src="wordsphere.js"></script>
-    <script src="alt-sphere.js"></script>
+    <script defer src="wordsphere.js"></script>
+    <script defer src="alt-sphere.js"></script>
 </body>
 </html>

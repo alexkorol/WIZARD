@@ -46,6 +46,21 @@
       width: 100%;
       height: 100%;
       cursor: grab;
+      background: radial-gradient(circle at center, rgba(15, 23, 42, 0.85), rgba(2, 6, 23, 0.95));
+    }
+
+    .axis-line {
+      stroke-width: 2;
+      stroke-linecap: round;
+      opacity: 0.35;
+    }
+
+    .axis-label {
+      fill: rgba(226, 232, 240, 0.9);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-shadow: 0 0 6px rgba(15, 23, 42, 0.8);
     }
 
     /* Node Styles */
@@ -74,20 +89,15 @@
 
     /* Node States */
     .inactive-node circle {
-      fill: #2D3748;
-      stroke: #1A202C;
+      filter: drop-shadow(0 0 1px rgba(15, 23, 42, 0.8));
     }
 
     .available-node circle {
-      fill: #4A5568;
-      stroke: #2D3748;
-      filter: drop-shadow(0 0 2px #4A5568);
+      filter: drop-shadow(0 0 4px rgba(148, 197, 255, 0.4));
     }
 
     .active-node circle {
-      fill: #34D399; /* Brighter color for visibility */
-      stroke: #059669; /* Complementary stroke color */
-      filter: drop-shadow(0 0 4px #34D399);
+      filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5));
       animation: pulse 2s infinite;
     }
 
@@ -100,27 +110,12 @@
 
     /* Extra Circle Styles */
     .extra-circle {
-      fill: rgba(255, 127, 80, 0.5); /* Coral color with transparency */
-      stroke: rgba(255, 69, 0, 0.8); /* OrangeRed stroke with transparency */
-      stroke-width: 1;
-      opacity: 0.6;
-      transition: fill 0.3s ease, stroke 0.3s ease;
+      opacity: 0.45;
+      transition: opacity 0.3s ease;
     }
 
-    /* Extra Circle States */
     .node.active-node .extra-circle {
-      fill: rgba(255, 99, 71, 0.6); /* Tomato color when node is active */
-      stroke: rgba(255, 69, 0, 0.8); /* Maintains OrangeRed stroke */
-    }
-
-    .node.available-node .extra-circle {
-      fill: rgba(255, 160, 122, 0.6); /* LightSalmon for available state */
-      stroke: rgba(255, 127, 80, 0.8); /* Coral stroke */
-    }
-
-    .node.inactive-node .extra-circle {
-      fill: rgba(205, 92, 92, 0.6); /* IndianRed for inactive state */
-      stroke: rgba(139, 0, 0, 0.8); /* DarkRed stroke */
+      opacity: 0.75;
     }
 
     /* Arc Styles */
@@ -217,8 +212,8 @@
       if (isDragging) {
         const dx = e.clientX - lastX;
         const dy = e.clientY - lastY;
-        offsetX += dx; // 1:1 movement
-        offsetY += dy; // 1:1 movement
+        offsetX += dx / scale;
+        offsetY += dy / scale;
         lastX = e.clientX;
         lastY = e.clientY;
         updateTransform();
@@ -237,35 +232,26 @@
       const mouseX = e.clientX - rect.left;
       const mouseY = e.clientY - rect.top;
 
-      // Convert mouse coordinates to SVG coordinates
-      const pt = svg.createSVGPoint();
-      pt.x = mouseX;
-      pt.y = mouseY;
-      const cursorPt = pt.matrixTransform(mainGroup.getCTM().inverse());
+      const zoomFactor = e.deltaY < 0 ? 1.1 : 0.9;
+      const newScale = Math.min(Math.max(0.6, scale * zoomFactor), 3);
+      const scaleRatio = newScale / scale;
+      const worldX = (mouseX / scale) - offsetX;
+      const worldY = (mouseY / scale) - offsetY;
 
-      // Adjust scale
-      const delta = e.deltaY > 0 ? 0.9 : 1.1; // Reversed zoom direction
-      scale *= delta;
-      scale = Math.min(Math.max(0.5, scale), 5);
-
-      // Get new cursor point after scaling
-      const newCursorPt = pt.matrixTransform(mainGroup.getCTM().inverse());
-
-      // Adjust offset to keep cursor point stationary
-      offsetX += (cursorPt.x - newCursorPt.x) * scale;
-      offsetY += (cursorPt.y - newCursorPt.y) * scale;
+      offsetX -= worldX * (scaleRatio - 1);
+      offsetY -= worldY * (scaleRatio - 1);
+      scale = newScale;
 
       updateTransform();
     });
 
     function updateTransform() {
-      // Optionally clamp offsets to prevent excessive panning
-      const maxOffset = 500; // Adjust based on SVG size
+      const maxOffset = 600;
       offsetX = Math.max(-maxOffset, Math.min(maxOffset, offsetX));
       offsetY = Math.max(-maxOffset, Math.min(maxOffset, offsetY));
 
       mainGroup.setAttribute('transform',
-          `translate(${offsetX},${offsetY}) scale(${scale})`);
+          `scale(${scale}) translate(${offsetX},${offsetY})`);
     }
 
     // Prevent context menu and page scrolling
@@ -275,6 +261,59 @@
     const R = 20; // Radius of circles
     const centerX = 150;
     const centerY = 150;
+
+    const statAxes = [
+      { id: 'str', label: 'STR', color: '#ef4444', dx: 1, dy: 0 },
+      { id: 'dex', label: 'DEX', color: '#22c55e', dx: -0.5, dy: -Math.sqrt(3) / 2 },
+      { id: 'int', label: 'INT', color: '#38bdf8', dx: -0.5, dy: Math.sqrt(3) / 2 }
+    ];
+
+    function hexToRgb(hex) {
+      const bigint = parseInt(hex.slice(1), 16);
+      return {
+        r: (bigint >> 16) & 255,
+        g: (bigint >> 8) & 255,
+        b: bigint & 255
+      };
+    }
+
+    function rgbToHex(r, g, b) {
+      const clamp = v => Math.max(0, Math.min(255, Math.round(v)));
+      return `#${clamp(r).toString(16).padStart(2, '0')}${clamp(g).toString(16).padStart(2, '0')}${clamp(b).toString(16).padStart(2, '0')}`;
+    }
+
+    function adjustLuminance(hex, factor) {
+      const { r, g, b } = hexToRgb(hex);
+      return rgbToHex(r * factor, g * factor, b * factor);
+    }
+
+    function mixColors(weights) {
+      const rgb = { r: 0, g: 0, b: 0 };
+      statAxes.forEach((axis, index) => {
+        const { r, g, b } = hexToRgb(axis.color);
+        rgb.r += r * weights[index];
+        rgb.g += g * weights[index];
+        rgb.b += b * weights[index];
+      });
+      return rgbToHex(rgb.r, rgb.g, rgb.b);
+    }
+
+    function computeWeights(x, y) {
+      const vx = x - centerX;
+      const vy = y - centerY;
+      const length = Math.hypot(vx, vy);
+      if (length < 1e-3) {
+        return [1 / 3, 1 / 3, 1 / 3];
+      }
+      const nx = vx / length;
+      const ny = vy / length;
+      const rawWeights = statAxes.map(axis => Math.max(0, nx * axis.dx + ny * axis.dy));
+      const sum = rawWeights.reduce((acc, value) => acc + value, 0);
+      if (sum <= 1e-5) {
+        return [1 / 3, 1 / 3, 1 / 3];
+      }
+      return rawWeights.map(w => w / sum);
+    }
 
     let nodeSkillPoints = 10;
     let arcSkillPoints = 10;
@@ -439,6 +478,28 @@
     const numberOfLayers = 4; // Increased from 3 to 4 to ensure nodes n13, n15 exist
     initializeGeometry(numberOfLayers);
 
+    const axisGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    const axisLength = R * (numberOfLayers + 2.5);
+    statAxes.forEach(axis => {
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute('x1', centerX);
+      line.setAttribute('y1', centerY);
+      line.setAttribute('x2', centerX + axis.dx * axisLength);
+      line.setAttribute('y2', centerY + axis.dy * axisLength);
+      line.setAttribute('stroke', axis.color);
+      line.setAttribute('class', 'axis-line');
+      axisGroup.appendChild(line);
+
+      const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      label.setAttribute('x', centerX + axis.dx * (axisLength + 10));
+      label.setAttribute('y', centerY + axis.dy * (axisLength + 10));
+      label.setAttribute('text-anchor', 'middle');
+      label.setAttribute('class', 'axis-label');
+      label.textContent = axis.label;
+      axisGroup.appendChild(label);
+    });
+    mainGroup.appendChild(axisGroup);
+
     // Draw circles
     circlePositions.forEach((pos, index) => {
       const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -500,6 +561,14 @@
       const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       circle.setAttribute('r', '3'); // Base radius
 
+      const weights = computeWeights(node.x, node.y);
+      node.statWeights = weights;
+      const dominantIndex = weights.indexOf(Math.max(...weights));
+      node.primaryStat = statAxes[dominantIndex].label;
+      const baseColor = mixColors(weights);
+      circle.setAttribute('fill', adjustLuminance(baseColor, 0.75));
+      circle.setAttribute('stroke', adjustLuminance(baseColor, 0.45));
+
       // Node label
       const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
       text.setAttribute('y', '0');
@@ -514,6 +583,8 @@
         const extraCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         extraCircle.setAttribute('r', '5'); // Larger radius for visibility
         extraCircle.setAttribute('class', 'extra-circle');
+        extraCircle.setAttribute('fill', adjustLuminance(baseColor, 0.35));
+        extraCircle.setAttribute('stroke', adjustLuminance(baseColor, 0.25));
         group.insertBefore(extraCircle, circle); // Insert before base circle to layer behind
       }
 
@@ -532,8 +603,15 @@
       hoveredNode = nodeId;
       if (nodeId) {
         const node = nodes.find(n => n.id === nodeId);
-        tooltip.textContent = node ? `Node ID: ${node.id}` : '';
-        tooltip.style.display = 'block';
+        if (node) {
+          const [strWeight, dexWeight, intWeight] = node.statWeights.map(w => Math.round(w * 100));
+          tooltip.innerHTML = `
+            <strong>${node.id} • ${node.primaryStat}</strong>
+            <span>STR ${strWeight}% · DEX ${dexWeight}% · INT ${intWeight}%</span>
+            <span>Connected Nodes: ${node.connections.length}</span>
+          `;
+          tooltip.style.display = 'block';
+        }
       } else {
         tooltip.style.display = 'none';
       }
@@ -544,8 +622,16 @@
       hoveredArc = arcId;
       if (arcId) {
         const arc = arcs.find(a => a.id === arcId);
-        tooltip.textContent = arc ? `Arc ID: ${arc.id}\nConnects: ${arc.from} - ${arc.to}` : '';
-        tooltip.style.display = 'block';
+        if (arc) {
+          const fromNode = nodes.find(n => n.id === arc.from);
+          const toNode = nodes.find(n => n.id === arc.to);
+          tooltip.innerHTML = `
+            <strong>${arc.id}</strong>
+            <span>${arc.from} ↔ ${arc.to}</span>
+            <span>Path Bias: ${fromNode.primaryStat} → ${toNode.primaryStat}</span>
+          `;
+          tooltip.style.display = 'block';
+        }
       } else {
         tooltip.style.display = 'none';
       }
@@ -682,6 +768,7 @@
       document.querySelectorAll('.node').forEach(nodeGroup => {
         const nodeId = nodeGroup.getAttribute('data-id');
         const circle = nodeGroup.querySelector('circle');
+        const node = nodes.find(n => n.id === nodeId);
         const isActive = allocatedNodes.includes(nodeId);
 
         // Determine if the node can be activated
@@ -693,6 +780,19 @@
 
         // Adjust radius on hover
         circle.setAttribute('r', nodeId === hoveredNode ? '4' : '3');
+
+        if (node) {
+          const baseColor = mixColors(node.statWeights);
+          const fillFactor = isActive ? 1.2 : canActivate ? 0.95 : 0.65;
+          const strokeFactor = isActive ? 0.9 : 0.55;
+          circle.setAttribute('fill', adjustLuminance(baseColor, fillFactor));
+          circle.setAttribute('stroke', adjustLuminance(baseColor, strokeFactor));
+          const extraCircle = nodeGroup.querySelector('.extra-circle');
+          if (extraCircle) {
+            extraCircle.setAttribute('fill', adjustLuminance(baseColor, 0.35));
+            extraCircle.setAttribute('stroke', adjustLuminance(baseColor, 0.25));
+          }
+        }
 
         // Manage classes
         nodeGroup.classList.remove('active-node', 'available-node', 'inactive-node');
