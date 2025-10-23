@@ -5,15 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WordSphere - WIZARD</title>
     <style>
+        :root {
+            color-scheme: dark;
+        }
+
         body {
             margin: 0;
             padding: 0;
             font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: radial-gradient(circle at center, rgba(2, 10, 27, 0.9) 0%, rgba(1, 4, 14, 0.95) 40%, #01030a 100%);
-            color: white;
+            background: radial-gradient(circle at center, rgba(2, 10, 27, 0.95) 0%, rgba(1, 4, 14, 0.97) 42%, #01030a 100%);
+            color: #e8f9ff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
             overflow: hidden;
-            width: 100vw;
-            height: 100vh;
         }
 
         body::before {
@@ -21,80 +27,182 @@
             position: fixed;
             inset: 0;
             background: url('https://assets.codepen.io/1224665/space-noise.png');
-            opacity: 0.2;
+            opacity: 0.24;
             mix-blend-mode: screen;
             pointer-events: none;
             animation: drift 120s linear infinite;
         }
-        
-        .container {
-            width: 100vw;
-            height: 100vh;
+
+        .top-bar {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(1080px, calc(100% - 48px));
             display: flex;
             align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+            justify-content: space-between;
+            gap: 16px;
+            z-index: 20;
+            padding: 16px 24px;
+            border-radius: 18px;
+            background: rgba(4, 18, 41, 0.72);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            box-shadow: 0 20px 50px rgba(15, 118, 191, 0.18);
+            backdrop-filter: blur(18px);
         }
 
-        #alt-container {
-            width: 100vw;
-            height: 100vh;
-            display: none;
-            position: relative;
-            overflow: hidden;
-            background-color: #0a0a1a;
-            background: radial-gradient(circle at center, #1a1a2a 0%, #0a0a1a 100%);
+        .top-bar__meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
         }
 
-        .back-button, .toggle-button, .preset-button {
-            position: fixed;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, rgba(0, 150, 255, 0.25), rgba(56, 189, 248, 0.1));
-            color: #7dd3fc;
-            border: 1px solid rgba(14, 165, 233, 0.5);
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
             border-radius: 999px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-            z-index: 1000;
+            font-size: 13px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.16), rgba(14, 165, 233, 0.06));
+            border: 1px solid rgba(125, 211, 252, 0.35);
+            color: #7dd3fc;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
+        }
+
+        .top-bar__actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .top-link,
+        .command-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 999px;
             font-size: 14px;
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+            background: linear-gradient(135deg, rgba(12, 74, 110, 0.85), rgba(8, 47, 73, 0.9));
+            color: #e0f2fe;
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
             backdrop-filter: blur(12px);
         }
 
-        .back-button {
-            top: 20px;
-            left: 20px;
+        .top-link {
+            background: linear-gradient(135deg, rgba(12, 74, 110, 0.8), rgba(8, 47, 73, 0.85));
         }
 
-        .toggle-button {
-            top: 20px;
-            right: 20px;
-        }
-
-        .preset-button {
-            top: 20px;
-            right: 200px;
-        }
-
-        .back-button:hover, .toggle-button:hover, .preset-button:hover {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.4), rgba(6, 182, 212, 0.2));
-            border-color: rgba(191, 219, 254, 0.6);
-            box-shadow: 0 0 24px rgba(56, 189, 248, 0.25);
+        .command-button:hover,
+        .top-link:hover {
             transform: translateY(-2px);
+            border-color: rgba(191, 219, 254, 0.65);
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.55), rgba(14, 165, 233, 0.35));
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.28);
+        }
+
+        .sphere-stage {
+            flex: 1;
+            position: relative;
+            padding: 120px 24px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sphere-container {
+            position: absolute;
+            inset: 24px;
+            border-radius: 28px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(56, 189, 248, 0.12);
+            box-shadow: inset 0 0 40px rgba(56, 189, 248, 0.12), 0 40px 80px rgba(2, 8, 23, 0.85);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.6s ease, visibility 0s linear 0.6s;
+        }
+
+        .sphere-container::before {
+            content: "";
+            position: absolute;
+            inset: -30%;
+            background: radial-gradient(circle at 50% 30%, rgba(56, 189, 248, 0.35), transparent 55%),
+                        radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.22), transparent 60%),
+                        radial-gradient(circle at 80% 60%, rgba(59, 130, 246, 0.18), transparent 65%);
+            opacity: 0.85;
+            filter: blur(40px);
+            pointer-events: none;
+        }
+
+        .sphere-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transition: opacity 0.6s ease;
+        }
+
+        #main-container {
+            background: radial-gradient(circle at center, rgba(3, 7, 18, 0.92) 0%, rgba(2, 6, 23, 0.98) 75%);
+        }
+
+        #alt-container {
+            background: radial-gradient(circle at center, rgba(6, 11, 30, 0.92) 0%, rgba(2, 6, 23, 0.96) 70%);
+        }
+
+        #main-container svg {
+            width: min(80vmin, 820px);
+            height: min(80vmin, 820px);
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .insight-card {
+            position: absolute;
+            bottom: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(520px, calc(100% - 48px));
+            padding: 18px 22px;
+            border-radius: 16px;
+            background: rgba(4, 12, 31, 0.75);
+            border: 1px solid rgba(125, 211, 252, 0.25);
+            box-shadow: 0 20px 50px rgba(8, 47, 73, 0.45);
+            backdrop-filter: blur(12px);
+            color: #cfeaff;
+            font-size: 14px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .insight-card strong {
+            color: #7dd3fc;
         }
 
         .error-boundary {
             padding: 20px;
-            color: #ff4444;
-            background: rgba(255, 0, 0, 0.1);
-            border-radius: 8px;
+            color: #ff7878;
+            background: rgba(255, 56, 56, 0.1);
+            border: 1px solid rgba(248, 113, 113, 0.35);
+            border-radius: 12px;
             margin: 20px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
         }
 
         @keyframes drift {
@@ -108,8 +216,8 @@
             transform-origin: center;
             user-select: none;
             cursor: pointer;
-            color: #00ffff;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            color: #9ae6ff;
+            text-shadow: 0 0 10px rgba(125, 211, 252, 0.6);
             transition: all 0.2s ease;
             white-space: nowrap;
             font-weight: 500;
@@ -117,24 +225,23 @@
         }
 
         .word:hover {
-            color: #fff;
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8),
-                        0 0 30px rgba(0, 255, 255, 0.6);
+            color: #ffffff;
+            text-shadow: 0 0 24px rgba(125, 211, 252, 0.85),
+                        0 0 34px rgba(14, 165, 233, 0.45);
         }
 
         .connection {
             position: absolute;
             pointer-events: none;
-            background: linear-gradient(90deg, 
-                rgba(0, 255, 255, 0.3) 0%,
-                rgba(0, 150, 255, 0.1) 50%,
-                rgba(0, 255, 255, 0) 100%);
+            background: linear-gradient(90deg,
+                rgba(125, 211, 252, 0.35) 0%,
+                rgba(56, 189, 248, 0.18) 50%,
+                rgba(14, 165, 233, 0) 100%);
             transform-origin: left;
             height: 1px;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 12px rgba(125, 211, 252, 0.35);
         }
 
-        /* Add animation styles */
         @keyframes pulse {
             0% { opacity: 0.4; transform: scale(1); }
             50% { opacity: 0.2; transform: scale(1.05); }
@@ -142,25 +249,90 @@
         }
 
         .pulse-effect {
-            animation: pulse 1.5s ease-in-out infinite;
+            animation: pulse 1.6s ease-in-out infinite;
         }
 
         svg {
             display: block;
-            width: 100%;
-            height: 100%;
+        }
+
+        @media (max-width: 860px) {
+            .top-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .top-bar__meta {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .top-bar__actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .sphere-container {
+                inset: 16px;
+            }
+
+            .insight-card {
+                bottom: 32px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 540px) {
+            .top-bar__meta,
+            .top-bar__actions {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .command-button,
+            .top-link {
+                width: 100%;
+            }
+
+            .status-pill {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .sphere-stage {
+                padding-top: 160px;
+            }
+
+            #main-container svg {
+                width: min(88vmin, 620px);
+                height: min(88vmin, 620px);
+            }
         }
     </style>
 </head>
 <body>
-    <a href="../../index.html" class="back-button">Back to Dashboard</a>
-    <button class="toggle-button" onclick="toggleSphere()">Switch View</button>
-    <button class="preset-button" onclick="cyclePreset()">Cycle Preset</button>
-    <div id="main-container"></div>
-    <div id="alt-container"></div>
+    <header class="top-bar" role="navigation" aria-label="WordSphere controls">
+        <a href="../../index.html" class="top-link">← Back to Dashboard</a>
+        <div class="top-bar__meta">
+            <span class="status-pill" data-view-label>View: Aurora SVG Sphere</span>
+            <span class="status-pill" data-preset-label>Preset: Core</span>
+        </div>
+        <div class="top-bar__actions">
+            <button type="button" class="command-button" data-action="toggle">Switch to Alternative View</button>
+            <button type="button" class="command-button" data-action="preset">Cycle Preset</button>
+        </div>
+    </header>
+
+    <main class="sphere-stage">
+        <div id="main-container" class="sphere-container active" role="application" aria-live="polite"></div>
+        <div id="alt-container" class="sphere-container" role="application" aria-live="polite"></div>
+        <div class="insight-card" aria-live="polite">
+            Explore curated vocabularies and their relationships. Hover or drag to orbit the <strong>WordSphere</strong>, then use presets to discover alternative themes.
+        </div>
+    </main>
 
     <script>
-        // Shared words data
         const spherePresets = {
             core: [
                 {text: "React", weight: 10},
@@ -235,8 +407,46 @@
         let mainSphere = null;
         let altSphere = null;
 
+        const toggleButton = document.querySelector('[data-action="toggle"]');
+        const presetButton = document.querySelector('[data-action="preset"]');
+        const viewLabel = document.querySelector('[data-view-label]');
+        const presetLabel = document.querySelector('[data-preset-label]');
+
         function setWords(presetKey) {
             window.sphereWords = spherePresets[presetKey] ?? spherePresets.core;
+        }
+
+        function updateUI() {
+            if (viewLabel) {
+                viewLabel.textContent = currentSphere === 'main'
+                    ? 'View: Aurora SVG Sphere'
+                    : 'View: Nebula Particle Sphere';
+            }
+
+            const formattedPreset = currentPreset.charAt(0).toUpperCase() + currentPreset.slice(1);
+            if (toggleButton) {
+                toggleButton.textContent = currentSphere === 'main'
+                    ? 'Switch to Alternative View'
+                    : 'Switch to SVG View';
+            }
+
+            if (presetLabel) {
+                presetLabel.textContent = `Preset: ${formattedPreset}`;
+            }
+
+            if (presetButton) {
+                presetButton.setAttribute('aria-label', `Cycle preset (current: ${formattedPreset})`);
+            }
+        }
+
+        function activateSphere(target) {
+            const mainContainer = document.getElementById('main-container');
+            const altContainer = document.getElementById('alt-container');
+            if (!mainContainer || !altContainer) return;
+
+            const showingMain = target === 'main';
+            mainContainer.classList.toggle('active', showingMain);
+            altContainer.classList.toggle('active', !showingMain);
         }
 
         function initializeSpheres() {
@@ -248,78 +458,89 @@
                 return;
             }
 
-            mainContainer.style.display = 'block';
-            altContainer.style.display = 'none';
+            activateSphere('main');
 
             try {
                 setWords(currentPreset);
-                mainSphere = new SvgWordSphere(mainContainer, window.sphereWords);
+                requestAnimationFrame(() => {
+                    mainContainer.replaceChildren();
+                    mainSphere = new SvgWordSphere(mainContainer, window.sphereWords);
+                    updateUI();
+                });
             } catch (error) {
                 console.error('Error initializing sphere:', error);
                 mainContainer.innerHTML = `<div class="error-boundary">Error initializing sphere: ${error.message}</div>`;
             }
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            initializeSpheres();
-
-            const presetButton = document.querySelector('.preset-button');
-            if (presetButton) {
-                presetButton.textContent = `Preset: ${currentPreset.charAt(0).toUpperCase() + currentPreset.slice(1)}`;
-            }
-
-            window.addEventListener('resize', () => {
-                if (currentSphere === 'main' && mainSphere) {
-                    mainSphere.handleResize();
-                } else if (currentSphere === 'alt' && altSphere && typeof altSphere.handleResize === 'function') {
-                    altSphere.handleResize();
-                }
-            });
-        });
-
         function rebuildActiveSphere() {
             setWords(currentPreset);
 
             if (currentSphere === 'main') {
                 const mainContainer = document.getElementById('main-container');
+                if (!mainContainer) return;
+
                 if (mainSphere) {
                     mainSphere.destroy();
                 }
-                mainSphere = new SvgWordSphere(mainContainer, window.sphereWords);
+
+                mainContainer.replaceChildren();
+                requestAnimationFrame(() => {
+                    mainSphere = new SvgWordSphere(mainContainer, window.sphereWords);
+                    updateUI();
+                });
             } else {
                 const altContainer = document.getElementById('alt-container');
+                if (!altContainer) return;
+
                 if (altSphere) {
                     altSphere.destroy();
                 }
-                altSphere = new WordSphere(altContainer, window.sphereWords);
+
+                altContainer.replaceChildren();
+                requestAnimationFrame(() => {
+                    altSphere = new WordSphere(altContainer, window.sphereWords);
+                    updateUI();
+                });
             }
         }
 
         function toggleSphere() {
             const mainContainer = document.getElementById('main-container');
             const altContainer = document.getElementById('alt-container');
-            const toggleButton = document.querySelector('.toggle-button');
+
+            if (!mainContainer || !altContainer) return;
 
             if (currentSphere === 'main') {
-                mainContainer.style.display = 'none';
-                altContainer.style.display = 'block';
                 if (mainSphere) {
                     mainSphere.destroy();
                     mainSphere = null;
                 }
-                altSphere = new WordSphere(altContainer, window.sphereWords);
+                mainContainer.replaceChildren();
+
                 currentSphere = 'alt';
-                toggleButton.textContent = 'Switch to Main View';
+                activateSphere('alt');
+
+                altContainer.replaceChildren();
+                requestAnimationFrame(() => {
+                    altSphere = new WordSphere(altContainer, window.sphereWords);
+                    updateUI();
+                });
             } else {
-                altContainer.style.display = 'none';
-                mainContainer.style.display = 'block';
                 if (altSphere) {
                     altSphere.destroy();
                     altSphere = null;
                 }
-                mainSphere = new SvgWordSphere(mainContainer, window.sphereWords);
+                altContainer.replaceChildren();
+
                 currentSphere = 'main';
-                toggleButton.textContent = 'Switch to Alternative View';
+                activateSphere('main');
+
+                mainContainer.replaceChildren();
+                requestAnimationFrame(() => {
+                    mainSphere = new SvgWordSphere(mainContainer, window.sphereWords);
+                    updateUI();
+                });
             }
         }
 
@@ -328,12 +549,27 @@
             const currentIndex = presetKeys.indexOf(currentPreset);
             currentPreset = presetKeys[(currentIndex + 1) % presetKeys.length];
             rebuildActiveSphere();
-
-            const presetButton = document.querySelector('.preset-button');
-            if (presetButton) {
-                presetButton.textContent = `Preset: ${currentPreset.charAt(0).toUpperCase() + currentPreset.slice(1)}`;
-            }
         }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initializeSpheres();
+
+            if (toggleButton) {
+                toggleButton.addEventListener('click', () => toggleSphere());
+            }
+
+            if (presetButton) {
+                presetButton.addEventListener('click', () => cyclePreset());
+            }
+
+            window.addEventListener('resize', () => {
+                if (currentSphere === 'main' && mainSphere && typeof mainSphere.handleResize === 'function') {
+                    mainSphere.handleResize();
+                } else if (currentSphere === 'alt' && altSphere && typeof altSphere.handleResize === 'function') {
+                    altSphere.handleResize();
+                }
+            });
+        });
     </script>
 
     <script defer src="wordsphere.js"></script>

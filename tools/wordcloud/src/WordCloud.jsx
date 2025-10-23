@@ -1,136 +1,163 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export function WordCloud({ words }) {
+export function WordCloud({ words, shuffleToken = 0, onHoverChange, clearSignal = 0 }) {
   const containerRef = useRef(null);
   const nodesRef = useRef([]);
   const [positions, setPositions] = useState({});
   const [hoveredWord, setHoveredWord] = useState(null);
   const animationRef = useRef();
+  const dimensionsRef = useRef({ width: 0, height: 0 });
 
-  useEffect(() => {
+  const cancelAnimation = useCallback(() => {
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = undefined;
+    }
+  }, []);
+
+  const initializeLayout = useCallback(() => {
     if (!containerRef.current) return;
 
+    cancelAnimation();
+    setHoveredWord(null);
+
     const container = containerRef.current;
-    const width = container.clientWidth;
-    const height = container.clientHeight;
-    const centerX = width / 2;
-    const centerY = height / 2;
+    const rect = container.getBoundingClientRect();
+    const width = rect.width || container.clientWidth || window.innerWidth;
+    const height = rect.height || container.clientHeight || window.innerHeight;
+    dimensionsRef.current = { width, height };
 
-    // Create a grid-based initial layout
-    const cols = 5;
-    const rows = 6;
+    const cols = Math.max(4, Math.round(width / 220));
+    const rows = Math.ceil(words.length / cols);
     const cellWidth = width / cols;
-    const cellHeight = height / rows;
+    const cellHeight = height / Math.max(1, rows);
 
-    // Shuffle words to randomize placement
     const shuffledWords = [...words].sort(() => Math.random() - 0.5);
 
     nodesRef.current = shuffledWords.map((word, i) => {
-      // Calculate base grid position
       const col = i % cols;
       const row = Math.floor(i / cols);
-      
-      // Add significant random offset within the cell
+
       const baseX = (col + 0.5) * cellWidth;
       const baseY = (row + 0.5) * cellHeight;
-      
-      // Add random offset up to half a cell size
-      const xOffset = (Math.random() - 0.5) * cellWidth * 1.5;
-      const yOffset = (Math.random() - 0.5) * cellHeight * 1.5;
 
-      // Weight-based additional offset (larger words spread more)
+      const xOffset = (Math.random() - 0.5) * cellWidth;
+      const yOffset = (Math.random() - 0.5) * cellHeight;
+
       const weightFactor = word.weight / 10;
-      const extraOffset = 50 * weightFactor;
+      const extraOffset = 60 * weightFactor;
       const extraX = (Math.random() - 0.5) * extraOffset;
       const extraY = (Math.random() - 0.5) * extraOffset;
 
+      const startX = baseX + xOffset + extraX;
+      const startY = baseY + yOffset + extraY;
+
       return {
         ...word,
-        x: baseX + xOffset + extraX,
-        y: baseY + yOffset + extraY,
+        x: startX,
+        y: startY,
         vx: 0,
         vy: 0,
-        baseX: baseX + xOffset + extraX,
-        baseY: baseY + yOffset + extraY
+        baseX: startX,
+        baseY: startY,
       };
     });
 
-    let lastTime = 0;
+    setPositions(
+      nodesRef.current.reduce((acc, node) => ({
+        ...acc,
+        [node.id]: { x: node.x, y: node.y },
+      }), {})
+    );
+
+    let lastTime = performance.now();
+
     const animate = (time) => {
-      const delta = lastTime ? (time - lastTime) / 1000 : 0;
+      const delta = (time - lastTime) / 1000;
       lastTime = time;
 
-      nodesRef.current.forEach((node, i) => {
-        // Very gentle continuous motion
-        const t = time * 0.0002; // Even slower
-        const wobbleX = Math.sin(t + i * 0.5) * 0.15;
-        const wobbleY = Math.cos(t + i * 0.5) * 0.15;
+      const { width: w, height: h } = dimensionsRef.current;
 
-        // Attraction to base position
+      nodesRef.current.forEach((node, i) => {
+        const wobbleTime = time * 0.00018;
+        const wobbleX = Math.sin(wobbleTime + i * 0.45) * 0.2;
+        const wobbleY = Math.cos(wobbleTime + i * 0.35) * 0.2;
+
         const dx = node.baseX - node.x;
         const dy = node.baseY - node.y;
-        node.vx += dx * 0.005;
-        node.vy += dy * 0.005;
+        node.vx += dx * 0.006;
+        node.vy += dy * 0.006;
 
-        // Strong repulsion forces
         nodesRef.current.forEach((other, j) => {
           if (i === j) return;
-          const dx = other.x - node.x;
-          const dy = other.y - node.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          const minDistance = (node.fontSize + other.fontSize) * 2.5; // Increased minimum distance
+          const rx = other.x - node.x;
+          const ry = other.y - node.y;
+          const distance = Math.sqrt(rx * rx + ry * ry) || 1;
+          const minDistance = (node.fontSize + other.fontSize) * 2.4;
 
           if (distance < minDistance) {
-            const force = (minDistance - distance) * 0.05; // Stronger repulsion
-            const angle = Math.atan2(dy, dx);
-            node.vx -= Math.cos(angle) * force;
-            node.vy -= Math.sin(angle) * force;
+            const force = (minDistance - distance) * 0.06;
+            node.vx -= (rx / distance) * force;
+            node.vy -= (ry / distance) * force;
           }
         });
 
-        // Apply velocity with stronger damping
         node.vx *= 0.9;
         node.vy *= 0.9;
-        
-        // Add wobble to final position
+
         node.x += node.vx * delta * 60 + wobbleX;
         node.y += node.vy * delta * 60 + wobbleY;
 
-        // Boundary constraints with padding
-        const padding = Math.max(80, node.fontSize * 2);
+        const padding = Math.max(64, node.fontSize * 2);
         if (node.x < padding) node.x = padding;
-        if (node.x > width - padding) node.x = width - padding;
+        if (node.x > w - padding) node.x = w - padding;
         if (node.y < padding) node.y = padding;
-        if (node.y > height - padding) node.y = height - padding;
+        if (node.y > h - padding) node.y = h - padding;
       });
 
-      // Update positions
       setPositions(
         nodesRef.current.reduce((acc, node) => ({
           ...acc,
-          [node.id]: { x: node.x, y: node.y }
+          [node.id]: { x: node.x, y: node.y },
         }), {})
       );
 
       animationRef.current = requestAnimationFrame(animate);
     };
 
-    animationRef.current = requestAnimationFrame(animate);
+    animationRef.current = requestAnimationFrame((time) => {
+      lastTime = time;
+      animate(time);
+    });
+  }, [cancelAnimation, words]);
 
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [words]);
+  useEffect(() => {
+    initializeLayout();
+    return () => cancelAnimation();
+  }, [initializeLayout, cancelAnimation, shuffleToken]);
 
-  // Get all related connections for a word
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new ResizeObserver(() => initializeLayout());
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [initializeLayout]);
+
+  useEffect(() => {
+    if (!onHoverChange) return;
+    const activeWord = words.find(w => w.id === hoveredWord) || null;
+    onHoverChange(activeWord);
+  }, [hoveredWord, onHoverChange, words]);
+
+  useEffect(() => {
+    setHoveredWord(null);
+  }, [clearSignal]);
+
   const getConnections = (wordId) => {
     const word = words.find(w => w.id === wordId);
     if (!word) return [];
-    
-    // Include both direct and reverse relationships
+
     const connections = new Set([
       ...word.related,
       ...words.filter(w => w.related.includes(wordId)).map(w => w.id)
@@ -138,12 +165,11 @@ export function WordCloud({ words }) {
     return Array.from(connections);
   };
 
-  // Get neighboring words (physically close)
   const getNeighbors = (wordId) => {
     if (!positions[wordId]) return [];
     const pos = positions[wordId];
-    const neighborRadius = 150; // Adjust this value to change what counts as a neighbor
-    
+    const neighborRadius = 150;
+
     return words
       .filter(w => w.id !== wordId)
       .filter(w => {
@@ -156,15 +182,30 @@ export function WordCloud({ words }) {
       .map(w => w.id);
   };
 
+  const activeWord = useMemo(() => words.find(w => w.id === hoveredWord) || null, [hoveredWord, words]);
+  const connectionNames = useMemo(() => (
+    hoveredWord ? getConnections(hoveredWord)
+      .map(id => words.find(w => w.id === id)?.text)
+      .filter(Boolean)
+      : []
+  ), [hoveredWord, words]);
+
+  const neighborNames = useMemo(() => (
+    hoveredWord ? getNeighbors(hoveredWord)
+      .map(id => words.find(w => w.id === id)?.text)
+      .filter(Boolean)
+      : []
+  ), [hoveredWord, positions, words]);
+
   return (
-    <div ref={containerRef} className="word-cloud-container relative w-full h-[600px]">
+    <div ref={containerRef} className="word-cloud-container relative w-full h-[620px]" role="presentation">
 
       {Object.keys(positions).length > 0 && words.map((word) => {
         const isHovered = hoveredWord === word.id;
         const isRelated = hoveredWord ? getConnections(hoveredWord).includes(word.id) : false;
         const isNeighbor = hoveredWord ? getNeighbors(hoveredWord).includes(word.id) : false;
-        
-        const scale = isHovered ? 1.3 : 
+
+        const scale = isHovered ? 1.3 :
                      isRelated ? 1.15 :
                      isNeighbor ? 1.1 : 1;
 
@@ -184,10 +225,10 @@ export function WordCloud({ words }) {
               color: word.color,
               zIndex: isHovered ? 10 : (isRelated ? 5 : 1),
             }}
-            animate={{ 
+            animate={{
               opacity,
               scale,
-              textShadow: isHovered ? `0 0 30px ${word.glow}` : 
+              textShadow: isHovered ? `0 0 30px ${word.glow}` :
                          isRelated ? `0 0 20px ${word.glow}` :
                          isNeighbor ? `0 0 10px ${word.glow}` : 'none',
               transition: {
@@ -204,7 +245,6 @@ export function WordCloud({ words }) {
         );
       })}
 
-      {/* Connections Layer */}
       <svg className="absolute inset-0 pointer-events-none" style={{ width: '100%', height: '100%' }}>
         <defs>
           <filter id="glow">
@@ -220,15 +260,15 @@ export function WordCloud({ words }) {
             if (!positions[hoveredWord] || !positions[relatedId]) return null;
             const sourceWord = words.find(w => w.id === hoveredWord);
             const targetWord = words.find(w => w.id === relatedId);
-            
+
             const lineKey = `${Math.min(hoveredWord, relatedId)}-${Math.max(hoveredWord, relatedId)}`;
-            
+
             return (
               <g key={lineKey}>
                 <motion.line
                   initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ 
-                    pathLength: 1, 
+                  animate={{
+                    pathLength: 1,
                     opacity: 0.2,
                     transition: { duration: 0.8, ease: "easeOut" }
                   }}
@@ -244,8 +284,8 @@ export function WordCloud({ words }) {
                 />
                 <motion.line
                   initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ 
-                    pathLength: 1, 
+                  animate={{
+                    pathLength: 1,
                     opacity: 0.8,
                     transition: { duration: 0.6, ease: "easeOut" }
                   }}
@@ -261,7 +301,7 @@ export function WordCloud({ words }) {
                 />
                 <motion.circle
                   initial={{ scale: 0 }}
-                  animate={{ 
+                  animate={{
                     scale: 1,
                     transition: { duration: 0.3 }
                   }}
@@ -273,7 +313,7 @@ export function WordCloud({ words }) {
                 />
                 <motion.circle
                   initial={{ scale: 0 }}
-                  animate={{ 
+                  animate={{
                     scale: 1,
                     transition: { duration: 0.3, delay: 0.2 }
                   }}
@@ -288,6 +328,29 @@ export function WordCloud({ words }) {
           })}
         </AnimatePresence>
       </svg>
+
+      <AnimatePresence>
+        {activeWord && (
+          <motion.div
+            key={activeWord.id}
+            className="word-focus-card"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.25 }}
+            aria-live="polite"
+          >
+            <h3>{activeWord.text}</h3>
+            <p className="word-focus-card__meta">Weight: {activeWord.weight}</p>
+            {connectionNames.length > 0 && (
+              <p><strong>Connected:</strong> {connectionNames.join(', ')}</p>
+            )}
+            {neighborNames.length > 0 && (
+              <p className="word-focus-card__neighbors">Nearby: {neighborNames.join(', ')}</p>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
