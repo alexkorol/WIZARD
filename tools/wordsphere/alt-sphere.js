@@ -2,7 +2,17 @@ class WordSphere {
     constructor(container, words) {
         this.container = container;
         this.words = words;
-        this.radius = Math.min(window.innerWidth, window.innerHeight) / 3;
+        this.container.style.position = 'relative';
+
+        this.updateMetrics = () => {
+            const rect = this.container.getBoundingClientRect();
+            this.radius = Math.min(rect.width, rect.height) / 2.2;
+            this.centerX = rect.width / 2;
+            this.centerY = rect.height / 2;
+            this.containerRect = rect;
+        };
+
+        this.updateMetrics();
         this.rotationX = 0;
         this.rotationY = 0;
         this.mouseX = 0;
@@ -11,14 +21,10 @@ class WordSphere {
         this.wordElements = [];
         this.momentum = { x: 0, y: 0.1 };
         this.lastTime = Date.now();
-        this.centerX = window.innerWidth / 2;
-        this.centerY = window.innerHeight / 2;
-        
+
         // Add resize handler
         this.handleResize = () => {
-            this.radius = Math.min(window.innerWidth, window.innerHeight) / 3;
-            this.centerX = window.innerWidth / 2;
-            this.centerY = window.innerHeight / 2;
+            this.updateMetrics();
             this.updatePositions();
         };
         window.addEventListener('resize', this.handleResize);
@@ -140,10 +146,11 @@ class WordSphere {
             this.rotationY += this.momentum.y;
         }
         
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-        const perspective = Math.max(window.innerWidth, window.innerHeight);
-        
+        const perspective = Math.max(
+            this.containerRect?.width || window.innerWidth,
+            this.containerRect?.height || window.innerHeight
+        ) * 1.2;
+
         this.wordElements.forEach(el => {
             const x = parseFloat(el.dataset.x);
             const y = parseFloat(el.dataset.y);
