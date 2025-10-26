@@ -15,6 +15,42 @@
       position: relative;
     }
 
+    .ui-panel {
+      position: absolute;
+      background: rgba(15, 23, 42, 0.82);
+      color: rgba(226, 232, 240, 0.92);
+      padding: 1rem;
+      border-radius: 0.85rem;
+      box-shadow: 0 18px 35px rgba(2, 6, 23, 0.55);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      z-index: 12;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .panel-header h3 {
+      margin: 0;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .panel-subtitle {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(148, 163, 184, 0.8);
+    }
+
     .skill-points {
       position: absolute;
       top: 1rem;
@@ -91,7 +127,8 @@
     .message {
       position: absolute;
       top: 1rem;
-      right: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
       background: rgba(255, 255, 255, 0.9);
       color: #1A202C;
       padding: 0.5rem 1rem;
@@ -123,6 +160,214 @@
       text-shadow: 0 0 6px rgba(15, 23, 42, 0.8);
     }
 
+    .legend-panel {
+      bottom: 1rem;
+      left: 1rem;
+      width: 260px;
+    }
+
+    .legend-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.35rem 0.75rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: rgba(203, 213, 225, 0.85);
+      letter-spacing: 0.04em;
+    }
+
+    .legend-swatch {
+      width: 0.85rem;
+      height: 0.85rem;
+      border-radius: 0.45rem;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 6px rgba(15, 118, 230, 0.55);
+    }
+
+    .status-active {
+      background: linear-gradient(135deg, #facc15, #fbbf24);
+      box-shadow: 0 0 8px rgba(250, 204, 21, 0.55);
+    }
+
+    .status-available {
+      background: linear-gradient(135deg, #a5b4fc, #6366f1);
+      box-shadow: 0 0 8px rgba(129, 140, 248, 0.55);
+    }
+
+    .status-reachable {
+      background: linear-gradient(135deg, #7dd3fc, #0ea5e9);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.45);
+    }
+
+    .status-locked {
+      background: linear-gradient(135deg, #475569, #1e293b);
+      box-shadow: none;
+    }
+
+    .tier-summary {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .tier-row {
+      font-size: 0.7rem;
+      line-height: 1.3;
+      color: rgba(148, 163, 184, 0.85);
+    }
+
+    .tier-row strong {
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: rgba(248, 250, 252, 0.92);
+      text-transform: uppercase;
+    }
+
+    .search-panel {
+      top: 1rem;
+      right: 1rem;
+      width: 320px;
+      gap: 0.85rem;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      border-radius: 0.65rem;
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      background: rgba(30, 41, 59, 0.9);
+      color: rgba(226, 232, 240, 0.95);
+      font-size: 0.85rem;
+    }
+
+    .search-input::placeholder {
+      color: rgba(148, 163, 184, 0.6);
+    }
+
+    .filter-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .filter-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .filter-chip {
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(30, 41, 59, 0.7);
+      color: rgba(226, 232, 240, 0.85);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-chip.active {
+      border-color: rgba(129, 140, 248, 0.75);
+      background: rgba(79, 70, 229, 0.55);
+      color: rgba(248, 250, 252, 0.95);
+      box-shadow: 0 0 8px rgba(129, 140, 248, 0.45);
+    }
+
+    .filter-chip:focus-visible {
+      outline: 2px solid rgba(56, 189, 248, 0.6);
+      outline-offset: 2px;
+    }
+
+    .filter-chip[data-filter-type="type"][data-filter-value="keystone"] {
+      border-color: rgba(250, 204, 21, 0.5);
+    }
+
+    .clear-search {
+      background: none;
+      border: none;
+      color: rgba(148, 197, 255, 0.85);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+    }
+
+    .search-results {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .search-result {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.55rem;
+      border-radius: 0.65rem;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid transparent;
+      transition: border 0.2s ease, background 0.2s ease;
+    }
+
+    .search-result:hover {
+      border-color: rgba(129, 140, 248, 0.45);
+      background: rgba(49, 60, 90, 0.75);
+    }
+
+    .result-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .result-meta strong {
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+    }
+
+    .result-meta span {
+      font-size: 0.65rem;
+      color: rgba(148, 163, 184, 0.8);
+    }
+
+    .result-pin {
+      background: rgba(79, 70, 229, 0.6);
+      color: white;
+      border: 1px solid rgba(129, 140, 248, 0.65);
+      border-radius: 999px;
+      font-size: 0.65rem;
+      padding: 0.3rem 0.6rem;
+      cursor: pointer;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .result-pin:hover {
+      background: rgba(99, 102, 241, 0.75);
+    }
+
+    .search-empty {
+      font-size: 0.7rem;
+      color: rgba(148, 163, 184, 0.8);
+      text-align: center;
+      padding: 0.5rem 0;
+    }
+
     /* Node Styles */
     .node {
       cursor: pointer;
@@ -145,6 +390,30 @@
 
     .node:hover text {
       font-size: 5px; /* Adjusted hover size */
+    }
+
+    .node.search-match circle {
+      stroke-width: 1.75;
+      filter: drop-shadow(0 0 5px rgba(129, 140, 248, 0.55));
+    }
+
+    .node.reachable-node circle {
+      filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.45));
+    }
+
+    .node.path-node circle {
+      stroke-width: 2;
+      filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.6));
+    }
+
+    .node.pinned-node circle {
+      stroke-width: 2.2;
+      filter: drop-shadow(0 0 9px rgba(236, 72, 153, 0.55));
+    }
+
+    .node.filtered-out {
+      opacity: 0.2;
+      pointer-events: none;
     }
 
     /* Node States */
@@ -181,6 +450,7 @@
     /* Arc Styles */
     .arc {
       transition: stroke 0.3s ease, filter 0.3s ease;
+      stroke-width: 1.25;
     }
 
     .inactive-arc {
@@ -200,6 +470,20 @@
       stroke: #818CF8;
       filter: drop-shadow(0 0 3px #818CF8);
       animation: connectionPulse 1.5s infinite;
+    }
+
+    .arc.reachable-arc {
+      stroke-dasharray: 3 4;
+      opacity: 0.7;
+    }
+
+    .arc.path-arc {
+      stroke-width: 2.5;
+      filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.6));
+    }
+
+    .arc.filtered-out {
+      opacity: 0.12;
     }
 
     @keyframes connectionPulse {
@@ -260,6 +544,54 @@
         <button id="levelUpButton">Gain Level</button>
         <button id="respecButton">Respec</button>
       </div>
+    </div>
+    <div class="ui-panel search-panel" id="searchPanel">
+      <div class="panel-header">
+        <h3>Node Finder</h3>
+        <button class="clear-search" id="clearSearchButton" type="button">Clear</button>
+      </div>
+      <input type="search" class="search-input" id="nodeSearch" placeholder="Search nodes, effects, or tiers" autocomplete="off" />
+      <div class="filter-section">
+        <span class="panel-subtitle">Primary Focus</span>
+        <div class="filter-grid" id="primaryFilters">
+          <button class="filter-chip" type="button" data-filter-type="stat" data-filter-value="STR">STR</button>
+          <button class="filter-chip" type="button" data-filter-type="stat" data-filter-value="DEX">DEX</button>
+          <button class="filter-chip" type="button" data-filter-type="stat" data-filter-value="INT">INT</button>
+        </div>
+      </div>
+      <div class="filter-section">
+        <span class="panel-subtitle">Ring</span>
+        <div class="filter-grid" id="tierFilters">
+          <button class="filter-chip" type="button" data-filter-type="tier" data-filter-value="0">0</button>
+          <button class="filter-chip" type="button" data-filter-type="tier" data-filter-value="1">1</button>
+          <button class="filter-chip" type="button" data-filter-type="tier" data-filter-value="2">2</button>
+          <button class="filter-chip" type="button" data-filter-type="tier" data-filter-value="3">3</button>
+          <button class="filter-chip" type="button" data-filter-type="tier" data-filter-value="4">4</button>
+        </div>
+      </div>
+      <div class="filter-section">
+        <span class="panel-subtitle">Node Type</span>
+        <div class="filter-grid" id="typeFilters">
+          <button class="filter-chip" type="button" data-filter-type="type" data-filter-value="core">Core</button>
+          <button class="filter-chip" type="button" data-filter-type="type" data-filter-value="notable">Notable</button>
+          <button class="filter-chip" type="button" data-filter-type="type" data-filter-value="keystone">Keystone</button>
+          <button class="filter-chip" type="button" data-filter-type="type" data-filter-value="cluster">Cluster</button>
+        </div>
+      </div>
+      <div class="panel-subtitle">Matches highlight on the lattice.</div>
+      <ul class="search-results" id="searchResults"></ul>
+    </div>
+    <div class="ui-panel legend-panel" id="legendPanel">
+      <div class="panel-header">
+        <h3>Atlas Status</h3>
+      </div>
+      <div class="legend-grid">
+        <div class="legend-item"><span class="legend-swatch status-active"></span>Active</div>
+        <div class="legend-item"><span class="legend-swatch status-available"></span>Unlockable</div>
+        <div class="legend-item"><span class="legend-swatch status-reachable"></span>Reachable</div>
+        <div class="legend-item"><span class="legend-swatch status-locked"></span>Locked</div>
+      </div>
+      <div class="tier-summary" id="tierSummary"></div>
     </div>
     <div class="message" id="message"></div>
     <div class="tooltip" id="tooltip"></div>
@@ -394,6 +726,21 @@
       }
     ];
 
+    function populateTierSummary() {
+      if (!searchUI.tierSummary) {
+        return;
+      }
+      searchUI.tierSummary.innerHTML = '';
+      tierThemes.forEach(theme => {
+        const row = document.createElement('div');
+        row.className = 'tier-row';
+        row.innerHTML = `<strong>Ring ${theme.ring}: ${theme.name}</strong>${theme.description}`;
+        searchUI.tierSummary.appendChild(row);
+      });
+    }
+
+    populateTierSummary();
+
     function hexToRgb(hex) {
       const bigint = parseInt(hex.slice(1), 16);
       return {
@@ -441,6 +788,37 @@
       return rawWeights.map(w => w / sum);
     }
 
+    function describeNodeEffect(node) {
+      const weights = node.statWeights || computeWeights(node.x, node.y);
+      const dominantIndex = weights.indexOf(Math.max(...weights));
+      const focus = statAxes[dominantIndex].label;
+      const hybridContribution = weights.reduce((acc, value, index) => index === dominantIndex ? acc : acc + value, 0);
+      const magnitude = Math.max(3, Math.round((node.normalizedRadius + 1) * 5));
+      const hybridMagnitude = Math.max(1, Math.round(hybridContribution * 12));
+      const tierScaling = Math.max(4, Math.round((node.tier + 1) * 6 + node.distanceFromCenter * 0.08));
+
+      let speciality = '';
+      switch (focus) {
+        case 'STR':
+          speciality = `${tierScaling}% improved Guard uptime`;
+          break;
+        case 'DEX':
+          speciality = `${tierScaling}% increased Evasion lattice`;
+          break;
+        case 'INT':
+          speciality = `${tierScaling}% augmented Mana flow`;
+          break;
+        default:
+          speciality = `${tierScaling}% adaptive resonance`;
+      }
+
+      const hybridLine = hybridMagnitude > 0
+        ? `${hybridMagnitude}% hybrid resonance shared to adjacent stats`
+        : 'Balanced across all stats';
+
+      return `+${magnitude} ${focus} • ${hybridLine} • ${speciality}`;
+    }
+
     let hoveredNode = null;
     let hoveredArc = null;
     let progression = null;
@@ -458,6 +836,31 @@
       respec: document.getElementById('respecButton')
     };
 
+    const searchUI = {
+      panel: document.getElementById('searchPanel'),
+      input: document.getElementById('nodeSearch'),
+      clear: document.getElementById('clearSearchButton'),
+      results: document.getElementById('searchResults'),
+      tierSummary: document.getElementById('tierSummary'),
+      filterButtons: Array.from(document.querySelectorAll('.filter-chip'))
+    };
+
+    const filterState = {
+      stat: new Set(),
+      tier: new Set(),
+      type: new Set()
+    };
+
+    let searchTerm = '';
+    let searchMatches = new Set();
+    let searchMatchList = [];
+    let filteredNodeIds = new Set();
+    let pinnedNode = null;
+    let pinnedPathNodes = new Set();
+    let pinnedPathArcs = new Set();
+    let hoverPathNodes = new Set();
+    let hoverPathArcs = new Set();
+
     const POSITION_PRECISION = 3;
     const ARC_DISTANCE_TOLERANCE = 1e-2;
 
@@ -467,9 +870,14 @@
     let adjacencyGraph = new Map();
     let geometryValidation = null;
     let serializedTree = '';
+    let arcLookup = new Map();
+    let reachableNodes = new Set();
+    let keystoneIds = new Set();
 
     // Define the nodes where extra circles should be added
     const extraCircleNodes = ['n7', 'n8', 'n9', 'n10', 'n11', 'n12', 'n13', 'n15'];
+
+    const makeArcKey = (a, b) => (a < b ? `${a}|${b}` : `${b}|${a}`);
 
     function snapCoordinate(value, precision = POSITION_PRECISION) {
       return Number(value.toFixed(precision));
@@ -901,6 +1309,14 @@
       node.statWeights = weights;
       const dominantIndex = weights.indexOf(Math.max(...weights));
       node.primaryStat = statAxes[dominantIndex].label;
+      if (node.id === 'n0' || node.tier === 0) {
+        node.nodeType = 'core';
+      } else if (extraCircleNodes.includes(node.id)) {
+        node.nodeType = 'notable';
+      } else {
+        node.nodeType = 'cluster';
+      }
+      node.effectSummary = describeNodeEffect(node);
     });
 
     const tierCounts = new Map();
@@ -924,6 +1340,16 @@
     const keystoneConfig = buildKeystoneConfigFromNodes(nodes, arcs, extraCircleNodes, {
       modifierPrefix: 'Celestial',
       additionalTierRequirement: 3
+    });
+
+    keystoneIds = new Set(Object.keys(keystoneConfig));
+    nodes.forEach(node => {
+      if (keystoneIds.has(node.id)) {
+        node.nodeType = 'keystone';
+        const keystone = keystoneConfig[node.id];
+        const modifier = keystone?.modifier ? ` ${keystone.modifier}` : '';
+        node.effectSummary = `Keystone:${modifier}`.trim();
+      }
     });
 
     progression = new SkillTreeProgression({
@@ -959,6 +1385,8 @@
       path.setAttribute('data-to', arc.to);
       mainGroup.insertBefore(path, mainGroup.firstChild); // Insert into mainGroup
 
+      arcLookup.set(makeArcKey(arc.from, arc.to), arc.id);
+
       // Invisible hit area
       const hitPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
       hitPath.setAttribute('d', d);
@@ -983,6 +1411,9 @@
       group.setAttribute('transform', `translate(${node.x},${node.y})`);
       group.classList.add('node', 'inactive-node');
       group.setAttribute('data-id', node.id);
+      group.dataset.tier = node.tier;
+      group.dataset.primary = node.primaryStat;
+      group.dataset.nodeType = node.nodeType;
 
       // Base circle
       const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -1023,6 +1454,196 @@
     // Tooltip element
     const tooltip = document.getElementById('tooltip');
 
+    function findPath(startId, targetId) {
+      if (!adjacencyGraph.has(startId) || !adjacencyGraph.has(targetId)) {
+        return [];
+      }
+      if (startId === targetId) {
+        return [startId];
+      }
+
+      const queue = [startId];
+      const visited = new Set([startId]);
+      const parents = new Map();
+
+      while (queue.length > 0) {
+        const current = queue.shift();
+        if (current === targetId) {
+          break;
+        }
+        const neighbors = adjacencyGraph.get(current) || new Set();
+        neighbors.forEach(neighbor => {
+          if (!visited.has(neighbor)) {
+            visited.add(neighbor);
+            parents.set(neighbor, current);
+            queue.push(neighbor);
+          }
+        });
+      }
+
+      if (!visited.has(targetId)) {
+        return [];
+      }
+
+      const path = [targetId];
+      let cursor = targetId;
+      while (cursor !== startId) {
+        cursor = parents.get(cursor);
+        if (!cursor) {
+          return [];
+        }
+        path.unshift(cursor);
+      }
+      return path;
+    }
+
+    function buildPathHighlight(nodeId) {
+      if (!nodeId) {
+        return { nodes: new Set(), arcs: new Set() };
+      }
+      const path = findPath('n0', nodeId);
+      const nodeSet = new Set(path);
+      const arcSet = new Set();
+      for (let i = 0; i < path.length - 1; i++) {
+        const key = makeArcKey(path[i], path[i + 1]);
+        const arcId = arcLookup.get(key);
+        if (arcId) {
+          arcSet.add(arcId);
+        }
+      }
+      return { nodes: nodeSet, arcs: arcSet };
+    }
+
+    function setPinnedNode(nodeId, withMessage = false) {
+      pinnedNode = nodeId;
+      const highlight = buildPathHighlight(nodeId);
+      pinnedPathNodes = highlight.nodes;
+      pinnedPathArcs = highlight.arcs;
+      if (!nodeId) {
+        pinnedPathNodes = new Set();
+        pinnedPathArcs = new Set();
+      }
+      if (withMessage && nodeId) {
+        const node = nodeIndex.get(nodeId);
+        if (node) {
+          showMessage(`Pinned path to ${nodeId} (${node.tierName}).`);
+        }
+      }
+      updateVisuals();
+    }
+
+    function nodeMatchesFilters(node) {
+      if (!node) {
+        return false;
+      }
+      const statSet = filterState.stat;
+      const tierSet = filterState.tier;
+      const typeSet = filterState.type;
+      const statMatch = statSet.size === 0 || statSet.has(node.primaryStat);
+      const tierMatch = tierSet.size === 0 || tierSet.has(String(node.tier));
+      const typeMatch = typeSet.size === 0 || typeSet.has(node.nodeType);
+      return statMatch && tierMatch && typeMatch;
+    }
+
+    function applyFilters() {
+      filteredNodeIds = new Set();
+      nodes.forEach(node => {
+        if (!nodeMatchesFilters(node)) {
+          filteredNodeIds.add(node.id);
+        }
+      });
+      updateVisuals();
+    }
+
+    function renderSearchResults() {
+      if (!searchUI.results) {
+        return;
+      }
+      searchUI.results.innerHTML = '';
+      if (!searchTerm) {
+        const empty = document.createElement('li');
+        empty.className = 'search-empty';
+        empty.textContent = 'Type to search the atlas.';
+        searchUI.results.appendChild(empty);
+        return;
+      }
+      if (searchMatchList.length === 0) {
+        const empty = document.createElement('li');
+        empty.className = 'search-empty';
+        empty.textContent = 'No nodes match your query.';
+        searchUI.results.appendChild(empty);
+        return;
+      }
+
+      searchMatchList.slice(0, 8).forEach(node => {
+        const item = document.createElement('li');
+        item.className = 'search-result';
+
+        const meta = document.createElement('div');
+        meta.className = 'result-meta';
+        const title = document.createElement('strong');
+        title.textContent = `${node.id} • ${node.primaryStat}`;
+        const subtitle = document.createElement('span');
+        subtitle.textContent = `${node.tierName} · ${node.nodeType.toUpperCase()}`;
+        const effect = document.createElement('span');
+        effect.textContent = node.effectSummary;
+        meta.appendChild(title);
+        meta.appendChild(subtitle);
+        meta.appendChild(effect);
+
+        const pinButton = document.createElement('button');
+        pinButton.className = 'result-pin';
+        pinButton.type = 'button';
+        pinButton.textContent = 'Focus';
+        pinButton.addEventListener('click', () => {
+          setPinnedNode(node.id, true);
+        });
+
+        item.appendChild(meta);
+        item.appendChild(pinButton);
+        searchUI.results.appendChild(item);
+      });
+    }
+
+    function updateSearchMatches() {
+      searchMatches = new Set();
+      searchMatchList = [];
+      if (searchTerm.length === 0) {
+        renderSearchResults();
+        updateVisuals();
+        return;
+      }
+
+      const term = searchTerm.toLowerCase();
+      nodes.forEach(node => {
+        const haystack = [
+          node.id,
+          node.primaryStat,
+          node.tierName,
+          node.tierDescription,
+          node.effectSummary
+        ].join(' ').toLowerCase();
+        if (haystack.includes(term)) {
+          searchMatches.add(node.id);
+          searchMatchList.push(node);
+        }
+      });
+      renderSearchResults();
+      updateVisuals();
+    }
+
+    function clearSearch() {
+      searchTerm = '';
+      searchMatches = new Set();
+      searchMatchList = [];
+      if (searchUI.input) {
+        searchUI.input.value = '';
+      }
+      setPinnedNode(null);
+      renderSearchResults();
+      updateVisuals();
+    }
+
     function updateStateDisplay() {
       if (!progression) {
         return;
@@ -1056,6 +1677,9 @@
       if (nodeId) {
         const node = nodeIndex.get(nodeId);
         if (node && progression) {
+          const highlight = buildPathHighlight(nodeId);
+          hoverPathNodes = highlight.nodes;
+          hoverPathArcs = highlight.arcs;
           const [strWeight, dexWeight, intWeight] = node.statWeights.map(w => Math.round(w * 100));
           const status = progression.getNodeStatus(nodeId);
           const requirements = !status.unlocked && status.reasons.length
@@ -1064,10 +1688,14 @@
           const keystoneLine = status.keystoneModifier
             ? `<span class="tooltip-keystone">${status.keystoneModifier}</span>`
             : '';
+          const effectLine = node.effectSummary
+            ? `<span>${node.effectSummary}</span>`
+            : '';
           tooltip.innerHTML = `
             <strong>${node.id} • ${node.primaryStat}</strong>
             <span>${node.tierName} • Ring ${node.tier}</span>
             <span>${node.tierDescription}</span>
+            ${effectLine}
             <span>STR ${strWeight}% · DEX ${dexWeight}% · INT ${intWeight}%</span>
             <span>Connected Nodes: ${node.connections.length}</span>
             ${keystoneLine}
@@ -1076,6 +1704,8 @@
           tooltip.style.display = 'block';
         }
       } else {
+        hoverPathNodes = new Set();
+        hoverPathArcs = new Set();
         tooltip.style.display = 'none';
       }
       updateVisuals();
@@ -1086,6 +1716,8 @@
       if (arcId && progression) {
         const arc = arcs.find(a => a.id === arcId);
         if (arc) {
+          hoverPathNodes = new Set([arc.from, arc.to]);
+          hoverPathArcs = new Set([arc.id]);
           const fromNode = nodeIndex.get(arc.from);
           const toNode = nodeIndex.get(arc.to);
           const fromStatus = progression.getNodeStatus(arc.from);
@@ -1109,6 +1741,10 @@
           tooltip.style.display = 'block';
         }
       } else {
+        if (!hoveredNode) {
+          hoverPathNodes = new Set();
+          hoverPathArcs = new Set();
+        }
         tooltip.style.display = 'none';
       }
       updateVisuals();
@@ -1124,6 +1760,7 @@
 
     function handleNodeClick(nodeId) {
       if (!progression) return;
+      setPinnedNode(nodeId);
       if (nodeId === 'n0') {
         showMessage('The Seed Core is always active.');
         return;
@@ -1182,6 +1819,18 @@
         statuses.set(node.id, progression.getNodeStatus(node.id));
       });
 
+      const unlocked = new Set(progression.getAllocatedNodes());
+      reachableNodes = new Set(unlocked);
+      unlocked.forEach(nodeId => {
+        const neighbors = adjacencyGraph.get(nodeId);
+        if (neighbors) {
+          neighbors.forEach(neighbor => reachableNodes.add(neighbor));
+        }
+      });
+
+      const combinedPathNodes = new Set([...pinnedPathNodes, ...hoverPathNodes]);
+      const combinedPathArcs = new Set([...pinnedPathArcs, ...hoverPathArcs]);
+
       document.querySelectorAll('.node').forEach(nodeGroup => {
         const nodeId = nodeGroup.getAttribute('data-id');
         const circle = nodeGroup.querySelector('circle');
@@ -1190,6 +1839,11 @@
 
         const isActive = status.unlocked;
         const canActivate = status.available;
+        const isReachable = reachableNodes.has(nodeId);
+        const isFiltered = filteredNodeIds.has(nodeId);
+        const isSearchMatch = searchMatches.has(nodeId);
+        const onPath = combinedPathNodes.has(nodeId);
+        const isPinnedNode = pinnedNode === nodeId;
 
         circle.setAttribute('r', nodeId === hoveredNode ? '4' : '3');
 
@@ -1206,13 +1860,38 @@
           }
         }
 
-        nodeGroup.classList.remove('active-node', 'available-node', 'inactive-node');
+        nodeGroup.classList.remove(
+          'active-node',
+          'available-node',
+          'inactive-node',
+          'reachable-node',
+          'search-match',
+          'filtered-out',
+          'path-node',
+          'pinned-node'
+        );
         if (isActive) {
           nodeGroup.classList.add('active-node');
         } else if (canActivate) {
           nodeGroup.classList.add('available-node');
         } else {
           nodeGroup.classList.add('inactive-node');
+        }
+
+        if (isReachable) {
+          nodeGroup.classList.add('reachable-node');
+        }
+        if (isSearchMatch) {
+          nodeGroup.classList.add('search-match');
+        }
+        if (isFiltered) {
+          nodeGroup.classList.add('filtered-out');
+        }
+        if (onPath) {
+          nodeGroup.classList.add('path-node');
+        }
+        if (isPinnedNode) {
+          nodeGroup.classList.add('pinned-node');
         }
       });
 
@@ -1227,8 +1906,11 @@
           (fromStatus?.unlocked && toStatus?.available) ||
           (toStatus?.unlocked && fromStatus?.available)
         );
+        const filteredArc = filteredNodeIds.has(fromId) || filteredNodeIds.has(toId);
+        const reachableArc = reachableNodes.has(fromId) || reachableNodes.has(toId);
+        const pathArc = combinedPathArcs.has(arcId);
 
-        path.classList.remove('active-arc', 'available-arc', 'inactive-arc', 'highlighted-arc');
+        path.classList.remove('active-arc', 'available-arc', 'inactive-arc', 'highlighted-arc', 'reachable-arc', 'filtered-out', 'path-arc');
         if (isActive) {
           path.classList.add('active-arc');
         } else if (available) {
@@ -1240,6 +1922,16 @@
         if (arcId === hoveredArc) {
           path.classList.add('highlighted-arc');
         }
+
+        if (reachableArc) {
+          path.classList.add('reachable-arc');
+        }
+        if (filteredArc) {
+          path.classList.add('filtered-out');
+        }
+        if (pathArc) {
+          path.classList.add('path-arc');
+        }
       });
 
       updateStateDisplay();
@@ -1247,6 +1939,52 @@
 
     controls.levelUp.addEventListener('click', handleLevelUp);
     controls.respec.addEventListener('click', handleRespec);
+
+    if (searchUI.input) {
+      searchUI.input.addEventListener('input', (event) => {
+        searchTerm = event.target.value.trim();
+        updateSearchMatches();
+      });
+      searchUI.input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && searchMatchList.length > 0) {
+          setPinnedNode(searchMatchList[0].id, true);
+        }
+        if (event.key === 'Escape') {
+          clearSearch();
+          searchUI.input.blur();
+        }
+      });
+    }
+
+    if (searchUI.clear) {
+      searchUI.clear.addEventListener('click', clearSearch);
+    }
+
+    searchUI.filterButtons.forEach(button => {
+      const type = button.dataset.filterType;
+      const value = button.dataset.filterValue;
+      button.addEventListener('click', () => {
+        const set = filterState[type];
+        if (!set) {
+          return;
+        }
+        if (set.has(value)) {
+          set.delete(value);
+          button.classList.remove('active');
+        } else {
+          set.add(value);
+          button.classList.add('active');
+        }
+        applyFilters();
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === '/' && searchUI.input) {
+        event.preventDefault();
+        searchUI.input.focus();
+      }
+    });
 
     // Message display function
     function showMessage(text) {
@@ -1260,6 +1998,8 @@
     }
 
     // Initial visual update
+    renderSearchResults();
+    applyFilters();
     updateVisuals();
   </script>
 </body>
