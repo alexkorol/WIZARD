@@ -58,6 +58,35 @@ The tool is stable and functional with core features implemented:
 
 ---
 
+## Developer Documentation
+
+### Geometry Rationale
+
+The runtime geometry is generated directly from Seed-of-Life circle packing. The renderer builds concentric rings of circle centers from polar/axial conversions and then resolves every circle-circle intersection to yield snapped node coordinates with tier metadata.【F:tools/geometric_skilltree/index.html†L1060-L1163】 Adjacency is reconstructed by checking which node pairs are separated by exactly one circle radius and then caching symmetric connection lists for later graph work.【F:tools/geometric_skilltree/index.html†L1166-L1201】 These utilities are wrapped by `geometryEngine`, which also exposes reachability and degree validation helpers to ensure the lattice stays balanced when new content is introduced.【F:tools/geometric_skilltree/index.html†L1203-L1293】
+
+### Data Schema
+
+Generated nodes carry stable ids (`n0`, `n1`, …), snapped `x/y` coordinates, tier descriptors (ring index, thematic name/description), and a mutable `connections` array populated during arc synthesis.【F:tools/geometric_skilltree/index.html†L1106-L1156】 Each arc records its `from` and `to` endpoints alongside cached endpoints for SVG rendering, and all ids feed directly into the adjacency graph.【F:tools/geometric_skilltree/index.html†L1166-L1201】 Runtime theming and balance parameters live in `assets/skilltree-content.json`, which defines ring archetypes, stat scaling, naming templates, overrides, and keystone prerequisites used to personalize generated nodes without hand-editing geometry output.【F:tools/geometric_skilltree/assets/skilltree-content.json†L1-L200】
+
+### APIs
+
+`geometryEngine` exposes deterministic builders (`buildGeometry`, `buildAdjacency`, `validateGraph`, `verifyPrerequisite`, `serialize`) for tooling and tests to regenerate the lattice and confirm reachability after edits.【F:tools/geometric_skilltree/index.html†L1203-L1300】 Progression state is managed by `SkillTreeProgression`, which normalizes tier gates, derives parent relationships from arcs, checks point budgets and prerequisites, and implements unlock/respec flows that surface human-readable rejection reasons for UI overlays.【F:tools/geometric_skilltree/assets/progression.mjs†L1-L240】
+
+## Designer Guide
+
+1. **Extend ring themes** – Adjust or add ring entries in `assets/skilltree-content.json` to tune archetypes, stat growth, radial bonuses, and naming templates before regenerating geometry. The runtime loader merges these records into `ringProfiles` and `tierThemes`, making the values immediately visible in search summaries.【F:tools/geometric_skilltree/index.html†L729-L809】【F:tools/geometric_skilltree/assets/skilltree-content.json†L21-L166】
+2. **Author node flavor** – Use `fallbackFocus`, `focus`, and `nodeTypeLabels` fields to define stat focuses and localized naming. These values drive `formatDisplayName` and tooltip descriptors without requiring manual DOM edits.【F:tools/geometric_skilltree/index.html†L812-L860】【F:tools/geometric_skilltree/assets/skilltree-content.json†L2-L78】
+3. **Balance keystones** – Declare keystone bonuses, penalties, and prerequisite gates (`minTierTotals`, `nodes`) under the `keystones` section. The progression engine reads these rules to block unlocks until prerequisites are met, ensuring balance passes only touch JSON.【F:tools/geometric_skilltree/assets/skilltree-content.json†L168-L214】【F:tools/geometric_skilltree/assets/progression.mjs†L166-L190】
+4. **Override marquee nodes** – Apply `nodeOverrides` to inject bespoke titles, effect copy, or custom costs (e.g., the root nexus) while leaving generated coordinates intact. Overrides are applied during node hydration in the UI layer.【F:tools/geometric_skilltree/assets/skilltree-content.json†L168-L177】【F:tools/geometric_skilltree/index.html†L849-L864】
+
+## QA Checklist
+
+- **Geometry accuracy** – Run the geometry validation utilities (`geometryEngine.validateGraph`) and confirm there are no orphan nodes, extreme degree deltas, or reachability regressions before shipping a new lattice.【F:tools/geometric_skilltree/index.html†L1203-L1293】
+- **Progression integrity** – Execute `npm test` or `node tests/progression.test.mjs` to ensure unlock gating, keystone prerequisites, and respec flows behave as expected after content tweaks.【F:tools/geometric_skilltree/tests/progression.test.mjs†L1-L116】
+- **UI polish** – Verify in-browser that zoom/drag gestures clamp correctly, hover panels resolve names/descriptions from `ringProfiles`, and key controls (level up/respec/search filters) remain wired to state selectors in `index.html` after any layout updates.【F:tools/geometric_skilltree/index.html†L652-L803】
+
+---
+
 ## Mathematical Foundations
 
 ### 1. Circle Geometry and the Seed of Life
