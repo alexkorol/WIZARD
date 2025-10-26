@@ -21,11 +21,71 @@
       left: 1rem;
       background: rgba(0, 0, 0, 0.7);
       color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      font-weight: bold;
-      font-size: 1.125rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.95rem;
       z-index: 10;
+      min-width: 200px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.35);
+    }
+
+    .skill-points h2 {
+      margin: 0 0 0.4rem 0;
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(248, 250, 252, 0.85);
+    }
+
+    .skill-points dl {
+      margin: 0 0 0.5rem 0;
+      display: grid;
+      grid-template-columns: auto auto;
+      column-gap: 0.75rem;
+      row-gap: 0.35rem;
+    }
+
+    .skill-points dt {
+      font-weight: 600;
+      color: rgba(226, 232, 240, 0.8);
+    }
+
+    .skill-points dd {
+      margin: 0;
+      font-weight: 700;
+      color: rgba(248, 250, 252, 0.95);
+      text-align: right;
+    }
+
+    .skill-points .controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .skill-points button {
+      flex: 1;
+      background: rgba(129, 140, 248, 0.35);
+      color: white;
+      border: 1px solid rgba(129, 140, 248, 0.55);
+      border-radius: 0.45rem;
+      padding: 0.35rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .skill-points button:hover {
+      background: rgba(129, 140, 248, 0.55);
+      transform: translateY(-1px);
+    }
+
+    .skill-points button:disabled {
+      background: rgba(71, 85, 105, 0.55);
+      border-color: rgba(71, 85, 105, 0.6);
+      cursor: not-allowed;
+      transform: none;
     }
 
     .message {
@@ -161,6 +221,21 @@
       z-index: 20;
     }
 
+    .tooltip span {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 0.8rem;
+    }
+
+    .tooltip-keystone {
+      color: #fbbf24;
+      font-weight: 600;
+    }
+
+    .tooltip-requirements {
+      color: #f87171;
+    }
+
     /* Arc Hit Area Styles */
     .arc-hit-area {
       cursor: pointer;
@@ -170,8 +245,21 @@
 <body>
   <div class="container">
     <div class="skill-points">
-      Node Points: <span id="nodePoints">10</span><br>
-      Arc Points: <span id="arcPoints">10</span>
+      <h2>Progression</h2>
+      <dl>
+        <dt>Level</dt>
+        <dd id="levelDisplay">1</dd>
+        <dt>Skill Points</dt>
+        <dd id="skillPoints">0</dd>
+        <dt>Allocated</dt>
+        <dd id="allocatedCount">0</dd>
+        <dt>Respec Cost</dt>
+        <dd id="respecCost">0</dd>
+      </dl>
+      <div class="controls">
+        <button id="levelUpButton">Gain Level</button>
+        <button id="respecButton">Respec</button>
+      </div>
     </div>
     <div class="message" id="message"></div>
     <div class="tooltip" id="tooltip"></div>
@@ -180,7 +268,12 @@
     </svg>
   </div>
 
-  <script>
+  <script type="module">
+    import {
+      SkillTreeProgression,
+      buildKeystoneConfigFromNodes,
+      createDefaultTierRequirements
+    } from './assets/progression.mjs';
     let scale = 1;
     let offsetX = 0;
     let offsetY = 0;
@@ -348,14 +441,22 @@
       return rawWeights.map(w => w / sum);
     }
 
-    let nodeSkillPoints = 10;
-    let arcSkillPoints = 10;
-
-    let allocatedNodes = ['n0'];
-    let allocatedArcs = [];
-
     let hoveredNode = null;
     let hoveredArc = null;
+    let progression = null;
+    let nodeIndex = new Map();
+
+    const stateDisplay = {
+      level: document.getElementById('levelDisplay'),
+      points: document.getElementById('skillPoints'),
+      allocated: document.getElementById('allocatedCount'),
+      respecCost: document.getElementById('respecCost')
+    };
+
+    const controls = {
+      levelUp: document.getElementById('levelUpButton'),
+      respec: document.getElementById('respecButton')
+    };
 
     const POSITION_PRECISION = 3;
     const ARC_DISTANCE_TOLERANCE = 1e-2;
@@ -745,6 +846,8 @@
     const numberOfLayers = 4; // Increased from 3 to 4 to ensure nodes n13, n15 exist
     initializeGeometry(numberOfLayers);
 
+    nodeIndex = new Map(nodes.map(node => [node.id, node]));
+
     if (typeof window !== 'undefined') {
       window.skillTreeGeometry = {
         engine: geometryEngine,
@@ -792,6 +895,48 @@
       circle.setAttribute('stroke', '#ffffff44'); // Increased opacity
       mainGroup.appendChild(circle);
     });
+
+    nodes.forEach(node => {
+      const weights = computeWeights(node.x, node.y);
+      node.statWeights = weights;
+      const dominantIndex = weights.indexOf(Math.max(...weights));
+      node.primaryStat = statAxes[dominantIndex].label;
+    });
+
+    const tierCounts = new Map();
+    nodes.forEach(node => {
+      tierCounts.set(node.tier, (tierCounts.get(node.tier) || 0) + 1);
+    });
+
+    const highestTier = nodes.reduce((max, node) => Math.max(max, node.tier), 0);
+    const tierGateRequirements = createDefaultTierRequirements(highestTier);
+    tierGateRequirements.set(1, 1);
+    tierGateRequirements.forEach((value, tier) => {
+      const previousCount = tierCounts.get(tier - 1) || 0;
+      if (previousCount <= 0) {
+        tierGateRequirements.set(tier, 1);
+      } else {
+        const baseline = tier === 1 ? 1 : Math.max(2, Math.ceil(previousCount * 0.6));
+        tierGateRequirements.set(tier, Math.min(previousCount, Math.max(1, baseline)));
+      }
+    });
+
+    const keystoneConfig = buildKeystoneConfigFromNodes(nodes, arcs, extraCircleNodes, {
+      modifierPrefix: 'Celestial',
+      additionalTierRequirement: 3
+    });
+
+    progression = new SkillTreeProgression({
+      nodes,
+      arcs,
+      tierGateRequirements,
+      keystoneConfig,
+      pointsPerLevel: 3,
+      baseRespecCost: 2,
+      respecCostGrowth: 1.65
+    });
+
+    progression.grantLevel(4);
 
     // Optional: Log nodes and arcs to verify existence
     console.log('Generated Nodes:', nodes.map(node => node.id));
@@ -843,10 +988,7 @@
       const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       circle.setAttribute('r', '3'); // Base radius
 
-      const weights = computeWeights(node.x, node.y);
-      node.statWeights = weights;
-      const dominantIndex = weights.indexOf(Math.max(...weights));
-      node.primaryStat = statAxes[dominantIndex].label;
+      const weights = node.statWeights;
       const baseColor = mixColors(weights);
       circle.setAttribute('fill', adjustLuminance(baseColor, 0.75));
       circle.setAttribute('stroke', adjustLuminance(baseColor, 0.45));
@@ -881,18 +1023,55 @@
     // Tooltip element
     const tooltip = document.getElementById('tooltip');
 
+    function updateStateDisplay() {
+      if (!progression) {
+        return;
+      }
+
+      stateDisplay.level.textContent = progression.getLevel();
+      stateDisplay.points.textContent = progression.getAvailablePoints();
+
+      const allocatedCount = Math.max(0, progression.getAllocatedNodes().length - 1);
+      stateDisplay.allocated.textContent = allocatedCount;
+
+      if (progression.canRespec()) {
+        const cost = progression.getRespecCost();
+        const refundable = allocatedCount;
+        const totalPoints = progression.getAvailablePoints() + refundable;
+        stateDisplay.respecCost.textContent = cost;
+        const insufficient = totalPoints < cost;
+        controls.respec.disabled = insufficient;
+        controls.respec.title = insufficient
+          ? `Requires ${cost} total points (have ${totalPoints}).`
+          : '';
+      } else {
+        stateDisplay.respecCost.textContent = '—';
+        controls.respec.disabled = true;
+        controls.respec.title = 'Unlock additional nodes to respec.';
+      }
+    }
+
     function handleNodeHover(nodeId) {
       hoveredNode = nodeId;
       if (nodeId) {
-        const node = nodes.find(n => n.id === nodeId);
-        if (node) {
+        const node = nodeIndex.get(nodeId);
+        if (node && progression) {
           const [strWeight, dexWeight, intWeight] = node.statWeights.map(w => Math.round(w * 100));
+          const status = progression.getNodeStatus(nodeId);
+          const requirements = !status.unlocked && status.reasons.length
+            ? `<span class="tooltip-requirements">${status.reasons.join('<br>')}</span>`
+            : '';
+          const keystoneLine = status.keystoneModifier
+            ? `<span class="tooltip-keystone">${status.keystoneModifier}</span>`
+            : '';
           tooltip.innerHTML = `
             <strong>${node.id} • ${node.primaryStat}</strong>
             <span>${node.tierName} • Ring ${node.tier}</span>
             <span>${node.tierDescription}</span>
             <span>STR ${strWeight}% · DEX ${dexWeight}% · INT ${intWeight}%</span>
             <span>Connected Nodes: ${node.connections.length}</span>
+            ${keystoneLine}
+            ${requirements}
           `;
           tooltip.style.display = 'block';
         }
@@ -904,15 +1083,28 @@
 
     function handleArcHover(arcId) {
       hoveredArc = arcId;
-      if (arcId) {
+      if (arcId && progression) {
         const arc = arcs.find(a => a.id === arcId);
         if (arc) {
-          const fromNode = nodes.find(n => n.id === arc.from);
-          const toNode = nodes.find(n => n.id === arc.to);
+          const fromNode = nodeIndex.get(arc.from);
+          const toNode = nodeIndex.get(arc.to);
+          const fromStatus = progression.getNodeStatus(arc.from);
+          const toStatus = progression.getNodeStatus(arc.to);
+          const isActive = fromStatus.unlocked && toStatus.unlocked;
+          let requirements = '';
+          if (!isActive) {
+            const lockedNodeId = fromStatus.unlocked ? arc.to : arc.from;
+            const lockedStatus = progression.getNodeStatus(lockedNodeId);
+            if (!lockedStatus.unlocked && lockedStatus.reasons.length) {
+              requirements = `<span class="tooltip-requirements">${lockedStatus.reasons.join('<br>')}</span>`;
+            }
+          }
           tooltip.innerHTML = `
             <strong>${arc.id}</strong>
             <span>${arc.from} ↔ ${arc.to}</span>
-            <span>Path Bias: ${fromNode.primaryStat} → ${toNode.primaryStat}</span>
+            <span>${isActive ? 'Active Path' : 'Locked Path'}</span>
+            <span>Bias: ${fromNode.primaryStat} → ${toNode.primaryStat}</span>
+            ${requirements}
           `;
           tooltip.style.display = 'block';
         }
@@ -931,117 +1123,74 @@
     });
 
     function handleNodeClick(nodeId) {
-      if (nodeId === 'n0') return;
-
-      if (allocatedNodes.includes(nodeId)) {
-        // Deallocate node if it doesn't disconnect the tree
-        const tempAllocatedNodes = allocatedNodes.filter(id => id !== nodeId);
-        const isConnected = checkConnectivity(tempAllocatedNodes, allocatedArcs);
-
-        if (isConnected) {
-          allocatedNodes = tempAllocatedNodes;
-          nodeSkillPoints++;
-          document.getElementById('nodePoints').textContent = nodeSkillPoints;
-
-          // Deallocate any arcs connected to the deallocated node that are no longer needed
-          const connectedArcs = arcs.filter(a => a.from === nodeId || a.to === nodeId);
-          connectedArcs.forEach(arc => {
-            if (allocatedArcs.includes(arc.id)) {
-              const otherNode = arc.from === nodeId ? arc.to : arc.from;
-              if (!allocatedNodes.includes(otherNode)) {
-                // Deallocate the arc
-                allocatedArcs = allocatedArcs.filter(id => id !== arc.id);
-                arcSkillPoints++;
-                document.getElementById('arcPoints').textContent = arcSkillPoints;
-              }
-            }
-          });
-
-        } else {
-          showMessage('Cannot deallocate this node as it would disconnect the tree from the origin.');
-        }
-      } else {
-        // Allocate node if possible
-        const connectingArcs = arcs.filter(a =>
-          (a.from === nodeId && allocatedNodes.includes(a.to)) ||
-          (a.to === nodeId && allocatedNodes.includes(a.from))
-        );
-
-        if (nodeSkillPoints > 0 && connectingArcs.length > 0) {
-          allocatedNodes.push(nodeId);
-          nodeSkillPoints--;
-          document.getElementById('nodePoints').textContent = nodeSkillPoints;
-
-          // Allocate the first available connecting arc
-          const arcToAllocate = connectingArcs.find(a => !allocatedArcs.includes(a.id));
-          if (arcToAllocate && arcSkillPoints > 0) {
-            allocatedArcs.push(arcToAllocate.id);
-            arcSkillPoints--;
-            document.getElementById('arcPoints').textContent = arcSkillPoints;
-          }
-        } else {
-          showMessage('Cannot allocate this node. It must be connected via an allocated arc.');
-        }
+      if (!progression) return;
+      if (nodeId === 'n0') {
+        showMessage('The Seed Core is always active.');
+        return;
       }
 
-      updateVisuals();
+      if (progression.isUnlocked(nodeId)) {
+        showMessage('Node already unlocked. Use respec to reset allocations.');
+        return;
+      }
+
+      try {
+        const result = progression.unlockNode(nodeId);
+        updateVisuals();
+        showMessage(result.modifier ? `${nodeId} unlocked: ${result.modifier}` : `${nodeId} unlocked.`);
+      } catch (error) {
+        showMessage(error.message);
+      }
     }
 
     function handleArcClick(arcId) {
+      if (!progression) return;
       const arc = arcs.find(a => a.id === arcId);
-
-      const fromAllocated = allocatedNodes.includes(arc.from);
-      const toAllocated = allocatedNodes.includes(arc.to);
-
-      if (allocatedArcs.includes(arcId)) {
-        // Deallocate arc if it doesn't disconnect the tree
-        const tempAllocatedArcs = allocatedArcs.filter(id => id !== arcId);
-        const isConnected = checkConnectivity(allocatedNodes, tempAllocatedArcs);
-
-        if (isConnected) {
-          allocatedArcs = tempAllocatedArcs;
-          arcSkillPoints++;
-          document.getElementById('arcPoints').textContent = arcSkillPoints;
-        } else {
-          showMessage('Cannot deallocate this arc as it would disconnect the tree from the origin.');
-        }
-      } else if (arcSkillPoints > 0 && (fromAllocated || toAllocated)) {
-        allocatedArcs.push(arcId);
-        arcSkillPoints--;
-        document.getElementById('arcPoints').textContent = arcSkillPoints;
+      if (!arc) return;
+      const fromStatus = progression.getNodeStatus(arc.from);
+      const toStatus = progression.getNodeStatus(arc.to);
+      if (fromStatus.unlocked && toStatus.unlocked) {
+        showMessage(`Path ${arcId} is active.`);
       } else {
-        showMessage('Cannot allocate this arc. At least one connected node must be allocated.');
+        showMessage(`Unlock adjacent nodes to empower ${arcId}.`);
       }
-
-      updateVisuals();
     }
 
-    // Function to check connectivity from 'n0' to all allocated nodes
-    function checkConnectivity(nodesSet, arcsSet) {
-      if (nodesSet.length === 0) return true;
+    function handleLevelUp() {
+      if (!progression) return;
+      progression.grantLevel(1);
+      updateVisuals();
+      showMessage('Level increased. Skill points awarded.');
+    }
 
-      const adjacency = geometryEngine.buildAdjacency(nodes, arcs, arcsSet);
-      const reachable = geometryEngine.getReachableNodes(adjacency, 'n0');
-
-      return nodesSet.every(nodeId => reachable.has(nodeId));
+    function handleRespec() {
+      if (!progression) return;
+      try {
+        const result = progression.respec();
+        updateVisuals();
+        showMessage(`Respec complete. Refunded ${result.refunded} points at cost ${result.cost}.`);
+      } catch (error) {
+        showMessage(error.message);
+      }
     }
 
     function updateVisuals() {
-      // Update nodes
+      if (!progression) return;
+
+      const statuses = new Map();
+      nodes.forEach(node => {
+        statuses.set(node.id, progression.getNodeStatus(node.id));
+      });
+
       document.querySelectorAll('.node').forEach(nodeGroup => {
         const nodeId = nodeGroup.getAttribute('data-id');
         const circle = nodeGroup.querySelector('circle');
-        const node = nodes.find(n => n.id === nodeId);
-        const isActive = allocatedNodes.includes(nodeId);
+        const node = nodeIndex.get(nodeId);
+        const status = statuses.get(nodeId) || { unlocked: false, available: false };
 
-        // Determine if the node can be activated
-        const connectedAllocatedArcs = arcs.filter(a =>
-          (a.from === nodeId || a.to === nodeId) && allocatedArcs.includes(a.id)
-        );
+        const isActive = status.unlocked;
+        const canActivate = status.available;
 
-        const canActivate = !isActive && nodeSkillPoints > 0 && connectedAllocatedArcs.length > 0;
-
-        // Adjust radius on hover
         circle.setAttribute('r', nodeId === hoveredNode ? '4' : '3');
 
         if (node) {
@@ -1057,7 +1206,6 @@
           }
         }
 
-        // Manage classes
         nodeGroup.classList.remove('active-node', 'available-node', 'inactive-node');
         if (isActive) {
           nodeGroup.classList.add('active-node');
@@ -1068,38 +1216,37 @@
         }
       });
 
-      // Update arcs
       document.querySelectorAll('.arc').forEach(path => {
         const arcId = path.getAttribute('data-id');
-        const isActive = allocatedArcs.includes(arcId);
-        const isHovered = arcId === hoveredArc;
+        const fromId = path.getAttribute('data-from');
+        const toId = path.getAttribute('data-to');
+        const fromStatus = statuses.get(fromId);
+        const toStatus = statuses.get(toId);
+        const isActive = Boolean(fromStatus?.unlocked && toStatus?.unlocked);
+        const available = !isActive && (
+          (fromStatus?.unlocked && toStatus?.available) ||
+          (toStatus?.unlocked && fromStatus?.available)
+        );
 
-        // Remove all classes except 'arc'
         path.classList.remove('active-arc', 'available-arc', 'inactive-arc', 'highlighted-arc');
-
-        // Apply classes based on state
         if (isActive) {
           path.classList.add('active-arc');
-        } else if (canActivateArc(arcId)) {
+        } else if (available) {
           path.classList.add('available-arc');
         } else {
           path.classList.add('inactive-arc');
         }
 
-        if (isHovered) {
+        if (arcId === hoveredArc) {
           path.classList.add('highlighted-arc');
         }
       });
+
+      updateStateDisplay();
     }
 
-    // Helper function to determine if an arc can be activated
-    function canActivateArc(arcId) {
-      const arc = arcs.find(a => a.id === arcId);
-      if (!arc) return false;
-      const fromAllocated = allocatedNodes.includes(arc.from);
-      const toAllocated = allocatedNodes.includes(arc.to);
-      return !allocatedArcs.includes(arcId) && arcSkillPoints > 0 && (fromAllocated || toAllocated);
-    }
+    controls.levelUp.addEventListener('click', handleLevelUp);
+    controls.respec.addEventListener('click', handleRespec);
 
     // Message display function
     function showMessage(text) {
