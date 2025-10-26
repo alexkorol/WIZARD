@@ -87,6 +87,38 @@ C_n: \left(r\cos\left(\frac{2\pi n}{6}\right),\ r\sin\left(\frac{2\pi n}{6}\righ
 ![Construction Diagram](https://github.com/alexkorol/WIZARD/blob/gh-pages/tools/geometric_skilltree/assets/construction_diagram.PNG)
 
 
+#### 1.3 Circle Radius and Spacing Rules
+
+- **Uniform Radius**: Every circle in both the Seed and Flower of Life maintains the same radius \(r\). This guarantees identical intersection geometry regardless of ring depth.
+- **Center Spacing**: Adjacent circle centers are separated by exactly \(r\). The hexagonal (triangular) lattice that emerges can be described with axial coordinates \((q, r)\) whose hex distance \(d = \max(|q|, |r|, |s|)\) (with \(s = -q - r\)) identifies the concentric layer.
+- **Layer Distances**: The Euclidean distance from the origin to a circle center with axial coordinates \((q, r)\) is \(r\sqrt{q^2 + qr + r^2}\). This value defines the radius of the concentric ring occupied by the circle.
+- **Circle Counts**: Layer \(0\) holds the central circle. Each subsequent layer \(n\geq1\) contains \(6n\) circles, matching the Flower of Life expansion formula \(1 + \sum_{k=1}^n 6k\).
+
+#### 1.4 Polar Coordinate Generation
+
+The implementation expresses each circle center as a polar offset and then converts it to Cartesian coordinates for rendering. The helper function
+
+```javascript
+function polarToCartesian(cx, cy, distance, angle) {
+  return {
+    x: cx + distance * Math.cos(angle),
+    y: cy + distance * Math.sin(angle)
+  };
+}
+```
+
+is used to build both the Seed of Life petals and additional Flower of Life rings. Axial hex coordinates \((q, r)\) are translated into polar values with
+
+```javascript
+const basisX = q + r / 2;
+const basisY = (Math.sqrt(3) / 2) * r;
+const distance = radius * Math.sqrt(basisX * basisX + basisY * basisY);
+const angle = Math.atan2(basisY, basisX);
+```
+
+allowing `buildCirclePositions` to generate every concentric ring procedurally before the intersections are evaluated.
+
+
 ### 2. Hexagonal Geometry
 
 #### 2.1 Regular Hexagon Properties
@@ -143,6 +175,20 @@ The Flower of Life extends the Seed of Life pattern:
 - **New Layers**: Each new layer adds 6 more circles than the previous layer.
 - **Number of Circles in Layer \(n\)**: \(6n\)
 - **Total Circles After \(n\) Layers**: \(1 + \sum_{k=1}^n 6k\)
+
+### 5. Concentric Node Tiers and Gameplay Themes
+
+Every concentric ring of the Flower of Life is mapped to a gameplay tier so that node placement communicates intended power level:
+
+| Ring Index | Geometry Layer | Gameplay Theme | Description |
+|------------|----------------|----------------|-------------|
+| 0 | Seed center | **Seed Core** | Core sustain, travel, and always-on passives. |
+| 1 | Seed petals | **Seed Petals** | Foundational offensive/defensive boosts reachable with minimal investment. |
+| 2 | First Flower ring | **Inner Flower** | Hybrid branches that blend stats and unlock cross-discipline synergies. |
+| 3 | Second Flower ring | **Outer Flower** | High-impact specialisations rewarding deeper pathing. |
+| 4+ | Subsequent rings | **Celestial Ring** | Capstones and legendary effects reserved for the outermost geometry. |
+
+The JavaScript generator tags each node with its ring index and theme so that tooltips and future balancing logic can differentiate Seed skills from late-game Flower rewards.
 
 ---
 

@@ -268,6 +268,39 @@
       { id: 'int', label: 'INT', color: '#38bdf8', dx: -0.5, dy: Math.sqrt(3) / 2 }
     ];
 
+    const tierThemes = [
+      {
+        ring: 0,
+        id: 'seed-core',
+        name: 'Seed Core',
+        description: 'Foundational survival and resource nodes anchored at the Seed center.'
+      },
+      {
+        ring: 1,
+        id: 'seed-petals',
+        name: 'Seed Petals',
+        description: 'Primary offensive and defensive skills formed by the Seed of Life petals.'
+      },
+      {
+        ring: 2,
+        id: 'inner-flower',
+        name: 'Inner Flower',
+        description: 'Advanced hybrid branches that weave the inner Flower of Life lattice.'
+      },
+      {
+        ring: 3,
+        id: 'outer-flower',
+        name: 'Outer Flower',
+        description: 'Expert specialisations occupying the outer Flower petals.'
+      },
+      {
+        ring: 4,
+        id: 'celestial-ring',
+        name: 'Celestial Ring',
+        description: 'Mythic capstones placed on the outermost concentric construction ring.'
+      }
+    ];
+
     function hexToRgb(hex) {
       const bigint = parseInt(hex.slice(1), 16);
       return {
@@ -338,29 +371,111 @@
       return Number(value.toFixed(precision));
     }
 
-    // Function to add circle positions in a hexagonal grid
-    function addCirclePositions(layers) {
-      circlePositions.length = 0;
+    function snapPoint(point, precision = POSITION_PRECISION) {
+      return {
+        x: snapCoordinate(point.x, precision),
+        y: snapCoordinate(point.y, precision)
+      };
+    }
 
-      const seen = new Set();
-      const roundKey = (x, y) => `${x.toFixed(3)},${y.toFixed(3)}`;
+    function getPointKey(point, precision = POSITION_PRECISION) {
+      return `${point.x.toFixed(precision)}:${point.y.toFixed(precision)}`;
+    }
 
-      for (let q = -layers; q <= layers; q++) {
-        for (let r = -layers; r <= layers; r++) {
-          const s = -q - r;
-          if (Math.max(Math.abs(q), Math.abs(r), Math.abs(s)) > layers) continue;
+    function polarToCartesian(cx, cy, distance, angle) {
+      return {
+        x: cx + distance * Math.cos(angle),
+        y: cy + distance * Math.sin(angle)
+      };
+    }
 
-          const x = centerX + (R * 1.5) * q;
-          const y = centerY + (R * Math.sqrt(3) / 2) * (2 * r + q);
+    function generateSeedOfLifeCenters(cx, cy, radius, includePetals = true) {
+      const positions = [snapPoint({ x: cx, y: cy })];
+      if (!includePetals) {
+        return positions;
+      }
 
-          const key = roundKey(x, y);
-          if (seen.has(key)) continue;
-          seen.add(key);
-          circlePositions.push({ x, y });
+      for (let i = 0; i < 6; i++) {
+        const angle = (Math.PI / 3) * i;
+        positions.push(snapPoint(polarToCartesian(cx, cy, radius, angle)));
+      }
+      return positions;
+    }
+
+    const axialDirections = [
+      { q: -1, r: 1 },
+      { q: -1, r: 0 },
+      { q: 0, r: -1 },
+      { q: 1, r: -1 },
+      { q: 1, r: 0 },
+      { q: 0, r: 1 }
+    ];
+
+    function generateAxialRing(layer) {
+      if (layer === 0) {
+        return [{ q: 0, r: 0 }];
+      }
+
+      const results = [];
+      let q = layer;
+      let r = 0;
+
+      axialDirections.forEach(direction => {
+        for (let step = 0; step < layer; step++) {
+          results.push({ q, r });
+          q += direction.q;
+          r += direction.r;
         }
+      });
+
+      return results;
+    }
+
+    function axialToPolar(q, r, radius) {
+      const basisX = q + r / 2;
+      const basisY = (Math.sqrt(3) / 2) * r;
+      const distance = radius * Math.sqrt(basisX * basisX + basisY * basisY);
+      const angle = Math.atan2(basisY, basisX);
+      return { distance, angle };
+    }
+
+    function buildCirclePositions(cx, cy, radius, layers) {
+      const positions = [];
+      const seen = new Set();
+
+      const pushPosition = point => {
+        const snapped = snapPoint(point);
+        const key = getPointKey(snapped);
+        if (!seen.has(key)) {
+          seen.add(key);
+          positions.push(snapped);
+        }
+      };
+
+      generateSeedOfLifeCenters(cx, cy, radius, layers >= 1).forEach(pushPosition);
+
+      for (let layer = 2; layer <= layers; layer++) {
+        const ring = generateAxialRing(layer);
+        ring.forEach(({ q, r }) => {
+          const { distance, angle } = axialToPolar(q, r, radius);
+          pushPosition(polarToCartesian(cx, cy, distance, angle));
+        });
       }
 
       return positions;
+    }
+
+    function classifyNodeTier(x, y, radius) {
+      const distance = Math.hypot(x - centerX, y - centerY);
+      const normalized = distance / radius;
+      const ring = Math.max(0, Math.round(normalized));
+      const theme = tierThemes.find(t => t.ring === ring) || tierThemes[tierThemes.length - 1];
+      return {
+        ring,
+        distance,
+        normalized,
+        theme
+      };
     }
 
     // Function to calculate circle-circle intersection points
@@ -392,11 +507,18 @@
 
       const centerPoint = snapPoint(circlePositions[0], precision);
       const centerKey = getPointKey(centerPoint, precision);
+      const centerTier = classifyNodeTier(centerPoint.x, centerPoint.y, radius);
       generatedNodes.push({
         id: 'n0',
         x: centerPoint.x,
         y: centerPoint.y,
-        connections: []
+        connections: [],
+        tier: centerTier.ring,
+        tierName: centerTier.theme.name,
+        tierDescription: centerTier.theme.description,
+        themeId: centerTier.theme.id,
+        normalizedRadius: centerTier.normalized,
+        distanceFromCenter: centerTier.distance
       });
       nodeMap.set(centerKey, 'n0');
 
@@ -416,11 +538,18 @@
             const key = getPointKey(snappedPoint, precision);
             if (!nodeMap.has(key)) {
               const newId = `n${++nodeId}`;
+              const tierInfo = classifyNodeTier(snappedPoint.x, snappedPoint.y, radius);
               generatedNodes.push({
                 id: newId,
                 x: snappedPoint.x,
                 y: snappedPoint.y,
-                connections: []
+                connections: [],
+                tier: tierInfo.ring,
+                tierName: tierInfo.theme.name,
+                tierDescription: tierInfo.theme.description,
+                themeId: tierInfo.theme.id,
+                normalizedRadius: tierInfo.normalized,
+                distanceFromCenter: tierInfo.distance
               });
               nodeMap.set(key, newId);
             }
@@ -607,6 +736,8 @@
           const [strWeight, dexWeight, intWeight] = node.statWeights.map(w => Math.round(w * 100));
           tooltip.innerHTML = `
             <strong>${node.id} • ${node.primaryStat}</strong>
+            <span>${node.tierName} • Ring ${node.tier}</span>
+            <span>${node.tierDescription}</span>
             <span>STR ${strWeight}% · DEX ${dexWeight}% · INT ${intWeight}%</span>
             <span>Connected Nodes: ${node.connections.length}</span>
           `;
