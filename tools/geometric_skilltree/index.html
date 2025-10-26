@@ -727,6 +727,43 @@
     ];
 
     const DEFAULT_NODE_COST = 1;
+    const stateDisplay = {
+      level: document.getElementById('levelDisplay'),
+      points: document.getElementById('skillPoints'),
+      allocated: document.getElementById('allocatedCount'),
+      respecCost: document.getElementById('respecCost')
+    };
+
+    const controls = {
+      levelUp: document.getElementById('levelUpButton'),
+      respec: document.getElementById('respecButton')
+    };
+
+    const searchUI = {
+      panel: document.getElementById('searchPanel'),
+      input: document.getElementById('nodeSearch'),
+      clear: document.getElementById('clearSearchButton'),
+      results: document.getElementById('searchResults'),
+      tierSummary: document.getElementById('tierSummary'),
+      filterButtons: Array.from(document.querySelectorAll('.filter-chip'))
+    };
+
+    const filterState = {
+      stat: new Set(),
+      tier: new Set(),
+      type: new Set()
+    };
+
+    let searchTerm = '';
+    let searchMatches = new Set();
+    let searchMatchList = [];
+    let filteredNodeIds = new Set();
+    let pinnedNode = null;
+    let pinnedPathNodes = new Set();
+    let pinnedPathArcs = new Set();
+    let hoverPathNodes = new Set();
+    let hoverPathArcs = new Set();
+
     let contentConfig = null;
     let tierThemes = [...defaultTierThemes];
     let ringProfiles = new Map();
@@ -914,43 +951,6 @@
     let hoveredArc = null;
     let progression = null;
     let nodeIndex = new Map();
-
-    const stateDisplay = {
-      level: document.getElementById('levelDisplay'),
-      points: document.getElementById('skillPoints'),
-      allocated: document.getElementById('allocatedCount'),
-      respecCost: document.getElementById('respecCost')
-    };
-
-    const controls = {
-      levelUp: document.getElementById('levelUpButton'),
-      respec: document.getElementById('respecButton')
-    };
-
-    const searchUI = {
-      panel: document.getElementById('searchPanel'),
-      input: document.getElementById('nodeSearch'),
-      clear: document.getElementById('clearSearchButton'),
-      results: document.getElementById('searchResults'),
-      tierSummary: document.getElementById('tierSummary'),
-      filterButtons: Array.from(document.querySelectorAll('.filter-chip'))
-    };
-
-    const filterState = {
-      stat: new Set(),
-      tier: new Set(),
-      type: new Set()
-    };
-
-    let searchTerm = '';
-    let searchMatches = new Set();
-    let searchMatchList = [];
-    let filteredNodeIds = new Set();
-    let pinnedNode = null;
-    let pinnedPathNodes = new Set();
-    let pinnedPathArcs = new Set();
-    let hoverPathNodes = new Set();
-    let hoverPathArcs = new Set();
 
     const POSITION_PRECISION = 3;
     const ARC_DISTANCE_TOLERANCE = 1e-2;
