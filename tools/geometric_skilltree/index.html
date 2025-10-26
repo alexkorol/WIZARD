@@ -535,7 +535,7 @@
         <dd id="levelDisplay">1</dd>
         <dt>Skill Points</dt>
         <dd id="skillPoints">0</dd>
-        <dt>Allocated</dt>
+        <dt>Allocated (nodes / pts)</dt>
         <dd id="allocatedCount">0</dd>
         <dt>Respec Cost</dt>
         <dd id="respecCost">0</dd>
@@ -693,7 +693,7 @@
       { id: 'int', label: 'INT', color: '#38bdf8', dx: -0.5, dy: Math.sqrt(3) / 2 }
     ];
 
-    const tierThemes = [
+    const defaultTierThemes = [
       {
         ring: 0,
         id: 'seed-core',
@@ -726,6 +726,26 @@
       }
     ];
 
+    const DEFAULT_NODE_COST = 1;
+    let contentConfig = null;
+    let tierThemes = [...defaultTierThemes];
+    let ringProfiles = new Map();
+    let nodeTypeScaling = new Map();
+    let nodeTypeLabels = {};
+    let fallbackFocus = {};
+    let nodeOverrides = {};
+    let keystoneOverrides = {};
+    let fallbackRingProfile = null;
+    let defaultTypeScaling = { primary: 1, hybrid: 1, special: 1, cost: DEFAULT_NODE_COST };
+
+    async function loadContentConfig() {
+      const response = await fetch('./assets/skilltree-content.json');
+      if (!response.ok) {
+        throw new Error(`Failed to load content configuration (${response.status})`);
+      }
+      return response.json();
+    }
+
     function populateTierSummary() {
       if (!searchUI.tierSummary) {
         return;
@@ -734,12 +754,114 @@
       tierThemes.forEach(theme => {
         const row = document.createElement('div');
         row.className = 'tier-row';
-        row.innerHTML = `<strong>Ring ${theme.ring}: ${theme.name}</strong>${theme.description}`;
+        const profile = ringProfiles.get(theme.ring);
+        const archetype = profile?.archetype ? ` · ${profile.archetype}` : '';
+        row.innerHTML = `<strong>Ring ${theme.ring}: ${theme.name}${archetype}</strong>${theme.description}`;
         searchUI.tierSummary.appendChild(row);
       });
     }
 
+    try {
+      contentConfig = await loadContentConfig();
+    } catch (error) {
+      console.error('Unable to load skill tree content configuration:', error);
+      contentConfig = {
+        rings: defaultTierThemes,
+        nodeTypeScaling: {},
+        nodeTypeLabels: {},
+        fallbackFocus: {},
+        nodeOverrides: {},
+        keystones: {}
+      };
+    }
+
+    tierThemes = (contentConfig.rings || []).map(ring => ({
+      ring: ring.ring,
+      id: ring.themeId,
+      name: ring.name,
+      description: ring.description
+    }));
+
+    ringProfiles = new Map((contentConfig.rings || []).map(ring => [ring.ring, ring]));
+    nodeTypeScaling = new Map(Object.entries(contentConfig.nodeTypeScaling || {}));
+    defaultTypeScaling = nodeTypeScaling.get('cluster') || defaultTypeScaling;
+    nodeTypeLabels = contentConfig.nodeTypeLabels || {};
+    fallbackFocus = contentConfig.fallbackFocus || {};
+    nodeOverrides = contentConfig.nodeOverrides || {};
+    keystoneOverrides = contentConfig.keystones || {};
+    fallbackRingProfile = (contentConfig.rings || []).reduce((acc, ring) => {
+      if (!acc || (typeof ring.ring === 'number' && ring.ring > acc.ring)) {
+        return ring;
+      }
+      return acc;
+    }, null);
+
     populateTierSummary();
+
+    function getRingProfile(tier) {
+      if (ringProfiles.has(tier)) {
+        return ringProfiles.get(tier);
+      }
+      if (fallbackRingProfile) {
+        return fallbackRingProfile;
+      }
+      const index = Math.min(defaultTierThemes.length - 1, Math.max(0, tier));
+      return defaultTierThemes[index];
+    }
+
+    function getTypeScaling(nodeType) {
+      return nodeTypeScaling.get(nodeType) || defaultTypeScaling;
+    }
+
+    function getFocusProfile(ringProfile, primaryStat) {
+      const ringFocus = ringProfile?.focus || {};
+      if (ringFocus[primaryStat]) {
+        return ringFocus[primaryStat];
+      }
+      if (fallbackFocus[primaryStat]) {
+        return fallbackFocus[primaryStat];
+      }
+      return fallbackFocus.default || {
+        focusTitle: primaryStat,
+        special: 'adaptive resonance flow',
+        specialScaling: 1
+      };
+    }
+
+    function computeHybridWeight(weights, dominantIndex) {
+      return weights.reduce((sum, weight, index) => index === dominantIndex ? sum : sum + weight, 0);
+    }
+
+    function resolveNameTemplate(ringProfile, nodeType) {
+      return (ringProfile?.naming && ringProfile.naming[nodeType]) || nodeTypeLabels[nodeType] || '{focusTitle} Node';
+    }
+
+    function formatDisplayName(template, focusProfile, node, ringProfile) {
+      const focusTitle = focusProfile.focusTitle || focusProfile.title || node.primaryStat;
+      return template
+        .replace('{focusTitle}', focusTitle)
+        .replace('{archetype}', ringProfile?.archetype || '')
+        .replace('{stat}', node.primaryStat)
+        .trim()
+        .replace(/\s+/g, ' ');
+    }
+
+    function applyNodeOverride(node) {
+      const override = nodeOverrides[node.id];
+      if (!override) {
+        return;
+      }
+      if (override.title) {
+        node.displayName = override.title;
+      }
+      if (Array.isArray(override.effectSegments)) {
+        node.effectSegments = override.effectSegments.slice();
+        node.effectSummary = node.effectSegments.join(' • ');
+      }
+      if (typeof override.cost === 'number') {
+        node.cost = override.cost;
+      }
+    }
 
     function hexToRgb(hex) {
       const bigint = parseInt(hex.slice(1), 16);
@@ -786,37 +908,6 @@
         return [1 / 3, 1 / 3, 1 / 3];
       }
       return rawWeights.map(w => w / sum);
-    }
-
-    function describeNodeEffect(node) {
-      const weights = node.statWeights || computeWeights(node.x, node.y);
-      const dominantIndex = weights.indexOf(Math.max(...weights));
-      const focus = statAxes[dominantIndex].label;
-      const hybridContribution = weights.reduce((acc, value, index) => index === dominantIndex ? acc : acc + value, 0);
-      const magnitude = Math.max(3, Math.round((node.normalizedRadius + 1) * 5));
-      const hybridMagnitude = Math.max(1, Math.round(hybridContribution * 12));
-      const tierScaling = Math.max(4, Math.round((node.tier + 1) * 6 + node.distanceFromCenter * 0.08));
-
-      let speciality = '';
-      switch (focus) {
-        case 'STR':
-          speciality = `${tierScaling}% improved Guard uptime`;
-          break;
-        case 'DEX':
-          speciality = `${tierScaling}% increased Evasion lattice`;
-          break;
-        case 'INT':
-          speciality = `${tierScaling}% augmented Mana flow`;
-          break;
-        default:
-          speciality = `${tierScaling}% adaptive resonance`;
-      }
-
-      const hybridLine = hybridMagnitude > 0
-        ? `${hybridMagnitude}% hybrid resonance shared to adjacent stats`
-        : 'Balanced across all stats';
-
-      return `+${magnitude} ${focus} • ${hybridLine} • ${speciality}`;
     }
 
     let hoveredNode = null;
@@ -1218,7 +1309,14 @@
             tierDescription: node.tierDescription,
             themeId: node.themeId,
             normalizedRadius: node.normalizedRadius,
-            distanceFromCenter: node.distanceFromCenter
+            distanceFromCenter: node.distanceFromCenter,
+            primaryStat: node.primaryStat,
+            nodeType: node.nodeType,
+            displayName: node.displayName,
+            effectSummary: node.effectSummary,
+            effectSegments: node.effectSegments,
+            cost: node.cost,
+            archetype: node.archetype
           })),
           arcs: arcs.map(arc => ({ ...arc }))
         });
@@ -1304,20 +1402,63 @@
       mainGroup.appendChild(circle);
     });
 
+    const keystoneCandidates = new Set(extraCircleNodes);
+
     nodes.forEach(node => {
       const weights = computeWeights(node.x, node.y);
-      node.statWeights = weights;
       const dominantIndex = weights.indexOf(Math.max(...weights));
+      const hybridWeight = computeHybridWeight(weights, dominantIndex);
+      node.statWeights = weights;
+      node.dominantIndex = dominantIndex;
+      node.hybridWeight = hybridWeight;
       node.primaryStat = statAxes[dominantIndex].label;
+
       if (node.id === 'n0' || node.tier === 0) {
         node.nodeType = 'core';
-      } else if (extraCircleNodes.includes(node.id)) {
+      } else if (keystoneCandidates.has(node.id)) {
+        node.nodeType = 'keystone';
+      } else if (node.tier >= 2 && (weights[dominantIndex] >= 0.7 || hybridWeight <= 0.3)) {
         node.nodeType = 'notable';
+      } else if (node.tier <= 1) {
+        node.nodeType = 'core';
       } else {
         node.nodeType = 'cluster';
       }
-      node.effectSummary = describeNodeEffect(node);
+
+      const ringProfile = getRingProfile(node.tier);
+      node.tierName = ringProfile.name;
+      node.tierDescription = ringProfile.description;
+      node.themeId = ringProfile.themeId;
+      node.archetype = ringProfile.archetype;
+
+      const typeScaling = getTypeScaling(node.nodeType);
+      const focusProfile = getFocusProfile(ringProfile, node.primaryStat);
+      const radialMultiplier = 1 + (ringProfile.radialBonus || 0) * node.normalizedRadius;
+      const primaryMagnitude = Math.max(1, Math.round((ringProfile.primaryBase + ringProfile.primaryGrowth * node.tier) * typeScaling.primary * radialMultiplier));
+      const hybridFactor = Math.max(0, (ringProfile.hybridWeightFloor || 0) + hybridWeight * (ringProfile.hybridWeightScale || 1));
+      const hybridMagnitude = Math.max(1, Math.round((ringProfile.hybridBase + ringProfile.hybridGrowth * node.tier) * typeScaling.hybrid * hybridFactor));
+      const specialMagnitude = Math.max(1, Math.round((ringProfile.specialBase + ringProfile.specialGrowth * node.tier) * typeScaling.special * (focusProfile.specialScaling || 1) * radialMultiplier));
+      const hybridDescriptor = ringProfile.hybridDescriptor || 'hybrid resonance';
+      const focusSpecial = focusProfile.special || 'adaptive resonance';
+      const specialDescriptor = ringProfile.specialDescriptor ? `${focusSpecial} ${ringProfile.specialDescriptor}` : focusSpecial;
+
+      node.effectSegments = [
+        `+${primaryMagnitude} ${node.primaryStat}`,
+        `+${hybridMagnitude}% ${hybridDescriptor}`,
+        `${specialMagnitude}% ${specialDescriptor}`
+      ];
+      node.effectSummary = node.effectSegments.join(' • ');
+
+      const template = resolveNameTemplate(ringProfile, node.nodeType);
+      node.displayName = formatDisplayName(template, focusProfile, node, ringProfile);
+
+      if (typeof node.cost !== 'number') {
+        const baseCost = getTypeScaling(node.nodeType).cost;
+        node.cost = typeof baseCost === 'number' ? Math.max(1, Math.round(baseCost)) : DEFAULT_NODE_COST;
+      }
     });
+
+    nodes.forEach(applyNodeOverride);
 
     const tierCounts = new Map();
     nodes.forEach(node => {
@@ -1339,16 +1480,39 @@
 
     const keystoneConfig = buildKeystoneConfigFromNodes(nodes, arcs, extraCircleNodes, {
       modifierPrefix: 'Celestial',
-      additionalTierRequirement: 3
+      additionalTierRequirement: 3,
+      overrides: keystoneOverrides
     });
+
+    const keystoneScale = getTypeScaling('keystone');
+    const keystoneDefaultCost = typeof keystoneScale.cost === 'number'
+      ? Math.max(1, Math.round(keystoneScale.cost))
+      : DEFAULT_NODE_COST;
 
     keystoneIds = new Set(Object.keys(keystoneConfig));
     nodes.forEach(node => {
       if (keystoneIds.has(node.id)) {
         node.nodeType = 'keystone';
-        const keystone = keystoneConfig[node.id];
-        const modifier = keystone?.modifier ? ` ${keystone.modifier}` : '';
-        node.effectSummary = `Keystone:${modifier}`.trim();
+        const keystone = keystoneConfig[node.id] || {};
+        const segments = [];
+        if (keystone.bonus) {
+          segments.push(keystone.bonus);
+        }
+        if (keystone.penalty) {
+          segments.push(`Trade-off: ${keystone.penalty}`);
+        }
+        if (segments.length > 0) {
+          node.effectSegments = segments;
+          node.effectSummary = segments.join(' • ');
+        }
+        if (keystone.name) {
+          node.displayName = keystone.name;
+        }
+        if (typeof keystone.cost === 'number') {
+          node.cost = keystone.cost;
+        } else if (typeof node.cost !== 'number' || node.cost < keystoneDefaultCost) {
+          node.cost = keystoneDefaultCost;
+        }
       }
     });
 
@@ -1428,10 +1592,15 @@
       const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
       text.setAttribute('y', '0');
       text.setAttribute('text-anchor', 'middle');
-      text.textContent = node.id;
+      const label = node.displayName || node.id;
+      text.textContent = label.length > 18 ? `${label.slice(0, 17)}…` : label;
 
       group.appendChild(circle);
       group.appendChild(text);
+
+      if (node.displayName) {
+        group.dataset.name = node.displayName;
+      }
 
       // Add extra circle if node is in the specified list
       if (extraCircleNodes.includes(node.id)) {
@@ -1526,7 +1695,7 @@
       if (withMessage && nodeId) {
         const node = nodeIndex.get(nodeId);
         if (node) {
-          showMessage(`Pinned path to ${nodeId} (${node.tierName}).`);
+          showMessage(`Pinned path to ${node.displayName || nodeId} (Ring ${node.tier}).`);
         }
       }
       updateVisuals();
@@ -1582,13 +1751,21 @@
         const meta = document.createElement('div');
         meta.className = 'result-meta';
         const title = document.createElement('strong');
-        title.textContent = `${node.id} • ${node.primaryStat}`;
+        title.textContent = `${node.displayName || node.id} • ${node.primaryStat}`;
         const subtitle = document.createElement('span');
-        subtitle.textContent = `${node.tierName} · ${node.nodeType.toUpperCase()}`;
+        const subtitleText = `${node.tierName} · ${node.nodeType.toUpperCase()}`;
+        subtitle.textContent = node.archetype ? `${subtitleText} · ${node.archetype}` : subtitleText;
+        const costLine = document.createElement('span');
+        if (typeof node.cost === 'number') {
+          costLine.textContent = `Cost ${node.cost} • Links ${node.connections.length}`;
+        }
         const effect = document.createElement('span');
         effect.textContent = node.effectSummary;
         meta.appendChild(title);
         meta.appendChild(subtitle);
+        if (typeof node.cost === 'number') {
+          meta.appendChild(costLine);
+        }
         meta.appendChild(effect);
 
         const pinButton = document.createElement('button');
@@ -1618,10 +1795,14 @@
       nodes.forEach(node => {
         const haystack = [
           node.id,
+          node.displayName,
           node.primaryStat,
           node.tierName,
           node.tierDescription,
-          node.effectSummary
+          node.archetype,
+          node.effectSummary,
+          Array.isArray(node.effectSegments) ? node.effectSegments.join(' ') : '',
+          typeof node.cost === 'number' ? `cost ${node.cost}` : ''
         ].join(' ').toLowerCase();
         if (haystack.includes(term)) {
           searchMatches.add(node.id);
@@ -1652,12 +1833,15 @@
       stateDisplay.level.textContent = progression.getLevel();
       stateDisplay.points.textContent = progression.getAvailablePoints();
 
-      const allocatedCount = Math.max(0, progression.getAllocatedNodes().length - 1);
-      stateDisplay.allocated.textContent = allocatedCount;
+      const allocatedNodes = progression.getAllocatedNodes();
+      const allocatedCount = Math.max(0, allocatedNodes.length - 1);
+      const refundable = allocatedNodes
+        .filter(id => id !== progression.rootNodeId)
+        .reduce((sum, id) => sum + progression.getNodeCost(id), 0);
+      stateDisplay.allocated.textContent = `${allocatedCount} (${refundable} pts)`;
 
       if (progression.canRespec()) {
         const cost = progression.getRespecCost();
-        const refundable = allocatedCount;
         const totalPoints = progression.getAvailablePoints() + refundable;
         stateDisplay.respecCost.textContent = cost;
         const insufficient = totalPoints < cost;
@@ -1691,11 +1875,15 @@
           const effectLine = node.effectSummary
             ? `<span>${node.effectSummary}</span>`
             : '';
+          const costLine = typeof node.cost === 'number'
+            ? `<span>Cost: ${node.cost} point${node.cost === 1 ? '' : 's'}</span>`
+            : '';
           tooltip.innerHTML = `
-            <strong>${node.id} • ${node.primaryStat}</strong>
-            <span>${node.tierName} • Ring ${node.tier}</span>
+            <strong>${node.displayName || node.id}</strong>
+            <span>${node.tierName} • Ring ${node.tier}${node.archetype ? ` • ${node.archetype}` : ''}</span>
             <span>${node.tierDescription}</span>
             ${effectLine}
+            ${costLine}
             <span>STR ${strWeight}% · DEX ${dexWeight}% · INT ${intWeight}%</span>
             <span>Connected Nodes: ${node.connections.length}</span>
             ${keystoneLine}
@@ -1731,9 +1919,11 @@
               requirements = `<span class="tooltip-requirements">${lockedStatus.reasons.join('<br>')}</span>`;
             }
           }
+          const fromName = fromNode?.displayName || arc.from;
+          const toName = toNode?.displayName || arc.to;
           tooltip.innerHTML = `
             <strong>${arc.id}</strong>
-            <span>${arc.from} ↔ ${arc.to}</span>
+            <span>${fromName} ↔ ${toName}</span>
             <span>${isActive ? 'Active Path' : 'Locked Path'}</span>
             <span>Bias: ${fromNode.primaryStat} → ${toNode.primaryStat}</span>
             ${requirements}
@@ -1774,7 +1964,13 @@
       try {
         const result = progression.unlockNode(nodeId);
         updateVisuals();
-        showMessage(result.modifier ? `${nodeId} unlocked: ${result.modifier}` : `${nodeId} unlocked.`);
+        const node = nodeIndex.get(nodeId);
+        const nodeName = node?.displayName || nodeId;
+        const baseMessage = result.modifier
+          ? `${nodeName} unlocked: ${result.modifier}`
+          : `${nodeName} unlocked.`;
+        const costNote = result.cost ? ` (${result.cost} point${result.cost === 1 ? '' : 's'})` : '';
+        showMessage(`${baseMessage}${costNote}`);
       } catch (error) {
         showMessage(error.message);
       }
