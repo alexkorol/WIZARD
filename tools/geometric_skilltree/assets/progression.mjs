@@ -57,7 +57,13 @@ export class SkillTreeProgression {
     if (!Array.isArray(nodes) || !nodes.length) {
       throw new Error('SkillTreeProgression requires a non-empty node list.');
     }
-    this.nodes = new Map(nodes.map(node => [node.id, { ...node }]));
+    this.nodes = new Map(nodes.map(node => {
+      const copy = { ...node };
+      if (typeof copy.cost !== 'number') {
+        delete copy.cost;
+      }
+      return [node.id, copy];
+    }));
     this.arcs = Array.isArray(arcs) ? arcs.slice() : [];
     this.rootNodeId = rootNodeId;
     if (!this.nodes.has(this.rootNodeId)) {
@@ -132,8 +138,10 @@ export class SkillTreeProgression {
 
     const reasons = [];
 
-    if (this.availablePoints < this.nodeCost) {
-      reasons.push('Not enough skill points.');
+    const cost = this.getNodeCost(nodeId);
+
+    if (this.availablePoints < cost) {
+      reasons.push(`Not enough skill points (requires ${cost}).`);
     }
 
     const parents = this.getParentNodes(nodeId);
@@ -178,7 +186,8 @@ export class SkillTreeProgression {
     return {
       allowed: reasons.length === 0,
       reasons,
-      keystone: keystone || null
+      keystone: keystone || null,
+      cost
     };
   }
 
@@ -189,13 +198,15 @@ export class SkillTreeProgression {
     }
 
     const unlocked = this.isUnlocked(nodeId);
+    const cost = this.getNodeCost(nodeId);
     if (unlocked) {
       const keystone = this.keystoneConfig.get(nodeId) || null;
       return {
         unlocked: true,
         available: false,
         reasons: [],
-        keystoneModifier: keystone ? keystone.modifier : null
+        keystoneModifier: keystone ? keystone.modifier : null,
+        cost
       };
     }
 
@@ -204,7 +215,8 @@ export class SkillTreeProgression {
       unlocked: false,
       available: evaluation.allowed,
       reasons: evaluation.reasons,
-      keystoneModifier: evaluation.keystone ? evaluation.keystone.modifier : null
+      keystoneModifier: evaluation.keystone ? evaluation.keystone.modifier : null,
+      cost
     };
   }
 
@@ -215,16 +227,26 @@ export class SkillTreeProgression {
     }
 
     const node = this.nodes.get(nodeId);
+    const cost = this.getNodeCost(nodeId);
     this.allocatedNodes.add(nodeId);
-    this.availablePoints -= this.nodeCost;
+    this.availablePoints -= cost;
 
     const currentCount = this.tierAllocations.get(node.tier) || 0;
     this.tierAllocations.set(node.tier, currentCount + 1);
 
     return {
       node,
-      modifier: evaluation.keystone ? evaluation.keystone.modifier : null
+      modifier: evaluation.keystone ? evaluation.keystone.modifier : null,
+      cost
     };
+  }
+
+  getNodeCost(nodeId) {
+    const node = this.nodes.get(nodeId);
+    if (!node) {
+      return this.nodeCost;
+    }
+    return typeof node.cost === 'number' ? node.cost : this.nodeCost;
   }
 
   getRespecCost() {
@@ -240,7 +262,8 @@ export class SkillTreeProgression {
       throw new Error('No allocated nodes to respec.');
     }
 
-    const refund = this.allocatedNodes.size - 1;
+    const refundableNodes = Array.from(this.allocatedNodes).filter(id => id !== this.rootNodeId);
+    const refund = refundableNodes.reduce((total, id) => total + this.getNodeCost(id), 0);
     const cost = this.getRespecCost();
     const totalPoints = this.availablePoints + refund;
 
@@ -265,10 +288,24 @@ export class SkillTreeProgression {
 
 export function buildKeystoneConfigFromNodes(nodes, arcs, keystoneIds, {
   modifierPrefix = 'Keystone',
-  additionalTierRequirement = 0
+  additionalTierRequirement = 0,
+  overrides = {}
 } = {}) {
   const nodeById = new Map(nodes.map(node => [node.id, node]));
   const config = {};
+  const overrideEntries = overrides || {};
+
+  const mergeMinTierTotals = (base = [], extra = []) => {
+    const totals = new Map();
+    [...base, ...extra].forEach(entry => {
+      if (!entry || typeof entry.tier !== 'number' || typeof entry.count !== 'number') {
+        return;
+      }
+      const existing = totals.get(entry.tier) || 0;
+      totals.set(entry.tier, Math.max(existing, entry.count));
+    });
+    return Array.from(totals.entries()).map(([tier, count]) => ({ tier, count }));
+  };
 
   keystoneIds.forEach(nodeId => {
     const node = nodeById.get(nodeId);
@@ -293,14 +330,33 @@ export function buildKeystoneConfigFromNodes(nodes, arcs, keystoneIds, {
     const uniqueParents = Array.from(new Set(parentNodes));
     const selectedParents = uniqueParents.slice(0, 2);
 
+    const baseModifier = `${modifierPrefix}: ${node.primaryStat || 'Mastery'} Keystone`;
+    const basePrerequisites = {
+      nodes: selectedParents,
+      minTierTotals: additionalTierRequirement > 0
+        ? [{ tier: node.tier - 1, count: additionalTierRequirement }]
+        : []
+    };
+
+    const override = overrideEntries[nodeId] || {};
+    const overridePrereq = override.prerequisites || {};
+    const overrideNodes = Array.isArray(overridePrereq.nodes) ? overridePrereq.nodes : [];
+    const combinedNodes = Array.from(new Set([...basePrerequisites.nodes, ...overrideNodes]));
+    const combinedTierTotals = mergeMinTierTotals(
+      basePrerequisites.minTierTotals,
+      Array.isArray(overridePrereq.minTierTotals) ? overridePrereq.minTierTotals : []
+    );
+
     config[nodeId] = {
-      modifier: `${modifierPrefix}: ${node.primaryStat || 'Mastery'} Keystone`,
+      modifier: override.modifier || baseModifier,
       prerequisites: {
-        nodes: selectedParents,
-        minTierTotals: additionalTierRequirement > 0
-          ? [{ tier: node.tier - 1, count: additionalTierRequirement }]
-          : []
-      }
+        nodes: combinedNodes,
+        minTierTotals: combinedTierTotals
+      },
+      bonus: override.bonus || null,
+      penalty: override.penalty || null,
+      name: override.name || undefined,
+      cost: typeof override.cost === 'number' ? override.cost : undefined
     };
   });
 
