@@ -363,6 +363,9 @@
     let circlePositions = [];
     let nodes = [];
     let arcs = [];
+    let adjacencyGraph = new Map();
+    let geometryValidation = null;
+    let serializedTree = '';
 
     // Define the nodes where extra circles should be added
     const extraCircleNodes = ['n7', 'n8', 'n9', 'n10', 'n11', 'n12', 'n13', 'n15'];
@@ -597,15 +600,165 @@
       return generatedArcs;
     }
 
+    const geometryEngine = {
+      POSITION_PRECISION,
+      ARC_DISTANCE_TOLERANCE,
+      snapCoordinate,
+      snapPoint,
+      getPointKey,
+      polarToCartesian,
+      generateSeedOfLifeCenters,
+      generateAxialRing,
+      axialToPolar,
+      buildCirclePositions,
+      buildNodesFromCircleIntersections,
+      buildArcsFromNodes,
+      buildGeometry({ centerX, centerY, radius, layers, precision = POSITION_PRECISION, tolerance = ARC_DISTANCE_TOLERANCE }) {
+        const circlePositions = buildCirclePositions(centerX, centerY, radius, layers);
+        const nodes = buildNodesFromCircleIntersections(circlePositions, radius, precision);
+        const arcs = buildArcsFromNodes(nodes, radius, tolerance);
+        return { circlePositions, nodes, arcs };
+      },
+      buildAdjacency(nodes, arcs, allowedArcIds = null) {
+        const adjacency = new Map();
+        nodes.forEach(node => adjacency.set(node.id, new Set()));
+
+        const allowedSet = allowedArcIds ? new Set(allowedArcIds) : null;
+
+        arcs.forEach(arc => {
+          if (allowedSet && !allowedSet.has(arc.id)) {
+            return;
+          }
+
+          if (!adjacency.has(arc.from) || !adjacency.has(arc.to)) {
+            return;
+          }
+
+          adjacency.get(arc.from).add(arc.to);
+          adjacency.get(arc.to).add(arc.from);
+        });
+
+        return adjacency;
+      },
+      getReachableNodes(adjacency, startId) {
+        const visited = new Set();
+        if (!adjacency.has(startId)) {
+          return visited;
+        }
+
+        const stack = [startId];
+        while (stack.length > 0) {
+          const current = stack.pop();
+          if (visited.has(current)) {
+            continue;
+          }
+
+          visited.add(current);
+          adjacency.get(current).forEach(neighbor => {
+            if (!visited.has(neighbor)) {
+              stack.push(neighbor);
+            }
+          });
+        }
+
+        return visited;
+      },
+      validateGraph(nodes, arcs, originId = 'n0') {
+        const adjacency = geometryEngine.buildAdjacency(nodes, arcs);
+        const reachable = geometryEngine.getReachableNodes(adjacency, originId);
+
+        const orphanNodes = nodes
+          .filter(node => (adjacency.get(node.id)?.size ?? 0) === 0 || !reachable.has(node.id))
+          .map(node => node.id);
+
+        const degrees = nodes.map(node => (adjacency.get(node.id)?.size ?? 0));
+        const totalDegree = degrees.reduce((acc, deg) => acc + deg, 0);
+        const minDegree = degrees.length ? Math.min(...degrees) : 0;
+        const maxDegree = degrees.length ? Math.max(...degrees) : 0;
+        const avgDegree = degrees.length ? totalDegree / degrees.length : 0;
+
+        const balanced = orphanNodes.length === 0 && maxDegree - minDegree <= 3;
+
+        return {
+          adjacency,
+          reachable,
+          orphanNodes,
+          degreeStats: {
+            min: minDegree,
+            max: maxDegree,
+            average: avgDegree
+          },
+          balanced
+        };
+      },
+      verifyPrerequisite(nodeId, nodes, arcs, allocatedArcIds, originId = 'n0') {
+        const adjacency = geometryEngine.buildAdjacency(nodes, arcs, allocatedArcIds);
+        const reachable = geometryEngine.getReachableNodes(adjacency, originId);
+        return reachable.has(nodeId);
+      },
+      serialize({ nodes, arcs, meta = {} }) {
+        return JSON.stringify({
+          meta,
+          nodes: nodes.map(node => ({
+            id: node.id,
+            x: node.x,
+            y: node.y,
+            connections: [...node.connections],
+            tier: node.tier,
+            tierName: node.tierName,
+            tierDescription: node.tierDescription,
+            themeId: node.themeId,
+            normalizedRadius: node.normalizedRadius,
+            distanceFromCenter: node.distanceFromCenter
+          })),
+          arcs: arcs.map(arc => ({ ...arc }))
+        });
+      }
+    };
+
     function initializeGeometry(layers) {
-      circlePositions = buildCirclePositions(centerX, centerY, R, layers);
-      nodes = buildNodesFromCircleIntersections(circlePositions, R, POSITION_PRECISION);
-      arcs = buildArcsFromNodes(nodes, R, ARC_DISTANCE_TOLERANCE);
+      const geometry = geometryEngine.buildGeometry({
+        centerX,
+        centerY,
+        radius: R,
+        layers,
+        precision: POSITION_PRECISION,
+        tolerance: ARC_DISTANCE_TOLERANCE
+      });
+
+      circlePositions = geometry.circlePositions;
+      nodes = geometry.nodes;
+      arcs = geometry.arcs;
+      geometryValidation = geometryEngine.validateGraph(nodes, arcs);
+      adjacencyGraph = geometryValidation.adjacency;
+      serializedTree = geometryEngine.serialize({
+        nodes,
+        arcs,
+        meta: { centerX, centerY, radius: R, layers }
+      });
+
+      console.info('Geometry validation summary', geometryValidation);
+      console.info('Serialized skill tree blueprint', serializedTree);
     }
 
     // Define the number of layers you want (e.g., 4 for more nodes)
     const numberOfLayers = 4; // Increased from 3 to 4 to ensure nodes n13, n15 exist
     initializeGeometry(numberOfLayers);
+
+    if (typeof window !== 'undefined') {
+      window.skillTreeGeometry = {
+        engine: geometryEngine,
+        getReachableNodes(originId = 'n0') {
+          return Array.from(geometryEngine.getReachableNodes(adjacencyGraph, originId));
+        },
+        getValidation() {
+          return geometryValidation;
+        },
+        serialize() {
+          return serializedTree;
+        }
+      };
+    }
 
     const axisGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
     const axisLength = R * (numberOfLayers + 2.5);
@@ -867,31 +1020,10 @@
     function checkConnectivity(nodesSet, arcsSet) {
       if (nodesSet.length === 0) return true;
 
-      const visited = new Set();
-      const stack = ['n0'];
+      const adjacency = geometryEngine.buildAdjacency(nodes, arcs, arcsSet);
+      const reachable = geometryEngine.getReachableNodes(adjacency, 'n0');
 
-      const allocatedArcsSet = new Set(arcsSet);
-
-      while (stack.length > 0) {
-        const currentNode = stack.pop();
-        if (!visited.has(currentNode)) {
-          visited.add(currentNode);
-
-          // Get all adjacent nodes via allocated arcs
-          const adjacentNodes = arcs
-            .filter(a => allocatedArcsSet.has(a.id) && (a.from === currentNode || a.to === currentNode))
-            .map(a => (a.from === currentNode ? a.to : a.from));
-
-          adjacentNodes.forEach(nodeId => {
-            if (!visited.has(nodeId)) {
-              stack.push(nodeId);
-            }
-          });
-        }
-      }
-
-      // Check if all allocated nodes are visited
-      return nodesSet.every(nodeId => visited.has(nodeId));
+      return nodesSet.every(nodeId => reachable.has(nodeId));
     }
 
     function updateVisuals() {
