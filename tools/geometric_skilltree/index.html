@@ -1,2202 +1,753 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <style>
-    body {
-      margin: 0;
-      background: rgb(17, 24, 39);
-      font-family: system-ui, -apple-system, sans-serif;
-      overflow: hidden; /* Prevent page scrolling */
-    }
-
-    .container {
-      width: 100vw;
-      height: 100vh;
-      position: relative;
-    }
-
-    .ui-panel {
-      position: absolute;
-      background: rgba(15, 23, 42, 0.82);
-      color: rgba(226, 232, 240, 0.92);
-      padding: 1rem;
-      border-radius: 0.85rem;
-      box-shadow: 0 18px 35px rgba(2, 6, 23, 0.55);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      z-index: 12;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-    }
-
-    .panel-header h3 {
-      margin: 0;
-      font-size: 0.95rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .panel-subtitle {
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(148, 163, 184, 0.8);
-    }
-
-    .skill-points {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 0.75rem 1rem;
-      border-radius: 0.75rem;
-      font-size: 0.95rem;
-      z-index: 10;
-      min-width: 200px;
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.35);
-    }
-
-    .skill-points h2 {
-      margin: 0 0 0.4rem 0;
-      font-size: 1.05rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(248, 250, 252, 0.85);
-    }
-
-    .skill-points dl {
-      margin: 0 0 0.5rem 0;
-      display: grid;
-      grid-template-columns: auto auto;
-      column-gap: 0.75rem;
-      row-gap: 0.35rem;
-    }
-
-    .skill-points dt {
-      font-weight: 600;
-      color: rgba(226, 232, 240, 0.8);
-    }
-
-    .skill-points dd {
-      margin: 0;
-      font-weight: 700;
-      color: rgba(248, 250, 252, 0.95);
-      text-align: right;
-    }
-
-    .skill-points .controls {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .skill-points button {
-      flex: 1;
-      background: rgba(129, 140, 248, 0.35);
-      color: white;
-      border: 1px solid rgba(129, 140, 248, 0.55);
-      border-radius: 0.45rem;
-      padding: 0.35rem 0.5rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-
-    .skill-points button:hover {
-      background: rgba(129, 140, 248, 0.55);
-      transform: translateY(-1px);
-    }
-
-    .skill-points button:disabled {
-      background: rgba(71, 85, 105, 0.55);
-      border-color: rgba(71, 85, 105, 0.6);
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .message {
-      position: absolute;
-      top: 1rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.9);
-      color: #1A202C;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      font-size: 1rem;
-      z-index: 10;
-      max-width: 300px;
-      display: none;
-    }
-
-    svg {
-      width: 100%;
-      height: 100%;
-      cursor: grab;
-      background: radial-gradient(circle at center, rgba(15, 23, 42, 0.85), rgba(2, 6, 23, 0.95));
-    }
-
-    .axis-line {
-      stroke-width: 2;
-      stroke-linecap: round;
-      opacity: 0.35;
-    }
-
-    .axis-label {
-      fill: rgba(226, 232, 240, 0.9);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-shadow: 0 0 6px rgba(15, 23, 42, 0.8);
-    }
-
-    .legend-panel {
-      bottom: 1rem;
-      left: 1rem;
-      width: 260px;
-    }
-
-    .legend-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.35rem 0.75rem;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.75rem;
-      color: rgba(203, 213, 225, 0.85);
-      letter-spacing: 0.04em;
-    }
-
-    .legend-swatch {
-      width: 0.85rem;
-      height: 0.85rem;
-      border-radius: 0.45rem;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 0 6px rgba(15, 118, 230, 0.55);
-    }
-
-    .status-active {
-      background: linear-gradient(135deg, #facc15, #fbbf24);
-      box-shadow: 0 0 8px rgba(250, 204, 21, 0.55);
-    }
-
-    .status-available {
-      background: linear-gradient(135deg, #a5b4fc, #6366f1);
-      box-shadow: 0 0 8px rgba(129, 140, 248, 0.55);
-    }
-
-    .status-reachable {
-      background: linear-gradient(135deg, #7dd3fc, #0ea5e9);
-      box-shadow: 0 0 8px rgba(56, 189, 248, 0.45);
-    }
-
-    .status-locked {
-      background: linear-gradient(135deg, #475569, #1e293b);
-      box-shadow: none;
-    }
-
-    .tier-summary {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .tier-row {
-      font-size: 0.7rem;
-      line-height: 1.3;
-      color: rgba(148, 163, 184, 0.85);
-    }
-
-    .tier-row strong {
-      display: block;
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      color: rgba(248, 250, 252, 0.92);
-      text-transform: uppercase;
-    }
-
-    .search-panel {
-      top: 1rem;
-      right: 1rem;
-      width: 320px;
-      gap: 0.85rem;
-    }
-
-    .search-input {
-      width: 100%;
-      padding: 0.55rem 0.75rem;
-      border-radius: 0.65rem;
-      border: 1px solid rgba(99, 102, 241, 0.4);
-      background: rgba(30, 41, 59, 0.9);
-      color: rgba(226, 232, 240, 0.95);
-      font-size: 0.85rem;
-    }
-
-    .search-input::placeholder {
-      color: rgba(148, 163, 184, 0.6);
-    }
-
-    .filter-section {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-
-    .filter-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-    }
-
-    .filter-chip {
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: rgba(30, 41, 59, 0.7);
-      color: rgba(226, 232, 240, 0.85);
-      font-size: 0.7rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .filter-chip.active {
-      border-color: rgba(129, 140, 248, 0.75);
-      background: rgba(79, 70, 229, 0.55);
-      color: rgba(248, 250, 252, 0.95);
-      box-shadow: 0 0 8px rgba(129, 140, 248, 0.45);
-    }
-
-    .filter-chip:focus-visible {
-      outline: 2px solid rgba(56, 189, 248, 0.6);
-      outline-offset: 2px;
-    }
-
-    .filter-chip[data-filter-type="type"][data-filter-value="keystone"] {
-      border-color: rgba(250, 204, 21, 0.5);
-    }
-
-    .clear-search {
-      background: none;
-      border: none;
-      color: rgba(148, 197, 255, 0.85);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      cursor: pointer;
-    }
-
-    .search-results {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .search-result {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.45rem 0.55rem;
-      border-radius: 0.65rem;
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid transparent;
-      transition: border 0.2s ease, background 0.2s ease;
-    }
-
-    .search-result:hover {
-      border-color: rgba(129, 140, 248, 0.45);
-      background: rgba(49, 60, 90, 0.75);
-    }
-
-    .result-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-    }
-
-    .result-meta strong {
-      font-size: 0.78rem;
-      letter-spacing: 0.06em;
-    }
-
-    .result-meta span {
-      font-size: 0.65rem;
-      color: rgba(148, 163, 184, 0.8);
-    }
-
-    .result-pin {
-      background: rgba(79, 70, 229, 0.6);
-      color: white;
-      border: 1px solid rgba(129, 140, 248, 0.65);
-      border-radius: 999px;
-      font-size: 0.65rem;
-      padding: 0.3rem 0.6rem;
-      cursor: pointer;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .result-pin:hover {
-      background: rgba(99, 102, 241, 0.75);
-    }
-
-    .search-empty {
-      font-size: 0.7rem;
-      color: rgba(148, 163, 184, 0.8);
-      text-align: center;
-      padding: 0.5rem 0;
-    }
-
-    /* Node Styles */
-    .node {
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .node circle {
-      stroke: #1a1a1a;
-      stroke-width: 1;
-      transition: fill 0.3s ease, stroke 0.3s ease, r 0.3s ease;
-    }
-
-    .node text {
-      fill: white;
-      font-size: 4px; /* Increased font size */
-      font-weight: 300;
-      transition: all 0.3s ease;
-      text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-    }
-
-    .node:hover text {
-      font-size: 5px; /* Adjusted hover size */
-    }
-
-    .node.search-match circle {
-      stroke-width: 1.75;
-      filter: drop-shadow(0 0 5px rgba(129, 140, 248, 0.55));
-    }
-
-    .node.reachable-node circle {
-      filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.45));
-    }
-
-    .node.path-node circle {
-      stroke-width: 2;
-      filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.6));
-    }
-
-    .node.pinned-node circle {
-      stroke-width: 2.2;
-      filter: drop-shadow(0 0 9px rgba(236, 72, 153, 0.55));
-    }
-
-    .node.filtered-out {
-      opacity: 0.2;
-      pointer-events: none;
-    }
-
-    /* Node States */
-    .inactive-node circle {
-      filter: drop-shadow(0 0 1px rgba(15, 23, 42, 0.8));
-    }
-
-    .available-node circle {
-      filter: drop-shadow(0 0 4px rgba(148, 197, 255, 0.4));
-    }
-
-    .active-node circle {
-      filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5));
-      animation: pulse 2s infinite;
-    }
-
-    /* Pulse Animation for Active Nodes */
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-
-    /* Extra Circle Styles */
-    .extra-circle {
-      opacity: 0.45;
-      transition: opacity 0.3s ease;
-    }
-
-    .node.active-node .extra-circle {
-      opacity: 0.75;
-    }
-
-    /* Arc Styles */
-    .arc {
-      transition: stroke 0.3s ease, filter 0.3s ease;
-      stroke-width: 1.25;
-    }
-
-    .inactive-arc {
-      stroke: #4A5568; /* Adjusted for visibility */
-    }
-
-    .available-arc {
-      stroke: #A0AEC0;
-    }
-
-    .active-arc {
-      stroke: #FCD34D;
-      filter: drop-shadow(0 0 1px #FCD34D);
-    }
-
-    .highlighted-arc {
-      stroke: #818CF8;
-      filter: drop-shadow(0 0 3px #818CF8);
-      animation: connectionPulse 1.5s infinite;
-    }
-
-    .arc.reachable-arc {
-      stroke-dasharray: 3 4;
-      opacity: 0.7;
-    }
-
-    .arc.path-arc {
-      stroke-width: 2.5;
-      filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.6));
-    }
-
-    .arc.filtered-out {
-      opacity: 0.12;
-    }
-
-    @keyframes connectionPulse {
-      0% { filter: drop-shadow(0 0 2px #818CF8); }
-      50% { filter: drop-shadow(0 0 4px #818CF8); }
-      100% { filter: drop-shadow(0 0 2px #818CF8); }
-    }
-
-    /* Tooltip Styles */
-    .tooltip {
-      position: absolute;
-      pointer-events: none;
-      background: rgba(0, 0, 0, 0.8);
-      color: white;
-      padding: 0.5rem;
-      border-radius: 0.3rem;
-      font-size: 0.875rem;
-      display: none;
-      z-index: 20;
-    }
-
-    .tooltip span {
-      display: block;
-      margin-top: 0.25rem;
-      font-size: 0.8rem;
-    }
-
-    .tooltip-keystone {
-      color: #fbbf24;
-      font-weight: 600;
-    }
-
-    .tooltip-requirements {
-      color: #f87171;
-    }
-
-    /* Arc Hit Area Styles */
-    .arc-hit-area {
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower of Life Skill Tree</title>
+    <style>
+        :root {
+            --bg-color: #0b0d12;
+            
+            /* Nodes */
+            --node-center: #ffffff;
+            --node-inactive: #1f242e;
+            --node-available: #3b4c66;
+            --node-active: #d4b483;
+            --node-pending: #ffd700; /* Selection Mode */
+            
+            /* Straight Paths */
+            --path-inactive: #1a1f29;
+            --path-active: #d4b483;
+            --path-ghost: rgba(255, 255, 255, 0.4); /* Potential Choice */
+            
+            /* Arcs */
+            --arc-inactive: rgba(255, 255, 255, 0.05);
+            --arc-available: rgba(100, 200, 255, 0.3); 
+            --arc-active: #ffd700;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #e0e0e0;
+            user-select: none;
+        }
+
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .hud-panel {
+            position: absolute;
+            background: rgba(11, 13, 18, 0.95);
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 15px;
+            pointer-events: auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+        }
+
+        #stats-panel { top: 20px; left: 20px; min-width: 220px; }
+        #controls-panel { bottom: 20px; right: 20px; }
+
+        h1 {
+            margin: 0 0 15px 0;
+            font-size: 16px;
+            color: var(--node-active);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #888;
+        }
+
+        .stat-value { font-weight: bold; color: #fff; }
+
+        .btn {
+            background: #1a1f29;
+            border: 1px solid #444;
+            color: #ccc;
+            padding: 8px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn:hover { background: var(--node-active); color: #000; }
+
+        /* --- SVG ELEMENTS --- */
+
+        /* Straight Links */
+        .straight-path {
+            fill: none;
+            stroke: var(--path-inactive);
+            stroke-width: 4;
+            stroke-linecap: round;
+            transition: all 0.3s;
+        }
+        .straight-path.active {
+            stroke: var(--path-active);
+            filter: drop-shadow(0 0 3px var(--path-active));
+        }
+        .straight-path.ghost {
+            stroke: var(--path-ghost);
+            stroke-dasharray: 10, 5;
+            animation: dash 1s linear infinite;
+            cursor: pointer;
+        }
+        .straight-path.ghost:hover {
+            stroke: #fff;
+            stroke-width: 6;
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: -15; }
+        }
+
+        /* Curved Arcs */
+        .curve-path {
+            fill: none;
+            stroke: var(--arc-inactive);
+            stroke-width: 2;
+            transition: all 0.3s;
+            pointer-events: stroke;
+            cursor: pointer;
+        }
+        .curve-path.available {
+            stroke: var(--arc-available);
+            stroke-width: 3;
+        }
+        .curve-path.available:hover {
+            stroke: #fff;
+            stroke-width: 4;
+        }
+        .curve-path.active {
+            stroke: var(--arc-active);
+            stroke-width: 3;
+            filter: drop-shadow(0 0 4px var(--arc-active));
+        }
+
+        /* Hit Areas */
+        .hit-area { stroke: transparent; stroke-width: 20; fill: none; cursor: pointer; }
+
+        /* Nodes */
+        .node-group { cursor: pointer; }
+        .node-group circle {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+        .node-group:hover circle.node-fill { transform: scale(1.4); }
+
+        .node-bg { fill: var(--bg-color); stroke: var(--node-inactive); stroke-width: 2; }
+        .node-fill { fill: var(--node-inactive); }
+
+        /* Node States */
+        .node-group.active .node-fill { fill: var(--node-active); filter: drop-shadow(0 0 5px var(--node-active)); }
+        .node-group.active .node-bg { stroke: var(--node-active); }
+        
+        .node-group.available .node-bg { stroke: var(--node-available); }
+        .node-group.available .node-fill { fill: var(--node-available); }
+        
+        /* Center Node Unique Style */
+        .node-group.type-center .node-fill { fill: var(--node-center); filter: drop-shadow(0 0 10px var(--node-center)); }
+        
+        /* Pending Choice State */
+        .node-group.pending .node-bg { stroke: var(--node-pending); stroke-dasharray: 4 2; }
+        .node-group.pending .node-fill { fill: var(--node-pending); animation: pulse 1s infinite; }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        #tooltip {
+            position: absolute;
+            display: none;
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid #444;
+            padding: 12px;
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: 100;
+            min-width: 200px;
+        }
+        .tt-header { color: var(--node-active); font-weight: bold; margin-bottom: 5px; font-size: 14px; }
+        .tt-body { color: #aaa; font-size: 12px; line-height: 1.4; }
+        .choice-hint {
+            position: absolute;
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid #ffd700;
+            color: #ffd700;
+            padding: 10px;
+            border-radius: 4px;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+            display: none;
+            font-weight: bold;
+            z-index: 20;
+        }
+
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+        #canvas-container:active {
+            cursor: grabbing;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="skill-points">
-      <h2>Progression</h2>
-      <dl>
-        <dt>Level</dt>
-        <dd id="levelDisplay">1</dd>
-        <dt>Skill Points</dt>
-        <dd id="skillPoints">0</dd>
-        <dt>Allocated (nodes / pts)</dt>
-        <dd id="allocatedCount">0</dd>
-        <dt>Respec Cost</dt>
-        <dd id="respecCost">0</dd>
-      </dl>
-      <div class="controls">
-        <button id="levelUpButton">Gain Level</button>
-        <button id="respecButton">Respec</button>
-      </div>
-    </div>
-    <div class="ui-panel search-panel" id="searchPanel">
-      <div class="panel-header">
-        <h3>Node Finder</h3>
-        <button class="clear-search" id="clearSearchButton" type="button">Clear</button>
-      </div>
-      <input type="search" class="search-input" id="nodeSearch" placeholder="Search nodes, effects, or tiers" autocomplete="off" />
-      <div class="filter-section">
-        <span class="panel-subtitle">Primary Focus</span>
-        <div class="filter-grid" id="primaryFilters">
-          <button class="filter-chip" type="button" data-filter-type="stat" data-filter-value="STR">STR</button>
-          <button class="filter-chip" type="button" data-filter-type="stat" data-filter-value="DEX">DEX</button>
-          <button class="filter-chip" type="button" data-filter-type="stat" data-filter-value="INT">INT</button>
+
+    <div id="ui-layer">
+        <div class="hud-panel" id="stats-panel">
+            <h1>Flower of Life</h1>
+            <div class="stat-row">
+                <span>Harmony (Nodes)</span>
+                <span class="stat-value" id="node-points-display">20</span>
+            </div>
+            <div class="stat-row">
+                <span>Flow (Arcs)</span>
+                <span class="stat-value" id="arc-points-display">15</span>
+            </div>
+            <div style="margin-top:15px; font-size: 11px; color:#666; border-top: 1px solid #333; padding-top:10px; line-height: 1.6;">
+                <strong style="color:#ccc">Left Click Node:</strong> Toggle (Awaken/Refund)<br>
+                <strong style="color:#ccc">Click Ghost Path:</strong> Confirm Choice<br>
+                <strong style="color:#ccc">Click Arcs:</strong> Channel Flow
+            </div>
         </div>
-      </div>
-      <div class="filter-section">
-        <span class="panel-subtitle">Ring</span>
-        <div class="filter-grid" id="tierFilters">
-          <button class="filter-chip" type="button" data-filter-type="tier" data-filter-value="0">0</button>
-          <button class="filter-chip" type="button" data-filter-type="tier" data-filter-value="1">1</button>
-          <button class="filter-chip" type="button" data-filter-type="tier" data-filter-value="2">2</button>
-          <button class="filter-chip" type="button" data-filter-type="tier" data-filter-value="3">3</button>
-          <button class="filter-chip" type="button" data-filter-type="tier" data-filter-value="4">4</button>
+        <div class="hud-panel" id="controls-panel">
+            <button class="btn" onclick="skillTree.reset()">Rebirth</button>
+            <button class="btn" onclick="viewController.center()">Center</button>
         </div>
-      </div>
-      <div class="filter-section">
-        <span class="panel-subtitle">Node Type</span>
-        <div class="filter-grid" id="typeFilters">
-          <button class="filter-chip" type="button" data-filter-type="type" data-filter-value="core">Core</button>
-          <button class="filter-chip" type="button" data-filter-type="type" data-filter-value="notable">Notable</button>
-          <button class="filter-chip" type="button" data-filter-type="type" data-filter-value="keystone">Keystone</button>
-          <button class="filter-chip" type="button" data-filter-type="type" data-filter-value="cluster">Cluster</button>
-        </div>
-      </div>
-      <div class="panel-subtitle">Matches highlight on the lattice.</div>
-      <ul class="search-results" id="searchResults"></ul>
+        <div id="choice-hint" class="choice-hint">Choose a path to connect</div>
     </div>
-    <div class="ui-panel legend-panel" id="legendPanel">
-      <div class="panel-header">
-        <h3>Atlas Status</h3>
-      </div>
-      <div class="legend-grid">
-        <div class="legend-item"><span class="legend-swatch status-active"></span>Active</div>
-        <div class="legend-item"><span class="legend-swatch status-available"></span>Unlockable</div>
-        <div class="legend-item"><span class="legend-swatch status-reachable"></span>Reachable</div>
-        <div class="legend-item"><span class="legend-swatch status-locked"></span>Locked</div>
-      </div>
-      <div class="tier-summary" id="tierSummary"></div>
+
+    <div id="tooltip">
+        <div class="tt-header"></div>
+        <div class="tt-body"></div>
     </div>
-    <div class="message" id="message"></div>
-    <div class="tooltip" id="tooltip"></div>
-    <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-      <!-- Circles, Arcs, and Nodes will be inserted here by JavaScript -->
-    </svg>
-  </div>
 
-  <script type="module">
-    import {
-      SkillTreeProgression,
-      buildKeystoneConfigFromNodes,
-      createDefaultTierRequirements
-    } from './assets/progression.mjs';
-    let scale = 1;
-    let offsetX = 0;
-    let offsetY = 0;
-    let isDragging = false;
-    let lastX = 0;
-    let lastY = 0;
+    <div id="canvas-container">
+        <svg id="main-svg" width="100%" height="100%">
+            <g id="viewport-group">
+                <g id="arcs-layer"></g>
+                <g id="straight-layer"></g>
+                <g id="nodes-layer"></g>
+            </g>
+        </svg>
+    </div>
 
-    const svg = document.querySelector('svg');
-    const mainGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    svg.appendChild(mainGroup);
+<script>
+const RADIUS = 80;
 
-    // Create a background rectangle to capture pan events
-    const bgRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    bgRect.setAttribute('width', '100%');
-    bgRect.setAttribute('height', '100%');
-    bgRect.setAttribute('fill', 'transparent');
-    svg.insertBefore(bgRect, svg.firstChild);
+class Hex {
+    constructor(q, r) { this.q = q; this.r = r; }
+    getKey() { return `${this.q},${this.r}`; }
+    toPixel() {
+        const x = RADIUS * (this.q + this.r/2);
+        const y = RADIUS * (this.r * Math.sqrt(3)/2);
+        return { x, y };
+    }
+    static neighbor(hex, i) {
+        const dirs = [{q:1,r:0}, {q:0,r:1}, {q:-1,r:1}, {q:-1,r:0}, {q:0,r:-1}, {q:1,r:-1}];
+        const d = dirs[i % 6];
+        return new Hex(hex.q + d.q, hex.r + d.r);
+    }
+}
 
-    // Add event listeners for panning on background
-    bgRect.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      lastX = e.clientX;
-      lastY = e.clientY;
-      svg.style.cursor = 'grabbing';
-      e.preventDefault();
-    });
+class Node {
+    constructor(hex, type='small') {
+        this.hex = hex;
+        this.id = hex.getKey();
+        this.type = type;
+        this.active = false;
+        this.connections = []; 
+        this.data = { name: "Cosmic Point", desc: "A point of power." };
+    }
+}
 
-    document.addEventListener('mousemove', (e) => {
-      if (isDragging) {
-        const dx = e.clientX - lastX;
-        const dy = e.clientY - lastY;
-        offsetX += dx / scale;
-        offsetY += dy / scale;
-        lastX = e.clientX;
-        lastY = e.clientY;
-        updateTransform();
-      }
-    });
+class Connection {
+    constructor(nodeA, nodeB) {
+        const sorted = [nodeA.id, nodeB.id].sort();
+        this.id = `${sorted[0]}:${sorted[1]}`;
+        this.fromId = sorted[0];
+        this.toId = sorted[1];
+        this.straight = false; 
+        this.curve1 = false;   
+        this.curve2 = false;   
+    }
+}
 
-    document.addEventListener('mouseup', () => {
-      isDragging = false;
-      svg.style.cursor = 'grab';
-    });
+class SkillTree {
+    constructor() {
+        this.nodes = new Map();
+        this.connections = new Map();
+        this.points = { nodes: 20, arcs: 15 };
+        this.startId = '0,0';
+        this.pendingNodeId = null; 
 
-    svg.addEventListener('wheel', (e) => {
-      e.preventDefault();
-
-      const rect = svg.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-
-      const zoomFactor = e.deltaY < 0 ? 1.1 : 0.9;
-      const newScale = Math.min(Math.max(0.6, scale * zoomFactor), 3);
-      const scaleRatio = newScale / scale;
-      const worldX = (mouseX / scale) - offsetX;
-      const worldY = (mouseY / scale) - offsetY;
-
-      offsetX -= worldX * (scaleRatio - 1);
-      offsetY -= worldY * (scaleRatio - 1);
-      scale = newScale;
-
-      updateTransform();
-    });
-
-    function updateTransform() {
-      const maxOffset = 600;
-      offsetX = Math.max(-maxOffset, Math.min(maxOffset, offsetX));
-      offsetY = Math.max(-maxOffset, Math.min(maxOffset, offsetY));
-
-      mainGroup.setAttribute('transform',
-          `scale(${scale}) translate(${offsetX},${offsetY})`);
+        this.generateTree(3);
+        
+        this.renderer = new SVGRenderer(this);
+        this.renderer.draw();
+        this.updateUI();
     }
 
-    // Prevent context menu and page scrolling
-    svg.addEventListener('contextmenu', e => e.preventDefault());
-    document.body.style.overflow = 'hidden';
+    generateTree(layers) {
+        const center = new Hex(0,0);
+        this.addNode(center, 'center');
+        this.nodes.get(center.getKey()).active = true;
 
-    const R = 20; // Radius of circles
-    const centerX = 150;
-    const centerY = 150;
+        for (let l = 1; l <= layers; l++) {
+            let cursor = new Hex(0,0);
+            // Move to start of ring (Direction 4 scaled by layer)
+            for(let k=0; k<l; k++) cursor = Hex.neighbor(cursor, 4);
 
-    const statAxes = [
-      { id: 'str', label: 'STR', color: '#ef4444', dx: 1, dy: 0 },
-      { id: 'dex', label: 'DEX', color: '#22c55e', dx: -0.5, dy: -Math.sqrt(3) / 2 },
-      { id: 'int', label: 'INT', color: '#38bdf8', dx: -0.5, dy: Math.sqrt(3) / 2 }
-    ];
-
-    const defaultTierThemes = [
-      {
-        ring: 0,
-        id: 'seed-core',
-        name: 'Seed Core',
-        description: 'Foundational survival and resource nodes anchored at the Seed center.'
-      },
-      {
-        ring: 1,
-        id: 'seed-petals',
-        name: 'Seed Petals',
-        description: 'Primary offensive and defensive skills formed by the Seed of Life petals.'
-      },
-      {
-        ring: 2,
-        id: 'inner-flower',
-        name: 'Inner Flower',
-        description: 'Advanced hybrid branches that weave the inner Flower of Life lattice.'
-      },
-      {
-        ring: 3,
-        id: 'outer-flower',
-        name: 'Outer Flower',
-        description: 'Expert specialisations occupying the outer Flower petals.'
-      },
-      {
-        ring: 4,
-        id: 'celestial-ring',
-        name: 'Celestial Ring',
-        description: 'Mythic capstones placed on the outermost concentric construction ring.'
-      }
-    ];
-
-    const DEFAULT_NODE_COST = 1;
-    const stateDisplay = {
-      level: document.getElementById('levelDisplay'),
-      points: document.getElementById('skillPoints'),
-      allocated: document.getElementById('allocatedCount'),
-      respecCost: document.getElementById('respecCost')
-    };
-
-    const controls = {
-      levelUp: document.getElementById('levelUpButton'),
-      respec: document.getElementById('respecButton')
-    };
-
-    const searchUI = {
-      panel: document.getElementById('searchPanel'),
-      input: document.getElementById('nodeSearch'),
-      clear: document.getElementById('clearSearchButton'),
-      results: document.getElementById('searchResults'),
-      tierSummary: document.getElementById('tierSummary'),
-      filterButtons: Array.from(document.querySelectorAll('.filter-chip'))
-    };
-
-    const filterState = {
-      stat: new Set(),
-      tier: new Set(),
-      type: new Set()
-    };
-
-    let searchTerm = '';
-    let searchMatches = new Set();
-    let searchMatchList = [];
-    let filteredNodeIds = new Set();
-    let pinnedNode = null;
-    let pinnedPathNodes = new Set();
-    let pinnedPathArcs = new Set();
-    let hoverPathNodes = new Set();
-    let hoverPathArcs = new Set();
-
-    let contentConfig = null;
-    let tierThemes = [...defaultTierThemes];
-    let ringProfiles = new Map();
-    let nodeTypeScaling = new Map();
-    let nodeTypeLabels = {};
-    let fallbackFocus = {};
-    let nodeOverrides = {};
-    let keystoneOverrides = {};
-    let fallbackRingProfile = null;
-    let defaultTypeScaling = { primary: 1, hybrid: 1, special: 1, cost: DEFAULT_NODE_COST };
-
-    async function loadContentConfig() {
-      const response = await fetch('./assets/skilltree-content.json');
-      if (!response.ok) {
-        throw new Error(`Failed to load content configuration (${response.status})`);
-      }
-      return response.json();
-    }
-
-    function populateTierSummary() {
-      if (!searchUI.tierSummary) {
-        return;
-      }
-      searchUI.tierSummary.innerHTML = '';
-      tierThemes.forEach(theme => {
-        const row = document.createElement('div');
-        row.className = 'tier-row';
-        const profile = ringProfiles.get(theme.ring);
-        const archetype = profile?.archetype ? ` · ${profile.archetype}` : '';
-        row.innerHTML = `<strong>Ring ${theme.ring}: ${theme.name}${archetype}</strong>${theme.description}`;
-        searchUI.tierSummary.appendChild(row);
-      });
-    }
-
-    try {
-      contentConfig = await loadContentConfig();
-    } catch (error) {
-      console.error('Unable to load skill tree content configuration:', error);
-      contentConfig = {
-        rings: defaultTierThemes,
-        nodeTypeScaling: {},
-        nodeTypeLabels: {},
-        fallbackFocus: {},
-        nodeOverrides: {},
-        keystones: {}
-      };
-    }
-
-    tierThemes = (contentConfig.rings || []).map(ring => ({
-      ring: ring.ring,
-      id: ring.themeId,
-      name: ring.name,
-      description: ring.description
-    }));
-
-    ringProfiles = new Map((contentConfig.rings || []).map(ring => [ring.ring, ring]));
-    nodeTypeScaling = new Map(Object.entries(contentConfig.nodeTypeScaling || {}));
-    defaultTypeScaling = nodeTypeScaling.get('cluster') || defaultTypeScaling;
-    nodeTypeLabels = contentConfig.nodeTypeLabels || {};
-    fallbackFocus = contentConfig.fallbackFocus || {};
-    nodeOverrides = contentConfig.nodeOverrides || {};
-    keystoneOverrides = contentConfig.keystones || {};
-    fallbackRingProfile = (contentConfig.rings || []).reduce((acc, ring) => {
-      if (!acc || (typeof ring.ring === 'number' && ring.ring > acc.ring)) {
-        return ring;
-      }
-      return acc;
-    }, null);
-
-    populateTierSummary();
-
-    function getRingProfile(tier) {
-      if (ringProfiles.has(tier)) {
-        return ringProfiles.get(tier);
-      }
-      if (fallbackRingProfile) {
-        return fallbackRingProfile;
-      }
-      const index = Math.min(defaultTierThemes.length - 1, Math.max(0, tier));
-      return defaultTierThemes[index];
-    }
-
-    function getTypeScaling(nodeType) {
-      return nodeTypeScaling.get(nodeType) || defaultTypeScaling;
-    }
-
-    function getFocusProfile(ringProfile, primaryStat) {
-      const ringFocus = ringProfile?.focus || {};
-      if (ringFocus[primaryStat]) {
-        return ringFocus[primaryStat];
-      }
-      if (fallbackFocus[primaryStat]) {
-        return fallbackFocus[primaryStat];
-      }
-      return fallbackFocus.default || {
-        focusTitle: primaryStat,
-        special: 'adaptive resonance flow',
-        specialScaling: 1
-      };
-    }
-
-    function computeHybridWeight(weights, dominantIndex) {
-      return weights.reduce((sum, weight, index) => index === dominantIndex ? sum : sum + weight, 0);
-    }
-
-    function resolveNameTemplate(ringProfile, nodeType) {
-      return (ringProfile?.naming && ringProfile.naming[nodeType]) || nodeTypeLabels[nodeType] || '{focusTitle} Node';
-    }
-
-    function formatDisplayName(template, focusProfile, node, ringProfile) {
-      const focusTitle = focusProfile.focusTitle || focusProfile.title || node.primaryStat;
-      return template
-        .replace('{focusTitle}', focusTitle)
-        .replace('{archetype}', ringProfile?.archetype || '')
-        .replace('{stat}', node.primaryStat)
-        .trim()
-        .replace(/\s+/g, ' ');
-    }
-
-    function applyNodeOverride(node) {
-      const override = nodeOverrides[node.id];
-      if (!override) {
-        return;
-      }
-      if (override.title) {
-        node.displayName = override.title;
-      }
-      if (Array.isArray(override.effectSegments)) {
-        node.effectSegments = override.effectSegments.slice();
-        node.effectSummary = node.effectSegments.join(' • ');
-      }
-      if (typeof override.cost === 'number') {
-        node.cost = override.cost;
-      }
-    }
-
-    function hexToRgb(hex) {
-      const bigint = parseInt(hex.slice(1), 16);
-      return {
-        r: (bigint >> 16) & 255,
-        g: (bigint >> 8) & 255,
-        b: bigint & 255
-      };
-    }
-
-    function rgbToHex(r, g, b) {
-      const clamp = v => Math.max(0, Math.min(255, Math.round(v)));
-      return `#${clamp(r).toString(16).padStart(2, '0')}${clamp(g).toString(16).padStart(2, '0')}${clamp(b).toString(16).padStart(2, '0')}`;
-    }
-
-    function adjustLuminance(hex, factor) {
-      const { r, g, b } = hexToRgb(hex);
-      return rgbToHex(r * factor, g * factor, b * factor);
-    }
-
-    function mixColors(weights) {
-      const rgb = { r: 0, g: 0, b: 0 };
-      statAxes.forEach((axis, index) => {
-        const { r, g, b } = hexToRgb(axis.color);
-        rgb.r += r * weights[index];
-        rgb.g += g * weights[index];
-        rgb.b += b * weights[index];
-      });
-      return rgbToHex(rgb.r, rgb.g, rgb.b);
-    }
-
-    function computeWeights(x, y) {
-      const vx = x - centerX;
-      const vy = y - centerY;
-      const length = Math.hypot(vx, vy);
-      if (length < 1e-3) {
-        return [1 / 3, 1 / 3, 1 / 3];
-      }
-      const nx = vx / length;
-      const ny = vy / length;
-      const rawWeights = statAxes.map(axis => Math.max(0, nx * axis.dx + ny * axis.dy));
-      const sum = rawWeights.reduce((acc, value) => acc + value, 0);
-      if (sum <= 1e-5) {
-        return [1 / 3, 1 / 3, 1 / 3];
-      }
-      return rawWeights.map(w => w / sum);
-    }
-
-    let hoveredNode = null;
-    let hoveredArc = null;
-    let progression = null;
-    let nodeIndex = new Map();
-
-    const POSITION_PRECISION = 3;
-    const ARC_DISTANCE_TOLERANCE = 1e-2;
-
-    let circlePositions = [];
-    let nodes = [];
-    let arcs = [];
-    let adjacencyGraph = new Map();
-    let geometryValidation = null;
-    let serializedTree = '';
-    let arcLookup = new Map();
-    let reachableNodes = new Set();
-    let keystoneIds = new Set();
-
-    // Define the nodes where extra circles should be added
-    const extraCircleNodes = ['n7', 'n8', 'n9', 'n10', 'n11', 'n12', 'n13', 'n15'];
-
-    const makeArcKey = (a, b) => (a < b ? `${a}|${b}` : `${b}|${a}`);
-
-    function snapCoordinate(value, precision = POSITION_PRECISION) {
-      return Number(value.toFixed(precision));
-    }
-
-    function snapPoint(point, precision = POSITION_PRECISION) {
-      return {
-        x: snapCoordinate(point.x, precision),
-        y: snapCoordinate(point.y, precision)
-      };
-    }
-
-    function getPointKey(point, precision = POSITION_PRECISION) {
-      return `${point.x.toFixed(precision)}:${point.y.toFixed(precision)}`;
-    }
-
-    function polarToCartesian(cx, cy, distance, angle) {
-      return {
-        x: cx + distance * Math.cos(angle),
-        y: cy + distance * Math.sin(angle)
-      };
-    }
-
-    function generateSeedOfLifeCenters(cx, cy, radius, includePetals = true) {
-      const positions = [snapPoint({ x: cx, y: cy })];
-      if (!includePetals) {
-        return positions;
-      }
-
-      for (let i = 0; i < 6; i++) {
-        const angle = (Math.PI / 3) * i;
-        positions.push(snapPoint(polarToCartesian(cx, cy, radius, angle)));
-      }
-      return positions;
-    }
-
-    const axialDirections = [
-      { q: -1, r: 1 },
-      { q: -1, r: 0 },
-      { q: 0, r: -1 },
-      { q: 1, r: -1 },
-      { q: 1, r: 0 },
-      { q: 0, r: 1 }
-    ];
-
-    function generateAxialRing(layer) {
-      if (layer === 0) {
-        return [{ q: 0, r: 0 }];
-      }
-
-      const results = [];
-      let q = layer;
-      let r = 0;
-
-      axialDirections.forEach(direction => {
-        for (let step = 0; step < layer; step++) {
-          results.push({ q, r });
-          q += direction.q;
-          r += direction.r;
-        }
-      });
-
-      return results;
-    }
-
-    function axialToPolar(q, r, radius) {
-      const basisX = q + r / 2;
-      const basisY = (Math.sqrt(3) / 2) * r;
-      const distance = radius * Math.sqrt(basisX * basisX + basisY * basisY);
-      const angle = Math.atan2(basisY, basisX);
-      return { distance, angle };
-    }
-
-    function buildCirclePositions(cx, cy, radius, layers) {
-      const positions = [];
-      const seen = new Set();
-
-      const pushPosition = point => {
-        const snapped = snapPoint(point);
-        const key = getPointKey(snapped);
-        if (!seen.has(key)) {
-          seen.add(key);
-          positions.push(snapped);
-        }
-      };
-
-      generateSeedOfLifeCenters(cx, cy, radius, layers >= 1).forEach(pushPosition);
-
-      for (let layer = 2; layer <= layers; layer++) {
-        const ring = generateAxialRing(layer);
-        ring.forEach(({ q, r }) => {
-          const { distance, angle } = axialToPolar(q, r, radius);
-          pushPosition(polarToCartesian(cx, cy, distance, angle));
-        });
-      }
-
-      return positions;
-    }
-
-    function classifyNodeTier(x, y, radius) {
-      const distance = Math.hypot(x - centerX, y - centerY);
-      const normalized = distance / radius;
-      const ring = Math.max(0, Math.round(normalized));
-      const theme = tierThemes.find(t => t.ring === ring) || tierThemes[tierThemes.length - 1];
-      return {
-        ring,
-        distance,
-        normalized,
-        theme
-      };
-    }
-
-    // Function to calculate circle-circle intersection points
-    function circleCircleIntersection(x0, y0, r0, x1, y1, r1) {
-      const dx = x1 - x0;
-      const dy = y1 - y0;
-      const d = Math.hypot(dx, dy);
-
-      if (d > r0 + r1 || d < Math.abs(r0 - r1) || d === 0) {
-        return [];
-      }
-
-      const a = (r0 * r0 - r1 * r1 + d * d) / (2 * d);
-      const h = Math.sqrt(r0 * r0 - a * a);
-      const xm = x0 + (a * dx) / d;
-      const ym = y0 + (a * dy) / d;
-      const xs1 = xm + (h * dy) / d;
-      const ys1 = ym - (h * dx) / d;
-      const xs2 = xm - (h * dy) / d;
-      const ys2 = ym + (h * dx) / d;
-
-      return [{ x: xs1, y: ys1 }, { x: xs2, y: ys2 }];
-    }
-
-    function buildNodesFromCircleIntersections(circlePositions, radius, precision = POSITION_PRECISION) {
-      const generatedNodes = [];
-      const nodeMap = new Map();
-      let nodeId = 0;
-
-      const centerPoint = snapPoint(circlePositions[0], precision);
-      const centerKey = getPointKey(centerPoint, precision);
-      const centerTier = classifyNodeTier(centerPoint.x, centerPoint.y, radius);
-      generatedNodes.push({
-        id: 'n0',
-        x: centerPoint.x,
-        y: centerPoint.y,
-        connections: [],
-        tier: centerTier.ring,
-        tierName: centerTier.theme.name,
-        tierDescription: centerTier.theme.description,
-        themeId: centerTier.theme.id,
-        normalizedRadius: centerTier.normalized,
-        distanceFromCenter: centerTier.distance
-      });
-      nodeMap.set(centerKey, 'n0');
-
-      for (let i = 0; i < circlePositions.length; i++) {
-        for (let j = i + 1; j < circlePositions.length; j++) {
-          const intersections = circleCircleIntersection(
-            circlePositions[i].x,
-            circlePositions[i].y,
-            radius,
-            circlePositions[j].x,
-            circlePositions[j].y,
-            radius
-          );
-
-          intersections.forEach(point => {
-            const snappedPoint = snapPoint(point, precision);
-            const key = getPointKey(snappedPoint, precision);
-            if (!nodeMap.has(key)) {
-              const newId = `n${++nodeId}`;
-              const tierInfo = classifyNodeTier(snappedPoint.x, snappedPoint.y, radius);
-              generatedNodes.push({
-                id: newId,
-                x: snappedPoint.x,
-                y: snappedPoint.y,
-                connections: [],
-                tier: tierInfo.ring,
-                tierName: tierInfo.theme.name,
-                tierDescription: tierInfo.theme.description,
-                themeId: tierInfo.theme.id,
-                normalizedRadius: tierInfo.normalized,
-                distanceFromCenter: tierInfo.distance
-              });
-              nodeMap.set(key, newId);
+            for (let i = 0; i < 6; i++) {
+                for (let j = 0; j < l; j++) {
+                    let type = 'small';
+                    if (l === layers) type = 'keystone';
+                    this.addNode(cursor, type);
+                    this.connectNeighbors(cursor);
+                    cursor = Hex.neighbor(cursor, i);
+                }
             }
-          });
         }
-      }
-
-      return generatedNodes;
     }
 
-    function buildArcsFromNodes(nodes, radius, tolerance = ARC_DISTANCE_TOLERANCE) {
-      nodes.forEach(node => {
-        node.connections = [];
-      });
+    addNode(hex, type) {
+        const key = hex.getKey();
+        if (!this.nodes.has(key)) this.nodes.set(key, new Node(hex, type));
+    }
 
-      const generatedArcs = [];
-      let arcId = 0;
-
-      nodes.forEach((nodeA, i) => {
-        nodes.forEach((nodeB, j) => {
-          if (i < j) {
-            const dist = Math.hypot(nodeA.x - nodeB.x, nodeA.y - nodeB.y);
-            if (Math.abs(dist - radius) <= tolerance) {
-              generatedArcs.push({
-                id: `a${arcId++}`,
-                from: nodeA.id,
-                to: nodeB.id,
-                x1: nodeA.x,
-                y1: nodeA.y,
-                x2: nodeB.x,
-                y2: nodeB.y
-              });
-
-              if (!nodeA.connections.includes(nodeB.id)) {
-                nodeA.connections.push(nodeB.id);
-              }
-              if (!nodeB.connections.includes(nodeA.id)) {
-                nodeB.connections.push(nodeA.id);
-              }
+    connectNeighbors(hex) {
+        for (let i = 0; i < 6; i++) {
+            const nHex = Hex.neighbor(hex, i);
+            if (this.nodes.has(nHex.getKey())) {
+                const nodeA = this.nodes.get(hex.getKey());
+                const nodeB = this.nodes.get(nHex.getKey());
+                this.createConnection(nodeA, nodeB);
             }
-          }
-        });
-      });
-
-      return generatedArcs;
+        }
     }
 
-    const geometryEngine = {
-      POSITION_PRECISION,
-      ARC_DISTANCE_TOLERANCE,
-      snapCoordinate,
-      snapPoint,
-      getPointKey,
-      polarToCartesian,
-      generateSeedOfLifeCenters,
-      generateAxialRing,
-      axialToPolar,
-      buildCirclePositions,
-      buildNodesFromCircleIntersections,
-      buildArcsFromNodes,
-      buildGeometry({ centerX, centerY, radius, layers, precision = POSITION_PRECISION, tolerance = ARC_DISTANCE_TOLERANCE }) {
-        const circlePositions = buildCirclePositions(centerX, centerY, radius, layers);
-        const nodes = buildNodesFromCircleIntersections(circlePositions, radius, precision);
-        const arcs = buildArcsFromNodes(nodes, radius, tolerance);
-        return { circlePositions, nodes, arcs };
-      },
-      buildAdjacency(nodes, arcs, allowedArcIds = null) {
-        const adjacency = new Map();
-        nodes.forEach(node => adjacency.set(node.id, new Set()));
-
-        const allowedSet = allowedArcIds ? new Set(allowedArcIds) : null;
-
-        arcs.forEach(arc => {
-          if (allowedSet && !allowedSet.has(arc.id)) {
-            return;
-          }
-
-          if (!adjacency.has(arc.from) || !adjacency.has(arc.to)) {
-            return;
-          }
-
-          adjacency.get(arc.from).add(arc.to);
-          adjacency.get(arc.to).add(arc.from);
-        });
-
-        return adjacency;
-      },
-      getReachableNodes(adjacency, startId) {
-        const visited = new Set();
-        if (!adjacency.has(startId)) {
-          return visited;
+    createConnection(n1, n2) {
+        const conn = new Connection(n1, n2);
+        if (!this.connections.has(conn.id)) {
+            this.connections.set(conn.id, conn);
+            if(!n1.connections.includes(n2.id)) n1.connections.push(n2.id);
+            if(!n2.connections.includes(n1.id)) n2.connections.push(n1.id);
         }
+    }
 
-        const stack = [startId];
-        while (stack.length > 0) {
-          const current = stack.pop();
-          if (visited.has(current)) {
-            continue;
-          }
+    // --- GAMEPLAY LOGIC ---
 
-          visited.add(current);
-          adjacency.get(current).forEach(neighbor => {
-            if (!visited.has(neighbor)) {
-              stack.push(neighbor);
+    isConnectedToStart(targetId, simulate = {}) {
+        if (targetId === this.startId) return true;
+        if (simulate.disableNode === targetId) return false;
+
+        const queue = [this.startId];
+        const visited = new Set([this.startId]);
+
+        while (queue.length > 0) {
+            const currId = queue.shift();
+            if (currId === targetId) return true;
+            const currNode = this.nodes.get(currId);
+            
+            for (const neighborId of currNode.connections) {
+                if (visited.has(neighborId)) continue;
+                if (neighborId === simulate.disableNode) continue;
+
+                const neighbor = this.nodes.get(neighborId);
+                const connId = [currId, neighborId].sort().join(':');
+                const conn = this.connections.get(connId);
+
+                const isNodeActive = neighbor.active;
+                const isConnActive = conn.straight && (simulate.disableStraight !== connId);
+
+                if (isNodeActive && isConnActive) {
+                    visited.add(neighborId);
+                    queue.push(neighborId);
+                }
             }
-          });
         }
-
-        return visited;
-      },
-      validateGraph(nodes, arcs, originId = 'n0') {
-        const adjacency = geometryEngine.buildAdjacency(nodes, arcs);
-        const reachable = geometryEngine.getReachableNodes(adjacency, originId);
-
-        const orphanNodes = nodes
-          .filter(node => (adjacency.get(node.id)?.size ?? 0) === 0 || !reachable.has(node.id))
-          .map(node => node.id);
-
-        const degrees = nodes.map(node => (adjacency.get(node.id)?.size ?? 0));
-        const totalDegree = degrees.reduce((acc, deg) => acc + deg, 0);
-        const minDegree = degrees.length ? Math.min(...degrees) : 0;
-        const maxDegree = degrees.length ? Math.max(...degrees) : 0;
-        const avgDegree = degrees.length ? totalDegree / degrees.length : 0;
-
-        const balanced = orphanNodes.length === 0 && maxDegree - minDegree <= 3;
-
-        return {
-          adjacency,
-          reachable,
-          orphanNodes,
-          degreeStats: {
-            min: minDegree,
-            max: maxDegree,
-            average: avgDegree
-          },
-          balanced
-        };
-      },
-      verifyPrerequisite(nodeId, nodes, arcs, allocatedArcIds, originId = 'n0') {
-        const adjacency = geometryEngine.buildAdjacency(nodes, arcs, allocatedArcIds);
-        const reachable = geometryEngine.getReachableNodes(adjacency, originId);
-        return reachable.has(nodeId);
-      },
-      serialize({ nodes, arcs, meta = {} }) {
-        return JSON.stringify({
-          meta,
-          nodes: nodes.map(node => ({
-            id: node.id,
-            x: node.x,
-            y: node.y,
-            connections: [...node.connections],
-            tier: node.tier,
-            tierName: node.tierName,
-            tierDescription: node.tierDescription,
-            themeId: node.themeId,
-            normalizedRadius: node.normalizedRadius,
-            distanceFromCenter: node.distanceFromCenter,
-            primaryStat: node.primaryStat,
-            nodeType: node.nodeType,
-            displayName: node.displayName,
-            effectSummary: node.effectSummary,
-            effectSegments: node.effectSegments,
-            cost: node.cost,
-            archetype: node.archetype
-          })),
-          arcs: arcs.map(arc => ({ ...arc }))
-        });
-      }
-    };
-
-    function initializeGeometry(layers) {
-      const geometry = geometryEngine.buildGeometry({
-        centerX,
-        centerY,
-        radius: R,
-        layers,
-        precision: POSITION_PRECISION,
-        tolerance: ARC_DISTANCE_TOLERANCE
-      });
-
-      circlePositions = geometry.circlePositions;
-      nodes = geometry.nodes;
-      arcs = geometry.arcs;
-      geometryValidation = geometryEngine.validateGraph(nodes, arcs);
-      adjacencyGraph = geometryValidation.adjacency;
-      serializedTree = geometryEngine.serialize({
-        nodes,
-        arcs,
-        meta: { centerX, centerY, radius: R, layers }
-      });
-
-      console.info('Geometry validation summary', geometryValidation);
-      console.info('Serialized skill tree blueprint', serializedTree);
-    }
-
-    // Define the number of layers you want (e.g., 4 for more nodes)
-    const numberOfLayers = 4; // Increased from 3 to 4 to ensure nodes n13, n15 exist
-    initializeGeometry(numberOfLayers);
-
-    nodeIndex = new Map(nodes.map(node => [node.id, node]));
-
-    if (typeof window !== 'undefined') {
-      window.skillTreeGeometry = {
-        engine: geometryEngine,
-        getReachableNodes(originId = 'n0') {
-          return Array.from(geometryEngine.getReachableNodes(adjacencyGraph, originId));
-        },
-        getValidation() {
-          return geometryValidation;
-        },
-        serialize() {
-          return serializedTree;
-        }
-      };
-    }
-
-    const axisGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    const axisLength = R * (numberOfLayers + 2.5);
-    statAxes.forEach(axis => {
-      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      line.setAttribute('x1', centerX);
-      line.setAttribute('y1', centerY);
-      line.setAttribute('x2', centerX + axis.dx * axisLength);
-      line.setAttribute('y2', centerY + axis.dy * axisLength);
-      line.setAttribute('stroke', axis.color);
-      line.setAttribute('class', 'axis-line');
-      axisGroup.appendChild(line);
-
-      const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      label.setAttribute('x', centerX + axis.dx * (axisLength + 10));
-      label.setAttribute('y', centerY + axis.dy * (axisLength + 10));
-      label.setAttribute('text-anchor', 'middle');
-      label.setAttribute('class', 'axis-label');
-      label.textContent = axis.label;
-      axisGroup.appendChild(label);
-    });
-    mainGroup.appendChild(axisGroup);
-
-    // Draw circles
-    circlePositions.forEach((pos, index) => {
-      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      circle.setAttribute('cx', pos.x);
-      circle.setAttribute('cy', pos.y);
-      circle.setAttribute('r', R);
-      circle.setAttribute('fill', 'none');
-      circle.setAttribute('stroke', '#ffffff44'); // Increased opacity
-      mainGroup.appendChild(circle);
-    });
-
-    const keystoneCandidates = new Set(extraCircleNodes);
-
-    nodes.forEach(node => {
-      const weights = computeWeights(node.x, node.y);
-      const dominantIndex = weights.indexOf(Math.max(...weights));
-      const hybridWeight = computeHybridWeight(weights, dominantIndex);
-      node.statWeights = weights;
-      node.dominantIndex = dominantIndex;
-      node.hybridWeight = hybridWeight;
-      node.primaryStat = statAxes[dominantIndex].label;
-
-      if (node.id === 'n0' || node.tier === 0) {
-        node.nodeType = 'core';
-      } else if (keystoneCandidates.has(node.id)) {
-        node.nodeType = 'keystone';
-      } else if (node.tier >= 2 && (weights[dominantIndex] >= 0.7 || hybridWeight <= 0.3)) {
-        node.nodeType = 'notable';
-      } else if (node.tier <= 1) {
-        node.nodeType = 'core';
-      } else {
-        node.nodeType = 'cluster';
-      }
-
-      const ringProfile = getRingProfile(node.tier);
-      node.tierName = ringProfile.name;
-      node.tierDescription = ringProfile.description;
-      node.themeId = ringProfile.themeId;
-      node.archetype = ringProfile.archetype;
-
-      const typeScaling = getTypeScaling(node.nodeType);
-      const focusProfile = getFocusProfile(ringProfile, node.primaryStat);
-      const radialMultiplier = 1 + (ringProfile.radialBonus || 0) * node.normalizedRadius;
-      const primaryMagnitude = Math.max(1, Math.round((ringProfile.primaryBase + ringProfile.primaryGrowth * node.tier) * typeScaling.primary * radialMultiplier));
-      const hybridFactor = Math.max(0, (ringProfile.hybridWeightFloor || 0) + hybridWeight * (ringProfile.hybridWeightScale || 1));
-      const hybridMagnitude = Math.max(1, Math.round((ringProfile.hybridBase + ringProfile.hybridGrowth * node.tier) * typeScaling.hybrid * hybridFactor));
-      const specialMagnitude = Math.max(1, Math.round((ringProfile.specialBase + ringProfile.specialGrowth * node.tier) * typeScaling.special * (focusProfile.specialScaling || 1) * radialMultiplier));
-      const hybridDescriptor = ringProfile.hybridDescriptor || 'hybrid resonance';
-      const focusSpecial = focusProfile.special || 'adaptive resonance';
-      const specialDescriptor = ringProfile.specialDescriptor ? `${focusSpecial} ${ringProfile.specialDescriptor}` : focusSpecial;
-
-      node.effectSegments = [
-        `+${primaryMagnitude} ${node.primaryStat}`,
-        `+${hybridMagnitude}% ${hybridDescriptor}`,
-        `${specialMagnitude}% ${specialDescriptor}`
-      ];
-      node.effectSummary = node.effectSegments.join(' • ');
-
-      const template = resolveNameTemplate(ringProfile, node.nodeType);
-      node.displayName = formatDisplayName(template, focusProfile, node, ringProfile);
-
-      if (typeof node.cost !== 'number') {
-        const baseCost = getTypeScaling(node.nodeType).cost;
-        node.cost = typeof baseCost === 'number' ? Math.max(1, Math.round(baseCost)) : DEFAULT_NODE_COST;
-      }
-    });
-
-    nodes.forEach(applyNodeOverride);
-
-    const tierCounts = new Map();
-    nodes.forEach(node => {
-      tierCounts.set(node.tier, (tierCounts.get(node.tier) || 0) + 1);
-    });
-
-    const highestTier = nodes.reduce((max, node) => Math.max(max, node.tier), 0);
-    const tierGateRequirements = createDefaultTierRequirements(highestTier);
-    tierGateRequirements.set(1, 1);
-    tierGateRequirements.forEach((value, tier) => {
-      const previousCount = tierCounts.get(tier - 1) || 0;
-      if (previousCount <= 0) {
-        tierGateRequirements.set(tier, 1);
-      } else {
-        const baseline = tier === 1 ? 1 : Math.max(2, Math.ceil(previousCount * 0.6));
-        tierGateRequirements.set(tier, Math.min(previousCount, Math.max(1, baseline)));
-      }
-    });
-
-    const keystoneConfig = buildKeystoneConfigFromNodes(nodes, arcs, extraCircleNodes, {
-      modifierPrefix: 'Celestial',
-      additionalTierRequirement: 3,
-      overrides: keystoneOverrides
-    });
-
-    const keystoneScale = getTypeScaling('keystone');
-    const keystoneDefaultCost = typeof keystoneScale.cost === 'number'
-      ? Math.max(1, Math.round(keystoneScale.cost))
-      : DEFAULT_NODE_COST;
-
-    keystoneIds = new Set(Object.keys(keystoneConfig));
-    nodes.forEach(node => {
-      if (keystoneIds.has(node.id)) {
-        node.nodeType = 'keystone';
-        const keystone = keystoneConfig[node.id] || {};
-        const segments = [];
-        if (keystone.bonus) {
-          segments.push(keystone.bonus);
-        }
-        if (keystone.penalty) {
-          segments.push(`Trade-off: ${keystone.penalty}`);
-        }
-        if (segments.length > 0) {
-          node.effectSegments = segments;
-          node.effectSummary = segments.join(' • ');
-        }
-        if (keystone.name) {
-          node.displayName = keystone.name;
-        }
-        if (typeof keystone.cost === 'number') {
-          node.cost = keystone.cost;
-        } else if (typeof node.cost !== 'number' || node.cost < keystoneDefaultCost) {
-          node.cost = keystoneDefaultCost;
-        }
-      }
-    });
-
-    progression = new SkillTreeProgression({
-      nodes,
-      arcs,
-      tierGateRequirements,
-      keystoneConfig,
-      pointsPerLevel: 3,
-      baseRespecCost: 2,
-      respecCostGrowth: 1.65
-    });
-
-    progression.grantLevel(4);
-
-    // Optional: Log nodes and arcs to verify existence
-    console.log('Generated Nodes:', nodes.map(node => node.id));
-    console.log('Generated Arcs:', arcs.map(arc => arc.id));
-
-    // Function to describe a straight line between two points
-    function describeLine(x1, y1, x2, y2) {
-      return `M ${x1} ${y1} L ${x2} ${y2}`;
-    }
-
-    // Draw arcs as straight lines with hit areas
-    arcs.forEach(arc => {
-      // Visual arc
-      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      const d = describeLine(arc.x1, arc.y1, arc.x2, arc.y2);
-      path.setAttribute('d', d);
-      path.setAttribute('class', 'arc inactive-arc');
-      path.setAttribute('data-id', arc.id);
-      path.setAttribute('data-from', arc.from);
-      path.setAttribute('data-to', arc.to);
-      mainGroup.insertBefore(path, mainGroup.firstChild); // Insert into mainGroup
-
-      arcLookup.set(makeArcKey(arc.from, arc.to), arc.id);
-
-      // Invisible hit area
-      const hitPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      hitPath.setAttribute('d', d);
-      hitPath.setAttribute('stroke', 'transparent');
-      hitPath.setAttribute('stroke-width', '10'); // Wider stroke for easier hovering
-      hitPath.setAttribute('fill', 'none');
-      hitPath.classList.add('arc-hit-area');
-      hitPath.setAttribute('data-id', arc.id);
-      hitPath.setAttribute('data-from', arc.from);
-      hitPath.setAttribute('data-to', arc.to);
-      mainGroup.insertBefore(hitPath, mainGroup.firstChild);
-
-      // Event listeners on hit area
-      hitPath.addEventListener('mouseenter', () => handleArcHover(arc.id));
-      hitPath.addEventListener('mouseleave', () => handleArcHover(null));
-      hitPath.addEventListener('click', () => handleArcClick(arc.id));
-    });
-
-    // Draw nodes
-    nodes.forEach(node => {
-      const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      group.setAttribute('transform', `translate(${node.x},${node.y})`);
-      group.classList.add('node', 'inactive-node');
-      group.setAttribute('data-id', node.id);
-      group.dataset.tier = node.tier;
-      group.dataset.primary = node.primaryStat;
-      group.dataset.nodeType = node.nodeType;
-
-      // Base circle
-      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      circle.setAttribute('r', '3'); // Base radius
-
-      const weights = node.statWeights;
-      const baseColor = mixColors(weights);
-      circle.setAttribute('fill', adjustLuminance(baseColor, 0.75));
-      circle.setAttribute('stroke', adjustLuminance(baseColor, 0.45));
-
-      // Node label
-      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      text.setAttribute('y', '0');
-      text.setAttribute('text-anchor', 'middle');
-      const label = node.displayName || node.id;
-      text.textContent = label.length > 18 ? `${label.slice(0, 17)}…` : label;
-
-      group.appendChild(circle);
-      group.appendChild(text);
-
-      if (node.displayName) {
-        group.dataset.name = node.displayName;
-      }
-
-      // Add extra circle if node is in the specified list
-      if (extraCircleNodes.includes(node.id)) {
-        const extraCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        extraCircle.setAttribute('r', '5'); // Larger radius for visibility
-        extraCircle.setAttribute('class', 'extra-circle');
-        extraCircle.setAttribute('fill', adjustLuminance(baseColor, 0.35));
-        extraCircle.setAttribute('stroke', adjustLuminance(baseColor, 0.25));
-        group.insertBefore(extraCircle, circle); // Insert before base circle to layer behind
-      }
-
-      mainGroup.appendChild(group);
-
-      // Event listeners on nodes
-      group.addEventListener('mouseenter', () => handleNodeHover(node.id));
-      group.addEventListener('mouseleave', () => handleNodeHover(null));
-      group.addEventListener('click', () => handleNodeClick(node.id));
-    });
-
-    // Tooltip element
-    const tooltip = document.getElementById('tooltip');
-
-    function findPath(startId, targetId) {
-      if (!adjacencyGraph.has(startId) || !adjacencyGraph.has(targetId)) {
-        return [];
-      }
-      if (startId === targetId) {
-        return [startId];
-      }
-
-      const queue = [startId];
-      const visited = new Set([startId]);
-      const parents = new Map();
-
-      while (queue.length > 0) {
-        const current = queue.shift();
-        if (current === targetId) {
-          break;
-        }
-        const neighbors = adjacencyGraph.get(current) || new Set();
-        neighbors.forEach(neighbor => {
-          if (!visited.has(neighbor)) {
-            visited.add(neighbor);
-            parents.set(neighbor, current);
-            queue.push(neighbor);
-          }
-        });
-      }
-
-      if (!visited.has(targetId)) {
-        return [];
-      }
-
-      const path = [targetId];
-      let cursor = targetId;
-      while (cursor !== startId) {
-        cursor = parents.get(cursor);
-        if (!cursor) {
-          return [];
-        }
-        path.unshift(cursor);
-      }
-      return path;
-    }
-
-    function buildPathHighlight(nodeId) {
-      if (!nodeId) {
-        return { nodes: new Set(), arcs: new Set() };
-      }
-      const path = findPath('n0', nodeId);
-      const nodeSet = new Set(path);
-      const arcSet = new Set();
-      for (let i = 0; i < path.length - 1; i++) {
-        const key = makeArcKey(path[i], path[i + 1]);
-        const arcId = arcLookup.get(key);
-        if (arcId) {
-          arcSet.add(arcId);
-        }
-      }
-      return { nodes: nodeSet, arcs: arcSet };
-    }
-
-    function setPinnedNode(nodeId, withMessage = false) {
-      pinnedNode = nodeId;
-      const highlight = buildPathHighlight(nodeId);
-      pinnedPathNodes = highlight.nodes;
-      pinnedPathArcs = highlight.arcs;
-      if (!nodeId) {
-        pinnedPathNodes = new Set();
-        pinnedPathArcs = new Set();
-      }
-      if (withMessage && nodeId) {
-        const node = nodeIndex.get(nodeId);
-        if (node) {
-          showMessage(`Pinned path to ${node.displayName || nodeId} (Ring ${node.tier}).`);
-        }
-      }
-      updateVisuals();
-    }
-
-    function nodeMatchesFilters(node) {
-      if (!node) {
         return false;
-      }
-      const statSet = filterState.stat;
-      const tierSet = filterState.tier;
-      const typeSet = filterState.type;
-      const statMatch = statSet.size === 0 || statSet.has(node.primaryStat);
-      const tierMatch = tierSet.size === 0 || tierSet.has(String(node.tier));
-      const typeMatch = typeSet.size === 0 || typeSet.has(node.nodeType);
-      return statMatch && tierMatch && typeMatch;
     }
 
-    function applyFilters() {
-      filteredNodeIds = new Set();
-      nodes.forEach(node => {
-        if (!nodeMatchesFilters(node)) {
-          filteredNodeIds.add(node.id);
+    handleNodeClick(id) {
+        const node = this.nodes.get(id);
+
+        // 1. If Pending, Cancel
+        if (this.pendingNodeId === id) {
+            this.pendingNodeId = null;
+            this.refresh();
+            return;
         }
-      });
-      updateVisuals();
+        if (this.pendingNodeId) this.pendingNodeId = null;
+
+        // 2. If Active -> Try Refund
+        if (node.active) {
+            this.deactivateNode(id);
+            return;
+        }
+
+        // 3. If Inactive -> Try Activate
+        this.attemptActivateNode(id);
     }
 
-    function renderSearchResults() {
-      if (!searchUI.results) {
-        return;
-      }
-      searchUI.results.innerHTML = '';
-      if (!searchTerm) {
-        const empty = document.createElement('li');
-        empty.className = 'search-empty';
-        empty.textContent = 'Type to search the atlas.';
-        searchUI.results.appendChild(empty);
-        return;
-      }
-      if (searchMatchList.length === 0) {
-        const empty = document.createElement('li');
-        empty.className = 'search-empty';
-        empty.textContent = 'No nodes match your query.';
-        searchUI.results.appendChild(empty);
-        return;
-      }
+    attemptActivateNode(id) {
+        const node = this.nodes.get(id);
+        if (this.points.nodes <= 0) { alert("Not enough Node Points."); return; }
 
-      searchMatchList.slice(0, 8).forEach(node => {
-        const item = document.createElement('li');
-        item.className = 'search-result';
-
-        const meta = document.createElement('div');
-        meta.className = 'result-meta';
-        const title = document.createElement('strong');
-        title.textContent = `${node.displayName || node.id} • ${node.primaryStat}`;
-        const subtitle = document.createElement('span');
-        const subtitleText = `${node.tierName} · ${node.nodeType.toUpperCase()}`;
-        subtitle.textContent = node.archetype ? `${subtitleText} · ${node.archetype}` : subtitleText;
-        const costLine = document.createElement('span');
-        if (typeof node.cost === 'number') {
-          costLine.textContent = `Cost ${node.cost} • Links ${node.connections.length}`;
+        // Find potential active neighbors
+        const potentialSources = [];
+        
+        for (const nid of node.connections) {
+            const n = this.nodes.get(nid);
+            if (n.active) {
+                const c = this.connections.get([id, nid].sort().join(':'));
+                potentialSources.push({ node: n, conn: c });
+            }
         }
-        const effect = document.createElement('span');
-        effect.textContent = node.effectSummary;
-        meta.appendChild(title);
-        meta.appendChild(subtitle);
-        if (typeof node.cost === 'number') {
-          meta.appendChild(costLine);
-        }
-        meta.appendChild(effect);
 
-        const pinButton = document.createElement('button');
-        pinButton.className = 'result-pin';
-        pinButton.type = 'button';
-        pinButton.textContent = 'Focus';
-        pinButton.addEventListener('click', () => {
-          setPinnedNode(node.id, true);
+        if (potentialSources.length === 0) {
+            alert("Must be adjacent to an active node.");
+            return;
+        }
+
+        // LOGIC FOR CHOICE:
+        if (potentialSources.length === 1) {
+            this.finalizeActivation(node, potentialSources[0].conn);
+        } else {
+            this.pendingNodeId = id;
+            this.refresh();
+            const hint = document.getElementById('choice-hint');
+            hint.style.display = 'block';
+            setTimeout(() => hint.style.display = 'none', 3000);
+        }
+    }
+
+    confirmPath(connId) {
+        const conn = this.connections.get(connId);
+        if (!this.pendingNodeId) return;
+        
+        const targetNode = this.nodes.get(this.pendingNodeId);
+        
+        // Validate connection
+        if (conn.fromId !== this.pendingNodeId && conn.toId !== this.pendingNodeId) return;
+
+        this.finalizeActivation(targetNode, conn);
+        this.pendingNodeId = null;
+    }
+
+    finalizeActivation(node, conn) {
+        let costArc = !conn.straight; 
+        
+        if (costArc) {
+            if (this.points.arcs <= 0) {
+                alert("Not enough Flow (Arc Points) to build connection.");
+                return;
+            }
+            conn.straight = true;
+            this.points.arcs--;
+        }
+        
+        node.active = true;
+        this.points.nodes--;
+        this.refresh();
+    }
+
+    deactivateNode(id) {
+        if (id === this.startId) return;
+        const node = this.nodes.get(id);
+        
+        // Dependency Check
+        const otherActive = Array.from(this.nodes.values()).filter(n => n.active && n.id !== id);
+        for (const other of otherActive) {
+            if (!this.isConnectedToStart(other.id, { disableNode: id })) {
+                alert("Cannot refund: This node supports other paths.");
+                return;
+            }
+        }
+
+        // Refund
+        node.active = false;
+        this.points.nodes++;
+        
+        // Refund straight links that are now dead ends
+        for (const nid of node.connections) {
+            const c = this.connections.get([id, nid].sort().join(':'));
+            if (c.straight) {
+                c.straight = false;
+                this.points.arcs++;
+                if(c.curve1) { c.curve1 = false; this.points.arcs++; }
+                if(c.curve2) { c.curve2 = false; this.points.arcs++; }
+            }
+        }
+
+        this.refresh();
+    }
+
+    toggleArc(connId, curveIndex) {
+        const conn = this.connections.get(connId);
+        if (!conn.straight) return; 
+
+        const prop = curveIndex === 1 ? 'curve1' : 'curve2';
+        
+        if (conn[prop]) {
+            conn[prop] = false;
+            this.points.arcs++;
+        } else {
+            if (this.points.arcs > 0) {
+                conn[prop] = true;
+                this.points.arcs--;
+            } else {
+                alert("Not enough Flow.");
+            }
+        }
+        this.refresh();
+    }
+
+    reset() {
+        this.pendingNodeId = null;
+        this.nodes.forEach(n => { if(n.id !== this.startId) n.active = false; });
+        this.connections.forEach(c => { c.straight = false; c.curve1 = false; c.curve2 = false; });
+        this.points = { nodes: 20, arcs: 15 };
+        this.refresh();
+    }
+
+    refresh() {
+        this.renderer.update();
+        this.updateUI();
+    }
+
+    updateUI() {
+        document.getElementById('node-points-display').innerText = this.points.nodes;
+        document.getElementById('arc-points-display').innerText = this.points.arcs;
+    }
+}
+
+class SVGRenderer {
+    constructor(tree) {
+        this.tree = tree;
+        this.layers = {
+            arcs: document.getElementById('arcs-layer'),
+            straight: document.getElementById('straight-layer'),
+            nodes: document.getElementById('nodes-layer')
+        };
+        this.cache = { nodes: new Map(), straight: new Map(), arcs: new Map() };
+    }
+
+    draw() {
+        this.tree.connections.forEach(conn => {
+            const n1 = this.tree.nodes.get(conn.fromId);
+            const n2 = this.tree.nodes.get(conn.toId);
+            const p1 = n1.hex.toPixel();
+            const p2 = n2.hex.toPixel();
+
+            // Straight Link
+            const gStraight = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            const straightLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            straightLine.setAttribute("x1", p1.x); straightLine.setAttribute("y1", p1.y);
+            straightLine.setAttribute("x2", p2.x); straightLine.setAttribute("y2", p2.y);
+            straightLine.setAttribute("class", "straight-path");
+
+            const straightHit = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            straightHit.setAttribute("x1", p1.x); straightHit.setAttribute("y1", p1.y);
+            straightHit.setAttribute("x2", p2.x); straightHit.setAttribute("y2", p2.y);
+            straightHit.setAttribute("class", "hit-area");
+            straightHit.onclick = (e) => {
+                e.stopPropagation(); 
+                if (this.tree.pendingNodeId) {
+                    this.tree.confirmPath(conn.id);
+                }
+            };
+
+            gStraight.appendChild(straightLine);
+            gStraight.appendChild(straightHit);
+            this.layers.straight.appendChild(gStraight);
+            this.cache.straight.set(conn.id, straightLine);
+
+            // Arcs
+            const gArcs = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            const createArc = (sweep, index) => {
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                const d = `M ${p1.x} ${p1.y} A ${RADIUS} ${RADIUS} 0 0 ${sweep} ${p2.x} ${p2.y}`;
+                path.setAttribute("d", d);
+                path.setAttribute("class", "curve-path");
+                const hit = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                hit.setAttribute("d", d); hit.setAttribute("class", "hit-area");
+                hit.onclick = (e) => { e.stopPropagation(); this.tree.toggleArc(conn.id, index); };
+                return { path, hit };
+            };
+            const c1 = createArc(0, 1);
+            const c2 = createArc(1, 2);
+
+            gArcs.appendChild(c1.path); gArcs.appendChild(c1.hit);
+            gArcs.appendChild(c2.path); gArcs.appendChild(c2.hit);
+            this.layers.arcs.appendChild(gArcs);
+            this.cache.arcs.set(conn.id, { c1: c1.path, c2: c2.path });
         });
 
-        item.appendChild(meta);
-        item.appendChild(pinButton);
-        searchUI.results.appendChild(item);
-      });
+        this.tree.nodes.forEach(node => {
+            const pos = node.hex.toPixel();
+            const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            g.setAttribute("transform", `translate(${pos.x},${pos.y})`);
+            g.setAttribute("class", `node-group type-${node.type}`);
+            
+            g.onclick = (e) => { e.stopPropagation(); this.tree.handleNodeClick(node.id); };
+            g.oncontextmenu = (e) => { e.preventDefault(); e.stopPropagation(); this.tree.deactivateNode(node.id); };
+            g.onmouseenter = (e) => this.showTooltip(e, node);
+            g.onmouseleave = () => this.hideTooltip();
+
+            const bg = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            bg.setAttribute("r", node.type === 'keystone' ? 12 : 6);
+            bg.setAttribute("class", "node-bg");
+            const fill = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            fill.setAttribute("r", node.type === 'keystone' ? 8 : 4);
+            fill.setAttribute("class", "node-fill");
+
+            g.appendChild(bg);
+            g.appendChild(fill);
+            this.layers.nodes.appendChild(g);
+            this.cache.nodes.set(node.id, g);
+        });
+        this.update();
     }
 
-    function updateSearchMatches() {
-      searchMatches = new Set();
-      searchMatchList = [];
-      if (searchTerm.length === 0) {
-        renderSearchResults();
-        updateVisuals();
-        return;
-      }
+    update() {
+        const pendingId = this.tree.pendingNodeId;
 
-      const term = searchTerm.toLowerCase();
-      nodes.forEach(node => {
-        const haystack = [
-          node.id,
-          node.displayName,
-          node.primaryStat,
-          node.tierName,
-          node.tierDescription,
-          node.archetype,
-          node.effectSummary,
-          Array.isArray(node.effectSegments) ? node.effectSegments.join(' ') : '',
-          typeof node.cost === 'number' ? `cost ${node.cost}` : ''
-        ].join(' ').toLowerCase();
-        if (haystack.includes(term)) {
-          searchMatches.add(node.id);
-          searchMatchList.push(node);
-        }
-      });
-      renderSearchResults();
-      updateVisuals();
-    }
-
-    function clearSearch() {
-      searchTerm = '';
-      searchMatches = new Set();
-      searchMatchList = [];
-      if (searchUI.input) {
-        searchUI.input.value = '';
-      }
-      setPinnedNode(null);
-      renderSearchResults();
-      updateVisuals();
-    }
-
-    function updateStateDisplay() {
-      if (!progression) {
-        return;
-      }
-
-      stateDisplay.level.textContent = progression.getLevel();
-      stateDisplay.points.textContent = progression.getAvailablePoints();
-
-      const allocatedNodes = progression.getAllocatedNodes();
-      const allocatedCount = Math.max(0, allocatedNodes.length - 1);
-      const refundable = allocatedNodes
-        .filter(id => id !== progression.rootNodeId)
-        .reduce((sum, id) => sum + progression.getNodeCost(id), 0);
-      stateDisplay.allocated.textContent = `${allocatedCount} (${refundable} pts)`;
-
-      if (progression.canRespec()) {
-        const cost = progression.getRespecCost();
-        const totalPoints = progression.getAvailablePoints() + refundable;
-        stateDisplay.respecCost.textContent = cost;
-        const insufficient = totalPoints < cost;
-        controls.respec.disabled = insufficient;
-        controls.respec.title = insufficient
-          ? `Requires ${cost} total points (have ${totalPoints}).`
-          : '';
-      } else {
-        stateDisplay.respecCost.textContent = '—';
-        controls.respec.disabled = true;
-        controls.respec.title = 'Unlock additional nodes to respec.';
-      }
-    }
-
-    function handleNodeHover(nodeId) {
-      hoveredNode = nodeId;
-      if (nodeId) {
-        const node = nodeIndex.get(nodeId);
-        if (node && progression) {
-          const highlight = buildPathHighlight(nodeId);
-          hoverPathNodes = highlight.nodes;
-          hoverPathArcs = highlight.arcs;
-          const [strWeight, dexWeight, intWeight] = node.statWeights.map(w => Math.round(w * 100));
-          const status = progression.getNodeStatus(nodeId);
-          const requirements = !status.unlocked && status.reasons.length
-            ? `<span class="tooltip-requirements">${status.reasons.join('<br>')}</span>`
-            : '';
-          const keystoneLine = status.keystoneModifier
-            ? `<span class="tooltip-keystone">${status.keystoneModifier}</span>`
-            : '';
-          const effectLine = node.effectSummary
-            ? `<span>${node.effectSummary}</span>`
-            : '';
-          const costLine = typeof node.cost === 'number'
-            ? `<span>Cost: ${node.cost} point${node.cost === 1 ? '' : 's'}</span>`
-            : '';
-          tooltip.innerHTML = `
-            <strong>${node.displayName || node.id}</strong>
-            <span>${node.tierName} • Ring ${node.tier}${node.archetype ? ` • ${node.archetype}` : ''}</span>
-            <span>${node.tierDescription}</span>
-            ${effectLine}
-            ${costLine}
-            <span>STR ${strWeight}% · DEX ${dexWeight}% · INT ${intWeight}%</span>
-            <span>Connected Nodes: ${node.connections.length}</span>
-            ${keystoneLine}
-            ${requirements}
-          `;
-          tooltip.style.display = 'block';
-        }
-      } else {
-        hoverPathNodes = new Set();
-        hoverPathArcs = new Set();
-        tooltip.style.display = 'none';
-      }
-      updateVisuals();
-    }
-
-    function handleArcHover(arcId) {
-      hoveredArc = arcId;
-      if (arcId && progression) {
-        const arc = arcs.find(a => a.id === arcId);
-        if (arc) {
-          hoverPathNodes = new Set([arc.from, arc.to]);
-          hoverPathArcs = new Set([arc.id]);
-          const fromNode = nodeIndex.get(arc.from);
-          const toNode = nodeIndex.get(arc.to);
-          const fromStatus = progression.getNodeStatus(arc.from);
-          const toStatus = progression.getNodeStatus(arc.to);
-          const isActive = fromStatus.unlocked && toStatus.unlocked;
-          let requirements = '';
-          if (!isActive) {
-            const lockedNodeId = fromStatus.unlocked ? arc.to : arc.from;
-            const lockedStatus = progression.getNodeStatus(lockedNodeId);
-            if (!lockedStatus.unlocked && lockedStatus.reasons.length) {
-              requirements = `<span class="tooltip-requirements">${lockedStatus.reasons.join('<br>')}</span>`;
+        this.tree.nodes.forEach(node => {
+            const el = this.cache.nodes.get(node.id);
+            el.classList.remove('active', 'available', 'pending');
+            
+            if (node.active) {
+                el.classList.add('active');
+            } else if (node.id === pendingId) {
+                el.classList.add('pending');
+            } else {
+                const isAvail = this.tree.points.nodes > 0 && node.connections.some(nid => this.tree.nodes.get(nid).active);
+                if (isAvail) el.classList.add('available');
             }
-          }
-          const fromName = fromNode?.displayName || arc.from;
-          const toName = toNode?.displayName || arc.to;
-          tooltip.innerHTML = `
-            <strong>${arc.id}</strong>
-            <span>${fromName} ↔ ${toName}</span>
-            <span>${isActive ? 'Active Path' : 'Locked Path'}</span>
-            <span>Bias: ${fromNode.primaryStat} → ${toNode.primaryStat}</span>
-            ${requirements}
-          `;
-          tooltip.style.display = 'block';
-        }
-      } else {
-        if (!hoveredNode) {
-          hoverPathNodes = new Set();
-          hoverPathArcs = new Set();
-        }
-        tooltip.style.display = 'none';
-      }
-      updateVisuals();
+        });
+
+        this.tree.connections.forEach(conn => {
+            const elStraight = this.cache.straight.get(conn.id);
+            const elArcs = this.cache.arcs.get(conn.id);
+            
+            elStraight.classList.remove('active', 'ghost');
+            elArcs.c1.classList.remove('active', 'available');
+            elArcs.c2.classList.remove('active', 'available');
+
+            if (conn.straight) {
+                elStraight.classList.add('active');
+                if (conn.curve1) elArcs.c1.classList.add('active');
+                else elArcs.c1.classList.add('available');
+                
+                if (conn.curve2) elArcs.c2.classList.add('active');
+                else elArcs.c2.classList.add('available');
+            } else {
+                if (pendingId && (conn.fromId === pendingId || conn.toId === pendingId)) {
+                    const otherId = conn.fromId === pendingId ? conn.toId : conn.fromId;
+                    if (this.tree.nodes.get(otherId).active) {
+                        elStraight.classList.add('ghost');
+                    }
+                }
+            }
+        });
     }
 
-    // Update Tooltip Position
-    document.addEventListener('mousemove', (e) => {
-      if (tooltip.style.display === 'block') {
-        tooltip.style.left = `${e.pageX + 10}px`;
-        tooltip.style.top = `${e.pageY + 10}px`;
-      }
-    });
+    showTooltip(e, node) {
+        const tt = document.getElementById('tooltip');
+        tt.querySelector('.tt-header').innerText = node.data.name;
+        tt.querySelector('.tt-body').innerText = node.data.desc;
+        tt.style.display = 'block';
+        tt.style.left = (e.clientX + 15) + 'px';
+        tt.style.top = (e.clientY + 15) + 'px';
+    }
+    hideTooltip() { document.getElementById('tooltip').style.display = 'none'; }
+}
 
-    function handleNodeClick(nodeId) {
-      if (!progression) return;
-      setPinnedNode(nodeId);
-      if (nodeId === 'n0') {
-        showMessage('The Seed Core is always active.');
-        return;
-      }
-
-      if (progression.isUnlocked(nodeId)) {
-        showMessage('Node already unlocked. Use respec to reset allocations.');
-        return;
-      }
-
-      try {
-        const result = progression.unlockNode(nodeId);
-        updateVisuals();
-        const node = nodeIndex.get(nodeId);
-        const nodeName = node?.displayName || nodeId;
-        const baseMessage = result.modifier
-          ? `${nodeName} unlocked: ${result.modifier}`
-          : `${nodeName} unlocked.`;
-        const costNote = result.cost ? ` (${result.cost} point${result.cost === 1 ? '' : 's'})` : '';
-        showMessage(`${baseMessage}${costNote}`);
-      } catch (error) {
-        showMessage(error.message);
-      }
+class ViewController {
+    constructor() {
+        this.svg = document.getElementById('main-svg');
+        this.group = document.getElementById('viewport-group');
+        
+        // Default to screen center
+        this.x = window.innerWidth / 2;
+        this.y = window.innerHeight / 2;
+        this.scale = 0.9;
+        
+        this.isDrag = false;
+        this.last = {x:0,y:0};
+        
+        // Initial Center check
+        this.center();
+        
+        // Re-check after delay to ensure layout
+        setTimeout(() => this.center(), 100);
+        window.addEventListener('resize', () => this.center());
+        
+        this.events();
+    }
+    
+    center() {
+        const rect = this.svg.getBoundingClientRect();
+        const w = rect.width || window.innerWidth;
+        const h = rect.height || window.innerHeight;
+        
+        if (w > 0 && h > 0) {
+            this.x = w / 2;
+            this.y = h / 2;
+        }
+        this.transform();
     }
 
-    function handleArcClick(arcId) {
-      if (!progression) return;
-      const arc = arcs.find(a => a.id === arcId);
-      if (!arc) return;
-      const fromStatus = progression.getNodeStatus(arc.from);
-      const toStatus = progression.getNodeStatus(arc.to);
-      if (fromStatus.unlocked && toStatus.unlocked) {
-        showMessage(`Path ${arcId} is active.`);
-      } else {
-        showMessage(`Unlock adjacent nodes to empower ${arcId}.`);
-      }
+    events() {
+        const c = document.getElementById('canvas-container');
+        c.onmousedown = e => { if(e.target.id==='canvas-container'||e.target.tagName==='svg'){this.isDrag=true;this.last={x:e.clientX,y:e.clientY}}};
+        window.onmousemove = e => {
+            if(this.isDrag) {
+                this.x += e.clientX-this.last.x; this.y += e.clientY-this.last.y;
+                this.last={x:e.clientX,y:e.clientY}; this.transform();
+            }
+            const tt = document.getElementById('tooltip');
+            if(tt.style.display==='block'){tt.style.left=(e.clientX+15)+'px';tt.style.top=(e.clientY+15)+'px';}
+        };
+        window.onmouseup = () => this.isDrag = false;
+        c.onwheel = e => { e.preventDefault(); this.scale = Math.min(Math.max(0.2, this.scale + e.deltaY*-0.001), 4); this.transform(); };
     }
+    transform() { this.group.setAttribute('transform', `translate(${this.x},${this.y}) scale(${this.scale})`); }
+}
 
-    function handleLevelUp() {
-      if (!progression) return;
-      progression.grantLevel(1);
-      updateVisuals();
-      showMessage('Level increased. Skill points awarded.');
-    }
-
-    function handleRespec() {
-      if (!progression) return;
-      try {
-        const result = progression.respec();
-        updateVisuals();
-        showMessage(`Respec complete. Refunded ${result.refunded} points at cost ${result.cost}.`);
-      } catch (error) {
-        showMessage(error.message);
-      }
-    }
-
-    function updateVisuals() {
-      if (!progression) return;
-
-      const statuses = new Map();
-      nodes.forEach(node => {
-        statuses.set(node.id, progression.getNodeStatus(node.id));
-      });
-
-      const unlocked = new Set(progression.getAllocatedNodes());
-      reachableNodes = new Set(unlocked);
-      unlocked.forEach(nodeId => {
-        const neighbors = adjacencyGraph.get(nodeId);
-        if (neighbors) {
-          neighbors.forEach(neighbor => reachableNodes.add(neighbor));
-        }
-      });
-
-      const combinedPathNodes = new Set([...pinnedPathNodes, ...hoverPathNodes]);
-      const combinedPathArcs = new Set([...pinnedPathArcs, ...hoverPathArcs]);
-
-      document.querySelectorAll('.node').forEach(nodeGroup => {
-        const nodeId = nodeGroup.getAttribute('data-id');
-        const circle = nodeGroup.querySelector('circle');
-        const node = nodeIndex.get(nodeId);
-        const status = statuses.get(nodeId) || { unlocked: false, available: false };
-
-        const isActive = status.unlocked;
-        const canActivate = status.available;
-        const isReachable = reachableNodes.has(nodeId);
-        const isFiltered = filteredNodeIds.has(nodeId);
-        const isSearchMatch = searchMatches.has(nodeId);
-        const onPath = combinedPathNodes.has(nodeId);
-        const isPinnedNode = pinnedNode === nodeId;
-
-        circle.setAttribute('r', nodeId === hoveredNode ? '4' : '3');
-
-        if (node) {
-          const baseColor = mixColors(node.statWeights);
-          const fillFactor = isActive ? 1.2 : canActivate ? 0.95 : 0.65;
-          const strokeFactor = isActive ? 0.9 : 0.55;
-          circle.setAttribute('fill', adjustLuminance(baseColor, fillFactor));
-          circle.setAttribute('stroke', adjustLuminance(baseColor, strokeFactor));
-          const extraCircle = nodeGroup.querySelector('.extra-circle');
-          if (extraCircle) {
-            extraCircle.setAttribute('fill', adjustLuminance(baseColor, 0.35));
-            extraCircle.setAttribute('stroke', adjustLuminance(baseColor, 0.25));
-          }
-        }
-
-        nodeGroup.classList.remove(
-          'active-node',
-          'available-node',
-          'inactive-node',
-          'reachable-node',
-          'search-match',
-          'filtered-out',
-          'path-node',
-          'pinned-node'
-        );
-        if (isActive) {
-          nodeGroup.classList.add('active-node');
-        } else if (canActivate) {
-          nodeGroup.classList.add('available-node');
-        } else {
-          nodeGroup.classList.add('inactive-node');
-        }
-
-        if (isReachable) {
-          nodeGroup.classList.add('reachable-node');
-        }
-        if (isSearchMatch) {
-          nodeGroup.classList.add('search-match');
-        }
-        if (isFiltered) {
-          nodeGroup.classList.add('filtered-out');
-        }
-        if (onPath) {
-          nodeGroup.classList.add('path-node');
-        }
-        if (isPinnedNode) {
-          nodeGroup.classList.add('pinned-node');
-        }
-      });
-
-      document.querySelectorAll('.arc').forEach(path => {
-        const arcId = path.getAttribute('data-id');
-        const fromId = path.getAttribute('data-from');
-        const toId = path.getAttribute('data-to');
-        const fromStatus = statuses.get(fromId);
-        const toStatus = statuses.get(toId);
-        const isActive = Boolean(fromStatus?.unlocked && toStatus?.unlocked);
-        const available = !isActive && (
-          (fromStatus?.unlocked && toStatus?.available) ||
-          (toStatus?.unlocked && fromStatus?.available)
-        );
-        const filteredArc = filteredNodeIds.has(fromId) || filteredNodeIds.has(toId);
-        const reachableArc = reachableNodes.has(fromId) || reachableNodes.has(toId);
-        const pathArc = combinedPathArcs.has(arcId);
-
-        path.classList.remove('active-arc', 'available-arc', 'inactive-arc', 'highlighted-arc', 'reachable-arc', 'filtered-out', 'path-arc');
-        if (isActive) {
-          path.classList.add('active-arc');
-        } else if (available) {
-          path.classList.add('available-arc');
-        } else {
-          path.classList.add('inactive-arc');
-        }
-
-        if (arcId === hoveredArc) {
-          path.classList.add('highlighted-arc');
-        }
-
-        if (reachableArc) {
-          path.classList.add('reachable-arc');
-        }
-        if (filteredArc) {
-          path.classList.add('filtered-out');
-        }
-        if (pathArc) {
-          path.classList.add('path-arc');
-        }
-      });
-
-      updateStateDisplay();
-    }
-
-    controls.levelUp.addEventListener('click', handleLevelUp);
-    controls.respec.addEventListener('click', handleRespec);
-
-    if (searchUI.input) {
-      searchUI.input.addEventListener('input', (event) => {
-        searchTerm = event.target.value.trim();
-        updateSearchMatches();
-      });
-      searchUI.input.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' && searchMatchList.length > 0) {
-          setPinnedNode(searchMatchList[0].id, true);
-        }
-        if (event.key === 'Escape') {
-          clearSearch();
-          searchUI.input.blur();
-        }
-      });
-    }
-
-    if (searchUI.clear) {
-      searchUI.clear.addEventListener('click', clearSearch);
-    }
-
-    searchUI.filterButtons.forEach(button => {
-      const type = button.dataset.filterType;
-      const value = button.dataset.filterValue;
-      button.addEventListener('click', () => {
-        const set = filterState[type];
-        if (!set) {
-          return;
-        }
-        if (set.has(value)) {
-          set.delete(value);
-          button.classList.remove('active');
-        } else {
-          set.add(value);
-          button.classList.add('active');
-        }
-        applyFilters();
-      });
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === '/' && searchUI.input) {
-        event.preventDefault();
-        searchUI.input.focus();
-      }
-    });
-
-    // Message display function
-    function showMessage(text) {
-      const messageDiv = document.getElementById('message');
-      messageDiv.textContent = text;
-      messageDiv.style.display = 'block';
-      clearTimeout(messageDiv.timeout);
-      messageDiv.timeout = setTimeout(() => {
-        messageDiv.style.display = 'none';
-      }, 3000);
-    }
-
-    // Initial visual update
-    renderSearchResults();
-    applyFilters();
-    updateVisuals();
-  </script>
+const skillTree = new SkillTree();
+const viewController = new ViewController();
+</script>
 </body>
 </html>
