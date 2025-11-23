@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Globe Module</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0a0d;
+      --panel: #141218;
+      --panel-dark: #0f0d12;
+      --text: #d8c9a5;
+      --muted: #928270;
+      --accent: #c5a059;
+      --danger: #e74c3c;
+      --border: #3a2a14;
+      --shadow: rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'DM Mono', 'Courier New', monospace;
+      background-color: var(--bg);
+      color: var(--text);
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(75, 10, 10, 0.16), transparent 26%),
+        radial-gradient(circle at 80% 20%, rgba(90, 60, 20, 0.15), transparent 22%),
+        radial-gradient(circle at 50% 80%, rgba(30, 20, 40, 0.22), transparent 32%),
+        linear-gradient(180deg, #0d0c10 0%, #050507 100%);
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+      display: grid;
+      gap: 28px;
+    }
+
+    header {
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-family: 'Cinzel', 'DM Mono', monospace;
+      letter-spacing: 2px;
+      font-size: clamp(26px, 4vw, 38px);
+      text-transform: uppercase;
+    }
+
+    .lede {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .layout {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      align-items: start;
+    }
+
+    .card {
+      background: linear-gradient(155deg, var(--panel) 0%, var(--panel-dark) 100%);
+      border: 1px solid rgba(197, 160, 89, 0.15);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 18px 40px var(--shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(197, 160, 89, 0.08), transparent 35%);
+      pointer-events: none;
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-family: 'Cinzel', 'DM Mono', monospace;
+      font-size: 18px;
+      letter-spacing: 1px;
+      color: var(--accent);
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .globe-shell {
+      display: grid;
+      place-items: center;
+      padding: 12px;
+    }
+
+    .globe-wrapper {
+      position: relative;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    canvas {
+      width: clamp(260px, 60vw, 440px);
+      height: clamp(260px, 60vw, 440px);
+      max-height: 75vh;
+      border-radius: 16px;
+      filter: drop-shadow(0 22px 40px rgba(0, 0, 0, 0.55));
+    }
+
+    .controls {
+      background: linear-gradient(180deg, #1d1b21 0%, #121017 100%);
+      border: 1px solid rgba(197, 160, 89, 0.3);
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 10px 30px rgba(0, 0, 0, 0.55);
+      padding: 18px;
+      border-radius: 10px;
+      width: clamp(260px, 60vw, 440px);
+      position: relative;
+    }
+
+    .controls::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      left: 10%;
+      width: 80%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .controls h3 {
+      margin: 0 0 10px;
+      text-align: center;
+      color: var(--accent);
+      letter-spacing: 1.5px;
+      font-size: 14px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+      padding-bottom: 10px;
+      font-family: 'Cinzel', 'DM Mono', monospace;
+    }
+
+    .stats {
+      font-size: 24px;
+      font-weight: 600;
+      text-align: center;
+      color: var(--danger);
+      text-shadow: 0 0 12px rgba(231, 76, 60, 0.45);
+      margin-bottom: 12px;
+    }
+
+    .slider-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      cursor: pointer;
+      accent-color: #8e2b2b;
+      background: #0d0c12;
+      height: 8px;
+      border-radius: 4px;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #ff6666 0%, #8e2b2b 100%);
+      border: 1px solid #2b0c0c;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #ff6666 0%, #8e2b2b 100%);
+      border: 1px solid #2b0c0c;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .control-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background: linear-gradient(180deg, #302b32 0%, #1f1c23 100%);
+      color: #d4c3a1;
+      border: 1px solid #000;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      padding: 10px 16px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.1s;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 12px;
+      flex: 1;
+      letter-spacing: 0.8px;
+      border-radius: 6px;
+    }
+
+    button:hover {
+      color: #fff4d6;
+      background: linear-gradient(180deg, #3c353f 0%, #27222c 100%);
+      border-color: #3c2c18;
+    }
+
+    button:active {
+      transform: translateY(1px);
+      background: #16121b;
+    }
+
+    .hint {
+      margin-top: 6px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(197, 160, 89, 0.08);
+      border: 1px solid rgba(197, 160, 89, 0.25);
+      color: var(--accent);
+      padding: 8px 12px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    @media (max-width: 720px) {
+      .controls {
+        width: 100%;
+      }
+      .globe-shell {
+        padding: 0;
+      }
+      .card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="badge">Arcane Systems · Vitality Globe</div>
+      <h1>Health Globe Module</h1>
+      <p class="lede">A Path of Exile inspired vitality orb with fluid simulation, rim lighting, noise-driven plasma layers, and button/slider controls for quick tuning.</p>
+    </header>
+
+    <div class="layout">
+      <div class="card globe-shell">
+        <div class="globe-wrapper">
+          <canvas id="globeCanvas" width="420" height="420"></canvas>
+          <div class="controls">
+            <h3>Vitality</h3>
+            <div class="stats">
+              <span id="hpDisplay">100</span> / <span id="maxHpDisplay">100</span>
+            </div>
+
+            <div class="slider-container">
+              <div class="slider-label">
+                <span>Drain</span>
+                <span>Fill</span>
+              </div>
+              <input type="range" id="hpSlider" min="0" max="100" value="100" aria-label="Health value">
+            </div>
+
+            <div class="control-group">
+              <button id="btnDamage">Damage</button>
+              <button id="btnHeal">Restore</button>
+            </div>
+
+            <div class="control-group">
+              <button id="btnDrain">Drain</button>
+              <button id="btnFill">Full</button>
+            </div>
+
+            <div class="hint">Use the slider for precise values or tap the buttons for quick actions.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Implementation Notes</h2>
+        <p>
+          This canvas-driven globe renders a layered fluid with domain-warped noise, additive aura, rim lighting,
+          caustics, and metallic frame etching. Health values lerp toward a target to give the orb weight, while
+          particles drift upward and wrap to keep the motion alive.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Canvas-driven ARPG-style health globe with layered texture and dynamic controls.
+    class HealthGlobe {
+      constructor(canvasId, maxHp = 100) {
+        this.canvas = document.getElementById(canvasId);
+        this.ctx = this.canvas.getContext('2d');
+
+        this.maxHp = maxHp;
+        this.currentHp = maxHp;
+        this.targetHp = maxHp;
+
+        this.time = 0;
+        this.waveSpeed = 0.03;
+        this.waveAmplitude = 2;
+
+        this.colors = {
+          liquidCore: '#ff3333',
+          liquidMid: '#b30000',
+          liquidDeep: '#4a0000',
+          bgCenter: '#1a0505',
+          bgEdge: '#000000',
+          frameLight: '#c5a059',
+          frameDark: '#3d2e18',
+        };
+
+        this.particles = [];
+        this.radius = 150;
+        for (let i = 0; i < 45; i++) {
+          this.particles.push(this.createParticle());
+        }
+
+        this.textureCanvas = document.createElement('canvas');
+        this.textureCtx = this.textureCanvas.getContext('2d');
+        this.generateTexture();
+
+        this.animate = this.animate.bind(this);
+        this.handleResize = this.handleResize.bind(this);
+
+        window.addEventListener('resize', this.handleResize);
+        this.handleResize();
+
+        requestAnimationFrame(this.animate);
+      }
+
+      handleResize() {
+        const dpr = window.devicePixelRatio || 1;
+        const w = this.canvas.clientWidth || this.canvas.width || 400;
+        const h = this.canvas.clientHeight || this.canvas.height || 400;
+
+        this.width = w;
+        this.height = h;
+        this.centerX = this.width / 2;
+        this.centerY = this.height / 2;
+        this.radius = Math.max(10, (Math.min(this.width, this.height) / 2) - 30);
+
+        this.canvas.width = w * dpr;
+        this.canvas.height = h * dpr;
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        this.ctx.scale(dpr, dpr);
+
+        this.generateTexture();
+      }
+
+      generateTexture() {
+        const size = 512;
+        this.textureCanvas.width = size;
+        this.textureCanvas.height = size;
+        const ctx = this.textureCtx;
+
+        const imageData = ctx.createImageData(size, size);
+        const data = imageData.data;
+        const TWO_PI = Math.PI * 2;
+
+        for (let i = 0; i < data.length; i += 4) {
+          const px = (i / 4) % size;
+          const py = Math.floor((i / 4) / size);
+
+          let x = (px / size) * TWO_PI;
+          let y = (py / size) * TWO_PI;
+
+          let qx = Math.sin(x + 2.4) + Math.cos(y + 1.2);
+          let qy = Math.cos(x + 8.1) + Math.sin(y + 4.5);
+
+          let rx = Math.sin(x + qx * 1.5 + 4.2);
+          let ry = Math.cos(y + qy * 1.5 + 1.8);
+
+          let n = Math.sin(x + rx * 2.0) + Math.cos(y + ry * 2.0);
+
+          let noise = (n + 2) / 4.0;
+          noise = Math.pow(noise, 3.5);
+          noise = Math.max(0, Math.min(1, noise));
+
+          const intensity = Math.floor(noise * 255);
+          data[i] = intensity;
+          data[i + 1] = intensity;
+          data[i + 2] = intensity;
+          data[i + 3] = Math.floor(noise * 200);
+        }
+        ctx.putImageData(imageData, 0, 0);
+      }
+
+      createParticle() {
+        const r = this.radius || 100;
+        return {
+          x: (Math.random() - 0.5) * (r * 1.6),
+          y: r + Math.random() * r,
+          radius: Math.random() * 2 + 0.5,
+          speed: Math.random() * 0.8 + 0.2,
+          wobble: Math.random() * Math.PI * 2,
+          wobbleSpeed: Math.random() * 0.05
+        };
+      }
+
+      setHealth(amount) {
+        this.targetHp = Math.max(0, Math.min(amount, this.maxHp));
+      }
+
+      modifyHealth(amount) {
+        this.setHealth(this.targetHp + amount);
+      }
+
+      update() {
+        this.time += 1;
+        const diff = this.targetHp - this.currentHp;
+        if (Math.abs(diff) > 0.1) {
+          this.currentHp += diff * 0.08;
+        } else {
+          this.currentHp = this.targetHp;
+        }
+
+        const r = this.radius || 100;
+        this.particles.forEach(p => {
+          p.y -= p.speed;
+          p.wobble += p.wobbleSpeed;
+          p.x += Math.sin(p.wobble) * 0.2;
+
+          if (p.y < -r) {
+            p.y = r + Math.random() * 30;
+            p.x = (Math.random() - 0.5) * (r * 1.6);
+          }
+        });
+      }
+
+      drawAura() {
+        const ctx = this.ctx;
+        const cx = this.centerX;
+        const cy = this.centerY;
+        const r = this.radius;
+        const hpPercent = this.currentHp / this.maxHp;
+
+        if (hpPercent < 0.95) return;
+
+        const auraRadius = r * (1.05 + hpPercent * 0.2);
+        const auraAlpha = 0.05 + hpPercent * 0.3;
+
+        const auraGrad = ctx.createRadialGradient(cx, cy, r * 0.9, cx, cy, auraRadius);
+        auraGrad.addColorStop(0, `rgba(255, 100, 100, ${auraAlpha})`);
+        auraGrad.addColorStop(0.6, `rgba(200, 0, 0, ${auraAlpha * 0.4})`);
+        auraGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.fillStyle = auraGrad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, auraRadius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      draw() {
+        if (!this.radius || this.radius <= 0) return;
+
+        this.ctx.clearRect(0, 0, this.width, this.height);
+        this.drawAura();
+
+        const bgGrad = this.ctx.createRadialGradient(
+          this.centerX, this.centerY, 0,
+          this.centerX, this.centerY, this.radius
+        );
+        bgGrad.addColorStop(0, this.colors.bgCenter);
+        bgGrad.addColorStop(0.8, this.colors.bgEdge);
+
+        this.ctx.beginPath();
+        this.ctx.arc(this.centerX, this.centerY, this.radius, 0, Math.PI * 2);
+        this.ctx.fillStyle = bgGrad;
+        this.ctx.fill();
+
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.arc(this.centerX, this.centerY, this.radius, 0, Math.PI * 2);
+        this.ctx.clip();
+
+        const hpPercent = this.currentHp / this.maxHp;
+        const range = this.radius * 2;
+        const fillHeight = range * hpPercent;
+        const baseLiquidY = (this.centerY + this.radius) - fillHeight;
+
+        this.ctx.beginPath();
+        const firstX = this.centerX - this.radius;
+
+        for (let x = this.centerX - this.radius; x <= this.centerX + this.radius; x += 2) {
+          const dampening = 1.0;
+          const waveY = baseLiquidY +
+            Math.sin((x / 40) + (this.time * this.waveSpeed)) * this.waveAmplitude * dampening +
+            Math.cos((x / 25) + (this.time * this.waveSpeed * 1.5)) * (this.waveAmplitude * 0.5);
+
+          if (x === firstX) this.ctx.moveTo(x, waveY);
+          else this.ctx.lineTo(x, waveY);
+        }
+
+        this.ctx.lineTo(this.centerX + this.radius, this.centerY + this.radius);
+        this.ctx.lineTo(this.centerX - this.radius, this.centerY + this.radius);
+        this.ctx.closePath();
+
+        const liquidGrad = this.ctx.createRadialGradient(
+          this.centerX, this.centerY + 20, 0,
+          this.centerX, this.centerY, this.radius
+        );
+        liquidGrad.addColorStop(0, this.colors.liquidCore);
+        liquidGrad.addColorStop(0.5, this.colors.liquidMid);
+        liquidGrad.addColorStop(1, this.colors.liquidDeep);
+
+        this.ctx.fillStyle = liquidGrad;
+        this.ctx.fill();
+
+        this.ctx.save();
+        this.ctx.globalCompositeOperation = 'overlay';
+        const pattern = this.ctx.createPattern(this.textureCanvas, 'repeat');
+        this.ctx.fillStyle = pattern;
+
+        this.ctx.globalAlpha = 0.4;
+        const scrollX1 = this.time * 0.2;
+        const scrollY1 = this.time * 0.1;
+        this.ctx.save();
+        this.ctx.translate(scrollX1, scrollY1);
+        this.ctx.fillRect(this.centerX - this.radius - scrollX1, baseLiquidY - scrollY1, this.radius * 2, fillHeight);
+        this.ctx.restore();
+
+        this.ctx.globalAlpha = 0.3;
+        const scrollX2 = -this.time * 0.15;
+        const scrollY2 = this.time * 0.25;
+        this.ctx.save();
+        this.ctx.translate(scrollX2, scrollY2);
+        this.ctx.scale(1.5, 1.5);
+        this.ctx.fillRect((this.centerX - this.radius - scrollX2) / 1.5, (baseLiquidY - scrollY2) / 1.5, (this.radius * 2) / 1.5, fillHeight / 1.5);
+        this.ctx.restore();
+
+        this.ctx.restore();
+
+        if (hpPercent > 0.2) {
+          this.ctx.save();
+          this.ctx.beginPath();
+          this.ctx.arc(this.centerX, this.centerY, this.radius * 0.9, Math.PI * 0.3, Math.PI * 0.7);
+          this.ctx.strokeStyle = 'rgba(255, 150, 150, 0.3)';
+          this.ctx.lineWidth = 5;
+          this.ctx.filter = 'blur(5px)';
+          this.ctx.stroke();
+
+          this.ctx.beginPath();
+          this.ctx.arc(this.centerX, this.centerY, this.radius * 0.85, Math.PI * 0.35, Math.PI * 0.65);
+          this.ctx.strokeStyle = 'rgba(255, 200, 200, 0.2)';
+          this.ctx.lineWidth = 3;
+          this.ctx.stroke();
+          this.ctx.restore();
+        }
+
+        this.ctx.save();
+        this.ctx.beginPath();
+        for (let x = this.centerX - this.radius; x <= this.centerX + this.radius; x += 2) {
+          const dampening = 1.0;
+          const waveY = baseLiquidY +
+            Math.sin((x / 40) + (this.time * this.waveSpeed)) * this.waveAmplitude * dampening +
+            Math.cos((x / 25) + (this.time * this.waveSpeed * 1.5)) * (this.waveAmplitude * 0.5);
+          if (x === firstX) this.ctx.moveTo(x, waveY);
+          else this.ctx.lineTo(x, waveY);
+        }
+        this.ctx.lineWidth = 3;
+        this.ctx.strokeStyle = 'rgba(255, 200, 200, 0.8)';
+        this.ctx.shadowColor = 'rgba(255, 100, 100, 1)';
+        this.ctx.shadowBlur = 10;
+        this.ctx.stroke();
+        this.ctx.restore();
+
+        this.ctx.fillStyle = "rgba(255, 200, 200, 0.3)";
+        this.particles.forEach(p => {
+          if (this.centerY + p.y > baseLiquidY + 5) {
+            this.ctx.beginPath();
+            this.ctx.arc(this.centerX + p.x, this.centerY + p.y, p.radius, 0, Math.PI * 2);
+            this.ctx.fill();
+          }
+        });
+
+        const innerShadow = this.ctx.createRadialGradient(
+          this.centerX, this.centerY, this.radius * 0.85,
+          this.centerX, this.centerY, this.radius
+        );
+        innerShadow.addColorStop(0, 'rgba(0,0,0,0)');
+        innerShadow.addColorStop(1, 'rgba(0,0,0,0.8)');
+
+        this.ctx.fillStyle = innerShadow;
+        this.ctx.beginPath();
+        this.ctx.arc(this.centerX, this.centerY, this.radius, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        this.ctx.restore();
+
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.arc(this.centerX, this.centerY, this.radius - 4, Math.PI * 0.2, Math.PI * 0.8);
+        this.ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+        this.ctx.lineWidth = 4;
+        this.ctx.lineCap = "round";
+        this.ctx.stroke();
+        this.ctx.restore();
+
+        this.ctx.save();
+        this.ctx.translate(this.centerX, this.centerY);
+        this.ctx.rotate(-Math.PI / 4);
+        this.ctx.beginPath();
+        this.ctx.ellipse(0, -this.radius * 0.75, this.radius * 0.3, this.radius * 0.12, 0, 0, Math.PI * 2);
+        const glossGrad = this.ctx.createLinearGradient(0, -this.radius * 0.85, 0, -this.radius * 0.65);
+        glossGrad.addColorStop(0, "rgba(255, 255, 255, 0.9)");
+        glossGrad.addColorStop(1, "rgba(255, 255, 255, 0.1)");
+        this.ctx.fillStyle = glossGrad;
+        this.ctx.fill();
+
+        this.ctx.beginPath();
+        this.ctx.ellipse(0, -this.radius * 0.75, this.radius * 0.1, this.radius * 0.05, 0, 0, Math.PI * 2);
+        this.ctx.fillStyle = "rgba(255, 255, 255, 1.0)";
+        this.ctx.shadowColor = "white";
+        this.ctx.shadowBlur = 15;
+        this.ctx.fill();
+        this.ctx.restore();
+
+        this.drawFrame();
+      }
+
+      drawFrame() {
+        const ctx = this.ctx;
+        const cx = this.centerX;
+        const cy = this.centerY;
+        const r = this.radius;
+
+        ctx.save();
+        ctx.shadowColor = 'rgba(0,0,0,0.8)';
+        ctx.shadowBlur = 25;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 15;
+
+        const ringGrad = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+        ringGrad.addColorStop(0.0, '#2a1f0d');
+        ringGrad.addColorStop(0.15, '#c5a059');
+        ringGrad.addColorStop(0.3, '#5c4520');
+        ringGrad.addColorStop(0.5, '#2a1f0d');
+        ringGrad.addColorStop(0.7, '#c5a059');
+        ringGrad.addColorStop(0.85, '#5c4520');
+        ringGrad.addColorStop(1.0, '#1a1105');
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, r + 6, 0, Math.PI * 2);
+        ctx.lineWidth = 18;
+        ctx.strokeStyle = ringGrad;
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.save();
+        ctx.beginPath();
+        for (let i = 0; i < 16; i++) {
+          const angle = (i * (360 / 16)) * (Math.PI / 180);
+          const x1 = cx + Math.cos(angle) * (r + 15);
+          const y1 = cy + Math.sin(angle) * (r + 15);
+          const x2 = cx + Math.cos(angle + 0.1) * (r - 3);
+          const y2 = cy + Math.sin(angle + 0.1) * (r - 3);
+          ctx.moveTo(x1, y1);
+          ctx.quadraticCurveTo(cx + Math.cos(angle + 0.05) * (r + 5), cy + Math.sin(angle + 0.05) * (r + 5), x2, y2);
+        }
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(92, 69, 32, 0.7)';
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(cx, cy, r + 15, 0, Math.PI * 2);
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = 'rgba(255, 255, 220, 0.4)';
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#1a0a00';
+        ctx.stroke();
+
+        const spikes = 4;
+        for (let i = 0; i < spikes; i++) {
+          const angle = (i * (360 / spikes)) * (Math.PI / 180);
+
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.rotate(angle);
+
+          ctx.beginPath();
+          ctx.moveTo(r - 2, -12);
+          ctx.lineTo(r + 30, 0);
+          ctx.lineTo(r - 2, 12);
+          ctx.lineTo(r + 4, 0);
+          ctx.closePath();
+
+          const spikeGrad = ctx.createLinearGradient(r, -12, r + 30, 12);
+          spikeGrad.addColorStop(0, '#c5a059');
+          spikeGrad.addColorStop(0.3, '#fff');
+          spikeGrad.addColorStop(0.7, '#c5a059');
+          spikeGrad.addColorStop(1, '#3d2e18');
+          ctx.fillStyle = spikeGrad;
+          ctx.fill();
+          ctx.strokeStyle = '#1a1105';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(r + 2, -14);
+          ctx.quadraticCurveTo(r + 10, -10, r + 12, -6);
+          ctx.lineTo(r + 6, 0);
+          ctx.lineTo(r + 12, 6);
+          ctx.quadraticCurveTo(r + 10, 10, r + 2, 14);
+          ctx.closePath();
+          ctx.fillStyle = '#5c4520';
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.arc(r + 4, 0, 6, 0, Math.PI * 2);
+          ctx.fillStyle = '#2a1f0d';
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(r + 4, 0, 4, 0, Math.PI * 2);
+          const gemGrad = ctx.createRadialGradient(r + 4, 0, 1, r + 4, 0, 4);
+          gemGrad.addColorStop(0, '#ff7777');
+          gemGrad.addColorStop(0.6, '#ff0000');
+          gemGrad.addColorStop(1, '#330000');
+          ctx.fillStyle = gemGrad;
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.ellipse(r + 3, -1.5, 1.5, 0.8, Math.PI / 4, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,255,255,0.8)';
+          ctx.fill();
+
+          ctx.restore();
+        }
+
+        for (let i = 0; i < spikes; i++) {
+          const angle = (i * (360 / spikes) + 45) * (Math.PI / 180);
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.rotate(angle);
+
+          ctx.beginPath();
+          ctx.moveTo(r + 10, 0);
+          ctx.arc(r + 10, 0, 3, 0, Math.PI * 2);
+          ctx.fillStyle = '#c5a059';
+          ctx.fill();
+          ctx.strokeStyle = '#3d2e18';
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+
+      animate() {
+        this.update();
+        this.draw();
+        requestAnimationFrame(this.animate);
+      }
+    }
+
+    const globe = new HealthGlobe('globeCanvas', 100);
+
+    const hpSlider = document.getElementById('hpSlider');
+    const hpDisplay = document.getElementById('hpDisplay');
+    const maxHpDisplay = document.getElementById('maxHpDisplay');
+
+    function updateUI() {
+      hpDisplay.textContent = Math.round(globe.targetHp);
+      maxHpDisplay.textContent = globe.maxHp;
+      hpSlider.max = globe.maxHp;
+      hpSlider.value = globe.targetHp;
+    }
+
+    hpSlider.addEventListener('input', (event) => {
+      const value = parseInt(event.target.value, 10);
+      globe.setHealth(value);
+      hpDisplay.textContent = value;
+    });
+
+    document.getElementById('btnDamage').addEventListener('click', () => {
+      globe.modifyHealth(-25);
+      updateUI();
+    });
+
+    document.getElementById('btnHeal').addEventListener('click', () => {
+      globe.modifyHealth(25);
+      updateUI();
+    });
+
+    document.getElementById('btnDrain').addEventListener('click', () => {
+      globe.setHealth(0);
+      updateUI();
+    });
+
+    document.getElementById('btnFill').addEventListener('click', () => {
+      globe.setHealth(globe.maxHp);
+      updateUI();
+    });
+
+    updateUI();
+  </script>
+</body>
+</html>
