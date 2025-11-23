@@ -3,7 +3,7 @@ class SvgWordSphere {
         // Basic initialization
         this.container = container;
         this.words = words;
-        this.radius = Math.min(window.innerWidth, window.innerHeight) / 4;
+        this.radius = Math.min(window.innerWidth, window.innerHeight) * 0.35;
         this.rotation = { x: -0.5, y: 0 };
         this.momentum = { x: 0, y: 0.2 };
         this.isDragging = false;
@@ -26,7 +26,7 @@ class SvgWordSphere {
         this.resizeHandler = () => {
             const rect = this.container.getBoundingClientRect();
             this.svg.setAttribute('viewBox', `0 0 ${rect.width} ${rect.height}`);
-            this.radius = Math.min(rect.width, rect.height) / 4;
+            this.radius = Math.min(rect.width, rect.height) * 0.35;
             
             // Update light source position based on container
             this.lightSource = {
@@ -358,7 +358,7 @@ class SvgWordSphere {
         this.svg.setAttribute('viewBox', `0 0 ${containerRect.width} ${containerRect.height}`);
         
         // Update radius based on container size
-        this.radius = Math.min(containerRect.width, containerRect.height) / 4;
+        this.radius = Math.min(containerRect.width, containerRect.height) * 0.35;
         
         // Initialize light source based on container
         this.lightSource = {
@@ -462,10 +462,10 @@ class SvgWordSphere {
 
         // Add fade-in effect
         this.svg.style.opacity = 0;
-        setTimeout(() => {
+        this.svg.style.transition = "opacity 1s ease";
+        requestAnimationFrame(() => {
             this.svg.style.opacity = 1;
-            this.svg.style.transition = "opacity 1s ease";
-        }, 100);
+        });
 
         this.container.appendChild(this.svg);
         this.render();

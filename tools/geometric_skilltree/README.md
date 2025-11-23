@@ -58,6 +58,35 @@ The tool is stable and functional with core features implemented:
 
 ---
 
+## Developer Documentation
+
+### Geometry Rationale
+
+The runtime geometry is generated directly from Seed-of-Life circle packing. The renderer builds concentric rings of circle centers from polar/axial conversions and then resolves every circle-circle intersection to yield snapped node coordinates with tier metadata.【F:tools/geometric_skilltree/index.html†L1060-L1163】 Adjacency is reconstructed by checking which node pairs are separated by exactly one circle radius and then caching symmetric connection lists for later graph work.【F:tools/geometric_skilltree/index.html†L1166-L1201】 These utilities are wrapped by `geometryEngine`, which also exposes reachability and degree validation helpers to ensure the lattice stays balanced when new content is introduced.【F:tools/geometric_skilltree/index.html†L1203-L1293】
+
+### Data Schema
+
+Generated nodes carry stable ids (`n0`, `n1`, …), snapped `x/y` coordinates, tier descriptors (ring index, thematic name/description), and a mutable `connections` array populated during arc synthesis.【F:tools/geometric_skilltree/index.html†L1106-L1156】 Each arc records its `from` and `to` endpoints alongside cached endpoints for SVG rendering, and all ids feed directly into the adjacency graph.【F:tools/geometric_skilltree/index.html†L1166-L1201】 Runtime theming and balance parameters live in `assets/skilltree-content.json`, which defines ring archetypes, stat scaling, naming templates, overrides, and keystone prerequisites used to personalize generated nodes without hand-editing geometry output.【F:tools/geometric_skilltree/assets/skilltree-content.json†L1-L200】
+
+### APIs
+
+`geometryEngine` exposes deterministic builders (`buildGeometry`, `buildAdjacency`, `validateGraph`, `verifyPrerequisite`, `serialize`) for tooling and tests to regenerate the lattice and confirm reachability after edits.【F:tools/geometric_skilltree/index.html†L1203-L1300】 Progression state is managed by `SkillTreeProgression`, which normalizes tier gates, derives parent relationships from arcs, checks point budgets and prerequisites, and implements unlock/respec flows that surface human-readable rejection reasons for UI overlays.【F:tools/geometric_skilltree/assets/progression.mjs†L1-L240】
+
+## Designer Guide
+
+1. **Extend ring themes** – Adjust or add ring entries in `assets/skilltree-content.json` to tune archetypes, stat growth, radial bonuses, and naming templates before regenerating geometry. The runtime loader merges these records into `ringProfiles` and `tierThemes`, making the values immediately visible in search summaries.【F:tools/geometric_skilltree/index.html†L729-L809】【F:tools/geometric_skilltree/assets/skilltree-content.json†L21-L166】
+2. **Author node flavor** – Use `fallbackFocus`, `focus`, and `nodeTypeLabels` fields to define stat focuses and localized naming. These values drive `formatDisplayName` and tooltip descriptors without requiring manual DOM edits.【F:tools/geometric_skilltree/index.html†L812-L860】【F:tools/geometric_skilltree/assets/skilltree-content.json†L2-L78】
+3. **Balance keystones** – Declare keystone bonuses, penalties, and prerequisite gates (`minTierTotals`, `nodes`) under the `keystones` section. The progression engine reads these rules to block unlocks until prerequisites are met, ensuring balance passes only touch JSON.【F:tools/geometric_skilltree/assets/skilltree-content.json†L168-L214】【F:tools/geometric_skilltree/assets/progression.mjs†L166-L190】
+4. **Override marquee nodes** – Apply `nodeOverrides` to inject bespoke titles, effect copy, or custom costs (e.g., the root nexus) while leaving generated coordinates intact. Overrides are applied during node hydration in the UI layer.【F:tools/geometric_skilltree/assets/skilltree-content.json†L168-L177】【F:tools/geometric_skilltree/index.html†L849-L864】
+
+## QA Checklist
+
+- **Geometry accuracy** – Run the geometry validation utilities (`geometryEngine.validateGraph`) and confirm there are no orphan nodes, extreme degree deltas, or reachability regressions before shipping a new lattice.【F:tools/geometric_skilltree/index.html†L1203-L1293】
+- **Progression integrity** – Execute `npm test` or `node tests/progression.test.mjs` to ensure unlock gating, keystone prerequisites, and respec flows behave as expected after content tweaks.【F:tools/geometric_skilltree/tests/progression.test.mjs†L1-L116】
+- **UI polish** – Verify in-browser that zoom/drag gestures clamp correctly, hover panels resolve names/descriptions from `ringProfiles`, and key controls (level up/respec/search filters) remain wired to state selectors in `index.html` after any layout updates.【F:tools/geometric_skilltree/index.html†L652-L803】
+
+---
+
 ## Mathematical Foundations
 
 ### 1. Circle Geometry and the Seed of Life
@@ -85,6 +114,38 @@ C_n: \left(r\cos\left(\frac{2\pi n}{6}\right),\ r\sin\left(\frac{2\pi n}{6}\righ
 \]
 
 ![Construction Diagram](https://github.com/alexkorol/WIZARD/blob/gh-pages/tools/geometric_skilltree/assets/construction_diagram.PNG)
+
+
+#### 1.3 Circle Radius and Spacing Rules
+
+- **Uniform Radius**: Every circle in both the Seed and Flower of Life maintains the same radius \(r\). This guarantees identical intersection geometry regardless of ring depth.
+- **Center Spacing**: Adjacent circle centers are separated by exactly \(r\). The hexagonal (triangular) lattice that emerges can be described with axial coordinates \((q, r)\) whose hex distance \(d = \max(|q|, |r|, |s|)\) (with \(s = -q - r\)) identifies the concentric layer.
+- **Layer Distances**: The Euclidean distance from the origin to a circle center with axial coordinates \((q, r)\) is \(r\sqrt{q^2 + qr + r^2}\). This value defines the radius of the concentric ring occupied by the circle.
+- **Circle Counts**: Layer \(0\) holds the central circle. Each subsequent layer \(n\geq1\) contains \(6n\) circles, matching the Flower of Life expansion formula \(1 + \sum_{k=1}^n 6k\).
+
+#### 1.4 Polar Coordinate Generation
+
+The implementation expresses each circle center as a polar offset and then converts it to Cartesian coordinates for rendering. The helper function
+
+```javascript
+function polarToCartesian(cx, cy, distance, angle) {
+  return {
+    x: cx + distance * Math.cos(angle),
+    y: cy + distance * Math.sin(angle)
+  };
+}
+```
+
+is used to build both the Seed of Life petals and additional Flower of Life rings. Axial hex coordinates \((q, r)\) are translated into polar values with
+
+```javascript
+const basisX = q + r / 2;
+const basisY = (Math.sqrt(3) / 2) * r;
+const distance = radius * Math.sqrt(basisX * basisX + basisY * basisY);
+const angle = Math.atan2(basisY, basisX);
+```
+
+allowing `buildCirclePositions` to generate every concentric ring procedurally before the intersections are evaluated.
 
 
 ### 2. Hexagonal Geometry
@@ -143,6 +204,20 @@ The Flower of Life extends the Seed of Life pattern:
 - **New Layers**: Each new layer adds 6 more circles than the previous layer.
 - **Number of Circles in Layer \(n\)**: \(6n\)
 - **Total Circles After \(n\) Layers**: \(1 + \sum_{k=1}^n 6k\)
+
+### 5. Concentric Node Tiers and Gameplay Themes
+
+Every concentric ring of the Flower of Life is mapped to a gameplay tier so that node placement communicates intended power level:
+
+| Ring Index | Geometry Layer | Gameplay Theme | Description |
+|------------|----------------|----------------|-------------|
+| 0 | Seed center | **Seed Core** | Core sustain, travel, and always-on passives. |
+| 1 | Seed petals | **Seed Petals** | Foundational offensive/defensive boosts reachable with minimal investment. |
+| 2 | First Flower ring | **Inner Flower** | Hybrid branches that blend stats and unlock cross-discipline synergies. |
+| 3 | Second Flower ring | **Outer Flower** | High-impact specialisations rewarding deeper pathing. |
+| 4+ | Subsequent rings | **Celestial Ring** | Capstones and legendary effects reserved for the outermost geometry. |
+
+The JavaScript generator tags each node with its ring index and theme so that tooltips and future balancing logic can differentiate Seed skills from late-game Flower rewards.
 
 ---
 
@@ -890,6 +965,76 @@ Ensure you have [Git](https://git-scm.com/) installed on your machine.
 2. **Open the Application**:
 
     Open `index.html` in your preferred web browser to view and interact with the skill tree.
+
+---
+
+## POE-Style Skill Allocation Architecture
+
+This design extends the existing Flower of Life lattice with Path of Exile-inspired mechanics. It defines the canonical node data schema, geometric adjacency resolution, and the progression rules that govern allocation, respec, and quality-of-life behavior.
+
+### Node Data Model
+
+Each node is stored as a record with strongly typed metadata so the renderer, progression logic, and future authoring tools can operate on the same structure.
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | Stable unique identifier (e.g., `seed:0:0`, `flower:2:3`). |
+| `tier` | `'seed' \| 'flower' \| 'keystone' \| 'link'` | Progression band tied to concentric ring depth and power level. |
+| `type` | `'stat' \| 'notable' \| 'keystone' \| 'utility'` | Gameplay impact category; keystones override other types. |
+| `coords` | `{ axial: { q: number, r: number, s: number }, cartesian: { x: number, y: number } }` | Dual coordinate systems. Axial values drive adjacency; Cartesian values drive rendering. `s` is derived as `-q-r` for integrity checks. |
+| `latticeIndex` | `{ ring: number, spoke: number }` | Concentric ring number and angular spoke slot, enabling deterministic placement of themed clusters. |
+| `geometry` | `{ radius: number, orientation: number }` | Node radius for hit detection and optional rotation for iconography. |
+| `cost` | `{ point: number, respec: number }` | Allocation point cost and respec penalty (default `1`). |
+| `effects` | `Array<Effect>` | Declarative modifiers, e.g., `{ stat: 'intelligence', value: 10, scaling: 'additive' }`. Supports stacking rules and unlock conditions. |
+| `connections` | `string[]` | References to adjacent node ids, generated from lattice adjacency logic. |
+| `requirements` | `{ allocated?: string[], unallocated?: string[] }` | Optional hard prerequisites (e.g., must take a notable before a keystone). |
+| `visual` | `{ icon: string, color: string, highlightGroup?: string }` | Asset hooks and UX grouping for search/highlight layers. |
+| `tags` | `string[]` | Thematic labels (e.g., `['energy-shield', 'alchemy']`) for filtering. |
+| `state` | `{ allocated: boolean, unlockProgress: number }` | Runtime state snapshot. Persisted separately when saving builds. |
+
+`Effect` definitions support mixed scalar and conditional bonuses:
+
+```ts
+type Effect =
+  | { kind: 'stat', stat: string, value: number, scaling?: 'additive' | 'multiplicative' }
+  | { kind: 'modifier', id: string, params?: Record<string, number> }
+  | { kind: 'ability', abilityId: string, unlocked: boolean };
+```
+
+### Geometric Adjacency Resolution
+
+Nodes live on a perfect Flower of Life lattice. Adjacency is generated mechanically to guarantee geometric fidelity.
+
+1. **Axial Neighborhoods**: Treat each node’s axial coordinates `(q, r, s)` as a hex grid. Immediate neighbors satisfy a hex distance of `1`. This produces six local connections per interior node.
+2. **Ring Bridging**: Flower ring nodes (outer layers) gain additional radial links to maintain POE-style spoke paths. For a node at `(q, r)`, connect to any node with the same `spoke` value and `ring ± 1`.
+3. **Interlaced Patterns**: Keystones appear at triangular lattice intersections where the sum of absolute axial coordinates equals `3n`. They can connect across two steps (`hexDistance === 2`) but must pass through an intermediate node unless flagged with `tier === 'keystone'` and `type === 'keystone'`.
+4. **Manual Overrides**: Special structures (wheels, notables) may inject curated connections using a `connectionsOverride` property. The generator merges overrides with lattice-derived neighbors and ensures bidirectional integrity.
+
+Adjacency can be generated by iterating the axial coordinate set or by running a Delaunay triangulation over the Cartesian coordinates and filtering edges down to lattice-valid neighbors.
+
+### Progression and Allocation Rules
+
+- **Starting Seeds**: Players begin at one or more `tier: 'seed'` nodes. These have zero cost and establish the allocation frontier.
+- **Unlock Pathing**: A node can be allocated when:
+  1. It is not already allocated.
+  2. The player has sufficient unspent points for its `cost.point`.
+  3. At least one connected neighbor is allocated (or the node is a seed).
+  4. All `requirements.allocated` dependencies are satisfied and no `requirements.unallocated` blockers are active.
+- **Point Investment**: Standard nodes cost `1` point. Notables may cost `2`, and keystones `3+`. Costs are represented directly in the node schema to support future balance passes.
+- **Respec Flow**: Refunding a node refunds its point cost minus `cost.respec`. A node cannot be refunded if doing so would disconnect any still-allocated node from the nearest seed. This is enforced by a connectivity check on the remaining subgraph.
+- **Cluster Themes**: Nodes sharing a `highlightGroup` or `tags` value form thematic clusters. UI search/highlight features operate over these groups.
+- **Progression Bands**: Tier determines maximum simultaneous keystone allocations and unlock pacing. Example: players must allocate three `flower` tier nodes in a ring before the matching keystone becomes eligible.
+- **Quality of Life**: Metadata enables filters (`tags`), radial path previews (traverse `connections` outwards), and auto-highlighting of reachable nodes (BFS from allocated nodes constrained by available points).
+- **Point Gains**: The system expects an external progression loop to award points. The tree tracks `state.allocated` counts and exposes derived stats so the host game can update character sheets.
+
+### Data Authoring and Validation Pipeline
+
+1. **Authoring**: Designers craft node definitions in JSON/YAML, grouped by ring or cluster.
+2. **Validation**: A schema validator checks coordinate integrity (`s === -q - r`), ensures reciprocal connections, and confirms keystones obey placement rules.
+3. **Build Compilation**: A build step stitches the definitions into a single manifest sorted by `tier` and `latticeIndex`, ready for consumption by the renderer.
+4. **Runtime Loading**: The client loads the manifest, initializes node states, and runs adjacency checks to build fast lookup maps (`id -> node`, `ring -> node[]`, `highlightGroup -> node[]`).
+
+This architecture provides the foundational layer for a Flower of Life skill tree that feels familiar to PoE players while remaining geometrically rigorous.
 
 ---
 
