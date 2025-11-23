@@ -1,1014 +1,888 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Advanced ARPG Inventory System</title>
-<!-- Include Tailwind CSS via CDN -->
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<!-- Include React and ReactDOM via CDN -->
-<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-<!-- Include Babel for JSX transformation -->
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<style>
-  /* Custom scrollbar styling */
-  .inventory-grid::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  .inventory-grid::-webkit-scrollbar-thumb {
-    background-color: rgba(55, 65, 81, 0.8);
-    border-radius: 4px;
-  }
-  .tooltip {
-    position: absolute;
-    z-index: 50;
-    width: 12rem;
-    padding: 0.5rem;
-    background-color: #1f2937;
-    border: 1px solid #374151;
-    border-radius: 0.25rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    pointer-events: none;
-  }
-  /* Grid background */
-  .grid-background {
-    background-image: linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
-                      linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px);
-    background-size: 2.5rem 2.5rem;
-  }
-  /* Item outline */
-  .item-outline {
-    outline: 1px solid rgba(255,255,255,0.2);
-  }
-  /* Drag animation */
-  .dragging {
-    opacity: 0.5;
-  }
-  /* Item styling */
-  .item {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    cursor: move;
-    z-index: 10;
-  }
-  /* Occupied slot */
-  .occupied {
-    background-color: rgba(75, 85, 99, 0.3);
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RPG Inventory Overhaul</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    :root {
+      --bg: #0c0f17;
+      --panel: #111827;
+      --panel-2: #0e1421;
+      --accent: #f7c266;
+      --accent-2: #7c3aed;
+      --grid: #1f2937;
+      --slot: 64px;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #253044;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.08), transparent 30%),
+                  radial-gradient(circle at 80% 0%, rgba(247, 194, 102, 0.12), transparent 25%),
+                  linear-gradient(180deg, #0a0e17 0%, #05070d 100%);
+      color: var(--text);
+      font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+      letter-spacing: 0.01em;
+      padding: 32px 20px 56px;
+    }
+
+    .app {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .title {
+      margin: 0;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 2px;
+      font-size: clamp(24px, 4vw, 34px);
+      text-transform: uppercase;
+    }
+
+    .lede {
+      margin: 4px 0 0;
+      color: var(--muted);
+      max-width: 720px;
+      line-height: 1.5;
+    }
+
+    .badge {
+      background: rgba(247, 194, 102, 0.1);
+      border: 1px solid rgba(247, 194, 102, 0.4);
+      color: var(--accent);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 16px;
+    }
+
+    .card {
+      background: linear-gradient(160deg, var(--panel) 0%, var(--panel-2) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+      position: relative;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .equipment-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(5, var(--slot));
+      gap: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+    }
+
+    .silhouette {
+      position: absolute;
+      inset: 6px;
+      opacity: 0.08;
+      pointer-events: none;
+      fill: var(--text);
+    }
+
+    .slot {
+      width: var(--slot);
+      height: var(--slot);
+      border-radius: 10px;
+      border: 1px dashed rgba(255, 255, 255, 0.08);
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.03), rgba(17, 24, 39, 0.8));
+      position: relative;
+      display: grid;
+      place-items: center;
+      transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+      color: var(--muted);
+    }
+
+    .slot.equip {
+      border-style: solid;
+      border-color: rgba(124, 58, 237, 0.4);
+    }
+
+    .slot:hover {
+      border-color: rgba(247, 194, 102, 0.5);
+      box-shadow: 0 0 0 1px rgba(247, 194, 102, 0.2);
+    }
+
+    .slot.drag-over {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(247, 194, 102, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .slot-label {
+      position: absolute;
+      top: -18px;
+      left: 0;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.3px;
+    }
+
+    .inventory-shell {
+      display: grid;
+      gap: 12px;
+    }
+
+    .grid-wrapper {
+      position: relative;
+      border-radius: 14px;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);
+    }
+
+    .inventory-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(8, var(--slot));
+      grid-auto-rows: var(--slot);
+      gap: 6px;
+      padding: 6px;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.02),
+        rgba(255, 255, 255, 0.02) 1px,
+        transparent 1px,
+        transparent calc(var(--slot))
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.02),
+        rgba(255, 255, 255, 0.02) 1px,
+        transparent 1px,
+        transparent calc(var(--slot))
+      );
+      min-height: calc(var(--slot) * 9);
+    }
+
+    .item {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      padding: 8px 8px 10px;
+      display: grid;
+      align-content: start;
+      gap: 6px;
+      cursor: grab;
+      user-select: none;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+
+    .item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+    }
+
+    .item-name {
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .item-icon {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .stack-badge {
+      position: absolute;
+      bottom: 6px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .rotate-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      font-size: 11px;
+      border-radius: 6px;
+      padding: 4px 6px;
+      cursor: pointer;
+    }
+
+    .rarity-common { border-color: rgba(148, 163, 184, 0.4); }
+    .rarity-uncommon { border-color: rgba(52, 211, 153, 0.5); box-shadow: 0 12px 22px rgba(52, 211, 153, 0.12); }
+    .rarity-rare { border-color: rgba(96, 165, 250, 0.55); box-shadow: 0 12px 22px rgba(96, 165, 250, 0.16); }
+    .rarity-epic { border-color: rgba(167, 139, 250, 0.7); box-shadow: 0 12px 22px rgba(167, 139, 250, 0.22); }
+    .rarity-legendary { border-color: rgba(251, 191, 36, 0.8); box-shadow: 0 12px 22px rgba(251, 191, 36, 0.28); }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(247, 194, 102, 0.5);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn.secondary {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .legend {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .tooltip {
+      position: fixed;
+      background: #0b0f18;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 10px 12px;
+      min-width: 180px;
+      max-width: 260px;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.5);
+      pointer-events: none;
+      z-index: 100;
+      font-size: 13px;
+    }
+
+    .tooltip .name {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .tooltip .stat {
+      color: var(--muted);
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+
+    .status {
+      position: fixed;
+      bottom: 14px;
+      right: 20px;
+      background: rgba(247, 194, 102, 0.14);
+      color: var(--accent);
+      border: 1px solid rgba(247, 194, 102, 0.5);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    @media (max-width: 1080px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .equipment-grid {
+        grid-template-columns: repeat(5, var(--slot));
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 720px) {
+      :root { --slot: 56px; }
+      body { padding: 24px 14px 42px; }
+      .inventory-grid { grid-template-columns: repeat(6, var(--slot)); }
+    }
+  </style>
 </head>
-<body class="bg-gray-900 text-white">
+<body>
+  <div id="root"></div>
 
-<div id="root"></div>
+  <script type="text/babel">
+    const { useEffect, useMemo, useState } = React;
 
-<script type="text/babel">
-  const { useState, useEffect } = React;
+    const GRID_COLS = 8;
+    const GRID_ROWS = 9;
+    const STORAGE_KEY = 'rpg_inventory_overhaul_v1';
 
-  // Define constants
-  const GRID_COLS = 8;
-  const INVENTORY_SIZE = 72;
-  const SLOT_SIZE = 2.5; // rem
+    const SLOT_RULES = {
+      helm: ['helm'],
+      amulet: ['amulet'],
+      weapon: ['weapon'],
+      armor: ['armor'],
+      offhand: ['shield', 'offhand'],
+      gloves: ['gloves'],
+      belt: ['belt'],
+      ring1: ['ring'],
+      ring2: ['ring'],
+      boots: ['boots'],
+    };
 
-  // Define rarity colors
-  const RARITY_COLORS = {
-    common: 'text-gray-200 border-gray-600',
-    uncommon: 'text-green-400 border-green-700',
-    rare: 'text-blue-400 border-blue-700',
-    epic: 'text-purple-400 border-purple-700',
-    legendary: 'text-yellow-400 border-yellow-700',
-  };
+    const RARITY_CLASS = {
+      common: 'rarity-common',
+      uncommon: 'rarity-uncommon',
+      rare: 'rarity-rare',
+      epic: 'rarity-epic',
+      legendary: 'rarity-legendary',
+    };
 
-  // Define items
-  const ITEMS = {
-    POTION: { 
-      id: 'potion',
-      icon: '🧪', 
-      name: 'Health Potion', 
-      width: 1, 
-      height: 1, 
-      type: 'consumable',
-      rarity: 'common',
-      stats: 'Restores 100 HP',
-      stackable: true,
-      maxStack: 20,
-      count: 1,
-    },
-    SWORD: { 
-      id: 'sword',
-      icon: '⚔️', 
-      name: 'Ancient Broadsword', 
-      width: 1, 
-      height: 2, 
-      type: 'weapon',
-      rarity: 'rare',
-      stats: '+45 Physical Damage\n+10% Attack Speed',
-    },
-    SHIELD: { 
-      id: 'shield',
-      icon: '🛡️', 
-      name: 'Tower Shield', 
-      width: 2, 
-      height: 2, 
-      type: 'shield',
-      rarity: 'uncommon',
-      stats: '+30 Armor\n+5% Block Chance',
-    },
-    CHEST: { 
-      id: 'chest',
-      icon: '🎽', 
-      name: 'Plate Mail', 
-      width: 2, 
-      height: 2, 
-      type: 'armor',
-      rarity: 'rare',
-      stats: '+150 Armor\n+20 Vitality',
-    },
-    HELM: { 
-      id: 'helm',
-      icon: '⛑️', 
-      name: 'War Helm', 
-      width: 2, 
-      height: 2, 
-      type: 'helm',
-      rarity: 'uncommon',
-      stats: '+50 Armor\n+10 Strength',
-    },
-    BOOTS: { 
-      id: 'boots',
-      icon: '👢', 
-      name: 'Steel Boots', 
-      width: 2, 
-      height: 1, 
-      type: 'boots',
-      rarity: 'common',
-      stats: '+40 Armor\n+5% Movement Speed',
-    },
-    GLOVES: { 
-      id: 'gloves',
-      icon: '🧤', 
-      name: 'Leather Gloves', 
-      width: 2, 
-      height: 1, 
-      type: 'gloves',
-      rarity: 'common',
-      stats: '+30 Armor\n+5 Dexterity',
-    },
-    RING: { 
-      id: 'ring',
-      icon: '💍', 
-      name: 'Magic Ring', 
-      width: 1, 
-      height: 1, 
-      type: 'ring',
-      rarity: 'epic',
-      stats: '+15% Magic Find\n+10 Intelligence',
-    },
-    AMULET: { 
-      id: 'amulet',
-      icon: '📿', 
-      name: 'Ancient Amulet', 
-      width: 1, 
-      height: 1, 
-      type: 'amulet',
-      rarity: 'epic',
-      stats: '+20% Experience Gain\n+15 All Attributes',
-    },
-    BELT: { 
-      id: 'belt',
-      icon: '🎗️', 
-      name: 'Warrior Belt', 
-      width: 2, 
-      height: 1, 
-      type: 'belt',
-      rarity: 'uncommon',
-      stats: '+50 Armor\n+10% Potion Effectiveness',
-    },
-    STAFF: { 
-      id: 'staff',
-      icon: '🏑', 
-      name: 'Magic Staff', 
-      width: 1, 
-      height: 3, 
-      type: 'weapon',
-      rarity: 'rare',
-      stats: '+60 Magic Damage\n+15% Spell Casting Speed',
-    },
-    BOOK: { 
-      id: 'book',
-      icon: '📕', 
-      name: 'Spell Tome', 
-      width: 2, 
-      height: 2, 
-      type: 'offhand',
-      rarity: 'rare',
-      stats: '+25 Intelligence\n+10% Mana Regeneration',
-    },
-    DAGGER: { 
-      id: 'dagger',
-      icon: '🗡️', 
-      name: 'Shadow Dagger', 
-      width: 1, 
-      height: 1, 
-      type: 'weapon',
-      rarity: 'rare',
-      stats: '+30 Physical Damage\n+20% Critical Strike Chance',
-    },
-    AXE: { 
-      id: 'axe',
-      icon: '🪓', 
-      name: 'Battle Axe', 
-      width: 2, 
-      height: 3, 
-      type: 'weapon',
-      rarity: 'uncommon',
-      stats: '+70 Physical Damage\n-5% Attack Speed',
-    },
-    MACE: { 
-      id: 'mace',
-      icon: '🔨', 
-      name: 'War Hammer', 
-      width: 2, 
-      height: 3, 
-      type: 'weapon',
-      rarity: 'rare',
-      stats: '+80 Physical Damage\n+10 Strength',
-    },
-    BOW: { 
-      id: 'bow',
-      icon: '🏹', 
-      name: 'Longbow', 
-      width: 2, 
-      height: 3, 
-      type: 'weapon',
-      rarity: 'uncommon',
-      stats: '+50 Physical Damage\n+15 Dexterity',
-    },
-  };
+    const ITEM_LIBRARY = {
+      potion: { id: 'potion', icon: '🧪', name: 'Healing Potion', width: 1, height: 1, type: 'consumable', rarity: 'common', stats: 'Restores 100 HP', stackable: true, maxStack: 20, count: 1 },
+      mana: { id: 'mana', icon: '🔮', name: 'Mana Flask', width: 1, height: 1, type: 'consumable', rarity: 'common', stats: 'Restores 60 Mana', stackable: true, maxStack: 20, count: 1 },
+      sword: { id: 'sword', icon: '⚔️', name: 'Ancient Broadsword', width: 1, height: 2, type: 'weapon', rarity: 'rare', stats: '+45 Physical Damage\n+10% Attack Speed' },
+      shield: { id: 'shield', icon: '🛡️', name: 'Tower Shield', width: 2, height: 2, type: 'shield', rarity: 'uncommon', stats: '+30 Armor\n+5% Block Chance' },
+      chest: { id: 'chest', icon: '🎽', name: 'Plate Mail', width: 2, height: 2, type: 'armor', rarity: 'rare', stats: '+150 Armor\n+20 Vitality' },
+      helm: { id: 'helm', icon: '⛑️', name: 'War Helm', width: 2, height: 2, type: 'helm', rarity: 'uncommon', stats: '+50 Armor\n+10 Strength' },
+      boots: { id: 'boots', icon: '👢', name: 'Steel Boots', width: 2, height: 1, type: 'boots', rarity: 'common', stats: '+40 Armor\n+5% Movement Speed' },
+      gloves: { id: 'gloves', icon: '🧤', name: 'Leather Gloves', width: 2, height: 1, type: 'gloves', rarity: 'common', stats: '+30 Armor\n+5 Dexterity' },
+      ring: { id: 'ring', icon: '💍', name: 'Magic Ring', width: 1, height: 1, type: 'ring', rarity: 'epic', stats: '+15% Magic Find\n+10 Intelligence' },
+      amulet: { id: 'amulet', icon: '📿', name: 'Ancient Amulet', width: 1, height: 1, type: 'amulet', rarity: 'epic', stats: '+20% Experience Gain\n+15 All Attributes' },
+      belt: { id: 'belt', icon: '🎗️', name: 'Warrior Belt', width: 2, height: 1, type: 'belt', rarity: 'uncommon', stats: '+50 Armor\n+10% Potion Effectiveness' },
+      staff: { id: 'staff', icon: '🏑', name: 'Mage Staff', width: 1, height: 3, type: 'weapon', rarity: 'rare', stats: '+60 Magic Damage\n+15% Spell Speed' },
+      book: { id: 'book', icon: '📕', name: 'Spell Tome', width: 2, height: 2, type: 'offhand', rarity: 'rare', stats: '+25 Intelligence\n+10% Mana Regen' },
+      dagger: { id: 'dagger', icon: '🗡️', name: 'Shadow Dagger', width: 1, height: 1, type: 'weapon', rarity: 'rare', stats: '+30 Physical Damage\n+20% Crit Chance' },
+      axe: { id: 'axe', icon: '🪓', name: 'Battle Axe', width: 2, height: 3, type: 'weapon', rarity: 'uncommon', stats: '+70 Physical Damage\n-5% Attack Speed' },
+      mace: { id: 'mace', icon: '🔨', name: 'War Hammer', width: 2, height: 3, type: 'weapon', rarity: 'rare', stats: '+80 Physical Damage\n+10 Strength' },
+      bow: { id: 'bow', icon: '🏹', name: 'Longbow', width: 2, height: 3, type: 'weapon', rarity: 'uncommon', stats: '+50 Physical Damage\n+15 Dexterity' },
+    };
 
-  // Tooltip component
-  const Tooltip = ({ item, position }) => {
-    if (!item) return null;
-    
-    return (
-      <div
-        className="tooltip"
-        style={{ top: position.y, left: position.x }}
-      >
-        <div className={`font-bold ${RARITY_COLORS[item.rarity]}`}>{item.name}</div>
-        <div className="mt-1 text-xs whitespace-pre-wrap">{item.stats}</div>
-        {item.stackable && (
-          <div className="mt-1 text-xs text-gray-400">
-            Stackable (Max: {item.maxStack})
-          </div>
-        )}
-      </div>
-    );
-  };
+    const emptyEquipped = {
+      ring1: null,
+      ring2: null,
+      amulet: null,
+      helm: null,
+      armor: null,
+      gloves: null,
+      boots: null,
+      belt: null,
+      weapon: null,
+      offhand: null,
+    };
 
-  // Single inventory slot component
-  const InventorySlot = ({
-    slotId,
-    isEquipSlot,
-    label,
-    isOccupied,
-    isDraggingOver,
-    onDragOver,
-    onDrop,
-  }) => {
-    return (
-      <div
-        id={slotId}
-        className={`
-          ${isEquipSlot ? 'border border-gray-600' : 'border border-gray-800'} 
-          ${isOccupied ? 'occupied' : 'bg-gray-900/50'} 
-          ${isDraggingOver ? 'ring-2 ring-blue-400' : ''}
-          relative grid-background item-outline hover:bg-gray-800/40 transition-colors
-        `}
-        style={{
-          width: `${SLOT_SIZE}rem`,
-          height: `${SLOT_SIZE}rem`,
-        }}
-        onDragOver={(e) => onDragOver(e, slotId)}
-        onDrop={(e) => onDrop(e, slotId)}
-      >
-        {label && (
-          <span className="absolute -top-5 left-0 text-xs text-gray-400">
-            {label}
-          </span>
-        )}
-      </div>
-    );
-  };
-
-  // Item component (overlaid on slots)
-  const Item = ({
-    item,
-    slotId,
-    onDragStart,
-    onDragEnd,
-    onMouseEnter,
-    onMouseLeave,
-    onRotate,
-  }) => {
-    if (!item) return null;
-    
-    return (
-      <div
-        className={`item ${RARITY_COLORS[item.rarity]}`}
-        draggable
-        onDragStart={(e) => onDragStart(e, slotId)}
-        onDragEnd={onDragEnd}
-        onMouseEnter={(e) => onMouseEnter(e, item)}
-        onMouseLeave={onMouseLeave}
-      >
-        <div className="text-2xl mb-1">{item.icon}</div>
-        <div className="text-xs text-center px-1">{item.name}</div>
-        {item.stackable && item.count > 1 && (
-          <div className="absolute bottom-0 right-1 text-xs bg-gray-900/80 px-1 rounded">
-            {item.count}
-          </div>
-        )}
-        {item.width !== item.height && (
-          <button
-            className="absolute top-0 right-0 text-xs bg-gray-800/70 px-1 rounded"
-            onClick={(e) => {
-              e.stopPropagation();
-              onRotate(slotId);
-            }}
-          >
-            🔄
-          </button>
-        )}
-      </div>
-    );
-  };
-
-  // Character silhouette
-  const CharacterSilhouette = () => (
-    <svg
-      className="absolute inset-0 w-full h-full opacity-20 pointer-events-none"
-      viewBox="0 0 100 200"
-    >
-      <path
-        d="M50 10 C60 10, 65 15, 65 25 C65 35, 60 40, 50 40 C40 40, 35 35, 35 25 C35 15, 40 10, 50 10"
-        fill="currentColor"
-      />
-      <path d="M45 40 L55 40 L60 90 L40 90 Z" fill="currentColor" />
-      <path d="M60 50 L75 80 L65 85 L55 60" fill="currentColor" />
-      <path d="M40 50 L25 80 L35 85 L45 60" fill="currentColor" />
-      <path d="M45 90 L40 130 L45 130 L50 100 L55 130 L60 130 L55 90" fill="currentColor" />
-    </svg>
-  );
-
-  // Main InventoryGrid component
-  const InventoryGrid = () => {
-    // Equipment slots state
-    const [equipped, setEquipped] = useState(() => {
-      const savedEquipped = localStorage.getItem('equipped');
-      return savedEquipped ? JSON.parse(savedEquipped) : {
-        ring1: null,
-        ring2: null,
-        amulet: null,
-        helm: null,
-        armor: null,
-        gloves: null,
-        boots: null,
-        belt: null,
-        weapon: null,
-        offhand: null,
-      };
+    const makeItem = (base, overrides = {}) => ({
+      ...base,
+      uid: `${base.id}-${Math.random().toString(16).slice(2)}`,
+      count: base.stackable ? overrides.count || base.count || 1 : 1,
+      position: overrides.position || null,
+      width: overrides.width || base.width,
+      height: overrides.height || base.height,
     });
 
-    // Create an inventory item object with its grid position
-    const createInventoryItem = (item, position) => {
-      if (!item) return null;
-      return {
-        ...item,
-        position,
-      };
+    const defaultBackpack = () => ([
+      makeItem(ITEM_LIBRARY.potion, { count: 6, position: { x: 0, y: 0 } }),
+      makeItem(ITEM_LIBRARY.potion, { count: 5, position: { x: 1, y: 0 } }),
+      makeItem(ITEM_LIBRARY.dagger, { position: { x: 2, y: 0 } }),
+      makeItem(ITEM_LIBRARY.ring, { position: { x: 3, y: 0 } }),
+      makeItem(ITEM_LIBRARY.amulet, { position: { x: 4, y: 0 } }),
+      makeItem(ITEM_LIBRARY.sword, { position: { x: 0, y: 1 } }),
+      makeItem(ITEM_LIBRARY.shield, { position: { x: 2, y: 1 } }),
+      makeItem(ITEM_LIBRARY.chest, { position: { x: 4, y: 1 } }),
+      makeItem(ITEM_LIBRARY.boots, { position: { x: 6, y: 1 } }),
+      makeItem(ITEM_LIBRARY.staff, { position: { x: 0, y: 3 } }),
+      makeItem(ITEM_LIBRARY.belt, { position: { x: 2, y: 3 } }),
+      makeItem(ITEM_LIBRARY.axe, { position: { x: 4, y: 3 } }),
+      makeItem(ITEM_LIBRARY.book, { position: { x: 6, y: 3 } }),
+      makeItem(ITEM_LIBRARY.mana, { count: 8, position: { x: 0, y: 6 } }),
+    ]);
+
+    const loadState = () => {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (saved && saved.backpack && saved.equipped) {
+          return saved;
+        }
+      } catch (e) {}
+      return { backpack: defaultBackpack(), equipped: { ...emptyEquipped } };
     };
 
-    // Initialize backpack items with their positions
-    const initializeBackpack = () => {
-      const initialItems = [
-        createInventoryItem({ ...ITEMS.POTION, count: 5 }, { x: 0, y: 0 }),
-        createInventoryItem(ITEMS.DAGGER, { x: 1, y: 0 }),
-        createInventoryItem(ITEMS.RING, { x: 2, y: 0 }),
-        createInventoryItem(ITEMS.AMULET, { x: 3, y: 0 }),
-        createInventoryItem(ITEMS.SWORD, { x: 0, y: 1 }),
-        createInventoryItem(ITEMS.SHIELD, { x: 2, y: 1 }),
-        createInventoryItem(ITEMS.CHEST, { x: 4, y: 0 }),
-        createInventoryItem(ITEMS.BOOTS, { x: 6, y: 0 }),
-        createInventoryItem(ITEMS.STAFF, { x: 0, y: 3 }),
-        createInventoryItem(ITEMS.BELT, { x: 2, y: 3 }),
-        createInventoryItem(ITEMS.AXE, { x: 4, y: 3 }),
-        createInventoryItem(ITEMS.BOOK, { x: 6, y: 3 }),
-      ];
-      
-      return initialItems;
+    const saveState = (state) => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     };
 
-    // Backpack items state
-    const [backpackItems, setBackpackItems] = useState(() => {
-      const savedBackpack = localStorage.getItem('backpackItems');
-      return savedBackpack ? JSON.parse(savedBackpack) : initializeBackpack();
-    });
-
-    // Dragging state
-    const [draggedItem, setDraggedItem] = useState(null);
-    const [draggedFromSlot, setDraggedFromSlot] = useState(null);
-    const [isDraggingOver, setIsDraggingOver] = useState(null);
-    
-    // Tooltip state
-    const [tooltipItem, setTooltipItem] = useState(null);
-    const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
-
-    // Save to local storage when state changes
-    useEffect(() => {
-      localStorage.setItem('equipped', JSON.stringify(equipped));
-    }, [equipped]);
-
-    useEffect(() => {
-      localStorage.setItem('backpackItems', JSON.stringify(backpackItems));
-    }, [backpackItems]);
-
-    // Get row and column from slot ID
-    const getCoordinatesFromSlotId = (slotId) => {
-      if (slotId.startsWith('backpack_')) {
-        const [_, coords] = slotId.split('backpack_');
-        const [x, y] = coords.split('_').map(Number);
-        return { x, y };
-      }
-      return null;
-    };
-
-    // Convert grid coordinates to slot ID
-    const getSlotIdFromCoordinates = (x, y) => {
-      return `backpack_${x}_${y}`;
-    };
-
-    // Create a map of occupied grid slots
-    const createOccupationMap = () => {
-      const occupationMap = {};
-      
-      // Mark slots occupied by items
-      backpackItems.forEach(item => {
-        if (!item) return;
-        
-        const { position, width, height } = item;
-        
-        for (let y = position.y; y < position.y + height; y++) {
-          for (let x = position.x; x < position.x + width; x++) {
-            occupationMap[getSlotIdFromCoordinates(x, y)] = item;
+    const buildOccupation = (backpack, ignoreUid = null) => {
+      const occ = new Map();
+      backpack.forEach((item) => {
+        if (!item.position) return;
+        if (ignoreUid && item.uid === ignoreUid) return;
+        for (let y = item.position.y; y < item.position.y + item.height; y++) {
+          for (let x = item.position.x; x < item.position.x + item.width; x++) {
+            occ.set(`${x}-${y}`, item.uid);
           }
         }
       });
-      
-      return occupationMap;
+      return occ;
     };
 
-    // Get item at slot coordinates
-    const getItemAtCoordinates = (x, y) => {
-      return backpackItems.find(item => {
-        if (!item) return false;
-        
-        const { position, width, height } = item;
-        
-        return (
-          x >= position.x && 
-          x < position.x + width && 
-          y >= position.y && 
-          y < position.y + height
-        );
-      });
-    };
+    const isWithinBounds = (item, position) => (
+      position.x >= 0 &&
+      position.y >= 0 &&
+      position.x + item.width <= GRID_COLS &&
+      position.y + item.height <= GRID_ROWS
+    );
 
-    // Check if a space is available for an item
-    const isSpaceAvailable = (item, targetX, targetY, occupationMap) => {
-      // Don't check if item is null
-      if (!item) return true;
-      
-      // Check if the target position is within bounds
-      if (
-        targetX < 0 || 
-        targetY < 0 || 
-        targetX + item.width > GRID_COLS
-      ) {
-        return false;
-      }
-      
-      // Check if all required slots are empty or occupied by the same item
-      for (let y = targetY; y < targetY + item.height; y++) {
-        for (let x = targetX; x < targetX + item.width; x++) {
-          const slotId = getSlotIdFromCoordinates(x, y);
-          const occupyingItem = occupationMap[slotId];
-          
-          // If slot is occupied by a different item
-          if (occupyingItem && occupyingItem !== draggedItem) {
-            return false;
-          }
+    const canPlace = (backpack, item, position, ignoreUid = null) => {
+      if (!isWithinBounds(item, position)) return false;
+      const occ = buildOccupation(backpack, ignoreUid);
+      for (let y = position.y; y < position.y + item.height; y++) {
+        for (let x = position.x; x < position.x + item.width; x++) {
+          if (occ.has(`${x}-${y}`)) return false;
         }
       }
-      
       return true;
     };
 
-    // Handle drag start
-    const handleDragStart = (e, slotId) => {
-      let item;
-      
-      if (slotId.startsWith('equip_')) {
-        const slotType = slotId.split('_')[1];
-        item = equipped[slotType];
-      } else if (slotId.startsWith('backpack_')) {
-        const coords = getCoordinatesFromSlotId(slotId);
-        item = getItemAtCoordinates(coords.x, coords.y);
-      }
-      
-      if (!item) {
-        e.preventDefault();
-        return;
-      }
-      
-      setDraggedItem(item);
-      setDraggedFromSlot(slotId);
-      
-      // Required for Firefox
-      e.dataTransfer?.setData('text/plain', '');
-    };
-
-    // Handle drag over
-    const handleDragOver = (e, slotId) => {
-      e.preventDefault();
-      
-      if (!draggedItem) return;
-      
-      let canDrop = false;
-      
-      if (slotId.startsWith('equip_')) {
-        const slotType = slotId.split('_')[1];
-        canDrop = isValidEquipTarget(draggedItem, slotType);
-      } else if (slotId.startsWith('backpack_')) {
-        const coords = getCoordinatesFromSlotId(slotId);
-        
-        // Create a map of occupied slots
-        const occupationMap = createOccupationMap();
-        
-        // Check if there's space for the item
-        canDrop = isSpaceAvailable(draggedItem, coords.x, coords.y, occupationMap);
-      }
-      
-      if (canDrop) {
-        setIsDraggingOver(slotId);
-      } else {
-        setIsDraggingOver(null);
-      }
-    };
-
-    // Handle drag end
-    const handleDragEnd = () => {
-      setDraggedItem(null);
-      setDraggedFromSlot(null);
-      setIsDraggingOver(null);
-    };
-
-    // Handle item drop
-    const handleDrop = (e, targetSlotId) => {
-      e.preventDefault();
-      setIsDraggingOver(null);
-      
-      if (!draggedItem || draggedFromSlot === targetSlotId) {
-        handleDragEnd();
-        return;
-      }
-      
-      // Handle equipment slots
-      if (targetSlotId.startsWith('equip_')) {
-        const slotType = targetSlotId.split('_')[1];
-        
-        // Check if item can be equipped
-        if (!isValidEquipTarget(draggedItem, slotType)) {
-          alert(`Cannot equip ${draggedItem.name} in this slot!`);
-          handleDragEnd();
-          return;
-        }
-        
-        // Handle the swap
-        const previousEquipped = equipped[slotType];
-        
-        // Update equipment slot
-        setEquipped(prev => ({
-          ...prev,
-          [slotType]: { ...draggedItem, position: null }
-        }));
-        
-        // If dragged from equipment, clear source slot
-        if (draggedFromSlot.startsWith('equip_')) {
-          const sourceSlotType = draggedFromSlot.split('_')[1];
-          setEquipped(prev => ({
-            ...prev,
-            [sourceSlotType]: null
-          }));
-        } 
-        // If dragged from backpack, remove from backpack
-        else if (draggedFromSlot.startsWith('backpack_')) {
-          setBackpackItems(prev => 
-            prev.filter(item => item !== draggedItem)
-          );
-        }
-        
-        // If there was an item in the equipment slot, add it to backpack
-        if (previousEquipped) {
-          // Find first available position
-          const position = findFirstAvailablePosition(previousEquipped);
-          
-          if (position) {
-            setBackpackItems(prev => [
-              ...prev, 
-              { ...previousEquipped, position }
-            ]);
-          } else {
-            alert("Not enough space in inventory!");
-            // Revert the swap
-            handleDragEnd();
-            return;
-          }
-        }
-      } 
-      // Handle backpack slots
-      else if (targetSlotId.startsWith('backpack_')) {
-        const coords = getCoordinatesFromSlotId(targetSlotId);
-        
-        // Create a map of occupied slots
-        const occupationMap = createOccupationMap();
-        
-        // Check if there's space for the item
-        if (!isSpaceAvailable(draggedItem, coords.x, coords.y, occupationMap)) {
-          handleDragEnd();
-          return;
-        }
-        
-        // Handle stacking for similar items
-        const targetItem = getItemAtCoordinates(coords.x, coords.y);
-        
-        if (
-          draggedItem.stackable && 
-          targetItem && 
-          targetItem.id === draggedItem.id && 
-          targetItem !== draggedItem &&
-          targetItem.stackable
-        ) {
-          // Stack items
-          const totalCount = (targetItem.count || 1) + (draggedItem.count || 1);
-          
-          if (totalCount <= draggedItem.maxStack) {
-            // Complete stack merge
-            setBackpackItems(prev => {
-              return prev.map(item => 
-                item === targetItem 
-                  ? { ...item, count: totalCount }
-                  : item
-              ).filter(item => item !== draggedItem);
-            });
-            
-            // If dragged from equipment, clear source slot
-            if (draggedFromSlot.startsWith('equip_')) {
-              const sourceSlotType = draggedFromSlot.split('_')[1];
-              setEquipped(prev => ({
-                ...prev,
-                [sourceSlotType]: null
-              }));
-            }
-          } else {
-            // Partial stack merge
-            const remainder = totalCount - draggedItem.maxStack;
-            
-            setBackpackItems(prev => {
-              return prev.map(item => {
-                if (item === targetItem) {
-                  return { ...item, count: draggedItem.maxStack };
-                }
-                if (item === draggedItem) {
-                  return { ...item, count: remainder };
-                }
-                return item;
-              });
-            });
-          }
-        } else {
-          // Move item to new position
-          
-          // If dragged from equipment, add to backpack
-          if (draggedFromSlot.startsWith('equip_')) {
-            const sourceSlotType = draggedFromSlot.split('_')[1];
-            
-            setEquipped(prev => ({
-              ...prev,
-              [sourceSlotType]: null
-            }));
-            
-            setBackpackItems(prev => [
-              ...prev, 
-              { ...draggedItem, position: { x: coords.x, y: coords.y } }
-            ]);
-          } 
-          // If dragged from backpack, update position
-          else if (draggedFromSlot.startsWith('backpack_')) {
-            setBackpackItems(prev => {
-              return prev.map(item => 
-                item === draggedItem 
-                  ? { ...item, position: { x: coords.x, y: coords.y } }
-                  : item
-              );
-            });
-          }
-        }
-      }
-      
-      handleDragEnd();
-    };
-
-    // Check if item can be equipped in target slot
-    const isValidEquipTarget = (item, slotType) => {
-      if (!item) return false;
-      
-      const slotTypeMap = {
-        ring1: ['ring'],
-        ring2: ['ring'],
-        amulet: ['amulet'],
-        helm: ['helm'],
-        armor: ['armor'],
-        gloves: ['gloves'],
-        boots: ['boots'],
-        belt: ['belt'],
-        weapon: ['weapon'],
-        offhand: ['offhand', 'shield'],
-      };
-      
-      return slotTypeMap[slotType]?.includes(item.type);
-    };
-
-    // Find first available position for item in backpack
-    const findFirstAvailablePosition = (item) => {
-      if (!item) return null;
-      
-      const occupationMap = createOccupationMap();
-      
-      for (let y = 0; y < Math.ceil(INVENTORY_SIZE / GRID_COLS); y++) {
+    const findFirstFit = (backpack, item) => {
+      for (let y = 0; y < GRID_ROWS; y++) {
         for (let x = 0; x < GRID_COLS; x++) {
-          if (isSpaceAvailable(item, x, y, occupationMap)) {
+          if (canPlace(backpack, item, { x, y })) {
             return { x, y };
           }
         }
       }
-      
       return null;
     };
 
-    // Rotate item (swap width and height)
-    const rotateItem = (slotId) => {
-      const coords = getCoordinatesFromSlotId(slotId);
-      const item = getItemAtCoordinates(coords.x, coords.y);
-      
-      if (!item) return;
-      
-      // Create a copy of the item with swapped dimensions
-      const rotatedItem = {
-        ...item,
-        width: item.height,
-        height: item.width
-      };
-      
-      // Check if the rotated item fits at its current position
-      const occupationMap = createOccupationMap();
-      
-      // Remove the item from the occupation map to avoid self-collision
-      for (let y = item.position.y; y < item.position.y + item.height; y++) {
-        for (let x = item.position.x; x < item.position.x + item.width; x++) {
-          const slotId = getSlotIdFromCoordinates(x, y);
-          if (occupationMap[slotId] === item) {
-            delete occupationMap[slotId];
-          }
-        }
-      }
-      
-      if (isSpaceAvailable(rotatedItem, item.position.x, item.position.y, occupationMap)) {
-        setBackpackItems(prev => 
-          prev.map(i => i === item ? rotatedItem : i)
-        );
-      } else {
-        alert("Not enough space to rotate item!");
-      }
-    };
+    const itemAt = (backpack, coords) => backpack.find((item) => {
+      if (!item.position) return false;
+      return coords.x >= item.position.x &&
+             coords.x < item.position.x + item.width &&
+             coords.y >= item.position.y &&
+             coords.y < item.position.y + item.height;
+    });
 
-    // Handle tooltip mouse enter
-    const handleMouseEnter = (e, item) => {
-      if (!item) return;
-      
-      const rect = e.target.getBoundingClientRect();
-      setTooltipPosition({ x: rect.right + 10, y: rect.top });
-      setTooltipItem(item);
-    };
-
-    // Handle tooltip mouse leave
-    const handleMouseLeave = () => {
-      setTooltipItem(null);
-    };
-    
-    // Render equipment slots
-    const renderEquipmentSlots = () => {
-      const equipmentLayout = [
-        { slot: 'helm', label: 'Helm', colStart: 3, rowStart: 1, width: 1, height: 1 },
-        { slot: 'amulet', label: 'Amulet', colStart: 4, rowStart: 1, width: 1, height: 1 },
-        { slot: 'weapon', label: 'Weapon', colStart: 1, rowStart: 2, width: 1, height: 2 },
-        { slot: 'armor', label: 'Armor', colStart: 3, rowStart: 2, width: 1, height: 2 },
-        { slot: 'offhand', label: 'Offhand', colStart: 5, rowStart: 2, width: 1, height: 2 },
-        { slot: 'gloves', label: 'Gloves', colStart: 1, rowStart: 4, width: 1, height: 1 },
-        { slot: 'belt', label: 'Belt', colStart: 3, rowStart: 4, width: 1, height: 1 },
-        { slot: 'ring1', label: 'Ring', colStart: 5, rowStart: 4, width: 1, height: 1 },
-        { slot: 'boots', label: 'Boots', colStart: 3, rowStart: 5, width: 1, height: 1 },
-        { slot: 'ring2', label: 'Ring', colStart: 5, rowStart: 5, width: 1, height: 1 },
-      ];
-
+    const Tooltip = ({ item, position }) => {
+      if (!item) return null;
       return (
-        <div className="grid" style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(5, minmax(0, 1fr))', 
-          gridTemplateRows: 'repeat(5, minmax(0, 1fr))',
-          gap: '0.5rem',
-          position: 'relative'
-        }}>
-          {equipmentLayout.map(({ slot, label, colStart, rowStart }) => {
-            const item = equipped[slot];
-            return (
-              <div 
-                key={slot} 
-                className="relative"
-                style={{ 
-                  gridColumn: `${colStart} / span 1`, 
-                  gridRow: `${rowStart} / span 1` 
-                }}
-              >
-                <InventorySlot
-                  slotId={`equip_${slot}`}
-                  isEquipSlot={true}
-                  label={label}
-                  isOccupied={!!item}
-                  isDraggingOver={isDraggingOver === `equip_${slot}`}
-                  onDragOver={handleDragOver}
-                  onDrop={handleDrop}
-                />
-                {item && (
-                  <Item
-                    item={item}
-                    slotId={`equip_${slot}`}
-                    onDragStart={handleDragStart}
-                    onDragEnd={handleDragEnd}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                    onRotate={() => {}}
-                  />
-                )}
-              </div>
-            );
-          })}
+        <div className="tooltip" style={{ top: position.y, left: position.x }}>
+          <div className={`name ${RARITY_CLASS[item.rarity]}`}>{item.name}</div>
+          <div className="stat">{item.stats}</div>
+          {item.stackable && (
+            <div className="stat" style={{ marginTop: 4 }}>
+              Stackable · Max {item.maxStack}
+            </div>
+          )}
         </div>
       );
     };
 
-    // Create empty backpack grid
-    const renderBackpackGrid = () => {
-      const occupationMap = createOccupationMap();
-      const rows = Math.ceil(INVENTORY_SIZE / GRID_COLS);
-      const grid = [];
-      
+    const Slot = ({ label, isEquip, onDrop, onDragOver, highlight }) => (
+      <div
+        className={`slot ${isEquip ? 'equip' : ''} ${highlight ? 'drag-over' : ''}`}
+        onDragOver={(e) => onDragOver?.(e)}
+        onDrop={(e) => onDrop?.(e)}
+      >
+        {label && <span className="slot-label">{label}</span>}
+      </div>
+    );
+
+    const ItemTile = ({ item, onDragStart, onDragEnd, onRotate, onHover, showRotate }) => (
+      <div
+        className={`item ${RARITY_CLASS[item.rarity]}`}
+        draggable
+        onDragStart={(e) => onDragStart(e)}
+        onDragEnd={onDragEnd}
+        onMouseEnter={(e) => onHover?.(e, item)}
+        onMouseLeave={() => onHover?.(null, null)}
+      >
+        <div className="item-icon">{item.icon}</div>
+        <div className="item-name">{item.name}</div>
+        {item.stackable && item.count > 1 && (
+          <div className="stack-badge">x{item.count}</div>
+        )}
+        {showRotate && (
+          <button className="rotate-btn" onClick={(e) => { e.stopPropagation(); onRotate?.(); }}>
+            ↻
+          </button>
+        )}
+      </div>
+    );
+
+    const App = () => {
+      const [state, setState] = useState(loadState);
+      const [drag, setDrag] = useState(null); // { source: 'bag'|'equip', uid, slotKey? }
+      const [dragOver, setDragOver] = useState(null);
+      const [hover, setHover] = useState({ item: null, pos: { x: 0, y: 0 } });
+      const [status, setStatus] = useState('');
+
+      useEffect(() => saveState(state), [state]);
+
+      const occupation = useMemo(
+        () => buildOccupation(state.backpack, drag?.source === 'bag' ? drag.uid : null),
+        [state.backpack, drag]
+      );
+
+      const showStatus = (msg) => {
+        setStatus(msg);
+        setTimeout(() => setStatus(''), 1500);
+      };
+
+      const getDraggedItem = () => {
+        if (!drag) return null;
+        if (drag.source === 'bag') {
+          return state.backpack.find((i) => i.uid === drag.uid);
+        }
+        return state.equipped[drag.slotKey];
+      };
+
+      const handleRotate = (uid) => {
+        setState((prev) => {
+          const item = prev.backpack.find((i) => i.uid === uid);
+          if (!item || !item.position) return prev;
+          const rotated = { ...item, width: item.height, height: item.width };
+          if (!canPlace(prev.backpack, rotated, item.position, uid)) {
+            showStatus('Rotation blocked: no room.');
+            return prev;
+          }
+          return {
+            ...prev,
+            backpack: prev.backpack.map((i) => i.uid === uid ? rotated : i),
+          };
+        });
+      };
+
+      const handleDragStart = (source, uid, slotKey = null) => {
+        setDrag({ source, uid, slotKey });
+      };
+
+      const handleDragEnd = () => {
+        setDrag(null);
+        setDragOver(null);
+      };
+
+      const handleEquipDrop = (slotKey) => {
+        const draggedItem = getDraggedItem();
+        if (!draggedItem) return;
+        if (!SLOT_RULES[slotKey].includes(draggedItem.type)) {
+          showStatus('Cannot equip there.');
+          handleDragEnd();
+          return;
+        }
+
+        setState((prev) => {
+          const next = { ...prev, equipped: { ...prev.equipped } };
+          let backpack = [...prev.backpack];
+
+          if (drag.source === 'bag') {
+            backpack = backpack.filter((i) => i.uid !== draggedItem.uid);
+          } else if (drag.source === 'equip') {
+            next.equipped[drag.slotKey] = null;
+          }
+
+          const displaced = next.equipped[slotKey];
+          next.equipped[slotKey] = { ...draggedItem, position: null };
+
+          if (displaced) {
+            const position = findFirstFit(backpack, displaced);
+            if (!position) {
+              showStatus('No space to unequip the current item.');
+              return prev;
+            }
+            backpack.push({ ...displaced, position });
+          }
+
+          next.backpack = backpack;
+          return next;
+        });
+
+        handleDragEnd();
+      };
+
+      const mergeStacks = (target, incoming) => {
+        if (!target.stackable || !incoming.stackable) return null;
+        if (target.id !== incoming.id) return null;
+        const combined = (target.count || 1) + (incoming.count || 1);
+        if (combined > target.maxStack) return null;
+        return { ...target, count: combined };
+      };
+
+      const handleBackpackDrop = (coords) => {
+        const draggedItem = getDraggedItem();
+        if (!draggedItem) return;
+
+        setState((prev) => {
+          let backpack = [...prev.backpack];
+          const equipped = { ...prev.equipped };
+          const ignoreUid = drag.source === 'bag' ? draggedItem.uid : null;
+
+          const target = itemAt(backpack, coords);
+          if (target) {
+            const merged = mergeStacks(target, draggedItem);
+            if (!merged) {
+              showStatus('Slot occupied.');
+              return prev;
+            }
+            backpack = backpack.map((i) => i.uid === target.uid ? merged : i);
+            if (drag.source === 'bag') {
+              backpack = backpack.filter((i) => i.uid !== draggedItem.uid || i.uid === target.uid);
+            } else if (drag.source === 'equip') {
+              equipped[drag.slotKey] = null;
+            }
+            return { backpack, equipped };
+          }
+
+          if (!canPlace(backpack, draggedItem, coords, ignoreUid)) {
+            showStatus('Not enough room.');
+            return prev;
+          }
+
+          if (drag.source === 'bag') {
+            backpack = backpack.filter((i) => i.uid !== draggedItem.uid);
+          } else if (drag.source === 'equip') {
+            equipped[drag.slotKey] = null;
+          }
+
+          backpack.push({ ...draggedItem, position: coords });
+          return { backpack, equipped };
+        });
+
+        handleDragEnd();
+      };
+
+      const resetInventory = () => {
+        setState({ backpack: defaultBackpack(), equipped: { ...emptyEquipped } });
+        setDrag(null);
+        setDragOver(null);
+        setStatus('');
+      };
+
+      const addRandomLoot = () => {
+        const pool = Object.values(ITEM_LIBRARY);
+        const candidate = makeItem(pool[Math.floor(Math.random() * pool.length)]);
+        setState((prev) => {
+          const position = findFirstFit(prev.backpack, candidate);
+          if (!position) {
+            showStatus('Backpack is full.');
+            return prev;
+          }
+          candidate.position = position;
+          return { ...prev, backpack: [...prev.backpack, candidate] };
+        });
+      };
+
+      const equipmentLayout = [
+        { key: 'helm', label: 'Helm', col: 2, row: 0 },
+        { key: 'amulet', label: 'Amulet', col: 3, row: 0 },
+        { key: 'weapon', label: 'Weapon', col: 0, row: 1 },
+        { key: 'armor', label: 'Armor', col: 2, row: 1 },
+        { key: 'offhand', label: 'Offhand', col: 4, row: 1 },
+        { key: 'gloves', label: 'Gloves', col: 0, row: 3 },
+        { key: 'belt', label: 'Belt', col: 2, row: 3 },
+        { key: 'ring1', label: 'Ring', col: 4, row: 3 },
+        { key: 'boots', label: 'Boots', col: 2, row: 4 },
+        { key: 'ring2', label: 'Ring', col: 4, row: 4 },
+      ];
+
+      const rows = GRID_ROWS;
+      const bagSlots = [];
       for (let y = 0; y < rows; y++) {
         for (let x = 0; x < GRID_COLS; x++) {
-          const slotId = getSlotIdFromCoordinates(x, y);
-          const isOccupied = !!occupationMap[slotId];
-          
-          grid.push(
-            <InventorySlot
-              key={slotId}
-              slotId={slotId}
-              isEquipSlot={false}
-              isOccupied={isOccupied}
-              isDraggingOver={isDraggingOver === slotId}
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
-            />
+          const id = `${x}-${y}`;
+          bagSlots.push(
+            <div key={id} style={{ position: 'relative' }}>
+              <Slot
+                isEquip={false}
+                highlight={dragOver === id}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setDragOver(id);
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  handleBackpackDrop({ x, y });
+                }}
+              />
+            </div>
           );
         }
       }
-      
-      return grid;
-    };
 
-    // Render inventory items
-    const renderBackpackItems = () => {
-      return backpackItems.map((item, index) => {
-        if (!item || !item.position) return null;
-        
-        const { x, y, width, height } = item;
-        const slotId = getSlotIdFromCoordinates(item.position.x, item.position.y);
-        
+      const bagItems = state.backpack.map((item) => {
+        if (!item.position) return null;
+        const left = item.position.x * (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--slot'), 10) || 64 + 6);
         return (
           <div
-            key={`item-${index}`}
-            className={`absolute ${item.width !== item.height ? 'bg-gray-700/30' : ''}`}
+            key={item.uid}
             style={{
-              left: `calc(${item.position.x} * ${SLOT_SIZE}rem)`,
-              top: `calc(${item.position.y} * ${SLOT_SIZE}rem)`,
-              width: `calc(${item.width} * ${SLOT_SIZE}rem)`,
-              height: `calc(${item.height} * ${SLOT_SIZE}rem)`,
-              zIndex: 5
+              position: 'absolute',
+              left: `calc(${item.position.x} * var(--slot) + ${item.position.x * 6}px)`,
+              top: `calc(${item.position.y} * var(--slot) + ${item.position.y * 6}px)`,
+              width: `calc(${item.width} * var(--slot) + ${(item.width - 1) * 6}px)`,
+              height: `calc(${item.height} * var(--slot) + ${(item.height - 1) * 6}px)`,
             }}
           >
-            <Item
+            <ItemTile
               item={item}
-              slotId={slotId}
-              onDragStart={handleDragStart}
+              showRotate={item.width !== item.height}
+              onRotate={() => handleRotate(item.uid)}
+              onDragStart={(e) => handleDragStart('bag', item.uid)}
               onDragEnd={handleDragEnd}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              onRotate={rotateItem}
+              onHover={(ev, hovered) => {
+                if (!hovered) {
+                  setHover({ item: null, pos: { x: 0, y: 0 } });
+                  return;
+                }
+                const pos = ev.target.getBoundingClientRect();
+                setHover({ item: hovered, pos: { x: pos.right + 10, y: pos.top } });
+              }}
             />
           </div>
         );
       });
-    };
-    
-    return (
-      <div className="max-w-4xl mx-auto p-4 bg-gray-800 text-white rounded-lg">
-        <h2 className="text-xl font-bold mb-6">Advanced ARPG Inventory System</h2>
 
-        {/* Character Equipment */}
-        <div className="relative bg-gray-900/30 p-6 rounded-lg mb-4">
-          <CharacterSilhouette />
-          {renderEquipmentSlots()}
-        </div>
+      return (
+        <div className="app">
+          <header>
+            <div>
+              <p className="badge">Drag + Drop • Stack • Rotate • Equip</p>
+              <h1 className="title">RPG Inventory</h1>
+              <p className="lede">A refreshed ARPG-inspired grid with clear slot rules, stacking, rotation checks, and quick-save persistence.</p>
+            </div>
+            <div className="controls">
+              <button className="btn" onClick={addRandomLoot}>Add Random Loot</button>
+              <button className="btn secondary" onClick={resetInventory}>Reset Inventory</button>
+            </div>
+          </header>
 
-        {/* Backpack */}
-        <div className="bg-gray-900/30 p-4 rounded">
-          <h3 className="text-lg font-semibold mb-2">Backpack</h3>
-          <div 
-            className="inventory-grid relative grid-background"
-            style={{ 
-              display: 'grid',
-              gridTemplateColumns: `repeat(${GRID_COLS}, ${SLOT_SIZE}rem)`,
-              gridAutoRows: `${SLOT_SIZE}rem`,
-              gap: '1px',
-              maxHeight: '400px',
-              overflowY: 'auto',
-              position: 'relative'
-            }}
-          >
-            {renderBackpackGrid()}
-            {renderBackpackItems()}
+          <div className="layout">
+            <div className="card">
+              <h3>Equipment</h3>
+              <div className="equipment-grid">
+                <svg className="silhouette" viewBox="0 0 100 200">
+                  <path d="M50 10 C60 10, 65 15, 65 25 C65 35, 60 40, 50 40 C40 40, 35 35, 35 25 C35 15, 40 10, 50 10" />
+                  <path d="M45 40 L55 40 L60 90 L40 90 Z" />
+                  <path d="M60 50 L75 80 L65 85 L55 60" />
+                  <path d="M40 50 L25 80 L35 85 L45 60" />
+                  <path d="M45 90 L40 130 L45 130 L50 100 L55 130 L60 130 L55 90" />
+                </svg>
+                {equipmentLayout.map(({ key, label, col, row }) => {
+                  const item = state.equipped[key];
+                  const highlight = dragOver === `equip-${key}`;
+                  return (
+                    <div
+                      key={key}
+                      style={{
+                        gridColumn: col + 1,
+                        gridRow: row + 1,
+                        position: 'relative',
+                      }}
+                    >
+                      <Slot
+                        label={label}
+                        isEquip
+                        highlight={highlight}
+                        onDragOver={(e) => { e.preventDefault(); setDragOver(`equip-${key}`); }}
+                        onDrop={(e) => { e.preventDefault(); handleEquipDrop(key); }}
+                      />
+                      {item && (
+                        <div style={{ position: 'absolute', inset: 0 }}>
+                          <ItemTile
+                            item={item}
+                            onDragStart={() => handleDragStart('equip', item.uid, key)}
+                            onDragEnd={handleDragEnd}
+                            onHover={(ev, hovered) => {
+                              const pos = ev.target.getBoundingClientRect();
+                              setHover({ item: hovered, pos: { x: pos.right + 10, y: pos.top } });
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="card inventory-shell">
+              <div className="grid-wrapper">
+                <h3>Backpack</h3>
+                <div
+                  className="inventory-grid"
+                  onDragLeave={() => setDragOver(null)}
+                >
+                  {bagSlots}
+                  {bagItems}
+                </div>
+              </div>
+              <div className="legend">
+                <div>• Drag items between backpack and equipment.</div>
+                <div>• Hover to inspect stats, click ↻ to rotate long items.</div>
+                <div>• Stacks merge when identical and under max capacity.</div>
+              </div>
+            </div>
           </div>
+
+          <Tooltip item={hover.item} position={hover.pos} />
+          {status && <div className="status">{status}</div>}
         </div>
+      );
+    };
 
-        {/* Actions */}
-        <div className="mt-4 flex space-x-2">
-          <button 
-            className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded"
-            onClick={() => {
-              if (confirm("Reset inventory to default?")) {
-                setBackpackItems(initializeBackpack());
-                setEquipped({
-                  ring1: null,
-                  ring2: null,
-                  amulet: null,
-                  helm: null,
-                  armor: null,
-                  gloves: null,
-                  boots: null,
-                  belt: null,
-                  weapon: null,
-                  offhand: null,
-                });
-              }
-            }}
-          >
-            Reset Inventory
-          </button>
-        </div>
-
-        {/* Tooltip */}
-        {tooltipItem && (
-          <Tooltip item={tooltipItem} position={tooltipPosition} />
-        )}
-      </div>
-    );
-  };
-
-  ReactDOM.render(<InventoryGrid />, document.getElementById('root'));
-</script>
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
 </body>
 </html>
