@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WIZARD: RP Account & Character Creator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { background: #0b0b0f; color: #e5e7eb; min-height: 100vh; }
+    .glass { background: rgba(17, 24, 39, 0.8); border: 1px solid rgba(255, 255, 255, 0.06); backdrop-filter: blur(10px); }
+    .animate-shake { animation: shake 0.35s linear; }
+    @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-4px);} 50% { transform: translateX(4px);} 75% { transform: translateX(-4px);} 100% { transform: translateX(0);} }
+    .scanline::after { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, rgba(255,255,255,0.04), transparent); mix-blend-mode:overlay; opacity:0.4; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    // --- Simple Icon Set (minimal, not full Lucide) ---
+    const iconBase = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' };
+    const ICONS = {
+      shield: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M12 3l8 3v6c0 4-3 8-8 9-5-1-8-5-8-9V6z" />
+          <path d="M12 7v11" />
+        </svg>
+      ),
+      sword: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M12 2l3 3-3 3-3-3z" />
+          <path d="M12 8v12" />
+          <path d="M8 16h8" />
+        </svg>
+      ),
+      scroll: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M6 4h10a2 2 0 012 2v11a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z" />
+          <path d="M9 9h8" /><path d="M9 13h5" />
+        </svg>
+      ),
+      skull: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M6 14v2a2 2 0 002 2h8a2 2 0 002-2v-2" />
+          <path d="M8 14h8" /><path d="M9 10.5a1 1 0 11-.01 0" /><path d="M15 10.5a1 1 0 11-.01 0" />
+          <path d="M12 4a6 6 0 016 6v2H6v-2a6 6 0 016-6z" />
+        </svg>
+      ),
+      crown: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M3 9l4 2 3-6 3 6 4-2 3 7H0z" />
+        </svg>
+      ),
+      user: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <circle cx="12" cy="7" r="4" /><path d="M5 21c0-4 3-7 7-7s7 3 7 7" />
+        </svg>
+      ),
+      logout: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+          <path d="M16 17l5-5-5-5" /><path d="M21 12H9" />
+        </svg>
+      ),
+      plus: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M12 5v14" /><path d="M5 12h14" />
+        </svg>
+      ),
+      heart: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M12 21s-7-4.3-7-10a5 5 0 019-3 5 5 0 019 3c0 5.7-7 10-7 10z" />
+        </svg>
+      ),
+      coins: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <ellipse cx="12" cy="5" rx="6" ry="2.5" />
+          <path d="M6 5v6c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V5" />
+          <path d="M6 11v6c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-6" />
+        </svg>
+      ),
+      history: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M3 3v6h6" /><path d="M3.5 12a8.5 8.5 0 101.5-4.9" /><path d="M12 7v5l3 2" />
+        </svg>
+      ),
+      chevron: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M9 18l6-6-6-6" />
+        </svg>
+      ),
+      book: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M4 4h12a4 4 0 014 4v10H8a4 4 0 00-4 4z" />
+          <path d="M8 18h12" />
+        </svg>
+      ),
+      loader: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props} className={`${props.className || ''} animate-spin`}>
+          <path d="M12 2v4" /><path d="M12 18v4" /><path d="M4.9 4.9l2.8 2.8" /><path d="M16.3 16.3l2.8 2.8" /><path d="M2 12h4" /><path d="M18 12h4" /><path d="M4.9 19.1l2.8-2.8" /><path d="M16.3 7.7l2.8-2.8" />
+        </svg>
+      ),
+      sparkles: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z" />
+          <path d="M5 19l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" />
+          <path d="M17 16l.5 1.5L19 18l-1.5.5L17 20l-.5-1.5L15 18l1.5-.5z" />
+        </svg>
+      ),
+      alert: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M12 9v4" /><path d="M12 17h.01" />
+          <path d="M10.29 3.86l-8 14A2 2 0 004 20h16a2 2 0 001.71-3.14l-8-14a2 2 0 00-3.42 0z" />
+        </svg>
+      ),
+      wand: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M5 15l-3 3" /><path d="M9 11l-3 3" /><path d="M7 17l3 3" /><path d="M14 4l-1.5 2.5L10 8l2.5 1.5L14 12l1.5-2.5L18 8l-2.5-1.5z" />
+          <path d="M21 3l-1 2 2 1-2 1-1 2-1-2-2-1 2-1z" />
+        </svg>
+      ),
+      ghost: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M5 19V9a7 7 0 0114 0v10l-2-1-2 1-2-1-2 1-2-1z" />
+          <path d="M9 9h.01" /><path d="M15 9h.01" />
+        </svg>
+      ),
+      backpack: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M6 7V5a4 4 0 118 0v2" /><path d="M6 7h12v12H6z" /><path d="M8 11h8" /><path d="M8 15h8" />
+        </svg>
+      ),
+      map: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M9 3l-6 3v15l6-3 6 3 6-3V3l-6 3z" />
+          <path d="M9 3v15" /><path d="M15 6v15" />
+        </svg>
+      ),
+      zap: (props) => (
+        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+          <path d="M13 2L3 14h7l-1 8 10-12h-7z" />
+        </svg>
+      ),
+    };
+    const Icon = ({ name, className, size = 20 }) => {
+      const Comp = ICONS[name] || ICONS.shield;
+      return <Comp className={className} width={size} height={size} />;
+    };
+
+    // --- Helpers & Data ---
+    const generateId = () => Math.random().toString(36).substr(2, 9);
+    const apiKey = ""; // Optional: set if you want live LLM calls
+
+    const INITIAL_RESOURCES = { gold: 100, renown: 0, shards: 5 };
+    const CORRUPT_RESOURCES = { gold: 666, renown: 0, shards: 13 };
+
+    const CLASSES = [
+      { id: 'vanguard', name: 'Vanguard', desc: 'Frontline steel and shield.', icon: 'shield' },
+      { id: 'arcanist', name: 'Arcanist', desc: 'Scholar of the forbidden arts.', icon: 'scroll' },
+      { id: 'ranger', name: 'Ranger', desc: 'Silent hunter of the wilds.', icon: 'sword' },
+    ];
+
+    const MONSTERS = ["Kobold", "Goblin", "Dire Rat", "Skeleton", "Bandit", "Orc", "Worg", "Mimic", "Troll"];
+    const ACTIONS = ["Polishing armor", "Sharpening blade", "Consulting map", "Eating rations", "Bandaging wounds", "Identifying herbs", "Haggling with merchant"];
+    const LOOT = ["Rusty Dagger", "Wolf Pelt", "Gold Coin", "Mysterious Gem", "Old Boot", "Health Potion", "Ancient Scroll"];
+    const LOCATIONS = ["The Dark Woods", "Crumbling Ruins", "Foggy Swamp", "Mountain Pass", "Abandoned Mine"];
+
+    // --- LLM Helpers (safe fallbacks if apiKey missing) ---
+    async function callGeminiAPI(prompt, systemInstruction, responseSchema = null) {
+      if (!apiKey) {
+        // offline/dev fallback
+        return responseSchema ? { approved: true, message: "The scribes nod in silence." } : "Placeholder";
+      }
+      const delays = [500, 1000, 2000];
+      for (let i = 0; i <= delays.length; i++) {
+        try {
+          const payload = {
+            contents: [{ parts: [{ text: prompt }] }],
+            systemInstruction: { parts: [{ text: systemInstruction }] },
+            generationConfig: responseSchema ? { responseMimeType: "application/json", responseSchema } : {}
+          };
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) throw new Error(res.statusText);
+          const data = await res.json();
+          const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (!text) throw new Error("No content");
+          return responseSchema ? JSON.parse(text) : text;
+        } catch (err) {
+          if (i === delays.length) throw err;
+          await new Promise(r => setTimeout(r, delays[i]));
+        }
+      }
+    }
+
+    const cleanAIOutput = (text) => (text || "").replace(/(\*\*|__)/g, '').replace(/^.*:\s*/, '').replace(/['"]+/g, '').replace(/\.$/, '').trim();
+
+    const consultTheScribes = async (type, data) => {
+      const systemPrompt = `
+        You are the High Scribe of a grim fantasy realm. Approve only serious, immersive entries.
+        1. Reject modern, silly, meme, or offensive names.
+        2. Reject names that are too short or random characters.
+        3. If rejected, respond with a short, in-character refusal.
+        4. If approved, respond with a brief, atmospheric blessing.
+      `;
+      const userPrompt = `Judge this ${type}: ${data.name}. Context: ${data.context || "None"}`;
+      const schema = { type: "OBJECT", properties: { approved: { type: "BOOLEAN" }, message: { type: "STRING" } } };
+      try {
+        return await callGeminiAPI(userPrompt, systemPrompt, schema);
+      } catch (err) {
+        console.error(err);
+        return { approved: true, message: "The scribes are silent, but you pass unchallenged." };
+      }
+    };
+
+    const generateLore = async (type, context) => {
+      const systemPrompt = `
+        You are a fantasy chronicler. Return ONLY the requested string.
+        No labels, no quotes, no markdown. Keep it concise.
+      `;
+      const userPrompt = `Generate a ${type} for: ${context}`;
+      try {
+        const result = await callGeminiAPI(userPrompt, systemPrompt);
+        return cleanAIOutput(result);
+      } catch (err) {
+        console.error(err);
+        return "";
+      }
+    };
+
+    // --- Main App ---
+    function App() {
+      const [view, setView] = useState('gate');
+      const [houses, setHouses] = useState({});
+      const [currentHouseId, setCurrentHouseId] = useState(null);
+      const [activeCharId, setActiveCharId] = useState(null);
+      const [notification, setNotification] = useState(null);
+
+      useEffect(() => {
+        const saved = localStorage.getItem('wizard_rp_houses');
+        if (saved) setHouses(JSON.parse(saved));
+      }, []);
+      useEffect(() => {
+        localStorage.setItem('wizard_rp_houses', JSON.stringify(houses));
+      }, [houses]);
+
+      const showNote = (msg) => {
+        setNotification(msg);
+        setTimeout(() => setNotification(null), 3500);
+      };
+
+      const currentHouse = currentHouseId ? houses[currentHouseId] : null;
+
+      const login = (name) => {
+        const id = Object.keys(houses).find(k => houses[k].name.toLowerCase() === name.toLowerCase());
+        if (id) {
+          setCurrentHouseId(id);
+          setView('hall');
+        } else {
+          showNote("That lineage is unknown to the records.");
+        }
+      };
+
+      const createHouse = (name, motto, sigilColor, isCorrupt = false) => {
+        if (!name || !motto) { showNote("Name and motto are required."); return; }
+        if (!isCorrupt && Object.values(houses).some(h => h.name.toLowerCase() === name.toLowerCase())) {
+          showNote("A House of that name already exists.");
+          return;
+        }
+        const id = generateId();
+        const newHouse = {
+          id,
+          name,
+          motto,
+          sigilColor,
+          origin: isCorrupt ? 'corrupt' : 'noble',
+          resources: isCorrupt ? { ...CORRUPT_RESOURCES } : { ...INITIAL_RESOURCES },
+          characters: [],
+          crypt: [],
+        };
+        setHouses(prev => ({ ...prev, [id]: newHouse }));
+        setCurrentHouseId(id);
+        setView('hall');
+      };
+
+      const createCharacter = (name, charClass, backstory, perks = []) => {
+        if (!currentHouse) return;
+        const newChar = {
+          id: generateId(),
+          name,
+          class: charClass,
+          level: 1,
+          xp: 0,
+          status: 'alive',
+          backstory,
+          perks,
+          createdAt: new Date().toISOString(),
+        };
+        const updated = { ...currentHouse, characters: [...currentHouse.characters, newChar] };
+        setHouses(prev => ({ ...prev, [currentHouseId]: updated }));
+        setView('hall');
+      };
+
+      const killCharacter = (charId) => {
+        const c = currentHouse?.characters.find(ch => ch.id === charId);
+        if (!c) return;
+        const renownGain = c.level * 100;
+        const dead = { ...c, status: 'deceased', diedAt: new Date().toISOString() };
+        const updated = {
+          ...currentHouse,
+          characters: currentHouse.characters.filter(ch => ch.id !== charId),
+          crypt: [dead, ...currentHouse.crypt],
+          resources: { ...currentHouse.resources, renown: currentHouse.resources.renown + renownGain },
+        };
+        setHouses(prev => ({ ...prev, [currentHouseId]: updated }));
+        showNote(`${c.name} has fallen. Renown +${renownGain}.`);
+      };
+
+      const logout = () => { setCurrentHouseId(null); setView('gate'); };
+
+      // Views
+      const Gate = () => {
+        const [input, setInput] = useState('');
+        return (
+          <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-stone-950 via-slate-950 to-black p-6">
+            <div className="max-w-md w-full text-center glass rounded-xl p-8 shadow-2xl border border-stone-800 relative overflow-hidden">
+              <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_30%_30%,#f59e0b,transparent_35%),radial-gradient(circle_at_70%_70%,#8b5cf6,transparent_35%)]"></div>
+              <div className="relative space-y-6">
+                <Icon name="shield" size={56} className="mx-auto text-amber-500" />
+                <div>
+                  <h1 className="text-3xl font-serif tracking-[0.18em] text-amber-400">CHRONICLES</h1>
+                  <p className="text-stone-500 italic">"Blood is temporary. The House is eternal."</p>
+                </div>
+                <div className="space-y-3">
+                  <input
+                    className="w-full bg-stone-900 border border-stone-700 rounded px-4 py-3 text-center font-serif focus:border-amber-500 outline-none"
+                    placeholder="Name of your House..."
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && login(input)}
+                  />
+                  <button
+                    onClick={() => login(input)}
+                    className="w-full bg-stone-800 hover:bg-stone-700 border border-stone-700 text-stone-200 py-3 tracking-wide transition"
+                  >
+                    Announce Presence
+                  </button>
+                  <div className="flex items-center gap-3 text-stone-700 text-xs uppercase justify-center">
+                    <span className="h-px bg-stone-800 flex-1"></span> or <span className="h-px bg-stone-800 flex-1"></span>
+                  </div>
+                  <button
+                    onClick={() => setView('founding')}
+                    className="w-full bg-amber-900/20 hover:bg-amber-900/40 text-amber-400 border border-amber-900/40 py-3 tracking-wide transition"
+                  >
+                    Establish New Lineage
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      const Founding = () => {
+        const [name, setName] = useState('');
+        const [motto, setMotto] = useState('');
+        const [color, setColor] = useState('text-amber-500');
+        const [rejects, setRejects] = useState(0);
+        const [judging, setJudging] = useState(false);
+        const [message, setMessage] = useState(null);
+        const [generating, setGenerating] = useState(false);
+
+        const colors = [
+          { text: 'text-red-500', bg: 'bg-red-700', label: 'Crimson' },
+          { text: 'text-blue-500', bg: 'bg-blue-700', label: 'Azure' },
+          { text: 'text-green-500', bg: 'bg-green-700', label: 'Verdant' },
+          { text: 'text-amber-500', bg: 'bg-amber-700', label: 'Gold' },
+          { text: 'text-purple-500', bg: 'bg-purple-700', label: 'Amethyst' },
+          { text: 'text-slate-200', bg: 'bg-slate-500', label: 'Silver' },
+        ];
+
+        const generateName = async () => {
+          setGenerating(true);
+          const rand = Math.floor(Math.random() * 1000);
+          const n = await generateLore('House Name', `Serious single-word noble house name. Seed ${rand}.`);
+          if (n) setName(n);
+          setGenerating(false);
+        };
+        const generateMotto = async () => {
+          if (!name) return;
+          setGenerating(true);
+          const m = await generateLore('House Motto', `House ${name} motto, solemn medieval tone.`);
+          if (m) setMotto(m);
+          setGenerating(false);
+        };
+
+        const triggerCorrupt = async () => {
+          const corruptName = await generateLore('House Name', 'Chaotic void house name') || "The Voidsworn";
+          const corruptMotto = await generateLore('House Motto', 'Chaos reigns eternal') || "Chaos Reigns Eternal";
+          createHouse(corruptName, corruptMotto, 'text-purple-500', true);
+          showNote("The scribes reject you; a Corrupt House is forged.");
+        };
+
+        const handleSubmit = async () => {
+          setJudging(true); setMessage(null);
+          const verdict = await consultTheScribes('House', { name, context: motto });
+          setJudging(false);
+          if (verdict.approved) {
+            showNote(verdict.message);
+            createHouse(name, motto, color);
+          } else {
+            const next = rejects + 1;
+            setRejects(next);
+            setMessage(verdict.message);
+            if (next >= 3) setTimeout(triggerCorrupt, 1500);
+          }
+        };
+
+        return (
+          <div className="min-h-screen flex items-center justify-center bg-stone-950 p-6">
+            <div className="w-full max-w-2xl glass rounded-xl p-8 shadow-2xl border border-stone-800 relative overflow-hidden">
+              <button className="absolute top-4 right-4 text-stone-600 hover:text-stone-300" onClick={() => setView('gate')}>
+                <Icon name="logout" />
+              </button>
+              <div className="flex flex-col items-center gap-2 mb-4">
+                <Icon name="shield" size={56} className={color} />
+                <h2 className="text-3xl font-serif text-amber-400">Founding Ceremony</h2>
+                <p className="text-stone-500 italic text-sm">"History awaits your mark."</p>
+              </div>
+              <div className="grid grid-cols-6 gap-2 mb-6">
+                {colors.map(c => (
+                  <button key={c.label} onClick={() => setColor(c.text)} className={`h-8 w-8 rounded-full ${c.bg} border-2 ${color === c.text ? 'border-white scale-110' : 'border-stone-800 hover:border-stone-600'} transition`} title={c.label}></button>
+                ))}
+              </div>
+              <div className="space-y-5">
+                <div>
+                  <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
+                    <span>House Name</span>
+                    <button onClick={generateName} disabled={generating} className="text-amber-400 flex items-center gap-1 disabled:opacity-50">
+                      {generating ? <Icon name="loader" size={14} /> : <Icon name="sparkles" size={14} />} Suggest
+                    </button>
+                  </div>
+                  <input value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-4 py-3 font-serif text-lg focus:border-amber-500 outline-none" />
+                </div>
+                <div>
+                  <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
+                    <span>House Motto</span>
+                    <button onClick={generateMotto} disabled={generating || !name} className="text-amber-400 flex items-center gap-1 disabled:opacity-50">
+                      {generating ? <Icon name="loader" size={14} /> : <Icon name="sparkles" size={14} />} Suggest
+                    </button>
+                  </div>
+                  <input value={motto} onChange={(e) => setMotto(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-4 py-3 font-serif italic focus:border-amber-500 outline-none" />
+                </div>
+                {rejects > 0 && (
+                  <div className="flex justify-center gap-2">
+                    {[...Array(3)].map((_, i) => <div key={i} className={`h-2 w-10 rounded-full ${i < rejects ? 'bg-red-600' : 'bg-stone-800'}`}></div>)}
+                  </div>
+                )}
+                {message && (
+                  <div className="bg-red-950/40 border border-red-900/60 text-red-200 text-sm rounded p-4 flex gap-3 animate-shake">
+                    <Icon name="alert" className="shrink-0" /> {message}
+                  </div>
+                )}
+                <button
+                  onClick={handleSubmit}
+                  disabled={!name || !motto || judging}
+                  className="w-full bg-amber-600 hover:bg-amber-500 text-stone-900 font-bold py-3 rounded border border-amber-400 uppercase tracking-widest disabled:opacity-50"
+                >
+                  {judging ? 'Consulting Scribes...' : 'Seal the Pact'}
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      const Hall = () => {
+        if (!currentHouse) return null;
+        const isCorrupt = currentHouse.origin === 'corrupt';
+        const accent = isCorrupt ? 'text-purple-400' : 'text-amber-400';
+        return (
+          <div className="min-h-screen bg-stone-950 text-stone-200 flex flex-col">
+            <header className="flex justify-between items-center p-6 border-b border-stone-800 bg-stone-900/60 backdrop-blur">
+              <div className="flex items-center gap-4">
+                <Icon name={isCorrupt ? 'ghost' : 'shield'} size={44} className={currentHouse.sigilColor} />
+                <div>
+                  <h1 className="text-2xl font-serif">{currentHouse.name}</h1>
+                  <p className="text-sm text-stone-500 italic">"{currentHouse.motto}"</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-5">
+                <div className={`flex items-center gap-2 ${accent}`} title="Gold"><Icon name="coins" /> <span className="font-mono">{currentHouse.resources.gold}</span></div>
+                <div className="flex items-center gap-2 text-purple-300" title="Renown"><Icon name="crown" /> <span className="font-mono">{currentHouse.resources.renown}</span></div>
+                <button onClick={logout} className="p-2 rounded hover:bg-stone-800 text-stone-500 hover:text-stone-200"><Icon name="logout" /></button>
+              </div>
+            </header>
+
+            <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 max-w-6xl mx-auto w-full">
+              <div className="lg:col-span-2 space-y-4">
+                <div className="flex justify-between items-center">
+                  <h2 className={`text-xl font-serif flex items-center gap-2 ${accent}`}><Icon name="user" /> Active Scions</h2>
+                  <button onClick={() => setView('recruit')} className="flex items-center gap-2 bg-stone-800 hover:bg-stone-700 border border-stone-700 px-4 py-2 rounded text-sm">
+                    <Icon name="plus" /> Recruit
+                  </button>
+                </div>
+                {currentHouse.characters.length === 0 ? (
+                  <div className="border border-dashed border-stone-800 rounded-lg p-10 text-center text-stone-500 font-serif">The halls are empty. Recruit a scion.</div>
+                ) : (
+                  <div className="space-y-3">
+                    {currentHouse.characters.map(ch => {
+                      const cls = CLASSES.find(c => c.id === ch.class);
+                      return (
+                        <div key={ch.id} className="flex items-center justify-between bg-stone-900 border border-stone-800 rounded-lg p-4 hover:border-stone-600 transition">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-full bg-stone-950 border border-stone-800 flex items-center justify-center">
+                              {cls && <Icon name={cls.icon} className="text-stone-400" />}
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <h3 className="text-lg font-serif">{ch.name}</h3>
+                                {ch.perks?.includes('fools_errand') && <span className="text-xs uppercase text-red-400 border border-red-700 px-1 rounded">Fool</span>}
+                              </div>
+                              <p className="text-xs text-stone-500 uppercase tracking-widest">{ch.class} • Lvl {ch.level}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <button onClick={() => { setActiveCharId(ch.id); setView('world'); }} className={`px-4 py-2 rounded border text-sm font-semibold ${isCorrupt ? 'border-purple-700 text-purple-300 hover:bg-purple-900/30' : 'border-amber-700 text-amber-400 hover:bg-amber-900/30'}`}>
+                              Enter World
+                            </button>
+                            <button onClick={() => { if (confirm(`End ${ch.name}'s journey?`)) killCharacter(ch.id); }} className="p-2 text-stone-500 hover:text-red-500 hover:bg-red-900/10 rounded">
+                              <Icon name="skull" />
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+              <div className="space-y-4">
+                <div className="bg-stone-900 border border-stone-800 rounded-lg p-5">
+                  <h3 className="text-lg font-serif text-stone-400 flex items-center gap-2 mb-3"><Icon name="book" /> House Legacy</h3>
+                  <div className="space-y-2 text-sm text-stone-500">
+                    <div className="flex justify-between"><span>Generations</span><span className="text-stone-200">{currentHouse.crypt.length} Fallen</span></div>
+                    <div className="flex justify-between"><span>Total Renown</span><span className="text-purple-300 font-mono">{currentHouse.resources.renown}</span></div>
+                    <div className="flex justify-between"><span>Vault</span><span className={accent}>Solvent</span></div>
+                  </div>
+                </div>
+                <div className="bg-stone-900 border border-stone-800 rounded-lg p-5">
+                  <h3 className="text-lg font-serif text-stone-400 flex items-center gap-2 mb-3"><Icon name="history" /> Crypt</h3>
+                  {currentHouse.crypt.length === 0 ? (
+                    <p className="text-stone-600 text-sm italic">No ancestors rest here yet.</p>
+                  ) : (
+                    <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
+                      {currentHouse.crypt.map(d => (
+                        <div key={d.id} className="flex justify-between text-sm text-stone-500">
+                          <span className="text-stone-300">{d.name}</span>
+                          <span>Lvl {d.level} {d.class}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      const Recruit = () => {
+        const [name, setName] = useState('');
+        const [cls, setCls] = useState(CLASSES[0].id);
+        const [origin, setOrigin] = useState('');
+        const [rejects, setRejects] = useState(0);
+        const [judging, setJudging] = useState(false);
+        const [message, setMessage] = useState(null);
+        const [generating, setGenerating] = useState(false);
+
+        const generateName = async () => {
+          setGenerating(true);
+          const rand = Math.floor(Math.random() * 1000);
+          const n = await generateLore('Character Name', `High fantasy name for a ${cls}. Seed ${rand}.`);
+          if (n) setName(n);
+          setGenerating(false);
+        };
+        const generateOrigin = async () => {
+          if (!name) return;
+          setGenerating(true);
+          const o = await generateLore('Character Origin', `${name}, a ${cls}, gritty dark fantasy origin.`);
+          if (o) setOrigin(o);
+          setGenerating(false);
+        };
+
+        const triggerFool = () => {
+          const pool = ["Bozo the Lost", "Jester of Ruin", "The Unworthy", "Buffoon McStumble", "Giggles"];
+          const randName = pool[Math.floor(Math.random() * pool.length)];
+          createCharacter(randName, "vanguard", "A fool branded by the scribes.", ["fools_errand"]);
+          showNote("You are branded a Fool. The scribes choose your fate.");
+        };
+
+        const handleSubmit = async () => {
+          setJudging(true); setMessage(null);
+          const verdict = await consultTheScribes('Character', { name, context: origin });
+          setJudging(false);
+          if (verdict.approved) {
+            showNote(verdict.message);
+            createCharacter(name, cls, origin);
+          } else {
+            const next = rejects + 1;
+            setRejects(next);
+            setMessage(verdict.message);
+            if (next >= 3) setTimeout(triggerFool, 1200);
+          }
+        };
+
+        return (
+          <div className="min-h-screen flex items-center justify-center bg-stone-950 p-6">
+            <div className="w-full max-w-5xl glass rounded-xl shadow-2xl border border-stone-800 grid md:grid-cols-2 overflow-hidden">
+              <div className="p-8 border-r border-stone-800">
+                <button onClick={() => setView('hall')} className="text-sm text-stone-500 hover:text-stone-200 mb-4 flex items-center gap-1">&larr; Return to Hall</button>
+                <h2 className="text-2xl font-serif text-amber-400 mb-4">Choose a Path</h2>
+                <div className="space-y-3">
+                  {CLASSES.map(c => (
+                    <button key={c.id} onClick={() => setCls(c.id)} className={`w-full text-left p-4 rounded border transition ${cls === c.id ? 'border-amber-500 bg-amber-900/20' : 'border-stone-800 bg-stone-950 hover:border-stone-600'}`}>
+                      <div className="flex items-start gap-3">
+                        <Icon name={c.icon} className={cls === c.id ? 'text-amber-400' : 'text-stone-500'} />
+                        <div>
+                          <h3 className={`font-serif text-lg ${cls === c.id ? 'text-stone-100' : 'text-stone-400'}`}>{c.name}</h3>
+                          <p className="text-xs text-stone-500">{c.desc}</p>
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="p-8 bg-stone-950/60">
+                <h3 className="text-xl font-serif text-stone-200 mb-4">Identity</h3>
+                <div className="space-y-5">
+                  <div>
+                    <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
+                      <span>Name</span>
+                      <button onClick={generateName} disabled={generating} className="text-amber-400 flex items-center gap-1 disabled:opacity-50">
+                        {generating ? <Icon name="loader" size={14} /> : <Icon name="sparkles" size={14} />} Suggest
+                      </button>
+                    </div>
+                    <input value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-3 py-2 focus:border-amber-500 outline-none" placeholder="Scion name" />
+                  </div>
+                  <div>
+                    <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
+                      <span>Origin (optional)</span>
+                      <button onClick={generateOrigin} disabled={!name || generating} className="text-amber-400 flex items-center gap-1 disabled:opacity-50">
+                        {generating ? <Icon name="loader" size={14} /> : <Icon name="sparkles" size={14} />} Imagine
+                      </button>
+                    </div>
+                    <textarea value={origin} onChange={(e) => setOrigin(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-3 py-2 h-28 resize-none text-sm focus:border-amber-500 outline-none" />
+                  </div>
+                  {rejects > 0 && (
+                    <div className="flex justify-center gap-2">
+                      {[...Array(3)].map((_, i) => <div key={i} className={`h-2 w-10 rounded-full ${i < rejects ? 'bg-red-600' : 'bg-stone-800'}`}></div>)}
+                    </div>
+                  )}
+                  {message && (
+                    <div className="bg-red-950/40 border border-red-900/60 text-red-200 text-sm rounded p-4 flex gap-3 animate-shake">
+                      <Icon name="alert" className="shrink-0" /> {message}
+                    </div>
+                  )}
+                  <button onClick={handleSubmit} disabled={!name || judging} className="w-full bg-stone-100 text-stone-900 py-3 font-bold rounded hover:bg-white disabled:opacity-50 flex items-center justify-center gap-2">
+                    {judging ? <><Icon name="loader" size={16} className="text-stone-800" /><span>Consulting...</span></> : <><Icon name="sparkles" className="text-amber-600" /> Sign the Contract</>}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      const World = () => {
+        const char = currentHouse?.characters.find(c => c.id === activeCharId);
+        const [logs, setLogs] = useState([]);
+        const [progress, setProgress] = useState(0);
+        const [action, setAction] = useState("Preparing for departure...");
+        const [stats, setStats] = useState({ gold: 0, kills: 0, xp: 0 });
+        const endRef = useRef(null);
+
+        useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [logs]);
+
+        useEffect(() => {
+          const interval = setInterval(() => {
+            setProgress(p => {
+              if (p >= 100) { performAction(); return 0; }
+              return p + (Math.random() * 10 + 5);
+            });
+          }, 500);
+          return () => clearInterval(interval);
+        }, []);
+
+        const performAction = () => {
+          const roll = Math.random();
+          let msg = "";
+          if (roll < 0.3) {
+            const mob = MONSTERS[Math.floor(Math.random() * MONSTERS.length)];
+            msg = `Executed ${mob}`;
+            setStats(s => ({ ...s, kills: s.kills + 1, xp: s.xp + 25 }));
+            setAction(`Hunting ${mob}...`);
+          } else if (roll < 0.5) {
+            const item = LOOT[Math.floor(Math.random() * LOOT.length)];
+            msg = `Looted ${item}`;
+            setStats(s => ({ ...s, gold: s.gold + Math.floor(Math.random() * 10) + 1 }));
+            setAction(ACTIONS[Math.floor(Math.random() * ACTIONS.length)]);
+          } else if (roll < 0.7) {
+            const loc = LOCATIONS[Math.floor(Math.random() * LOCATIONS.length)];
+            msg = `Traversing ${loc}`;
+            setAction(`Traveling to ${loc}...`);
+          } else {
+            const act = ACTIONS[Math.floor(Math.random() * ACTIONS.length)];
+            msg = act;
+            setAction(act + "...");
+          }
+          setLogs(prev => [...prev.slice(-15), msg]);
+        };
+
+        if (!char) return null;
+        const cls = CLASSES.find(c => c.id === char.class);
+
+        return (
+          <div className="min-h-screen bg-black text-stone-300 font-mono p-6 relative">
+            <div className="flex justify-between items-center border-b border-stone-800 pb-4 mb-4">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded bg-stone-900 border border-stone-700 flex items-center justify-center">
+                  {cls && <Icon name={cls.icon} className="text-amber-500" />}
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold">{char.name}</h1>
+                  <p className="text-xs text-stone-500">Level {char.level} {char.class}</p>
+                </div>
+              </div>
+              <button onClick={() => setView('hall')} className="text-stone-500 hover:text-stone-200 border border-stone-800 px-4 py-2 text-xs uppercase tracking-widest">Return to Hall</button>
+            </div>
+            <div className="grid grid-cols-3 gap-3 mb-5">
+              <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between"><span className="text-xs text-stone-500 uppercase">Kills</span><span className="text-red-500 font-bold flex items-center gap-1"><Icon name="skull" size={16} />{stats.kills}</span></div>
+              <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between"><span className="text-xs text-stone-500 uppercase">Loot Gold</span><span className="text-amber-500 font-bold flex items-center gap-1"><Icon name="coins" size={16} />{stats.gold}</span></div>
+              <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between"><span className="text-xs text-stone-500 uppercase">XP</span><span className="text-blue-400 font-bold flex items-center gap-1"><Icon name="zap" size={16} />{stats.xp}</span></div>
+            </div>
+            <div className="mb-4">
+              <div className="flex justify-between text-xs text-amber-500 mb-1 uppercase"><span>Action</span><span>{action}</span></div>
+              <div className="h-2 w-full bg-stone-900 rounded-full overflow-hidden border border-stone-800">
+                <div className="h-full bg-amber-600 transition-all duration-500" style={{ width: `${progress}%` }}></div>
+              </div>
+            </div>
+            <div className="relative bg-stone-950 border border-stone-800 rounded p-4 h-[50vh] overflow-y-auto scanline">
+              <div className="space-y-1">
+                {logs.length === 0 && <div className="text-stone-700 italic">...Initializing World Simulation...</div>}
+                {logs.map((l, i) => (
+                  <div key={i} className="text-sm">
+                    <span className="text-stone-600 mr-2">[{new Date().toLocaleTimeString([], { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" })}]</span>
+                    <span>{l}</span>
+                  </div>
+                ))}
+                <div ref={endRef}></div>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      return (
+        <div className="font-sans antialiased">
+          {notification && (
+            <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-stone-900 border border-amber-900/50 text-amber-100 px-5 py-3 rounded shadow-2xl flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-amber-500"></span>
+              {notification}
+            </div>
+          )}
+          {view === 'gate' && <Gate />}
+          {view === 'founding' && <Founding />}
+          {view === 'hall' && <Hall />}
+          {view === 'recruit' && <Recruit />}
+          {view === 'world' && <World />}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

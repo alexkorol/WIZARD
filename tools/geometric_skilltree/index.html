@@ -81,6 +81,12 @@
         }
 
         .stat-value { font-weight: bold; color: #fff; }
+        .axis-legend { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 10px; font-size: 11px; color: #9ca3af; }
+        .axis-pill { display: flex; align-items: center; gap: 6px; background: #0f1219; border: 1px solid #1f2937; padding: 6px 8px; border-radius: 4px; }
+        .axis-dot { width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 8px currentColor; }
+        .axis-dot.might { color: #ff5252; }
+        .axis-dot.dex { color: #34d399; }
+        .axis-dot.int { color: #60a5fa; }
 
         .btn {
             background: #1a1f29;
@@ -106,8 +112,8 @@
             transition: all 0.3s;
         }
         .straight-path.active {
-            stroke: var(--path-active);
-            filter: drop-shadow(0 0 3px var(--path-active));
+            stroke: var(--path-color, var(--path-active));
+            filter: drop-shadow(0 0 3px var(--path-color, var(--path-active)));
         }
         .straight-path.ghost {
             stroke: var(--path-ghost);
@@ -134,7 +140,7 @@
             cursor: pointer;
         }
         .curve-path.available {
-            stroke: var(--arc-available);
+            stroke: var(--arc-color, var(--arc-available));
             stroke-width: 3;
         }
         .curve-path.available:hover {
@@ -142,9 +148,9 @@
             stroke-width: 4;
         }
         .curve-path.active {
-            stroke: var(--arc-active);
+            stroke: var(--arc-color, var(--arc-active));
             stroke-width: 3;
-            filter: drop-shadow(0 0 4px var(--arc-active));
+            filter: drop-shadow(0 0 4px var(--arc-color, var(--arc-active)));
         }
 
         /* Hit Areas */
@@ -159,15 +165,15 @@
         }
         .node-group:hover circle.node-fill { transform: scale(1.4); }
 
-        .node-bg { fill: var(--bg-color); stroke: var(--node-inactive); stroke-width: 2; }
-        .node-fill { fill: var(--node-inactive); }
+        .node-bg { fill: var(--bg-color); stroke: var(--axis-base, var(--node-inactive)); stroke-width: 2; }
+        .node-fill { fill: var(--axis-base, var(--node-inactive)); }
 
         /* Node States */
-        .node-group.active .node-fill { fill: var(--node-active); filter: drop-shadow(0 0 5px var(--node-active)); }
-        .node-group.active .node-bg { stroke: var(--node-active); }
+        .node-group.active .node-fill { fill: var(--axis-strong, var(--node-active)); filter: drop-shadow(0 0 5px var(--axis-glow, var(--axis-strong, var(--node-active)))); }
+        .node-group.active .node-bg { stroke: var(--axis-strong, var(--node-active)); }
         
-        .node-group.available .node-bg { stroke: var(--node-available); }
-        .node-group.available .node-fill { fill: var(--node-available); }
+        .node-group.available .node-bg { stroke: var(--axis-base, var(--node-available)); }
+        .node-group.available .node-fill { fill: var(--axis-base, var(--node-available)); }
         
         /* Center Node Unique Style */
         .node-group.type-center .node-fill { fill: var(--node-center); filter: drop-shadow(0 0 10px var(--node-center)); }
@@ -234,6 +240,11 @@
                 <span>Flow (Arcs)</span>
                 <span class="stat-value" id="arc-points-display">15</span>
             </div>
+            <div class="axis-legend">
+                <div class="axis-pill"><span class="axis-dot might"></span> Might</div>
+                <div class="axis-pill"><span class="axis-dot dex"></span> Dex</div>
+                <div class="axis-pill"><span class="axis-dot int"></span> Int</div>
+            </div>
             <div style="margin-top:15px; font-size: 11px; color:#666; border-top: 1px solid #333; padding-top:10px; line-height: 1.6;">
                 <strong style="color:#ccc">Left Click Node:</strong> Toggle (Awaken/Refund)<br>
                 <strong style="color:#ccc">Click Ghost Path:</strong> Confirm Choice<br>
@@ -264,6 +275,53 @@
 
 <script>
 const RADIUS = 80;
+const AXIS_COLORS = {
+    might: { r: 255, g: 82, b: 82 },   // Red axis
+    dex:   { r: 52,  g: 211, b: 153 }, // Green axis
+    int:   { r: 96,  g: 165, b: 250 }  // Blue axis
+};
+const AXIS_FALLBACK = { r: 110, g: 130, b: 150 };
+
+function clamp01(v) { return Math.max(0, Math.min(1, v)); }
+function colorToCss(c) { return `rgb(${Math.round(c.r)},${Math.round(c.g)},${Math.round(c.b)})`; }
+function mixAxis(weights) {
+    const r = AXIS_COLORS.might.r * weights.might + AXIS_COLORS.dex.r * weights.dex + AXIS_COLORS.int.r * weights.int;
+    const g = AXIS_COLORS.might.g * weights.might + AXIS_COLORS.dex.g * weights.dex + AXIS_COLORS.int.g * weights.int;
+    const b = AXIS_COLORS.might.b * weights.might + AXIS_COLORS.dex.b * weights.dex + AXIS_COLORS.int.b * weights.int;
+    return { r, g, b };
+}
+function lighten(color, amt = 0.2) {
+    return {
+        r: color.r + (255 - color.r) * amt,
+        g: color.g + (255 - color.g) * amt,
+        b: color.b + (255 - color.b) * amt
+    };
+}
+function axisWeightsFromHex(hex) {
+    const q = hex.q;
+    const r = hex.r;
+    const s = -q - r;
+    const sum = Math.abs(q) + Math.abs(r) + Math.abs(s);
+    if (sum === 0) return { might: 0, dex: 0, int: 0 };
+    return {
+        might: Math.abs(q) / sum,
+        dex: Math.abs(r) / sum,
+        int: Math.abs(s) / sum,
+    };
+}
+function makeAxisColors(hex) {
+    const weights = axisWeightsFromHex(hex);
+    const base = (weights.might + weights.dex + weights.int) === 0 ? AXIS_FALLBACK : mixAxis(weights);
+    return {
+        weights,
+        base,
+        strong: lighten(base, 0.25),
+        glow: lighten(base, 0.45),
+    };
+}
+function averageColor(c1, c2) {
+    return { r: (c1.r + c2.r) / 2, g: (c1.g + c2.g) / 2, b: (c1.b + c2.b) / 2 };
+}
 
 class Hex {
     constructor(q, r) { this.q = q; this.r = r; }
@@ -288,6 +346,7 @@ class Node {
         this.active = false;
         this.connections = []; 
         this.data = { name: "Cosmic Point", desc: "A point of power." };
+        this.axis = makeAxisColors(hex);
     }
 }
 
@@ -569,6 +628,8 @@ class SVGRenderer {
             const n2 = this.tree.nodes.get(conn.toId);
             const p1 = n1.hex.toPixel();
             const p2 = n2.hex.toPixel();
+            const connColor = averageColor(n1.axis.strong, n2.axis.strong);
+            const arcColor = averageColor(n1.axis.base, n2.axis.base);
 
             // Straight Link
             const gStraight = document.createElementNS("http://www.w3.org/2000/svg", "g");
@@ -576,6 +637,7 @@ class SVGRenderer {
             straightLine.setAttribute("x1", p1.x); straightLine.setAttribute("y1", p1.y);
             straightLine.setAttribute("x2", p2.x); straightLine.setAttribute("y2", p2.y);
             straightLine.setAttribute("class", "straight-path");
+            straightLine.style.setProperty('--path-color', colorToCss(connColor));
 
             const straightHit = document.createElementNS("http://www.w3.org/2000/svg", "line");
             straightHit.setAttribute("x1", p1.x); straightHit.setAttribute("y1", p1.y);
@@ -600,6 +662,7 @@ class SVGRenderer {
                 const d = `M ${p1.x} ${p1.y} A ${RADIUS} ${RADIUS} 0 0 ${sweep} ${p2.x} ${p2.y}`;
                 path.setAttribute("d", d);
                 path.setAttribute("class", "curve-path");
+                path.style.setProperty('--arc-color', colorToCss(arcColor));
                 const hit = document.createElementNS("http://www.w3.org/2000/svg", "path");
                 hit.setAttribute("d", d); hit.setAttribute("class", "hit-area");
                 hit.onclick = (e) => { e.stopPropagation(); this.tree.toggleArc(conn.id, index); };
@@ -619,6 +682,9 @@ class SVGRenderer {
             const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
             g.setAttribute("transform", `translate(${pos.x},${pos.y})`);
             g.setAttribute("class", `node-group type-${node.type}`);
+            g.style.setProperty('--axis-base', colorToCss(node.axis.base));
+            g.style.setProperty('--axis-strong', colorToCss(node.axis.strong));
+            g.style.setProperty('--axis-glow', colorToCss(node.axis.glow));
             
             g.onclick = (e) => { e.stopPropagation(); this.tree.handleNodeClick(node.id); };
             g.oncontextmenu = (e) => { e.preventDefault(); e.stopPropagation(); this.tree.deactivateNode(node.id); };
@@ -686,7 +752,15 @@ class SVGRenderer {
     showTooltip(e, node) {
         const tt = document.getElementById('tooltip');
         tt.querySelector('.tt-header').innerText = node.data.name;
-        tt.querySelector('.tt-body').innerText = node.data.desc;
+        const w = node.axis.weights;
+        const pct = (v) => Math.round(v * 100);
+        tt.querySelector('.tt-body').innerHTML = `
+            <div style="margin-bottom:6px;">${node.data.desc}</div>
+            <div style="display:flex; gap:8px; font-weight:bold; font-size:11px;">
+                <span style="color:#fca5a5;">Might ${pct(w.might)}%</span>
+                <span style="color:#86efac;">Dex ${pct(w.dex)}%</span>
+                <span style="color:#93c5fd;">Int ${pct(w.int)}%</span>
+            </div>`;
         tt.style.display = 'block';
         tt.style.left = (e.clientX + 15) + 'px';
         tt.style.top = (e.clientY + 15) + 'px';

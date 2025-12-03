@@ -11,27 +11,17 @@
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
 
   <style>
     :root {
-      --bg-depth: #050507;
-      --bg-panel: rgba(13, 17, 26, 0.85);
-      --slot-bg: rgba(0, 0, 0, 0.3);
-      --slot-border: rgba(255, 255, 255, 0.08);
-
-      --rarity-common: #a3a3a3;
-      --rarity-magic: #3b82f6;
-      --rarity-rare: #eab308;
-      --rarity-legendary: #f97316;
-      --rarity-unique: #a855f7;
-
-      --accent: #d4b483;
-      --text-main: #e2e8f0;
-      --text-muted: #94a3b8;
-
-      --cell-size: 50px;
-      --gap: 2px;
+      --bg: #050505;
+      --panel: rgba(12, 13, 18, 0.9);
+      --panel-border: rgba(255, 255, 255, 0.08);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #f59e0b;
+      --cell-size: 48px;
+      --cell-gap: 2px;
     }
 
     * { box-sizing: border-box; user-select: none; }
@@ -39,182 +29,253 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background-color: var(--bg-depth);
-      background-image:
-        radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 40%),
-        radial-gradient(circle at 85% 30%, rgba(234, 179, 8, 0.05), transparent 40%);
-      color: var(--text-main);
+      background: var(--bg);
+      color: var(--text);
       font-family: 'Inter', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
     }
 
-    h1 { font-family: 'Cinzel', serif; color: var(--accent); text-shadow: 0 0 15px rgba(212, 180, 131, 0.3); margin: 0; }
-    .subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
+    #root { min-height: 100vh; }
 
-    .interface {
+    .app-shell {
+      min-height: 100vh;
+      background-image:
+        radial-gradient(circle at 15% 40%, rgba(59, 130, 246, 0.08), transparent 36%),
+        radial-gradient(circle at 80% 20%, rgba(234, 179, 8, 0.06), transparent 32%);
+      padding-bottom: 40px;
+    }
+
+    .top-bar {
       display: flex;
-      gap: 32px;
-      align-items: flex-start;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 22px;
+      background: linear-gradient(90deg, rgba(10, 12, 17, 0.95), rgba(12, 16, 24, 0.95));
+      border-bottom: 1px solid #1f2937;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+
+    .title {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.14em;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    .title strong { color: var(--accent); }
+    .subtext { color: var(--muted); font-size: 0.85rem; }
+
+    .top-actions { display: flex; align-items: center; gap: 12px; }
+    .gold-counter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #0b0d10;
+      border: 1px solid #43350f;
+      padding: 8px 12px;
+      border-radius: 10px;
+      color: #fcd34d;
+      font-family: 'JetBrains Mono', monospace;
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.5);
+    }
+    .btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.08em;
+      transition: all 0.18s ease;
+    }
+    .btn:hover { background: var(--accent); color: #0b0b0b; border-color: var(--accent); transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .main {
+      display: flex;
       flex-wrap: wrap;
-      justify-content: center;
+      gap: 24px;
+      padding: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .panel {
-      background: var(--bg-panel);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
       border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-      backdrop-filter: blur(12px);
+      padding: 18px;
+      box-shadow: 0 15px 45px rgba(0,0,0,0.42);
       position: relative;
     }
 
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(10, var(--cell-size));
-      grid-template-rows: repeat(6, var(--cell-size));
-      gap: var(--gap);
-      padding: 10px;
-      background: rgba(0,0,0,0.2);
-      border-radius: 8px;
-      border: 1px solid var(--slot-border);
+    .paperdoll { display: flex; flex-direction: column; gap: 16px; align-items: center; }
+    .slot-row { display: flex; align-items: flex-start; gap: 14px; }
+
+    .equip-slot {
       position: relative;
+      background: rgba(255,255,255,0.02);
+      border: 1px dashed #334155;
+      border-radius: 12px;
+      min-width: 78px;
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #475569;
+      transition: all 0.2s ease;
+      overflow: hidden;
+    }
+    .equip-slot.belt { min-width: 150px; min-height: 46px; }
+    .equip-slot.small { min-width: 70px; min-height: 70px; }
+    .equip-slot.highlight {
+      border-color: #fbbf24;
+      box-shadow: 0 0 14px rgba(251, 191, 36, 0.32);
+      background: rgba(251,191,36,0.08);
+      color: #eab308;
+    }
+    .equip-slot .label {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0 6px;
+    }
+
+    .inventory-panel { display: flex; flex-direction: column; gap: 12px; flex: 1; min-width: 360px; }
+    .section-title { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+    .grid-shell {
+      position: relative;
+      display: inline-block;
+      padding: 10px;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.82), rgba(7, 11, 17, 0.9));
+      border-radius: 12px;
+      border: 1px solid var(--panel-border);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .inventory-grid {
+      position: relative;
+      display: grid;
+      gap: var(--cell-gap);
+      background: rgba(0,0,0,0.35);
+      border: 1px solid #1f2937;
+      border-radius: 10px;
+      overflow: hidden;
     }
 
     .grid-cell {
       width: var(--cell-size);
       height: var(--cell-size);
-      background: var(--slot-bg);
-      border: 1px solid var(--slot-border);
-      border-radius: 4px;
-      transition: background 0.2s;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.03);
     }
-
-    .grid-cell.hover-valid { background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.3); }
-    .grid-cell.hover-invalid { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); }
 
     .item {
       position: absolute;
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
-      border: 1px solid;
-      border-radius: 4px;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      background: linear-gradient(145deg, rgba(30,41,59,0.94), rgba(17,24,39,0.92));
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: grab;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
+      transition: transform 0.08s ease, box-shadow 0.2s ease;
       overflow: hidden;
-      transition: transform 0.1s, box-shadow 0.2s;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
     }
-
-    .item:hover { filter: brightness(1.2); z-index: 20; }
-    .item:active { cursor: grabbing; transform: scale(1.02); }
-    .item svg { width: 60%; height: 60%; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); }
-
-    .item.common { border-color: var(--rarity-common); color: var(--rarity-common); }
-    .item.magic { border-color: var(--rarity-magic); color: var(--rarity-magic); box-shadow: inset 0 0 15px rgba(59, 130, 246, 0.2); }
-    .item.rare { border-color: var(--rarity-rare); color: var(--rarity-rare); box-shadow: inset 0 0 15px rgba(234, 179, 8, 0.2); }
-    .item.legendary { border-color: var(--rarity-legendary); color: var(--rarity-legendary); box-shadow: inset 0 0 15px rgba(249, 115, 22, 0.3); }
-    .item.unique { border-color: var(--rarity-unique); color: var(--rarity-unique); box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.3); animation: pulse-border 3s infinite; }
-
-    @keyframes pulse-border {
-      0% { border-color: var(--rarity-unique); }
-      50% { border-color: #d8b4fe; }
-      100% { border-color: var(--rarity-unique); }
+    .item:hover { filter: brightness(1.08); }
+    .item.dragging {
+      opacity: 0.92;
+      transform: scale(1.05);
+      cursor: grabbing;
+      box-shadow: 0 18px 30px rgba(0,0,0,0.52);
     }
-
-    .doll-container {
-      position: relative;
-      width: 300px;
-      height: 450px;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" fill="%23ffffff05"><path d="M100,20 C120,20 130,40 130,60 L140,70 L130,120 L140,180 L110,280 L90,280 L60,180 L70,120 L60,70 L70,60 C70,40 80,20 100,20 Z" /></svg>') center no-repeat;
-      background-size: contain;
-    }
-
-    .equip-slot {
+    .item .item-gloss {
       position: absolute;
-      width: var(--cell-size);
-      height: var(--cell-size);
-      background: rgba(0,0,0,0.4);
-      border: 1px dashed #444;
-      border-radius: 4px;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06), transparent 55%);
+      pointer-events: none;
+    }
+
+    .ghost {
+      position: absolute;
+      z-index: 5;
+      border: 2px solid rgba(255,255,255,0.14);
+      pointer-events: none;
+      border-radius: 6px;
+    }
+    .ghost.valid { border-color: rgba(74,222,128,0.6); background: rgba(74,222,128,0.14); box-shadow: 0 0 16px rgba(74,222,128,0.25); }
+    .ghost.invalid { border-color: rgba(248,113,113,0.6); background: rgba(248,113,113,0.14); box-shadow: 0 0 16px rgba(248,113,113,0.25); }
+
+    .trash-zone {
+      min-height: 92px;
+      border: 2px dashed #334155;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s;
+      gap: 10px;
+      color: #64748b;
+      padding: 12px;
+      transition: all 0.2s ease;
     }
-
-    .equip-slot.large { height: calc(var(--cell-size) * 2 + var(--gap)); }
-    .equip-slot.hover-valid { border-color: #4ade80; background: rgba(74, 222, 128, 0.1); }
-
-    .slot-icon { opacity: 0.2; width: 50%; height: 50%; }
-
-    .slot-head { top: 20px; left: 125px; }
-    .slot-chest { top: 100px; left: 125px; height: calc(var(--cell-size) * 3 + var(--gap) * 2); width: calc(var(--cell-size) * 2); transform: translateX(-25%); }
-    .slot-mainhand { top: 100px; left: 20px; width: calc(var(--cell-size) * 1.5); height: calc(var(--cell-size) * 3); }
-    .slot-offhand { top: 100px; right: 20px; width: calc(var(--cell-size) * 1.5); height: calc(var(--cell-size) * 3); }
-    .slot-legs { top: 280px; left: 125px; }
-    .slot-feet { top: 350px; left: 125px; }
-    .slot-hands { top: 200px; left: 10px; }
-    .slot-amulet { top: 40px; left: 190px; width: 40px; height: 40px; }
-    .slot-ring1 { top: 280px; left: 80px; width: 40px; height: 40px; }
-    .slot-ring2 { top: 280px; left: 180px; width: 40px; height: 40px; }
+    .trash-zone.active { border-color: #ef4444; background: rgba(239,68,68,0.09); color: #fca5a5; box-shadow: 0 0 12px rgba(239,68,68,0.25); }
 
     .tooltip {
       position: fixed;
       pointer-events: none;
       z-index: 100;
-      background: #0f1115;
-      border: 1px solid #333;
+      min-width: 230px;
+      background: rgba(3,7,18,0.98);
+      border: 1px solid #1f2937;
+      border-radius: 10px;
       padding: 12px;
-      min-width: 250px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-      border-radius: 4px;
-      display: none;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.65);
     }
-    .tooltip.visible { display: block; }
+    .tooltip .header { font-family: 'Cinzel', serif; font-size: 1rem; margin-bottom: 4px; }
+    .tooltip .rarity { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .tooltip .stat { color: #cbd5e1; font-size: 0.9rem; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+    .tooltip .foot { color: #475569; font-size: 0.75rem; margin-top: 8px; border-top: 1px solid #1f2937; padding-top: 6px; }
 
-    .tt-header { font-family: 'Cinzel', serif; font-size: 1.1rem; margin-bottom: 4px; border-bottom: 1px solid #333; padding-bottom: 8px; }
-    .tt-type { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 12px; }
-    .tt-stat { display: flex; justify-content: space-between; color: #818cf8; font-size: 0.9rem; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
-    .tt-stat.implicit { color: var(--text-main); margin-bottom: 8px; }
-    .tt-req { color: #ef4444; font-size: 0.8rem; margin-top: 10px; }
-    .tt-flavor { font-style: italic; color: #555; margin-top: 12px; font-size: 0.8rem; line-height: 1.4; }
-
-    .tt-common { color: var(--text-main); border-color: var(--rarity-common); }
-    .tt-magic { color: var(--rarity-magic); border-color: var(--rarity-magic); }
-    .tt-rare { color: var(--rarity-rare); border-color: var(--rarity-rare); }
-    .tt-legendary { color: var(--rarity-legendary); border-color: var(--rarity-legendary); }
-    .tt-unique { color: var(--rarity-unique); border-color: var(--rarity-unique); }
-
-    .controls { margin-top: 20px; display: flex; gap: 12px; }
-    button {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: var(--text-main);
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-family: 'Cinzel', serif;
-      transition: all 0.2s;
+    .error-chip {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(127,29,29,0.9);
+      color: #fecdd3;
+      padding: 10px 16px;
+      border: 1px solid rgba(239,68,68,0.7);
+      border-radius: 10px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+      z-index: 120;
+      font-weight: 700;
+      letter-spacing: 0.05em;
     }
-    button:hover { background: var(--accent); color: #000; border-color: var(--accent); }
 
-    .instructions {
+    .stat-grid {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      gap: 8px 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+    .stat-grid strong { color: #e2e8f0; }
+
+    .silhouette {
       position: absolute;
-      bottom: -40px;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.8rem;
+      inset: 24px;
+      opacity: 0.04;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    kbd { background: #333; padding: 2px 6px; border-radius: 4px; border: 1px solid #555; }
   </style>
 </head>
 <body>
@@ -222,384 +283,651 @@
 <div id="root"></div>
 
 <script type="text/babel">
-  const { useState, useEffect, useRef } = React;
+  const { useState, useEffect, useRef, useCallback } = React;
 
-  const playSound = (type) => {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
-    const ctx = new AudioContext();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    const now = ctx.currentTime;
-
-    if (type === 'pickup') {
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(400, now);
-      osc.frequency.exponentialRampToValueAtTime(600, now + 0.1);
-      gain.gain.setValueAtTime(0.1, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-      osc.start(now);
-      osc.stop(now + 0.1);
-    } else if (type === 'drop') {
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(200, now);
-      osc.frequency.exponentialRampToValueAtTime(100, now + 0.15);
-      gain.gain.setValueAtTime(0.2, now);
-      gain.gain.linearRampToValueAtTime(0, now + 0.15);
-      osc.start(now);
-      osc.stop(now + 0.15);
-    } else if (type === 'error') {
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(150, now);
-      gain.gain.setValueAtTime(0.1, now);
-      gain.gain.linearRampToValueAtTime(0, now + 0.1);
-      osc.start(now);
-      osc.stop(now + 0.1);
-    } else if (type === 'rotate') {
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(800, now);
-      gain.gain.setValueAtTime(0.05, now);
-      gain.gain.linearRampToValueAtTime(0, now + 0.05);
-      osc.start(now);
-      osc.stop(now + 0.05);
-    }
-  };
-
-  const GRID_W = 10;
+  const GRID_W = 12;
   const GRID_H = 6;
-  const CELL_SIZE = 50;
-  const GAP = 2;
+  const TILE_SIZE = 48;
+  const CELL_GAP = 2;
 
-  const ITEM_DB = {
-    sword: { name: "Void Blade", w: 1, h: 3, type: 'mainhand', icon: 'path d="M10,10 L90,90 M20,80 L80,20"', rarity: 'rare', stats: {'Physical Dmg': '45-60', 'Attack Speed': '1.2'}, flavor: "Whispers of the void emanate from the steel." },
-    shield: { name: "Aegis of Valor", w: 2, h: 2, type: 'offhand', icon: 'rect x="10" y="10" width="80" height="80" rx="10"', rarity: 'legendary', stats: {'Armor': '450', 'Block Chance': '32%'}, flavor: "Unbreakable." },
-    potion: { name: "Elixir of Life", w: 1, h: 1, type: 'consumable', icon: 'circle cx="50" cy="50" r="30"', rarity: 'magic', stats: {'Heal': '500 HP'}, flavor: "Tastes like cherries." },
-    bow: { name: "Windrunner", w: 2, h: 3, type: 'mainhand', icon: 'path d="M20,10 Q90,50 20,90 M20,10 L20,90"', rarity: 'unique', stats: {'Dexterity': '+50', 'Move Speed': '+10%'}, flavor: "Swift as the gale." },
-    helm: { name: "Iron Casque", w: 2, h: 2, type: 'head', icon: 'path d="M10,50 Q50,0 90,50 L90,90 L10,90 Z"', rarity: 'common', stats: {'Armor': '120'}, flavor: "Standard issue." },
-    chest: { name: "Astral Plate", w: 2, h: 3, type: 'chest', icon: 'rect x="10" y="10" width="80" height="80"', rarity: 'rare', stats: {'Armor': '800', 'Resist All': '+15%'}, flavor: "Forged in starlight." },
-    ring: { name: "Signet", w: 1, h: 1, type: 'ring', icon: 'circle cx="50" cy="50" r="20" fill="none" stroke="currentColor" stroke-width="5"', rarity: 'unique', stats: {'Crit Dmg': '+25%'}, flavor: "Precious." },
+  const ITEM_TYPES = {
+    WEAPON: 'weapon',
+    ARMOR: 'armor',
+    HELMET: 'helmet',
+    BOOTS: 'boots',
+    GLOVES: 'gloves',
+    BELT: 'belt',
+    AMULET: 'amulet',
+    POTION: 'potion',
+    ACCESSORY: 'accessory',
+    MATERIAL: 'material',
   };
 
-  const INITIAL_ITEMS = [
-    { id: 'i1', dbId: 'sword', x: 0, y: 0, rotated: false },
-    { id: 'i2', dbId: 'shield', x: 2, y: 0, rotated: false },
-    { id: 'i3', dbId: 'potion', x: 5, y: 0, rotated: false },
-    { id: 'i4', dbId: 'chest', x: 0, y: 3, rotated: false }
+  const RARITY = {
+    COMMON: { label: 'Common', color: '#cbd5e1', border: '#475569', shadow: '0 0 0 rgba(0,0,0,0)' },
+    MAGIC: { label: 'Magic', color: '#60a5fa', border: '#3b82f6', shadow: '0 0 12px rgba(59,130,246,0.35)' },
+    RARE: { label: 'Rare', color: '#facc15', border: '#facc15', shadow: '0 0 14px rgba(250,204,21,0.35)' },
+    LEGENDARY: { label: 'Legendary', color: '#fb923c', border: '#f97316', shadow: '0 0 16px rgba(249,115,22,0.4)' },
+  };
+
+  const iconProps = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round' };
+
+  const ICONS = {
+    sword: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <path d="M3 21l5-5" />
+        <path d="M14 4l6-2-2 6-9 9-4 1 1-4 9-9z" />
+        <path d="M7 14l3 3" />
+      </svg>
+    ),
+    shield: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z" />
+        <path d="M12 6v11" />
+      </svg>
+    ),
+    hammer: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <rect x="4" y="4" width="9" height="5" rx="1" />
+        <path d="M11 9l6 6" />
+        <path d="M14.5 12.5l-3.5 3.5" />
+      </svg>
+    ),
+    skull: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <path d="M7 14v2a2 2 0 002 2h6a2 2 0 002-2v-2" />
+        <path d="M8 14h8" />
+        <path d="M9 10.5a1 1 0 11-.01 0" />
+        <path d="M15 10.5a1 1 0 11-.01 0" />
+        <path d="M12 4a6 6 0 016 6v2H6v-2a6 6 0 016-6z" />
+      </svg>
+    ),
+    scroll: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <path d="M7 4h10a2 2 0 012 2v11a2 2 0 01-2 2H8a2 2 0 01-2-2V6a2 2 0 012-2z" />
+        <path d="M9 8h8" />
+        <path d="M9 12h6" />
+      </svg>
+    ),
+    gem: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <path d="M12 3l6 5-6 13-6-13z" />
+        <path d="M18 8H6" />
+        <path d="M12 3l-2 5 2 13 2-13z" />
+      </svg>
+    ),
+    zap: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <path d="M13 2L4 14h7l-1 8 9-12h-7z" />
+      </svg>
+    ),
+    axe: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <path d="M4 5h6l3 4-2 2-3-2-2 2-3-3z" />
+        <path d="M11 9l8 8" />
+        <path d="M18 14l2 2" />
+      </svg>
+    ),
+    shirt: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <path d="M9 4l3 2 3-2 3 3-2 2v11H8V9L6 7z" />
+      </svg>
+    ),
+    wand: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <path d="M4 20l9-9" />
+        <path d="M14 4l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" />
+      </svg>
+    ),
+    boots: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <path d="M6 3h7v10l5 2v4H6z" />
+        <path d="M6 15h7" />
+      </svg>
+    ),
+    hand: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <path d="M7 13V7a1.5 1.5 0 013 0v4" />
+        <path d="M10 11V5a1.5 1.5 0 013 0v6" />
+        <path d="M13 11V6a1.5 1.5 0 013 0v7" />
+        <path d="M7 13c0 4 2 7 5 7s5-2 5-5v-4" />
+      </svg>
+    ),
+    crosshair: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <circle cx="12" cy="12" r="6" />
+        <path d="M12 3v3" />
+        <path d="M12 18v3" />
+        <path d="M3 12h3" />
+        <path d="M18 12h3" />
+      </svg>
+    ),
+    anchor: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <path d="M12 3v13" />
+        <path d="M9 6h6" />
+        <path d="M5 13c0 4 3 7 7 7s7-3 7-7" />
+        <path d="M8 17l4-1 4 1" />
+      </svg>
+    ),
+    crown: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <path d="M4 8l3 2 3-5 3 5 3-2 4 5-3 4H3l-3-4z" />
+        <path d="M4 17h16" />
+      </svg>
+    ),
+    box: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <path d="M3 7l9-4 9 4-9 4z" />
+        <path d="M3 7v10l9 4 9-4V7" />
+        <path d="M12 11v10" />
+      </svg>
+    ),
+    default: ({ size = 26 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
+        <rect x="4" y="4" width="16" height="16" rx="2" />
+        <path d="M8 12h8" />
+        <path d="M12 8v8" />
+      </svg>
+    ),
+  };
+
+  const ITEM_DB = [
+    { name: 'Rusty Short Sword', type: ITEM_TYPES.WEAPON, w: 1, h: 3, icon: 'sword', rarity: 'COMMON', stats: ['+5 Physical Dmg'] },
+    { name: 'Iron Plate', type: ITEM_TYPES.ARMOR, w: 2, h: 3, icon: 'shield', rarity: 'COMMON', stats: ['+15 Armor'] },
+    { name: 'Bone Helm', type: ITEM_TYPES.HELMET, w: 2, h: 2, icon: 'skull', rarity: 'MAGIC', stats: ['+10 Armor', '+5 Necrotic Res'] },
+    { name: 'Minor Health Potion', type: ITEM_TYPES.POTION, w: 1, h: 1, icon: 'box', rarity: 'COMMON', stats: ['Restores 50 HP'] },
+    { name: 'Town Portal Scroll', type: ITEM_TYPES.MATERIAL, w: 1, h: 1, icon: 'scroll', rarity: 'COMMON', stats: ['Teleport to Town'] },
+    { name: 'Mjolnir Prototype', type: ITEM_TYPES.WEAPON, w: 2, h: 3, icon: 'hammer', rarity: 'LEGENDARY', stats: ['+150 Lightning Dmg', '50% Stun Chance'] },
+    { name: 'Blood Ruby', type: ITEM_TYPES.ACCESSORY, w: 1, h: 1, icon: 'gem', rarity: 'RARE', stats: ['+20 Life', '+5% Fire Res'] },
+    { name: 'Ring of Storms', type: ITEM_TYPES.ACCESSORY, w: 1, h: 1, icon: 'zap', rarity: 'LEGENDARY', stats: ['+15 Lightning Dmg', '+10% Cast Speed'] },
+    { name: 'Double Axe', type: ITEM_TYPES.WEAPON, w: 2, h: 3, icon: 'axe', rarity: 'MAGIC', stats: ['+25 Physical Dmg'] },
+    { name: 'Leather Vest', type: ITEM_TYPES.ARMOR, w: 2, h: 2, icon: 'shirt', rarity: 'COMMON', stats: ['+8 Armor'] },
+    { name: 'Apprentice Wand', type: ITEM_TYPES.WEAPON, w: 1, h: 2, icon: 'wand', rarity: 'MAGIC', stats: ['+10 Spell Dmg'] },
+    { name: 'Heavy Greaves', type: ITEM_TYPES.BOOTS, w: 2, h: 2, icon: 'boots', rarity: 'COMMON', stats: ['+10 Armor', '+5 Move Speed'] },
+    { name: 'Iron Gauntlets', type: ITEM_TYPES.GLOVES, w: 2, h: 2, icon: 'hand', rarity: 'RARE', stats: ['+12 Armor', '+5% Atk Speed'] },
+    { name: 'Tower Shield', type: ITEM_TYPES.ARMOR, w: 2, h: 4, icon: 'shield', rarity: 'RARE', stats: ['+45 Block Chance', '+20 Armor'] },
+    { name: 'Long Pike', type: ITEM_TYPES.WEAPON, w: 1, h: 4, icon: 'crosshair', rarity: 'COMMON', stats: ['+15 Physical Dmg', 'Long Reach'] },
+    { name: 'Assassin Dagger', type: ITEM_TYPES.WEAPON, w: 1, h: 2, icon: 'sword', rarity: 'RARE', stats: ['+10 Crit Chance', '+50% Crit Multi'] },
+    { name: 'Leather Belt', type: ITEM_TYPES.BELT, w: 2, h: 1, icon: 'anchor', rarity: 'COMMON', stats: ['+2 Potion Slots'] },
+    { name: 'Golden Amulet', type: ITEM_TYPES.AMULET, w: 1, h: 1, icon: 'crown', rarity: 'MAGIC', stats: ['+15 All Attributes'] },
+    { name: 'Sash of Knives', type: ITEM_TYPES.BELT, w: 2, h: 1, icon: 'anchor', rarity: 'LEGENDARY', stats: ['Reflects Damage', '+100 Armor'] },
   ];
+
+  const generateId = () => Math.random().toString(36).substr(2, 9);
+  const createItem = (template) => ({ ...template, id: generateId(), x: null, y: null });
+
+  const canPlaceItem = (inventory, item, x, y, ignoreId = null) => {
+    if (x < 0 || y < 0 || x + item.w > GRID_W || y + item.h > GRID_H) return false;
+    for (const invItem of inventory) {
+      if (invItem.id === item.id || invItem.id === ignoreId) continue;
+      if (
+        x < invItem.x + invItem.w &&
+        x + item.w > invItem.x &&
+        y < invItem.y + invItem.h &&
+        y + item.h > invItem.y
+      ) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const findFreeSpot = (inventory, item) => {
+    for (let y = 0; y <= GRID_H - item.h; y++) {
+      for (let x = 0; x <= GRID_W - item.w; x++) {
+        if (canPlaceItem(inventory, item, x, y)) return { x, y };
+      }
+    }
+    return null;
+  };
+
+  const isSlotCompatible = (slotId, itemType) => {
+    if (!itemType) return false;
+    if (slotId === 'head' && itemType === ITEM_TYPES.HELMET) return true;
+    if (slotId === 'body' && itemType === ITEM_TYPES.ARMOR) return true;
+    if (slotId === 'mainHand' && itemType === ITEM_TYPES.WEAPON) return true;
+    if (slotId === 'offHand' && (itemType === ITEM_TYPES.WEAPON || itemType === ITEM_TYPES.ARMOR)) return true;
+    if (slotId === 'boots' && itemType === ITEM_TYPES.BOOTS) return true;
+    if (slotId === 'gloves' && itemType === ITEM_TYPES.GLOVES) return true;
+    if (slotId === 'belt' && itemType === ITEM_TYPES.BELT) return true;
+    if (slotId === 'amulet' && itemType === ITEM_TYPES.AMULET) return true;
+    if ((slotId === 'ring1' || slotId === 'ring2') && itemType === ITEM_TYPES.ACCESSORY) return true;
+    return false;
+  };
 
   const Tooltip = ({ item, position }) => {
     if (!item) return null;
-    const db = ITEM_DB[item.dbId];
-    const style = { top: position.y + 10, left: position.x + 10 };
-
-    if (style.left + 250 > window.innerWidth) style.left -= 270;
-    if (style.top + 200 > window.innerHeight) style.top -= 200;
+    const rare = RARITY[item.rarity] || RARITY.COMMON;
+    const style = { left: position.x + 16, top: position.y + 16 };
+    if (style.left + 260 > window.innerWidth) style.left = position.x - 260;
+    if (style.top + 200 > window.innerHeight) style.top = position.y - 180;
 
     return (
-      <div className={`tooltip visible tt-${db.rarity}`} style={style}>
-        <div className="tt-header">{db.name}</div>
-        <div className="tt-type">{db.rarity} {db.type}</div>
-        {Object.entries(db.stats).map(([k, v]) => (
-          <div key={k} className="tt-stat"><span>{k}</span><span>{v}</span></div>
-        ))}
-        {db.flavor && <div className="tt-flavor">"{db.flavor}"</div>}
+      <div
+        className="tooltip"
+        style={{
+          ...style,
+          borderColor: rare.border,
+          boxShadow: `0 12px 35px rgba(0,0,0,0.6), ${rare.shadow}`,
+        }}
+      >
+        <div className="header" style={{ color: rare.color }}>{item.name}</div>
+        <div className="rarity">{rare.label} • {item.type}</div>
+        <div>
+          {item.stats?.map((line, idx) => (
+            <div key={idx} className="stat">• {line}</div>
+          ))}
+        </div>
+        <div className="foot">Click-drag to move. Drop on vendor to sell.</div>
       </div>
     );
   };
 
-  const EquipmentSlot = ({ slot, type, item, onDrop, className }) => {
-    const handleDragOver = (e) => {
-      e.preventDefault();
-      if (window.draggedItem) {
-        const db = ITEM_DB[window.draggedItem.dbId];
-        if ((db.type === type || (type === 'ring' && db.type === 'ring')) && !window.draggedItem.rotated) {
-           e.target.closest('.equip-slot').classList.add('hover-valid');
-        }
-      }
-    };
-
-    const handleLeave = (e) => {
-      e.target.closest('.equip-slot').classList.remove('hover-valid');
-    };
-
-    const handleDrop = (e) => {
-      e.preventDefault();
-      e.target.closest('.equip-slot').classList.remove('hover-valid');
-      onDrop(slot);
+  const ItemComponent = ({ item, isDragging = false, onPointerDown, onHover, style, inSlot = false }) => {
+    const rare = RARITY[item.rarity] || RARITY.COMMON;
+    const Icon = ICONS[item.icon] || ICONS.default;
+    const baseStyle = {
+      width: inSlot ? '100%' : item.w * TILE_SIZE + (item.w - 1) * CELL_GAP,
+      height: inSlot ? '100%' : item.h * TILE_SIZE + (item.h - 1) * CELL_GAP,
+      left: inSlot ? 0 : item.x * (TILE_SIZE + CELL_GAP),
+      top: inSlot ? 0 : item.y * (TILE_SIZE + CELL_GAP),
+      position: isDragging ? 'fixed' : 'absolute',
+      borderColor: rare.border,
+      color: rare.color,
+      boxShadow: isDragging ? `0 16px 30px rgba(0,0,0,0.5), ${rare.shadow}` : rare.shadow,
+      background: 'linear-gradient(150deg, rgba(30,41,59,0.95), rgba(15,23,42,0.92))',
+      pointerEvents: isDragging ? 'none' : 'auto',
     };
 
     return (
       <div
-        className={`equip-slot ${className || ''}`}
-        onDragOver={handleDragOver}
-        onDragLeave={handleLeave}
-        onDrop={handleDrop}
+        className={`item ${isDragging ? 'dragging' : ''}`}
+        style={{ ...baseStyle, ...style }}
+        onPointerDown={(e) => onPointerDown && onPointerDown(e, item)}
+        onPointerEnter={(e) => onHover && onHover(item, e)}
+        onPointerLeave={() => onHover && onHover(null, null)}
       >
-        {!item && <svg className="slot-icon" viewBox="0 0 100 100">
-          <path d="M20,20 L80,80 M80,20 L20,80" stroke="#fff" strokeWidth="2" />
-        </svg>}
-        {item && <InventoryItem item={item} isEquipped={true} />}
+        <Icon size={Math.max(22, Math.min(item.w, item.h) * 18)} />
+        <div className="item-gloss" />
       </div>
     );
   };
 
-  const InventoryItem = ({ item, isEquipped }) => {
-    const db = ITEM_DB[item.dbId];
-    const w = item.rotated ? db.h : db.w;
-    const h = item.rotated ? db.w : db.h;
-
-    const style = {
-      width: `calc(${w * CELL_SIZE + (w-1)*GAP}px)`,
-      height: `calc(${h * CELL_SIZE + (h-1)*GAP}px)`,
-      left: !isEquipped ? `calc(${item.x * CELL_SIZE + item.x * GAP}px)` : undefined,
-      top: !isEquipped ? `calc(${item.y * CELL_SIZE + item.y * GAP}px)` : undefined,
-      position: !isEquipped ? 'absolute' : 'relative',
-    };
-
-    const handleDragStart = (e) => {
-      window.draggedItem = item;
-      const ghost = e.target.cloneNode(true);
-      ghost.style.opacity = '0.5';
-      document.body.appendChild(ghost);
-      e.dataTransfer.setDragImage(ghost, 25, 25);
-      setTimeout(() => document.body.removeChild(ghost), 0);
-      playSound('pickup');
-    };
-
-    const renderIcon = () => {
-      if (db.icon.startsWith('path') || db.icon.startsWith('rect') || db.icon.startsWith('circle')) {
-        return <svg viewBox="0 0 100 100" stroke="currentColor" strokeWidth="4" fill="none" dangerouslySetInnerHTML={{__html: db.icon}} />;
-      }
-      return null;
-    };
+  const EquipmentSlot = ({ slotType, item, label, onPointerDown, draggingType, onHover }) => {
+    const highlight = isSlotCompatible(slotType, draggingType);
+    const beltClass = slotType === 'belt' ? 'belt' : '';
 
     return (
       <div
-        className={`item ${db.rarity}`}
-        style={style}
-        draggable="true"
-        onDragStart={handleDragStart}
-        data-id={item.id}
+        data-slot-id={slotType}
+        className={`equip-slot ${beltClass} ${highlight ? 'highlight' : ''}`}
       >
-        {renderIcon()}
+        {item ? (
+          <ItemComponent
+            item={item}
+            inSlot
+            onPointerDown={(e) => onPointerDown(e, item, slotType)}
+            onHover={onHover}
+          />
+        ) : (
+          <span className="label">{label}</span>
+        )}
       </div>
     );
   };
 
   const App = () => {
-    const [inventory, setInventory] = useState(INITIAL_ITEMS);
-    const [equipped, setEquipped] = useState({});
+    const [inventory, setInventory] = useState([]);
+    const [equipment, setEquipment] = useState({
+      head: null, amulet: null,
+      mainHand: null, body: null, offHand: null,
+      gloves: null, belt: null, boots: null,
+      ring1: null, ring2: null,
+    });
+    const [gold, setGold] = useState(1500);
+    const [dragState, setDragState] = useState(null);
     const [tooltip, setTooltip] = useState(null);
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const [errorMsg, setErrorMsg] = useState(null);
     const gridRef = useRef(null);
 
-    const checkCollision = (x, y, w, h, excludeId = null) => {
-      if (x < 0 || y < 0 || x + w > GRID_W || y + h > GRID_H) return true;
-      return inventory.some(i => {
-        if (i.id === excludeId) return false;
-        const iw = i.rotated ? ITEM_DB[i.dbId].h : ITEM_DB[i.dbId].w;
-        const ih = i.rotated ? ITEM_DB[i.dbId].w : ITEM_DB[i.dbId].h;
-        return (x < i.x + iw && x + w > i.x && y < i.y + ih && y + h > i.y);
-      });
-    };
-
-    const findFreeSpace = (dbId) => {
-      const db = ITEM_DB[dbId];
-      const w = db.w;
-      const h = db.h;
-      for (let y = 0; y <= GRID_H - h; y++) {
-        for (let x = 0; x <= GRID_W - w; x++) {
-          if (!checkCollision(x, y, w, h)) return { x, y, rotated: false };
-        }
-      }
-      for (let y = 0; y <= GRID_H - w; y++) {
-        for (let x = 0; x <= GRID_W - h; x++) {
-          if (!checkCollision(x, y, h, w)) return { x, y, rotated: true };
-        }
-      }
-      return null;
-    };
-
-    const handleGridDrop = (e) => {
-      e.preventDefault();
-      const dragged = window.draggedItem;
-      if (!dragged) return;
-
-      const rect = gridRef.current.getBoundingClientRect();
-      const offsetX = e.clientX - rect.left;
-      const offsetY = e.clientY - rect.top;
-
-      const cellX = Math.floor(offsetX / (CELL_SIZE + GAP));
-      const cellY = Math.floor(offsetY / (CELL_SIZE + GAP));
-
-      const db = ITEM_DB[dragged.dbId];
-      const w = dragged.rotated ? db.h : db.w;
-      const h = dragged.rotated ? db.w : db.h;
-
-      const finalX = Math.min(Math.max(0, cellX), GRID_W - w);
-      const finalY = Math.min(Math.max(0, cellY), GRID_H - h);
-
-      if (!checkCollision(finalX, finalY, w, h, dragged.id)) {
-        playSound('drop');
-        const newEquipped = { ...equipped };
-        Object.keys(newEquipped).forEach(k => {
-          if (newEquipped[k] && newEquipped[k].id === dragged.id) delete newEquipped[k];
-        });
-        setEquipped(newEquipped);
-
-        const newInv = inventory.filter(i => i.id !== dragged.id);
-        newInv.push({ ...dragged, x: finalX, y: finalY });
-        setInventory(newInv);
-      } else {
-        playSound('error');
-      }
-      window.draggedItem = null;
-    };
-
-    const handleGridDragOver = (e) => {
-      e.preventDefault();
-    };
-
-    const handleEquipDrop = (slotName) => {
-      const dragged = window.draggedItem;
-      if (!dragged) return;
-      const db = ITEM_DB[dragged.dbId];
-
-      let valid = false;
-      if (slotName === 'mainhand' && db.type === 'mainhand') valid = true;
-      if (slotName === 'offhand' && (db.type === 'offhand' || db.type === 'shield')) valid = true;
-      if (slotName === 'head' && db.type === 'head') valid = true;
-      if (slotName === 'chest' && db.type === 'chest') valid = true;
-      if ((slotName === 'ring1' || slotName === 'ring2') && db.type === 'ring') valid = true;
-      if (slotName === 'consumable' && db.type === 'consumable') valid = true;
-
-      if (valid) {
-        playSound('drop');
-
-        const existing = equipped[slotName];
-        const newInv = inventory.filter(i => i.id !== dragged.id);
-
-        if (existing) {
-          const space = findFreeSpace(existing.dbId);
-          if (space) {
-            newInv.push({ ...existing, ...space });
-          } else {
-            playSound('error');
-            return;
-          }
-        }
-
-        setInventory(newInv);
-        setEquipped({ ...equipped, [slotName]: { ...dragged, x: 0, y: 0, rotated: false } });
-      } else {
-        playSound('error');
-      }
-      window.draggedItem = null;
-    };
-
     useEffect(() => {
-      const handleKey = (e) => {
-        if (e.key.toLowerCase() === 'r' && window.draggedItem) {
-          playSound('rotate');
-          window.draggedItem.rotated = !window.draggedItem.rotated;
-        }
-      };
-      window.addEventListener('keydown', handleKey);
-      return () => window.removeEventListener('keydown', handleKey);
+      const starterTemplates = [ITEM_DB[0], ITEM_DB[1], ITEM_DB[3], ITEM_DB[16], ITEM_DB[17], ITEM_DB[6]];
+      let initialInv = [];
+      starterTemplates.forEach((t) => {
+        const newItem = createItem(t);
+        const pos = findFreeSpot(initialInv, newItem);
+        if (pos) initialInv.push({ ...newItem, ...pos });
+      });
+      setInventory(initialInv);
     }, []);
 
-    const handleMouseMove = (e) => {
-      const target = e.target.closest('.item');
-      if (target) {
-        const id = target.dataset.id;
-        let item = inventory.find(i => i.id === id);
-        if (!item) item = Object.values(equipped).find(i => i && i.id === id);
+    useEffect(() => {
+      if (!errorMsg) return;
+      const timer = setTimeout(() => setErrorMsg(null), 1400);
+      return () => clearTimeout(timer);
+    }, [errorMsg]);
 
-        if (item) {
-          setTooltip({ item, x: e.clientX, y: e.clientY });
-          return;
+    const returnItemToSource = useCallback((item, source, sourceSlot, originalX, originalY) => {
+      if (source === 'equipment') {
+        setEquipment((prev) => ({ ...prev, [sourceSlot]: item }));
+      } else {
+        setInventory((prev) => [...prev, { ...item, x: originalX, y: originalY }]);
+      }
+    }, []);
+
+    const finalizeDrop = useCallback((e) => {
+      if (!dragState) return;
+      const { item, source, sourceSlot, originalX, originalY } = dragState;
+      let placed = false;
+      const elements = document.elementsFromPoint(e.clientX, e.clientY);
+
+      if (elements.some((el) => el.getAttribute && el.getAttribute('data-trash-zone'))) {
+        setGold((prev) => prev + 50);
+        setDragState(null);
+        return;
+      }
+
+      const slotElement = elements.find((el) => el.getAttribute && el.getAttribute('data-slot-id'));
+      if (slotElement) {
+        const slotId = slotElement.getAttribute('data-slot-id');
+        if (isSlotCompatible(slotId, item.type)) {
+          const existingItem = equipment[slotId];
+          setEquipment((prev) => ({ ...prev, [slotId]: item }));
+          placed = true;
+
+          if (existingItem) {
+            if (source === 'inventory') {
+              if (canPlaceItem(inventory, existingItem, originalX, originalY, existingItem.id)) {
+                setInventory((prev) => [...prev, { ...existingItem, x: originalX, y: originalY }]);
+              } else {
+                const newPos = findFreeSpot(inventory, existingItem);
+                if (newPos) {
+                  setInventory((prev) => [...prev, { ...existingItem, ...newPos }]);
+                } else {
+                  setErrorMsg('No space to swap!');
+                  setEquipment((prev) => ({ ...prev, [slotId]: existingItem }));
+                  returnItemToSource(item, source, sourceSlot, originalX, originalY);
+                  setDragState(null);
+                  return;
+                }
+              }
+            } else if (source === 'equipment') {
+              setEquipment((prev) => ({ ...prev, [sourceSlot]: existingItem }));
+            }
+          }
+        } else {
+          setErrorMsg('Incompatible slot');
         }
       }
-      setTooltip(null);
+
+      if (!placed && gridRef.current) {
+        const gridRect = gridRef.current.getBoundingClientRect();
+
+        if (
+          e.clientX >= gridRect.left - 25 &&
+          e.clientX <= gridRect.right + 25 &&
+          e.clientY >= gridRect.top - 25 &&
+          e.clientY <= gridRect.bottom + 25
+        ) {
+          const visualItemX = e.clientX - dragState.grabOffsetX;
+          const visualItemY = e.clientY - dragState.grabOffsetY;
+          const gridRelX = visualItemX - gridRect.left;
+          const gridRelY = visualItemY - gridRect.top;
+          const cellSize = TILE_SIZE + CELL_GAP;
+          const targetX = Math.round(gridRelX / cellSize);
+          const targetY = Math.round(gridRelY / cellSize);
+
+          if (canPlaceItem(inventory, item, targetX, targetY, item.id)) {
+            setInventory((prev) => [...prev, { ...item, x: targetX, y: targetY }]);
+            placed = true;
+          } else {
+            setErrorMsg('Blocked');
+          }
+        }
+      }
+
+      if (!placed) {
+        returnItemToSource(item, source, sourceSlot, originalX, originalY);
+      }
+
+      setDragState(null);
+    }, [dragState, equipment, inventory, returnItemToSource]);
+
+    useEffect(() => {
+      const handleMove = (e) => {
+        setMousePos({ x: e.clientX, y: e.clientY });
+        if (tooltip) {
+          setTooltip((prev) => (prev ? { ...prev, x: e.clientX, y: e.clientY } : null));
+        }
+      };
+      const handleUp = (e) => finalizeDrop(e);
+
+      window.addEventListener('pointermove', handleMove);
+      window.addEventListener('pointerup', handleUp);
+      return () => {
+        window.removeEventListener('pointermove', handleMove);
+        window.removeEventListener('pointerup', handleUp);
+      };
+    }, [finalizeDrop, tooltip]);
+
+    const spawnLoot = () => {
+      const randomTemplate = ITEM_DB[Math.floor(Math.random() * ITEM_DB.length)];
+      const newItem = createItem(randomTemplate);
+      const pos = findFreeSpot(inventory, newItem);
+
+      if (pos) {
+        setInventory((prev) => [...prev, { ...newItem, ...pos }]);
+      } else {
+        setErrorMsg('Inventory full');
+      }
     };
 
-    const addLoot = () => {
-      const keys = Object.keys(ITEM_DB);
-      const randomKey = keys[Math.floor(Math.random() * keys.length)];
-      const space = findFreeSpace(randomKey);
-      if (space) {
-        const newItem =
-          {
-            id: `gen-${Date.now()}`,
-            dbId: randomKey,
-            x: space.x,
-            y: space.y,
-            rotated: space.rotated
-          };
-        setInventory([...inventory, newItem]);
-        playSound('drop');
-      } else {
-        playSound('error');
-        alert("Inventory Full!");
+    const handleHover = (item, e) => {
+      if (dragState) {
+        setTooltip(null);
+        return;
       }
+      if (item) {
+        setTooltip({ item, x: e.clientX, y: e.clientY });
+      } else {
+        setTooltip(null);
+      }
+    };
+
+    const startDrag = (e, item, sourceSlot = null) => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      setTooltip(null);
+      const startX = e.clientX;
+      const startY = e.clientY;
+      setMousePos({ x: startX, y: startY });
+
+      const rect = e.currentTarget.getBoundingClientRect();
+      const offsetX = startX - rect.left;
+      const offsetY = startY - rect.top;
+
+      setDragState({
+        item,
+        source: sourceSlot ? 'equipment' : 'inventory',
+        sourceSlot,
+        originalX: item.x,
+        originalY: item.y,
+        grabOffsetX: offsetX,
+        grabOffsetY: offsetY,
+      });
+
+      if (sourceSlot) {
+        setEquipment((prev) => ({ ...prev, [sourceSlot]: null }));
+      } else {
+        setInventory((prev) => prev.filter((i) => i.id !== item.id));
+      }
+    };
+
+    const getGhostPos = () => {
+      if (!dragState || !gridRef.current) return null;
+      const gridRect = gridRef.current.getBoundingClientRect();
+      if (
+        mousePos.x < gridRect.left - 60 || mousePos.x > gridRect.right + 60 ||
+        mousePos.y < gridRect.top - 60 || mousePos.y > gridRect.bottom + 60
+      ) return null;
+
+      const visualItemX = mousePos.x - dragState.grabOffsetX;
+      const visualItemY = mousePos.y - dragState.grabOffsetY;
+      const cellSize = TILE_SIZE + CELL_GAP;
+      const targetX = Math.round((visualItemX - gridRect.left) / cellSize);
+      const targetY = Math.round((visualItemY - gridRect.top) / cellSize);
+
+      if (targetX < 0 || targetY < 0 || targetX + dragState.item.w > GRID_W || targetY + dragState.item.h > GRID_H) return null;
+      const isValid = canPlaceItem(inventory, dragState.item, targetX, targetY, dragState.item.id);
+      return { x: targetX, y: targetY, isValid };
+    };
+
+    const ghost = getGhostPos();
+
+    const renderGridCells = () => {
+      const cells = [];
+      for (let y = 0; y < GRID_H; y++) {
+        for (let x = 0; x < GRID_W; x++) {
+          cells.push(<div key={`${x}-${y}`} className="grid-cell" />);
+        }
+      }
+      return cells;
     };
 
     return (
-      <div className="app" onMouseMove={handleMouseMove}>
-        <div style={{textAlign: 'center', marginBottom: '20px'}}>
-          <h1>WIZARD: ARTIFACT VAULT</h1>
-          <div className="subtitle">Drag & Drop Inventory System • Press 'R' to Rotate Items</div>
-        </div>
-
-        <div className="interface">
-          <div className="panel">
-            <div className="doll-container">
-              <EquipmentSlot slot="head" type="head" className="slot-head" item={equipped.head} onDrop={handleEquipDrop} />
-              <EquipmentSlot slot="chest" type="chest" className="slot-chest" item={equipped.chest} onDrop={handleEquipDrop} />
-              <EquipmentSlot slot="mainhand" type="mainhand" className="slot-mainhand" item={equipped.mainhand} onDrop={handleEquipDrop} />
-              <EquipmentSlot slot="offhand" type="offhand" className="slot-offhand" item={equipped.offhand} onDrop={handleEquipDrop} />
-              <EquipmentSlot slot="legs" type="legs" className="slot-legs" item={equipped.legs} onDrop={handleEquipDrop} />
-              <EquipmentSlot slot="feet" type="feet" className="slot-feet" item={equipped.feet} onDrop={handleEquipDrop} />
-              <EquipmentSlot slot="hands" type="hands" className="slot-hands" item={equipped.hands} onDrop={handleEquipDrop} />
-              <EquipmentSlot slot="amulet" type="amulet" className="slot-amulet" item={equipped.amulet} onDrop={handleEquipDrop} />
-              <EquipmentSlot slot="ring1" type="ring" className="slot-ring1" item={equipped.ring1} onDrop={handleEquipDrop} />
-              <EquipmentSlot slot="ring2" type="ring" className="slot-ring2" item={equipped.ring2} onDrop={handleEquipDrop} />
-            </div>
-          </div>
-
-          <div className="panel">
-            <div
-              className="grid-container"
-              ref={gridRef}
-              onDrop={handleGridDrop}
-              onDragOver={handleGridDragOver}
-              style={{
-                width: GRID_W * CELL_SIZE + (GRID_W + 1) * GAP + 20 + 'px',
-                height: GRID_H * CELL_SIZE + (GRID_H + 1) * GAP + 20 + 'px'
-              }}
-            >
-              {Array.from({ length: GRID_W * GRID_H }).map((_, i) => (
-                <div key={i} className="grid-cell" />
-              ))}
-
-              {inventory.map(item => (
-                <InventoryItem key={item.id} item={item} />
-              ))}
-            </div>
-            <div className="instructions">
-              <kbd>R</kbd> Rotate Item • <kbd>Drag</kbd> Move & Equip
-            </div>
-          </div>
-        </div>
-
-        <div className="controls">
-          <button onClick={addLoot}>Generate Loot</button>
-          <button onClick={() => { setInventory([]); setEquipped({}); playSound('error'); }}>Clear All</button>
-        </div>
+      <div className="app-shell">
 
         {tooltip && <Tooltip item={tooltip.item} position={tooltip} />}
+
+        {dragState && (
+          <ItemComponent
+            item={dragState.item}
+            isDragging
+            style={{
+              left: mousePos.x - dragState.grabOffsetX,
+              top: mousePos.y - dragState.grabOffsetY,
+              width: dragState.item.w * TILE_SIZE + (dragState.item.w - 1) * CELL_GAP,
+              height: dragState.item.h * TILE_SIZE + (dragState.item.h - 1) * CELL_GAP,
+              zIndex: 200,
+            }}
+          />
+        )}
+
+        <div className="top-bar">
+          <div>
+            <div className="title">NEPHALEM<strong>STASH</strong></div>
+            <div className="subtext">Drag to equip, drop items on the vendor to sell.</div>
+          </div>
+          <div className="top-actions">
+            <div className="gold-counter">
+              <span style={{ width: 8, height: 8, borderRadius: 4, background: '#fcd34d', display: 'inline-block', boxShadow: '0 0 5px rgba(250,204,21,0.8)' }} />
+              {gold.toLocaleString()}
+            </div>
+            <button className="btn" onClick={spawnLoot}>Spawn Loot</button>
+          </div>
+        </div>
+
+        <main className="main">
+          <div className="panel paperdoll">
+            <div className="section-title">Equipment</div>
+
+            <div className="slot-row" style={{ justifyContent: 'center' }}>
+              <EquipmentSlot slotType="head" label="Head" item={equipment.head} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+            </div>
+
+            <div className="slot-row">
+              <div className="slot-column" style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 10 }}>
+                <EquipmentSlot slotType="mainHand" label="Main Hand" item={equipment.mainHand} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+                <EquipmentSlot slotType="gloves" label="Gloves" item={equipment.gloves} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                <EquipmentSlot slotType="amulet" label="Amulet" item={equipment.amulet} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+                <EquipmentSlot slotType="body" label="Torso" item={equipment.body} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+                <EquipmentSlot slotType="belt" label="Belt" item={equipment.belt} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+              </div>
+
+              <div className="slot-column" style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 10 }}>
+                <EquipmentSlot slotType="offHand" label="Off Hand" item={equipment.offHand} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+                <EquipmentSlot slotType="boots" label="Boots" item={equipment.boots} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+              </div>
+            </div>
+
+            <div className="slot-row" style={{ justifyContent: 'center' }}>
+              <EquipmentSlot slotType="ring1" label="Ring" item={equipment.ring1} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+              <EquipmentSlot slotType="ring2" label="Ring" item={equipment.ring2} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+            </div>
+
+            <div className="stat-grid">
+              <div>Damage <strong>1,240</strong></div>
+              <div>Armor <strong>850</strong></div>
+              <div>Life <strong>2,400</strong></div>
+              <div>Resist <strong style={{ color: '#f59e0b' }}>75%</strong></div>
+            </div>
+
+            <div className="silhouette">
+              <svg viewBox="0 0 200 320" width="260" height="260" stroke="currentColor" strokeWidth="8" fill="none">
+                <path d="M100,25 C120,25 130,50 130,70 L140,80 L130,140 L140,200 L110,300 L90,300 L60,200 L70,140 L60,80 L70,70 C70,50 80,25 100,25 Z" />
+              </svg>
+            </div>
+          </div>
+
+          <div className="panel inventory-panel">
+            <div className="section-title">Stash Tab 1</div>
+
+            <div className="grid-shell">
+              <div
+                ref={gridRef}
+                className="inventory-grid"
+                style={{
+                  gridTemplateColumns: `repeat(${GRID_W}, ${TILE_SIZE}px)`,
+                  gridTemplateRows: `repeat(${GRID_H}, ${TILE_SIZE}px)`,
+                }}
+              >
+                {renderGridCells()}
+
+                {ghost && (
+                  <div
+                    className={`ghost ${ghost.isValid ? 'valid' : 'invalid'}`}
+                    style={{
+                      left: ghost.x * (TILE_SIZE + CELL_GAP),
+                      top: ghost.y * (TILE_SIZE + CELL_GAP),
+                      width: dragState.item.w * TILE_SIZE + (dragState.item.w - 1) * CELL_GAP,
+                      height: dragState.item.h * TILE_SIZE + (dragState.item.h - 1) * CELL_GAP,
+                    }}
+                  />
+                )}
+
+                {inventory.map((item) => (
+                  <ItemComponent
+                    key={item.id}
+                    item={item}
+                    onPointerDown={startDrag}
+                    onHover={handleHover}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div
+              data-trash-zone="true"
+              className={`trash-zone ${dragState ? 'active' : ''}`}
+            >
+              <span style={{ fontWeight: 700, letterSpacing: '0.08em' }}>
+                {dragState ? 'Drop here to Sell (+50g)' : 'Vendor Trash'}
+              </span>
+            </div>
+
+            <div className="subtext">
+              "Stay awhile and listen."
+              <div style={{ color: '#475569' }}>— Deckard C.</div>
+            </div>
+          </div>
+        </main>
+
+        {errorMsg && <div className="error-chip">{errorMsg}</div>}
       </div>
     );
   };
