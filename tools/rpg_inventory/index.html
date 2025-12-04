@@ -676,8 +676,10 @@
           const gridRelX = visualItemX - gridRect.left;
           const gridRelY = visualItemY - gridRect.top;
           const cellSize = TILE_SIZE + CELL_GAP;
-          const targetX = Math.round(gridRelX / cellSize);
-          const targetY = Math.round(gridRelY / cellSize);
+          let targetX = Math.floor(gridRelX / cellSize);
+          let targetY = Math.floor(gridRelY / cellSize);
+          targetX = Math.max(0, Math.min(GRID_W - item.w, targetX));
+          targetY = Math.max(0, Math.min(GRID_H - item.h, targetY));
 
           if (canPlaceItem(inventory, item, targetX, targetY, item.id)) {
             setInventory((prev) => [...prev, { ...item, x: targetX, y: targetY }]);
@@ -776,8 +778,10 @@
       const visualItemX = mousePos.x - dragState.grabOffsetX;
       const visualItemY = mousePos.y - dragState.grabOffsetY;
       const cellSize = TILE_SIZE + CELL_GAP;
-      const targetX = Math.round((visualItemX - gridRect.left) / cellSize);
-      const targetY = Math.round((visualItemY - gridRect.top) / cellSize);
+      let targetX = Math.floor((visualItemX - gridRect.left) / cellSize);
+      let targetY = Math.floor((visualItemY - gridRect.top) / cellSize);
+      targetX = Math.max(0, Math.min(GRID_W - dragState.item.w, targetX));
+      targetY = Math.max(0, Math.min(GRID_H - dragState.item.h, targetY));
 
       if (targetX < 0 || targetY < 0 || targetX + dragState.item.w > GRID_W || targetY + dragState.item.h > GRID_H) return null;
       const isValid = canPlaceItem(inventory, dragState.item, targetX, targetY, dragState.item.id);
