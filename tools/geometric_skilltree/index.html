@@ -111,6 +111,10 @@
             stroke-linecap: round;
             transition: all 0.3s;
         }
+        .straight-path.available {
+            stroke: var(--path-color, var(--path-active));
+            stroke-dasharray: 8 6;
+        }
         .straight-path.active {
             stroke: var(--path-color, var(--path-active));
             filter: drop-shadow(0 0 3px var(--path-color, var(--path-active)));
@@ -240,6 +244,12 @@
                 <span>Flow (Arcs)</span>
                 <span class="stat-value" id="arc-points-display">15</span>
             </div>
+            <div style="margin:10px 0; border-top:1px solid #333; padding-top:10px; font-size:12px;">
+                <div class="stat-row"><span>Damage</span><span class="stat-value" id="stat-damage">1240</span></div>
+                <div class="stat-row"><span>Armor</span><span class="stat-value" id="stat-armor">850</span></div>
+                <div class="stat-row"><span>Life</span><span class="stat-value" id="stat-life">2400</span></div>
+                <div class="stat-row"><span>Resist</span><span class="stat-value" id="stat-resist">75%</span></div>
+            </div>
             <div class="axis-legend">
                 <div class="axis-pill"><span class="axis-dot might"></span> Might</div>
                 <div class="axis-pill"><span class="axis-dot dex"></span> Dex</div>
@@ -281,6 +291,7 @@ const AXIS_COLORS = {
     int:   { r: 96,  g: 165, b: 250 }  // Blue axis
 };
 const AXIS_FALLBACK = { r: 110, g: 130, b: 150 };
+const BASE_STATS = { damage: 1000, armor: 700, life: 2000, resist: 50 };
 
 function clamp01(v) { return Math.max(0, Math.min(1, v)); }
 function colorToCss(c) { return `rgb(${Math.round(c.r)},${Math.round(c.g)},${Math.round(c.b)})`; }
@@ -431,6 +442,31 @@ class SkillTree {
             if(!n1.connections.includes(n2.id)) n1.connections.push(n2.id);
             if(!n2.connections.includes(n1.id)) n2.connections.push(n1.id);
         }
+    }
+    connectActiveStraight(connId) {
+        const conn = this.connections.get(connId);
+        if (!conn || conn.straight) return;
+        const n1 = this.nodes.get(conn.fromId);
+        const n2 = this.nodes.get(conn.toId);
+        if (!(n1?.active && n2?.active)) return;
+        if (this.points.arcs <= 0) { alert("Not enough Flow."); return; }
+        conn.straight = true;
+        this.points.arcs--;
+        this.refresh();
+    }
+
+    computeStats() {
+        const totals = { ...BASE_STATS };
+        this.nodes.forEach(n => {
+            if (!n.active) return;
+            const w = n.axis.weights;
+            totals.damage += Math.round(6 * w.might + 3 * w.dex + 2 * w.int);
+            totals.armor  += Math.round(5 * w.dex + 1 * w.might);
+            totals.life   += Math.round(8 * w.int + 4 * w.might);
+            totals.resist += (2.5 * w.int + 0.5 * w.dex);
+        });
+        totals.resist = Math.min(90, Math.round(totals.resist));
+        return totals;
     }
 
     // --- GAMEPLAY LOGIC ---
@@ -617,6 +653,15 @@ class SkillTree {
     updateUI() {
         document.getElementById('node-points-display').innerText = this.points.nodes;
         document.getElementById('arc-points-display').innerText = this.points.arcs;
+        const stats = this.computeStats();
+        const dmg = document.getElementById('stat-damage');
+        const arm = document.getElementById('stat-armor');
+        const life = document.getElementById('stat-life');
+        const res = document.getElementById('stat-resist');
+        if (dmg) dmg.innerText = stats.damage.toLocaleString();
+        if (arm) arm.innerText = stats.armor.toLocaleString();
+        if (life) life.innerText = stats.life.toLocaleString();
+        if (res) res.innerText = `${stats.resist}%`;
     }
 }
 
@@ -656,6 +701,8 @@ class SVGRenderer {
                 e.stopPropagation(); 
                 if (this.tree.pendingNodeId) {
                     this.tree.confirmPath(conn.id);
+                } else {
+                    this.tree.connectActiveStraight(conn.id);
                 }
             };
 
@@ -748,6 +795,11 @@ class SVGRenderer {
                 if (conn.curve2) elArcs.c2.classList.add('active');
                 else elArcs.c2.classList.add('available');
             } else {
+                const nA = this.tree.nodes.get(conn.fromId);
+                const nB = this.tree.nodes.get(conn.toId);
+                if (nA.active && nB.active) {
+                    elStraight.classList.add('available');
+                }
                 if (pendingId && (conn.fromId === pendingId || conn.toId === pendingId)) {
                     const otherId = conn.fromId === pendingId ? conn.toId : conn.fromId;
                     if (this.tree.nodes.get(otherId).active) {
