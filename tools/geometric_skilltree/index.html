@@ -1071,28 +1071,205 @@
       }
     }
 
+    .mobile-panel-toggle,
+    .mobile-panel-backdrop {
+      display: none;
+    }
+
     @media (max-width: 900px) {
-      #left-panel {
-        top: 10px;
-        left: 10px;
-        right: 10px;
-        width: auto;
-        max-height: 34vh;
+      #canvas-container {
+        /* Keep all empty viewport space dedicated to panning and zooming the tree on touch devices. */
+        inset: 0;
       }
 
+      .mobile-panel-backdrop {
+        position: absolute;
+        inset: 0;
+        z-index: 11;
+        background: rgba(0, 0, 0, 0.34);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 180ms ease;
+      }
+
+      #app.mobile-panel-open .mobile-panel-backdrop {
+        display: block;
+        pointer-events: auto;
+        opacity: 1;
+      }
+
+      .mobile-panel-toggle {
+        position: absolute;
+        top: max(10px, env(safe-area-inset-top));
+        z-index: 13;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        padding: 0 13px;
+        border: 1px solid var(--panel-border-strong);
+        border-radius: 999px;
+        background: rgba(10, 13, 18, 0.9);
+        color: var(--text);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(12px);
+        font-size: 12px;
+        font-weight: 800;
+        pointer-events: auto;
+      }
+
+      #mobile-stats-toggle {
+        left: max(10px, env(safe-area-inset-left));
+      }
+
+      #mobile-details-toggle {
+        right: max(10px, env(safe-area-inset-right));
+      }
+
+      .mobile-panel-toggle[aria-expanded="true"] {
+        background: color-mix(in srgb, var(--node-active) 18%, rgba(10, 13, 18, 0.94));
+        border-color: var(--node-active);
+      }
+
+      .hud-panel {
+        border-radius: 12px;
+      }
+
+      #left-panel,
       #right-panel {
         top: auto;
         left: 10px;
         right: 10px;
-        bottom: 212px;
+        bottom: calc(92px + env(safe-area-inset-bottom));
         width: auto;
-        max-height: 24vh;
+        max-height: min(58vh, calc(100vh - 154px));
+        display: flex;
+        flex-direction: column;
+        z-index: 12;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(calc(100% + 18px));
+        transition: transform 220ms ease, opacity 180ms ease;
+      }
+
+      #app.mobile-stats-open #left-panel,
+      #app.mobile-details-open #right-panel {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .panel-scroll {
+        padding: 14px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      #right-panel .choice-panel.active {
+        max-height: 32vh;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .app-title {
+        font-size: 16px;
+      }
+
+      .app-subtitle {
+        font-size: 11px;
+      }
+
+      .section {
+        margin-top: 12px;
+        padding-top: 12px;
+      }
+
+      .point-pill {
+        flex-basis: calc(50% - 4px);
+        padding: 8px;
+      }
+
+      .point-value {
+        font-size: 19px;
+      }
+
+      .derived-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       #bottom-toolbar {
-        bottom: 8px;
-        flex-wrap: wrap;
-        justify-content: center;
+        left: 8px;
+        right: 8px;
+        bottom: max(8px, env(safe-area-inset-bottom));
+        transform: none;
+        display: grid;
+        grid-template-columns: auto auto minmax(130px, 1fr);
+        align-items: center;
+        gap: 7px;
+        max-width: none;
+        padding: 8px;
+        z-index: 14;
+      }
+
+      #bottom-toolbar .toolbar-group {
+        min-width: 0;
+      }
+
+      #bottom-toolbar .toolbar-group[aria-label="Search"] {
+        grid-column: 3;
+      }
+
+      #bottom-toolbar .toolbar-group[aria-label="Theme"] {
+        grid-column: 1 / -1;
+        overflow-x: auto;
+        padding-bottom: 1px;
+        scrollbar-width: none;
+      }
+
+      #bottom-toolbar .toolbar-group[aria-label="Theme"]::-webkit-scrollbar {
+        display: none;
+      }
+
+      .theme-btn,
+      .icon-btn {
+        height: 32px;
+        min-width: 32px;
+        padding: 0 9px;
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      .icon-btn.square {
+        width: 32px;
+      }
+
+      .search-input {
+        min-height: 32px;
+      }
+
+      #tooltip {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 560px) {
+      #left-panel,
+      #right-panel {
+        left: 8px;
+        right: 8px;
+        bottom: calc(130px + env(safe-area-inset-bottom));
+        max-height: min(56vh, calc(100vh - 190px));
+      }
+
+      #bottom-toolbar {
+        grid-template-columns: auto auto;
+      }
+
+      #bottom-toolbar .toolbar-group[aria-label="Search"] {
+        grid-column: 1 / -1;
+      }
+
+      .derived-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -1113,6 +1290,10 @@
     </div>
 
     <div id="ui-layer">
+      <button class="mobile-panel-toggle" id="mobile-stats-toggle" type="button" aria-controls="left-panel" aria-expanded="false">Stats</button>
+      <button class="mobile-panel-toggle" id="mobile-details-toggle" type="button" aria-controls="right-panel" aria-expanded="false">Details</button>
+      <div class="mobile-panel-backdrop" id="mobile-panel-backdrop" aria-hidden="true"></div>
+
       <aside class="hud-panel" id="left-panel">
         <div class="panel-scroll">
           <h1 class="app-title">Geometric Passive Tree</h1>
@@ -3198,7 +3379,10 @@
     class UIController {
       constructor(tree) {
         this.tree = tree;
+        this.app = document.getElementById("app");
+        this.mobileQuery = window.matchMedia("(max-width: 900px)");
         this.bind();
+        this.syncMobilePanels();
       }
 
       bind() {
@@ -3216,6 +3400,43 @@
             document.body.className = `theme-${btn.dataset.theme}`;
           });
         });
+
+        document.getElementById("mobile-stats-toggle").addEventListener("click", () => this.toggleMobilePanel("stats"));
+        document.getElementById("mobile-details-toggle").addEventListener("click", () => this.toggleMobilePanel("details"));
+        document.getElementById("mobile-panel-backdrop").addEventListener("click", () => this.closeMobilePanels());
+        document.addEventListener("keydown", event => {
+          if (event.key === "Escape") this.closeMobilePanels();
+        });
+        this.mobileQuery.addEventListener("change", () => this.closeMobilePanels());
+      }
+
+      toggleMobilePanel(panel) {
+        if (!this.mobileQuery.matches) return;
+        const statsOpen = panel === "stats" && !this.app.classList.contains("mobile-stats-open");
+        const detailsOpen = panel === "details" && !this.app.classList.contains("mobile-details-open");
+        this.app.classList.toggle("mobile-stats-open", statsOpen);
+        this.app.classList.toggle("mobile-details-open", detailsOpen);
+        this.syncMobilePanels();
+      }
+
+      openMobilePanel(panel) {
+        if (!this.mobileQuery.matches) return;
+        this.app.classList.toggle("mobile-stats-open", panel === "stats");
+        this.app.classList.toggle("mobile-details-open", panel === "details");
+        this.syncMobilePanels();
+      }
+
+      closeMobilePanels() {
+        this.app.classList.remove("mobile-stats-open", "mobile-details-open");
+        this.syncMobilePanels();
+      }
+
+      syncMobilePanels() {
+        const statsOpen = this.app.classList.contains("mobile-stats-open");
+        const detailsOpen = this.app.classList.contains("mobile-details-open");
+        this.app.classList.toggle("mobile-panel-open", statsOpen || detailsOpen);
+        document.getElementById("mobile-stats-toggle").setAttribute("aria-expanded", String(statsOpen));
+        document.getElementById("mobile-details-toggle").setAttribute("aria-expanded", String(detailsOpen));
       }
 
       update() {
@@ -3352,6 +3573,7 @@
           panel.classList.remove("active");
           return;
         }
+        this.openMobilePanel("details");
         if (this.tree.pending.mode === "conduit") {
           const conduit = this.tree.conduits.get(this.tree.pending.conduitId);
           const from = this.tree.nodes.get(conduit.fromId);
