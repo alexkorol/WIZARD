@@ -1,888 +1,2934 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flower of Life Skill Tree</title>
-    <style>
-        :root {
-            --bg-color: #0b0d12;
-            
-            /* Nodes */
-            --node-center: #ffffff;
-            --node-inactive: #1f242e;
-            --node-available: #3b4c66;
-            --node-active: #d4b483;
-            --node-pending: #ffd700; /* Selection Mode */
-            
-            /* Straight Paths */
-            --path-inactive: #1a1f29;
-            --path-active: #d4b483;
-            --path-ghost: rgba(255, 255, 255, 0.4); /* Potential Choice */
-            
-            /* Arcs */
-            --arc-inactive: rgba(255, 255, 255, 0.05);
-            --arc-available: rgba(100, 200, 255, 0.3); 
-            --arc-active: #ffd700;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geometric Passive Tree</title>
+  <style>
+    :root {
+      --bg: #07090d;
+      --panel: rgba(10, 13, 18, 0.92);
+      --panel-solid: #10141d;
+      --panel-soft: rgba(16, 20, 29, 0.74);
+      --panel-border: #2e3647;
+      --panel-border-strong: #526071;
+      --text: #eef3f8;
+      --muted: #9ba8b9;
+      --faint: #627083;
+      --ink: #06080b;
+      --path-locked: rgba(83, 95, 112, 0.22);
+      --path-ready: #c0c8d4;
+      --path-active: #f3d37a;
+      --path-extra: #8ad4ff;
+      --danger: #e07373;
+      --success: #78c994;
+      --warning: #f0c86c;
+      --str: #f06a54;
+      --dex: #56c88b;
+      --int: #6e9cff;
+      --hybrid: #d7bc7c;
+      --node-locked: #141922;
+      --node-locked-stroke: #27303d;
+      --node-ready: #344052;
+      --node-ready-stroke: #ced7e4;
+      --node-active: #ead18c;
+      --shadow: rgba(0, 0, 0, 0.55);
+      --ring: rgba(167, 183, 204, 0.08);
+      --font: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-        html, body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: var(--bg-color);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            color: #e0e0e0;
-            user-select: none;
-        }
+    body.theme-modern {
+      --bg: #07090d;
+      --panel: rgba(10, 13, 18, 0.92);
+      --panel-solid: #10141d;
+      --panel-soft: rgba(16, 20, 29, 0.74);
+      --panel-border: #2e3647;
+      --node-active: #ead18c;
+      --path-active: #f3d37a;
+      --font: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-        #ui-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 10;
-        }
+    body.theme-classic {
+      --bg: #12100c;
+      --panel: rgba(32, 25, 16, 0.94);
+      --panel-solid: #241c12;
+      --panel-soft: rgba(42, 32, 20, 0.78);
+      --panel-border: #665234;
+      --panel-border-strong: #a8874b;
+      --text: #fff0c8;
+      --muted: #d0ba8a;
+      --faint: #907a56;
+      --node-active: #f0c260;
+      --path-active: #ffd978;
+      --ring: rgba(255, 218, 120, 0.09);
+      --font: Georgia, "Times New Roman", serif;
+    }
 
-        .hud-panel {
-            position: absolute;
-            background: rgba(11, 13, 18, 0.95);
-            border: 1px solid #333;
-            border-radius: 4px;
-            padding: 15px;
-            pointer-events: auto;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
-        }
+    body.theme-stone {
+      --bg: #111414;
+      --panel: rgba(18, 22, 22, 0.95);
+      --panel-solid: #171d1d;
+      --panel-soft: rgba(24, 30, 30, 0.78);
+      --panel-border: #43504c;
+      --panel-border-strong: #80948a;
+      --text: #e6ede6;
+      --muted: #aebcaf;
+      --faint: #728078;
+      --node-active: #c8d0a0;
+      --path-active: #d4dda8;
+      --ring: rgba(210, 222, 188, 0.08);
+      --font: "Trebuchet MS", Verdana, sans-serif;
+    }
 
-        #stats-panel { top: 20px; left: 20px; min-width: 220px; }
-        #controls-panel { bottom: 20px; right: 20px; }
+    body.theme-terminal {
+      --bg: #030503;
+      --panel: rgba(3, 8, 4, 0.96);
+      --panel-solid: #071007;
+      --panel-soft: rgba(6, 14, 7, 0.86);
+      --panel-border: #1c5b2c;
+      --panel-border-strong: #42b866;
+      --text: #c9ffd8;
+      --muted: #78d391;
+      --faint: #418450;
+      --node-active: #7dff9c;
+      --path-active: #9dffae;
+      --path-ready: #b6ffca;
+      --ring: rgba(125, 255, 156, 0.08);
+      --font: Consolas, "Courier New", monospace;
+    }
 
-        h1 {
-            margin: 0 0 15px 0;
-            font-size: 16px;
-            color: var(--node-active);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-align: center;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 13px;
-            color: #888;
-        }
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 48% 46%, rgba(125, 151, 189, 0.16), transparent 42%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 34%),
+        var(--bg);
+      font-family: var(--font);
+      user-select: none;
+    }
 
-        .stat-value { font-weight: bold; color: #fff; }
-        .axis-legend { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 10px; font-size: 11px; color: #9ca3af; }
-        .axis-pill { display: flex; align-items: center; gap: 6px; background: #0f1219; border: 1px solid #1f2937; padding: 6px 8px; border-radius: 4px; }
-        .axis-dot { width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 8px currentColor; }
-        .axis-dot.might { color: #ff5252; }
-        .axis-dot.dex { color: #34d399; }
-        .axis-dot.int { color: #60a5fa; }
+    button,
+    input,
+    select {
+      font: inherit;
+    }
 
-        .btn {
-            background: #1a1f29;
-            border: 1px solid #444;
-            color: #ccc;
-            padding: 8px 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .btn:hover { background: var(--node-active); color: #000; }
+    #app {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
 
-        /* --- SVG ELEMENTS --- */
+    #canvas-container {
+      position: absolute;
+      inset: 0;
+      cursor: grab;
+      touch-action: none;
+    }
 
-        /* Straight Links */
-        .straight-path {
-            fill: none;
-            stroke: var(--path-inactive);
-            stroke-width: 4;
-            stroke-linecap: round;
-            transition: all 0.3s;
-        }
-        .straight-path.available {
-            stroke: var(--path-color, var(--path-active));
-            stroke-dasharray: 8 6;
-        }
-        .straight-path.active {
-            stroke: var(--path-color, var(--path-active));
-            filter: drop-shadow(0 0 3px var(--path-color, var(--path-active)));
-        }
-        .straight-path.ghost {
-            stroke: var(--path-ghost);
-            stroke-dasharray: 10, 5;
-            animation: dash 1s linear infinite;
-            cursor: pointer;
-        }
-        .straight-path.ghost:hover {
-            stroke: #fff;
-            stroke-width: 6;
-        }
+    #canvas-container.dragging {
+      cursor: grabbing;
+    }
 
-        @keyframes dash {
-            to { stroke-dashoffset: -15; }
-        }
+    #main-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
 
-        /* Curved Arcs */
-        .curve-path {
-            fill: none;
-            stroke: var(--arc-inactive);
-            stroke-width: 2;
-            transition: all 0.3s;
-            pointer-events: stroke;
-            cursor: pointer;
-        }
-        .curve-path.available {
-            stroke: var(--arc-color, var(--arc-available));
-            stroke-width: 3;
-        }
-        .curve-path.available:hover {
-            stroke: #fff;
-            stroke-width: 4;
-        }
-        .curve-path.active {
-            stroke: var(--arc-color, var(--arc-active));
-            stroke-width: 3;
-            filter: drop-shadow(0 0 4px var(--arc-color, var(--arc-active)));
-        }
+    .background-ring {
+      fill: none;
+      stroke: var(--ring);
+      stroke-width: 1;
+      pointer-events: none;
+    }
 
-        /* Hit Areas */
-        .hit-area { stroke: transparent; stroke-width: 20; fill: none; cursor: pointer; }
+    .axis-line {
+      stroke: currentColor;
+      stroke-width: 1.4;
+      stroke-dasharray: 10 9;
+      opacity: 0.22;
+      pointer-events: none;
+    }
 
-        /* Nodes */
-        .node-group { cursor: pointer; }
-        .node-group circle {
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-origin: center;
-            transform-box: fill-box;
-        }
-        .node-group:hover circle.node-fill { transform: scale(1.4); }
+    .axis-label {
+      fill: currentColor;
+      font-size: 12px;
+      font-weight: 700;
+      paint-order: stroke;
+      stroke: rgba(0, 0, 0, 0.85);
+      stroke-width: 4px;
+      stroke-linejoin: round;
+      pointer-events: none;
+    }
 
-        .node-bg { fill: var(--bg-color); stroke: var(--axis-base, var(--node-inactive)); stroke-width: 2; }
-        .node-fill { fill: var(--axis-base, var(--node-inactive)); }
+    .subtree-halo {
+      fill: rgba(255, 255, 255, 0.015);
+      stroke: rgba(215, 226, 240, 0.13);
+      stroke-width: 1;
+      pointer-events: none;
+    }
 
-        /* Node States */
-        .node-group.active .node-fill { fill: var(--axis-strong, var(--node-active)); filter: drop-shadow(0 0 5px var(--axis-glow, var(--axis-strong, var(--node-active)))); }
-        .node-group.active .node-bg { stroke: var(--axis-strong, var(--node-active)); }
-        
-        .node-group.available .node-bg { stroke: var(--axis-base, var(--node-available)); }
-        .node-group.available .node-fill { fill: var(--axis-base, var(--node-available)); }
-        
-        /* Center Node Unique Style */
-        .node-group.type-center .node-fill { fill: var(--node-center); filter: drop-shadow(0 0 10px var(--node-center)); }
-        
-        /* Pending Choice State */
-        .node-group.pending .node-bg { stroke: var(--node-pending); stroke-dasharray: 4 2; }
-        .node-group.pending .node-fill { fill: var(--node-pending); animation: pulse 1s infinite; }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+    .subtree-title {
+      fill: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      pointer-events: none;
+      paint-order: stroke;
+      stroke: rgba(0, 0, 0, 0.82);
+      stroke-width: 4px;
+      stroke-linejoin: round;
+    }
 
-        #tooltip {
-            position: absolute;
-            display: none;
-            background: rgba(0, 0, 0, 0.95);
-            border: 1px solid #444;
-            padding: 12px;
-            border-radius: 2px;
-            pointer-events: none;
-            z-index: 100;
-            min-width: 200px;
-        }
-        .tt-header { color: var(--node-active); font-weight: bold; margin-bottom: 5px; font-size: 14px; }
-        .tt-body { color: #aaa; font-size: 12px; line-height: 1.4; }
-        .choice-hint {
-            position: absolute;
-            background: rgba(255, 215, 0, 0.2);
-            border: 1px solid #ffd700;
-            color: #ffd700;
-            padding: 10px;
-            border-radius: 4px;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            pointer-events: none;
-            display: none;
-            font-weight: bold;
-            z-index: 20;
-        }
+    #effects-layer {
+      pointer-events: none;
+    }
 
-        #canvas-container {
-            width: 100%;
-            height: 100%;
-            cursor: grab;
-        }
-        #canvas-container:active {
-            cursor: grabbing;
-        }
-    </style>
+    .circle-bonus-effect {
+      pointer-events: none;
+      opacity: 0.92;
+      mix-blend-mode: screen;
+    }
+
+    .circle-bonus-disc {
+      fill: var(--effect-fill, rgba(140, 210, 255, 0.05));
+      stroke: none;
+      opacity: 0.55;
+    }
+
+    .circle-bonus-ring {
+      fill: none;
+      stroke: var(--effect-color, #9fdcff);
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      opacity: 0.9;
+      filter: drop-shadow(0 0 7px var(--effect-glow, rgba(150, 220, 255, 0.62)));
+    }
+
+    .circle-bonus-ring.inner {
+      stroke-width: 1.6;
+      opacity: 0.58;
+      stroke-dasharray: 9 10;
+      animation: ring-spin 8s linear infinite;
+    }
+
+    .circle-bonus-ring.outer {
+      stroke-dasharray: 42 18;
+      animation: ring-flow 5.5s linear infinite;
+    }
+
+    .circle-bonus-pulse {
+      fill: none;
+      stroke: var(--effect-color, #9fdcff);
+      stroke-width: 2;
+      opacity: 0;
+      animation: circle-pulse 2.8s ease-out infinite;
+    }
+
+    .circle-bonus-spoke {
+      stroke: var(--effect-color, #9fdcff);
+      stroke-width: 1.4;
+      stroke-linecap: round;
+      stroke-dasharray: 4 9;
+      opacity: 0.35;
+      animation: spoke-breathe 2.4s ease-in-out infinite alternate;
+    }
+
+    @keyframes ring-flow {
+      to { stroke-dashoffset: -60; }
+    }
+
+    @keyframes ring-spin {
+      to { stroke-dashoffset: -76; }
+    }
+
+    @keyframes circle-pulse {
+      0% { r: 42px; opacity: 0.45; }
+      65% { opacity: 0.16; }
+      100% { r: 100px; opacity: 0; }
+    }
+
+    @keyframes spoke-breathe {
+      from { opacity: 0.18; }
+      to { opacity: 0.46; }
+    }
+
+    .conduit-hit,
+    .node-hit {
+      cursor: pointer;
+    }
+
+    .conduit-path {
+      fill: none;
+      stroke: var(--path-locked);
+      stroke-linecap: round;
+      stroke-width: 3.2;
+      opacity: 0.46;
+      pointer-events: none;
+      transition: stroke 160ms ease, stroke-width 160ms ease, opacity 160ms ease;
+    }
+
+    .conduit-path.available {
+      stroke: var(--path-available-color, var(--path-ready));
+      stroke-width: 2.7;
+      stroke-dasharray: 7 8;
+      opacity: 0.46;
+    }
+
+    .conduit-path.pending {
+      stroke: var(--path-preview-color, #c8d1dc);
+      stroke-width: 4;
+      stroke-dasharray: 6 8;
+      opacity: 0.72;
+      filter: drop-shadow(0 0 2px rgba(220, 230, 242, 0.22));
+    }
+
+    .conduit-path.allocated {
+      stroke: var(--path-color, var(--path-active));
+      stroke-width: 5;
+      opacity: 1;
+      filter: drop-shadow(0 0 4px var(--path-color, var(--path-active)));
+    }
+
+    .conduit-path.extra {
+      stroke: var(--path-extra);
+      stroke-width: 4.5;
+      opacity: 1;
+      filter: drop-shadow(0 0 5px rgba(138, 212, 255, 0.45));
+    }
+
+    .conduit-hit {
+      fill: none;
+      stroke: transparent;
+      stroke-width: 22;
+      pointer-events: stroke;
+    }
+
+    .conduit-hit:hover + .conduit-path {
+      stroke-width: 4.2;
+      opacity: 0.72;
+    }
+
+    .conduit-hit:hover + .conduit-path.allocated,
+    .conduit-hit:hover + .conduit-path.pending {
+      stroke-width: 5.3;
+      opacity: 0.9;
+    }
+
+    .conduit-hit:hover + .conduit-path.allocated {
+      opacity: 1;
+    }
+
+    .node-group {
+      cursor: pointer;
+      transition: opacity 160ms ease;
+    }
+
+    .node-shell,
+    .node-core,
+    .node-ring {
+      transition: fill 180ms ease, stroke 180ms ease, r 180ms ease, opacity 180ms ease, transform 180ms ease;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .node-shell {
+      fill: var(--node-shell-fill, var(--axis-dim, var(--node-locked)));
+      stroke: var(--axis-muted, var(--node-locked-stroke));
+      stroke-width: 2;
+    }
+
+    .node-ring {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.11);
+      stroke-width: 1.4;
+      opacity: 0;
+    }
+
+    .node-core {
+      fill: var(--node-core-fill, var(--axis-color, #2b3442));
+      stroke: rgba(0, 0, 0, 0.35);
+      stroke-width: 1;
+      opacity: 0.54;
+    }
+
+    .node-icon {
+      fill: rgba(255, 255, 255, 0.74);
+      font-size: 9px;
+      font-weight: 800;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+    }
+
+    .node-group.available .node-shell {
+      fill: var(--node-shell-fill, var(--axis-mid, var(--node-ready)));
+      stroke: var(--axis-light, var(--node-ready-stroke));
+      stroke-width: 2.5;
+      filter: drop-shadow(0 0 4px var(--axis-glow, rgba(206, 215, 228, 0.38)));
+    }
+
+    .node-group.available .node-core {
+      fill: var(--node-core-fill, var(--axis-color, var(--node-ready-stroke)));
+      opacity: 0.86;
+    }
+
+    .node-group.active .node-shell {
+      fill: var(--node-shell-fill, #1b1720);
+      stroke: var(--axis-light, var(--node-active));
+      filter: drop-shadow(0 0 6px var(--axis-glow, rgba(234, 209, 140, 0.5)));
+    }
+
+    .node-group.active .node-core {
+      fill: var(--node-core-fill, var(--axis-light, var(--node-active)));
+      opacity: 1;
+    }
+
+    .node-group.pending .node-shell {
+      stroke: #ffffff;
+      stroke-dasharray: 4 3;
+      filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.65));
+    }
+
+    .node-group.selected .node-ring,
+    .node-group.empowered .node-ring {
+      opacity: 1;
+      stroke: #ffffff;
+    }
+
+    .node-group.empowered .node-shell {
+      stroke-width: 3;
+      filter: drop-shadow(0 0 10px var(--axis-glow, rgba(255, 234, 170, 0.6)));
+    }
+
+    .node-group.type-origin .node-shell {
+      fill: #f4f7ff;
+      stroke: #ffffff;
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.82));
+    }
+
+    .node-group.type-origin .node-core {
+      fill: #10141d;
+      opacity: 1;
+    }
+
+    .node-group.type-keystone .node-shell {
+      stroke-width: 3;
+    }
+
+    .node-group.type-keystone .node-core {
+      fill: var(--axis-light, #f3d37a);
+    }
+
+    .node-group.type-mastery .node-shell {
+      stroke-dasharray: 2 2;
+    }
+
+    .node-group:hover .node-shell {
+      transform: scale(1.12);
+    }
+
+    .node-hit {
+      fill: transparent;
+      stroke: transparent;
+      pointer-events: fill;
+    }
+
+    #ui-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .hud-panel {
+      position: absolute;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      box-shadow: 0 18px 60px var(--shadow);
+      pointer-events: auto;
+      backdrop-filter: blur(12px);
+    }
+
+    #left-panel {
+      top: 16px;
+      left: 16px;
+      width: 326px;
+      max-height: calc(100vh - 32px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    #right-panel {
+      top: 16px;
+      right: 16px;
+      width: 344px;
+      max-height: calc(100vh - 32px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-scroll {
+      overflow: auto;
+      padding: 16px;
+    }
+
+    .panel-scroll::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .panel-scroll::-webkit-scrollbar-thumb {
+      background: rgba(160, 176, 196, 0.26);
+      border-radius: 999px;
+    }
+
+    .app-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.1;
+      font-weight: 800;
+    }
+
+    .app-subtitle {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .section {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 14px;
+      padding-top: 14px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .point-pill,
+    .tag-pill,
+    .theme-btn,
+    .icon-btn,
+    .choice-btn {
+      border: 1px solid var(--panel-border);
+      background: var(--panel-soft);
+      color: var(--text);
+      border-radius: 6px;
+    }
+
+    .point-pill {
+      flex: 1 1 120px;
+      padding: 10px;
+    }
+
+    .point-label {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .point-value {
+      display: block;
+      margin-top: 3px;
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .point-sub {
+      display: block;
+      color: var(--faint);
+      font-size: 11px;
+    }
+
+    .stat-bars {
+      display: grid;
+      gap: 9px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 42px 1fr 48px;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .bar-label {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .bar-track {
+      position: relative;
+      height: 8px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+    }
+
+    .bar-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 0;
+      border-radius: inherit;
+      background: currentColor;
+      box-shadow: 0 0 12px currentColor;
+      transition: width 220ms ease;
+    }
+
+    .bar-value {
+      text-align: right;
+      font-weight: 800;
+    }
+
+    .derived-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .derived-cell {
+      padding: 9px;
+      background: var(--panel-soft);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 6px;
+      min-height: 58px;
+    }
+
+    .derived-label {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.25;
+    }
+
+    .derived-value {
+      display: block;
+      margin-top: 4px;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .delta-list,
+    .bonus-list,
+    .log-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .delta-item,
+    .bonus-item,
+    .log-item {
+      padding: 9px 10px;
+      background: var(--panel-soft);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .bonus-item.active {
+      border-color: rgba(120, 201, 148, 0.55);
+      color: var(--text);
+      background: rgba(79, 154, 104, 0.12);
+    }
+
+    .bonus-item.locked {
+      opacity: 0.68;
+    }
+
+    .log-item strong,
+    .bonus-item strong,
+    .delta-item strong {
+      color: var(--text);
+    }
+
+    .node-name {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.2;
+      font-weight: 800;
+      color: var(--node-active);
+    }
+
+    .node-meta {
+      margin-top: 5px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 3px 7px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    .effect-list {
+      margin: 11px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 7px;
+    }
+
+    .effect-list li {
+      position: relative;
+      padding-left: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.38;
+    }
+
+    .effect-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.58em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--axis-light, var(--node-active));
+    }
+
+    .selection-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .selection-actions .icon-btn {
+      height: 32px;
+    }
+
+    .choice-panel {
+      display: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 14px 16px 16px;
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .choice-panel.active {
+      display: block;
+    }
+
+    .choice-title {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--warning);
+    }
+
+    .choice-copy {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .choice-list {
+      display: grid;
+      gap: 7px;
+    }
+
+    .choice-btn {
+      width: 100%;
+      padding: 9px;
+      text-align: left;
+      cursor: pointer;
+      transition: border 150ms ease, background 150ms ease;
+    }
+
+    .choice-btn:hover,
+    .choice-btn:focus-visible {
+      border-color: var(--panel-border-strong);
+      outline: none;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .choice-btn strong {
+      display: block;
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    .choice-btn span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    #bottom-toolbar {
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      max-width: calc(100vw - 32px);
+    }
+
+    .toolbar-group {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .theme-btn,
+    .icon-btn {
+      height: 34px;
+      min-width: 34px;
+      padding: 0 10px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+      transition: border 150ms ease, background 150ms ease, color 150ms ease;
+    }
+
+    .icon-btn.square {
+      width: 34px;
+      padding: 0;
+      font-size: 16px;
+    }
+
+    .theme-btn:hover,
+    .theme-btn.active,
+    .icon-btn:hover,
+    .icon-btn:focus-visible {
+      border-color: var(--panel-border-strong);
+      background: rgba(255, 255, 255, 0.09);
+      outline: none;
+    }
+
+    .icon-btn.danger:hover {
+      border-color: var(--danger);
+      color: #ffd1d1;
+    }
+
+    .search-input {
+      width: 100%;
+      min-height: 34px;
+      padding: 0 10px;
+      border: 1px solid var(--panel-border);
+      background: var(--panel-soft);
+      color: var(--text);
+      border-radius: 6px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--panel-border-strong);
+    }
+
+    #tooltip {
+      position: absolute;
+      z-index: 20;
+      width: 250px;
+      display: none;
+      padding: 12px;
+      pointer-events: none;
+      background: rgba(3, 5, 8, 0.95);
+      border: 1px solid var(--panel-border-strong);
+      border-radius: 6px;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65);
+    }
+
+    .tooltip-title {
+      color: var(--node-active);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .tooltip-body {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .empty-note {
+      color: var(--faint);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 1180px) {
+      #left-panel,
+      #right-panel {
+        width: 300px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      #left-panel {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        width: auto;
+        max-height: 34vh;
+      }
+
+      #right-panel {
+        top: auto;
+        left: 10px;
+        right: 10px;
+        bottom: 212px;
+        width: auto;
+        max-height: 24vh;
+      }
+
+      #bottom-toolbar {
+        bottom: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
-<body>
+<body class="theme-modern">
+  <div id="app">
+    <div id="canvas-container" aria-label="Interactive geometric passive skill tree">
+      <svg id="main-svg" width="100%" height="100%" role="img" aria-label="Geometric passive tree with strength, dexterity, and intelligence axes">
+        <defs id="svg-defs"></defs>
+        <g id="viewport-group">
+          <g id="background-layer"></g>
+          <g id="effects-layer"></g>
+          <g id="conduit-layer"></g>
+          <g id="node-layer"></g>
+          <g id="label-layer"></g>
+        </g>
+      </svg>
+    </div>
 
     <div id="ui-layer">
-        <div class="hud-panel" id="stats-panel">
-            <h1>Flower of Life</h1>
-            <div class="stat-row">
-                <span>Harmony (Nodes)</span>
-                <span class="stat-value" id="node-points-display">20</span>
+      <aside class="hud-panel" id="left-panel">
+        <div class="panel-scroll">
+          <h1 class="app-title">Geometric Passive Tree</h1>
+          <div class="app-subtitle">Seven-ring RPG tree with deliberate node picks, conduit routing, outer subtrees, and geometry combo bonuses.</div>
+
+          <section class="section">
+            <div class="section-title">Point Pool</div>
+            <div class="pill-row">
+              <div class="point-pill">
+                <span class="point-label">Skill Points</span>
+                <span class="point-value" id="node-points-display">0</span>
+                <span class="point-sub">spent on passive nodes</span>
+              </div>
+              <div class="point-pill">
+                <span class="point-label">Conduits</span>
+                <span class="point-value" id="path-points-display">0</span>
+                <span class="point-sub">spent on paths and loops</span>
+              </div>
             </div>
-            <div class="stat-row">
-                <span>Flow (Arcs)</span>
-                <span class="stat-value" id="arc-points-display">15</span>
+          </section>
+
+          <section class="section">
+            <div class="section-title">Attributes From Paths</div>
+            <div class="stat-bars">
+              <div class="bar-row" style="color: var(--str);">
+                <span class="bar-label">STR</span>
+                <span class="bar-track"><span class="bar-fill" id="bar-str"></span></span>
+                <span class="bar-value" id="attr-str">0</span>
+              </div>
+              <div class="bar-row" style="color: var(--dex);">
+                <span class="bar-label">DEX</span>
+                <span class="bar-track"><span class="bar-fill" id="bar-dex"></span></span>
+                <span class="bar-value" id="attr-dex">0</span>
+              </div>
+              <div class="bar-row" style="color: var(--int);">
+                <span class="bar-label">INT</span>
+                <span class="bar-track"><span class="bar-fill" id="bar-int"></span></span>
+                <span class="bar-value" id="attr-int">0</span>
+              </div>
             </div>
-            <div style="margin:10px 0; border-top:1px solid #333; padding-top:10px; font-size:12px;">
-                <div class="stat-row"><span>Damage</span><span class="stat-value" id="stat-damage">1240</span></div>
-                <div class="stat-row"><span>Armor</span><span class="stat-value" id="stat-armor">850</span></div>
-                <div class="stat-row"><span>Life</span><span class="stat-value" id="stat-life">2400</span></div>
-                <div class="stat-row"><span>Resist</span><span class="stat-value" id="stat-resist">75%</span></div>
-            </div>
-            <div class="axis-legend">
-                <div class="axis-pill"><span class="axis-dot might"></span> Might</div>
-                <div class="axis-pill"><span class="axis-dot dex"></span> Dex</div>
-                <div class="axis-pill"><span class="axis-dot int"></span> Int</div>
-            </div>
-            <div style="margin-top:15px; font-size: 11px; color:#666; border-top: 1px solid #333; padding-top:10px; line-height: 1.6;">
-                <strong style="color:#ccc">Left Click Node:</strong> Toggle (Awaken/Refund)<br>
-                <strong style="color:#ccc">Click Ghost Path:</strong> Confirm Choice<br>
-                <strong style="color:#ccc">Click Arcs:</strong> Channel Flow
-            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-title">Character Sheet</div>
+            <div class="derived-grid" id="derived-grid"></div>
+          </section>
+
+          <section class="section">
+            <div class="section-title">Recent Results</div>
+            <div class="delta-list" id="delta-list"></div>
+          </section>
         </div>
-        <div class="hud-panel" id="controls-panel">
-            <button class="btn" onclick="skillTree.reset()">Rebirth</button>
-            <button class="btn" onclick="viewController.center()">Center</button>
+      </aside>
+
+      <aside class="hud-panel" id="right-panel">
+        <div class="panel-scroll">
+          <div class="section-title">Selected Passive</div>
+          <div id="selection-panel"></div>
+
+          <section class="section">
+            <div class="section-title">Shape Bonuses</div>
+            <div class="bonus-list" id="bonus-list"></div>
+          </section>
+
+          <section class="section">
+            <div class="section-title">Build Log</div>
+            <div class="log-list" id="log-list"></div>
+          </section>
         </div>
-        <div id="choice-hint" class="choice-hint">Choose a path to connect</div>
+        <div class="choice-panel" id="choice-panel">
+          <p class="choice-title">Choose Conduit</p>
+          <p class="choice-copy">Pick the curved arc that should carry the new connection. Each arc can lean toward a different attribute mix.</p>
+          <div class="choice-list" id="choice-list"></div>
+        </div>
+      </aside>
+
+      <div class="hud-panel" id="bottom-toolbar">
+        <div class="toolbar-group" aria-label="View controls">
+          <button class="icon-btn square" id="zoom-out-btn" aria-label="Zoom out" type="button">-</button>
+          <button class="icon-btn square" id="zoom-in-btn" aria-label="Zoom in" type="button">+</button>
+          <button class="icon-btn" id="center-btn" aria-label="Center view" type="button">Center</button>
+        </div>
+        <div class="toolbar-group" aria-label="Build controls">
+          <button class="icon-btn" id="undo-btn" aria-label="Undo the last allocation" type="button">Undo</button>
+          <button class="icon-btn danger" id="reset-btn" aria-label="Reset all allocations" type="button">Reset</button>
+        </div>
+        <div class="toolbar-group" aria-label="Search">
+          <label class="sr-only" for="search-input">Search passives</label>
+          <input class="search-input" id="search-input" type="search" placeholder="Search nodes or tags">
+        </div>
+        <div class="toolbar-group" aria-label="Theme">
+          <button class="theme-btn active" data-theme="modern" type="button">Modern</button>
+          <button class="theme-btn" data-theme="classic" type="button">90s</button>
+          <button class="theme-btn" data-theme="stone" type="button">Stone</button>
+          <button class="theme-btn" data-theme="terminal" type="button">ASCII</button>
+        </div>
+      </div>
     </div>
 
     <div id="tooltip">
-        <div class="tt-header"></div>
-        <div class="tt-body"></div>
+      <div class="tooltip-title"></div>
+      <div class="tooltip-body"></div>
     </div>
+  </div>
 
-    <div id="canvas-container">
-        <svg id="main-svg" width="100%" height="100%">
-            <g id="viewport-group">
-                <g id="arcs-layer"></g>
-                <g id="straight-layer"></g>
-                <g id="nodes-layer"></g>
-            </g>
-        </svg>
-    </div>
-
-<script>
-const RADIUS = 80;
-const AXIS_COLORS = {
-    might: { r: 255, g: 82, b: 82 },   // Red axis
-    dex:   { r: 52,  g: 211, b: 153 }, // Green axis
-    int:   { r: 96,  g: 165, b: 250 }  // Blue axis
-};
-const AXIS_FALLBACK = { r: 110, g: 130, b: 150 };
-const BASE_STATS = { damage: 1000, armor: 700, life: 2000, resist: 50 };
-
-function clamp01(v) { return Math.max(0, Math.min(1, v)); }
-function colorToCss(c) { return `rgb(${Math.round(c.r)},${Math.round(c.g)},${Math.round(c.b)})`; }
-function mixAxis(weights) {
-    const r = AXIS_COLORS.might.r * weights.might + AXIS_COLORS.dex.r * weights.dex + AXIS_COLORS.int.r * weights.int;
-    const g = AXIS_COLORS.might.g * weights.might + AXIS_COLORS.dex.g * weights.dex + AXIS_COLORS.int.g * weights.int;
-    const b = AXIS_COLORS.might.b * weights.might + AXIS_COLORS.dex.b * weights.dex + AXIS_COLORS.int.b * weights.int;
-    return { r, g, b };
-}
-function lighten(color, amt = 0.2) {
-    return {
-        r: color.r + (255 - color.r) * amt,
-        g: color.g + (255 - color.g) * amt,
-        b: color.b + (255 - color.b) * amt
+  <script>
+    const SVG_NS = "http://www.w3.org/2000/svg";
+    const MAIN_RING_DEPTH = 7;
+    const NODE_SPACING = 72;
+    const SUBTREE_SPACING = 58;
+    const START_POINTS = { nodes: 92, paths: 126 };
+    const BASE_CHARACTER = {
+      life: 1000,
+      mana: 300,
+      armour: 0,
+      evasion: 0,
+      energyShield: 0,
+      attackDamage: 100,
+      spellDamage: 100,
+      projectileDamage: 100,
+      minionDamage: 100,
+      attackSpeed: 100,
+      castSpeed: 100,
+      critChance: 5,
+      allResistances: 0,
+      ailmentEffect: 0,
+      blockChance: 0,
+      cooldownRecovery: 0
     };
-}
-function axisWeightsFromHex(hex) {
-    const q = hex.q;          // Might axis (red)
-    const r = hex.r;          // Dex axis (green)
-    const s = -q - r;         // Int axis (blue) derived from cube coords
-
-    // Use only the forward direction of each axis so colors radiate correctly
-    const m = Math.max(0, q);
-    const d = Math.max(0, r);
-    const i = Math.max(0, s);
-    const sum = m + d + i;
-
-    if (sum === 0) {
-        // Center point or perfectly opposite direction: keep neutral mix
-        return { might: 1/3, dex: 1/3, int: 1/3 };
-    }
-    return {
-        might: m / sum,
-        dex: d / sum,
-        int: i / sum,
+    const AXIS_VECTORS = {
+      int: { x: 0, y: -1 },
+      dex: { x: -Math.sqrt(3) / 2, y: 0.5 },
+      str: { x: Math.sqrt(3) / 2, y: 0.5 }
     };
-}
-function makeAxisColors(hex) {
-    const weights = axisWeightsFromHex(hex);
-    const base = (weights.might + weights.dex + weights.int) === 0 ? AXIS_FALLBACK : mixAxis(weights);
-    return {
-        weights,
-        base,
-        strong: lighten(base, 0.25),
-        glow: lighten(base, 0.45),
+    const AXIS_META = {
+      str: { label: "Strength", short: "STR", color: "#f06a54", path: "Iron Route" },
+      dex: { label: "Dexterity", short: "DEX", color: "#56c88b", path: "Quickstep Trace" },
+      int: { label: "Intelligence", short: "INT", color: "#6e9cff", path: "Memory Thread" },
+      hybrid: { label: "Hybrid", short: "HYB", color: "#d7bc7c", path: "Braided Span" }
     };
-}
-function averageColor(c1, c2) {
-    return { r: (c1.r + c2.r) / 2, g: (c1.g + c2.g) / 2, b: (c1.b + c2.b) / 2 };
-}
+    const HEX_DIRECTIONS = [
+      { q: 1, r: 0 },
+      { q: 1, r: -1 },
+      { q: 0, r: -1 },
+      { q: -1, r: 0 },
+      { q: -1, r: 1 },
+      { q: 0, r: 1 }
+    ];
+    const AXIS_DIRECTIONS = {
+      int: { q: 1, r: 0 },
+      dex: { q: 0, r: -1 },
+      str: { q: -1, r: 1 }
+    };
+    const SEARCH_DIM_OPACITY = 0.18;
 
-class Hex {
-    constructor(q, r) { this.q = q; this.r = r; }
-    getKey() { return `${this.q},${this.r}`; }
-    toPixel() {
-        const x = RADIUS * (this.q + this.r/2);
-        const y = RADIUS * (this.r * Math.sqrt(3)/2);
-        return { x, y };
-    }
-    static neighbor(hex, i) {
-        const dirs = [{q:1,r:0}, {q:0,r:1}, {q:-1,r:1}, {q:-1,r:0}, {q:0,r:-1}, {q:1,r:-1}];
-        const d = dirs[i % 6];
-        return new Hex(hex.q + d.q, hex.r + d.r);
-    }
-}
+    const NODE_EFFECTS = {
+      str: [
+        { tag: "weapon", names: ["Hammer Cant", "Iron Grip", "Break Rhythm", "Headsplitter", "Warhand"], stat: "attackDamage", amount: 9, line: "+9% melee and heavy weapon damage" },
+        { tag: "armour", names: ["Braced Plate", "Shield Memory", "Stone Vein", "Close Guard", "Tidewall"], stat: "armour", amount: 85, line: "+85 Armour" },
+        { tag: "life", names: ["Red Marrow", "Field Surgeon", "Second Breath", "Blood Reserve", "Unbroken Core"], stat: "life", amount: 55, line: "+55 maximum Life" },
+        { tag: "block", names: ["Doorframe Stance", "Shield Hook", "Locking Elbow", "Iron Angle", "Line Holder"], stat: "blockChance", amount: 2, line: "+2% Block Chance" }
+      ],
+      dex: [
+        { tag: "blade", names: ["Knife Tempo", "Twin Feint", "Edge Step", "Whisper Cut", "Clean Draw"], stat: "attackSpeed", amount: 4, line: "+4% Attack Speed" },
+        { tag: "evasion", names: ["Loose Footing", "Wind Pocket", "Slidecast", "Narrow Escape", "Pivot Guard"], stat: "evasion", amount: 90, line: "+90 Evasion Rating" },
+        { tag: "projectile", names: ["String Theory", "Fletched Line", "Far Hand", "Ricochet Habit", "Green Angle"], stat: "projectileDamage", amount: 9, line: "+9% Projectile Damage" },
+        { tag: "critical", names: ["Clean Read", "Soft Target", "Needle Line", "Second Look", "Open Guard"], stat: "critChance", amount: 0.8, line: "+0.8% Critical Strike Chance" }
+      ],
+      int: [
+        { tag: "spell", names: ["Runic Memory", "Cold Diagram", "Amber Formula", "Thoughtspark", "Held Word"], stat: "spellDamage", amount: 10, line: "+10% Spell Damage" },
+        { tag: "energy-shield", names: ["Mirror Ward", "Blue Aegis", "Quiet Barrier", "Glyph Skin", "Second Sigil"], stat: "energyShield", amount: 48, line: "+48 Energy Shield" },
+        { tag: "minion", names: ["Familiar Line", "Servant Rule", "Bound Chorus", "Living Ink", "Lantern Host"], stat: "minionDamage", amount: 9, line: "+9% Minion Damage" },
+        { tag: "mana", names: ["Deep Vessel", "Blue Reserve", "Stored Word", "Mana Lattice", "Quiet Font"], stat: "mana", amount: 35, line: "+35 maximum Mana" }
+      ],
+      hybrid: [
+        { tag: "elemental", names: ["Cross-Discipline", "Joined Method", "Two-Hand Thesis", "Practical Lore", "Measured Risk"], stat: "spellDamage", amount: 6, line: "+6% Elemental and Spell Damage" },
+        { tag: "recovery", names: ["Deep Pockets", "Reservoir Knot", "Field Cache", "Slow Burn", "Held Breath"], stat: "cooldownRecovery", amount: 3, line: "+3% Cooldown Recovery Rate" },
+        { tag: "ailment", names: ["Marking Rule", "Weighted Hex", "Hex Vector", "Fault Line", "Soft Lock"], stat: "ailmentEffect", amount: 7, line: "+7% Ailment Effect" },
+        { tag: "resistance", names: ["Weathered Thread", "Salt Charm", "Brass Omen", "Fourfold Ward", "Ash Measure"], stat: "allResistances", amount: 3, line: "+3% to all Elemental Resistances" }
+      ]
+    };
 
-class Node {
-    constructor(hex, type='small') {
-        this.hex = hex;
-        this.id = hex.getKey();
+    const NOTABLES = {
+      str: [
+        { name: "Oath of the Front Line", stat: "armour", amount: 240, lines: ["+240 Armour", "When hit recently, +12% melee damage"] },
+        { name: "Anvil Reading", stat: "attackDamage", amount: 22, lines: ["+22% Melee Damage", "Stuns you inflict count as one rank stronger"] },
+        { name: "Red Standard", stat: "life", amount: 180, lines: ["+180 maximum Life", "War skills recover 3% Life on first target hit"] },
+        { name: "Breaker's Posture", stat: "attackDamage", amount: 25, lines: ["+25% damage against armoured enemies", "Armour Break lasts 20% longer"] }
+      ],
+      dex: [
+        { name: "Needlework Footing", stat: "evasion", amount: 260, lines: ["+260 Evasion Rating", "First dodge after moving grants +8% Attack Speed"] },
+        { name: "Far Hand Geometry", stat: "projectileDamage", amount: 22, lines: ["+22% Projectile Damage", "Projectiles gain +1 rebound after travelling through a conduit loop"] },
+        { name: "Quiet Draw", stat: "critChance", amount: 2.2, lines: ["+2.2% Critical Strike Chance", "Critical misses refund a small amount of stamina"] },
+        { name: "Poison Ledger", stat: "ailmentEffect", amount: 21, lines: ["+21% Ailment Effect", "Poisons tick 12% faster on marked targets"] }
+      ],
+      int: [
+        { name: "Archivist's Spark", stat: "spellDamage", amount: 25, lines: ["+25% Spell Damage", "Every third spell gains +12% area or chain range"] },
+        { name: "Ward in Two Parts", stat: "energyShield", amount: 210, lines: ["+210 Energy Shield", "Half of broken Energy Shield becomes Mana over 4 seconds"] },
+        { name: "Lanterns Answer", stat: "minionDamage", amount: 23, lines: ["+23% Minion Damage", "Summoned allies inherit 10% of your path attributes"] },
+        { name: "Blue Arithmetic", stat: "mana", amount: 120, lines: ["+120 maximum Mana", "Mana spent recently improves spell critical chance"] }
+      ],
+      hybrid: [
+        { name: "Spellblade Interval", stat: "spellDamage", amount: 21, lines: ["+21% mixed Attack and Spell Damage", "Attack after casting grants +8 INT and +8 STR for 4 seconds"] },
+        { name: "Cunning Bulwark", stat: "evasion", amount: 160, lines: ["+160 Evasion Rating", "Defensive skills keep 15% of movement speed"] },
+        { name: "Tutor's Ambush", stat: "ailmentEffect", amount: 22, lines: ["+22% trap, mark, and ailment effect", "Marked enemies count as studied"] },
+        { name: "Field Alchemy", stat: "cooldownRecovery", amount: 12, lines: ["+12% Cooldown Recovery Rate", "Recovery effects improve your weakest attribute"] }
+      ]
+    };
+
+    const KEYSTONES = {
+      str: [
+        { name: "No Backward Step", lines: ["You cannot evade while standing still", "Standing still grants +70% guard and +30% heavy damage"] },
+        { name: "Weight Has Memory", lines: ["Every recent stun grants +8 STR", "Your movement speed cannot exceed its base value"] },
+        { name: "The Wall Moves", lines: ["Guard skills become attacks", "Guard skills have 35% longer cooldowns"] }
+      ],
+      dex: [
+        { name: "The Hand Arrives First", lines: ["Your first strike against each enemy always has advantage", "You lose 20% guard while not moving"] },
+        { name: "Knife Before Name", lines: ["Critical hits apply your strongest ailment", "Non-critical hits deal 18% less damage"] },
+        { name: "Thin Air Doctrine", lines: ["Every 6 allocated DEX paths grants one free dodge", "You cannot block"] }
+      ],
+      int: [
+        { name: "The Book Reads Back", lines: ["Spells repeat once at 45% effect", "Repeated spells cost life instead of mana"] },
+        { name: "Borrowed Familiar", lines: ["Companions copy your last cast spell at reduced effect", "You can summon one fewer permanent companion"] },
+        { name: "Cold Proof", lines: ["Ward also absorbs ailments", "Life recovery is 30% slower while ward is full"] }
+      ],
+      hybrid: [
+        { name: "Two Laws, One Price", lines: ["Your two highest attributes count as each other", "Your lowest attribute cannot be raised by equipment"] },
+        { name: "Closed Circuit", lines: ["Completed circles empower their center twice", "Path conduits cost one extra point outside circles"] },
+        { name: "The Practical Miracle", lines: ["Notables grant +8 to their nearest path attribute", "Small passives grant 20% less direct effect"] }
+      ]
+    };
+
+    const MASTERIES = {
+      str: { name: "Mastery of Force", lines: ["Choose this region for weapons, armour, and direct confrontation."] },
+      dex: { name: "Mastery of Motion", lines: ["Choose this region for speed, precision, projectiles, and evasive play."] },
+      int: { name: "Mastery of Thought", lines: ["Choose this region for spells, wards, companions, and resource engines."] },
+      hybrid: { name: "Mastery of Method", lines: ["Hybrid areas reward builds that cross school boundaries."] }
+    };
+
+    const SUBTREES = [
+      {
+        id: "genius",
+        title: "Genius Circle",
+        gateway: { q: 7, r: 0 },
+        axis: "int",
+        nodes: [
+          { id: "genius-core", name: "Proof Engine", type: "notable", stat: "spellDamage", amount: 22, effects: ["+22% Spell Damage", "Completed circles add +5 INT"], tag: "spell" },
+          { id: "genius-left", name: "Marginal Note", type: "small", stat: "mana", amount: 45, effects: ["+45 maximum Mana"], tag: "mana" },
+          { id: "genius-right", name: "Axiomatic Spark", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Spell Critical Strike Chance"], tag: "critical" },
+          { id: "genius-lower", name: "Blue Library", type: "small", stat: "energyShield", amount: 70, effects: ["+70 Energy Shield"], tag: "energy-shield" },
+          { id: "genius-cross", name: "Impossible Lemma", type: "mastery", stat: "castSpeed", amount: 9, effects: ["+9% Cast Speed", "Every allocated loop conduit grants +1% Spell Damage"], tag: "spell" },
+          { id: "genius-apex", name: "The Last Footnote", type: "keystone", stat: null, amount: 0, effects: ["Allocated masteries also count as one small circle node", "Conduits from this circle cost no extra points"], tag: "theory" }
+        ],
+        layout: [[0, 0], [-76, -26], [76, -26], [-54, 74], [54, 74], [0, 150]],
+        links: [[0, 1], [0, 2], [1, 3], [2, 4], [3, 4, true], [3, 5], [4, 5]]
+      },
+      {
+        id: "ranger",
+        title: "Ranger's Writ",
+        gateway: { q: 0, r: -7 },
+        axis: "dex",
+        nodes: [
+          { id: "ranger-core", name: "Distance Contract", type: "notable", stat: "projectileDamage", amount: 24, effects: ["+24% Projectile Damage", "First projectile after a dodge pierces"], tag: "projectile" },
+          { id: "ranger-low", name: "Low Branch", type: "small", stat: "evasion", amount: 95, effects: ["+95 Evasion Rating"], tag: "evasion" },
+          { id: "ranger-far", name: "Long String", type: "small", stat: "attackSpeed", amount: 4, effects: ["+4% Attack Speed with bows and thrown weapons"], tag: "projectile" },
+          { id: "ranger-mark", name: "Green Measure", type: "notable", stat: "critChance", amount: 1.8, effects: ["+1.8% Critical Strike Chance", "Projectiles have +12% Critical Damage Bonus"], tag: "critical" },
+          { id: "ranger-apex", name: "No Loose Ends", type: "keystone", stat: null, amount: 0, effects: ["Projectiles returning to you grant +18 DEX", "You cannot gain bonuses from shields"], tag: "projectile" }
+        ],
+        layout: [[0, 0], [-68, 42], [52, 74], [-96, 132], [10, 180]],
+        links: [[0, 1], [0, 2], [1, 3], [2, 4], [3, 4, true]]
+      },
+      {
+        id: "vanguard",
+        title: "Vanguard Oath",
+        gateway: { q: -7, r: 7 },
+        axis: "str",
+        nodes: [
+          { id: "vanguard-core", name: "Raised Banner", type: "notable", stat: "armour", amount: 260, effects: ["+260 Armour", "Allies behind you gain +8% damage"], tag: "armour" },
+          { id: "vanguard-haft", name: "Heavy Answer", type: "small", stat: "attackDamage", amount: 10, effects: ["+10% Heavy Weapon Damage"], tag: "weapon" },
+          { id: "vanguard-blood", name: "Red Reserve", type: "small", stat: "life", amount: 70, effects: ["+70 maximum Life"], tag: "life" },
+          { id: "vanguard-lock", name: "Shield Lock", type: "small", stat: "blockChance", amount: 3, effects: ["+3% Block Chance"], tag: "block" },
+          { id: "vanguard-wall", name: "Line Cannot Break", type: "mastery", stat: "allResistances", amount: 5, effects: ["+5% to all Elemental Resistances", "Armour also reduces reflected hit damage"], tag: "resistance" },
+          { id: "vanguard-apex", name: "Hold the Door", type: "keystone", stat: null, amount: 0, effects: ["While blocking, nearby allies count as on your path", "Your movement speed is 25% lower"], tag: "block" }
+        ],
+        layout: [[0, 0], [-58, 56], [58, 56], [0, 116], [-46, 176], [46, 228]],
+        links: [[0, 1], [0, 2], [1, 3], [2, 3], [3, 4], [3, 5], [4, 5, true]]
+      },
+      {
+        id: "spellblade",
+        title: "Spellblade Annex",
+        gateway: { q: 7, r: -7 },
+        axis: "hybrid",
+        nodes: [
+          { id: "spellblade-core", name: "Edge Formula", type: "notable", stat: "spellDamage", amount: 18, effects: ["+18% Spell Damage", "+18% Attack Damage if you cast recently"], tag: "hybrid" },
+          { id: "spellblade-ink", name: "Hot Ink", type: "small", stat: "castSpeed", amount: 5, effects: ["+5% Cast Speed"], tag: "spell" },
+          { id: "spellblade-wrist", name: "Wrist Ward", type: "small", stat: "energyShield", amount: 64, effects: ["+64 Energy Shield"], tag: "energy-shield" },
+          { id: "spellblade-tempo", name: "One-Beat Riposte", type: "small", stat: "attackSpeed", amount: 5, effects: ["+5% Attack Speed after casting"], tag: "weapon" },
+          { id: "spellblade-sigil", name: "Burning Guard", type: "notable", stat: "allResistances", amount: 4, effects: ["+4% to all Elemental Resistances", "Blocking ignites nearby enemies"], tag: "resistance" },
+          { id: "spellblade-apex", name: "Cast Through Steel", type: "keystone", stat: null, amount: 0, effects: ["Attack skills can trigger your lowest-cost spell", "Triggered spells deal 40% less damage"], tag: "hybrid" }
+        ],
+        layout: [[0, 0], [-84, 18], [68, 50], [-44, 112], [78, 130], [8, 208]],
+        links: [[0, 1], [0, 2], [1, 3], [2, 4], [3, 5], [4, 5], [3, 4, true]]
+      },
+      {
+        id: "skirmish",
+        title: "Skirmish Annex",
+        gateway: { q: -7, r: 0 },
+        axis: "hybrid",
+        nodes: [
+          { id: "skirmish-core", name: "Brawler's Angle", type: "notable", stat: "attackDamage", amount: 18, effects: ["+18% close-range and thrown damage"], tag: "weapon" },
+          { id: "skirmish-step", name: "Side Step Guard", type: "small", stat: "evasion", amount: 82, effects: ["+82 Evasion Rating"], tag: "evasion" },
+          { id: "skirmish-haft", name: "Short Haft", type: "small", stat: "attackSpeed", amount: 5, effects: ["+5% Melee Attack Speed"], tag: "blade" },
+          { id: "skirmish-hook", name: "Hook and Heel", type: "small", stat: "blockChance", amount: 2, effects: ["+2% Block Chance while dual wielding or using a buckler"], tag: "block" },
+          { id: "skirmish-apex", name: "Win the Space", type: "keystone", stat: null, amount: 0, effects: ["Moving into melee range grants advantage", "Retreating removes it for 3 seconds"], tag: "hybrid" }
+        ],
+        layout: [[0, 0], [-82, 52], [82, 52], [-24, 126], [40, 190]],
+        links: [[0, 1], [0, 2], [1, 3], [2, 3, true], [3, 4]]
+      },
+      {
+        id: "seer",
+        title: "Seer's Annex",
+        gateway: { q: 0, r: 7 },
+        axis: "hybrid",
+        nodes: [
+          { id: "seer-core", name: "Hidden Mark", type: "notable", stat: "ailmentEffect", amount: 19, effects: ["+19% Mark, Hex, and Ailment Effect"], tag: "ailment" },
+          { id: "seer-silent", name: "Silent Cast", type: "small", stat: "castSpeed", amount: 5, effects: ["+5% Cast Speed while unseen"], tag: "spell" },
+          { id: "seer-night", name: "Night Step", type: "small", stat: "evasion", amount: 88, effects: ["+88 Evasion Rating"], tag: "evasion" },
+          { id: "seer-ink", name: "Black Ledger", type: "small", stat: "minionDamage", amount: 8, effects: ["+8% Minion and Trap Damage"], tag: "minion" },
+          { id: "seer-lens", name: "Wrong Future", type: "mastery", stat: "cooldownRecovery", amount: 10, effects: ["+10% Cooldown Recovery Rate", "Hexed enemies have 10% reduced Critical Damage Bonus"], tag: "spell" },
+          { id: "seer-apex", name: "Seen First", type: "keystone", stat: null, amount: 0, effects: ["Marked enemies are always revealed", "Unmarked enemies take 15% less damage from you"], tag: "ailment" }
+        ],
+        layout: [[0, 0], [-64, 40], [64, 40], [-88, 118], [28, 130], [-20, 210]],
+        links: [[0, 1], [0, 2], [1, 3], [2, 4], [3, 5], [4, 5], [1, 4, true]]
+      }
+    ];
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function round(value) {
+      return Math.round(value * 100) / 100;
+    }
+
+    function colorMix(hexA, hexB, t) {
+      const a = parseHex(hexA);
+      const b = parseHex(hexB);
+      const m = {
+        r: a.r + (b.r - a.r) * t,
+        g: a.g + (b.g - a.g) * t,
+        b: a.b + (b.b - a.b) * t
+      };
+      return `rgb(${Math.round(m.r)}, ${Math.round(m.g)}, ${Math.round(m.b)})`;
+    }
+
+    function parseHex(hex) {
+      if (hex.startsWith("rgb")) {
+        const values = hex.match(/[-\d.]+/g)?.map(Number) || [0, 0, 0];
+        return { r: values[0] || 0, g: values[1] || 0, b: values[2] || 0 };
+      }
+      const clean = hex.replace("#", "");
+      return {
+        r: parseInt(clean.slice(0, 2), 16),
+        g: parseInt(clean.slice(2, 4), 16),
+        b: parseInt(clean.slice(4, 6), 16)
+      };
+    }
+
+    function axialKey(q, r) {
+      return `${q},${r}`;
+    }
+
+    function edgeKey(a, b) {
+      return [a, b].sort().join(":");
+    }
+
+    function hexDistance(q, r) {
+      const s = -q - r;
+      return Math.max(Math.abs(q), Math.abs(r), Math.abs(s));
+    }
+
+    function normalizeVector(vector) {
+      const length = Math.hypot(vector.x, vector.y) || 1;
+      return { x: vector.x / length, y: vector.y / length };
+    }
+
+    function axialToPixel(q, r, spacing = NODE_SPACING) {
+      const rawX = spacing * (q + r / 2);
+      const rawY = spacing * (r * Math.sqrt(3) / 2);
+      return {
+        x: rawY,
+        y: -rawX
+      };
+    }
+
+    function axisWeightsFromPosition(pos) {
+      const length = Math.hypot(pos.x, pos.y);
+      if (length < 0.001) {
+        return { str: 1 / 3, dex: 1 / 3, int: 1 / 3 };
+      }
+      const unit = { x: pos.x / length, y: pos.y / length };
+      const raw = {
+        str: Math.max(0, unit.x * AXIS_VECTORS.str.x + unit.y * AXIS_VECTORS.str.y),
+        dex: Math.max(0, unit.x * AXIS_VECTORS.dex.x + unit.y * AXIS_VECTORS.dex.y),
+        int: Math.max(0, unit.x * AXIS_VECTORS.int.x + unit.y * AXIS_VECTORS.int.y)
+      };
+      const total = raw.str + raw.dex + raw.int;
+      if (!total) {
+        return { str: 1 / 3, dex: 1 / 3, int: 1 / 3 };
+      }
+      return {
+        str: raw.str / total,
+        dex: raw.dex / total,
+        int: raw.int / total
+      };
+    }
+
+    function dominantAxis(weights) {
+      const ordered = Object.entries(weights).sort((a, b) => b[1] - a[1]);
+      if (ordered[0][1] - ordered[1][1] < 0.18) {
+        return "hybrid";
+      }
+      return ordered[0][0];
+    }
+
+    function weightedAxisColor(weights) {
+      const colors = Object.entries(weights).map(([axis, weight]) => {
+        const color = parseHex(AXIS_META[axis].color);
+        return { color, weight };
+      });
+      const mixed = colors.reduce((acc, item) => ({
+        r: acc.r + item.color.r * item.weight,
+        g: acc.g + item.color.g * item.weight,
+        b: acc.b + item.color.b * item.weight
+      }), { r: 0, g: 0, b: 0 });
+      return `rgb(${Math.round(mixed.r)}, ${Math.round(mixed.g)}, ${Math.round(mixed.b)})`;
+    }
+
+    function axisColor(axis, weights) {
+      return weightedAxisColor(weights);
+    }
+
+    function nodeSpectrum(weights) {
+      const sorted = Object.entries(weights).sort((a, b) => b[1] - a[1]);
+      const primary = sorted[0][0];
+      const secondary = sorted[1][0];
+      const tertiary = sorted[2][0];
+      const blend = weightedAxisColor(weights);
+      return {
+        primary: AXIS_META[primary].color,
+        secondary: AXIS_META[secondary].color,
+        tertiary: AXIS_META[tertiary].color,
+        blend,
+        primaryWeight: sorted[0][1],
+        secondaryWeight: sorted[1][1]
+      };
+    }
+
+    function pathAttributesFromWeights(weights, ring) {
+      const scale = ring > 5 ? 7 : ring > 3 ? 6 : 5;
+      return {
+        str: Math.round(weights.str * scale),
+        dex: Math.round(weights.dex * scale),
+        int: Math.round(weights.int * scale)
+      };
+    }
+
+    function biasArcAttributes(attrs, axis, side) {
+      const copy = { ...attrs };
+      const primary = Object.entries(copy).sort((a, b) => b[1] - a[1])[0][0];
+      const secondaryByAxis = {
+        int: side < 0 ? "dex" : "str",
+        dex: side < 0 ? "str" : "int",
+        str: side < 0 ? "int" : "dex",
+        hybrid: side < 0 ? "dex" : "str"
+      };
+      const secondary = secondaryByAxis[axis] || secondaryByAxis[primary] || "int";
+      if (copy[primary] > 1 && copy[secondary] === 0) {
+        copy[primary] -= 1;
+        copy[secondary] += 1;
+      } else if (copy[primary] > 2 && copy[secondary] > 0) {
+        copy[primary] -= 1;
+        copy[secondary] += 1;
+      }
+      return copy;
+    }
+
+    function effectTemplate(axis, q, r, ring) {
+      const pool = NODE_EFFECTS[axis] || NODE_EFFECTS.hybrid;
+      const index = Math.abs((q * 17 + r * 31 + ring * 7) % pool.length);
+      return pool[index];
+    }
+
+    function notableTemplate(axis, q, r, ring) {
+      const pool = NOTABLES[axis] || NOTABLES.hybrid;
+      const index = Math.abs((q * 11 + r * 19 + ring * 5) % pool.length);
+      return pool[index];
+    }
+
+    function keystoneTemplate(axis, q, r, ring) {
+      const pool = KEYSTONES[axis] || KEYSTONES.hybrid;
+      const index = Math.abs((q * 13 + r * 23 + ring * 3) % pool.length);
+      return pool[index];
+    }
+
+    function masteryTemplate(axis) {
+      return MASTERIES[axis] || MASTERIES.hybrid;
+    }
+
+    function makeNodeName(template, q, r, ring, type) {
+      if (type === "small") {
+        const pool = template.names;
+        const index = Math.abs((q * 7 + r * 5 + ring * 3) % pool.length);
+        return pool[index];
+      }
+      return template.name;
+    }
+
+    function nodeTypeFor(q, r, ring) {
+      if (ring === 0) return "origin";
+      const s = -q - r;
+      const corner = [Math.abs(q), Math.abs(r), Math.abs(s)].filter(value => value === ring).length >= 2;
+      const axisNode = (
+        (q === ring && r === 0) ||
+        (q === 0 && r === -ring) ||
+        (q === -ring && r === ring)
+      );
+      if (ring === MAIN_RING_DEPTH && corner) return "keystone";
+      if ((ring === 3 || ring === 5) && axisNode) return "mastery";
+      if (ring >= 2 && ((Math.abs(q * 2 + r * 3 + ring) % 5) === 0 || axisNode)) return "notable";
+      return "small";
+    }
+
+    function costForType(type) {
+      if (type === "origin") return 0;
+      if (type === "keystone") return 3;
+      if (type === "notable" || type === "mastery") return 2;
+      return 1;
+    }
+
+    function radiusForType(type, empowered = false) {
+      const base = {
+        origin: 14,
+        small: 7,
+        notable: 12,
+        mastery: 11,
+        keystone: 16,
+        gateway: 13
+      }[type] || 8;
+      return empowered ? base + 4 : base;
+    }
+
+    function makeSvgEl(tag, attrs = {}) {
+      const el = document.createElementNS(SVG_NS, tag);
+      Object.entries(attrs).forEach(([key, value]) => {
+        if (key === "className") {
+          el.setAttribute("class", value);
+        } else {
+          el.setAttribute(key, value);
+        }
+      });
+      return el;
+    }
+
+    class SkillNode {
+      constructor({ id, q, r, pos, ring, type, axis, weights, name, effects, tags, subtree = null, source = "main" }) {
+        this.id = id;
+        this.q = q;
+        this.r = r;
+        this.pos = pos;
+        this.ring = ring;
         this.type = type;
-        this.active = false;
-        this.connections = []; 
-        this.data = { name: "Cosmic Point", desc: "A point of power." };
-        this.axis = makeAxisColors(hex);
+        this.axis = axis;
+        this.weights = weights;
+        this.name = name;
+        this.effects = effects;
+        this.tags = tags;
+        this.subtree = subtree;
+        this.source = source;
+        this.cost = costForType(type);
+        this.active = type === "origin";
+        this.connections = [];
+      }
     }
-}
 
-class Connection {
-    constructor(nodeA, nodeB) {
-        const sorted = [nodeA.id, nodeB.id].sort();
-        this.id = `${sorted[0]}:${sorted[1]}`;
-        this.fromId = sorted[0];
-        this.toId = sorted[1];
-        this.straight = false; 
-        this.curve1 = false;   
-        this.curve2 = false;   
+    class Conduit {
+      constructor(nodeA, nodeB, extra = false) {
+        this.id = edgeKey(nodeA.id, nodeB.id);
+        this.fromId = nodeA.id;
+        this.toId = nodeB.id;
+        this.extra = extra;
+        this.allocatedVariant = null;
+        this.options = [-1, 1].map(side => this.makeOption(nodeA, nodeB, side));
+      }
+
+      get allocated() {
+        return Boolean(this.allocatedVariant);
+      }
+
+      get activeOption() {
+        return this.getOption(this.allocatedVariant);
+      }
+
+      get name() {
+        return this.activeOption ? this.activeOption.name : "Unchosen Arc";
+      }
+
+      get attrs() {
+        return this.activeOption ? this.activeOption.attrs : { str: 0, dex: 0, int: 0 };
+      }
+
+      get color() {
+        return this.activeOption ? this.activeOption.color : "#9ca3af";
+      }
+
+      getOption(optionId) {
+        return this.options.find(option => option.id === optionId) || null;
+      }
+
+      makeOption(nodeA, nodeB, side) {
+        const sideName = side < 0 ? "inner" : "outer";
+        const dx = nodeB.pos.x - nodeA.pos.x;
+        const dy = nodeB.pos.y - nodeA.pos.y;
+        const length = Math.hypot(dx, dy) || 1;
+        const offset = side * Math.min(42, Math.max(20, length * 0.34));
+        const midpoint = {
+          x: (nodeA.pos.x + nodeB.pos.x) / 2,
+          y: (nodeA.pos.y + nodeB.pos.y) / 2
+        };
+        const sample = {
+          x: midpoint.x + (-dy / length) * offset,
+          y: midpoint.y + (dx / length) * offset
+        };
+        const weights = axisWeightsFromPosition(sample);
+        const axis = dominantAxis(weights);
+        const attrs = biasArcAttributes(pathAttributesFromWeights(weights, Math.max(nodeA.ring, nodeB.ring)), axis, side);
+        const secondary = Object.entries(attrs)
+          .filter(([, value]) => value > 0)
+          .sort((a, b) => b[1] - a[1])
+          .map(([key]) => key.toUpperCase())
+          .slice(0, 2)
+          .join("/");
+        return {
+          id: sideName,
+          side,
+          weights,
+          axis,
+          attrs,
+          color: axisColor(axis, weights),
+          name: `${side < 0 ? "Inner" : "Outer"} ${axis === "hybrid" ? AXIS_META.hybrid.path : AXIS_META[axis].path}`,
+          short: secondary || AXIS_META[axis].short
+        };
+      }
     }
-}
 
-class SkillTree {
-    constructor() {
+    class GeometricSkillTree {
+      constructor() {
         this.nodes = new Map();
-        this.connections = new Map();
-        this.points = { nodes: 20, arcs: 15 };
-        this.startId = '0,0';
-        this.pendingNodeId = null; 
+        this.conduits = new Map();
+        this.points = { ...START_POINTS };
+        this.pending = null;
+        this.selectedNodeId = "0,0";
+        this.history = [];
+        this.log = [];
+        this.searchTerm = "";
+        this.empoweredNodes = new Set();
+        this.shapeBonuses = [];
+        this.lastDeltas = [];
 
-        this.generateTree(3);
-        
-        this.renderer = new SVGRenderer(this);
-        this.renderer.draw();
-        this.updateUI();
-    }
+        this.buildMainTree();
+        this.buildSubtrees();
+        this.recalculate();
+      }
 
-    generateTree(layers) {
-        const center = new Hex(0,0);
-        this.addNode(center, 'center');
-        this.nodes.get(center.getKey()).active = true;
+      buildMainTree() {
+        for (let q = -MAIN_RING_DEPTH; q <= MAIN_RING_DEPTH; q += 1) {
+          for (let r = -MAIN_RING_DEPTH; r <= MAIN_RING_DEPTH; r += 1) {
+            const ring = hexDistance(q, r);
+            if (ring > MAIN_RING_DEPTH) continue;
+            const pos = axialToPixel(q, r);
+            const weights = axisWeightsFromPosition(pos);
+            const axis = dominantAxis(weights);
+            const type = nodeTypeFor(q, r, ring);
+            const template = type === "keystone"
+              ? keystoneTemplate(axis, q, r, ring)
+              : type === "notable"
+                ? notableTemplate(axis, q, r, ring)
+                : type === "mastery"
+                  ? masteryTemplate(axis)
+                  : effectTemplate(axis, q, r, ring);
+            const name = type === "origin" ? "Origin" : makeNodeName(template, q, r, ring, type);
+            const effects = type === "origin"
+              ? ["Starting point. No passive bonus."]
+              : type === "keystone"
+                ? template.lines
+                : type === "notable" || type === "mastery"
+                  ? template.lines
+                  : [template.line];
+            const stat = type === "keystone" ? null : template.stat;
+            const amount = type === "keystone" ? 0 : template.amount;
+            const tags = [AXIS_META[axis].short, type];
+            if (template.tag) tags.push(template.tag);
+            if (ring === MAIN_RING_DEPTH) tags.push("outer");
+            const node = new SkillNode({
+              id: axialKey(q, r),
+              q,
+              r,
+              pos,
+              ring,
+              type,
+              axis,
+              weights,
+              name,
+              effects,
+              tags,
+              source: "main"
+            });
+            node.stat = type === "origin" ? null : stat;
+            node.amount = type === "origin" ? 0 : amount;
+            this.nodes.set(node.id, node);
+          }
+        }
 
-        for (let l = 1; l <= layers; l++) {
-            let cursor = new Hex(0,0);
-            // Move to start of ring (Direction 4 scaled by layer)
-            for(let k=0; k<l; k++) cursor = Hex.neighbor(cursor, 4);
-
-            for (let i = 0; i < 6; i++) {
-                for (let j = 0; j < l; j++) {
-                    let type = 'small';
-                    if (l === layers) type = 'keystone';
-                    this.addNode(cursor, type);
-                    this.connectNeighbors(cursor);
-                    cursor = Hex.neighbor(cursor, i);
-                }
+        this.nodes.forEach(node => {
+          HEX_DIRECTIONS.forEach(dir => {
+            const neighbor = this.nodes.get(axialKey(node.q + dir.q, node.r + dir.r));
+            if (neighbor) {
+              this.addConduit(node, neighbor);
             }
-        }
-    }
-
-    addNode(hex, type) {
-        const key = hex.getKey();
-        if (!this.nodes.has(key)) this.nodes.set(key, new Node(hex, type));
-    }
-
-    connectNeighbors(hex) {
-        for (let i = 0; i < 6; i++) {
-            const nHex = Hex.neighbor(hex, i);
-            if (this.nodes.has(nHex.getKey())) {
-                const nodeA = this.nodes.get(hex.getKey());
-                const nodeB = this.nodes.get(nHex.getKey());
-                this.createConnection(nodeA, nodeB);
-            }
-        }
-    }
-
-    createConnection(n1, n2) {
-        const conn = new Connection(n1, n2);
-        if (!this.connections.has(conn.id)) {
-            this.connections.set(conn.id, conn);
-            if(!n1.connections.includes(n2.id)) n1.connections.push(n2.id);
-            if(!n2.connections.includes(n1.id)) n2.connections.push(n1.id);
-        }
-    }
-    connectActiveStraight(connId) {
-        const conn = this.connections.get(connId);
-        if (!conn || conn.straight) return;
-        const n1 = this.nodes.get(conn.fromId);
-        const n2 = this.nodes.get(conn.toId);
-        if (!(n1?.active && n2?.active)) return;
-        if (this.points.arcs <= 0) { alert("Not enough Flow."); return; }
-        conn.straight = true;
-        this.points.arcs--;
-        this.refresh();
-    }
-
-    computeStats() {
-        const totals = { ...BASE_STATS };
-        this.nodes.forEach(n => {
-            if (!n.active) return;
-            const w = n.axis.weights;
-            totals.damage += Math.round(6 * w.might + 3 * w.dex + 2 * w.int);
-            totals.armor  += Math.round(5 * w.dex + 1 * w.might);
-            totals.life   += Math.round(8 * w.int + 4 * w.might);
-            totals.resist += (2.5 * w.int + 0.5 * w.dex);
+          });
         });
-        totals.resist = Math.min(90, Math.round(totals.resist));
-        return totals;
-    }
+      }
 
-    // --- GAMEPLAY LOGIC ---
+      buildSubtrees() {
+        SUBTREES.forEach(config => {
+          const gatewayId = axialKey(config.gateway.q, config.gateway.r);
+          const gateway = this.nodes.get(gatewayId);
+          if (!gateway) return;
+          gateway.type = "gateway";
+          gateway.name = `${config.title} Gate`;
+          gateway.tags = Array.from(new Set([...gateway.tags, "gateway", config.title]));
+          gateway.effects = [
+            `Shared gate for the ${config.title} outer circle.`,
+            "Unlock condition: allocate this gate and complete any inner six-node circle."
+          ];
 
-    isConnectedToStart(targetId, simulate = {}) {
-        if (targetId === this.startId) return true;
-        if (simulate.disableNode === targetId) return false;
+          const outward = normalizeVector(gateway.pos);
+          const tangent = { x: -outward.y, y: outward.x };
+          const base = {
+            x: gateway.pos.x + outward.x * 292,
+            y: gateway.pos.y + outward.y * 292
+          };
 
-        const queue = [this.startId];
-        const visited = new Set([this.startId]);
+          const created = [];
+          config.nodes.forEach((def, index) => {
+            const local = config.layout[index] || [0, index * SUBTREE_SPACING];
+            const pos = {
+              x: base.x + tangent.x * local[0] + outward.x * local[1],
+              y: base.y + tangent.y * local[0] + outward.y * local[1]
+            };
+            const weights = axisWeightsFromPosition(pos);
+            const axis = def.tag === "hybrid" ? "hybrid" : config.axis;
+            const node = new SkillNode({
+              id: def.id,
+              q: null,
+              r: null,
+              pos,
+              ring: MAIN_RING_DEPTH + 1,
+              type: def.type,
+              axis,
+              weights,
+              name: def.name,
+              effects: def.effects,
+              tags: [AXIS_META[axis].short, def.type, def.tag, config.title],
+              subtree: config.id,
+              source: "subtree"
+            });
+            node.stat = def.stat;
+            node.amount = def.amount;
+            this.nodes.set(node.id, node);
+            created.push(node);
+          });
 
-        while (queue.length > 0) {
-            const currId = queue.shift();
-            if (currId === targetId) return true;
-            const currNode = this.nodes.get(currId);
-            
-            for (const neighborId of currNode.connections) {
-                if (visited.has(neighborId)) continue;
-                if (neighborId === simulate.disableNode) continue;
+          this.addConduit(gateway, created[0]);
+          config.links.forEach(([fromIndex, toIndex, extra]) => {
+            this.addConduit(created[fromIndex], created[toIndex], Boolean(extra));
+          });
+        });
+      }
 
-                const neighbor = this.nodes.get(neighborId);
-                const connId = [currId, neighborId].sort().join(':');
-                const conn = this.connections.get(connId);
+      addConduit(nodeA, nodeB, extra = false) {
+        const id = edgeKey(nodeA.id, nodeB.id);
+        if (this.conduits.has(id)) return this.conduits.get(id);
+        const conduit = new Conduit(nodeA, nodeB, extra);
+        this.conduits.set(id, conduit);
+        if (!nodeA.connections.includes(nodeB.id)) nodeA.connections.push(nodeB.id);
+        if (!nodeB.connections.includes(nodeA.id)) nodeB.connections.push(nodeA.id);
+        return conduit;
+      }
 
-                const isNodeActive = neighbor.active;
-                const isConnActive = conn.straight && (simulate.disableStraight !== connId);
+      snapshot() {
+        return {
+          nodes: Array.from(this.nodes.values()).filter(node => node.active).map(node => node.id),
+          conduits: Array.from(this.conduits.values())
+            .filter(conduit => conduit.allocated)
+            .map(conduit => ({ id: conduit.id, variant: conduit.allocatedVariant })),
+          points: { ...this.points },
+          log: this.log.slice(),
+          selectedNodeId: this.selectedNodeId
+        };
+      }
 
-                if (isNodeActive && isConnActive) {
-                    visited.add(neighborId);
-                    queue.push(neighborId);
-                }
+      restore(snapshot) {
+        this.nodes.forEach(node => {
+          node.active = snapshot.nodes.includes(node.id);
+        });
+        this.conduits.forEach(conduit => {
+          const saved = snapshot.conduits.find(item => item.id === conduit.id);
+          conduit.allocatedVariant = saved ? saved.variant : null;
+        });
+        this.points = { ...snapshot.points };
+        this.log = snapshot.log.slice();
+        this.selectedNodeId = snapshot.selectedNodeId || "0,0";
+        this.pending = null;
+        this.recalculate();
+      }
+
+      commit(message) {
+        this.log.unshift(message);
+        this.log = this.log.slice(0, 8);
+      }
+
+      saveHistory() {
+        this.history.push(this.snapshot());
+        this.history = this.history.slice(-32);
+      }
+
+      undo() {
+        const previous = this.history.pop();
+        if (!previous) return;
+        this.restore(previous);
+      }
+
+      reset() {
+        this.saveHistory();
+        this.nodes.forEach(node => {
+          node.active = node.id === "0,0";
+        });
+        this.conduits.forEach(conduit => {
+          conduit.allocatedVariant = null;
+        });
+        this.points = { ...START_POINTS };
+        this.pending = null;
+        this.selectedNodeId = "0,0";
+        this.log = ["Build reset to origin."];
+        this.recalculate();
+      }
+
+      getNode(id) {
+        return this.nodes.get(id);
+      }
+
+      getConduit(id) {
+        return this.conduits.get(id);
+      }
+
+      isSubtreeUnlocked(subtreeId) {
+        if (!subtreeId) return true;
+        const config = SUBTREES.find(entry => entry.id === subtreeId);
+        if (!config) return false;
+        const gateway = this.nodes.get(axialKey(config.gateway.q, config.gateway.r));
+        return Boolean(gateway?.active && this.empoweredNodes.size > 0);
+      }
+
+      isNodeVisible(node) {
+        return node.source !== "subtree" || this.isSubtreeUnlocked(node.subtree);
+      }
+
+      isConduitVisible(conduit) {
+        const a = this.nodes.get(conduit.fromId);
+        const b = this.nodes.get(conduit.toId);
+        return Boolean(a && b && this.isNodeVisible(a) && this.isNodeVisible(b));
+      }
+
+      getActiveNeighborConduitChoices(node) {
+        return node.connections
+          .map(neighborId => {
+            const neighbor = this.nodes.get(neighborId);
+            const conduit = this.conduits.get(edgeKey(node.id, neighborId));
+            return { neighbor, conduit };
+          })
+          .filter(item => item.neighbor && item.neighbor.active && item.conduit && !item.conduit.allocated && this.isConduitVisible(item.conduit))
+          .flatMap(item => item.conduit.options.map(option => ({
+            neighbor: item.neighbor,
+            conduit: item.conduit,
+            option,
+            choiceId: this.choiceId(item.conduit.id, option.id)
+          })));
+      }
+
+      isAvailableNode(node) {
+        if (!this.isNodeVisible(node) || node.active || this.points.nodes < node.cost || this.points.paths < 1) return false;
+        return this.getActiveNeighborConduitChoices(node).length > 0;
+      }
+
+      isAvailableConduit(conduit, optionId = null) {
+        if (!this.isConduitVisible(conduit) || conduit.allocated || this.points.paths < 1) return false;
+        if (optionId && !conduit.getOption(optionId)) return false;
+        const a = this.nodes.get(conduit.fromId);
+        const b = this.nodes.get(conduit.toId);
+        return Boolean(a && b && a.active && b.active);
+      }
+
+      choiceId(conduitId, optionId) {
+        return `${conduitId}|${optionId}`;
+      }
+
+      parseChoiceId(choiceId) {
+        const [conduitId, optionId] = choiceId.split("|");
+        return { conduitId, optionId };
+      }
+
+      handleNodeClick(id) {
+        const node = this.nodes.get(id);
+        if (!node) return;
+        this.selectedNodeId = id;
+
+        if (this.pending && this.pending.nodeId === id) {
+          this.pending = null;
+          this.recalculate();
+          return;
+        }
+
+        if (this.pending && this.pending.nodeId !== id) {
+          this.pending = null;
+        }
+
+        if (node.active) {
+          if (node.id !== "0,0") {
+            this.refundNode(id);
+          } else {
+            this.pending = null;
+            this.recalculate();
+          }
+          return;
+        }
+
+        this.tryAllocateNode(id);
+      }
+
+      tryAllocateNode(id) {
+        const node = this.nodes.get(id);
+        if (!node) return;
+        if (this.points.nodes < node.cost) {
+          this.commit(`Not enough skill points for ${node.name}.`);
+          this.recalculate();
+          return;
+        }
+        const choices = this.getActiveNeighborConduitChoices(node);
+        if (!choices.length) {
+          this.commit(`${node.name} is not adjacent to an allocated node.`);
+          this.recalculate();
+          return;
+        }
+        if (this.points.paths < 1) {
+          this.commit(`No conduit points available for ${node.name}.`);
+          this.recalculate();
+          return;
+        }
+        this.pending = {
+          nodeId: id,
+          choices: choices.map(item => item.choiceId)
+        };
+        this.commit(`Choose which arc should connect ${node.name}.`);
+        this.recalculate();
+      }
+
+      allocateNodeWithConduit(node, conduit, optionId) {
+        if (!node || !conduit || node.active || conduit.allocated) return;
+        const option = conduit.getOption(optionId);
+        if (!option) return;
+        this.saveHistory();
+        node.active = true;
+        conduit.allocatedVariant = option.id;
+        this.points.nodes -= node.cost;
+        this.points.paths -= 1;
+        this.pending = null;
+        const attrText = this.formatAttrs(option.attrs);
+        this.commit(`Allocated ${node.name} through ${option.name} (${attrText}).`);
+        this.selectedNodeId = node.id;
+        this.recalculate();
+      }
+
+      handleConduitClick(id, optionId = null) {
+        const conduit = this.conduits.get(id);
+        if (!conduit) return;
+
+        if (this.pending) {
+          const choiceId = this.choiceId(id, optionId);
+          if (this.pending.choices.includes(choiceId)) {
+            const node = this.nodes.get(this.pending.nodeId);
+            this.allocateNodeWithConduit(node, conduit, optionId);
+          }
+          return;
+        }
+
+        if (conduit.allocated) {
+          this.refundConduit(conduit.id);
+          return;
+        }
+
+        if (this.isAvailableConduit(conduit, optionId)) {
+          const option = conduit.getOption(optionId);
+          if (!option) return;
+          this.saveHistory();
+          conduit.allocatedVariant = option.id;
+          this.points.paths -= 1;
+          this.commit(`Added loop arc ${option.name} (${this.formatAttrs(option.attrs)}).`);
+          this.recalculate();
+        }
+      }
+
+      refundNode(id) {
+        const node = this.nodes.get(id);
+        if (!node || node.id === "0,0" || !node.active) return;
+        if (!this.canRefundNode(id)) {
+          this.commit(`${node.name} supports another allocated path and cannot be refunded first.`);
+          this.recalculate();
+          return;
+        }
+        this.saveHistory();
+        node.active = false;
+        this.points.nodes += node.cost;
+        node.connections.forEach(neighborId => {
+          const conduit = this.conduits.get(edgeKey(node.id, neighborId));
+          if (conduit && conduit.allocated) {
+            conduit.allocatedVariant = null;
+            this.points.paths += 1;
+          }
+        });
+        this.selectedNodeId = "0,0";
+        this.commit(`Refunded ${node.name}.`);
+        this.recalculate();
+      }
+
+      refundConduit(id) {
+        const conduit = this.conduits.get(id);
+        if (!conduit || !conduit.allocated) return;
+        if (!this.canRefundConduit(id)) {
+          this.commit("That arc supports allocated nodes and cannot be removed first.");
+          this.recalculate();
+          return;
+        }
+        this.saveHistory();
+        const option = conduit.activeOption;
+        conduit.allocatedVariant = null;
+        this.points.paths += 1;
+        this.commit(`Refunded ${option ? option.name : "arc"}.`);
+        this.recalculate();
+      }
+
+      canRefundNode(id) {
+        const remainingActive = Array.from(this.nodes.values())
+          .filter(node => node.active && node.id !== id)
+          .map(node => node.id);
+        const reachable = this.reachableFromOrigin({ blockedNodeId: id });
+        return remainingActive.every(nodeId => reachable.has(nodeId));
+      }
+
+      canRefundConduit(id) {
+        const remainingActive = Array.from(this.nodes.values())
+          .filter(node => node.active)
+          .map(node => node.id);
+        const reachable = this.reachableFromOrigin({ blockedConduitId: id });
+        return remainingActive.every(nodeId => reachable.has(nodeId));
+      }
+
+      reachableFromOrigin({ blockedNodeId = null, blockedConduitId = null } = {}) {
+        const visited = new Set();
+        const queue = ["0,0"];
+        visited.add("0,0");
+        while (queue.length) {
+          const id = queue.shift();
+          const node = this.nodes.get(id);
+          if (!node) continue;
+          node.connections.forEach(neighborId => {
+            if (neighborId === blockedNodeId || visited.has(neighborId)) return;
+            const neighbor = this.nodes.get(neighborId);
+            const conduit = this.conduits.get(edgeKey(id, neighborId));
+            if (conduit?.id === blockedConduitId) return;
+            if (neighbor && neighbor.active && conduit && conduit.allocated) {
+              visited.add(neighborId);
+              queue.push(neighborId);
             }
+          });
+        }
+        return visited;
+      }
+
+      formatAttrs(attrs) {
+        return Object.entries(attrs)
+          .filter(([, value]) => value > 0)
+          .map(([key, value]) => `+${value} ${key.toUpperCase()}`)
+          .join(", ") || "+1 flexible attribute";
+      }
+
+      recalculate() {
+        const previousStats = this.stats || null;
+        this.empoweredNodes = this.detectEmpoweredNodes();
+        this.shapeBonuses = this.computeShapeBonuses();
+        this.stats = this.computeStats();
+        this.lastDeltas = this.computeDeltas(previousStats, this.stats);
+        if (window.renderer) window.renderer.update();
+        if (window.ui) window.ui.update();
+      }
+
+      computeStats() {
+        const attrs = { str: 0, dex: 0, int: 0 };
+        const derived = { ...BASE_CHARACTER };
+
+        this.conduits.forEach(conduit => {
+          if (!conduit.allocated) return;
+          attrs.str += conduit.attrs.str;
+          attrs.dex += conduit.attrs.dex;
+          attrs.int += conduit.attrs.int;
+        });
+
+        this.nodes.forEach(node => {
+          if (!node.active) return;
+          if (node.stat && typeof node.amount === "number") {
+            derived[node.stat] = (derived[node.stat] || 0) + node.amount;
+          }
+          if (this.empoweredNodes.has(node.id)) {
+            const bonus = node.type === "small" ? 12 : node.type === "notable" ? 18 : 10;
+            if (node.stat) derived[node.stat] = (derived[node.stat] || 0) + bonus;
+            attrs.str += Math.round(node.weights.str * 4);
+            attrs.dex += Math.round(node.weights.dex * 4);
+            attrs.int += Math.round(node.weights.int * 4);
+          }
+        });
+
+        this.shapeBonuses.forEach(bonus => {
+          if (!bonus.active) return;
+          Object.entries(bonus.attrs || {}).forEach(([key, value]) => {
+            attrs[key] += value;
+          });
+          Object.entries(bonus.derived || {}).forEach(([key, value]) => {
+            derived[key] = (derived[key] || 0) + value;
+          });
+        });
+
+        derived.life += Math.round(attrs.str * 7);
+        derived.mana += Math.round(attrs.int * 5);
+        derived.armour += Math.round(attrs.str * 8);
+        derived.evasion += Math.round(attrs.dex * 8);
+        derived.energyShield += Math.round(attrs.int * 6);
+        derived.attackDamage += Math.round(attrs.str * 0.55 + attrs.dex * 0.35);
+        derived.spellDamage += Math.round(attrs.int * 0.7);
+        derived.projectileDamage += Math.round(attrs.dex * 0.55);
+        derived.minionDamage += Math.round(attrs.int * 0.42);
+        derived.attackSpeed += round(attrs.dex * 0.08 + attrs.str * 0.03);
+        derived.castSpeed += round(attrs.int * 0.08 + attrs.dex * 0.02);
+        derived.critChance = round(derived.critChance + attrs.dex * 0.035 + attrs.int * 0.025);
+        derived.allResistances = round(derived.allResistances + attrs.int * 0.05 + attrs.str * 0.025);
+        derived.blockChance = round(Math.min(75, derived.blockChance + attrs.str * 0.015));
+
+        return { attrs, derived };
+      }
+
+      computeDeltas(previous, next) {
+        if (!previous) {
+          return [
+            "Allocate nodes for passive effects.",
+            "Allocate conduits for STR, DEX, and INT.",
+            "Close loops or mirror paths for geometry bonuses."
+          ];
+        }
+        const deltas = [];
+        ["str", "dex", "int"].forEach(key => {
+          const diff = next.attrs[key] - previous.attrs[key];
+          if (diff) deltas.push(`${diff > 0 ? "+" : ""}${diff} ${key.toUpperCase()} from conduit changes.`);
+        });
+        Object.entries(next.derived).forEach(([key, value]) => {
+          const diff = value - previous.derived[key];
+          if (diff) deltas.push(`${diff > 0 ? "+" : ""}${diff} ${this.formatDerivedLabel(key)}.`);
+        });
+        return deltas.slice(0, 5);
+      }
+
+      formatDerivedLabel(key) {
+        return {
+          life: "Life",
+          mana: "Mana",
+          armour: "Armour",
+          evasion: "Evasion",
+          energyShield: "Energy Shield",
+          attackDamage: "Attack Damage",
+          spellDamage: "Spell Damage",
+          projectileDamage: "Projectile Damage",
+          minionDamage: "Minion Damage",
+          attackSpeed: "Attack Speed",
+          castSpeed: "Cast Speed",
+          critChance: "Critical Chance",
+          allResistances: "All Resistances",
+          ailmentEffect: "Ailment Effect",
+          blockChance: "Block Chance",
+          cooldownRecovery: "Cooldown Recovery"
+        }[key] || key;
+      }
+
+      detectEmpoweredNodes() {
+        const empowered = new Set();
+        this.nodes.forEach(node => {
+          if (!node.active || node.source !== "main" || node.ring === 0) return;
+          const ringNeighbors = HEX_DIRECTIONS.map(dir => this.nodes.get(axialKey(node.q + dir.q, node.r + dir.r)));
+          if (ringNeighbors.some(n => !n || !n.active)) return;
+          const perimeterComplete = ringNeighbors.every((neighbor, index) => {
+            const next = ringNeighbors[(index + 1) % ringNeighbors.length];
+            const conduit = this.conduits.get(edgeKey(neighbor.id, next.id));
+            return conduit && conduit.allocated;
+          });
+          if (perimeterComplete) empowered.add(node.id);
+        });
+        return empowered;
+      }
+
+      computeShapeBonuses() {
+        const activeCircles = this.empoweredNodes.size;
+        const axisChains = this.computeAxisChains();
+        const symmetryPairs = this.computeSymmetryPairs();
+        const loopCount = this.computeExtraLoopCount();
+        return [
+          {
+            id: "circle",
+            name: "Six-Node Circle",
+            active: activeCircles > 0,
+            progress: `${activeCircles} center${activeCircles === 1 ? "" : "s"} crowned`,
+            description: "Allocate a node and the six-node ring around it, then close the ring with conduits.",
+            attrs: { int: activeCircles * 3, dex: activeCircles * 3, str: activeCircles * 3 },
+            derived: { spellDamage: activeCircles * 10, energyShield: activeCircles * 45, armour: activeCircles * 45 }
+          },
+          {
+            id: "axis",
+            name: "Straight Axis Chain",
+            active: Object.values(axisChains).some(length => length >= 4),
+            progress: `INT ${axisChains.int}, DEX ${axisChains.dex}, STR ${axisChains.str}`,
+            description: "Run a connected path straight outward on an attribute axis. Four or more segments imbue the route.",
+            attrs: {
+              int: axisChains.int >= 4 ? axisChains.int * 2 : 0,
+              dex: axisChains.dex >= 4 ? axisChains.dex * 2 : 0,
+              str: axisChains.str >= 4 ? axisChains.str * 2 : 0
+            },
+            derived: {
+              spellDamage: axisChains.int >= 4 ? 14 : 0,
+              projectileDamage: axisChains.dex >= 4 ? 14 : 0,
+              attackDamage: axisChains.str >= 4 ? 14 : 0
+            }
+          },
+          {
+            id: "mirror",
+            name: "Mirror Symmetry",
+            active: symmetryPairs >= 5,
+            progress: `${symmetryPairs} mirrored pairs`,
+            description: "Allocate matching left/right nodes across the vertical INT axis.",
+            attrs: symmetryPairs >= 5 ? { int: 8, dex: 8, str: 8 } : {},
+            derived: symmetryPairs >= 5 ? { allResistances: 6, cooldownRecovery: 8 } : {}
+          },
+          {
+            id: "loop",
+            name: "Redundant Circuit",
+            active: loopCount >= 3,
+            progress: `${loopCount} extra loop conduits`,
+            description: "Spend conduit points on active-to-active links to build redundant routes.",
+            attrs: loopCount >= 3 ? { dex: loopCount, int: loopCount } : {},
+            derived: loopCount >= 3 ? { energyShield: loopCount * 18, evasion: loopCount * 18 } : {}
+          }
+        ];
+      }
+
+      computeAxisChains() {
+        const result = {};
+        Object.entries(AXIS_DIRECTIONS).forEach(([axis, dir]) => {
+          let length = 0;
+          let currentId = "0,0";
+          for (let step = 1; step <= MAIN_RING_DEPTH; step += 1) {
+            const nextId = axialKey(dir.q * step, dir.r * step);
+            const node = this.nodes.get(nextId);
+            const conduit = this.conduits.get(edgeKey(currentId, nextId));
+            if (node && node.active && conduit && conduit.allocated) {
+              length += 1;
+              currentId = nextId;
+            } else {
+              break;
+            }
+          }
+          result[axis] = length;
+        });
+        return result;
+      }
+
+      computeSymmetryPairs() {
+        let pairs = 0;
+        this.nodes.forEach(node => {
+          if (!node.active || node.source !== "main" || node.q >= 0) return;
+          const mirror = this.nodes.get(axialKey(-node.q - node.r, node.r));
+          if (mirror && mirror.active) pairs += 1;
+        });
+        return pairs;
+      }
+
+      computeExtraLoopCount() {
+        let count = 0;
+        this.conduits.forEach(conduit => {
+          if (!conduit.allocated) return;
+          const a = this.nodes.get(conduit.fromId);
+          const b = this.nodes.get(conduit.toId);
+          if (a && b && a.active && b.active && this.hasAlternateActiveRoute(conduit)) {
+            count += 1;
+          }
+        });
+        return count;
+      }
+
+      hasAlternateActiveRoute(blockedConduit) {
+        const start = blockedConduit.fromId;
+        const target = blockedConduit.toId;
+        const visited = new Set([start]);
+        const queue = [start];
+        while (queue.length) {
+          const id = queue.shift();
+          const node = this.nodes.get(id);
+          if (!node) continue;
+          for (const neighborId of node.connections) {
+            const conduit = this.conduits.get(edgeKey(id, neighborId));
+            if (!conduit || !conduit.allocated || conduit.id === blockedConduit.id || visited.has(neighborId)) continue;
+            const neighbor = this.nodes.get(neighborId);
+            if (!neighbor || !neighbor.active) continue;
+            if (neighborId === target) return true;
+            visited.add(neighborId);
+            queue.push(neighborId);
+          }
         }
         return false;
+      }
     }
 
-    handleNodeClick(id) {
-        const node = this.nodes.get(id);
-
-        // 1. If Pending, Cancel
-        if (this.pendingNodeId === id) {
-            this.pendingNodeId = null;
-            this.refresh();
-            return;
-        }
-        if (this.pendingNodeId) this.pendingNodeId = null;
-
-        // 2. If Active -> Try Refund
-        if (node.active) {
-            this.deactivateNode(id);
-            return;
-        }
-
-        // 3. If Inactive -> Try Activate
-        this.attemptActivateNode(id);
-    }
-
-    attemptActivateNode(id) {
-        const node = this.nodes.get(id);
-        if (this.points.nodes <= 0) { alert("Not enough Node Points."); return; }
-
-        // Find potential active neighbors
-        const potentialSources = [];
-        
-        for (const nid of node.connections) {
-            const n = this.nodes.get(nid);
-            if (n.active) {
-                const c = this.connections.get([id, nid].sort().join(':'));
-                potentialSources.push({ node: n, conn: c });
-            }
-        }
-
-        if (potentialSources.length === 0) {
-            alert("Must be adjacent to an active node.");
-            return;
-        }
-
-        // LOGIC FOR CHOICE:
-        if (potentialSources.length === 1) {
-            this.finalizeActivation(node, potentialSources[0].conn);
-        } else {
-            this.pendingNodeId = id;
-            this.refresh();
-            const hint = document.getElementById('choice-hint');
-            hint.style.display = 'block';
-            setTimeout(() => hint.style.display = 'none', 3000);
-        }
-    }
-
-    confirmPath(connId) {
-        const conn = this.connections.get(connId);
-        if (!this.pendingNodeId) return;
-        
-        const targetNode = this.nodes.get(this.pendingNodeId);
-        
-        // Validate connection
-        if (conn.fromId !== this.pendingNodeId && conn.toId !== this.pendingNodeId) return;
-
-        this.finalizeActivation(targetNode, conn);
-        this.pendingNodeId = null;
-    }
-
-    finalizeActivation(node, conn) {
-        let costArc = !conn.straight; 
-        
-        if (costArc) {
-            if (this.points.arcs <= 0) {
-                alert("Not enough Flow (Arc Points) to build connection.");
-                return;
-            }
-            conn.straight = true;
-            this.points.arcs--;
-        }
-        
-        node.active = true;
-        this.points.nodes--;
-        this.refresh();
-    }
-
-    deactivateNode(id) {
-        if (id === this.startId) return;
-        const node = this.nodes.get(id);
-        
-        // Dependency Check
-        const otherActive = Array.from(this.nodes.values()).filter(n => n.active && n.id !== id);
-        for (const other of otherActive) {
-            if (!this.isConnectedToStart(other.id, { disableNode: id })) {
-                alert("Cannot refund: This node supports other paths.");
-                return;
-            }
-        }
-
-        // Refund
-        node.active = false;
-        this.points.nodes++;
-        
-        // Refund straight links that are now dead ends
-        for (const nid of node.connections) {
-            const c = this.connections.get([id, nid].sort().join(':'));
-            if (c.straight) {
-                c.straight = false;
-                this.points.arcs++;
-                if(c.curve1) { c.curve1 = false; this.points.arcs++; }
-                if(c.curve2) { c.curve2 = false; this.points.arcs++; }
-            }
-        }
-
-        this.refresh();
-    }
-
-    toggleArc(connId, curveIndex) {
-        const conn = this.connections.get(connId);
-        if (!conn.straight) return; 
-
-        const prop = curveIndex === 1 ? 'curve1' : 'curve2';
-        
-        if (conn[prop]) {
-            conn[prop] = false;
-            this.points.arcs++;
-        } else {
-            if (this.points.arcs > 0) {
-                conn[prop] = true;
-                this.points.arcs--;
-            } else {
-                alert("Not enough Flow.");
-            }
-        }
-        this.refresh();
-    }
-
-    reset() {
-        this.pendingNodeId = null;
-        this.nodes.forEach(n => { if(n.id !== this.startId) n.active = false; });
-        this.connections.forEach(c => { c.straight = false; c.curve1 = false; c.curve2 = false; });
-        this.points = { nodes: 20, arcs: 15 };
-        this.refresh();
-    }
-
-    refresh() {
-        this.renderer.update();
-        this.updateUI();
-    }
-
-    updateUI() {
-        document.getElementById('node-points-display').innerText = this.points.nodes;
-        document.getElementById('arc-points-display').innerText = this.points.arcs;
-        const stats = this.computeStats();
-        const dmg = document.getElementById('stat-damage');
-        const arm = document.getElementById('stat-armor');
-        const life = document.getElementById('stat-life');
-        const res = document.getElementById('stat-resist');
-        if (dmg) dmg.innerText = stats.damage.toLocaleString();
-        if (arm) arm.innerText = stats.armor.toLocaleString();
-        if (life) life.innerText = stats.life.toLocaleString();
-        if (res) res.innerText = `${stats.resist}%`;
-    }
-}
-
-class SVGRenderer {
-    constructor(tree) {
+    class SVGRenderer {
+      constructor(tree) {
         this.tree = tree;
         this.layers = {
-            arcs: document.getElementById('arcs-layer'),
-            straight: document.getElementById('straight-layer'),
-            nodes: document.getElementById('nodes-layer')
+          defs: document.getElementById("svg-defs"),
+          background: document.getElementById("background-layer"),
+          effects: document.getElementById("effects-layer"),
+          conduits: document.getElementById("conduit-layer"),
+          nodes: document.getElementById("node-layer"),
+          labels: document.getElementById("label-layer")
         };
-        this.cache = { nodes: new Map(), straight: new Map(), arcs: new Map() };
-    }
+        this.nodeEls = new Map();
+        this.conduitEls = new Map();
+        this.subtreeEls = new Map();
+        this.draw();
+      }
 
-    draw() {
-        this.tree.connections.forEach(conn => {
-            const n1 = this.tree.nodes.get(conn.fromId);
-            const n2 = this.tree.nodes.get(conn.toId);
-            const p1 = n1.hex.toPixel();
-            const p2 = n2.hex.toPixel();
-            const connColor = averageColor(n1.axis.strong, n2.axis.strong);
-            const arcColor = averageColor(n1.axis.base, n2.axis.base);
-
-            // Straight Link
-            const gStraight = document.createElementNS("http://www.w3.org/2000/svg", "g");
-            const straightLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            straightLine.setAttribute("x1", p1.x); straightLine.setAttribute("y1", p1.y);
-            straightLine.setAttribute("x2", p2.x); straightLine.setAttribute("y2", p2.y);
-            straightLine.setAttribute("class", "straight-path");
-            straightLine.style.setProperty('--path-color', colorToCss(connColor));
-
-            const straightHit = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            straightHit.setAttribute("x1", p1.x); straightHit.setAttribute("y1", p1.y);
-            straightHit.setAttribute("x2", p2.x); straightHit.setAttribute("y2", p2.y);
-            straightHit.setAttribute("class", "hit-area");
-            straightHit.onclick = (e) => {
-                e.stopPropagation(); 
-                if (this.tree.pendingNodeId) {
-                    this.tree.confirmPath(conn.id);
-                } else {
-                    this.tree.connectActiveStraight(conn.id);
-                }
-            };
-
-            gStraight.appendChild(straightLine);
-            gStraight.appendChild(straightHit);
-            this.layers.straight.appendChild(gStraight);
-            this.cache.straight.set(conn.id, straightLine);
-
-            // Arcs
-            const gArcs = document.createElementNS("http://www.w3.org/2000/svg", "g");
-            const createArc = (sweep, index) => {
-                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                const d = `M ${p1.x} ${p1.y} A ${RADIUS} ${RADIUS} 0 0 ${sweep} ${p2.x} ${p2.y}`;
-                path.setAttribute("d", d);
-                path.setAttribute("class", "curve-path");
-                path.style.setProperty('--arc-color', colorToCss(arcColor));
-                const hit = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                hit.setAttribute("d", d); hit.setAttribute("class", "hit-area");
-                hit.onclick = (e) => { e.stopPropagation(); this.tree.toggleArc(conn.id, index); };
-                return { path, hit };
-            };
-            const c1 = createArc(0, 1);
-            const c2 = createArc(1, 2);
-
-            gArcs.appendChild(c1.path); gArcs.appendChild(c1.hit);
-            gArcs.appendChild(c2.path); gArcs.appendChild(c2.hit);
-            this.layers.arcs.appendChild(gArcs);
-            this.cache.arcs.set(conn.id, { c1: c1.path, c2: c2.path });
-        });
-
-        this.tree.nodes.forEach(node => {
-            const pos = node.hex.toPixel();
-            const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-            g.setAttribute("transform", `translate(${pos.x},${pos.y})`);
-            g.setAttribute("class", `node-group type-${node.type}`);
-            g.style.setProperty('--axis-base', colorToCss(node.axis.base));
-            g.style.setProperty('--axis-strong', colorToCss(node.axis.strong));
-            g.style.setProperty('--axis-glow', colorToCss(node.axis.glow));
-            
-            g.onclick = (e) => { e.stopPropagation(); this.tree.handleNodeClick(node.id); };
-            g.oncontextmenu = (e) => { e.preventDefault(); e.stopPropagation(); this.tree.deactivateNode(node.id); };
-            g.onmouseenter = (e) => this.showTooltip(e, node);
-            g.onmouseleave = () => this.hideTooltip();
-
-            const bg = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            bg.setAttribute("r", node.type === 'keystone' ? 12 : 6);
-            bg.setAttribute("class", "node-bg");
-            const fill = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            fill.setAttribute("r", node.type === 'keystone' ? 8 : 4);
-            fill.setAttribute("class", "node-fill");
-
-            g.appendChild(bg);
-            g.appendChild(fill);
-            this.layers.nodes.appendChild(g);
-            this.cache.nodes.set(node.id, g);
-        });
+      draw() {
+        this.drawBackground();
+        this.tree.conduits.forEach(conduit => this.drawConduit(conduit));
+        this.tree.nodes.forEach(node => this.drawNode(node));
         this.update();
-    }
+      }
 
-    update() {
-        const pendingId = this.tree.pendingNodeId;
+      safeId(id) {
+        return String(id).replace(/[^\w-]/g, "_");
+      }
 
-        this.tree.nodes.forEach(node => {
-            const el = this.cache.nodes.get(node.id);
-            el.classList.remove('active', 'available', 'pending');
-            
-            if (node.active) {
-                el.classList.add('active');
-            } else if (node.id === pendingId) {
-                el.classList.add('pending');
-            } else {
-                const isAvail = this.tree.points.nodes > 0 && node.connections.some(nid => this.tree.nodes.get(nid).active);
-                if (isAvail) el.classList.add('available');
-            }
-        });
-
-        this.tree.connections.forEach(conn => {
-            const elStraight = this.cache.straight.get(conn.id);
-            const elArcs = this.cache.arcs.get(conn.id);
-            
-            elStraight.classList.remove('active', 'ghost');
-            elArcs.c1.classList.remove('active', 'available');
-            elArcs.c2.classList.remove('active', 'available');
-
-            if (conn.straight) {
-                elStraight.classList.add('active');
-                if (conn.curve1) elArcs.c1.classList.add('active');
-                else elArcs.c1.classList.add('available');
-                
-                if (conn.curve2) elArcs.c2.classList.add('active');
-                else elArcs.c2.classList.add('available');
-            } else {
-                const nA = this.tree.nodes.get(conn.fromId);
-                const nB = this.tree.nodes.get(conn.toId);
-                if (nA.active && nB.active) {
-                    elStraight.classList.add('available');
-                }
-                if (pendingId && (conn.fromId === pendingId || conn.toId === pendingId)) {
-                    const otherId = conn.fromId === pendingId ? conn.toId : conn.fromId;
-                    if (this.tree.nodes.get(otherId).active) {
-                        elStraight.classList.add('ghost');
-                    }
-                }
-            }
-        });
-    }
-
-    showTooltip(e, node) {
-        const tt = document.getElementById('tooltip');
-        tt.querySelector('.tt-header').innerText = node.data.name;
-        const w = node.axis.weights;
-        const pct = (v) => Math.round(v * 100);
-        tt.querySelector('.tt-body').innerHTML = `
-            <div style="margin-bottom:6px;">${node.data.desc}</div>
-            <div style="display:flex; gap:8px; font-weight:bold; font-size:11px;">
-                <span style="color:#fca5a5;">Might ${pct(w.might)}%</span>
-                <span style="color:#86efac;">Dex ${pct(w.dex)}%</span>
-                <span style="color:#93c5fd;">Int ${pct(w.int)}%</span>
-            </div>`;
-        tt.style.display = 'block';
-        tt.style.left = (e.clientX + 15) + 'px';
-        tt.style.top = (e.clientY + 15) + 'px';
-    }
-    hideTooltip() { document.getElementById('tooltip').style.display = 'none'; }
-}
-
-class ViewController {
-    constructor() {
-        this.svg = document.getElementById('main-svg');
-        this.group = document.getElementById('viewport-group');
-        
-        // Default to screen center
-        this.x = window.innerWidth / 2;
-        this.y = window.innerHeight / 2;
-        this.scale = 0.9;
-        
-        this.isDrag = false;
-        this.last = {x:0,y:0};
-        
-        // Initial Center check
-        this.center();
-        
-        // Re-check after delay to ensure layout
-        setTimeout(() => this.center(), 100);
-        window.addEventListener('resize', () => this.center());
-        
-        this.events();
-    }
-    
-    center() {
-        const rect = this.svg.getBoundingClientRect();
-        const w = rect.width || window.innerWidth;
-        const h = rect.height || window.innerHeight;
-        
-        if (w > 0 && h > 0) {
-            this.x = w / 2;
-            this.y = h / 2;
+      ensureNodeGradients(node) {
+        const safe = this.safeId(node.id);
+        const coreId = `node-core-grad-${safe}`;
+        const shellId = `node-shell-grad-${safe}`;
+        if (document.getElementById(coreId)) {
+          return { coreId, shellId };
         }
-        this.transform();
-    }
 
-    events() {
-        const c = document.getElementById('canvas-container');
-        c.onmousedown = e => { if(e.target.id==='canvas-container'||e.target.tagName==='svg'){this.isDrag=true;this.last={x:e.clientX,y:e.clientY}}};
-        window.onmousemove = e => {
-            if(this.isDrag) {
-                this.x += e.clientX-this.last.x; this.y += e.clientY-this.last.y;
-                this.last={x:e.clientX,y:e.clientY}; this.transform();
+        const spectrum = nodeSpectrum(node.weights);
+        const core = makeSvgEl("radialGradient", {
+          id: coreId,
+          cx: "34%",
+          cy: "28%",
+          r: "78%"
+        });
+        [
+          ["0%", colorMix(spectrum.primary, "#ffffff", 0.34), "1"],
+          ["45%", spectrum.blend, "0.96"],
+          ["76%", colorMix(spectrum.secondary, spectrum.blend, 0.45), "0.86"],
+          ["100%", colorMix(spectrum.tertiary, "#05070c", 0.72), "0.72"]
+        ].forEach(([offset, color, opacity]) => {
+          core.appendChild(makeSvgEl("stop", {
+            offset,
+            "stop-color": color,
+            "stop-opacity": opacity
+          }));
+        });
+
+        const shell = makeSvgEl("radialGradient", {
+          id: shellId,
+          cx: "50%",
+          cy: "50%",
+          r: "74%"
+        });
+        [
+          ["0%", colorMix(spectrum.blend, "#111722", 0.35), "0.78"],
+          ["62%", colorMix(spectrum.blend, "#080b12", 0.58), "0.74"],
+          ["100%", colorMix(spectrum.primary, "#020305", 0.7), "0.92"]
+        ].forEach(([offset, color, opacity]) => {
+          shell.appendChild(makeSvgEl("stop", {
+            offset,
+            "stop-color": color,
+            "stop-opacity": opacity
+          }));
+        });
+
+        this.layers.defs.appendChild(core);
+        this.layers.defs.appendChild(shell);
+        return { coreId, shellId };
+      }
+
+      drawBackground() {
+        for (let ring = 1; ring <= MAIN_RING_DEPTH; ring += 1) {
+          const radius = ring * NODE_SPACING * 1.02;
+          const points = [];
+          for (let i = 0; i < 6; i += 1) {
+            const angle = -Math.PI / 2 + i * Math.PI / 3;
+            points.push(`${Math.cos(angle) * radius},${Math.sin(angle) * radius}`);
+          }
+          this.layers.background.appendChild(makeSvgEl("polygon", {
+            points: points.join(" "),
+            className: "background-ring"
+          }));
+        }
+
+        Object.entries(AXIS_VECTORS).forEach(([axis, vector]) => {
+          const length = MAIN_RING_DEPTH * NODE_SPACING * 1.28;
+          const color = AXIS_META[axis].color;
+          const line = makeSvgEl("line", {
+            x1: 0,
+            y1: 0,
+            x2: vector.x * length,
+            y2: vector.y * length,
+            className: "axis-line"
+          });
+          line.style.color = color;
+          this.layers.background.appendChild(line);
+          const label = makeSvgEl("text", {
+            x: vector.x * (length + 24),
+            y: vector.y * (length + 24),
+            className: "axis-label",
+            "text-anchor": "middle"
+          });
+          label.style.color = color;
+          label.textContent = AXIS_META[axis].short;
+          this.layers.labels.appendChild(label);
+        });
+
+        SUBTREES.forEach(config => {
+          const gateway = this.tree.nodes.get(axialKey(config.gateway.q, config.gateway.r));
+          if (!gateway) return;
+          const outward = normalizeVector(gateway.pos);
+          const center = {
+            x: gateway.pos.x + outward.x * 392,
+            y: gateway.pos.y + outward.y * 392
+          };
+          const halo = makeSvgEl("circle", {
+            cx: center.x,
+            cy: center.y,
+            r: 150,
+            className: "subtree-halo"
+          });
+          this.layers.background.appendChild(halo);
+          const label = makeSvgEl("text", {
+            x: center.x,
+            y: center.y + outward.y * 146,
+            className: "subtree-title",
+            "text-anchor": "middle"
+          });
+          label.textContent = config.title;
+          this.layers.labels.appendChild(label);
+          this.subtreeEls.set(config.id, { halo, label });
+        });
+      }
+
+      renderPatternEffects() {
+        this.layers.effects.replaceChildren();
+        this.tree.empoweredNodes.forEach(nodeId => {
+          const node = this.tree.nodes.get(nodeId);
+          if (!node || !this.tree.isNodeVisible(node)) return;
+          const color = axisColor(node.axis, node.weights);
+          const group = makeSvgEl("g", {
+            className: "circle-bonus-effect",
+            transform: `translate(${node.pos.x},${node.pos.y})`
+          });
+          group.style.setProperty("--effect-color", colorMix(color, "#dff4ff", 0.28));
+          group.style.setProperty("--effect-glow", colorMix(color, "#ffffff", 0.12));
+          group.style.setProperty("--effect-fill", colorMix(color, "#05080d", 0.68));
+
+          group.appendChild(makeSvgEl("circle", {
+            className: "circle-bonus-disc",
+            r: NODE_SPACING * 1.14
+          }));
+          group.appendChild(makeSvgEl("circle", {
+            className: "circle-bonus-ring outer",
+            r: NODE_SPACING * 1.03
+          }));
+          group.appendChild(makeSvgEl("circle", {
+            className: "circle-bonus-ring inner",
+            r: NODE_SPACING * 0.52
+          }));
+          group.appendChild(makeSvgEl("circle", {
+            className: "circle-bonus-pulse",
+            r: NODE_SPACING * 0.58
+          }));
+
+          HEX_DIRECTIONS.forEach(dir => {
+            const neighbor = this.tree.nodes.get(axialKey(node.q + dir.q, node.r + dir.r));
+            if (!neighbor) return;
+            group.appendChild(makeSvgEl("line", {
+              className: "circle-bonus-spoke",
+              x1: 0,
+              y1: 0,
+              x2: neighbor.pos.x - node.pos.x,
+              y2: neighbor.pos.y - node.pos.y
+            }));
+          });
+
+          this.layers.effects.appendChild(group);
+        });
+      }
+
+      drawConduit(conduit) {
+        const from = this.tree.nodes.get(conduit.fromId);
+        const to = this.tree.nodes.get(conduit.toId);
+        const group = makeSvgEl("g");
+        group.dataset.conduitId = conduit.id;
+        const variants = new Map();
+        conduit.options.forEach(option => {
+          const d = this.pathD(from.pos, to.pos, option.side, from.source !== to.source || conduit.extra);
+          const variantGroup = makeSvgEl("g");
+          const hit = makeSvgEl("path", { d, className: "conduit-hit" });
+          const line = makeSvgEl("path", { d, className: "conduit-path" });
+          hit.dataset.conduitId = conduit.id;
+          hit.dataset.variantId = option.id;
+          line.dataset.conduitId = conduit.id;
+          line.dataset.variantId = option.id;
+          line.style.setProperty("--path-color", option.color);
+          line.style.setProperty("--path-available-color", colorMix(option.color, "#1d2430", 0.62));
+          line.style.setProperty("--path-preview-color", colorMix(option.color, "#d8dee8", 0.42));
+          hit.addEventListener("click", event => {
+            event.stopPropagation();
+            this.tree.handleConduitClick(conduit.id, option.id);
+          });
+          hit.addEventListener("mouseenter", event => this.showConduitTooltip(event, conduit, option));
+          hit.addEventListener("mouseleave", () => this.hideTooltip());
+          variantGroup.appendChild(hit);
+          variantGroup.appendChild(line);
+          group.appendChild(variantGroup);
+          variants.set(option.id, { group: variantGroup, line, hit });
+        });
+        this.layers.conduits.appendChild(group);
+        this.conduitEls.set(conduit.id, { group, variants });
+      }
+
+      pathD(a, b, side, wide) {
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const mx = (a.x + b.x) / 2;
+        const my = (a.y + b.y) / 2;
+        const length = Math.hypot(dx, dy) || 1;
+        const curve = side * Math.min(wide ? 78 : 42, Math.max(wide ? 34 : 18, length * (wide ? 0.34 : 0.28)));
+        const cx = mx + (-dy / length) * curve;
+        const cy = my + (dx / length) * curve;
+        return `M ${a.x} ${a.y} Q ${cx} ${cy} ${b.x} ${b.y}`;
+      }
+
+      drawNode(node) {
+        const group = makeSvgEl("g", {
+          transform: `translate(${node.pos.x},${node.pos.y})`,
+          className: `node-group type-${node.type}`
+        });
+        group.dataset.nodeId = node.id;
+        const color = axisColor(node.axis, node.weights);
+        const gradients = this.ensureNodeGradients(node);
+        group.style.setProperty("--axis-color", color);
+        group.style.setProperty("--axis-light", colorMix(color, "#ffffff", 0.24));
+        group.style.setProperty("--axis-glow", colorMix(color, "#ffffff", 0.08));
+        group.style.setProperty("--axis-muted", colorMix(color, "#10141d", 0.54));
+        group.style.setProperty("--axis-dim", colorMix(color, "#10141d", 0.76));
+        group.style.setProperty("--axis-mid", colorMix(color, "#10141d", 0.38));
+        group.style.setProperty("--node-core-fill", `url(#${gradients.coreId})`);
+        group.style.setProperty("--node-shell-fill", `url(#${gradients.shellId})`);
+        const shell = makeSvgEl("circle", { className: "node-shell", r: radiusForType(node.type) });
+        const ring = makeSvgEl("circle", { className: "node-ring", r: radiusForType(node.type) + 6 });
+        const core = makeSvgEl("circle", { className: "node-core", r: Math.max(3, radiusForType(node.type) - 4) });
+        const icon = makeSvgEl("text", { className: "node-icon", y: "0.5" });
+        icon.textContent = this.iconText(node);
+        const hit = makeSvgEl("circle", { className: "node-hit", r: Math.max(22, radiusForType(node.type) + 9) });
+        group.appendChild(ring);
+        group.appendChild(shell);
+        group.appendChild(core);
+        group.appendChild(icon);
+        group.appendChild(hit);
+        group.addEventListener("click", event => {
+          event.stopPropagation();
+          this.tree.handleNodeClick(node.id);
+        });
+        group.addEventListener("contextmenu", event => {
+          event.preventDefault();
+          event.stopPropagation();
+          this.tree.refundNode(node.id);
+        });
+        group.addEventListener("mouseenter", event => this.showNodeTooltip(event, node));
+        group.addEventListener("mouseleave", () => this.hideTooltip());
+        this.layers.nodes.appendChild(group);
+        this.nodeEls.set(node.id, { group, shell, core, ring, icon });
+      }
+
+      iconText(node) {
+        if (node.type === "origin") return "O";
+        if (node.type === "keystone") return "!";
+        if (node.type === "mastery") return "M";
+        if (node.type === "notable") return "*";
+        if (node.type === "gateway") return "G";
+        return AXIS_META[node.axis]?.short.slice(0, 1) || "+";
+      }
+
+      update() {
+        const pendingChoices = new Set(this.tree.pending ? this.tree.pending.choices : []);
+        this.renderPatternEffects();
+        this.subtreeEls.forEach((els, subtreeId) => {
+          const visible = this.tree.isSubtreeUnlocked(subtreeId);
+          els.halo.style.display = visible ? "" : "none";
+          els.label.style.display = visible ? "" : "none";
+        });
+        this.tree.conduits.forEach(conduit => {
+          const el = this.conduitEls.get(conduit.id);
+          const visible = this.tree.isConduitVisible(conduit);
+          el.group.style.display = visible ? "" : "none";
+          conduit.options.forEach(option => {
+            const variantEl = el.variants.get(option.id);
+            variantEl.line.classList.remove("allocated", "available", "pending", "extra");
+            if (!visible) return;
+            const choiceId = this.tree.choiceId(conduit.id, option.id);
+            if (conduit.allocatedVariant === option.id) {
+              variantEl.line.classList.add("allocated");
+              if (this.tree.hasAlternateActiveRoute(conduit) || conduit.extra) {
+                variantEl.line.classList.add("extra");
+              }
+            } else if (pendingChoices.has(choiceId)) {
+              variantEl.line.classList.add("pending");
+            } else if (!conduit.allocated && this.tree.isAvailableConduit(conduit, option.id)) {
+              variantEl.line.classList.add("available");
             }
-            const tt = document.getElementById('tooltip');
-            if(tt.style.display==='block'){tt.style.left=(e.clientX+15)+'px';tt.style.top=(e.clientY+15)+'px';}
-        };
-        window.onmouseup = () => this.isDrag = false;
-        c.onwheel = e => { e.preventDefault(); this.scale = Math.min(Math.max(0.2, this.scale + e.deltaY*-0.001), 4); this.transform(); };
-    }
-    transform() { this.group.setAttribute('transform', `translate(${this.x},${this.y}) scale(${this.scale})`); }
-}
+          });
+        });
 
-const skillTree = new SkillTree();
-const viewController = new ViewController();
-</script>
+        const term = this.tree.searchTerm.trim().toLowerCase();
+        this.tree.nodes.forEach(node => {
+          const el = this.nodeEls.get(node.id);
+          const group = el.group;
+          const visible = this.tree.isNodeVisible(node);
+          group.style.display = visible ? "" : "none";
+          if (!visible) return;
+          group.classList.remove("active", "available", "pending", "selected", "empowered");
+          if (node.active) group.classList.add("active");
+          if (!node.active && this.tree.isAvailableNode(node)) group.classList.add("available");
+          if (this.tree.pending && this.tree.pending.nodeId === node.id) group.classList.add("pending");
+          if (this.tree.selectedNodeId === node.id) group.classList.add("selected");
+          if (this.tree.empoweredNodes.has(node.id)) group.classList.add("empowered");
+          const empowered = this.tree.empoweredNodes.has(node.id);
+          el.shell.setAttribute("r", radiusForType(node.type, empowered));
+          el.core.setAttribute("r", Math.max(3, radiusForType(node.type, empowered) - 4));
+          el.ring.setAttribute("r", radiusForType(node.type, empowered) + 6);
+          if (term) {
+            const haystack = `${node.name} ${node.tags.join(" ")} ${node.effects.join(" ")}`.toLowerCase();
+            group.style.opacity = haystack.includes(term) ? "1" : SEARCH_DIM_OPACITY;
+          } else {
+            group.style.opacity = "1";
+          }
+        });
+      }
+
+      showNodeTooltip(event, node) {
+        const tooltip = document.getElementById("tooltip");
+        const title = tooltip.querySelector(".tooltip-title");
+        const body = tooltip.querySelector(".tooltip-body");
+        title.textContent = node.name;
+        const status = node.active ? "Allocated" : this.tree.isAvailableNode(node) ? "Allocatable" : "Locked";
+        const attr = node.axis === "hybrid" ? "Hybrid" : AXIS_META[node.axis].label;
+        body.innerHTML = `
+          <div>${status} ${node.type}. ${attr} leaning, ring ${node.ring}.</div>
+          <div style="margin-top:6px;">${node.effects.join("<br>")}</div>
+          <div style="margin-top:6px;color:var(--faint);">Cost: ${node.cost} skill point${node.cost === 1 ? "" : "s"}. Click or right-click allocated nodes to refund.</div>
+        `;
+        this.placeTooltip(event);
+      }
+
+      showConduitTooltip(event, conduit, option) {
+        const tooltip = document.getElementById("tooltip");
+        const title = tooltip.querySelector(".tooltip-title");
+        const body = tooltip.querySelector(".tooltip-body");
+        title.textContent = option.name;
+        const state = conduit.allocatedVariant === option.id
+          ? "Allocated"
+          : this.tree.isAvailableConduit(conduit, option.id)
+            ? "Allocatable"
+            : "Locked";
+        body.innerHTML = `
+          <div>${state} curved arc.</div>
+          <div style="margin-top:6px;">${this.tree.formatAttrs(option.attrs)}</div>
+          <div style="margin-top:6px;color:var(--faint);">Each node pair has two arcs. Pick the arc whose stats and shape work for the build.</div>
+        `;
+        this.placeTooltip(event);
+      }
+
+      placeTooltip(event) {
+        const tooltip = document.getElementById("tooltip");
+        tooltip.style.display = "block";
+        const x = clamp(event.clientX + 16, 12, window.innerWidth - 270);
+        const y = clamp(event.clientY + 16, 12, window.innerHeight - 180);
+        tooltip.style.left = `${x}px`;
+        tooltip.style.top = `${y}px`;
+      }
+
+      hideTooltip() {
+        document.getElementById("tooltip").style.display = "none";
+      }
+    }
+
+    class UIController {
+      constructor(tree) {
+        this.tree = tree;
+        this.bind();
+      }
+
+      bind() {
+        document.getElementById("reset-btn").addEventListener("click", () => this.tree.reset());
+        document.getElementById("undo-btn").addEventListener("click", () => this.tree.undo());
+        document.getElementById("search-input").addEventListener("input", event => {
+          this.tree.searchTerm = event.target.value;
+          this.update();
+          if (window.renderer) window.renderer.update();
+        });
+        document.querySelectorAll(".theme-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            document.querySelectorAll(".theme-btn").forEach(other => other.classList.remove("active"));
+            btn.classList.add("active");
+            document.body.className = `theme-${btn.dataset.theme}`;
+          });
+        });
+      }
+
+      update() {
+        document.getElementById("node-points-display").textContent = this.tree.points.nodes;
+        document.getElementById("path-points-display").textContent = this.tree.points.paths;
+        this.updateAttributes();
+        this.updateDerived();
+        this.updateSelection();
+        this.updateBonuses();
+        this.updateLog();
+        this.updateDeltas();
+        this.updateChoices();
+      }
+
+      updateAttributes() {
+        const attrs = this.tree.stats.attrs;
+        const max = Math.max(60, attrs.str, attrs.dex, attrs.int);
+        ["str", "dex", "int"].forEach(key => {
+          document.getElementById(`attr-${key}`).textContent = attrs[key];
+          document.getElementById(`bar-${key}`).style.width = `${Math.max(5, (attrs[key] / max) * 100)}%`;
+        });
+      }
+
+      updateDerived() {
+        const grid = document.getElementById("derived-grid");
+        const labels = {
+          life: ["Life", ""],
+          mana: ["Mana", ""],
+          armour: ["Armour", ""],
+          evasion: ["Evasion", ""],
+          energyShield: ["Energy Shield", ""],
+          attackDamage: ["Attack Damage", "%"],
+          spellDamage: ["Spell Damage", "%"],
+          projectileDamage: ["Projectile Damage", "%"],
+          minionDamage: ["Minion Damage", "%"],
+          attackSpeed: ["Attack Speed", "%"],
+          castSpeed: ["Cast Speed", "%"],
+          critChance: ["Critical Chance", "%"],
+          allResistances: ["All Resistances", "%"],
+          ailmentEffect: ["Ailment Effect", "%"],
+          blockChance: ["Block Chance", "%"],
+          cooldownRecovery: ["Cooldown Recovery", "%"]
+        };
+        grid.innerHTML = "";
+        Object.entries(labels).forEach(([key, [label, suffix]]) => {
+          const cell = document.createElement("div");
+          cell.className = "derived-cell";
+          const value = this.tree.stats.derived[key];
+          const display = Number.isInteger(value) ? value : value.toFixed(1);
+          cell.innerHTML = `<span class="derived-label">${label}</span><span class="derived-value">${display}${suffix}</span>`;
+          grid.appendChild(cell);
+        });
+      }
+
+      updateSelection() {
+        const panel = document.getElementById("selection-panel");
+        const node = this.tree.nodes.get(this.tree.selectedNodeId) || this.tree.nodes.get("0,0");
+        const status = node.active ? "allocated" : this.tree.isAvailableNode(node) ? "allocatable" : "locked";
+        const axis = node.axis === "hybrid" ? "Hybrid" : AXIS_META[node.axis].label;
+        const tags = node.tags.map(tag => `<span class="tag-pill">${tag}</span>`).join("");
+        const effects = node.effects.map(line => `<li>${line}</li>`).join("");
+        panel.innerHTML = `
+          <h2 class="node-name">${node.name}</h2>
+          <div class="node-meta">
+            <span class="tag-pill">${status}</span>
+            <span class="tag-pill">${node.type}</span>
+            <span class="tag-pill">${axis}</span>
+            <span class="tag-pill">cost ${node.cost}</span>
+            ${tags}
+          </div>
+          <ul class="effect-list">${effects}</ul>
+          ${node.active && node.id !== "0,0" ? `<div class="selection-actions"><button class="icon-btn danger" id="refund-node-btn" type="button">Refund Node</button></div>` : ""}
+        `;
+        const refund = document.getElementById("refund-node-btn");
+        if (refund) {
+          refund.addEventListener("click", () => this.tree.refundNode(node.id));
+        }
+      }
+
+      updateBonuses() {
+        const list = document.getElementById("bonus-list");
+        list.innerHTML = "";
+        this.tree.shapeBonuses.forEach(bonus => {
+          const item = document.createElement("div");
+          item.className = `bonus-item ${bonus.active ? "active" : "locked"}`;
+          item.innerHTML = `<strong>${bonus.name}</strong><br>${bonus.description}<br><span>${bonus.progress}</span>`;
+          list.appendChild(item);
+        });
+      }
+
+      updateLog() {
+        const list = document.getElementById("log-list");
+        list.innerHTML = "";
+        if (!this.tree.log.length) {
+          list.innerHTML = `<div class="empty-note">Allocate a node or conduit to start the build log.</div>`;
+          return;
+        }
+        this.tree.log.forEach(entry => {
+          const item = document.createElement("div");
+          item.className = "log-item";
+          item.textContent = entry;
+          list.appendChild(item);
+        });
+      }
+
+      updateDeltas() {
+        const list = document.getElementById("delta-list");
+        list.innerHTML = "";
+        this.tree.lastDeltas.forEach(delta => {
+          const item = document.createElement("div");
+          item.className = "delta-item";
+          item.textContent = delta;
+          list.appendChild(item);
+        });
+      }
+
+      updateChoices() {
+        const panel = document.getElementById("choice-panel");
+        const list = document.getElementById("choice-list");
+        list.innerHTML = "";
+        if (!this.tree.pending) {
+          panel.classList.remove("active");
+          return;
+        }
+        const pendingNode = this.tree.nodes.get(this.tree.pending.nodeId);
+        this.tree.pending.choices.forEach((choiceId, index) => {
+          const { conduitId, optionId } = this.tree.parseChoiceId(choiceId);
+          const conduit = this.tree.conduits.get(conduitId);
+          const option = conduit.getOption(optionId);
+          const otherId = conduit.fromId === pendingNode.id ? conduit.toId : conduit.fromId;
+          const other = this.tree.nodes.get(otherId);
+          const btn = document.createElement("button");
+          btn.className = "choice-btn";
+          btn.type = "button";
+          btn.innerHTML = `<strong>${index + 1}. ${option.name} from ${other.name}</strong><span>${this.tree.formatAttrs(option.attrs)}</span>`;
+          btn.addEventListener("click", () => this.tree.handleConduitClick(conduit.id, option.id));
+          list.appendChild(btn);
+        });
+        panel.classList.add("active");
+      }
+    }
+
+    class ViewController {
+      constructor() {
+        this.svg = document.getElementById("main-svg");
+        this.container = document.getElementById("canvas-container");
+        this.group = document.getElementById("viewport-group");
+        this.x = 0;
+        this.y = 0;
+        this.scale = 0.72;
+        this.dragging = false;
+        this.last = { x: 0, y: 0 };
+        this.bind();
+        this.center();
+        setTimeout(() => this.center(), 80);
+      }
+
+      bind() {
+        this.container.addEventListener("pointerdown", event => {
+          if (event.target.closest(".node-group") || event.target.classList.contains("conduit-hit")) return;
+          this.dragging = true;
+          this.container.classList.add("dragging");
+          this.container.setPointerCapture(event.pointerId);
+          this.last = { x: event.clientX, y: event.clientY };
+        });
+        this.container.addEventListener("pointermove", event => {
+          if (!this.dragging) return;
+          this.x += event.clientX - this.last.x;
+          this.y += event.clientY - this.last.y;
+          this.last = { x: event.clientX, y: event.clientY };
+          this.transform();
+        });
+        this.container.addEventListener("pointerup", event => {
+          this.dragging = false;
+          this.container.classList.remove("dragging");
+          try {
+            this.container.releasePointerCapture(event.pointerId);
+          } catch (_) {}
+        });
+        this.container.addEventListener("wheel", event => {
+          event.preventDefault();
+          const next = this.scale * (event.deltaY > 0 ? 0.92 : 1.08);
+          this.scale = clamp(next, 0.24, 2.2);
+          this.transform();
+        }, { passive: false });
+        window.addEventListener("resize", () => this.center());
+        document.getElementById("center-btn").addEventListener("click", () => this.center());
+        document.getElementById("zoom-in-btn").addEventListener("click", () => this.zoom(1.12));
+        document.getElementById("zoom-out-btn").addEventListener("click", () => this.zoom(0.88));
+        window.addEventListener("keydown", event => {
+          if (event.key >= "1" && event.key <= "9" && window.skillTree.pending) {
+            const index = Number(event.key) - 1;
+            const choiceId = window.skillTree.pending.choices[index];
+            if (choiceId) {
+              const { conduitId, optionId } = window.skillTree.parseChoiceId(choiceId);
+              window.skillTree.handleConduitClick(conduitId, optionId);
+            }
+          }
+          if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "z") {
+            event.preventDefault();
+            window.skillTree.undo();
+          }
+        });
+      }
+
+      zoom(factor) {
+        this.scale = clamp(this.scale * factor, 0.24, 2.2);
+        this.transform();
+      }
+
+      center() {
+        const rect = this.svg.getBoundingClientRect();
+        this.x = rect.width / 2;
+        this.y = rect.height / 2 + 10;
+        this.transform();
+      }
+
+      transform() {
+        this.group.setAttribute("transform", `translate(${round(this.x)},${round(this.y)}) scale(${round(this.scale)})`);
+      }
+    }
+
+    window.skillTree = new GeometricSkillTree();
+    window.renderer = new SVGRenderer(window.skillTree);
+    window.ui = new UIController(window.skillTree);
+    window.viewController = new ViewController();
+    window.skillTree.recalculate();
+  </script>
 </body>
 </html>
