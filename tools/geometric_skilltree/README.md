@@ -12,18 +12,23 @@ Open `index.html` directly in a browser.
   - Skill points allocate passive nodes.
   - Conduit points allocate paths and extra loop links.
 - Passive nodes provide build effects such as weapon damage, wards, minion damage, evasion, recovery, marks, ailments, and hybrid bonuses.
+- Passive hierarchy is geometric rather than random: inner notables, fixed axis masteries, ordered outer keystone seats, and rim gateways occupy repeatable ring roles.
 - Every node-to-node connection has two curved arc variants. Each arc has its own `STR`, `DEX`, and `INT` attribute mix.
 - Allocation flow: clicking an inactive node opens an arc chooser. Pick the curved arc that should carry the new connection.
+- Allocated conduits can be edited in place: click the alternate curve to switch stat routing, or click the current curve to open the conduit editor.
+- Allocated conduits can be refunded without removing either endpoint node when another active route keeps the graph connected.
 - Extra active-to-active arc allocation supports loop building and redundant routes.
 - One-by-one respec: click or right-click allocated nodes to refund them when graph connectivity allows it; click extra loop arcs to refund those arcs.
 - Outer subtree unlock rule: activate the shared rim gateway and complete at least one inner six-node circle.
 - Shape bonuses detect:
-  - Six-node circles around an allocated center.
+  - Radius 1, 2, and 3 loops around an allocated center.
   - Straight axis chains.
   - Mirrored left/right allocation.
   - Redundant circuit paths.
-- Completed six-node circles render animated radiating rings, pulse effects, and spoke patterns around the empowered center.
+- Completed loops visibly empower their center node, increase that node's own in-game stat effect, and add weighted attribute resonance.
+- Larger loop crowns render additional scalloped rings, perimeter petals, internal chords, pulse effects, and stronger center auras.
 - Nodes use weighted STR/DEX/INT SVG gradients so off-axis nodes visually blend their stat correspondence instead of using only three flat colors.
+- Allocated outer nodes and conduits gain stronger stroke, glow, and color intensity to read as higher-tier progression without adding global layer bands.
 - Four visual themes: modern, 90s RPG, stone dungeon, and terminal/ASCII.
 - Search, undo, reset, pan/zoom, center, hover tooltips, and right-click refund.
 
@@ -33,9 +38,11 @@ Open `index.html` directly in a browser.
 2. If the node has one eligible allocated neighbor, the conduit is selected automatically.
 3. The side-panel chooser lists each curved arc option. Click a highlighted arc or press `1`-`9`.
 4. Click an available arc between two already-allocated nodes to spend a conduit point on an extra loop route.
-5. Click or right-click an allocated node to refund it, unless doing so would disconnect allocated nodes from the origin.
-6. Click an allocated loop arc to refund that arc if it is not required for connectivity.
-7. Use `Undo`, `Reset`, zoom buttons, mouse wheel, and drag panning for planning.
+5. Click the alternate curve on an allocated conduit to switch its stat choice without unallocating either node.
+6. Click the current curve on an allocated conduit to edit or refund that path when graph connectivity allows it.
+7. Right-click an allocated conduit to refund that path directly; if it is required for connectivity, the build log explains why it is blocked.
+8. Click or right-click an allocated node to refund it, unless doing so would disconnect allocated nodes from the origin.
+9. Use `Undo`, `Reset`, zoom buttons, mouse wheel, and drag panning for planning.
 
 ## Game Design Rules
 
@@ -43,13 +50,25 @@ The demo uses a few rules that should survive if this is adapted into a full RPG
 
 - The origin has no build bonus. It only establishes the allocation root.
 - Nodes should feel like passive powers. Paths should feel like stat and routing commitments.
+- Path arcs are the travel-stat layer. They are intentionally analogous to travel nodes, but with a real routing choice between two curved stat variants.
 - Small passives establish texture and travel value.
-- Notables are local rewards and should shape build identity.
-- Masteries summarize a local school and should make a region legible.
-- Keystones should be rare and rule-changing, with tradeoffs.
+- Notables are local rewards and should shape build identity at repeatable ring seats.
+- Masteries summarize a local school and sit on fixed axis milestones.
+- Keystones should be rare and rule-changing, with tradeoffs; in the main lattice they belong at ordered outer seats, not scattered throughout.
 - Gateways should touch the outside of the main tree and lead to compact, themed subtrees only after a shape-combo unlock.
-- Geometric combo bonuses should reward deliberate shapes, not random wandering.
+- Geometric combo bonuses should reward deliberate shapes, not random wandering. Larger concentric loops around the same center should feel like a meaningful investment, not only a cosmetic flourish.
 - Extra arc spending should matter because it enables loops, symmetry, redundant circuits, and alternate attribute routing.
+
+## System Direction
+
+The tree should behave like a full character progression system, not a decorative graph:
+
+- Rings 1-2 are foundation picks: cheap passives, first notables, and early identity choices.
+- Rings 3-4 are specialization: axis masteries and stronger local notables start to define a build's school.
+- Rings 5-6 are advanced commitment: expensive outer routing, larger pattern payoffs, and keystone seats.
+- Ring 7 and attached subtrees are capstone expansion: gateways, build-defining routes, and optional endgame branches.
+- Curved paths are the attribute/travel layer. Nodes are passive-effect rewards. Shape patterns are a third layer that converts geometry into build power.
+- Node size and type should follow geometric rules: ring seats, axes, side midpoints, gateways, and earned pattern upgrades. Random large nodes are explicitly out of scope.
 
 ## PoE2 Export Review
 

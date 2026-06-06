@@ -145,13 +145,6 @@
       display: block;
     }
 
-    .background-ring {
-      fill: none;
-      stroke: var(--ring);
-      stroke-width: 1;
-      pointer-events: none;
-    }
-
     .axis-line {
       stroke: currentColor;
       stroke-width: 1.4;
@@ -227,12 +220,45 @@
       animation: ring-flow 5.5s linear infinite;
     }
 
+    .circle-bonus-ring.large {
+      stroke-width: 2.4;
+      opacity: 0.72;
+      stroke-dasharray: 18 10 4 10;
+      animation: ring-flow 9s linear infinite;
+    }
+
+    .circle-bonus-ring.scallop {
+      stroke-width: 1.2;
+      opacity: 0.42;
+      stroke-dasharray: 2 11;
+      animation: ring-spin 12s linear infinite reverse;
+    }
+
+    .circle-bonus-wave {
+      fill: none;
+      stroke: var(--effect-color, #9fdcff);
+      stroke-width: 1.5;
+      stroke-dasharray: 3 13;
+      opacity: 0.26;
+      animation: loop-wave 3.8s ease-in-out infinite;
+    }
+
     .circle-bonus-pulse {
       fill: none;
       stroke: var(--effect-color, #9fdcff);
       stroke-width: 2;
       opacity: 0;
       animation: circle-pulse 2.8s ease-out infinite;
+    }
+
+    .circle-bonus-center-aura {
+      fill: none;
+      stroke: var(--effect-color, #9fdcff);
+      stroke-width: 2;
+      stroke-dasharray: 5 7;
+      opacity: 0.72;
+      filter: drop-shadow(0 0 8px var(--effect-glow, rgba(150, 220, 255, 0.7)));
+      animation: center-aura 4.6s linear infinite;
     }
 
     .circle-bonus-spoke {
@@ -242,6 +268,30 @@
       stroke-dasharray: 4 9;
       opacity: 0.35;
       animation: spoke-breathe 2.4s ease-in-out infinite alternate;
+    }
+
+    .circle-bonus-spoke.strong {
+      stroke-width: 1.8;
+      stroke-dasharray: 9 12;
+      opacity: 0.42;
+    }
+
+    .circle-bonus-chord {
+      stroke: var(--effect-color, #9fdcff);
+      stroke-width: 1;
+      stroke-linecap: round;
+      stroke-dasharray: 2 8;
+      opacity: 0.22;
+      animation: spoke-breathe 3.2s ease-in-out infinite alternate;
+    }
+
+    .circle-bonus-petal {
+      fill: var(--effect-fill, rgba(140, 210, 255, 0.05));
+      stroke: var(--effect-color, #9fdcff);
+      stroke-width: 1.5;
+      opacity: 0.52;
+      filter: drop-shadow(0 0 6px var(--effect-glow, rgba(150, 220, 255, 0.42)));
+      animation: petal-bloom 3.6s ease-in-out infinite alternate;
     }
 
     @keyframes ring-flow {
@@ -258,9 +308,23 @@
       100% { r: 100px; opacity: 0; }
     }
 
+    @keyframes loop-wave {
+      0%, 100% { opacity: 0.14; stroke-width: 1; }
+      45% { opacity: 0.38; stroke-width: 2.1; }
+    }
+
+    @keyframes center-aura {
+      to { stroke-dashoffset: -72; }
+    }
+
     @keyframes spoke-breathe {
       from { opacity: 0.18; }
       to { opacity: 0.46; }
+    }
+
+    @keyframes petal-bloom {
+      from { opacity: 0.34; stroke-width: 1; }
+      to { opacity: 0.68; stroke-width: 2.2; }
     }
 
     .conduit-hit,
@@ -280,31 +344,39 @@
 
     .conduit-path.available {
       stroke: var(--path-available-color, var(--path-ready));
-      stroke-width: 2.7;
+      stroke-width: var(--path-available-width, 2.7px);
       stroke-dasharray: 7 8;
-      opacity: 0.46;
+      opacity: var(--path-available-opacity, 0.46);
     }
 
     .conduit-path.pending {
       stroke: var(--path-preview-color, #c8d1dc);
-      stroke-width: 4;
+      stroke-width: var(--path-pending-width, 4px);
       stroke-dasharray: 6 8;
-      opacity: 0.72;
-      filter: drop-shadow(0 0 2px rgba(220, 230, 242, 0.22));
+      opacity: var(--path-pending-opacity, 0.72);
+      filter: drop-shadow(0 0 var(--path-pending-glow, 2px) var(--path-preview-glow, rgba(220, 230, 242, 0.22)));
+    }
+
+    .conduit-path.swap-option {
+      stroke: var(--path-preview-color, #aeb8c5);
+      stroke-width: var(--path-available-width, 2.7px);
+      stroke-dasharray: 4 10;
+      opacity: 0.28;
+      filter: none;
     }
 
     .conduit-path.allocated {
       stroke: var(--path-color, var(--path-active));
-      stroke-width: 5;
+      stroke-width: var(--path-allocated-width, 5px);
       opacity: 1;
-      filter: drop-shadow(0 0 4px var(--path-color, var(--path-active)));
+      filter: drop-shadow(0 0 var(--path-allocated-glow, 4px) var(--path-glow, var(--path-color, var(--path-active))));
     }
 
     .conduit-path.extra {
-      stroke: var(--path-extra);
-      stroke-width: 4.5;
+      stroke: var(--path-extra-color, var(--path-extra));
+      stroke-width: var(--path-extra-width, 4.5px);
       opacity: 1;
-      filter: drop-shadow(0 0 5px rgba(138, 212, 255, 0.45));
+      filter: drop-shadow(0 0 var(--path-extra-glow, 5px) var(--path-extra-glow-color, rgba(138, 212, 255, 0.45)));
     }
 
     .conduit-hit {
@@ -345,7 +417,8 @@
     .node-shell {
       fill: var(--node-shell-fill, var(--axis-dim, var(--node-locked)));
       stroke: var(--axis-muted, var(--node-locked-stroke));
-      stroke-width: 2;
+      stroke-width: var(--node-locked-stroke-width, 2px);
+      opacity: var(--node-shell-opacity, 1);
     }
 
     .node-ring {
@@ -359,7 +432,7 @@
       fill: var(--node-core-fill, var(--axis-color, #2b3442));
       stroke: rgba(0, 0, 0, 0.35);
       stroke-width: 1;
-      opacity: 0.54;
+      opacity: var(--node-core-locked-opacity, 0.54);
     }
 
     .node-icon {
@@ -374,24 +447,32 @@
     .node-group.available .node-shell {
       fill: var(--node-shell-fill, var(--axis-mid, var(--node-ready)));
       stroke: var(--axis-light, var(--node-ready-stroke));
-      stroke-width: 2.5;
-      filter: drop-shadow(0 0 4px var(--axis-glow, rgba(206, 215, 228, 0.38)));
+      stroke-width: var(--node-available-stroke-width, 2.5px);
+      filter: drop-shadow(0 0 var(--node-available-glow, 4px) var(--axis-glow, rgba(206, 215, 228, 0.38)));
     }
 
     .node-group.available .node-core {
       fill: var(--node-core-fill, var(--axis-color, var(--node-ready-stroke)));
-      opacity: 0.86;
+      opacity: var(--node-core-available-opacity, 0.86);
     }
 
     .node-group.active .node-shell {
       fill: var(--node-shell-fill, #1b1720);
       stroke: var(--axis-light, var(--node-active));
-      filter: drop-shadow(0 0 6px var(--axis-glow, rgba(234, 209, 140, 0.5)));
+      stroke-width: var(--node-active-stroke-width, 2.5px);
+      filter: drop-shadow(0 0 var(--node-active-glow, 6px) var(--axis-glow, rgba(234, 209, 140, 0.5)));
     }
 
     .node-group.active .node-core {
       fill: var(--node-core-fill, var(--axis-light, var(--node-active)));
-      opacity: 1;
+      opacity: var(--node-core-active-opacity, 1);
+      filter: drop-shadow(0 0 var(--node-core-active-glow, 0px) var(--axis-glow, transparent));
+    }
+
+    .node-group.active .node-ring {
+      opacity: var(--node-active-ring-opacity, 0);
+      stroke: var(--axis-light, rgba(255, 255, 255, 0.18));
+      stroke-width: var(--node-active-ring-width, 1.2px);
     }
 
     .node-group.pending .node-shell {
@@ -406,9 +487,51 @@
       stroke: #ffffff;
     }
 
+    .node-group.type-notable .node-ring,
+    .node-group.type-mastery .node-ring,
+    .node-group.type-keystone .node-ring,
+    .node-group.type-gateway .node-ring {
+      opacity: var(--node-passive-ring-opacity, 0.12);
+      stroke: var(--axis-muted, rgba(255, 255, 255, 0.16));
+      stroke-width: var(--node-passive-ring-width, 1.2px);
+    }
+
+    .node-group.selected .node-ring,
+    .node-group.empowered .node-ring {
+      opacity: 1;
+      stroke: #ffffff;
+    }
+
     .node-group.empowered .node-shell {
       stroke-width: 3;
       filter: drop-shadow(0 0 10px var(--axis-glow, rgba(255, 234, 170, 0.6)));
+    }
+
+    .node-group.empowered .node-ring {
+      stroke: var(--axis-light, #ffffff);
+      stroke-width: 1.8;
+      stroke-dasharray: 5 5;
+      filter: drop-shadow(0 0 5px var(--axis-glow, rgba(255, 234, 170, 0.55)));
+      animation: center-aura 5.2s linear infinite;
+    }
+
+    .node-group.empowered.boost-r2 .node-shell,
+    .node-group.empowered.boost-r3 .node-shell {
+      stroke-width: 3.8;
+      filter: drop-shadow(0 0 14px var(--axis-glow, rgba(255, 234, 170, 0.76)));
+    }
+
+    .node-group.empowered.boost-r3 .node-shell {
+      filter: drop-shadow(0 0 18px var(--axis-glow, rgba(255, 234, 170, 0.9)));
+    }
+
+    .node-group.empowered.boost-concentric .node-ring {
+      stroke-dasharray: 2 4 9 5;
+      stroke-width: 2.4;
+    }
+
+    .node-group.empowered .node-icon {
+      fill: #ffffff;
     }
 
     .node-group.type-origin .node-shell {
@@ -723,6 +846,30 @@
       background: var(--axis-light, var(--node-active));
     }
 
+    .effect-list li.boost-line {
+      color: var(--text);
+    }
+
+    .boost-callout,
+    .tooltip-boost {
+      margin-top: 10px;
+      padding: 9px 10px;
+      border: 1px solid color-mix(in srgb, var(--axis-light, var(--node-active)) 48%, transparent);
+      border-radius: 6px;
+      background: color-mix(in srgb, var(--axis-color, var(--node-active)) 13%, transparent);
+      box-shadow: inset 0 0 18px color-mix(in srgb, var(--axis-color, var(--node-active)) 12%, transparent);
+    }
+
+    .boost-callout strong,
+    .tooltip-boost strong {
+      color: var(--axis-light, var(--node-active));
+    }
+
+    .boost-callout div + div,
+    .tooltip-boost div + div {
+      margin-top: 4px;
+    }
+
     .selection-actions {
       display: flex;
       gap: 8px;
@@ -777,6 +924,26 @@
       border-color: var(--panel-border-strong);
       outline: none;
       background: rgba(255, 255, 255, 0.08);
+    }
+
+    .choice-btn.current {
+      border-color: color-mix(in srgb, var(--node-active) 52%, var(--panel-border));
+      background: rgba(234, 209, 140, 0.1);
+    }
+
+    .choice-btn.swap {
+      border-color: rgba(120, 201, 148, 0.42);
+    }
+
+    .choice-btn.danger {
+      border-color: rgba(224, 115, 115, 0.5);
+    }
+
+    .choice-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.52;
+      border-color: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.035);
     }
 
     .choice-btn strong {
@@ -1290,6 +1457,12 @@
       return Math.round(value * 100) / 100;
     }
 
+    function formatNumber(value) {
+      const rounded = round(value);
+      if (Number.isInteger(rounded)) return String(rounded);
+      return rounded.toFixed(Math.abs(rounded) < 10 ? 2 : 1).replace(/0+$/, "").replace(/\.$/, "");
+    }
+
     function colorMix(hexA, hexB, t) {
       const a = parseHex(hexA);
       const b = parseHex(hexB);
@@ -1404,6 +1577,31 @@
       };
     }
 
+    function ringProgress(ring) {
+      return clamp((ring || 0) / MAIN_RING_DEPTH, 0, 1);
+    }
+
+    function ringIntensity(ring) {
+      const progress = ringProgress(ring);
+      return {
+        progress,
+        stroke: 2.2 + progress * 1.45,
+        availableStroke: 2.35 + progress * 0.5,
+        glow: 4.8 + progress * 9,
+        coreGlow: progress * 5,
+        ringOpacity: progress > 0.58 ? 0.12 + progress * 0.18 : 0,
+        ringWidth: 1 + progress * 1.05
+      };
+    }
+
+    function progressionTier(ring) {
+      if (ring === 0) return { label: "Origin", short: "T0", description: "start" };
+      if (ring <= 2) return { label: "Tier I", short: "T1", description: "foundation" };
+      if (ring <= 4) return { label: "Tier II", short: "T2", description: "specialization" };
+      if (ring <= 6) return { label: "Tier III", short: "T3", description: "advanced" };
+      return { label: "Tier IV", short: "T4", description: "outer mastery" };
+    }
+
     function pathAttributesFromWeights(weights, ring) {
       const scale = ring > 5 ? 7 : ring > 3 ? 6 : 5;
       return {
@@ -1464,18 +1662,49 @@
       return template.name;
     }
 
-    function nodeTypeFor(q, r, ring) {
-      if (ring === 0) return "origin";
+    function hexRingIndex(q, r, ring) {
+      if (ring === 0) return 0;
+      let currentQ = HEX_DIRECTIONS[4].q * ring;
+      let currentR = HEX_DIRECTIONS[4].r * ring;
+      let index = 0;
+      for (let side = 0; side < 6; side += 1) {
+        const dir = HEX_DIRECTIONS[side];
+        for (let step = 0; step < ring; step += 1) {
+          if (currentQ === q && currentR === r) return index;
+          currentQ += dir.q;
+          currentR += dir.r;
+          index += 1;
+        }
+      }
+      return -1;
+    }
+
+    function isHexCorner(q, r, ring) {
       const s = -q - r;
-      const corner = [Math.abs(q), Math.abs(r), Math.abs(s)].filter(value => value === ring).length >= 2;
-      const axisNode = (
+      return [Math.abs(q), Math.abs(r), Math.abs(s)].filter(value => value === ring).length >= 2;
+    }
+
+    function isPrimaryAxisNode(q, r, ring) {
+      return (
         (q === ring && r === 0) ||
         (q === 0 && r === -ring) ||
         (q === -ring && r === ring)
       );
-      if (ring === MAIN_RING_DEPTH && corner) return "keystone";
+    }
+
+    function nodeTypeFor(q, r, ring) {
+      if (ring === 0) return "origin";
+      const index = hexRingIndex(q, r, ring);
+      const corner = isHexCorner(q, r, ring);
+      const axisNode = isPrimaryAxisNode(q, r, ring);
+      if (ring === MAIN_RING_DEPTH && corner) return "gateway";
+      if (ring === 6 && index % 6 === 3) return "keystone";
       if ((ring === 3 || ring === 5) && axisNode) return "mastery";
-      if (ring >= 2 && ((Math.abs(q * 2 + r * 3 + ring) % 5) === 0 || axisNode)) return "notable";
+      if (ring === 2 && index % 2 === 0) return "notable";
+      if (ring === 4 && index % 4 === 2) return "notable";
+      if (ring === 5 && index % 5 === 2) return "notable";
+      if (ring === 6 && index % 6 === 0) return "notable";
+      if (ring === MAIN_RING_DEPTH && index % 7 === 3) return "notable";
       return "small";
     }
 
@@ -1486,7 +1715,7 @@
       return 1;
     }
 
-    function radiusForType(type, empowered = false) {
+    function radiusForType(type, boost = null) {
       const base = {
         origin: 14,
         small: 7,
@@ -1495,7 +1724,9 @@
         keystone: 16,
         gateway: 13
       }[type] || 8;
-      return empowered ? base + 4 : base;
+      if (boost === true) return base + 4;
+      if (!boost) return base;
+      return base + 3 + boost.maxRadius * 2 + Math.max(0, boost.loopCount - 1);
     }
 
     function makeSvgEl(tag, attrs = {}) {
@@ -1537,6 +1768,8 @@
         this.fromId = nodeA.id;
         this.toId = nodeB.id;
         this.extra = extra;
+        this.ring = Math.max(nodeA.ring || 0, nodeB.ring || 0);
+        this.depth = ringProgress(this.ring);
         this.allocatedVariant = null;
         this.options = [-1, 1].map(side => this.makeOption(nodeA, nodeB, side));
       }
@@ -1612,6 +1845,7 @@
         this.log = [];
         this.searchTerm = "";
         this.empoweredNodes = new Set();
+        this.empoweredNodeDetails = new Map();
         this.shapeBonuses = [];
         this.lastDeltas = [];
 
@@ -1691,6 +1925,8 @@
             `Shared gate for the ${config.title} outer circle.`,
             "Unlock condition: allocate this gate and complete any inner six-node circle."
           ];
+          gateway.stat = null;
+          gateway.amount = 0;
 
           const outward = normalizeVector(gateway.pos);
           const tangent = { x: -outward.y, y: outward.x };
@@ -1916,6 +2152,7 @@
           return;
         }
         this.pending = {
+          mode: "node",
           nodeId: id,
           choices: choices.map(item => item.choiceId)
         };
@@ -1944,16 +2181,26 @@
         if (!conduit) return;
 
         if (this.pending) {
+          const pending = this.pending;
           const choiceId = this.choiceId(id, optionId);
-          if (this.pending.choices.includes(choiceId)) {
-            const node = this.nodes.get(this.pending.nodeId);
+          if (pending.mode === "node" && pending.choices.includes(choiceId)) {
+            const node = this.nodes.get(pending.nodeId);
             this.allocateNodeWithConduit(node, conduit, optionId);
+            return;
+          }
+          if (pending.mode === "conduit" && pending.conduitId === id && pending.choices.includes(choiceId)) {
+            this.changeConduitVariant(id, optionId);
+            return;
           }
           return;
         }
 
         if (conduit.allocated) {
-          this.refundConduit(conduit.id);
+          if (optionId && optionId !== conduit.allocatedVariant) {
+            this.changeConduitVariant(conduit.id, optionId);
+          } else {
+            this.openConduitEditor(conduit.id);
+          }
           return;
         }
 
@@ -1966,6 +2213,34 @@
           this.commit(`Added loop arc ${option.name} (${this.formatAttrs(option.attrs)}).`);
           this.recalculate();
         }
+      }
+
+      openConduitEditor(id) {
+        const conduit = this.conduits.get(id);
+        if (!conduit || !conduit.allocated) return;
+        this.pending = {
+          mode: "conduit",
+          conduitId: id,
+          choices: conduit.options.map(option => this.choiceId(id, option.id))
+        };
+        this.recalculate();
+      }
+
+      changeConduitVariant(id, optionId) {
+        const conduit = this.conduits.get(id);
+        const option = conduit?.getOption(optionId);
+        if (!conduit || !option || !conduit.allocated) return;
+        if (conduit.allocatedVariant === option.id) {
+          this.pending = null;
+          this.recalculate();
+          return;
+        }
+        this.saveHistory();
+        const previous = conduit.activeOption;
+        conduit.allocatedVariant = option.id;
+        this.pending = null;
+        this.commit(`Changed ${previous ? previous.name : "arc"} to ${option.name} (${this.formatAttrs(option.attrs)}).`);
+        this.recalculate();
       }
 
       refundNode(id) {
@@ -2003,6 +2278,9 @@
         const option = conduit.activeOption;
         conduit.allocatedVariant = null;
         this.points.paths += 1;
+        if (this.pending?.mode === "conduit" && this.pending.conduitId === id) {
+          this.pending = null;
+        }
         this.commit(`Refunded ${option ? option.name : "arc"}.`);
         this.recalculate();
       }
@@ -2054,7 +2332,8 @@
 
       recalculate() {
         const previousStats = this.stats || null;
-        this.empoweredNodes = this.detectEmpoweredNodes();
+        this.empoweredNodeDetails = this.detectLoopEmpowerments();
+        this.empoweredNodes = new Set(this.empoweredNodeDetails.keys());
         this.shapeBonuses = this.computeShapeBonuses();
         this.stats = this.computeStats();
         this.lastDeltas = this.computeDeltas(previousStats, this.stats);
@@ -2078,12 +2357,14 @@
           if (node.stat && typeof node.amount === "number") {
             derived[node.stat] = (derived[node.stat] || 0) + node.amount;
           }
-          if (this.empoweredNodes.has(node.id)) {
-            const bonus = node.type === "small" ? 12 : node.type === "notable" ? 18 : 10;
-            if (node.stat) derived[node.stat] = (derived[node.stat] || 0) + bonus;
-            attrs.str += Math.round(node.weights.str * 4);
-            attrs.dex += Math.round(node.weights.dex * 4);
-            attrs.int += Math.round(node.weights.int * 4);
+          const boost = this.getNodeBoost(node);
+          if (boost) {
+            if (node.stat && boost.directBonus) {
+              derived[node.stat] = (derived[node.stat] || 0) + boost.directBonus;
+            }
+            attrs.str += boost.attrBonus.str;
+            attrs.dex += boost.attrBonus.dex;
+            attrs.int += boost.attrBonus.int;
           }
         });
 
@@ -2156,36 +2437,150 @@
         }[key] || key;
       }
 
-      detectEmpoweredNodes() {
-        const empowered = new Set();
+      statSuffix(key) {
+        return [
+          "attackDamage",
+          "spellDamage",
+          "projectileDamage",
+          "minionDamage",
+          "attackSpeed",
+          "castSpeed",
+          "critChance",
+          "allResistances",
+          "ailmentEffect",
+          "blockChance",
+          "cooldownRecovery"
+        ].includes(key) ? "%" : "";
+      }
+
+      formatDerivedBonus(key, value) {
+        return `+${formatNumber(value)}${this.statSuffix(key)} ${this.formatDerivedLabel(key)}`;
+      }
+
+      getNodeBoost(node) {
+        const detail = this.empoweredNodeDetails.get(node.id);
+        if (!detail) return null;
+        const radiusTotal = detail.radiusTotal;
+        const loopCount = detail.loops.length;
+        const maxRadius = detail.maxRadius;
+        const multiplier = round(1 + radiusTotal * 0.42 + Math.max(0, maxRadius - 1) * 0.16 + Math.max(0, loopCount - 1) * 0.12);
+        const percentIncrease = Math.round((multiplier - 1) * 100);
+        const directBonus = node.stat && typeof node.amount === "number"
+          ? round(node.amount * (multiplier - 1))
+          : 0;
+        const attrScale = 4 + maxRadius * 3 + radiusTotal + Math.max(0, loopCount - 1) * 2;
+        const attrBonus = {
+          str: Math.round(node.weights.str * attrScale),
+          dex: Math.round(node.weights.dex * attrScale),
+          int: Math.round(node.weights.int * attrScale)
+        };
+        const primaryAttr = Object.entries(node.weights).sort((a, b) => b[1] - a[1])[0][0];
+        if (attrBonus[primaryAttr] < 1) attrBonus[primaryAttr] = 1;
+        return {
+          ...detail,
+          loopCount,
+          multiplier,
+          percentIncrease,
+          directBonus,
+          attrBonus
+        };
+      }
+
+      formatNodeBoostLines(node) {
+        const boost = this.getNodeBoost(node);
+        if (!boost) return [];
+        const loopLabels = boost.loops.map(loop => loop.radius === 1 ? "inner loop" : `radius ${loop.radius} loop`);
+        const lines = [
+          `${boost.loopCount} completed loop${boost.loopCount === 1 ? "" : "s"} (${loopLabels.join(", ")}); largest radius ${boost.maxRadius}.`,
+          `${boost.percentIncrease}% increased center-node effect.`
+        ];
+        if (node.stat && boost.directBonus) {
+          lines.push(`${this.formatDerivedBonus(node.stat, boost.directBonus)} from the boosted passive.`);
+        }
+        lines.push(`${this.formatAttrs(boost.attrBonus)} from geometric resonance.`);
+        return lines;
+      }
+
+      hexRingNodes(center, radius) {
+        if (!center || center.q === null || center.r === null || radius < 1) return null;
+        const nodes = [];
+        let q = center.q + HEX_DIRECTIONS[4].q * radius;
+        let r = center.r + HEX_DIRECTIONS[4].r * radius;
+        for (let side = 0; side < 6; side += 1) {
+          const dir = HEX_DIRECTIONS[side];
+          for (let step = 0; step < radius; step += 1) {
+            const node = this.nodes.get(axialKey(q, r));
+            if (!node) return null;
+            nodes.push(node);
+            q += dir.q;
+            r += dir.r;
+          }
+        }
+        return nodes;
+      }
+
+      detectCompletedLoop(center, radius) {
+        const ringNodes = this.hexRingNodes(center, radius);
+        if (!ringNodes || ringNodes.some(node => !node.active || node.source !== "main")) return null;
+        const perimeterComplete = ringNodes.every((node, index) => {
+          const next = ringNodes[(index + 1) % ringNodes.length];
+          const conduit = this.conduits.get(edgeKey(node.id, next.id));
+          return conduit && conduit.allocated;
+        });
+        if (!perimeterComplete) return null;
+        return {
+          radius,
+          nodeIds: ringNodes.map(node => node.id)
+        };
+      }
+
+      detectLoopEmpowerments() {
+        const details = new Map();
         this.nodes.forEach(node => {
           if (!node.active || node.source !== "main" || node.ring === 0) return;
-          const ringNeighbors = HEX_DIRECTIONS.map(dir => this.nodes.get(axialKey(node.q + dir.q, node.r + dir.r)));
-          if (ringNeighbors.some(n => !n || !n.active)) return;
-          const perimeterComplete = ringNeighbors.every((neighbor, index) => {
-            const next = ringNeighbors[(index + 1) % ringNeighbors.length];
-            const conduit = this.conduits.get(edgeKey(neighbor.id, next.id));
-            return conduit && conduit.allocated;
+          const loops = [];
+          for (let radius = 1; radius <= 3; radius += 1) {
+            const loop = this.detectCompletedLoop(node, radius);
+            if (loop) loops.push(loop);
+          }
+          if (!loops.length) return;
+          details.set(node.id, {
+            nodeId: node.id,
+            loops,
+            maxRadius: Math.max(...loops.map(loop => loop.radius)),
+            radiusTotal: loops.reduce((sum, loop) => sum + loop.radius, 0)
           });
-          if (perimeterComplete) empowered.add(node.id);
         });
-        return empowered;
+        return details;
+      }
+
+      detectEmpoweredNodes() {
+        return new Set(this.detectLoopEmpowerments().keys());
       }
 
       computeShapeBonuses() {
-        const activeCircles = this.empoweredNodes.size;
+        const loopDetails = Array.from(this.empoweredNodeDetails.values());
+        const loopTotals = { 1: 0, 2: 0, 3: 0 };
+        loopDetails.forEach(detail => {
+          detail.loops.forEach(loop => {
+            loopTotals[loop.radius] += 1;
+          });
+        });
+        const activeCircles = loopTotals[1] + loopTotals[2] + loopTotals[3];
+        const largeLoops = loopTotals[2] + loopTotals[3];
+        const loopPower = loopTotals[1] + loopTotals[2] * 2 + loopTotals[3] * 3;
         const axisChains = this.computeAxisChains();
         const symmetryPairs = this.computeSymmetryPairs();
         const loopCount = this.computeExtraLoopCount();
         return [
           {
             id: "circle",
-            name: "Six-Node Circle",
+            name: "Loop Crowns",
             active: activeCircles > 0,
-            progress: `${activeCircles} center${activeCircles === 1 ? "" : "s"} crowned`,
-            description: "Allocate a node and the six-node ring around it, then close the ring with conduits.",
-            attrs: { int: activeCircles * 3, dex: activeCircles * 3, str: activeCircles * 3 },
-            derived: { spellDamage: activeCircles * 10, energyShield: activeCircles * 45, armour: activeCircles * 45 }
+            progress: `${loopDetails.length} center${loopDetails.length === 1 ? "" : "s"} crowned; ${largeLoops} large loop${largeLoops === 1 ? "" : "s"}`,
+            description: "Close radius 1, 2, or 3 loops around an allocated center. Larger loops scale the center node and add stronger resonance.",
+            attrs: { int: loopPower * 3, dex: loopPower * 3, str: loopPower * 3 },
+            derived: { spellDamage: loopPower * 9 + largeLoops * 8, energyShield: loopPower * 42 + largeLoops * 34, armour: loopPower * 42 + largeLoops * 34 }
           },
           {
             id: "axis",
@@ -2329,6 +2724,7 @@
         }
 
         const spectrum = nodeSpectrum(node.weights);
+        const depth = ringProgress(node.ring);
         const core = makeSvgEl("radialGradient", {
           id: coreId,
           cx: "34%",
@@ -2336,10 +2732,10 @@
           r: "78%"
         });
         [
-          ["0%", colorMix(spectrum.primary, "#ffffff", 0.34), "1"],
-          ["45%", spectrum.blend, "0.96"],
-          ["76%", colorMix(spectrum.secondary, spectrum.blend, 0.45), "0.86"],
-          ["100%", colorMix(spectrum.tertiary, "#05070c", 0.72), "0.72"]
+          ["0%", colorMix(spectrum.primary, "#ffffff", 0.28 + depth * 0.18), "1"],
+          ["45%", colorMix(spectrum.blend, "#ffffff", depth * 0.08), "0.96"],
+          ["76%", colorMix(spectrum.secondary, spectrum.blend, 0.38 + depth * 0.12), "0.88"],
+          ["100%", colorMix(spectrum.tertiary, "#05070c", 0.74 - depth * 0.1), "0.74"]
         ].forEach(([offset, color, opacity]) => {
           core.appendChild(makeSvgEl("stop", {
             offset,
@@ -2355,9 +2751,9 @@
           r: "74%"
         });
         [
-          ["0%", colorMix(spectrum.blend, "#111722", 0.35), "0.78"],
-          ["62%", colorMix(spectrum.blend, "#080b12", 0.58), "0.74"],
-          ["100%", colorMix(spectrum.primary, "#020305", 0.7), "0.92"]
+          ["0%", colorMix(spectrum.blend, "#111722", 0.38 - depth * 0.08), "0.8"],
+          ["62%", colorMix(spectrum.blend, "#080b12", 0.62 - depth * 0.12), "0.76"],
+          ["100%", colorMix(spectrum.primary, "#020305", 0.72 - depth * 0.12), "0.94"]
         ].forEach(([offset, color, opacity]) => {
           shell.appendChild(makeSvgEl("stop", {
             offset,
@@ -2372,19 +2768,6 @@
       }
 
       drawBackground() {
-        for (let ring = 1; ring <= MAIN_RING_DEPTH; ring += 1) {
-          const radius = ring * NODE_SPACING * 1.02;
-          const points = [];
-          for (let i = 0; i < 6; i += 1) {
-            const angle = -Math.PI / 2 + i * Math.PI / 3;
-            points.push(`${Math.cos(angle) * radius},${Math.sin(angle) * radius}`);
-          }
-          this.layers.background.appendChild(makeSvgEl("polygon", {
-            points: points.join(" "),
-            className: "background-ring"
-          }));
-        }
-
         Object.entries(AXIS_VECTORS).forEach(([axis, vector]) => {
           const length = MAIN_RING_DEPTH * NODE_SPACING * 1.28;
           const color = AXIS_META[axis].color;
@@ -2437,49 +2820,117 @@
 
       renderPatternEffects() {
         this.layers.effects.replaceChildren();
-        this.tree.empoweredNodes.forEach(nodeId => {
-          const node = this.tree.nodes.get(nodeId);
+        Array.from(this.tree.empoweredNodeDetails.values())
+          .sort((a, b) => a.maxRadius - b.maxRadius)
+          .forEach(detail => {
+          const node = this.tree.nodes.get(detail.nodeId);
           if (!node || !this.tree.isNodeVisible(node)) return;
+          const boost = this.tree.getNodeBoost(node);
           const color = axisColor(node.axis, node.weights);
           const group = makeSvgEl("g", {
-            className: "circle-bonus-effect",
+            className: `circle-bonus-effect loop-radius-${detail.maxRadius}`,
             transform: `translate(${node.pos.x},${node.pos.y})`
           });
           group.style.setProperty("--effect-color", colorMix(color, "#dff4ff", 0.28));
           group.style.setProperty("--effect-glow", colorMix(color, "#ffffff", 0.12));
           group.style.setProperty("--effect-fill", colorMix(color, "#05080d", 0.68));
+          const aura = makeSvgEl("circle", {
+            className: "circle-bonus-center-aura",
+            r: radiusForType(node.type, boost) + 8
+          });
+          group.appendChild(aura);
+          detail.loops
+            .slice()
+            .sort((a, b) => b.radius - a.radius)
+            .forEach((loop, index) => this.appendLoopEffect(group, node, loop, index));
 
-          group.appendChild(makeSvgEl("circle", {
-            className: "circle-bonus-disc",
-            r: NODE_SPACING * 1.14
-          }));
-          group.appendChild(makeSvgEl("circle", {
-            className: "circle-bonus-ring outer",
-            r: NODE_SPACING * 1.03
-          }));
-          group.appendChild(makeSvgEl("circle", {
-            className: "circle-bonus-ring inner",
-            r: NODE_SPACING * 0.52
-          }));
+          this.layers.effects.appendChild(group);
+        });
+      }
+
+      appendLoopEffect(group, center, loop, loopIndex) {
+        const ringNodes = loop.nodeIds
+          .map(id => this.tree.nodes.get(id))
+          .filter(Boolean);
+        const radiusPx = NODE_SPACING * loop.radius * 1.03;
+        const delay = `${loopIndex * -0.45}s`;
+        const disc = makeSvgEl("circle", {
+          className: "circle-bonus-disc",
+          r: radiusPx + 10 + loop.radius * 4
+        });
+        disc.style.opacity = loop.radius === 1 ? "0.36" : "0.2";
+        group.appendChild(disc);
+
+        const ring = makeSvgEl("circle", {
+          className: `circle-bonus-ring ${loop.radius === 1 ? "outer" : "large"}`,
+          r: radiusPx
+        });
+        ring.style.animationDelay = delay;
+        group.appendChild(ring);
+
+        const inner = makeSvgEl("circle", {
+          className: `circle-bonus-ring ${loop.radius === 1 ? "inner" : "scallop"}`,
+          r: Math.max(22, radiusPx - NODE_SPACING * 0.46)
+        });
+        inner.style.animationDelay = `${loopIndex * -0.7}s`;
+        group.appendChild(inner);
+
+        const wave = makeSvgEl("circle", {
+          className: "circle-bonus-wave",
+          r: radiusPx + 16
+        });
+        wave.style.animationDelay = `${loopIndex * -0.55}s`;
+        group.appendChild(wave);
+
+        if (loop.radius === 1) {
           group.appendChild(makeSvgEl("circle", {
             className: "circle-bonus-pulse",
             r: NODE_SPACING * 0.58
           }));
+        }
 
-          HEX_DIRECTIONS.forEach(dir => {
-            const neighbor = this.tree.nodes.get(axialKey(node.q + dir.q, node.r + dir.r));
-            if (!neighbor) return;
-            group.appendChild(makeSvgEl("line", {
-              className: "circle-bonus-spoke",
-              x1: 0,
-              y1: 0,
-              x2: neighbor.pos.x - node.pos.x,
-              y2: neighbor.pos.y - node.pos.y
-            }));
+        ringNodes.forEach((ringNode, index) => {
+          const x = ringNode.pos.x - center.pos.x;
+          const y = ringNode.pos.y - center.pos.y;
+          const spoke = makeSvgEl("line", {
+            className: `circle-bonus-spoke${loop.radius > 1 && index % loop.radius === 0 ? " strong" : ""}`,
+            x1: 0,
+            y1: 0,
+            x2: x,
+            y2: y
           });
+          spoke.style.animationDelay = `${(index % 6) * -0.12}s`;
+          group.appendChild(spoke);
 
-          this.layers.effects.appendChild(group);
+          if (loop.radius > 1) {
+            const petal = makeSvgEl("circle", {
+              className: "circle-bonus-petal",
+              cx: x,
+              cy: y,
+              r: 7 + loop.radius * 3
+            });
+            petal.style.animationDelay = `${index * -0.08}s`;
+            group.appendChild(petal);
+          }
         });
+
+        if (loop.radius > 1 && ringNodes.length) {
+          const chordStep = loop.radius === 2 ? 3 : 4;
+          for (let index = 0; index < ringNodes.length; index += loop.radius) {
+            const a = ringNodes[index];
+            const b = ringNodes[(index + chordStep) % ringNodes.length];
+            if (!a || !b) continue;
+            const chord = makeSvgEl("line", {
+              className: "circle-bonus-chord",
+              x1: a.pos.x - center.pos.x,
+              y1: a.pos.y - center.pos.y,
+              x2: b.pos.x - center.pos.x,
+              y2: b.pos.y - center.pos.y
+            });
+            chord.style.animationDelay = `${index * -0.1}s`;
+            group.appendChild(chord);
+          }
+        }
       }
 
       drawConduit(conduit) {
@@ -2487,6 +2938,7 @@
         const to = this.tree.nodes.get(conduit.toId);
         const group = makeSvgEl("g");
         group.dataset.conduitId = conduit.id;
+        group.dataset.ring = conduit.ring;
         const variants = new Map();
         conduit.options.forEach(option => {
           const d = this.pathD(from.pos, to.pos, option.side, from.source !== to.source || conduit.extra);
@@ -2497,12 +2949,36 @@
           hit.dataset.variantId = option.id;
           line.dataset.conduitId = conduit.id;
           line.dataset.variantId = option.id;
-          line.style.setProperty("--path-color", option.color);
-          line.style.setProperty("--path-available-color", colorMix(option.color, "#1d2430", 0.62));
-          line.style.setProperty("--path-preview-color", colorMix(option.color, "#d8dee8", 0.42));
+          const depth = conduit.depth;
+          const activeColor = colorMix(option.color, "#ffffff", 0.06 + depth * 0.2);
+          const glowColor = colorMix(option.color, "#ffffff", 0.02 + depth * 0.16);
+          line.style.setProperty("--path-depth", `${round(depth)}`);
+          line.style.setProperty("--path-color", activeColor);
+          line.style.setProperty("--path-glow", colorMix(glowColor, "#05080d", 0.04));
+          line.style.setProperty("--path-allocated-width", `${round(4.45 + depth * 1.75)}px`);
+          line.style.setProperty("--path-allocated-glow", `${round(3.4 + depth * 8.4)}px`);
+          line.style.setProperty("--path-available-color", colorMix(option.color, "#1d2430", 0.68 - depth * 0.1));
+          line.style.setProperty("--path-available-width", `${round(2.45 + depth * 0.45)}px`);
+          line.style.setProperty("--path-available-opacity", `${round(0.34 + depth * 0.1)}`);
+          line.style.setProperty("--path-preview-color", colorMix(option.color, "#d8dee8", 0.34 + depth * 0.16));
+          line.style.setProperty("--path-preview-glow", colorMix(option.color, "#ffffff", 0.12 + depth * 0.18));
+          line.style.setProperty("--path-pending-width", `${round(3.5 + depth * 1.2)}px`);
+          line.style.setProperty("--path-pending-glow", `${round(1.8 + depth * 4.4)}px`);
+          line.style.setProperty("--path-pending-opacity", `${round(0.62 + depth * 0.18)}`);
+          line.style.setProperty("--path-extra-color", colorMix(activeColor, "#8ad4ff", 0.34 + depth * 0.22));
+          line.style.setProperty("--path-extra-width", `${round(4.2 + depth * 1.65)}px`);
+          line.style.setProperty("--path-extra-glow", `${round(4 + depth * 7.5)}px`);
+          line.style.setProperty("--path-extra-glow-color", colorMix(option.color, "#8ad4ff", 0.36 + depth * 0.24));
           hit.addEventListener("click", event => {
             event.stopPropagation();
             this.tree.handleConduitClick(conduit.id, option.id);
+          });
+          hit.addEventListener("contextmenu", event => {
+            event.preventDefault();
+            event.stopPropagation();
+            if (conduit.allocated) {
+              this.tree.refundConduit(conduit.id);
+            }
           });
           hit.addEventListener("mouseenter", event => this.showConduitTooltip(event, conduit, option));
           hit.addEventListener("mouseleave", () => this.hideTooltip());
@@ -2534,13 +3010,29 @@
         });
         group.dataset.nodeId = node.id;
         const color = axisColor(node.axis, node.weights);
+        const depth = ringIntensity(node.ring);
         const gradients = this.ensureNodeGradients(node);
         group.style.setProperty("--axis-color", color);
-        group.style.setProperty("--axis-light", colorMix(color, "#ffffff", 0.24));
-        group.style.setProperty("--axis-glow", colorMix(color, "#ffffff", 0.08));
-        group.style.setProperty("--axis-muted", colorMix(color, "#10141d", 0.54));
-        group.style.setProperty("--axis-dim", colorMix(color, "#10141d", 0.76));
-        group.style.setProperty("--axis-mid", colorMix(color, "#10141d", 0.38));
+        group.style.setProperty("--depth", `${round(depth.progress)}`);
+        group.style.setProperty("--axis-light", colorMix(color, "#ffffff", 0.18 + depth.progress * 0.18));
+        group.style.setProperty("--axis-glow", colorMix(color, "#ffffff", 0.04 + depth.progress * 0.16));
+        group.style.setProperty("--axis-muted", colorMix(color, "#10141d", 0.6 - depth.progress * 0.1));
+        group.style.setProperty("--axis-dim", colorMix(color, "#10141d", 0.8 - depth.progress * 0.1));
+        group.style.setProperty("--axis-mid", colorMix(color, "#10141d", 0.44 - depth.progress * 0.12));
+        group.style.setProperty("--node-locked-stroke-width", `${round(1.7 + depth.progress * 0.65)}px`);
+        group.style.setProperty("--node-shell-opacity", `${round(0.84 + depth.progress * 0.16)}`);
+        group.style.setProperty("--node-active-stroke-width", `${round(depth.stroke)}px`);
+        group.style.setProperty("--node-available-stroke-width", `${round(depth.availableStroke)}px`);
+        group.style.setProperty("--node-active-glow", `${round(depth.glow)}px`);
+        group.style.setProperty("--node-available-glow", `${round(3.2 + depth.progress * 3.2)}px`);
+        group.style.setProperty("--node-core-active-glow", `${round(depth.coreGlow)}px`);
+        group.style.setProperty("--node-core-locked-opacity", `${round(0.44 + depth.progress * 0.16)}`);
+        group.style.setProperty("--node-core-available-opacity", `${round(0.78 + depth.progress * 0.12)}`);
+        group.style.setProperty("--node-core-active-opacity", `${round(0.9 + depth.progress * 0.1)}`);
+        group.style.setProperty("--node-active-ring-opacity", `${round(depth.ringOpacity)}`);
+        group.style.setProperty("--node-active-ring-width", `${round(depth.ringWidth)}px`);
+        group.style.setProperty("--node-passive-ring-opacity", `${round(0.08 + depth.progress * 0.16)}`);
+        group.style.setProperty("--node-passive-ring-width", `${round(1 + depth.progress * 0.9)}px`);
         group.style.setProperty("--node-core-fill", `url(#${gradients.coreId})`);
         group.style.setProperty("--node-shell-fill", `url(#${gradients.shellId})`);
         const shell = makeSvgEl("circle", { className: "node-shell", r: radiusForType(node.type) });
@@ -2592,7 +3084,7 @@
           el.group.style.display = visible ? "" : "none";
           conduit.options.forEach(option => {
             const variantEl = el.variants.get(option.id);
-            variantEl.line.classList.remove("allocated", "available", "pending", "extra");
+            variantEl.line.classList.remove("allocated", "available", "pending", "swap-option", "extra");
             if (!visible) return;
             const choiceId = this.tree.choiceId(conduit.id, option.id);
             if (conduit.allocatedVariant === option.id) {
@@ -2602,6 +3094,8 @@
               }
             } else if (pendingChoices.has(choiceId)) {
               variantEl.line.classList.add("pending");
+            } else if (conduit.allocated && conduit.allocatedVariant !== option.id) {
+              variantEl.line.classList.add("swap-option");
             } else if (!conduit.allocated && this.tree.isAvailableConduit(conduit, option.id)) {
               variantEl.line.classList.add("available");
             }
@@ -2615,16 +3109,19 @@
           const visible = this.tree.isNodeVisible(node);
           group.style.display = visible ? "" : "none";
           if (!visible) return;
-          group.classList.remove("active", "available", "pending", "selected", "empowered");
+          group.classList.remove("active", "available", "pending", "selected", "empowered", "boost-r1", "boost-r2", "boost-r3", "boost-concentric");
           if (node.active) group.classList.add("active");
           if (!node.active && this.tree.isAvailableNode(node)) group.classList.add("available");
           if (this.tree.pending && this.tree.pending.nodeId === node.id) group.classList.add("pending");
           if (this.tree.selectedNodeId === node.id) group.classList.add("selected");
-          if (this.tree.empoweredNodes.has(node.id)) group.classList.add("empowered");
-          const empowered = this.tree.empoweredNodes.has(node.id);
-          el.shell.setAttribute("r", radiusForType(node.type, empowered));
-          el.core.setAttribute("r", Math.max(3, radiusForType(node.type, empowered) - 4));
-          el.ring.setAttribute("r", radiusForType(node.type, empowered) + 6);
+          const boost = this.tree.getNodeBoost(node);
+          if (boost) {
+            group.classList.add("empowered", `boost-r${boost.maxRadius}`);
+            if (boost.loopCount > 1) group.classList.add("boost-concentric");
+          }
+          el.shell.setAttribute("r", radiusForType(node.type, boost));
+          el.core.setAttribute("r", Math.max(3, radiusForType(node.type, boost) - 4));
+          el.ring.setAttribute("r", radiusForType(node.type, boost) + 6);
           if (term) {
             const haystack = `${node.name} ${node.tags.join(" ")} ${node.effects.join(" ")}`.toLowerCase();
             group.style.opacity = haystack.includes(term) ? "1" : SEARCH_DIM_OPACITY;
@@ -2639,11 +3136,20 @@
         const title = tooltip.querySelector(".tooltip-title");
         const body = tooltip.querySelector(".tooltip-body");
         title.textContent = node.name;
+        const color = axisColor(node.axis, node.weights);
+        tooltip.style.setProperty("--axis-color", color);
+        tooltip.style.setProperty("--axis-light", colorMix(color, "#ffffff", 0.24));
         const status = node.active ? "Allocated" : this.tree.isAvailableNode(node) ? "Allocatable" : "Locked";
         const attr = node.axis === "hybrid" ? "Hybrid" : AXIS_META[node.axis].label;
+        const tier = progressionTier(node.ring);
+        const boostLines = this.tree.formatNodeBoostLines(node);
+        const boostHtml = boostLines.length
+          ? `<div class="tooltip-boost"><strong>Empowered center</strong>${boostLines.map(line => `<div>${line}</div>`).join("")}</div>`
+          : "";
         body.innerHTML = `
-          <div>${status} ${node.type}. ${attr} leaning, ring ${node.ring}.</div>
+          <div>${status} ${node.type}. ${tier.label} ${tier.description}, ring ${node.ring}. ${attr} leaning.</div>
           <div style="margin-top:6px;">${node.effects.join("<br>")}</div>
+          ${boostHtml}
           <div style="margin-top:6px;color:var(--faint);">Cost: ${node.cost} skill point${node.cost === 1 ? "" : "s"}. Click or right-click allocated nodes to refund.</div>
         `;
         this.placeTooltip(event);
@@ -2655,14 +3161,22 @@
         const body = tooltip.querySelector(".tooltip-body");
         title.textContent = option.name;
         const state = conduit.allocatedVariant === option.id
-          ? "Allocated"
+          ? "Current"
+          : conduit.allocated
+            ? "Swap option"
           : this.tree.isAvailableConduit(conduit, option.id)
             ? "Allocatable"
             : "Locked";
+        const tier = progressionTier(conduit.ring);
+        const editHint = conduit.allocated
+          ? conduit.allocatedVariant === option.id
+            ? "Click to edit this conduit. Right-click to refund this path if the allocated graph remains connected."
+            : "Click to switch this connection to this alternate curved arc without unallocating either node."
+          : "Each node pair has two arcs. Pick the arc whose stats and shape work for the build.";
         body.innerHTML = `
-          <div>${state} curved arc.</div>
+          <div>${state} ${tier.label} curved arc.</div>
           <div style="margin-top:6px;">${this.tree.formatAttrs(option.attrs)}</div>
-          <div style="margin-top:6px;color:var(--faint);">Each node pair has two arcs. Pick the arc whose stats and shape work for the build.</div>
+          <div style="margin-top:6px;color:var(--faint);">${editHint}</div>
         `;
         this.placeTooltip(event);
       }
@@ -2761,18 +3275,28 @@
         const node = this.tree.nodes.get(this.tree.selectedNodeId) || this.tree.nodes.get("0,0");
         const status = node.active ? "allocated" : this.tree.isAvailableNode(node) ? "allocatable" : "locked";
         const axis = node.axis === "hybrid" ? "Hybrid" : AXIS_META[node.axis].label;
+        const tier = progressionTier(node.ring);
+        const color = axisColor(node.axis, node.weights);
+        panel.style.setProperty("--axis-color", color);
+        panel.style.setProperty("--axis-light", colorMix(color, "#ffffff", 0.24));
         const tags = node.tags.map(tag => `<span class="tag-pill">${tag}</span>`).join("");
         const effects = node.effects.map(line => `<li>${line}</li>`).join("");
+        const boostLines = this.tree.formatNodeBoostLines(node);
+        const boostHtml = boostLines.length
+          ? `<div class="boost-callout"><strong>Empowered Center</strong>${boostLines.map(line => `<div>${line}</div>`).join("")}</div>`
+          : "";
         panel.innerHTML = `
           <h2 class="node-name">${node.name}</h2>
           <div class="node-meta">
             <span class="tag-pill">${status}</span>
             <span class="tag-pill">${node.type}</span>
+            <span class="tag-pill">${tier.label}</span>
             <span class="tag-pill">${axis}</span>
             <span class="tag-pill">cost ${node.cost}</span>
             ${tags}
           </div>
           <ul class="effect-list">${effects}</ul>
+          ${boostHtml}
           ${node.active && node.id !== "0,0" ? `<div class="selection-actions"><button class="icon-btn danger" id="refund-node-btn" type="button">Refund Node</button></div>` : ""}
         `;
         const refund = document.getElementById("refund-node-btn");
@@ -2821,25 +3345,60 @@
       updateChoices() {
         const panel = document.getElementById("choice-panel");
         const list = document.getElementById("choice-list");
+        const title = panel.querySelector(".choice-title");
+        const copy = panel.querySelector(".choice-copy");
         list.innerHTML = "";
         if (!this.tree.pending) {
           panel.classList.remove("active");
           return;
         }
-        const pendingNode = this.tree.nodes.get(this.tree.pending.nodeId);
-        this.tree.pending.choices.forEach((choiceId, index) => {
-          const { conduitId, optionId } = this.tree.parseChoiceId(choiceId);
-          const conduit = this.tree.conduits.get(conduitId);
-          const option = conduit.getOption(optionId);
-          const otherId = conduit.fromId === pendingNode.id ? conduit.toId : conduit.fromId;
-          const other = this.tree.nodes.get(otherId);
-          const btn = document.createElement("button");
-          btn.className = "choice-btn";
-          btn.type = "button";
-          btn.innerHTML = `<strong>${index + 1}. ${option.name} from ${other.name}</strong><span>${this.tree.formatAttrs(option.attrs)}</span>`;
-          btn.addEventListener("click", () => this.tree.handleConduitClick(conduit.id, option.id));
-          list.appendChild(btn);
-        });
+        if (this.tree.pending.mode === "conduit") {
+          const conduit = this.tree.conduits.get(this.tree.pending.conduitId);
+          const from = this.tree.nodes.get(conduit.fromId);
+          const to = this.tree.nodes.get(conduit.toId);
+          const canRefund = this.tree.canRefundConduit(conduit.id);
+          title.textContent = "Edit Conduit";
+          copy.textContent = `Change or remove the path between ${from.name} and ${to.name}. Switching arcs keeps both passives allocated.`;
+          this.tree.pending.choices.forEach((choiceId, index) => {
+            const { conduitId, optionId } = this.tree.parseChoiceId(choiceId);
+            const option = conduit.getOption(optionId);
+            const current = conduit.allocatedVariant === option.id;
+            const btn = document.createElement("button");
+            btn.className = `choice-btn ${current ? "current" : "swap"}`;
+            btn.type = "button";
+            btn.innerHTML = `<strong>${index + 1}. ${current ? "Current" : "Switch to"} ${option.name}</strong><span>${this.tree.formatAttrs(option.attrs)}</span>`;
+            btn.addEventListener("click", () => this.tree.handleConduitClick(conduitId, option.id));
+            list.appendChild(btn);
+          });
+          const refund = document.createElement("button");
+          refund.className = `choice-btn danger${canRefund ? "" : " blocked"}`;
+          refund.type = "button";
+          refund.disabled = !canRefund;
+          refund.innerHTML = canRefund
+            ? `<strong>Refund this path</strong><span>Returns 1 conduit point without unallocating either passive.</span>`
+            : `<strong>Refund path blocked</strong><span>This is the only active route for one or more allocated passives. Add another path first.</span>`;
+          if (canRefund) {
+            refund.addEventListener("click", () => this.tree.refundConduit(conduit.id));
+          }
+          list.appendChild(refund);
+        } else {
+          title.textContent = "Choose Conduit";
+          copy.textContent = "Pick the curved arc that should carry the new connection. Each arc can lean toward a different attribute mix.";
+          const pendingNode = this.tree.nodes.get(this.tree.pending.nodeId);
+          this.tree.pending.choices.forEach((choiceId, index) => {
+            const { conduitId, optionId } = this.tree.parseChoiceId(choiceId);
+            const conduit = this.tree.conduits.get(conduitId);
+            const option = conduit.getOption(optionId);
+            const otherId = conduit.fromId === pendingNode.id ? conduit.toId : conduit.fromId;
+            const other = this.tree.nodes.get(otherId);
+            const btn = document.createElement("button");
+            btn.className = "choice-btn";
+            btn.type = "button";
+            btn.innerHTML = `<strong>${index + 1}. ${option.name} from ${other.name}</strong><span>${this.tree.formatAttrs(option.attrs)}</span>`;
+            btn.addEventListener("click", () => this.tree.handleConduitClick(conduit.id, option.id));
+            list.appendChild(btn);
+          });
+        }
         panel.classList.add("active");
       }
     }
