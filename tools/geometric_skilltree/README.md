@@ -14,7 +14,8 @@ Open `index.html` directly in a browser.
 - Passive nodes provide build effects such as weapon damage, wards, minion damage, evasion, recovery, marks, ailments, and hybrid bonuses.
 - Passive hierarchy is geometric rather than random: inner notables, fixed axis masteries, ordered outer keystone seats, and rim gateways occupy repeatable ring roles.
 - Every node-to-node connection has two curved arc variants. Each arc has its own `STR`, `DEX`, and `INT` attribute mix.
-- Allocation flow: clicking an inactive node opens an arc chooser. Pick the curved arc that should carry the new connection.
+- Allocation flow: clicking or tapping an inactive allocatable node immediately spends the node and conduit points.
+- The automatic conduit choice favors the clicked node's STR/DEX/INT weighting; click the path afterward to switch to the alternate curved arc.
 - Allocated conduits can be edited in place: click the alternate curve to switch stat routing, or click the current curve to open the conduit editor.
 - Allocated conduits can be refunded without removing either endpoint node when another active route keeps the graph connected.
 - Extra active-to-active arc allocation supports loop building and redundant routes.
@@ -27,22 +28,22 @@ Open `index.html` directly in a browser.
   - Redundant circuit paths.
 - Completed loops visibly empower their center node, increase that node's own in-game stat effect, and add weighted attribute resonance.
 - Larger loop crowns render additional scalloped rings, perimeter petals, internal chords, pulse effects, and stronger center auras.
+- Loop/combo effects are attribute-aware: STR reads as restrained vitality pulses, DEX as light whirlwind arcs, INT as celestial orbit/star marks, and hybrid nodes blend those motifs by weight.
 - Nodes use weighted STR/DEX/INT SVG gradients so off-axis nodes visually blend their stat correspondence instead of using only three flat colors.
 - Allocated outer nodes and conduits gain stronger stroke, glow, and color intensity to read as higher-tier progression without adding global layer bands.
 - Four visual themes: modern, 90s RPG, stone dungeon, and terminal/ASCII.
-- Search, undo, reset, pan/zoom, center, hover tooltips, and right-click refund.
+- Search, undo, reset, pan/zoom, center, desktop hover tooltips, click/tap allocation, and right-click refund.
 
 ## Interaction Model
 
-1. Click an allocatable node to allocate it.
-2. If the node has one eligible allocated neighbor, the conduit is selected automatically.
-3. The side-panel chooser lists each curved arc option. Click a highlighted arc or press `1`-`9`.
-4. Click an available arc between two already-allocated nodes to spend a conduit point on an extra loop route.
-5. Click the alternate curve on an allocated conduit to switch its stat choice without unallocating either node.
-6. Click the current curve on an allocated conduit to edit or refund that path when graph connectivity allows it.
-7. Right-click an allocated conduit to refund that path directly; if it is required for connectivity, the build log explains why it is blocked.
-8. Click or right-click an allocated node to refund it, unless doing so would disconnect allocated nodes from the origin.
-9. Use `Undo`, `Reset`, zoom buttons, mouse wheel, and drag panning for planning.
+1. Click or tap an allocatable node to allocate it immediately.
+2. The tree automatically chooses the best available arc by matching the node's attribute leaning and preferring inward progression when scores tie.
+3. Click an available arc between two already-allocated nodes to spend a conduit point on an extra loop route.
+4. Click the alternate curve on an allocated conduit to switch its stat choice without unallocating either node.
+5. Click the current curve on an allocated conduit to edit or refund that path when graph connectivity allows it.
+6. Right-click an allocated conduit to refund that path directly; if it is required for connectivity, the build log explains why it is blocked.
+7. Click or right-click an allocated node to refund it, unless doing so would disconnect allocated nodes from the origin.
+8. Use `Undo`, `Reset`, zoom buttons, mouse wheel, and drag panning for planning.
 
 ## Game Design Rules
 

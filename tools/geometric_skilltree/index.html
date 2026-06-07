@@ -193,6 +193,10 @@
       mix-blend-mode: screen;
     }
 
+    .circle-bonus-effect.effect-blend {
+      opacity: 0.84;
+    }
+
     .circle-bonus-disc {
       fill: var(--effect-fill, rgba(140, 210, 255, 0.05));
       stroke: none;
@@ -218,6 +222,21 @@
     .circle-bonus-ring.outer {
       stroke-dasharray: 42 18;
       animation: ring-flow 5.5s linear infinite;
+    }
+
+    .circle-bonus-effect.effect-primary-str .circle-bonus-ring.outer {
+      stroke-dasharray: 34 24;
+      animation: vitality-ring 4.8s ease-in-out infinite;
+    }
+
+    .circle-bonus-effect.effect-primary-dex .circle-bonus-ring.outer {
+      stroke-dasharray: 20 18;
+      animation: ring-flow 3.9s linear infinite;
+    }
+
+    .circle-bonus-effect.effect-primary-int .circle-bonus-ring.outer {
+      stroke-dasharray: 3 12 28 20;
+      animation: ring-flow 8.8s linear infinite;
     }
 
     .circle-bonus-ring.large {
@@ -294,12 +313,82 @@
       animation: petal-bloom 3.6s ease-in-out infinite alternate;
     }
 
+    .circle-bonus-vitality {
+      fill: none;
+      stroke: var(--str-effect-color, var(--effect-color, #ff9b82));
+      stroke-width: 2;
+      opacity: 0;
+      filter: drop-shadow(0 0 7px var(--str-effect-glow, var(--effect-glow, rgba(255, 128, 95, 0.45))));
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: vitality-pulse 3.6s ease-out infinite;
+    }
+
+    .circle-bonus-vitality.outer {
+      stroke-width: 1.3;
+      animation-duration: 4.7s;
+    }
+
+    .circle-bonus-whirl {
+      fill: none;
+      stroke: var(--dex-effect-color, var(--effect-color, #78e5ab));
+      stroke-width: 1.45;
+      stroke-linecap: round;
+      stroke-dasharray: 26 44;
+      opacity: var(--local-effect-opacity, 0.2);
+      filter: drop-shadow(0 0 5px var(--dex-effect-glow, var(--effect-glow, rgba(100, 230, 160, 0.35))));
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: whirl-turn 6.2s linear infinite;
+    }
+
+    .circle-bonus-whirl.reverse {
+      stroke-width: 1;
+      animation-direction: reverse;
+      animation-duration: 7.4s;
+    }
+
+    .circle-bonus-orbit {
+      fill: none;
+      stroke: var(--int-effect-color, var(--effect-color, #a9c4ff));
+      stroke-width: 1;
+      stroke-dasharray: 1 13;
+      opacity: var(--local-effect-opacity, 0.2);
+      filter: drop-shadow(0 0 5px var(--int-effect-glow, var(--effect-glow, rgba(130, 170, 255, 0.38))));
+      animation: ring-spin 13s linear infinite reverse;
+    }
+
+    .circle-bonus-star {
+      fill: var(--int-effect-color, var(--effect-color, #b7caff));
+      stroke: var(--int-effect-color, var(--effect-color, #b7caff));
+      stroke-width: 0.8;
+      opacity: var(--local-effect-opacity, 0.2);
+      filter: drop-shadow(0 0 5px var(--int-effect-glow, var(--effect-glow, rgba(130, 170, 255, 0.42))));
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: star-twinkle 3.9s ease-in-out infinite alternate;
+    }
+
+    .circle-bonus-constellation {
+      stroke: var(--int-effect-color, var(--effect-color, #b7caff));
+      stroke-width: 0.85;
+      stroke-linecap: round;
+      stroke-dasharray: 1 8;
+      opacity: var(--local-effect-opacity, 0.16);
+      animation: spoke-breathe 4.8s ease-in-out infinite alternate;
+    }
+
     @keyframes ring-flow {
       to { stroke-dashoffset: -60; }
     }
 
     @keyframes ring-spin {
       to { stroke-dashoffset: -76; }
+    }
+
+    @keyframes vitality-ring {
+      0%, 100% { stroke-width: 2.8; opacity: 0.58; }
+      45% { stroke-width: 3.9; opacity: 0.92; }
     }
 
     @keyframes circle-pulse {
@@ -325,6 +414,25 @@
     @keyframes petal-bloom {
       from { opacity: 0.34; stroke-width: 1; }
       to { opacity: 0.68; stroke-width: 2.2; }
+    }
+
+    @keyframes vitality-pulse {
+      0% { transform: scale(0.78); opacity: 0; }
+      32% { opacity: var(--local-effect-opacity, 0.24); }
+      72% { opacity: var(--local-effect-faint, 0.08); }
+      100% { transform: scale(1.16); opacity: 0; }
+    }
+
+    @keyframes whirl-turn {
+      to {
+        transform: rotate(360deg);
+        stroke-dashoffset: -70;
+      }
+    }
+
+    @keyframes star-twinkle {
+      from { opacity: var(--local-effect-faint, 0.09); transform: scale(0.88); }
+      to { opacity: var(--local-effect-opacity, 0.22); transform: scale(1.12); }
     }
 
     .conduit-hit,
@@ -1031,6 +1139,12 @@
       border: 1px solid var(--panel-border-strong);
       border-radius: 6px;
       box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65);
+    }
+
+    @media (hover: none), (pointer: coarse) {
+      #tooltip {
+        display: none !important;
+      }
     }
 
     .tooltip-title {
@@ -2263,6 +2377,29 @@
           })));
       }
 
+      scoreAllocationChoice(node, choice) {
+        const weights = node.weights || { str: 1 / 3, dex: 1 / 3, int: 1 / 3 };
+        const attrs = choice.option.attrs;
+        const weightedAttrs = attrs.str * weights.str + attrs.dex * weights.dex + attrs.int * weights.int;
+        const axisBonus = node.axis !== "hybrid"
+          ? (attrs[node.axis] || 0) * 0.18
+          : Math.min(attrs.str, attrs.dex, attrs.int) * 0.12;
+        const inwardBonus = choice.neighbor ? Math.max(0, node.ring - choice.neighbor.ring) * 0.06 : 0;
+        return weightedAttrs + axisBonus + inwardBonus + (choice.conduit.extra ? -0.1 : 0);
+      }
+
+      chooseAutomaticAllocation(node, choices) {
+        return choices.slice().sort((a, b) => {
+          const scoreDiff = this.scoreAllocationChoice(node, b) - this.scoreAllocationChoice(node, a);
+          if (Math.abs(scoreDiff) > 0.001) return scoreDiff;
+          const neighborRingDiff = (a.neighbor?.ring || 0) - (b.neighbor?.ring || 0);
+          if (neighborRingDiff) return neighborRingDiff;
+          const conduitDiff = a.conduit.id.localeCompare(b.conduit.id);
+          if (conduitDiff) return conduitDiff;
+          return a.option.id.localeCompare(b.option.id);
+        })[0] || null;
+      }
+
       isAvailableNode(node) {
         if (!this.isNodeVisible(node) || node.active || this.points.nodes < node.cost || this.points.paths < 1) return false;
         return this.getActiveNeighborConduitChoices(node).length > 0;
@@ -2288,17 +2425,8 @@
       handleNodeClick(id) {
         const node = this.nodes.get(id);
         if (!node) return;
-        this.selectedNodeId = id;
 
-        if (this.pending && this.pending.nodeId === id) {
-          this.pending = null;
-          this.recalculate();
-          return;
-        }
-
-        if (this.pending && this.pending.nodeId !== id) {
-          this.pending = null;
-        }
+        if (this.pending) this.pending = null;
 
         if (node.active) {
           if (node.id !== "0,0") {
@@ -2332,13 +2460,13 @@
           this.recalculate();
           return;
         }
-        this.pending = {
-          mode: "node",
-          nodeId: id,
-          choices: choices.map(item => item.choiceId)
-        };
-        this.commit(`Choose which arc should connect ${node.name}.`);
-        this.recalculate();
+        const choice = this.chooseAutomaticAllocation(node, choices);
+        if (!choice) {
+          this.commit(`${node.name} has no available conduit route.`);
+          this.recalculate();
+          return;
+        }
+        this.allocateNodeWithConduit(node, choice.conduit, choice.option.id);
       }
 
       allocateNodeWithConduit(node, conduit, optionId) {
@@ -3008,13 +3136,21 @@
           if (!node || !this.tree.isNodeVisible(node)) return;
           const boost = this.tree.getNodeBoost(node);
           const color = axisColor(node.axis, node.weights);
+          const effectStyle = this.effectStyleForNode(node);
           const group = makeSvgEl("g", {
-            className: `circle-bonus-effect loop-radius-${detail.maxRadius}`,
+            className: [
+              "circle-bonus-effect",
+              `loop-radius-${detail.maxRadius}`,
+              `effect-primary-${effectStyle.primary}`,
+              effectStyle.axes.length > 1 ? "effect-blend" : ""
+            ].filter(Boolean).join(" "),
             transform: `translate(${node.pos.x},${node.pos.y})`
           });
+          group.dataset.effectAxes = effectStyle.axes.join(" ");
           group.style.setProperty("--effect-color", colorMix(color, "#dff4ff", 0.28));
           group.style.setProperty("--effect-glow", colorMix(color, "#ffffff", 0.12));
           group.style.setProperty("--effect-fill", colorMix(color, "#05080d", 0.68));
+          this.applyEffectStyleVars(group, effectStyle);
           const aura = makeSvgEl("circle", {
             className: "circle-bonus-center-aura",
             r: radiusForType(node.type, boost) + 8
@@ -3023,13 +3159,43 @@
           detail.loops
             .slice()
             .sort((a, b) => b.radius - a.radius)
-            .forEach((loop, index) => this.appendLoopEffect(group, node, loop, index));
+            .forEach((loop, index) => this.appendLoopEffect(group, node, loop, index, effectStyle));
 
           this.layers.effects.appendChild(group);
         });
       }
 
-      appendLoopEffect(group, center, loop, loopIndex) {
+      effectStyleForNode(node) {
+        const weights = node.weights || { str: 1 / 3, dex: 1 / 3, int: 1 / 3 };
+        const ranked = ["str", "dex", "int"].sort((a, b) => weights[b] - weights[a]);
+        const primary = ranked[0];
+        const threshold = node.axis === "hybrid" ? 0.18 : 0.32;
+        let axes = ranked.filter(axis => weights[axis] >= threshold);
+        if (!axes.length) axes = [primary];
+        if (node.axis !== "hybrid" && ["str", "dex", "int"].includes(node.axis) && !axes.includes(node.axis)) {
+          axes.unshift(node.axis);
+        }
+        axes = Array.from(new Set(axes));
+        return { axes, primary, weights };
+      }
+
+      applyEffectStyleVars(group, effectStyle) {
+        const colorTargets = {
+          str: ["#ffd1c1", "#2b0806"],
+          dex: ["#c7f7d8", "#062413"],
+          int: ["#dbe7ff", "#070d2b"]
+        };
+        effectStyle.axes.forEach(axis => {
+          const [light, dark] = colorTargets[axis];
+          const base = AXIS_META[axis].color;
+          const weight = effectStyle.weights[axis] || 0;
+          group.style.setProperty(`--${axis}-effect-color`, colorMix(base, light, 0.2));
+          group.style.setProperty(`--${axis}-effect-glow`, colorMix(base, dark, 0.22));
+          group.style.setProperty(`--${axis}-effect-opacity`, `${round(clamp(weight * 0.5, 0.1, 0.36))}`);
+        });
+      }
+
+      appendLoopEffect(group, center, loop, loopIndex, effectStyle) {
         const ringNodes = loop.nodeIds
           .map(id => this.tree.nodes.get(id))
           .filter(Boolean);
@@ -3064,11 +3230,15 @@
         group.appendChild(wave);
 
         if (loop.radius === 1) {
-          group.appendChild(makeSvgEl("circle", {
+          const pulse = makeSvgEl("circle", {
             className: "circle-bonus-pulse",
             r: NODE_SPACING * 0.58
-          }));
+          });
+          pulse.style.animationDelay = `${loopIndex * -0.4}s`;
+          group.appendChild(pulse);
         }
+
+        this.appendAxisLoopEffects(group, center, loop, ringNodes, radiusPx, loopIndex, effectStyle);
 
         ringNodes.forEach((ringNode, index) => {
           const x = ringNode.pos.x - center.pos.x;
@@ -3114,6 +3284,127 @@
         }
       }
 
+      appendAxisLoopEffects(group, center, loop, ringNodes, radiusPx, loopIndex, effectStyle) {
+        if (effectStyle.axes.includes("str")) {
+          this.appendStrengthLoopEffect(group, radiusPx, loop.radius, loopIndex, effectStyle.weights.str);
+        }
+        if (effectStyle.axes.includes("dex")) {
+          this.appendDexLoopEffect(group, radiusPx, loop.radius, loopIndex, effectStyle.weights.dex);
+        }
+        if (effectStyle.axes.includes("int")) {
+          this.appendIntLoopEffect(group, center, loop, ringNodes, radiusPx, loopIndex, effectStyle.weights.int);
+        }
+      }
+
+      effectOpacity(weight, max = 0.34) {
+        return round(clamp((weight || 0) * max, 0.08, max));
+      }
+
+      setLocalEffectOpacity(el, opacity) {
+        el.style.setProperty("--local-effect-opacity", `${opacity}`);
+        el.style.setProperty("--local-effect-faint", `${round(opacity * 0.36)}`);
+      }
+
+      appendStrengthLoopEffect(group, radiusPx, radius, loopIndex, weight) {
+        const opacity = this.effectOpacity(weight, 0.32);
+        [0.56, 0.78].forEach((scale, index) => {
+          const pulse = makeSvgEl("circle", {
+            className: `circle-bonus-vitality ${index ? "outer" : "inner"}`,
+            r: Math.max(30, radiusPx * scale)
+          });
+          this.setLocalEffectOpacity(pulse, index ? round(opacity * 0.72) : opacity);
+          pulse.style.animationDelay = `${loopIndex * -0.42 + index * -1.18}s`;
+          if (radius > 1) pulse.style.animationDuration = `${round(4.2 + radius * 0.45)}s`;
+          group.appendChild(pulse);
+        });
+      }
+
+      appendDexLoopEffect(group, radiusPx, radius, loopIndex, weight) {
+        const opacity = this.effectOpacity(weight, 0.3);
+        const arcs = radius > 1 ? 4 : 3;
+        for (let index = 0; index < arcs; index += 1) {
+          const ring = radiusPx + 10 - index * 9;
+          const start = index * (Math.PI * 2 / arcs) + loopIndex * 0.28;
+          const end = start + Math.PI * (0.58 + radius * 0.08);
+          const arc = makeSvgEl("path", {
+            className: `circle-bonus-whirl${index % 2 ? " reverse" : ""}`,
+            d: this.arcPath(ring, start, end)
+          });
+          this.setLocalEffectOpacity(arc, round(opacity * (index % 2 ? 0.66 : 1)));
+          arc.style.animationDelay = `${loopIndex * -0.38 + index * -0.52}s`;
+          group.appendChild(arc);
+        }
+      }
+
+      appendIntLoopEffect(group, center, loop, ringNodes, radiusPx, loopIndex, weight) {
+        const opacity = this.effectOpacity(weight, 0.3);
+        const orbit = makeSvgEl("circle", {
+          className: "circle-bonus-orbit",
+          r: radiusPx + 24
+        });
+        this.setLocalEffectOpacity(orbit, round(opacity * 0.72));
+        orbit.style.animationDelay = `${loopIndex * -0.62}s`;
+        group.appendChild(orbit);
+
+        const starCount = loop.radius > 1 ? 6 : 4;
+        for (let index = 0; index < starCount; index += 1) {
+          const angle = index * (Math.PI * 2 / starCount) + Math.PI / 6 + loopIndex * 0.2;
+          const starRadius = radiusPx + (index % 2 ? 28 : 14);
+          const x = Math.cos(angle) * starRadius;
+          const y = Math.sin(angle) * starRadius;
+          const star = makeSvgEl("polygon", {
+            className: "circle-bonus-star",
+            points: this.starPoints(x, y, 4.4 + loop.radius * 0.9, 1.5 + loop.radius * 0.25, 4, angle)
+          });
+          this.setLocalEffectOpacity(star, round(opacity * (index % 2 ? 0.74 : 1)));
+          star.style.animationDelay = `${index * -0.28 + loopIndex * -0.36}s`;
+          group.appendChild(star);
+        }
+
+        if (loop.radius > 1 && ringNodes.length) {
+          for (let index = 0; index < ringNodes.length; index += Math.max(2, loop.radius)) {
+            const a = ringNodes[index];
+            const b = ringNodes[(index + loop.radius + 1) % ringNodes.length];
+            if (!a || !b) continue;
+            const line = makeSvgEl("line", {
+              className: "circle-bonus-constellation",
+              x1: a.pos.x - center.pos.x,
+              y1: a.pos.y - center.pos.y,
+              x2: b.pos.x - center.pos.x,
+              y2: b.pos.y - center.pos.y
+            });
+            this.setLocalEffectOpacity(line, round(opacity * 0.58));
+            line.style.animationDelay = `${index * -0.12}s`;
+            group.appendChild(line);
+          }
+        }
+      }
+
+      arcPath(radius, startAngle, endAngle) {
+        const start = {
+          x: Math.cos(startAngle) * radius,
+          y: Math.sin(startAngle) * radius
+        };
+        const end = {
+          x: Math.cos(endAngle) * radius,
+          y: Math.sin(endAngle) * radius
+        };
+        const largeArc = Math.abs(endAngle - startAngle) > Math.PI ? 1 : 0;
+        const sweep = endAngle > startAngle ? 1 : 0;
+        return `M ${round(start.x)} ${round(start.y)} A ${round(radius)} ${round(radius)} 0 ${largeArc} ${sweep} ${round(end.x)} ${round(end.y)}`;
+      }
+
+      starPoints(cx, cy, outer, inner, points = 4, rotation = 0) {
+        const total = points * 2;
+        const coordinates = [];
+        for (let index = 0; index < total; index += 1) {
+          const radius = index % 2 === 0 ? outer : inner;
+          const angle = rotation - Math.PI / 2 + index * Math.PI / points;
+          coordinates.push(`${round(cx + Math.cos(angle) * radius)},${round(cy + Math.sin(angle) * radius)}`);
+        }
+        return coordinates.join(" ");
+      }
+
       drawConduit(conduit) {
         const from = this.tree.nodes.get(conduit.fromId);
         const to = this.tree.nodes.get(conduit.toId);
@@ -3152,11 +3443,13 @@
           line.style.setProperty("--path-extra-glow-color", colorMix(option.color, "#8ad4ff", 0.36 + depth * 0.24));
           hit.addEventListener("click", event => {
             event.stopPropagation();
+            this.hideTooltip();
             this.tree.handleConduitClick(conduit.id, option.id);
           });
           hit.addEventListener("contextmenu", event => {
             event.preventDefault();
             event.stopPropagation();
+            this.hideTooltip();
             if (conduit.allocated) {
               this.tree.refundConduit(conduit.id);
             }
@@ -3229,11 +3522,13 @@
         group.appendChild(hit);
         group.addEventListener("click", event => {
           event.stopPropagation();
+          this.hideTooltip();
           this.tree.handleNodeClick(node.id);
         });
         group.addEventListener("contextmenu", event => {
           event.preventDefault();
           event.stopPropagation();
+          this.hideTooltip();
           this.tree.refundNode(node.id);
         });
         group.addEventListener("mouseenter", event => this.showNodeTooltip(event, node));
@@ -3312,7 +3607,16 @@
         });
       }
 
+      shouldShowHoverTooltip(event) {
+        if (event?.sourceCapabilities?.firesTouchEvents) return false;
+        if (typeof window.matchMedia === "function" && window.matchMedia("(hover: none), (pointer: coarse)").matches) {
+          return false;
+        }
+        return true;
+      }
+
       showNodeTooltip(event, node) {
+        if (!this.shouldShowHoverTooltip(event)) return;
         const tooltip = document.getElementById("tooltip");
         const title = tooltip.querySelector(".tooltip-title");
         const body = tooltip.querySelector(".tooltip-body");
@@ -3337,6 +3641,7 @@
       }
 
       showConduitTooltip(event, conduit, option) {
+        if (!this.shouldShowHoverTooltip(event)) return;
         const tooltip = document.getElementById("tooltip");
         const title = tooltip.querySelector(".tooltip-title");
         const body = tooltip.querySelector(".tooltip-body");
