@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life &amp; Mana Orbs</title>
+<style>
+  :root{
+    --ink:#0b0a09; --panel:#14110d; --panel2:#1a150f;
+    --gold:#c9a96a; --gold-dim:#8a7146; --bone:#d8d2c4; --mute:#9a9183;
+    --life:#c8323a; --life-glow:rgba(200,40,50,.45);
+    --mana:#3d7be0; --mana-glow:rgba(60,120,224,.45);
+    --serif:'Iowan Old Style','Palatino Linotype','Book Antiqua',Palatino,Georgia,serif;
+    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--ink);color:var(--bone);font-family:var(--serif);min-height:100%}
+  body{display:flex;flex-direction:column;align-items:center;padding:18px 16px 40px;
+       background:
+         radial-gradient(1200px 500px at 50% -10%, #1c1610 0%, transparent 60%),
+         radial-gradient(900px 600px at 12% 110%, rgba(120,30,36,.10), transparent 60%),
+         radial-gradient(900px 600px at 88% 110%, rgba(40,80,180,.10), transparent 60%),
+         var(--ink);}
+
+  /* ---- stage ---- */
+  .stage-wrap{position:relative;width:min(1180px,100%)}
+  .stage{position:relative;width:100%;aspect-ratio:1672/941;border:1px solid #3a3023;outline:1px solid #000;
+         outline-offset:-4px;border-radius:4px;overflow:hidden;background:#000;
+         box-shadow:0 0 0 1px #000,0 30px 80px -20px #000,
+                    0 0 120px -30px var(--life-glow),0 0 120px -30px var(--mana-glow);}
+  .stage::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:4px;
+         box-shadow:inset 0 0 90px 10px rgba(0,0,0,.55)}
+  canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .corner{position:absolute;width:26px;height:26px;border:1px solid var(--gold-dim);pointer-events:none;z-index:3}
+  .corner.tl{top:7px;left:7px;border-right:0;border-bottom:0}
+  .corner.tr{top:7px;right:7px;border-left:0;border-bottom:0}
+  .corner.bl{bottom:7px;left:7px;border-right:0;border-top:0}
+  .corner.br{bottom:7px;right:7px;border-left:0;border-top:0}
+
+  /* plaques above the orbs */
+  .plaque{position:absolute;transform:translateX(-50%);top:3.5%;text-align:center;pointer-events:none;z-index:2;
+          display:flex;flex-direction:column;align-items:center;gap:2px;transition:opacity .3s}
+  #plaqueL{left:32.35%} #plaqueR{left:67.45%}
+  .plaque .num{font-size:clamp(15px,2.2vw,26px);font-weight:700;letter-spacing:.04em;line-height:1}
+  .plaque .num small{font-size:.55em;font-weight:400;color:rgba(255,255,255,.5);font-family:var(--mono);letter-spacing:.1em}
+  #plaqueL .num{color:#ffd9d4;text-shadow:0 0 14px rgba(255,60,60,.85),0 2px 3px #000}
+  #plaqueR .num{color:#dceaff;text-shadow:0 0 14px rgba(80,140,255,.9),0 2px 3px #000}
+  .plaque .bar{width:clamp(70px,9vw,120px);height:2px;border-radius:1px;background:#241d12;overflow:hidden;
+               box-shadow:0 0 0 1px rgba(0,0,0,.7)}
+  .plaque .bar i{display:block;height:100%;width:100%;transform-origin:left;transition:transform .12s linear}
+  #plaqueL .bar i{background:linear-gradient(90deg,#7e1f26,#e5454e)}
+  #plaqueR .bar i{background:linear-gradient(90deg,#234a8f,#62a0ff)}
+  .resline{display:none;font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:#a59d8e;
+           text-transform:uppercase;background:rgba(0,0,0,.55);border:1px solid #363026;border-radius:3px;padding:1px 6px}
+  .resline.on{display:block}
+  .resline b{color:#cfc8ba;font-weight:600}
+  .chips{display:flex;gap:5px;min-height:18px;align-items:center}
+  .chip{display:none;align-items:center;gap:3px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;
+        background:rgba(0,0,0,.62);border:1px solid #2c251b;border-radius:3px;padding:1px 5px}
+  .chip.on{display:inline-flex}
+  .chip svg{width:10px;height:12px;display:block}
+  .chip.poison{color:#9ee06a;border-color:#3a5220}
+  .chip.bleed{color:#f08a8a;border-color:#5a2020}
+  .chip.shield{color:#9fd2ff;border-color:#274566}
+  .chip.reserve{color:#b9b2a4;border-color:#3a352c}
+  .hidden-read{opacity:0}
+
+  .fps{position:absolute;right:14px;top:12px;z-index:3;font-family:var(--mono);font-size:10px;
+       letter-spacing:.18em;color:var(--mute);background:rgba(0,0,0,.45);padding:4px 8px;border:1px solid #2c251b;border-radius:3px}
+
+  /* ---- console ---- */
+  .console{width:min(1080px,100%);margin-top:14px;display:grid;grid-template-columns:1.15fr .7fr 1fr;gap:10px;opacity:.94}
+  .panel{background:linear-gradient(180deg,#15110d,#100d0a);border:1px solid #292218;border-radius:6px;
+         padding:11px 12px 10px;position:relative}
+  .panel h2{font-variant:small-caps;letter-spacing:.24em;font-size:11px;font-weight:600;display:flex;align-items:center;gap:7px;color:#857c6c}
+  .panel h2 .dot{width:6px;height:6px;transform:rotate(45deg)}
+  .panel.life h2 .dot{background:#7e2b30}
+  .panel.mana h2 .dot{background:#2c5497}
+  .panel.sys h2{justify-content:center}
+
+  .gauge{margin:8px 0 2px}
+  .gauge input[type=range]{width:100%;appearance:none;height:5px;border-radius:3px;outline:none;cursor:pointer;
+      background:#221c14;border:1px solid #000}
+  .gauge input::-webkit-slider-thumb{appearance:none;width:13px;height:13px;border-radius:50%;
+      background:radial-gradient(circle at 35% 35%,#fff6,var(--gc));border:1px solid #000;box-shadow:0 0 6px var(--gc)}
+  .gauge input::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--gc);border:1px solid #000}
+  .panel.life{--gc:var(--life)} .panel.mana{--gc:var(--mana)}
+  .gauge .lab{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--mute);
+      letter-spacing:.1em;margin-top:5px}
+  .gauge .lab b{color:var(--bone);font-weight:600}
+
+  .btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .grp{font-family:var(--mono);font-size:8px;letter-spacing:.22em;color:#564f43;text-transform:uppercase;
+       width:100%;margin-top:4px;display:flex;align-items:center;gap:8px}
+  .grp::after{content:"";flex:1;height:1px;background:#231e16}
+  button{font-family:var(--serif);font-variant:small-caps;letter-spacing:.08em;font-size:11.5px;
+      color:#b9b2a4;background:#1b1611;border:1px solid #322a1e;
+      border-radius:4px;padding:5px 9px;cursor:pointer;transition:all .15s;user-select:none;-webkit-user-select:none}
+  button:hover{border-color:#5a4d35;color:#d8cdb4}
+  button:active{transform:translateY(1px)}
+  button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .panel.life button:hover{border-color:#6a3236;color:#df9ba0}
+  .panel.mana button:hover{border-color:#2f4d80;color:#9fbbe8}
+  button.tgl[aria-pressed="true"]{border-color:#8a7146;color:var(--gold);background:#221c12}
+  button.danger:hover{border-color:#7a2a2e;color:#e08a8a}
+  .key{font-family:var(--mono);font-size:8px;color:#6a6256;letter-spacing:.05em;border:1px solid #2b2419;
+      border-radius:3px;padding:0 3px;margin-left:5px;vertical-align:1px}
+
+  .sys .btns{justify-content:center}
+  .sys .row{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+  .seg{display:flex;border:1px solid #322a1e;border-radius:4px;overflow:hidden}
+  .seg button{border:0;border-radius:0;padding:5px 9px;font-size:11px}
+  .seg button+button{border-left:1px solid #322a1e}
+  .seg button[aria-pressed="true"]{color:var(--gold);background:#221b11}
+  .seg.small button{padding:5px 9px;font-size:11px;font-family:var(--mono);letter-spacing:0}
+  .resrow{display:flex;align-items:center;gap:10px;width:100%;margin-top:2px}
+  .resrow input[type=range]{flex:1;appearance:none;height:5px;border-radius:3px;border:1px solid #000;
+      background:linear-gradient(90deg,#6e675c var(--rp,0%),#241e15 var(--rp,0%));cursor:pointer}
+  .resrow input::-webkit-slider-thumb{appearance:none;width:13px;height:13px;border-radius:2px;transform:rotate(45deg);
+      background:linear-gradient(135deg,#cfc8ba,#7e776b);border:1px solid #000;box-shadow:0 0 6px rgba(200,190,170,.5)}
+  .resrow input::-moz-range-thumb{width:13px;height:13px;border-radius:2px;background:#b0a899;border:1px solid #000}
+  .resrow b{font-family:var(--mono);font-size:11px;color:#b9b2a4;min-width:38px;text-align:right}
+  .hint{font-family:var(--mono);font-size:8px;color:#544d41;letter-spacing:.12em;text-align:center;margin-top:10px;line-height:1.7}
+
+  @media (max-width:980px){
+    .console{grid-template-columns:1fr 1fr}
+    .panel.sys{grid-column:1/-1;order:3}
+  }
+  @media (max-width:640px){
+    .console{grid-template-columns:1fr}
+    .plaque .num{font-size:15px}
+  }
+</style>
+</head>
+<body>
+
+<div class="stage-wrap">
+  <div class="stage">
+    <canvas id="gl"></canvas>
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+
+    <div class="plaque" id="plaqueL">
+      <div class="num"><span id="hpVal">1000</span> <small>/ 1000</small></div>
+      <div class="bar"><i id="hpBar"></i></div>
+      <div class="resline" id="resLineL">reserved <b id="resPctL">25%</b></div>
+      <div class="chips">
+        <span class="chip poison" id="chipPoison">
+          <svg viewBox="0 0 10 12"><path d="M5 0C5 0 1 5 1 8a4 4 0 0 0 8 0C9 5 5 0 5 0Z" fill="#7fc14f"/></svg>
+          <b id="poisonPct">100%</b></span>
+        <span class="chip bleed" id="chipBleed">
+          <svg viewBox="0 0 10 12"><path d="M5 0C5 0 1 5 1 8a4 4 0 0 0 8 0C9 5 5 0 5 0Z" fill="#a82230"/></svg>
+          <b id="bleedN">×1</b></span>
+      </div>
+    </div>
+
+    <div class="plaque" id="plaqueR">
+      <div class="num"><span id="mpVal">800</span> <small>/ 800</small></div>
+      <div class="bar"><i id="mpBar"></i></div>
+      <div class="resline" id="resLineR">reserved <b id="resPctR">25%</b></div>
+      <div class="chips"></div>
+    </div>
+
+    <div class="fps" id="fps">-- FPS</div>
+  </div>
+</div>
+
+<div class="console">
+  <section class="panel life">
+    <h2><span class="dot"></span>Health</h2>
+    <div class="gauge"><input type="range" id="hpSlider" min="0" max="1000" step="1" value="1000" aria-label="Health amount">
+      <div class="lab"><span>0</span><b id="hpLab">1000 / 1000</b><span>1000</span></div></div>
+    <div class="btns">
+      <button id="btnHit">Take Hit −15%<span class="key">1</span></button>
+      <button id="btnCrit" class="danger">Heavy Blow −40%<span class="key">2</span></button>
+      <button id="btnPotion">Drink Potion +35%<span class="key">3</span></button>
+      <button id="btnHpRegen" class="tgl" aria-pressed="false">Regenerate</button>
+      <div class="grp">ailments</div>
+      <button id="btnPoison">Apply Poison<span class="key">4</span></button>
+      <button id="btnBleed" class="danger">Bleed +1 stack<span class="key">5</span></button>
+      <div class="grp">reservation</div>
+      <div class="resrow"><input type="range" id="resLSlider" min="0" max="100" step="1" value="0"
+        aria-label="Life reservation percent"><b id="resLLab">0%</b></div>
+    </div>
+  </section>
+
+  <section class="panel sys">
+    <h2>Controls</h2>
+    <div class="btns">
+      <button id="btnBoss" class="tgl" aria-pressed="false">Boss Fight<span class="key">Space</span></button>
+      <button id="btnRestore">Restore All<span class="key">R</span></button>
+    </div>
+    <div class="row">
+      <div class="seg" role="group" aria-label="Render quality">
+        <button data-q="ultra" aria-pressed="true">Ultra</button>
+        <button data-q="high" aria-pressed="false">High</button>
+        <button data-q="perf" aria-pressed="false">Performance</button>
+      </div>
+      <button id="btnVals" class="tgl" aria-pressed="true">Values</button>
+    </div>
+    <div class="hint">1·2·3 · 4·5 · Q·W·E · R · SPACE</div>
+  </section>
+
+  <section class="panel mana">
+    <h2><span class="dot"></span>Mana</h2>
+    <div class="gauge"><input type="range" id="mpSlider" min="0" max="800" step="1" value="800" aria-label="Mana amount">
+      <div class="lab"><span>0</span><b id="mpLab">800 / 800</b><span>800</span></div></div>
+    <div class="btns">
+      <button id="btnBolt">Cast Bolt −12%<span class="key">Q</span></button>
+      <button id="btnChannel">Channel (hold)<span class="key">E</span></button>
+      <button id="btnElixir">Drink Elixir +40%<span class="key">W</span></button>
+      <button id="btnMpRegen" class="tgl" aria-pressed="true">Meditate</button>
+      <div class="grp">reservation</div>
+      <div class="resrow"><input type="range" id="resRSlider" min="0" max="100" step="1" value="0"
+        aria-label="Mana reservation percent"><b id="resRLab">0%</b></div>
+    </div>
+  </section>
+</div>
+
+<script id="fs" type="x-shader/fragment">__FRAG__</script>
+<script>
+'use strict';
+/* ============================ DATA ============================ */
+const ART_B64  = '__ART__';
+const MASK_B64 = '__MASK__';
+const NORM_B64 = '__NORM__';
+const EMPTY_B64 = '__EMPTY__';
+const PACK_B64 = '__PACK__';
+const STONE_B64 = '__STONE__';
+const HP_MAX = 1000, MP_MAX = 800;
+
+/* ============================ STATE =========================== */
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const S = {
+  hp: 1, mp: 1, hpD: 1, mpD: 1,
+  sloshL: {a:0, v:0}, sloshR: {a:0, v:0},
+  flashL: 0, flashR: 0,
+  fullL: 0, fullR: 0, prevHpD: 1, prevMpD: 1,
+  beat: 0,
+  hpRegen: false, mpRegen: true,
+  channeling: false, boss: false, showVals: true,
+  oct: 5, resScale: 1.0, dprCap: 2.0,
+  time: 0,
+  /* statuses */
+  poison: 0,
+  bleedT: [],          // expiry times, one per stack
+  resL: 0, resR: 0,
+};
+
+function clamp01(x){ return Math.min(1, Math.max(0, x)); }
+function smoothstep(a,b,x){ const t = clamp01((x-a)/(b-a)); return t*t*(3-2*t); }
+
+function hpCap(){ return 1 - S.resL; }
+function mpCap(){ return 1 - S.resR; }
+
+function setHP(v, kick){
+  v = Math.min(hpCap(), clamp01(v));
+  const d = v - S.hp;
+  S.hp = v;
+  if (kick !== false){
+    S.sloshL.v += -d * (d < 0 ? 9 : 5);
+    if (Math.abs(d) > 0.08) S.flashL = Math.min(1.4, S.flashL + Math.abs(d) * 2.2);
+  }
+  sync();
+}
+function setMP(v, kick){
+  v = Math.min(mpCap(), clamp01(v));
+  const d = v - S.mp;
+  S.mp = v;
+  if (kick !== false){
+    S.sloshR.v += -d * (d < 0 ? 8 : 5);
+    if (Math.abs(d) > 0.08) S.flashR = Math.min(1.8, S.flashR + Math.abs(d) * 3.2);
+  }
+  sync();
+}
+
+const HP_FLOOR = 0.02;   // the demo never quite kills you
+function takeDamage(x){ setHP(Math.max(S.hp - x, Math.min(S.hp, HP_FLOOR))); }
+function castSpell(x){ setMP(S.mp - x); }
+const BLEED_DURATION = 8;
+function addBleed(){ if (S.bleedT.length < 9) S.bleedT.push(S.time + BLEED_DURATION); }
+
+/* fill -> surface height: volume-true mid-range, constant-speed at the poles */
+function levelFromFill(f){
+  f = clamp01(f);
+  const fc = Math.min(0.9995, Math.max(0.0005, f));
+  let h = 2*fc - 1;
+  for (let i = 0; i < 6; i++){
+    const V = (2 + 3*h - h*h*h) / 4;
+    const dV = Math.max((3 - 3*h*h) / 4, 1e-3);
+    h -= (V - fc) / dV;
+    h = Math.min(1, Math.max(-1, h));
+  }
+  const vol = h * 0.94;
+  const lin = (2 * f - 1) * 1.045;
+  const w = smoothstep(0.70, 0.95, f) + smoothstep(0.30, 0.05, f);
+  return vol * (1 - w) + lin * w;
+}
+
+/* ============================ UI ============================== */
+const $ = id => document.getElementById(id);
+const hpSlider = $('hpSlider'), mpSlider = $('mpSlider');
+
+function sync(){
+  hpSlider.value = Math.round(S.hp * HP_MAX);
+  mpSlider.value = Math.round(S.mp * MP_MAX);
+  const hc = (S.hp*100).toFixed(1), mc = (S.mp*100).toFixed(1);
+  hpSlider.style.background = `linear-gradient(90deg, var(--life) ${hc}%, #241e15 ${hc}%)`;
+  mpSlider.style.background = `linear-gradient(90deg, var(--mana) ${mc}%, #241e15 ${mc}%)`;
+}
+function chip(id, on){ $(id).classList.toggle('on', !!on); }
+function syncReadouts(){
+  $('hpVal').textContent = Math.round(S.hpD * HP_MAX);
+  $('mpVal').textContent = Math.round(S.mpD * MP_MAX);
+  $('hpLab').textContent = `${Math.round(S.hp*HP_MAX)} / ${HP_MAX}`;
+  $('mpLab').textContent = `${Math.round(S.mp*MP_MAX)} / ${MP_MAX}`;
+  $('hpBar').style.transform = `scaleX(${S.hpD.toFixed(3)})`;
+  $('mpBar').style.transform = `scaleX(${S.mpD.toFixed(3)})`;
+  chip('chipPoison', S.poison > 0.005);
+  $('poisonPct').textContent = Math.ceil(S.poison * 100) + '%';
+  chip('chipBleed', S.bleedT.length > 0);
+  $('bleedN').textContent = '×' + S.bleedT.length;
+  $('resLineL').classList.toggle('on', S.resL > 0.005);
+  $('resPctL').textContent = Math.round(S.resL*100) + '%';
+  $('resLineR').classList.toggle('on', S.resR > 0.005);
+  $('resPctR').textContent = Math.round(S.resR*100) + '%';
+}
+
+hpSlider.addEventListener('input', () => setHP(hpSlider.value / HP_MAX, false));
+mpSlider.addEventListener('input', () => setMP(mpSlider.value / MP_MAX, false));
+
+$('btnHit').onclick    = () => takeDamage(0.15);
+$('btnCrit').onclick   = () => takeDamage(0.40);
+$('btnPotion').onclick = () => { S.bleedT = []; setHP(S.hp + 0.35); };
+$('btnBolt').onclick   = () => castSpell(0.12);
+$('btnElixir').onclick = () => setMP(S.mp + 0.40);
+$('btnRestore').onclick = () => { S.poison = 0; S.bleedT = []; setHP(1); setMP(1); };
+$('btnPoison').onclick = () => { S.poison = 1; };
+$('btnBleed').onclick  = () => addBleed();
+
+function toggle(btn, get, set){
+  btn.onclick = () => { set(!get()); btn.setAttribute('aria-pressed', String(get())); };
+}
+toggle($('btnHpRegen'), () => S.hpRegen, v => S.hpRegen = v);
+toggle($('btnMpRegen'), () => S.mpRegen, v => S.mpRegen = v);
+toggle($('btnVals'), () => S.showVals, v => {
+  S.showVals = v;
+  $('plaqueL').classList.toggle('hidden-read', !v);
+  $('plaqueR').classList.toggle('hidden-read', !v);
+});
+
+const chBtn = $('btnChannel');
+chBtn.addEventListener('pointerdown', () => S.channeling = true);
+addEventListener('pointerup', () => S.channeling = false);
+chBtn.addEventListener('pointerleave', () => S.channeling = false);
+
+let bossT = 0;
+toggle($('btnBoss'), () => S.boss, v => { S.boss = v; bossT = 0; });
+
+function wireRes(slider, lab, set){
+  slider.addEventListener('input', () => {
+    const v = slider.value / 100;
+    set(v);
+    lab.textContent = slider.value + '%';
+    slider.style.setProperty('--rp', slider.value + '%');
+  });
+}
+wireRes($('resLSlider'), $('resLLab'), v => { S.resL = v; setHP(S.hp); });
+wireRes($('resRSlider'), $('resRLab'), v => { S.resR = v; setMP(S.mp); });
+
+const QUAL = { ultra:[5, 1.0, 2.0], high:[4, 0.85, 1.75], perf:[3, 0.66, 1.5] };
+document.querySelectorAll('[data-q]').forEach(b => {
+  b.onclick = () => {
+    document.querySelectorAll('[data-q]').forEach(x => x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+    const [oct, scale, dprCap] = QUAL[b.dataset.q];
+    S.oct = oct; S.resScale = scale; S.dprCap = dprCap;
+    resize();
+  };
+});
+
+addEventListener('keydown', e => {
+  if (e.repeat && e.key.toLowerCase() !== 'e') return;
+  switch (e.key === ' ' ? 'space' : e.key.toLowerCase()){
+    case '1': takeDamage(0.15); break;
+    case '2': takeDamage(0.40); break;
+    case '3': $('btnPotion').click(); break;
+    case '4': S.poison = 1; break;
+    case '5': addBleed(); break;
+    case 'q': castSpell(0.12); break;
+    case 'w': setMP(S.mp + 0.40); break;
+    case 'e': S.channeling = true; break;
+    case 'r': $('btnRestore').click(); break;
+    case 'space': e.preventDefault(); $('btnBoss').click(); break;
+  }
+});
+addEventListener('keyup', e => { if (e.key.toLowerCase() === 'e') S.channeling = false; });
+
+/* ============================ WEBGL =========================== */
+const canvas = $('gl');
+const gl = canvas.getContext('webgl2', { antialias:false, alpha:false, powerPreference:'high-performance' });
+if (!gl){
+  document.querySelector('.stage').innerHTML =
+    '<div style="display:grid;place-items:center;height:100%;color:#9a9183;font-family:var(--mono);font-size:12px;letter-spacing:.2em">WEBGL2 IS REQUIRED — ENABLE HARDWARE ACCELERATION AND RELOAD</div>';
+  throw new Error('no webgl2');
+}
+
+function shader(type, src){
+  const s = gl.createShader(type);
+  gl.shaderSource(s, src); gl.compileShader(s);
+  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
+  return s;
+}
+const VS = `#version 300 es
+layout(location=0) in vec2 aPos;
+void main(){ gl_Position = vec4(aPos, 0.0, 1.0); }`;
+const prog = gl.createProgram();
+gl.attachShader(prog, shader(gl.VERTEX_SHADER, VS));
+gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, document.getElementById('fs').textContent.trim()));
+gl.linkProgram(prog);
+if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
+gl.useProgram(prog);
+
+const quad = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+gl.enableVertexAttribArray(0);
+gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+
+const U = {};
+['uArt','uMask','uNorm','uEmpty','uPack','uStone','uRes','uTime','uHP','uMP','uLvlL','uLvlR',
+ 'uSloshL','uSloshR','uBeat','uOct','uFlashL','uFlashR','uFullL','uFullR',
+ 'uPoison','uBleed','uResL','uResR','uResLvlL','uResLvlR']
+  .forEach(n => U[n] = gl.getUniformLocation(prog, n));
+
+function makeTex(img){
+  const t = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, t);
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  return t;
+}
+function loadImg(b64, mime){
+  return new Promise((res, rej) => {
+    const im = new Image();
+    im.onload = () => res(im);
+    im.onerror = rej;
+    im.src = `data:${mime};base64,${b64}`;
+  });
+}
+
+function resize(){
+  const r = canvas.getBoundingClientRect();
+  const dpr = Math.min(devicePixelRatio || 1, S.dprCap || 2) * S.resScale;
+  const w = Math.max(2, Math.round(r.width * dpr));
+  const h = Math.max(2, Math.round(r.height * dpr));
+  if (canvas.width !== w || canvas.height !== h){
+    canvas.width = w; canvas.height = h;
+    gl.viewport(0, 0, w, h);
+  }
+}
+addEventListener('resize', resize);
+
+/* ============================ LOOP ============================ */
+let last = performance.now(), fpsE = 60, fpsTick = 0;
+const fpsEl = $('fps');
+const motion = reduced ? 0.45 : 1.0;
+
+function frame(now){
+  requestAnimationFrame(frame);
+  if (document.hidden) { last = now; return; }
+  let dt = Math.min((now - last) / 1000, 0.05);
+  last = now;
+
+  fpsE = fpsE * 0.95 + (1/Math.max(dt,1e-3)) * 0.05;
+  if ((fpsTick += dt) > 0.4){ fpsTick = 0; fpsEl.textContent = Math.round(fpsE) + ' FPS'; }
+
+  /* sim */
+  S.time += dt * motion;
+  if (S.hpRegen) setHP(S.hp + dt * 0.030, false);
+  if (S.mpRegen) setMP(S.mp + dt * 0.022, false);
+  if (S.channeling) castSpell(dt * 0.22);
+
+  /* ailment ticks */
+  if (S.poison > 0.001){
+    S.poison = Math.max(0, S.poison - dt / 14);
+    setHP(Math.max(S.hp - dt * 0.014 * Math.min(1, S.poison * 3), Math.min(S.hp, HP_FLOOR)), false);
+  }
+  if (S.bleedT.length){
+    S.bleedT = S.bleedT.filter(tm => tm > S.time);   // each stack wears off on its own
+    if (S.bleedT.length) setHP(Math.max(S.hp - dt * 0.007 * S.bleedT.length, Math.min(S.hp, HP_FLOOR)), false);
+  }
+
+  if (S.boss){
+    bossT -= dt;
+    if (bossT <= 0){
+      const roll = Math.random();
+      if (S.hp < 0.20 && Math.random() < 0.5) $('btnPotion').click();
+      else if (roll < 0.08) addBleed();
+      else if (roll < 0.11 && S.poison < 0.25) S.poison = 1;
+      else if (roll < 0.55) takeDamage(0.05 + Math.random() * 0.14);
+      else if (roll < 0.9){
+        if (S.mp > 0.10) castSpell(0.06 + Math.random() * 0.08);
+        else setMP(S.mp + 0.45);
+      } else takeDamage(0.30);
+      bossT = 0.35 + Math.random() * 0.9;
+    }
+  }
+
+  /* smoothing & springs */
+  const k = 1 - Math.exp(-dt * 5);
+  S.hpD += (S.hp - S.hpD) * k;
+  S.mpD += (S.mp - S.mpD) * k;
+  for (const s of [S.sloshL, S.sloshR]){
+    s.v += (-110 * s.a - 7.5 * s.v) * dt;
+    s.a += s.v * dt;
+    s.a = Math.max(-0.2, Math.min(0.2, s.a));
+  }
+  S.flashL *= Math.exp(-dt * 3.2);
+  S.flashR *= Math.exp(-dt * 3.2);
+
+  /* gentle bloom the moment the surface slips out of sight at the dome */
+  const lvlL = levelFromFill(S.hpD), lvlR = levelFromFill(S.mpD);
+  if (lvlL >= 0.95 && S.prevHpD < 0.95) S.fullL = 1;
+  if (lvlR >= 0.95 && S.prevMpD < 0.95) S.fullR = 1;
+  S.prevHpD = lvlL; S.prevMpD = lvlR;
+  S.fullL *= Math.exp(-dt * 1.6);
+  S.fullR *= Math.exp(-dt * 1.6);
+
+  /* heartbeat: quickens as life drains */
+  const bpm = 42 + 126 * smoothstep(0.55, 0.06, S.hpD);
+  S.beat += dt * motion * bpm / 60;
+
+  syncReadouts();
+
+  /* draw */
+  resize();
+  gl.uniform2f(U.uRes, canvas.width, canvas.height);
+  gl.uniform1f(U.uTime, S.time);
+  gl.uniform1f(U.uHP, S.hpD);
+  gl.uniform1f(U.uMP, S.mpD);
+  gl.uniform1f(U.uLvlL, lvlL);
+  gl.uniform1f(U.uLvlR, lvlR);
+  gl.uniform1f(U.uSloshL, S.sloshL.a);
+  gl.uniform1f(U.uSloshR, S.sloshR.a);
+  gl.uniform1f(U.uBeat, S.beat);
+  gl.uniform1i(U.uOct, S.oct);
+  gl.uniform1f(U.uFlashL, S.flashL);
+  gl.uniform1f(U.uFlashR, S.flashR);
+  gl.uniform1f(U.uFullL, S.fullL);
+  gl.uniform1f(U.uFullR, S.fullR);
+  gl.uniform1f(U.uPoison, S.poison);
+  gl.uniform1f(U.uBleed, Math.min(1, S.bleedT.length / 4));
+  gl.uniform1f(U.uResL, S.resL);
+  gl.uniform1f(U.uResR, S.resR);
+  gl.uniform1f(U.uResLvlL, S.resL > 0.003 ? levelFromFill(1 - S.resL) : 2.0);
+  gl.uniform1f(U.uResLvlR, S.resR > 0.003 ? levelFromFill(1 - S.resR) : 2.0);
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
+}
+
+Promise.all([loadImg(ART_B64, 'image/jpeg'), loadImg(MASK_B64, 'image/png'), loadImg(NORM_B64, 'image/jpeg'),
+             loadImg(EMPTY_B64, 'image/jpeg'), loadImg(PACK_B64, 'image/jpeg'), loadImg(STONE_B64, 'image/jpeg')]).then(([a, m, n, e, p, st]) => {
+  gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, makeTex(a));
+  gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, makeTex(m));
+  gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, makeTex(n));
+  gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, makeTex(e));
+  gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, makeTex(p));
+  gl.activeTexture(gl.TEXTURE5); gl.bindTexture(gl.TEXTURE_2D, makeTex(st));
+  gl.uniform1i(U.uArt, 0);
+  gl.uniform1i(U.uMask, 1);
+  gl.uniform1i(U.uNorm, 2);
+  gl.uniform1i(U.uEmpty, 3);
+  gl.uniform1i(U.uPack, 4);
+  gl.uniform1i(U.uStone, 5);
+  sync(); syncReadouts(); resize();
+  requestAnimationFrame(t => { last = t; frame(t); });
+});
+</script>
+</body>
+</html>
