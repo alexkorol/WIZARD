@@ -1,212 +1,495 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WIZARD: Web-Integrated Zero-lag Adaptive Resource Dashboard</title>
-    <style>
-        :root {
-            --primary: #4CAF50;
-            --primary-dark: #388E3C;
-            --background: #1a1a1a;
-            --card-bg: #2d2d2d;
-            --text: #ffffff;
-            --text-secondary: #b0b0b0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WIZARD — AI-built interactive web experiments</title>
+<meta name="description" content="WIZARD: a toolbox of AI-built interactive experiments for game UI and visualization — WebGL2 orb engines, skill trees, falling-sand sandboxes, and more, by Alexei Korol.">
+<link rel="canonical" href="https://alexkorol.github.io/WIZARD/">
+<meta property="og:title" content="WIZARD — AI-built interactive web experiments">
+<meta property="og:description" content="A toolbox of AI-built interactive experiments for game UI and visualization — WebGL2 orb engines, skill trees, falling-sand sandboxes, and more.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alexkorol.github.io/WIZARD/">
+<meta property="og:image" content="https://alexkorol.github.io/WIZARD/tools/wizard_orbs/screenshots/shot_hero.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WIZARD — AI-built interactive web experiments">
+<meta name="twitter:description" content="A toolbox of AI-built interactive experiments for game UI and visualization.">
+<meta name="twitter:image" content="https://alexkorol.github.io/WIZARD/tools/wizard_orbs/screenshots/shot_hero.png">
+<meta name="theme-color" content="#0d0c0a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0c0a;
+  --bg-card:#100f0c;
+  --ink:#e9e4d8;
+  --ink-dim:#9c9587;
+  --ink-faint:#6e685e;
+  --gold:#c9a227;
+  --gold-soft:rgba(201,162,39,.55);
+  --gold-faint:rgba(201,162,39,.22);
+  --hairline:rgba(233,228,216,.12);
+  --hairline-soft:rgba(233,228,216,.07);
+  --serif:'Cinzel',Georgia,serif;
+  --sans:'Source Sans 3','Segoe UI',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:1.0625rem;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+/* faint warm vignette */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(120% 70% at 50% -10%, rgba(201,162,39,.05), transparent 60%),
+    radial-gradient(90% 60% at 50% 115%, rgba(20,16,10,.6), transparent 65%);
+  z-index:0;
+}
+::selection{background:rgba(201,162,39,.28);color:#fff}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+.skip-link{
+  position:absolute;left:50%;top:-3rem;transform:translateX(-50%);
+  background:var(--bg);color:var(--gold);padding:.5rem 1rem;
+  border:1px solid var(--gold-soft);z-index:10;transition:top .15s ease;
+}
+.skip-link:focus{top:.75rem}
+.wrap{
+  position:relative;
+  z-index:1;
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 clamp(1.25rem,4vw,2.5rem);
+}
 
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-        }
+/* ---------- masthead ---------- */
+.masthead{
+  text-align:center;
+  padding:clamp(4rem,9vh,6.5rem) 0 clamp(2.5rem,5vh,3.5rem);
+}
+.masthead h1{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:clamp(2.6rem,9vw,4.6rem);
+  letter-spacing:.32em;
+  text-indent:.32em; /* recenters letter-spaced text */
+  margin:0;
+  line-height:1.1;
+}
+.backronym{
+  display:block;
+  margin:1.1rem 0 0;
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+.tagline{
+  max-width:34em;
+  margin:1.4rem auto 0;
+  font-size:1.1rem;
+  color:var(--ink-dim);
+}
+.ornament{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1.1rem;
+  margin:clamp(2rem,4vh,2.75rem) auto 0;
+  max-width:420px;
+  color:var(--gold);
+  font-size:.8rem;
+}
+.ornament::before,.ornament::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-faint));
+}
+.ornament::after{background:linear-gradient(90deg,var(--gold-faint),transparent)}
 
-        header {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-            color: white;
-            text-align: center;
-            padding: 3em 1em;
-        }
+/* ---------- section labels ---------- */
+.section-label{
+  display:flex;
+  align-items:center;
+  gap:1.25rem;
+  margin:0 0 clamp(1.75rem,4vh,2.5rem);
+  font-size:.74rem;
+  font-weight:600;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+.section-label::before,.section-label::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:var(--hairline);
+}
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            font-weight: 700;
-        }
+/* ---------- featured plate ---------- */
+.featured{padding:clamp(2rem,5vh,3.5rem) 0 clamp(3rem,7vh,5rem)}
+.plate-wrap{
+  position:relative;
+  max-width:880px;
+  margin:0 auto;
+}
+/* echo of the orbs: faint crimson + azure auras behind the plate */
+.plate-wrap::before,.plate-wrap::after{
+  content:"";
+  position:absolute;
+  top:8%;
+  width:46%;
+  height:84%;
+  pointer-events:none;
+  z-index:-1;
+}
+.plate-wrap::before{
+  left:-6%;
+  background:radial-gradient(closest-side,rgba(214,38,38,.13),transparent 70%);
+}
+.plate-wrap::after{
+  right:-6%;
+  background:radial-gradient(closest-side,rgba(42,98,214,.13),transparent 70%);
+}
+.plate{
+  display:block;
+  padding:clamp(8px,1.4vw,12px);
+  background:#0a0908;
+  border:1px solid var(--gold-soft);
+  outline:1px solid var(--gold-faint);
+  outline-offset:6px;
+  margin:8px; /* room for the offset outline */
+}
+.plate img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.plate-caption{
+  margin:1.4rem auto 0;
+  text-align:center;
+  font-size:.85rem;
+  font-style:italic;
+  color:var(--ink-dim);
+  letter-spacing:.04em;
+}
+.plate-caption .num{
+  font-style:normal;
+  font-family:var(--serif);
+  color:var(--gold);
+  letter-spacing:.12em;
+}
+.featured-body{
+  max-width:620px;
+  margin:clamp(2.25rem,5vh,3rem) auto 0;
+  text-align:center;
+}
+.featured-body h2{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:clamp(1.7rem,4.5vw,2.4rem);
+  letter-spacing:.08em;
+  margin:0 0 1.1rem;
+  line-height:1.25;
+}
+.featured-body p{
+  margin:0 0 1.9rem;
+  color:var(--ink-dim);
+}
+.cta-row{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:1rem;
+}
+.btn{
+  display:inline-block;
+  padding:.78em 1.8em;
+  font-size:.8rem;
+  font-weight:600;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  text-decoration:none;
+  border:1px solid var(--hairline);
+  color:var(--ink);
+  transition:border-color .2s ease,background-color .2s ease,color .2s ease;
+}
+.btn-primary{
+  border-color:var(--gold-soft);
+  color:var(--gold);
+}
+.btn-primary:hover{
+  border-color:var(--gold);
+  background:rgba(201,162,39,.08);
+}
+.btn-ghost:hover{
+  border-color:var(--ink-dim);
+  color:#fff;
+}
 
-        header p {
-            margin: 1em 0 0;
-            font-size: 1.2em;
-            opacity: 0.9;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+/* ---------- collection grid ---------- */
+.collection{padding:clamp(1.5rem,4vh,2.5rem) 0 clamp(3.5rem,8vh,5.5rem)}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));
+  gap:1.1rem;
+}
+.card{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:.55rem;
+  padding:1.5rem 1.5rem 1.6rem;
+  background:var(--bg-card);
+  border:1px solid var(--hairline-soft);
+  text-decoration:none;
+  transition:border-color .22s ease,transform .22s ease,background-color .22s ease;
+}
+.card:hover{
+  border-color:var(--gold-soft);
+  background:#12100c;
+  transform:translateY(-3px);
+}
+.card-head{
+  display:flex;
+  align-items:baseline;
+  gap:.8rem;
+}
+.card .num{
+  font-family:var(--serif);
+  font-size:.78rem;
+  letter-spacing:.1em;
+  color:var(--gold);
+  opacity:.85;
+  min-width:1.6em;
+}
+.card h3{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:1.06rem;
+  letter-spacing:.05em;
+  line-height:1.4;
+  margin:0;
+  color:var(--ink);
+  flex:1;
+}
+.card .arrow{
+  color:var(--gold);
+  opacity:.3;
+  font-size:.9rem;
+  transition:opacity .22s ease,transform .22s ease;
+}
+.card:hover .arrow{opacity:1;transform:translate(2px,-2px)}
+.card p{
+  margin:0;
+  font-size:.94rem;
+  line-height:1.6;
+  color:var(--ink-dim);
+  padding-left:calc(1.6em + .8rem);
+}
+.badge{
+  align-self:flex-start;
+  margin-left:calc(1.6em + .8rem);
+  font-size:.68rem;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  border:1px solid var(--gold-faint);
+  padding:.22em .75em;
+}
+.card .tech{
+  margin:.15rem 0 0;
+  padding-left:calc(1.6em + .8rem);
+  font-size:.66rem;
+  font-weight:600;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.card .tech b{font-weight:600;color:var(--gold-soft)}
 
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2em;
-        }
+/* ---------- footer ---------- */
+footer{
+  border-top:1px solid var(--hairline-soft);
+  padding:2.25rem 0 3rem;
+}
+.foot-row{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  font-size:.9rem;
+  color:var(--ink-dim);
+}
+.gh-link{
+  display:inline-flex;
+  align-items:center;
+  gap:.55rem;
+  text-decoration:none;
+  color:var(--ink-dim);
+  transition:color .2s ease;
+}
+.gh-link:hover{color:var(--gold)}
+.gh-link svg{fill:currentColor}
+.gh-link span{
+  text-decoration:underline;
+  text-decoration-color:var(--gold-faint);
+  text-underline-offset:4px;
+}
+.gh-link:hover span{text-decoration-color:var(--gold)}
 
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2em;
-            margin-top: 2em;
-        }
+/* ---------- reveal on scroll (JS-gated) ---------- */
+.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.js .reveal.in{opacity:1;transform:none}
 
-        .tool-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5em;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .tool-card h3 {
-            margin: 0 0 0.5em;
-            color: var(--primary);
-            font-size: 1.4em;
-        }
-
-        .tool-card p {
-            margin: 0 0 1.5em;
-            color: var(--text-secondary);
-        }
-
-        .tool-link {
-            display: inline-block;
-            padding: 0.8em 1.5em;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: background-color 0.2s;
-        }
-
-        .tool-link:hover {
-            background-color: var(--primary-dark);
-        }
-
-        footer {
-            text-align: center;
-            padding: 2em;
-            background-color: var(--card-bg);
-            margin-top: 4em;
-        }
-
-        footer p {
-            margin: 0;
-            color: var(--text-secondary);
-        }
-
-        .github-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5em;
-            color: var(--text);
-            text-decoration: none;
-            margin-top: 1em;
-        }
-
-        .github-link:hover {
-            color: var (--primary);
-        }
-    </style>
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  .js .reveal{opacity:1;transform:none}
+  .card:hover{transform:none}
+}
+@media (max-width:480px){
+  .masthead h1{letter-spacing:.22em;text-indent:.22em}
+  .card p,.badge,.card .tech{padding-left:0;margin-left:0}
+}
+</style>
 </head>
 <body>
-    <header>
-        <h1>WIZARD</h1>
-        <p><b>W</b>eb-<b>I</b>ntegrated <b>Z</b>ero-lag <b>A</b>daptive <b>R</b>esource <b>D</b>ashboard</p>
-        <p>A collection of versatile, LLM-aided tools designed for web development and game design</p>
-    </header>
+<a class="skip-link" href="#collection">Skip to the collection</a>
 
-    <main>
-        <div class="tools-grid">
-            <div class="tool-card">
-                <h3>Interactive Word Cloud</h3>
-                <p>Explore relationships between concepts with an interactive, force-directed word cloud. Features dynamic layouts, hover effects, and animated relationship visualization.</p>
-                <a href="tools/wordcloud/dist/index.html" class="tool-link">Open Tool</a>
-            </div>
+<header class="masthead wrap">
+  <h1>WIZARD</h1>
+  <p class="backronym">Web-Integrated Zero-lag Adaptive Resource Dashboard</p>
+  <p class="tagline">A toolbox of AI-built interactive experiments for game UI and visualization.</p>
+  <div class="ornament" aria-hidden="true">&#10022;</div>
+</header>
 
-            <div class="tool-card">
-                <h3>WordSphere</h3>
-                <p>Experience a 3D spherical word visualization with interactive rotation and dynamic highlighting. Perfect for showcasing related terms or concepts in an engaging, spatial arrangement.</p>
-                <a href="tools/wordsphere/index.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <h3>Pixel Art Creator</h3>
-                <p>Create and customize pixel art with an intuitive grid-based interface. Features multiple canvas sizes, color picker, and PNG export.</p>
-                <a href="tools/pixelart/index.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <h3>Skill Tree Designer</h3>
-                <p>Design tree-based skill systems inspired by the Tree of Life. Features interactive nodes, skill point management, and path dependencies.</p>
-                <a href="tools/skilltree/index.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <h3>Geometric Skill Tree</h3>
-                <p>Create hexagonal grid-based skill systems inspired by Path of Exile. Features dual point system and connection visualization.</p>
-                <a href="tools/geometric_skilltree/index.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <h3>RPG Inventory System</h3>
-                <p>Manage game inventories with drag-and-drop functionality. Features equipment slots, item stacking, and local storage persistence.</p>
-                <a href="tools/rpg_inventory/index.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <h3>RP Account & Character Creator</h3>
-                <p>Roleplay-enforced house and character onboarding with LLM-validated names, strike-based punishments, and a lightweight world simulation log.</p>
-                <a href="tools/rp_account_creator/index.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <h3>Health Globe Module</h3>
-                <p>An ARPG-style vitality orb with layered fluid, rim lighting, and quick damage/heal controls for prototyping combat UI.</p>
-                <a href="tools/health_globe/index.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <h3>Pixel Alchemy Sandbox</h3>
-                <p>Noita-inspired falling-sand playground with wand projectiles, mining beam, hazards, explosions, and material palette buttons.</p>
-                <a href="tools/pixel_sandbox/index.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <h3>SLerp: Smooth Color Interpolation Tool</h3>
-                <p>Generate color palettes for pixel art and create smooth transitions between colors. Features real-time preview and export options.</p>
-                <a href="tools/slerp/index.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <h3>Wireframe Space Shooter</h3>
-                <p>Engage in space combat with 3D wireframe graphics. Features a radar system, various enemy types, and power-ups.</p>
-                <a href="tools/space_shooter/index.html" class="tool-link">Open Tool</a>
-            </div>
+<main class="wrap">
+  <section class="featured" aria-labelledby="featured-title">
+    <h2 class="section-label" id="featured-label">Featured Work</h2>
+    <div class="plate-wrap reveal">
+      <figure style="margin:0">
+        <div class="plate">
+          <img src="tools/wizard_orbs/screenshots/shot_hero.png"
+               alt="Two marble goddess statues kneel beside a crimson life orb and an azure mana orb, glowing against near-black darkness"
+               width="1254" height="706" loading="eager" fetchpriority="high">
         </div>
-    </main>
+        <figcaption class="plate-caption">
+          <span class="num">Plate I</span> &mdash; Vessels of Life &amp; Mana &middot; WebGL2 fragment shader over AI-generated art
+        </figcaption>
+      </figure>
+    </div>
+    <div class="featured-body reveal">
+      <h2 id="featured-title">Vessels of Life &amp; Mana</h2>
+      <p>A real-time WebGL2 health and mana orb engine, rendered by a single fullscreen fragment shader. Live procedural liquids &mdash; ink-plume blood and a condensing malachite nebula &mdash; are composited into AI-generated art plates with dynamic statue relighting. A status simulation drives poison, bleed, and mana reservation as you watch.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="tools/wizard_orbs/index.html">Launch demo</a>
+        <a class="btn btn-ghost" href="https://github.com/alexkorol/WIZARD/tree/gh-pages/tools/wizard_orbs">Build notes</a>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-        <p>&copy; 2024 Alexei Korol. All rights reserved.</p>
-        <a href="https://github.com/alexkorol/WIZARD" class="github-link">
-            <svg height="24" width="24" viewBox="0 0 16 16">
-                <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
-            </svg>
-            View on GitHub
-        </a>
-    </footer>
+  <section class="collection" id="collection" aria-labelledby="collection-label">
+    <h2 class="section-label" id="collection-label">The Collection</h2>
+    <div class="grid">
+      <a class="card reveal" href="tools/health_globe/index.html">
+        <div class="card-head"><span class="num" aria-hidden="true">I</span><h3>Health Globe v1</h3><span class="arrow" aria-hidden="true">&#8599;</span></div>
+        <p>The orbs&rsquo; predecessor: 100% procedural canvas, no assets. Kept as the &ldquo;before&rdquo; in a before/after of how the workflow evolved.</p>
+        <span class="badge">v1 &middot; the before</span>
+        <span class="tech">Canvas 2D &middot; JS</span>
+      </a>
+      <a class="card reveal" href="tools/geometric_skilltree/index.html">
+        <div class="card-head"><span class="num" aria-hidden="true">II</span><h3>Geometric Skill Tree</h3><span class="arrow" aria-hidden="true">&#8599;</span></div>
+        <p>Hexagonal passive skill tree inspired by Path of Exile, with a dual point system and connection visualization.</p>
+        <span class="tech">SVG &middot; JS</span>
+      </a>
+      <a class="card reveal" href="tools/rpg_inventory/index.html">
+        <div class="card-head"><span class="num" aria-hidden="true">III</span><h3>RPG Inventory</h3><span class="arrow" aria-hidden="true">&#8599;</span></div>
+        <p>Drag-and-drop grid inventory with equipment slots and persistence.</p>
+        <span class="tech">JS &middot; Drag &amp; Drop</span>
+      </a>
+      <a class="card reveal" href="tools/pixel_sandbox/index.html">
+        <div class="card-head"><span class="num" aria-hidden="true">IV</span><h3>Pixel Alchemy Sandbox</h3><span class="arrow" aria-hidden="true">&#8599;</span></div>
+        <p>Noita-style falling-sand playground with wand projectiles, hazards, and explosions.</p>
+        <span class="tech">Canvas &middot; Physics</span>
+      </a>
+      <a class="card reveal" href="tools/pixelart/index.html">
+        <div class="card-head"><span class="num" aria-hidden="true">V</span><h3>Pixel Art Creator</h3><span class="arrow" aria-hidden="true">&#8599;</span></div>
+        <p>Grid-based pixel art editor with a color picker and PNG export.</p>
+        <span class="tech">Canvas &middot; JS</span>
+      </a>
+      <a class="card reveal" href="tools/slerp/index.html">
+        <div class="card-head"><span class="num" aria-hidden="true">VI</span><h3>SLerp</h3><span class="arrow" aria-hidden="true">&#8599;</span></div>
+        <p>Smooth color interpolation and palette generation for pixel art.</p>
+        <span class="tech">JS &middot; Color Math</span>
+      </a>
+      <a class="card reveal" href="tools/wordcloud/dist/index.html">
+        <div class="card-head"><span class="num" aria-hidden="true">VII</span><h3>Interactive Word Cloud</h3><span class="arrow" aria-hidden="true">&#8599;</span></div>
+        <p>Force-directed concept cloud with animated relationships.</p>
+        <span class="tech">JS &middot; Physics</span>
+      </a>
+      <a class="card reveal" href="tools/wordsphere/index.html">
+        <div class="card-head"><span class="num" aria-hidden="true">VIII</span><h3>WordSphere</h3><span class="arrow" aria-hidden="true">&#8599;</span></div>
+        <p>3D spherical word visualization with momentum rotation.</p>
+        <span class="tech">CSS 3D &middot; JS</span>
+      </a>
+      <a class="card reveal" href="tools/rp_account_creator/index.html">
+        <div class="card-head"><span class="num" aria-hidden="true">IX</span><h3>RP Account &amp; Character Creator</h3><span class="arrow" aria-hidden="true">&#8599;</span></div>
+        <p>Roleplay-enforced onboarding with LLM-validated names and a world simulation log.</p>
+        <span class="tech">LLM &middot; JS</span>
+      </a>
+      <a class="card reveal" href="tools/space_shooter/index.html">
+        <div class="card-head"><span class="num" aria-hidden="true">X</span><h3>Wireframe Space Shooter</h3><span class="arrow" aria-hidden="true">&#8599;</span></div>
+        <p>3D wireframe space combat with radar and enemy variety.</p>
+        <span class="tech">Three.js &middot; WebGL</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <p style="margin:0">&copy; 2026 Alexei Korol</p>
+    <a class="gh-link" href="https://github.com/alexkorol/WIZARD">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      <span>View on GitHub</span>
+    </a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
+  items.forEach(function(el){ io.observe(el); });
+})();
+</script>
 </body>
 </html>

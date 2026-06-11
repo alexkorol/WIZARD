@@ -1,151 +1,68 @@
-# WIZARD: Web-Integrated Zero-lag Adaptive Resource Dashboard
+# WIZARD
 
-Welcome to WIZARD, a collection of versatile, LLM-aided tools and pages designed for web use. This project showcases various small tools and web pages generated using advanced language models, aimed at enhancing productivity and functionality.
+**W**eb-**I**ntegrated **Z**ero-lag **A**daptive **R**esource **D**ashboard — a toolbox of
+AI-built interactive web experiments for game UI and visualization, served as a static
+site from this branch.
 
-## Table of Contents
+**Live site:** [alexkorol.github.io/WIZARD](https://alexkorol.github.io/WIZARD/)
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Tools Overview](#tools-overview)
-- [Getting Started](#getting-started)
-- [Directory Structure](#directory-structure)
-- [Development Status](#development-status)
-- [Contributing](#contributing)
-- [License](#license)
+## Featured: Vessels of Life & Mana
 
-## Introduction
+![Vessels of Life & Mana](tools/wizard_orbs/screenshots/shot_hero.png)
 
-WIZARD is a dynamic and adaptable resource dashboard that brings together a variety of tools and web pages. Created using cutting-edge language models, these tools are designed to provide seamless and efficient solutions for various web-related tasks.
+A real-time ARPG health/mana orb system: one WebGL2 fragment shader compositing live
+procedural liquids, statue relighting, and a status-effect simulation (poison, bleed,
+reservation) into AI-generated art plates. Built with Claude Fable from a multi-model
+asset pipeline — base render, orb mask, normal map, empty-glass plate, packed depth+AO,
+and a petrified-stone plate, all aligned by silhouette-IoU.
 
-## Features
+[Live demo](https://alexkorol.github.io/WIZARD/tools/wizard_orbs/) ·
+[Module README](tools/wizard_orbs/README.md) ·
+[Predecessor (fully procedural v1)](https://alexkorol.github.io/WIZARD/tools/health_globe/)
 
-- **Versatile Tools**: A collection of multi-functional tools for diverse web applications
-- **LLM-Aided**: Tools generated with the aid of advanced language models for high efficiency and accuracy
-- **Customizable**: Easily modify and extend the tools to suit your specific needs
-- **User-Friendly**: Intuitive interfaces and straightforward documentation for easy use
+## Tools
 
-## Tools Overview
+| Tool | Description |
+|---|---|
+| [Vessels of Life & Mana](tools/wizard_orbs/index.html) | WebGL2 orb engine over AI-rendered plates; poison/bleed/reservation sim |
+| [Health Globe v1](tools/health_globe/index.html) | The orb's predecessor — 100% procedural canvas, kept as a before/after comparison |
+| [Geometric Skill Tree](tools/geometric_skilltree/index.html) | Hexagonal passive tree inspired by Path of Exile, with dual point system |
+| [RPG Inventory](tools/rpg_inventory/index.html) | Drag-and-drop grid inventory with equipment slots and persistence |
+| [Pixel Alchemy Sandbox](tools/pixel_sandbox/index.html) | Noita-style falling-sand playground with wands, hazards, and explosions |
+| [Pixel Art Creator](tools/pixelart/index.html) | Grid-based pixel art editor with PNG export |
+| [SLerp](tools/slerp/index.html) | Smooth color interpolation and palette generation for pixel art |
+| [Interactive Word Cloud](tools/wordcloud/dist/index.html) | Force-directed concept cloud with animated relationships |
+| [WordSphere](tools/wordsphere/index.html) | 3D spherical word visualization with momentum rotation |
+| [RP Account & Character Creator](tools/rp_account_creator/index.html) | Roleplay-enforced onboarding with LLM-validated names |
+| [Wireframe Space Shooter](tools/space_shooter/index.html) | 3D wireframe space combat with radar and enemy variety |
 
-### Interactive Word Cloud
-- **Status**: Active Development
-- **Features**: Force-directed layout, dynamic relationships, hover effects
-- **TODOs**: 
-  - [ ] Add search functionality
-  - [ ] Implement word grouping
-  - [ ] Add export options
+## How these are built
 
-### WordSphere
-- **Status**: Active Development
-- **Features**: 3D visualization, momentum-based rotation, term highlighting
-- **TODOs**: 
-  - [ ] Add zoom functionality
-  - [ ] Implement touch controls
-  - [ ] Add word customization UI
+Every tool here is AI-assisted, and the workflow has evolved with the models. Early
+tools were single-prompt procedural generations; the current process is a multi-model
+pipeline — concept art and asset plates from image models (GPT Image, Gemini /
+Nano Banana), interactive engineering in Claude (Fable / Claude Code), with Codex
+used for earlier iterations. The orbs module's [README](tools/wizard_orbs/README.md)
+documents the most developed version of this process.
 
-### Pixel Art Creator
-- **Status**: Stable
-- **Features**: Grid-based interface, color picker, PNG export
-- **TODOs**:
-  - [ ] Add layer support
-  - [ ] Implement undo/redo
-  - [ ] Add animation frames
+## Running locally
 
-### Skill Tree Designer
-- **Status**: Stable
-- **Features**: Tree-based skills, point management, dependencies
-- **TODOs**:
-  - [ ] Add save/load functionality
-  - [ ] Implement skill prerequisites
-  - [ ] Add custom icons
-
-### Geometric Skill Tree
-- **Status**: Stable
-- **Features**: Hexagonal grid, dual point system, connection visualization
-- **TODOs**:
-  - [ ] Add path highlighting
-  - [ ] Implement skill levels
-  - [ ] Add export/import
-
-### RPG Inventory System
-- **Status**: Stable
-- **Features**: Drag-and-drop, equipment slots, local storage
-- **TODOs**:
-  - [ ] Add item stacking
-  - [ ] Implement weight system
-  - [ ] Add item tooltips
-
-### SLerp: Color Interpolation
-- **Status**: Stable
-- **Features**: Color transitions, real-time preview, export options
-- **TODOs**:
-  - [ ] Add more color spaces
-  - [ ] Implement palette saving
-  - [ ] Add batch processing
-
-### Wireframe Space Shooter
-- **Status**: Active Development
-- **Features**: 3D wireframe graphics, space combat, radar system
-- **TODOs**:
-  - [ ] Add more enemy types
-  - [ ] Implement power-ups
-  - [ ] Add sound effects
-
-## Getting Started
-
-To get started with WIZARD, follow these steps:
-
-1. **Clone the repository**:
-    ```bash
-    git clone https://github.com/alexkorol/wizard.git
-    cd wizard
-    ```
-
-2. **Explore the tools**: Browse the `tools/` directory to see the available tools and pages.
-
-3. **Open the landing page**: Open `index.html` in your browser to access the main dashboard.
-
-## Directory Structure
-
-```
-wizard/
-+-- index.html          # Landing page with links to all tools
-+-- README.md           # Project documentation
-+-- tools/              # Directory containing all tools
-|   +-- wordcloud/      # Interactive word cloud
-|   +-- wordsphere/     # 3D word visualization
-|   +-- pixelart/       # Pixel art creator
-|   +-- skilltree/      # Skill tree designer
-|   +-- geometric_skilltree/  # Hexagonal skill system
-|   +-- rpg_inventory/  # Inventory management
-|   +-- slerp/         # Color interpolation tool
-|   +-- space_shooter/  # Wireframe space shooter game
-+-- assets/            # Common assets (images, CSS, JS)
+```bash
+git clone https://github.com/alexkorol/WIZARD.git
+cd WIZARD
+python -m http.server   # then open http://localhost:8000
 ```
 
-## Development Status
+Most tools are single self-contained HTML files and also work opened directly.
 
-The project is actively maintained and new features are being added regularly. Each tool has its own README with specific TODOs and development status.
+## Structure
 
-Current focus areas:
-- Improving mobile responsiveness
-- Adding more interactive features
-- Enhancing tool integration
-- Implementing user feedback
-
-## Contributing
-
-We welcome contributions to WIZARD! To contribute:
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/YourFeature`)
-3. Commit your changes (`git commit -am 'Add YourFeature'`)
-4. Push to the branch (`git push origin feature/YourFeature`)
-5. Open a Pull Request
+```
+index.html        # landing page
+tools/<name>/     # one folder per tool, each with its own index.html
+                  # (larger tools carry their own README, src/, assets)
+```
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-Thank you for using WIZARD! We hope these tools enhance your web development experience.
+MIT — see [LICENSE](LICENSE).
