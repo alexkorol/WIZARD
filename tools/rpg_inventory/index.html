@@ -3,23 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WIZARD: Artifact Vault</title>
+  <title>RPG Inventory — WIZARD</title>
+  <meta name="description" content="Grid-based RPG inventory with drag-and-drop equipment, tooltips, and a vendor — an artifact vault demo from the WIZARD portfolio.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <style>
     :root {
-      --bg: #050505;
-      --panel: rgba(12, 13, 18, 0.9);
-      --panel-border: rgba(255, 255, 255, 0.08);
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --accent: #f59e0b;
+      --bg: #0d0c0a;
+      --panel: #100f0c;
+      --panel-border: rgba(233, 228, 216, 0.12);
+      --hairline: rgba(233, 228, 216, 0.12);
+      --text: #e9e4d8;
+      --muted: #9c9587;
+      --dim: #6f695c;
+      --accent: #c9a227;
       --cell-size: 48px;
       --cell-gap: 2px;
     }
@@ -31,7 +34,7 @@
       min-height: 100vh;
       background: var(--bg);
       color: var(--text);
-      font-family: 'Inter', sans-serif;
+      font-family: 'Source Sans 3', sans-serif;
     }
 
     #root { min-height: 100vh; }
@@ -39,8 +42,8 @@
     .app-shell {
       min-height: 100vh;
       background-image:
-        radial-gradient(circle at 15% 40%, rgba(59, 130, 246, 0.08), transparent 36%),
-        radial-gradient(circle at 80% 20%, rgba(234, 179, 8, 0.06), transparent 32%);
+        radial-gradient(circle at 15% 40%, rgba(201, 162, 39, 0.05), transparent 36%),
+        radial-gradient(circle at 80% 20%, rgba(201, 162, 39, 0.04), transparent 32%);
       padding-bottom: 40px;
     }
 
@@ -48,13 +51,34 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
       padding: 14px 22px;
-      background: linear-gradient(90deg, rgba(10, 12, 17, 0.95), rgba(12, 16, 24, 0.95));
-      border-bottom: 1px solid #1f2937;
+      background: linear-gradient(90deg, rgba(13, 12, 10, 0.96), rgba(16, 15, 12, 0.96));
+      border-bottom: 1px solid var(--hairline);
       position: sticky;
       top: 0;
       z-index: 50;
       box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+
+    .back-link {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin: 0 0 4px -6px;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .back-link:hover {
+      color: var(--accent);
+      border-color: var(--hairline);
     }
 
     .title {
@@ -71,17 +95,17 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: #0b0d10;
-      border: 1px solid #43350f;
+      background: #0b0a08;
+      border: 1px solid rgba(201, 162, 39, 0.35);
       padding: 8px 12px;
       border-radius: 10px;
-      color: #fcd34d;
+      color: #e0c25e;
       font-family: 'JetBrains Mono', monospace;
       box-shadow: inset 0 0 12px rgba(0,0,0,0.5);
     }
     .btn {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(233,228,216,0.04);
+      border: 1px solid var(--hairline);
       color: var(--text);
       padding: 10px 14px;
       border-radius: 10px;
@@ -92,6 +116,10 @@
     }
     .btn:hover { background: var(--accent); color: #0b0b0b; border-color: var(--accent); transform: translateY(-1px); }
     .btn:active { transform: translateY(0); }
+    .btn:focus-visible, .back-link:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
 
     .main {
       display: flex;
@@ -116,25 +144,25 @@
 
     .equip-slot {
       position: relative;
-      background: rgba(255,255,255,0.02);
-      border: 1px dashed #334155;
+      background: rgba(233,228,216,0.02);
+      border: 1px dashed rgba(233, 228, 216, 0.18);
       border-radius: 12px;
       min-width: 78px;
       min-height: 78px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #475569;
+      color: var(--dim);
       transition: all 0.2s ease;
       overflow: hidden;
     }
     .equip-slot.belt { min-width: 150px; min-height: 46px; }
     .equip-slot.small { min-width: 70px; min-height: 70px; }
     .equip-slot.highlight {
-      border-color: #fbbf24;
-      box-shadow: 0 0 14px rgba(251, 191, 36, 0.32);
-      background: rgba(251,191,36,0.08);
-      color: #eab308;
+      border-color: var(--accent);
+      box-shadow: 0 0 14px rgba(201, 162, 39, 0.32);
+      background: rgba(201, 162, 39, 0.08);
+      color: var(--accent);
     }
     .equip-slot .label {
       font-size: 0.65rem;
@@ -150,19 +178,22 @@
     .grid-shell {
       position: relative;
       display: inline-block;
+      max-width: 100%;
+      overflow-x: auto;
       padding: 10px;
-      background: linear-gradient(180deg, rgba(15, 23, 42, 0.82), rgba(7, 11, 17, 0.9));
+      background: linear-gradient(180deg, rgba(24, 22, 18, 0.82), rgba(10, 9, 7, 0.9));
       border-radius: 12px;
       border: 1px solid var(--panel-border);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      box-shadow: inset 0 0 0 1px rgba(233,228,216,0.02);
     }
 
     .inventory-grid {
       position: relative;
       display: grid;
+      width: max-content;
       gap: var(--cell-gap);
       background: rgba(0,0,0,0.35);
-      border: 1px solid #1f2937;
+      border: 1px solid var(--hairline);
       border-radius: 10px;
       overflow: hidden;
     }
@@ -170,19 +201,20 @@
     .grid-cell {
       width: var(--cell-size);
       height: var(--cell-size);
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.03);
+      background: rgba(233,228,216,0.02);
+      border: 1px solid rgba(233,228,216,0.03);
     }
 
     .item {
       position: absolute;
-      border: 1px solid #334155;
+      border: 1px solid rgba(233,228,216,0.2);
       border-radius: 10px;
-      background: linear-gradient(145deg, rgba(30,41,59,0.94), rgba(17,24,39,0.92));
+      background: linear-gradient(145deg, rgba(40,37,31,0.94), rgba(20,18,15,0.92));
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: grab;
+      touch-action: none;
       transition: transform 0.08s ease, box-shadow 0.2s ease;
       overflow: hidden;
     }
@@ -196,7 +228,7 @@
     .item .item-gloss {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.06), transparent 55%);
+      background: linear-gradient(135deg, rgba(233,228,216,0.06), transparent 55%);
       pointer-events: none;
     }
 
@@ -212,13 +244,13 @@
 
     .trash-zone {
       min-height: 92px;
-      border: 2px dashed #334155;
+      border: 2px dashed rgba(233, 228, 216, 0.18);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      color: #64748b;
+      color: var(--muted);
       padding: 12px;
       transition: all 0.2s ease;
     }
@@ -229,16 +261,16 @@
       pointer-events: none;
       z-index: 100;
       min-width: 230px;
-      background: rgba(3,7,18,0.98);
-      border: 1px solid #1f2937;
+      background: rgba(13,12,10,0.98);
+      border: 1px solid var(--hairline);
       border-radius: 10px;
       padding: 12px;
       box-shadow: 0 12px 35px rgba(0,0,0,0.65);
     }
     .tooltip .header { font-family: 'Cinzel', serif; font-size: 1rem; margin-bottom: 4px; }
     .tooltip .rarity { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-    .tooltip .stat { color: #cbd5e1; font-size: 0.9rem; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-    .tooltip .foot { color: #475569; font-size: 0.75rem; margin-top: 8px; border-top: 1px solid #1f2937; padding-top: 6px; }
+    .tooltip .stat { color: #d6d0c2; font-size: 0.9rem; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+    .tooltip .foot { color: var(--dim); font-size: 0.75rem; margin-top: 8px; border-top: 1px solid var(--hairline); padding-top: 6px; }
 
     .error-chip {
       position: fixed;
@@ -263,9 +295,9 @@
       gap: 8px 18px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.75rem;
-      color: #94a3b8;
+      color: var(--muted);
     }
-    .stat-grid strong { color: #e2e8f0; }
+    .stat-grid strong { color: var(--text); }
 
     .silhouette {
       position: absolute;
@@ -275,6 +307,25 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    @media (max-width: 640px) {
+      .main { padding: 14px; gap: 16px; }
+      .top-bar { padding: 12px 14px; }
+      .panel { padding: 14px; }
+      .inventory-panel { min-width: 0; width: 100%; }
+      .paperdoll { width: 100%; }
+      .grid-shell { display: block; -webkit-overflow-scrolling: touch; }
+      .equip-slot { min-width: 64px; min-height: 64px; }
+      .equip-slot.belt { min-width: 120px; min-height: 42px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+      .btn:hover, .item.dragging { transform: none; }
     }
   </style>
 </head>
@@ -304,7 +355,7 @@
   };
 
   const RARITY = {
-    COMMON: { label: 'Common', color: '#cbd5e1', border: '#475569', shadow: '0 0 0 rgba(0,0,0,0)' },
+    COMMON: { label: 'Common', color: '#d6d0c2', border: '#5d574c', shadow: '0 0 0 rgba(0,0,0,0)' },
     MAGIC: { label: 'Magic', color: '#60a5fa', border: '#3b82f6', shadow: '0 0 12px rgba(59,130,246,0.35)' },
     RARE: { label: 'Rare', color: '#facc15', border: '#facc15', shadow: '0 0 14px rgba(250,204,21,0.35)' },
     LEGENDARY: { label: 'Legendary', color: '#fb923c', border: '#f97316', shadow: '0 0 16px rgba(249,115,22,0.4)' },
@@ -536,7 +587,7 @@
       borderColor: rare.border,
       color: rare.color,
       boxShadow: isDragging ? `0 16px 30px rgba(0,0,0,0.5), ${rare.shadow}` : rare.shadow,
-      background: 'linear-gradient(150deg, rgba(30,41,59,0.95), rgba(15,23,42,0.92))',
+      background: 'linear-gradient(150deg, rgba(40,37,31,0.95), rgba(20,18,15,0.92))',
       pointerEvents: isDragging ? 'none' : 'auto',
     };
 
@@ -821,12 +872,13 @@
 
         <div className="top-bar">
           <div>
-            <div className="title">NEPHALEM<strong>STASH</strong></div>
+            <a className="back-link" href="../../index.html">&larr; WIZARD</a>
+            <div className="title">ARTIFACT <strong>VAULT</strong></div>
             <div className="subtext">Drag to equip, drop items on the vendor to sell.</div>
           </div>
           <div className="top-actions">
             <div className="gold-counter">
-              <span style={{ width: 8, height: 8, borderRadius: 4, background: '#fcd34d', display: 'inline-block', boxShadow: '0 0 5px rgba(250,204,21,0.8)' }} />
+              <span style={{ width: 8, height: 8, borderRadius: 4, background: '#e0c25e', display: 'inline-block', boxShadow: '0 0 5px rgba(201,162,39,0.8)' }} />
               {gold.toLocaleString()}
             </div>
             <button className="btn" onClick={spawnLoot}>Spawn Loot</button>
@@ -868,7 +920,7 @@
               <div>Damage <strong>1,240</strong></div>
               <div>Armor <strong>850</strong></div>
               <div>Life <strong>2,400</strong></div>
-              <div>Resist <strong style={{ color: '#f59e0b' }}>75%</strong></div>
+              <div>Resist <strong style={{ color: '#c9a227' }}>75%</strong></div>
             </div>
 
             <div className="silhouette">
@@ -926,7 +978,7 @@
 
             <div className="subtext">
               "Stay awhile and listen."
-              <div style={{ color: '#475569' }}>— Deckard C.</div>
+              <div style={{ color: '#6f695c' }}>— Deckard C.</div>
             </div>
           </div>
         </main>
