@@ -3,20 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WIZARD: RP Account & Character Creator</title>
+  <title>RP Account & Character Creator — WIZARD</title>
+  <meta name="description" content="A roleplay-flavored onboarding flow: found a noble House, recruit scions, and watch their chronicles unfold. Part of the WIZARD tool collection.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Cinzel', 'Georgia', 'serif'],
+            sans: ['"Source Sans 3"', '"Segoe UI"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            stone: {
+              100: '#f2eee3', 200: '#e9e4d8', 300: '#cfc8b8', 400: '#aaa28f',
+              500: '#9c9587', 600: '#57503f', 700: '#3a332a', 800: '#241f17',
+              900: '#14110d', 950: '#0d0c0a',
+            },
+            amber: {
+              100: '#f3ecd2', 400: '#d7b958', 500: '#c9a227', 600: '#a9861f',
+              700: '#806619', 900: '#473a10',
+            },
+          },
+        },
+      },
+    };
+  </script>
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
-    body { background: #0b0b0f; color: #e5e7eb; min-height: 100vh; }
-    .glass { background: rgba(17, 24, 39, 0.8); border: 1px solid rgba(255, 255, 255, 0.06); backdrop-filter: blur(10px); }
+    body { background: #0d0c0a; color: #e9e4d8; min-height: 100vh; font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif; }
+    .glass { background: rgba(16, 15, 12, 0.88); border: 1px solid rgba(233, 228, 216, 0.12); backdrop-filter: blur(10px); }
     .animate-shake { animation: shake 0.35s linear; }
     @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-4px);} 50% { transform: translateX(4px);} 75% { transform: translateX(-4px);} 100% { transform: translateX(0);} }
     .scanline::after { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, rgba(255,255,255,0.04), transparent); mix-blend-mode:overlay; opacity:0.4; }
+    /* Site chrome: back link bar */
+    .site-bar { position: sticky; top: 0; z-index: 40; height: 41px; display: flex; align-items: center; padding: 0 20px; background: rgba(13, 12, 10, 0.92); border-bottom: 1px solid rgba(233, 228, 216, 0.12); backdrop-filter: blur(6px); }
+    .wizard-back { font-family: 'Cinzel', Georgia, serif; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #9c9587; text-decoration: none; transition: color 0.2s ease; }
+    .wizard-back:hover { color: #c9a227; }
+    body .min-h-screen { min-height: calc(100vh - 41px); }
+    /* Accessible focus */
+    *:focus-visible { outline: 2px solid rgba(201, 162, 39, 0.8) !important; outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    }
   </style>
 </head>
 <body>
+  <div class="site-bar"><a class="wizard-back" href="../../index.html">&larr; WIZARD</a></div>
   <div id="root"></div>
 
   <script type="text/babel">
@@ -171,10 +209,31 @@
     const LOCATIONS = ["The Dark Woods", "Crumbling Ruins", "Foggy Swamp", "Mountain Pass", "Abandoned Mine"];
 
     // --- LLM Helpers (safe fallbacks if apiKey missing) ---
+    const OFFLINE_LORE = {
+      houseName: ["Vaelmont", "Druskane", "Morvayne", "Ashgrave", "Thornholt", "Caldrest", "Veyrane", "Oakhart", "Greywarden", "Stillbrook"],
+      voidName: ["The Voidsworn", "Hollowmark", "Nightrend", "The Unhallowed", "Gravemourn"],
+      motto: ["Ash remembers", "Iron before honey", "We endure the long dark", "No crown without thorns", "The river forgets nothing", "Silence keeps the keep"],
+      charName: ["Kaelen Dray", "Mirelle of the Fen", "Tobias Crane", "Sera Voss", "Aldric Thane", "Wren Calloway", "Edmun Hale", "Isolde Marr"],
+      origin: [
+        "Raised among the lime kilns of a dying quarry town, sworn to outlive its debts.",
+        "Last survivor of a caravan lost in the Foggy Swamp; speaks little of what followed.",
+        "A disgraced retainer seeking to buy back an honored name, one contract at a time.",
+        "Schooled by hedge-clerics in letters and knife-work, in roughly equal measure.",
+        "Born under a hanged moon; the village midwife refused payment and left by night.",
+      ],
+    };
+    const offlineLore = (prompt) => {
+      const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+      if (/house name/i.test(prompt)) return /void|chaos/i.test(prompt) ? pick(OFFLINE_LORE.voidName) : pick(OFFLINE_LORE.houseName);
+      if (/motto/i.test(prompt)) return /void|chaos/i.test(prompt) ? "Chaos Reigns Eternal" : pick(OFFLINE_LORE.motto);
+      if (/character name/i.test(prompt)) return pick(OFFLINE_LORE.charName);
+      if (/origin/i.test(prompt)) return pick(OFFLINE_LORE.origin);
+      return "";
+    };
     async function callGeminiAPI(prompt, systemInstruction, responseSchema = null) {
       if (!apiKey) {
-        // offline/dev fallback
-        return responseSchema ? { approved: true, message: "The scribes nod in silence." } : "Placeholder";
+        // offline/dev fallback: judge leniently, draw lore from local pools
+        return responseSchema ? { approved: true, message: "The scribes nod in silence." } : offlineLore(prompt);
       }
       const delays = [500, 1000, 2000];
       for (let i = 0; i <= delays.length; i++) {
@@ -330,9 +389,9 @@
       const Gate = () => {
         const [input, setInput] = useState('');
         return (
-          <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-stone-950 via-slate-950 to-black p-6">
+          <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-stone-950 via-stone-950 to-black p-6">
             <div className="max-w-md w-full text-center glass rounded-xl p-8 shadow-2xl border border-stone-800 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_30%_30%,#f59e0b,transparent_35%),radial-gradient(circle_at_70%_70%,#8b5cf6,transparent_35%)]"></div>
+              <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_30%_30%,#c9a227,transparent_35%),radial-gradient(circle_at_70%_70%,#8b5cf6,transparent_35%)]"></div>
               <div className="relative space-y-6">
                 <Icon name="shield" size={56} className="mx-auto text-amber-500" />
                 <div>
@@ -349,7 +408,7 @@
                   />
                   <button
                     onClick={() => login(input)}
-                    className="w-full bg-stone-800 hover:bg-stone-700 border border-stone-700 text-stone-200 py-3 tracking-wide transition"
+                    className="w-full bg-stone-800 hover:bg-stone-700 border border-stone-700 hover:border-amber-700 text-stone-200 py-3 tracking-wide transition rounded"
                   >
                     Announce Presence
                   </button>
@@ -358,7 +417,7 @@
                   </div>
                   <button
                     onClick={() => setView('founding')}
-                    className="w-full bg-amber-900/20 hover:bg-amber-900/40 text-amber-400 border border-amber-900/40 py-3 tracking-wide transition"
+                    className="w-full bg-amber-900/20 hover:bg-amber-900/40 text-amber-400 border border-amber-900/40 hover:border-amber-700 py-3 tracking-wide transition rounded"
                   >
                     Establish New Lineage
                   </button>
@@ -488,7 +547,7 @@
         const accent = isCorrupt ? 'text-purple-400' : 'text-amber-400';
         return (
           <div className="min-h-screen bg-stone-950 text-stone-200 flex flex-col">
-            <header className="flex justify-between items-center p-6 border-b border-stone-800 bg-stone-900/60 backdrop-blur">
+            <header className="flex flex-wrap gap-y-3 justify-between items-center p-4 sm:p-6 border-b border-stone-800 bg-stone-900/60 backdrop-blur">
               <div className="flex items-center gap-4">
                 <Icon name={isCorrupt ? 'ghost' : 'shield'} size={44} className={currentHouse.sigilColor} />
                 <div>
@@ -518,7 +577,7 @@
                     {currentHouse.characters.map(ch => {
                       const cls = CLASSES.find(c => c.id === ch.class);
                       return (
-                        <div key={ch.id} className="flex items-center justify-between bg-stone-900 border border-stone-800 rounded-lg p-4 hover:border-stone-600 transition">
+                        <div key={ch.id} className="flex flex-wrap gap-y-3 items-center justify-between bg-stone-900 border border-stone-800 rounded-lg p-4 hover:border-amber-700 hover:-translate-y-px transition">
                           <div className="flex items-center gap-4">
                             <div className="w-12 h-12 rounded-full bg-stone-950 border border-stone-800 flex items-center justify-center">
                               {cls && <Icon name={cls.icon} className="text-stone-400" />}
@@ -724,14 +783,15 @@
             msg = act;
             setAction(act + "...");
           }
-          setLogs(prev => [...prev.slice(-15), msg]);
+          const stamp = new Date().toLocaleTimeString([], { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" });
+          setLogs(prev => [...prev.slice(-15), { t: stamp, m: msg }]);
         };
 
         if (!char) return null;
         const cls = CLASSES.find(c => c.id === char.class);
 
         return (
-          <div className="min-h-screen bg-black text-stone-300 font-mono p-6 relative">
+          <div className="min-h-screen bg-stone-950 text-stone-300 font-mono p-4 sm:p-6 relative">
             <div className="flex justify-between items-center border-b border-stone-800 pb-4 mb-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded bg-stone-900 border border-stone-700 flex items-center justify-center">
@@ -744,7 +804,7 @@
               </div>
               <button onClick={() => setView('hall')} className="text-stone-500 hover:text-stone-200 border border-stone-800 px-4 py-2 text-xs uppercase tracking-widest">Return to Hall</button>
             </div>
-            <div className="grid grid-cols-3 gap-3 mb-5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
               <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between"><span className="text-xs text-stone-500 uppercase">Kills</span><span className="text-red-500 font-bold flex items-center gap-1"><Icon name="skull" size={16} />{stats.kills}</span></div>
               <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between"><span className="text-xs text-stone-500 uppercase">Loot Gold</span><span className="text-amber-500 font-bold flex items-center gap-1"><Icon name="coins" size={16} />{stats.gold}</span></div>
               <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between"><span className="text-xs text-stone-500 uppercase">XP</span><span className="text-blue-400 font-bold flex items-center gap-1"><Icon name="zap" size={16} />{stats.xp}</span></div>
@@ -760,8 +820,8 @@
                 {logs.length === 0 && <div className="text-stone-700 italic">...Initializing World Simulation...</div>}
                 {logs.map((l, i) => (
                   <div key={i} className="text-sm">
-                    <span className="text-stone-600 mr-2">[{new Date().toLocaleTimeString([], { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" })}]</span>
-                    <span>{l}</span>
+                    <span className="text-stone-600 mr-2">[{l.t}]</span>
+                    <span>{l.m}</span>
                   </div>
                 ))}
                 <div ref={endRef}></div>
