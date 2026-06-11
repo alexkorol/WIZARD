@@ -3,15 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wireframe Space Shooter</title>
+    <title>Wireframe Space Shooter &mdash; WIZARD</title>
+    <meta name="description" content="A retro wireframe 3D space shooter. Pilot a vector-graphics starfighter, lock missiles, and dodge enemies on the radar. Part of the WIZARD tool collection.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #0d0c0a;
+            --panel: #100f0c;
+            --ink: #e9e4d8;
+            --ink-dim: #9c9587;
+            --gold: #c9a227;
+            --hairline: rgba(233, 228, 216, .12);
+            --serif: 'Cinzel', Georgia, serif;
+            --sans: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+        }
         body {
             margin: 0;
             overflow: hidden;
-            background-color: #000;
+            background-color: var(--bg);
             color: #0f0;
             font-family: monospace;
         }
+        /* ===== Page chrome ===== */
+        #page-chrome {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 50;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        .back-link {
+            font-family: var(--serif);
+            font-size: 13px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--ink-dim);
+            text-decoration: none;
+            background: rgba(16, 15, 12, .72);
+            border: 1px solid var(--hairline);
+            border-radius: 4px;
+            padding: 4px 10px;
+            transition: color .2s ease, border-color .2s ease;
+        }
+        .back-link:hover {
+            color: var(--gold);
+            border-color: var(--hairline);
+        }
+        .back-link:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+        .page-title {
+            font-family: var(--serif);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--ink-dim);
+            pointer-events: none;
+        }
+        /* ===== Game canvas and HUD ===== */
         #gameCanvas {
             width: 100%;
             height: 100%;
@@ -19,6 +74,7 @@
         }
         #hud {
             position: absolute;
+            top: 48px;
             width: 100%;
             padding: 10px;
             box-sizing: border-box;
@@ -27,9 +83,40 @@
         }
         #controls {
             position: absolute;
-            bottom: 10px;
-            left: 10px;
-            color: #0f0;
+            bottom: 12px;
+            left: 12px;
+            z-index: 10;
+            background: rgba(16, 15, 12, .78);
+            border: 1px solid var(--hairline);
+            border-radius: 6px;
+            padding: 10px 14px 12px;
+            pointer-events: none;
+        }
+        #controls h2 {
+            margin: 0 0 6px;
+            font-family: var(--serif);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+        .control-row {
+            font-family: var(--sans);
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--ink-dim);
+        }
+        .control-row .key {
+            font-family: monospace;
+            color: var(--ink);
+        }
+        #missile-indicator {
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            color: #ffcc00;
+            font-size: 14px;
             z-index: 10;
         }
         #radar {
@@ -160,41 +247,104 @@
         }
         .target-indicator {
             position: absolute;
+            display: none;
             width: 50px;
             height: 50px;
-            border: 1px solid #f00;
+            margin: -25px 0 0 -25px; /* center on the screen position set by JS */
+            border: 1px dashed #f00;
             border-radius: 50%;
             z-index: 5;
             pointer-events: none;
+            opacity: 0.55;
+            transition: opacity 0.2s, border-color 0.2s;
+        }
+        .target-indicator.locked {
+            opacity: 1;
+            border-style: solid;
+            border-color: #ffcc00;
+        }
+        /* Collision flash (background color set by game code) */
+        #screen-flash {
+            position: absolute;
+            inset: 0;
+            z-index: 30;
             opacity: 0;
-            transition: opacity 0.2s;
+            pointer-events: none;
+            transition: opacity 0.15s ease;
+        }
+        /* Game over overlay (shown by game code) */
+        #game-over-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 40;
+            display: none; /* game code sets display: flex */
+            align-items: center;
+            justify-content: center;
+            background: rgba(13, 12, 10, .82);
+        }
+        .game-over-panel {
+            background: var(--panel);
+            border: 1px solid var(--hairline);
+            border-radius: 8px;
+            padding: 32px 48px;
+            text-align: center;
+        }
+        .game-over-panel h1 {
+            margin: 0 0 6px;
+            font-family: var(--serif);
+            font-size: 26px;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--ink);
+        }
+        .game-over-panel hr {
+            width: 56px;
+            margin: 0 auto 12px;
+            border: none;
+            border-top: 1px solid var(--gold);
+            opacity: .6;
+        }
+        .game-over-panel p {
+            margin: 0;
+            font-family: var(--sans);
+            font-size: 14px;
+            color: var(--ink-dim);
+        }
+        .game-over-panel .key {
+            font-family: monospace;
+            color: var(--ink);
         }
     </style>
 </head>
 <body>
     <canvas id="gameCanvas"></canvas>
+    <header id="page-chrome">
+        <a class="back-link" href="../../index.html">&larr; WIZARD</a>
+        <span class="page-title">Wireframe Space Shooter</span>
+    </header>
     <div id="hud">
         <div id="score">SCORE: 0</div>
         <div id="shields">SHIELDS: 100%</div>
     </div>
     <div id="controls">
-        CONTROLS:<br>
-        MOUSE - Aim/Turn<br>
-        W/S - Forward/Backward<br>
-        A/D - Strafe Left/Right<br>
-        Q/E - Roll<br>
-        SPACE - Fire Lasers<br>
-        M - Lock/Fire Missile<br>
-        T - Target Nearest Enemy<br>
-        CLICK - Lock Mouse
+        <h2>Controls</h2>
+        <div class="control-row"><span class="key">MOUSE</span> &mdash; Aim / Turn</div>
+        <div class="control-row"><span class="key">W/S</span> &mdash; Forward / Backward</div>
+        <div class="control-row"><span class="key">A/D</span> &mdash; Strafe Left / Right</div>
+        <div class="control-row"><span class="key">Q/E</span> &mdash; Roll</div>
+        <div class="control-row"><span class="key">SPACE</span> &mdash; Fire Lasers</div>
+        <div class="control-row"><span class="key">M</span> &mdash; Lock / Fire Missile</div>
+        <div class="control-row"><span class="key">T</span> &mdash; Target Nearest Enemy</div>
+        <div class="control-row"><span class="key">CLICK</span> &mdash; Lock Mouse</div>
     </div>
-    <div id="missile-indicator" style="position: absolute; top: 50px; right: 20px; color: #ffcc00; font-size: 14px; z-index: 10;">MISSILES: 5</div>
+    <div id="missile-indicator">MISSILES: 5</div>
     <div id="radar">
         <div class="player-blip"></div>
     </div>
     <div id="crosshair"></div>
     <div id="laser-trajectory"></div>
-    
+
     <!-- Add cockpit overlay -->
     <div id="cockpit">
         <div id="cockpit-top" class="cockpit-frame"></div>
@@ -204,7 +354,17 @@
     </div>
     <div id="speed-indicator">SPEED: 0</div>
     <div class="target-indicator"></div>
-    
+
+    <!-- Referenced by game.js: collision feedback and game over state -->
+    <div id="screen-flash"></div>
+    <div id="game-over-overlay">
+        <div class="game-over-panel">
+            <h1>Ship Destroyed</h1>
+            <hr>
+            <p>Press <span class="key">R</span> to restart</p>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="game.js"></script>
 </body>
