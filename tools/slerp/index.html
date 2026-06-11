@@ -3,50 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SLerp - Smooth Color Interpolation Tool</title>
+    <title>SLerp — WIZARD</title>
+    <meta name="description" content="SLerp — a smooth color interpolation tool for pixel art shading. Generate stepped palettes in RGB or HSL space and preview them as banded sphere shading.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #1a1a1a;
-            --text-color: #ffffff;
-            --accent-color: #4CAF50;
-            --panel-bg: #2d2d2d;
+            --bg: #0d0c0a;
+            --bg-card: #100f0c;
+            --ink: #e9e4d8;
+            --ink-dim: #9c9587;
+            --gold: #c9a227;
+            --gold-soft: rgba(201,162,39,.55);
+            --hairline: rgba(233,228,216,.12);
+            --serif: 'Cinzel', Georgia, serif;
+            --sans: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+            color-scheme: dark;
         }
+
+        *, *::before, *::after { box-sizing: border-box; }
 
         body {
             margin: 0;
-            padding: 20px;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            padding: 1.25rem;
+            background-color: var(--bg);
+            color: var(--ink);
+            font-family: var(--sans);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
+        /* faint warm vignette, matching the landing page */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(120% 70% at 50% -10%, rgba(201,162,39,.05), transparent 60%);
+            z-index: 0;
+        }
+
+        ::selection { background: rgba(201,162,39,.28); color: #fff; }
+        :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+
         .container {
+            position: relative;
+            z-index: 1;
             max-width: 1200px;
             margin: 0 auto;
         }
 
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1.25rem;
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--ink-dim);
+            transition: color .15s ease;
+        }
+
+        .back-link:hover { color: var(--gold); }
+
         .header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 2.25rem;
+        }
+
+        .header h1 {
+            margin: 0 0 .5rem;
+            font-family: var(--serif);
+            font-weight: 500;
+            font-size: clamp(1.45rem, 4.5vw, 2.2rem);
+            letter-spacing: .06em;
+            line-height: 1.2;
+        }
+
+        .header p {
+            margin: 0;
+            color: var(--ink-dim);
         }
 
         .controls {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 1.25rem;
+            margin-bottom: 1.25rem;
         }
 
         .panel {
-            background: var(--panel-bg);
-            padding: 1rem;
-            border-radius: 8px;
+            background: var(--bg-card);
+            padding: 1.25rem 1.4rem;
+            border: 1px solid var(--hairline);
+            border-radius: 10px;
+        }
+
+        .panel h2 {
+            margin: 0 0 1.1rem;
+            font-family: var(--serif);
+            font-size: .78rem;
+            font-weight: 600;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        .hint {
+            margin: .35rem 0 0;
+            font-size: .82rem;
+            color: var(--ink-dim);
         }
 
         .color-pickers {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 1.5rem;
+            margin-bottom: 1.25rem;
         }
 
         .color-picker {
@@ -55,13 +129,29 @@
             align-items: center;
         }
 
-        input[type="color"] {
-            width: 60px;
-            height: 60px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+        .color-picker label {
+            margin-bottom: .45rem;
+            font-size: .72rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--ink-dim);
         }
+
+        input[type="color"] {
+            width: 64px;
+            height: 48px;
+            padding: 2px;
+            border: 1px solid var(--hairline);
+            border-radius: 6px;
+            background: var(--bg-card);
+            cursor: pointer;
+            transition: border-color .15s ease;
+        }
+
+        input[type="color"]:hover { border-color: var(--gold-soft); }
+
+        input[type="range"],
+        input[type="checkbox"] { accent-color: var(--gold); }
 
         .interpolation-controls {
             display: flex;
@@ -72,6 +162,7 @@
         .palette-preview {
             display: flex;
             height: 60px;
+            border: 1px solid var(--hairline);
             border-radius: 8px;
             overflow: hidden;
             margin: 1rem 0;
@@ -89,44 +180,61 @@
 
         .export-controls {
             display: flex;
-            gap: 1rem;
+            flex-wrap: wrap;
+            gap: 0.6rem;
             margin-top: 1rem;
         }
 
         button {
-            background: var(--accent-color);
-            color: white;
-            border: none;
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid var(--hairline);
             padding: 0.5rem 1rem;
-            border-radius: 4px;
+            border-radius: 6px;
+            font: inherit;
+            font-size: .85rem;
+            letter-spacing: .04em;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: border-color .15s ease, color .15s ease, transform .15s ease;
         }
 
         button:hover {
-            background-color: #388E3C;
+            border-color: var(--gold-soft);
+            color: var(--gold);
+            transform: translateY(-1px);
         }
 
         .sample-preview {
-            margin-top: 2rem;
+            margin-top: 1.25rem;
         }
 
         .pixel-art-sample {
             width: 100%;
             height: 200px;
-            background: var(--panel-bg);
+            background: #0a0908;
+            border: 1px solid var(--hairline);
             border-radius: 8px;
-            margin-top: 1rem;
+            margin: 1rem 0;
         }
 
-        .pixel-art-sample.with-sample {
-            background-image: url(sample_pixel_art.png);
-            background-size: cover;
+        @media (max-width: 480px) {
+            body { padding: 1rem .85rem; }
+            .header { margin-bottom: 1.5rem; }
+            .panel { padding: 1.1rem 1rem; }
+            .color-pickers { justify-content: center; }
+            .export-controls button { flex: 1 1 auto; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; }
+            button:hover, .color-stop:hover { transform: none; }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <a class="back-link" href="../../index.html">&larr; WIZARD</a>
+
         <div class="header">
             <h1>SLerp: Smooth Color Interpolation Tool</h1>
             <p>Create smooth color transitions for pixel art shading</p>
@@ -137,16 +245,16 @@
                 <h2>Color Selection</h2>
                 <div class="color-pickers">
                     <div class="color-picker">
-                        <label>Start Color</label>
+                        <label for="startColor">Start Color</label>
                         <input type="color" id="startColor" value="#ffffff">
                     </div>
                     <div class="color-picker">
-                        <label>End Color</label>
+                        <label for="endColor">End Color</label>
                         <input type="color" id="endColor" value="#000000">
                     </div>
                 </div>
                 <div class="interpolation-controls">
-                    <label>Steps: <span id="stepsValue">5</span></label>
+                    <label for="steps">Steps: <span id="stepsValue">5</span></label>
                     <input type="range" id="steps" min="2" max="10" value="5">
                     <label>
                         <input type="checkbox" id="useHSL"> Use HSL interpolation
@@ -161,15 +269,16 @@
                     <button id="copyHex">Copy Hex Values</button>
                     <button id="savePalette">Save Palette</button>
                     <button id="loadPalette">Load Palette</button>
-                    <button id="addSamplePixelArt">Add Sample Pixel Art</button>
                 </div>
+                <p class="hint">Click a swatch to copy its hex value.</p>
             </div>
         </div>
 
         <div class="sample-preview panel">
             <h2>Sample Preview</h2>
             <div class="pixel-art-sample" id="pixelArtSample"></div>
-            <button id="addSamplePixelArt">Add Sample Pixel Art</button>
+            <button id="addSamplePixelArt">Show Shading Sample</button>
+            <p class="hint">Renders the current palette as banded sphere shading.</p>
         </div>
     </div>
 
@@ -274,6 +383,37 @@
             return colors;
         }
 
+        // UI helpers
+        function makeColorStop(color) {
+            const colorStop = document.createElement('div');
+            colorStop.className = 'color-stop';
+            colorStop.style.backgroundColor = color;
+            colorStop.title = color;
+            colorStop.onclick = () => {
+                navigator.clipboard.writeText(color);
+                alert(`Copied ${color} to clipboard!`);
+            };
+            return colorStop;
+        }
+
+        function currentColors() {
+            return Array.from(document.querySelectorAll('#palettePreview .color-stop'))
+                .map(stop => stop.title);
+        }
+
+        let sampleVisible = false;
+        function renderSample() {
+            if (!sampleVisible) return;
+            const colors = currentColors();
+            if (!colors.length) return;
+            const n = colors.length;
+            const stops = colors
+                .map((c, i) => `${c} ${(i / n * 100).toFixed(1)}% ${((i + 1) / n * 100).toFixed(1)}%`)
+                .join(', ');
+            document.getElementById('pixelArtSample').style.background =
+                `radial-gradient(circle at 35% 30%, ${stops})`;
+        }
+
         // UI update functions
         function updatePalettePreview() {
             const startColor = document.getElementById('startColor').value;
@@ -281,60 +421,15 @@
             const steps = parseInt(document.getElementById('steps').value);
             const useHSL = document.getElementById('useHSL').checked;
 
-            const colors = useHSL ? 
-                interpolateHSL(startColor, endColor, steps) : 
+            const colors = useHSL ?
+                interpolateHSL(startColor, endColor, steps) :
                 interpolateRGB(startColor, endColor, steps);
 
             const preview = document.getElementById('palettePreview');
             preview.innerHTML = '';
+            colors.forEach(color => preview.appendChild(makeColorStop(color)));
 
-            colors.forEach(color => {
-                const colorStop = document.createElement('div');
-                colorStop.className = 'color-stop';
-                colorStop.style.backgroundColor = color;
-                colorStop.title = color;
-                colorStop.onclick = () => {
-                    navigator.clipboard.writeText(color);
-                    alert(`Copied ${color} to clipboard!`);
-                };
-                preview.appendChild(colorStop);
-            });
-
-            // Save Palette Functionality
-            document.getElementById('savePalette').addEventListener('click', () => {
-                const palette = colors.join(',');
-                localStorage.setItem('savedPalette', palette);
-                alert('Palette saved!');
-            });
-
-            // Load Palette Functionality
-            document.getElementById('loadPalette').addEventListener('click', () => {
-                const savedPalette = localStorage.getItem('savedPalette');
-                if (savedPalette) {
-                    const loadedColors = savedPalette.split(',');
-                    loadedColors.forEach(color => {
-                        const colorStop = document.createElement('div');
-                        colorStop.className = 'color-stop';
-                        colorStop.style.backgroundColor = color;
-                        colorStop.title = color;
-                        colorStop.onclick = () => {
-                            navigator.clipboard.writeText(color);
-                            alert(`Copied ${color} to clipboard!`);
-                        };
-                        preview.appendChild(colorStop);
-                    });
-                    alert('Palette loaded!');
-                } else {
-                    alert('No saved palette found.');
-                }
-            });
-
-            // Add Sample Pixel Art Functionality
-            document.getElementById('addSamplePixelArt').addEventListener('click', () => {
-                const samplePixelArt = document.getElementById('pixelArtSample');
-                samplePixelArt.classList.add('with-sample');
-                alert('Sample pixel art added!');
-            });
+            renderSample();
         }
 
         // Event listeners
@@ -347,11 +442,32 @@
         document.getElementById('useHSL').addEventListener('change', updatePalettePreview);
 
         document.getElementById('copyHex').addEventListener('click', () => {
-            const colors = Array.from(document.querySelectorAll('.color-stop'))
-                .map(stop => stop.title)
-                .join(', ');
+            const colors = currentColors().join(', ');
             navigator.clipboard.writeText(colors);
             alert('Copied palette hex values to clipboard!');
+        });
+
+        document.getElementById('savePalette').addEventListener('click', () => {
+            localStorage.setItem('savedPalette', currentColors().join(','));
+            alert('Palette saved!');
+        });
+
+        document.getElementById('loadPalette').addEventListener('click', () => {
+            const savedPalette = localStorage.getItem('savedPalette');
+            if (savedPalette) {
+                const preview = document.getElementById('palettePreview');
+                preview.innerHTML = '';
+                savedPalette.split(',').forEach(color => preview.appendChild(makeColorStop(color)));
+                renderSample();
+                alert('Palette loaded!');
+            } else {
+                alert('No saved palette found.');
+            }
+        });
+
+        document.getElementById('addSamplePixelArt').addEventListener('click', () => {
+            sampleVisible = true;
+            renderSample();
         });
 
         // Initialize
