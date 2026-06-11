@@ -3,17 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pixel Alchemy: Character Centric</title>
+  <title>Pixel Alchemy Sandbox — WIZARD</title>
+  <meta name="description" content="A Noita-style falling sand sandbox. Fling sand, water, lava, acid and TNT around a fully destructible pixel world.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #0d0c0a;
+      --panel: #100f0c;
+      --ink: #e9e4d8;
+      --ink-dim: #9c9587;
+      --gold: #c9a227;
+      --hairline: rgba(233, 228, 216, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      background-color: #111;
-      color: #eee;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: 'Source Sans 3', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       height: 100vh;
+      height: 100dvh;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    #site-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 18px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    #back-link {
+      color: var(--ink-dim);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    #back-link:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    #site-header h1 {
+      margin: 0;
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 17px;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+    }
+
+    .header-label {
+      margin-left: auto;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      white-space: nowrap;
     }
 
     #game-container {
@@ -22,7 +88,8 @@
       justify-content: center;
       align-items: center;
       position: relative;
-      background: #000;
+      background: var(--bg);
+      min-height: 0;
     }
 
     canvas {
@@ -31,36 +98,41 @@
       cursor: crosshair;
       max-width: 100%;
       max-height: 100%;
+      touch-action: none;
     }
 
     #ui-layer {
       position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.8);
-      padding: 10px 20px;
-      border-radius: 12px;
-      border: 1px solid #333;
+      bottom: 16px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: fit-content;
+      background: rgba(16, 15, 12, 0.92);
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--hairline);
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
       justify-content: center;
       pointer-events: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.5);
       max-width: 95vw;
     }
 
     .material-btn {
-      background: #222;
-      border: 2px solid #444;
-      color: #aaa;
+      font-family: inherit;
+      background: rgba(233, 228, 216, 0.04);
+      border: 1px solid var(--hairline);
+      color: var(--ink-dim);
       padding: 6px 10px;
       cursor: pointer;
       font-size: 11px;
-      font-weight: bold;
-      border-radius: 6px;
-      transition: all 0.1s;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      border-radius: 5px;
+      transition: background-color 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
       text-transform: uppercase;
       min-width: 50px;
       text-align: center;
@@ -68,16 +140,16 @@
     }
 
     .material-btn:hover {
-      background: #333;
-      color: #fff;
+      border-color: var(--gold);
+      color: var(--ink);
       transform: translateY(-2px);
     }
 
     .material-btn.active {
-      border-color: #fff;
-      color: #fff;
+      border-color: var(--ink);
+      color: var(--ink);
       transform: translateY(-2px);
-      box-shadow: 0 0 8px rgba(255,255,255,0.3);
+      box-shadow: 0 0 8px rgba(233, 228, 216, 0.25);
     }
 
     .btn-sand.active { background: #e6c229; color: #000; border-color: #e6c229; }
@@ -104,16 +176,18 @@
       pointer-events: none;
       font-family: monospace;
       font-size: 12px;
-      color: #aaa;
-      background: rgba(0,0,0,0.7);
-      padding: 8px;
-      border-radius: 4px;
+      color: var(--ink-dim);
+      background: rgba(16, 15, 12, 0.85);
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--hairline);
       backdrop-filter: blur(2px);
     }
 
     .key-hint {
-      color: #fff;
-      background: #444;
+      color: var(--gold);
+      background: rgba(201, 162, 39, 0.12);
+      border: 1px solid rgba(201, 162, 39, 0.3);
       padding: 1px 4px;
       border-radius: 3px;
       margin-right: 4px;
@@ -125,9 +199,9 @@
       top: 10px;
       right: 10px;
       width: 200px;
-      height: 20px;
-      background: #333;
-      border: 2px solid #555;
+      height: 18px;
+      background: var(--panel);
+      border: 1px solid var(--hairline);
       border-radius: 4px;
       overflow: hidden;
     }
@@ -138,9 +212,30 @@
       background: #f00;
       transition: width 0.1s;
     }
+
+    @media (max-width: 480px) {
+      #site-header { padding: 8px 12px; gap: 10px; }
+      #site-header h1 { font-size: 14px; }
+      .header-label { display: none; }
+      #info-overlay { font-size: 10px; padding: 6px 8px; }
+      #health-container { width: 110px; height: 14px; }
+      #ui-layer { bottom: 8px; gap: 4px; padding: 8px; border-radius: 8px; }
+      .material-btn { min-width: 44px; padding: 8px 6px; font-size: 10px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+      .material-btn:hover,
+      .material-btn.active { transform: none; }
+    }
   </style>
 </head>
 <body>
+  <header id="site-header">
+    <a id="back-link" href="../../index.html">&larr; WIZARD</a>
+    <h1>Pixel Alchemy Sandbox</h1>
+    <span class="header-label">Falling-Sand Alchemy</span>
+  </header>
   <div id="game-container">
     <canvas id="simCanvas"></canvas>
     <div id="info-overlay">
@@ -255,13 +350,16 @@
       selectedMat: MAT.SAND
     };
 
+    const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // Setup Canvas
     const canvas = document.getElementById('simCanvas');
     const ctx = canvas.getContext('2d', { alpha: false });
     canvas.width = WIDTH;
     canvas.height = HEIGHT;
+    // Only set width; height stays auto so the 3:2 aspect ratio is preserved
+    // when max-width/max-height shrink the canvas on small screens.
     canvas.style.width = `${WIDTH * SCALE}px`;
-    canvas.style.height = `${HEIGHT * SCALE}px`;
 
     const imgData = ctx.createImageData(WIDTH, HEIGHT);
     const data = imgData.data;
@@ -288,7 +386,8 @@
     ];
 
     buttons.forEach((btn, idx) => {
-      const el = document.createElement('div');
+      const el = document.createElement('button');
+      el.type = 'button';
       el.className = `material-btn ${btn.class} ${idx === 0 ? 'active' : ''}`;
       el.textContent = PROPS[btn.mat].name;
       el.onclick = () => setMaterial(btn.mat, el);
@@ -717,8 +816,10 @@
         }
       }
 
-      canvas.style.transform = `translate(${Math.random() * 6 - 3}px, ${Math.random() * 6 - 3}px)`;
-      setTimeout(() => canvas.style.transform = 'none', 50);
+      if (!REDUCED_MOTION) {
+        canvas.style.transform = `translate(${Math.random() * 6 - 3}px, ${Math.random() * 6 - 3}px)`;
+        setTimeout(() => canvas.style.transform = 'none', 50);
+      }
 
       const dx = player.x - cx;
       const dy = player.y - cy;
@@ -1106,12 +1207,20 @@
 
     window.addEventListener('keydown', e => { input.keys[e.key] = true; });
     window.addEventListener('keyup', e => { input.keys[e.key] = false; });
-    canvas.addEventListener('mousemove', e => {
+
+    // Map client coords to the canvas's nominal (WIDTH*SCALE) space, so aiming
+    // stays correct when CSS max-width/max-height shrinks the canvas.
+    function setMouseFromClient(clientX, clientY) {
       const rect = canvas.getBoundingClientRect();
-      input.mouse.x = e.clientX - rect.left;
-      input.mouse.y = e.clientY - rect.top;
+      input.mouse.x = (clientX - rect.left) * (WIDTH * SCALE) / rect.width;
+      input.mouse.y = (clientY - rect.top) * (HEIGHT * SCALE) / rect.height;
+    }
+
+    canvas.addEventListener('mousemove', e => {
+      setMouseFromClient(e.clientX, e.clientY);
     });
     canvas.addEventListener('mousedown', e => {
+      setMouseFromClient(e.clientX, e.clientY);
       if (e.button === 0) input.mouse.left = true;
       if (e.button === 2) input.mouse.right = true;
     });
@@ -1119,6 +1228,24 @@
       if (e.button === 0) input.mouse.left = false;
       if (e.button === 2) input.mouse.right = false;
     });
+
+    // Touch: drag to aim, hold to shoot the selected material.
+    canvas.addEventListener('touchstart', e => {
+      e.preventDefault();
+      const t = e.touches[0];
+      setMouseFromClient(t.clientX, t.clientY);
+      input.mouse.left = true;
+    }, { passive: false });
+    canvas.addEventListener('touchmove', e => {
+      e.preventDefault();
+      const t = e.touches[0];
+      setMouseFromClient(t.clientX, t.clientY);
+    }, { passive: false });
+    canvas.addEventListener('touchend', e => {
+      e.preventDefault();
+      if (e.touches.length === 0) input.mouse.left = false;
+    }, { passive: false });
+    canvas.addEventListener('touchcancel', () => { input.mouse.left = false; });
     canvas.addEventListener('wheel', e => {
       e.preventDefault();
       if (e.deltaY < 0) input.brushSize = Math.min(20, input.brushSize + 1);
