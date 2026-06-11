@@ -1,56 +1,165 @@
-<html><head><base href="https://cdn.jsdelivr.net/"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Pixel Art Creator</title><style>
-body, html {
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Pixel Art Creator — WIZARD</title><meta name="description" content="A small in-browser pixel art editor with mirror drawing, undo/redo, palette tracking, and PNG/JSON export. Part of the WIZARD atelier."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"><style>
+:root {
+  --bg: #0d0c0a;
+  --panel: #100f0c;
+  --ink: #e9e4d8;
+  --ink-dim: #9c9587;
+  --gold: #c9a227;
+  --hairline: rgba(233, 228, 216, .12);
+  --serif: 'Cinzel', Georgia, serif;
+  --sans: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+}
+html {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+}
+body {
+  margin: 0;
+  font-family: var(--sans);
+  background-color: var(--bg);
+  color: var(--ink);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 56px 20px 40px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+.back-link {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  font-family: var(--serif);
+  font-size: 13px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px 8px;
+  transition: color .2s ease, border-color .2s ease;
+}
+.back-link:hover {
+  color: var(--gold);
+  border-color: var(--hairline);
 }
 h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 28px;
+  letter-spacing: .06em;
+  margin: 0 0 6px;
+  text-align: center;
+}
+.tool-label {
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 22px;
 }
 .controls {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: var(--panel);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 12px 14px;
+  width: 100%;
+  max-width: 920px;
+  box-sizing: border-box;
+}
+#palette {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 16px;
+}
+#palette:empty {
+  display: none;
+}
+#palette button {
+  padding: 0;
+  box-sizing: border-box;
 }
 input[type="color"] {
   width: 50px;
-  height: 30px;
+  height: 32px;
+  padding: 2px;
+  background-color: var(--bg);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  cursor: pointer;
 }
 button, select {
-  padding: 5px 10px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
+  padding: 6px 12px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
+  background-color: var(--bg);
+  border: 1px solid var(--hairline);
   cursor: pointer;
   border-radius: 4px;
-  transition: all 0.2s ease;
+  transition: border-color .2s ease, color .2s ease, transform .2s ease;
 }
-
-button:hover, select:hover {
-  background-color: #e2e8f0;
+button:hover, select:hover, input[type="color"]:hover {
+  border-color: var(--gold);
+  transform: translateY(-1px);
 }
-
+button:focus-visible, select:focus-visible, input[type="color"]:focus-visible, a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
 button.active {
-  background-color: #3b82f6;
-  color: #fff;
-  border-color: #2563eb;
-  box-shadow: 0 0 6px rgba(37, 99, 235, 0.35);
+  color: var(--gold);
+  border-color: var(--gold);
+  background-color: rgba(201, 162, 39, .08);
 }
 #pixel-canvas {
-  border: 1px solid #ccc;
+  border: 1px solid var(--hairline);
+  border-radius: 2px;
   background-color: #fff;
   cursor: crosshair;
   image-rendering: pixelated;
+  touch-action: none;
+  max-width: 100%;
+  height: auto;
+}
+@media (max-width: 480px) {
+  body {
+    padding: 64px 12px 28px;
+  }
+  h1 {
+    font-size: 22px;
+  }
+  .controls {
+    gap: 8px;
+    padding: 10px;
+  }
+  button, select {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+  button:hover, select:hover, input[type="color"]:hover {
+    transform: none;
+  }
 }
 </style></head>
 <body>
+  <a class="back-link" href="../../index.html">&larr; WIZARD</a>
   <h1>Pixel Art Creator</h1>
+  <p class="tool-label">Atelier Tool</p>
   <div class="controls">
     <input type="color" id="colorPicker" value="#000000" title="Choose color">
     <select id="canvasSize">
@@ -152,8 +261,10 @@ function initCanvas() {
 
 function toGridCoordinate(evt) {
   const rect = canvas.getBoundingClientRect();
-  const x = Math.floor((evt.clientX - rect.left) / state.pixelSize);
-  const y = Math.floor((evt.clientY - rect.top) / state.pixelSize);
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  const x = Math.floor(((evt.clientX - rect.left) * scaleX) / state.pixelSize);
+  const y = Math.floor(((evt.clientY - rect.top) * scaleY) / state.pixelSize);
   return { x, y };
 }
 
@@ -289,7 +400,8 @@ function updatePalette() {
     swatch.style.background = color;
     swatch.style.width = '32px';
     swatch.style.height = '32px';
-    swatch.style.border = '1px solid #ccc';
+    swatch.style.border = '1px solid rgba(233, 228, 216, .25)';
+    swatch.style.borderRadius = '4px';
     swatch.style.cursor = 'pointer';
     swatch.title = color;
     swatch.addEventListener('click', () => {
