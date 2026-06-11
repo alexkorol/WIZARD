@@ -64,6 +64,7 @@ class WordSphere {
 
   setHoverPause(value) {
     this.hoverPause = value;
+    if (!value) this.isHovering = false;
   }
 
   setSpeed(multiplier) {
@@ -180,8 +181,13 @@ const buildWords = (text) => {
 
 wordsInput.value = sampleWords.join("\n");
 let sphere = new WordSphere(container, { words: buildWords(wordsInput.value) });
-speedValue.textContent = speedInput.value;
-radiusValue.textContent = radiusInput.value;
+speedValue.textContent = parseFloat(speedInput.value).toFixed(2);
+radiusValue.textContent = parseFloat(radiusInput.value).toFixed(2);
+
+if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  autoSpinInput.checked = false;
+  sphere.setAutoSpin(false);
+}
 
 document.getElementById("apply").addEventListener("click", () => {
   sphere.setWords(buildWords(wordsInput.value));
@@ -198,7 +204,7 @@ document.getElementById("reset").addEventListener("click", () => {
   sphere.momentum = { x: 0, y: 0.45 };
   sphere.setRadiusScale(1);
   radiusInput.value = 1;
-  radiusValue.textContent = "1.0";
+  radiusValue.textContent = "1.00";
 });
 
 speedInput.addEventListener("input", (e) => {
