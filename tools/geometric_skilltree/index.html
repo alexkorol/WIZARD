@@ -1411,7 +1411,7 @@
       <aside class="hud-panel" id="left-panel">
         <div class="panel-scroll">
           <h1 class="app-title">Geometric Passive Tree</h1>
-          <div class="app-subtitle">Seven-ring RPG tree with deliberate node picks, conduit routing, outer subtrees, and geometry combo bonuses.</div>
+          <div class="app-subtitle">Nine-ring RPG tree with deliberate node picks, conduit routing, outer subtrees, and geometry combo bonuses.</div>
 
           <section class="section">
             <div class="section-title">Point Pool</div>
@@ -1419,12 +1419,7 @@
               <div class="point-pill">
                 <span class="point-label">Skill Points</span>
                 <span class="point-value" id="node-points-display">0</span>
-                <span class="point-sub">spent on passive nodes</span>
-              </div>
-              <div class="point-pill">
-                <span class="point-label">Conduits</span>
-                <span class="point-value" id="path-points-display">0</span>
-                <span class="point-sub">spent on paths and loops</span>
+                <span class="point-sub">nodes and paths each cost 1</span>
               </div>
             </div>
           </section>
@@ -1518,7 +1513,9 @@
     const MAIN_RING_DEPTH = 9;
     const NODE_SPACING = 72;
     const SUBTREE_SPACING = 58;
-    const START_POINTS = { nodes: 92, paths: 126 };
+    // One pool: nodes and connections each cost 1 point, so travel is a real spend.
+    // ~160 points buys roughly 80 node+path steps of a 271-node lattice.
+    const START_POINTS = { skill: 160 };
     const BASE_CHARACTER = {
       life: 1000,
       mana: 300,
@@ -2058,10 +2055,8 @@
     }
 
     function costForType(type) {
-      if (type === "origin") return 0;
-      if (type === "keystone") return 3;
-      if (type === "notable" || type === "mastery") return 2;
-      return 1;
+      // PoE convention: every passive costs 1 regardless of power; travel is the real cost.
+      return type === "origin" ? 0 : 1;
     }
 
     function radiusForType(type, boost = null) {
@@ -2455,12 +2450,12 @@
       }
 
       isAvailableNode(node) {
-        if (!this.isNodeVisible(node) || node.active || this.points.nodes < node.cost || this.points.paths < 1) return false;
+        if (!this.isNodeVisible(node) || node.active || this.points.skill < node.cost + 1) return false;
         return this.getActiveNeighborConduitChoices(node).length > 0;
       }
 
       isAvailableConduit(conduit, optionId = null) {
-        if (!this.isConduitVisible(conduit) || conduit.allocated || this.points.paths < 1) return false;
+        if (!this.isConduitVisible(conduit) || conduit.allocated || this.points.skill < 1) return false;
         if (optionId && !conduit.getOption(optionId)) return false;
         const a = this.nodes.get(conduit.fromId);
         const b = this.nodes.get(conduit.toId);
@@ -2498,19 +2493,14 @@
       tryAllocateNode(id) {
         const node = this.nodes.get(id);
         if (!node) return;
-        if (this.points.nodes < node.cost) {
-          this.commit(`Not enough skill points for ${node.name}.`);
+        if (this.points.skill < node.cost + 1) {
+          this.commit(`Not enough skill points for ${node.name} (needs ${node.cost + 1} with its path).`);
           this.recalculate();
           return;
         }
         const choices = this.getActiveNeighborConduitChoices(node);
         if (!choices.length) {
           this.commit(`${node.name} is not adjacent to an allocated node.`);
-          this.recalculate();
-          return;
-        }
-        if (this.points.paths < 1) {
-          this.commit(`No conduit points available for ${node.name}.`);
           this.recalculate();
           return;
         }
@@ -2530,8 +2520,7 @@
         this.saveHistory();
         node.active = true;
         conduit.allocatedVariant = option.id;
-        this.points.nodes -= node.cost;
-        this.points.paths -= 1;
+        this.points.skill -= node.cost + 1;
         this.pending = null;
         const attrText = this.formatAttrs(option.attrs);
         this.commit(`Allocated ${node.name} through ${option.name} (${attrText}).`);
@@ -2572,7 +2561,7 @@
           if (!option) return;
           this.saveHistory();
           conduit.allocatedVariant = option.id;
-          this.points.paths -= 1;
+          this.points.skill -= 1;
           this.commit(`Added loop arc ${option.name} (${this.formatAttrs(option.attrs)}).`);
           this.recalculate();
         }
@@ -2616,12 +2605,12 @@
         }
         this.saveHistory();
         node.active = false;
-        this.points.nodes += node.cost;
+        this.points.skill += node.cost;
         node.connections.forEach(neighborId => {
           const conduit = this.conduits.get(edgeKey(node.id, neighborId));
           if (conduit && conduit.allocated) {
             conduit.allocatedVariant = null;
-            this.points.paths += 1;
+            this.points.skill += 1;
           }
         });
         this.selectedNodeId = "0,0";
@@ -2640,7 +2629,7 @@
         this.saveHistory();
         const option = conduit.activeOption;
         conduit.allocatedVariant = null;
-        this.points.paths += 1;
+        this.points.skill += 1;
         if (this.pending?.mode === "conduit" && this.pending.conduitId === id) {
           this.pending = null;
         }
@@ -2976,7 +2965,7 @@
             name: "Redundant Circuit",
             active: loopCount >= 3,
             progress: `${loopCount} extra loop conduits`,
-            description: "Spend conduit points on active-to-active links to build redundant routes.",
+            description: "Spend skill points on active-to-active links to build redundant routes.",
             attrs: loopCount >= 3 ? { dex: loopCount, int: loopCount } : {},
             derived: loopCount >= 3 ? { energyShield: loopCount * 18, evasion: loopCount * 18 } : {}
           }
@@ -3689,7 +3678,7 @@
           <div>${status} ${node.type}. ${tier.label} ${tier.description}, ring ${node.ring}. ${attr} leaning.</div>
           <div style="margin-top:6px;">${node.effects.join("<br>")}</div>
           ${boostHtml}
-          <div style="margin-top:6px;color:var(--faint);">Cost: ${node.cost} skill point${node.cost === 1 ? "" : "s"}. Click or right-click allocated nodes to refund.</div>
+          <div style="margin-top:6px;color:var(--faint);">Cost: ${node.cost} point + 1 for the connecting path. Click or right-click allocated nodes to refund.</div>
         `;
         this.placeTooltip(event);
       }
@@ -3799,8 +3788,7 @@
       }
 
       update() {
-        document.getElementById("node-points-display").textContent = this.tree.points.nodes;
-        document.getElementById("path-points-display").textContent = this.tree.points.paths;
+        document.getElementById("node-points-display").textContent = this.tree.points.skill;
         this.updateAttributes();
         this.updateDerived();
         this.updateSelection();
@@ -3956,7 +3944,7 @@
           refund.type = "button";
           refund.disabled = !canRefund;
           refund.innerHTML = canRefund
-            ? `<strong>Refund this path</strong><span>Returns 1 conduit point without unallocating either passive.</span>`
+            ? `<strong>Refund this path</strong><span>Returns 1 skill point without unallocating either passive.</span>`
             : `<strong>Refund path blocked</strong><span>This is the only active route for one or more allocated passives. Add another path first.</span>`;
           if (canRefund) {
             refund.addEventListener("click", () => this.tree.refundConduit(conduit.id));
