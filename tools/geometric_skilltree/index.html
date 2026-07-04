@@ -1515,7 +1515,7 @@
 
   <script>
     const SVG_NS = "http://www.w3.org/2000/svg";
-    const MAIN_RING_DEPTH = 7;
+    const MAIN_RING_DEPTH = 9;
     const NODE_SPACING = 72;
     const SUBTREE_SPACING = 58;
     const START_POINTS = { nodes: 92, paths: 126 };
@@ -1565,28 +1565,28 @@
 
     const NODE_EFFECTS = {
       str: [
-        { tag: "weapon", names: ["Hammer Cant", "Iron Grip", "Break Rhythm", "Headsplitter", "Warhand"], stat: "attackDamage", amount: 9, line: "+9% melee and heavy weapon damage" },
-        { tag: "armour", names: ["Braced Plate", "Shield Memory", "Stone Vein", "Close Guard", "Tidewall"], stat: "armour", amount: 85, line: "+85 Armour" },
-        { tag: "life", names: ["Red Marrow", "Field Surgeon", "Second Breath", "Blood Reserve", "Unbroken Core"], stat: "life", amount: 55, line: "+55 maximum Life" },
-        { tag: "block", names: ["Doorframe Stance", "Shield Hook", "Locking Elbow", "Iron Angle", "Line Holder"], stat: "blockChance", amount: 2, line: "+2% Block Chance" }
+        { tag: "weapon", names: ["Hammer Cant", "Iron Grip", "Break Rhythm", "Headsplitter", "Warhand", "Heft", "Follow Through"], stat: "attackDamage", amount: 9, line: "+9% melee and heavy weapon damage" },
+        { tag: "armour", names: ["Braced Plate", "Shield Memory", "Stone Vein", "Close Guard", "Tidewall", "Thick Skin", "Padded Guard"], stat: "armour", amount: 85, line: "+85 Armour" },
+        { tag: "life", names: ["Red Marrow", "Field Surgeon", "Second Breath", "Blood Reserve", "Unbroken Core", "Old Scars", "Deep Lungs"], stat: "life", amount: 55, line: "+55 maximum Life" },
+        { tag: "block", names: ["Doorframe Stance", "Shield Hook", "Locking Elbow", "Iron Angle", "Line Holder", "Raised Rim", "Braced Wrist"], stat: "blockChance", amount: 2, line: "+2% Block Chance" }
       ],
       dex: [
-        { tag: "blade", names: ["Knife Tempo", "Twin Feint", "Edge Step", "Whisper Cut", "Clean Draw"], stat: "attackSpeed", amount: 4, line: "+4% Attack Speed" },
-        { tag: "evasion", names: ["Loose Footing", "Wind Pocket", "Slidecast", "Narrow Escape", "Pivot Guard"], stat: "evasion", amount: 90, line: "+90 Evasion Rating" },
-        { tag: "projectile", names: ["String Theory", "Fletched Line", "Far Hand", "Ricochet Habit", "Green Angle"], stat: "projectileDamage", amount: 9, line: "+9% Projectile Damage" },
-        { tag: "critical", names: ["Clean Read", "Soft Target", "Needle Line", "Second Look", "Open Guard"], stat: "critChance", amount: 0.8, line: "+0.8% Critical Strike Chance" }
+        { tag: "blade", names: ["Knife Tempo", "Twin Feint", "Edge Step", "Whisper Cut", "Clean Draw", "Short Grip", "Off Hand"], stat: "attackSpeed", amount: 4, line: "+4% Attack Speed" },
+        { tag: "evasion", names: ["Loose Footing", "Wind Pocket", "Slidecast", "Narrow Escape", "Pivot Guard", "Light Step", "Read the Room"], stat: "evasion", amount: 90, line: "+90 Evasion Rating" },
+        { tag: "projectile", names: ["String Theory", "Fletched Line", "Far Hand", "Ricochet Habit", "Green Angle", "Steady Loose", "High Arc"], stat: "projectileDamage", amount: 9, line: "+9% Projectile Damage" },
+        { tag: "critical", names: ["Clean Read", "Soft Target", "Needle Line", "Second Look", "Open Guard", "Gap Finder", "Cold Eye"], stat: "critChance", amount: 0.8, line: "+0.8% Critical Strike Chance" }
       ],
       int: [
-        { tag: "spell", names: ["Runic Memory", "Cold Diagram", "Amber Formula", "Thoughtspark", "Held Word"], stat: "spellDamage", amount: 10, line: "+10% Spell Damage" },
-        { tag: "energy-shield", names: ["Mirror Ward", "Blue Aegis", "Quiet Barrier", "Glyph Skin", "Second Sigil"], stat: "energyShield", amount: 48, line: "+48 Energy Shield" },
-        { tag: "minion", names: ["Familiar Line", "Servant Rule", "Bound Chorus", "Living Ink", "Lantern Host"], stat: "minionDamage", amount: 9, line: "+9% Minion Damage" },
-        { tag: "mana", names: ["Deep Vessel", "Blue Reserve", "Stored Word", "Mana Lattice", "Quiet Font"], stat: "mana", amount: 35, line: "+35 maximum Mana" }
+        { tag: "spell", names: ["Runic Memory", "Cold Diagram", "Amber Formula", "Thoughtspark", "Held Word", "Chalk Line", "Third Reading"], stat: "spellDamage", amount: 10, line: "+10% Spell Damage" },
+        { tag: "energy-shield", names: ["Mirror Ward", "Blue Aegis", "Quiet Barrier", "Glyph Skin", "Second Sigil", "Layered Thought", "Glass Calm"], stat: "energyShield", amount: 48, line: "+48 Energy Shield" },
+        { tag: "minion", names: ["Familiar Line", "Servant Rule", "Bound Chorus", "Living Ink", "Lantern Host", "Roll Call", "Long Leash"], stat: "minionDamage", amount: 9, line: "+9% Minion Damage" },
+        { tag: "mana", names: ["Deep Vessel", "Blue Reserve", "Stored Word", "Mana Lattice", "Quiet Font", "Still Water", "Spare Ink"], stat: "mana", amount: 35, line: "+35 maximum Mana" }
       ],
       hybrid: [
-        { tag: "elemental", names: ["Cross-Discipline", "Joined Method", "Two-Hand Thesis", "Practical Lore", "Measured Risk"], stat: "spellDamage", amount: 6, line: "+6% Elemental and Spell Damage" },
-        { tag: "recovery", names: ["Deep Pockets", "Reservoir Knot", "Field Cache", "Slow Burn", "Held Breath"], stat: "cooldownRecovery", amount: 3, line: "+3% Cooldown Recovery Rate" },
-        { tag: "ailment", names: ["Marking Rule", "Weighted Hex", "Hex Vector", "Fault Line", "Soft Lock"], stat: "ailmentEffect", amount: 7, line: "+7% Ailment Effect" },
-        { tag: "resistance", names: ["Weathered Thread", "Salt Charm", "Brass Omen", "Fourfold Ward", "Ash Measure"], stat: "allResistances", amount: 3, line: "+3% to all Elemental Resistances" }
+        { tag: "elemental", names: ["Cross-Discipline", "Joined Method", "Two-Hand Thesis", "Practical Lore", "Measured Risk", "Borrowed Fire", "Split Study"], stat: "spellDamage", amount: 6, line: "+6% Elemental and Spell Damage" },
+        { tag: "recovery", names: ["Deep Pockets", "Reservoir Knot", "Field Cache", "Slow Burn", "Held Breath", "Short Rest", "Second Course"], stat: "cooldownRecovery", amount: 3, line: "+3% Cooldown Recovery Rate" },
+        { tag: "ailment", names: ["Marking Rule", "Weighted Hex", "Hex Vector", "Fault Line", "Soft Lock", "Salted Wound", "Slow Poison"], stat: "ailmentEffect", amount: 7, line: "+7% Ailment Effect" },
+        { tag: "resistance", names: ["Weathered Thread", "Salt Charm", "Brass Omen", "Fourfold Ward", "Ash Measure", "Oiled Cloak", "Hearth Charm"], stat: "allResistances", amount: 3, line: "+3% to all Elemental Resistances" }
       ]
     };
 
@@ -1595,25 +1595,45 @@
         { name: "Oath of the Front Line", stat: "armour", amount: 240, lines: ["+240 Armour", "When hit recently, +12% melee damage"] },
         { name: "Anvil Reading", stat: "attackDamage", amount: 22, lines: ["+22% Melee Damage", "Stuns you inflict count as one rank stronger"] },
         { name: "Red Standard", stat: "life", amount: 180, lines: ["+180 maximum Life", "War skills recover 3% Life on first target hit"] },
-        { name: "Breaker's Posture", stat: "attackDamage", amount: 25, lines: ["+25% damage against armoured enemies", "Armour Break lasts 20% longer"] }
+        { name: "Breaker's Posture", stat: "attackDamage", amount: 25, lines: ["+25% damage against armoured enemies", "Armour Break lasts 20% longer"] },
+        { name: "Berserker", stat: "attackDamage", amount: 26, lines: ["+26% Melee Damage", "+10% Attack Speed while below half Life"] },
+        { name: "Gladiator", stat: "blockChance", amount: 4, lines: ["+4% Block Chance", "Blocking grants +8% melee damage for 3 seconds"] },
+        { name: "Hoplite", stat: "armour", amount: 200, lines: ["+200 Armour", "+14% damage with spears and long weapons"] },
+        { name: "Warden", stat: "life", amount: 150, lines: ["+150 maximum Life", "Nearby allies take 6% less damage"] },
+        { name: "Executioner", stat: "attackDamage", amount: 20, lines: ["+20% Melee Damage", "Enemies below a fifth of their life take +25% damage from you"] }
       ],
       dex: [
         { name: "Needlework Footing", stat: "evasion", amount: 260, lines: ["+260 Evasion Rating", "First dodge after moving grants +8% Attack Speed"] },
         { name: "Far Hand Geometry", stat: "projectileDamage", amount: 22, lines: ["+22% Projectile Damage", "Projectiles gain +1 rebound after travelling through a conduit loop"] },
         { name: "Quiet Draw", stat: "critChance", amount: 2.2, lines: ["+2.2% Critical Strike Chance", "Critical misses refund a small amount of stamina"] },
-        { name: "Poison Ledger", stat: "ailmentEffect", amount: 21, lines: ["+21% Ailment Effect", "Poisons tick 12% faster on marked targets"] }
+        { name: "Poison Ledger", stat: "ailmentEffect", amount: 21, lines: ["+21% Ailment Effect", "Poisons tick 12% faster on marked targets"] },
+        { name: "Duelist", stat: "critChance", amount: 2.5, lines: ["+2.5% Critical Strike Chance", "After you dodge, your next strike cannot miss"] },
+        { name: "Assassin", stat: "attackSpeed", amount: 8, lines: ["+8% Attack Speed", "+30% Critical Damage Bonus against enemies at full life"] },
+        { name: "Falconer", stat: "projectileDamage", amount: 20, lines: ["+20% Projectile Damage", "Companions mark the first enemy they strike"] },
+        { name: "Corsair", stat: "evasion", amount: 220, lines: ["+220 Evasion Rating", "+10% Movement Speed for 4 seconds after a kill"] },
+        { name: "Outrider", stat: "attackSpeed", amount: 6, lines: ["+6% Attack Speed", "Damage taken while moving is reduced by 8%"] }
       ],
       int: [
         { name: "Archivist's Spark", stat: "spellDamage", amount: 25, lines: ["+25% Spell Damage", "Every third spell gains +12% area or chain range"] },
         { name: "Ward in Two Parts", stat: "energyShield", amount: 210, lines: ["+210 Energy Shield", "Half of broken Energy Shield becomes Mana over 4 seconds"] },
         { name: "Lanterns Answer", stat: "minionDamage", amount: 23, lines: ["+23% Minion Damage", "Summoned allies inherit 10% of your path attributes"] },
-        { name: "Blue Arithmetic", stat: "mana", amount: 120, lines: ["+120 maximum Mana", "Mana spent recently improves spell critical chance"] }
+        { name: "Blue Arithmetic", stat: "mana", amount: 120, lines: ["+120 maximum Mana", "Mana spent recently improves spell critical chance"] },
+        { name: "Alchemist", stat: "cooldownRecovery", amount: 10, lines: ["+10% Cooldown Recovery Rate", "Flasks and preparations last 20% longer"] },
+        { name: "Summoner", stat: "minionDamage", amount: 25, lines: ["+25% Minion Damage", "+1 maximum companion while a loop conduit is complete"] },
+        { name: "Occultist", stat: "ailmentEffect", amount: 20, lines: ["+20% Hex and Curse Effect", "Cursed enemies deal 8% less damage to you"] },
+        { name: "Chronicler", stat: "mana", amount: 100, lines: ["+100 maximum Mana", "Repeating your previous spell costs 15% less"] },
+        { name: "Hierophant", stat: "energyShield", amount: 180, lines: ["+180 Energy Shield", "Auras you cast gain +12% effect"] }
       ],
       hybrid: [
         { name: "Spellblade Interval", stat: "spellDamage", amount: 21, lines: ["+21% mixed Attack and Spell Damage", "Attack after casting grants +8 INT and +8 STR for 4 seconds"] },
         { name: "Cunning Bulwark", stat: "evasion", amount: 160, lines: ["+160 Evasion Rating", "Defensive skills keep 15% of movement speed"] },
         { name: "Tutor's Ambush", stat: "ailmentEffect", amount: 22, lines: ["+22% trap, mark, and ailment effect", "Marked enemies count as studied"] },
-        { name: "Field Alchemy", stat: "cooldownRecovery", amount: 12, lines: ["+12% Cooldown Recovery Rate", "Recovery effects improve your weakest attribute"] }
+        { name: "Field Alchemy", stat: "cooldownRecovery", amount: 12, lines: ["+12% Cooldown Recovery Rate", "Recovery effects improve your weakest attribute"] },
+        { name: "Battlemage", stat: "spellDamage", amount: 18, lines: ["+18% Spell Damage", "+18% Attack Damage while holding a two-handed weapon"] },
+        { name: "Inquisitor", stat: "critChance", amount: 1.8, lines: ["+1.8% Critical Strike Chance", "Criticals against hexed enemies recover 2% Mana"] },
+        { name: "Trickster", stat: "evasion", amount: 180, lines: ["+180 Evasion Rating", "Traps arm 30% faster"] },
+        { name: "Warpriest", stat: "life", amount: 120, lines: ["+120 maximum Life", "Healing you cast also grants a small ward"] },
+        { name: "Nightblade", stat: "attackSpeed", amount: 6, lines: ["+6% Attack Speed", "Spells cast from stealth are always critical"] }
       ]
     };
 
@@ -1640,6 +1660,19 @@
       ]
     };
 
+    // Ring-8 keystones are the Signs: birthsign-style build-defining picks, one big bonus and one real price.
+    const SIGNS = [
+      { name: "The Bull", lines: ["You cannot be slowed, knocked back, or interrupted", "-15% Movement Speed"] },
+      { name: "The Serpent", lines: ["Your critical strikes always poison, and poisons stack once more", "You take 20% more damage from ailments"] },
+      { name: "The Tower", lines: ["+30% Block Chance while stationary", "You cannot dodge"] },
+      { name: "The Steed", lines: ["+20% Movement Speed and skills can be used while moving", "You cannot stand and fight: -20% damage while stationary"] },
+      { name: "The Shadow", lines: ["After 2 seconds unseen, your next action has advantage", "Your maximum Life is 15% lower"] },
+      { name: "The Lantern", lines: ["Allies and companions near you gain +15% damage", "You are always revealed to enemies"] },
+      { name: "The Scales", lines: ["Your attributes count as equal to their average", "Attribute bonuses from equipment are halved"] },
+      { name: "The Crow", lines: ["Kills recently grant +1% damage each, up to +25%", "The bonus resets if you go 6 seconds without a kill"] },
+      { name: "The Wheel", lines: ["Cooldowns recover 30% faster", "Your skills cost 15% more"] }
+    ];
+
     const MASTERIES = {
       str: { name: "Mastery of Force", lines: ["Choose this region for weapons, armour, and direct confrontation."] },
       dex: { name: "Mastery of Motion", lines: ["Choose this region for speed, precision, projectiles, and evasive play."] },
@@ -1647,11 +1680,19 @@
       hybrid: { name: "Mastery of Method", lines: ["Hybrid areas reward builds that cross school boundaries."] }
     };
 
+    // Ring-7 axis milestones read as classic classes rather than a second "Mastery of X".
+    const GRAND_MASTERIES = {
+      str: { name: "Champion", lines: ["+12% Melee Damage and +120 Armour", "War banners and shouts affect a wider area."] },
+      dex: { name: "Acrobat", lines: ["+8% Attack Speed and +140 Evasion Rating", "Dodging costs no stamina inside completed loops."] },
+      int: { name: "Archmage", lines: ["+12% Spell Damage and +80 maximum Mana", "Your highest-cost spell gains +1 echo."] },
+      hybrid: { name: "Spellsword", lines: ["+9% Attack and Spell Damage", "Weapon strikes recover 1% Mana."] }
+    };
+
     const SUBTREES = [
       {
         id: "genius",
         title: "Genius Circle",
-        gateway: { q: 7, r: 0 },
+        gateway: { q: 9, r: 0 },
         axis: "int",
         nodes: [
           { id: "genius-core", name: "Proof Engine", type: "notable", stat: "spellDamage", amount: 22, effects: ["+22% Spell Damage", "Completed circles add +5 INT"], tag: "spell" },
@@ -1667,7 +1708,7 @@
       {
         id: "ranger",
         title: "Ranger's Writ",
-        gateway: { q: 0, r: -7 },
+        gateway: { q: 0, r: -9 },
         axis: "dex",
         nodes: [
           { id: "ranger-core", name: "Distance Contract", type: "notable", stat: "projectileDamage", amount: 24, effects: ["+24% Projectile Damage", "First projectile after a dodge pierces"], tag: "projectile" },
@@ -1682,7 +1723,7 @@
       {
         id: "vanguard",
         title: "Vanguard Oath",
-        gateway: { q: -7, r: 7 },
+        gateway: { q: -9, r: 9 },
         axis: "str",
         nodes: [
           { id: "vanguard-core", name: "Raised Banner", type: "notable", stat: "armour", amount: 260, effects: ["+260 Armour", "Allies behind you gain +8% damage"], tag: "armour" },
@@ -1698,7 +1739,7 @@
       {
         id: "spellblade",
         title: "Spellblade Annex",
-        gateway: { q: 7, r: -7 },
+        gateway: { q: 9, r: -9 },
         axis: "hybrid",
         nodes: [
           { id: "spellblade-core", name: "Edge Formula", type: "notable", stat: "spellDamage", amount: 18, effects: ["+18% Spell Damage", "+18% Attack Damage if you cast recently"], tag: "hybrid" },
@@ -1714,7 +1755,7 @@
       {
         id: "skirmish",
         title: "Skirmish Annex",
-        gateway: { q: -7, r: 0 },
+        gateway: { q: -9, r: 0 },
         axis: "hybrid",
         nodes: [
           { id: "skirmish-core", name: "Brawler's Angle", type: "notable", stat: "attackDamage", amount: 18, effects: ["+18% close-range and thrown damage"], tag: "weapon" },
@@ -1729,7 +1770,7 @@
       {
         id: "seer",
         title: "Seer's Annex",
-        gateway: { q: 0, r: 7 },
+        gateway: { q: 0, r: 9 },
         axis: "hybrid",
         nodes: [
           { id: "seer-core", name: "Hidden Mark", type: "notable", stat: "ailmentEffect", amount: 19, effects: ["+19% Mark, Hex, and Ailment Effect"], tag: "ailment" },
@@ -1894,11 +1935,12 @@
       if (ring <= 2) return { label: "Tier I", short: "T1", description: "foundation" };
       if (ring <= 4) return { label: "Tier II", short: "T2", description: "specialization" };
       if (ring <= 6) return { label: "Tier III", short: "T3", description: "advanced" };
-      return { label: "Tier IV", short: "T4", description: "outer mastery" };
+      if (ring <= 8) return { label: "Tier IV", short: "T4", description: "outer mastery" };
+      return { label: "Tier V", short: "T5", description: "frontier" };
     }
 
     function pathAttributesFromWeights(weights, ring) {
-      const scale = ring > 5 ? 7 : ring > 3 ? 6 : 5;
+      const scale = ring > 7 ? 8 : ring > 5 ? 7 : ring > 3 ? 6 : 5;
       return {
         str: Math.round(weights.str * scale),
         dex: Math.round(weights.dex * scale),
@@ -1939,12 +1981,21 @@
     }
 
     function keystoneTemplate(axis, q, r, ring) {
+      // Outer-ring keystones draw from the Signs; inner keystones stay axis-flavored.
+      // Index by position around the ring so each sign seat gets a distinct Sign.
+      if (ring >= 8) {
+        const seat = Math.floor(hexRingIndex(q, r, ring) / 8);
+        return SIGNS[Math.abs(seat) % SIGNS.length];
+      }
       const pool = KEYSTONES[axis] || KEYSTONES.hybrid;
       const index = Math.abs((q * 13 + r * 23 + ring * 3) % pool.length);
       return pool[index];
     }
 
-    function masteryTemplate(axis) {
+    function masteryTemplate(axis, ring = 0) {
+      if (ring >= 7) {
+        return GRAND_MASTERIES[axis] || GRAND_MASTERIES.hybrid;
+      }
       return MASTERIES[axis] || MASTERIES.hybrid;
     }
 
@@ -1994,11 +2045,14 @@
       const axisNode = isPrimaryAxisNode(q, r, ring);
       if (ring === MAIN_RING_DEPTH && corner) return "gateway";
       if (ring === 6 && index % 6 === 3) return "keystone";
-      if ((ring === 3 || ring === 5) && axisNode) return "mastery";
+      if (ring === 8 && index % 8 === 4) return "keystone";
+      if ((ring === 3 || ring === 5 || ring === 7) && axisNode) return "mastery";
       if (ring === 2 && index % 2 === 0) return "notable";
       if (ring === 4 && index % 4 === 2) return "notable";
       if (ring === 5 && index % 5 === 2) return "notable";
       if (ring === 6 && index % 6 === 0) return "notable";
+      if (ring === 7 && index % 7 === 2) return "notable";
+      if (ring === 8 && index % 8 === 0) return "notable";
       if (ring === MAIN_RING_DEPTH && index % 7 === 3) return "notable";
       return "small";
     }
@@ -2163,7 +2217,7 @@
               : type === "notable"
                 ? notableTemplate(axis, q, r, ring)
                 : type === "mastery"
-                  ? masteryTemplate(axis)
+                  ? masteryTemplate(axis, ring)
                   : effectTemplate(axis, q, r, ring);
             const name = type === "origin" ? "Origin" : makeNodeName(template, q, r, ring, type);
             const effects = type === "origin"
