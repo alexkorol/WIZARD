@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RP Account & Character Creator — WIZARD</title>
-  <meta name="description" content="A roleplay-flavored onboarding flow: found a noble House, recruit scions, and watch their chronicles unfold. Part of the WIZARD tool collection.">
+  <title>Chronicles — Houses &amp; Scions | WIZARD</title>
+  <meta name="description" content="Found a noble House, recruit scions, and let permadeath forge a legacy: fallen characters seed the world's drop tables as circulating relics. Part of the WIZARD tool collection.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
               900: '#14110d', 950: '#0d0c0a',
             },
             amber: {
-              100: '#f3ecd2', 400: '#d7b958', 500: '#c9a227', 600: '#a9861f',
+              100: '#f3ecd2', 300: '#e2ca7d', 400: '#d7b958', 500: '#c9a227', 600: '#a9861f',
               700: '#806619', 900: '#473a10',
             },
           },
@@ -41,6 +41,10 @@
     .animate-shake { animation: shake 0.35s linear; }
     @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-4px);} 50% { transform: translateX(4px);} 75% { transform: translateX(-4px);} 100% { transform: translateX(0);} }
     .scanline::after { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, rgba(255,255,255,0.04), transparent); mix-blend-mode:overlay; opacity:0.4; }
+    @keyframes tickfill { from { width: 0%; } to { width: 100%; } }
+    .tick-bar { animation: tickfill 1.6s linear forwards; }
+    @keyframes riseIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .rise-in { animation: riseIn 0.45s ease both; }
     /* Site chrome: back link bar */
     .site-bar { position: sticky; top: 0; z-index: 40; height: 41px; display: flex; align-items: center; padding: 0 20px; background: rgba(13, 12, 10, 0.92); border-bottom: 1px solid rgba(233, 228, 216, 0.12); backdrop-filter: blur(6px); }
     .wizard-back { font-family: 'Cinzel', Georgia, serif; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #9c9587; text-decoration: none; transition: color 0.2s ease; }
@@ -60,180 +64,210 @@
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
-    // --- Simple Icon Set (minimal, not full Lucide) ---
+    // ============================================================
+    // Icons (minimal line set)
+    // ============================================================
     const iconBase = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' };
     const ICONS = {
-      shield: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M12 3l8 3v6c0 4-3 8-8 9-5-1-8-5-8-9V6z" />
-          <path d="M12 7v11" />
-        </svg>
-      ),
-      sword: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M12 2l3 3-3 3-3-3z" />
-          <path d="M12 8v12" />
-          <path d="M8 16h8" />
-        </svg>
-      ),
-      scroll: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M6 4h10a2 2 0 012 2v11a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z" />
-          <path d="M9 9h8" /><path d="M9 13h5" />
-        </svg>
-      ),
-      skull: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M6 14v2a2 2 0 002 2h8a2 2 0 002-2v-2" />
-          <path d="M8 14h8" /><path d="M9 10.5a1 1 0 11-.01 0" /><path d="M15 10.5a1 1 0 11-.01 0" />
-          <path d="M12 4a6 6 0 016 6v2H6v-2a6 6 0 016-6z" />
-        </svg>
-      ),
-      crown: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M3 9l4 2 3-6 3 6 4-2 3 7H0z" />
-        </svg>
-      ),
-      user: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <circle cx="12" cy="7" r="4" /><path d="M5 21c0-4 3-7 7-7s7 3 7 7" />
-        </svg>
-      ),
-      logout: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
-          <path d="M16 17l5-5-5-5" /><path d="M21 12H9" />
-        </svg>
-      ),
-      plus: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M12 5v14" /><path d="M5 12h14" />
-        </svg>
-      ),
-      heart: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M12 21s-7-4.3-7-10a5 5 0 019-3 5 5 0 019 3c0 5.7-7 10-7 10z" />
-        </svg>
-      ),
-      coins: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <ellipse cx="12" cy="5" rx="6" ry="2.5" />
-          <path d="M6 5v6c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V5" />
-          <path d="M6 11v6c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-6" />
-        </svg>
-      ),
-      history: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M3 3v6h6" /><path d="M3.5 12a8.5 8.5 0 101.5-4.9" /><path d="M12 7v5l3 2" />
-        </svg>
-      ),
-      chevron: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M9 18l6-6-6-6" />
-        </svg>
-      ),
-      book: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M4 4h12a4 4 0 014 4v10H8a4 4 0 00-4 4z" />
-          <path d="M8 18h12" />
-        </svg>
-      ),
-      loader: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props} className={`${props.className || ''} animate-spin`}>
-          <path d="M12 2v4" /><path d="M12 18v4" /><path d="M4.9 4.9l2.8 2.8" /><path d="M16.3 16.3l2.8 2.8" /><path d="M2 12h4" /><path d="M18 12h4" /><path d="M4.9 19.1l2.8-2.8" /><path d="M16.3 7.7l2.8-2.8" />
-        </svg>
-      ),
-      sparkles: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z" />
-          <path d="M5 19l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" />
-          <path d="M17 16l.5 1.5L19 18l-1.5.5L17 20l-.5-1.5L15 18l1.5-.5z" />
-        </svg>
-      ),
-      alert: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M12 9v4" /><path d="M12 17h.01" />
-          <path d="M10.29 3.86l-8 14A2 2 0 004 20h16a2 2 0 001.71-3.14l-8-14a2 2 0 00-3.42 0z" />
-        </svg>
-      ),
-      wand: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M5 15l-3 3" /><path d="M9 11l-3 3" /><path d="M7 17l3 3" /><path d="M14 4l-1.5 2.5L10 8l2.5 1.5L14 12l1.5-2.5L18 8l-2.5-1.5z" />
-          <path d="M21 3l-1 2 2 1-2 1-1 2-1-2-2-1 2-1z" />
-        </svg>
-      ),
-      ghost: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M5 19V9a7 7 0 0114 0v10l-2-1-2 1-2-1-2 1-2-1z" />
-          <path d="M9 9h.01" /><path d="M15 9h.01" />
-        </svg>
-      ),
-      backpack: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M6 7V5a4 4 0 118 0v2" /><path d="M6 7h12v12H6z" /><path d="M8 11h8" /><path d="M8 15h8" />
-        </svg>
-      ),
-      map: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M9 3l-6 3v15l6-3 6 3 6-3V3l-6 3z" />
-          <path d="M9 3v15" /><path d="M15 6v15" />
-        </svg>
-      ),
-      zap: (props) => (
-        <svg viewBox="0 0 24 24" {...iconBase} {...props}>
-          <path d="M13 2L3 14h7l-1 8 10-12h-7z" />
-        </svg>
-      ),
+      shield: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M12 3l8 3v6c0 4-3 8-8 9-5-1-8-5-8-9V6z" /><path d="M12 7v11" /></svg>),
+      sword: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M12 2l3 3-3 3-3-3z" /><path d="M12 8v12" /><path d="M8 16h8" /></svg>),
+      scroll: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M6 4h10a2 2 0 012 2v11a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z" /><path d="M9 9h8" /><path d="M9 13h5" /></svg>),
+      skull: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M6 14v2a2 2 0 002 2h8a2 2 0 002-2v-2" /><path d="M8 14h8" /><path d="M9 10.5a1 1 0 11-.01 0" /><path d="M15 10.5a1 1 0 11-.01 0" /><path d="M12 4a6 6 0 016 6v2H6v-2a6 6 0 016-6z" /></svg>),
+      crown: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M3 9l4 2 3-6 3 6 4-2 2 8H3z" /><path d="M5 20h14" /></svg>),
+      user: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><circle cx="12" cy="7" r="4" /><path d="M5 21c0-4 3-7 7-7s7 3 7 7" /></svg>),
+      logout: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" /><path d="M16 17l5-5-5-5" /><path d="M21 12H9" /></svg>),
+      plus: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M12 5v14" /><path d="M5 12h14" /></svg>),
+      heart: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M12 21s-7-4.3-7-10a5 5 0 019-3 5 5 0 019 3c0 5.7-7 10-7 10z" /></svg>),
+      coins: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><ellipse cx="12" cy="5" rx="6" ry="2.5" /><path d="M6 5v6c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V5" /><path d="M6 11v6c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-6" /></svg>),
+      history: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M3 3v6h6" /><path d="M3.5 12a8.5 8.5 0 101.5-4.9" /><path d="M12 7v5l3 2" /></svg>),
+      chevron: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M9 18l6-6-6-6" /></svg>),
+      book: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M4 4h12a4 4 0 014 4v10H8a4 4 0 00-4 4z" /><path d="M8 18h12" /></svg>),
+      loader: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props} className={`${props.className || ''} animate-spin`}><path d="M12 2v4" /><path d="M12 18v4" /><path d="M4.9 4.9l2.8 2.8" /><path d="M16.3 16.3l2.8 2.8" /><path d="M2 12h4" /><path d="M18 12h4" /><path d="M4.9 19.1l2.8-2.8" /><path d="M16.3 7.7l2.8-2.8" /></svg>),
+      sparkles: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z" /><path d="M5 19l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" /><path d="M17 16l.5 1.5L19 18l-1.5.5L17 20l-.5-1.5L15 18l1.5-.5z" /></svg>),
+      alert: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M12 9v4" /><path d="M12 17h.01" /><path d="M10.29 3.86l-8 14A2 2 0 004 20h16a2 2 0 001.71-3.14l-8-14a2 2 0 00-3.42 0z" /></svg>),
+      ghost: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M5 19V9a7 7 0 0114 0v10l-2-1-2 1-2-1-2 1-2-1z" /><path d="M9 9h.01" /><path d="M15 9h.01" /></svg>),
+      map: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M9 3l-6 3v15l6-3 6 3 6-3V3l-6 3z" /><path d="M9 3v15" /><path d="M15 6v15" /></svg>),
+      zap: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M13 2L3 14h7l-1 8 10-12h-7z" /></svg>),
+      gem: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M6 3h12l4 6-10 12L2 9z" /><path d="M2 9h20" /><path d="M12 21L8 9l4-6 4 6z" /></svg>),
+      tower: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M8 21V8h8v13" /><path d="M6 8V4h2v2h3V4h2v2h3V4h2v4z" /><path d="M11 21v-5h2v5" /></svg>),
+      tree: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M12 2l5 7h-3l4 6h-5v0H11v0H6l4-6H7z" /><path d="M12 15v6" /></svg>),
+      moon: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M20 13A8 8 0 1111 4a6.5 6.5 0 009 9z" /></svg>),
+      flame: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M12 3c1 3 5 5 5 10a5 5 0 01-10 0c0-3.5 2-4.5 3-7.5 1 2 2 2.5 2 4.5" /></svg>),
+      star: (props) => (<svg viewBox="0 0 24 24" {...iconBase} {...props}><path d="M12 3l2.4 5.8 6.1.5-4.7 4 1.5 6L12 16l-5.3 3.3 1.5-6-4.7-4 6.1-.5z" /></svg>),
     };
     const Icon = ({ name, className, size = 20 }) => {
       const Comp = ICONS[name] || ICONS.shield;
       return <Comp className={className} width={size} height={size} />;
     };
 
-    // --- Helpers & Data ---
+    // ============================================================
+    // Static data
+    // ============================================================
     const generateId = () => Math.random().toString(36).substr(2, 9);
+    const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const timeStamp = () => new Date().toLocaleTimeString([], { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    const possessive = (fullName) => {
+      const first = (fullName || 'Unknown').trim().split(/\s+/)[0];
+      return first.endsWith('s') ? `${first}'` : `${first}'s`;
+    };
     const apiKey = ""; // Optional: set if you want live LLM calls
 
-    const INITIAL_RESOURCES = { gold: 100, renown: 0, shards: 5 };
-    const CORRUPT_RESOURCES = { gold: 666, renown: 0, shards: 13 };
+    const SIGIL_COLORS = [
+      { id: 'crimson', label: 'Crimson', hex: '#8c2f28' },
+      { id: 'azure', label: 'Azure', hex: '#2c4a6e' },
+      { id: 'verdant', label: 'Verdant', hex: '#3d5a3a' },
+      { id: 'gold', label: 'Gold', hex: '#a9861f' },
+      { id: 'amethyst', label: 'Amethyst', hex: '#5b3a72' },
+      { id: 'slate', label: 'Slate', hex: '#4a4e57' },
+      { id: 'umber', label: 'Umber', hex: '#6e4a2c' },
+      { id: 'void', label: 'Void', hex: '#2a1f38' },
+    ];
+    const SIGIL_CHARGES = ['crown', 'sword', 'tower', 'tree', 'moon', 'flame', 'star', 'skull'];
 
+    // Attributes: shared canon with tools/geometric_skilltree — same three axes, same colors.
+    const ATTRS = {
+      str: { short: 'STR', label: 'Strength', color: '#f06a54' },
+      dex: { short: 'DEX', label: 'Dexterity', color: '#56c88b' },
+      int: { short: 'INT', label: 'Intelligence', color: '#6e9cff' },
+    };
+    // STR soaks blows, DEX finds fortune, INT learns fast.
+    const attrMods = (attrs) => ({
+      dmg: Math.max(0.55, 1 - attrs.str * 0.03),
+      loot: 1 + attrs.dex * 0.05,
+      xp: 1 + attrs.int * 0.03,
+    });
+    const baseMaxHp = (attrs) => 70 + attrs.str * 6;
+    // Callings lean on one axis. Names echo Verdigris canon (shieldbearer/farwalker kinships, omen-craft).
     const CLASSES = [
-      { id: 'vanguard', name: 'Vanguard', desc: 'Frontline steel and shield.', icon: 'shield' },
-      { id: 'arcanist', name: 'Arcanist', desc: 'Scholar of the forbidden arts.', icon: 'scroll' },
-      { id: 'ranger', name: 'Ranger', desc: 'Silent hunter of the wilds.', icon: 'sword' },
+      { id: 'shieldbearer', name: 'Shieldbearer', icon: 'shield', attr: 'str', desc: 'The wall the House hides behind. Slow to learn, slower to die.', attrs: { str: 8, dex: 4, int: 3 }, outfitItem: { form: 'Spear', material: 'copper' } },
+      { id: 'wayfarer', name: 'Wayfarer', icon: 'sword', attr: 'dex', desc: 'Farwalker of the wilds. Finds what others walk past.', attrs: { str: 4, dex: 8, int: 3 }, outfitItem: { form: 'Atlatl', material: 'copper' } },
+      { id: 'omenspeaker', name: 'Omenspeaker', icon: 'scroll', attr: 'int', desc: 'Reads entrails and skies. Knows much, bleeds easily.', attrs: { str: 3, dex: 4, int: 8 }, outfitItem: { form: 'Ring', material: 'copper' } },
     ];
 
-    const MONSTERS = ["Kobold", "Goblin", "Dire Rat", "Skeleton", "Bandit", "Orc", "Worg", "Mimic", "Troll"];
-    const ACTIONS = ["Polishing armor", "Sharpening blade", "Consulting map", "Eating rations", "Bandaging wounds", "Identifying herbs", "Haggling with merchant"];
-    const LOOT = ["Rusty Dagger", "Wolf Pelt", "Gold Coin", "Mysterious Gem", "Old Boot", "Health Potion", "Ancient Scroll"];
-    const LOCATIONS = ["The Dark Woods", "Crumbling Ruins", "Foggy Swamp", "Mountain Pass", "Abandoned Mine"];
+    const ZONES = [
+      { id: 'fields', name: 'Millbrook Fields', danger: 1, minLevel: 1, desc: 'Tame farmland gone slightly wrong.', lines: ['Following a hedgerow', 'Questioning a nervous shepherd', 'Poking a scarecrow that moved'] },
+      { id: 'woods', name: 'The Dark Woods', danger: 2, minLevel: 3, desc: 'The trees keep their own counsel.', lines: ['Cutting through bramble', 'Marking trunks with chalk', 'Losing sight of the sun'] },
+      { id: 'ruins', name: 'Crumbling Ruins', danger: 3, minLevel: 5, desc: 'Something older than the kingdom.', lines: ['Reading half-worn inscriptions', 'Climbing a fallen column', 'Stepping over old bones'] },
+      { id: 'crypts', name: 'The Sunken Crypts', danger: 4, minLevel: 8, desc: 'The dead here were buried standing up.', lines: ['Wading through black water', 'Counting alcoves in the dark', 'Snuffing the lantern to listen'] },
+      { id: 'rift', name: 'The Pale Rift', danger: 5, minLevel: 11, desc: 'Where the map ends and the scribes go quiet.', lines: ['Walking on ground that hums', 'Ignoring a voice that knows your name', 'Watching two moons where one should be'] },
+    ];
 
-    // --- LLM Helpers (safe fallbacks if apiKey missing) ---
+    const MONSTERS = {
+      1: ['Field Rat', 'Kobold Scavenger', 'Mud Crab', 'Feral Hound'],
+      2: ['Goblin Skirmisher', 'Dire Wolf', 'Bog Wisp', 'Roadside Bandit'],
+      3: ['Skeleton Warden', 'Reaver of the Ash Clans', 'Stone Ghoul', 'Mimic'],
+      4: ['Crypt Wight', 'Drowned Oathman', 'Bone Priest', 'Flesh Golem'],
+      5: ['Rift Stalker', 'Pale Seraph', 'Void Maw', "The Hollow King's Herald"],
+    };
+
+    // Itemization: shared canon with tools/rpg_inventory (Vesselforge / Verdigris pack).
+    // No rarity ladder — power IS the material. Form × material combos mirror verdigris-pack.js.
+    const MATERIALS = {
+      flint: { name: 'Flint', tier: 1 }, bone: { name: 'Bone', tier: 1 }, hide: { name: 'Hide', tier: 1 },
+      quilted: { name: 'Quilted', tier: 2 }, copper: { name: 'Copper', tier: 2 },
+      bronze: { name: 'Bronze', tier: 3 }, obsidian: { name: 'Obsidian', tier: 3 },
+      jade: { name: 'Jade', tier: 4 }, amber: { name: 'Amber', tier: 4 }, bronzescale: { name: 'Bronze-scale', tier: 4 },
+      skymetal: { name: 'Skymetal', tier: 5 },
+      rivetmail: { name: 'Riveted Mail', tier: 6 },
+    };
+    const FORMS = {
+      Handaxe: ['flint', 'copper', 'bronze', 'obsidian', 'skymetal'],
+      Spear: ['flint', 'bone', 'copper', 'bronze', 'obsidian', 'skymetal'],
+      Macuahuitl: ['obsidian', 'flint', 'bone'],
+      Atlatl: ['bone', 'copper', 'bronze'],
+      Khopesh: ['copper', 'bronze', 'skymetal'],
+      Sling: ['hide', 'quilted'],
+      Shield: ['hide', 'bronze', 'bronzescale', 'rivetmail'],
+      Wrap: ['hide', 'quilted', 'bronzescale', 'rivetmail'],
+      Crest: ['bone', 'hide', 'copper', 'bronze', 'jade'],
+      Gorget: ['jade', 'amber', 'bone', 'copper'],
+      Ring: ['bone', 'copper', 'jade', 'amber'],
+      Curio: ['bone', 'jade', 'amber'],
+    };
+    const TIER_STYLE = {
+      1: { text: 'text-stone-400', chip: 'text-stone-400 border-stone-700' },
+      2: { text: 'text-orange-300', chip: 'text-orange-300 border-orange-900' },
+      3: { text: 'text-amber-300', chip: 'text-amber-300 border-amber-800' },
+      4: { text: 'text-emerald-300', chip: 'text-emerald-300 border-emerald-900' },
+      5: { text: 'text-sky-300', chip: 'text-sky-300 border-sky-900' },
+      6: { text: 'text-rose-300', chip: 'text-rose-300 border-rose-900' },
+    };
+    const RELIC_STYLE = { text: 'text-purple-300', chip: 'text-purple-300 border-purple-800' };
+    const itemStyle = (it) => it.relicId ? RELIC_STYLE : (TIER_STYLE[it.tier] || TIER_STYLE[1]);
+    const makeItem = (form, material) => ({ id: generateId(), name: `${MATERIALS[material].name} ${form}`, form, material, tier: MATERIALS[material].tier });
+    // Relics deepen by being carried and lived with (Bonds, in Vesselforge terms) — never "reforged".
+    const TIER_EPITHETS = { 2: 'Remembered', 3: 'Storied', 4: 'Undying' };
+    const relicDisplayName = (relic, tier) => {
+      const t = Math.min(tier, 4);
+      const suffix = TIER_EPITHETS[t] ? `, ${TIER_EPITHETS[t]}` : '';
+      return `${possessive(relic.origin)} ${relic.base}${suffix}`;
+    };
+
+    // Legacy boons: unlocked permanently at renown thresholds.
+    const BOONS = [
+      { id: 'oral_tradition', renown: 150, icon: 'book', name: 'Oral Tradition', corruptName: 'Whispered Heresies', desc: 'Tales of the fallen guide the young. Scions gain +15% experience.' },
+      { id: 'ancestral_arms', renown: 400, icon: 'sword', name: 'Ancestral Arms', corruptName: 'Grave-Gifts', desc: 'New scions set out bearing a circulating relic of the House.' },
+      { id: 'hardened_blood', renown: 800, icon: 'heart', name: 'Hardened Blood', corruptName: 'Ichor of the Void', desc: 'The lineage endures. Scions gain +25 vitality.' },
+      { id: 'grave_whispers', renown: 1500, icon: 'ghost', name: 'Whispers of the Dead', corruptName: 'The Choir Below', desc: 'The dead point the way to what they lost. Relics surface twice as often.' },
+      { id: 'long_memory', renown: 3000, icon: 'history', name: 'The Long Memory', corruptName: 'Eternal Recurrence', desc: 'Each generation begins where the last left a mark. Scions start at level 3.' },
+    ];
+    const unlockedBoons = (house) => BOONS.filter(b => house.renown >= b.renown);
+    const boonMods = (house) => {
+      const ids = unlockedBoons(house).map(b => b.id);
+      return {
+        xp: ids.includes('oral_tradition') ? 1.15 : 1,
+        hp: ids.includes('hardened_blood') ? 25 : 0,
+        relicChance: ids.includes('grave_whispers') ? 2 : 1,
+        startLevel: ids.includes('long_memory') ? 3 : 1,
+        startRelic: ids.includes('ancestral_arms'),
+      };
+    };
+    const boonName = (boon, isCorrupt) => (isCorrupt ? boon.corruptName : boon.name);
+
+    // Verdigris canon: copper is wealth. The House vault counts copper, not gold.
+    const OUTFIT_COST = 75;
+    const NOBLE_COPPER = 100;
+    const CORRUPT_COPPER = 666;
+
+    // ============================================================
+    // Lore: offline pools + optional LLM
+    // ============================================================
     const OFFLINE_LORE = {
-      houseName: ["Vaelmont", "Druskane", "Morvayne", "Ashgrave", "Thornholt", "Caldrest", "Veyrane", "Oakhart", "Greywarden", "Stillbrook"],
-      voidName: ["The Voidsworn", "Hollowmark", "Nightrend", "The Unhallowed", "Gravemourn"],
-      motto: ["Ash remembers", "Iron before honey", "We endure the long dark", "No crown without thorns", "The river forgets nothing", "Silence keeps the keep"],
-      charName: ["Kaelen Dray", "Mirelle of the Fen", "Tobias Crane", "Sera Voss", "Aldric Thane", "Wren Calloway", "Edmun Hale", "Isolde Marr"],
+      houseName: ['Vaelmont', 'Druskane', 'Morvayne', 'Ashgrave', 'Thornholt', 'Caldrest', 'Veyrane', 'Oakhart', 'Greywarden', 'Stillbrook', 'Ravencrest', 'Mournvale'],
+      voidName: ['The Voidsworn', 'Hollowmark', 'Nightrend', 'The Unhallowed', 'Gravemourn', 'The Palefast'],
+      motto: ['Ash remembers', 'Iron before honey', 'We endure the long dark', 'No crown without thorns', 'The river forgets nothing', 'Silence keeps the keep', 'Debt is a kind of love', 'The last light is ours'],
+      charName: ['Kaelen Dray', 'Mirelle of the Fen', 'Tobias Crane', 'Sera Voss', 'Aldric Thane', 'Wren Calloway', 'Edmun Hale', 'Isolde Marr', 'Petra Quill', 'Rooke Damaris', 'Fenn Oswic', 'Lysa Corveaux'],
       origin: [
-        "Raised among the lime kilns of a dying quarry town, sworn to outlive its debts.",
-        "Last survivor of a caravan lost in the Foggy Swamp; speaks little of what followed.",
-        "A disgraced retainer seeking to buy back an honored name, one contract at a time.",
-        "Schooled by hedge-clerics in letters and knife-work, in roughly equal measure.",
-        "Born under a hanged moon; the village midwife refused payment and left by night.",
+        'Raised among the lime kilns of a dying quarry town, sworn to outlive its debts.',
+        'Last survivor of a caravan lost in the Foggy Swamp; speaks little of what followed.',
+        'A disgraced retainer seeking to buy back an honored name, one contract at a time.',
+        'Schooled by hedge-clerics in letters and knife-work, in roughly equal measure.',
+        'Born under a hanged moon; the village midwife refused payment and left by night.',
+        'Third child of a third child, owed nothing and determined to collect anyway.',
+        'Kept the tollbridge ledger for nine years, then one morning burned it and walked east.',
+      ],
+      epitaph: [
+        'They walked into the dark so others would not have to.',
+        'Went further than the maps.',
+        'Debt paid in full.',
+        'The river forgets nothing; neither do we.',
+        'Third of the name, first to the wall.',
+        'Asked the wrong question in the right place.',
+        'The House endures because they did not.',
       ],
     };
     const offlineLore = (prompt) => {
-      const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
       if (/house name/i.test(prompt)) return /void|chaos/i.test(prompt) ? pick(OFFLINE_LORE.voidName) : pick(OFFLINE_LORE.houseName);
-      if (/motto/i.test(prompt)) return /void|chaos/i.test(prompt) ? "Chaos Reigns Eternal" : pick(OFFLINE_LORE.motto);
+      if (/motto/i.test(prompt)) return /void|chaos/i.test(prompt) ? 'Chaos Reigns Eternal' : pick(OFFLINE_LORE.motto);
       if (/character name/i.test(prompt)) return pick(OFFLINE_LORE.charName);
       if (/origin/i.test(prompt)) return pick(OFFLINE_LORE.origin);
-      return "";
+      if (/epitaph/i.test(prompt)) return pick(OFFLINE_LORE.epitaph);
+      return '';
     };
     async function callGeminiAPI(prompt, systemInstruction, responseSchema = null) {
       if (!apiKey) {
         // offline/dev fallback: judge leniently, draw lore from local pools
-        return responseSchema ? { approved: true, message: "The scribes nod in silence." } : offlineLore(prompt);
+        return responseSchema ? { approved: true, message: 'The scribes nod in silence.' } : offlineLore(prompt);
       }
       const delays = [500, 1000, 2000];
       for (let i = 0; i <= delays.length; i++) {
@@ -241,7 +275,7 @@
           const payload = {
             contents: [{ parts: [{ text: prompt }] }],
             systemInstruction: { parts: [{ text: systemInstruction }] },
-            generationConfig: responseSchema ? { responseMimeType: "application/json", responseSchema } : {}
+            generationConfig: responseSchema ? { responseMimeType: 'application/json', responseSchema } : {}
           };
           const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
             method: 'POST',
@@ -251,7 +285,7 @@
           if (!res.ok) throw new Error(res.statusText);
           const data = await res.json();
           const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (!text) throw new Error("No content");
+          if (!text) throw new Error('No content');
           return responseSchema ? JSON.parse(text) : text;
         } catch (err) {
           if (i === delays.length) throw err;
@@ -259,8 +293,7 @@
         }
       }
     }
-
-    const cleanAIOutput = (text) => (text || "").replace(/(\*\*|__)/g, '').replace(/^.*:\s*/, '').replace(/['"]+/g, '').replace(/\.$/, '').trim();
+    const cleanAIOutput = (text) => (text || '').replace(/(\*\*|__)/g, '').replace(/^.*:\s*/, '').replace(/['"]+/g, '').replace(/\.$/, '').trim();
 
     const consultTheScribes = async (type, data) => {
       const systemPrompt = `
@@ -270,13 +303,13 @@
         3. If rejected, respond with a short, in-character refusal.
         4. If approved, respond with a brief, atmospheric blessing.
       `;
-      const userPrompt = `Judge this ${type}: ${data.name}. Context: ${data.context || "None"}`;
-      const schema = { type: "OBJECT", properties: { approved: { type: "BOOLEAN" }, message: { type: "STRING" } } };
+      const userPrompt = `Judge this ${type}: ${data.name}. Context: ${data.context || 'None'}`;
+      const schema = { type: 'OBJECT', properties: { approved: { type: 'BOOLEAN' }, message: { type: 'STRING' } } };
       try {
         return await callGeminiAPI(userPrompt, systemPrompt, schema);
       } catch (err) {
         console.error(err);
-        return { approved: true, message: "The scribes are silent, but you pass unchallenged." };
+        return { approved: true, message: 'The scribes are silent, but you pass unchallenged.' };
       }
     };
 
@@ -291,559 +324,1165 @@
         return cleanAIOutput(result);
       } catch (err) {
         console.error(err);
-        return "";
+        return '';
       }
     };
 
-    // --- Main App ---
-    function App() {
-      const [view, setView] = useState('gate');
-      const [houses, setHouses] = useState({});
-      const [currentHouseId, setCurrentHouseId] = useState(null);
-      const [activeCharId, setActiveCharId] = useState(null);
-      const [notification, setNotification] = useState(null);
-
-      useEffect(() => {
-        const saved = localStorage.getItem('wizard_rp_houses');
-        if (saved) setHouses(JSON.parse(saved));
-      }, []);
-      useEffect(() => {
-        localStorage.setItem('wizard_rp_houses', JSON.stringify(houses));
-      }, [houses]);
-
-      const showNote = (msg) => {
-        setNotification(msg);
-        setTimeout(() => setNotification(null), 3500);
+    // ============================================================
+    // Persistence & migration
+    // ============================================================
+    const STORAGE_KEY = 'wizard_rp_v3';
+    const V2_KEY = 'wizard_rp_v2';
+    const V1_KEY = 'wizard_rp_houses';
+    const LEGACY_COLOR_MAP = {
+      'text-red-500': 'crimson', 'text-blue-500': 'azure', 'text-green-500': 'verdant',
+      'text-amber-500': 'gold', 'text-purple-500': 'amethyst', 'text-slate-200': 'slate',
+    };
+    const CLASS_MIGRATION = { vanguard: 'shieldbearer', arcanist: 'omenspeaker', ranger: 'wayfarer' };
+    const migrateClassId = (id) => CLASS_MIGRATION[id] || (CLASSES.some(c => c.id === id) ? id : 'shieldbearer');
+    const attrsFor = (classId, level) => {
+      const def = CLASSES.find(c => c.id === classId) || CLASSES[0];
+      const attrs = { ...def.attrs };
+      for (let i = 1; i < (level || 1); i++) {
+        attrs.str += def.attr === 'str' ? 2 : 1;
+        attrs.dex += def.attr === 'dex' ? 2 : 1;
+        attrs.int += def.attr === 'int' ? 2 : 1;
+      }
+      return attrs;
+    };
+    const V2_RARITY_TO_MATERIAL = { common: 'flint', fine: 'copper', runed: 'bronze', ancient: 'jade' };
+    const migrateItem = (it) => {
+      if (it.form && it.material) return it; // already v3
+      if (it.relicId) return { ...it, tier: it.tier || 2 };
+      const material = V2_RARITY_TO_MATERIAL[it.rarity] || 'flint';
+      const forms = Object.keys(FORMS).filter(f => FORMS[f].includes(material));
+      return makeItem(pick(forms), material);
+    };
+    const migrateV2Char = (c) => {
+      const classId = migrateClassId(c.class);
+      return {
+        ...c, class: classId,
+        attrs: c.attrs || attrsFor(classId, c.level),
+        items: (c.items || []).map(migrateItem),
       };
+    };
+    function loadHouses() {
+      try {
+        const v3 = localStorage.getItem(STORAGE_KEY);
+        if (v3) return JSON.parse(v3);
+        const v2 = localStorage.getItem(V2_KEY);
+        if (v2) {
+          const old = JSON.parse(v2);
+          const migrated = {};
+          Object.values(old).forEach(h => {
+            migrated[h.id] = {
+              ...h,
+              copper: h.copper ?? h.gold ?? NOBLE_COPPER,
+              characters: (h.characters || []).map(migrateV2Char),
+              crypt: (h.crypt || []).map(d => ({ ...d, class: migrateClassId(d.class) })),
+              reliquary: h.reliquary || [],
+            };
+            delete migrated[h.id].gold;
+          });
+          return migrated;
+        }
+        const v1 = localStorage.getItem(V1_KEY);
+        if (!v1) return {};
+        const old = JSON.parse(v1);
+        const migrated = {};
+        Object.values(old).forEach(h => {
+          migrated[h.id] = {
+            id: h.id, name: h.name, motto: h.motto, origin: h.origin || 'noble',
+            founded: new Date().toISOString(),
+            sigil: { color: LEGACY_COLOR_MAP[h.sigilColor] || 'gold', charge: 'crown' },
+            copper: h.resources?.gold ?? NOBLE_COPPER,
+            renown: h.resources?.renown ?? 0,
+            characters: (h.characters || []).map(c => {
+              const classId = migrateClassId(c.class);
+              const attrs = attrsFor(classId, c.level || 1);
+              const maxHp = baseMaxHp(attrs);
+              return {
+                id: c.id, name: c.name, class: classId, level: c.level || 1, xp: c.xp || 0,
+                hp: maxHp, maxHp, attrs, kills: 0, status: 'alive',
+                origin: c.backstory || '', items: [], deeds: [], brand: c.perks?.includes('fools_errand') ? 'fool' : null,
+                createdAt: c.createdAt || new Date().toISOString(),
+              };
+            }),
+            crypt: (h.crypt || []).map(d => ({
+              id: d.id, name: d.name, class: migrateClassId(d.class), level: d.level || 1,
+              epitaph: 'From before the chronicles were kept.', cause: 'Lost to the old records',
+              kills: 0, deeds: [], relics: [], diedAt: d.diedAt || new Date().toISOString(),
+            })),
+            reliquary: [],
+          };
+        });
+        return migrated;
+      } catch (err) {
+        console.error('Failed to load houses', err);
+        return {};
+      }
+    }
 
-      const currentHouse = currentHouseId ? houses[currentHouseId] : null;
+    // ============================================================
+    // World simulation (pure step function)
+    // ============================================================
+    const TICK_MS = 1600;
+    // Material tier weighted by zone danger; DEX (fortune) tilts toward better materials.
+    // Skymetal only surfaces at danger 4+; riveted mail stays a rumor outside the Rift.
+    function rollLootItem(danger, lootMod) {
+      const w = {
+        1: Math.max(5, 55 - danger * 9),
+        2: 24,
+        3: (6 + danger * 3) * lootMod,
+        4: (1.5 + danger * 1.5) * lootMod,
+        5: danger >= 4 ? danger * 0.7 * lootMod : 0,
+        6: danger === 5 ? 0.25 : 0,
+      };
+      let r = Math.random() * Object.values(w).reduce((a, b) => a + b, 0);
+      let tier = 1;
+      for (const t of Object.keys(w)) { r -= w[t]; if (r <= 0) { tier = Number(t); break; } }
+      const material = pick(Object.keys(MATERIALS).filter(m => MATERIALS[m].tier === tier));
+      const form = pick(Object.keys(FORMS).filter(f => FORMS[f].includes(material)));
+      return makeItem(form, material);
+    }
+    const pushLog = (logs, m, kind) => [...logs.slice(-44), { t: timeStamp(), m, kind }];
+    const addDeed = (deeds, d) => (deeds.includes(d) || deeds.length >= 10) ? deeds : [...deeds, d];
 
-      const login = (name) => {
-        const id = Object.keys(houses).find(k => houses[k].name.toLowerCase() === name.toLowerCase());
-        if (id) {
-          setCurrentHouseId(id);
-          setView('hall');
+    // One event per tick. `ctx` = { zone, mods, reliquary }
+    function stepSim(sim, ctx) {
+      if (sim.dead) return sim;
+      const { zone, mods, reliquary } = ctx;
+      const am = attrMods(sim.attrs);
+      const d = zone.danger;
+      let s = { ...sim, ticks: sim.ticks + 1 };
+      const roll = Math.random();
+
+      const circulating = reliquary.filter(r => r.status === 'circulating' && !s.foundRelics.includes(r.id));
+      const relicChance = circulating.length ? 0.035 * mods.relicChance : 0;
+
+      if (roll < relicChance) {
+        // An ancestor's relic surfaces, its bonds deepened one tier by the years underground.
+        const relic = pick(circulating);
+        const newTier = Math.min(relic.tier + 1, 4);
+        const name = relicDisplayName(relic, newTier);
+        s.foundRelics = [...s.foundRelics, relic.id];
+        s.items = [...s.items, { id: generateId(), name, base: relic.base, form: relic.form, material: relic.material, relicId: relic.id }];
+        s.deeds = addDeed(s.deeds, `Reclaimed ${name}`);
+        s.logs = pushLog(s.logs, `Unearthed ${name} — once borne by ${relic.origin}. The House remembers.`, 'relic');
+        s.action = 'Turning a relic over in the light';
+      } else if (roll < relicChance + 0.36) {
+        // Combat: victory, but it costs blood. STR soaks, INT learns.
+        const mob = pick(MONSTERS[d]);
+        const dmg = Math.max(1, Math.round((3 + Math.random() * 7) * d * am.dmg));
+        const xpGain = Math.round((12 + Math.random() * 10) * d * am.xp * mods.xp);
+        s.hp = s.hp - dmg;
+        s.kills += 1;
+        s.xp += xpGain;
+        s.logs = pushLog(s.logs, `Slew ${mob} (+${xpGain} xp, -${dmg} hp)`, 'fight');
+        s.action = `Wiping the blade clean`;
+        if (d >= 4) s.deeds = addDeed(s.deeds, `Felled a horror of ${zone.name}`);
+        if (s.hp <= 0) {
+          s.hp = 0;
+          s.dead = true;
+          s.cause = `Slain by ${mob} in ${zone.name}`;
+          s.logs = pushLog(s.logs, `${s.name} has fallen.`, 'warn');
+          return s;
+        }
+        if (s.hp / s.maxHp < 0.25) s.logs = pushLog(s.logs, 'Bleeding badly. The Hall is not far — yet.', 'warn');
+      } else if (roll < relicChance + 0.58) {
+        // Loot: copper always; sometimes a vessel worth keeping (tier 2+ material).
+        const copper = Math.round((2 + Math.random() * 6) * d);
+        s.copperFound += copper;
+        const item = rollLootItem(d, am.loot);
+        const art = /^[aeiou]/i.test(item.name) ? 'an' : 'a';
+        if (item.tier <= 1) {
+          s.logs = pushLog(s.logs, `Scavenged ${art} ${item.name.toLowerCase()} and ${copper} copper — anyone's tools`, 'loot');
+        } else if (s.items.length < 8) {
+          s.logs = pushLog(s.logs, `Found ${art} ${item.name} and ${copper} copper`, 'loot');
         } else {
-          showNote("That lineage is unknown to the records.");
+          s.logs = pushLog(s.logs, `Found ${art} ${item.name}, but the pack is full. Left it for the crows. (+${copper} copper)`, 'loot');
         }
-      };
+        s.action = 'Weighing the take';
+      } else if (roll < relicChance + 0.72) {
+        // Rest / recover
+        const heal = Math.round(8 + d * 3 + Math.random() * 6);
+        s.hp = Math.min(s.maxHp, s.hp + heal);
+        s.logs = pushLog(s.logs, `Made camp and bound wounds (+${heal} hp)`, 'rest');
+        s.action = 'Watching the fire burn low';
+      } else {
+        // Flavor / travel
+        const line = pick(zone.lines);
+        s.logs = pushLog(s.logs, `${line}...`, 'flavor');
+        s.action = line;
+      }
 
-      const createHouse = (name, motto, sigilColor, isCorrupt = false) => {
-        if (!name || !motto) { showNote("Name and motto are required."); return; }
-        if (!isCorrupt && Object.values(houses).some(h => h.name.toLowerCase() === name.toLowerCase())) {
-          showNote("A House of that name already exists.");
-          return;
-        }
-        const id = generateId();
-        const newHouse = {
-          id,
-          name,
-          motto,
-          sigilColor,
-          origin: isCorrupt ? 'corrupt' : 'noble',
-          resources: isCorrupt ? { ...CORRUPT_RESOURCES } : { ...INITIAL_RESOURCES },
-          characters: [],
-          crypt: [],
+      // Level up (xp needed = level * 100, resets each level); +2 to the calling's axis, +1 to the others
+      while (s.xp >= s.level * 100) {
+        s.xp -= s.level * 100;
+        s.level += 1;
+        s.attrs = {
+          str: s.attrs.str + (s.primary === 'str' ? 2 : 1),
+          dex: s.attrs.dex + (s.primary === 'dex' ? 2 : 1),
+          int: s.attrs.int + (s.primary === 'int' ? 2 : 1),
         };
-        setHouses(prev => ({ ...prev, [id]: newHouse }));
-        setCurrentHouseId(id);
-        setView('hall');
-      };
+        s.maxHp += 8;
+        s.hp = Math.min(s.maxHp, s.hp + Math.round(s.maxHp * 0.4));
+        s.logs = pushLog(s.logs, `${s.name} has reached level ${s.level}.`, 'level');
+        if (s.level === 5) s.deeds = addDeed(s.deeds, 'Survived to the fifth rank');
+        if (s.level === 10) s.deeds = addDeed(s.deeds, 'Stood among the ten-ranked');
+      }
+      return s;
+    }
 
-      const createCharacter = (name, charClass, backstory, perks = []) => {
-        if (!currentHouse) return;
-        const newChar = {
-          id: generateId(),
-          name,
-          class: charClass,
-          level: 1,
-          xp: 0,
-          status: 'alive',
-          backstory,
-          perks,
-          createdAt: new Date().toISOString(),
-        };
-        const updated = { ...currentHouse, characters: [...currentHouse.characters, newChar] };
-        setHouses(prev => ({ ...prev, [currentHouseId]: updated }));
-        setView('hall');
-      };
+    // ============================================================
+    // Small UI atoms
+    // ============================================================
+    const Banner = ({ sigil, size = 64, corrupt }) => {
+      const color = (SIGIL_COLORS.find(c => c.id === sigil?.color) || SIGIL_COLORS[3]).hex;
+      const Charge = ICONS[sigil?.charge] || ICONS.crown;
+      return (
+        <svg width={size} height={size * 1.15} viewBox="0 0 100 115" aria-hidden="true">
+          <path d="M10 10 H90 V52 C90 80 72 98 50 108 C28 98 10 80 10 52 Z" fill={color} stroke={corrupt ? 'rgba(167,139,250,0.55)' : 'rgba(233,228,216,0.35)'} strokeWidth="2.5" />
+          <path d="M10 10 H90 V52 C90 80 72 98 50 108 C28 98 10 80 10 52 Z" fill="url(#banner-shine)" />
+          <Charge x="27" y="28" width="46" height="46" style={{ color: 'rgba(242,238,227,0.92)' }} />
+        </svg>
+      );
+    };
+    const SharedDefs = () => (
+      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+        <defs>
+          <linearGradient id="banner-shine" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="rgba(255,255,255,0.22)" />
+            <stop offset="0.45" stopColor="rgba(255,255,255,0.04)" />
+            <stop offset="1" stopColor="rgba(0,0,0,0.3)" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+    const DangerPips = ({ n }) => (
+      <span className="inline-flex gap-0.5 align-middle" title={`Danger ${n} of 5`}>
+        {[...Array(5)].map((_, i) => (
+          <span key={i} className={`inline-block h-1.5 w-1.5 rounded-full ${i < n ? 'bg-red-500' : 'bg-stone-800'}`}></span>
+        ))}
+      </span>
+    );
+    const Meter = ({ value, max, color, label }) => (
+      <div>
+        {label && <div className="flex justify-between text-[10px] uppercase tracking-widest text-stone-500 mb-0.5"><span>{label}</span><span>{value}/{max}</span></div>}
+        <div className="h-2 w-full bg-stone-900 rounded-full overflow-hidden border border-stone-800">
+          <div className={`h-full ${color} transition-all duration-500`} style={{ width: `${Math.max(0, Math.min(100, (value / max) * 100))}%` }}></div>
+        </div>
+      </div>
+    );
+    const SuggestBtn = ({ onClick, disabled, generating, label = 'Suggest' }) => (
+      <button onClick={onClick} disabled={disabled || generating} className="text-amber-400 hover:text-amber-300 flex items-center gap-1 disabled:opacity-40">
+        {generating ? <Icon name="loader" size={14} /> : <Icon name="sparkles" size={14} />} {label}
+      </button>
+    );
+    const RejectionRow = ({ rejects }) => rejects > 0 ? (
+      <div className="flex justify-center gap-2">
+        {[...Array(3)].map((_, i) => <div key={i} className={`h-2 w-10 rounded-full ${i < rejects ? 'bg-red-600' : 'bg-stone-800'}`}></div>)}
+      </div>
+    ) : null;
+    const ScribeMessage = ({ message }) => message ? (
+      <div className="bg-red-950/40 border border-red-900/60 text-red-200 text-sm rounded p-4 flex gap-3 animate-shake">
+        <Icon name="alert" className="shrink-0" /> {message}
+      </div>
+    ) : null;
 
-      const killCharacter = (charId) => {
-        const c = currentHouse?.characters.find(ch => ch.id === charId);
-        if (!c) return;
-        const renownGain = c.level * 100;
-        const dead = { ...c, status: 'deceased', diedAt: new Date().toISOString() };
-        const updated = {
-          ...currentHouse,
-          characters: currentHouse.characters.filter(ch => ch.id !== charId),
-          crypt: [dead, ...currentHouse.crypt],
-          resources: { ...currentHouse.resources, renown: currentHouse.resources.renown + renownGain },
-        };
-        setHouses(prev => ({ ...prev, [currentHouseId]: updated }));
-        showNote(`${c.name} has fallen. Renown +${renownGain}.`);
-      };
-
-      const logout = () => { setCurrentHouseId(null); setView('gate'); };
-
-      // Views
-      const Gate = () => {
-        const [input, setInput] = useState('');
-        return (
-          <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-stone-950 via-stone-950 to-black p-6">
-            <div className="max-w-md w-full text-center glass rounded-xl p-8 shadow-2xl border border-stone-800 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_30%_30%,#c9a227,transparent_35%),radial-gradient(circle_at_70%_70%,#8b5cf6,transparent_35%)]"></div>
-              <div className="relative space-y-6">
-                <Icon name="shield" size={56} className="mx-auto text-amber-500" />
-                <div>
-                  <h1 className="text-3xl font-serif tracking-[0.18em] text-amber-400">CHRONICLES</h1>
-                  <p className="text-stone-500 italic">"Blood is temporary. The House is eternal."</p>
-                </div>
-                <div className="space-y-3">
-                  <input
-                    className="w-full bg-stone-900 border border-stone-700 rounded px-4 py-3 text-center font-serif focus:border-amber-500 outline-none"
-                    placeholder="Name of your House..."
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && login(input)}
-                  />
-                  <button
-                    onClick={() => login(input)}
-                    className="w-full bg-stone-800 hover:bg-stone-700 border border-stone-700 hover:border-amber-700 text-stone-200 py-3 tracking-wide transition rounded"
-                  >
-                    Announce Presence
-                  </button>
-                  <div className="flex items-center gap-3 text-stone-700 text-xs uppercase justify-center">
-                    <span className="h-px bg-stone-800 flex-1"></span> or <span className="h-px bg-stone-800 flex-1"></span>
-                  </div>
-                  <button
-                    onClick={() => setView('founding')}
-                    className="w-full bg-amber-900/20 hover:bg-amber-900/40 text-amber-400 border border-amber-900/40 hover:border-amber-700 py-3 tracking-wide transition rounded"
-                  >
-                    Establish New Lineage
-                  </button>
-                </div>
-              </div>
+    // ============================================================
+    // View: Gate (account home — all your Houses)
+    // ============================================================
+    function Gate({ houses, onEnter, onFound }) {
+      const list = Object.values(houses).sort((a, b) => (a.founded || '').localeCompare(b.founded || ''));
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-stone-950 via-stone-950 to-black p-6 flex flex-col items-center">
+          <div className="w-full max-w-5xl rise-in">
+            <div className="text-center mt-10 mb-10">
+              <Icon name="crown" size={48} className="mx-auto text-amber-500 mb-3" />
+              <h1 className="text-4xl font-serif tracking-[0.18em] text-amber-400">CHRONICLES</h1>
+              <p className="text-stone-500 italic mt-2">"Blood is temporary. The House is eternal."</p>
             </div>
-          </div>
-        );
-      };
 
-      const Founding = () => {
-        const [name, setName] = useState('');
-        const [motto, setMotto] = useState('');
-        const [color, setColor] = useState('text-amber-500');
-        const [rejects, setRejects] = useState(0);
-        const [judging, setJudging] = useState(false);
-        const [message, setMessage] = useState(null);
-        const [generating, setGenerating] = useState(false);
-
-        const colors = [
-          { text: 'text-red-500', bg: 'bg-red-700', label: 'Crimson' },
-          { text: 'text-blue-500', bg: 'bg-blue-700', label: 'Azure' },
-          { text: 'text-green-500', bg: 'bg-green-700', label: 'Verdant' },
-          { text: 'text-amber-500', bg: 'bg-amber-700', label: 'Gold' },
-          { text: 'text-purple-500', bg: 'bg-purple-700', label: 'Amethyst' },
-          { text: 'text-slate-200', bg: 'bg-slate-500', label: 'Silver' },
-        ];
-
-        const generateName = async () => {
-          setGenerating(true);
-          const rand = Math.floor(Math.random() * 1000);
-          const n = await generateLore('House Name', `Serious single-word noble house name. Seed ${rand}.`);
-          if (n) setName(n);
-          setGenerating(false);
-        };
-        const generateMotto = async () => {
-          if (!name) return;
-          setGenerating(true);
-          const m = await generateLore('House Motto', `House ${name} motto, solemn medieval tone.`);
-          if (m) setMotto(m);
-          setGenerating(false);
-        };
-
-        const triggerCorrupt = async () => {
-          const corruptName = await generateLore('House Name', 'Chaotic void house name') || "The Voidsworn";
-          const corruptMotto = await generateLore('House Motto', 'Chaos reigns eternal') || "Chaos Reigns Eternal";
-          createHouse(corruptName, corruptMotto, 'text-purple-500', true);
-          showNote("The scribes reject you; a Corrupt House is forged.");
-        };
-
-        const handleSubmit = async () => {
-          setJudging(true); setMessage(null);
-          const verdict = await consultTheScribes('House', { name, context: motto });
-          setJudging(false);
-          if (verdict.approved) {
-            showNote(verdict.message);
-            createHouse(name, motto, color);
-          } else {
-            const next = rejects + 1;
-            setRejects(next);
-            setMessage(verdict.message);
-            if (next >= 3) setTimeout(triggerCorrupt, 1500);
-          }
-        };
-
-        return (
-          <div className="min-h-screen flex items-center justify-center bg-stone-950 p-6">
-            <div className="w-full max-w-2xl glass rounded-xl p-8 shadow-2xl border border-stone-800 relative overflow-hidden">
-              <button className="absolute top-4 right-4 text-stone-600 hover:text-stone-300" onClick={() => setView('gate')}>
-                <Icon name="logout" />
-              </button>
-              <div className="flex flex-col items-center gap-2 mb-4">
-                <Icon name="shield" size={56} className={color} />
-                <h2 className="text-3xl font-serif text-amber-400">Founding Ceremony</h2>
-                <p className="text-stone-500 italic text-sm">"History awaits your mark."</p>
-              </div>
-              <div className="grid grid-cols-6 gap-2 mb-6">
-                {colors.map(c => (
-                  <button key={c.label} onClick={() => setColor(c.text)} className={`h-8 w-8 rounded-full ${c.bg} border-2 ${color === c.text ? 'border-white scale-110' : 'border-stone-800 hover:border-stone-600'} transition`} title={c.label}></button>
-                ))}
-              </div>
-              <div className="space-y-5">
-                <div>
-                  <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
-                    <span>House Name</span>
-                    <button onClick={generateName} disabled={generating} className="text-amber-400 flex items-center gap-1 disabled:opacity-50">
-                      {generating ? <Icon name="loader" size={14} /> : <Icon name="sparkles" size={14} />} Suggest
-                    </button>
+            {list.length === 0 ? (
+              <div className="max-w-2xl mx-auto space-y-8">
+                <div className="grid sm:grid-cols-3 gap-4 text-sm">
+                  <div className="glass rounded-lg p-5 text-center">
+                    <Icon name="skull" size={28} className="mx-auto text-red-400 mb-2" />
+                    <h3 className="font-serif text-stone-200 mb-1">Permadeath</h3>
+                    <p className="text-stone-500">Every scion dies once, and for good. Choose how far to push them.</p>
                   </div>
-                  <input value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-4 py-3 font-serif text-lg focus:border-amber-500 outline-none" />
+                  <div className="glass rounded-lg p-5 text-center">
+                    <Icon name="book" size={28} className="mx-auto text-amber-400 mb-2" />
+                    <h3 className="font-serif text-stone-200 mb-1">Legacy</h3>
+                    <p className="text-stone-500">The fallen earn renown. The House endures, and each generation starts stronger.</p>
+                  </div>
+                  <div className="glass rounded-lg p-5 text-center">
+                    <Icon name="gem" size={28} className="mx-auto text-purple-300 mb-2" />
+                    <h3 className="font-serif text-stone-200 mb-1">Relics</h3>
+                    <p className="text-stone-500">What the dead carried seeds the world's treasure — found again, reforged stronger.</p>
+                  </div>
                 </div>
-                <div>
-                  <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
-                    <span>House Motto</span>
-                    <button onClick={generateMotto} disabled={generating || !name} className="text-amber-400 flex items-center gap-1 disabled:opacity-50">
-                      {generating ? <Icon name="loader" size={14} /> : <Icon name="sparkles" size={14} />} Suggest
-                    </button>
-                  </div>
-                  <input value={motto} onChange={(e) => setMotto(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-4 py-3 font-serif italic focus:border-amber-500 outline-none" />
-                </div>
-                {rejects > 0 && (
-                  <div className="flex justify-center gap-2">
-                    {[...Array(3)].map((_, i) => <div key={i} className={`h-2 w-10 rounded-full ${i < rejects ? 'bg-red-600' : 'bg-stone-800'}`}></div>)}
-                  </div>
-                )}
-                {message && (
-                  <div className="bg-red-950/40 border border-red-900/60 text-red-200 text-sm rounded p-4 flex gap-3 animate-shake">
-                    <Icon name="alert" className="shrink-0" /> {message}
-                  </div>
-                )}
-                <button
-                  onClick={handleSubmit}
-                  disabled={!name || !motto || judging}
-                  className="w-full bg-amber-600 hover:bg-amber-500 text-stone-900 font-bold py-3 rounded border border-amber-400 uppercase tracking-widest disabled:opacity-50"
-                >
-                  {judging ? 'Consulting Scribes...' : 'Seal the Pact'}
+                <button onClick={onFound} className="w-full bg-amber-900/20 hover:bg-amber-900/40 text-amber-400 border border-amber-900/40 hover:border-amber-700 py-4 tracking-[0.2em] uppercase font-serif transition rounded-lg">
+                  Found Your First House
                 </button>
               </div>
-            </div>
+            ) : (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {list.map(h => {
+                  const alive = h.characters.length;
+                  const isCorrupt = h.origin === 'corrupt';
+                  return (
+                    <button key={h.id} onClick={() => onEnter(h.id)}
+                      className={`glass rounded-xl p-6 text-left hover:-translate-y-1 transition group ${isCorrupt ? 'hover:border-purple-700' : 'hover:border-amber-700'}`}>
+                      <div className="flex items-start gap-4">
+                        <Banner sigil={h.sigil} size={52} corrupt={isCorrupt} />
+                        <div className="min-w-0">
+                          <h2 className="font-serif text-xl text-stone-100 truncate">{h.name}</h2>
+                          <p className="text-xs text-stone-500 italic truncate">"{h.motto}"</p>
+                          {isCorrupt && <span className="inline-block mt-1 text-[10px] uppercase tracking-widest text-purple-300 border border-purple-800 rounded px-1.5">Corrupt</span>}
+                        </div>
+                      </div>
+                      <div className="flex gap-4 mt-4 text-xs text-stone-500">
+                        <span className="flex items-center gap-1"><Icon name="user" size={13} /> {alive} living</span>
+                        <span className="flex items-center gap-1"><Icon name="skull" size={13} /> {h.crypt.length} fallen</span>
+                        <span className={`flex items-center gap-1 ${isCorrupt ? 'text-purple-300' : 'text-amber-400'}`}><Icon name="crown" size={13} /> {h.renown}</span>
+                      </div>
+                      <div className={`mt-4 text-xs uppercase tracking-[0.2em] ${isCorrupt ? 'text-purple-300' : 'text-amber-400'} opacity-0 group-hover:opacity-100 transition flex items-center gap-1`}>
+                        Enter the Hall <Icon name="chevron" size={14} />
+                      </div>
+                    </button>
+                  );
+                })}
+                <button onClick={onFound} className="border border-dashed border-stone-800 hover:border-amber-800 rounded-xl p-6 flex flex-col items-center justify-center gap-2 text-stone-600 hover:text-amber-400 transition min-h-[170px]">
+                  <Icon name="plus" size={28} />
+                  <span className="font-serif tracking-widest uppercase text-sm">Found a New House</span>
+                  <span className="text-xs text-stone-600">A separate lineage, a separate legacy</span>
+                </button>
+              </div>
+            )}
+
+            <p className="text-center text-xs text-stone-700 mt-10">
+              One realm, many Houses. Each lineage keeps its own crypt, reliquary, and renown.
+            </p>
           </div>
-        );
+        </div>
+      );
+    }
+
+    // ============================================================
+    // View: Founding Ceremony
+    // ============================================================
+    function Founding({ onCreate, onBack, showNote }) {
+      const [name, setName] = useState('');
+      const [motto, setMotto] = useState('');
+      const [color, setColor] = useState('gold');
+      const [charge, setCharge] = useState('crown');
+      const [rejects, setRejects] = useState(0);
+      const [judging, setJudging] = useState(false);
+      const [message, setMessage] = useState(null);
+      const [generating, setGenerating] = useState(false);
+
+      const generateName = async () => {
+        setGenerating(true);
+        const n = await generateLore('House Name', `Serious single-word noble house name. Seed ${Math.floor(Math.random() * 1000)}.`);
+        if (n) setName(n);
+        setGenerating(false);
+      };
+      const generateMotto = async () => {
+        if (!name) return;
+        setGenerating(true);
+        const m = await generateLore('House Motto', `House ${name} motto, solemn medieval tone.`);
+        if (m) setMotto(m);
+        setGenerating(false);
+      };
+      const triggerCorrupt = async () => {
+        const corruptName = await generateLore('House Name', 'Chaotic void house name') || 'The Voidsworn';
+        const corruptMotto = await generateLore('House Motto', 'Chaos reigns eternal') || 'Chaos Reigns Eternal';
+        onCreate(corruptName, corruptMotto, { color: 'void', charge: 'skull' }, true);
+        showNote('The scribes reject you; a Corrupt House is forged in spite.');
+      };
+      const handleSubmit = async () => {
+        setJudging(true); setMessage(null);
+        const verdict = await consultTheScribes('House', { name, context: motto });
+        setJudging(false);
+        if (verdict.approved) {
+          showNote(verdict.message);
+          onCreate(name, motto, { color, charge }, false);
+        } else {
+          const next = rejects + 1;
+          setRejects(next);
+          setMessage(verdict.message);
+          if (next >= 3) setTimeout(triggerCorrupt, 1500);
+        }
       };
 
-      const Hall = () => {
-        if (!currentHouse) return null;
-        const isCorrupt = currentHouse.origin === 'corrupt';
-        const accent = isCorrupt ? 'text-purple-400' : 'text-amber-400';
-        return (
-          <div className="min-h-screen bg-stone-950 text-stone-200 flex flex-col">
-            <header className="flex flex-wrap gap-y-3 justify-between items-center p-4 sm:p-6 border-b border-stone-800 bg-stone-900/60 backdrop-blur">
-              <div className="flex items-center gap-4">
-                <Icon name={isCorrupt ? 'ghost' : 'shield'} size={44} className={currentHouse.sigilColor} />
-                <div>
-                  <h1 className="text-2xl font-serif">{currentHouse.name}</h1>
-                  <p className="text-sm text-stone-500 italic">"{currentHouse.motto}"</p>
-                </div>
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-stone-950 p-6">
+          <div className="w-full max-w-3xl glass rounded-xl shadow-2xl relative overflow-hidden rise-in">
+            <button className="absolute top-4 right-4 text-stone-600 hover:text-stone-300 z-10" onClick={onBack} title="Return to the gate">
+              <Icon name="logout" />
+            </button>
+            <div className="grid md:grid-cols-5">
+              {/* Banner preview */}
+              <div className="md:col-span-2 bg-stone-950/70 border-b md:border-b-0 md:border-r border-stone-800 p-8 flex flex-col items-center justify-center text-center gap-3">
+                <Banner sigil={{ color, charge }} size={110} />
+                <h3 className="font-serif text-xl text-stone-100 min-h-[28px]">{name || 'Unnamed House'}</h3>
+                <p className="text-stone-500 italic text-sm min-h-[20px]">{motto ? `"${motto}"` : 'No words yet spoken'}</p>
+                <p className="text-[11px] text-stone-600 leading-relaxed mt-2">
+                  This banner will hang over every scion you send into the world — and over every name in your crypt.
+                </p>
               </div>
-              <div className="flex items-center gap-5">
-                <div className={`flex items-center gap-2 ${accent}`} title="Gold"><Icon name="coins" /> <span className="font-mono">{currentHouse.resources.gold}</span></div>
-                <div className="flex items-center gap-2 text-purple-300" title="Renown"><Icon name="crown" /> <span className="font-mono">{currentHouse.resources.renown}</span></div>
-                <button onClick={logout} className="p-2 rounded hover:bg-stone-800 text-stone-500 hover:text-stone-200"><Icon name="logout" /></button>
-              </div>
-            </header>
-
-            <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 max-w-6xl mx-auto w-full">
-              <div className="lg:col-span-2 space-y-4">
-                <div className="flex justify-between items-center">
-                  <h2 className={`text-xl font-serif flex items-center gap-2 ${accent}`}><Icon name="user" /> Active Scions</h2>
-                  <button onClick={() => setView('recruit')} className="flex items-center gap-2 bg-stone-800 hover:bg-stone-700 border border-stone-700 px-4 py-2 rounded text-sm">
-                    <Icon name="plus" /> Recruit
+              {/* Form */}
+              <div className="md:col-span-3 p-8">
+                <h2 className="text-2xl font-serif text-amber-400 mb-1">Founding Ceremony</h2>
+                <p className="text-stone-500 italic text-sm mb-5">"State your name for the record. The scribes are listening."</p>
+                <div className="space-y-5">
+                  <div>
+                    <div className="text-xs uppercase tracking-widest text-stone-500 mb-1.5">Sigil Color</div>
+                    <div className="flex flex-wrap gap-2">
+                      {SIGIL_COLORS.map(c => (
+                        <button key={c.id} onClick={() => setColor(c.id)} title={c.label}
+                          className={`h-8 w-8 rounded-full border-2 transition ${color === c.id ? 'border-white scale-110' : 'border-stone-800 hover:border-stone-600'}`}
+                          style={{ background: c.hex }}></button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-xs uppercase tracking-widest text-stone-500 mb-1.5">Sigil Charge</div>
+                    <div className="flex flex-wrap gap-2">
+                      {SIGIL_CHARGES.map(ch => (
+                        <button key={ch} onClick={() => setCharge(ch)} title={ch}
+                          className={`h-9 w-9 rounded border flex items-center justify-center transition ${charge === ch ? 'border-amber-500 text-amber-300 bg-amber-900/20' : 'border-stone-800 text-stone-500 hover:border-stone-600'}`}>
+                          <Icon name={ch} size={18} />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
+                      <span>House Name</span>
+                      <SuggestBtn onClick={generateName} generating={generating} />
+                    </div>
+                    <input value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-4 py-3 font-serif text-lg focus:border-amber-500 outline-none" />
+                  </div>
+                  <div>
+                    <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
+                      <span>House Motto</span>
+                      <SuggestBtn onClick={generateMotto} generating={generating} disabled={!name} />
+                    </div>
+                    <input value={motto} onChange={(e) => setMotto(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-4 py-3 font-serif italic focus:border-amber-500 outline-none" />
+                  </div>
+                  <RejectionRow rejects={rejects} />
+                  <ScribeMessage message={message} />
+                  <button onClick={handleSubmit} disabled={!name || !motto || judging}
+                    className="w-full bg-amber-600 hover:bg-amber-500 text-stone-900 font-bold py-3 rounded border border-amber-400 uppercase tracking-widest disabled:opacity-50">
+                    {judging ? 'Consulting Scribes...' : 'Seal the Pact'}
                   </button>
                 </div>
-                {currentHouse.characters.length === 0 ? (
-                  <div className="border border-dashed border-stone-800 rounded-lg p-10 text-center text-stone-500 font-serif">The halls are empty. Recruit a scion.</div>
-                ) : (
-                  <div className="space-y-3">
-                    {currentHouse.characters.map(ch => {
-                      const cls = CLASSES.find(c => c.id === ch.class);
-                      return (
-                        <div key={ch.id} className="flex flex-wrap gap-y-3 items-center justify-between bg-stone-900 border border-stone-800 rounded-lg p-4 hover:border-amber-700 hover:-translate-y-px transition">
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ============================================================
+    // View: Hall (house overview)
+    // ============================================================
+    function Hall({ house, onRecruit, onEnterWorld, onRetire, onSwitchHouse }) {
+      const [openCrypt, setOpenCrypt] = useState(null);
+      const [openRelic, setOpenRelic] = useState(null);
+      const isCorrupt = house.origin === 'corrupt';
+      const accent = isCorrupt ? 'text-purple-300' : 'text-amber-400';
+      const unlocked = unlockedBoons(house);
+      const nextBoon = BOONS.find(b => house.renown < b.renown);
+
+      return (
+        <div className="min-h-screen bg-stone-950 text-stone-200 flex flex-col rise-in">
+          <header className="flex flex-wrap gap-y-3 justify-between items-center px-4 sm:px-6 py-4 border-b border-stone-800 bg-stone-900/60 backdrop-blur">
+            <div className="flex items-center gap-4">
+              <Banner sigil={house.sigil} size={46} corrupt={isCorrupt} />
+              <div>
+                <h1 className="text-2xl font-serif leading-tight">{house.name}</h1>
+                <p className="text-sm text-stone-500 italic">"{house.motto}"</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-5">
+              <div className="flex items-center gap-2 text-orange-300" title="House copper — copper is wealth"><Icon name="coins" /> <span className="font-mono">{house.copper}</span></div>
+              <div className="flex items-center gap-2 text-purple-300" title="Renown — earned by the fallen, never spent"><Icon name="crown" /> <span className="font-mono">{house.renown}</span></div>
+              <button onClick={onSwitchHouse} className="p-2 rounded hover:bg-stone-800 text-stone-500 hover:text-stone-200" title="Return to the gate (switch House)"><Icon name="logout" /></button>
+            </div>
+          </header>
+
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 max-w-6xl mx-auto w-full">
+            {/* Scions */}
+            <div className="lg:col-span-2 space-y-4">
+              <div className="flex justify-between items-center">
+                <h2 className={`text-xl font-serif flex items-center gap-2 ${accent}`}><Icon name="user" /> Living Scions</h2>
+                <button onClick={onRecruit} className="flex items-center gap-2 bg-stone-800 hover:bg-stone-700 border border-stone-700 px-4 py-2 rounded text-sm">
+                  <Icon name="plus" /> Recruit
+                </button>
+              </div>
+              {house.characters.length === 0 ? (
+                <div className="border border-dashed border-stone-800 rounded-lg p-10 text-center text-stone-500 font-serif">
+                  The halls are empty.<br />
+                  <span className="text-sm text-stone-600 font-sans">Recruit a scion and send them into the world. They will not come back forever.</span>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {house.characters.map(ch => {
+                    const cls = CLASSES.find(c => c.id === ch.class);
+                    return (
+                      <div key={ch.id} className="bg-stone-900 border border-stone-800 rounded-lg p-4 hover:border-amber-700 transition">
+                        <div className="flex flex-wrap gap-y-3 items-center justify-between">
                           <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-stone-950 border border-stone-800 flex items-center justify-center">
+                            <div className="w-12 h-12 rounded-full bg-stone-950 border border-stone-800 flex items-center justify-center shrink-0">
                               {cls && <Icon name={cls.icon} className="text-stone-400" />}
                             </div>
                             <div>
                               <div className="flex items-center gap-2">
                                 <h3 className="text-lg font-serif">{ch.name}</h3>
-                                {ch.perks?.includes('fools_errand') && <span className="text-xs uppercase text-red-400 border border-red-700 px-1 rounded">Fool</span>}
+                                {ch.brand === 'fool' && <span className="text-xs uppercase text-red-400 border border-red-700 px-1 rounded">Fool</span>}
                               </div>
-                              <p className="text-xs text-stone-500 uppercase tracking-widest">{ch.class} • Lvl {ch.level}</p>
+                              <p className="text-xs text-stone-500 uppercase tracking-widest">{cls?.name || ch.class} • Level {ch.level} • {ch.kills} kills</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-3">
-                            <button onClick={() => { setActiveCharId(ch.id); setView('world'); }} className={`px-4 py-2 rounded border text-sm font-semibold ${isCorrupt ? 'border-purple-700 text-purple-300 hover:bg-purple-900/30' : 'border-amber-700 text-amber-400 hover:bg-amber-900/30'}`}>
+                            <button onClick={() => onEnterWorld(ch.id)} className={`px-4 py-2 rounded border text-sm font-semibold ${isCorrupt ? 'border-purple-700 text-purple-300 hover:bg-purple-900/30' : 'border-amber-700 text-amber-400 hover:bg-amber-900/30'}`}>
                               Enter World
                             </button>
-                            <button onClick={() => { if (confirm(`End ${ch.name}'s journey?`)) killCharacter(ch.id); }} className="p-2 text-stone-500 hover:text-red-500 hover:bg-red-900/10 rounded">
+                            <button onClick={() => onRetire(ch.id)} className="p-2 text-stone-500 hover:text-red-400 hover:bg-red-900/10 rounded" title="Take the Grey Vow — retire this scion to the crypt (permanent)">
                               <Icon name="skull" />
                             </button>
                           </div>
                         </div>
-                      );
-                    })}
+                        <div className="grid grid-cols-2 gap-4 mt-3">
+                          <Meter value={ch.hp} max={ch.maxHp} color="bg-red-700" label="Vitality" />
+                          <Meter value={ch.xp} max={ch.level * 100} color="bg-blue-700" label={`To level ${ch.level + 1}`} />
+                        </div>
+                        {ch.items.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 mt-3">
+                            {ch.items.map(it => (
+                              <span key={it.id} className={`text-[11px] border rounded px-1.5 py-0.5 ${itemStyle(it).chip}`}>{it.name}</span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Legacy boons */}
+              <div className="bg-stone-900 border border-stone-800 rounded-lg p-5 mt-6">
+                <h3 className={`text-lg font-serif flex items-center gap-2 mb-1 ${accent}`}><Icon name="book" /> Legacy of the House</h3>
+                <p className="text-xs text-stone-600 mb-4">Renown is earned only by the dead. It is never spent — it accumulates, and the House grows around it.</p>
+                {nextBoon && (
+                  <div className="mb-4">
+                    <Meter value={house.renown} max={nextBoon.renown} color={isCorrupt ? 'bg-purple-700' : 'bg-amber-600'} label={`Next: ${boonName(nextBoon, isCorrupt)}`} />
+                  </div>
+                )}
+                <div className="space-y-2.5">
+                  {BOONS.map(b => {
+                    const has = house.renown >= b.renown;
+                    return (
+                      <div key={b.id} className={`flex items-start gap-3 text-sm ${has ? '' : 'opacity-45'}`}>
+                        <Icon name={b.icon} size={17} className={has ? accent : 'text-stone-600'} />
+                        <div>
+                          <span className={`font-serif ${has ? 'text-stone-100' : 'text-stone-400'}`}>{boonName(b, isCorrupt)}</span>
+                          <span className="text-stone-600 text-xs ml-2">{has ? 'unlocked' : `at ${b.renown} renown`}</span>
+                          <p className="text-xs text-stone-500">{b.desc}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* Right column: reliquary + crypt */}
+            <div className="space-y-4">
+              <div className="bg-stone-900 border border-stone-800 rounded-lg p-5">
+                <h3 className="text-lg font-serif text-stone-300 flex items-center gap-2 mb-1"><Icon name="gem" className="text-purple-300" /> Reliquary</h3>
+                <p className="text-xs text-stone-600 mb-3">What the dead carried now circulates in the world's drop tables. Scions — yours, and one day others' — may find it reforged.</p>
+                {house.reliquary.length === 0 ? (
+                  <p className="text-stone-600 text-sm italic">No relics yet circulate. The world takes payment first.</p>
+                ) : (
+                  <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+                    {house.reliquary.map(r => (
+                      <button key={r.id} onClick={() => setOpenRelic(openRelic === r.id ? null : r.id)} className="w-full text-left">
+                        <div className="flex justify-between items-center text-sm gap-2">
+                          <span className="text-purple-300 truncate">{relicDisplayName(r, r.tier)}</span>
+                          <span className={`text-[10px] uppercase tracking-wider shrink-0 ${r.status === 'circulating' ? 'text-stone-500' : 'text-green-400'}`}>
+                            {r.status === 'circulating' ? 'circulating' : 'borne'}
+                          </span>
+                        </div>
+                        {openRelic === r.id && (
+                          <div className="mt-1 mb-2 pl-2 border-l border-stone-800 space-y-0.5">
+                            {r.history.map((h, i) => <p key={i} className="text-[11px] text-stone-500">{h}</p>)}
+                          </div>
+                        )}
+                      </button>
+                    ))}
                   </div>
                 )}
               </div>
-              <div className="space-y-4">
-                <div className="bg-stone-900 border border-stone-800 rounded-lg p-5">
-                  <h3 className="text-lg font-serif text-stone-400 flex items-center gap-2 mb-3"><Icon name="book" /> House Legacy</h3>
-                  <div className="space-y-2 text-sm text-stone-500">
-                    <div className="flex justify-between"><span>Generations</span><span className="text-stone-200">{currentHouse.crypt.length} Fallen</span></div>
-                    <div className="flex justify-between"><span>Total Renown</span><span className="text-purple-300 font-mono">{currentHouse.resources.renown}</span></div>
-                    <div className="flex justify-between"><span>Vault</span><span className={accent}>Solvent</span></div>
-                  </div>
-                </div>
-                <div className="bg-stone-900 border border-stone-800 rounded-lg p-5">
-                  <h3 className="text-lg font-serif text-stone-400 flex items-center gap-2 mb-3"><Icon name="history" /> Crypt</h3>
-                  {currentHouse.crypt.length === 0 ? (
-                    <p className="text-stone-600 text-sm italic">No ancestors rest here yet.</p>
-                  ) : (
-                    <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
-                      {currentHouse.crypt.map(d => (
-                        <div key={d.id} className="flex justify-between text-sm text-stone-500">
-                          <span className="text-stone-300">{d.name}</span>
-                          <span>Lvl {d.level} {d.class}</span>
+
+              <div className="bg-stone-900 border border-stone-800 rounded-lg p-5">
+                <h3 className="text-lg font-serif text-stone-300 flex items-center gap-2 mb-3"><Icon name="history" /> The Crypt</h3>
+                {house.crypt.length === 0 ? (
+                  <p className="text-stone-600 text-sm italic">No ancestors rest here yet.</p>
+                ) : (
+                  <div className="space-y-3 max-h-96 overflow-y-auto pr-1">
+                    {house.crypt.map(d => (
+                      <button key={d.id} onClick={() => setOpenCrypt(openCrypt === d.id ? null : d.id)} className="w-full text-left group">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-stone-300 group-hover:text-stone-100">{d.name}</span>
+                          <span className="text-stone-600">Lvl {d.level} {CLASSES.find(c => c.id === d.class)?.name || d.class}</span>
                         </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                        <p className="text-xs text-stone-500 italic">"{d.epitaph}"</p>
+                        {openCrypt === d.id && (
+                          <div className="mt-1.5 pl-2 border-l border-stone-800 space-y-0.5">
+                            <p className="text-[11px] text-red-300/70">{d.cause}</p>
+                            <p className="text-[11px] text-stone-500">{d.kills} kills • {d.relics.length} relic{d.relics.length === 1 ? '' : 's'} interred</p>
+                            {d.deeds.map((deed, i) => <p key={i} className="text-[11px] text-stone-500">• {deed}</p>)}
+                          </div>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
-        );
+        </div>
+      );
+    }
+
+    // ============================================================
+    // View: Recruit
+    // ============================================================
+    function Recruit({ house, onCreate, onBack, showNote }) {
+      const [name, setName] = useState('');
+      const [cls, setCls] = useState(CLASSES[0].id);
+      const [origin, setOrigin] = useState('');
+      const [outfit, setOutfit] = useState(false);
+      const [rejects, setRejects] = useState(0);
+      const [judging, setJudging] = useState(false);
+      const [message, setMessage] = useState(null);
+      const [generating, setGenerating] = useState(false);
+      const isCorrupt = house.origin === 'corrupt';
+      const mods = boonMods(house);
+      const unlocked = unlockedBoons(house);
+      const canOutfit = house.copper >= OUTFIT_COST;
+
+      const generateName = async () => {
+        setGenerating(true);
+        const n = await generateLore('Character Name', `High fantasy name for a ${cls}. Seed ${Math.floor(Math.random() * 1000)}.`);
+        if (n) setName(n);
+        setGenerating(false);
+      };
+      const generateOrigin = async () => {
+        if (!name) return;
+        setGenerating(true);
+        const o = await generateLore('Character Origin', `${name}, a ${cls}, gritty dark fantasy origin.`);
+        if (o) setOrigin(o);
+        setGenerating(false);
+      };
+      const triggerFool = () => {
+        const pool = ['Bozo the Lost', 'Jester of Ruin', 'The Unworthy', 'Buffoon McStumble', 'Giggles'];
+        onCreate({ name: pick(pool), cls: 'shieldbearer', origin: 'A fool branded by the scribes.', brand: 'fool', outfit: false });
+        showNote('You are branded a Fool. The scribes choose your fate.');
+      };
+      const handleSubmit = async () => {
+        setJudging(true); setMessage(null);
+        const verdict = await consultTheScribes('Character', { name, context: origin });
+        setJudging(false);
+        if (verdict.approved) {
+          showNote(verdict.message);
+          onCreate({ name, cls, origin, brand: null, outfit: outfit && canOutfit });
+        } else {
+          const next = rejects + 1;
+          setRejects(next);
+          setMessage(verdict.message);
+          if (next >= 3) setTimeout(triggerFool, 1200);
+        }
       };
 
-      const Recruit = () => {
-        const [name, setName] = useState('');
-        const [cls, setCls] = useState(CLASSES[0].id);
-        const [origin, setOrigin] = useState('');
-        const [rejects, setRejects] = useState(0);
-        const [judging, setJudging] = useState(false);
-        const [message, setMessage] = useState(null);
-        const [generating, setGenerating] = useState(false);
+      const selected = CLASSES.find(c => c.id === cls);
+      const startAttrs = attrsFor(selected.id, mods.startLevel);
+      const startHp = baseMaxHp(startAttrs) + (mods.startLevel - 1) * 8 + mods.hp + (outfit && canOutfit ? 10 : 0);
+      const outfitName = `${MATERIALS[selected.outfitItem.material].name} ${selected.outfitItem.form}`;
 
-        const generateName = async () => {
-          setGenerating(true);
-          const rand = Math.floor(Math.random() * 1000);
-          const n = await generateLore('Character Name', `High fantasy name for a ${cls}. Seed ${rand}.`);
-          if (n) setName(n);
-          setGenerating(false);
-        };
-        const generateOrigin = async () => {
-          if (!name) return;
-          setGenerating(true);
-          const o = await generateLore('Character Origin', `${name}, a ${cls}, gritty dark fantasy origin.`);
-          if (o) setOrigin(o);
-          setGenerating(false);
-        };
-
-        const triggerFool = () => {
-          const pool = ["Bozo the Lost", "Jester of Ruin", "The Unworthy", "Buffoon McStumble", "Giggles"];
-          const randName = pool[Math.floor(Math.random() * pool.length)];
-          createCharacter(randName, "vanguard", "A fool branded by the scribes.", ["fools_errand"]);
-          showNote("You are branded a Fool. The scribes choose your fate.");
-        };
-
-        const handleSubmit = async () => {
-          setJudging(true); setMessage(null);
-          const verdict = await consultTheScribes('Character', { name, context: origin });
-          setJudging(false);
-          if (verdict.approved) {
-            showNote(verdict.message);
-            createCharacter(name, cls, origin);
-          } else {
-            const next = rejects + 1;
-            setRejects(next);
-            setMessage(verdict.message);
-            if (next >= 3) setTimeout(triggerFool, 1200);
-          }
-        };
-
-        return (
-          <div className="min-h-screen flex items-center justify-center bg-stone-950 p-6">
-            <div className="w-full max-w-5xl glass rounded-xl shadow-2xl border border-stone-800 grid md:grid-cols-2 overflow-hidden">
-              <div className="p-8 border-r border-stone-800">
-                <button onClick={() => setView('hall')} className="text-sm text-stone-500 hover:text-stone-200 mb-4 flex items-center gap-1">&larr; Return to Hall</button>
-                <h2 className="text-2xl font-serif text-amber-400 mb-4">Choose a Path</h2>
-                <div className="space-y-3">
-                  {CLASSES.map(c => (
-                    <button key={c.id} onClick={() => setCls(c.id)} className={`w-full text-left p-4 rounded border transition ${cls === c.id ? 'border-amber-500 bg-amber-900/20' : 'border-stone-800 bg-stone-950 hover:border-stone-600'}`}>
-                      <div className="flex items-start gap-3">
-                        <Icon name={c.icon} className={cls === c.id ? 'text-amber-400' : 'text-stone-500'} />
-                        <div>
-                          <h3 className={`font-serif text-lg ${cls === c.id ? 'text-stone-100' : 'text-stone-400'}`}>{c.name}</h3>
-                          <p className="text-xs text-stone-500">{c.desc}</p>
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-stone-950 p-6">
+          <div className="w-full max-w-5xl glass rounded-xl shadow-2xl grid md:grid-cols-2 overflow-hidden rise-in">
+            <div className="p-8 border-b md:border-b-0 md:border-r border-stone-800">
+              <button onClick={onBack} className="text-sm text-stone-500 hover:text-stone-200 mb-4 flex items-center gap-1">&larr; Return to Hall</button>
+              <h2 className="text-2xl font-serif text-amber-400 mb-4">Choose a Path</h2>
+              <div className="space-y-3">
+                {CLASSES.map(c => (
+                  <button key={c.id} onClick={() => setCls(c.id)} className={`w-full text-left p-4 rounded border transition ${cls === c.id ? 'border-amber-500 bg-amber-900/20' : 'border-stone-800 bg-stone-950 hover:border-stone-600'}`}>
+                    <div className="flex items-start gap-3">
+                      <Icon name={c.icon} className={cls === c.id ? 'text-amber-400' : 'text-stone-500'} />
+                      <div className="flex-1">
+                        <h3 className={`font-serif text-lg ${cls === c.id ? 'text-stone-100' : 'text-stone-400'}`}>{c.name}</h3>
+                        <p className="text-xs text-stone-500">{c.desc}</p>
+                        <div className="flex gap-3 mt-1.5 text-[11px] font-bold">
+                          {Object.keys(ATTRS).map(k => (
+                            <span key={k} title={ATTRS[k].label} style={{ color: ATTRS[k].color, opacity: c.attr === k ? 1 : 0.5 }}>{ATTRS[k].short} {c.attrs[k]}</span>
+                          ))}
                         </div>
                       </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="p-8 bg-stone-950/60">
-                <h3 className="text-xl font-serif text-stone-200 mb-4">Identity</h3>
-                <div className="space-y-5">
-                  <div>
-                    <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
-                      <span>Name</span>
-                      <button onClick={generateName} disabled={generating} className="text-amber-400 flex items-center gap-1 disabled:opacity-50">
-                        {generating ? <Icon name="loader" size={14} /> : <Icon name="sparkles" size={14} />} Suggest
-                      </button>
                     </div>
-                    <input value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-3 py-2 focus:border-amber-500 outline-none" placeholder="Scion name" />
-                  </div>
-                  <div>
-                    <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
-                      <span>Origin (optional)</span>
-                      <button onClick={generateOrigin} disabled={!name || generating} className="text-amber-400 flex items-center gap-1 disabled:opacity-50">
-                        {generating ? <Icon name="loader" size={14} /> : <Icon name="sparkles" size={14} />} Imagine
-                      </button>
-                    </div>
-                    <textarea value={origin} onChange={(e) => setOrigin(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-3 py-2 h-28 resize-none text-sm focus:border-amber-500 outline-none" />
-                  </div>
-                  {rejects > 0 && (
-                    <div className="flex justify-center gap-2">
-                      {[...Array(3)].map((_, i) => <div key={i} className={`h-2 w-10 rounded-full ${i < rejects ? 'bg-red-600' : 'bg-stone-800'}`}></div>)}
-                    </div>
-                  )}
-                  {message && (
-                    <div className="bg-red-950/40 border border-red-900/60 text-red-200 text-sm rounded p-4 flex gap-3 animate-shake">
-                      <Icon name="alert" className="shrink-0" /> {message}
-                    </div>
-                  )}
-                  <button onClick={handleSubmit} disabled={!name || judging} className="w-full bg-stone-100 text-stone-900 py-3 font-bold rounded hover:bg-white disabled:opacity-50 flex items-center justify-center gap-2">
-                    {judging ? <><Icon name="loader" size={16} className="text-stone-800" /><span>Consulting...</span></> : <><Icon name="sparkles" className="text-amber-600" /> Sign the Contract</>}
                   </button>
-                </div>
+                ))}
               </div>
+              {unlocked.length > 0 && (
+                <div className="mt-5 border-t border-stone-800 pt-4">
+                  <p className="text-xs uppercase tracking-widest text-stone-600 mb-2">The House provides</p>
+                  <div className="space-y-1">
+                    {unlocked.map(b => (
+                      <p key={b.id} className="text-xs text-stone-500 flex items-center gap-2">
+                        <Icon name={b.icon} size={13} className={isCorrupt ? 'text-purple-300' : 'text-amber-400'} /> {boonName(b, isCorrupt)}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        );
-      };
-
-      const World = () => {
-        const char = currentHouse?.characters.find(c => c.id === activeCharId);
-        const [logs, setLogs] = useState([]);
-        const [progress, setProgress] = useState(0);
-        const [action, setAction] = useState("Preparing for departure...");
-        const [stats, setStats] = useState({ gold: 0, kills: 0, xp: 0 });
-        const endRef = useRef(null);
-
-        useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [logs]);
-
-        useEffect(() => {
-          const interval = setInterval(() => {
-            setProgress(p => {
-              if (p >= 100) { performAction(); return 0; }
-              return p + (Math.random() * 10 + 5);
-            });
-          }, 500);
-          return () => clearInterval(interval);
-        }, []);
-
-        const performAction = () => {
-          const roll = Math.random();
-          let msg = "";
-          if (roll < 0.3) {
-            const mob = MONSTERS[Math.floor(Math.random() * MONSTERS.length)];
-            msg = `Executed ${mob}`;
-            setStats(s => ({ ...s, kills: s.kills + 1, xp: s.xp + 25 }));
-            setAction(`Hunting ${mob}...`);
-          } else if (roll < 0.5) {
-            const item = LOOT[Math.floor(Math.random() * LOOT.length)];
-            msg = `Looted ${item}`;
-            setStats(s => ({ ...s, gold: s.gold + Math.floor(Math.random() * 10) + 1 }));
-            setAction(ACTIONS[Math.floor(Math.random() * ACTIONS.length)]);
-          } else if (roll < 0.7) {
-            const loc = LOCATIONS[Math.floor(Math.random() * LOCATIONS.length)];
-            msg = `Traversing ${loc}`;
-            setAction(`Traveling to ${loc}...`);
-          } else {
-            const act = ACTIONS[Math.floor(Math.random() * ACTIONS.length)];
-            msg = act;
-            setAction(act + "...");
-          }
-          const stamp = new Date().toLocaleTimeString([], { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" });
-          setLogs(prev => [...prev.slice(-15), { t: stamp, m: msg }]);
-        };
-
-        if (!char) return null;
-        const cls = CLASSES.find(c => c.id === char.class);
-
-        return (
-          <div className="min-h-screen bg-stone-950 text-stone-300 font-mono p-4 sm:p-6 relative">
-            <div className="flex justify-between items-center border-b border-stone-800 pb-4 mb-4">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded bg-stone-900 border border-stone-700 flex items-center justify-center">
-                  {cls && <Icon name={cls.icon} className="text-amber-500" />}
+            <div className="p-8 bg-stone-950/60">
+              <h3 className="text-xl font-serif text-stone-200 mb-1">Identity</h3>
+              <p className="text-xs text-stone-600 mb-4">Starts at level {mods.startLevel} with {startHp} vitality.</p>
+              <div className="space-y-5">
+                <div>
+                  <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
+                    <span>Name</span>
+                    <SuggestBtn onClick={generateName} generating={generating} />
+                  </div>
+                  <input value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-3 py-2 focus:border-amber-500 outline-none" placeholder="Scion name" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold">{char.name}</h1>
-                  <p className="text-xs text-stone-500">Level {char.level} {char.class}</p>
-                </div>
-              </div>
-              <button onClick={() => setView('hall')} className="text-stone-500 hover:text-stone-200 border border-stone-800 px-4 py-2 text-xs uppercase tracking-widest">Return to Hall</button>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
-              <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between"><span className="text-xs text-stone-500 uppercase">Kills</span><span className="text-red-500 font-bold flex items-center gap-1"><Icon name="skull" size={16} />{stats.kills}</span></div>
-              <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between"><span className="text-xs text-stone-500 uppercase">Loot Gold</span><span className="text-amber-500 font-bold flex items-center gap-1"><Icon name="coins" size={16} />{stats.gold}</span></div>
-              <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between"><span className="text-xs text-stone-500 uppercase">XP</span><span className="text-blue-400 font-bold flex items-center gap-1"><Icon name="zap" size={16} />{stats.xp}</span></div>
-            </div>
-            <div className="mb-4">
-              <div className="flex justify-between text-xs text-amber-500 mb-1 uppercase"><span>Action</span><span>{action}</span></div>
-              <div className="h-2 w-full bg-stone-900 rounded-full overflow-hidden border border-stone-800">
-                <div className="h-full bg-amber-600 transition-all duration-500" style={{ width: `${progress}%` }}></div>
-              </div>
-            </div>
-            <div className="relative bg-stone-950 border border-stone-800 rounded p-4 h-[50vh] overflow-y-auto scanline">
-              <div className="space-y-1">
-                {logs.length === 0 && <div className="text-stone-700 italic">...Initializing World Simulation...</div>}
-                {logs.map((l, i) => (
-                  <div key={i} className="text-sm">
-                    <span className="text-stone-600 mr-2">[{l.t}]</span>
-                    <span>{l.m}</span>
+                  <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
+                    <span>Origin (optional)</span>
+                    <SuggestBtn onClick={generateOrigin} generating={generating} disabled={!name} label="Imagine" />
                   </div>
-                ))}
-                <div ref={endRef}></div>
+                  <textarea value={origin} onChange={(e) => setOrigin(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-3 py-2 h-24 resize-none text-sm focus:border-amber-500 outline-none" />
+                </div>
+                <label className={`flex items-start gap-3 text-sm rounded border p-3 cursor-pointer transition ${outfit && canOutfit ? 'border-amber-700 bg-amber-900/10' : 'border-stone-800'} ${canOutfit ? '' : 'opacity-50 cursor-not-allowed'}`}>
+                  <input type="checkbox" checked={outfit && canOutfit} disabled={!canOutfit} onChange={(e) => setOutfit(e.target.checked)} className="mt-0.5 accent-amber-600" />
+                  <span>
+                    <span className="text-stone-200">Outfit from the vault</span>
+                    <span className="text-orange-300 font-mono ml-2">−{OUTFIT_COST} copper</span>
+                    <span className="block text-xs text-stone-500">Begin with a {outfitName} and +10 vitality. {canOutfit ? '' : 'The vault cannot afford it.'}</span>
+                  </span>
+                </label>
+                <RejectionRow rejects={rejects} />
+                <ScribeMessage message={message} />
+                <button onClick={handleSubmit} disabled={!name || judging} className="w-full bg-stone-100 text-stone-900 py-3 font-bold rounded hover:bg-white disabled:opacity-50 flex items-center justify-center gap-2">
+                  {judging ? <><Icon name="loader" size={16} className="text-stone-800" /><span>Consulting...</span></> : <><Icon name="sparkles" className="text-amber-600" /> Sign the Contract</>}
+                </button>
               </div>
             </div>
           </div>
-        );
+        </div>
+      );
+    }
+
+    // ============================================================
+    // View: World (the expedition)
+    // ============================================================
+    function World({ house, char, onSync, onDeath, onRetreat }) {
+      const classDef = CLASSES.find(c => c.id === char.class) || CLASSES[0];
+      const mods = boonMods(house);
+      const [zoneId, setZoneId] = useState(ZONES[0].id);
+      const [sim, setSim] = useState(() => ({
+        name: char.name,
+        hp: char.hp, maxHp: char.maxHp, xp: char.xp, level: char.level,
+        attrs: char.attrs || attrsFor(char.class, char.level), primary: classDef.attr,
+        kills: char.kills, items: char.items, deeds: char.deeds,
+        copperFound: 0, houseCopperStart: house.copper, foundRelics: [],
+        logs: [{ t: timeStamp(), m: `${char.name} sets out from the Hall of ${house.name}.`, kind: 'travel' }],
+        ticks: 0, dead: false, cause: null, action: 'Setting out',
+      }));
+      const ctxRef = useRef(null);
+      const deathSent = useRef(false);
+      const endRef = useRef(null);
+      const zone = ZONES.find(z => z.id === zoneId);
+      ctxRef.current = { zone, mods, reliquary: house.reliquary };
+
+      useEffect(() => {
+        const iv = setInterval(() => setSim(s => stepSim(s, ctxRef.current)), TICK_MS);
+        return () => clearInterval(iv);
+      }, []);
+      useEffect(() => {
+        onSync(sim);
+        if (sim.dead && !deathSent.current) {
+          deathSent.current = true;
+          setTimeout(() => onDeath(sim.cause), 900);
+        }
+      }, [sim]);
+      useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [sim.logs]);
+
+      const travelTo = (z) => {
+        if (z.id === zoneId || sim.dead) return;
+        setZoneId(z.id);
+        setSim(s => ({ ...s, logs: pushLog(s.logs, `Traveling to ${z.name}. ${z.desc}`, 'travel'), action: `On the road to ${z.name}` }));
       };
+      const LOG_COLORS = { fight: 'text-red-300', loot: 'text-amber-200', relic: 'text-purple-300', travel: 'text-stone-400', rest: 'text-green-300', flavor: 'text-stone-500', warn: 'text-red-400 font-bold', level: 'text-amber-400 font-bold' };
+
+      return (
+        <div className="min-h-screen bg-stone-950 text-stone-300 font-mono p-4 sm:p-6 rise-in">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-wrap gap-y-3 justify-between items-center border-b border-stone-800 pb-4 mb-4">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded bg-stone-900 border border-stone-700 flex items-center justify-center">
+                  <Icon name={classDef.icon} className="text-amber-500" />
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold font-serif">{sim.name}</h1>
+                  <p className="text-xs text-stone-500">Level {sim.level} {classDef.name} of {house.name}</p>
+                  <div className="flex gap-3 mt-0.5">
+                    {Object.keys(ATTRS).map(k => (
+                      <span key={k} className="text-[11px] font-bold" style={{ color: ATTRS[k].color }}>{ATTRS[k].short} {sim.attrs[k]}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <button onClick={() => onRetreat(sim)} disabled={sim.dead}
+                className="text-stone-300 hover:text-amber-300 border border-stone-700 hover:border-amber-800 px-4 py-2 text-xs uppercase tracking-widest disabled:opacity-40 rounded">
+                Retreat to the Hall
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+              {/* Zones */}
+              <div className="space-y-2">
+                <p className="text-[10px] uppercase tracking-widest text-stone-600">The Wilds</p>
+                {ZONES.map(z => {
+                  const active = z.id === zoneId;
+                  const risky = sim.level < z.minLevel;
+                  return (
+                    <button key={z.id} onClick={() => travelTo(z)}
+                      className={`w-full text-left p-3 rounded border text-xs transition ${active ? 'border-amber-600 bg-amber-900/15' : 'border-stone-800 bg-stone-900/40 hover:border-stone-600'}`}>
+                      <div className="flex justify-between items-center gap-2">
+                        <span className={active ? 'text-amber-300' : 'text-stone-300'}>{z.name}</span>
+                        <DangerPips n={z.danger} />
+                      </div>
+                      <p className="text-stone-600 mt-0.5">{z.desc}</p>
+                      {risky && <p className="text-red-400/80 mt-0.5">The scribes advise level {z.minLevel}.</p>}
+                    </button>
+                  );
+                })}
+                <p className="text-[10px] text-stone-700 leading-relaxed pt-1">Deeper wilds pay more in copper, glory, and relics — and take payment in blood. Retreat while you still can.</p>
+              </div>
+
+              {/* Main column */}
+              <div className="lg:col-span-3 space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <Meter value={Math.max(0, Math.round(sim.hp))} max={sim.maxHp} color={sim.hp / sim.maxHp < 0.3 ? 'bg-red-600' : 'bg-red-800'} label="Vitality" />
+                  <Meter value={sim.xp} max={sim.level * 100} color="bg-blue-700" label={`To level ${sim.level + 1}`} />
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between items-center"><span className="text-[10px] text-stone-500 uppercase">Kills</span><span className="text-red-400 font-bold flex items-center gap-1"><Icon name="skull" size={15} />{sim.kills}</span></div>
+                  <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between items-center"><span className="text-[10px] text-stone-500 uppercase">Copper</span><span className="text-orange-300 font-bold flex items-center gap-1"><Icon name="coins" size={15} />{sim.copperFound}</span></div>
+                  <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between items-center"><span className="text-[10px] text-stone-500 uppercase">Relics</span><span className="text-purple-300 font-bold flex items-center gap-1"><Icon name="gem" size={15} />{sim.foundRelics.length}</span></div>
+                </div>
+                <div>
+                  <div className="flex justify-between text-xs text-amber-500 mb-1 uppercase"><span>{zone.name}</span><span>{sim.action}...</span></div>
+                  <div className="h-1.5 w-full bg-stone-900 rounded-full overflow-hidden border border-stone-800">
+                    {!sim.dead && <div key={sim.ticks} className="h-full bg-amber-700/80 tick-bar"></div>}
+                  </div>
+                </div>
+                <div className="relative bg-stone-950 border border-stone-800 rounded p-4 h-[44vh] overflow-y-auto scanline">
+                  <div className="space-y-1">
+                    {sim.logs.map((l, i) => (
+                      <div key={i} className="text-sm">
+                        <span className="text-stone-700 mr-2">[{l.t}]</span>
+                        <span className={LOG_COLORS[l.kind] || 'text-stone-400'}>{l.m}</span>
+                      </div>
+                    ))}
+                    <div ref={endRef}></div>
+                  </div>
+                </div>
+                {sim.items.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {sim.items.map(it => (
+                      <span key={it.id} className={`text-[11px] border rounded px-1.5 py-0.5 ${itemStyle(it).chip}`}>{it.name}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ============================================================
+    // Rite of Passing (death / retirement ceremony)
+    // ============================================================
+    function RiteModal({ char, cause, cancelable, onCommit, onCancel }) {
+      const [epitaph, setEpitaph] = useState('');
+      const [generating, setGenerating] = useState(false);
+      // Tier-1 materials are anyone's tools; only tier 2+ vessels carry enough of a life to become relics.
+      const relicsToInter = char.items.filter(it => it.relicId || it.tier >= 2);
+      const renownGain = char.level * 100 + char.kills * 2 + relicsToInter.length * 50;
+      const suggest = async () => {
+        setGenerating(true);
+        const e = await generateLore('Epitaph', `${char.name}, level ${char.level}, ${cause}. One short solemn line.`);
+        if (e) setEpitaph(e);
+        setGenerating(false);
+      };
+      return (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-6">
+          <div className="w-full max-w-lg glass rounded-xl p-8 text-center rise-in">
+            <Icon name="skull" size={52} className="mx-auto text-red-400 mb-3" />
+            <h2 className="text-2xl font-serif text-stone-100">{char.name} has fallen</h2>
+            <p className="text-sm text-stone-500 mt-1">{cause}</p>
+            <div className="grid grid-cols-3 gap-3 my-6 text-sm">
+              <div className="bg-stone-900/70 border border-stone-800 rounded p-3">
+                <div className="text-purple-300 font-mono text-lg">+{renownGain}</div>
+                <div className="text-[10px] uppercase tracking-widest text-stone-600">Renown</div>
+              </div>
+              <div className="bg-stone-900/70 border border-stone-800 rounded p-3">
+                <div className="text-stone-200 font-mono text-lg">{char.kills}</div>
+                <div className="text-[10px] uppercase tracking-widest text-stone-600">Kills</div>
+              </div>
+              <div className="bg-stone-900/70 border border-stone-800 rounded p-3">
+                <div className="text-purple-300 font-mono text-lg">{relicsToInter.length}</div>
+                <div className="text-[10px] uppercase tracking-widest text-stone-600">Relics interred</div>
+              </div>
+            </div>
+            {relicsToInter.length > 0 && (
+              <div className="text-left bg-stone-900/50 border border-stone-800 rounded p-3 mb-5">
+                <p className="text-[10px] uppercase tracking-widest text-stone-600 mb-1.5">Given back to the world</p>
+                {relicsToInter.map(it => (
+                  <p key={it.id} className={`text-xs ${itemStyle(it).text}`}>{it.name} <span className="text-stone-600">— its bonds sleep in the metal until another hand wakes them</span></p>
+                ))}
+              </div>
+            )}
+            <div className="text-left mb-5">
+              <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
+                <span>Epitaph</span>
+                <SuggestBtn onClick={suggest} generating={generating} />
+              </div>
+              <textarea value={epitaph} onChange={(e) => setEpitaph(e.target.value)} placeholder="Words for the crypt wall..."
+                className="w-full bg-stone-900 border border-stone-700 rounded px-3 py-2 h-20 resize-none text-sm italic focus:border-amber-500 outline-none" />
+            </div>
+            <div className="flex gap-3">
+              {cancelable && (
+                <button onClick={onCancel} className="flex-1 border border-stone-700 text-stone-400 hover:text-stone-200 py-3 rounded uppercase tracking-widest text-xs">
+                  Not Yet
+                </button>
+              )}
+              <button onClick={() => onCommit(epitaph.trim() || pick(OFFLINE_LORE.epitaph))}
+                className="flex-1 bg-stone-100 hover:bg-white text-stone-900 font-bold py-3 rounded uppercase tracking-widest text-xs">
+                Commit to the Crypt
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ============================================================
+    // App
+    // ============================================================
+    function App() {
+      const [houses, setHouses] = useState(loadHouses);
+      const [view, setView] = useState('gate');
+      const [currentHouseId, setCurrentHouseId] = useState(null);
+      const [activeCharId, setActiveCharId] = useState(null);
+      const [pendingDeath, setPendingDeath] = useState(null); // { charId, cause, cancelable }
+      const [notification, setNotification] = useState(null);
+      const noteTimer = useRef(null);
+
+      useEffect(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(houses));
+      }, [houses]);
+
+      const showNote = (msg) => {
+        setNotification(msg);
+        clearTimeout(noteTimer.current);
+        noteTimer.current = setTimeout(() => setNotification(null), 4000);
+      };
+
+      const currentHouse = currentHouseId ? houses[currentHouseId] : null;
+      const updateHouse = (id, fn) => setHouses(prev => (prev[id] ? { ...prev, [id]: fn(prev[id]) } : prev));
+
+      // --- House lifecycle ---
+      const createHouse = (name, motto, sigil, isCorrupt) => {
+        if (!isCorrupt && Object.values(houses).some(h => h.name.toLowerCase() === name.toLowerCase())) {
+          showNote('A House of that name already exists in this realm.');
+          return;
+        }
+        const id = generateId();
+        const house = {
+          id, name, motto, sigil,
+          origin: isCorrupt ? 'corrupt' : 'noble',
+          founded: new Date().toISOString(),
+          copper: isCorrupt ? CORRUPT_COPPER : NOBLE_COPPER,
+          renown: 0,
+          characters: [], crypt: [], reliquary: [],
+        };
+        setHouses(prev => ({ ...prev, [id]: house }));
+        setCurrentHouseId(id);
+        setView('hall');
+      };
+
+      // --- Character lifecycle ---
+      const createCharacter = ({ name, cls, origin, brand, outfit }) => {
+        if (!currentHouse) return;
+        const classDef = CLASSES.find(c => c.id === cls) || CLASSES[0];
+        const mods = boonMods(currentHouse);
+        const level = mods.startLevel;
+        const attrs = attrsFor(classDef.id, level);
+        const maxHp = baseMaxHp(attrs) + (level - 1) * 8 + mods.hp + (outfit ? 10 : 0);
+        const items = [];
+        if (outfit) items.push(makeItem(classDef.outfitItem.form, classDef.outfitItem.material));
+        updateHouse(currentHouseId, h => {
+          const house = { ...h };
+          if (outfit) house.copper = Math.max(0, house.copper - OUTFIT_COST);
+          // Ancestral Arms: hand down a circulating relic, reforged.
+          if (mods.startRelic) {
+            const circ = house.reliquary.filter(r => r.status === 'circulating');
+            if (circ.length) {
+              const relic = pick(circ);
+              const newTier = Math.min(relic.tier + 1, 4);
+              items.push({ id: generateId(), name: relicDisplayName(relic, newTier), base: relic.base, form: relic.form, material: relic.material, relicId: relic.id });
+              house.reliquary = house.reliquary.map(r => r.id === relic.id
+                ? { ...r, tier: newTier, status: 'borne', history: [...r.history, `Handed down to ${name} at the recruiting rite.`] }
+                : r);
+            }
+          }
+          const newChar = {
+            id: generateId(), name, class: cls, level, xp: 0,
+            hp: maxHp, maxHp, attrs, kills: 0, status: 'alive',
+            origin: origin || '', items, deeds: [], brand: brand || null,
+            createdAt: new Date().toISOString(),
+          };
+          house.characters = [...house.characters, newChar];
+          return house;
+        });
+        setView('hall');
+      };
+
+      // --- World sync: reconcile sim state into the house ---
+      const syncSim = (sim) => {
+        if (!currentHouseId || !activeCharId) return;
+        updateHouse(currentHouseId, h => {
+          const house = { ...h, copper: sim.houseCopperStart + sim.copperFound };
+          house.characters = house.characters.map(c => c.id === activeCharId
+            ? { ...c, hp: sim.hp, maxHp: sim.maxHp, xp: sim.xp, level: sim.level, attrs: sim.attrs, kills: sim.kills, items: sim.items, deeds: sim.deeds }
+            : c);
+          // Relics reclaimed this run: mark as borne, tier up, log provenance (idempotent via status check).
+          house.reliquary = house.reliquary.map(r => {
+            if (sim.foundRelics.includes(r.id) && r.status === 'circulating') {
+              const char = house.characters.find(c => c.id === activeCharId);
+              return { ...r, tier: Math.min(r.tier + 1, 4), status: 'borne', history: [...r.history, `Unearthed by ${char ? char.name : 'a scion'}, reforged.`] };
+            }
+            return r;
+          });
+          return house;
+        });
+      };
+
+      const retreat = (sim) => {
+        syncSim(sim);
+        // The house tends its own: scions recover fully in the hall.
+        updateHouse(currentHouseId, h => ({
+          ...h,
+          characters: h.characters.map(c => c.id === activeCharId ? { ...c, hp: c.maxHp } : c),
+        }));
+        showNote('The scion returns. The hearth does the rest.');
+        setActiveCharId(null);
+        setView('hall');
+      };
+
+      const commitDeath = (epitaph) => {
+        if (!pendingDeath || !currentHouse) return;
+        const char = currentHouse.characters.find(c => c.id === pendingDeath.charId);
+        if (!char) { setPendingDeath(null); return; }
+        const relicsToInter = char.items.filter(it => it.relicId || it.tier >= 2);
+        const renownGain = char.level * 100 + char.kills * 2 + relicsToInter.length * 50;
+        const before = unlockedBoons(currentHouse).length;
+        updateHouse(currentHouseId, h => {
+          const house = { ...h, renown: h.renown + renownGain };
+          house.characters = h.characters.filter(c => c.id !== char.id);
+          house.crypt = [{
+            id: char.id, name: char.name, class: char.class, level: char.level,
+            epitaph, cause: pendingDeath.cause, kills: char.kills, deeds: char.deeds,
+            relics: relicsToInter.map(it => it.name), diedAt: new Date().toISOString(),
+          }, ...h.crypt];
+          // Inter the dead's notable items: they enter (or return to) circulation.
+          const date = new Date().toLocaleDateString();
+          const returned = [];
+          relicsToInter.forEach(it => {
+            if (it.relicId) {
+              house.reliquary = house.reliquary.map(r => r.id === it.relicId
+                ? { ...r, status: 'circulating', history: [...r.history, `Interred with ${char.name}; returned to the world.`] }
+                : r);
+              returned.push(it.relicId);
+            }
+          });
+          const fresh = relicsToInter.filter(it => !it.relicId).map(it => ({
+            id: generateId(), base: it.name, form: it.form, material: it.material, origin: char.name, tier: 1,
+            status: 'circulating',
+            history: [`Carried by ${char.name}, interred ${date}. Its bonds sleep in the metal, seeded into the world's drop tables.`],
+          }));
+          house.reliquary = [...fresh, ...house.reliquary];
+          return house;
+        });
+        const after = BOONS.filter(b => (currentHouse.renown + renownGain) >= b.renown).length;
+        if (after > before) {
+          const boon = BOONS.filter(b => (currentHouse.renown + renownGain) >= b.renown).slice(-1)[0];
+          showNote(`${char.name} has fallen. +${renownGain} renown — the House learns: ${boonName(boon, currentHouse.origin === 'corrupt')}.`);
+        } else {
+          showNote(`${char.name} has fallen. +${renownGain} renown. ${relicsToInter.length ? 'Their belongings now circulate as relics.' : ''}`);
+        }
+        setPendingDeath(null);
+        setActiveCharId(null);
+        setView('hall');
+      };
+
+      const retire = (charId) => setPendingDeath({ charId, cause: 'Took the Grey Vow and retired to the crypt', cancelable: true });
+      const worldDeath = (cause) => setPendingDeath({ charId: activeCharId, cause, cancelable: false });
+
+      // --- Render ---
+      const activeChar = currentHouse?.characters.find(c => c.id === activeCharId);
+      const riteChar = pendingDeath ? currentHouse?.characters.find(c => c.id === pendingDeath.charId) : null;
 
       return (
         <div className="font-sans antialiased">
+          <SharedDefs />
           {notification && (
-            <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-stone-900 border border-amber-900/50 text-amber-100 px-5 py-3 rounded shadow-2xl flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-amber-500"></span>
-              {notification}
+            <div className="fixed top-14 left-1/2 -translate-x-1/2 z-[60] bg-stone-900 border border-amber-900/50 text-amber-100 px-5 py-3 rounded shadow-2xl flex items-center gap-2 max-w-[90vw]">
+              <span className="h-2 w-2 rounded-full bg-amber-500 shrink-0"></span>
+              <span className="text-sm">{notification}</span>
             </div>
           )}
-          {view === 'gate' && <Gate />}
-          {view === 'founding' && <Founding />}
-          {view === 'hall' && <Hall />}
-          {view === 'recruit' && <Recruit />}
-          {view === 'world' && <World />}
+          {view === 'gate' && <Gate houses={houses} onEnter={(id) => { setCurrentHouseId(id); setView('hall'); }} onFound={() => setView('founding')} />}
+          {view === 'founding' && <Founding onCreate={createHouse} onBack={() => setView('gate')} showNote={showNote} />}
+          {view === 'hall' && currentHouse && (
+            <Hall house={currentHouse}
+              onRecruit={() => setView('recruit')}
+              onEnterWorld={(id) => { setActiveCharId(id); setView('world'); }}
+              onRetire={retire}
+              onSwitchHouse={() => { setCurrentHouseId(null); setView('gate'); }} />
+          )}
+          {view === 'recruit' && currentHouse && (
+            <Recruit house={currentHouse} onCreate={createCharacter} onBack={() => setView('hall')} showNote={showNote} />
+          )}
+          {view === 'world' && currentHouse && activeChar && (
+            <World key={activeChar.id} house={currentHouse} char={activeChar}
+              onSync={syncSim} onDeath={worldDeath} onRetreat={retreat} />
+          )}
+          {riteChar && (
+            <RiteModal char={riteChar} cause={pendingDeath.cause} cancelable={pendingDeath.cancelable}
+              onCommit={commitDeath} onCancel={() => setPendingDeath(null)} />
+          )}
         </div>
       );
     }
