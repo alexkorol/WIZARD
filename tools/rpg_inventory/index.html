@@ -117,11 +117,30 @@
     .btn:disabled:hover { background: rgba(233,228,216,0.04); color: var(--text); border-color: var(--hairline); transform: none; }
     .btn:focus-visible, .back-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+    /* PoE composition: left column (character / atelier) docks left,
+       the portrait inventory frame docks right, the "world" shows between. */
     .main {
       display: flex; flex-wrap: wrap; gap: 24px;
-      padding: 24px; max-width: 1280px; margin: 0 auto;
+      padding: 24px 28px; max-width: 1500px; margin: 0 auto;
       align-items: flex-start;
+      justify-content: space-between;
     }
+    .left-col {
+      display: flex; flex-direction: column; gap: 20px;
+      width: 430px; max-width: 100%;
+      flex-shrink: 0;
+    }
+    :root { --pc: 50px; } /* paperdoll cell unit — slots sized in cell multiples like PoE */
+    .s1x1 { width: var(--pc); height: var(--pc); }
+    .s2x1 { width: calc(var(--pc) * 2 + 4px); height: calc(var(--pc) * 1 + 2px); }
+    .s2x2 { width: calc(var(--pc) * 2 + 4px); height: calc(var(--pc) * 2 + 4px); }
+    .s2x3 { width: calc(var(--pc) * 2 + 4px); height: calc(var(--pc) * 3 + 6px); }
+    .s2x4 { width: calc(var(--pc) * 2 + 4px); height: calc(var(--pc) * 4 + 8px); }
+    .doll-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .doll-col { display: flex; flex-direction: column; gap: 10px; }
+    .doll-col.thin-l { justify-content: flex-end; }
+    .doll-col.thin-r { justify-content: space-between; }
+    .slot-row.doll { align-items: stretch; gap: 8px; }
 
     .panel {
       background: var(--panel);
@@ -160,7 +179,6 @@
       border: 1px solid rgba(168, 144, 92, 0.28);
       border-radius: 7px;
       box-shadow: inset 0 0 16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(233,228,216,0.05);
-      min-width: 78px; min-height: 78px;
       display: flex; align-items: center; justify-content: center;
       color: var(--dim);
       transition: all 0.2s ease;
@@ -212,7 +230,7 @@
     .chronicle .entry.deed { color: var(--muted); }
 
     /* ---------- Right panel ---------- */
-    .inventory-panel { display: flex; flex-direction: column; gap: 12px; flex: 1; min-width: 380px; }
+    .inventory-panel { display: flex; flex-direction: column; gap: 12px; width: fit-content; max-width: 100%; }
     .section-title { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
     .pack-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
     .pack-actions { display: flex; gap: 8px; }
@@ -494,14 +512,14 @@
     .toast.awake { background: rgba(66,32,9,0.95); color: #fed7aa; border: 1px solid rgba(251,146,60,0.7); }
 
     @media (max-width: 700px) {
+      :root { --pc: 36px; }
       .main { padding: 14px; gap: 16px; }
       .top-bar { padding: 12px 14px; }
-      .inventory-panel { min-width: 0; width: 100%; }
+      .inventory-panel { width: 100%; }
+      .left-col { width: 100%; }
       .paperdoll { width: 100%; }
       .grid-shell { display: block; -webkit-overflow-scrolling: touch; }
-      .equip-slot { min-width: 64px; min-height: 64px; }
-      .equip-slot.tall { min-height: 100px; }
-      .equip-slot.belt { min-width: 120px; min-height: 42px; }
+      .equip-slot .label { font-size: 0.52rem; }
       .atelier-socket { width: 100%; min-height: 150px; }
       .pack-head { flex-direction: column; align-items: flex-start; }
     }
@@ -831,11 +849,9 @@
     );
   };
 
-  const EquipmentSlot = ({ slotType, item, label, tall, onPointerDown, draggingItem, onHover }) => {
+  const EquipmentSlot = ({ slotType, item, label, size = 's2x2', onPointerDown, draggingItem, onHover }) => {
     const highlight = isSlotCompatible(slotType, draggingItem);
-    const cls = ['equip-slot'];
-    if (slotType === 'belt') cls.push('belt');
-    if (tall) cls.push('tall');
+    const cls = ['equip-slot', size];
     if (highlight) cls.push('highlight');
     return (
       <div data-slot-id={slotType} className={cls.join(' ')}>
@@ -1258,38 +1274,16 @@
         </div>
 
         <main className="main">
-          {/* ---------------- Paperdoll ---------------- */}
+          {/* ---------------- Left column: character + atelier ---------------- */}
+          <div className="left-col">
           <div className="panel paperdoll">
-            <div className="panel-banner"><span>Equipment</span></div>
+            <div className="panel-banner"><span>Character</span></div>
             <div className="doll-head">
               <input className="char-name-input" value={character.name} onChange={(e) => setCharName(e.target.value)} aria-label="Character name" spellCheck="false" />
               <select className="arch-select" value={character.archetype} onChange={(e) => setArchetype(e.target.value)} aria-label="Character archetype">
                 {Object.entries(pack.archetypes).map(([id, a]) => <option key={id} value={id}>{a.name}</option>)}
               </select>
               <span className="char-level">Lv {level} · {character.xp % 100}/100</span>
-            </div>
-
-            <div className="slot-row" style={{ justifyContent: 'center' }}>
-              <EquipmentSlot slotType="head" label="Head" item={equipment.head} {...slotProps} />
-              <EquipmentSlot slotType="amulet" label="Neck" item={equipment.amulet} {...slotProps} />
-            </div>
-            <div className="slot-row">
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 8 }}>
-                <EquipmentSlot slotType="mainHand" label="Main Hand" item={equipment.mainHand} tall {...slotProps} />
-                <EquipmentSlot slotType="gloves" label="Hands" item={equipment.gloves} {...slotProps} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-                <EquipmentSlot slotType="body" label="Body" item={equipment.body} tall {...slotProps} />
-                <EquipmentSlot slotType="belt" label="Waist" item={equipment.belt} {...slotProps} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 8 }}>
-                <EquipmentSlot slotType="offHand" label="Off Hand" item={equipment.offHand} tall {...slotProps} />
-                <EquipmentSlot slotType="boots" label="Feet" item={equipment.boots} {...slotProps} />
-              </div>
-            </div>
-            <div className="slot-row" style={{ justifyContent: 'center' }}>
-              <EquipmentSlot slotType="ring1" label="Ring" item={equipment.ring1} {...slotProps} />
-              <EquipmentSlot slotType="ring2" label="Ring" item={equipment.ring2} {...slotProps} />
             </div>
 
             <div className="stat-grid">
@@ -1313,20 +1307,10 @@
             </div>
           </div>
 
-          {/* ---------------- Backpack + Atelier ---------------- */}
-          <div className="panel inventory-panel">
-            <div className="panel-banner"><span>Inventory</span></div>
-            <div className="pack-head">
-              <div className="section-title">{inventory.length} items · {GRID_W}×{GRID_H}</div>
-              <div className="pack-actions">
-                <button className="btn small" onClick={sortPack}>Sort</button>
-                <button className={`btn small ${benchOpen ? 'primary' : ''}`} aria-expanded={benchOpen} onClick={() => setBenchOpen(o => !o)}>
-                  {benchOpen ? 'Close Atelier' : `Atelier · ${satchelTotal}`}
-                </button>
-              </div>
-            </div>
-
-            {benchOpen && (
+          {/* Atelier docks left, like a PoE vendor/crafting window. */}
+          {benchOpen && (
+            <div className="panel">
+              <div className="panel-banner"><span>Atelier</span></div>
               <div className="atelier">
                 <div className="atelier-top">
                   <div data-atelier-socket="true" className={`atelier-socket ${dragState && dragState.item.vessel ? 'highlight' : ''}`}>
@@ -1422,7 +1406,48 @@
                   })}
                 </div>
               </div>
-            )}
+            </div>
+          )}
+          </div>
+
+          {/* ---------------- Inventory: portrait frame, PoE-style ---------------- */}
+          <div className="panel inventory-panel">
+            <div className="panel-banner"><span>Inventory</span></div>
+
+            <div className="doll-wrap">
+              <div className="slot-row doll">
+                <div className="doll-col">
+                  <EquipmentSlot slotType="mainHand" label="Main Hand" size="s2x4" item={equipment.mainHand} {...slotProps} />
+                  <EquipmentSlot slotType="gloves" label="Hands" size="s2x2" item={equipment.gloves} {...slotProps} />
+                </div>
+                <div className="doll-col thin-l">
+                  <EquipmentSlot slotType="ring1" label="Ring" size="s1x1" item={equipment.ring1} {...slotProps} />
+                </div>
+                <div className="doll-col">
+                  <EquipmentSlot slotType="head" label="Head" size="s2x2" item={equipment.head} {...slotProps} />
+                  <EquipmentSlot slotType="body" label="Body" size="s2x3" item={equipment.body} {...slotProps} />
+                  <EquipmentSlot slotType="belt" label="Waist" size="s2x1" item={equipment.belt} {...slotProps} />
+                </div>
+                <div className="doll-col thin-r">
+                  <EquipmentSlot slotType="amulet" label="Neck" size="s1x1" item={equipment.amulet} {...slotProps} />
+                  <EquipmentSlot slotType="ring2" label="Ring" size="s1x1" item={equipment.ring2} {...slotProps} />
+                </div>
+                <div className="doll-col">
+                  <EquipmentSlot slotType="offHand" label="Off Hand" size="s2x4" item={equipment.offHand} {...slotProps} />
+                  <EquipmentSlot slotType="boots" label="Feet" size="s2x2" item={equipment.boots} {...slotProps} />
+                </div>
+              </div>
+            </div>
+
+            <div className="pack-head">
+              <div className="section-title">{inventory.length} items · {GRID_W}×{GRID_H}</div>
+              <div className="pack-actions">
+                <button className="btn small" onClick={sortPack}>Sort</button>
+                <button className={`btn small ${benchOpen ? 'primary' : ''}`} aria-expanded={benchOpen} onClick={() => setBenchOpen(o => !o)}>
+                  {benchOpen ? 'Close Atelier' : `Atelier · ${satchelTotal}`}
+                </button>
+              </div>
+            </div>
 
             <div className="grid-shell">
               <div
