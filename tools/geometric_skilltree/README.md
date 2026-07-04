@@ -6,7 +6,7 @@ Open `index.html` directly in a browser.
 
 ## Current Feature Set
 
-- Nine-ring main hex lattice (271 nodes) with `INT` running center-to-up, `DEX` center-to-bottom-left, and `STR` center-to-bottom-right. The point budget covers roughly a third of the lattice, so builds must choose.
+- Nine-ring main hex lattice (271 nodes) with `INT` running center-to-up, `DEX` center-to-bottom-left, and `STR` center-to-bottom-right. A maxed character has 123 points (100 from levels, 23 from quests) — about 61 node+path steps, under a quarter of the lattice — so builds must choose.
 - Six hidden outer subtrees attached through shared gateway nodes on the main rim, similar in purpose to cluster/ascendancy-style expansions without copying Path of Exile layouts.
 - A single skill-point pool: every node costs 1 point and every path or extra loop link costs 1 point, so travel distance is itself the build cost.
 - Passive nodes provide build effects such as weapon damage, wards, minion damage, evasion, recovery, marks, ailments, and hybrid bonuses.
