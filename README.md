@@ -33,7 +33,7 @@ and a petrified-stone plate, all aligned by silhouette-IoU.
 | [SLerp](tools/slerp/index.html) | Smooth color interpolation and palette generation for pixel art |
 | [Interactive Word Cloud](tools/wordcloud/dist/index.html) | Force-directed concept cloud with animated relationships |
 | [WordSphere](tools/wordsphere/index.html) | 3D spherical word visualization with momentum rotation |
-| [RP Account & Character Creator](tools/rp_account_creator/index.html) | Roleplay-enforced onboarding with LLM-validated names |
+| [Chronicles — RP Account Creator](tools/rp_account_creator/index.html) | Found a House, send scions to die, inherit their relics — permadeath meta-progression with scribe-judged names |
 | [Wireframe Space Shooter](tools/space_shooter/index.html) | 3D wireframe space combat with radar and enemy variety |
 
 ## How these are built
