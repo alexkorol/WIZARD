@@ -1,171 +1,60 @@
-# RPG Inventory System Issues and Improvements Tracking
+# Brands & Bonds / Vesselforge — Known Limitations & Ideas
 
-## Current Issues
+## Vesselforge core (2026-07)
 
-### Inventory Management
-- [ ] Limited item stacking functionality
-- [ ] No weight/capacity system
-- [ ] No item rotation in inventory grid
-- [ ] Limited item sorting options
+- [x] Engine/content split shipped (`core/`), 22 tests green
+- [x] `index.html` rewired onto the core (save key `wizard_vesselforge_v3`;
+      old saves reseed). Art paths follow ASSET-BRIEF naming with SVG
+      fallbacks until the ChatGPT-Pro image run lands — expect benign 404s
+      for `assets/{form}_{material}.png` until then
+- [ ] Ward-knot metamods ("brands cannot be effaced") — PoE metacraft analog
+- [ ] Trophy rites as usable skills with cooldowns (Grim Dawn components)
+- [ ] Estrangement healing / kinship re-stamping over time
+- [ ] Panoply bonuses are display-only labels; make them structured mods
 
-### Equipment System
-- [ ] Basic equipment slots only
-- [ ] No equipment set bonuses
-- [ ] Limited equipment restrictions
-- [ ] No equipment comparison
+Rewritten 2026-07 alongside the full module rebuild. The old grid-inventory
+wishlist is obsolete; this tracks the new system.
 
-### Item System
-- [ ] Basic item properties only
-- [ ] No item quality/rarity system
-- [ ] Limited item tooltips
-- [ ] No item modifications/enchantments
+## Known limitations
 
-## Planned Improvements
+- [ ] Bond formation picks from the item's dominant deed theme but ignores
+      item kind (a shield can learn Slaughter if you only ever fight)  —
+      arguably a feature; revisit for balance
+- [ ] No stacking (currencies deliberately live in the satchel; potions/curios
+      are single items)
+- [ ] Single character — bonds never "fade for strangers" since there is no
+      second bearer to hand items to
+- [ ] Awakened keystone powers are descriptive only (no combat sim to apply them)
+- [ ] `window.confirm` for Reset (fine for a demo, replace with a modal in a game)
 
-### Inventory Features
-1. Grid System
-   - [ ] Add item rotation
-   - [ ] Implement auto-sort
-   - [ ] Add grid size configuration
-   - [ ] Include grid highlighting
+## Ideas for the Verdigris / Delaford port
 
-2. Stacking System
-   - [ ] Add stack size limits
-   - [ ] Implement partial stack moves
-   - [ ] Add stack splitting
-   - [ ] Include stack combining
+- [x] ~~Bond decay when equipped by a different character~~ → shipped as
+      **kinship/estrangement**: bonds carry their shaper's archetype and give
+      half strength to other archetypes
+- [ ] Estrangement could deepen over time, or heal — an estranged bond slowly
+      re-attunes to its new bearer (and re-stamps its kinship)
+- [ ] Named NPC relics generated from the same pipeline (give NPCs deed logs)
+- [ ] Scar removal as an endgame sink ("the item forgives, at a price")
+- [ ] Two-handed weapons occupying both hand slots
+- [ ] Theme-gated encounters (choose your venture, aim your bonds)
+- [ ] Shared stash tabs; loadouts
 
-3. Weight System
-   - [ ] Add item weights
-   - [ ] Implement capacity limits
-   - [ ] Add weight-based movement penalties
-   - [ ] Include weight distribution
+## Verified in the asset + kinship pass (2026-07)
 
-### Equipment System
-1. Equipment Slots
-   - [ ] Add specialized slots (rings, accessories)
-   - [ ] Implement dual wielding
-   - [ ] Add equipment restrictions
-   - [ ] Include set bonuses
+- [x] All 24 AI-generated assets (15 bases, 6 currencies, 3 UI) wired in with
+      SVG fallbacks; ~1.1 MB total after palette quantization
+- [x] Conditional named bonds form via ventures and draughts; estrangement
+      halves values and flips live when the archetype changes
+- [x] Filigree border-image on panels/tooltips, ornament dividers, stone slot
+      texture — no console errors, no mobile overflow, drag engine unaffected
 
-2. Equipment Management
-   - [ ] Add equipment sets
-   - [ ] Implement quick-swap
-   - [ ] Add equipment loadouts
-   - [ ] Include equipment comparison
+## Verified in this rebuild
 
-3. Visual Equipment
-   - [ ] Add character preview
-   - [ ] Implement equipment appearance
-   - [ ] Add visual effects
-   - [ ] Include animation previews
-
-### Item System
-1. Item Properties
-   - [ ] Add quality/rarity system
-   - [ ] Implement durability
-   - [ ] Add item level requirements
-   - [ ] Include item categories
-
-2. Item Modifications
-   - [ ] Add enhancement system
-   - [ ] Implement socket system
-   - [ ] Add enchantment system
-   - [ ] Include item crafting
-
-3. Item Management
-   - [ ] Add item search
-   - [ ] Implement filters
-   - [ ] Add item locking
-   - [ ] Include item notes
-
-### User Interface
-1. Tooltips
-   - [ ] Add detailed item stats
-   - [ ] Implement comparison tooltips
-   - [ ] Add effect descriptions
-   - [ ] Include item history
-
-2. Visual Feedback
-   - [ ] Add drag animations
-   - [ ] Implement hover effects
-   - [ ] Add sound effects
-   - [ ] Include visual notifications
-
-3. Layout Options
-   - [ ] Add customizable layout
-   - [ ] Implement resizable windows
-   - [ ] Add UI scaling
-   - [ ] Include theme options
-
-### Data Management
-1. Storage
-   - [ ] Improve local storage
-   - [ ] Add cloud save support
-   - [ ] Implement multiple characters
-   - [ ] Include shared storage
-
-2. Import/Export
-   - [ ] Add inventory export
-   - [ ] Implement build sharing
-   - [ ] Add template system
-   - [ ] Include backup system
-
-### Currency System
-1. Basic Currency
-   - [ ] Add multiple currency types
-   - [ ] Implement currency conversion
-   - [ ] Add transaction history
-   - [ ] Include wallet management
-
-2. Trading
-   - [ ] Add basic trading
-   - [ ] Implement auction system
-   - [ ] Add vendor system
-   - [ ] Include price history
-
-### Performance
-1. Optimization
-   - [ ] Improve drag performance
-   - [ ] Optimize item rendering
-   - [ ] Add lazy loading
-   - [ ] Include performance monitoring
-
-2. Memory Management
-   - [ ] Optimize item data storage
-   - [ ] Implement cleanup routines
-   - [ ] Add cache management
-   - [ ] Include memory usage tracking
-
-### Accessibility
-1. Controls
-   - [ ] Add keyboard navigation
-   - [ ] Implement screen reader support
-   - [ ] Add ARIA labels
-   - [ ] Include shortcuts
-
-2. Visual
-   - [ ] Add high contrast mode
-   - [ ] Implement colorblind mode
-   - [ ] Add text scaling
-   - [ ] Include UI size options
-
-## Documentation Needs
-- [ ] Add user guide
-- [ ] Create API documentation
-- [ ] Include example configurations
-- [ ] Add tutorial system
-
-## Notes
-
-### Priority Items
-1. Implement item stacking
-2. Add equipment comparison
-3. Improve item tooltips
-4. Add sorting system
-
-### Future Considerations
-- Integration with character systems
-- Real-time multiplayer support
-- Mobile/tablet optimization
-- VR inventory support
+- [x] Drag & drop: grid ↔ paperdoll ↔ atelier socket ↔ vendor, with swap,
+      ghost preview, and no item loss on failed drops
+- [x] All six currencies incl. error paths (full vessel, no brand/bond, max slots)
+- [x] Bond growth + tiering through Venture Forth; awakening path
+- [x] Persistence across reloads (versioned localStorage key, corrupt-save fallback)
+- [x] Mobile layout (375px): no horizontal overflow, grid scrolls, bench stacks
+- [x] Live character sheet aggregation from implicits + brands + bonds

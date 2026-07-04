@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RPG Inventory — WIZARD</title>
-  <meta name="description" content="Grid-based RPG inventory with drag-and-drop equipment, tooltips, and a vendor — an artifact vault demo from the WIZARD portfolio.">
+  <title>Brands &amp; Bonds — Vesselforge — WIZARD</title>
+  <meta name="description" content="Bronze-age ARPG inventory running on the Vesselforge modular item engine: sear Brands, grow Bonds, bind Trophies — items remember their bearer.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -12,6 +12,8 @@
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="core/vesselforge.js"></script>
+  <script src="core/verdigris-pack.js"></script>
 
   <style>
     :root {
@@ -23,11 +25,17 @@
       --muted: #9c9587;
       --dim: #6f695c;
       --accent: #c9a227;
+      --brand: #e0b84f;
+      --bond: #a78bfa;
+      --trophy: #6ee7b7;
+      --awake: #fb923c;
+      --scar: #8b6a6a;
       --cell-size: 48px;
       --cell-gap: 2px;
     }
 
     * { box-sizing: border-box; user-select: none; }
+    input { user-select: text; }
 
     body {
       margin: 0;
@@ -43,7 +51,7 @@
       min-height: 100vh;
       background-image:
         radial-gradient(circle at 15% 40%, rgba(201, 162, 39, 0.05), transparent 36%),
-        radial-gradient(circle at 80% 20%, rgba(201, 162, 39, 0.04), transparent 32%);
+        radial-gradient(circle at 80% 20%, rgba(110, 231, 183, 0.03), transparent 32%);
       padding-bottom: 40px;
     }
 
@@ -54,7 +62,7 @@
       gap: 12px;
       flex-wrap: wrap;
       padding: 14px 22px;
-      background: linear-gradient(90deg, rgba(13, 12, 10, 0.96), rgba(16, 15, 12, 0.96));
+      background: linear-gradient(90deg, #0d0c0a, #100f0c);
       border-bottom: 1px solid var(--hairline);
       position: sticky;
       top: 0;
@@ -76,133 +84,159 @@
       margin: 0 0 4px -6px;
       transition: color 0.2s ease, border-color 0.2s ease;
     }
-    .back-link:hover {
-      color: var(--accent);
-      border-color: var(--hairline);
-    }
+    .back-link:hover { color: var(--accent); border-color: var(--hairline); }
 
-    .title {
-      font-family: 'Cinzel', serif;
-      letter-spacing: 0.14em;
-      font-size: 1.1rem;
-      color: var(--text);
-    }
+    .title { font-family: 'Cinzel', serif; letter-spacing: 0.14em; font-size: 1.1rem; color: var(--text); }
     .title strong { color: var(--accent); }
     .subtext { color: var(--muted); font-size: 0.85rem; }
 
-    .top-actions { display: flex; align-items: center; gap: 12px; }
+    .top-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .gold-counter {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      display: flex; align-items: center; gap: 8px;
       background: #0b0a08;
       border: 1px solid rgba(201, 162, 39, 0.35);
-      padding: 8px 12px;
-      border-radius: 10px;
-      color: #e0c25e;
-      font-family: 'JetBrains Mono', monospace;
+      padding: 8px 12px; border-radius: 10px;
+      color: #e0c25e; font-family: 'JetBrains Mono', monospace;
       box-shadow: inset 0 0 12px rgba(0,0,0,0.5);
+      white-space: nowrap;
     }
     .btn {
       background: rgba(233,228,216,0.04);
       border: 1px solid var(--hairline);
       color: var(--text);
-      padding: 10px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-family: 'Cinzel', serif;
-      letter-spacing: 0.08em;
+      padding: 10px 14px; border-radius: 10px; cursor: pointer;
+      font-family: 'Cinzel', serif; letter-spacing: 0.08em; font-size: 0.8rem;
+      white-space: nowrap;
       transition: all 0.18s ease;
     }
     .btn:hover { background: var(--accent); color: #0b0b0b; border-color: var(--accent); transform: translateY(-1px); }
     .btn:active { transform: translateY(0); }
-    .btn:focus-visible, .back-link:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
+    .btn.primary { border-color: rgba(201,162,39,0.5); color: #e0c25e; }
+    .btn.small { padding: 6px 10px; font-size: 0.7rem; }
+    .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .btn:disabled:hover { background: rgba(233,228,216,0.04); color: var(--text); border-color: var(--hairline); transform: none; }
+    .btn:focus-visible, .back-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
     .main {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
-      padding: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
+      display: flex; flex-wrap: wrap; gap: 24px;
+      padding: 24px; max-width: 1280px; margin: 0 auto;
+      align-items: flex-start;
     }
 
     .panel {
       background: var(--panel);
-      border: 1px solid var(--panel-border);
-      border-radius: 12px;
-      padding: 18px;
+      background-clip: padding-box;
+      border: 16px solid transparent;
+      border-image: url('assets/frame_ornate.png') 118 / 16px stretch;
+      padding: 12px;
       box-shadow: 0 15px 45px rgba(0,0,0,0.42);
       position: relative;
     }
 
-    .paperdoll { display: flex; flex-direction: column; gap: 16px; align-items: center; }
+    /* ---------- Paperdoll ---------- */
+    .paperdoll { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+    .doll-head { width: 100%; display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    .char-name-input {
+      background: transparent; border: none;
+      border-bottom: 1px dashed rgba(233,228,216,0.2);
+      color: var(--text); font-family: 'Cinzel', serif; font-size: 1rem;
+      letter-spacing: 0.1em; width: 120px; padding: 2px 0;
+    }
+    .char-name-input:focus { outline: none; border-bottom-color: var(--accent); }
+    .char-level { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
+    .arch-select {
+      background: #0b0a08; border: 1px solid var(--hairline); color: var(--text);
+      font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.08em;
+      border-radius: 6px; padding: 4px 6px; cursor: pointer;
+    }
+    .arch-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
     .slot-row { display: flex; align-items: flex-start; gap: 14px; }
 
     .equip-slot {
       position: relative;
       background: rgba(233,228,216,0.02);
+      background-image: linear-gradient(rgba(13,12,10,0.5), rgba(13,12,10,0.5)), url('assets/slot_texture.png');
+      background-size: cover;
+      background-position: center;
       border: 1px dashed rgba(233, 228, 216, 0.18);
       border-radius: 12px;
-      min-width: 78px;
-      min-height: 78px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      min-width: 78px; min-height: 78px;
+      display: flex; align-items: center; justify-content: center;
       color: var(--dim);
       transition: all 0.2s ease;
       overflow: hidden;
     }
     .equip-slot.belt { min-width: 150px; min-height: 46px; }
-    .equip-slot.small { min-width: 70px; min-height: 70px; }
+    .equip-slot.tall { min-height: 120px; }
     .equip-slot.highlight {
       border-color: var(--accent);
       box-shadow: 0 0 14px rgba(201, 162, 39, 0.32);
       background: rgba(201, 162, 39, 0.08);
       color: var(--accent);
     }
-    .equip-slot .label {
-      font-size: 0.65rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      text-align: center;
-      padding: 0 6px;
+    .equip-slot .label { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; padding: 0 6px; }
+
+    .stat-grid {
+      margin-top: 4px; width: 100%;
+      display: grid; grid-template-columns: repeat(2, minmax(130px, 1fr));
+      gap: 7px 18px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--muted);
+    }
+    .stat-grid strong { color: var(--text); font-weight: 700; }
+
+    .pill {
+      display: inline-block; border: 1px solid var(--hairline); border-radius: 20px;
+      padding: 1px 9px; margin: 2px 3px 2px 0;
+      color: var(--trophy); font-size: 0.7rem; font-family: 'JetBrains Mono', monospace;
+    }
+    .panoply-line { color: var(--awake); font-size: 0.76rem; width: 100%; }
+
+    .silhouette {
+      position: absolute; inset: 24px; opacity: 0.04; pointer-events: none;
+      display: flex; align-items: center; justify-content: center;
     }
 
-    .inventory-panel { display: flex; flex-direction: column; gap: 12px; flex: 1; min-width: 360px; }
+    /* ---------- Chronicle ---------- */
+    .chronicle {
+      width: 100%; max-height: 180px; overflow-y: auto;
+      display: flex; flex-direction: column; gap: 5px;
+      padding: 10px; background: rgba(0,0,0,0.3);
+      border: 1px solid var(--hairline); border-radius: 10px;
+      font-size: 0.78rem;
+    }
+    .chronicle .entry { color: var(--muted); line-height: 1.35; }
+    .chronicle .entry.bond { color: var(--bond); }
+    .chronicle .entry.awake { color: var(--awake); font-weight: 600; }
+    .chronicle .entry.craft { color: var(--brand); }
+    .chronicle .entry.sys, .chronicle .entry.deed { color: var(--dim); }
+    .chronicle .entry.deed { color: var(--muted); }
+
+    /* ---------- Right panel ---------- */
+    .inventory-panel { display: flex; flex-direction: column; gap: 12px; flex: 1; min-width: 380px; }
     .section-title { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .pack-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .pack-actions { display: flex; gap: 8px; }
 
     .grid-shell {
-      position: relative;
-      display: inline-block;
-      max-width: 100%;
-      overflow-x: auto;
-      padding: 10px;
+      position: relative; display: inline-block; max-width: 100%;
+      overflow-x: auto; padding: 10px;
       background: linear-gradient(180deg, rgba(24, 22, 18, 0.82), rgba(10, 9, 7, 0.9));
-      border-radius: 12px;
-      border: 1px solid var(--panel-border);
+      border-radius: 12px; border: 1px solid var(--panel-border);
       box-shadow: inset 0 0 0 1px rgba(233,228,216,0.02);
     }
 
     .inventory-grid {
-      position: relative;
-      display: grid;
-      width: max-content;
+      position: relative; display: grid; width: max-content;
       gap: var(--cell-gap);
-      background: rgba(0,0,0,0.35);
-      border: 1px solid var(--hairline);
-      border-radius: 10px;
-      overflow: hidden;
+      background: linear-gradient(rgba(10,9,7,0.55), rgba(10,9,7,0.55)), url('assets/slot_texture.png') repeat;
+      border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden;
     }
 
     .grid-cell {
-      width: var(--cell-size);
-      height: var(--cell-size);
+      width: var(--cell-size); height: var(--cell-size);
       background: rgba(233,228,216,0.02);
-      border: 1px solid rgba(233,228,216,0.03);
+      border: 1px solid rgba(233,228,216,0.04);
     }
 
     .item {
@@ -210,122 +244,191 @@
       border: 1px solid rgba(233,228,216,0.2);
       border-radius: 10px;
       background: linear-gradient(145deg, rgba(40,37,31,0.94), rgba(20,18,15,0.92));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: grab;
-      touch-action: none;
+      display: flex; align-items: center; justify-content: center;
+      cursor: grab; touch-action: none;
       transition: transform 0.08s ease, box-shadow 0.2s ease;
       overflow: hidden;
     }
-    .item:hover { filter: brightness(1.08); }
-    .item.dragging {
-      opacity: 0.92;
-      transform: scale(1.05);
-      cursor: grabbing;
-      box-shadow: 0 18px 30px rgba(0,0,0,0.52);
+    .item:hover { filter: brightness(1.1); }
+    .item.dragging { opacity: 0.92; transform: scale(1.05); cursor: grabbing; box-shadow: 0 18px 30px rgba(0,0,0,0.52); }
+    .item .item-gloss { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(233,228,216,0.06), transparent 55%); pointer-events: none; }
+    .item-art {
+      max-width: 88%; max-height: 84%; object-fit: contain;
+      filter: drop-shadow(0 3px 7px rgba(0,0,0,0.65));
+      pointer-events: none; position: relative; z-index: 1;
     }
-    .item .item-gloss {
+    .item-sigil { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 0; }
+    .item .pip-strip {
+      position: absolute; bottom: 2px; left: 0; right: 0;
+      display: flex; justify-content: center; gap: 2px;
+      font-size: 7px; line-height: 1; pointer-events: none; z-index: 2;
+    }
+    /* Opacity-only pulse: composites on the GPU, never forces repaint
+       (animating box-shadow froze weaker renderers). */
+    .item.awakened { box-shadow: 0 0 12px rgba(251,146,60,0.4); }
+    .item.awakened::after {
+      content: "";
       position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(233,228,216,0.06), transparent 55%);
+      inset: -5px;
+      border-radius: 12px;
+      box-shadow: 0 0 22px rgba(251,146,60,0.65);
+      opacity: 0.15;
+      animation: awakePulse 2.6s ease-in-out infinite;
       pointer-events: none;
+    }
+    @keyframes awakePulse {
+      0%, 100% { opacity: 0.15; }
+      50% { opacity: 1; }
     }
 
-    .ghost {
-      position: absolute;
-      z-index: 5;
-      border: 2px solid rgba(255,255,255,0.14);
-      pointer-events: none;
-      border-radius: 6px;
-    }
+    .ghost { position: absolute; z-index: 5; border: 2px solid rgba(255,255,255,0.14); pointer-events: none; border-radius: 6px; }
     .ghost.valid { border-color: rgba(74,222,128,0.6); background: rgba(74,222,128,0.14); box-shadow: 0 0 16px rgba(74,222,128,0.25); }
     .ghost.invalid { border-color: rgba(248,113,113,0.6); background: rgba(248,113,113,0.14); box-shadow: 0 0 16px rgba(248,113,113,0.25); }
 
     .trash-zone {
-      min-height: 92px;
+      min-height: 66px;
       border: 2px dashed rgba(233, 228, 216, 0.18);
       border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      color: var(--muted);
-      padding: 12px;
-      transition: all 0.2s ease;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      color: var(--muted); padding: 12px;
+      transition: all 0.2s ease; font-size: 0.85rem;
     }
     .trash-zone.active { border-color: #ef4444; background: rgba(239,68,68,0.09); color: #fca5a5; box-shadow: 0 0 12px rgba(239,68,68,0.25); }
 
-    .tooltip {
-      position: fixed;
-      pointer-events: none;
-      z-index: 100;
-      min-width: 230px;
-      background: rgba(13,12,10,0.98);
-      border: 1px solid var(--hairline);
-      border-radius: 10px;
-      padding: 12px;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.65);
+    /* ---------- Atelier ---------- */
+    .atelier {
+      display: flex; flex-direction: column; gap: 14px;
+      border: 1px solid rgba(167,139,250,0.22);
+      border-radius: 12px; padding: 14px;
+      background: linear-gradient(180deg, rgba(167,139,250,0.04), rgba(0,0,0,0.25));
+      animation: benchIn 0.22s ease;
     }
-    .tooltip .header { font-family: 'Cinzel', serif; font-size: 1rem; margin-bottom: 4px; }
-    .tooltip .rarity { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-    .tooltip .stat { color: #d6d0c2; font-size: 0.9rem; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-    .tooltip .foot { color: var(--dim); font-size: 0.75rem; margin-top: 8px; border-top: 1px solid var(--hairline); padding-top: 6px; }
-
-    .error-chip {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(127,29,29,0.9);
-      color: #fecdd3;
-      padding: 10px 16px;
-      border: 1px solid rgba(239,68,68,0.7);
-      border-radius: 10px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.45);
-      z-index: 120;
-      font-weight: 700;
-      letter-spacing: 0.05em;
+    @keyframes benchIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    .atelier-top { display: flex; gap: 16px; flex-wrap: wrap; }
+    .atelier-socket {
+      flex: 0 0 auto; width: 180px; min-height: 200px;
+      border: 2px dashed rgba(167,139,250,0.3);
+      border-radius: 14px;
+      background: radial-gradient(circle at 50% 35%, rgba(167,139,250,0.07), rgba(0,0,0,0.35));
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 10px; padding: 14px; text-align: center;
+      transition: all 0.2s ease; position: relative;
     }
+    .atelier-socket.highlight {
+      border-color: var(--bond);
+      box-shadow: 0 0 18px rgba(167,139,250,0.3);
+      background: radial-gradient(circle at 50% 35%, rgba(167,139,250,0.14), rgba(0,0,0,0.35));
+    }
+    .atelier-socket .hint { color: var(--dim); font-size: 0.78rem; line-height: 1.4; }
+    .socket-item-frame { position: relative; }
 
-    .stat-grid {
-      margin-top: 10px;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(120px, 1fr));
-      gap: 8px 18px;
+    .atelier-readout { flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: 7px; font-size: 0.83rem; }
+    .atelier-readout .row-name { font-family: 'Cinzel', serif; font-size: 0.95rem; }
+    .atelier-readout .modline { display: flex; align-items: baseline; gap: 7px; }
+    .atelier-readout .modline.brand { color: var(--brand); }
+    .atelier-readout .modline.trophy { color: var(--trophy); }
+    .atelier-readout .modline .glyph { font-size: 0.7rem; }
+
+    .tool-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    .tool-select {
+      background: #0b0a08; border: 1px solid var(--hairline); color: var(--text);
+      font-size: 0.72rem; border-radius: 7px; padding: 5px 6px; cursor: pointer;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--muted);
     }
-    .stat-grid strong { color: var(--text); }
+    .odds-mini { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--dim); line-height: 1.5; }
+    .odds-mini b { color: var(--accent); font-weight: 400; }
 
-    .silhouette {
-      position: absolute;
-      inset: 24px;
-      opacity: 0.04;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .pips { display: flex; gap: 5px; font-size: 0.85rem; }
+    .pip-brand { color: var(--brand); }
+    .pip-trophy { color: var(--trophy); }
+    .pip-scar { color: var(--scar); }
+    .pip-empty { color: rgba(233,228,216,0.22); }
+    .pips-legend { color: var(--dim); font-size: 0.7rem; }
+    .pips-legend span { margin-right: 12px; }
+
+    .att-bar { height: 5px; border-radius: 3px; background: rgba(233,228,216,0.08); overflow: hidden; }
+    .att-bar > div { height: 100%; background: linear-gradient(90deg, #7c6bd4, var(--bond)); transition: width 0.4s ease; }
+    .att-label { display: flex; justify-content: space-between; font-size: 0.66rem; color: var(--dim); margin-bottom: 3px; font-family: 'JetBrains Mono', monospace; }
+
+    .shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 10px; }
+    .shelf-card {
+      display: flex; gap: 10px; padding: 10px;
+      background: rgba(0,0,0,0.3); border: 1px solid var(--hairline); border-radius: 10px;
+      align-items: flex-start; transition: border-color 0.18s ease;
     }
+    .shelf-card:hover { border-color: rgba(201,162,39,0.35); }
+    .shelf-icon {
+      flex: 0 0 38px; width: 38px; height: 38px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(233,228,216,0.05); border: 1px solid var(--hairline);
+      color: var(--accent);
+    }
+    .shelf-icon .item-art { max-width: 30px; max-height: 30px; }
+    .shelf-body { flex: 1; min-width: 0; }
+    .shelf-name { font-family: 'Cinzel', serif; font-size: 0.78rem; letter-spacing: 0.04em; display: flex; justify-content: space-between; gap: 6px; }
+    .shelf-count { font-family: 'JetBrains Mono', monospace; color: var(--accent); }
+    .shelf-desc { color: var(--muted); font-size: 0.72rem; line-height: 1.35; margin: 3px 0 7px; }
+    .shelf-actions { display: flex; gap: 6px; }
 
-    @media (max-width: 640px) {
+    /* ---------- Tooltip ---------- */
+    .tooltip {
+      position: fixed; pointer-events: none; z-index: 100;
+      width: 300px;
+      background: rgba(13,12,10,0.98);
+      background-clip: padding-box;
+      border: 12px solid transparent;
+      border-image: url('assets/frame_ornate.png') 118 / 12px stretch;
+      padding: 8px 9px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.65);
+      font-size: 0.84rem;
+    }
+    .tooltip .tt-name { font-family: 'Cinzel', serif; font-size: 1.02rem; line-height: 1.25; }
+    .tooltip .tt-base { font-family: 'Cinzel', serif; font-size: 0.86rem; color: var(--muted); }
+    .tooltip .tt-kind, .tooltip .tt-vessel { font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); margin: 4px 0; }
+    .tooltip .tt-divider { height: 18px; background: url('assets/divider.png') center / contain no-repeat; margin: 5px 0; opacity: 0.85; }
+    .tooltip .tt-stat { color: #d6d0c2; margin-bottom: 3px; }
+    .tooltip .tt-implicit { color: #8fb7e8; font-style: italic; margin-bottom: 2px; }
+    .tooltip .tt-brand { color: var(--brand); margin-bottom: 3px; }
+    .tooltip .tt-trophy { color: var(--trophy); margin-bottom: 3px; }
+    .tooltip .tt-scar { color: var(--scar); margin-bottom: 3px; }
+    .tooltip .tt-bond { margin-bottom: 3px; }
+    .tooltip .tt-power { color: var(--awake); margin: 6px 0 3px; }
+    .tooltip .tt-flavor { color: #b7a98a; font-style: italic; text-align: center; margin: 8px 0 2px; line-height: 1.4; font-size: 0.8rem; }
+    .tooltip .foot { color: var(--dim); font-size: 0.72rem; margin-top: 8px; border-top: 1px solid var(--hairline); padding-top: 6px; line-height: 1.4; }
+    .estranged { opacity: 0.55; font-style: italic; }
+
+    /* ---------- Toast ---------- */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      padding: 10px 18px; border-radius: 10px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+      z-index: 120; font-weight: 600; letter-spacing: 0.04em;
+      max-width: min(520px, 90vw); text-align: center;
+      animation: toastIn 0.18s ease;
+    }
+    @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+    .toast.err { background: rgba(127,29,29,0.92); color: #fecdd3; border: 1px solid rgba(239,68,68,0.7); }
+    .toast.ok { background: rgba(20,45,25,0.94); color: #bbf7d0; border: 1px solid rgba(74,222,128,0.5); }
+    .toast.bond { background: rgba(42,32,74,0.94); color: #ddd6fe; border: 1px solid rgba(167,139,250,0.6); }
+    .toast.awake { background: rgba(66,32,9,0.95); color: #fed7aa; border: 1px solid rgba(251,146,60,0.7); }
+
+    @media (max-width: 700px) {
       .main { padding: 14px; gap: 16px; }
       .top-bar { padding: 12px 14px; }
-      .panel { padding: 14px; }
       .inventory-panel { min-width: 0; width: 100%; }
       .paperdoll { width: 100%; }
       .grid-shell { display: block; -webkit-overflow-scrolling: touch; }
       .equip-slot { min-width: 64px; min-height: 64px; }
+      .equip-slot.tall { min-height: 100px; }
       .equip-slot.belt { min-width: 120px; min-height: 42px; }
+      .atelier-socket { width: 100%; min-height: 150px; }
+      .pack-head { flex-direction: column; align-items: flex-start; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-      }
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
       .btn:hover, .item.dragging { transform: none; }
+      .item.awakened { animation: none; box-shadow: 0 0 14px rgba(251,146,60,0.45); }
     }
   </style>
 </head>
@@ -334,196 +437,88 @@
 <div id="root"></div>
 
 <script type="text/babel">
-  const { useState, useEffect, useRef, useCallback } = React;
+  const { useState, useEffect, useRef, useCallback, useMemo } = React;
+
+  /* =====================================================================
+     UI layer only — all item rules live in core/vesselforge.js, all
+     content in core/verdigris-pack.js. This file: grid placement, drag
+     engine, rendering, and the demo's gold economy for craft operations.
+     ===================================================================== */
+  const pack = VerdigrisPack;
+  const forge = VesselForge.createForge(pack);
 
   const GRID_W = 12;
-  const GRID_H = 6;
+  const GRID_H = 8;
   const TILE_SIZE = 48;
   const CELL_GAP = 2;
+  const SAVE_KEY = 'wizard_vesselforge_v3';
+  const ROMAN = ['I', 'II', 'III'];
 
-  const ITEM_TYPES = {
-    WEAPON: 'weapon',
-    ARMOR: 'armor',
-    HELMET: 'helmet',
-    BOOTS: 'boots',
-    GLOVES: 'gloves',
-    BELT: 'belt',
-    AMULET: 'amulet',
-    POTION: 'potion',
-    ACCESSORY: 'accessory',
-    MATERIAL: 'material',
+  /* Demo economy: craft operations & tools priced in gold. */
+  const OP_COST = { sear: 60, efface: 40, chisel: 150, fire: 100, resonate: 200, sever: 80 };
+  const TOOL_PRICES = { red_ochre: 80, woad: 80, soot: 80, ochre_gold: 80, entrail_omen: 120, bird_omen: 120, smoke_omen: 120, blood_omen: 120 };
+  const TOOL_DESC = {
+    red_ochre: 'Pigment — the mold drinks it: searing leans hard toward blade, blood and blunt.',
+    woad: 'Pigment — searing leans toward ward and life.',
+    soot: 'Pigment — searing leans toward spirit and ember.',
+    ochre_gold: 'Pigment — searing leans toward fortune, swiftness and the river.',
+    entrail_omen: 'Omen — read first, sear after: the next brand is guaranteed to carry the ward tag.',
+    bird_omen: 'Omen — the next brand is guaranteed swift.',
+    smoke_omen: 'Omen — the next brand is guaranteed spirit.',
+    blood_omen: 'Omen — the next brand is guaranteed blood.',
   };
 
-  const RARITY = {
-    COMMON: { label: 'Common', color: '#d6d0c2', border: '#5d574c', shadow: '0 0 0 rgba(0,0,0,0)' },
-    MAGIC: { label: 'Magic', color: '#60a5fa', border: '#3b82f6', shadow: '0 0 12px rgba(59,130,246,0.35)' },
-    RARE: { label: 'Rare', color: '#facc15', border: '#facc15', shadow: '0 0 14px rgba(250,204,21,0.35)' },
-    LEGENDARY: { label: 'Legendary', color: '#fb923c', border: '#f97316', shadow: '0 0 16px rgba(249,115,22,0.4)' },
-  };
-
+  /* ---------------- icons (SVG fallbacks for missing art) ---------------- */
   const iconProps = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round' };
-
   const ICONS = {
-    sword: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <path d="M3 21l5-5" />
-        <path d="M14 4l6-2-2 6-9 9-4 1 1-4 9-9z" />
-        <path d="M7 14l3 3" />
-      </svg>
-    ),
-    shield: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z" />
-        <path d="M12 6v11" />
-      </svg>
-    ),
-    hammer: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <rect x="4" y="4" width="9" height="5" rx="1" />
-        <path d="M11 9l6 6" />
-        <path d="M14.5 12.5l-3.5 3.5" />
-      </svg>
-    ),
-    skull: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <path d="M7 14v2a2 2 0 002 2h6a2 2 0 002-2v-2" />
-        <path d="M8 14h8" />
-        <path d="M9 10.5a1 1 0 11-.01 0" />
-        <path d="M15 10.5a1 1 0 11-.01 0" />
-        <path d="M12 4a6 6 0 016 6v2H6v-2a6 6 0 016-6z" />
-      </svg>
-    ),
-    scroll: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <path d="M7 4h10a2 2 0 012 2v11a2 2 0 01-2 2H8a2 2 0 01-2-2V6a2 2 0 012-2z" />
-        <path d="M9 8h8" />
-        <path d="M9 12h6" />
-      </svg>
-    ),
-    gem: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <path d="M12 3l6 5-6 13-6-13z" />
-        <path d="M18 8H6" />
-        <path d="M12 3l-2 5 2 13 2-13z" />
-      </svg>
-    ),
-    zap: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <path d="M13 2L4 14h7l-1 8 9-12h-7z" />
-      </svg>
-    ),
-    axe: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <path d="M4 5h6l3 4-2 2-3-2-2 2-3-3z" />
-        <path d="M11 9l8 8" />
-        <path d="M18 14l2 2" />
-      </svg>
-    ),
-    shirt: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <path d="M9 4l3 2 3-2 3 3-2 2v11H8V9L6 7z" />
-      </svg>
-    ),
-    wand: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <path d="M4 20l9-9" />
-        <path d="M14 4l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" />
-      </svg>
-    ),
-    boots: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <path d="M6 3h7v10l5 2v4H6z" />
-        <path d="M6 15h7" />
-      </svg>
-    ),
-    hand: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <path d="M7 13V7a1.5 1.5 0 013 0v4" />
-        <path d="M10 11V5a1.5 1.5 0 013 0v6" />
-        <path d="M13 11V6a1.5 1.5 0 013 0v7" />
-        <path d="M7 13c0 4 2 7 5 7s5-2 5-5v-4" />
-      </svg>
-    ),
-    crosshair: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <circle cx="12" cy="12" r="6" />
-        <path d="M12 3v3" />
-        <path d="M12 18v3" />
-        <path d="M3 12h3" />
-        <path d="M18 12h3" />
-      </svg>
-    ),
-    anchor: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <path d="M12 3v13" />
-        <path d="M9 6h6" />
-        <path d="M5 13c0 4 3 7 7 7s7-3 7-7" />
-        <path d="M8 17l4-1 4 1" />
-      </svg>
-    ),
-    crown: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <path d="M4 8l3 2 3-5 3 5 3-2 4 5-3 4H3l-3-4z" />
-        <path d="M4 17h16" />
-      </svg>
-    ),
-    box: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <path d="M3 7l9-4 9 4-9 4z" />
-        <path d="M3 7v10l9 4 9-4V7" />
-        <path d="M12 11v10" />
-      </svg>
-    ),
-    default: ({ size = 26 }) => (
-      <svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}>
-        <rect x="4" y="4" width="16" height="16" rx="2" />
-        <path d="M8 12h8" />
-        <path d="M12 8v8" />
-      </svg>
-    ),
+    axe: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M4 5h6l3 4-2 2-3-2-2 2-3-3z" /><path d="M11 9l8 8" /><path d="M18 14l2 2" /></svg>),
+    spear: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M12 21V8" /><path d="M12 8L9.5 5.5 12 2l2.5 3.5z" /></svg>),
+    club: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M10 21l-1-6 1-11h4l1 11-1 6z" /><path d="M9 6h6" /><path d="M9 10h6" /><path d="M9 14h6" /></svg>),
+    atlatl: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M8 21L16 3" /><path d="M16 3l2 3" /><path d="M8 21c-2-1-3-3-2-5" /></svg>),
+    khopesh: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M9 21l1-6c-3-2-4-6-2-9 1 3 3 4 6 4l4-1-1 4c-2 2-4 2-6 2l-1 6z" /></svg>),
+    sling: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M7 3l5 8 5-8" /><path d="M12 11v7" /><circle cx="12" cy="20" r="1.6" /></svg>),
+    shield: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z" /><path d="M12 6v11" /></svg>),
+    wrap: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M9 4l3 2 3-2 3 3-2 2v11H8V9L6 7z" /></svg>),
+    crest: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M5 14v-3a7 7 0 0114 0v3" /><path d="M5 14h14v3a2 2 0 01-2 2h-2l-1-3h-4l-1 3H7a2 2 0 01-2-2z" /><path d="M12 4v3" /></svg>),
+    grips: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M7 13V7a1.5 1.5 0 013 0v4" /><path d="M10 11V5a1.5 1.5 0 013 0v6" /><path d="M13 11V6a1.5 1.5 0 013 0v7" /><path d="M7 13c0 4 2 7 5 7s5-2 5-5v-4" /></svg>),
+    sandals: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M6 3h7v10l5 2v4H6z" /><path d="M6 15h7" /></svg>),
+    girdle: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M2 10h20v4H2z" /><rect x="9" y="8.5" width="6" height="7" rx="1" /><path d="M12 10v4" /></svg>),
+    gorget: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M5 4c2 3 5 4 7 4s5-1 7-4" /><path d="M12 8v3" /><path d="M12 11l-2.5 3.5L12 19l2.5-4.5z" /></svg>),
+    ring: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><circle cx="12" cy="14" r="6" /><path d="M9 8l3-5 3 5" /><path d="M9 8h6" /></svg>),
+    curio: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M12 3l6 5-6 13-6-13z" /><path d="M18 8H6" /><path d="M12 3l-2 5 2 13 2-13z" /></svg>),
+    tool: ({ size = 22 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><circle cx="12" cy="12" r="7" /><path d="M12 5v-2" /><path d="M12 21v-2" /><path d="M5 12H3" /><path d="M21 12h-2" /></svg>),
+    default: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><rect x="4" y="4" width="16" height="16" rx="2" /><path d="M8 12h8" /><path d="M12 8v8" /></svg>),
   };
 
-  const ITEM_DB = [
-    { name: 'Rusty Short Sword', type: ITEM_TYPES.WEAPON, w: 1, h: 3, icon: 'sword', rarity: 'COMMON', stats: ['+5 Physical Dmg'] },
-    { name: 'Iron Plate', type: ITEM_TYPES.ARMOR, w: 2, h: 3, icon: 'shield', rarity: 'COMMON', stats: ['+15 Armor'] },
-    { name: 'Bone Helm', type: ITEM_TYPES.HELMET, w: 2, h: 2, icon: 'skull', rarity: 'MAGIC', stats: ['+10 Armor', '+5 Necrotic Res'] },
-    { name: 'Minor Health Potion', type: ITEM_TYPES.POTION, w: 1, h: 1, icon: 'box', rarity: 'COMMON', stats: ['Restores 50 HP'] },
-    { name: 'Town Portal Scroll', type: ITEM_TYPES.MATERIAL, w: 1, h: 1, icon: 'scroll', rarity: 'COMMON', stats: ['Teleport to Town'] },
-    { name: 'Mjolnir Prototype', type: ITEM_TYPES.WEAPON, w: 2, h: 3, icon: 'hammer', rarity: 'LEGENDARY', stats: ['+150 Lightning Dmg', '50% Stun Chance'] },
-    { name: 'Blood Ruby', type: ITEM_TYPES.ACCESSORY, w: 1, h: 1, icon: 'gem', rarity: 'RARE', stats: ['+20 Life', '+5% Fire Res'] },
-    { name: 'Ring of Storms', type: ITEM_TYPES.ACCESSORY, w: 1, h: 1, icon: 'zap', rarity: 'LEGENDARY', stats: ['+15 Lightning Dmg', '+10% Cast Speed'] },
-    { name: 'Double Axe', type: ITEM_TYPES.WEAPON, w: 2, h: 3, icon: 'axe', rarity: 'MAGIC', stats: ['+25 Physical Dmg'] },
-    { name: 'Leather Vest', type: ITEM_TYPES.ARMOR, w: 2, h: 2, icon: 'shirt', rarity: 'COMMON', stats: ['+8 Armor'] },
-    { name: 'Apprentice Wand', type: ITEM_TYPES.WEAPON, w: 1, h: 2, icon: 'wand', rarity: 'MAGIC', stats: ['+10 Spell Dmg'] },
-    { name: 'Heavy Greaves', type: ITEM_TYPES.BOOTS, w: 2, h: 2, icon: 'boots', rarity: 'COMMON', stats: ['+10 Armor', '+5 Move Speed'] },
-    { name: 'Iron Gauntlets', type: ITEM_TYPES.GLOVES, w: 2, h: 2, icon: 'hand', rarity: 'RARE', stats: ['+12 Armor', '+5% Atk Speed'] },
-    { name: 'Tower Shield', type: ITEM_TYPES.ARMOR, w: 2, h: 4, icon: 'shield', rarity: 'RARE', stats: ['+45 Block Chance', '+20 Armor'] },
-    { name: 'Long Pike', type: ITEM_TYPES.WEAPON, w: 1, h: 4, icon: 'crosshair', rarity: 'COMMON', stats: ['+15 Physical Dmg', 'Long Reach'] },
-    { name: 'Assassin Dagger', type: ITEM_TYPES.WEAPON, w: 1, h: 2, icon: 'sword', rarity: 'RARE', stats: ['+10 Crit Chance', '+50% Crit Multi'] },
-    { name: 'Leather Belt', type: ITEM_TYPES.BELT, w: 2, h: 1, icon: 'anchor', rarity: 'COMMON', stats: ['+2 Potion Slots'] },
-    { name: 'Golden Amulet', type: ITEM_TYPES.AMULET, w: 1, h: 1, icon: 'crown', rarity: 'MAGIC', stats: ['+15 All Attributes'] },
-    { name: 'Sash of Knives', type: ITEM_TYPES.BELT, w: 2, h: 1, icon: 'anchor', rarity: 'LEGENDARY', stats: ['Reflects Damage', '+100 Armor'] },
-  ];
+  /* Theme sigils — influence watermark behind bonded item art. */
+  const SIGILS = {
+    slaughter: ({ size = 40 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M6 3c2 6 2 12-1 18" /><path d="M12 2c2.5 6.5 2.5 13.5 0 20" /><path d="M18 3c-2 6-2 12 1 18" /></svg>),
+    warding: ({ size = 40 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z" /><path d="M9 10h6l-3 5z" /></svg>),
+    spiritwork: ({ size = 40 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M2 12c3-5.5 17-5.5 20 0-3 5.5-17 5.5-20 0z" /><circle cx="12" cy="12" r="2.6" /></svg>),
+    wayfaring: ({ size = 40 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" /></svg>),
+  };
 
-  const generateId = () => Math.random().toString(36).substr(2, 9);
-  const createItem = (template) => ({ ...template, id: generateId(), x: null, y: null });
+  const ArtImg = ({ src, fallbackIcon, size }) => {
+    const [broken, setBroken] = useState(false);
+    const Icon = ICONS[fallbackIcon] || ICONS.default;
+    if (!src || broken) return <Icon size={size} />;
+    return <img className="item-art" src={src} alt="" draggable="false" onError={() => setBroken(true)} />;
+  };
 
+  /* Art path per the ASSET-BRIEF naming; falls back to icon until generated. */
+  const artSrc = (item) => `assets/${item.formId}_${item.materialId}.png`;
+  const itemIcon = (item) => pack.forms[item.formId].icon;
+
+  /* ---------------- grid placement (UI concern, not engine) ---------------- */
   const canPlaceItem = (inventory, item, x, y, ignoreId = null) => {
     if (x < 0 || y < 0 || x + item.w > GRID_W || y + item.h > GRID_H) return false;
     for (const invItem of inventory) {
       if (invItem.id === item.id || invItem.id === ignoreId) continue;
-      if (
-        x < invItem.x + invItem.w &&
-        x + item.w > invItem.x &&
-        y < invItem.y + invItem.h &&
-        y + item.h > invItem.y
-      ) {
-        return false;
-      }
+      if (x < invItem.x + invItem.w && x + item.w > invItem.x &&
+          y < invItem.y + invItem.h && y + item.h > invItem.y) return false;
     }
     return true;
   };
-
   const findFreeSpot = (inventory, item) => {
     for (let y = 0; y <= GRID_H - item.h; y++) {
       for (let x = 0; x <= GRID_W - item.w; x++) {
@@ -532,95 +527,239 @@
     }
     return null;
   };
-
-  const isSlotCompatible = (slotId, itemType) => {
-    if (!itemType) return false;
-    if (slotId === 'head' && itemType === ITEM_TYPES.HELMET) return true;
-    if (slotId === 'body' && itemType === ITEM_TYPES.ARMOR) return true;
-    if (slotId === 'mainHand' && itemType === ITEM_TYPES.WEAPON) return true;
-    if (slotId === 'offHand' && (itemType === ITEM_TYPES.WEAPON || itemType === ITEM_TYPES.ARMOR)) return true;
-    if (slotId === 'boots' && itemType === ITEM_TYPES.BOOTS) return true;
-    if (slotId === 'gloves' && itemType === ITEM_TYPES.GLOVES) return true;
-    if (slotId === 'belt' && itemType === ITEM_TYPES.BELT) return true;
-    if (slotId === 'amulet' && itemType === ITEM_TYPES.AMULET) return true;
-    if ((slotId === 'ring1' || slotId === 'ring2') && itemType === ITEM_TYPES.ACCESSORY) return true;
+  const isSlotCompatible = (slotId, item) => {
+    if (!item) return false;
+    const k = item.kind;
+    if (slotId === 'head') return k === 'helmet';
+    if (slotId === 'body') return k === 'body';
+    if (slotId === 'mainHand') return k === 'weapon';
+    if (slotId === 'offHand') return k === 'weapon' || k === 'shield';
+    if (slotId === 'boots') return k === 'boots';
+    if (slotId === 'gloves') return k === 'gloves';
+    if (slotId === 'belt') return k === 'belt';
+    if (slotId === 'amulet') return k === 'amulet';
+    if (slotId === 'ring1' || slotId === 'ring2') return k === 'ring';
     return false;
   };
 
-  const Tooltip = ({ item, position }) => {
+  const itemTint = (item) => {
+    if (!item.vessel) return { color: '#d6d0c2', border: '#5d574c', shadow: 'none' };
+    if (item.awakened) return { color: '#fb923c', border: '#f97316', shadow: '0 0 16px rgba(249,115,22,0.4)' };
+    const nb = item.brands.length + item.trophies.length, nd = item.bonds.length;
+    if (nd > nb) {
+      const theme = pack.themes[forge.dominantBondTheme(item)];
+      return { color: theme.color, border: theme.color, shadow: `0 0 13px ${theme.color}59` };
+    }
+    if (nb > 0 || nd > 0) return { color: '#e0b84f', border: '#c9a227', shadow: '0 0 12px rgba(201,162,39,0.3)' };
+    return { color: '#d6d0c2', border: '#5d574c', shadow: 'none' };
+  };
+
+  /* ---------------- seed ---------------- */
+  const seedState = () => {
+    const inv = [];
+    const put = (item) => {
+      const pos = findFreeSpot(inv, item);
+      if (pos) inv.push({ ...item, ...pos });
+    };
+
+    put(forge.generateItem({ ilvl: 34, formId: 'khopesh', materialId: 'bronze', brands: 1 }));
+    put(forge.generateItem({ ilvl: 30, formId: 'wrap', materialId: 'quilted', brands: 2 }));
+    put(forge.generateItem({ ilvl: 28, formId: 'gorget', materialId: 'jade', brands: 1 }));
+    put(forge.generateItem({ ilvl: 18, formId: 'ring', materialId: 'bone', brands: 0 }));
+    put(forge.generateItem({ ilvl: 20, formId: 'curio', materialId: 'bone' }));
+
+    // Pre-loved sandals shaped by some unknown Farwalker — estranged for a Shieldbearer.
+    const sandals = forge.generateItem({ ilvl: 40, formId: 'sandals', materialId: 'quilted', brands: 0 });
+    sandals.vessel = Math.max(sandals.vessel, 3);
+    sandals.bonds = [
+      { id: 'seedb1', modId: 'dead_sprint', themeId: 'wayfaring', base: 13, tier: 2, kinship: 'farwalker' },
+      { id: 'seedb2', modId: 'sidestep', themeId: 'wayfaring', base: 12, tier: 1, kinship: 'farwalker' },
+    ];
+    sandals.att = { xp: 40, next: 190, tc: { wayfaring: 9 } };
+    sandals.evolutions = 3;
+    sandals.epithetName = 'Pale Stride';
+    put(sandals);
+
+    // A fully awakened relic to show where the road ends.
+    const relic = forge.generateItem({ ilvl: 62, formId: 'hideshield', materialId: 'bronze', brands: 0 });
+    relic.vessel = 4;
+    relic.brands = [{ id: 'seedbr', modId: 'hale', tier: 2, value: 32 }];
+    relic.bonds = [
+      { id: 'seedr1', modId: 'shieldwall', themeId: 'warding', base: 12, tier: 3, kinship: 'shieldbearer' },
+      { id: 'seedr2', modId: 'stand_ground', themeId: 'warding', base: 4, tier: 3, kinship: 'shieldbearer' },
+      { id: 'seedr3', modId: 'old_grudge', themeId: 'warding', base: 26, tier: 3, kinship: 'shieldbearer' },
+    ];
+    relic.evolutions = 9;
+    relic.att = { xp: 0, next: 575, tc: { warding: 22 } };
+    relic.awakened = {
+      name: "Azrael's Unbroken Vigil", themeId: 'warding',
+      power: pack.themes.warding.power,
+      flavor: 'Bound to Azrael through 9 trials. It has learned to endure.',
+    };
+    put(relic);
+
+    const character = forge.createCharacter({ name: 'Azrael', archetype: 'shieldbearer', gold: 600 });
+    character.fragments = { boar_tusk: 3, river_pearl: 1 };
+
+    return {
+      character,
+      inventory: inv,
+      equipment: {
+        head: null, amulet: null, mainHand: null, body: null, offHand: null,
+        gloves: null, belt: null, boots: null, ring1: null, ring2: null,
+      },
+      atelierItem: null,
+      satchel: { red_ochre: 2, woad: 1, soot: 1, ochre_gold: 0, entrail_omen: 1, bird_omen: 0, smoke_omen: 0, blood_omen: 1 },
+      log: [
+        { kind: 'sys', text: 'The vault opens on the Green Lands. Sear Brands, grow Bonds, bind Trophies — the vessel remembers all three.' },
+      ],
+    };
+  };
+
+  const loadState = () => {
+    try {
+      const raw = localStorage.getItem(SAVE_KEY);
+      if (!raw) return seedState();
+      const state = forge.deserialize(raw);
+      if (!state || !Array.isArray(state.inventory) || !state.character || !state.equipment) return seedState();
+      return state;
+    } catch (err) {
+      return seedState();
+    }
+  };
+
+  /* ---------------- presentational bits ---------------- */
+  const VesselPips = ({ item, size }) => {
+    if (!item.vessel) return null;
+    const pips = [];
+    item.brands.forEach((b, i) => pips.push(<span key={`b${i}`} className="pip-brand">✦</span>));
+    item.bonds.forEach((b, i) => pips.push(<span key={`d${i}`} style={{ color: pack.themes[b.themeId].color }}>◈</span>));
+    item.trophies.forEach((t, i) => pips.push(<span key={`t${i}`} className="pip-trophy">✧</span>));
+    for (let i = 0; i < item.scars; i++) pips.push(<span key={`s${i}`} className="pip-scar">✕</span>);
+    for (let i = 0; i < forge.freeSlots(item); i++) pips.push(<span key={`e${i}`} className="pip-empty">○</span>);
+    return <div className="pips" style={size ? { fontSize: size } : null}>{pips}</div>;
+  };
+
+  /* Renders the engine's structured tooltip lines. */
+  const SECTION_CLS = {
+    name: 'tt-name', base: 'tt-base', kind: 'tt-kind', vessel: 'tt-vessel',
+    stat: 'tt-stat', implicit: 'tt-implicit', brand: 'tt-brand', bond: 'tt-bond',
+    trophy: 'tt-trophy', scar: 'tt-scar', power: 'tt-power', flavor: 'tt-flavor',
+  };
+  const TONE_COLOR = { plain: '#d6d0c2', branded: '#e0b84f', bonded: null, awakened: '#fb923c' };
+
+  const Tooltip = ({ item, position, equipped, archetype }) => {
     if (!item) return null;
-    const rare = RARITY[item.rarity] || RARITY.COMMON;
+    const tint = itemTint(item);
     const style = { left: position.x + 16, top: position.y + 16 };
-    if (style.left + 260 > window.innerWidth) style.left = position.x - 260;
-    if (style.top + 200 > window.innerHeight) style.top = position.y - 180;
+    if (style.left + 315 > window.innerWidth) style.left = Math.max(6, position.x - 315);
+    if (style.top + 430 > window.innerHeight) style.top = Math.max(6, window.innerHeight - 440);
+
+    const lines = forge.tooltip(item, { archetype });
+    const showAtt = item.vessel > 0 && !forge.isSated(item);
+    const attPct = Math.min(100, Math.round((item.att.xp / item.att.next) * 100));
+    let dividerShown = false;
 
     return (
-      <div
-        className="tooltip"
-        style={{
-          ...style,
-          borderColor: rare.border,
-          boxShadow: `0 12px 35px rgba(0,0,0,0.6), ${rare.shadow}`,
-        }}
-      >
-        <div className="header" style={{ color: rare.color }}>{item.name}</div>
-        <div className="rarity">{rare.label} • {item.type}</div>
-        <div>
-          {item.stats?.map((line, idx) => (
-            <div key={idx} className="stat">• {line}</div>
-          ))}
+      <div className="tooltip" style={{ ...style, boxShadow: `0 12px 35px rgba(0,0,0,0.6), ${tint.shadow}` }}>
+        {lines.map((l, i) => {
+          if (l.section === 'attune') return null; // custom bar below
+          if (l.section === 'vessel') {
+            return (
+              <div key={i}>
+                <div className="tt-vessel">{l.text}</div>
+                <VesselPips item={item} />
+              </div>
+            );
+          }
+          const cls = SECTION_CLS[l.section] || 'tt-stat';
+          const color = l.section === 'name' ? (TONE_COLOR[l.tone] || tint.color)
+            : l.section === 'bond' && l.tone !== 'estranged' ? tint.border && undefined : undefined;
+          const needDivider = l.section === 'implicit' && !dividerShown && (dividerShown = true);
+          return (
+            <React.Fragment key={i}>
+              {needDivider && <div className="tt-divider" />}
+              <div
+                className={`${cls} ${l.tone === 'estranged' ? 'estranged' : ''}`}
+                style={l.section === 'name' ? { color: tint.color }
+                  : l.section === 'bond' && l.tone === 'bond' ? { color: (pack.themes[(item.bonds.find(b => l.text.includes(pack.themes[b.themeId].mods[b.modId].name)) || {}).themeId] || {}).color } : null}
+              >{l.text}</div>
+            </React.Fragment>
+          );
+        })}
+        {showAtt && (
+          <div style={{ marginTop: 7 }}>
+            <div className="att-label">
+              <span>Attunement{equipped ? '' : ' (equip to grow)'}</span>
+              <span>{item.att.xp}/{item.att.next}</span>
+            </div>
+            <div className="att-bar"><div style={{ width: `${attPct}%` }} /></div>
+          </div>
+        )}
+        <div className="foot">
+          Drag to move · sell for {forge.sellValue(item)}g
+          {item.vessel > 0 && ' · craft at the Atelier'}
         </div>
-        <div className="foot">Click-drag to move. Drop on vendor to sell.</div>
       </div>
     );
   };
 
   const ItemComponent = ({ item, isDragging = false, onPointerDown, onHover, style, inSlot = false }) => {
-    const rare = RARITY[item.rarity] || RARITY.COMMON;
-    const Icon = ICONS[item.icon] || ICONS.default;
+    const tint = itemTint(item);
     const baseStyle = {
       width: inSlot ? '100%' : item.w * TILE_SIZE + (item.w - 1) * CELL_GAP,
       height: inSlot ? '100%' : item.h * TILE_SIZE + (item.h - 1) * CELL_GAP,
       left: inSlot ? 0 : item.x * (TILE_SIZE + CELL_GAP),
       top: inSlot ? 0 : item.y * (TILE_SIZE + CELL_GAP),
       position: isDragging ? 'fixed' : 'absolute',
-      borderColor: rare.border,
-      color: rare.color,
-      boxShadow: isDragging ? `0 16px 30px rgba(0,0,0,0.5), ${rare.shadow}` : rare.shadow,
-      background: 'linear-gradient(150deg, rgba(40,37,31,0.95), rgba(20,18,15,0.92))',
+      borderColor: tint.border,
+      color: tint.color,
+      boxShadow: isDragging ? `0 16px 30px rgba(0,0,0,0.5), ${tint.shadow}` : tint.shadow,
       pointerEvents: isDragging ? 'none' : 'auto',
     };
 
     return (
       <div
-        className={`item ${isDragging ? 'dragging' : ''}`}
+        className={`item ${isDragging ? 'dragging' : ''} ${item.awakened ? 'awakened' : ''}`}
         style={{ ...baseStyle, ...style }}
         onPointerDown={(e) => onPointerDown && onPointerDown(e, item)}
         onPointerEnter={(e) => onHover && onHover(item, e)}
         onPointerLeave={() => onHover && onHover(null, null)}
       >
-        <Icon size={Math.max(22, Math.min(item.w, item.h) * 18)} />
+        {(() => {
+          const wm = item.bonds.length ? forge.dominantBondTheme(item) : null;
+          if (!wm || !SIGILS[wm]) return null;
+          const Sigil = SIGILS[wm];
+          return (
+            <div className="item-sigil" style={{ color: pack.themes[wm].color, opacity: item.awakened ? 0.2 : 0.13 }}>
+              <Sigil size={Math.min(item.w, item.h) * TILE_SIZE * 0.72} />
+            </div>
+          );
+        })()}
+        <ArtImg src={artSrc(item)} fallbackIcon={itemIcon(item)} size={Math.max(22, Math.min(item.w, item.h) * 18)} />
+        {item.vessel > 0 && (item.brands.length || item.bonds.length || item.trophies.length || item.scars) > 0 && (
+          <div className="pip-strip">
+            {item.brands.map((b, i) => <span key={`b${i}`} style={{ color: 'var(--brand)' }}>✦</span>)}
+            {item.bonds.map((b, i) => <span key={`d${i}`} style={{ color: pack.themes[b.themeId].color }}>◈</span>)}
+            {item.trophies.map((t, i) => <span key={`t${i}`} style={{ color: 'var(--trophy)' }}>✧</span>)}
+            {Array.from({ length: item.scars }).map((_, i) => <span key={`s${i}`} style={{ color: 'var(--scar)' }}>✕</span>)}
+          </div>
+        )}
         <div className="item-gloss" />
       </div>
     );
   };
 
-  const EquipmentSlot = ({ slotType, item, label, onPointerDown, draggingType, onHover }) => {
-    const highlight = isSlotCompatible(slotType, draggingType);
-    const beltClass = slotType === 'belt' ? 'belt' : '';
-
+  const EquipmentSlot = ({ slotType, item, label, tall, onPointerDown, draggingItem, onHover }) => {
+    const highlight = isSlotCompatible(slotType, draggingItem);
+    const cls = ['equip-slot'];
+    if (slotType === 'belt') cls.push('belt');
+    if (tall) cls.push('tall');
+    if (highlight) cls.push('highlight');
     return (
-      <div
-        data-slot-id={slotType}
-        className={`equip-slot ${beltClass} ${highlight ? 'highlight' : ''}`}
-      >
+      <div data-slot-id={slotType} className={cls.join(' ')}>
         {item ? (
-          <ItemComponent
-            item={item}
-            inSlot
-            onPointerDown={(e) => onPointerDown(e, item, slotType)}
-            onHover={onHover}
-          />
+          <ItemComponent item={item} inSlot onPointerDown={(e) => onPointerDown(e, item, slotType)} onHover={onHover} />
         ) : (
           <span className="label">{label}</span>
         )}
@@ -628,135 +767,191 @@
     );
   };
 
+  /* =====================================================================
+     App
+     ===================================================================== */
   const App = () => {
-    const [inventory, setInventory] = useState([]);
-    const [equipment, setEquipment] = useState({
-      head: null, amulet: null,
-      mainHand: null, body: null, offHand: null,
-      gloves: null, belt: null, boots: null,
-      ring1: null, ring2: null,
-    });
-    const [gold, setGold] = useState(1500);
+    const [state, setState] = useState(loadState);
+    const { character, inventory, equipment, atelierItem, satchel, log } = state;
+
+    const [benchOpen, setBenchOpen] = useState(false);
+    const [pigmentId, setPigmentId] = useState('');
+    const [omenId, setOmenId] = useState('');
     const [dragState, setDragState] = useState(null);
     const [tooltip, setTooltip] = useState(null);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-    const [errorMsg, setErrorMsg] = useState(null);
+    const [toast, setToast] = useState(null);
     const gridRef = useRef(null);
 
-    useEffect(() => {
-      const starterTemplates = [ITEM_DB[0], ITEM_DB[1], ITEM_DB[3], ITEM_DB[16], ITEM_DB[17], ITEM_DB[6]];
-      let initialInv = [];
-      starterTemplates.forEach((t) => {
-        const newItem = createItem(t);
-        const pos = findFreeSpot(initialInv, newItem);
-        if (pos) initialInv.push({ ...newItem, ...pos });
-      });
-      setInventory(initialInv);
-    }, []);
+    const level = forge.charLevel(character);
+    const agg = useMemo(
+      () => forge.aggregate(Object.values(equipment), { archetype: character.archetype, level }),
+      [equipment, character.archetype, level]
+    );
+    const satchelTotal = Object.values(satchel).reduce((a, b) => a + b, 0);
 
     useEffect(() => {
-      if (!errorMsg) return;
-      const timer = setTimeout(() => setErrorMsg(null), 1400);
+      try { localStorage.setItem(SAVE_KEY, forge.serialize(state)); } catch (err) { /* storage blocked */ }
+    }, [state]);
+
+    useEffect(() => {
+      if (!toast) return;
+      const timer = setTimeout(() => setToast(null), toast.tone === 'err' ? 1600 : 2400);
       return () => clearTimeout(timer);
-    }, [errorMsg]);
+    }, [toast]);
 
-    const returnItemToSource = useCallback((item, source, sourceSlot, originalX, originalY) => {
+    const showToast = (msg, tone = 'err') => setToast({ msg, tone });
+    const toneOf = (ev) => ev.kind === 'awake' ? 'awake' : ev.kind === 'bond' ? 'bond' : 'ok';
+    const pushLog = (entries) => (prev) => ({ ...prev, log: [...entries, ...prev.log].slice(0, 40) });
+
+    /* -------- drag engine -------- */
+    const startDrag = (e, item, sourceSlot = null, sourceKind = null) => {
+      if (e.button !== undefined && e.button !== 0) return;
+      e.preventDefault();
+      setTooltip(null);
+      const startX = e.clientX, startY = e.clientY;
+      setMousePos({ x: startX, y: startY });
+      const rect = e.currentTarget.getBoundingClientRect();
+      const source = sourceKind || (sourceSlot ? 'equipment' : 'inventory');
+      setDragState({
+        item, source, sourceSlot,
+        originalX: item.x, originalY: item.y,
+        startX, startY,
+        grabOffsetX: startX - rect.left,
+        grabOffsetY: startY - rect.top,
+      });
       if (source === 'equipment') {
-        setEquipment((prev) => ({ ...prev, [sourceSlot]: item }));
+        setState(prev => ({ ...prev, equipment: { ...prev.equipment, [sourceSlot]: null } }));
+      } else if (source === 'atelier') {
+        setState(prev => ({ ...prev, atelierItem: null }));
       } else {
-        setInventory((prev) => [...prev, { ...item, x: originalX, y: originalY }]);
+        setState(prev => ({ ...prev, inventory: prev.inventory.filter(i => i.id !== item.id) }));
       }
-    }, []);
+    };
+
+    const returnToSource = (prev, drag) => {
+      const { item, source, sourceSlot, originalX, originalY } = drag;
+      if (source === 'equipment') return { ...prev, equipment: { ...prev.equipment, [sourceSlot]: item } };
+      if (source === 'atelier') return { ...prev, atelierItem: item };
+      if (originalX != null && canPlaceItem(prev.inventory, item, originalX, originalY, item.id)) {
+        return { ...prev, inventory: [...prev.inventory, { ...item, x: originalX, y: originalY }] };
+      }
+      const pos = findFreeSpot(prev.inventory, item);
+      if (pos) return { ...prev, inventory: [...prev.inventory, { ...item, ...pos }] };
+      return { ...prev, inventory: [...prev.inventory, { ...item, x: originalX || 0, y: originalY || 0 }] };
+    };
 
     const finalizeDrop = useCallback((e) => {
       if (!dragState) return;
-      const { item, source, sourceSlot, originalX, originalY } = dragState;
-      let placed = false;
+      const drag = dragState;
+      setDragState(null);
+      const { item, source } = drag;
       const elements = document.elementsFromPoint(e.clientX, e.clientY);
+      const moved = Math.hypot(e.clientX - drag.startX, e.clientY - drag.startY) > 5;
 
-      if (elements.some((el) => el.getAttribute && el.getAttribute('data-trash-zone'))) {
-        setGold((prev) => prev + 50);
-        setDragState(null);
+      if (!moved && benchOpen && source !== 'atelier' && item.vessel > 0) {
+        setState(prev => {
+          let next = prev;
+          if (prev.atelierItem) {
+            const pos = findFreeSpot(prev.inventory, prev.atelierItem);
+            if (!pos) { showToast('No room in the pack to swap the socketed item'); return returnToSource(prev, drag); }
+            next = { ...prev, inventory: [...prev.inventory, { ...prev.atelierItem, ...pos }] };
+          }
+          return { ...next, atelierItem: item };
+        });
+        return;
+      }
+      if (!moved && source !== 'atelier') {
+        setState(prev => returnToSource(prev, drag));
         return;
       }
 
-      const slotElement = elements.find((el) => el.getAttribute && el.getAttribute('data-slot-id'));
+      if (elements.some(el => el.getAttribute && el.getAttribute('data-trash-zone'))) {
+        const price = forge.sellValue(item);
+        setState(prev => pushLog([{ kind: 'sys', text: `Sold ${forge.displayName(item)} for ${price}g.` }])({
+          ...prev, character: { ...prev.character, gold: prev.character.gold + price },
+        }));
+        showToast(`Sold for ${price}g`, 'ok');
+        return;
+      }
+
+      if (elements.some(el => el.getAttribute && el.getAttribute('data-atelier-socket'))) {
+        if (!item.vessel) { showToast('A curio holds no vessel'); setState(prev => returnToSource(prev, drag)); return; }
+        setState(prev => {
+          if (!prev.atelierItem) return { ...prev, atelierItem: item };
+          const pos = findFreeSpot(prev.inventory, prev.atelierItem);
+          if (!pos) { showToast('No room in the pack to swap the socketed item'); return returnToSource(prev, drag); }
+          return { ...prev, inventory: [...prev.inventory, { ...prev.atelierItem, ...pos }], atelierItem: item };
+        });
+        return;
+      }
+
+      const slotElement = elements.find(el => el.getAttribute && el.getAttribute('data-slot-id'));
       if (slotElement) {
         const slotId = slotElement.getAttribute('data-slot-id');
-        if (isSlotCompatible(slotId, item.type)) {
-          const existingItem = equipment[slotId];
-          setEquipment((prev) => ({ ...prev, [slotId]: item }));
-          placed = true;
-
-          if (existingItem) {
-            if (source === 'inventory') {
-              if (canPlaceItem(inventory, existingItem, originalX, originalY, existingItem.id)) {
-                setInventory((prev) => [...prev, { ...existingItem, x: originalX, y: originalY }]);
+        if (!isSlotCompatible(slotId, item)) {
+          showToast('Incompatible slot');
+          setState(prev => returnToSource(prev, drag));
+          return;
+        }
+        setState(prev => {
+          const existing = prev.equipment[slotId];
+          let next = { ...prev, equipment: { ...prev.equipment, [slotId]: item } };
+          if (existing) {
+            if (source === 'equipment') {
+              if (isSlotCompatible(drag.sourceSlot, existing)) {
+                next = { ...next, equipment: { ...next.equipment, [drag.sourceSlot]: existing } };
               } else {
-                const newPos = findFreeSpot(inventory, existingItem);
-                if (newPos) {
-                  setInventory((prev) => [...prev, { ...existingItem, ...newPos }]);
-                } else {
-                  setErrorMsg('No space to swap!');
-                  setEquipment((prev) => ({ ...prev, [slotId]: existingItem }));
-                  returnItemToSource(item, source, sourceSlot, originalX, originalY);
-                  setDragState(null);
-                  return;
-                }
+                const pos = findFreeSpot(next.inventory, existing);
+                if (!pos) { showToast('No space to swap'); return returnToSource(prev, drag); }
+                next = { ...next, inventory: [...next.inventory, { ...existing, ...pos }] };
               }
-            } else if (source === 'equipment') {
-              setEquipment((prev) => ({ ...prev, [sourceSlot]: existingItem }));
+            } else if (source === 'atelier') {
+              next = { ...next, atelierItem: existing };
+            } else {
+              if (drag.originalX != null && canPlaceItem(next.inventory, existing, drag.originalX, drag.originalY, existing.id)) {
+                next = { ...next, inventory: [...next.inventory, { ...existing, x: drag.originalX, y: drag.originalY }] };
+              } else {
+                const pos = findFreeSpot(next.inventory, existing);
+                if (!pos) { showToast('No space to swap'); return returnToSource(prev, drag); }
+                next = { ...next, inventory: [...next.inventory, { ...existing, ...pos }] };
+              }
             }
           }
-        } else {
-          setErrorMsg('Incompatible slot');
-        }
+          return next;
+        });
+        return;
       }
 
-      if (!placed && gridRef.current) {
+      if (gridRef.current) {
         const gridRect = gridRef.current.getBoundingClientRect();
-
-        if (
-          e.clientX >= gridRect.left - 25 &&
-          e.clientX <= gridRect.right + 25 &&
-          e.clientY >= gridRect.top - 25 &&
-          e.clientY <= gridRect.bottom + 25
-        ) {
-          const visualItemX = e.clientX - dragState.grabOffsetX;
-          const visualItemY = e.clientY - dragState.grabOffsetY;
-          const gridRelX = visualItemX - gridRect.left;
-          const gridRelY = visualItemY - gridRect.top;
+        if (e.clientX >= gridRect.left - 25 && e.clientX <= gridRect.right + 25 &&
+            e.clientY >= gridRect.top - 25 && e.clientY <= gridRect.bottom + 25) {
           const cellSize = TILE_SIZE + CELL_GAP;
-          let targetX = Math.floor(gridRelX / cellSize);
-          let targetY = Math.floor(gridRelY / cellSize);
+          let targetX = Math.floor((e.clientX - drag.grabOffsetX - gridRect.left) / cellSize);
+          let targetY = Math.floor((e.clientY - drag.grabOffsetY - gridRect.top) / cellSize);
           targetX = Math.max(0, Math.min(GRID_W - item.w, targetX));
           targetY = Math.max(0, Math.min(GRID_H - item.h, targetY));
-
-          if (canPlaceItem(inventory, item, targetX, targetY, item.id)) {
-            setInventory((prev) => [...prev, { ...item, x: targetX, y: targetY }]);
-            placed = true;
-          } else {
-            setErrorMsg('Blocked');
-          }
+          setState(prev => {
+            if (canPlaceItem(prev.inventory, item, targetX, targetY, item.id)) {
+              return { ...prev, inventory: [...prev.inventory, { ...item, x: targetX, y: targetY }] };
+            }
+            showToast('Blocked');
+            return returnToSource(prev, drag);
+          });
+          return;
         }
       }
 
-      if (!placed) {
-        returnItemToSource(item, source, sourceSlot, originalX, originalY);
-      }
-
-      setDragState(null);
-    }, [dragState, equipment, inventory, returnItemToSource]);
+      setState(prev => returnToSource(prev, drag));
+    }, [dragState, benchOpen]);
 
     useEffect(() => {
       const handleMove = (e) => {
         setMousePos({ x: e.clientX, y: e.clientY });
-        if (tooltip) {
-          setTooltip((prev) => (prev ? { ...prev, x: e.clientX, y: e.clientY } : null));
-        }
+        if (tooltip) setTooltip(prev => (prev ? { ...prev, x: e.clientX, y: e.clientY } : null));
       };
       const handleUp = (e) => finalizeDrop(e);
-
       window.addEventListener('pointermove', handleMove);
       window.addEventListener('pointerup', handleUp);
       return () => {
@@ -765,96 +960,189 @@
       };
     }, [finalizeDrop, tooltip]);
 
-    const spawnLoot = () => {
-      const randomTemplate = ITEM_DB[Math.floor(Math.random() * ITEM_DB.length)];
-      const newItem = createItem(randomTemplate);
-      const pos = findFreeSpot(inventory, newItem);
-
-      if (pos) {
-        setInventory((prev) => [...prev, { ...newItem, ...pos }]);
-      } else {
-        setErrorMsg('Inventory full');
-      }
-    };
-
     const handleHover = (item, e) => {
-      if (dragState) {
-        setTooltip(null);
-        return;
-      }
-      if (item) {
-        setTooltip({ item, x: e.clientX, y: e.clientY });
-      } else {
-        setTooltip(null);
-      }
-    };
-
-    const startDrag = (e, item, sourceSlot = null) => {
-      if (e.button !== 0) return;
-      e.preventDefault();
-      setTooltip(null);
-      const startX = e.clientX;
-      const startY = e.clientY;
-      setMousePos({ x: startX, y: startY });
-
-      const rect = e.currentTarget.getBoundingClientRect();
-      const offsetX = startX - rect.left;
-      const offsetY = startY - rect.top;
-
-      setDragState({
-        item,
-        source: sourceSlot ? 'equipment' : 'inventory',
-        sourceSlot,
-        originalX: item.x,
-        originalY: item.y,
-        grabOffsetX: offsetX,
-        grabOffsetY: offsetY,
-      });
-
-      if (sourceSlot) {
-        setEquipment((prev) => ({ ...prev, [sourceSlot]: null }));
-      } else {
-        setInventory((prev) => prev.filter((i) => i.id !== item.id));
-      }
+      if (dragState || !item) { setTooltip(null); return; }
+      const equipped = Object.values(equipment).some(it => it && it.id === item.id);
+      setTooltip({ item, equipped, x: e.clientX, y: e.clientY });
     };
 
     const getGhostPos = () => {
       if (!dragState || !gridRef.current) return null;
       const gridRect = gridRef.current.getBoundingClientRect();
-      if (
-        mousePos.x < gridRect.left - 60 || mousePos.x > gridRect.right + 60 ||
-        mousePos.y < gridRect.top - 60 || mousePos.y > gridRect.bottom + 60
-      ) return null;
-
-      const visualItemX = mousePos.x - dragState.grabOffsetX;
-      const visualItemY = mousePos.y - dragState.grabOffsetY;
+      if (mousePos.x < gridRect.left - 60 || mousePos.x > gridRect.right + 60 ||
+          mousePos.y < gridRect.top - 60 || mousePos.y > gridRect.bottom + 60) return null;
       const cellSize = TILE_SIZE + CELL_GAP;
-      let targetX = Math.floor((visualItemX - gridRect.left) / cellSize);
-      let targetY = Math.floor((visualItemY - gridRect.top) / cellSize);
+      let targetX = Math.floor((mousePos.x - dragState.grabOffsetX - gridRect.left) / cellSize);
+      let targetY = Math.floor((mousePos.y - dragState.grabOffsetY - gridRect.top) / cellSize);
       targetX = Math.max(0, Math.min(GRID_W - dragState.item.w, targetX));
       targetY = Math.max(0, Math.min(GRID_H - dragState.item.h, targetY));
-
-      if (targetX < 0 || targetY < 0 || targetX + dragState.item.w > GRID_W || targetY + dragState.item.h > GRID_H) return null;
       const isValid = canPlaceItem(inventory, dragState.item, targetX, targetY, dragState.item.id);
       return { x: targetX, y: targetY, isValid };
     };
 
-    const ghost = getGhostPos();
-
-    const renderGridCells = () => {
-      const cells = [];
-      for (let y = 0; y < GRID_H; y++) {
-        for (let x = 0; x < GRID_W; x++) {
-          cells.push(<div key={`${x}-${y}`} className="grid-cell" />);
+    /* -------- actions -------- */
+    const ventureForth = () => {
+      setState(prev => {
+        const r = forge.venture(prev.character, prev.equipment);
+        const events = [...r.events];
+        let nextInv = prev.inventory;
+        r.drops.forEach(d => {
+          const pos = findFreeSpot(nextInv, d);
+          if (pos) {
+            nextInv = [...nextInv, { ...d, ...pos }];
+            events.push({ kind: 'sys', text: `Found: ${forge.displayName(d)} (ilvl ${d.ilvl}).` });
+          } else {
+            events.push({ kind: 'sys', text: 'Found an item, but the pack was full. Left it in the mud.' });
+          }
+        });
+        if (forge.charLevel(r.character) > forge.charLevel(prev.character)) {
+          events.push({ kind: 'sys', text: `${r.character.name} reached level ${forge.charLevel(r.character)}.` });
         }
-      }
-      return cells;
+        const big = events.find(e => e.kind === 'awake') || events.find(e => e.kind === 'bond');
+        if (big) setTimeout(() => setToast({ msg: big.text, tone: toneOf(big) }), 0);
+        return pushLog(events)({ ...prev, character: r.character, equipment: r.equipment, inventory: nextInv });
+      });
     };
+
+    const spawnLoot = () => {
+      setState(prev => {
+        const item = forge.generateItem({ ilvl: Math.min(80, 10 + level * 3 + Math.floor(Math.random() * 15)) });
+        const pos = findFreeSpot(prev.inventory, item);
+        if (!pos) { showToast('Backpack full'); return prev; }
+        return { ...prev, inventory: [...prev.inventory, { ...item, ...pos }] };
+      });
+    };
+
+    const sortPack = () => {
+      setState(prev => {
+        const sorted = [...prev.inventory].sort((a, b) => (b.w * b.h) - (a.w * a.h) || b.h - a.h);
+        const placed = [];
+        for (const it of sorted) {
+          const pos = findFreeSpot(placed, it);
+          if (!pos) { showToast('Could not sort'); return prev; }
+          placed.push({ ...it, ...pos });
+        }
+        return { ...prev, inventory: placed };
+      });
+    };
+
+    const resetVault = () => {
+      if (!window.confirm('Reset the vault? All items, bonds and chronicle entries are lost.')) return;
+      setState(seedState());
+      setBenchOpen(false);
+    };
+
+    /* Craft operation dispatcher: gold + optional tool consumption. */
+    const runOp = (opId) => {
+      setState(prev => {
+        if (!prev.atelierItem) { showToast('Socket an item first'); return prev; }
+        const cost = OP_COST[opId] || 0;
+        if (prev.character.gold < cost) { showToast(`Needs ${cost}g`); return prev; }
+
+        let usePigment = null, useOmen = null;
+        if (opId === 'sear') {
+          if (pigmentId) {
+            if ((prev.satchel[pigmentId] || 0) <= 0) { showToast(`No ${pack.pigments[pigmentId].name} left`); return prev; }
+            usePigment = pigmentId;
+          }
+          if (omenId) {
+            if ((prev.satchel[omenId] || 0) <= 0) { showToast(`No ${pack.omens[omenId].name} left`); return prev; }
+            useOmen = omenId;
+          }
+        }
+
+        const r =
+          opId === 'sear' ? forge.sear(prev.atelierItem, { pigmentId: usePigment || undefined, omenId: useOmen || undefined }) :
+          opId === 'efface' ? forge.efface(prev.atelierItem) :
+          opId === 'chisel' ? forge.chisel(prev.atelierItem) :
+          opId === 'fire' ? forge.fire(prev.atelierItem) :
+          opId === 'resonate' ? forge.resonate(prev.atelierItem) :
+          forge.sever(prev.atelierItem);
+
+        if (r.error) { showToast(r.error); return prev; }
+        setTimeout(() => setToast({ msg: r.event.text, tone: toneOf(r.event) }), 0);
+
+        const satchelNext = { ...prev.satchel };
+        if (usePigment) satchelNext[usePigment] -= 1;
+        if (useOmen) satchelNext[useOmen] -= 1;
+
+        return pushLog([r.event])({
+          ...prev,
+          atelierItem: r.destroyed ? null : r.item,
+          satchel: satchelNext,
+          character: { ...prev.character, gold: prev.character.gold - cost },
+        });
+      });
+    };
+
+    const bindTrophy = () => {
+      setState(prev => {
+        if (!prev.atelierItem) { showToast('Socket an item first'); return prev; }
+        const ready = Object.entries(prev.character.fragments).find(([id, n]) =>
+          n >= pack.trophies[id].fragments && pack.trophies[id].kinds.includes(prev.atelierItem.kind));
+        if (!ready) { showToast('No completed trophy fits this item — hunt more fragments'); return prev; }
+        const r = forge.socketTrophy(prev.atelierItem, ready[0], prev.character.fragments);
+        if (r.error) { showToast(r.error); return prev; }
+        setTimeout(() => setToast({ msg: r.event.text, tone: 'ok' }), 0);
+        return pushLog([r.event])({
+          ...prev, atelierItem: r.item,
+          character: { ...prev.character, fragments: r.stash },
+        });
+      });
+    };
+
+    const buyTool = (toolId) => {
+      setState(prev => {
+        const cost = TOOL_PRICES[toolId];
+        if (prev.character.gold < cost) { showToast('Not enough gold'); return prev; }
+        const name = (pack.pigments[toolId] || pack.omens[toolId]).name;
+        return pushLog([{ kind: 'sys', text: `Bought ${name} for ${cost}g.` }])({
+          ...prev,
+          character: { ...prev.character, gold: prev.character.gold - cost },
+          satchel: { ...prev.satchel, [toolId]: (prev.satchel[toolId] || 0) + 1 },
+        });
+      });
+    };
+
+    const returnSocketed = () => {
+      setState(prev => {
+        if (!prev.atelierItem) return prev;
+        const pos = findFreeSpot(prev.inventory, prev.atelierItem);
+        if (!pos) { showToast('Backpack full'); return prev; }
+        return { ...prev, inventory: [...prev.inventory, { ...prev.atelierItem, ...pos }], atelierItem: null };
+      });
+    };
+
+    const setCharName = (name) => {
+      const clean = name.slice(0, 16);
+      setState(prev => ({ ...prev, character: { ...prev.character, name: clean || 'Nameless' } }));
+    };
+    const setArchetype = (archId) => {
+      setState(prev => {
+        if (prev.character.archetype === archId) return prev;
+        return pushLog([{
+          kind: 'sys',
+          text: `${prev.character.name} walks the ${pack.archetypes[archId].name}'s path. Bonds of other kinships answer at half strength.`,
+        }])({ ...prev, character: { ...prev.character, archetype: archId } });
+      });
+    };
+
+    /* -------- render -------- */
+    const ghost = getGhostPos();
+    const gridCells = [];
+    for (let y = 0; y < GRID_H; y++) for (let x = 0; x < GRID_W; x++) gridCells.push(<div key={`${x}-${y}`} className="grid-cell" />);
+
+    const slotProps = { onPointerDown: (e, item, slot) => startDrag(e, item, slot), draggingItem: dragState?.item, onHover: handleHover };
+    const odds = atelierItem && atelierItem.vessel
+      ? forge.explainOdds(atelierItem, { pigmentId: pigmentId || undefined, omenId: omenId || undefined }).slice(0, 5)
+      : [];
+    const sheet = agg.sheet;
+    const trophyReady = atelierItem && Object.entries(character.fragments).some(([id, n]) =>
+      n >= pack.trophies[id].fragments && pack.trophies[id].kinds.includes(atelierItem.kind));
 
     return (
       <div className="app-shell">
-
-        {tooltip && <Tooltip item={tooltip.item} position={tooltip} />}
+        {tooltip && <Tooltip item={tooltip.item} position={tooltip} equipped={tooltip.equipped} archetype={character.archetype} />}
 
         {dragState && (
           <ItemComponent
@@ -873,54 +1161,83 @@
         <div className="top-bar">
           <div>
             <a className="back-link" href="../../index.html">&larr; WIZARD</a>
-            <div className="title">ARTIFACT <strong>VAULT</strong></div>
-            <div className="subtext">Drag to equip, drop items on the vendor to sell.</div>
+            <div className="title">BRANDS <strong>&amp;</strong> BONDS</div>
+            <div className="subtext">Vesselforge engine · Verdigris pack — copper is wealth, bronze is power, mail is a rumor.</div>
           </div>
           <div className="top-actions">
             <div className="gold-counter">
               <span style={{ width: 8, height: 8, borderRadius: 4, background: '#e0c25e', display: 'inline-block', boxShadow: '0 0 5px rgba(201,162,39,0.8)' }} />
-              {gold.toLocaleString()}
+              {character.gold.toLocaleString()}
             </div>
+            <button className="btn primary" onClick={ventureForth}>Venture Forth</button>
             <button className="btn" onClick={spawnLoot}>Spawn Loot</button>
+            <button className="btn" onClick={resetVault}>Reset</button>
           </div>
         </div>
 
         <main className="main">
+          {/* ---------------- Paperdoll ---------------- */}
           <div className="panel paperdoll">
-            <div className="section-title">Equipment</div>
-
-            <div className="slot-row" style={{ justifyContent: 'center' }}>
-              <EquipmentSlot slotType="head" label="Head" item={equipment.head} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+            <div className="doll-head">
+              <input className="char-name-input" value={character.name} onChange={(e) => setCharName(e.target.value)} aria-label="Character name" spellCheck="false" />
+              <select className="arch-select" value={character.archetype} onChange={(e) => setArchetype(e.target.value)} aria-label="Character archetype">
+                {Object.entries(pack.archetypes).map(([id, a]) => <option key={id} value={id}>{a.name}</option>)}
+              </select>
+              <span className="char-level">Lv {level} · {character.xp % 100}/100</span>
             </div>
 
+            <div className="slot-row" style={{ justifyContent: 'center' }}>
+              <EquipmentSlot slotType="head" label="Head" item={equipment.head} {...slotProps} />
+              <EquipmentSlot slotType="amulet" label="Neck" item={equipment.amulet} {...slotProps} />
+            </div>
             <div className="slot-row">
-              <div className="slot-column" style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 10 }}>
-                <EquipmentSlot slotType="mainHand" label="Main Hand" item={equipment.mainHand} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
-                <EquipmentSlot slotType="gloves" label="Gloves" item={equipment.gloves} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 8 }}>
+                <EquipmentSlot slotType="mainHand" label="Main Hand" item={equipment.mainHand} tall {...slotProps} />
+                <EquipmentSlot slotType="gloves" label="Hands" item={equipment.gloves} {...slotProps} />
               </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-                <EquipmentSlot slotType="amulet" label="Amulet" item={equipment.amulet} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
-                <EquipmentSlot slotType="body" label="Torso" item={equipment.body} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
-                <EquipmentSlot slotType="belt" label="Belt" item={equipment.belt} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+                <EquipmentSlot slotType="body" label="Body" item={equipment.body} tall {...slotProps} />
+                <EquipmentSlot slotType="belt" label="Waist" item={equipment.belt} {...slotProps} />
               </div>
-
-              <div className="slot-column" style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 10 }}>
-                <EquipmentSlot slotType="offHand" label="Off Hand" item={equipment.offHand} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
-                <EquipmentSlot slotType="boots" label="Boots" item={equipment.boots} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 8 }}>
+                <EquipmentSlot slotType="offHand" label="Off Hand" item={equipment.offHand} tall {...slotProps} />
+                <EquipmentSlot slotType="boots" label="Feet" item={equipment.boots} {...slotProps} />
               </div>
             </div>
-
             <div className="slot-row" style={{ justifyContent: 'center' }}>
-              <EquipmentSlot slotType="ring1" label="Ring" item={equipment.ring1} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
-              <EquipmentSlot slotType="ring2" label="Ring" item={equipment.ring2} onPointerDown={startDrag} draggingType={dragState?.item.type} onHover={handleHover} />
+              <EquipmentSlot slotType="ring1" label="Ring" item={equipment.ring1} {...slotProps} />
+              <EquipmentSlot slotType="ring2" label="Ring" item={equipment.ring2} {...slotProps} />
             </div>
 
             <div className="stat-grid">
-              <div>Damage <strong>1,240</strong></div>
-              <div>Armor <strong>850</strong></div>
-              <div>Life <strong>2,400</strong></div>
-              <div>Resist <strong style={{ color: '#c9a227' }}>75%</strong></div>
+              <div>Life <strong>{sheet.life}</strong></div>
+              <div>Spirit <strong>{sheet.spirit}</strong></div>
+              <div>Damage <strong>{sheet.damage || '—'}</strong></div>
+              <div>Ward <strong>{sheet.ward}</strong></div>
+              <div>Move <strong>{sheet.move ? `+${sheet.move}%` : '—'}</strong></div>
+              <div>Goods <strong>{sheet.goods ? `+${sheet.goods}%` : '—'}</strong></div>
+              <div style={{ gridColumn: '1 / -1' }}>
+                Res <strong style={{ color: '#f87171' }}>{sheet.resEmber}</strong> ember / <strong style={{ color: '#93c5fd' }}>{sheet.resRiver}</strong> river
+              </div>
+            </div>
+
+            {agg.panoplies.map((p, i) => <div key={i} className="panoply-line">{p.bonus.label}</div>)}
+
+            <div style={{ width: '100%' }}>
+              <div className="section-title" style={{ marginBottom: 6 }}>Trophy Fragments</div>
+              <div>
+                {Object.entries(character.fragments).filter(([, n]) => n > 0).map(([id, n]) => (
+                  <span key={id} className="pill">✧ {pack.trophies[id].name} {Math.min(n, pack.trophies[id].fragments)}/{pack.trophies[id].fragments}{n >= pack.trophies[id].fragments ? ' ✓' : ''}</span>
+                ))}
+                {!Object.values(character.fragments).some(n => n > 0) && <span style={{ color: 'var(--dim)', fontSize: '0.75rem' }}>none yet — hunt</span>}
+              </div>
+            </div>
+
+            <div style={{ width: '100%' }}>
+              <div className="section-title" style={{ marginBottom: 6 }}>Chronicle</div>
+              <div className="chronicle">
+                {log.map((entry, i) => <div key={i} className={`entry ${entry.kind}`}>{entry.text}</div>)}
+              </div>
             </div>
 
             <div className="silhouette">
@@ -930,21 +1247,124 @@
             </div>
           </div>
 
+          {/* ---------------- Backpack + Atelier ---------------- */}
           <div className="panel inventory-panel">
-            <div className="section-title">Stash Tab 1</div>
+            <div className="pack-head">
+              <div className="section-title">Backpack · {GRID_W}×{GRID_H} · {inventory.length} items</div>
+              <div className="pack-actions">
+                <button className="btn small" onClick={sortPack}>Sort</button>
+                <button className={`btn small ${benchOpen ? 'primary' : ''}`} aria-expanded={benchOpen} onClick={() => setBenchOpen(o => !o)}>
+                  {benchOpen ? 'Close Atelier' : `Open Atelier · ${satchelTotal}`}
+                </button>
+              </div>
+            </div>
+
+            {benchOpen && (
+              <div className="atelier">
+                <div className="atelier-top">
+                  <div data-atelier-socket="true" className={`atelier-socket ${dragState && dragState.item.vessel ? 'highlight' : ''}`}>
+                    {atelierItem ? (
+                      <React.Fragment>
+                        <div className="socket-item-frame" style={{ width: atelierItem.w * 44, height: atelierItem.h * 44, position: 'relative' }}>
+                          <ItemComponent item={atelierItem} inSlot onPointerDown={(e, it) => startDrag(e, it, null, 'atelier')} onHover={handleHover} />
+                        </div>
+                        <button className="btn small" onClick={returnSocketed}>Return to Pack</button>
+                      </React.Fragment>
+                    ) : (
+                      <div className="hint">Drag an item here —<br />or tap one in your pack<br />while the Atelier is open.</div>
+                    )}
+                  </div>
+
+                  <div className="atelier-readout">
+                    {atelierItem ? (
+                      <React.Fragment>
+                        <div className="row-name" style={{ color: itemTint(atelierItem).color }}>
+                          {forge.displayName(atelierItem)}
+                          <span style={{ color: 'var(--dim)', fontSize: '0.72rem', marginLeft: 8 }}>
+                            {pack.materials[atelierItem.materialId].name} · Patience {atelierItem.patience}/{atelierItem.patienceMax}
+                          </span>
+                        </div>
+                        <VesselPips item={atelierItem} size="1rem" />
+
+                        <div className="tool-row">
+                          <button className="btn small" onClick={() => runOp('sear')}>Sear ✦ · {OP_COST.sear}g</button>
+                          <select className="tool-select" value={pigmentId} onChange={e => setPigmentId(e.target.value)} aria-label="Pigment">
+                            <option value="">no pigment</option>
+                            {Object.entries(pack.pigments).map(([id, p]) => (
+                              <option key={id} value={id} disabled={!(satchel[id] > 0)}>{p.name} ×{satchel[id] || 0}</option>
+                            ))}
+                          </select>
+                          <select className="tool-select" value={omenId} onChange={e => setOmenId(e.target.value)} aria-label="Omen">
+                            <option value="">no omen</option>
+                            {Object.entries(pack.omens).map(([id, o]) => (
+                              <option key={id} value={id} disabled={!(satchel[id] > 0)}>{o.name} ×{satchel[id] || 0}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="tool-row">
+                          <button className="btn small" onClick={() => runOp('efface')}>Efface · {OP_COST.efface}g</button>
+                          <button className="btn small" onClick={() => runOp('chisel')}>Chisel · {OP_COST.chisel}g</button>
+                          <button className="btn small" onClick={() => runOp('fire')}>Fire 🔥 · {OP_COST.fire}g</button>
+                          <button className="btn small" onClick={() => runOp('resonate')}>Resonate ◈ · {OP_COST.resonate}g</button>
+                          <button className="btn small" onClick={() => runOp('sever')}>Sever · {OP_COST.sever}g</button>
+                          <button className="btn small" disabled={!trophyReady} onClick={bindTrophy}>Bind Trophy ✧</button>
+                        </div>
+
+                        {odds.length > 0 && (
+                          <div className="odds-mini">
+                            next sear: {odds.map(o => `${o.label.replace('#', '·')} <b>${Math.round(o.p * 100)}%</b>`).join(' · ').split('<b>').map((part, i) =>
+                              i === 0 ? part : <React.Fragment key={i}><b>{part.split('</b>')[0]}</b>{part.split('</b>')[1]}</React.Fragment>
+                            )}
+                          </div>
+                        )}
+
+                        {!forge.isSated(atelierItem) && (
+                          <div style={{ marginTop: 2 }}>
+                            <div className="att-label"><span>Attunement</span><span>{atelierItem.att.xp}/{atelierItem.att.next}</span></div>
+                            <div className="att-bar"><div style={{ width: `${Math.min(100, Math.round(atelierItem.att.xp / atelierItem.att.next * 100))}%` }} /></div>
+                          </div>
+                        )}
+                      </React.Fragment>
+                    ) : (
+                      <div style={{ color: 'var(--dim)', fontSize: '0.82rem', lineHeight: 1.5 }}>
+                        <p style={{ margin: '0 0 8px' }}><span style={{ color: 'var(--brand)' }}>✦ Brands</span> are seared with pigments and omens — flat numbers, while the vessel's <b>Patience</b> lasts.</p>
+                        <p style={{ margin: '0 0 8px' }}><span style={{ color: 'var(--bond)' }}>◈ Bonds</span> are named memories with conditional powers, kin to your archetype. <span style={{ color: 'var(--trophy)' }}>✧ Trophies</span> are taken from the hunt.</p>
+                        <p style={{ margin: 0 }}>All three fight for the same slots. <span style={{ color: 'var(--awake)' }}>Fire</span> the kiln to gamble the material itself.</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="section-title">Pigments &amp; Omens</div>
+                <div className="shelf">
+                  {Object.keys(TOOL_PRICES).map(toolId => {
+                    const def = pack.pigments[toolId] || pack.omens[toolId];
+                    const count = satchel[toolId] || 0;
+                    return (
+                      <div key={toolId} className="shelf-card">
+                        <div className="shelf-icon"><ArtImg src={`assets/${toolId}.png`} fallbackIcon="tool" size={22} /></div>
+                        <div className="shelf-body">
+                          <div className="shelf-name"><span>{def.name}</span><span className="shelf-count">×{count}</span></div>
+                          <div className="shelf-desc">{TOOL_DESC[toolId]}</div>
+                          <div className="shelf-actions">
+                            <button className="btn small" disabled={character.gold < TOOL_PRICES[toolId]} onClick={() => buyTool(toolId)}>Buy · {TOOL_PRICES[toolId]}g</button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             <div className="grid-shell">
               <div
                 ref={gridRef}
                 className="inventory-grid"
-                style={{
-                  gridTemplateColumns: `repeat(${GRID_W}, ${TILE_SIZE}px)`,
-                  gridTemplateRows: `repeat(${GRID_H}, ${TILE_SIZE}px)`,
-                }}
+                style={{ gridTemplateColumns: `repeat(${GRID_W}, ${TILE_SIZE}px)`, gridTemplateRows: `repeat(${GRID_H}, ${TILE_SIZE}px)` }}
               >
-                {renderGridCells()}
-
-                {ghost && (
+                {gridCells}
+                {ghost && dragState && (
                   <div
                     className={`ghost ${ghost.isValid ? 'valid' : 'invalid'}`}
                     style={{
@@ -955,35 +1375,34 @@
                     }}
                   />
                 )}
-
-                {inventory.map((item) => (
-                  <ItemComponent
-                    key={item.id}
-                    item={item}
-                    onPointerDown={startDrag}
-                    onHover={handleHover}
-                  />
+                {inventory.map(item => (
+                  <ItemComponent key={item.id} item={item} onPointerDown={(e, it) => startDrag(e, it)} onHover={handleHover} />
                 ))}
               </div>
             </div>
 
-            <div
-              data-trash-zone="true"
-              className={`trash-zone ${dragState ? 'active' : ''}`}
-            >
+            <div className="pips-legend">
+              <span><span className="pip-brand">✦</span> Brand</span>
+              <span><span style={{ color: 'var(--bond)' }}>◈</span> Bond</span>
+              <span><span className="pip-trophy">✧</span> Trophy</span>
+              <span><span className="pip-scar">✕</span> Scar</span>
+              <span><span className="pip-empty">○</span> Empty</span>
+            </div>
+
+            <div data-trash-zone="true" className={`trash-zone ${dragState ? 'active' : ''}`}>
               <span style={{ fontWeight: 700, letterSpacing: '0.08em' }}>
-                {dragState ? 'Drop here to Sell (+50g)' : 'Vendor Trash'}
+                {dragState ? `Drop here to sell — ${forge.sellValue(dragState.item)}g` : 'Trader — drag items here to sell'}
               </span>
             </div>
 
             <div className="subtext">
-              "Stay awhile and listen."
-              <div style={{ color: '#6f695c' }}>— Deckard C.</div>
+              "A spear is only wood and flint until someone carries it through a winter."
+              <div style={{ color: '#6f695c' }}>— Bondwright's Primer, first page</div>
             </div>
           </div>
         </main>
 
-        {errorMsg && <div className="error-chip">{errorMsg}</div>}
+        {toast && <div className={`toast ${toast.tone}`}>{toast.msg}</div>}
       </div>
     );
   };

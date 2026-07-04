@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vesselforge Playground — WIZARD</title>
+  <meta name="description" content="Console-style harness for the Vesselforge modular ARPG item engine with the Verdigris bronze-age content pack.">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0c0a; --panel: #100f0c; --hairline: rgba(233,228,216,0.12);
+      --text: #e9e4d8; --muted: #9c9587; --dim: #6f695c; --accent: #c9a227;
+      --brand: #e0b84f; --bond: #a78bfa; --trophy: #6ee7b7; --awake: #fb923c; --scar: #8b6a6a;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+    .bar { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; padding: 12px 18px; border-bottom: 1px solid var(--hairline); position: sticky; top: 0; background: var(--bg); z-index: 5; }
+    .bar a { color: var(--muted); text-decoration: none; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+    .bar a:hover { color: var(--accent); }
+    h1 { font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.12em; margin: 0; }
+    h1 b { color: var(--accent); }
+    .wrap { display: flex; gap: 16px; padding: 16px; flex-wrap: wrap; max-width: 1300px; margin: 0 auto; }
+    .col { flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 10px; }
+    .card { background: var(--panel); border: 1px solid var(--hairline); border-radius: 10px; padding: 12px; }
+    .card h2 { font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+    button, select { background: rgba(233,228,216,0.05); border: 1px solid var(--hairline); color: var(--text); font-family: inherit; font-size: 12px; padding: 6px 10px; border-radius: 7px; cursor: pointer; }
+    button:hover { border-color: var(--accent); color: var(--accent); }
+    .row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+    #log { max-height: 300px; overflow-y: auto; display: flex; flex-direction: column-reverse; gap: 3px; }
+    #log div { color: var(--muted); }
+    #log .bond { color: var(--bond); } #log .craft { color: var(--brand); }
+    #log .awake { color: var(--awake); } #log .deed { color: var(--text); }
+    #log .err { color: #f87171; }
+    #tooltip { white-space: pre-wrap; line-height: 1.5; }
+    .tt-name { font-family: 'Cinzel', serif; font-size: 1rem; }
+    .tone-plain { color: var(--text); } .tone-branded { color: var(--brand); }
+    .tone-bonded { color: var(--bond); } .tone-awakened { color: var(--awake); }
+    .sec-brand { color: var(--brand); } .sec-bond { color: var(--bond); }
+    .sec-trophy { color: var(--trophy); } .sec-scar { color: var(--scar); }
+    .sec-implicit { color: #8fb7e8; font-style: italic; }
+    .sec-kind, .sec-vessel, .sec-attune, .sec-base { color: var(--dim); }
+    .sec-power { color: var(--awake); } .sec-flavor { color: #b7a98a; font-style: italic; }
+    .sec-stat { color: #d6d0c2; }
+    .estranged { opacity: 0.55; font-style: italic; }
+    table { border-collapse: collapse; width: 100%; }
+    td { padding: 2px 6px; border-bottom: 1px solid rgba(233,228,216,0.05); color: var(--muted); }
+    td:last-child { text-align: right; color: var(--text); }
+    .odds td:last-child { color: var(--accent); }
+    .pill { display: inline-block; border: 1px solid var(--hairline); border-radius: 20px; padding: 1px 9px; margin: 2px 3px 2px 0; color: var(--muted); font-size: 11px; }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <a href="../../../index.html">&larr; WIZARD</a>
+    <h1>VESSELFORGE <b>PLAYGROUND</b></h1>
+    <span style="color:var(--dim)">engine + verdigris pack, no framework — view source</span>
+  </div>
+
+  <div class="wrap">
+    <div class="col">
+      <div class="card">
+        <h2>Character</h2>
+        <div class="row">
+          <select id="arch"></select>
+          <button id="venture">Venture Forth</button>
+          <button id="venture10">×10</button>
+        </div>
+        <div id="char"></div>
+        <div id="fragments"></div>
+      </div>
+      <div class="card">
+        <h2>Chronicle</h2>
+        <div id="log"></div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <h2>Workbench — current item</h2>
+        <div class="row">
+          <button id="roll">Roll item</button>
+          <select id="ilvl">
+            <option value="10">ilvl 10</option><option value="30" selected>ilvl 30</option>
+            <option value="55">ilvl 55</option><option value="78">ilvl 78</option>
+          </select>
+          <button id="equip">Equip → main hand</button>
+        </div>
+        <div class="row">
+          <button id="sear">Sear ✦</button>
+          <select id="pigment"><option value="">no pigment</option></select>
+          <select id="omen"><option value="">no omen</option></select>
+        </div>
+        <div class="row">
+          <button id="efface">Efface</button>
+          <button id="chisel">Chisel slot</button>
+          <button id="fire">Fire in kiln</button>
+          <button id="resonate">Resonate ◈</button>
+          <button id="sever">Sever ◈→✕</button>
+          <button id="trophy">Bind trophy ✧</button>
+        </div>
+        <div id="tooltip" class="card" style="border-color: rgba(201,162,39,0.3)"></div>
+      </div>
+      <div class="card">
+        <h2>Sear odds (live, explainOdds)</h2>
+        <table class="odds" id="odds"></table>
+      </div>
+      <div class="card">
+        <h2>Sheet (flat) + conditionals (equipped)</h2>
+        <table id="sheet"></table>
+        <div id="conds"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="vesselforge.js"></script>
+  <script src="verdigris-pack.js"></script>
+  <script>
+    const forge = VesselForge.createForge(VerdigrisPack);
+    const $ = (id) => document.getElementById(id);
+
+    let character = forge.createCharacter({ name: 'Orun', archetype: 'shieldbearer', gold: 300 });
+    let equipment = { mainHand: null };
+    let bench = forge.generateItem({ ilvl: 30 });
+
+    // populate selects
+    Object.entries(VerdigrisPack.archetypes).forEach(([id, a]) => {
+      $('arch').insertAdjacentHTML('beforeend', `<option value="${id}">${a.name}</option>`);
+    });
+    $('arch').value = character.archetype;
+    Object.entries(VerdigrisPack.pigments).forEach(([id, p]) => {
+      $('pigment').insertAdjacentHTML('beforeend', `<option value="${id}">${p.name}</option>`);
+    });
+    Object.entries(VerdigrisPack.omens).forEach(([id, o]) => {
+      $('omen').insertAdjacentHTML('beforeend', `<option value="${id}">${o.name} (${o.tag})</option>`);
+    });
+
+    const logLines = [];
+    function log(ev) {
+      logLines.push(ev);
+      $('log').innerHTML = logLines.slice(-60).map(e => `<div class="${e.kind || ''}">${e.text}</div>`).join('');
+    }
+
+    function render() {
+      const ctx = { archetype: character.archetype, level: forge.charLevel(character) };
+      // character
+      $('char').innerHTML = `<div>${character.name} the ${VerdigrisPack.archetypes[character.archetype].name}` +
+        ` · Lv ${forge.charLevel(character)} · ${character.gold}g</div>` +
+        `<div style="color:var(--dim)">deeds: ${Object.entries(character.deeds).map(([t, n]) => `${t} ${n}`).join(' · ') || '—'}</div>`;
+      $('fragments').innerHTML = Object.entries(character.fragments)
+        .map(([id, n]) => `<span class="pill">✧ ${VerdigrisPack.trophies[id].name} ${n}/${VerdigrisPack.trophies[id].fragments}</span>`)
+        .join('') || '<span style="color:var(--dim)">no trophy fragments yet</span>';
+      // bench tooltip (structured lines -> html)
+      $('tooltip').innerHTML = bench ? forge.tooltip(bench, ctx).map(l =>
+        `<div class="sec-${l.section} ${l.tone === 'estranged' ? 'estranged' : ''} ${l.section === 'name' ? 'tt-name tone-' + l.tone : ''}">${l.text}</div>`
+      ).join('') : '<span style="color:var(--dim)">no item — roll one</span>';
+      // odds
+      $('odds').innerHTML = bench && bench.vessel ? forge.explainOdds(bench, {
+        pigmentId: $('pigment').value || undefined, omenId: $('omen').value || undefined,
+      }).map(o => `<tr><td>${o.label}</td><td>${(o.p * 100).toFixed(1)}%</td></tr>`).join('') : '';
+      // sheet
+      const agg = forge.aggregate(Object.values(equipment), ctx);
+      $('sheet').innerHTML = Object.entries(agg.sheet).map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+      $('conds').innerHTML = agg.conditionals.map(c =>
+        `<div class="${c.estranged ? 'estranged' : ''}" style="color:${c.themeId ? VerdigrisPack.themes[c.themeId].color : 'var(--trophy)'}">◈ ${c.name} — ${c.text}${c.estranged ? ' (estranged)' : ''}</div>`
+      ).join('') + agg.panoplies.map(p => `<div style="color:var(--awake)">${p.bonus.label}</div>`).join('');
+    }
+
+    function applyOp(res) {
+      if (res.error) { log({ kind: 'err', text: res.error }); return; }
+      if (res.destroyed) { bench = null; }
+      else if (res.item) bench = res.item;
+      if (res.stash) character.fragments = res.stash;
+      if (res.event) log(res.event);
+      (res.events || []).forEach(log);
+      render();
+    }
+
+    $('roll').onclick = () => { bench = forge.generateItem({ ilvl: +$('ilvl').value }); log({ kind: 'craft', text: `Rolled: ${forge.displayName(bench)} (ilvl ${bench.ilvl})` }); render(); };
+    $('sear').onclick = () => bench && applyOp(forge.sear(bench, { pigmentId: $('pigment').value || undefined, omenId: $('omen').value || undefined }));
+    $('efface').onclick = () => bench && applyOp(forge.efface(bench));
+    $('chisel').onclick = () => bench && applyOp(forge.chisel(bench));
+    $('fire').onclick = () => bench && applyOp(forge.fire(bench));
+    $('resonate').onclick = () => bench && applyOp(forge.resonate(bench));
+    $('sever').onclick = () => bench && applyOp(forge.sever(bench));
+    $('trophy').onclick = () => {
+      if (!bench) return;
+      const ready = Object.entries(character.fragments).find(([id, n]) =>
+        n >= VerdigrisPack.trophies[id].fragments && VerdigrisPack.trophies[id].kinds.includes(bench.kind));
+      if (!ready) { log({ kind: 'err', text: 'No completed trophy fits this item — hunt more fragments' }); return; }
+      applyOp(forge.socketTrophy(bench, ready[0], character.fragments));
+    };
+    $('equip').onclick = () => {
+      if (!bench || !VerdigrisPack.forms[bench.formId].weapon) { log({ kind: 'err', text: 'Bench item is not a weapon' }); return; }
+      const old = equipment.mainHand;
+      equipment.mainHand = bench;
+      bench = old || forge.generateItem({ ilvl: +$('ilvl').value });
+      log({ kind: 'craft', text: `Equipped ${forge.displayName(equipment.mainHand)}` });
+      render();
+    };
+    function doVenture() {
+      const r = forge.venture(character, equipment);
+      character = r.character; equipment = r.equipment;
+      r.events.forEach(log);
+      r.drops.forEach(d => log({ kind: 'deed', text: `Loot: ${forge.displayName(d)} (${VerdigrisPack.materials[d.materialId].name}, ilvl ${d.ilvl}) — sent to bench` }));
+      if (r.drops.length) bench = r.drops[r.drops.length - 1];
+      render();
+    }
+    $('venture').onclick = doVenture;
+    $('venture10').onclick = () => { for (let i = 0; i < 10; i++) doVenture(); };
+    $('arch').onchange = (e) => { character.archetype = e.target.value; log({ kind: 'deed', text: `${character.name} walks the ${VerdigrisPack.archetypes[character.archetype].name}'s path.` }); render(); };
+    $('pigment').onchange = render; $('omen').onchange = render;
+
+    log({ kind: 'deed', text: 'The forge is lit. Roll an item, read the odds, spend its patience wisely.' });
+    render();
+  </script>
+</body>
+</html>
