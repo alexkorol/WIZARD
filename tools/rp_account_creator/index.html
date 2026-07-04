@@ -137,11 +137,11 @@
       xp: 1 + attrs.int * 0.03,
     });
     const baseMaxHp = (attrs) => 70 + attrs.str * 6;
-    // Callings lean on one axis. Names echo Verdigris canon (shieldbearer/farwalker kinships, omen-craft).
+    // Classes lean on one axis. Plain archetypes on purpose — no invented titles.
     const CLASSES = [
-      { id: 'shieldbearer', name: 'Shieldbearer', icon: 'shield', attr: 'str', desc: 'The wall the House hides behind. Slow to learn, slower to die.', attrs: { str: 8, dex: 4, int: 3 }, outfitItem: { form: 'Spear', material: 'copper' } },
-      { id: 'wayfarer', name: 'Wayfarer', icon: 'sword', attr: 'dex', desc: 'Farwalker of the wilds. Finds what others walk past.', attrs: { str: 4, dex: 8, int: 3 }, outfitItem: { form: 'Atlatl', material: 'copper' } },
-      { id: 'omenspeaker', name: 'Omenspeaker', icon: 'scroll', attr: 'int', desc: 'Reads entrails and skies. Knows much, bleeds easily.', attrs: { str: 3, dex: 4, int: 8 }, outfitItem: { form: 'Ring', material: 'copper' } },
+      { id: 'warrior', name: 'Warrior', icon: 'shield', attr: 'str', desc: 'The wall the House hides behind. Slow to learn, slower to die.', attrs: { str: 8, dex: 4, int: 3 }, outfitItem: { form: 'Spear', material: 'copper' } },
+      { id: 'rogue', name: 'Rogue', icon: 'sword', attr: 'dex', desc: 'Quick hands, quicker feet. Finds what others walk past.', attrs: { str: 4, dex: 8, int: 3 }, outfitItem: { form: 'Handaxe', material: 'copper' } },
+      { id: 'mage', name: 'Mage', icon: 'scroll', attr: 'int', desc: 'Reads entrails and skies. Knows much, bleeds easily.', attrs: { str: 3, dex: 4, int: 8 }, outfitItem: { form: 'Ring', material: 'copper' } },
     ];
 
     const ZONES = [
@@ -155,9 +155,9 @@
     const MONSTERS = {
       1: ['Field Rat', 'Kobold Scavenger', 'Mud Crab', 'Feral Hound'],
       2: ['Goblin Skirmisher', 'Dire Wolf', 'Bog Wisp', 'Roadside Bandit'],
-      3: ['Skeleton Warden', 'Reaver of the Ash Clans', 'Stone Ghoul', 'Mimic'],
-      4: ['Crypt Wight', 'Drowned Oathman', 'Bone Priest', 'Flesh Golem'],
-      5: ['Rift Stalker', 'Pale Seraph', 'Void Maw', "The Hollow King's Herald"],
+      3: ['Skeleton', 'Raider', 'Ghoul', 'Mimic'],
+      4: ['Wight', 'Drowned Soldier', 'Bone Priest', 'Flesh Golem'],
+      5: ['Rift Stalker', 'Pale Seraph', 'Void Beast', 'The Hollow King'],
     };
 
     // Itemization: shared canon with tools/rpg_inventory (Vesselforge / Verdigris pack).
@@ -206,7 +206,7 @@
     // Legacy boons: unlocked permanently at renown thresholds.
     const BOONS = [
       { id: 'oral_tradition', renown: 150, icon: 'book', name: 'Oral Tradition', corruptName: 'Whispered Heresies', desc: 'Tales of the fallen guide the young. Scions gain +15% experience.' },
-      { id: 'ancestral_arms', renown: 400, icon: 'sword', name: 'Ancestral Arms', corruptName: 'Grave-Gifts', desc: 'New scions set out bearing a circulating relic of the House.' },
+      { id: 'ancestral_arms', renown: 400, icon: 'sword', name: 'Ancestral Arms', corruptName: 'Grave Goods', desc: 'New scions set out bearing a circulating relic of the House.' },
       { id: 'hardened_blood', renown: 800, icon: 'heart', name: 'Hardened Blood', corruptName: 'Ichor of the Void', desc: 'The lineage endures. Scions gain +25 vitality.' },
       { id: 'grave_whispers', renown: 1500, icon: 'ghost', name: 'Whispers of the Dead', corruptName: 'The Choir Below', desc: 'The dead point the way to what they lost. Relics surface twice as often.' },
       { id: 'long_memory', renown: 3000, icon: 'history', name: 'The Long Memory', corruptName: 'Eternal Recurrence', desc: 'Each generation begins where the last left a mark. Scions start at level 3.' },
@@ -233,8 +233,8 @@
     // Lore: offline pools + optional LLM
     // ============================================================
     const OFFLINE_LORE = {
-      houseName: ['Vaelmont', 'Druskane', 'Morvayne', 'Ashgrave', 'Thornholt', 'Caldrest', 'Veyrane', 'Oakhart', 'Greywarden', 'Stillbrook', 'Ravencrest', 'Mournvale'],
-      voidName: ['The Voidsworn', 'Hollowmark', 'Nightrend', 'The Unhallowed', 'Gravemourn', 'The Palefast'],
+      houseName: ['Vaelmont', 'Druskane', 'Morvayne', 'Ashford', 'Thornholt', 'Caldrest', 'Veyrane', 'Oakhart', 'Greyford', 'Stillbrook', 'Blackwell', 'Marlowe'],
+      voidName: ['The Unhallowed', 'The Hollow House', 'The Broken House', 'The Nameless', 'The Last House'],
       motto: ['Ash remembers', 'Iron before honey', 'We endure the long dark', 'No crown without thorns', 'The river forgets nothing', 'Silence keeps the keep', 'Debt is a kind of love', 'The last light is ours'],
       charName: ['Kaelen Dray', 'Mirelle of the Fen', 'Tobias Crane', 'Sera Voss', 'Aldric Thane', 'Wren Calloway', 'Edmun Hale', 'Isolde Marr', 'Petra Quill', 'Rooke Damaris', 'Fenn Oswic', 'Lysa Corveaux'],
       origin: [
@@ -338,8 +338,12 @@
       'text-red-500': 'crimson', 'text-blue-500': 'azure', 'text-green-500': 'verdant',
       'text-amber-500': 'gold', 'text-purple-500': 'amethyst', 'text-slate-200': 'slate',
     };
-    const CLASS_MIGRATION = { vanguard: 'shieldbearer', arcanist: 'omenspeaker', ranger: 'wayfarer' };
-    const migrateClassId = (id) => CLASS_MIGRATION[id] || (CLASSES.some(c => c.id === id) ? id : 'shieldbearer');
+    const CLASS_MIGRATION = {
+      vanguard: 'warrior', shieldbearer: 'warrior',
+      ranger: 'rogue', wayfarer: 'rogue',
+      arcanist: 'mage', omenspeaker: 'mage',
+    };
+    const migrateClassId = (id) => CLASS_MIGRATION[id] || (CLASSES.some(c => c.id === id) ? id : 'warrior');
     const attrsFor = (classId, level) => {
       const def = CLASSES.find(c => c.id === classId) || CLASSES[0];
       const attrs = { ...def.attrs };
@@ -369,7 +373,15 @@
     function loadHouses() {
       try {
         const v3 = localStorage.getItem(STORAGE_KEY);
-        if (v3) return JSON.parse(v3);
+        if (v3) {
+          // Normalize older class ids (e.g. shieldbearer/wayfarer/omenspeaker) in place.
+          const parsed = JSON.parse(v3);
+          Object.values(parsed).forEach(h => {
+            (h.characters || []).forEach(c => { c.class = migrateClassId(c.class); });
+            (h.crypt || []).forEach(d => { d.class = migrateClassId(d.class); });
+          });
+          return parsed;
+        }
         const v2 = localStorage.getItem(V2_KEY);
         if (v2) {
           const old = JSON.parse(v2);
@@ -697,7 +709,7 @@
         setGenerating(false);
       };
       const triggerCorrupt = async () => {
-        const corruptName = await generateLore('House Name', 'Chaotic void house name') || 'The Voidsworn';
+        const corruptName = await generateLore('House Name', 'Chaotic void house name') || 'The Unhallowed';
         const corruptMotto = await generateLore('House Motto', 'Chaos reigns eternal') || 'Chaos Reigns Eternal';
         onCreate(corruptName, corruptMotto, { color: 'void', charge: 'skull' }, true);
         showNote('The scribes reject you; a Corrupt House is forged in spite.');
@@ -992,7 +1004,7 @@
       };
       const triggerFool = () => {
         const pool = ['Bozo the Lost', 'Jester of Ruin', 'The Unworthy', 'Buffoon McStumble', 'Giggles'];
-        onCreate({ name: pick(pool), cls: 'shieldbearer', origin: 'A fool branded by the scribes.', brand: 'fool', outfit: false });
+        onCreate({ name: pick(pool), cls: 'warrior', origin: 'A fool branded by the scribes.', brand: 'fool', outfit: false });
         showNote('You are branded a Fool. The scribes choose your fate.');
       };
       const handleSubmit = async () => {
