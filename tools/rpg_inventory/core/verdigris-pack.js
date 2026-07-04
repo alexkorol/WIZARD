@@ -160,9 +160,9 @@
       slaughter: {
         name: 'Slaughter', color: '#f87171',
         mods: {
-          blood_price:   { name: 'The Blood-Price', label: 'Recover {v}% of Life on Kill', shape: 'trigger', roll: [2, 3] },
-          battle_rhythm: { name: 'Battle-Rhythm', label: '+{v}% Attack Speed for 4s after a Kill', shape: 'trigger', roll: [12, 18] },
-          read_wound:    { name: 'Read-the-Wound', label: '+{v}% Critical Chance against Bleeding foes', shape: 'conditional', roll: [15, 25] },
+          blood_price:   { name: 'The Blood Price', label: 'Recover {v}% of Life on Kill', shape: 'trigger', roll: [2, 3] },
+          battle_rhythm: { name: 'Battle Rhythm', label: '+{v}% Attack Speed for 4s after a Kill', shape: 'trigger', roll: [12, 18] },
+          read_wound:    { name: 'Read the Wound', label: '+{v}% Critical Chance against Bleeding foes', shape: 'conditional', roll: [15, 25] },
         },
         epithets: ['Hunger', 'Fang', 'Reckoning'], adjs: ['Red', 'Grim', 'Howling'],
         power: 'Echoing Kill — slain foes have 15% chance to die twice, doubling their spoils.',
@@ -172,7 +172,7 @@
         name: 'Warding', color: '#93c5fd',
         mods: {
           shieldwall:   { name: 'The Shieldwall', label: 'Regain {v} Life when you Block', shape: 'trigger', roll: [8, 14] },
-          stand_ground: { name: 'Stand-Your-Ground', label: '+{v}% Chance to Block while stationary', shape: 'conditional', roll: [3, 5] },
+          stand_ground: { name: 'Stand Your Ground', label: '+{v}% Chance to Block while stationary', shape: 'conditional', roll: [3, 5] },
           old_grudge:   { name: 'Old Grudge', label: '+{v}% Ward for 2s when Hit', shape: 'trigger', roll: [20, 30] },
         },
         epithets: ['Oath', 'Bulwark', 'Vigil'], adjs: ['Unbroken', 'Stone', 'Dawnlit'],
@@ -182,9 +182,9 @@
       spiritwork: {
         name: 'Spiritwork', color: '#c084fc',
         mods: {
-          clear_mind:  { name: 'Clear-Mind', label: '+{v}% Rite Power while Spirit is above three-quarters', shape: 'conditional', roll: [12, 20] },
-          ember_tithe: { name: 'Ember-Tithe', label: 'Recover {v}% of Spirit on Kill', shape: 'trigger', roll: [3, 5] },
-          veil_wise:   { name: 'Veil-Wise', label: '{v}% chance to shrug off Curses', shape: 'conditional', roll: [10, 18] },
+          clear_mind:  { name: 'Clear Mind', label: '+{v}% Rite Power while Spirit is above three-quarters', shape: 'conditional', roll: [12, 20] },
+          ember_tithe: { name: 'Harvest', label: 'Recover {v}% of Spirit on Kill', shape: 'trigger', roll: [3, 5] },
+          veil_wise:   { name: 'Superstition', label: '{v}% chance to shrug off Curses', shape: 'conditional', roll: [10, 18] },
         },
         epithets: ['Whisper', 'Cinder', 'Riddle'], adjs: ['Silent', 'Ashen', 'Nine-Veiled'],
         power: 'Twinned Voice — rites have 12% chance to speak twice, free.',
@@ -193,9 +193,9 @@
       wayfaring: {
         name: 'Wayfaring', color: '#86efac',
         mods: {
-          dead_sprint: { name: 'Dead-Sprint', label: '+{v}% Movement Speed for 3s on Kill', shape: 'trigger', roll: [10, 16] },
+          dead_sprint: { name: 'Dead Sprint', label: '+{v}% Movement Speed for 3s on Kill', shape: 'trigger', roll: [10, 16] },
           sidestep:    { name: 'Sidestep', label: '{v}% chance to Avoid thrown weapons while moving', shape: 'conditional', roll: [10, 16] },
-          road_lore:   { name: 'Road-Lore', label: 'Regain {v} Life per second while moving', shape: 'conditional', roll: [2, 4] },
+          road_lore:   { name: 'Second Wind', label: 'Regain {v} Life per second while moving', shape: 'conditional', roll: [2, 4] },
         },
         epithets: ['Stride', 'Wind', 'Lantern'], adjs: ['Fleet', 'Pale', 'Far'],
         power: 'Untraceable — the first strike against you in every battle misses.',
@@ -204,27 +204,27 @@
     },
 
     archetypes: {
-      redhand:     { name: 'Redhand', themeId: 'slaughter' },
-      shieldbearer: { name: 'Shieldbearer', themeId: 'warding' },
-      ashspeaker:  { name: 'Ashspeaker', themeId: 'spiritwork' },
-      farwalker:   { name: 'Farwalker', themeId: 'wayfaring' },
+      redhand:     { name: 'Butcher', themeId: 'slaughter' },
+      shieldbearer: { name: 'Guard', themeId: 'warding' },
+      ashspeaker:  { name: 'Seer', themeId: 'spiritwork' },
+      farwalker:   { name: 'Scout', themeId: 'wayfaring' },
     },
 
     /* ---------------- trophies (hunted power, TQ/GD homage) ---------------- */
     trophies: {
-      boar_tusk:   { name: 'Boar-Tusk Fetish', fragments: 5, kinds: ['weapon', 'belt'],
+      boar_tusk:   { name: 'Boar Tusk', fragments: 5, kinds: ['weapon', 'belt'],
                      mods: [{ stat: 'phys_pct', v: 10, label: '+{v}% increased Physical Damage', shape: 'scalar' }],
                      completionBonus: { label: 'Charge — your first strike each battle cannot be blocked', shape: 'trigger' } },
-      wolf_fang:   { name: 'Wolf-Fang Fetish', fragments: 5, kinds: ['weapon', 'gloves'],
+      wolf_fang:   { name: 'Wolf Fang', fragments: 5, kinds: ['weapon', 'gloves'],
                      mods: [{ stat: 'atk_speed', v: 6, label: '+{v}% Attack Speed', shape: 'scalar' }],
-                     completionBonus: { label: 'Pack-Sense — you cannot be surprised', shape: 'conditional' } },
-      river_pearl: { name: 'River-Pearl', fragments: 3, kinds: ['amulet', 'ring', 'helmet'],
+                     completionBonus: { label: 'Pack Sense — you cannot be surprised', shape: 'conditional' } },
+      river_pearl: { name: 'River Pearl', fragments: 3, kinds: ['amulet', 'ring', 'helmet'],
                      mods: [{ stat: 'spirit', v: 12, label: '+{v} to Maximum Spirit', shape: 'flat' }],
                      completionBonus: { label: 'Undertow — your rites chill their targets', shape: 'trigger' } },
-      ember_shell: { name: 'Ember-Beetle Shell', fragments: 3, kinds: ['shield', 'body'],
+      ember_shell: { name: 'Beetle Shell', fragments: 3, kinds: ['shield', 'body'],
                      mods: [{ stat: 'ember_res', v: 15, label: '+{v}% to Ember Resistance', shape: 'scalar' }],
-                     completionBonus: { label: 'Cinder-Skin — attackers are singed', shape: 'trigger' } },
-      knucklebone: { name: 'Ancestor Knucklebone', fragments: 3, kinds: ['amulet', 'ring', 'belt'],
+                     completionBonus: { label: 'Cinder Skin — attackers are singed', shape: 'trigger' } },
+      knucklebone: { name: 'Knucklebone', fragments: 3, kinds: ['amulet', 'ring', 'belt'],
                      mods: [{ stat: 'fortune', v: 10, label: '+{v}% Goods Found', shape: 'scalar' }],
                      completionBonus: { label: 'Grandmother’s Rite — once a day, reroll one omen', shape: 'grant' } },
     },
@@ -238,7 +238,7 @@
     },
     omens: {
       entrail_omen: { name: 'Entrail Omen', tag: 'ward' },
-      bird_omen:    { name: 'Bird-Flight Omen', tag: 'swift' },
+      bird_omen:    { name: 'Bird Omen', tag: 'swift' },
       smoke_omen:   { name: 'Smoke Omen', tag: 'spirit' },
       blood_omen:   { name: 'Blood Omen', tag: 'blood' },
     },
