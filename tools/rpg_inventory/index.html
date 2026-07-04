@@ -153,14 +153,13 @@
 
     .slot-row { display: flex; align-items: flex-start; gap: 14px; }
 
+    /* PoE-style slot wells: deep navy over the stone panel, bronze hairline. */
     .equip-slot {
       position: relative;
-      background: rgba(233,228,216,0.02);
-      background-image: linear-gradient(rgba(13,12,10,0.5), rgba(13,12,10,0.5)), url('assets/slot_texture.png');
-      background-size: cover;
-      background-position: center;
-      border: 1px dashed rgba(233, 228, 216, 0.18);
-      border-radius: 12px;
+      background: linear-gradient(165deg, rgba(23, 27, 56, 0.9), rgba(8, 10, 24, 0.95));
+      border: 1px solid rgba(168, 144, 92, 0.28);
+      border-radius: 7px;
+      box-shadow: inset 0 0 16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(233,228,216,0.05);
       min-width: 78px; min-height: 78px;
       display: flex; align-items: center; justify-content: center;
       color: var(--dim);
@@ -235,8 +234,9 @@
 
     .grid-cell {
       width: var(--cell-size); height: var(--cell-size);
-      background: rgba(233,228,216,0.02);
-      border: 1px solid rgba(233,228,216,0.04);
+      background: rgba(15, 19, 42, 0.5);
+      border: 1px solid rgba(110, 120, 170, 0.09);
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.35);
     }
 
     .item {
@@ -396,6 +396,87 @@
     .tooltip .tt-flavor { color: #b7a98a; font-style: italic; text-align: center; margin: 8px 0 2px; line-height: 1.4; font-size: 0.8rem; }
     .tooltip .foot { color: var(--dim); font-size: 0.72rem; margin-top: 8px; border-top: 1px solid var(--hairline); padding-top: 6px; line-height: 1.4; }
     .estranged { opacity: 0.55; font-style: italic; }
+
+    /* ---------- Panel banner (PoE header) ---------- */
+    .panel-banner {
+      display: flex; align-items: center; gap: 10px;
+      margin: -2px 0 10px;
+    }
+    .panel-banner::before, .panel-banner::after {
+      content: "";
+      flex: 1; height: 14px;
+      background: url('assets/divider.png') center / contain no-repeat;
+      opacity: 0.55;
+    }
+    .panel-banner span {
+      font-family: 'Cinzel', serif;
+      font-size: 0.92rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #e8c76a;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 18px rgba(201,162,39,0.25);
+      white-space: nowrap;
+    }
+
+    /* ---------- Side drawer (chronicle & sundries) ---------- */
+    .drawer {
+      position: fixed;
+      top: 76px; right: 0; bottom: 24px;
+      width: 320px; max-width: 86vw;
+      background: rgba(13, 12, 10, 0.97);
+      border: 1px solid var(--hairline);
+      border-right: none;
+      border-radius: 12px 0 0 12px;
+      box-shadow: -14px 0 40px rgba(0,0,0,0.55);
+      z-index: 90;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      display: flex; flex-direction: column;
+      padding: 14px;
+      gap: 12px;
+      overflow-y: auto;
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-tab {
+      position: fixed;
+      top: 50%; right: 0;
+      transform: translateY(-50%);
+      z-index: 91;
+      background: rgba(16, 15, 12, 0.95);
+      border: 1px solid var(--hairline);
+      border-right: none;
+      border-radius: 9px 0 0 9px;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      padding: 14px 7px;
+      cursor: pointer;
+      transition: color 0.2s ease, right 0.25s ease;
+      writing-mode: vertical-rl;
+      letter-spacing: 0.2em;
+    }
+    .drawer-tab:hover { color: var(--accent); }
+    .drawer-tab.open { right: min(320px, 86vw); }
+    .drawer .chronicle { max-height: none; flex: 1; }
+    .drawer-quote { color: var(--dim); font-size: 0.75rem; font-style: italic; line-height: 1.45; }
+
+    /* ---------- Floating sell target (only while dragging) ---------- */
+    .sell-float {
+      position: fixed;
+      bottom: 26px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 110;
+      padding: 16px 34px;
+      border: 2px dashed rgba(239, 68, 68, 0.55);
+      border-radius: 14px;
+      background: rgba(30, 10, 10, 0.92);
+      color: #fca5a5;
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.6), 0 0 18px rgba(239,68,68,0.2);
+      animation: toastIn 0.15s ease;
+    }
 
     /* ---------- Toast ---------- */
     .toast {
@@ -775,6 +856,7 @@
     const { character, inventory, equipment, atelierItem, satchel, log } = state;
 
     const [benchOpen, setBenchOpen] = useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(false);
     const [pigmentId, setPigmentId] = useState('');
     const [omenId, setOmenId] = useState('');
     const [dragState, setDragState] = useState(null);
@@ -1162,7 +1244,7 @@
           <div>
             <a className="back-link" href="../../index.html">&larr; WIZARD</a>
             <div className="title">BRANDS <strong>&amp;</strong> BONDS</div>
-            <div className="subtext">Vesselforge engine · Verdigris pack — copper is wealth, bronze is power, mail is a rumor.</div>
+            <div className="subtext">Brands are seared. Bonds are earned. Items remember their bearer.</div>
           </div>
           <div className="top-actions">
             <div className="gold-counter">
@@ -1178,6 +1260,7 @@
         <main className="main">
           {/* ---------------- Paperdoll ---------------- */}
           <div className="panel paperdoll">
+            <div className="panel-banner"><span>Equipment</span></div>
             <div className="doll-head">
               <input className="char-name-input" value={character.name} onChange={(e) => setCharName(e.target.value)} aria-label="Character name" spellCheck="false" />
               <select className="arch-select" value={character.archetype} onChange={(e) => setArchetype(e.target.value)} aria-label="Character archetype">
@@ -1223,23 +1306,6 @@
 
             {agg.panoplies.map((p, i) => <div key={i} className="panoply-line">{p.bonus.label}</div>)}
 
-            <div style={{ width: '100%' }}>
-              <div className="section-title" style={{ marginBottom: 6 }}>Trophy Fragments</div>
-              <div>
-                {Object.entries(character.fragments).filter(([, n]) => n > 0).map(([id, n]) => (
-                  <span key={id} className="pill">✧ {pack.trophies[id].name} {Math.min(n, pack.trophies[id].fragments)}/{pack.trophies[id].fragments}{n >= pack.trophies[id].fragments ? ' ✓' : ''}</span>
-                ))}
-                {!Object.values(character.fragments).some(n => n > 0) && <span style={{ color: 'var(--dim)', fontSize: '0.75rem' }}>none yet — hunt</span>}
-              </div>
-            </div>
-
-            <div style={{ width: '100%' }}>
-              <div className="section-title" style={{ marginBottom: 6 }}>Chronicle</div>
-              <div className="chronicle">
-                {log.map((entry, i) => <div key={i} className={`entry ${entry.kind}`}>{entry.text}</div>)}
-              </div>
-            </div>
-
             <div className="silhouette">
               <svg viewBox="0 0 200 320" width="260" height="260" stroke="currentColor" strokeWidth="8" fill="none">
                 <path d="M100,25 C120,25 130,50 130,70 L140,80 L130,140 L140,200 L110,300 L90,300 L60,200 L70,140 L60,80 L70,70 C70,50 80,25 100,25 Z" />
@@ -1249,12 +1315,13 @@
 
           {/* ---------------- Backpack + Atelier ---------------- */}
           <div className="panel inventory-panel">
+            <div className="panel-banner"><span>Inventory</span></div>
             <div className="pack-head">
-              <div className="section-title">Backpack · {GRID_W}×{GRID_H} · {inventory.length} items</div>
+              <div className="section-title">{inventory.length} items · {GRID_W}×{GRID_H}</div>
               <div className="pack-actions">
                 <button className="btn small" onClick={sortPack}>Sort</button>
                 <button className={`btn small ${benchOpen ? 'primary' : ''}`} aria-expanded={benchOpen} onClick={() => setBenchOpen(o => !o)}>
-                  {benchOpen ? 'Close Atelier' : `Open Atelier · ${satchelTotal}`}
+                  {benchOpen ? 'Close Atelier' : `Atelier · ${satchelTotal}`}
                 </button>
               </div>
             </div>
@@ -1381,26 +1448,49 @@
               </div>
             </div>
 
-            <div className="pips-legend">
-              <span><span className="pip-brand">✦</span> Brand</span>
-              <span><span style={{ color: 'var(--bond)' }}>◈</span> Bond</span>
-              <span><span className="pip-trophy">✧</span> Trophy</span>
-              <span><span className="pip-scar">✕</span> Scar</span>
-              <span><span className="pip-empty">○</span> Empty</span>
-            </div>
-
-            <div data-trash-zone="true" className={`trash-zone ${dragState ? 'active' : ''}`}>
-              <span style={{ fontWeight: 700, letterSpacing: '0.08em' }}>
-                {dragState ? `Drop here to sell — ${forge.sellValue(dragState.item)}g` : 'Trader — drag items here to sell'}
-              </span>
-            </div>
-
-            <div className="subtext">
-              "A spear is only wood and flint until someone carries it through a winter."
-              <div style={{ color: '#6f695c' }}>— Bondwright's Primer, first page</div>
-            </div>
           </div>
         </main>
+
+        {/* Sell target — exists only while something is being dragged. */}
+        {dragState && (
+          <div data-trash-zone="true" className="sell-float">
+            ⚖ Sell — {forge.sellValue(dragState.item)}g
+          </div>
+        )}
+
+        {/* Side drawer: chronicle & sundries, out of the way. */}
+        <button
+          className={`drawer-tab ${drawerOpen ? 'open' : ''}`}
+          onClick={() => setDrawerOpen(o => !o)}
+          aria-expanded={drawerOpen}
+          title="Chronicle"
+        >
+          {drawerOpen ? '››' : '‹‹ Chronicle'}
+        </button>
+        <div className={`drawer ${drawerOpen ? 'open' : ''}`}>
+          <div className="section-title">Trophy Fragments</div>
+          <div>
+            {Object.entries(character.fragments).filter(([, n]) => n > 0).map(([id, n]) => (
+              <span key={id} className="pill">✧ {pack.trophies[id].name} {Math.min(n, pack.trophies[id].fragments)}/{pack.trophies[id].fragments}{n >= pack.trophies[id].fragments ? ' ✓' : ''}</span>
+            ))}
+            {!Object.values(character.fragments).some(n => n > 0) && <span style={{ color: 'var(--dim)', fontSize: '0.75rem' }}>none yet — hunt</span>}
+          </div>
+          <div className="section-title">Chronicle</div>
+          <div className="chronicle">
+            {log.map((entry, i) => <div key={i} className={`entry ${entry.kind}`}>{entry.text}</div>)}
+          </div>
+          <div className="pips-legend">
+            <span><span className="pip-brand">✦</span> Brand</span>
+            <span><span style={{ color: 'var(--bond)' }}>◈</span> Bond</span>
+            <span><span className="pip-trophy">✧</span> Trophy</span>
+            <span><span className="pip-scar">✕</span> Scar</span>
+            <span><span className="pip-empty">○</span> Empty</span>
+          </div>
+          <div className="drawer-quote">
+            "A spear is only wood and flint until someone carries it through a winter."
+            <div style={{ color: '#57503f' }}>— Bondwright's Primer, first page</div>
+          </div>
+        </div>
 
         {toast && <div className={`toast ${toast.tone}`}>{toast.msg}</div>}
       </div>
