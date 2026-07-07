@@ -1,0 +1,142 @@
+window.VerdigrisDownloadIntake = [
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_001_copper_hand_bell.png",
+    original: "64fa5867-3780-4f9d-8d7d-ac7b23336df7.png",
+    proposedLabel: "Copper Hand Bell",
+    proposedArtId: "rattle_copper",
+    slot: "ritefocus",
+    canvas: "S",
+    confidence: "high",
+    note: "Overlaps revised rattle_copper. Candidate replacement or alias."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_002_linen_corslet_a.png",
+    original: "425a36d0-6291-4c02-89fe-5718e7b01438.png",
+    proposedLabel: "Layered Linen Corslet A",
+    proposedArtId: "wrap_quilted_candidate_a",
+    slot: "body",
+    canvas: "P",
+    confidence: "high",
+    note: "Duplicate cluster with B/C; choose one for wrap_quilted or a new linen body base."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_003_linen_corslet_b.png",
+    original: "c40fe092-ff11-46b8-a46a-c7f02edd925a.png",
+    proposedLabel: "Layered Linen Corslet B",
+    proposedArtId: "wrap_quilted_candidate_b",
+    slot: "body",
+    canvas: "P",
+    confidence: "high",
+    note: "Duplicate cluster with A/C; choose one for wrap_quilted or a new linen body base."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_004_linen_corslet_c.png",
+    original: "3bee21da-0e53-4227-94f9-46225d7627c4.png",
+    proposedLabel: "Layered Linen Corslet C",
+    proposedArtId: "wrap_quilted_candidate_c",
+    slot: "body",
+    canvas: "P",
+    confidence: "high",
+    note: "Duplicate cluster with A/B; choose one for wrap_quilted or a new linen body base."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_005_bronze_limb_plates_a.png",
+    original: "bc4ae91c-8ccd-4309-a5a5-46b869265643.png",
+    proposedLabel: "Bronze Limb Plates A",
+    proposedArtId: "bracers_bronzeplate_candidate_a",
+    slot: "bracers_or_greaves",
+    canvas: "S",
+    confidence: "medium",
+    note: "Could be bracers or greaves; duplicate cluster with B. Needs human slot decision."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_006_bronze_war_girdle_a.png",
+    original: "5dfeb5a9-1470-4ad9-a473-bd549798b56c.png",
+    proposedLabel: "Bronze War-Girdle A",
+    proposedArtId: "girdle_bronzeplate_candidate_a",
+    slot: "belt",
+    canvas: "L",
+    confidence: "high",
+    note: "Duplicate cluster with B; choose one for girdle_bronzeplate or a new belt base."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_007_bronze_limb_plates_b.png",
+    original: "ecf6f620-b181-4edf-8560-b9a36be973cd.png",
+    proposedLabel: "Bronze Limb Plates B",
+    proposedArtId: "bracers_bronzeplate_candidate_b",
+    slot: "bracers_or_greaves",
+    canvas: "S",
+    confidence: "medium",
+    note: "Could be bracers or greaves; duplicate cluster with A. Needs human slot decision."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_008_hiltless_bronze_dagger.png",
+    original: "a646dea5-7bda-4e20-be60-89f7ae2914d8.png",
+    proposedLabel: "Hiltless Bronze Dagger",
+    proposedArtId: "dagger_bronze_hiltless",
+    slot: "dagger",
+    canvas: "P",
+    confidence: "high",
+    note: "Overlaps bronze dagger lane; good candidate for a new hiltless dagger base."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_009_black_disc_focus.png",
+    original: "04e149a3-fb45-4bba-84ef-d4fbaa879fae.png",
+    proposedLabel: "Black Disc Focus",
+    proposedArtId: "focus_black_disc",
+    slot: "offhand_focus",
+    canvas: "S",
+    confidence: "low",
+    note: "Reads like mirror, lens, or pan. Needs human call before use."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_010_rawhide_padded_guard.png",
+    original: "ab03b88c-0c51-41e2-9c0c-8752d24f2118.png",
+    proposedLabel: "Rawhide Padded Guard",
+    proposedArtId: "guard_rawhide_padded",
+    slot: "shield_or_body",
+    canvas: "P",
+    confidence: "low",
+    note: "Ambiguous: hourglass shield, pad, or guard. Needs human call before use."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_011_pronged_bronze_sceptre.png",
+    original: "46a9c6f4-4678-460a-8a7a-113b14e6f393.png",
+    proposedLabel: "Pronged Bronze Sceptre",
+    proposedArtId: "sceptre_bronze_pronged",
+    slot: "ritefocus",
+    canvas: "P",
+    confidence: "high",
+    note: "Overlaps sceptre_bronze; candidate new pronged rite focus if accepted."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_012_sheet_bronze_tall_shield_a.png",
+    original: "9bf4a0ef-a3e2-4641-9e48-5a7dceee8891.png",
+    proposedLabel: "Sheet-Bronze Tall Shield A",
+    proposedArtId: "hideshield_bronze_candidate_a",
+    slot: "shield",
+    canvas: "P",
+    confidence: "high",
+    note: "Duplicate cluster with B; choose one for shield lane."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_013_sheet_bronze_tall_shield_b.png",
+    original: "714b0013-aa0c-422a-b66a-849eaec21a08.png",
+    proposedLabel: "Sheet-Bronze Tall Shield B",
+    proposedArtId: "hideshield_bronze_candidate_b",
+    slot: "shield",
+    canvas: "P",
+    confidence: "high",
+    note: "Duplicate cluster with A; choose one for shield lane."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_014_bronze_war_girdle_b.png",
+    original: "79651e99-fb2c-4de7-ba1a-39dee27d6802.png",
+    proposedLabel: "Bronze War-Girdle B",
+    proposedArtId: "girdle_bronzeplate_candidate_b",
+    slot: "belt",
+    canvas: "L",
+    confidence: "high",
+    note: "Duplicate cluster with A; choose one for girdle_bronzeplate or a new belt base."
+  }
+];
