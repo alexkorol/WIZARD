@@ -133,13 +133,17 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    ARPG loot bases. Relic gear needs a strong held/worn/handled implement with
    mass and purpose: bowls, bells, pronged sceptres, standards, reliquary boxes,
    idol-head cudgels, trophy settings, or small shield-like foci.
-16. STYLE REFERENCES TRANSFER RENDERING ONLY (2026-07-07). Character concept
-   references are allowed only as evidence for crisp photoreal rendering:
-   white-studio clarity, high local contrast, material-specific highlights,
-   sharp bevels, readable seams, fine scratches, and clean rim lighting. Do not
-   copy character subjects, low-angle portrait language, faction costumes,
-   deity/sun/eagle symbols, feather crowns, coin-chain clutter, veils, fixed
-   costume palettes, or jewelry density into ordinary base item prompts.
+16. SOURCE-IMAGE LOADOUT EXTRACTION (2026-07-07, Alexei). A full character or
+   loadout image can be used as a coherent equipment source, not merely as a
+   render-style reference. This is often better than prompting isolated items
+   in a vacuum because the source image supplies material logic, ornament
+   density, attachment points, proportions, and slot relationships. Details
+   such as feathers, tassels, scratches, shell plates, cords, chains, veils,
+   stones, coins, and symbols are allowed when they are visibly integrated into
+   the item and belong to the source kit. The failure to avoid is ungrounded
+   decoration: random lore marks, loose clutter, costume fragments, or detail
+   that breaks readability/utility. Use `core/LOADOUT-EXTRACTION.md` for this
+   mode.
 
 ### Prompt changelog
 
@@ -169,10 +173,12 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
 - 2026-07-07: true-alpha manual accepts bypass mask generation and palette
   quantization; compose directly from source alpha. Wearable construction and
   boring tablet/plaque relic failures added as hard prompt rules.
-- 2026-07-07: attached crisp character refs recorded as render-stack evidence
-  only. They may inform photoreal/PBR/studio clarity in style experiments, but
-  their character, faction, symbol, feather, veil, and jewelry language must
-  not enter base-item DESCs.
+- 2026-07-07: corrected style-reference guidance after Alexei's loadout
+  extraction test. Full character/source images are useful because they encode
+  coherent equipment systems, not just crisp rendering. Integrated feathers,
+  tassels, shell, cords, chains, veils, stones, scratches, and ornaments are
+  valid when they belong to the item; the banned failure is ungrounded detail
+  pasted onto isolated prompt nouns.
 
 ### Material-specific corrections (2026-07-05 review — do not relitigate)
 

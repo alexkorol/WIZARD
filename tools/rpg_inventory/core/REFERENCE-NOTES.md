@@ -86,27 +86,32 @@ Do not copy icons, names, or exact item lists. Extract the production logic.
 - PoE icon style favors centered, isolated objects on dark/transparent fields,
   strong rim lighting, and no scene. That agrees with Verdigris v2.
 
-## Visual notes from crisp character style references
+## Visual notes from source-image loadout extraction
 
-The 2026-07-07 character reference images are not item-subject references.
-Their value is rendering calibration:
+The 2026-07-07 character reference images produced a better lesson than
+"borrow the render stack." Alex's loadout-extraction test showed that a full
+character image can act as a coherent equipment source for paperdoll-slot item
+icons. This is a major improvement over isolated item prompts.
 
-- The useful look is crisp product-render realism: white studio clarity, high
-  local contrast, tight edge definition, hard-surface bevels, visible seams,
-  fine scratches, hammered metal texture, leather grain, and material-specific
-  specular response.
-- Lighting reads as controlled studio lighting: strong upper-left key, deep
-  neutral object shadows, and a cool rim on the far edge. This maps cleanly to
-  inventory icons if the object remains isolated and fully visible.
-- Metals read best when the prompt asks for physical surface response instead
-  of lore decoration: polished high spots, worn edges, hammered irregularity,
-  dark recesses, and clean neutral grading.
-- The dangerous leakage is subject matter: character poses, bodies, class
-  labels, faction costumes, sun/eagle/deity symbols, feather crowns, veils,
-  coin-chain clutter, fixed turquoise/gold or red/green/gold palettes, and
-  dense jewelry. Those belong to character concepts, not ordinary base items.
-- For Verdigris item prompts, borrow the render stack only. Keep the base item
-  generic, usable, transparent, centered, and silhouette-first.
+- The source image gives image-2 a whole design system: silhouette family,
+  construction logic, material palette, ornament density, attachment points,
+  wear level, and slot relationships.
+- Details work when they are integrated into that system. Feathers, tassels,
+  scratches, shell plates, cords, chains, coins, veils, stones, and symbols can
+  strengthen an item when they are physically attached and consistent with the
+  kit. The earlier "ban all costume detail" interpretation was too defensive.
+- The failure mode is ungrounded detail: decorations invented in a vacuum,
+  random lore symbols, loose clutter, costume fragments, or object parts that
+  do not explain how the item is held, worn, blocked with, struck with, or
+  carried.
+- The useful render look remains crisp product-render realism: white studio
+  clarity, high local contrast, tight edge definition, hard-surface bevels,
+  visible seams, fine scratches, hammered metal texture, leather grain, shell
+  surface, and material-specific specular response.
+- Operational rule: use source-image extraction when a source character/loadout
+  is strong; then accept, discard, and normalize the extracted slot items like
+  any other manual intake. Do not let the extracted item become a character
+  crop, paperdoll UI, body-part fragment, or baked checkerboard preview.
 
 ## Copper / Bronze Age visual research notes
 
