@@ -27,6 +27,21 @@
       fireOutcomes: { ascend: 40, scar: 30, silent: 20, shatter: 10 },
     },
 
+    retiredForms: ['atlatl', 'sling'],
+    retiredArtIds: [
+      'handaxe_copper', 'spear_bronze',
+      'atlatl_bone', 'atlatl_copper', 'atlatl_bronze',
+      'khopesh_copper', 'khopesh_bronze',
+      'sword_jade', 'spear_jade',
+      'sling_hide', 'sling_quilted',
+      'crest_bone', 'crest_hide',
+      'helm_bronze', 'helm_copper',
+      'grips_hide', 'grips_quilted', 'grips_bronzescale',
+      'gorget_bone', 'gorget_copper', 'gorget_amber',
+      'curio_jade',
+      'entrail_omen',
+    ],
+
     /* ---------------- materials: the tech-fantasy ladder ---------------- */
     materials: {
       flint:    { name: 'Flint',    tier: 1, statMult: 1.0, vessel: [2, 3], patience: [2, 3], dropWeight: 30, ascendsTo: null,
