@@ -137,6 +137,11 @@ days, plus review and rework time.
   waist wearables, min 2 jewellery/neck/ring items, and min 2 rite foci,
   relics, curios, or trophies. For smaller batches, weapons stay below 25%.
   Never let axes/daggers become the default sample set.
+- Prompt-candidate batches must be no-repeat by default. When Alexei asks for
+  "test prompts" or "prompts to roast", do not repeat, regenerate, or restyle
+  already-made items. Exclude current `assets/`, accepted manual intake,
+  duplicate/exclusion notes, discarded rows, and queued reworks unless Alexei
+  explicitly asks for a style-calibration repeat of a named item.
 - Currency/crafting-material candidates are out of scope. Do not propose or
   generate crafting currencies, pigments, omen objects, ingots, molds, generic
   orbs, seal weights, or abstract bench reagents unless Alexei explicitly

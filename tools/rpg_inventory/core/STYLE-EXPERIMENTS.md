@@ -22,6 +22,18 @@ warrior, body, allure, cloth flutter, class/faction, and "concept art" wording
 do not belong in item prompts. "Stylized" is risky by itself; if tested, it
 should be subordinate to photoreal/PBR/product-render language.
 
+## No-Repeat Rule
+
+When Alexei asks for "test prompts", that means new item concepts only. Do not
+repeat, regenerate, style-test, or near-duplicate any item that already has art
+in `assets/`, has an accepted entry in `download-intake.js`, appears in
+`DOWNLOAD-INTAKE.md` exclusions, or is marked discard/rework in
+`asset-review.js`, unless Alexei explicitly asks to restyle that exact item.
+
+Style calibration can reuse known objects only when explicitly requested as a
+controlled A/B render test. Otherwise, use the style block below with novel
+DESC content.
+
 ## Candidate Style Block
 
 Manual A/B style block to try in place of the active style sentence only:
@@ -50,48 +62,17 @@ Risks to watch:
 - studio render language can introduce gradients if true alpha is ignored, so
   the flat-background fallback and local matte QA still matter
 
-## Full Manual Test Prompts
+## Prompt Shape
 
-Use these only for manual image-2 experiments. They intentionally do not update
-`PROMPT.txt`.
+Use this structure for novel manual image-2 experiments. It intentionally does
+not update `PROMPT.txt`.
 
-### Copper Torc
-
-Generate an image, no commentary. Square canvas (1:1 aspect ratio). AAA
-inventory item product render: a clean hammered copper torc with a thick
-crescent body and rounded bulb terminals, one complete neck ring. Ultra-fine
-photoreal 3D game asset rendered with physically based copper, macro lens
-clarity, crisp silhouette, sharp bevels, detailed hammered surface grain, clean
-neutral color grading, controlled high-contrast studio key light from the
-upper-left, and a cool rim light along the far edge. Isolated single object,
-centered, filling the frame while remaining entirely visible, true transparent
-PNG background preferred. If transparency is unavailable, use one flat uniform
-mid-grey fill. No text, no watermark, no frame, no cast shadow.
-
-### Carved Jade Cudgel
-
-Generate an image, no commentary. Vertical portrait canvas (2:3 aspect ratio).
-AAA inventory item product render: a heavy blunt war club carved entirely from
-dark green jade, blocky squared striking head, thick grip, the entire weapon
-visible on a strong diagonal. Ultra-fine photoreal 3D game asset rendered with
-physically based jade, macro lens clarity, crisp silhouette, sharp bevels,
-detailed stone surface grain, clean neutral color grading, controlled
-high-contrast studio key light from the upper-left, and a cool rim light along
-the far edge. Isolated single object, centered, filling the frame while
-remaining entirely visible, true transparent PNG background preferred. If
-transparency is unavailable, use one flat uniform mid-grey fill. No text, no
-watermark, no frame, no cast shadow.
-
-### Boiled Leather War Cap
-
-Generate an image, no commentary. Square canvas (1:1 aspect ratio). AAA
-inventory item product render: a boiled dark leather war cap with a domed skull,
-broad cheek guards, and complete wearable head protection, clean plain leather
-surface. Ultra-fine photoreal 3D game asset rendered with physically based
-leather, macro lens clarity, crisp silhouette, sharp folded edges, detailed
-leather grain, clean neutral color grading, controlled high-contrast studio key
-light from the upper-left, and a cool rim light along the far edge. Isolated
-single object, centered, filling the frame while remaining entirely visible,
-true transparent PNG background preferred. If transparency is unavailable, use
-one flat uniform mid-grey fill. No text, no watermark, no frame, no cast
-shadow.
+> Generate an image, no commentary. {CANVAS PREFIX}. AAA inventory item product
+> render: {NEW DESC}. Ultra-fine photoreal 3D game asset rendered with
+> physically based {MATERIAL}, macro lens clarity, crisp silhouette, sharp
+> bevels, detailed surface grain, clean neutral color grading, controlled
+> high-contrast studio key light from the upper-left, and a cool rim light
+> along the far edge. Isolated single object, centered, filling the frame while
+> remaining entirely visible, true transparent PNG background preferred. If
+> transparency is unavailable, use one flat uniform mid-grey fill. No text, no
+> watermark, no frame, no cast shadow.

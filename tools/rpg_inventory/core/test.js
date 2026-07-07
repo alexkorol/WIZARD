@@ -129,6 +129,22 @@ t('generation plan keeps currency art lane closed', () => {
   assert(/max 2 weapons/.test(plan),
     'plan must carry the prompt-batch weapon cap');
 });
+t('test prompts require novelty checks', () => {
+  const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
+  const briefPath = path.join(__dirname, 'ASSET-BRIEF.md');
+  const stylePath = path.join(__dirname, 'STYLE-EXPERIMENTS.md');
+  const plan = fs.readFileSync(planPath, 'utf8');
+  const brief = fs.readFileSync(briefPath, 'utf8');
+  const style = fs.readFileSync(stylePath, 'utf8');
+  assert(/no-repeat by default/.test(plan),
+    'plan must require no-repeat prompt candidates');
+  assert(/TEST PROMPTS ARE NOVELTY-CHECKED NEW ITEMS/.test(brief),
+    'brief must define test prompts as novelty-checked new items');
+  assert(/No-Repeat Rule/.test(style),
+    'style experiments must carry the no-repeat rule');
+  assert(!/### Copper Torc/.test(style) && !/### Carved Jade Cudgel/.test(style),
+    'style experiments must not keep full prompts for already-made items');
+});
 t('generation plan requires concrete relic gear', () => {
   const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
   const plan = fs.readFileSync(planPath, 'utf8');
