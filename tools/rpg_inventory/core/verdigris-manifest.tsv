@@ -27,7 +27,7 @@ wrap_quilted	P	a quilted linen armor vest of layered stitched cloth, undyed off-
 wrap_bronzescale	P	a vest of overlapping bronze scales sewn onto plain leather backing, clean raised collar plates
 wrap_rivetmail	P	a riveted mail hauberk laid out flat and spread like a garment, plain dark metal rings and a simple collar
 crest_bone	S	a simple bone headpiece with a raised crest and clean curved brow line
-crest_hide	S	a simple hide cap over a wicker frame with a raised crest profile
+crest_hide	S	a simple hide cap over a stiff rawhide frame with a raised crest profile
 crest_copper	S	a hammered copper cap with cheek guards and a plain raised brow band
 crest_bronze	S	a hammered bronze cap with cheek guards and a clean raised crown ridge
 crest_jade	S	a jade circlet-diadem with a clean curved profile and a raised crest shape
@@ -45,9 +45,9 @@ ring_bone	S	a ring carved from a single piece of bone, simple carved marks
 ring_copper	S	a simple coiled copper ring with clean hammered metal
 ring_jade	S	a ring carved from a single piece of green jade, clean simple band
 ring_amber	S	a ring carved from raw amber, translucent, clean simple band
-curio_bone	S	a small carved bone bird curio with clean simple shape
-curio_jade	S	a small carved jade river-fish curio with a clean simple shape, a single object centered
-curio_amber	S	a single polished amber sphere centered alone
+curio_bone	S	a small but solid carved bone reliquary box with a fitted lid and thick raised rim, one complete object
+curio_jade	S	a compact reliquary box carved entirely from dark green jade, thick walls, fitted lid, and clean blocky silhouette
+curio_amber	S	a compact reliquary casket carved entirely from raw amber, thick walls, fitted lid, and clean blocky silhouette
 red_ochre	S	a lump of red ochre pigment beside a grinding stone stained crimson, a pinch of spilled powder beside it
 woad	S	blue woad paste in a small plain shell
 soot	S	black soot powder in a carved bone tube capped with copper, a smudge of black spilled at its mouth

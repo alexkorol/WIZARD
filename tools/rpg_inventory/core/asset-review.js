@@ -275,8 +275,8 @@ window.VerdigrisAssetReview = [
     "canvas": "S",
     "failure_modes": [],
     "original_desc": "a strange small curio: a tiny carved jade river-fish with incised scales and gold-leaf fins, resting on a black feather",
-    "reworked_desc": "a strange small curio: a tiny carved jade river-fish with incised scales and gold-leaf fins, resting on a black feather",
-    "notes": "bad alpha, bad idea"
+    "reworked_desc": "a compact reliquary box carved entirely from dark green jade, thick walls, fitted lid, and clean blocky silhouette",
+    "notes": "bad alpha; old fish-curio idea retired"
   },
   {
     "name": "curio_amber",
@@ -284,8 +284,8 @@ window.VerdigrisAssetReview = [
     "canvas": "S",
     "failure_modes": [],
     "original_desc": "a strange small curio: a polished amber sphere with a trapped mayfly, cradled in a tiny bronze claw stand",
-    "reworked_desc": "a single polished amber sphere centered alone",
-    "notes": "redo without a stand"
+    "reworked_desc": "a compact reliquary casket carved entirely from raw amber, thick walls, fitted lid, and clean blocky silhouette",
+    "notes": "redo as reliquary; sphere/stand idea retired"
   },
   {
     "name": "entrail_omen",

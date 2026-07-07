@@ -148,9 +148,13 @@ Production takeaways:
   hand-held, and instantly legible: central grip, mirrored pronged ends,
   strong axis, no limp cords or vague magic smoke.
 - Use these as structural references for Verdigris relic gear, not as direct
-  religious copies. Prefer names like double-ended ritual baton, thunderbolt
-  sceptre, pronged hand-sceptre, or forked rite focus over literal religious
-  naming unless a row is explicitly intended as historical reference.
+  religious copies. Prefer names like thunderbolt sceptre, pronged hand-sceptre,
+  heavy rite rod, or forked rite focus over literal religious naming unless a
+  row is explicitly intended as historical reference.
+- 2026-07-07 prompt roast correction: "rite baton" reads weak and prop-like.
+  Do not use baton/stick language as the item thesis. The object should read
+  as a substantial sceptre, mace-like hand focus, bell, reliquary, tablet, or
+  cudgel with real mass.
 - Paired bell/sceptre logic is also strong: bell body, handle, finial, and
   clapper silhouette. Generate as one object unless a pair is explicitly
   required and composition remains readable.
@@ -158,6 +162,24 @@ Production takeaways:
   carried. Bad relic gear is a floating crystal, glowing orb, symbol plaque,
   generic "ancient artifact," tiny charm cluster, or object on a decorative
   stand.
+
+## Base-worthiness / weak-prop scan
+
+Source scan after the rite-baton / wicker-shield roast found the broader
+failure class: prompt ideas that satisfy slot diversity but do not read as
+credible loot. Retire these as positive examples:
+
+- Wicker shields, reed shields, reed maps, reed baskets, road charms, loose
+  feather markers, shrine miniatures, hand stones, tiny darts, pencil-thin
+  wands, rite batons, and generic small foci.
+- Wicker/reed can appear as hidden backing under hide or leather when needed,
+  but it should not be the named material thesis for a defensive base.
+- Shields must look able to block: hide over a thick wood frame, rawhide,
+  bronze roundshields, bronze-scale shields, sheet-bronze towers, or similar
+  credible structures.
+- Rite and relic gear must look held, rung, struck, opened, sealed, carried,
+  or equipped. If the object reads like a prop, souvenir, charm pile, classroom
+  craft, or gag item at 48px, replace it with a heavier base.
 
 ## PoE special-state item dissection
 

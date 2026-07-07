@@ -96,11 +96,19 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    Alexei explicitly reopens that lane.
 11. RELIC GEAR MUST BE CONCRETE IMPLEMENTS (2026-07-07). Avoid weak AI-trope
    mystic trinkets. Use strong ritual-object construction: double-ended
-   pronged sceptres, hand bells, ritual batons, handled tablets, forked
-   standards, idol-head cudgels, offering bowls, reliquary boxes. Borrow
+   pronged sceptres, heavy hand bells, handled tablets, forked standards,
+   idol-head cudgels, offering bowls, reliquary boxes. Borrow
    silhouette logic from real implements like vajra/dorje forms, but do not
    copy living sacred iconography one-to-one or use exact religious names as
    ordinary base names.
+12. BASES MUST READ AS EQUIPPABLE GEAR (2026-07-07). Prompt candidates must
+   look worth looting before tooltip context: enough mass, construction, and
+   silhouette authority to block, strike, ward, carry, bind, or focus power.
+   Retire weak/toy-like prompt ideas as positive examples: wicker shields,
+   rite batons, pencil-thin wands, hand stones, tiny darts, shrine miniatures,
+   reed baskets or maps, road charms, loose feather markers, and other one-off
+   props. If reed or wicker appears, it is hidden backing under hide/leather,
+   not the named shield face or item thesis.
 
 ### Prompt changelog
 
@@ -122,6 +130,8 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
   crafting-material image ideation paused.
 - 2026-07-07: relic gear guidance added: concrete ritual implements over vague
   AI mystic trinkets.
+- 2026-07-07: weak-prop scan added: no wicker shields, rite batons, tiny
+  darts/hand stones, shrine miniatures, reed props, or other joke-loot bases.
 
 ### Material-specific corrections (2026-07-05 review — do not relitigate)
 
@@ -293,10 +303,10 @@ inventory images, with a planned overshoot manifest of about 640 rows.
 
 ## Trophies (5)
 
-boar_tusk (lashed tusk fetish), wolf_fang (fang on a cord with feathers),
-river_pearl (large baroque pearl in a woven reed cage), ember_shell (glowing
-red-veined beetle carapace), knucklebone (polished ancestor knucklebone with
-ochre marks).
+boar_tusk (large tusk trophy setting), wolf_fang (large fang trophy setting),
+river_pearl (large baroque pearl in a carved shell setting), ember_shell
+(glowing red-veined beetle carapace), knucklebone (polished ancestor
+knucklebone with plain carved marks).
 
 ## Legacy craft tools (frozen)
 

@@ -41,6 +41,7 @@
       'gorget_bone', 'gorget_copper', 'gorget_amber',
       'curio_jade',
       'entrail_omen',
+      'shield_wicker',
       'wrap_rivetmail', 'helm_rivetmail', 'greaves_rivetmail',
       'hideshield_rivetmail',
     ],

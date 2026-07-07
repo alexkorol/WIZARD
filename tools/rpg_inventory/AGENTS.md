@@ -172,7 +172,12 @@ When asked for roastable prompt candidates, apply the pipeline rules in
 - Do not let axes/daggers become the default sample set. If weapons appear,
   vary class and construction, then move back to non-weapon slots.
 - Relic gear candidates should be concrete ritual implements, not vague magic
-  trinkets: double-ended pronged sceptres, hand bells, ritual batons, handled
-  tablets, forked standards, offering bowls, idol-head cudgels, reliquary
-  boxes. Use vajra/dorje-like forms as structural inspiration, not direct
-  sacred-symbol copies or literal default names.
+  trinkets: double-ended pronged sceptres, heavy hand bells, handled tablets,
+  forked standards, offering bowls, idol-head cudgels, reliquary boxes. Use
+  vajra/dorje-like forms as structural inspiration, not direct sacred-symbol
+  copies or literal default names.
+- Screen prompt candidates for weak/toy-like base reads. Avoid wicker shields,
+  rite batons, pencil-thin wands, hand stones, tiny darts, shrine miniatures,
+  reed baskets or maps, road charms, loose feather markers, and generic small
+  foci. If the item would read as a prop or joke loot before the tooltip
+  explains it, replace it with a heavier credible base.
