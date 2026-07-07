@@ -20,6 +20,17 @@ Do not copy icons, names, or exact item lists. Extract the production logic.
   https://www.poewiki.net/wiki/Amulet
 - Path of Exile belt base list:
   https://www.poewiki.net/wiki/Belt
+- Path of Exile influenced item mechanics and symbols:
+  https://www.poewiki.net/wiki/Influenced_item
+- Path of Exile synthesised item mechanics:
+  https://www.poewiki.net/wiki/Synthesised_item
+- Path of Exile Synthesis FAQ, especially Fractured/Synthesised item notes:
+  https://de.pathofexile.com/forum/view-thread/2478470
+- Path of Exile Foulborn unique mechanics and example:
+  https://www.poewiki.net/wiki/Foulborn_unique_item
+- Path of Exile Keepers of the Flame FAQ / patch notes for Foulborn scope:
+  https://www.pathofexile.com/forum/view-thread/3870059
+  https://www.pathofexile.com/forum/view-thread/3869068
 - Diablo II elite item tier note:
   https://diablo.fandom.com/wiki/Elite_Items
 - Diablo II base item database:
@@ -73,6 +84,89 @@ Do not copy icons, names, or exact item lists. Extract the production logic.
   48px. Save explicit emblems for faction/set/unique art.
 - PoE icon style favors centered, isolated objects on dark/transparent fields,
   strong rim lighting, and no scene. That agrees with Verdigris v2.
+
+## PoE special-state item dissection
+
+PoE uses special item states as UI/effect overlays, not as wholesale changes
+to the base icon. That is the core lesson for Verdigris: a state should be
+legible as a layer on top of a known object.
+
+### Influenced items
+
+- Mechanically, influenced items are base items with exclusive modifier pools.
+  The item remains the same base, but the item panel gains an influence marker
+  and the item has access to extra affixes.
+- Visual read: side icons on the name plate plus a themed background/effect.
+  PoE's six classic influence marks are tiny and symbolic: Crusader red,
+  Hunter green, Redeemer pale/silver-blue, Warlord gold, Shaper cosmic red,
+  Elder dark purple/void.
+- Important production lesson: the influence signal is outside the object
+  silhouette. The sword/helmet/ring art can stay readable and generic while
+  the UI says "this item belongs to a higher system."
+- For Verdigris: use frame accents, tooltip side glyphs, and subtle aura
+  washes for Brands/Bonds/Trophies or future factions. Do not bake faction
+  symbols into ordinary base prompts.
+- Multi-influence is valuable as a UI grammar: two small side marks can mean a
+  hybrid state without needing a new full item render.
+
+### Synthesised items
+
+- Mechanically, Synthesis created new bases with special implicit modifiers.
+  The current core mechanic can also make an item Synthesised and give random
+  Synthesis implicits; Synthesised items cannot also be influenced or
+  fractured in the normal rules.
+- Fractured source items had special art effects and fixed light-brown mods
+  that could not be altered. Synthesised outcomes inherit the idea of a
+  machine/memory-made base with unusual implicits.
+- Visual read: blue/cyan memory energy, ornate machine frame language, and a
+  clean "this has hidden structure" feeling rather than dirt, gore, or heavy
+  decoration. The effect is cold, prismatic, and arcane.
+- For Verdigris: this maps well to "vessel" and "memory" states. Use cool
+  rim-light, faint inner lattice, ghosted duplicate edge, or small crystalline
+  motes around the tile. Keep it as a postprocess layer; do not ask image-2 to
+  invent complex memory machinery on every base item.
+- Design guardrail: synthesised-style visuals should mean "rewritten
+  structure/implicit identity", not just "rarer item." Reserve it for base
+  mutation, awakened relics, or high-order craft outcomes.
+
+### Foulborn uniques
+
+- Mechanically, Foulborn uniques are mutated versions of existing uniques. One
+  or more original modifiers are replaced with purple Foulborn modifiers. The
+  original unique remains recognizable.
+- Visual read: the item gets "Foulborn" before the name, a purple name-plate
+  symbol, purple modifier text, and a purple effect on the 2D artwork. It is a
+  mutation layer, not a new base family.
+- The PoE example reads well because the changed line is visually isolated in
+  purple. The player can compare "normal unique" vs "mutated unique" without
+  rereading the whole card.
+- For Verdigris: this is a strong model for cursed/estranged/failed-awakened
+  relics. Keep the original item art, then add a violet-black edge glow,
+  bruised underlight, or one corrupt modifier line. Avoid making the whole
+  item purple soup.
+- Good UI grammar: prefix/sigil/color-line all agree. If Verdigris adds a
+  Foulborn-like state, it should have one word in the item name, one small
+  glyph in the frame, and one modifier text color.
+
+## Verdigris special-state rules from PoE research
+
+- Base art remains base art. Special states are overlays, frame treatments,
+  side glyphs, tooltip text colors, and controlled particle/rim effects.
+- Keep state palettes sparse:
+  - Brand: warm gold/ochre.
+  - Bond: theme color, quiet glow.
+  - Trophy: bone/green-white accent.
+  - Synth/memory/vessel rewrite: cold cyan/blue-white lattice.
+  - Foulborn/corrupt mutation: violet-black or magenta-purple.
+- Never encode ordinary bases with invented faction marks. Use symbols only
+  for explicit mechanics: influence, set, unique, awakened, mutation.
+- Effects should frame the silhouette, not cover it. At 48px, a readable
+  outline beats a beautiful internal texture.
+- Use nameplate/frame language heavily. PoE gets a lot of state readability
+  from tiny side icons and text color before the player even looks at the art.
+- For image generation prompts, do not ask for "influenced/synthesised/
+  foulborn" base items directly. Generate clean transparent item art first,
+  then apply deterministic CSS/canvas effects in the app.
 
 ## Visual notes from Diablo item structure
 
