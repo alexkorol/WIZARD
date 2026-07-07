@@ -55,14 +55,14 @@ t('low ilvl never drops skymetal or mail', () => {
 
 /* ---------------- crafting: sear/patience/pigment/omen ---------------- */
 t('sear adds a brand and spends patience', () => {
-  const it = forge.generateItem({ ilvl: 40, formId: 'khopesh', materialId: 'bronze', brands: 0 });
+  const it = forge.generateItem({ ilvl: 40, formId: 'dagger', materialId: 'bronze', brands: 0 });
   const r = forge.sear(it);
   assert(!r.error, r.error);
   eq(r.item.brands.length, 1);
   eq(r.item.patience, it.patience - 1);
 });
 t('patience exhaustion closes crafting', () => {
-  let it = forge.generateItem({ ilvl: 40, formId: 'khopesh', materialId: 'bronze', brands: 0 });
+  let it = forge.generateItem({ ilvl: 40, formId: 'dagger', materialId: 'bronze', brands: 0 });
   let guard = 0;
   while (it.patience > 0 && guard++ < 30) {
     const r = it.brands.length ? forge.efface(it) : forge.sear(it);
@@ -127,7 +127,7 @@ t('trophy fragments complete and socket', () => {
     stash = r.stash; completed = r.completed;
   }
   assert(completed, '5/5 completes');
-  const it = forge.generateItem({ ilvl: 30, formId: 'spear', materialId: 'bronze', brands: 0 });
+  const it = forge.generateItem({ ilvl: 30, formId: 'spear', materialId: 'copper', brands: 0 });
   const r = forge.socketTrophy(it, 'boar_tusk', stash);
   assert(!r.error, r.error);
   eq(r.item.trophies.length, 1);
@@ -175,7 +175,7 @@ t('the full life of an item: bonds to tier III then awakening', () => {
   assert(forge.isSated(it), 'awakened full item is sated');
 });
 t('sever scars the slot', () => {
-  let it = forge.generateItem({ ilvl: 30, formId: 'spear', materialId: 'bronze', brands: 0 });
+  let it = forge.generateItem({ ilvl: 30, formId: 'spear', materialId: 'copper', brands: 0 });
   const r0 = forge.attune(it, 100, { slaughter: 2 }, { charName: 'X', archetype: 'redhand' });
   it = r0.item;
   if (!it.bonds.length) return; // rng gave a tier-up instead; fine
@@ -226,7 +226,7 @@ t('panoply detects player-authored sets', () => {
   assert(/Panoply \(2\)/.test(ps[0].bonus.label));
 });
 t('tooltip returns structured UI-agnostic lines', () => {
-  const it = forge.generateItem({ ilvl: 40, formId: 'khopesh', materialId: 'bronze', brands: 2 });
+  const it = forge.generateItem({ ilvl: 40, formId: 'dagger', materialId: 'bronze', brands: 2 });
   const lines = forge.tooltip(it, { archetype: 'redhand' });
   assert(lines.every(l => l.section && typeof l.text === 'string'), 'line shape');
   assert(lines.some(l => l.section === 'name'), 'has name');

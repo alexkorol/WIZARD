@@ -117,6 +117,42 @@ window.VerdigrisAssetReview = [
     "notes": "bad item idea - look awkward and weird, not good for generating with image ai"
   },
   {
+    "name": "helm_bronze",
+    "status": "discard",
+    "canvas": "S",
+    "failure_modes": [],
+    "original_desc": "a full enclosed bronze war helmet that covers the whole head, a rounded domed skull with cheek guards and a nose-guard, its full domed shell and the back of the head visible at the three-quarter angle, clean bronze surface",
+    "reworked_desc": "a full enclosed bronze war helmet that covers the whole head, a rounded domed skull with cheek guards and a nose-guard, its full domed shell and the back of the head visible at the three-quarter angle, clean bronze surface",
+    "notes": "ugly helmet batch retired from base item art"
+  },
+  {
+    "name": "helm_bronzescale",
+    "status": "ok",
+    "canvas": "S",
+    "failure_modes": [],
+    "original_desc": "a full enclosed war helm faced with overlapping gilded bronze scales over a domed skull, cheek guards and a short black feather plume",
+    "reworked_desc": "a full enclosed war helm faced with overlapping gilded bronze scales over a domed skull, cheek guards and a short black feather plume",
+    "notes": "kept as usable high-tier helm art after review"
+  },
+  {
+    "name": "helm_rivetmail",
+    "status": "ok",
+    "canvas": "S",
+    "failure_modes": [],
+    "original_desc": "a full enclosed war helm of riveted iron plates over a domed skull with a mail aventail draping the neck, dull grey gleam, gold-wire edging, otherworldly",
+    "reworked_desc": "a full enclosed war helm of riveted iron plates over a domed skull with a mail aventail draping the neck, dull grey gleam, gold-wire edging, otherworldly",
+    "notes": "kept as usable high-tier helm art after review"
+  },
+  {
+    "name": "helm_copper",
+    "status": "discard",
+    "canvas": "S",
+    "failure_modes": [],
+    "original_desc": "a full enclosed copper war helm covering the whole head, a rounded domed skull with cheek guards and a nose-guard, clean copper surface",
+    "reworked_desc": "a full enclosed copper war helm covering the whole head, a rounded domed skull with cheek guards and a nose-guard, clean copper surface",
+    "notes": "ugly helmet batch retired from base item art"
+  },
+  {
     "name": "grips_hide",
     "status": "discard",
     "canvas": "S",
