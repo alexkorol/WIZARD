@@ -40,8 +40,8 @@ base vocabulary to mutate.
 | Clubs / maces | 18 | Femur clubs, cudgels, copper maces, star-maces, mauls. |
 | Two-hand heavy weapons | 18 | Greatclubs, greataxes, macuahuitls, execution blades, temple mauls. |
 | Spears / polearms | 18 | Spears, harpoons, pikes, glaives, warspears; keep full weapon visible. |
-| Rite foci / sceptres | 18 | Fetishes, rattles, sceptres, idol-staves, starwands, priest tools. |
-| Caster rods / wands | 12 | Small foci distinct from sceptres; reliable short objects. |
+| Rite foci / sceptres | 18 | Fetishes, rattles, hand bells, double-ended ritual batons, pronged sceptres, idol-staves, priest tools. |
+| Caster rods / wands | 12 | Small foci distinct from sceptres; reliable short objects with real handles, finials, or sockets. |
 | Throwing / sidearms | 12 | Throwing knives, darts, hand stones; avoid bows/slings unless reconceived. |
 | Body armour | 24 | Hide wraps, linen, boiled leather, studded jerkins, scale vests, sheet-bronze corslets. |
 | Helmets / crowns | 24 | Caps, crests, helms, masks, warcrowns, greathelms; distinct silhouettes. |
@@ -136,6 +136,14 @@ days, plus review and rework time.
   generate crafting currencies, pigments, omen objects, ingots, molds, generic
   orbs, seal weights, or abstract bench reagents unless Alexei explicitly
   reopens that lane.
+- Relic gear should be built from concrete ritual implement silhouettes, not
+  weak AI-trope "mystic trinkets." Good structural references include
+  vajra/dorje-like double-ended pronged sceptres, paired hand bells, ritual
+  batons, forked standards, handled tablets, offering bowls, idol-head cudgels,
+  and reliquary boxes. Use the object logic: central grip, mirrored prongs,
+  bell body plus handle, socketed finial, lid/base/handle. Do not copy living
+  sacred iconography one-to-one, use exact religious names as ordinary base
+  names, or add fake symbols/lore marks.
 - At least 20% of equipment bases should have implicit/mechanical identity:
   socket, vessel, patience, trophy affinity, theme bias, block, speed, ward,
   spirit, reach, crit, or carry capacity.
@@ -157,6 +165,9 @@ Retire these unless reconceived into a reliable icon:
 - Currency/crafting-material art: crafting currencies, pigments, omens, ingots,
   molds, generic orbs, seal weights, draughts, reagent stones, and abstract
   bench-tool tokens.
+- Weak relic tropes: floating crystals, vague glowing idols, generic magic
+  orbs, symbol-covered plaques, smoky amulets, tiny charm clusters, and
+  decorative stands. Relic gear needs one strong held/worn/handled object.
 
 ## Next file to create
 

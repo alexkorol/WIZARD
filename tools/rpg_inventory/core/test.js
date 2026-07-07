@@ -129,6 +129,16 @@ t('generation plan keeps currency art lane closed', () => {
   assert(/max 2 weapons/.test(plan),
     'plan must carry the prompt-batch weapon cap');
 });
+t('generation plan requires concrete relic gear', () => {
+  const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
+  const plan = fs.readFileSync(planPath, 'utf8');
+  assert(/concrete ritual implement silhouettes/.test(plan),
+    'plan must require concrete relic implement silhouettes');
+  assert(/vajra\/dorje-like double-ended pronged sceptres/.test(plan),
+    'plan must include vajra/dorje-like structural reference');
+  assert(/Weak relic tropes/.test(plan),
+    'plan must forbid weak relic trope prompts');
+});
 
 /* ---------------- crafting: sear/patience/pigment/omen ---------------- */
 t('sear adds a brand and spends patience', () => {
