@@ -194,8 +194,9 @@ def main():
                   f"{r['name']:<24} [{has_desc}]")
     print()
     print('Per item: python3 status.py --prompt ART_ID -> paste via the JS '
-          'recipe in RUNBOOK.md, then qa_gate.py, art_matte.py, '
-          'compose_assets.py, log to GEN-LOG.md')
+          'recipe in RUNBOOK.md, then qa_gate.py, compose_assets.py '
+          '(art_matte.py only for flat fallback backgrounds), log to '
+          'GEN-LOG.md')
 
 
 if __name__ == '__main__':

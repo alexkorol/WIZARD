@@ -1,8 +1,14 @@
-"""Compose Verdigris assets from ChatGPT-generated art + mattes.
+"""Compose Verdigris assets from ChatGPT-generated art.
 
-Input:  assets_staging/{name}.png       (art on pure black background)
-        assets_staging/{name}_mask.png  (subject white on black, same framing)
-Output: ../assets/{name}.png            (RGBA, autocropped, max 512px, 256-color)
+Input:
+  assets_staging/{name}.png       TRUE-ALPHA PNG, or art on flat background
+  assets_staging/{name}_mask.png  required only for flat-background art
+
+Output:
+  ../assets/{name}.png
+
+TRUE-ALPHA image-2 downloads are preserved as RGBA and cropped directly from
+their own alpha channel. They are not matted and not palette-quantized.
 
 Usage:  python compose_assets.py [--staging DIR] [--no-crop NAME ...] [--wb] [NAME ...]
 
@@ -18,6 +24,8 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.path.normpath(os.path.join(HERE, '..', 'assets'))
 MAX_DIM = 512
+TRUE_ALPHA_MIN_TRANSPARENT = 0.02
+ALPHA_CROP_THRESHOLD = 8
 NO_CROP_DEFAULT = {'frame_ornate', 'divider_raw'}  # UI pieces keep full framing
 
 
@@ -39,13 +47,51 @@ def white_balance(img):
     return Image.merge('RGB', bands)
 
 
+def has_true_alpha(src):
+    if src.mode != 'RGBA':
+        return False
+    alpha = src.getchannel('A')
+    hist = alpha.histogram()
+    transparent = sum(hist[:128]) / max(1, alpha.width * alpha.height)
+    return transparent > TRUE_ALPHA_MIN_TRANSPARENT
+
+
+def alpha_bbox(img):
+    alpha = img.getchannel('A')
+    return alpha.point(lambda p: 255 if p > ALPHA_CROP_THRESHOLD else 0).getbbox()
+
+
+def save_true_alpha(name, src, no_crop, wb):
+    out = src.convert('RGBA')
+    if wb:
+        rgb = white_balance(out.convert('RGB'))
+        rgb.putalpha(out.getchannel('A'))
+        out = rgb
+    if name not in no_crop:
+        bbox = alpha_bbox(out)
+        if bbox:
+            pad = 16
+            l, t, r, b = bbox
+            out = out.crop((max(0, l - pad), max(0, t - pad),
+                            min(out.width, r + pad), min(out.height, b + pad)))
+    out.thumbnail((MAX_DIM, MAX_DIM), Image.LANCZOS)
+    final = os.path.join(OUT_DIR, f'{name}.png')
+    out.save(final, optimize=True)
+    print(f'ok   {name} -> {os.path.relpath(final, HERE)} '
+          f'({out.size[0]}x{out.size[1]}, true-alpha RGBA)')
+    return True
+
+
 def compose(name, staging, no_crop, wb):
     art_p = os.path.join(staging, f'{name}.png')
     mask_p = os.path.join(staging, f'{name}_mask.png')
+    src = Image.open(art_p)
+    if has_true_alpha(src):
+        return save_true_alpha(name, src, no_crop, wb)
     if not os.path.exists(mask_p):
         print(f'skip {name}: no mask ({name}_mask.png missing)')
         return False
-    art = Image.open(art_p).convert('RGB')
+    art = src.convert('RGB')
     if wb:
         art = white_balance(art)
     mask = Image.open(mask_p).convert('L')

@@ -153,6 +153,21 @@ t('test prompts require novelty checks', () => {
   assert(!/style-calibration repeat/.test(plan + brief + style),
     'docs must not preserve the old style-calibration repeat loophole');
 });
+t('true-alpha assets bypass matte and quantization', () => {
+  const compose = fs.readFileSync(path.join(__dirname, 'compose_assets.py'), 'utf8');
+  const matte = fs.readFileSync(path.join(__dirname, 'art_matte.py'), 'utf8');
+  const runbook = fs.readFileSync(path.join(__dirname, 'RUNBOOK.md'), 'utf8');
+  assert(/TRUE-ALPHA image-2 downloads are preserved as RGBA/.test(compose),
+    'compose must preserve true-alpha downloads as RGBA');
+  assert(/has_true_alpha/.test(compose) && /save_true_alpha/.test(compose),
+    'compose must have a true-alpha direct path');
+  assert(/They are not matted and not palette-quantized/.test(compose),
+    'compose docs must forbid matte/quantize for true alpha');
+  assert(/m = al >= 8/.test(matte),
+    'art_matte true-alpha path must use source alpha directly');
+  assert(/skip matte generation/.test(runbook),
+    'runbook must tell operators to skip matte generation for true alpha');
+});
 t('generation plan requires concrete relic gear', () => {
   const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
   const plan = fs.readFileSync(planPath, 'utf8');
@@ -162,6 +177,22 @@ t('generation plan requires concrete relic gear', () => {
     'plan must include vajra/dorje-like structural reference');
   assert(/Weak relic tropes/.test(plan),
     'plan must forbid weak relic trope prompts');
+});
+t('generation plan rejects boring relic tablets and plaques', () => {
+  const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
+  const basePath = path.join(__dirname, 'BASE-DESIGN.md');
+  const notesPath = path.join(__dirname, 'REFERENCE-NOTES.md');
+  const plan = fs.readFileSync(planPath, 'utf8');
+  const base = fs.readFileSync(basePath, 'utf8');
+  const notes = fs.readFileSync(notesPath, 'utf8');
+  assert(!/\| (Rite foci \/ sceptres|Charms \/ relic curios|Off-hand foci) \|[^\n]*(tablet|plaque|ward plate)/i.test(plan),
+    'allocation table must not use tablets/plaques/ward plates as positive relic sources');
+  assert(/flat tablets, ward plates, carved slabs/.test(plan),
+    'plan must forbid flat tablet and ward-plate relic concepts');
+  assert(/flat tablets, plaques/.test(base),
+    'base design must reject flat tablets and plaques');
+  assert(/Bad relic gear[\s\S]*flat tablet/.test(notes),
+    'reference notes must classify flat tablets as bad relic gear');
 });
 t('generation plan rejects weak prop-like bases', () => {
   const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
@@ -182,6 +213,24 @@ t('generation plan rejects weak prop-like bases', () => {
     'curio allocation must not use shrine miniatures as positive sources');
   assert(/no loose tiny charms or shrine miniatures/.test(plan),
     'curio allocation must explicitly reject shrine miniatures');
+});
+t('wearable item prompts require plausible construction', () => {
+  const brief = fs.readFileSync(path.join(__dirname, 'ASSET-BRIEF.md'), 'utf8');
+  const plan = fs.readFileSync(path.join(__dirname, 'GENERATION-PLAN.md'), 'utf8');
+  const targets = fs.readFileSync(path.join(__dirname, 'targets.tsv'), 'utf8');
+  const manifest = fs.readFileSync(path.join(__dirname, 'verdigris-manifest.tsv'), 'utf8');
+  assert(/WEARABLE\/CARRIED CONSTRUCTION MUST BE PLAUSIBLE/.test(brief),
+    'brief must require plausible wearable construction');
+  assert(/Bone armour must be assembled from smaller bone plates/.test(plan),
+    'plan must forbid magic one-piece bone armour plates');
+  assert(!/bone shin guards?[^\n]*(single|solid|one-piece|perfect)/i.test(plan + targets + manifest),
+    'bone shin guards must not be one solid perfect plate');
+  assert(!/greaves_jade[^\n]*single piece/i.test(targets + manifest),
+    'jade greaves must not be a single magic shell');
+  assert(/greaves_jade[^\n]*leather backing[^\n]*side straps/i.test(targets),
+    'jade greaves target must include backing and straps');
+  assert(/bracers_bronzeplate[^\n]*leather backing[^\n]*straps/i.test(targets),
+    'bracer target must include backing and straps');
 });
 
 /* ---------------- crafting: sear/patience/pigment/omen ---------------- */

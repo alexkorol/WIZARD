@@ -78,8 +78,9 @@ def main():
                   f'{"PASS" if ok else "REJECT"}')
             for k, m_ in msgs:
                 print(f'  [{k}] {m_}')
-            print('TRUE-ALPHA: no matte needed - art_matte.py uses the '
-                  'alpha channel directly. Eyeball checklist still applies.')
+            print('TRUE-ALPHA: no matte needed - compose_assets.py will '
+                  'crop directly from the source alpha. Eyeball checklist '
+                  'still applies.')
             sys.exit(0 if ok else 1)
 
     img = src.convert('RGB')

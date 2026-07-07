@@ -153,15 +153,15 @@ Production takeaways:
   row is explicitly intended as historical reference.
 - 2026-07-07 prompt roast correction: "rite baton" reads weak and prop-like.
   Do not use baton/stick language as the item thesis. The object should read
-  as a substantial sceptre, mace-like hand focus, bell, reliquary, tablet, or
-  cudgel with real mass.
+  as a substantial sceptre, mace-like hand focus, bell, reliquary box, offering
+  bowl, forked standard, or cudgel with real mass.
 - Paired bell/sceptre logic is also strong: bell body, handle, finial, and
   clapper silhouette. Generate as one object unless a pair is explicitly
   required and composition remains readable.
 - Good relic gear should look held, worn, struck, rung, sealed, opened, or
   carried. Bad relic gear is a floating crystal, glowing orb, symbol plaque,
-  generic "ancient artifact," tiny charm cluster, or object on a decorative
-  stand.
+  flat tablet, generic "ancient artifact," tiny charm cluster, or object on a
+  decorative stand.
 
 ## Base-worthiness / weak-prop scan
 

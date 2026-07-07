@@ -28,6 +28,9 @@ Accepted assets promoted:
 - `crest_hide.png`
 - `warclub_jade.png`
 - `wrap_hide_lamellar.png`
+- `quiver_rawhide.png`
+- `bowl_bronze_offering.png`
+- `hideshield_rawhide_oval.png`
 
 2026-07-07 10:32-10:37 manual follow-up accepted immediately: 4 accepted,
 0 duplicates. These images were moved out of Downloads, kept in
@@ -35,6 +38,11 @@ Accepted assets promoted:
 `gorget_copper`, `crest_hide`, and `warclub_jade` are wired as live runtime
 art; `wrap_hide_lamellar` is promoted art only until body-form/material wiring
 is decided.
+
+2026-07-07 11:22-12:12 manual follow-up accepted immediately: 3 accepted,
+0 duplicates. These are true-alpha image-2 outputs and were promoted through
+the direct RGBA compose path, with no matte generation or palette quantization.
+`hideshield_rawhide_oval` is distinct from existing `hideshield_hide`; keep both.
 
 ## 2026-07-07 09:52-10:02 manual burst
 
@@ -60,6 +68,9 @@ Images were moved to `tools/rpg_inventory/assets_inbox/2026-07-07-manual/`.
 | 16 | `intake_016_boiled_leather_war_cap.png` | `f7c3467d-e756-492e-b79b-8615e5098de7.png` | 1024x1024 | boiled dark leather war cap with cheek guards | Accepted as `crest_hide`; future prompts should avoid mail/rivetmail as a class even though this manual save has stud detail. |
 | 17 | `intake_017_carved_jade_cudgel.png` | `86127cf5-a0b6-4381-90b4-96fa4f27521e.png` | 1024x1536 | carved jade blunt cudgel / sceptre | Accepted as `warclub_jade`; jade weapons stay blunt only. |
 | 18 | `intake_018_hide_lamellar_armor.png` | `dfa8d350-0076-4159-8e31-680c74cff8eb.png` | 1024x1536 | leather or hide lamellar body armour | Accepted as `wrap_hide_lamellar`; promoted art, but runtime body-form/material wiring is not decided. |
+| 19 | `intake_019_rawhide_back_quiver.png` | `aee6d186-86c3-452d-9725-522c29f69252.png` | 1024x1536 | rawhide back quiver with visible shoulder strap | Accepted as `quiver_rawhide`; promoted art pending sidegear/quiver wiring. |
+| 20 | `intake_020_bronze_offering_bowl.png` | `c564c1fa-14d2-4ffa-8f79-6d57064a8976.png` | 1024x1024 | heavy handled bronze offering bowl | Accepted as `bowl_bronze_offering`; prefer substantial bowls/implements over flat relic tablets. |
+| 21 | `intake_021_rawhide_oval_shield.png` | `d19ae5f6-59bf-446d-8b88-2b81868e139c.png` | 1024x1536 | rawhide oval shield | Accepted as `hideshield_rawhide_oval`; distinct from `hideshield_hide`, keep both. |
 
 Immediate prompt-batch exclusions from this burst:
 
@@ -76,3 +87,6 @@ Immediate prompt-batch exclusions from this burst:
 - Boiled leather war caps / hide caps.
 - Carved jade cudgels or sceptres.
 - Leather/hide lamellar armour variants.
+- Rawhide back quivers.
+- Bronze offering bowls.
+- Rawhide oval shields.

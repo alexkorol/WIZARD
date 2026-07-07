@@ -62,7 +62,7 @@ warclub_jade	P	a heavy blunt war club carved entirely from dark green jade, bloc
 greataxe_bronze	P	a two-handed bronze greataxe with a large broad crescent blade on a long leather-wrapped haft, held vertical, massive and menacing
 buckler_bronze	S	a small round bronze buckler shield with a plain domed central boss and a clean hammered rim, front view
 helm_bronze	S	a full enclosed bronze war helmet that covers the whole head, a rounded domed skull with cheek guards and a nose-guard, its full domed shell and the back of the head visible at the three-quarter angle, clean bronze surface
-greaves_bronze	S	a matched pair of bronze shin greaves shown together, the two greaves overlapping at a dynamic angle, clean hammered bronze curved to the leg
+greaves_bronze	S	a matched pair of bronze shin greaves on plain leather backing, broad side straps visible, shown together overlapping at a dynamic angle
 dagger_bone	P	a crude dagger: a long sharpened bone blade lashed to a hide-wrapped grip with sinew, simple and primitive
 dagger_copper	P	a copper dagger with a broad clean leaf blade and a leather-wrapped grip with a stone pommel
 dagger_obsidian	P	a dagger with a long knapped black obsidian blade, razor-edged, bound to a plain hardwood grip
@@ -76,7 +76,7 @@ greataxe_skymetal	P	a two-handed greataxe with a broad blade of raw dark meteori
 helm_copper	S	a full enclosed copper war helm covering the whole head, a rounded domed skull with cheek guards and a nose-guard, clean copper surface
 helm_bronzescale	S	a full enclosed war helm faced with overlapping bronze scales over a domed skull, with cheek guards
 helm_rivetmail	S	a full enclosed war helm of riveted iron plates over a domed skull with a mail aventail draping the neck, dull grey metal, simple edging
-greaves_bronzescale	S	a matched pair of shin greaves faced with overlapping bronze scales on plain leather, shown together overlapping at a dynamic angle
-greaves_rivetmail	S	a matched pair of shin greaves of riveted iron strips over dark leather, shown together overlapping at a dynamic angle
+greaves_bronzescale	S	a matched pair of shin greaves faced with overlapping bronze scales on plain leather backing, broad side straps visible, shown together overlapping at a dynamic angle
+greaves_rivetmail	S	a matched pair of shin greaves of riveted iron strips over dark leather backing, broad side straps visible, shown together overlapping at a dynamic angle
 buckler_hide	S	a small round buckler of stretched hide over a wooden frame with a bone rim and a plain domed boss
 buckler_bronzescale	S	a small round buckler faced with overlapping bronze scales around a plain domed boss

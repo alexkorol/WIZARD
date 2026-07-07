@@ -232,5 +232,44 @@ window.VerdigrisDownloadIntake = [
     label: "Hide Lamellar Armor",
     artId: "wrap_hide_lamellar",
     notes: "Accepted manual lamellar body armor save. Keep as promoted art until body-form/material wiring is decided; avoid duplicate leather/hide lamellar prompts."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_019_rawhide_back_quiver.png",
+    original: "aee6d186-86c3-452d-9725-522c29f69252.png",
+    proposedLabel: "Rawhide Back Quiver",
+    proposedArtId: "quiver_rawhide",
+    slot: "offhand_or_sidegear",
+    canvas: "P",
+    confidence: "high",
+    status: "accept",
+    label: "Rawhide Back Quiver",
+    artId: "quiver_rawhide",
+    notes: "Accepted true-alpha manual save. Shows credible carried construction with shoulder strap; keep as promoted art until quiver/sidegear wiring is decided."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_020_bronze_offering_bowl.png",
+    original: "c564c1fa-14d2-4ffa-8f79-6d57064a8976.png",
+    proposedLabel: "Bronze Offering Bowl",
+    proposedArtId: "bowl_bronze_offering",
+    slot: "ritefocus_or_curio",
+    canvas: "S",
+    confidence: "high",
+    status: "accept",
+    label: "Bronze Offering Bowl",
+    artId: "bowl_bronze_offering",
+    notes: "Accepted true-alpha manual save. Substantial handled ritual implement; use bowls over flat tablets/plaques for this lane."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_021_rawhide_oval_shield.png",
+    original: "d19ae5f6-59bf-446d-8b88-2b81868e139c.png",
+    proposedLabel: "Rawhide Oval Shield",
+    proposedArtId: "hideshield_rawhide_oval",
+    slot: "shield",
+    canvas: "P",
+    confidence: "high",
+    status: "accept",
+    label: "Rawhide Oval Shield",
+    artId: "hideshield_rawhide_oval",
+    notes: "Accepted true-alpha manual save. Distinct silhouette from existing hideshield_hide; keep both."
   }
 ];
