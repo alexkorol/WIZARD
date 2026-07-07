@@ -4,7 +4,7 @@ Input:  assets_staging/{name}.png       (art on pure black background)
         assets_staging/{name}_mask.png  (subject white on black, same framing)
 Output: ../assets/{name}.png            (RGBA, autocropped, max 512px, 256-color)
 
-Usage:  python compose_assets.py [--staging DIR] [--no-crop NAME ...] [--wb]
+Usage:  python compose_assets.py [--staging DIR] [--no-crop NAME ...] [--wb] [NAME ...]
 
 --wb applies a gentle white-balance correction that pulls a yellow/sepia cast
 back to neutral (estimated from the brightest 5% of pixels). Use it if a batch
@@ -74,14 +74,18 @@ def main():
     ap.add_argument('--staging', default=os.path.join(HERE, '..', 'assets_staging'))
     ap.add_argument('--no-crop', nargs='*', default=[])
     ap.add_argument('--wb', action='store_true', help='apply anti-yellow white balance')
+    ap.add_argument('names', nargs='*', help='optional asset names to compose')
     args = ap.parse_args()
     staging = os.path.normpath(args.staging)
     no_crop = NO_CROP_DEFAULT | set(args.no_crop)
     if not os.path.isdir(staging):
         sys.exit(f'staging dir not found: {staging}')
     os.makedirs(OUT_DIR, exist_ok=True)
-    names = sorted(f[:-4] for f in os.listdir(staging)
-                   if f.endswith('.png') and not f.endswith('_mask.png'))
+    if args.names:
+        names = sorted(n[:-4] if n.endswith('.png') else n for n in args.names)
+    else:
+        names = sorted(f[:-4] for f in os.listdir(staging)
+                       if f.endswith('.png') and not f.endswith('_mask.png'))
     if not names:
         sys.exit('no art PNGs in staging')
     done = sum(compose(n, staging, no_crop, args.wb) for n in names)

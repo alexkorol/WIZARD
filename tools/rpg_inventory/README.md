@@ -64,10 +64,11 @@ backgrounds.
 
 ### Art pipeline
 
-Item, currency, and UI art are AI-generated PNGs in `assets/`
-(`gpt-image` art on black → `gemini` alpha matte → PIL composite → autocrop),
-with inline-SVG fallbacks if an asset fails to load. The generation script
-lives outside the repo; assets are committed, no API key ships with the page.
+Item, currency, and UI art are AI-generated PNG finals in `assets/`.
+The local pipeline keeps source generations in ignored `assets_staging/*.png`,
+derives alpha mattes with `core/art_matte.py`, and composes cropped RGBA finals
+with `core/compose_assets.py`. Inline SVG fallbacks are still present if an
+asset fails to load.
 
 ### Currencies (the Atelier)
 

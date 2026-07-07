@@ -131,7 +131,7 @@
                     implicit: { label: '20% increased Physical Damage', stat: { id: 'phys_pct', v: 20 } } },
       buckler:    { name: 'Buckler', kind: 'shield', kindLabel: 'Buckler', w: 1, h: 1, icon: 'shield',
                     armor: 20, tags: ['ward', 'swift'], weights: { ward: 1.2, swift: 1.2 },
-                    materials: ['hide', 'bronze', 'bronzescale'],
+                    materials: ['hide', 'bronze'],
                     implicit: { label: '+6% Chance to Block', stat: { id: 'block', v: 6 } } },
       helm:       { name: 'Helm', kind: 'helmet', kindLabel: 'War helm', w: 2, h: 2, icon: 'crest',
                     armor: 35, tags: ['ward', 'life'], weights: { ward: 1.3 },
@@ -259,7 +259,7 @@
       red_ochre: { name: 'Red Ochre', weights: { blade: 3, blood: 3, blunt: 2, ward: 0.3, spirit: 0.3 } },
       woad:      { name: 'Woad', weights: { ward: 3, life: 2.5, blade: 0.3, blood: 0.2 } },
       soot:      { name: 'Soot', weights: { spirit: 3, ember: 3, fortune: 0.5, life: 0.4 } },
-      ochre_gold: { name: 'Marsh Ochre', weights: { fortune: 3, swift: 2.5, river: 2 } },
+      marsh_ochre: { name: 'Marsh Ochre', weights: { fortune: 3, swift: 2.5, river: 2 } },
     },
     omens: {
       entrail_omen: { name: 'Entrail Omen', tag: 'ward' },

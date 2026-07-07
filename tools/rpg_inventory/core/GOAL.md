@@ -4,13 +4,19 @@
 the regular from Alexei's ChatGPT Pro plan (web app only, no image APIs),
 runnable by ANY agent (Fable, Claude Code, Codex) without handholding.
 
+Scale target: **500-600 usable inventory images**, not the current 90-row
+starter slice. The concrete expansion plan lives in `GENERATION-PLAN.md`;
+research notes from PoE/Diablo live in `REFERENCE-NOTES.md`.
+
 ## Definition of done
 
-1. Every row in `core/targets.tsv` with `want=yes` has a composed final in
-   `assets/` that passes `core/qa_gate.py` AND the eyeball checklist.
+1. Every active row in the final 500-600 row manifest has a composed final in
+   `assets/` that passes `core/qa_gate.py` AND the eyeball checklist. Rows
+   marked `discard` in `core/asset-review.js` are retired from the target set.
 2. `core/verdigris-pack.js` has a form entry for every rung that has art
    (ladders per `core/BASE-DESIGN.md`; evocative names, never id-names).
-3. Everything committed to gh-pages via `commit_assets.sh` (run ON THE MAC).
+3. Composed finals and reusable scripts/docs are committed to gh-pages; local
+   source generations in `assets_staging/*.png` are not.
 
 ## Budget math (2026-07-06: throughput mode — Alexei wants 50+/day)
 
@@ -24,7 +30,8 @@ runnable by ANY agent (Fable, Claude Code, Codex) without handholding.
 
 ## Priorities (work top-down)
 
-1. `core/REGEN.txt` queue (genuinely broken items only).
+1. `core/asset-review.js` rework items, then `core/REGEN.txt` queue
+   (genuinely broken items only).
 2. Missing rungs in targets.tsv, weapons+armour before jewellery/flavour.
 3. Material variants for new bases (dagger/warclub/greataxe/buckler/helm/
    greaves ladders).

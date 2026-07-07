@@ -98,11 +98,15 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
   world" into the prompt — that desaturates the render, kills the cool rim-light,
   and breaks continuity with the rest of the set. Just name the material and let
   the standard v2 lighting/grading light it exactly like every other item.
-- **No spiral motifs.** Spirals are overused — do NOT put spirals on shields,
-  amulets/gorgets, crests, bucklers, blades, or anywhere. Use varied ornament
-  instead: sunbursts / sun-face bosses, concentric rings, chevrons, deity-profile
-  or marching-figure friezes, punched dots and studs, meander/key bands, feather
-  fringes, radiating rays, animal (fish/bird/boar) motifs.
+- **Base items stay generic and clean (2026-07-07).** Do NOT put invented lore
+  symbols, horned suns, deity marks, faction emblems, seal faces, friezes, or
+  heavy patina into ordinary base-item DESCs. Think thrice before adding any
+  symbol at all. Use shape, silhouette, construction, and material as the base
+  identity. Extreme wear, verdigris, grime, and overt symbolic flair are for
+  uniques/awakened relics only, or for an explicit reviewed exception.
+- **No spiral motifs.** Spirals are overused. If a base needs ornament, prefer
+  generic geometry: plain raised rims, concentric ridges, chevrons, punched
+  dots/studs, or simple bands.
 - **Primitive / low-tier items = ONE material, minimal parts.** This is the real
   rule (a bone club failed not because bone is bad, but because it was prompted as
   a wood-shaft + jawbone + lashings composite — illogical for a crude weapon, and
@@ -142,7 +146,14 @@ cast is banned explicitly.
 directives and grafted bronze fittings / patina / stray materials onto items
 that never asked for them. Material mentions now live only in each DESC.)
 
-## Ornamentation ladder (2026-07-03, from game concept art)
+## Historical ornamentation ladder (superseded for base items)
+
+The notes below are retained as history. They overfit early concept art and
+caused base generations to drift into fake lore symbols, heavy patina, and
+grimy "Verdigris means every item is green" leakage. For base items, follow
+the 2026-07-07 rule above instead: generic, clean, silhouette-first. Use this
+ornament vocabulary only for uniques, awakened relics, faction sets, or rows
+explicitly reviewed as lore-heavy.
 
 Item DESCs follow the concepts' wealth ladder so the set reads varied, not
 stone-age-drab. Ornament vocabulary from the concept sheets: embossed gold
@@ -181,7 +192,7 @@ images in ~13h, mid-batch. Cooldown duration unknown (hours-scale).
 
 Future sessions: pace generations at ONE EVERY 5-6 MINUTES (≤12/hr), take a
 ~15 min break every 10 images, keep a day's total under ~50, and interleave
-Gemini matte work between generations instead of batching gens back-to-back.
+local QA/matte/compose work between generations instead of batching gens back-to-back.
 Front-load the highest-priority items in case the ceiling arrives early.
 
 ## Canvas orientation (start every prompt with this)
@@ -198,28 +209,26 @@ Rule of thumb: weapons/armor/shields portrait, belt landscape, small wearables
 (rings, amulets, helms, gloves, boots), trophies and tools square. The matte
 must be requested at the same canvas ("same canvas size and framing").
 
-## Mattes: Gemini web app (free), API as sweeper — never ChatGPT
+## Mattes: local scripts, never generative
 
-Primary route: the Gemini web app (Nano Banana) on the Pro plan — free.
-Attach the downloaded art image with this prompt and save the result as
-`{file}_mask.png` next to the art in `assets_staging/`:
+Primary route: ask ChatGPT for true transparent PNG output. If it returns real
+alpha, `core/art_matte.py` uses that alpha channel directly.
 
-> Create a precise binary alpha matte for the attached image: render the
-> subject as a solid pure white silhouette on a solid pure black background.
-> Preserve the exact outline, including thin cords, straps and points; any
-> region showing the black background inside or around the subject must be
-> black. Only ~1px of soft antialiasing at edges. Same canvas size and
-> framing as the original. Output only the matte image, no text.
+Fallback route: if the image has a flat mid-grey, blue-grey, or old black
+background, run `python3 core/art_matte.py assets_staging ART_ID`. The script
+samples the background from the corners, flood-fills reachable background, keeps
+the largest subject component, and fills interior holes unless the form is a
+ring, sling, gorget, or curio.
 
-Fallback/sweeper: `python gen_masks.py` (Nano Banana Pro via OpenRouter,
-~$0.14 each). It only generates masks that are missing, so run it once at
-the end to fill any gaps — the two routes never conflict. Do not spend
-ChatGPT credits on mattes.
+`gen_masks.py`, `cleanup_masks.py`, and `fix_masks.py` are retained only for
+old-mask archaeology. Do not use Gemini or other generative matte services for
+new assets.
 
-Key lookup is cross-platform: `OPENROUTER_API_KEY` env var, then
-`~/.openrouter_key` file, then (Windows only) the user registry. On macOS,
-drop the key into `~/.openrouter_key` once. Scripts need Python 3 with
-`pip install pillow requests`; use `python3` on macOS.
+## Historical seed list (superseded)
+
+This section is the old starter list. It is useful as archaeology, but the
+actual production scale is now `core/GENERATION-PLAN.md`: 500-600 usable
+inventory images, with a planned overshoot manifest of about 640 rows.
 
 ## Forms × signature materials (one image per row, ~30 items)
 
@@ -280,19 +289,20 @@ as hammered bronze rather than gold filigree.
 1. For each row: generate the art in ChatGPT (canvas prefix + style prompt +
    DESC), judge it against the reject checklist, download as
    `<repo>/tools/rpg_inventory/assets_staging/{file}.png`.
-2. Matte it in the Gemini web app (matte prompt above), save as
-   `{file}_mask.png` in the same folder.
-3. Every ~6 items run `python compose_assets.py` from
-   `tools\rpg_inventory\core\` (add `--wb` if the chunk trends yellow) —
-   composites, autocrops, quantizes into `assets/`.
-4. At the end, run `python gen_masks.py` once to sweep any items whose web
-   matte was skipped or failed, then `compose_assets.py` again.
+2. Run `python3 core/qa_gate.py assets_staging/{file}.png CANVAS`, then eyeball
+   the render against the checklist.
+3. Run `python3 core/art_matte.py assets_staging {file}` unless the staged PNG
+   already has true alpha.
+4. Every ~6 items run `python compose_assets.py` from
+   `tools\rpg_inventory\core\` (add `--wb` if the chunk trends yellow). This
+   composites, autocrops, and quantizes into `assets/`.
 5. Verify in the browser (`tools/rpg_inventory/index.html`): item art
    replaces the SVG fallback automatically.
 
 ## Reject-and-redo checklist per image
 
-- Background is pure black, single object, no text/watermark/frame.
+- Background is true alpha, or a flat uniform mid-grey/blue-grey/black field;
+  single object, no text/watermark/frame.
 - **No yellow/sepia wash** — whites read bone-white, shadows read grey-black.
 - Silhouette reads clearly at 48px (squint test).
 - Matte matches framing; holes (shield grips, cord loops) are black.

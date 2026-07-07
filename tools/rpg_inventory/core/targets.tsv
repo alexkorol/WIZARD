@@ -32,8 +32,8 @@ spear_obsidian	polearm	4	Obsidian Warspear	P	-
 spear_jade	polearm	4	Jade Glaive	P	a polearm with a long curved blade of polished green jade on a dark lacquered shaft, the entire weapon visible tip to butt on a slight diagonal
 spear_skymetal	polearm	5	Skymetal Warspear	P	-
 fetish_bone	ritefocus	1	Bone Fetish	S	a caster focus: a carved bone fetish idol mounted on a short wooden handle, hung with knotted cords and small animal teeth
-rattle_copper	ritefocus	2	Copper Rattle	S	a ritual rattle of hammered copper on a carved bone handle, verdigris pooling in the seams, a red cord tassel
-sceptre_bronze	ritefocus	3	Bronze Sceptre	S	a bronze sceptre topped with a horned-sun finial, oxblood cord grip, verdigris pooling in the embossed relief
+rattle_copper	ritefocus	2	Copper Rattle	S	a plain hammered copper rattle on a carved bone handle, red cord tassel
+sceptre_bronze	ritefocus	3	Bronze Sceptre	S	a plain bronze sceptre with a rounded mace-like finial and an oxblood cord grip
 idolstaff_jade	ritefocus	4	Jade Idol-Staff	P	a tall dark-wood staff crowned with a carved jade idol head, black-dyed feather tassels
 starwand_skymetal	ritefocus	5	Skymetal Starwand	S	a slender wand of raw dark meteoric iron, hammer-faceted surface, a rawhide-wrapped grip
 wrap_hide	body	1	Hide Wrap	P	-
@@ -50,7 +50,7 @@ helm_rivetmail	helmet	5	Skymetal Greathelm	S	-
 grips_hide	bracers	1	Rawhide Wraps	S	-
 grips_quilted	bracers	2	Boiled Bracers	S	-
 grips_bronzescale	bracers	3	Bronze-Scale Bracers	S	-
-bracers_gilded	bracers	4	Gilded Vambraces	S	a pair of forearm vambraces of gilded bronze embossed with a tiny marching-figure frieze, oxblood leather straps, shown as a pair
+bracers_gilded	bracers	4	Gilded Vambraces	S	a pair of forearm vambraces of clean gilded bronze plates over oxblood leather, shown as a pair
 bracers_skymetal	bracers	5	Skymetal Gauntlets	S	a pair of gauntlets of raw dark meteoric-iron plates over oxblood leather, shown as a pair
 sandals_hide	boots	1	Hide Sandals	S	-
 sandals_quilted	boots	2	Quilted Sandals	S	-
@@ -61,7 +61,7 @@ greaves_rivetmail	boots	5	Skymetal Greaves	S	a pair of greaves of riveted raw da
 girdle_hide	belt	1	Sinew Girdle	L	-
 girdle_quilted	belt	2	Woven Girdle	L	-
 girdle_copper	belt	3	Copper-Plated Belt	L	-
-girdle_gilded	belt	4	Gilded War-Girdle	L	a wide war-belt of gilded bronze plates on oxblood leather laid out horizontally, a sun-face emblem at center
+girdle_gilded	belt	4	Gilded War-Girdle	L	a wide war-belt of clean gilded bronze plates on oxblood leather laid out horizontally, a large plain central plate
 girdle_skymetal	belt	5	Skymetal Warbelt	L	a wide belt of raw dark meteoric-iron plates on oxblood leather laid out horizontally
 buckler_hide	shield	2	Hide Buckler	P	-
 buckler_bronze	shield	3	Bronze Roundshield	P	-
@@ -88,5 +88,5 @@ entrail_omen	tool	-	Entrail Omen	S	-
 bird_omen	tool	-	Bird Omen	S	-
 smoke_omen	tool	-	Smoke Omen	S	-
 blood_omen	tool	-	Blood Omen	S	-
-lunula_bronze	amulet	3	Bronze Lunula	S	a broad crescent-moon neck collar of hammered bronze, incised sun-ray lines fanning across the face, verdigris pooling in the grooves, hung on a simple oxblood cord
-signet_bronze	ring	3	Bronze Signet	S	a heavy bronze signet ring, its flat oval face embossed with a horned-sun seal, verdigris pooling in the recesses of the engraving
+lunula_bronze	amulet	3	Bronze Lunula	S	a broad crescent neck collar of clean hammered bronze with a simple raised rim, hung on a plain oxblood cord
+signet_bronze	ring	3	Bronze Signet	S	a heavy bronze signet ring with a plain flat oval face and clean hammered bronze surface
