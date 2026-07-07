@@ -86,6 +86,14 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    blunt or mace-like: club, mace, maul, hammer, idol-head cudgel, or heavy
    ritual striking object. Jade remains fine for armour, jewellery, foci,
    curios, and other non-bladed bases.
+9. PROMPT BATCH DIVERSITY (2026-07-07). Candidate batches must cover the
+   inventory, not only reliable weapons. Default roast batches cap weapons at
+   two and include armour/helmets, shields/off-hands, limb/waist wearables,
+   jewellery, and rite/relic/curio/trophy objects.
+10. NO CURRENCY/CRAFTING-MATERIAL IDEATION (2026-07-07). Do not propose new
+   crafting currencies, pigments, omens, ingots, molds, generic orbs, seal
+   weights, draughts, reagent stones, or abstract bench-tool tokens unless
+   Alexei explicitly reopens that lane.
 
 ### Prompt changelog
 
@@ -103,6 +111,8 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
   greaves, not jade-inlaid); agents no longer touch the style text.
 - 2026-07-07: jade retired from bladed/reach weapon bases. Jade weapons are
   allowed only for blunt, mace-like silhouettes.
+- 2026-07-07: prompt-candidate batches require slot diversity; currency and
+  crafting-material image ideation paused.
 
 ### Material-specific corrections (2026-07-05 review — do not relitigate)
 
@@ -279,13 +289,14 @@ river_pearl (large baroque pearl in a woven reed cage), ember_shell (glowing
 red-veined beetle carapace), knucklebone (polished ancestor knucklebone with
 ochre marks).
 
-## Craft tools (8)
+## Legacy craft tools (frozen)
 
-Pigments: red_ochre (lump + stained grinding stone), woad (blue paste in a
-shell), soot (black powder in a bone tube), marsh_ochre (yellow ochre in a
-reed basket). Omens: entrail_omen (clay liver-model with marks),
-bird_omen (bundle of feathers and knotted string), smoke_omen (smoldering
-herb bundle), blood_omen (dark-stained shallow clay bowl).
+These rows exist as early gameplay/UI archaeology only. Do not expand,
+regenerate, or use them as examples for future prompt candidates unless Alexei
+explicitly reopens the currency/crafting-material lane.
+
+Pigments: red_ochre, woad, soot, marsh_ochre. Omens: entrail_omen,
+bird_omen, smoke_omen, blood_omen.
 
 ## UI (reuse existing)
 
@@ -337,6 +348,9 @@ failures. Bake these into every prompt:
    hilt/haft proportion; a weapon that looks flimsy or awkward is a reject.
 5. Hand armour: render as upright **forearm bracers/vambraces** (reliable),
    not laid-flat fingerless wraps (read as foot-shaped garbage).
+6. Prompt-candidate batches must be slot-diverse. Do not sample only weapons,
+   and especially do not let axes/daggers dominate a batch. Currency/crafting
+   materials are frozen, not a source of new prompt ideas.
 
 Retired this pass: `atlatl_*` (kept old art as placeholder, flagged for
 removal). Reworked: `spear_*`, `khopesh_*`, `gorget_*`, `grips_*` (-> bracers),

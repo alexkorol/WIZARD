@@ -79,9 +79,10 @@ Do not copy icons, names, or exact item lists. Extract the production logic.
   can be visually simple if the silhouette/material/function differ: corded
   charm, torc, collar, bead strand, signet, plain seal ring, socket ring,
   relic ring.
-- Currency/tool icons are allowed to be very close-up. The object is often a
-  small orb, shard, vial, seal, or fossil-like piece with one strong read at
-  48px. Save explicit emblems for faction/set/unique art.
+- Do not use PoE/Diablo currency/tool icon patterns as Verdigris prompt
+  fodder for now. The current currency/crafting-material concepts are too
+  generic; production ideation should stay on equipment, wearable gear, rite
+  objects, trophies, relics, and UI only.
 - PoE icon style favors centered, isolated objects on dark/transparent fields,
   strong rim lighting, and no scene. That agrees with Verdigris v2.
 
@@ -236,6 +237,10 @@ legible as a layer on top of a known object.
   differences, and several endgame special bases.
 - Use Diablo's difficulty ladder: crude -> worked -> martial -> ritual ->
   otherworldly, with occasional alias/reuse where a D2-style rename is useful.
+- Do not translate Diablo/PoE currency systems into Verdigris art prompts
+  unless the currency/crafting-material lane is explicitly reopened. The
+  durable art plan should allocate those rows to equipment and concrete relics
+  instead.
 - Preserve image-2 reliability lessons: discard atlatls, slings, handwraps,
   tiny closures, over-thin loose cords, and other concepts that have already
   failed generation.

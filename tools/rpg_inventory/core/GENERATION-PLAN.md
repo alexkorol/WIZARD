@@ -8,12 +8,11 @@ target is roughly 500-600 usable inventory images.
 
 | Bucket | Count | Notes |
 |---|---:|---|
-| Equipment base items | 360 | Named base ladders across weapons, armour, off-hands, jewellery, and relics. |
+| Equipment base items | 420 | Named base ladders across weapons, armour, off-hands, jewellery, rite gear, and relics. The former currency/crafting-art budget is redistributed here, mostly to non-weapon slots. |
 | Uniques / awakened relics | 100 | 25 per theme: slaughter, warding, spiritwork, wayfaring. |
-| Crafting currency / omens / pigments | 60 | Bench tools, sigils, stones, draughts, knives, pigments, omens. |
 | Trophies / fragments / hunt relics | 40 | Monster parts, ancestor fragments, shrine offerings. |
 | Sets / faction variants | 40 | Small 3-5 piece visual families, not full material grids. |
-| UI / frame / support art | 20 | Frames, benches, sockets, dividers, vendor/crafting accents. |
+| UI / frame / support art | 20 | Frames, benches, sockets, dividers, vendor and inventory accents. |
 | Rework / discard buffer | 20 | Expected failed concepts and replacement rows. |
 | **Total** | **640 planned rows** | Gives room to discard down to 500-600 finals. |
 
@@ -30,7 +29,7 @@ image-2 has known concept failures. A final committed set around 560 is ideal.
 
 ## Equipment base allocation
 
-The 360 equipment bases should be generated before most uniques. Uniques need
+The 420 equipment bases should be generated before most uniques. Uniques need
 base vocabulary to mutate.
 
 | Slot / family | Count | Verdigris direction |
@@ -52,10 +51,11 @@ base vocabulary to mutate.
 | Shields / bucklers | 24 | Wicker, hide, round, tower, sheet-bronze, scale; strong front read, plain bosses on bases. |
 | Amulets / neckpieces | 18 | Pendants, torcs, collars, lunulae, gorgets, sigils. |
 | Rings / seals | 18 | Bone rings, coils, signets, bands, plain seal rings, socket rings. |
-| Charms / relic curios | 24 | Fetishes, carved animals, omen tokens, shrine miniatures, reliquaries. |
+| Charms / relic curios | 24 | Fetishes, carved animals, ancestor tokens, shrine miniatures, reliquaries. |
 | Off-hand foci | 12 | Targes, tablets, hand-idols, rite boards; caster/ward variants. |
 | Alias / reuse pool | 12 | D2-style renamed tiers using already-good art where acceptable. |
-| **Total** | **360** |  |
+| Non-weapon expansion reserve | 60 | Extra armour, shields, wearable jewellery, belts, greaves/bracers, rite foci, relic gear, and trophies. Do not spend this reserve on weapons or currency/crafting materials. |
+| **Total** | **420** |  |
 
 ## Uniques and awakened relics
 
@@ -73,30 +73,36 @@ ordinary bronze war-axe becomes a notched execution axe with a tooth-count
 edge; a ring becomes a seal with an inset omen bead; a shield becomes a
 specific oath board.
 
-## Currency, tools, trophies
+## Non-Equipment Art
 
-The 100 non-equipment gameplay items should be split:
+The non-equipment art budget is for trophies, relics, faction/set support, and
+UI. Do not expand the currency/crafting-material lane unless Alexei explicitly
+reopens it.
 
-- 20 crafting currencies: sigils, stones, knives, chisels, resonance orbs,
-  kiln tools, sealing waxes, memory shards.
-- 16 pigments and washes: red ochre, woad, soot, marsh ochre, bone white,
-  copper green, ash grey, river blue, etc.
-- 16 omens: bird, smoke, blood, entrail, ash, river, hoofprint, eclipse,
-  cracked tooth, storm reed.
-- 24 trophies/fragments: tusks, claws, fangs, pearls, shells, feathers, scales,
+- 40 trophies/fragments: tusks, claws, fangs, pearls, shells, feathers, scales,
   knucklebones, antlers, chitin, ember carapaces.
-- 24 shrine/faction tokens: Redhand, Shieldbearer, Ashspeaker, Farwalker,
+- 40 shrine/faction tokens: Redhand, Shieldbearer, Ashspeaker, Farwalker,
   settlement and wilderness variants.
+- 20 UI/support pieces: frames, slots, sockets, dividers, vendor and inventory
+  accents if needed.
+
+Do not generate crafting currencies, generic orbs, sigils-as-currency, stones,
+draughts, pigments, ingots, molds, seal weights, or omen/currency abstractions
+for the production manifest. Existing gameplay pigments/omens can remain as
+legacy mechanics/UI until separately redesigned; they are not a source for new
+image rows.
 
 ## Generation order
 
-1. Fix current 6 review reworks.
-2. Expand equipment bases to 180 rows: weapons first, armour second.
-3. Expand equipment bases to 360 rows: jewellery, foci, charms, off-hands.
-4. Add 60 crafting/currency rows.
-5. Add 40 trophies/fragments.
+1. Fix current 5 review reworks.
+2. Expand equipment bases to 180 rows with slot balance: weapons may lead
+   discovery, but they cannot dominate prompt batches.
+3. Expand equipment bases to 360 rows: armour, shields, jewellery, foci,
+   charms, belts, bracers, boots, and off-hands.
+4. Add the 60-row non-weapon expansion reserve.
+5. Add 40 trophies/fragments and 40 shrine/faction tokens.
 6. Add 100 uniques/awakened rows.
-7. Add set/faction variants and UI/support art.
+7. Add UI/support art only where the app actually needs it.
 
 At 50-60 acceptable gens/day, the 500-600 target is roughly 10-12 production
 days, plus review and rework time.
@@ -121,6 +127,15 @@ days, plus review and rework time.
   scale, sheet-bronze shields, greaves, collars, and simple corslet panels.
   Functional rivet holes on tanged dagger blades, halberds, or shield handles
   are fine; do not make mail/rivetmail/riveted iron strips a class.
+- Prompt-candidate batches must be slot-diverse. In a 12-candidate roast batch:
+  max 2 weapons, min 2 armour/helmets, min 2 shields/off-hands, min 2 limb or
+  waist wearables, min 2 jewellery/neck/ring items, and min 2 rite foci,
+  relics, curios, or trophies. For smaller batches, weapons stay below 25%.
+  Never let axes/daggers become the default sample set.
+- Currency/crafting-material candidates are out of scope. Do not propose or
+  generate crafting currencies, pigments, omen objects, ingots, molds, generic
+  orbs, seal weights, or abstract bench reagents unless Alexei explicitly
+  reopens that lane.
 - At least 20% of equipment bases should have implicit/mechanical identity:
   socket, vessel, patience, trophy affinity, theme bias, block, speed, ward,
   spirit, reach, crit, or carry capacity.
@@ -139,6 +154,9 @@ Retire these unless reconceived into a reliable icon:
   weapons. Keep jade weapons blunt/mace-like only.
 - Mail, rivetmail hauberks, mail aventails, chain/ring mail, and riveted iron
   strip armour until the tech tier is explicitly reintroduced.
+- Currency/crafting-material art: crafting currencies, pigments, omens, ingots,
+  molds, generic orbs, seal weights, draughts, reagent stones, and abstract
+  bench-tool tokens.
 
 ## Next file to create
 
