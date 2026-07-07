@@ -52,9 +52,13 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    watermark, no drop shadow, no vignette — those work.)
 2. Ask for TRUE-ALPHA output first (real transparent PNG), flat grey fill as
    fallback (blue-grey for grey metals — the swap is automated in status.py).
-   qa_gate/art_matte handle both automatically. Painted checkerboard = reject.
-3. Never prompt closures/fastenings (toggles, buckles, clasps) — let the
-   model improvise them.
+   qa_gate detects both; compose_assets uses source alpha directly for true
+   alpha, and art_matte is only for flat fallback backgrounds. Painted
+   checkerboard = reject.
+3. Do not prompt tiny closure hardware as decoration (toggles, buckles,
+   clasps). But wearable/carryable gear must still have credible structural
+   attachment: broad straps, lacing, side ties, leather backing, shoulder
+   straps, or front/back plates joined at the shoulder and sides.
 4. DESCs (targets.tsv) hold ONLY item content — materials, construction,
    proportions ("a pair of, shown as a pair", "entire weapon visible") —
    never render-style words.
@@ -116,6 +120,19 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    and discard/rework state in `asset-review.js`. Style-calibration prompts
    follow the same no-repeat rule unless Alexei explicitly names an existing
    item and asks to restyle that exact item.
+14. WEARABLE/CARRIED CONSTRUCTION MUST BE PLAUSIBLE (2026-07-07). Armour,
+   quivers, belts, greaves, bracers, sandals, and shields must visibly explain
+   how they stay on the body or in the hand. Use broad straps, lacing, backing,
+   arm loops, shoulder straps, front/back plates, overlap, or wrap geometry.
+   For hard armour, avoid one-piece magic shells unless the real object can be
+   made and donned that way. Bone armour is assembled from smaller bone plates,
+   splints, or sections on hide/leather backing; never a perfect solid
+   shin-guard-shaped bone plate.
+15. NO BORING FORCED RELIC BASES (2026-07-07). Flat tablets, ward plates,
+   symbol plaques, carved slabs, and generic hand-held boards are not exciting
+   ARPG loot bases. Relic gear needs a strong held/worn/handled implement with
+   mass and purpose: bowls, bells, pronged sceptres, standards, reliquary boxes,
+   idol-head cudgels, trophy settings, or small shield-like foci.
 
 ### Prompt changelog
 
@@ -142,6 +159,9 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
 - 2026-07-07: no-repeat test-prompt rule added and extended to style
   calibration. Test prompts now mean novel item concepts unless Alexei
   explicitly names an existing item for restyling.
+- 2026-07-07: true-alpha manual accepts bypass mask generation and palette
+  quantization; compose directly from source alpha. Wearable construction and
+  boring tablet/plaque relic failures added as hard prompt rules.
 
 ### Material-specific corrections (2026-07-05 review — do not relitigate)
 
@@ -260,7 +280,13 @@ must be requested at the same canvas ("same canvas size and framing").
 ## Mattes: local scripts, never generative
 
 Primary route: ask ChatGPT for true transparent PNG output. If it returns real
-alpha, `core/art_matte.py` uses that alpha channel directly.
+alpha, do not run matte generation. `core/compose_assets.py` crops directly
+from the source alpha, preserves RGBA output, and skips palette quantization.
+This is the safe path for accepted manual image-2 downloads.
+
+`core/art_matte.py` is for flat-background fallback art. If it is accidentally
+run on a true-alpha PNG, it now writes the source alpha silhouette directly
+without hole filling, component pruning, or other reinterpretation.
 
 Fallback route: if the image has a flat mid-grey, blue-grey, or old black
 background, run `python3 core/art_matte.py assets_staging ART_ID`. The script
@@ -340,12 +366,14 @@ as hammered bronze rather than gold filigree.
    `<repo>/tools/rpg_inventory/assets_staging/{file}.png`.
 2. Run `python3 core/qa_gate.py assets_staging/{file}.png CANVAS`, then eyeball
    the render against the checklist.
-3. Run `python3 core/art_matte.py assets_staging {file}` unless the staged PNG
-   already has true alpha.
-4. Every ~6 items run `python compose_assets.py` from
+3. If the staged PNG has true alpha, skip `art_matte.py`.
+4. If the staged PNG has a flat fallback background, run
+   `python3 core/art_matte.py assets_staging {file}`.
+5. Every ~6 items run `python compose_assets.py` from
    `tools\rpg_inventory\core\` (add `--wb` if the chunk trends yellow). This
-   composites, autocrops, and quantizes into `assets/`.
-5. Verify in the browser (`tools/rpg_inventory/index.html`): item art
+   directly crops true-alpha RGBA inputs, or composites flat-background inputs
+   with masks into `assets/`.
+6. Verify in the browser (`tools/rpg_inventory/index.html`): item art
    replaces the SVG fallback automatically.
 
 ## Reject-and-redo checklist per image
@@ -355,6 +383,10 @@ as hammered bronze rather than gold filigree.
 - **No yellow/sepia wash** — whites read bone-white, shadows read grey-black.
 - Silhouette reads clearly at 48px (squint test).
 - Matte matches framing; holes (shield grips, cord loops) are black.
+- Wearable/carryable objects explain how they are worn, held, slung, or
+  attached through visible structure.
+- Relic gear is a substantial implement, not a flat tablet, plaque, board, or
+  slab.
 
 ## 2026-07-04 review priors (from full manual review)
 

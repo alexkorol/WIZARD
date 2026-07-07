@@ -79,8 +79,9 @@ Not every class needs all five rungs; 3–5 each is fine (like D2's three).
 - **Amulet / neckpiece**: Bone Pendant · Copper Torc · Jade Gorget · Amber Talisman · Skymetal Sigil
 - **Ring**: Bone Ring · Copper Coil · Jade Band · Amber Ring · Skymetal Ring
 - **Curio / relic** (spirit flavour): use substantial reliquary boxes,
-  handled tablets, and trophy settings. Do not build a tier ladder out of tiny
-  trinkets, shrine miniatures, or loose charms.
+  offering bowls, forked standards, and trophy settings. Do not build a tier
+  ladder out of flat tablets, plaques, tiny trinkets, shrine miniatures, or
+  loose charms.
 
 ## How current art maps in (don't waste the good gens)
 

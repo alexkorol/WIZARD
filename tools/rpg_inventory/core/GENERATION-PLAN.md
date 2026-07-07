@@ -51,8 +51,8 @@ base vocabulary to mutate.
 | Shields / bucklers | 24 | Hide-over-wood, rawhide, round, tower, sheet-bronze, scale; strong front read, plain bosses on bases. |
 | Amulets / neckpieces | 18 | Pendants, torcs, collars, lunulae, gorgets, sigils. |
 | Rings / seals | 18 | Bone rings, coils, signets, bands, plain seal rings, socket rings. |
-| Charms / relic curios | 24 | Reliquary boxes, carved ancestor tablets, trophy settings, handled votive objects; no loose tiny charms or shrine miniatures. |
-| Off-hand foci | 12 | Targes, heavy tablets, handled ward plates, reliquary shields; caster/ward variants. |
+| Charms / relic curios | 24 | Reliquary boxes, trophy settings, handled votive vessels, compact caskets; no loose tiny charms or shrine miniatures. |
+| Off-hand foci | 12 | Targes, bossed ward bucklers, reliquary shields, heavy hand-guards; caster/ward variants. |
 | Alias / reuse pool | 12 | D2-style renamed tiers using already-good art where acceptable. |
 | Non-weapon expansion reserve | 60 | Extra armour, shields, wearable jewellery, belts, greaves/bracers, rite foci, relic gear, and trophies. Do not spend this reserve on weapons or currency/crafting materials. |
 | **Total** | **420** |  |
@@ -123,6 +123,14 @@ days, plus review and rework time.
   silhouette authority to block, strike, ward, carry, bind, or focus power.
   Retire concepts that read as camp props, toys, school projects, tiny ritual
   souvenirs, or joke loot.
+- Wearable and carried items must show plausible construction. Armour needs
+  wearable front/back, overlap, backing, lacing, side ties, or broad straps;
+  quivers need a visible shoulder strap; shields need a grip, arm loop, or
+  clear hand/arm use; greaves/bracers need backing or side straps. Avoid
+  one-piece magic shells that cannot be donned.
+- Bone armour must be assembled from smaller bone plates, splints, or sections
+  on hide/leather backing. Do not prompt a perfect solid shin-guard-shaped
+  bone plate; no animal grows a clean greave-shaped bone.
 - Jade is not a blade/reach weapon material. Do not generate jade sabres,
   daggers, axes, spearheads, glaives, or polearms. Jade weapons are allowed
   only when the silhouette is blunt or mace-like: club, mace, maul, hammer,
@@ -150,11 +158,11 @@ days, plus review and rework time.
 - Relic gear should be built from concrete ritual implement silhouettes, not
   weak AI-trope "mystic trinkets." Good structural references include
   vajra/dorje-like double-ended pronged sceptres, heavy paired hand bells,
-  forked standards, handled tablets, offering bowls, idol-head cudgels, and
-  reliquary boxes. Use the object logic: central grip, mirrored prongs, bell
-  body plus handle, socketed finial, lid/base/handle. Do not copy living sacred
-  iconography one-to-one, use exact religious names as ordinary base names, or
-  add fake symbols/lore marks.
+  forked standards, offering bowls, idol-head cudgels, and reliquary boxes.
+  Use the object logic: central grip, mirrored prongs, bell body plus handle,
+  socketed finial, lid/base/handle. Do not copy living sacred iconography
+  one-to-one, use exact religious names as ordinary base names, or add fake
+  symbols/lore marks.
 - At least 20% of equipment bases should have implicit/mechanical identity:
   socket, vessel, patience, trophy affinity, theme bias, block, speed, ward,
   spirit, reach, crit, or carry capacity.
@@ -166,7 +174,9 @@ Retire these unless reconceived into a reliable icon:
 - Atlatls / spear-throwers.
 - Loose slings and long dangling cords.
 - Fingerless handwraps or objects that read as feet/hands ambiguously.
-- Tiny toggles, buckles, clasps, and explicit closures.
+- Tiny toggles, buckles, clasps, and explicit closures as decoration. Broad
+  straps, lacing, backing, shoulder straps, and arm loops are required when
+  they explain how gear is worn or carried.
 - Long thin objects without a strong diagonal/full-length framing instruction.
 - Vague curios on stands. Use one strong object instead.
 - Jade blades, jade spearheads, jade glaives, and other jade cutting/piercing
@@ -177,8 +187,9 @@ Retire these unless reconceived into a reliable icon:
   molds, generic orbs, seal weights, draughts, reagent stones, and abstract
   bench-tool tokens.
 - Weak relic tropes: floating crystals, vague glowing idols, generic magic
-  orbs, symbol-covered plaques, smoky amulets, tiny charm clusters, and
-  decorative stands. Relic gear needs one strong held/worn/handled object.
+  orbs, symbol-covered plaques, flat tablets, ward plates, carved slabs,
+  generic hand-held boards, smoky amulets, tiny charm clusters, and decorative
+  stands. Relic gear needs one strong held/worn/handled object.
 - Weak base-item concepts: wicker shields, rite batons, pencil-thin wands,
   hand stones, tiny darts, shrine miniatures, reed baskets, reed maps, road
   charms, loose feather markers, and other one-off props that do not read as

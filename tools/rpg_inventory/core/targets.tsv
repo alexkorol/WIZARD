@@ -49,12 +49,12 @@ helm_rivetmail	helmet	5	Skymetal Greathelm	S	-
 grips_hide	bracers	1	Rawhide Wraps	S	-
 grips_quilted	bracers	2	Boiled Bracers	S	-
 grips_bronzescale	bracers	3	Bronze-Scale Bracers	S	-
-bracers_bronzeplate	bracers	4	Bronze Vambraces	S	a pair of forearm vambraces of clean bronze plates over plain leather, shown as a pair
-bracers_skymetal	bracers	5	Skymetal Gauntlets	S	a pair of gauntlets of raw dark meteoric-iron plates over plain leather, shown as a pair
+bracers_bronzeplate	bracers	4	Bronze Vambraces	S	a pair of forearm vambraces of clean bronze plates over plain leather backing, broad side straps visible, shown as a pair
+bracers_skymetal	bracers	5	Skymetal Gauntlets	S	a pair of gauntlets of raw dark meteoric-iron plates over plain leather backing, broad wrist straps visible, shown as a pair
 sandals_hide	boots	1	Hide Sandals	S	-
 sandals_quilted	boots	2	Quilted Sandals	S	-
 greaves_bronze	boots	3	Bronze Greaves	S	-
-greaves_jade	boots	4	Jade Greaves	S	a pair of greaves each carved from a single piece of green jade, faint cool sheen, shaped to the shin, shown as a pair
+greaves_jade	boots	4	Jade Greaves	S	a pair of segmented jade shin guards built from overlapping curved jade plates on plain leather backing, broad side straps visible, shown as a pair
 greaves_bronzescale	boots	4	Bronze-Scale Greaves	S	-
 greaves_rivetmail	boots	5	Skymetal Greaves	S	a pair of greaves of riveted raw dark iron strips over plain leather, shown as a pair
 girdle_hide	belt	1	Sinew Girdle	L	-

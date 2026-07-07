@@ -21,7 +21,7 @@ mechanical loop. Filesystem is the only state; no memory required.
    Then confirm chatgpt.com is logged in. If either fails, STOP and tell
    Alexei — do not thrash.
 
-## Per item (gen → QA → matte → compose → log)
+## Per item (gen → QA → compose → log)
 
 1. `python3 core/status.py --prompt ART_ID` → the full assembled prompt.
    If it says the item is marked discard, do not generate it.
@@ -47,14 +47,15 @@ mechanical loop. Filesystem is the only state; no memory required.
    Then LOOK at the image (Read tool) and run the eyeball checklist. Reject =
    fix the DESC (targets.tsv) before any retry; one retry max, then move on
    and note it in GEN-LOG.
-6. Matte + compose (local, free):
-   - `python3 core/art_matte.py assets_staging ART_ID`
-   - `cd core && python3 compose_assets.py ART_ID`
+6. Compose (local, free):
+   - TRUE-ALPHA PNG: skip matte generation; `cd core && python3 compose_assets.py ART_ID`
+   - Flat fallback background: `python3 core/art_matte.py assets_staging ART_ID`,
+     then `cd core && python3 compose_assets.py ART_ID`
 7. Look at the composed final on a checkerboard if in doubt (holes, halos,
    eaten dark edges).
 8. Log to `core/GEN-LOG.md`: `YYYY-MM-DD HH:MM TZ  ART_ID DONE|REDONE|SKIP (why)`.
 9. If it was a REGEN item, remove its line from `core/REGEN.txt`.
-10. Wait 5-6 min before the next gen (do matte/compose/QA work in the gap).
+10. Wait 5-6 min before the next gen (do compose/QA work in the gap).
     Every 10 gens: 15-min break.
 
 ## Failure-mode catalog (catch these BEFORE staging)
@@ -74,10 +75,13 @@ mechanical loop. Filesystem is the only state; no memory required.
 
 ## Matte rules (LOCAL, never generative)
 
-`core/art_matte.py` keys the flat background color automatically (black,
-mid-grey #7F7F7F, or blue-grey #6E7B8B for skymetal/rivetmail/flint items).
-Interior holes fill opaque by default; only rings/slings/gorgets/curios keep
-genuine see-through holes. Helmet eyes must be OPAQUE.
+TRUE-ALPHA image-2 downloads are the preferred path. `core/compose_assets.py`
+crops directly from source alpha and preserves RGBA output.
+
+Use `core/art_matte.py` only for flat fallback backgrounds (black, mid-grey
+#7F7F7F, or blue-grey #6E7B8B for skymetal/rivetmail/flint items). Interior
+holes fill opaque by default; only rings/slings/gorgets/curios keep genuine
+see-through holes. Helmet eyes must be OPAQUE.
 
 ## Session end
 
