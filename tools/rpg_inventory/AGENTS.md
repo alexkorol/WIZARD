@@ -156,3 +156,18 @@ proposed ladders live in `core/BASE-DESIGN.md`.
   If a discarded idea is a runtime item, also add its form to
   `retiredForms` or its exact `form_material` id to `retiredArtIds` in
   `core/verdigris-pack.js` so the game cannot roll it again.
+
+## Prompt ideation guardrails
+
+When asked for roastable prompt candidates, apply the pipeline rules in
+`core/GENERATION-PLAN.md`, not just chat memory:
+
+- No currency/crafting-material candidates unless Alexei explicitly reopens
+  that lane. Avoid crafting currencies, pigments, omens, ingots, molds,
+  generic orbs, seal weights, draughts, reagent stones, and abstract bench
+  tokens.
+- Default 12-candidate batches cap weapons at two and must include armour or
+  helmets, shields/off-hands, limb or waist wearables, jewellery, and
+  rite/relic/curio/trophy objects. Smaller batches keep weapons below 25%.
+- Do not let axes/daggers become the default sample set. If weapons appear,
+  vary class and construction, then move back to non-weapon slots.

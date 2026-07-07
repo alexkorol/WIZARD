@@ -117,6 +117,18 @@ t('retired forms and art ids cannot be generated', () => {
   }
   assert(threw, 'explicit retired sling generation must fail');
 });
+t('generation plan keeps currency art lane closed', () => {
+  const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
+  const plan = fs.readFileSync(planPath, 'utf8');
+  assert(!/Crafting currency \/ omens \/ pigments/.test(plan),
+    'currency bucket must stay out of target counts');
+  assert(!/Add 60 crafting\/currency rows/.test(plan),
+    'generation order must not reintroduce currency rows');
+  assert(/Currency\/crafting-material candidates are out of scope/.test(plan),
+    'plan must carry the no-currency prompt rule');
+  assert(/max 2 weapons/.test(plan),
+    'plan must carry the prompt-batch weapon cap');
+});
 
 /* ---------------- crafting: sear/patience/pigment/omen ---------------- */
 t('sear adds a brand and spends patience', () => {
