@@ -63,10 +63,18 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    cord). NO decorative accent materials — no gold bands/inlays/collars/
    caps/rivets sprinkled onto iron or jade items. Enchantment prefixes/
    suffixes carry the uniqueness in-game; base art stays clean. Composites
-   are allowed ONLY when the composite IS the rung's identity (Gilded
-   Vambraces, bronze scales on leather) and then it dominates the read
-   instead of being a hair-thin detail.
-6. COMMIT FULLY TO EXOTIC MATERIALS (2026-07-06, Alexei — "full permission
+   are allowed ONLY when the composite IS the rung's identity (bronze scales
+   over a plain leather backing, riveted iron strips over plain leather) and
+   then the construction must dominate the read instead of becoming a
+   hair-thin detail.
+6. GENERIC COLOR LANGUAGE FOR BASES (2026-07-07). Do not encode lore/fashion
+   specificity into base rows: no oxblood, burgundy, glossy black-dyed trim,
+   lapis, turquoise chips, gold wire, feather tassels, cowrie rows, tusk
+   fetishes, deity/frieze motifs, or named symbolic decoration. Use "plain
+   leather", "dark leather", "plain cord", "simple stitched seams", "clean
+   bronze", "raw dark iron", etc. Save strong color accents and ceremonial
+   trim for uniques, awakened relics, faction sets, or reviewed exceptions.
+7. COMMIT FULLY TO EXOTIC MATERIALS (2026-07-06, Alexei — "full permission
    to step away from AI tropes and cliche fantasy constructs"). "X-inlaid
    Y" is a trope hedge: not jade-inlaid bronze greaves but greaves carved
    ENTIRELY of jade. A full-jade / full-amber / full-bone item is bolder
@@ -115,8 +123,8 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
   knobbed joint-end as the striking head, at most a leather strap for a grip,
   nothing else. Do not reinvent the wheel with unnecessary composites on low-tier
   items; simplicity IS the primitive read.
-- Obsidian keeps its glassy black facets with faint teal glints (that's correct,
-  ceremonial) — but keep it clearly *stone*, not glowing crystal.
+- Obsidian keeps its glassy black facets, but keep it clearly *stone*, not
+  glowing crystal or gem-inlaid ceremony.
 
 (v1 style below is retained for reference only; v2 above wins on any conflict.)
 
@@ -155,30 +163,23 @@ the 2026-07-07 rule above instead: generic, clean, silhouette-first. Use this
 ornament vocabulary only for uniques, awakened relics, faction sets, or rows
 explicitly reviewed as lore-heavy.
 
-Item DESCs follow the concepts' wealth ladder so the set reads varied, not
-stone-age-drab. Ornament vocabulary from the concept sheets: embossed gold
-panels and friezes (Mesopotamian marching figures, sunbursts, horned suns),
-turquoise inlay dots, lapis-blue beads and tassels, black-and-teal feather
-fringe, small skull/tusk fetishes, ragged madder-red cloth, and — on obsidian
-and skymetal only — faint cool teal glints/veins in the material.
+The old wealth ladder is no longer valid for ordinary bases. Do not use the
+old concept-sheet details as prompt content for base rows. The failure class
+was broader than individual words: tiny accent materials, named dye colors,
+ceremonial trims, symbolic motifs, and invented lore marks all make base items
+look like uniques and poison later generation batches.
 
-- tier 1 (flint, bone, hide): humble and functional; at most a bone bead,
-  cowrie shell, ochre mark or copper stud.
-- tier 2-3 (quilted, copper, bronze): dyed bindings, chevron bands,
-  embossed friezes, bead tassels, patina.
-- tier 4+ (obsidian, jade, amber, bronzescale): gilded panels, turquoise or
-  lapis inlay, gold wire, feather fringe, ceremonial weight.
-- tier 5-6 (skymetal, rivetmail): otherworldly — star-flecked iridescence,
-  faint teal energy veins, gold fittings; rivetmail stays alien and austere.
+For base rows, tier should read through silhouette and construction:
 
-Round-2 notes (full concept dump lives in Downloads/Images): verdigris patina
-is a WEATHERING marker wherever bronze/copper appears, at any tier — "pooling
-in grooves/relief". Leather reads oxblood/burgundy-dyed, not dull tan; fur is
-cream-tan and scruffy. Feathers split by status: natural tan = humble, glossy
-black-dyed = luxury. Also add: antler tines/crowns (tier 3+ carved, tier 5
-gilded), deity-profile friezes and mask-face panels (belts, shields, wrist
-bands), embossed ribs/pectoral relief on armor, cascading multi-strand lapis
-or turquoise bead drops, sun-face bosses on shields.
+- tier 1: crude, simple, functional.
+- tier 2-3: cleaner construction, stronger shape, broader mass.
+- tier 4: refined/exotic main material, but still generic.
+- tier 5-6: rare material or advanced construction, still plain enough to be
+  a base item.
+
+Use gold, lapis, feathers, deity marks, patina, dyed leather, and elaborate
+ceremonial trim only for uniques, awakened relics, faction sets, or an
+explicitly reviewed exception.
 
 If a result still trends warm, regenerate once with "make the white balance
 noticeably cooler" appended; the local composer also has a `--wb` rescue flag.
@@ -237,31 +238,31 @@ inventory images, with a planned overshoot manifest of about 640 rows.
 | handaxe_flint | P | a knapped flint handaxe lashed to a short wooden haft with sinew, held vertical |
 | handaxe_bronze | P | a cast bronze handaxe with a leather-wrapped haft, held vertical |
 | spear_flint | P | a flint-tipped hunting spear on a long ash shaft, sinew lashing, vertical, filling the full height |
-| spear_bronze | P | a leaf-bladed bronze spear with incised socket, vertical, filling the full height |
-| spear_skymetal | P | a spear with a dark iridescent meteoric-iron head, star-flecked, vertical, filling the full height |
+| spear_bronze | P | a leaf-bladed bronze spear, vertical, filling the full height |
+| spear_skymetal | P | a spear with a raw dark meteoric-iron head, vertical, filling the full height |
 | macuahuitl_obsidian | P | a macuahuitl: flat hardwood club edged with rows of black obsidian blades, held vertical |
-| atlatl_bone | P | a carved bone atlatl dart-thrower with a feathered dart, vertical |
-| khopesh_copper | P | a copper sickle-sword khopesh, its blade blooming with green patina, held vertical |
+| atlatl_bone | P | a carved bone atlatl dart-thrower with a plain dart, vertical |
+| khopesh_copper | P | a copper sickle-sword khopesh with a clean broad hooked blade, held vertical |
 | khopesh_bronze | P | a bronze khopesh with a notch-worn blade, held vertical |
 | sling_hide | P | a braided hide sling with a smooth river stone in the pouch, straps hanging vertical |
-| shield_hide | P | a tall oval shield of stretched hide over a wooden frame, painted with a red ochre spiral |
-| shield_bronze | P | a tall shield faced with hammered bronze, central boss, green patina creeping at the edges |
-| shield_rivetmail | P | a tall shield reinforced with riveted iron strips — impossibly advanced, gleaming dully |
-| wrap_hide | P | a wrapped hide tunic with bone toggles and cord belt loops |
+| shield_hide | P | a tall oval shield of stretched hide over a wooden frame, plain front |
+| shield_bronze | P | a tall shield faced with hammered bronze, central boss |
+| shield_rivetmail | P | a tall shield reinforced with riveted iron strips |
+| wrap_hide | P | a wrapped hide tunic with a simple garment shape |
 | wrap_quilted | P | a quilted linen armor vest of layered stitched cloth, undyed off-white, cord tie at the shoulder |
 | wrap_bronzescale | P | a vest of overlapping bronze scales sewn onto leather backing |
-| wrap_rivetmail | P | a riveted mail hauberk laid out flat and spread like a garment — technology from beyond the horizon (no stand/mannequin: image gen mangles them) |
-| crest_bone | S | a headpiece of carved bone and boar tusks with a horsehair crest |
-| crest_bronze | S | a hammered bronze cap with cheek guards, weathered with green patina |
-| crest_jade | S | a jade circlet-diadem carved with river motifs, faint cool inner glow |
+| wrap_rivetmail | P | a riveted mail hauberk laid out flat and spread like a garment |
+| crest_bone | S | a simple bone headpiece with a raised crest |
+| crest_bronze | S | a hammered bronze cap with cheek guards |
+| crest_jade | S | a jade circlet-diadem with a clean curved profile |
 | grips_hide | S | a pair of hide handwraps with knuckle cords |
-| sandals_hide | S | a pair of strapped hide sandals, mud-flecked, worn |
-| girdle_hide | L | a wide woven-hide girdle belt laid out horizontally, with a carved antler toggle |
+| sandals_hide | S | a pair of strapped hide sandals, clean and lightly used |
+| girdle_hide | L | a wide woven-hide girdle belt laid out horizontally |
 | gorget_jade | S | a carved jade gorget pendant on a knotted cord |
-| gorget_amber | S | a raw amber pendant with a trapped insect, on sinew cord |
-| ring_bone | S | a ring carved from a single knucklebone, incised marks |
-| ring_copper | S | a coiled copper ring with blooms of blue-green patina on hammered metal |
-| curio_bone | S | a strange small curio: a tiny carved bone bird with jade-chip eyes |
+| gorget_amber | S | a raw amber pendant on sinew cord |
+| ring_bone | S | a ring carved from a single piece of bone |
+| ring_copper | S | a simple coiled copper ring with clean hammered metal |
+| curio_bone | S | a small carved bone bird curio with a clean simple shape |
 
 ## Trophies (5)
 
