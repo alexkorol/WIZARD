@@ -162,6 +162,9 @@ proposed ladders live in `core/BASE-DESIGN.md`.
 When asked for roastable prompt candidates, apply the pipeline rules in
 `core/GENERATION-PLAN.md`, not just chat memory:
 
+- Check `core/DOWNLOAD-INTAKE.md` before proposing candidates. Do not re-prompt
+  silhouettes from a recent manual download burst until those images are
+  reviewed, staged, or discarded.
 - No currency/crafting-material candidates unless Alexei explicitly reopens
   that lane. Avoid crafting currencies, pigments, omens, ingots, molds,
   generic orbs, seal weights, draughts, reagent stones, and abstract bench
