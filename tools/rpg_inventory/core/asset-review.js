@@ -86,7 +86,7 @@ window.VerdigrisAssetReview = [
     "canvas": "P",
     "failure_modes": [],
     "original_desc": "a wrapped tunic of oxblood-dyed hide with bone toggles and cord belt loops, cream fur-trimmed shoulder, a single small copper disc stitched at the chest",
-    "reworked_desc": "a wrapped tunic of oxblood-dyed hide with cream fur-trimmed shoulder panels, clean simple garment shape",
+    "reworked_desc": "a wrapped tunic of plain hide with simple shoulder panels, clean simple garment shape",
     "notes": "bad alpha - missing chunks in dark underarm area"
   },
   {
@@ -194,7 +194,7 @@ window.VerdigrisAssetReview = [
     "canvas": "S",
     "failure_modes": [],
     "original_desc": "a pair of strapped sandals of layered quilted linen, undyed off-white with red binding thread, small bronze ankle discs",
-    "reworked_desc": "a pair of simple strapped sandals of layered quilted linen, undyed off-white with red binding thread, shown as a pair",
+    "reworked_desc": "a pair of simple strapped sandals of layered quilted linen with simple stitched seams, shown as a pair",
     "notes": "alpha issues (black blob in hole area)"
   },
   {
@@ -203,7 +203,7 @@ window.VerdigrisAssetReview = [
     "canvas": "L",
     "failure_modes": [],
     "original_desc": "a wide girdle belt of layered quilted linen laid out horizontally, stitched in red chevrons, a carved antler toggle and a hanging blue bead cord",
-    "reworked_desc": "a wide girdle belt of layered quilted linen laid out horizontally, stitched in simple red chevrons, clean simple band",
+    "reworked_desc": "a wide girdle belt of layered quilted linen laid out horizontally, clean simple band with plain stitching",
     "notes": "alpha issues (black blob in hole area)"
   },
   {
@@ -221,7 +221,7 @@ window.VerdigrisAssetReview = [
     "canvas": "S",
     "failure_modes": ["proportion"],
     "original_desc": "a crescent gorget of hammered copper on a knotted cord, blooming blue-green patina, a cascade of three short lapis-bead strands dangling from its lower edge",
-    "reworked_desc": "a crescent hammered-copper gorget on a long cord forming a full wearable neck-loop, blooming blue-green patina, three short lapis-bead strands dangling from its lower edge",
+    "reworked_desc": "a crescent hammered-copper gorget on a long cord forming a full wearable neck-loop, clean copper surface",
     "notes": ""
   },
   {
@@ -248,7 +248,7 @@ window.VerdigrisAssetReview = [
     "canvas": "S",
     "failure_modes": [],
     "original_desc": "a strange small curio: a polished amber sphere with a trapped mayfly, cradled in a tiny bronze claw stand",
-    "reworked_desc": "a single polished amber sphere with a trapped mayfly centered alone",
+    "reworked_desc": "a single polished amber sphere centered alone",
     "notes": "redo without a stand"
   },
   {
