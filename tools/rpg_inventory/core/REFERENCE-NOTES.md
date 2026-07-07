@@ -127,6 +127,38 @@ Production takeaways:
 - Boar-tusk helmets are historically real, but risky for AI and easily become
   ugly/costume-like. Use as a later reviewed helm concept, not a default base.
 
+## Ritual / relic implement references
+
+Sources checked:
+
+- British Museum brass vajra/dorje, part of a Gomadan altar:
+  https://www.britishmuseum.org/collection/object/A_As1892-0523-6-29-e
+- British Museum vajra/ghanta note:
+  https://www.britishmuseum.org/collection/object/A_1948-0716-11-b
+- Met Museum Javanese vajra:
+  https://www.metmuseum.org/art/collection/search/39090
+- Met Museum ritual bell / dril-bu:
+  https://www.metmuseum.org/art/collection/search/500698
+- Rubin / Project Himalayan Art vajra and bell overview:
+  https://rubinmuseum.org/projecthimalayanart/exhibition/living-practices/ritual/vajra-and-bell/
+
+Production takeaways:
+
+- Vajra/dorje-type implements are useful because they are compact, symmetric,
+  hand-held, and instantly legible: central grip, mirrored pronged ends,
+  strong axis, no limp cords or vague magic smoke.
+- Use these as structural references for Verdigris relic gear, not as direct
+  religious copies. Prefer names like double-ended ritual baton, thunderbolt
+  sceptre, pronged hand-sceptre, or forked rite focus over literal religious
+  naming unless a row is explicitly intended as historical reference.
+- Paired bell/sceptre logic is also strong: bell body, handle, finial, and
+  clapper silhouette. Generate as one object unless a pair is explicitly
+  required and composition remains readable.
+- Good relic gear should look held, worn, struck, rung, sealed, opened, or
+  carried. Bad relic gear is a floating crystal, glowing orb, symbol plaque,
+  generic "ancient artifact," tiny charm cluster, or object on a decorative
+  stand.
+
 ## PoE special-state item dissection
 
 PoE uses special item states as UI/effect overlays, not as wholesale changes

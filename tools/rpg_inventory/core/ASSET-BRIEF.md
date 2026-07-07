@@ -94,6 +94,13 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    crafting currencies, pigments, omens, ingots, molds, generic orbs, seal
    weights, draughts, reagent stones, or abstract bench-tool tokens unless
    Alexei explicitly reopens that lane.
+11. RELIC GEAR MUST BE CONCRETE IMPLEMENTS (2026-07-07). Avoid weak AI-trope
+   mystic trinkets. Use strong ritual-object construction: double-ended
+   pronged sceptres, hand bells, ritual batons, handled tablets, forked
+   standards, idol-head cudgels, offering bowls, reliquary boxes. Borrow
+   silhouette logic from real implements like vajra/dorje forms, but do not
+   copy living sacred iconography one-to-one or use exact religious names as
+   ordinary base names.
 
 ### Prompt changelog
 
@@ -113,6 +120,8 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
   allowed only for blunt, mace-like silhouettes.
 - 2026-07-07: prompt-candidate batches require slot diversity; currency and
   crafting-material image ideation paused.
+- 2026-07-07: relic gear guidance added: concrete ritual implements over vague
+  AI mystic trinkets.
 
 ### Material-specific corrections (2026-07-05 review — do not relitigate)
 
