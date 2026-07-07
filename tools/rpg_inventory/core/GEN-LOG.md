@@ -72,3 +72,4 @@ skipped(locked) 2026-07-06 18:07 PDT
 2026-07-06 20:59 PDT  lunula_bronze DONE
 2026-07-06 20:59 PDT  signet_bronze DONE
 2026-07-06 20:59 PDT  NOTE: queue hit 89/89 mid-run -> extended ladders per BASE-DESIGN: added lunula_bronze (amulet T3, Bronze Lunula - crescent neck collar, silhouette-distinct from torc/gorget) and signet_bronze (ring T3, Bronze Signet - flat horned-sun seal face, distinct from coil/band). Both were the only tier gaps (T2->T4 jumps); helmet T2 skipped per redundancy warning + alias pool. All 6 gens this run passed gate first try (TRUE-ALPHA, square-prefix holding).
+2026-07-07 10:20 PDT  MANUAL INTAKE ACCEPTED 9/14: rattle_copper, wrap_quilted_candidate_b, bracers_bronzeplate_candidate_a, girdle_bronzeplate_candidate_a, dagger_bronze_hiltless, focus_black_disc, guard_rawhide_padded, sceptre_bronze_pronged, hideshield_bronze_candidate_b. Duplicate holds remain in assets_inbox.
