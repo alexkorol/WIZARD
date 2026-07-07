@@ -9,6 +9,22 @@ Review labels in `tools/rpg_inventory/intake-review.html`. The page shows the
 image, proposed label, proposed art id, slot, confidence, and an exportable
 correction JSON.
 
+2026-07-07 review export applied: 9 accepted, 5 duplicates. Accepted images
+are promoted into `tools/rpg_inventory/assets/` using the reviewed `artId`;
+duplicate images remain in `assets_inbox` for comparison only.
+
+Accepted assets promoted:
+
+- `rattle_copper.png`
+- `wrap_quilted_candidate_b.png`
+- `bracers_bronzeplate_candidate_a.png`
+- `girdle_bronzeplate_candidate_a.png`
+- `dagger_bronze_hiltless.png`
+- `focus_black_disc.png`
+- `guard_rawhide_padded.png`
+- `sceptre_bronze_pronged.png`
+- `hideshield_bronze_candidate_b.png`
+
 ## 2026-07-07 09:52-10:02 manual burst
 
 Images were moved to `tools/rpg_inventory/assets_inbox/2026-07-07-manual/`.

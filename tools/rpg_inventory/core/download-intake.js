@@ -7,7 +7,10 @@ window.VerdigrisDownloadIntake = [
     slot: "ritefocus",
     canvas: "S",
     confidence: "high",
-    note: "Overlaps revised rattle_copper. Candidate replacement or alias."
+    status: "accept",
+    label: "Copper Hand Bell",
+    artId: "rattle_copper",
+    notes: "Overlaps revised rattle_copper. Candidate replacement or alias."
   },
   {
     file: "assets_inbox/2026-07-07-manual/intake_002_linen_corslet_a.png",
@@ -17,7 +20,10 @@ window.VerdigrisDownloadIntake = [
     slot: "body",
     canvas: "P",
     confidence: "high",
-    note: "Duplicate cluster with B/C; choose one for wrap_quilted or a new linen body base."
+    status: "duplicate",
+    label: "Layered Linen Corslet A",
+    artId: "wrap_quilted_candidate_a",
+    notes: "Duplicate cluster with B/C; choose one for wrap_quilted or a new linen body base."
   },
   {
     file: "assets_inbox/2026-07-07-manual/intake_003_linen_corslet_b.png",
@@ -27,7 +33,10 @@ window.VerdigrisDownloadIntake = [
     slot: "body",
     canvas: "P",
     confidence: "high",
-    note: "Duplicate cluster with A/C; choose one for wrap_quilted or a new linen body base."
+    status: "accept",
+    label: "Layered Linen Corslet B",
+    artId: "wrap_quilted_candidate_b",
+    notes: "Duplicate cluster with A/C; choose one for wrap_quilted or a new linen body base."
   },
   {
     file: "assets_inbox/2026-07-07-manual/intake_004_linen_corslet_c.png",
@@ -37,7 +46,10 @@ window.VerdigrisDownloadIntake = [
     slot: "body",
     canvas: "P",
     confidence: "high",
-    note: "Duplicate cluster with A/B; choose one for wrap_quilted or a new linen body base."
+    status: "duplicate",
+    label: "Layered Linen Corslet C",
+    artId: "wrap_quilted_candidate_c",
+    notes: "Duplicate cluster with A/B; choose one for wrap_quilted or a new linen body base."
   },
   {
     file: "assets_inbox/2026-07-07-manual/intake_005_bronze_limb_plates_a.png",
@@ -47,7 +59,10 @@ window.VerdigrisDownloadIntake = [
     slot: "bracers_or_greaves",
     canvas: "S",
     confidence: "medium",
-    note: "Could be bracers or greaves; duplicate cluster with B. Needs human slot decision."
+    status: "accept",
+    label: "Bronze vambrace",
+    artId: "bracers_bronzeplate_candidate_a",
+    notes: "Could be bracers or greaves; duplicate cluster with B. Needs human slot decision."
   },
   {
     file: "assets_inbox/2026-07-07-manual/intake_006_bronze_war_girdle_a.png",
@@ -57,7 +72,10 @@ window.VerdigrisDownloadIntake = [
     slot: "belt",
     canvas: "L",
     confidence: "high",
-    note: "Duplicate cluster with B; choose one for girdle_bronzeplate or a new belt base."
+    status: "accept",
+    label: "Bronze War-Girdle A",
+    artId: "girdle_bronzeplate_candidate_a",
+    notes: "Duplicate cluster with B; choose one for girdle_bronzeplate or a new belt base."
   },
   {
     file: "assets_inbox/2026-07-07-manual/intake_007_bronze_limb_plates_b.png",
@@ -67,7 +85,10 @@ window.VerdigrisDownloadIntake = [
     slot: "bracers_or_greaves",
     canvas: "S",
     confidence: "medium",
-    note: "Could be bracers or greaves; duplicate cluster with A. Needs human slot decision."
+    status: "duplicate",
+    label: "Bronze Limb Plates B",
+    artId: "bracers_bronzeplate_candidate_b",
+    notes: "Could be bracers or greaves; duplicate cluster with A. Needs human slot decision."
   },
   {
     file: "assets_inbox/2026-07-07-manual/intake_008_hiltless_bronze_dagger.png",
@@ -77,7 +98,10 @@ window.VerdigrisDownloadIntake = [
     slot: "dagger",
     canvas: "P",
     confidence: "high",
-    note: "Overlaps bronze dagger lane; good candidate for a new hiltless dagger base."
+    status: "accept",
+    label: "Hiltless Bronze Dagger",
+    artId: "dagger_bronze_hiltless",
+    notes: "Overlaps bronze dagger lane; good candidate for a new hiltless dagger base."
   },
   {
     file: "assets_inbox/2026-07-07-manual/intake_009_black_disc_focus.png",
@@ -87,7 +111,10 @@ window.VerdigrisDownloadIntake = [
     slot: "offhand_focus",
     canvas: "S",
     confidence: "low",
-    note: "Reads like mirror, lens, or pan. Needs human call before use."
+    status: "accept",
+    label: "Obsidian Mirror",
+    artId: "focus_black_disc",
+    notes: "Reads like mirror, lens, or pan. Needs human call before use."
   },
   {
     file: "assets_inbox/2026-07-07-manual/intake_010_rawhide_padded_guard.png",
@@ -97,7 +124,10 @@ window.VerdigrisDownloadIntake = [
     slot: "shield_or_body",
     canvas: "P",
     confidence: "low",
-    note: "Ambiguous: hourglass shield, pad, or guard. Needs human call before use."
+    status: "accept",
+    label: "Rawhide Padded Guard",
+    artId: "guard_rawhide_padded",
+    notes: "Ambiguous: hourglass shield, pad, or guard. Needs human call before use."
   },
   {
     file: "assets_inbox/2026-07-07-manual/intake_011_pronged_bronze_sceptre.png",
@@ -107,7 +137,10 @@ window.VerdigrisDownloadIntake = [
     slot: "ritefocus",
     canvas: "P",
     confidence: "high",
-    note: "Overlaps sceptre_bronze; candidate new pronged rite focus if accepted."
+    status: "accept",
+    label: "Pronged Bronze Sceptre",
+    artId: "sceptre_bronze_pronged",
+    notes: "Overlaps sceptre_bronze; candidate new pronged rite focus if accepted."
   },
   {
     file: "assets_inbox/2026-07-07-manual/intake_012_sheet_bronze_tall_shield_a.png",
@@ -117,7 +150,10 @@ window.VerdigrisDownloadIntake = [
     slot: "shield",
     canvas: "P",
     confidence: "high",
-    note: "Duplicate cluster with B; choose one for shield lane."
+    status: "duplicate",
+    label: "Sheet-Bronze Tall Shield A",
+    artId: "hideshield_bronze_candidate_a",
+    notes: "Duplicate cluster with B; choose one for shield lane."
   },
   {
     file: "assets_inbox/2026-07-07-manual/intake_013_sheet_bronze_tall_shield_b.png",
@@ -127,7 +163,10 @@ window.VerdigrisDownloadIntake = [
     slot: "shield",
     canvas: "P",
     confidence: "high",
-    note: "Duplicate cluster with A; choose one for shield lane."
+    status: "accept",
+    label: "Sheet-Bronze Tall Shield B",
+    artId: "hideshield_bronze_candidate_b",
+    notes: "Duplicate cluster with A; choose one for shield lane."
   },
   {
     file: "assets_inbox/2026-07-07-manual/intake_014_bronze_war_girdle_b.png",
@@ -137,6 +176,9 @@ window.VerdigrisDownloadIntake = [
     slot: "belt",
     canvas: "L",
     confidence: "high",
-    note: "Duplicate cluster with A; choose one for girdle_bronzeplate or a new belt base."
+    status: "duplicate",
+    label: "Bronze War-Girdle B",
+    artId: "girdle_bronzeplate_candidate_b",
+    notes: "Duplicate cluster with A; choose one for girdle_bronzeplate or a new belt base."
   }
 ];

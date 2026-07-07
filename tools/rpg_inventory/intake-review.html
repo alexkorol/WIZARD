@@ -74,19 +74,19 @@
 
 <script src="core/download-intake.js"></script>
 <script>
-const KEY = "verdigris_intake_review_v1";
+const KEY = "verdigris_intake_review_v2";
 const items = window.VerdigrisDownloadIntake || [];
 let state = JSON.parse(localStorage.getItem(KEY) || "{}");
 
 function rowState(item) {
   if (!state[item.file]) {
     state[item.file] = {
-      status: "rename",
-      label: item.proposedLabel,
-      artId: item.proposedArtId,
+      status: item.status || "rename",
+      label: item.label || item.proposedLabel,
+      artId: item.artId || item.proposedArtId,
       slot: item.slot,
       confidence: item.confidence,
-      notes: item.note
+      notes: item.notes || item.note || ""
     };
   }
   return state[item.file];
@@ -104,7 +104,7 @@ function render() {
     card.innerHTML = `
       <div class="thumb"><img src="${item.file}" alt="${item.proposedLabel}"></div>
       <div class="body">
-        <div class="line"><span class="name">${idx + 1}. ${item.proposedLabel}</span><span class="pill ${item.confidence}">${item.confidence}</span></div>
+        <div class="line"><span class="name">${idx + 1}. ${s.label}</span><span class="pill ${item.confidence}">${item.confidence}</span></div>
         <div class="stat">${item.file}<br>original: ${item.original}</div>
         <div class="status">
           ${["accept","rename","duplicate","discard"].map(st => `<button data-status="${st}" class="${s.status === st ? "on" : ""}">${st}</button>`).join("")}
