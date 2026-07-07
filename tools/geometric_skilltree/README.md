@@ -6,11 +6,9 @@ Open `index.html` directly in a browser.
 
 ## Current Feature Set
 
-- Seven-ring main hex lattice with `INT` running center-to-up, `DEX` center-to-bottom-left, and `STR` center-to-bottom-right.
+- Nine-ring main hex lattice (271 nodes) with `INT` running center-to-up, `DEX` center-to-bottom-left, and `STR` center-to-bottom-right. A maxed character has 123 points (100 from levels, 23 from quests) — about 61 node+path steps, under a quarter of the lattice — so builds must choose.
 - Six hidden outer subtrees attached through shared gateway nodes on the main rim, similar in purpose to cluster/ascendancy-style expansions without copying Path of Exile layouts.
-- Separate point pools:
-  - Skill points allocate passive nodes.
-  - Conduit points allocate paths and extra loop links.
+- A single skill-point pool: every node costs 1 point and every path or extra loop link costs 1 point, so travel distance is itself the build cost.
 - Passive nodes provide build effects such as weapon damage, wards, minion damage, evasion, recovery, marks, ailments, and hybrid bonuses.
 - Passive hierarchy is geometric rather than random: inner notables, fixed axis masteries, ordered outer keystone seats, and rim gateways occupy repeatable ring roles.
 - Every node-to-node connection has two curved arc variants. Each arc has its own `STR`, `DEX`, and `INT` attribute mix.
@@ -66,8 +64,9 @@ The tree should behave like a full character progression system, not a decorativ
 
 - Rings 1-2 are foundation picks: cheap passives, first notables, and early identity choices.
 - Rings 3-4 are specialization: axis masteries and stronger local notables start to define a build's school.
-- Rings 5-6 are advanced commitment: expensive outer routing, larger pattern payoffs, and keystone seats.
-- Ring 7 and attached subtrees are capstone expansion: gateways, build-defining routes, and optional endgame branches.
+- Rings 5-6 are advanced commitment: expensive outer routing, larger pattern payoffs, and the first keystone seats.
+- Rings 7-8 are outer mastery: class-named milestones (Champion, Acrobat, Archmage) and the Signs — birthsign-style keystones with a defining bonus and a real price.
+- Ring 9 and attached subtrees are capstone expansion: gateways, build-defining routes, and optional endgame branches.
 - Curved paths are the attribute/travel layer. Nodes are passive-effect rewards. Shape patterns are a third layer that converts geometry into build power.
 - Node size and type should follow geometric rules: ring seats, axes, side midpoints, gateways, and earned pattern upgrades. Random large nodes are explicitly out of scope.
 
