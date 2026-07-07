@@ -113,8 +113,9 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    for "test prompts" or "prompts to roast", never repeat or restyle items
    already made. First check current `assets/`, accepted manual intake in
    `download-intake.js`, duplicate/exclusion notes in `DOWNLOAD-INTAKE.md`,
-   and discard/rework state in `asset-review.js`. Style-calibration repeats
-   are allowed only when Alexei explicitly asks to restyle a specific item.
+   and discard/rework state in `asset-review.js`. Style-calibration prompts
+   follow the same no-repeat rule unless Alexei explicitly names an existing
+   item and asks to restyle that exact item.
 
 ### Prompt changelog
 
@@ -138,8 +139,9 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
   AI mystic trinkets.
 - 2026-07-07: weak-prop scan added: no wicker shields, rite batons, tiny
   darts/hand stones, shrine miniatures, reed props, or other joke-loot bases.
-- 2026-07-07: no-repeat test-prompt rule added. Test prompts now mean novel
-  item concepts; repeats are only for explicit style-calibration requests.
+- 2026-07-07: no-repeat test-prompt rule added and extended to style
+  calibration. Test prompts now mean novel item concepts unless Alexei
+  explicitly names an existing item for restyling.
 
 ### Material-specific corrections (2026-07-05 review — do not relitigate)
 

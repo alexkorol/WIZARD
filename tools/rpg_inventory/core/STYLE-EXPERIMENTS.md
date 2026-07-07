@@ -30,9 +30,9 @@ in `assets/`, has an accepted entry in `download-intake.js`, appears in
 `DOWNLOAD-INTAKE.md` exclusions, or is marked discard/rework in
 `asset-review.js`, unless Alexei explicitly asks to restyle that exact item.
 
-Style calibration can reuse known objects only when explicitly requested as a
-controlled A/B render test. Otherwise, use the style block below with novel
-DESC content.
+Style calibration prompts also use novel DESC content. The only exception is
+when Alexei explicitly names an existing item and asks to restyle that exact
+item; otherwise, the style block below must be paired with a new concept.
 
 ## Candidate Style Block
 

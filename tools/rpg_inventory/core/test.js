@@ -138,12 +138,20 @@ t('test prompts require novelty checks', () => {
   const style = fs.readFileSync(stylePath, 'utf8');
   assert(/no-repeat by default/.test(plan),
     'plan must require no-repeat prompt candidates');
+  assert(/Style\s+calibration follows the same rule/.test(plan),
+    'plan must require style calibration to be no-repeat too');
   assert(/TEST PROMPTS ARE NOVELTY-CHECKED NEW ITEMS/.test(brief),
     'brief must define test prompts as novelty-checked new items');
+  assert(/extended to style\s+calibration/.test(brief),
+    'brief changelog must record no-repeat style calibration');
   assert(/No-Repeat Rule/.test(style),
     'style experiments must carry the no-repeat rule');
+  assert(/Style calibration prompts also use novel DESC content/.test(style),
+    'style experiments must not allow generic repeat calibration prompts');
   assert(!/### Copper Torc/.test(style) && !/### Carved Jade Cudgel/.test(style),
     'style experiments must not keep full prompts for already-made items');
+  assert(!/style-calibration repeat/.test(plan + brief + style),
+    'docs must not preserve the old style-calibration repeat loophole');
 });
 t('generation plan requires concrete relic gear', () => {
   const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
