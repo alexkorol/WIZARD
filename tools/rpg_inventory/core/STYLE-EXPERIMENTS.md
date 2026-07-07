@@ -7,8 +7,11 @@ not be edited by agents.
 ## Crisp AAA Render Test
 
 The recent manual saves are stronger when they read like product-rendered game
-assets instead of painted concept art. The useful transfer from the older
-character prompts is not the character language; it is the rendering stack:
+assets instead of painted concept art. The first read was that the useful
+transfer from the older character prompts was mostly rendering stack. Alex's
+2026-07-07 loadout test corrected that: a complete character/source image is
+also a coherent equipment system. The item art gets better because image-2 can
+see how the gear fits together before it isolates each slot.
 
 - photorealistic 3D asset, not illustration language
 - ultra-fine material detail
@@ -17,15 +20,34 @@ character prompts is not the character language; it is the rendering stack:
 - crisp silhouette and hard-surface bevel clarity
 - physically based metal, leather, stone, hide, and jade response
 
-Avoid carrying over character-prompt baggage: low-angle pose, portrait,
-warrior, body, allure, cloth flutter, class/faction, and "concept art" wording
-do not belong in item prompts. "Stylized" is risky by itself; if tested, it
-should be subordinate to photoreal/PBR/product-render language.
+Avoid carrying over character-prompt baggage as literal output: low-angle
+portrait pose, body, allure wording, class label, and "concept art" wording do
+not belong in final item prompts. But do use the source image's integrated
+equipment language when it is grounded in the object: feathers, tassels,
+scratches, shell plates, cords, chains, cloth panels, stones, and ornaments are
+valid when they are physically attached, proportional, and clearly part of a
+usable item.
 
-## 2026-07-07 Character Reference Inspection
+## 2026-07-07 Source-Image Loadout Extraction Breakthrough
 
-The attached character generations are useful because their rendering is crisp,
-not because their subjects should leak into item bases. Transfer these traits:
+Alex's trial prompt used a full character image as the initial reference and
+asked image-2 to generate separate ARPG paperdoll-slot item icons from the gear
+worn by that character. This worked better than isolated item prompts because
+the model did not have to invent the equipment system from a single noun. The
+source image provides silhouette family, ornament density, material palette,
+construction logic, and attachment logic.
+
+This is a first-class experimental generation mode:
+
+1. Start with a strong full-character/loadout image.
+2. Ask for separate transparent PNG outputs, one per paperdoll slot.
+3. Let the model infer the slot items from the visible equipment.
+4. Keep details that are integrated into the object and consistent with the
+   kit; reject details that look pasted on, unreadable, or physically
+   impossible.
+5. After acceptance, normalize names/material tags for the game.
+
+Transfer these traits from the source image:
 
 - white studio product-render clarity with no painterly brush texture
 - high local contrast and sharp specular separation on metal
@@ -34,20 +56,23 @@ not because their subjects should leak into item bases. Transfer these traits:
   polished hardstone/jade depth, sheer fabric translucency where relevant
 - clean edge definition that survives downscaling to an inventory icon
 - controlled key light from upper-left plus a cool rim light
+- coherent ornament density and kit-specific construction
+- reference-derived feathers, tassels, shell plates, cords, chains, veils, or
+  symbols when they are physically integrated into the item
 
-Do not transfer these traits into item prompts:
+Do not transfer these traits blindly:
 
-- characters, bodies, class portraits, low-angle fashion poses, allure wording
-- faction costumes, deity/faction symbols, sun discs, eagle masks, named lore
-- feather crowns, loose feather tassels, coin-chain clutter, veil language
-- fixed costume palettes such as turquoise/gold, lapis/gold, red/green/gold
-- over-ornate jewelry density on ordinary base items
-- ceremonial story props that do not read as usable loot
+- character bodies, faces, hands, feet, mannequins, or portrait composition
+- class-label prose, allure wording, or fashion-shot language
+- ungrounded lore symbols added to unrelated base rows
+- loose clutter that is not visibly attached to the item
+- fixed costume palettes copied into unrelated items outside the source kit
+- detail density that makes the item unreadable at inventory scale
 
-For item-art experiments, "crisp AAA" means a single isolated product-rendered
-object with excellent material fidelity. It does not mean a character concept
-cropped down into an icon, and it does not reopen decorative faction language
-for generic bases.
+The corrected rule is not "ban feathers/tassels/symbols." The rule is "ban
+ungrounded detail." A turtle-shell shield, feather-edged shield, tasselled
+spear, coin-strung belt, or veiled shawl can be excellent if the source image
+shows how it belongs to the equipment kit.
 
 ## No-Repeat Rule
 

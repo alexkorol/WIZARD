@@ -107,6 +107,27 @@ image rows.
 At 50-60 acceptable gens/day, the 500-600 target is roughly 10-12 production
 days, plus review and rework time.
 
+## Source-image loadout extraction lane
+
+Use `LOADOUT-EXTRACTION.md` as a parallel production lane when isolated item
+DESCs start producing forced or weak results. This was Alexei's 2026-07-07
+breakthrough: give image-2 a full character/loadout source image first, then
+ask it to extract separate transparent paperdoll-slot item icons from the gear
+the character wears.
+
+This is especially useful for shields, belts, footwear, armor, offhands, relic
+gear, and coherent faction/set families. It solves a different problem than
+prompt wording: the source image carries the whole equipment system, including
+material palette, construction logic, ornament density, straps/attachments, and
+slot relationships.
+
+Guardrail: details are allowed when grounded in the source kit. Feathers,
+tassels, shell plates, scratches, cords, chains, coins, veils, stones, and
+symbols can be valid item details if they are physically integrated and improve
+the object. Reject ungrounded decoration, body-part crops, paperdoll UI,
+contact sheets, baked checkerboards, and any extracted item that does not read
+as usable loot.
+
 ## Naming rules for the large manifest
 
 - Player-facing names are base names, not material IDs.

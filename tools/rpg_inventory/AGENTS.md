@@ -11,6 +11,9 @@ do not make him say it again. When he gives new feedback, ADD IT HERE.
   collapse the project back to the current ~90-row starter manifest.
 - `core/REFERENCE-NOTES.md` — PoE/Diablo structure and visual notes that
   justify the larger base-item plan.
+- `core/LOADOUT-EXTRACTION.md` — Alexei's 2026-07-07 breakthrough for using a
+  full character/source image as a coherent equipment system, then extracting
+  separate paperdoll-slot item icons with true alpha.
 - `python3 core/status.py` — coverage vs `core/targets.tsv`, today's gen
   count, prioritized queue; `--prompt ART_ID` prints the full assembled
   generation prompt for any item.
@@ -103,6 +106,13 @@ model render fastening its own way. (When it improvises, it does fine — the
 antler toggles on the early belts came out well UNPROMPTED-level quality,
 but explicitly demanding them invites mangled hardware.) Describe the body
 of the item and its materials; leave closures unstated.
+**Source-image loadout extraction** (2026-07-07, Alexei): a strong full
+character/loadout image can be a better item source than isolated DESCs. It
+gives image-2 a coherent equipment system, so feathers, tassels, shell plates,
+scratches, cords, chains, veils, stones, coins, and symbols can work when they
+are physically integrated into the object. The bad pattern is not "detail"; it
+is ungrounded detail pasted onto an item prompt in a vacuum. Use
+`core/LOADOUT-EXTRACTION.md` for that workflow.
 
 ## Pipeline facts (so you don't rediscover them)
 

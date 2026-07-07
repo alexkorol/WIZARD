@@ -153,23 +153,27 @@ t('test prompts require novelty checks', () => {
   assert(!/style-calibration repeat/.test(plan + brief + style),
     'docs must not preserve the old style-calibration repeat loophole');
 });
-t('style references transfer render stack only', () => {
+t('source-image loadout extraction captures coherent kit detail', () => {
   const brief = fs.readFileSync(path.join(__dirname, 'ASSET-BRIEF.md'), 'utf8');
   const style = fs.readFileSync(path.join(__dirname, 'STYLE-EXPERIMENTS.md'), 'utf8');
   const notes = fs.readFileSync(path.join(__dirname, 'REFERENCE-NOTES.md'), 'utf8');
-  assert(/STYLE REFERENCES TRANSFER RENDERING ONLY/.test(brief),
-    'brief must state that character refs only transfer rendering');
-  assert(/Character Reference Inspection/.test(style),
-    'style experiments must record the inspected reference-image lesson');
-  assert(/Do not transfer these traits into item prompts/.test(style),
-    'style experiments must blacklist character-reference baggage');
-  assert(/white\s+studio\s+clarity/i.test(notes) &&
-    /material-specific\s+specular\s+response/i.test(notes),
-    'reference notes must capture the useful crisp render traits');
-  assert(/faction costumes/.test(brief + style + notes) &&
-    /feather crowns/.test(brief + style + notes) &&
-    /coin-chain clutter/.test(brief + style + notes),
-    'docs must forbid character costume clutter from leaking into bases');
+  const plan = fs.readFileSync(path.join(__dirname, 'GENERATION-PLAN.md'), 'utf8');
+  const loadout = fs.readFileSync(path.join(__dirname, 'LOADOUT-EXTRACTION.md'), 'utf8');
+  const all = brief + style + notes + plan + loadout;
+  assert(/SOURCE-IMAGE LOADOUT EXTRACTION/.test(brief),
+    'brief must define source-image loadout extraction as a pipeline mode');
+  assert(/Source-Image Loadout Extraction Breakthrough/.test(style),
+    'style experiments must record Alexei loadout breakthrough');
+  assert(/Alex's idea/.test(loadout),
+    'loadout doc must preserve attribution');
+  assert(/maximum 10 images/.test(loadout) && /Ring or small hand jewelry/.test(loadout),
+    'loadout prompt must encode the 10-image slot constraint');
+  assert(/Source-image loadout extraction lane/.test(plan),
+    'generation plan must include source-image extraction as a production lane');
+  assert(/feathers, tassels, scratches, shell plates/.test(all),
+    'docs must allow integrated source-derived details');
+  assert(/ungrounded detail/.test(all) && /baked white\/gray checkerboard/.test(loadout),
+    'docs must reject pasted-on detail and checkerboard alpha failures');
 });
 t('true-alpha assets bypass matte and quantization', () => {
   const compose = fs.readFileSync(path.join(__dirname, 'compose_assets.py'), 'utf8');
