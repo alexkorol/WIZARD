@@ -617,18 +617,8 @@
     gloves: null, belt: null, boots: null, ring1: null, ring2: null,
   };
 
-  const RETIRED_ART_IDS = new Set([
-    'handaxe_copper', 'spear_bronze',
-    'atlatl_bone', 'atlatl_copper', 'atlatl_bronze',
-    'khopesh_copper', 'khopesh_bronze',
-    'sling_hide', 'sling_quilted',
-    'crest_bone', 'crest_hide',
-    'grips_hide', 'grips_quilted', 'grips_bronzescale',
-    'gorget_bone', 'gorget_copper', 'gorget_amber',
-    'curio_jade',
-    'entrail_omen',
-    'helm_copper', 'helm_bronze',
-  ]);
+  const RETIRED_FORMS = new Set(pack.retiredForms || []);
+  const RETIRED_ART_IDS = new Set(pack.retiredArtIds || []);
 
   const artId = (item) => item ? `${item.formId}_${item.materialId}` : '';
   const isKnownRuntimeItem = (item) => {
@@ -636,6 +626,7 @@
     return Boolean(
       form &&
       pack.materials[item.materialId] &&
+      !RETIRED_FORMS.has(item.formId) &&
       form.materials.includes(item.materialId) &&
       !RETIRED_ART_IDS.has(artId(item))
     );
@@ -1144,6 +1135,7 @@
         const events = [...r.events];
         let nextInv = prev.inventory;
         r.drops.forEach(d => {
+          if (!isKnownRuntimeItem(d)) return;
           const pos = findFreeSpot(nextInv, d);
           if (pos) {
             nextInv = [...nextInv, { ...d, ...pos }];
@@ -1164,6 +1156,7 @@
     const spawnLoot = () => {
       setState(prev => {
         const item = forge.generateItem({ ilvl: Math.min(80, 10 + level * 3 + Math.floor(Math.random() * 15)) });
+        if (!isKnownRuntimeItem(item)) return prev;
         const pos = findFreeSpot(prev.inventory, item);
         if (!pos) { showToast('Backpack full'); return prev; }
         return { ...prev, inventory: [...prev.inventory, { ...item, ...pos }] };

@@ -73,6 +73,41 @@ t('jade is restricted to non-weapons or blunt weapon bases', () => {
       `${artId} is a jade blade/reach target`);
   }
 });
+t('retired forms and art ids cannot be generated', () => {
+  const retiredIds = new Set(pack.retiredArtIds || []);
+  const retiredForms = new Set(pack.retiredForms || []);
+  for (let i = 0; i < 500; i++) {
+    const it = forge.generateItem({ ilvl: 1 + (i % 80) });
+    assert(!retiredForms.has(it.formId), `generated retired form ${it.formId}`);
+    assert(!retiredIds.has(`${it.formId}_${it.materialId}`),
+      `generated retired art id ${it.formId}_${it.materialId}`);
+  }
+
+  let threw = false;
+  try {
+    forge.generateItem({ ilvl: 40, formId: 'khopesh', materialId: 'bronze' });
+  } catch (e) {
+    threw = /retired item/.test(e.message);
+  }
+  assert(threw, 'explicit retired khopesh_bronze generation must fail');
+
+  const testPack = JSON.parse(JSON.stringify(pack));
+  testPack.forms.sling = {
+    name: 'Sling', kind: 'weapon', kindLabel: 'Thrown weapon', w: 1, h: 2,
+    icon: 'sling', weapon: { dmg: [3, 7], aps: 1.4 },
+    tags: ['swift'], materials: ['hide', 'quilted'],
+  };
+  testPack.retiredForms = [...new Set([...(testPack.retiredForms || []), 'sling'])];
+  const testForge = VesselForge.createForge(testPack, { seed: 99 });
+  eq(testForge.materialPoolFor('sling', 80).length, 0, 'retired forms have no material pool');
+  threw = false;
+  try {
+    testForge.generateItem({ ilvl: 40, formId: 'sling', materialId: 'hide' });
+  } catch (e) {
+    threw = /retired form/.test(e.message);
+  }
+  assert(threw, 'explicit retired sling generation must fail');
+});
 
 /* ---------------- crafting: sear/patience/pigment/omen ---------------- */
 t('sear adds a brand and spends patience', () => {

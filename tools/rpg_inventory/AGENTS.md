@@ -153,3 +153,6 @@ proposed ladders live in `core/BASE-DESIGN.md`.
   prompts, or mark bad ideas as discard. Durable feedback lives in
   `core/asset-review.js`; `core/status.py` hides discarded items and queues
   rework items. Discard means retire/drop the idea, not "try again later."
+  If a discarded idea is a runtime item, also add its form to
+  `retiredForms` or its exact `form_material` id to `retiredArtIds` in
+  `core/verdigris-pack.js` so the game cannot roll it again.
