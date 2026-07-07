@@ -23,8 +23,8 @@ image-2 has known concept failures. A final committed set around 560 is ideal.
 ## Current state
 
 - `targets.tsv`: 89 rows.
-- Active after `core/asset-review.js` discards: 74 rows.
-- Current complete active coverage: 74/74, with 6 review reworks queued.
+- Active after `core/asset-review.js` discards: 70 rows.
+- Current complete active coverage: 70/70, with 5 review reworks queued.
 - Current set is a vertical slice: it proves the pipeline, not the final item
   economy scale.
 
@@ -44,12 +44,12 @@ base vocabulary to mutate.
 | Rite foci / sceptres | 18 | Fetishes, rattles, sceptres, idol-staves, starwands, priest tools. |
 | Caster rods / wands | 12 | Small foci distinct from sceptres; reliable short objects. |
 | Throwing / sidearms | 12 | Throwing knives, darts, hand stones; avoid bows/slings unless reconceived. |
-| Body armour | 24 | Hide wraps, linen, boiled leather, studded jerkins, scale vests, hauberks. |
+| Body armour | 24 | Hide wraps, linen, boiled leather, studded jerkins, scale vests, sheet-bronze corslets. |
 | Helmets / crowns | 24 | Caps, crests, helms, masks, warcrowns, greathelms; distinct silhouettes. |
 | Bracers / gloves | 18 | Bracers/vambraces/gauntlets; avoid ambiguous handwraps. |
 | Boots / greaves | 18 | Sandals, boots, shin guards, greaves; pair shown as pair. |
 | Belts / girdles | 18 | Cords, sashes, girdles, plated belts, warbelts; landscape canvas. |
-| Shields / bucklers | 24 | Wicker, hide, round, tower, scale, rivetmail; strong front read, plain bosses on bases. |
+| Shields / bucklers | 24 | Wicker, hide, round, tower, sheet-bronze, scale; strong front read, plain bosses on bases. |
 | Amulets / neckpieces | 18 | Pendants, torcs, collars, lunulae, gorgets, sigils. |
 | Rings / seals | 18 | Bone rings, coils, signets, bands, plain seal rings, socket rings. |
 | Charms / relic curios | 24 | Fetishes, carved animals, omen tokens, shrine miniatures, reliquaries. |
@@ -116,6 +116,11 @@ days, plus review and rework time.
   daggers, axes, spearheads, glaives, or polearms. Jade weapons are allowed
   only when the silhouette is blunt or mace-like: club, mace, maul, hammer,
   idol-head cudgel, or heavy ritual striking object.
+- Mail and riveted-iron armour are paused for now. Prefer Copper/Bronze Age
+  structures: hide/leather, quilted or layered linen, bronze sheet, bronze
+  scale, sheet-bronze shields, greaves, collars, and simple corslet panels.
+  Functional rivet holes on tanged dagger blades, halberds, or shield handles
+  are fine; do not make mail/rivetmail/riveted iron strips a class.
 - At least 20% of equipment bases should have implicit/mechanical identity:
   socket, vessel, patience, trophy affinity, theme bias, block, speed, ward,
   spirit, reach, crit, or carry capacity.
@@ -132,6 +137,8 @@ Retire these unless reconceived into a reliable icon:
 - Vague curios on stands. Use one strong object instead.
 - Jade blades, jade spearheads, jade glaives, and other jade cutting/piercing
   weapons. Keep jade weapons blunt/mace-like only.
+- Mail, rivetmail hauberks, mail aventails, chain/ring mail, and riveted iron
+  strip armour until the tech tier is explicitly reintroduced.
 
 ## Next file to create
 

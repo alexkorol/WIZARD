@@ -618,6 +618,7 @@
   };
 
   const RETIRED_FORMS = new Set(pack.retiredForms || []);
+  const RETIRED_MATERIALS = new Set(pack.retiredMaterials || []);
   const RETIRED_ART_IDS = new Set(pack.retiredArtIds || []);
 
   const artId = (item) => item ? `${item.formId}_${item.materialId}` : '';
@@ -627,6 +628,7 @@
       form &&
       pack.materials[item.materialId] &&
       !RETIRED_FORMS.has(item.formId) &&
+      !RETIRED_MATERIALS.has(item.materialId) &&
       form.materials.includes(item.materialId) &&
       !RETIRED_ART_IDS.has(artId(item))
     );

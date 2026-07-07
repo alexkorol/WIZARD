@@ -70,7 +70,7 @@ Do not copy icons, names, or exact item lists. Extract the production logic.
   polearm, maul, and staff should not be made by scaling a one-handed icon.
 - Body armour uses defense-family visual language: plate is rigid and blocky;
   leather is slim and flexible; robes are hanging cloth; hybrids combine
-  readable cues. Verdigris equivalents should be hide/linen/scale/mail/ritual
+  readable cues. Verdigris equivalents should be hide/linen/scale/sheet-bronze/ritual
   families, not one repeated vest in different colors.
 - Boots, gloves, and helmets need paired/symmetric presentation and large,
   clean silhouettes. Avoid tiny fasteners and explicit buckles; let the model
@@ -84,6 +84,47 @@ Do not copy icons, names, or exact item lists. Extract the production logic.
   48px. Save explicit emblems for faction/set/unique art.
 - PoE icon style favors centered, isolated objects on dark/transparent fields,
   strong rim lighting, and no scene. That agrees with Verdigris v2.
+
+## Copper / Bronze Age visual research notes
+
+Sources checked:
+
+- British Museum Early Bronze Age flat axe:
+  https://www.britishmuseum.org/collection/object/H_WG-1529
+- British Museum Early/Middle Bronze Age copper-alloy halberd:
+  https://www.britishmuseum.org/collection/object/H_1889-0704-153
+- Museum Wales Early Bronze Age bronze dagger:
+  https://museum.wales/collections/online/object/78365f92-b262-3b8f-a7be-ef7ecaf682dd/Early-Bronze-Age-bronze-dagger/
+- Met Cypriot Early/Middle Bronze Age copper-alloy dagger blade:
+  https://www.metmuseum.org/art/collection/search/244172
+- British Museum Late Bronze Age sheet-bronze shield:
+  https://www.britishmuseum.org/collection/object/H_1873-0210-2
+- Museum Wales Bronze Age axe identification guide:
+  https://museum.wales/media/52118/7.FactSheet_BronzeAxes.ENG.pdf
+- Prehistoric Society Early Bronze Age weapons factsheet:
+  https://www.prehistoricsociety.org/sites/prehistoricsociety.org/files/resources/ps-intros-ba-3-eba-weapons.pdf
+- Heraklion Archaeological Museum boar's-tusk helmet:
+  https://heraklionmuseum.gr/en/exhibit/boars-tusk-helmet-with-cheek-guards/
+
+Production takeaways:
+
+- Use more hiltless and guardless weapons. Good bases: flat dagger blade with
+  tang and rivet holes, leaf blade, triangular dagger blade, flanged axe head,
+  palstave, socketed axe, socketed spearhead, halberd blade, awl, punch, knife.
+- Hafting should read as construction, not medieval furniture: bare tang,
+  rivet holes, simple rivets, wrapped grip, socket, forked haft, side-loop,
+  rawhide binding, wooden shaft. Avoid crossguards and ornate pommels on bases.
+- Axes progress by hafting tech and silhouette: flat axe -> developed flat axe
+  with low flanges -> palstave with stop -> looped palstave -> socketed axe.
+- Armour should stay pre-mail for now: hide, leather, quilted/layered linen,
+  bronze sheet, bronze scale, sheet-bronze shield, bronze greaves, simple
+  corslet/breastplate panels, boar-tusk/leather helmets. Retire mail, chain,
+  ring mail, mail aventails, and riveted iron strip armour until later.
+- Sheet-bronze shields are strong icon candidates: single disc, shallow dome,
+  central conical boss, concentric ribs, punched boss rows, rolled rim. Keep
+  decoration geometric and structural, not symbolic.
+- Boar-tusk helmets are historically real, but risky for AI and easily become
+  ugly/costume-like. Use as a later reviewed helm concept, not a default base.
 
 ## PoE special-state item dissection
 

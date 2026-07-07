@@ -109,12 +109,12 @@ window.VerdigrisAssetReview = [
   },
   {
     "name": "wrap_rivetmail",
-    "status": "rework",
+    "status": "discard",
     "canvas": "P",
     "failure_modes": [],
     "original_desc": "a riveted mail hauberk laid out flat and spread like a garment, technology from beyond the horizon, collar bound in gold wire with one lapis bead",
     "reworked_desc": "a riveted mail hauberk laid out flat and spread like a garment, clean dark iron rings and plates",
-    "notes": "bad alpha - missing chunks in dark underarm area"
+    "notes": "mail/rivetmail material class paused until later tech-tier review"
   },
   {
     "name": "crest_bone",
@@ -154,12 +154,12 @@ window.VerdigrisAssetReview = [
   },
   {
     "name": "helm_rivetmail",
-    "status": "ok",
+    "status": "discard",
     "canvas": "S",
     "failure_modes": [],
     "original_desc": "a full enclosed war helm of riveted iron plates over a domed skull with a mail aventail draping the neck, dull grey gleam, gold-wire edging, otherworldly",
     "reworked_desc": "a full enclosed war helm of riveted iron plates over a domed skull with a mail aventail draping the neck, dull grey gleam, gold-wire edging, otherworldly",
-    "notes": "kept as usable high-tier helm art after review"
+    "notes": "mail/rivetmail material class paused until later tech-tier review"
   },
   {
     "name": "helm_copper",
@@ -223,6 +223,24 @@ window.VerdigrisAssetReview = [
     "original_desc": "a wide girdle belt of layered quilted linen laid out horizontally, stitched in red chevrons, a carved antler toggle and a hanging blue bead cord",
     "reworked_desc": "a wide girdle belt of layered quilted linen laid out horizontally, clean simple band with plain stitching",
     "notes": "alpha issues (black blob in hole area)"
+  },
+  {
+    "name": "greaves_rivetmail",
+    "status": "discard",
+    "canvas": "S",
+    "failure_modes": [],
+    "original_desc": "a pair of greaves of riveted raw dark iron strips over plain leather, shown as a pair",
+    "reworked_desc": "a pair of greaves of riveted raw dark iron strips over plain leather, shown as a pair",
+    "notes": "mail/rivetmail material class paused until later tech-tier review"
+  },
+  {
+    "name": "hideshield_rivetmail",
+    "status": "discard",
+    "canvas": "P",
+    "failure_modes": [],
+    "original_desc": "a tall shield reinforced with riveted iron strips over dark leather, dull grey metal, simple bound edges",
+    "reworked_desc": "a tall shield reinforced with riveted iron strips over dark leather, dull grey metal, simple bound edges",
+    "notes": "mail/rivetmail material class paused until later tech-tier review"
   },
   {
     "name": "gorget_bone",

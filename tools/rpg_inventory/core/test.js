@@ -48,7 +48,7 @@ t('generated items respect vessel/material invariants', () => {
     }
   }
 });
-t('low ilvl never drops skymetal or mail', () => {
+t('low ilvl never drops skymetal or unavailable mail', () => {
   for (let i = 0; i < 100; i++) {
     const it = forge.generateItem({ ilvl: 10 });
     assert(!['skymetal', 'rivetmail'].includes(it.materialId), it.materialId);
@@ -76,9 +76,11 @@ t('jade is restricted to non-weapons or blunt weapon bases', () => {
 t('retired forms and art ids cannot be generated', () => {
   const retiredIds = new Set(pack.retiredArtIds || []);
   const retiredForms = new Set(pack.retiredForms || []);
+  const retiredMaterials = new Set(pack.retiredMaterials || []);
   for (let i = 0; i < 500; i++) {
     const it = forge.generateItem({ ilvl: 1 + (i % 80) });
     assert(!retiredForms.has(it.formId), `generated retired form ${it.formId}`);
+    assert(!retiredMaterials.has(it.materialId), `generated retired material ${it.materialId}`);
     assert(!retiredIds.has(`${it.formId}_${it.materialId}`),
       `generated retired art id ${it.formId}_${it.materialId}`);
   }
@@ -90,6 +92,13 @@ t('retired forms and art ids cannot be generated', () => {
     threw = /retired item/.test(e.message);
   }
   assert(threw, 'explicit retired khopesh_bronze generation must fail');
+  threw = false;
+  try {
+    forge.generateItem({ ilvl: 80, formId: 'wrap', materialId: 'rivetmail' });
+  } catch (e) {
+    threw = /retired item/.test(e.message);
+  }
+  assert(threw, 'explicit retired rivetmail generation must fail');
 
   const testPack = JSON.parse(JSON.stringify(pack));
   testPack.forms.sling = {
@@ -170,8 +179,8 @@ t('firing ascends, scars, silences, or shatters — and hide never skips tiers',
   assert(seen.ascend && seen.scar && seen.silent && seen.shatter, JSON.stringify(seen));
 });
 t('top materials cannot be fired', () => {
-  const it = forge.generateItem({ ilvl: 79, formId: 'wrap', materialId: 'rivetmail', brands: 0 });
-  assert(forge.fire(it).error, 'rivetmail must refuse the kiln');
+  const it = forge.generateItem({ ilvl: 79, formId: 'wrap', materialId: 'bronzescale', brands: 0 });
+  assert(forge.fire(it).error, 'retired mail ascension must refuse the kiln');
 });
 
 /* ---------------- trophies ---------------- */

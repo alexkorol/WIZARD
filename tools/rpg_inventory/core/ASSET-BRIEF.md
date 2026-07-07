@@ -64,7 +64,7 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    caps/rivets sprinkled onto iron or jade items. Enchantment prefixes/
    suffixes carry the uniqueness in-game; base art stays clean. Composites
    are allowed ONLY when the composite IS the rung's identity (bronze scales
-   over a plain leather backing, riveted iron strips over plain leather) and
+   over a plain leather backing, sheet-bronze plates over leather) and
    then the construction must dominate the read instead of becoming a
    hair-thin detail.
 6. GENERIC COLOR LANGUAGE FOR BASES (2026-07-07). Do not encode lore/fashion
@@ -255,11 +255,11 @@ inventory images, with a planned overshoot manifest of about 640 rows.
 | sling_hide | P | a braided hide sling with a smooth river stone in the pouch, straps hanging vertical |
 | shield_hide | P | a tall oval shield of stretched hide over a wooden frame, plain front |
 | shield_bronze | P | a tall shield faced with hammered bronze, central boss |
-| shield_rivetmail | P | a tall shield reinforced with riveted iron strips |
+| shield_bronzesheet | P | a tall shield faced with clean sheet bronze over a hide backing |
 | wrap_hide | P | a wrapped hide tunic with a simple garment shape |
 | wrap_quilted | P | a quilted linen armor vest of layered stitched cloth, undyed off-white, cord tie at the shoulder |
 | wrap_bronzescale | P | a vest of overlapping bronze scales sewn onto leather backing |
-| wrap_rivetmail | P | a riveted mail hauberk laid out flat and spread like a garment |
+| wrap_bronzesheet | P | a simple sheet-bronze corslet with front and back plates |
 | crest_bone | S | a simple bone headpiece with a raised crest |
 | crest_bronze | S | a hammered bronze cap with cheek guards |
 | crest_jade | S | a jade circlet-diadem with a clean curved profile |

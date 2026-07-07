@@ -136,7 +136,7 @@ equipment **class** gets a **ladder of distinct, individually-named bases**, one
 per **tier**, escalating crude→endgame. Material/theme is intrinsic to each named
 rung, not an axis sprayed across everything. Our tech arc IS the tier ladder:
 T1 scavenged (flint/bone/hide) → T2 copper → T3 bronze → T4 ritual/exotic
-(obsidian/jade/amber/gilded) → T5 otherworldly (skymetal/rivetmail). Exotic
+(obsidian/jade/amber) → T5 otherworldly (skymetal; mail paused). Exotic
 items are high rungs, not whole classes. Give evocative names (Bronze Khopesh,
 Obsidian Macuahuitl, Skymetal Greathelm), never IDs like `grips_quilted`. Full
 proposed ladders live in `core/BASE-DESIGN.md`.

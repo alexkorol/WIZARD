@@ -51,7 +51,7 @@ Key properties to copy:
 | **T2 Copper-age** | first metal | copper, tin, woven linen, boiled leather, cord | plain-functional: *Copper, Tin, Boiled, Woven* |
 | **T3 Bronze-age** | the civilised norm | bronze, lacquered wood, plain leather, bronze studs | soldierly: *Bronze, War-, Legion, Studded* |
 | **T4 Ritual/Exotic** | ceremonial power | obsidian, jade, amber, carved stone, polished shell | refined but generic: *Obsidian, Jade, Amber, Ritual, Carved* |
-| **T5 Otherworldly** | beyond the horizon | skymetal (raw dark meteoric iron), rivetmail | severe/endgame: *Skymetal, Meteoric, Riven* |
+| **T5 Otherworldly** | beyond the horizon | skymetal (raw dark meteoric iron) | severe/endgame: *Skymetal, Meteoric, Riven* |
 
 Not every class needs all five rungs; 3–5 each is fine (like D2's three).
 
@@ -67,12 +67,12 @@ Not every class needs all five rungs; 3–5 each is fine (like D2's three).
 - **Rite-focus** (spirit caster): Bone Fetish · Copper Rattle · Bronze Sceptre · Jade Idol-Staff · Skymetal Starwand
 
 ### Armour
-- **Body** (life/ward line): Hide Wrap · Boiled Vest · Bronze-Studded Jerkin · Bronze-Scale Vest · Rivetmail Hauberk
+- **Body** (life/ward line): Hide Wrap · Boiled Vest · Bronze-Studded Jerkin · Bronze-Scale Vest · Sheet-Bronze Corslet
 - **Helmet**: Hide Cap · Bone Crest · Bronze War-Helm · Jade Circlet · Skymetal Greathelm
 - **Gloves/bracers**: Rawhide Wraps · Boiled Bracers · Bronze-Scale Bracers · Bronze Vambraces · Skymetal Gauntlets
 - **Boots**: Bark Sandals · Hide Sandals · Bronze-Shod Sandals · Jade Greaves · Skymetal Greaves
 - **Belt**: Sinew Cord · Woven Girdle · Bronze-Plated Belt · Bronze War-Girdle · Skymetal Warbelt
-- **Shield**: Wicker Shield · Hide Buckler · Bronze Roundshield · Bronze-Scale Warshield · Rivetmail Towershield
+- **Shield**: Wicker Shield · Hide Buckler · Bronze Roundshield · Bronze-Scale Warshield · Sheet-Bronze Tower
 
 ### Jewellery
 - **Amulet / neckpiece**: Bone Pendant · Copper Torc · Jade Gorget · Amber Talisman · Skymetal Sigil
@@ -83,8 +83,8 @@ Not every class needs all five rungs; 3–5 each is fine (like D2's three).
 
 Most existing finals slot straight into a rung, just renamed:
 `handaxe_bronze`→Bronze War-Axe, `khopesh_bronze`→Bronze Khopesh,
-`macuahuitl_obsidian`→Obsidian Macuahuitl (T4), `wrap_rivetmail`→Rivetmail
-Hauberk, `crest_bronze`→Bronze War-Helm, `gorget_jade`→Jade Gorget, new
+`macuahuitl_obsidian`→Obsidian Macuahuitl (T4),
+`crest_bronze`→Bronze War-Helm, `gorget_jade`→Jade Gorget, new
 `dagger_bronze`→Bronze Dirk, `helm_bronze`→Bronze War-Helm, etc. Retire the
 combinatorial oddities (quilted sandals, obsidian gorget, atlatls).
 
