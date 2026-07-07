@@ -24,6 +24,17 @@ Accepted assets promoted:
 - `guard_rawhide_padded.png`
 - `sceptre_bronze_pronged.png`
 - `hideshield_bronze_candidate_b.png`
+- `gorget_copper.png`
+- `crest_hide.png`
+- `warclub_jade.png`
+- `wrap_hide_lamellar.png`
+
+2026-07-07 10:32-10:37 manual follow-up accepted immediately: 4 accepted,
+0 duplicates. These images were moved out of Downloads, kept in
+`assets_inbox` for review provenance, and promoted into `assets/`.
+`gorget_copper`, `crest_hide`, and `warclub_jade` are wired as live runtime
+art; `wrap_hide_lamellar` is promoted art only until body-form/material wiring
+is decided.
 
 ## 2026-07-07 09:52-10:02 manual burst
 
@@ -45,6 +56,10 @@ Images were moved to `tools/rpg_inventory/assets_inbox/2026-07-07-manual/`.
 | 12 | `intake_012_sheet_bronze_tall_shield_a.png` | `9bf4a0ef-a3e2-4641-9e48-5a7dceee8891.png` | 1024x1536 | sheet-bronze tall shield | Duplicate cluster with #13; choose one for shield lane. |
 | 13 | `intake_013_sheet_bronze_tall_shield_b.png` | `714b0013-aa0c-422a-b66a-849eaec21a08.png` | 1024x1536 | sheet-bronze tall shield | Duplicate cluster with #12; choose one for shield lane. |
 | 14 | `intake_014_bronze_war_girdle_b.png` | `79651e99-fb2c-4de7-ba1a-39dee27d6802.png` | 1536x1024 | bronze war-girdle / plated belt | Duplicate cluster with #6; choose one for belt lane. |
+| 15 | `intake_015_copper_torc.png` | `1dd3bfe5-5f33-4e68-b91a-2e61daa6af97.png` | 1024x1024 | clean hammered copper torc | Accepted as `gorget_copper`; do not re-prompt copper torcs for now. |
+| 16 | `intake_016_boiled_leather_war_cap.png` | `f7c3467d-e756-492e-b79b-8615e5098de7.png` | 1024x1024 | boiled dark leather war cap with cheek guards | Accepted as `crest_hide`; future prompts should avoid mail/rivetmail as a class even though this manual save has stud detail. |
+| 17 | `intake_017_carved_jade_cudgel.png` | `86127cf5-a0b6-4381-90b4-96fa4f27521e.png` | 1024x1536 | carved jade blunt cudgel / sceptre | Accepted as `warclub_jade`; jade weapons stay blunt only. |
+| 18 | `intake_018_hide_lamellar_armor.png` | `dfa8d350-0076-4159-8e31-680c74cff8eb.png` | 1024x1536 | leather or hide lamellar body armour | Accepted as `wrap_hide_lamellar`; promoted art, but runtime body-form/material wiring is not decided. |
 
 Immediate prompt-batch exclusions from this burst:
 
@@ -57,3 +72,7 @@ Immediate prompt-batch exclusions from this burst:
 - Sheet-bronze tall shields.
 - Black mirror or polished-disc off-hand foci.
 - Rawhide pad/shield variants.
+- Copper torcs.
+- Boiled leather war caps / hide caps.
+- Carved jade cudgels or sceptres.
+- Leather/hide lamellar armour variants.

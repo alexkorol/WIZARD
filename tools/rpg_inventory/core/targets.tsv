@@ -17,6 +17,7 @@ warclub_bone	mace	1	Femur Club	P	-
 warclub_copper	mace	2	Copper Mace	P	-
 warclub_bronze	mace	3	Bronze War-Mace	P	-
 warclub_obsidian	mace	4	Obsidian Star-Mace	P	a war-mace whose stone head bristles with radiating knapped black obsidian points, on a dark hardwood haft
+warclub_jade	mace	4	Jade Cudgel	P	a heavy blunt war club carved entirely from dark green jade, blocky squared striking head, thick grip, the entire weapon visible on a strong diagonal
 warclub_skymetal	mace	5	Skymetal Maul	P	a heavy maul with a raw dark meteoric-iron head, hammer-textured faces, on a thick leather-wrapped haft
 greataxe_bone	great2h	1	Bone Maul	P	a massive two-handed club carved from a single whale bone, sinew-wrapped grip, the entire weapon visible on a slight diagonal
 greataxe_copper	great2h	2	Copper Greatclub	P	-
@@ -39,7 +40,7 @@ wrap_quilted	body	2	Quilted Vest	P	-
 wrap_studded	body	3	Bronze-Studded Jerkin	P	a plain boiled-leather jerkin reinforced with rows of domed bronze studs
 wrap_bronzescale	body	4	Bronze-Scale Vest	P	-
 wrap_rivetmail	body	5	Rivetmail Hauberk	P	-
-crest_hide	helmet	1	Hide Cap	S	-
+crest_hide	helmet	1	Hide Cap	S	a boiled dark leather war cap with a domed skull, broad cheek guards, and complete wearable head protection, clean plain leather surface
 crest_bone	helmet	1	Bone Crest	S	-
 helm_bronze	helmet	3	Bronze War-Helm	S	-
 crest_jade	helmet	4	Feathered Warcrown	S	-
@@ -66,7 +67,7 @@ buckler_bronze	shield	3	Bronze Roundshield	P	-
 hideshield_bronzescale	shield	4	Bronze-Scale Warshield	P	-
 hideshield_rivetmail	shield	5	Rivetmail Towershield	P	-
 gorget_bone	amulet	1	Bone Pendant	S	-
-gorget_copper	amulet	2	Copper Torc	S	-
+gorget_copper	amulet	2	Copper Torc	S	a clean hammered copper torc with a thick crescent body and rounded bulb terminals, one complete neck ring
 gorget_jade	amulet	4	Jade Gorget	S	-
 gorget_amber	amulet	4	Amber Talisman	S	-
 gorget_skymetal	amulet	5	Skymetal Sigil	S	a pendant sigil of raw dark meteoric iron on a long knotted cord forming a full wearable neck-loop
