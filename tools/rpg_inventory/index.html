@@ -393,7 +393,7 @@
       position: fixed; pointer-events: none; z-index: 100;
       width: 300px;
       background: rgba(13,12,10,0.98);
-      background-clip: padding-box;
+      background-clip: border-box;
       border: 12px solid transparent;
       border-image: url('assets/frame_ornate.png') 118 / 12px stretch;
       padding: 8px 9px;
@@ -604,9 +604,38 @@
     return <img className="item-art" src={src} alt="" draggable="false" onError={() => setBroken(true)} />;
   };
 
+  const DEFAULT_EQUIPMENT = {
+    head: null, amulet: null, mainHand: null, body: null, offHand: null,
+    gloves: null, belt: null, boots: null, ring1: null, ring2: null,
+  };
+
+  const RETIRED_ART_IDS = new Set([
+    'handaxe_copper', 'spear_bronze',
+    'atlatl_bone', 'atlatl_copper', 'atlatl_bronze',
+    'khopesh_copper', 'khopesh_bronze',
+    'sling_hide', 'sling_quilted',
+    'crest_bone', 'crest_hide',
+    'grips_hide', 'grips_quilted', 'grips_bronzescale',
+    'gorget_bone', 'gorget_copper', 'gorget_amber',
+    'curio_jade',
+    'entrail_omen',
+    'helm_copper', 'helm_bronze',
+  ]);
+
+  const artId = (item) => item ? `${item.formId}_${item.materialId}` : '';
+  const isKnownRuntimeItem = (item) => {
+    const form = item && pack.forms[item.formId];
+    return Boolean(
+      form &&
+      pack.materials[item.materialId] &&
+      form.materials.includes(item.materialId) &&
+      !RETIRED_ART_IDS.has(artId(item))
+    );
+  };
+
   /* Art path per the ASSET-BRIEF naming; falls back to icon until generated. */
-  const artSrc = (item) => `assets/${item.formId}_${item.materialId}.png`;
-  const itemIcon = (item) => pack.forms[item.formId].icon;
+  const artSrc = (item) => isKnownRuntimeItem(item) ? `assets/${artId(item)}.png` : null;
+  const itemIcon = (item) => (pack.forms[item.formId] || {}).icon || 'default';
 
   /* ---------------- grid placement (UI concern, not engine) ---------------- */
   const canPlaceItem = (inventory, item, x, y, ignoreId = null) => {
@@ -661,7 +690,7 @@
       if (pos) inv.push({ ...item, ...pos });
     };
 
-    put(forge.generateItem({ ilvl: 34, formId: 'khopesh', materialId: 'bronze', brands: 1 }));
+    put(forge.generateItem({ ilvl: 34, formId: 'dagger', materialId: 'bronze', brands: 1 }));
     put(forge.generateItem({ ilvl: 30, formId: 'wrap', materialId: 'quilted', brands: 2 }));
     put(forge.generateItem({ ilvl: 28, formId: 'gorget', materialId: 'jade', brands: 1 }));
     put(forge.generateItem({ ilvl: 18, formId: 'ring', materialId: 'bone', brands: 0 }));
@@ -703,10 +732,7 @@
     return {
       character,
       inventory: inv,
-      equipment: {
-        head: null, amulet: null, mainHand: null, body: null, offHand: null,
-        gloves: null, belt: null, boots: null, ring1: null, ring2: null,
-      },
+      equipment: { ...DEFAULT_EQUIPMENT },
       atelierItem: null,
       satchel: { red_ochre: 2, woad: 1, soot: 1, marsh_ochre: 0, entrail_omen: 1, bird_omen: 0, smoke_omen: 0, blood_omen: 1 },
       log: [
@@ -724,7 +750,20 @@
     Object.keys(TOOL_PRICES).forEach(id => {
       if (satchel[id] == null) satchel[id] = 0;
     });
-    return { ...state, satchel };
+
+    const equipment = { ...DEFAULT_EQUIPMENT };
+    Object.keys(DEFAULT_EQUIPMENT).forEach(slotId => {
+      const item = state.equipment ? state.equipment[slotId] : null;
+      equipment[slotId] = isKnownRuntimeItem(item) ? item : null;
+    });
+
+    return {
+      ...state,
+      inventory: (state.inventory || []).filter(isKnownRuntimeItem),
+      equipment,
+      atelierItem: isKnownRuntimeItem(state.atelierItem) ? state.atelierItem : null,
+      satchel,
+    };
   };
 
   const loadState = () => {
