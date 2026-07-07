@@ -27,7 +27,7 @@ wrap_quilted	P	a quilted linen armor vest of layered stitched cloth, undyed off-
 wrap_bronzescale	P	a vest of overlapping bronze scales sewn onto plain leather backing, clean raised collar plates
 wrap_rivetmail	P	a riveted mail hauberk laid out flat and spread like a garment, plain dark metal rings and a simple collar
 crest_bone	S	a simple bone headpiece with a raised crest and clean curved brow line
-crest_hide	S	a simple hide cap over a stiff rawhide frame with a raised crest profile
+crest_hide	S	a boiled dark leather war cap with a domed skull, broad cheek guards, and complete wearable head protection, clean plain leather surface
 crest_copper	S	a hammered copper cap with cheek guards and a plain raised brow band
 crest_bronze	S	a hammered bronze cap with cheek guards and a clean raised crown ridge
 crest_jade	S	a jade circlet-diadem with a clean curved profile and a raised crest shape
@@ -40,7 +40,7 @@ girdle_quilted	L	a wide girdle belt of layered quilted linen laid out horizontal
 girdle_copper	L	a wide belt of clean hammered copper plates on plain leather backing laid out horizontally
 gorget_jade	S	a carved jade gorget pendant hung on a long knotted cord forming a full wearable neck-loop (cord much longer than the pendant), smooth simple crescent shape
 gorget_bone	S	a carved bone gorget pendant on a long knotted sinew cord forming a full wearable neck-loop, simple carved marks
-gorget_copper	S	a crescent hammered-copper gorget on a long cord forming a full wearable neck-loop, clean copper surface
+gorget_copper	S	a clean hammered copper torc with a thick crescent body and rounded bulb terminals, one complete neck ring
 ring_bone	S	a ring carved from a single piece of bone, simple carved marks
 ring_copper	S	a simple coiled copper ring with clean hammered metal
 ring_jade	S	a ring carved from a single piece of green jade, clean simple band
@@ -58,6 +58,7 @@ smoke_omen	S	a smoldering herb bundle on a small clay dish, one thin wisp of pal
 blood_omen	S	a shallow dark clay bowl with a plain bronze lancet resting across its rim
 dagger_bronze	P	a bronze dagger with a long broad leaf-shaped blade and a leather-wrapped grip with a stone pommel, the blade prominent and deadly, the whole dagger spanning the full height of the frame
 warclub_bronze	P	a bronze war mace: a heavy faceted bronze head with blunt flanges mounted on a leather-wrapped wooden haft, brutal and well-crafted, spanning the full height of the frame
+warclub_jade	P	a heavy blunt war club carved entirely from dark green jade, blocky squared striking head, thick grip, the entire weapon visible on a strong diagonal
 greataxe_bronze	P	a two-handed bronze greataxe with a large broad crescent blade on a long leather-wrapped haft, held vertical, massive and menacing
 buckler_bronze	S	a small round bronze buckler shield with a plain domed central boss and a clean hammered rim, front view
 helm_bronze	S	a full enclosed bronze war helmet that covers the whole head, a rounded domed skull with cheek guards and a nose-guard, its full domed shell and the back of the head visible at the three-quarter angle, clean bronze surface

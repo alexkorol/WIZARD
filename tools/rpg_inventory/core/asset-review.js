@@ -127,12 +127,12 @@ window.VerdigrisAssetReview = [
   },
   {
     "name": "crest_hide",
-    "status": "discard",
+    "status": "ok",
     "canvas": "S",
     "failure_modes": [],
     "original_desc": "a headpiece of stretched hide over a wicker frame with a russet horsehair crest, a row of small cowrie shells across the brow and one natural tan feather at the temple",
-    "reworked_desc": "a headpiece of stretched hide over a wicker frame with a russet horsehair crest, a row of small cowrie shells across the brow and one natural tan feather at the temple",
-    "notes": "bad item idea - look awkward and weird, not good for generating with image ai"
+    "reworked_desc": "a boiled dark leather war cap with a domed skull, broad cheek guards, and complete wearable head protection, clean plain leather surface",
+    "notes": "replaced by 2026-07-07 manual true-alpha boiled leather war cap intake"
   },
   {
     "name": "helm_bronze",
@@ -253,12 +253,12 @@ window.VerdigrisAssetReview = [
   },
   {
     "name": "gorget_copper",
-    "status": "discard",
+    "status": "ok",
     "canvas": "S",
-    "failure_modes": ["proportion"],
+    "failure_modes": [],
     "original_desc": "a crescent gorget of hammered copper on a knotted cord, blooming blue-green patina, a cascade of three short lapis-bead strands dangling from its lower edge",
-    "reworked_desc": "a crescent hammered-copper gorget on a long cord forming a full wearable neck-loop, clean copper surface",
-    "notes": ""
+    "reworked_desc": "a clean hammered copper torc with a thick crescent body and rounded bulb terminals, one complete neck ring",
+    "notes": "replaced by 2026-07-07 manual true-alpha copper torc intake"
   },
   {
     "name": "gorget_amber",

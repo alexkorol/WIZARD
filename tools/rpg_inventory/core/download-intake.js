@@ -180,5 +180,57 @@ window.VerdigrisDownloadIntake = [
     label: "Bronze War-Girdle B",
     artId: "girdle_bronzeplate_candidate_b",
     notes: "Duplicate cluster with A; choose one for girdle_bronzeplate or a new belt base."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_015_copper_torc.png",
+    original: "1dd3bfe5-5f33-4e68-b91a-2e61daa6af97.png",
+    proposedLabel: "Copper Torc",
+    proposedArtId: "gorget_copper",
+    slot: "amulet",
+    canvas: "S",
+    confidence: "high",
+    status: "accept",
+    label: "Copper Torc",
+    artId: "gorget_copper",
+    notes: "Accepted manual replacement for the old copper gorget/torc lane. Do not regenerate copper torcs until reviewed."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_016_boiled_leather_war_cap.png",
+    original: "f7c3467d-e756-492e-b79b-8615e5098de7.png",
+    proposedLabel: "Boiled Leather War Cap",
+    proposedArtId: "crest_hide",
+    slot: "helmet",
+    canvas: "S",
+    confidence: "high",
+    status: "accept",
+    label: "Boiled Leather War Cap",
+    artId: "crest_hide",
+    notes: "Accepted manual hide-cap replacement. Image has stud detail; future prompts should keep leather cap construction clean and avoid mail/rivetmail as a class."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_017_carved_jade_cudgel.png",
+    original: "86127cf5-a0b6-4381-90b4-96fa4f27521e.png",
+    proposedLabel: "Carved Jade Cudgel",
+    proposedArtId: "warclub_jade",
+    slot: "mace",
+    canvas: "P",
+    confidence: "high",
+    status: "accept",
+    label: "Carved Jade Cudgel",
+    artId: "warclub_jade",
+    notes: "Accepted manual jade blunt-weapon save. This satisfies the jade-weapons-only-as-blunt rule; do not generate more jade cudgels until needed."
+  },
+  {
+    file: "assets_inbox/2026-07-07-manual/intake_018_hide_lamellar_armor.png",
+    original: "dfa8d350-0076-4159-8e31-680c74cff8eb.png",
+    proposedLabel: "Hide Lamellar Armor",
+    proposedArtId: "wrap_hide_lamellar",
+    slot: "body",
+    canvas: "P",
+    confidence: "high",
+    status: "accept",
+    label: "Hide Lamellar Armor",
+    artId: "wrap_hide_lamellar",
+    notes: "Accepted manual lamellar body armor save. Keep as promoted art until body-form/material wiring is decided; avoid duplicate leather/hide lamellar prompts."
   }
 ];
