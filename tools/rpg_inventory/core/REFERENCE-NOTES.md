@@ -86,6 +86,28 @@ Do not copy icons, names, or exact item lists. Extract the production logic.
 - PoE icon style favors centered, isolated objects on dark/transparent fields,
   strong rim lighting, and no scene. That agrees with Verdigris v2.
 
+## Visual notes from crisp character style references
+
+The 2026-07-07 character reference images are not item-subject references.
+Their value is rendering calibration:
+
+- The useful look is crisp product-render realism: white studio clarity, high
+  local contrast, tight edge definition, hard-surface bevels, visible seams,
+  fine scratches, hammered metal texture, leather grain, and material-specific
+  specular response.
+- Lighting reads as controlled studio lighting: strong upper-left key, deep
+  neutral object shadows, and a cool rim on the far edge. This maps cleanly to
+  inventory icons if the object remains isolated and fully visible.
+- Metals read best when the prompt asks for physical surface response instead
+  of lore decoration: polished high spots, worn edges, hammered irregularity,
+  dark recesses, and clean neutral grading.
+- The dangerous leakage is subject matter: character poses, bodies, class
+  labels, faction costumes, sun/eagle/deity symbols, feather crowns, veils,
+  coin-chain clutter, fixed turquoise/gold or red/green/gold palettes, and
+  dense jewelry. Those belong to character concepts, not ordinary base items.
+- For Verdigris item prompts, borrow the render stack only. Keep the base item
+  generic, usable, transparent, centered, and silhouette-first.
+
 ## Copper / Bronze Age visual research notes
 
 Sources checked:

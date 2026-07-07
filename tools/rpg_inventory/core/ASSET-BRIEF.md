@@ -133,6 +133,13 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    ARPG loot bases. Relic gear needs a strong held/worn/handled implement with
    mass and purpose: bowls, bells, pronged sceptres, standards, reliquary boxes,
    idol-head cudgels, trophy settings, or small shield-like foci.
+16. STYLE REFERENCES TRANSFER RENDERING ONLY (2026-07-07). Character concept
+   references are allowed only as evidence for crisp photoreal rendering:
+   white-studio clarity, high local contrast, material-specific highlights,
+   sharp bevels, readable seams, fine scratches, and clean rim lighting. Do not
+   copy character subjects, low-angle portrait language, faction costumes,
+   deity/sun/eagle symbols, feather crowns, coin-chain clutter, veils, fixed
+   costume palettes, or jewelry density into ordinary base item prompts.
 
 ### Prompt changelog
 
@@ -162,6 +169,10 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
 - 2026-07-07: true-alpha manual accepts bypass mask generation and palette
   quantization; compose directly from source alpha. Wearable construction and
   boring tablet/plaque relic failures added as hard prompt rules.
+- 2026-07-07: attached crisp character refs recorded as render-stack evidence
+  only. They may inform photoreal/PBR/studio clarity in style experiments, but
+  their character, faction, symbol, feather, veil, and jewelry language must
+  not enter base-item DESCs.
 
 ### Material-specific corrections (2026-07-05 review — do not relitigate)
 

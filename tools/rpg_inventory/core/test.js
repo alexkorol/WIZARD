@@ -153,6 +153,24 @@ t('test prompts require novelty checks', () => {
   assert(!/style-calibration repeat/.test(plan + brief + style),
     'docs must not preserve the old style-calibration repeat loophole');
 });
+t('style references transfer render stack only', () => {
+  const brief = fs.readFileSync(path.join(__dirname, 'ASSET-BRIEF.md'), 'utf8');
+  const style = fs.readFileSync(path.join(__dirname, 'STYLE-EXPERIMENTS.md'), 'utf8');
+  const notes = fs.readFileSync(path.join(__dirname, 'REFERENCE-NOTES.md'), 'utf8');
+  assert(/STYLE REFERENCES TRANSFER RENDERING ONLY/.test(brief),
+    'brief must state that character refs only transfer rendering');
+  assert(/Character Reference Inspection/.test(style),
+    'style experiments must record the inspected reference-image lesson');
+  assert(/Do not transfer these traits into item prompts/.test(style),
+    'style experiments must blacklist character-reference baggage');
+  assert(/white\s+studio\s+clarity/i.test(notes) &&
+    /material-specific\s+specular\s+response/i.test(notes),
+    'reference notes must capture the useful crisp render traits');
+  assert(/faction costumes/.test(brief + style + notes) &&
+    /feather crowns/.test(brief + style + notes) &&
+    /coin-chain clutter/.test(brief + style + notes),
+    'docs must forbid character costume clutter from leaking into bases');
+});
 t('true-alpha assets bypass matte and quantization', () => {
   const compose = fs.readFileSync(path.join(__dirname, 'compose_assets.py'), 'utf8');
   const matte = fs.readFileSync(path.join(__dirname, 'art_matte.py'), 'utf8');
