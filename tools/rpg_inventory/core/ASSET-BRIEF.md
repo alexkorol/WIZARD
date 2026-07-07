@@ -80,6 +80,12 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    ENTIRELY of jade. A full-jade / full-amber / full-bone item is bolder
    and reads better than a timid accent. When a rung is named for an
    exotic material, the whole item is that material.
+8. JADE WEAPON RULE (2026-07-07). Jade is bad for blades and reach weapons:
+   no jade sabres, daggers, axes, spearheads, glaives, polearms, or other
+   cutting/piercing weapons. If jade is used as a weapon material, it must be
+   blunt or mace-like: club, mace, maul, hammer, idol-head cudgel, or heavy
+   ritual striking object. Jade remains fine for armour, jewellery, foci,
+   curios, and other non-bladed bases.
 
 ### Prompt changelog
 
@@ -95,6 +101,8 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
 - 2026-07-07: prompt extracted to PROMPT.txt for Alexei's hand-tuning;
   one-material rule; commit-fully-to-exotic-materials rule (full jade
   greaves, not jade-inlaid); agents no longer touch the style text.
+- 2026-07-07: jade retired from bladed/reach weapon bases. Jade weapons are
+  allowed only for blunt, mace-like silhouettes.
 
 ### Material-specific corrections (2026-07-05 review — do not relitigate)
 

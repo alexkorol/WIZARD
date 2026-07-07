@@ -49,9 +49,9 @@ Key properties to copy:
 |---|---|---|---|
 | **T1 Scavenged** | stone-age, found | flint, bone, driftwood, rawhide, wicker, sinew, hide | crude, blunt: *Flint, Bone, Driftwood, Notched, Ragged* |
 | **T2 Copper-age** | first metal | copper, tin, woven linen, boiled leather, cord | plain-functional: *Copper, Tin, Boiled, Woven* |
-| **T3 Bronze-age** | the civilised norm | bronze, lacquered wood, oxblood leather, bronze studs | soldierly: *Bronze, War-, Legion, Studded* |
-| **T4 Ritual/Exotic** | ceremonial power | obsidian, jade, amber, gold-leaf, turquoise/lapis inlay, black-dyed feathers | ornate/temple: *Obsidian, Jade, Gilded, Feathered, Sun-* |
-| **T5 Otherworldly** | beyond the horizon | skymetal (meteoric iron), rivetmail, star-glass | alien/epic: *Skymetal, Star-, Meteoric, Riven* |
+| **T3 Bronze-age** | the civilised norm | bronze, lacquered wood, plain leather, bronze studs | soldierly: *Bronze, War-, Legion, Studded* |
+| **T4 Ritual/Exotic** | ceremonial power | obsidian, jade, amber, carved stone, polished shell | refined but generic: *Obsidian, Jade, Amber, Ritual, Carved* |
+| **T5 Otherworldly** | beyond the horizon | skymetal (raw dark meteoric iron), rivetmail | severe/endgame: *Skymetal, Meteoric, Riven* |
 
 Not every class needs all five rungs; 3–5 each is fine (like D2's three).
 
@@ -59,20 +59,20 @@ Not every class needs all five rungs; 3–5 each is fine (like D2's three).
 
 ### Weapons (kind: weapon; sub-class by tag)
 - **Dagger** (blade/swift): Bone Shiv · Copper Knife · Bronze Dirk · Obsidian Fang · Skymetal Kris
-- **Sword / one-hand blade** (blade): Flint Cleaver · Copper Falchion · Bronze Khopesh · Jade Sabre · Skymetal Longsword
+- **Sword / one-hand blade** (blade): Flint Cleaver · Copper Falchion · Bronze Khopesh · Obsidian Shortblade · Skymetal Longsword
 - **Axe** (blade/blunt): Flint Hatchet · Copper Adze · Bronze War-Axe · Obsidian Cleaver · Skymetal Bardiche
-- **Mace / club** (blunt): Driftwood Cudgel · Copper Mace · Bronze War-Mace · Obsidian Star-Mace · Skymetal Maul
+- **Mace / club** (blunt): Driftwood Cudgel · Copper Mace · Bronze War-Mace · Jade Hammer · Skymetal Maul
 - **Two-hand great** (blade/blunt): Bone Maul · Copper Greatclub · Bronze Greataxe · Obsidian Macuahuitl · Skymetal Greatblade
-- **Reach / polearm** (reach): Flint Spear · Bone Harpoon · Bronze Pike · Jade Glaive · Skymetal Warspear
+- **Reach / polearm** (reach): Flint Spear · Bone Harpoon · Bronze Pike · Obsidian Warspear · Skymetal Warspear
 - **Rite-focus** (spirit caster): Bone Fetish · Copper Rattle · Bronze Sceptre · Jade Idol-Staff · Skymetal Starwand
 
 ### Armour
-- **Body** (life/ward line): Hide Wrap · Boiled Vest · Bronze-Studded Jerkin · Oxblood Scale Vest · Rivetmail Hauberk
-- **Helmet**: Hide Cap · Bone Crest · Bronze War-Helm · Feathered Warcrown (jade) · Skymetal Greathelm
-- **Gloves/bracers**: Rawhide Wraps · Boiled Bracers · Bronze-Scale Bracers · Gilded Vambraces · Skymetal Gauntlets
-- **Boots**: Bark Sandals · Hide Sandals · Bronze-Shod Sandals · Jade-Inlaid Greaves · Skymetal Greaves
-- **Belt**: Sinew Cord · Woven Girdle · Bronze-Plated Belt · Gilded War-Girdle · Skymetal Warbelt
-- **Shield**: Wicker Shield · Hide Buckler · Bronze Roundshield · Sun-Face Warshield · Rivetmail Towershield
+- **Body** (life/ward line): Hide Wrap · Boiled Vest · Bronze-Studded Jerkin · Bronze-Scale Vest · Rivetmail Hauberk
+- **Helmet**: Hide Cap · Bone Crest · Bronze War-Helm · Jade Circlet · Skymetal Greathelm
+- **Gloves/bracers**: Rawhide Wraps · Boiled Bracers · Bronze-Scale Bracers · Bronze Vambraces · Skymetal Gauntlets
+- **Boots**: Bark Sandals · Hide Sandals · Bronze-Shod Sandals · Jade Greaves · Skymetal Greaves
+- **Belt**: Sinew Cord · Woven Girdle · Bronze-Plated Belt · Bronze War-Girdle · Skymetal Warbelt
+- **Shield**: Wicker Shield · Hide Buckler · Bronze Roundshield · Bronze-Scale Warshield · Rivetmail Towershield
 
 ### Jewellery
 - **Amulet / neckpiece**: Bone Pendant · Copper Torc · Jade Gorget · Amber Talisman · Skymetal Sigil
@@ -91,5 +91,5 @@ combinatorial oddities (quilted sandals, obsidian gorget, atlatls).
 ## Naming principles
 
 Evocative > descriptive. Two-word "[flavor/material] [archetype]" mostly, with
-occasional single iconic names at T4/T5 (Sun-Face Warshield, Skymetal Kris).
+occasional single iconic names at T4/T5 (Bronze-Scale Warshield, Skymetal Kris).
 Avoid IDs like `grips_quilted` in player-facing names.

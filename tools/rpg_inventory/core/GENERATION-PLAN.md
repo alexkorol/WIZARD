@@ -22,9 +22,9 @@ image-2 has known concept failures. A final committed set around 560 is ideal.
 
 ## Current state
 
-- `targets.tsv`: 91 rows.
-- Active after `core/asset-review.js` discards: 77 rows.
-- Current complete active coverage: 77/77, with 6 review reworks queued.
+- `targets.tsv`: 89 rows.
+- Active after `core/asset-review.js` discards: 74 rows.
+- Current complete active coverage: 74/74, with 6 review reworks queued.
 - Current set is a vertical slice: it proves the pipeline, not the final item
   economy scale.
 
@@ -112,6 +112,10 @@ days, plus review and rework time.
 - Base rows do not get invented lore symbols, horned suns, deity marks,
   faction emblems, heavy patina, or grimy verdigris. Save that for uniques,
   awakened relics, and faction sets.
+- Jade is not a blade/reach weapon material. Do not generate jade sabres,
+  daggers, axes, spearheads, glaives, or polearms. Jade weapons are allowed
+  only when the silhouette is blunt or mace-like: club, mace, maul, hammer,
+  idol-head cudgel, or heavy ritual striking object.
 - At least 20% of equipment bases should have implicit/mechanical identity:
   socket, vessel, patience, trophy affinity, theme bias, block, speed, ward,
   spirit, reach, crit, or carry capacity.
@@ -126,6 +130,8 @@ Retire these unless reconceived into a reliable icon:
 - Tiny toggles, buckles, clasps, and explicit closures.
 - Long thin objects without a strong diagonal/full-length framing instruction.
 - Vague curios on stands. Use one strong object instead.
+- Jade blades, jade spearheads, jade glaives, and other jade cutting/piercing
+  weapons. Keep jade weapons blunt/mace-like only.
 
 ## Next file to create
 

@@ -63,6 +63,24 @@ window.VerdigrisAssetReview = [
     "notes": "bad item idea - look awkward and weird, not good for generating with image ai"
   },
   {
+    "name": "sword_jade",
+    "status": "discard",
+    "canvas": "P",
+    "failure_modes": [],
+    "original_desc": "a curved sabre of green jade with a simple leather-wrapped grip",
+    "reworked_desc": "a curved sabre of green jade with a simple leather-wrapped grip",
+    "notes": "jade is retired from bladed weapons; keep jade weapons only for blunt/mace-like bases"
+  },
+  {
+    "name": "spear_jade",
+    "status": "discard",
+    "canvas": "P",
+    "failure_modes": [],
+    "original_desc": "a polearm with a long curved blade of polished green jade on a dark lacquered shaft, the entire weapon visible tip to butt on a slight diagonal",
+    "reworked_desc": "a polearm with a long curved blade of polished green jade on a dark lacquered shaft, the entire weapon visible tip to butt on a slight diagonal",
+    "notes": "jade is retired from bladed and reach weapons; keep jade weapons only for blunt/mace-like bases"
+  },
+  {
     "name": "sling_hide",
     "status": "discard",
     "canvas": "P",

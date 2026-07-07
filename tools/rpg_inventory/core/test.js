@@ -1,5 +1,7 @@
 /* Vesselforge test suite — run: node test.js */
 'use strict';
+const fs = require('fs');
+const path = require('path');
 const VesselForge = require('./vesselforge.js');
 const pack = require('./verdigris-pack.js');
 
@@ -50,6 +52,25 @@ t('low ilvl never drops skymetal or mail', () => {
   for (let i = 0; i < 100; i++) {
     const it = forge.generateItem({ ilvl: 10 });
     assert(!['skymetal', 'rivetmail'].includes(it.materialId), it.materialId);
+  }
+});
+t('jade is restricted to non-weapons or blunt weapon bases', () => {
+  for (const [formId, form] of Object.entries(pack.forms)) {
+    if (!form.materials || !form.materials.includes('jade')) continue;
+    if (form.kind !== 'weapon') continue;
+    assert(form.tags.includes('blunt'), `${formId} uses jade but is not blunt`);
+    assert(!form.tags.includes('blade'), `${formId} uses jade but is a blade`);
+    assert(!form.tags.includes('reach'), `${formId} uses jade but is reach`);
+  }
+
+  const targetPath = path.join(__dirname, 'targets.tsv');
+  const rows = fs.readFileSync(targetPath, 'utf8').trim().split(/\r?\n/).slice(1);
+  const bannedClasses = new Set(['dagger', 'sword', 'axe', 'great2h', 'polearm']);
+  for (const line of rows) {
+    const [artId, cls, , name, , desc] = line.split('\t');
+    const text = `${artId} ${name} ${desc}`.toLowerCase();
+    assert(!(bannedClasses.has(cls) && text.includes('jade')),
+      `${artId} is a jade blade/reach target`);
   }
 });
 
