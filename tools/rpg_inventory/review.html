@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Verdigris Asset Review</title>
+<style>
+  :root{
+    --bg:#14161a; --panel:#1d2026; --panel2:#23272f; --edge:#333a44;
+    --ink:#e8e6df; --dim:#9aa0ab; --accent:#7fd8c2; --warn:#e5b567; --bad:#e06b6b; --ok:#7fc97f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  header{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:1px solid var(--edge);padding:12px 18px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  h1{font-size:16px;margin:0;font-weight:600;letter-spacing:.3px}
+  .stat{font-size:12px;color:var(--dim)}
+  .stat b{color:var(--ink)}
+  .spacer{flex:1}
+  button{font:inherit;color:var(--ink);background:var(--panel2);border:1px solid var(--edge);border-radius:7px;padding:6px 11px;cursor:pointer}
+  button:hover{border-color:var(--accent)}
+  button.active{background:var(--accent);color:#0c0f12;border-color:var(--accent);font-weight:600}
+  .filters{display:flex;gap:6px}
+  main{padding:18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid var(--edge);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+  .card.flag{border-color:var(--warn)}
+  .card.missing{border-color:var(--bad)}
+  .thumb{height:200px;display:flex;align-items:center;justify-content:center;
+    background-color:#8a8f98;
+    background-image:linear-gradient(45deg,#7c828b 25%,transparent 25%),linear-gradient(-45deg,#7c828b 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#7c828b 75%),linear-gradient(-45deg,transparent 75%,#7c828b 75%);
+    background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0}
+  .thumb img{max-width:96%;max-height:96%;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
+  .thumb .none{color:#2a2d33;font-weight:700;font-size:13px}
+  .body{padding:11px 12px;display:flex;flex-direction:column;gap:9px}
+  .row{display:flex;align-items:center;gap:8px}
+  .name{font-weight:600;font-size:14px}
+  .cv{font-size:10px;color:var(--dim);border:1px solid var(--edge);border-radius:4px;padding:1px 5px}
+  .status{display:flex;gap:6px}
+  .status button{flex:1;padding:5px 0;font-size:12px}
+  .status button.ok.on{background:var(--ok);color:#0c0f12;border-color:var(--ok);font-weight:600}
+  .status button.rw.on{background:var(--warn);color:#0c0f12;border-color:var(--warn);font-weight:600}
+  .modes{display:flex;flex-wrap:wrap;gap:5px}
+  .chip{font-size:11px;padding:2px 7px;border:1px solid var(--edge);border-radius:20px;color:var(--dim);cursor:pointer;user-select:none}
+  .chip.on{background:var(--bad);border-color:var(--bad);color:#120c0c;font-weight:600}
+  label.fld{font-size:11px;color:var(--dim);display:block;margin-bottom:2px}
+  textarea{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--edge);border-radius:6px;padding:6px 7px;font:12px/1.4 inherit;resize:vertical}
+  textarea.desc{min-height:52px}
+  textarea.notes{min-height:34px}
+  .hidden{display:none}
+  #exportPane{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:40}
+  #exportPane .inner{background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:18px;width:min(820px,92vw);max-height:88vh;overflow:auto}
+  #exportPane textarea{min-height:320px;font-family:ui-monospace,Menlo,monospace}
+  .modelegend{font-size:11px;color:var(--dim)}
+  .summary{background:var(--panel2);border:1px solid var(--edge);border-radius:8px;padding:10px 12px;font-size:12px;margin:0 18px}
+  .summary b{color:var(--warn)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Verdigris Asset Review</h1>
+  <div class="stat"><b id="cTotal">0</b> items · <b id="cFlag" style="color:var(--warn)">0</b> to rework · <b id="cOk" style="color:var(--ok)">0</b> ok · <b id="cMiss" style="color:var(--bad)">0</b> missing art</div>
+  <div class="spacer"></div>
+  <div class="filters">
+    <button data-f="all" class="active">All</button>
+    <button data-f="flag">Flagged</button>
+    <button data-f="ok">OK</button>
+    <button data-f="untouched">Unreviewed</button>
+  </div>
+  <button id="btnExport">Export flags ▸</button>
+  <button id="btnReset" title="Clear all your marks">Reset</button>
+</header>
+<div class="summary" id="summary"></div>
+<main id="grid"></main>
+
+<div id="exportPane"><div class="inner">
+  <div class="row" style="margin-bottom:10px"><b style="font-size:15px">Flagged items export</b><div class="spacer"></div>
+    <button id="btnCopy">Copy JSON</button><button id="btnClose">Close</button></div>
+  <p class="modelegend">Paste this back to Claude to drive prompt reworks / regeneration. Includes reworked DESC, failure modes, and notes for every item you marked "Rework".</p>
+  <textarea id="exportText" readonly></textarea>
+</div></div>
+
+<script>
+const MODES = ["proportion","malformed","oversimplified","hard-shape","ambiguous-read","material-bleed","mask","style/wash"];
+// name, canvas, desc, preflag(status|modes|suggestion)
+const ITEMS = [
+ ["handaxe_copper","P","a cast copper handaxe, its blade blooming with blue-green patina, on a leather-wrapped haft, held vertical"],
+ ["handaxe_bronze","P","a cast bronze handaxe with a leather-wrapped haft, held vertical"],
+ ["handaxe_obsidian","P","a handaxe of knapped black obsidian, glassy conchoidal facets, lashed to a short wooden haft with sinew, held vertical"],
+ ["handaxe_skymetal","P","a handaxe with a dark iridescent meteoric-iron head, star-flecked, on a short wooden haft, held vertical"],
+ ["spear_flint","P","a flint-tipped hunting spear on a long ash shaft with sinew lashing, the entire spear visible tip to butt, posed on a slight diagonal so the full length fits inside the frame"],
+ ["spear_bone","P","a spear tipped with a barbed carved-bone point on a long ash shaft, sinew lashing, the entire spear visible tip to butt, posed on a slight diagonal so the full length fits inside the frame"],
+ ["spear_copper","P","a copper-bladed spear, the blade blooming with green patina, on a long ash shaft, the entire spear visible tip to butt, posed on a slight diagonal so the full length fits inside the frame"],
+ ["spear_bronze","P","a leaf-bladed bronze spear, blade embossed with a river-spiral, socket wrapped in red-dyed cord with a bronze bead tassel, long ash shaft, the entire spear visible tip to butt, posed on a slight diagonal so the full length fits inside the frame"],
+ ["spear_obsidian","P","a spear with a long saw-edged black obsidian head inlaid with tiny turquoise chips, faint cool teal glints in the glassy facets, dark hardwood shaft with a gold-leaf band at the socket, the entire spear visible tip to butt, posed on a slight diagonal so the full length fits inside the frame"],
+ ["spear_skymetal","P","a spear with a dark iridescent meteoric-iron head, star-flecked and traced with faint cool teal veins, gold socket collar with a small carved bone skull fetish, the entire spear visible tip to butt, posed on a slight diagonal so the full length fits inside the frame"],
+ ["macuahuitl_obsidian","P","an Aztec macuahuitl: flat hardwood club edged with rows of black obsidian blades, the wood plated with embossed gold panels and turquoise inlay dots, a small gold skull at the pommel, held vertical"],
+ ["macuahuitl_flint","P","a macuahuitl: flat hardwood club edged with rows of knapped grey flint blades, grip whipped in rawhide, a red ochre handprint stamped on the wood, held vertical"],
+ ["macuahuitl_bone","P","a macuahuitl: flat dark hardwood club edged with rows of polished bone shards, a carved deity-profile in the wood, hung with knotted cords and two copper-capped boar tusks at the pommel, held vertical"],
+ ["atlatl_bone","P","a carved bone atlatl dart-thrower incised with bird-flight tally marks, a black-and-teal fletched dart resting in its groove, vertical", "rework","hard-shape,oversimplified","a carved bone atlatl (spear-thrower): a long hooked throwing stick held vertical, a separate fletched dart laid alongside it, clear hook at the top end, incised bird-flight tally marks"],
+ ["atlatl_copper","P","a copper-plated atlatl dart-thrower with green patina in its engraved grooves, a blue bead tassel at the grip, feathered dart in its groove, vertical","rework","hard-shape,oversimplified",""],
+ ["atlatl_bronze","P","a bronze atlatl dart-thrower embossed with a tiny deity-profile frieze, verdigris pooling in the grooves, red cord grip, feathered dart in its groove, vertical","rework","hard-shape,oversimplified",""],
+ ["khopesh_copper","P","a copper sickle-sword khopesh blooming with green patina, hilt wound in dark leather with a lapis-blue bead pommel, held vertical"],
+ ["khopesh_bronze","P","a bronze khopesh, blade embossed with a procession of tiny marching figures in the Mesopotamian style, verdigris pooling in the embossed lines, notch-worn edge, lapis and gold banding at the hilt, held vertical"],
+ ["khopesh_skymetal","P","a khopesh of dark iridescent meteoric iron, star-flecked blade traced with faint cool teal veins, gold hilt embossed with a horned sun, held vertical"],
+ ["sling_hide","P","a braided hide sling with a smooth river stone in the pouch, one strap ending in a carved bone toggle, straps hanging vertical","rework","proportion,hard-shape","a braided hide sling laid out full length: two long thin cords meeting at a small central pouch cradling a smooth river stone, cords trailing to their full length, one ending in a carved bone toggle"],
+ ["sling_quilted","P","a sling of tightly braided undyed linen cords, the pouch quilted and stitched with a small red spiral, smooth river stone seated in it, straps hanging vertical","rework","proportion,hard-shape",""],
+ ["hideshield_bronze","P","a tall shield faced with hammered bronze, embossed with concentric rings of spiral ornament around a domed sun-face boss, verdigris pooling in the grooves, ragged madder-red cloth strips knotted at the rim"],
+ ["hideshield_bronzescale","P","a tall oval shield faced with overlapping gilded bronze scales on leather backing, a bronze sun-face boss at center, black and teal feather fringe around the lower rim"],
+ ["hideshield_rivetmail","P","a tall shield reinforced with riveted iron strips over dark leather, impossibly advanced, dull grey gleam, edges bound in gold wire"],
+ ["wrap_hide","P","a wrapped tunic of oxblood-dyed hide with bone toggles and cord belt loops, cream fur-trimmed shoulder, a single small copper disc stitched at the chest"],
+ ["wrap_quilted","P","a quilted linen armor vest of layered stitched cloth, undyed off-white with madder-red binding along the seams, cord tie at the shoulder"],
+ ["wrap_bronzescale","P","a vest of overlapping gilded bronze scales sewn onto oxblood leather backing, collar edged with an embossed gold deity-profile band and a short lapis bead fringe"],
+ ["wrap_rivetmail","P","a riveted mail hauberk laid out flat and spread like a garment, technology from beyond the horizon, collar bound in gold wire with one lapis bead"],
+ ["crest_bone","S","a headpiece of carved bone and boar tusks with two short antler tines, crowned with a black horsehair crest, the tusks capped in copper"],
+ ["crest_hide","S","a headpiece of stretched hide over a wicker frame with a russet horsehair crest, a row of small cowrie shells across the brow and one natural tan feather at the temple"],
+ ["crest_copper","S","a hammered copper cap with cheek guards, blue-green patina blooming across the dome, brow band engraved with a running spiral"],
+ ["crest_bronze","S","a hammered bronze cap with cheek guards, an embossed sunburst above the brow, weathered green patina, a short black feather plume at the crown"],
+ ["crest_jade","S","a jade circlet-diadem carved with river motifs, faint cool inner glow, gold wire wrapping at the temples, a fan of glossy black-dyed feathers rising behind, two dangling jade drops"],
+ ["grips_hide","S","a pair of hide handwraps with knuckle cords, a small bone bead knotted at each wrist","rework","ambiguous-read","a pair of hide hand-wraps for a person's hands (fingerless), knuckle cords and a small bone bead at each wrist, clearly hands not feet, laid flat side by side"],
+ ["grips_quilted","S","a pair of quilted linen handwraps of layered stitched cloth, undyed off-white with red-stitched knuckle lines"],
+ ["grips_bronzescale","S","a pair of handwraps armored with overlapping gilded bronze scales on oxblood leather, wrist bands embossed with a tiny deity-profile frieze"],
+ ["sandals_hide","S","a pair of strapped hide sandals, mud-flecked and worn, one copper stud at each ankle strap"],
+ ["sandals_quilted","S","a pair of strapped sandals of layered quilted linen, undyed off-white with red binding thread, small bronze ankle discs"],
+ ["girdle_quilted","L","a wide girdle belt of layered quilted linen laid out horizontally, stitched in red chevrons, a carved antler toggle and a hanging blue bead cord"],
+ ["girdle_copper","L","a wide belt of hammered copper plates on oxblood leather backing laid out horizontally, each plate embossed with a tiny deity-profile, blue-green patina pooling in the relief, gold-capped antler toggle"],
+ ["gorget_jade","S","a carved jade gorget pendant on a knotted cord, incised river-spiral, gold caps on the cord knots","rework","proportion","a carved jade gorget pendant hung on a long knotted cord forming a full wearable neck-loop (cord much longer than the pendant), incised river-spiral, gold caps on the cord knots"],
+ ["gorget_bone","S","a gorget pendant of carved bone on a knotted sinew cord, incised tally marks rubbed with red ochre","rework","proportion","a carved bone gorget pendant on a long sinew cord forming a full wearable neck-loop, incised tally marks rubbed with red ochre"],
+ ["gorget_copper","S","a crescent gorget of hammered copper on a knotted cord, blooming blue-green patina, a cascade of three short lapis-bead strands dangling from its lower edge","rework","proportion","a crescent hammered-copper gorget on a long cord forming a full wearable neck-loop, blooming blue-green patina, three short lapis-bead strands dangling from its lower edge"],
+ ["gorget_amber","S","a raw amber pendant with a trapped insect, on sinew cord","rework","proportion","a raw amber pendant with a trapped insect, hung on a long sinew cord forming a full wearable neck-loop (cord several times longer than the pendant)"],
+ ["ring_bone","S","a ring carved from a single knucklebone, incised marks rubbed with soot"],
+ ["ring_copper","S","a coiled copper ring with blooms of blue-green patina, its ends finished as two tiny facing bird heads"],
+ ["ring_jade","S","a ring carved from a single piece of green jade, faint cool sheen, a hair-thin gold band inlaid around its center"],
+ ["ring_amber","S","a ring carved from raw honey-gold amber, translucent with a trapped seed inside, set in a thin embossed gold collar"],
+ ["curio_bone","S","a strange small curio: a tiny carved bone bird with jade-chip eyes, perched on a copper ring stand"],
+ ["curio_jade","S","a strange small curio: a tiny carved jade river-fish with incised scales and gold-leaf fins, resting on a black feather"],
+ ["curio_amber","S","a strange small curio: a polished amber sphere with a trapped mayfly, cradled in a tiny bronze claw stand"],
+ ["red_ochre","S","a lump of red ochre pigment beside a grinding stone stained crimson, a pinch of spilled powder beside it"],
+ ["woad","S","vivid blue woad paste in a pearly seashell, a bone stirring stick resting across it"],
+ ["soot","S","black soot powder in a carved bone tube capped with copper, a smudge of black spilled at its mouth"],
+ ["marsh_ochre","S","yellow marsh ochre in a small woven reed basket, the weave stained gold at the rim"],
+ ["entrail_omen","S","a clay liver-model omen piece incised with a divination grid in the Mesopotamian style, some lines rubbed with red ochre"],
+ ["bird_omen","S","a bird-flight omen: a bundle of black and teal feathers bound with knotted string and a small bronze ring"],
+ ["smoke_omen","S","a smoldering herb bundle wrapped in red cord on a small clay dish, one thin wisp of pale smoke rising"],
+ ["blood_omen","S","a shallow clay bowl glazed dark, stained with old blood, a bronze lancet resting across its rim"]
+];
+const MISSING = new Set(["blood_omen"]);
+const KEY="verdigris_review_v1";
+let state = JSON.parse(localStorage.getItem(KEY)||"{}");
+let filter="all";
+
+function saveState(){localStorage.setItem(KEY,JSON.stringify(state))}
+function get(n){return state[n]||(state[n]={status:"",modes:[],desc:"",notes:""})}
+
+function seed(){
+  // preseed from ITEMS preflag columns if user hasn't touched that item
+  ITEMS.forEach(it=>{
+    const [n,cv,desc,pf,modes,sugg]=it;
+    if(!state[n]){
+      const s={status:"",modes:[],desc:"",notes:""};
+      if(pf==="rework"){s.status="rework";s.modes=(modes||"").split(",").filter(Boolean);s.desc=sugg||"";}
+      state[n]=s;
+    }
+  });
+  saveState();
+}
+
+function render(){
+  const grid=document.getElementById("grid");grid.innerHTML="";
+  let nFlag=0,nOk=0,nMiss=0;
+  ITEMS.forEach(it=>{
+    const [n,cv,desc]=it; const st=get(n);
+    if(st.status==="rework")nFlag++; if(st.status==="ok")nOk++; if(MISSING.has(n))nMiss++;
+    let show=true;
+    if(filter==="flag")show=st.status==="rework";
+    else if(filter==="ok")show=st.status==="ok";
+    else if(filter==="untouched")show=!st.status;
+    if(!show)return;
+    const card=document.createElement("div");
+    card.className="card"+(st.status==="rework"?" flag":"")+(MISSING.has(n)?" missing":"");
+    const img = MISSING.has(n)?`<span class="none">NO ART YET</span>`:`<img src="assets/${n}.png" alt="${n}" loading="lazy"/>`;
+    card.innerHTML=`
+      <div class="thumb">${img}</div>
+      <div class="body">
+        <div class="row"><span class="name">${n}</span><span class="cv">${cv}</span></div>
+        <div class="status">
+          <button class="ok ${st.status==="ok"?"on":""}" data-a="ok">OK</button>
+          <button class="rw ${st.status==="rework"?"on":""}" data-a="rework">Rework</button>
+        </div>
+        <div class="modes">${MODES.map(m=>`<span class="chip ${st.modes.includes(m)?"on":""}" data-m="${m}">${m}</span>`).join("")}</div>
+        <div><label class="fld">DESC / reworked prompt</label><textarea class="desc" data-k="desc" placeholder="original: ${desc.replace(/"/g,'&quot;')}">${st.desc||""}</textarea></div>
+        <div><label class="fld">notes</label><textarea class="notes" data-k="notes">${st.notes||""}</textarea></div>
+      </div>`;
+    card.querySelectorAll(".status button").forEach(b=>b.onclick=()=>{
+      st.status = st.status===b.dataset.a?"":b.dataset.a; saveState(); render();});
+    card.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{
+      const m=c.dataset.m; const i=st.modes.indexOf(m);
+      if(i>=0)st.modes.splice(i,1);else st.modes.push(m);
+      saveState(); render();});
+    card.querySelectorAll("textarea").forEach(t=>t.oninput=()=>{st[t.dataset.k]=t.value;saveState();});
+    grid.appendChild(card);
+  });
+  document.getElementById("cTotal").textContent=ITEMS.length;
+  document.getElementById("cFlag").textContent=nFlag;
+  document.getElementById("cOk").textContent=nOk;
+  document.getElementById("cMiss").textContent=nMiss;
+  // summary of failure modes
+  const tally={};ITEMS.forEach(it=>{const st=get(it[0]);if(st.status==="rework")st.modes.forEach(m=>tally[m]=(tally[m]||0)+1)});
+  const parts=Object.entries(tally).sort((a,b)=>b[1]-a[1]).map(([m,c])=>`${m}: <b>${c}</b>`);
+  document.getElementById("summary").innerHTML = parts.length? "Failure modes across flagged items — "+parts.join(" · ") : "No items flagged yet. Mark items 'Rework' and tag their failure modes; use the DESC box to draft a better prompt.";
+}
+document.querySelectorAll(".filters button").forEach(b=>b.onclick=()=>{
+  filter=b.dataset.f;document.querySelectorAll(".filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");render();});
+document.getElementById("btnExport").onclick=()=>{
+  const out=ITEMS.filter(it=>get(it[0]).status==="rework").map(it=>{
+    const [n,cv,desc]=it;const st=get(n);
+    return {name:n,canvas:cv,failure_modes:st.modes,original_desc:desc,reworked_desc:st.desc||desc,notes:st.notes||""};});
+  document.getElementById("exportText").value=JSON.stringify(out,null,2);
+  document.getElementById("exportPane").style.display="flex";};
+document.getElementById("btnClose").onclick=()=>document.getElementById("exportPane").style.display="none";
+document.getElementById("btnCopy").onclick=()=>{const t=document.getElementById("exportText");t.select();document.execCommand("copy");};
+document.getElementById("btnReset").onclick=()=>{if(confirm("Clear all your review marks?")){state={};localStorage.removeItem(KEY);seed();render();}};
+seed();render();
+</script>
+</body>
+</html>

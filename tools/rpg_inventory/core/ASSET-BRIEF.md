@@ -5,6 +5,117 @@ Goal: item art for the Verdigris pack, generated on the ChatGPT web app
 art on pure black → alpha matte → composite → autocrop (script pattern:
 `gen_assets.py` from the July 2026 session; only the generation step changes).
 
+## ⚑ AUTHORITATIVE STYLE (v2, 2026-07-04 pm) — USE THIS, supersedes the v1 blockquote below
+
+Hard lessons from review (do NOT relitigate these — they cost real quota):
+
+1. **Dynamic 3/4 hero angle, never flat.** ARPG icons (Path of Exile, Diablo 2,
+   Last Epoch) show the item tilted in a three-quarter view — partly from the
+   side and slightly above — so it reads as a solid object with volume. Dead-on
+   front or pure side views look like stiff museum archival photos. This also
+   fixes "backless" reads: a helmet at 3/4 shows its full domed shell and the
+   back of the head, not just a face-plate.
+2. **Complete, solid, wearable object seen in the round.** It must look like a
+   real thing that fully does its job (a helm protects the whole head; a vest
+   wraps the torso). Never a fragment or facade.
+3. **Fill the frame + right aspect ratio.** GPT-image defaults to square and
+   SQUISHES anything long or wide. Always set the canvas (portrait for
+   weapons/tall armour, landscape for belts) AND say the item fills the frame
+   edge-to-edge; long weapons sit on a bold diagonal spanning corner to corner.
+4. **Pairs render as a pair.** Boots, sandals, greaves, bracers, gloves, grips
+   → show BOTH pieces together, overlapping at a dynamic angle (our slots draw
+   one icon, so the pair must be in that one image).
+5. **Dramatic game lighting.** Strong directional key light (upper-left), deep
+   shadow, a crisp cool rim light on the silhouette. High contrast, moody, not
+   flatly lit.
+6. **Flat uniform MID-GREY background (blue-grey for grey-metal/flint items),
+   NO cast shadow / ground plane** — one solid colour the adaptive local matte
+   keys out (2026-07-05 pivot; older art on #000000 still mattes fine). Cold
+   neutral grading, no yellow/sepia wash.
+7. **QA every render before accepting.** Look at it: complete object? 3/4 and
+   dynamic? fills frame, not squished/tiny? pair if applicable? deadly/cool for
+   a game, not a diagram? If any "no", re-roll — do not stage a dud.
+
+### The prompt text lives in ONE place: `core/PROMPT.txt` (hand-tuned by Alexei)
+
+`core/PROMPT.txt` is the style prompt — Alexei tunes it BY HAND; agents never
+edit it. status.py reads it ('#' lines stripped, whitespace collapsed) and
+assembles canvas prefix + PROMPT + DESC; `python3 core/status.py --prompt
+ART_ID` emits the exact final prompt. Canvas prefixes + the blue-grey
+fallback swap live in status.py. Rules below apply when Alexei tunes it
+(agents: rules 1-6 still govern DESC writing):
+
+1. POSITIVE PHRASING ONLY for style/render qualities. Never name the thing
+   you don't want — "NOT painterly", "not magical", "no museum view" all
+   INJECT those tokens and the model drifts toward them. Describe only the
+   wanted look. (Negations are OK for concrete artifacts: no text, no
+   watermark, no drop shadow, no vignette — those work.)
+2. Ask for TRUE-ALPHA output first (real transparent PNG), flat grey fill as
+   fallback (blue-grey for grey metals — the swap is automated in status.py).
+   qa_gate/art_matte handle both automatically. Painted checkerboard = reject.
+3. Never prompt closures/fastenings (toggles, buckles, clasps) — let the
+   model improvise them.
+4. DESCs (targets.tsv) hold ONLY item content — materials, construction,
+   proportions ("a pair of, shown as a pair", "entire weapon visible") —
+   never render-style words.
+5. ONE MATERIAL PER ITEM (2026-07-06, Alexei). A base item is its material
+   plus at most an obvious functional secondary (leather grip, wooden haft,
+   cord). NO decorative accent materials — no gold bands/inlays/collars/
+   caps/rivets sprinkled onto iron or jade items. Enchantment prefixes/
+   suffixes carry the uniqueness in-game; base art stays clean. Composites
+   are allowed ONLY when the composite IS the rung's identity (Gilded
+   Vambraces, bronze scales on leather) and then it dominates the read
+   instead of being a hair-thin detail.
+6. COMMIT FULLY TO EXOTIC MATERIALS (2026-07-06, Alexei — "full permission
+   to step away from AI tropes and cliche fantasy constructs"). "X-inlaid
+   Y" is a trope hedge: not jade-inlaid bronze greaves but greaves carved
+   ENTIRELY of jade. A full-jade / full-amber / full-bone item is bolder
+   and reads better than a timid accent. When a rung is named for an
+   exotic material, the whole item is that material.
+
+### Prompt changelog
+
+- 2026-07-04 v2: 3/4 hero angle, fill frame, PoE/D2 framing, dramatic
+  lighting; replaced painterly-oil v1.
+- 2026-07-05: crisp game-icon look; grey bg replaces black; skymetal = plain
+  raw dark iron (negation stacking removed); no spirals.
+- 2026-07-06: TRUE-ALPHA background requested first, grey fill fallback.
+- 2026-07-07: closures/fastenings never prompted. Render-style sentence
+  rewritten positive-only ("sharply modeled high-detail 3D game asset, crisp
+  hard edges, photoreal material textures") — the old sentence contained
+  "stylized"/"painterly" as negations and the style was leaking back in.
+- 2026-07-07: prompt extracted to PROMPT.txt for Alexei's hand-tuning;
+  one-material rule; commit-fully-to-exotic-materials rule (full jade
+  greaves, not jade-inlaid); agents no longer touch the style text.
+
+### Material-specific corrections (2026-07-05 review — do not relitigate)
+
+- **Skymetal / meteoric iron = raw dark iron.** Describe the MATERIAL only: raw,
+  dark, cold, dense, unpolished grey-black iron on a plain leather-bound grip.
+  Avoid the high-fantasy elements — NO glow, NO star-flecks, NO crystalline/gemlike
+  blades, NO teal/blue energy veins, NO ornate gilded hilts. BUT do NOT stack
+  negations like "mundane, not magical, primitive iron unknown to a bronze-age
+  world" into the prompt — that desaturates the render, kills the cool rim-light,
+  and breaks continuity with the rest of the set. Just name the material and let
+  the standard v2 lighting/grading light it exactly like every other item.
+- **No spiral motifs.** Spirals are overused — do NOT put spirals on shields,
+  amulets/gorgets, crests, bucklers, blades, or anywhere. Use varied ornament
+  instead: sunbursts / sun-face bosses, concentric rings, chevrons, deity-profile
+  or marching-figure friezes, punched dots and studs, meander/key bands, feather
+  fringes, radiating rays, animal (fish/bird/boar) motifs.
+- **Primitive / low-tier items = ONE material, minimal parts.** This is the real
+  rule (a bone club failed not because bone is bad, but because it was prompted as
+  a wood-shaft + jawbone + lashings composite — illogical for a crude weapon, and
+  the gen can't picture it). Bone BLADES are great: a sharpened bone/femur dagger
+  reads perfectly. A bone club is just ONE massive bone — a heavy femur, the
+  knobbed joint-end as the striking head, at most a leather strap for a grip,
+  nothing else. Do not reinvent the wheel with unnecessary composites on low-tier
+  items; simplicity IS the primitive read.
+- Obsidian keeps its glassy black facets with faint teal glints (that's correct,
+  ceremonial) — but keep it clearly *stone*, not glowing crystal.
+
+(v1 style below is retained for reference only; v2 above wins on any conflict.)
+
 ## Style prompt (prefix every item prompt with this)
 
 Written to counteract GPT-image's habitual yellow/sepia wash: the palette is
@@ -13,18 +124,65 @@ cast is banned explicitly.
 
 > Dark low-fantasy bronze-age inventory item icon: {DESC}. Painterly digital
 > oil style with neutral white balance and cold, desaturated grading — deep
-> neutral blacks, slate-grey shadows, bone-white highlights, muted
-> copper-green accents. Warm tones appear only where the material itself is
-> warm (ochre pigment, bronze metal), never as an overall wash. Lit by cool
-> diffuse overcast light with one restrained warm rim light from the side.
-> No sepia tone, no yellow color cast, no amber haze, no vignette. Materials
-> look hand-made: knapped stone, lashed cord, hammered metal, stitched hide.
-> No polished steel, no gems unless stated. Single object, centered, filling
-> most of the frame. Isolated on a pure solid #000000 black background.
-> No text, no watermark, no frame.
+> neutral blacks, slate-grey shadows, bone-white highlights. Warm tones appear
+> only where the material itself is warm, never as an overall wash. Lit by
+> cool diffuse overcast light with one restrained warm rim light from the
+> side. No sepia tone, no yellow color cast, no amber haze, no vignette.
+> Hand-made, period-appropriate craftsmanship. The item is made only of the
+> materials named above — do not add extra fittings, bindings, metal parts,
+> patina or gems beyond those named. No polished steel. Single
+> object, centered, filling most of the frame while remaining entirely
+> inside it — no part of the item cropped by the frame edges; long weapons
+> may sit on a slight diagonal to fit their full length. Isolated on a pure
+> solid #000000 black background. No text, no watermark, no frame.
+
+(2026-07-03 batch note: the original prompt enumerated example materials —
+"knapped stone, lashed cord, hammered metal, stitched hide" — and asked for
+"muted copper-green accents" globally. GPT-image treated both as content
+directives and grafted bronze fittings / patina / stray materials onto items
+that never asked for them. Material mentions now live only in each DESC.)
+
+## Ornamentation ladder (2026-07-03, from game concept art)
+
+Item DESCs follow the concepts' wealth ladder so the set reads varied, not
+stone-age-drab. Ornament vocabulary from the concept sheets: embossed gold
+panels and friezes (Mesopotamian marching figures, sunbursts, horned suns),
+turquoise inlay dots, lapis-blue beads and tassels, black-and-teal feather
+fringe, small skull/tusk fetishes, ragged madder-red cloth, and — on obsidian
+and skymetal only — faint cool teal glints/veins in the material.
+
+- tier 1 (flint, bone, hide): humble and functional; at most a bone bead,
+  cowrie shell, ochre mark or copper stud.
+- tier 2-3 (quilted, copper, bronze): dyed bindings, chevron bands,
+  embossed friezes, bead tassels, patina.
+- tier 4+ (obsidian, jade, amber, bronzescale): gilded panels, turquoise or
+  lapis inlay, gold wire, feather fringe, ceremonial weight.
+- tier 5-6 (skymetal, rivetmail): otherworldly — star-flecked iridescence,
+  faint teal energy veins, gold fittings; rivetmail stays alien and austere.
+
+Round-2 notes (full concept dump lives in Downloads/Images): verdigris patina
+is a WEATHERING marker wherever bronze/copper appears, at any tier — "pooling
+in grooves/relief". Leather reads oxblood/burgundy-dyed, not dull tan; fur is
+cream-tan and scruffy. Feathers split by status: natural tan = humble, glossy
+black-dyed = luxury. Also add: antler tines/crowns (tier 3+ carved, tier 5
+gilded), deity-profile friezes and mask-face panels (belts, shields, wrist
+bands), embossed ribs/pectoral relief on armor, cascading multi-strand lapis
+or turquoise bead drops, sun-face bosses on shields.
 
 If a result still trends warm, regenerate once with "make the white balance
 noticeably cooler" appended; the local composer also has a `--wb` rescue flag.
+
+## Rate discipline (2026-07-04 — we hit "too many requests")
+
+Observed on ChatGPT Pro web image gen: ~24 images over the evening (peak
+burst 20.5/hr), then 38 more the next morning at 20.4/hr sustained with a
+33.6/hr peak stretch (28 images in 50 min). The throttle tripped at ~70
+images in ~13h, mid-batch. Cooldown duration unknown (hours-scale).
+
+Future sessions: pace generations at ONE EVERY 5-6 MINUTES (≤12/hr), take a
+~15 min break every 10 images, keep a day's total under ~50, and interleave
+Gemini matte work between generations instead of batching gens back-to-back.
+Front-load the highest-priority items in case the ceiling arrives early.
 
 ## Canvas orientation (start every prompt with this)
 
@@ -83,7 +241,7 @@ drop the key into `~/.openrouter_key` once. Scripts need Python 3 with
 | wrap_hide | P | a wrapped hide tunic with bone toggles and cord belt loops |
 | wrap_quilted | P | a quilted linen armor vest of layered stitched cloth, undyed off-white, cord tie at the shoulder |
 | wrap_bronzescale | P | a vest of overlapping bronze scales sewn onto leather backing |
-| wrap_rivetmail | P | a riveted mail hauberk on a wooden stand — technology from beyond the horizon |
+| wrap_rivetmail | P | a riveted mail hauberk laid out flat and spread like a garment — technology from beyond the horizon (no stand/mannequin: image gen mangles them) |
 | crest_bone | S | a headpiece of carved bone and boar tusks with a horsehair crest |
 | crest_bronze | S | a hammered bronze cap with cheek guards, weathered with green patina |
 | crest_jade | S | a jade circlet-diadem carved with river motifs, faint cool inner glow |
@@ -138,3 +296,29 @@ as hammered bronze rather than gold filigree.
 - **No yellow/sepia wash** — whites read bone-white, shadows read grey-black.
 - Silhouette reads clearly at 48px (squint test).
 - Matte matches framing; holes (shield grips, cord loops) are black.
+
+## 2026-07-04 review priors (from full manual review)
+
+Mattes are now generated locally from the art's black background
+(`core/art_matte.py`) — no generative matte. The remaining failures are ART
+failures. Bake these into every prompt:
+
+1. **Correct real-world proportions; never zoom the "interesting" part.**
+   GPT-image enlarges the ornate bit and shrinks the rest. Polearms/spears
+   must show a SMALL head on a VERY LONG thin shaft (shaft >= 5x head length,
+   shaft is the dominant element), the whole weapon a thin diagonal line
+   corner to corner. Necklaces/gorgets must hang on a cord long enough to form
+   a full wearable neck-loop (cord several times longer than the pendant).
+2. **Simple, legible single objects.** Avoid multi-part composites and loose
+   props (spare darts, "resting on a feather", paired tools). One object.
+3. **Avoid AI-fragile shapes entirely.** Atlatls/spear-throwers, bows, and
+   loose slings render as malformed blobs — retire them rather than burn
+   tokens. Prefer weapons/armour with a bold, unambiguous silhouette.
+4. **Weapons should look deadly and balanced** — bold blade mass, sensible
+   hilt/haft proportion; a weapon that looks flimsy or awkward is a reject.
+5. Hand armour: render as upright **forearm bracers/vambraces** (reliable),
+   not laid-flat fingerless wraps (read as foot-shaped garbage).
+
+Retired this pass: `atlatl_*` (kept old art as placeholder, flagged for
+removal). Reworked: `spear_*`, `khopesh_*`, `gorget_*`, `grips_*` (-> bracers),
+`sling_*` (one attempt then cut if still unusable), `curio_jade` (simplified).

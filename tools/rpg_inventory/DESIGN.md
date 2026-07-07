@@ -109,6 +109,32 @@ fossils built into the metallurgy. **Firing** (kiln/pyre rite) is the
 corruption analog: a gamble to ascend the material one tier — or scar the
 vessel, or shatter it.
 
+### Base items — class ladders, not a raw form×material grid (2026-07-04 revision — Alexei's vision)
+
+> **The important correction.** A naive `form × material` cross is a *failure
+> mode*: it forces nonsense combos (quilted sandals, obsidian gorgets,
+> fingerless quilted gloves) and pins the game on quirky exotic-only "forms"
+> (atlatl, macuahuitl) with no familiar baseline and no crude→endgame arc.
+
+What PoE and Diablo 2 actually ship: **each equipment class is a curated
+*ladder* of distinct, individually-named base items — one per tier — escalating
+from crude/early to endgame** (D2: Short Sword → Gladius → Falcata; Cap → War
+Hat → Shako. PoE: Iron Hat → … → Hubris Circlet). Material/theme is **intrinsic
+to each named rung**, not an axis sprayed across every class. The exotic stuff
+(obsidian macuahuitl, skymetal greathelm) is a **high rung, not a whole class.**
+
+Our material tiers above already *are* the ladder — we just need to (a) curate
+each class's rungs so only sensible materials appear, (b) give every rung an
+evocative name (Bronze Khopesh, Obsidian Cleaver, Skymetal Greathelm) instead of
+`{material} {form}`, and (c) use familiar archetype classes (dagger, sword, axe,
+mace, two-hander, spear, focus; body, helm, gloves, boots, belt, shield; amulet,
+ring) with the odd combinatorial items retired.
+
+**Full proposed class ladders + naming live in `core/BASE-DESIGN.md`.** Future
+coding sessions building the item roster / `verdigris-pack.js` `forms` block
+should follow that ladder model, not the old grid. (This is also recorded in
+`AGENTS.md`.)
+
 ### The three powers
 
 | | Brand ✦ | Bond ◈ | Trophy ✧ |

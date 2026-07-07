@@ -1,0 +1,2 @@
+# Items pulled from the auto-queue. One name per line, reason after a #.
+# The scheduler NEVER generates these; Alexei unblocks by deleting the line.
