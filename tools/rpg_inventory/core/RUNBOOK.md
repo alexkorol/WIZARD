@@ -6,8 +6,9 @@ mechanical loop. Filesystem is the only state; no memory required.
 ## Session start
 
 1. `python3 core/status.py` — coverage, today's budget usage, prioritized
-   queue. If 40 gens already logged today: do non-gen work (matte/compose/
-   QA/pack wiring) or stop.
+   queue. It applies `core/asset-review.js`: discarded items are retired, and
+   rework items are queued before ordinary missing targets. If 40 gens already
+   logged today: do non-gen work (matte/compose/QA/pack wiring) or stop.
 2. Check `core/.gen-lock` by CONTENT (not mtime — this mount can't delete
    files and truncation refreshes mtime): the file holds a unix timestamp;
    younger than 40 min = another run is live, do non-gen work only. `0` or
@@ -23,6 +24,7 @@ mechanical loop. Filesystem is the only state; no memory required.
 ## Per item (gen → QA → matte → compose → log)
 
 1. `python3 core/status.py --prompt ART_ID` → the full assembled prompt.
+   If it says the item is marked discard, do not generate it.
 2. Send it in the ChatGPT web app. Debugged recipe (coordinates drift; trust
    selectors + screenshots over pixels):
    - navigate to chatgpt.com (plain chat is fine; project chat is a
@@ -47,7 +49,7 @@ mechanical loop. Filesystem is the only state; no memory required.
    and note it in GEN-LOG.
 6. Matte + compose (local, free):
    - `python3 core/art_matte.py assets_staging ART_ID`
-   - `cd core && python3 compose_assets.py` (or per-item if supported)
+   - `cd core && python3 compose_assets.py ART_ID`
 7. Look at the composed final on a checkerboard if in doubt (holes, halos,
    eaten dark edges).
 8. Log to `core/GEN-LOG.md`: `YYYY-MM-DD HH:MM TZ  ART_ID DONE|REDONE|SKIP (why)`.
@@ -81,8 +83,9 @@ genuine see-through holes. Helmet eyes must be OPAQUE.
 
 - `python3 core/status.py` again; append a one-line session summary to
   GEN-LOG.md.
-- Do NOT git commit/push from a sandbox that can't delete/rename files —
-  `commit_assets.sh` runs on the Mac. From Claude Code on the Mac directly,
-  committing is fine: only assets/ + assets_staging/ + core scripts/docs.
+- Commit only composed finals in `assets/` plus reusable scripts/docs.
+  `assets_staging/*.png` is local working state and is ignored.
 - New Alexei feedback → bake it into AGENTS.md / ASSET-BRIEF.md / this table
   immediately.
+- Review exports that mark individual items as rework/discard belong in
+  `core/asset-review.js`.

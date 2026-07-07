@@ -555,12 +555,12 @@
 
   /* Demo economy: craft operations & tools priced in gold. */
   const OP_COST = { sear: 60, efface: 40, chisel: 150, fire: 100, resonate: 200, sever: 80 };
-  const TOOL_PRICES = { red_ochre: 80, woad: 80, soot: 80, ochre_gold: 80, entrail_omen: 120, bird_omen: 120, smoke_omen: 120, blood_omen: 120 };
+  const TOOL_PRICES = { red_ochre: 80, woad: 80, soot: 80, marsh_ochre: 80, entrail_omen: 120, bird_omen: 120, smoke_omen: 120, blood_omen: 120 };
   const TOOL_DESC = {
     red_ochre: 'Pigment — the mold drinks it: searing leans hard toward blade, blood and blunt.',
     woad: 'Pigment — searing leans toward ward and life.',
     soot: 'Pigment — searing leans toward spirit and ember.',
-    ochre_gold: 'Pigment — searing leans toward fortune, swiftness and the river.',
+    marsh_ochre: 'Pigment — searing leans toward fortune, swiftness and the river.',
     entrail_omen: 'Omen — read first, sear after: the next brand is guaranteed to carry the ward tag.',
     bird_omen: 'Omen — the next brand is guaranteed swift.',
     smoke_omen: 'Omen — the next brand is guaranteed spirit.',
@@ -708,11 +708,23 @@
         gloves: null, belt: null, boots: null, ring1: null, ring2: null,
       },
       atelierItem: null,
-      satchel: { red_ochre: 2, woad: 1, soot: 1, ochre_gold: 0, entrail_omen: 1, bird_omen: 0, smoke_omen: 0, blood_omen: 1 },
+      satchel: { red_ochre: 2, woad: 1, soot: 1, marsh_ochre: 0, entrail_omen: 1, bird_omen: 0, smoke_omen: 0, blood_omen: 1 },
       log: [
         { kind: 'sys', text: 'The vault opens on the Green Lands. Sear Brands, grow Bonds, bind Trophies — the vessel remembers all three.' },
       ],
     };
+  };
+
+  const normalizeState = (state) => {
+    const satchel = { ...(state.satchel || {}) };
+    if (satchel.ochre_gold != null) {
+      satchel.marsh_ochre = (satchel.marsh_ochre || 0) + satchel.ochre_gold;
+      delete satchel.ochre_gold;
+    }
+    Object.keys(TOOL_PRICES).forEach(id => {
+      if (satchel[id] == null) satchel[id] = 0;
+    });
+    return { ...state, satchel };
   };
 
   const loadState = () => {
@@ -721,7 +733,7 @@
       if (!raw) return seedState();
       const state = forge.deserialize(raw);
       if (!state || !Array.isArray(state.inventory) || !state.character || !state.equipment) return seedState();
-      return state;
+      return normalizeState(state);
     } catch (err) {
       return seedState();
     }
