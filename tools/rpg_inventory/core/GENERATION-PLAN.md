@@ -140,8 +140,9 @@ days, plus review and rework time.
 - Prompt-candidate batches must be no-repeat by default. When Alexei asks for
   "test prompts" or "prompts to roast", do not repeat, regenerate, or restyle
   already-made items. Exclude current `assets/`, accepted manual intake,
-  duplicate/exclusion notes, discarded rows, and queued reworks unless Alexei
-  explicitly asks for a style-calibration repeat of a named item.
+  duplicate/exclusion notes, discarded rows, and queued reworks. Style
+  calibration follows the same rule unless Alexei explicitly names an existing
+  item and asks to restyle that exact item.
 - Currency/crafting-material candidates are out of scope. Do not propose or
   generate crafting currencies, pigments, omen objects, ingots, molds, generic
   orbs, seal weights, or abstract bench reagents unless Alexei explicitly
