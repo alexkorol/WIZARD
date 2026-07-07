@@ -2,7 +2,7 @@
    VERDIGRIS CONTENT PACK for Vesselforge
    -----------------------------------------------------------------------------
    Bronze-age, low-power, low-fantasy. Copper is wealth, bronze is power,
-   riveted mail is a rumor from beyond the horizon. Influences: early
+   mail is a future-tech rumor beyond the current item horizon. Influences: early
    Mediterranean & Mesopotamian bronze age, Mesoamerica (macuahuitl,
    ichcahuipilli quilted armor, obsidian), paleolithic (flint, bone, hide).
 
@@ -28,6 +28,7 @@
     },
 
     retiredForms: ['atlatl', 'sling'],
+    retiredMaterials: ['rivetmail'],
     retiredArtIds: [
       'handaxe_copper', 'spear_bronze',
       'atlatl_bone', 'atlatl_copper', 'atlatl_bronze',
@@ -40,6 +41,8 @@
       'gorget_bone', 'gorget_copper', 'gorget_amber',
       'curio_jade',
       'entrail_omen',
+      'wrap_rivetmail', 'helm_rivetmail', 'greaves_rivetmail',
+      'hideshield_rivetmail',
     ],
 
     /* ---------------- materials: the tech-fantasy ladder ---------------- */
@@ -90,11 +93,11 @@
                     implicit: { label: '+10% Attack Speed', stat: { id: 'atk_speed', v: 10 } } },
       hideshield: { name: 'Shield', kind: 'shield', kindLabel: 'Shield', w: 2, h: 3, icon: 'shield',
                     armor: 45, tags: ['ward'], weights: { ward: 1.5 },
-                    materials: ['hide', 'bronze', 'bronzescale', 'rivetmail'],
+                    materials: ['hide', 'bronze', 'bronzescale'],
                     implicit: { label: '+4% Chance to Block', stat: { id: 'block', v: 4 } } },
       wrap:       { name: 'Wrap', kind: 'body', kindLabel: 'Body wrap', w: 2, h: 3, icon: 'wrap',
                     armor: 60, tags: ['ward', 'life'], weights: { life: 1.2 },
-                    materials: ['hide', 'quilted', 'bronzescale', 'rivetmail'],
+                    materials: ['hide', 'quilted', 'bronzescale'],
                     implicit: { label: '+15 to Maximum Life', stat: { id: 'life', v: 15 } } },
       crest:      { name: 'Crest', kind: 'helmet', kindLabel: 'Headpiece', w: 2, h: 2, icon: 'crest',
                     armor: 25, tags: ['ward', 'spirit'], weights: { spirit: 1.2 },
@@ -137,11 +140,11 @@
                     implicit: { label: '+6% Chance to Block', stat: { id: 'block', v: 6 } } },
       helm:       { name: 'Helm', kind: 'helmet', kindLabel: 'War helm', w: 2, h: 2, icon: 'crest',
                     armor: 35, tags: ['ward', 'life'], weights: { ward: 1.3 },
-                    materials: ['bronzescale', 'rivetmail'],
+                    materials: ['bronzescale'],
                     implicit: { label: '+20 to Maximum Life', stat: { id: 'life', v: 20 } } },
       greaves:    { name: 'Greaves', kind: 'boots', kindLabel: 'Shin guards', w: 2, h: 2, icon: 'sandals',
                     armor: 22, tags: ['ward'], weights: { ward: 1.4 },
-                    materials: ['bronze', 'bronzescale', 'rivetmail'],
+                    materials: ['bronze', 'bronzescale'],
                     implicit: { label: '+8% increased Ward', stat: { id: 'ward_pct', v: 8 } } },
     },
 

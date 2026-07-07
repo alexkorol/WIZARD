@@ -101,10 +101,11 @@
     let idCounter = 0;
     const genId = () => 'vf' + (++idCounter).toString(36) + Math.floor(rnd() * 1e6).toString(36);
     const retiredForms = new Set(pack.retiredForms || []);
+    const retiredMaterials = new Set(pack.retiredMaterials || []);
     const retiredArtIds = new Set(pack.retiredArtIds || []);
     const itemArtId = (formId, materialId) => `${formId}_${materialId}`;
     const isRetiredCombo = (formId, materialId) =>
-      retiredForms.has(formId) || retiredArtIds.has(itemArtId(formId, materialId));
+      retiredForms.has(formId) || retiredMaterials.has(materialId) || retiredArtIds.has(itemArtId(formId, materialId));
 
     /* ---------------- basic queries ---------------- */
     const material = (item) => pack.materials[item.materialId];
@@ -285,6 +286,7 @@
       if (!item.vessel) return err('This holds no vessel');
       const mat = material(item);
       if (!mat.ascendsTo) return err(`${mat.name} cannot be fired higher`);
+      if (retiredMaterials.has(mat.ascendsTo)) return err(`${pack.materials[mat.ascendsTo].name} is not available yet`);
       if (!spendPatience(item, 2)) return err('Firing needs 2 patience');
       const outcomes = Object.entries(S.fireOutcomes).map(([k, w]) => ({ w, k }));
       const res = pickWeighted(outcomes).k;
