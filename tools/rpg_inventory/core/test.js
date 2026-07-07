@@ -139,6 +139,26 @@ t('generation plan requires concrete relic gear', () => {
   assert(/Weak relic tropes/.test(plan),
     'plan must forbid weak relic trope prompts');
 });
+t('generation plan rejects weak prop-like bases', () => {
+  const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
+  const plan = fs.readFileSync(planPath, 'utf8');
+  assert(/Base-worthy gear rule/.test(plan),
+    'plan must include a base-worthiness guardrail');
+  assert(/Weak base-item concepts/.test(plan),
+    'plan must list weak prop-like base concepts');
+  assert(!/\| Shields \/ bucklers \|[^\n]*Wicker/.test(plan),
+    'shield allocation must not use wicker as a positive source');
+  assert(!/\| Rite foci \/ sceptres \|[^\n]*baton/i.test(plan),
+    'rite allocation must not use batons as positive sources');
+  assert(!/\| Throwing \/ sidearms \|[^\n]*Throwing knives, darts, hand stones/i.test(plan),
+    'sidearm allocation must not use joke-sized thrown objects as positive sources');
+  assert(/avoid bows\/slings, tiny darts, and hand stones/.test(plan),
+    'sidearm allocation must explicitly reject tiny darts and hand stones');
+  assert(!/\| Charms \/ relic curios \|[^\n]*ancestor tokens, shrine miniatures/i.test(plan),
+    'curio allocation must not use shrine miniatures as positive sources');
+  assert(/no loose tiny charms or shrine miniatures/.test(plan),
+    'curio allocation must explicitly reject shrine miniatures');
+});
 
 /* ---------------- crafting: sear/patience/pigment/omen ---------------- */
 t('sear adds a brand and spends patience', () => {

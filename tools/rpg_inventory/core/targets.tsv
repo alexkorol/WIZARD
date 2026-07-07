@@ -29,11 +29,11 @@ spear_copper	polearm	2	Copper Spear	P	-
 spear_bronze	polearm	3	Bronze Pike	P	-
 spear_obsidian	polearm	4	Obsidian Warspear	P	-
 spear_skymetal	polearm	5	Skymetal Warspear	P	-
-fetish_bone	ritefocus	1	Bone Fetish	S	a caster focus: a carved bone fetish idol mounted on a short wooden handle, hung with knotted cords and small animal teeth
-rattle_copper	ritefocus	2	Copper Rattle	S	a plain hammered copper rattle on a carved bone handle
+fetish_bone	ritefocus	1	Bone Idol-Cudgel	S	a heavy bone idol-head rite cudgel carved from one large bone, thick central grip, blunt striking head, compact and solid
+rattle_copper	ritefocus	2	Copper Hand Bell	S	a clean hammered copper hand bell with thick rounded bell body, short central handle, and simple raised rim bands
 sceptre_bronze	ritefocus	3	Bronze Sceptre	S	a plain bronze sceptre with a rounded mace-like finial and a leather-wrapped grip
 idolstaff_jade	ritefocus	4	Jade Idol-Staff	P	a tall dark-wood staff topped with a simple carved jade idol head
-starwand_skymetal	ritefocus	5	Skymetal Starwand	S	a slender wand of raw dark meteoric iron, hammer-faceted surface, a rawhide-wrapped grip
+starwand_skymetal	ritefocus	5	Skymetal Rite Rod	S	a short heavy rod of raw dark meteoric iron with a socketed blunt finial and rawhide-wrapped grip
 wrap_hide	body	1	Hide Wrap	P	-
 wrap_quilted	body	2	Quilted Vest	P	-
 wrap_studded	body	3	Bronze-Studded Jerkin	P	a plain boiled-leather jerkin reinforced with rows of domed bronze studs
@@ -75,9 +75,9 @@ ring_copper	ring	2	Copper Coil	S	-
 ring_jade	ring	4	Jade Band	S	-
 ring_amber	ring	4	Amber Ring	S	-
 ring_skymetal	ring	5	Skymetal Ring	S	a ring of raw dark meteoric iron, hammer-faceted
-curio_bone	curio	-	Bone Bird Curio	S	-
-curio_jade	curio	-	Jade Fish Curio	S	-
-curio_amber	curio	-	Amber Sphere Curio	S	-
+curio_bone	curio	-	Bone Reliquary	S	a small but solid carved bone reliquary box with a fitted lid and thick raised rim, one complete object
+curio_jade	curio	-	Jade Reliquary	S	a compact reliquary box carved entirely from dark green jade, thick walls, fitted lid, and clean blocky silhouette
+curio_amber	curio	-	Amber Reliquary	S	a compact reliquary casket carved entirely from raw amber, thick walls, fitted lid, and clean blocky silhouette
 red_ochre	tool	-	Red Ochre	S	-
 woad	tool	-	Woad	S	-
 soot	tool	-	Soot	S	-

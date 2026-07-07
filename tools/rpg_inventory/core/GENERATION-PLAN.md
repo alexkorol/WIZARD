@@ -40,19 +40,19 @@ base vocabulary to mutate.
 | Clubs / maces | 18 | Femur clubs, cudgels, copper maces, star-maces, mauls. |
 | Two-hand heavy weapons | 18 | Greatclubs, greataxes, macuahuitls, execution blades, temple mauls. |
 | Spears / polearms | 18 | Spears, harpoons, pikes, glaives, warspears; keep full weapon visible. |
-| Rite foci / sceptres | 18 | Fetishes, rattles, hand bells, double-ended ritual batons, pronged sceptres, idol-staves, priest tools. |
-| Caster rods / wands | 12 | Small foci distinct from sceptres; reliable short objects with real handles, finials, or sockets. |
-| Throwing / sidearms | 12 | Throwing knives, darts, hand stones; avoid bows/slings unless reconceived. |
+| Rite foci / sceptres | 18 | Heavy hand bells, pronged hand-sceptres, mace-like idol-staves, handled reliquaries, offering bowls, priest tools with real mass. |
+| Caster rods / wands | 12 | Short heavy rods distinct from sceptres; thick grips, blunt finials, sockets, or capped heads. Avoid pencil-thin wands. |
+| Throwing / sidearms | 12 | Throwing knives, heavy javelins, throwing clubs; avoid bows/slings, tiny darts, and hand stones. |
 | Body armour | 24 | Hide wraps, linen, boiled leather, studded jerkins, scale vests, sheet-bronze corslets. |
 | Helmets / crowns | 24 | Caps, crests, helms, masks, warcrowns, greathelms; distinct silhouettes. |
 | Bracers / gloves | 18 | Bracers/vambraces/gauntlets; avoid ambiguous handwraps. |
 | Boots / greaves | 18 | Sandals, boots, shin guards, greaves; pair shown as pair. |
 | Belts / girdles | 18 | Cords, sashes, girdles, plated belts, warbelts; landscape canvas. |
-| Shields / bucklers | 24 | Wicker, hide, round, tower, sheet-bronze, scale; strong front read, plain bosses on bases. |
+| Shields / bucklers | 24 | Hide-over-wood, rawhide, round, tower, sheet-bronze, scale; strong front read, plain bosses on bases. |
 | Amulets / neckpieces | 18 | Pendants, torcs, collars, lunulae, gorgets, sigils. |
 | Rings / seals | 18 | Bone rings, coils, signets, bands, plain seal rings, socket rings. |
-| Charms / relic curios | 24 | Fetishes, carved animals, ancestor tokens, shrine miniatures, reliquaries. |
-| Off-hand foci | 12 | Targes, tablets, hand-idols, rite boards; caster/ward variants. |
+| Charms / relic curios | 24 | Reliquary boxes, carved ancestor tablets, trophy settings, handled votive objects; no loose tiny charms or shrine miniatures. |
+| Off-hand foci | 12 | Targes, heavy tablets, handled ward plates, reliquary shields; caster/ward variants. |
 | Alias / reuse pool | 12 | D2-style renamed tiers using already-good art where acceptable. |
 | Non-weapon expansion reserve | 60 | Extra armour, shields, wearable jewellery, belts, greaves/bracers, rite foci, relic gear, and trophies. Do not spend this reserve on weapons or currency/crafting materials. |
 | **Total** | **420** |  |
@@ -66,7 +66,7 @@ Generate after the base vocabulary exists.
 | Slaughter | 25 | Red ochre, chipped edges, tooth/tusk trophies, but not gore soup. |
 | Warding | 25 | Shields, knots, blue-white mineral, heavy geometry, oath marks. |
 | Spiritwork | 25 | Bone, soot, ash, smoke, carved masks, quiet ritual objects. |
-| Wayfaring | 25 | Sandals, road charms, feather markers, reed maps, travel-worn gear. |
+| Wayfaring | 25 | Sandals, boots, travel belts, map cases, staff heads, travel-worn gear. |
 
 Uniques should alter silhouette, not just add glow. Example patterns: an
 ordinary bronze war-axe becomes a notched execution axe with a tooth-count
@@ -118,6 +118,11 @@ days, plus review and rework time.
 - Base rows do not get invented lore symbols, horned suns, deity marks,
   faction emblems, heavy patina, or grimy verdigris. Save that for uniques,
   awakened relics, and faction sets.
+- Base-worthy gear rule: every ordinary base must look worth equipping before
+  the tooltip explains it. It should have enough mass, construction, and
+  silhouette authority to block, strike, ward, carry, bind, or focus power.
+  Retire concepts that read as camp props, toys, school projects, tiny ritual
+  souvenirs, or joke loot.
 - Jade is not a blade/reach weapon material. Do not generate jade sabres,
   daggers, axes, spearheads, glaives, or polearms. Jade weapons are allowed
   only when the silhouette is blunt or mace-like: club, mace, maul, hammer,
@@ -138,12 +143,12 @@ days, plus review and rework time.
   reopens that lane.
 - Relic gear should be built from concrete ritual implement silhouettes, not
   weak AI-trope "mystic trinkets." Good structural references include
-  vajra/dorje-like double-ended pronged sceptres, paired hand bells, ritual
-  batons, forked standards, handled tablets, offering bowls, idol-head cudgels,
-  and reliquary boxes. Use the object logic: central grip, mirrored prongs,
-  bell body plus handle, socketed finial, lid/base/handle. Do not copy living
-  sacred iconography one-to-one, use exact religious names as ordinary base
-  names, or add fake symbols/lore marks.
+  vajra/dorje-like double-ended pronged sceptres, heavy paired hand bells,
+  forked standards, handled tablets, offering bowls, idol-head cudgels, and
+  reliquary boxes. Use the object logic: central grip, mirrored prongs, bell
+  body plus handle, socketed finial, lid/base/handle. Do not copy living sacred
+  iconography one-to-one, use exact religious names as ordinary base names, or
+  add fake symbols/lore marks.
 - At least 20% of equipment bases should have implicit/mechanical identity:
   socket, vessel, patience, trophy affinity, theme bias, block, speed, ward,
   spirit, reach, crit, or carry capacity.
@@ -168,6 +173,11 @@ Retire these unless reconceived into a reliable icon:
 - Weak relic tropes: floating crystals, vague glowing idols, generic magic
   orbs, symbol-covered plaques, smoky amulets, tiny charm clusters, and
   decorative stands. Relic gear needs one strong held/worn/handled object.
+- Weak base-item concepts: wicker shields, rite batons, pencil-thin wands,
+  hand stones, tiny darts, shrine miniatures, reed baskets, reed maps, road
+  charms, loose feather markers, and other one-off props that do not read as
+  credible loot. Wicker/reed can be hidden construction under hide or leather,
+  not the named face of a shield or the item thesis.
 
 ## Next file to create
 
