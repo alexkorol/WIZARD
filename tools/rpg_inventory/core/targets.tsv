@@ -7,7 +7,6 @@ dagger_skymetal	dagger	5	Skymetal Kris	P	-
 sword_flint	sword	1	Flint Cleaver	P	a heavy cleaver-like short sword: a single long knapped flint edge set into a thick wooden back, rawhide-bound grip
 khopesh_copper	sword	2	Copper Falchion	P	-
 khopesh_bronze	sword	3	Bronze Khopesh	P	-
-sword_jade	sword	4	Jade Sabre	P	a curved sabre of green jade with a simple leather-wrapped grip
 khopesh_skymetal	sword	5	Skymetal Longblade	P	-
 handaxe_flint	axe	1	Flint Hatchet	P	-
 handaxe_copper	axe	2	Copper Adze	P	-
@@ -29,7 +28,6 @@ spear_bone	polearm	1	Bone Harpoon	P	-
 spear_copper	polearm	2	Copper Spear	P	-
 spear_bronze	polearm	3	Bronze Pike	P	-
 spear_obsidian	polearm	4	Obsidian Warspear	P	-
-spear_jade	polearm	4	Jade Glaive	P	a polearm with a long curved blade of polished green jade on a dark lacquered shaft, the entire weapon visible tip to butt on a slight diagonal
 spear_skymetal	polearm	5	Skymetal Warspear	P	-
 fetish_bone	ritefocus	1	Bone Fetish	S	a caster focus: a carved bone fetish idol mounted on a short wooden handle, hung with knotted cords and small animal teeth
 rattle_copper	ritefocus	2	Copper Rattle	S	a plain hammered copper rattle on a carved bone handle
