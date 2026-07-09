@@ -40,13 +40,13 @@ ChatGPT image-2 currently reports a 10-image limit for one request. Use one
 ring by default and treat the outer layer as the flex slot:
 
 1. Main hand weapon
-2. Off hand item, shield, focus, or secondary weapon
+2. Off hand shield, focus, ritual tool, or secondary weapon
 3. Helmet, crown, hood, cap, or headgear
-4. Amulet, collar, torc, necklace, or throat ornament
+4. Amulet, pendant, necklace, or compact throat ornament
 5. Body armor, cuirass, harness, vest, robe armor, or chest piece
 6. Outer layer: cloak, shawl, scarf, veil, mantle, or hooded layer
-7. Belt, girdle, sash, waist harness, or hip piece
-8. Ring or small hand jewelry
+7. Belt, girdle, sash, waist harness, or horizontal hip piece
+8. Ring or compact finger jewelry
 9. Hands, gloves, bracers, wrist wraps, or vambraces
 10. Footwear, boots, sandals, greaves, anklets, or leg armor
 
@@ -56,9 +56,14 @@ anklet, toe ring, greave, or foot jewelry only; do not draw feet.
 
 ## Prompt Template
 
-Use this as the working multi-image prompt. Keep the alpha requirement strict.
-If the model bakes checkerboards, discard those images and retry with stronger
-"real alpha" wording rather than accepting the result.
+Use this as the working multi-image prompt. ChatGPT/image-2 batch output has
+not been reliable for true alpha: it may bake checkerboards or return opaque
+white backgrounds even when asked for transparent PNGs. For loadout extraction,
+generate on a flat slate matte instead, then run `core/chroma_key.py` locally.
+
+The current matte color is `#737A68` / sampled around `#6A6E5F` in outputs. It
+is far less toxic than magenta if a small edge fringe survives: the remainder
+reads as neutral dirt or cloth fuzz instead of a hot colored halo.
 
 ```text
 Generate images, no commentary.
@@ -73,13 +78,13 @@ total. Each output must be its own independent image file, not a combined sheet.
 
 Slots to generate:
 1. Main hand weapon
-2. Off hand item, shield, focus, or secondary weapon
+2. Off hand shield, focus, ritual tool, or secondary weapon
 3. Helmet, crown, hood, cap, or headgear
-4. Amulet, collar, torc, necklace, or throat ornament
+4. Amulet, pendant, necklace, or compact throat ornament
 5. Body armor, cuirass, harness, vest, robe armor, or chest piece
 6. Outer layer: cloak, shawl, scarf, veil, mantle, or hooded layer
-7. Belt, girdle, sash, waist harness, or hip piece
-8. Ring or small hand jewelry
+7. Belt, girdle, sash, waist harness, or horizontal hip piece
+8. Ring or compact finger jewelry
 9. Hands, gloves, bracers, wrist wraps, or vambraces
 10. Footwear, boots, sandals, greaves, anklets, or leg armor
 
@@ -96,11 +101,54 @@ faction or unrelated fantasy style.
 
 Each item should look like it truly belongs to this character and could be
 equipped by them. Preserve the successful design logic of the reference image:
-integrated ornament, believable straps and attachment points, purposeful tassels
-or hanging details, coherent metalwork, coherent leather/cloth/stone/shell
-treatment, and details that support the item instead of feeling pasted on.
-Details are allowed when they are physically attached, proportional, and part of
-the object's construction.
+integrated ornament, believable straps and attachment points, coherent
+metalwork, coherent leather/cloth/stone/shell treatment, and details that
+support the item instead of feeling pasted on. Details are allowed when they
+are physically attached, proportional, and part of the object's construction.
+Do not add decorative clutter just because the source outfit is ornate.
+
+Slot hygiene rules:
+Rings for fingers must be compact bands, signets, coils, socket rings, or seal
+rings. Do not put dangling charms, tassels, chains, bells, chimes, or hanging
+ornaments on rings.
+
+Do not add invasive charms, loose dangling rings, chimes, delicate chains,
+coins, tassels, or harness clutter to every item. Helmets must not have
+vision-hazard dangles. Armor and cloaks must not have stealth-hazard chimes or
+fragile loose charms. Weapons must not have fragile dangling jewelry unless it
+is a short, physically plausible grip wrap or lanyard. Chains, if present, must
+be period-appropriate cord or substantial chain, not delicate modern jewelry
+filigree.
+
+Solar symbols, eight-spoked wheel symbols, and human-face centerpieces are
+overrepresented and high-risk. Avoid them by default. If the reference clearly
+uses one of these motifs, use it on at most one extracted item, not across the
+whole set. The set should feel coordinated, not matchy.
+
+Amulets must be one pendant, stone, bead cluster, metal piece, or small charm
+on a long-ish cord, twine, leather string, or simple chain. The pendant must be
+the main readable object and take up most of the image; curl the string behind
+or around it. Do not render a gorget, collar, neck armor, choker plate, or
+turtleneck throat-piece for the amulet slot unless explicitly requested.
+
+Body armor must be the body/chest piece only. Prefer open neck and open chest
+construction consistent with ancient and Bronze Age gear. Do not include an
+attached gorget, collar, turtleneck, belt, skirt, faulds, tassets, or cloak as
+part of the body armor item.
+
+Belts must render as horizontal waist items for a landscape 1x2 slot: belt,
+girdle, sash, cord, or waist band. Do not turn the belt slot into a skirt,
+faulds, tassets, apron, or hanging costume panel.
+
+Shields must show the front fighting face only. Do not render the back side,
+inside of the shield, clamshell openings, front-side straps, dangling front
+hardware, handle loops, random rings, or utility rigging. The shield may have a
+boss or face material, but the visible front should remain clean and functional.
+
+Use gauze, translucent cloth, shredded cloth, and ragged fringe sparingly.
+Prefer opaque linen, wool, hide, leather, bark cloth, felt, woven fiber, or
+thicker silk-like panels. Cloak edges can be worn, but not so shredded that the
+asset becomes hard to cut out or reads as costume trash.
 
 For every image: render exactly one isolated inventory item cutout. No character
 body, no hands, no face, no mannequin, no torso, no feet, no floating UI slot,
@@ -110,14 +158,24 @@ generating gloves or bracers, show the pair as objects only, not worn on arms.
 If generating rings, show the ring as a distinct object, large enough to read as
 loot.
 
+Long weapon framing rule:
+If the main hand or off hand is a spear, pike, staff, glaive, polearm, standard,
+banner-staff, long axe, long hammer, or any other reach/two-handed weapon, the
+entire object must be visible from tip to butt. Do not shorten it into a club,
+mace, wand, or one-handed prop. The shaft must remain the dominant structure:
+long, slender, and clearly visible; shaft at least five times the length of the
+head or striking element. Place the complete weapon on a steep diagonal from
+corner to corner so it fills the frame while remaining uncropped. The head
+should not be enlarged so much that the shaft disappears.
+Use this exact proportion cue for long weapons: shaft at least five times the length of the head.
+
 Rendering style for every image:
 Dark low-fantasy action-RPG inventory item icon. A complete, solid,
 three-dimensional object shown from a dynamic three-quarter hero angle, with
 real depth and volume. The item should be centered, large in frame, and fully
-visible with no cropping. Long weapons may sit on a strong diagonal so the
-entire weapon fits. Paired items such as gloves, bracers, sandals, greaves, or
-boots should appear together in one icon, slightly overlapping at a readable
-angle.
+visible with no cropping. Paired items such as gloves, bracers, sandals,
+greaves, or boots should appear together in one icon, slightly overlapping at a
+readable angle.
 
 Use dramatic high-contrast game lighting: a strong directional key light from
 the upper left, deep neutral shadows on the object itself, and a crisp cool rim
@@ -125,33 +183,34 @@ light catching the silhouette. Rendered like a sharply modeled, high-detail AAA
 3D game asset with photoreal material textures, crisp hard edges, precise
 surface detail, readable bevels, seams, scratches, hammered metal, carved
 stone, leather grain, cloth weave, shell, bone, feather, tassel, cord, chain,
-or jewel surfaces where appropriate to the reference.
+or jewel surfaces where appropriate to the reference and slot.
 
 Keep the item's material behavior physically believable. Metal should have sharp
 specular highlights and darker recesses. Leather should absorb light and show
 grain. Cloth should show weave and thickness. Stone, shell, jade, glass, or
 enamel should have depth and polished surface response. Feathers, tassels,
-cords, chains, coins, or shell plates may appear when they are clearly attached
-to the item and are part of the reference-derived equipment language.
+cords, chains, coins, or shell plates may appear only when they are clearly
+attached to the item, proportional, useful to the silhouette, and part of the
+reference-derived equipment language.
 
 Use neutral-to-cold white balance: deep neutral blacks, slate-grey shadows,
 bone-white highlights. Warm tones should appear only where the material itself
 is warm, never as a global sepia or yellow cast.
 
-Alpha/background requirements are mandatory:
-Each output must be a real transparent-background PNG cutout with an alpha
-channel. Pixels outside the item must be fully transparent, alpha=0. Do not
-draw, simulate, preview, or represent transparency. Do not render a checkerboard
-pattern. Do not render white-and-gray checkers. Do not render a
-transparent-background preview. Do not render a paperdoll screen, contact sheet,
-image grid, UI frame, slot label, background card, floor, drop shadow, cast
-shadow, vignette, gradient, studio backdrop, grey fill, white fill, or colored
-fill. The object must appear alone on actual transparency.
+Background requirements are mandatory:
+Place every item on the same perfectly flat, uniform matte olive-slate
+background: #737A68. The background must be one single unlit solid color across
+the entire canvas, with no shadows, no gradients, no texture, no paper grain, no
+vignette, no floor plane, no reflection, and no lighting variation. This color
+is only a removable matte color. Do not use olive-slate, green-grey, or matching
+muted green tones anywhere in the item itself. Do not let the background color
+reflect onto the object, tint the rim light, tint the metal, or appear as edge
+glow. Keep the item edges clean and separated from the matte background.
 
 Do not include text, labels, watermarks, frames, borders, UI elements, inventory
 squares, or decorative backgrounds.
 
-Generate the separate transparent PNG images now, one per slot.
+Generate the separate slate-background images now, one per slot.
 ```
 
 ## QA Notes
@@ -161,18 +220,35 @@ Accept:
 - item clearly belongs to the source kit
 - detail is integrated into the object and improves the silhouette/material read
 - usable construction is visible or strongly implied
-- true alpha is present
-- no body parts, UI, checkerboard, contact sheet, or background
+- slot identity is preserved: ring stays ring, amulet stays pendant, belt stays
+  horizontal belt, body armor stays chest/body piece, shield shows its front
+- reach weapons are full length, tip-to-butt, on a steep diagonal
+- flat slate matte is uniform enough for `chroma_key.py`
+- no body parts, UI, checkerboard, contact sheet, or extra background
+- small neutral cloth/fiber edge residue is acceptable if it reads as material
 
 Reject:
 
 - baked white/gray checkerboard
+- magenta, green-screen, white, black, gradient, or textured backgrounds
 - paperdoll UI, contact sheet, or combined grid
 - item that only works as costume decoration and not loot
 - floating, ungrounded tassels/coins/symbols with no physical attachment
+- dangling charms, chimes, tassels, or delicate chains added to rings, helmets,
+  weapons, armor, or cloaks without a structural reason
+- solar symbols, eight-spoked wheels, or human faces repeated across a whole set
+- amulets rendered as gorgets/collars, body armor rendered with attached
+  neckwear/belts/skirts, belts rendered as faulds/tassets/skirts, or shields
+  rendered with front-side straps/hardware/clamshell construction
 - copied body parts, hands, feet, face, or mannequin fragments
 - unreadable over-ornamented silhouette at inventory scale
+- polearm, spear, staff, or long weapon shortened into a club/wand/mace-length
+  prop, or cropped so the butt/tip is missing
+- ragged fringe so heavy that body armor reads like torn costume trash instead
+  of usable gear
 
 After acceptance, the item still needs normal intake: save from Downloads,
-record in `DOWNLOAD-INTAKE.md` / `download-intake.js`, run `qa_gate.py`, compose
-direct RGBA if true-alpha, and update duplicate exclusions.
+record in `DOWNLOAD-INTAKE.md` / `download-intake.js`, run
+`python3 core/chroma_key.py SOURCE_DIR --out CLEAN_DIR`, then compose the
+resulting RGBA as a true-alpha source if promoted into runtime assets. Update
+duplicate exclusions.

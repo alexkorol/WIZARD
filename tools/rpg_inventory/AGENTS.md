@@ -48,11 +48,12 @@ queue top-down, stay under budget, log to `GEN-LOG.md`, stop cleanly.
    the queue with a note, a second failure moves it to `core/BLOCKED.txt`
    for Alexei to rework the DESC. A "hung" gen usually completes later in
    its chat — HARVEST it next run instead of re-sending.
-2b. **Request TRUE ALPHA output** (2026-07-06): the prompt asks for a fully
-   transparent background (real alpha PNG, not a painted checkerboard) with
-   a flat grey fill only as fallback. Real alpha = no matte step at all;
-   qa_gate.py and art_matte.py detect and use the alpha channel
-   automatically. Never flatten RGBA to RGB when inspecting.
+2b. **TRUE ALPHA when real; slate matte when not** (2026-07-06/07): real alpha
+   PNGs are ideal and must bypass matte generation entirely. ChatGPT/image-2
+   batch output is not reliable for true alpha, so source-image loadout
+   extraction uses a flat olive-slate matte (`#737A68`) and local
+   `core/chroma_key.py` cleanup. Reject painted checkerboards and hot magenta
+   fringe. Never flatten RGBA to RGB when inspecting.
 3. **QA every generation on the fly.** Before staging, look at the render and
    check it against what the item is supposed to be: complete solid object?
    correct 3/4 dynamic angle? fills the frame, not squished/tiny? a PAIR if it's
@@ -112,15 +113,44 @@ gives image-2 a coherent equipment system, so feathers, tassels, shell plates,
 scratches, cords, chains, veils, stones, coins, and symbols can work when they
 are physically integrated into the object. The bad pattern is not "detail"; it
 is ungrounded detail pasted onto an item prompt in a vacuum. Use
-`core/LOADOUT-EXTRACTION.md` for that workflow.
+`core/LOADOUT-EXTRACTION.md` for that workflow. For current ChatGPT batches,
+use the slate matte prompt and `core/chroma_key.py`; magenta backgrounds leave
+unacceptable halos. Long weapons in this mode need explicit full-length
+framing: tip-to-butt, shaft-dominant, steep diagonal corner-to-corner. Reject
+polearms shortened into clubs, wands, or mace-length props.
+**Character/source prompts must be self-contained** (2026-07-07): never rely on
+chat history or faction names as shorthand. The image model does not know what
+"Jungle Empire" or "Seven Kingdoms" means in Verdigris. Every final prompt must
+expand the faction design language, class/stat gear grammar, tier language,
+rendering style, spacing/composition rules, and weapon constraints inline. Do
+not optimize final prompts for brevity, and do not assume lore familiarity
+with our internal factions. Use scratchpads or script-built blocks if needed;
+the final prompt should be long, explicit, and redundant enough that it works
+when pasted into a fresh image model session with no prior context.
+**Do not save Alexei's proprietary legacy character prompts in the public repo.**
+Only save distilled, generic process rules and non-proprietary prompt structure.
+**Slot hygiene / anti-costume clutter** (2026-07-08): rings are compact finger
+objects, not dangling charm jewelry. Amulets are pendant-first objects on
+cord/twine/leather/simple chain, not gorgets or collars. Body armor should not
+include attached collars, turtlenecks, belts, skirts, faulds, or tassets. Belts
+are horizontal waist items. Shields show the front fighting face only, with no
+front straps, clamshells, dangling hardware, or utility rigging. Avoid invasive
+charms, chimes, tassels, tiny hanging rings, delicate costume chains, solar
+symbols, eight-spoked wheels, and repeated human-face motifs unless explicitly
+reviewed. Sets should be coordinated, not motif-cloned across every slot.
 
 ## Pipeline facts (so you don't rediscover them)
 
-- **Masks are generated LOCALLY** from the art's black background via
+- **Masks/alpha are generated LOCALLY** from flat backgrounds via
   `core/art_matte.py` — NOT a generative matte. Gemini/GPT mattes leave holes;
   don't use them. `art_matte.py` params: low FLOOD threshold keeps dark subject
   detail; a pure-black-fraction test re-opens only genuine see-through holes
   (ring centres, sling gaps) while keeping dark concave surfaces solid.
+- **Source-image loadout extraction uses `core/chroma_key.py`** for flat
+  olive-slate (`#737A68`) batch output. It removes the matte color everywhere,
+  including interior jewelry/chain holes, and decontaminates antialiased edges.
+  This is intentionally separate from `art_matte.py`, which fills most holes
+  for ordinary item icons.
 - **Compose:** `cd core && python3 compose_assets.py [NAME ...]` -> autocropped
   finals in `assets/{formId}_{materialId}.png` (tools as `assets/{toolId}.png`).
 - **ChatGPT web gen recipe (works, screenshot-free):** new tab → navigate
