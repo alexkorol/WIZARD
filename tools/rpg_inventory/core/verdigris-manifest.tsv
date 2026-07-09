@@ -1,81 +1,82 @@
-handaxe_copper	P	a cast copper handaxe, its blade blooming with blue-green patina, on a leather-wrapped haft, held vertical
+handaxe_copper	P	a cast copper handaxe with a clean hammered blade on a leather-wrapped haft, held vertical
 handaxe_bronze	P	a cast bronze handaxe with a leather-wrapped haft, held vertical
 handaxe_obsidian	P	a handaxe of knapped black obsidian, glassy conchoidal facets, lashed to a short wooden haft with sinew, held vertical
 handaxe_skymetal	P	a hand-axe with a head of raw dark meteoric iron, cold grey-black and unpolished, crude, on a short wooden haft with rawhide binding
 spear_flint	P	a flint-tipped hunting spear on a long ash shaft with sinew lashing, the entire spear visible tip to butt, posed on a slight diagonal so the full length fits inside the frame
 spear_bone	P	a spear tipped with a barbed carved-bone point on a long ash shaft, sinew lashing, the entire spear visible tip to butt, posed on a slight diagonal so the full length fits inside the frame
-spear_copper	P	a copper-bladed spear shown complete tip to butt: a small leaf-shaped copper spearhead blooming with green patina atop a very long slender ash shaft (shaft at least five times the head length and the dominant element), the whole weapon a thin line on a steep diagonal filling the frame corner to corner
-spear_bronze	P	a leaf-bladed bronze spear, blade embossed with a procession of tiny marching figures, socket wrapped in red-dyed cord with a bronze bead tassel, long ash shaft, the entire spear visible tip to butt, posed on a slight diagonal so the full length fits inside the frame
-spear_obsidian	P	a spear shown complete tip to butt: a small saw-edged black obsidian head inlaid with tiny turquoise chips and faint teal glints, a gold-leaf band at the socket, atop a very long slender dark hardwood shaft (shaft at least five times the head length and the dominant element), the whole weapon a thin line on a steep diagonal filling the frame corner to corner
+spear_copper	P	a copper-bladed spear shown complete tip to butt: a small leaf-shaped copper spearhead atop a very long slender ash shaft (shaft at least five times the head length and the dominant element), the whole weapon a thin line on a steep diagonal filling the frame corner to corner
+spear_bronze	P	a leaf-bladed bronze spear on a long ash shaft, the entire spear visible tip to butt, posed on a slight diagonal so the full length fits inside the frame
+spear_obsidian	P	a spear shown complete tip to butt: a small saw-edged black obsidian head atop a very long slender dark hardwood shaft (shaft at least five times the head length and the dominant element), the whole weapon a thin line on a steep diagonal filling the frame corner to corner
 spear_skymetal	P	a spear shown complete tip to butt: a small head of raw dark meteoric iron, cold grey-black and unpolished, atop a very long slender ash shaft (shaft at least five times the head length and the dominant element), the whole weapon a thin line on a steep diagonal filling the frame corner to corner
-macuahuitl_obsidian	P	an Aztec macuahuitl: flat hardwood club edged with rows of black obsidian blades, the wood plated with embossed gold panels and turquoise inlay dots, a small gold skull at the pommel, held vertical
+macuahuitl_obsidian	P	a macuahuitl: flat hardwood club edged with rows of black obsidian blades, plain dark wood body, held vertical
 macuahuitl_flint	P	a macuahuitl: flat hardwood club edged with rows of knapped grey flint blades, grip whipped in rawhide, a red ochre handprint stamped on the wood, held vertical
-macuahuitl_bone	P	a macuahuitl: flat dark hardwood club edged with rows of polished bone shards, a carved deity-profile in the wood, hung with knotted cords and two copper-capped boar tusks at the pommel, held vertical
-atlatl_bone	P	a carved bone atlatl dart-thrower incised with bird-flight tally marks, a black-and-teal fletched dart resting in its groove, vertical
-atlatl_copper	P	a copper-plated atlatl dart-thrower with green patina in its engraved grooves, a blue bead tassel at the grip, feathered dart in its groove, vertical
-atlatl_bronze	P	a bronze atlatl dart-thrower embossed with a tiny deity-profile frieze, verdigris pooling in the grooves, red cord grip, feathered dart in its groove, vertical
-khopesh_copper	P	a copper sickle-sword khopesh blooming with green patina, hilt wound in dark leather with a lapis-blue bead pommel, held vertical
-khopesh_bronze	P	a bronze khopesh sickle-sword with a bold broad sweeping hooked blade and a solid leather-wrapped hilt, well-balanced and clearly deadly, blade embossed with a procession of tiny marching figures with verdigris pooling in the lines, lapis and gold banding at the hilt, held vertical
+macuahuitl_bone	P	a macuahuitl: flat dark hardwood club edged with rows of polished bone shards, plain wood body, held vertical
+atlatl_bone	P	a carved bone atlatl dart-thrower with a plain fletched dart resting in its groove, vertical
+atlatl_copper	P	a copper-plated atlatl dart-thrower with a plain cord grip and a fletched dart in its groove, vertical
+atlatl_bronze	P	a bronze atlatl dart-thrower with a plain cord grip and a fletched dart in its groove, vertical
+khopesh_copper	P	a copper sickle-sword khopesh with a clean broad hooked blade and a dark leather-wrapped hilt, held vertical
+khopesh_bronze	P	a bronze khopesh sickle-sword with a bold broad sweeping hooked blade and a solid leather-wrapped hilt, well-balanced and clearly deadly, held vertical
 khopesh_skymetal	P	a khopesh sickle-sword with a bold broad sweeping hooked blade of raw dark meteoric iron, cold grey-black and unpolished, crude, a plain leather-wound hilt, deadly, held vertical
 sling_hide	P	a functional leather sling laid out straight: a small oval pouch at the center cradling a river stone, with two long braided hide cords of equal length trailing to their full length from each end of the pouch, one cord ending in a finger-loop
 sling_quilted	P	a functional sling of braided undyed linen cord laid out straight: a small quilted pouch at the center cradling a river stone, two long cords of equal length trailing to full length, one ending in a finger-loop
-hideshield_bronze	P	a tall shield faced with hammered bronze, embossed with concentric ridged rings around a domed sun-face boss, verdigris pooling in the grooves, ragged madder-red cloth strips knotted at the rim
-hideshield_bronzescale	P	a tall oval shield faced with overlapping gilded bronze scales on leather backing, a bronze sun-face boss at center, black and teal feather fringe around the lower rim
-hideshield_rivetmail	P	a tall shield reinforced with riveted iron strips over dark leather, impossibly advanced, dull grey gleam, edges bound in gold wire
-wrap_hide	P	a wrapped tunic of oxblood-dyed hide with bone toggles and cord belt loops, cream fur-trimmed shoulder, a single small copper disc stitched at the chest
+hideshield_bronze	P	a tall shield faced with clean hammered bronze, concentric raised rings around a plain domed central boss
+hideshield_bronzescale	P	a tall oval shield faced with overlapping bronze scales on plain leather backing, a plain bronze domed boss at center
+hideshield_rivetmail	P	a tall shield reinforced with riveted iron strips over dark leather, dull grey metal, simple bound edges
+wrap_hide	P	a wrapped tunic of plain hide with simple shoulder panels, clean simple garment shape
 wrap_quilted	P	a quilted linen armor vest of layered stitched cloth, undyed off-white with madder-red binding along the seams, cord tie at the shoulder
-wrap_bronzescale	P	a vest of overlapping gilded bronze scales sewn onto oxblood leather backing, collar edged with an embossed gold deity-profile band and a short lapis bead fringe
-wrap_rivetmail	P	a riveted mail hauberk laid out flat and spread like a garment, technology from beyond the horizon, collar bound in gold wire with one lapis bead
-crest_bone	S	a headpiece of carved bone and boar tusks with two short antler tines, crowned with a black horsehair crest, the tusks capped in copper
-crest_hide	S	a headpiece of stretched hide over a wicker frame with a russet horsehair crest, a row of small cowrie shells across the brow and one natural tan feather at the temple
-crest_copper	S	a hammered copper cap with cheek guards, blue-green patina blooming across the dome, brow band engraved with a row of chevrons
-crest_bronze	S	a hammered bronze cap with cheek guards, an embossed sunburst above the brow, weathered green patina, a short black feather plume at the crown
-crest_jade	S	a jade circlet-diadem carved with river motifs, faint cool inner glow, gold wire wrapping at the temples, a fan of glossy black-dyed feathers rising behind, two dangling jade drops
-grips_hide	S	a pair of forearm bracers of oxblood-dyed wrapped hide laced with cord, a small bone bead at each, standing upright side by side
-grips_quilted	S	a pair of forearm bracers of layered quilted linen, undyed off-white with red-stitched lines, laced with cord, standing upright side by side
-grips_bronzescale	S	a pair of forearm bracers armored with overlapping gilded bronze scales on oxblood leather, a tiny embossed deity-profile at the wrist, standing upright side by side
-sandals_hide	S	a pair of strapped hide sandals, mud-flecked and worn, one copper stud at each ankle strap
-sandals_quilted	S	a pair of strapped sandals of layered quilted linen, undyed off-white with red binding thread, small bronze ankle discs
-girdle_quilted	L	a wide girdle belt of layered quilted linen laid out horizontally, stitched in red chevrons, a carved antler toggle and a hanging blue bead cord
-girdle_copper	L	a wide belt of hammered copper plates on oxblood leather backing laid out horizontally, each plate embossed with a tiny deity-profile, blue-green patina pooling in the relief, gold-capped antler toggle
-gorget_jade	S	a carved jade gorget pendant hung on a long knotted cord forming a full wearable neck-loop (cord much longer than the pendant), incised with a carved river-fish motif, gold caps on the cord knots
-gorget_bone	S	a carved bone gorget pendant on a long knotted sinew cord forming a full wearable neck-loop, incised tally marks rubbed with red ochre
-gorget_copper	S	a crescent hammered-copper gorget on a long cord forming a full wearable neck-loop, blooming blue-green patina, three short lapis-bead strands dangling from its lower edge
-ring_bone	S	a ring carved from a single knucklebone, incised marks rubbed with soot
-ring_copper	S	a coiled copper ring with blooms of blue-green patina, its ends finished as two tiny facing bird heads
-ring_jade	S	a ring carved from a single piece of green jade, faint cool sheen, a hair-thin gold band inlaid around its center
-ring_amber	S	a ring carved from raw honey-gold amber, translucent with a trapped seed inside, set in a thin embossed gold collar
-curio_bone	S	a strange small curio: a tiny carved bone bird with jade-chip eyes, perched on a copper ring stand
-curio_jade	S	a small carved jade river-fish curio with incised scales and gold-leaf fins, a single object centered
-curio_amber	S	a strange small curio: a polished amber sphere with a trapped mayfly, cradled in a tiny bronze claw stand
+wrap_bronzescale	P	a vest of overlapping bronze scales sewn onto plain leather backing, clean raised collar plates
+wrap_rivetmail	P	a riveted mail hauberk laid out flat and spread like a garment, plain dark metal rings and a simple collar
+crest_bone	S	a simple bone headpiece with a raised crest and clean curved brow line
+crest_hide	S	a boiled dark leather war cap with a domed skull, broad cheek guards, and complete wearable head protection, clean plain leather surface
+crest_copper	S	a hammered copper cap with cheek guards and a plain raised brow band
+crest_bronze	S	a hammered bronze cap with cheek guards and a clean raised crown ridge
+crest_jade	S	a jade circlet-diadem with a clean curved profile and a raised crest shape
+grips_hide	S	a pair of forearm bracers of plain wrapped hide laced with cord, standing upright side by side
+grips_quilted	S	a pair of forearm bracers of layered quilted linen with simple stitched lines, standing upright side by side
+grips_bronzescale	S	a pair of forearm bracers armored with overlapping bronze scales on plain leather, standing upright side by side
+sandals_hide	S	a pair of strapped hide sandals, clean and lightly used, shown as a pair
+sandals_quilted	S	a pair of strapped sandals of layered quilted linen with simple stitched seams, shown as a pair
+girdle_quilted	L	a wide girdle belt of layered quilted linen laid out horizontally, clean simple band with plain stitching
+girdle_copper	L	a wide belt of clean hammered copper plates on plain leather backing laid out horizontally
+gorget_jade	S	a carved jade gorget pendant hung on a long knotted cord forming a full wearable neck-loop (cord much longer than the pendant), smooth simple crescent shape
+gorget_bone	S	a carved bone gorget pendant on a long knotted sinew cord forming a full wearable neck-loop, simple carved marks
+gorget_copper	S	a clean hammered copper torc with a thick crescent body and rounded bulb terminals, one complete neck ring
+ring_bone	S	a ring carved from a single piece of bone, simple carved marks
+ring_copper	S	a simple coiled copper ring with clean hammered metal
+ring_jade	S	a ring carved from a single piece of green jade, clean simple band
+ring_amber	S	a ring carved from raw amber, translucent, clean simple band
+curio_bone	S	a small but solid carved bone reliquary box with a fitted lid and thick raised rim, one complete object
+curio_jade	S	a compact reliquary box carved entirely from dark green jade, thick walls, fitted lid, and clean blocky silhouette
+curio_amber	S	a compact reliquary casket carved entirely from raw amber, thick walls, fitted lid, and clean blocky silhouette
 red_ochre	S	a lump of red ochre pigment beside a grinding stone stained crimson, a pinch of spilled powder beside it
-woad	S	vivid blue woad paste in a pearly seashell, a bone stirring stick resting across it
+woad	S	blue woad paste in a small plain shell
 soot	S	black soot powder in a carved bone tube capped with copper, a smudge of black spilled at its mouth
-marsh_ochre	S	yellow marsh ochre in a small woven reed basket, the weave stained gold at the rim
-entrail_omen	S	a clay liver-model omen piece incised with a divination grid in the Mesopotamian style, some lines rubbed with red ochre
-bird_omen	S	a bird-flight omen: a bundle of black and teal feathers bound with knotted string and a small bronze ring
-smoke_omen	S	a smoldering herb bundle wrapped in red cord on a small clay dish, one thin wisp of pale smoke rising
-blood_omen	S	a shallow clay bowl glazed dark, stained with old blood, a bronze lancet resting across its rim
+marsh_ochre	S	yellow marsh ochre in a small woven reed basket
+entrail_omen	S	a clay liver-model omen piece with a simple incised divination grid
+bird_omen	S	a bird omen: a small bundle of plain feathers bound with knotted string
+smoke_omen	S	a smoldering herb bundle on a small clay dish, one thin wisp of pale smoke rising
+blood_omen	S	a shallow dark clay bowl with a plain bronze lancet resting across its rim
 dagger_bronze	P	a bronze dagger with a long broad leaf-shaped blade and a leather-wrapped grip with a stone pommel, the blade prominent and deadly, the whole dagger spanning the full height of the frame
 warclub_bronze	P	a bronze war mace: a heavy faceted bronze head with blunt flanges mounted on a leather-wrapped wooden haft, brutal and well-crafted, spanning the full height of the frame
+warclub_jade	P	a heavy blunt war club carved entirely from dark green jade, blocky squared striking head, thick grip, the entire weapon visible on a strong diagonal
 greataxe_bronze	P	a two-handed bronze greataxe with a large broad crescent blade on a long leather-wrapped haft, held vertical, massive and menacing
-buckler_bronze	S	a small round bronze buckler shield with a domed central boss and a hammered rim, verdigris pooling in the grooves, front view
-helm_bronze	S	a full enclosed bronze war helmet that covers the whole head, a rounded domed skull with cheek guards and a nose-guard, its full domed shell and the back of the head visible at the three-quarter angle, weathered green patina
-greaves_bronze	S	a matched pair of bronze shin greaves shown together, the two greaves overlapping at a dynamic angle, hammered and curved to the leg, verdigris pooling in the grooves
-dagger_bone	P	a crude dagger: a long sharpened bone blade lashed to a hide-wrapped grip with sinew, worn and primitive
-dagger_copper	P	a copper dagger with a broad leaf blade blooming with blue-green patina and a leather-wrapped grip with a stone pommel
-dagger_obsidian	P	a ritual dagger with a long knapped black obsidian blade, razor-edged with faint teal glints, bound to a hardwood grip inlaid with turquoise
+buckler_bronze	S	a small round bronze buckler shield with a plain domed central boss and a clean hammered rim, front view
+helm_bronze	S	a full enclosed bronze war helmet that covers the whole head, a rounded domed skull with cheek guards and a nose-guard, its full domed shell and the back of the head visible at the three-quarter angle, clean bronze surface
+greaves_bronze	S	a matched pair of bronze shin greaves on plain leather backing, broad side straps visible, shown together overlapping at a dynamic angle
+dagger_bone	P	a crude dagger: a long sharpened bone blade lashed to a hide-wrapped grip with sinew, simple and primitive
+dagger_copper	P	a copper dagger with a broad clean leaf blade and a leather-wrapped grip with a stone pommel
+dagger_obsidian	P	a dagger with a long knapped black obsidian blade, razor-edged, bound to a plain hardwood grip
 dagger_skymetal	P	a dagger with a blade of raw dark meteoric iron, cold grey-black and unpolished, crude and dense, on a plain leather-wound grip
 handaxe_flint	P	a crude hand-axe, a knapped grey flint head lashed with sinew to a short wooden haft, primitive and heavy
-warclub_copper	P	a copper war mace, a heavy cast copper head blooming with blue-green patina on a leather-wrapped wooden haft, brutal
+warclub_copper	P	a copper war mace, a heavy clean cast copper head on a leather-wrapped wooden haft, brutal
 warclub_bone	P	a primitive club made from a single massive bone - a heavy femur/thighbone, its knobbed joint-end as the striking head, with at most a strip of leather wrapped as a handle at the narrow end; nothing else, one solid bone, crude and simple
-greataxe_copper	P	a two-handed copper greataxe with a broad crescent blade blooming with blue-green patina on a long leather-wrapped haft, massive
-greataxe_obsidian	P	a two-handed greataxe with a broad crescent blade of knapped black obsidian, glassy flaked edge with faint teal glints, on a long hardwood haft, ritual and menacing
+greataxe_copper	P	a two-handed copper greataxe with a broad clean crescent blade on a long leather-wrapped haft, massive
+greataxe_obsidian	P	a two-handed greataxe with a broad crescent blade of knapped black obsidian, glassy flaked edge, on a long hardwood haft, massive and menacing
 greataxe_skymetal	P	a two-handed greataxe with a broad blade of raw dark meteoric iron, cold grey-black and unpolished, crude and heavy, on a plain leather-bound haft
-helm_copper	S	a full enclosed copper war helm covering the whole head, a rounded domed skull with cheek guards and a nose-guard, blue-green patina blooming across the dome
-helm_bronzescale	S	a full enclosed war helm faced with overlapping gilded bronze scales over a domed skull, cheek guards and a short black feather plume
-helm_rivetmail	S	a full enclosed war helm of riveted iron plates over a domed skull with a mail aventail draping the neck, dull grey gleam, gold-wire edging, otherworldly
-greaves_bronzescale	S	a matched pair of shin greaves faced with overlapping gilded bronze scales on oxblood leather, shown together overlapping at a dynamic angle
-greaves_rivetmail	S	a matched pair of shin greaves of riveted iron strips over dark leather with gold-wire edging, shown together overlapping at a dynamic angle, otherworldly
-buckler_hide	S	a small round buckler of stretched hide over a wooden frame with a bone rim and a domed boss, painted with a red ochre sunburst
-buckler_bronzescale	S	a small round buckler faced with overlapping gilded bronze scales around a domed sun-face boss, verdigris in the grooves
+helm_copper	S	a full enclosed copper war helm covering the whole head, a rounded domed skull with cheek guards and a nose-guard, clean copper surface
+helm_bronzescale	S	a full enclosed war helm faced with overlapping bronze scales over a domed skull, with cheek guards
+helm_rivetmail	S	a full enclosed war helm of riveted iron plates over a domed skull with a mail aventail draping the neck, dull grey metal, simple edging
+greaves_bronzescale	S	a matched pair of shin greaves faced with overlapping bronze scales on plain leather backing, broad side straps visible, shown together overlapping at a dynamic angle
+greaves_rivetmail	S	a matched pair of shin greaves of riveted iron strips over dark leather backing, broad side straps visible, shown together overlapping at a dynamic angle
+buckler_hide	S	a small round buckler of stretched hide over a wooden frame with a bone rim and a plain domed boss
+buckler_bronzescale	S	a small round buckler faced with overlapping bronze scales around a plain domed boss

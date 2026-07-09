@@ -52,9 +52,13 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    watermark, no drop shadow, no vignette — those work.)
 2. Ask for TRUE-ALPHA output first (real transparent PNG), flat grey fill as
    fallback (blue-grey for grey metals — the swap is automated in status.py).
-   qa_gate/art_matte handle both automatically. Painted checkerboard = reject.
-3. Never prompt closures/fastenings (toggles, buckles, clasps) — let the
-   model improvise them.
+   qa_gate detects both; compose_assets uses source alpha directly for true
+   alpha, and art_matte is only for flat fallback backgrounds. Painted
+   checkerboard = reject.
+3. Do not prompt tiny closure hardware as decoration (toggles, buckles,
+   clasps). But wearable/carryable gear must still have credible structural
+   attachment: broad straps, lacing, side ties, leather backing, shoulder
+   straps, or front/back plates joined at the shoulder and sides.
 4. DESCs (targets.tsv) hold ONLY item content — materials, construction,
    proportions ("a pair of, shown as a pair", "entire weapon visible") —
    never render-style words.
@@ -63,15 +67,83 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    cord). NO decorative accent materials — no gold bands/inlays/collars/
    caps/rivets sprinkled onto iron or jade items. Enchantment prefixes/
    suffixes carry the uniqueness in-game; base art stays clean. Composites
-   are allowed ONLY when the composite IS the rung's identity (Gilded
-   Vambraces, bronze scales on leather) and then it dominates the read
-   instead of being a hair-thin detail.
-6. COMMIT FULLY TO EXOTIC MATERIALS (2026-07-06, Alexei — "full permission
+   are allowed ONLY when the composite IS the rung's identity (bronze scales
+   over a plain leather backing, sheet-bronze plates over leather) and
+   then the construction must dominate the read instead of becoming a
+   hair-thin detail.
+6. GENERIC COLOR LANGUAGE FOR BASES (2026-07-07). Do not encode lore/fashion
+   specificity into base rows: no oxblood, burgundy, glossy black-dyed trim,
+   lapis, turquoise chips, gold wire, feather tassels, cowrie rows, tusk
+   fetishes, deity/frieze motifs, or named symbolic decoration. Use "plain
+   leather", "dark leather", "plain cord", "simple stitched seams", "clean
+   bronze", "raw dark iron", etc. Save strong color accents and ceremonial
+   trim for uniques, awakened relics, faction sets, or reviewed exceptions.
+7. COMMIT FULLY TO EXOTIC MATERIALS (2026-07-06, Alexei — "full permission
    to step away from AI tropes and cliche fantasy constructs"). "X-inlaid
    Y" is a trope hedge: not jade-inlaid bronze greaves but greaves carved
    ENTIRELY of jade. A full-jade / full-amber / full-bone item is bolder
    and reads better than a timid accent. When a rung is named for an
    exotic material, the whole item is that material.
+8. JADE WEAPON RULE (2026-07-07). Jade is bad for blades and reach weapons:
+   no jade sabres, daggers, axes, spearheads, glaives, polearms, or other
+   cutting/piercing weapons. If jade is used as a weapon material, it must be
+   blunt or mace-like: club, mace, maul, hammer, idol-head cudgel, or heavy
+   ritual striking object. Jade remains fine for armour, jewellery, foci,
+   curios, and other non-bladed bases.
+9. PROMPT BATCH DIVERSITY (2026-07-07). Candidate batches must cover the
+   inventory, not only reliable weapons. Default roast batches cap weapons at
+   two and include armour/helmets, shields/off-hands, limb/waist wearables,
+   jewellery, and rite/relic/curio/trophy objects.
+10. NO CURRENCY/CRAFTING-MATERIAL IDEATION (2026-07-07). Do not propose new
+   crafting currencies, pigments, omens, ingots, molds, generic orbs, seal
+   weights, draughts, reagent stones, or abstract bench-tool tokens unless
+   Alexei explicitly reopens that lane.
+11. RELIC GEAR MUST BE CONCRETE IMPLEMENTS (2026-07-07). Avoid weak AI-trope
+   mystic trinkets. Use strong ritual-object construction: double-ended
+   pronged sceptres, heavy hand bells, handled tablets, forked standards,
+   idol-head cudgels, offering bowls, reliquary boxes. Borrow
+   silhouette logic from real implements like vajra/dorje forms, but do not
+   copy living sacred iconography one-to-one or use exact religious names as
+   ordinary base names.
+12. BASES MUST READ AS EQUIPPABLE GEAR (2026-07-07). Prompt candidates must
+   look worth looting before tooltip context: enough mass, construction, and
+   silhouette authority to block, strike, ward, carry, bind, or focus power.
+   Retire weak/toy-like prompt ideas as positive examples: wicker shields,
+   rite batons, pencil-thin wands, hand stones, tiny darts, shrine miniatures,
+   reed baskets or maps, road charms, loose feather markers, and other one-off
+   props. If reed or wicker appears, it is hidden backing under hide/leather,
+   not the named shield face or item thesis.
+13. TEST PROMPTS ARE NOVELTY-CHECKED NEW ITEMS (2026-07-07). When Alexei asks
+   for "test prompts" or "prompts to roast", never repeat or restyle items
+   already made. First check current `assets/`, accepted manual intake in
+   `download-intake.js`, duplicate/exclusion notes in `DOWNLOAD-INTAKE.md`,
+   and discard/rework state in `asset-review.js`. Style-calibration prompts
+   follow the same no-repeat rule unless Alexei explicitly names an existing
+   item and asks to restyle that exact item.
+14. WEARABLE/CARRIED CONSTRUCTION MUST BE PLAUSIBLE (2026-07-07). Armour,
+   quivers, belts, greaves, bracers, sandals, and shields must visibly explain
+   how they stay on the body or in the hand. Use broad straps, lacing, backing,
+   arm loops, shoulder straps, front/back plates, overlap, or wrap geometry.
+   For hard armour, avoid one-piece magic shells unless the real object can be
+   made and donned that way. Bone armour is assembled from smaller bone plates,
+   splints, or sections on hide/leather backing; never a perfect solid
+   shin-guard-shaped bone plate.
+15. NO BORING FORCED RELIC BASES (2026-07-07). Flat tablets, ward plates,
+   symbol plaques, carved slabs, and generic hand-held boards are not exciting
+   ARPG loot bases. Relic gear needs a strong held/worn/handled implement with
+   mass and purpose: bowls, bells, pronged sceptres, standards, reliquary boxes,
+   idol-head cudgels, trophy settings, or small shield-like foci.
+16. SOURCE-IMAGE LOADOUT EXTRACTION (2026-07-07, Alexei). A full character or
+   loadout image can be used as a coherent equipment source, not merely as a
+   render-style reference. This is often better than prompting isolated items
+   in a vacuum because the source image supplies material logic, ornament
+   density, attachment points, proportions, and slot relationships. Details
+   such as feathers, tassels, scratches, shell plates, cords, chains, veils,
+   stones, coins, and symbols are allowed when they are visibly integrated into
+   the item and belong to the source kit. The failure to avoid is ungrounded
+   decoration: random lore marks, loose clutter, costume fragments, or detail
+   that breaks readability/utility. Use `core/LOADOUT-EXTRACTION.md` for this
+   mode.
 
 ### Prompt changelog
 
@@ -87,6 +159,26 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
 - 2026-07-07: prompt extracted to PROMPT.txt for Alexei's hand-tuning;
   one-material rule; commit-fully-to-exotic-materials rule (full jade
   greaves, not jade-inlaid); agents no longer touch the style text.
+- 2026-07-07: jade retired from bladed/reach weapon bases. Jade weapons are
+  allowed only for blunt, mace-like silhouettes.
+- 2026-07-07: prompt-candidate batches require slot diversity; currency and
+  crafting-material image ideation paused.
+- 2026-07-07: relic gear guidance added: concrete ritual implements over vague
+  AI mystic trinkets.
+- 2026-07-07: weak-prop scan added: no wicker shields, rite batons, tiny
+  darts/hand stones, shrine miniatures, reed props, or other joke-loot bases.
+- 2026-07-07: no-repeat test-prompt rule added and extended to style
+  calibration. Test prompts now mean novel item concepts unless Alexei
+  explicitly names an existing item for restyling.
+- 2026-07-07: true-alpha manual accepts bypass mask generation and palette
+  quantization; compose directly from source alpha. Wearable construction and
+  boring tablet/plaque relic failures added as hard prompt rules.
+- 2026-07-07: corrected style-reference guidance after Alexei's loadout
+  extraction test. Full character/source images are useful because they encode
+  coherent equipment systems, not just crisp rendering. Integrated feathers,
+  tassels, shell, cords, chains, veils, stones, scratches, and ornaments are
+  valid when they belong to the item; the banned failure is ungrounded detail
+  pasted onto isolated prompt nouns.
 
 ### Material-specific corrections (2026-07-05 review — do not relitigate)
 
@@ -98,11 +190,15 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
   world" into the prompt — that desaturates the render, kills the cool rim-light,
   and breaks continuity with the rest of the set. Just name the material and let
   the standard v2 lighting/grading light it exactly like every other item.
-- **No spiral motifs.** Spirals are overused — do NOT put spirals on shields,
-  amulets/gorgets, crests, bucklers, blades, or anywhere. Use varied ornament
-  instead: sunbursts / sun-face bosses, concentric rings, chevrons, deity-profile
-  or marching-figure friezes, punched dots and studs, meander/key bands, feather
-  fringes, radiating rays, animal (fish/bird/boar) motifs.
+- **Base items stay generic and clean (2026-07-07).** Do NOT put invented lore
+  symbols, horned suns, deity marks, faction emblems, seal faces, friezes, or
+  heavy patina into ordinary base-item DESCs. Think thrice before adding any
+  symbol at all. Use shape, silhouette, construction, and material as the base
+  identity. Extreme wear, verdigris, grime, and overt symbolic flair are for
+  uniques/awakened relics only, or for an explicit reviewed exception.
+- **No spiral motifs.** Spirals are overused. If a base needs ornament, prefer
+  generic geometry: plain raised rims, concentric ridges, chevrons, punched
+  dots/studs, or simple bands.
 - **Primitive / low-tier items = ONE material, minimal parts.** This is the real
   rule (a bone club failed not because bone is bad, but because it was prompted as
   a wood-shaft + jawbone + lashings composite — illogical for a crude weapon, and
@@ -111,8 +207,8 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
   knobbed joint-end as the striking head, at most a leather strap for a grip,
   nothing else. Do not reinvent the wheel with unnecessary composites on low-tier
   items; simplicity IS the primitive read.
-- Obsidian keeps its glassy black facets with faint teal glints (that's correct,
-  ceremonial) — but keep it clearly *stone*, not glowing crystal.
+- Obsidian keeps its glassy black facets, but keep it clearly *stone*, not
+  glowing crystal or gem-inlaid ceremony.
 
 (v1 style below is retained for reference only; v2 above wins on any conflict.)
 
@@ -142,32 +238,32 @@ cast is banned explicitly.
 directives and grafted bronze fittings / patina / stray materials onto items
 that never asked for them. Material mentions now live only in each DESC.)
 
-## Ornamentation ladder (2026-07-03, from game concept art)
+## Historical ornamentation ladder (superseded for base items)
 
-Item DESCs follow the concepts' wealth ladder so the set reads varied, not
-stone-age-drab. Ornament vocabulary from the concept sheets: embossed gold
-panels and friezes (Mesopotamian marching figures, sunbursts, horned suns),
-turquoise inlay dots, lapis-blue beads and tassels, black-and-teal feather
-fringe, small skull/tusk fetishes, ragged madder-red cloth, and — on obsidian
-and skymetal only — faint cool teal glints/veins in the material.
+The notes below are retained as history. They overfit early concept art and
+caused base generations to drift into fake lore symbols, heavy patina, and
+grimy "Verdigris means every item is green" leakage. For base items, follow
+the 2026-07-07 rule above instead: generic, clean, silhouette-first. Use this
+ornament vocabulary only for uniques, awakened relics, faction sets, or rows
+explicitly reviewed as lore-heavy.
 
-- tier 1 (flint, bone, hide): humble and functional; at most a bone bead,
-  cowrie shell, ochre mark or copper stud.
-- tier 2-3 (quilted, copper, bronze): dyed bindings, chevron bands,
-  embossed friezes, bead tassels, patina.
-- tier 4+ (obsidian, jade, amber, bronzescale): gilded panels, turquoise or
-  lapis inlay, gold wire, feather fringe, ceremonial weight.
-- tier 5-6 (skymetal, rivetmail): otherworldly — star-flecked iridescence,
-  faint teal energy veins, gold fittings; rivetmail stays alien and austere.
+The old wealth ladder is no longer valid for ordinary bases. Do not use the
+old concept-sheet details as prompt content for base rows. The failure class
+was broader than individual words: tiny accent materials, named dye colors,
+ceremonial trims, symbolic motifs, and invented lore marks all make base items
+look like uniques and poison later generation batches.
 
-Round-2 notes (full concept dump lives in Downloads/Images): verdigris patina
-is a WEATHERING marker wherever bronze/copper appears, at any tier — "pooling
-in grooves/relief". Leather reads oxblood/burgundy-dyed, not dull tan; fur is
-cream-tan and scruffy. Feathers split by status: natural tan = humble, glossy
-black-dyed = luxury. Also add: antler tines/crowns (tier 3+ carved, tier 5
-gilded), deity-profile friezes and mask-face panels (belts, shields, wrist
-bands), embossed ribs/pectoral relief on armor, cascading multi-strand lapis
-or turquoise bead drops, sun-face bosses on shields.
+For base rows, tier should read through silhouette and construction:
+
+- tier 1: crude, simple, functional.
+- tier 2-3: cleaner construction, stronger shape, broader mass.
+- tier 4: refined/exotic main material, but still generic.
+- tier 5-6: rare material or advanced construction, still plain enough to be
+  a base item.
+
+Use gold, lapis, feathers, deity marks, patina, dyed leather, and elaborate
+ceremonial trim only for uniques, awakened relics, faction sets, or an
+explicitly reviewed exception.
 
 If a result still trends warm, regenerate once with "make the white balance
 noticeably cooler" appended; the local composer also has a `--wb` rescue flag.
@@ -181,7 +277,7 @@ images in ~13h, mid-batch. Cooldown duration unknown (hours-scale).
 
 Future sessions: pace generations at ONE EVERY 5-6 MINUTES (≤12/hr), take a
 ~15 min break every 10 images, keep a day's total under ~50, and interleave
-Gemini matte work between generations instead of batching gens back-to-back.
+local QA/matte/compose work between generations instead of batching gens back-to-back.
 Front-load the highest-priority items in case the ceiling arrives early.
 
 ## Canvas orientation (start every prompt with this)
@@ -198,28 +294,32 @@ Rule of thumb: weapons/armor/shields portrait, belt landscape, small wearables
 (rings, amulets, helms, gloves, boots), trophies and tools square. The matte
 must be requested at the same canvas ("same canvas size and framing").
 
-## Mattes: Gemini web app (free), API as sweeper — never ChatGPT
+## Mattes: local scripts, never generative
 
-Primary route: the Gemini web app (Nano Banana) on the Pro plan — free.
-Attach the downloaded art image with this prompt and save the result as
-`{file}_mask.png` next to the art in `assets_staging/`:
+Primary route: ask ChatGPT for true transparent PNG output. If it returns real
+alpha, do not run matte generation. `core/compose_assets.py` crops directly
+from the source alpha, preserves RGBA output, and skips palette quantization.
+This is the safe path for accepted manual image-2 downloads.
 
-> Create a precise binary alpha matte for the attached image: render the
-> subject as a solid pure white silhouette on a solid pure black background.
-> Preserve the exact outline, including thin cords, straps and points; any
-> region showing the black background inside or around the subject must be
-> black. Only ~1px of soft antialiasing at edges. Same canvas size and
-> framing as the original. Output only the matte image, no text.
+`core/art_matte.py` is for flat-background fallback art. If it is accidentally
+run on a true-alpha PNG, it now writes the source alpha silhouette directly
+without hole filling, component pruning, or other reinterpretation.
 
-Fallback/sweeper: `python gen_masks.py` (Nano Banana Pro via OpenRouter,
-~$0.14 each). It only generates masks that are missing, so run it once at
-the end to fill any gaps — the two routes never conflict. Do not spend
-ChatGPT credits on mattes.
+Fallback route: if the image has a flat mid-grey, blue-grey, or old black
+background, run `python3 core/art_matte.py assets_staging ART_ID`. The script
+samples the background from the corners, flood-fills reachable background, keeps
+the largest subject component, and fills interior holes unless the form is a
+ring, sling, gorget, or curio.
 
-Key lookup is cross-platform: `OPENROUTER_API_KEY` env var, then
-`~/.openrouter_key` file, then (Windows only) the user registry. On macOS,
-drop the key into `~/.openrouter_key` once. Scripts need Python 3 with
-`pip install pillow requests`; use `python3` on macOS.
+`gen_masks.py`, `cleanup_masks.py`, and `fix_masks.py` are retained only for
+old-mask archaeology. Do not use Gemini or other generative matte services for
+new assets.
+
+## Historical seed list (superseded)
+
+This section is the old starter list. It is useful as archaeology, but the
+actual production scale is now `core/GENERATION-PLAN.md`: 500-600 usable
+inventory images, with a planned overshoot manifest of about 640 rows.
 
 ## Forms × signature materials (one image per row, ~30 items)
 
@@ -228,46 +328,47 @@ drop the key into `~/.openrouter_key` once. Scripts need Python 3 with
 | handaxe_flint | P | a knapped flint handaxe lashed to a short wooden haft with sinew, held vertical |
 | handaxe_bronze | P | a cast bronze handaxe with a leather-wrapped haft, held vertical |
 | spear_flint | P | a flint-tipped hunting spear on a long ash shaft, sinew lashing, vertical, filling the full height |
-| spear_bronze | P | a leaf-bladed bronze spear with incised socket, vertical, filling the full height |
-| spear_skymetal | P | a spear with a dark iridescent meteoric-iron head, star-flecked, vertical, filling the full height |
+| spear_bronze | P | a leaf-bladed bronze spear, vertical, filling the full height |
+| spear_skymetal | P | a spear with a raw dark meteoric-iron head, vertical, filling the full height |
 | macuahuitl_obsidian | P | a macuahuitl: flat hardwood club edged with rows of black obsidian blades, held vertical |
-| atlatl_bone | P | a carved bone atlatl dart-thrower with a feathered dart, vertical |
-| khopesh_copper | P | a copper sickle-sword khopesh, its blade blooming with green patina, held vertical |
+| atlatl_bone | P | a carved bone atlatl dart-thrower with a plain dart, vertical |
+| khopesh_copper | P | a copper sickle-sword khopesh with a clean broad hooked blade, held vertical |
 | khopesh_bronze | P | a bronze khopesh with a notch-worn blade, held vertical |
 | sling_hide | P | a braided hide sling with a smooth river stone in the pouch, straps hanging vertical |
-| shield_hide | P | a tall oval shield of stretched hide over a wooden frame, painted with a red ochre spiral |
-| shield_bronze | P | a tall shield faced with hammered bronze, central boss, green patina creeping at the edges |
-| shield_rivetmail | P | a tall shield reinforced with riveted iron strips — impossibly advanced, gleaming dully |
-| wrap_hide | P | a wrapped hide tunic with bone toggles and cord belt loops |
+| shield_hide | P | a tall oval shield of stretched hide over a wooden frame, plain front |
+| shield_bronze | P | a tall shield faced with hammered bronze, central boss |
+| shield_bronzesheet | P | a tall shield faced with clean sheet bronze over a hide backing |
+| wrap_hide | P | a wrapped hide tunic with a simple garment shape |
 | wrap_quilted | P | a quilted linen armor vest of layered stitched cloth, undyed off-white, cord tie at the shoulder |
 | wrap_bronzescale | P | a vest of overlapping bronze scales sewn onto leather backing |
-| wrap_rivetmail | P | a riveted mail hauberk laid out flat and spread like a garment — technology from beyond the horizon (no stand/mannequin: image gen mangles them) |
-| crest_bone | S | a headpiece of carved bone and boar tusks with a horsehair crest |
-| crest_bronze | S | a hammered bronze cap with cheek guards, weathered with green patina |
-| crest_jade | S | a jade circlet-diadem carved with river motifs, faint cool inner glow |
+| wrap_bronzesheet | P | a simple sheet-bronze corslet with front and back plates |
+| crest_bone | S | a simple bone headpiece with a raised crest |
+| crest_bronze | S | a hammered bronze cap with cheek guards |
+| crest_jade | S | a jade circlet-diadem with a clean curved profile |
 | grips_hide | S | a pair of hide handwraps with knuckle cords |
-| sandals_hide | S | a pair of strapped hide sandals, mud-flecked, worn |
-| girdle_hide | L | a wide woven-hide girdle belt laid out horizontally, with a carved antler toggle |
+| sandals_hide | S | a pair of strapped hide sandals, clean and lightly used |
+| girdle_hide | L | a wide woven-hide girdle belt laid out horizontally |
 | gorget_jade | S | a carved jade gorget pendant on a knotted cord |
-| gorget_amber | S | a raw amber pendant with a trapped insect, on sinew cord |
-| ring_bone | S | a ring carved from a single knucklebone, incised marks |
-| ring_copper | S | a coiled copper ring with blooms of blue-green patina on hammered metal |
-| curio_bone | S | a strange small curio: a tiny carved bone bird with jade-chip eyes |
+| gorget_amber | S | a raw amber pendant on sinew cord |
+| ring_bone | S | a ring carved from a single piece of bone |
+| ring_copper | S | a simple coiled copper ring with clean hammered metal |
+| curio_bone | S | a small carved bone bird curio with a clean simple shape |
 
 ## Trophies (5)
 
-boar_tusk (lashed tusk fetish), wolf_fang (fang on a cord with feathers),
-river_pearl (large baroque pearl in a woven reed cage), ember_shell (glowing
-red-veined beetle carapace), knucklebone (polished ancestor knucklebone with
-ochre marks).
+boar_tusk (large tusk trophy setting), wolf_fang (large fang trophy setting),
+river_pearl (large baroque pearl in a carved shell setting), ember_shell
+(glowing red-veined beetle carapace), knucklebone (polished ancestor
+knucklebone with plain carved marks).
 
-## Craft tools (8)
+## Legacy craft tools (frozen)
 
-Pigments: red_ochre (lump + stained grinding stone), woad (blue paste in a
-shell), soot (black powder in a bone tube), marsh_ochre (yellow ochre in a
-reed basket). Omens: entrail_omen (clay liver-model with marks),
-bird_omen (bundle of feathers and knotted string), smoke_omen (smoldering
-herb bundle), blood_omen (dark-stained shallow clay bowl).
+These rows exist as early gameplay/UI archaeology only. Do not expand,
+regenerate, or use them as examples for future prompt candidates unless Alexei
+explicitly reopens the currency/crafting-material lane.
+
+Pigments: red_ochre, woad, soot, marsh_ochre. Omens: entrail_omen,
+bird_omen, smoke_omen, blood_omen.
 
 ## UI (reuse existing)
 
@@ -280,22 +381,29 @@ as hammered bronze rather than gold filigree.
 1. For each row: generate the art in ChatGPT (canvas prefix + style prompt +
    DESC), judge it against the reject checklist, download as
    `<repo>/tools/rpg_inventory/assets_staging/{file}.png`.
-2. Matte it in the Gemini web app (matte prompt above), save as
-   `{file}_mask.png` in the same folder.
-3. Every ~6 items run `python compose_assets.py` from
-   `tools\rpg_inventory\core\` (add `--wb` if the chunk trends yellow) —
-   composites, autocrops, quantizes into `assets/`.
-4. At the end, run `python gen_masks.py` once to sweep any items whose web
-   matte was skipped or failed, then `compose_assets.py` again.
-5. Verify in the browser (`tools/rpg_inventory/index.html`): item art
+2. Run `python3 core/qa_gate.py assets_staging/{file}.png CANVAS`, then eyeball
+   the render against the checklist.
+3. If the staged PNG has true alpha, skip `art_matte.py`.
+4. If the staged PNG has a flat fallback background, run
+   `python3 core/art_matte.py assets_staging {file}`.
+5. Every ~6 items run `python compose_assets.py` from
+   `tools\rpg_inventory\core\` (add `--wb` if the chunk trends yellow). This
+   directly crops true-alpha RGBA inputs, or composites flat-background inputs
+   with masks into `assets/`.
+6. Verify in the browser (`tools/rpg_inventory/index.html`): item art
    replaces the SVG fallback automatically.
 
 ## Reject-and-redo checklist per image
 
-- Background is pure black, single object, no text/watermark/frame.
+- Background is true alpha, or a flat uniform mid-grey/blue-grey/black field;
+  single object, no text/watermark/frame.
 - **No yellow/sepia wash** — whites read bone-white, shadows read grey-black.
 - Silhouette reads clearly at 48px (squint test).
 - Matte matches framing; holes (shield grips, cord loops) are black.
+- Wearable/carryable objects explain how they are worn, held, slung, or
+  attached through visible structure.
+- Relic gear is a substantial implement, not a flat tablet, plaque, board, or
+  slab.
 
 ## 2026-07-04 review priors (from full manual review)
 
@@ -318,6 +426,9 @@ failures. Bake these into every prompt:
    hilt/haft proportion; a weapon that looks flimsy or awkward is a reject.
 5. Hand armour: render as upright **forearm bracers/vambraces** (reliable),
    not laid-flat fingerless wraps (read as foot-shaped garbage).
+6. Prompt-candidate batches must be slot-diverse. Do not sample only weapons,
+   and especially do not let axes/daggers dominate a batch. Currency/crafting
+   materials are frozen, not a source of new prompt ideas.
 
 Retired this pass: `atlatl_*` (kept old art as placeholder, flagged for
 removal). Reworked: `spear_*`, `khopesh_*`, `gorget_*`, `grips_*` (-> bracers),

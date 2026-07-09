@@ -100,6 +100,12 @@
     };
     let idCounter = 0;
     const genId = () => 'vf' + (++idCounter).toString(36) + Math.floor(rnd() * 1e6).toString(36);
+    const retiredForms = new Set(pack.retiredForms || []);
+    const retiredMaterials = new Set(pack.retiredMaterials || []);
+    const retiredArtIds = new Set(pack.retiredArtIds || []);
+    const itemArtId = (formId, materialId) => `${formId}_${materialId}`;
+    const isRetiredCombo = (formId, materialId) =>
+      retiredForms.has(formId) || retiredMaterials.has(materialId) || retiredArtIds.has(itemArtId(formId, materialId));
 
     /* ---------------- basic queries ---------------- */
     const material = (item) => pack.materials[item.materialId];
@@ -124,11 +130,16 @@
     };
 
     /* ---------------- item generation ---------------- */
-    function materialPoolFor(formDef, ilvl) {
+    function materialPoolFor(formRef, ilvl) {
+      const formId = typeof formRef === 'string'
+        ? formRef
+        : Object.keys(pack.forms).find(id => pack.forms[id] === formRef);
+      const formDef = typeof formRef === 'string' ? pack.forms[formRef] : formRef;
+      if (!formDef || retiredForms.has(formId)) return [];
       const maxTier = 1 + Math.floor(ilvl / 15); // t2 @15, t3 @30, t4 @45, t5 @60, t6 @75
       return (formDef.materials || Object.keys(pack.materials))
         .map(id => ({ id, m: pack.materials[id] }))
-        .filter(e => e.m.tier <= maxTier)
+        .filter(e => e.m.tier <= maxTier && !isRetiredCombo(formId, e.id))
         .map(e => ({ w: e.m.dropWeight || 10, id: e.id }));
     }
 
@@ -138,16 +149,23 @@
       if (!formId) {
         // random drops only pick forms with a legal material at this ilvl
         const legal = Object.keys(pack.forms).filter(f =>
-          !pack.forms[f].noDrop && materialPoolFor(pack.forms[f], ilvl).length);
+          !pack.forms[f].noDrop && !retiredForms.has(f) && materialPoolFor(f, ilvl).length);
         formId = pick(legal.length ? legal : Object.keys(pack.forms));
       }
       const formDef = pack.forms[formId];
+      if (!formDef) throw new Error(`unknown form ${formId}`);
+      if (retiredForms.has(formId)) throw new Error(`retired form ${formId}`);
       let materialId = genOpts.materialId;
       if (!materialId) {
-        const poolEntry = pickWeighted(materialPoolFor(formDef, ilvl));
+        const poolEntry = pickWeighted(materialPoolFor(formId, ilvl));
         materialId = poolEntry ? poolEntry.id : (formDef.materials || Object.keys(pack.materials))[0];
       }
+      if (isRetiredCombo(formId, materialId)) throw new Error(`retired item ${itemArtId(formId, materialId)}`);
+      if (formDef.materials && !formDef.materials.includes(materialId)) {
+        throw new Error(`form ${formId} cannot use material ${materialId}`);
+      }
       const mat = pack.materials[materialId];
+      if (!mat) throw new Error(`unknown material ${materialId}`);
       const item = {
         v: 1, id: genId(), formId, materialId,
         kind: formDef.kind, w: formDef.w, h: formDef.h, ilvl,
@@ -268,6 +286,7 @@
       if (!item.vessel) return err('This holds no vessel');
       const mat = material(item);
       if (!mat.ascendsTo) return err(`${mat.name} cannot be fired higher`);
+      if (retiredMaterials.has(mat.ascendsTo)) return err(`${pack.materials[mat.ascendsTo].name} is not available yet`);
       if (!spendPatience(item, 2)) return err('Firing needs 2 patience');
       const outcomes = Object.entries(S.fireOutcomes).map(([k, w]) => ({ w, k }));
       const res = pickWeighted(outcomes).k;

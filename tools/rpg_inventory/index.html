@@ -172,11 +172,11 @@
 
     .slot-row { display: flex; align-items: flex-start; gap: 14px; }
 
-    /* PoE-style slot wells: deep navy over the stone panel, bronze hairline. */
+    /* PoE-style slot wells: neutral recessed stone over the panel, bronze hairline. */
     .equip-slot {
       position: relative;
-      background: linear-gradient(165deg, rgba(23, 27, 56, 0.9), rgba(8, 10, 24, 0.95));
-      border: 1px solid rgba(168, 144, 92, 0.28);
+      background: linear-gradient(165deg, rgba(22, 20, 17, 0.86), rgba(9, 8, 7, 0.94));
+      border: 1px solid rgba(168, 144, 92, 0.22);
       border-radius: 7px;
       box-shadow: inset 0 0 16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(233,228,216,0.05);
       display: flex; align-items: center; justify-content: center;
@@ -252,8 +252,8 @@
 
     .grid-cell {
       width: var(--cell-size); height: var(--cell-size);
-      background: rgba(15, 19, 42, 0.5);
-      border: 1px solid rgba(110, 120, 170, 0.09);
+      background: rgba(16, 14, 11, 0.42);
+      border: 1px solid rgba(168, 144, 92, 0.07);
       box-shadow: inset 0 0 6px rgba(0,0,0,0.35);
     }
 
@@ -261,7 +261,7 @@
       position: absolute;
       border: 1px solid rgba(233,228,216,0.2);
       border-radius: 10px;
-      background: linear-gradient(145deg, rgba(40,37,31,0.94), rgba(20,18,15,0.92));
+      background: transparent;
       display: flex; align-items: center; justify-content: center;
       cursor: grab; touch-action: none;
       transition: transform 0.08s ease, box-shadow 0.2s ease;
@@ -269,7 +269,7 @@
     }
     .item:hover { filter: brightness(1.1); }
     .item.dragging { opacity: 0.92; transform: scale(1.05); cursor: grabbing; box-shadow: 0 18px 30px rgba(0,0,0,0.52); }
-    .item .item-gloss { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(233,228,216,0.06), transparent 55%); pointer-events: none; }
+    .item .item-gloss { display: none; }
     .item-art {
       max-width: 88%; max-height: 84%; object-fit: contain;
       filter: drop-shadow(0 3px 7px rgba(0,0,0,0.65));
@@ -392,14 +392,22 @@
     .tooltip {
       position: fixed; pointer-events: none; z-index: 100;
       width: 300px;
-      background: rgba(13,12,10,0.98);
-      background-clip: padding-box;
-      border: 12px solid transparent;
-      border-image: url('assets/frame_ornate.png') 118 / 12px stretch;
-      padding: 8px 9px;
+      background: #0d0c0a;
+      padding: 20px 21px;
       box-shadow: 0 12px 35px rgba(0,0,0,0.65);
       font-size: 0.84rem;
+      isolation: isolate;
     }
+    .tooltip::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 12px solid transparent;
+      border-image: url('assets/frame_ornate.png') 118 / 12px stretch;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .tooltip > * { position: relative; z-index: 1; }
     .tooltip .tt-name { font-family: 'Cinzel', serif; font-size: 1.02rem; line-height: 1.25; }
     .tooltip .tt-base { font-family: 'Cinzel', serif; font-size: 0.86rem; color: var(--muted); }
     .tooltip .tt-kind, .tooltip .tt-vessel { font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); margin: 4px 0; }
@@ -555,12 +563,12 @@
 
   /* Demo economy: craft operations & tools priced in gold. */
   const OP_COST = { sear: 60, efface: 40, chisel: 150, fire: 100, resonate: 200, sever: 80 };
-  const TOOL_PRICES = { red_ochre: 80, woad: 80, soot: 80, ochre_gold: 80, entrail_omen: 120, bird_omen: 120, smoke_omen: 120, blood_omen: 120 };
+  const TOOL_PRICES = { red_ochre: 80, woad: 80, soot: 80, marsh_ochre: 80, entrail_omen: 120, bird_omen: 120, smoke_omen: 120, blood_omen: 120 };
   const TOOL_DESC = {
     red_ochre: 'Pigment — the mold drinks it: searing leans hard toward blade, blood and blunt.',
     woad: 'Pigment — searing leans toward ward and life.',
     soot: 'Pigment — searing leans toward spirit and ember.',
-    ochre_gold: 'Pigment — searing leans toward fortune, swiftness and the river.',
+    marsh_ochre: 'Pigment — searing leans toward fortune, swiftness and the river.',
     entrail_omen: 'Omen — read first, sear after: the next brand is guaranteed to carry the ward tag.',
     bird_omen: 'Omen — the next brand is guaranteed swift.',
     smoke_omen: 'Omen — the next brand is guaranteed spirit.',
@@ -604,9 +612,31 @@
     return <img className="item-art" src={src} alt="" draggable="false" onError={() => setBroken(true)} />;
   };
 
+  const DEFAULT_EQUIPMENT = {
+    head: null, amulet: null, mainHand: null, body: null, offHand: null,
+    gloves: null, belt: null, boots: null, ring1: null, ring2: null,
+  };
+
+  const RETIRED_FORMS = new Set(pack.retiredForms || []);
+  const RETIRED_MATERIALS = new Set(pack.retiredMaterials || []);
+  const RETIRED_ART_IDS = new Set(pack.retiredArtIds || []);
+
+  const artId = (item) => item ? `${item.formId}_${item.materialId}` : '';
+  const isKnownRuntimeItem = (item) => {
+    const form = item && pack.forms[item.formId];
+    return Boolean(
+      form &&
+      pack.materials[item.materialId] &&
+      !RETIRED_FORMS.has(item.formId) &&
+      !RETIRED_MATERIALS.has(item.materialId) &&
+      form.materials.includes(item.materialId) &&
+      !RETIRED_ART_IDS.has(artId(item))
+    );
+  };
+
   /* Art path per the ASSET-BRIEF naming; falls back to icon until generated. */
-  const artSrc = (item) => `assets/${item.formId}_${item.materialId}.png`;
-  const itemIcon = (item) => pack.forms[item.formId].icon;
+  const artSrc = (item) => isKnownRuntimeItem(item) ? `assets/${artId(item)}.png` : null;
+  const itemIcon = (item) => (pack.forms[item.formId] || {}).icon || 'default';
 
   /* ---------------- grid placement (UI concern, not engine) ---------------- */
   const canPlaceItem = (inventory, item, x, y, ignoreId = null) => {
@@ -661,7 +691,7 @@
       if (pos) inv.push({ ...item, ...pos });
     };
 
-    put(forge.generateItem({ ilvl: 34, formId: 'khopesh', materialId: 'bronze', brands: 1 }));
+    put(forge.generateItem({ ilvl: 34, formId: 'dagger', materialId: 'bronze', brands: 1 }));
     put(forge.generateItem({ ilvl: 30, formId: 'wrap', materialId: 'quilted', brands: 2 }));
     put(forge.generateItem({ ilvl: 28, formId: 'gorget', materialId: 'jade', brands: 1 }));
     put(forge.generateItem({ ilvl: 18, formId: 'ring', materialId: 'bone', brands: 0 }));
@@ -703,15 +733,37 @@
     return {
       character,
       inventory: inv,
-      equipment: {
-        head: null, amulet: null, mainHand: null, body: null, offHand: null,
-        gloves: null, belt: null, boots: null, ring1: null, ring2: null,
-      },
+      equipment: { ...DEFAULT_EQUIPMENT },
       atelierItem: null,
-      satchel: { red_ochre: 2, woad: 1, soot: 1, ochre_gold: 0, entrail_omen: 1, bird_omen: 0, smoke_omen: 0, blood_omen: 1 },
+      satchel: { red_ochre: 2, woad: 1, soot: 1, marsh_ochre: 0, entrail_omen: 1, bird_omen: 0, smoke_omen: 0, blood_omen: 1 },
       log: [
         { kind: 'sys', text: 'The vault opens on the Green Lands. Sear Brands, grow Bonds, bind Trophies — the vessel remembers all three.' },
       ],
+    };
+  };
+
+  const normalizeState = (state) => {
+    const satchel = { ...(state.satchel || {}) };
+    if (satchel.ochre_gold != null) {
+      satchel.marsh_ochre = (satchel.marsh_ochre || 0) + satchel.ochre_gold;
+      delete satchel.ochre_gold;
+    }
+    Object.keys(TOOL_PRICES).forEach(id => {
+      if (satchel[id] == null) satchel[id] = 0;
+    });
+
+    const equipment = { ...DEFAULT_EQUIPMENT };
+    Object.keys(DEFAULT_EQUIPMENT).forEach(slotId => {
+      const item = state.equipment ? state.equipment[slotId] : null;
+      equipment[slotId] = isKnownRuntimeItem(item) ? item : null;
+    });
+
+    return {
+      ...state,
+      inventory: (state.inventory || []).filter(isKnownRuntimeItem),
+      equipment,
+      atelierItem: isKnownRuntimeItem(state.atelierItem) ? state.atelierItem : null,
+      satchel,
     };
   };
 
@@ -721,7 +773,7 @@
       if (!raw) return seedState();
       const state = forge.deserialize(raw);
       if (!state || !Array.isArray(state.inventory) || !state.character || !state.equipment) return seedState();
-      return state;
+      return normalizeState(state);
     } catch (err) {
       return seedState();
     }
@@ -1085,6 +1137,7 @@
         const events = [...r.events];
         let nextInv = prev.inventory;
         r.drops.forEach(d => {
+          if (!isKnownRuntimeItem(d)) return;
           const pos = findFreeSpot(nextInv, d);
           if (pos) {
             nextInv = [...nextInv, { ...d, ...pos }];
@@ -1105,6 +1158,7 @@
     const spawnLoot = () => {
       setState(prev => {
         const item = forge.generateItem({ ilvl: Math.min(80, 10 + level * 3 + Math.floor(Math.random() * 15)) });
+        if (!isKnownRuntimeItem(item)) return prev;
         const pos = findFreeSpot(prev.inventory, item);
         if (!pos) { showToast('Backpack full'); return prev; }
         return { ...prev, inventory: [...prev.inventory, { ...item, ...pos }] };

@@ -7,6 +7,13 @@ do not make him say it again. When he gives new feedback, ADD IT HERE.
 ## ⚑ Goal harness (2026-07-05) — the self-serve loop
 
 - `core/GOAL.md` — mission, definition of done, budget math, priorities.
+- `core/GENERATION-PLAN.md` — the durable 500-600 image target. Do not
+  collapse the project back to the current ~90-row starter manifest.
+- `core/REFERENCE-NOTES.md` — PoE/Diablo structure and visual notes that
+  justify the larger base-item plan.
+- `core/LOADOUT-EXTRACTION.md` — Alexei's 2026-07-07 breakthrough for using a
+  full character/source image as a coherent equipment system, then extracting
+  separate paperdoll-slot item icons with true alpha.
 - `python3 core/status.py` — coverage vs `core/targets.tsv`, today's gen
   count, prioritized queue; `--prompt ART_ID` prints the full assembled
   generation prompt for any item.
@@ -84,14 +91,28 @@ rim-light continuity). Let the standard v2 lighting apply. **Primitive/low-tier 
 material, minimal parts** — bone daggers (sharpened bone blade) are great; a bone
 club is just a femur (+ maybe a leather strap), NOT a wood+jawbone composite.
 Simplicity is the primitive read; don't over-compose low-tier items.
-**No spiral motifs anywhere** (overused) — use sunbursts, concentric rings,
-chevrons, friezes, dots/studs, meander bands, feather fringes, animal motifs.
+**Base items stay generic and clean** (2026-07-07): do not put invented lore
+symbols, horned suns, deity marks, faction emblems, seal faces, friezes, or
+heavy patina into ordinary base-item DESCs. Think thrice before adding any
+symbol at all. Use shape, silhouette, construction, and material as the base
+identity. Extreme wear, verdigris, grime, and overt symbolic flair are for
+uniques/awakened relics only, or for an explicit reviewed exception.
+**No spiral motifs anywhere** (overused). If a base needs ornament, prefer
+generic geometry: plain raised rims, concentric ridges, chevrons, punched
+dots/studs, or simple bands.
 **Don't prompt closures/fastenings** (2026-07-07): toggles, buckles, clasps
 are shapes image-2 struggles with — never call them out in a DESC; let the
 model render fastening its own way. (When it improvises, it does fine — the
 antler toggles on the early belts came out well UNPROMPTED-level quality,
 but explicitly demanding them invites mangled hardware.) Describe the body
 of the item and its materials; leave closures unstated.
+**Source-image loadout extraction** (2026-07-07, Alexei): a strong full
+character/loadout image can be a better item source than isolated DESCs. It
+gives image-2 a coherent equipment system, so feathers, tassels, shell plates,
+scratches, cords, chains, veils, stones, coins, and symbols can work when they
+are physically integrated into the object. The bad pattern is not "detail"; it
+is ungrounded detail pasted onto an item prompt in a vacuum. Use
+`core/LOADOUT-EXTRACTION.md` for that workflow.
 
 ## Pipeline facts (so you don't rediscover them)
 
@@ -100,8 +121,8 @@ of the item and its materials; leave closures unstated.
   don't use them. `art_matte.py` params: low FLOOD threshold keeps dark subject
   detail; a pure-black-fraction test re-opens only genuine see-through holes
   (ring centres, sling gaps) while keeping dark concave surfaces solid.
-- **Compose:** `cd core && python3 compose_assets.py` → autocropped finals in
-  `assets/{formId}_{materialId}.png` (tools as `assets/{toolId}.png`).
+- **Compose:** `cd core && python3 compose_assets.py [NAME ...]` -> autocropped
+  finals in `assets/{formId}_{materialId}.png` (tools as `assets/{toolId}.png`).
 - **ChatGPT web gen recipe (works, screenshot-free):** new tab → navigate
   `https://chatgpt.com/` → JS inject prompt into `div.ProseMirror` via
   `execCommand('insertText')` + dispatch input → click `[data-testid=send-button]`
@@ -111,9 +132,10 @@ of the item and its materials; leave closures unstated.
   commentary. ` and ASCII only (no em-dashes). Plain chat works (no project
   needed).
 - **Downloads must be a connected folder** for the sandbox to read gen output.
-- **Commit/push:** run `commit_assets.sh` ON THE MAC — the Cowork sandbox mount
-  forbids file delete/rename, so git can't finish there (it leaves stale
-  `.git/*.lock` files). Nothing has been pushed by an agent.
+- **Commit hygiene:** source generations in `assets_staging/*.png` are local
+  working files and ignored. Commit the composed finals in `assets/` plus the
+  reusable docs/scripts only. Do not commit `.DS_Store`, `__pycache__`,
+  `.gen-lock`, or one-off handoff/commit helper debris.
 
 ## Base-item model (READ `core/BASE-DESIGN.md` — this is fundamental)
 
@@ -124,7 +146,7 @@ equipment **class** gets a **ladder of distinct, individually-named bases**, one
 per **tier**, escalating crude→endgame. Material/theme is intrinsic to each named
 rung, not an axis sprayed across everything. Our tech arc IS the tier ladder:
 T1 scavenged (flint/bone/hide) → T2 copper → T3 bronze → T4 ritual/exotic
-(obsidian/jade/amber/gilded) → T5 otherworldly (skymetal/rivetmail). Exotic
+(obsidian/jade/amber) → T5 otherworldly (skymetal; mail paused). Exotic
 items are high rungs, not whole classes. Give evocative names (Bronze Khopesh,
 Obsidian Macuahuitl, Skymetal Greathelm), never IDs like `grips_quilted`. Full
 proposed ladders live in `core/BASE-DESIGN.md`.
@@ -137,5 +159,38 @@ proposed ladders live in `core/BASE-DESIGN.md`.
 - New bases added 2026-07-04: `dagger`, `warclub`, `greataxe`, `buckler`,
   `helm`, `greaves` — flagship **bronze** art done; other material variants
   still needed.
-- Review dashboard: open `review.html` in a browser to flag items + rework
-  prompts; its Export button emits JSON of flagged items.
+- Review dashboard: open `review.html` in a browser to flag items, rework
+  prompts, or mark bad ideas as discard. Durable feedback lives in
+  `core/asset-review.js`; `core/status.py` hides discarded items and queues
+  rework items. Discard means retire/drop the idea, not "try again later."
+  If a discarded idea is a runtime item, also add its form to
+  `retiredForms` or its exact `form_material` id to `retiredArtIds` in
+  `core/verdigris-pack.js` so the game cannot roll it again.
+
+## Prompt ideation guardrails
+
+When asked for roastable prompt candidates, apply the pipeline rules in
+`core/GENERATION-PLAN.md`, not just chat memory:
+
+- Check `core/DOWNLOAD-INTAKE.md` before proposing candidates. Do not re-prompt
+  silhouettes from a recent manual download burst until those images are
+  reviewed, staged, or discarded.
+- No currency/crafting-material candidates unless Alexei explicitly reopens
+  that lane. Avoid crafting currencies, pigments, omens, ingots, molds,
+  generic orbs, seal weights, draughts, reagent stones, and abstract bench
+  tokens.
+- Default 12-candidate batches cap weapons at two and must include armour or
+  helmets, shields/off-hands, limb or waist wearables, jewellery, and
+  rite/relic/curio/trophy objects. Smaller batches keep weapons below 25%.
+- Do not let axes/daggers become the default sample set. If weapons appear,
+  vary class and construction, then move back to non-weapon slots.
+- Relic gear candidates should be concrete ritual implements, not vague magic
+  trinkets: double-ended pronged sceptres, heavy hand bells, handled tablets,
+  forked standards, offering bowls, idol-head cudgels, reliquary boxes. Use
+  vajra/dorje-like forms as structural inspiration, not direct sacred-symbol
+  copies or literal default names.
+- Screen prompt candidates for weak/toy-like base reads. Avoid wicker shields,
+  rite batons, pencil-thin wands, hand stones, tiny darts, shrine miniatures,
+  reed baskets or maps, road charms, loose feather markers, and generic small
+  foci. If the item would read as a prop or joke loot before the tooltip
+  explains it, replace it with a heavier credible base.

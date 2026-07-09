@@ -12,11 +12,13 @@ verdigris-manifest.tsv for legacy rows).
 import os
 import re
 import sys
+import json
 import datetime
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ASSETS = os.path.join(HERE, '..', 'assets')
 STAGING = os.path.join(HERE, '..', 'assets_staging')
+REVIEW_JS = os.path.join(HERE, 'asset-review.js')
 
 # The style prompt lives in PROMPT.txt (hand-tuned by Alexei - agents
 # never edit it). status.py only assembles canvas + PROMPT + DESC.
@@ -56,6 +58,18 @@ def load_targets():
     return rows
 
 
+def load_review():
+    if not os.path.exists(REVIEW_JS):
+        return {}
+    text = open(REVIEW_JS, encoding='utf-8').read()
+    m = re.search(r'VerdigrisAssetReview\s*=\s*(\[[\s\S]*\])\s*;?\s*$',
+                  text)
+    if not m:
+        return {}
+    rows = json.loads(m.group(1))
+    return {r['name']: r for r in rows if r.get('name')}
+
+
 def manifest_desc(art_id):
     mf = os.path.join(HERE, 'verdigris-manifest.tsv')
     if os.path.exists(mf):
@@ -70,8 +84,15 @@ def get_desc(row):
     return row['desc'] if row['desc'] != '-' else manifest_desc(row['art_id'])
 
 
-def build_prompt(row):
-    desc = get_desc(row)
+def get_review_desc(row, review):
+    item = review.get(row['art_id']) if review else None
+    if item and item.get('status') == 'rework' and item.get('reworked_desc'):
+        return item['reworked_desc']
+    return get_desc(row)
+
+
+def build_prompt(row, review=None):
+    desc = get_review_desc(row, review)
     if not desc:
         return None
     body = STYLE.replace('{DESC}', desc)
@@ -81,12 +102,20 @@ def build_prompt(row):
 
 
 def main():
-    rows = load_targets()
+    all_rows = load_targets()
+    review = load_review()
+    discarded = {n for n, r in review.items() if r.get('status') == 'discard'}
+    rows = [r for r in all_rows if r['art_id'] not in discarded]
     if len(sys.argv) == 3 and sys.argv[1] == '--prompt':
-        row = next((r for r in rows if r['art_id'] == sys.argv[2]), None)
+        if sys.argv[2] in discarded:
+            note = review.get(sys.argv[2], {}).get('notes')
+            why = f': {note}' if note else ''
+            print(f'{sys.argv[2]} is marked discard in asset-review.js{why}')
+            return
+        row = next((r for r in all_rows if r['art_id'] == sys.argv[2]), None)
         if not row:
             print(f'unknown art_id {sys.argv[2]}'); return
-        p = build_prompt(row)
+        p = build_prompt(row, review)
         print(p if p else f'no DESC available for {sys.argv[2]} - write one '
               'in targets.tsv (v2 style, ASCII)')
         return
@@ -114,7 +143,16 @@ def main():
     if os.path.exists(rg):
         regen = [x.strip() for x in open(rg)
                  if x.strip() and x.strip() not in blocked
-                 and x.strip() not in twostrike]
+                 and x.strip() not in twostrike
+                 and x.strip() not in discarded]
+    review_rework = [n for n, r in review.items()
+                     if r.get('status') == 'rework'
+                     and n not in blocked
+                     and n not in twostrike
+                     and n not in discarded]
+    for n in review_rework:
+        if n not in regen:
+            regen.append(n)
 
     today = datetime.date.today().isoformat()
     gens_today = 0
@@ -124,9 +162,9 @@ def main():
                          if ln.startswith(today) and
                          ('DONE' in ln or 'REDONE' in ln))
 
-    print(f'COVERAGE: {len(done)}/{len(rows)} targets have finals '
+    print(f'COVERAGE: {len(done)}/{len(rows)} active targets have finals '
           f'({len(missing)} missing, {len(regen)} queued for regen, '
-          f'{len(blocked)} blocked)')
+          f'{len(discarded)} discarded, {len(blocked)} blocked)')
     print(f"BUDGET: {gens_today} gens logged today "
           f"(cap 60/day; waves of 3 parallel chats, ~10/hr sustained)")
     print()
@@ -138,7 +176,7 @@ def main():
             print(f'  H  {n:<22} {path or "(no chat path)"}  {note}')
         print()
     if regen:
-        print('QUEUE - regen first (broken items):')
+        print('QUEUE - regen/review first (broken items):')
         for n in regen:
             print(f'  R  {n}')
     if missing:
@@ -156,8 +194,9 @@ def main():
                   f"{r['name']:<24} [{has_desc}]")
     print()
     print('Per item: python3 status.py --prompt ART_ID -> paste via the JS '
-          'recipe in RUNBOOK.md, then qa_gate.py, art_matte.py, '
-          'compose_assets.py, log to GEN-LOG.md')
+          'recipe in RUNBOOK.md, then qa_gate.py, compose_assets.py '
+          '(art_matte.py only for flat fallback backgrounds), log to '
+          'GEN-LOG.md')
 
 
 if __name__ == '__main__':

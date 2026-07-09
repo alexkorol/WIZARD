@@ -17,6 +17,10 @@ Algorithm:
   4. only for KEEP_HOLES forms (ring, sling, gorget, curio): re-open genuine
      see-through holes (enclosed regions that are large AND mostly bg-coloured).
 
+TRUE-ALPHA PNGs are different: the alpha channel is already the artifact of
+record. For those, return the alpha silhouette directly. Do not fill holes,
+keep only one component, or otherwise reinterpret the generated cutout.
+
 Usage: python3 art_matte.py <staging_dir> [name ...]   (no names = all art)
 Writes <staging_dir>/<name>_mask.png (pure white subject on black).
 """
@@ -42,13 +46,7 @@ def matte(art_path, keep_holes=False):
     if src.mode == 'RGBA':
         al = np.asarray(src)[:, :, 3]
         if (al < 128).mean() > 0.02:
-            m = al >= 128
-            lbl, n = ndimage.label(m)
-            if n > 1:
-                sizes = ndimage.sum(m, lbl, range(1, n + 1))
-                m = lbl == (1 + int(np.argmax(sizes)))
-            if not keep_holes:
-                m = ndimage.binary_fill_holes(m)
+            m = al >= 8
             # bg_luma -1 marks the true-alpha path in the log line
             return (m * 255).astype(np.uint8), float(m.mean()), 0, -1.0
     a = np.asarray(src.convert('RGB')).astype(np.float32)

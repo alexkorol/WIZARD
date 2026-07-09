@@ -1,5 +1,7 @@
 /* Vesselforge test suite — run: node test.js */
 'use strict';
+const fs = require('fs');
+const path = require('path');
 const VesselForge = require('./vesselforge.js');
 const pack = require('./verdigris-pack.js');
 
@@ -46,23 +48,223 @@ t('generated items respect vessel/material invariants', () => {
     }
   }
 });
-t('low ilvl never drops skymetal or mail', () => {
+t('low ilvl never drops skymetal or unavailable mail', () => {
   for (let i = 0; i < 100; i++) {
     const it = forge.generateItem({ ilvl: 10 });
     assert(!['skymetal', 'rivetmail'].includes(it.materialId), it.materialId);
   }
 });
+t('jade is restricted to non-weapons or blunt weapon bases', () => {
+  for (const [formId, form] of Object.entries(pack.forms)) {
+    if (!form.materials || !form.materials.includes('jade')) continue;
+    if (form.kind !== 'weapon') continue;
+    assert(form.tags.includes('blunt'), `${formId} uses jade but is not blunt`);
+    assert(!form.tags.includes('blade'), `${formId} uses jade but is a blade`);
+    assert(!form.tags.includes('reach'), `${formId} uses jade but is reach`);
+  }
+
+  const targetPath = path.join(__dirname, 'targets.tsv');
+  const rows = fs.readFileSync(targetPath, 'utf8').trim().split(/\r?\n/).slice(1);
+  const bannedClasses = new Set(['dagger', 'sword', 'axe', 'great2h', 'polearm']);
+  for (const line of rows) {
+    const [artId, cls, , name, , desc] = line.split('\t');
+    const text = `${artId} ${name} ${desc}`.toLowerCase();
+    assert(!(bannedClasses.has(cls) && text.includes('jade')),
+      `${artId} is a jade blade/reach target`);
+  }
+});
+t('retired forms and art ids cannot be generated', () => {
+  const retiredIds = new Set(pack.retiredArtIds || []);
+  const retiredForms = new Set(pack.retiredForms || []);
+  const retiredMaterials = new Set(pack.retiredMaterials || []);
+  for (let i = 0; i < 500; i++) {
+    const it = forge.generateItem({ ilvl: 1 + (i % 80) });
+    assert(!retiredForms.has(it.formId), `generated retired form ${it.formId}`);
+    assert(!retiredMaterials.has(it.materialId), `generated retired material ${it.materialId}`);
+    assert(!retiredIds.has(`${it.formId}_${it.materialId}`),
+      `generated retired art id ${it.formId}_${it.materialId}`);
+  }
+
+  let threw = false;
+  try {
+    forge.generateItem({ ilvl: 40, formId: 'khopesh', materialId: 'bronze' });
+  } catch (e) {
+    threw = /retired item/.test(e.message);
+  }
+  assert(threw, 'explicit retired khopesh_bronze generation must fail');
+  threw = false;
+  try {
+    forge.generateItem({ ilvl: 80, formId: 'wrap', materialId: 'rivetmail' });
+  } catch (e) {
+    threw = /retired item/.test(e.message);
+  }
+  assert(threw, 'explicit retired rivetmail generation must fail');
+
+  const testPack = JSON.parse(JSON.stringify(pack));
+  testPack.forms.sling = {
+    name: 'Sling', kind: 'weapon', kindLabel: 'Thrown weapon', w: 1, h: 2,
+    icon: 'sling', weapon: { dmg: [3, 7], aps: 1.4 },
+    tags: ['swift'], materials: ['hide', 'quilted'],
+  };
+  testPack.retiredForms = [...new Set([...(testPack.retiredForms || []), 'sling'])];
+  const testForge = VesselForge.createForge(testPack, { seed: 99 });
+  eq(testForge.materialPoolFor('sling', 80).length, 0, 'retired forms have no material pool');
+  threw = false;
+  try {
+    testForge.generateItem({ ilvl: 40, formId: 'sling', materialId: 'hide' });
+  } catch (e) {
+    threw = /retired form/.test(e.message);
+  }
+  assert(threw, 'explicit retired sling generation must fail');
+});
+t('generation plan keeps currency art lane closed', () => {
+  const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
+  const plan = fs.readFileSync(planPath, 'utf8');
+  assert(!/Crafting currency \/ omens \/ pigments/.test(plan),
+    'currency bucket must stay out of target counts');
+  assert(!/Add 60 crafting\/currency rows/.test(plan),
+    'generation order must not reintroduce currency rows');
+  assert(/Currency\/crafting-material candidates are out of scope/.test(plan),
+    'plan must carry the no-currency prompt rule');
+  assert(/max 2 weapons/.test(plan),
+    'plan must carry the prompt-batch weapon cap');
+});
+t('test prompts require novelty checks', () => {
+  const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
+  const briefPath = path.join(__dirname, 'ASSET-BRIEF.md');
+  const stylePath = path.join(__dirname, 'STYLE-EXPERIMENTS.md');
+  const plan = fs.readFileSync(planPath, 'utf8');
+  const brief = fs.readFileSync(briefPath, 'utf8');
+  const style = fs.readFileSync(stylePath, 'utf8');
+  assert(/no-repeat by default/.test(plan),
+    'plan must require no-repeat prompt candidates');
+  assert(/Style\s+calibration follows the same rule/.test(plan),
+    'plan must require style calibration to be no-repeat too');
+  assert(/TEST PROMPTS ARE NOVELTY-CHECKED NEW ITEMS/.test(brief),
+    'brief must define test prompts as novelty-checked new items');
+  assert(/extended to style\s+calibration/.test(brief),
+    'brief changelog must record no-repeat style calibration');
+  assert(/No-Repeat Rule/.test(style),
+    'style experiments must carry the no-repeat rule');
+  assert(/Style calibration prompts also use novel DESC content/.test(style),
+    'style experiments must not allow generic repeat calibration prompts');
+  assert(!/### Copper Torc/.test(style) && !/### Carved Jade Cudgel/.test(style),
+    'style experiments must not keep full prompts for already-made items');
+  assert(!/style-calibration repeat/.test(plan + brief + style),
+    'docs must not preserve the old style-calibration repeat loophole');
+});
+t('source-image loadout extraction captures coherent kit detail', () => {
+  const brief = fs.readFileSync(path.join(__dirname, 'ASSET-BRIEF.md'), 'utf8');
+  const style = fs.readFileSync(path.join(__dirname, 'STYLE-EXPERIMENTS.md'), 'utf8');
+  const notes = fs.readFileSync(path.join(__dirname, 'REFERENCE-NOTES.md'), 'utf8');
+  const plan = fs.readFileSync(path.join(__dirname, 'GENERATION-PLAN.md'), 'utf8');
+  const loadout = fs.readFileSync(path.join(__dirname, 'LOADOUT-EXTRACTION.md'), 'utf8');
+  const all = brief + style + notes + plan + loadout;
+  assert(/SOURCE-IMAGE LOADOUT EXTRACTION/.test(brief),
+    'brief must define source-image loadout extraction as a pipeline mode');
+  assert(/Source-Image Loadout Extraction Breakthrough/.test(style),
+    'style experiments must record Alexei loadout breakthrough');
+  assert(/Alex's idea/.test(loadout),
+    'loadout doc must preserve attribution');
+  assert(/maximum 10 images/.test(loadout) && /Ring or small hand jewelry/.test(loadout),
+    'loadout prompt must encode the 10-image slot constraint');
+  assert(/Source-image loadout extraction lane/.test(plan),
+    'generation plan must include source-image extraction as a production lane');
+  assert(/feathers, tassels, scratches, shell plates/.test(all),
+    'docs must allow integrated source-derived details');
+  assert(/ungrounded detail/.test(all) && /baked white\/gray checkerboard/.test(loadout),
+    'docs must reject pasted-on detail and checkerboard alpha failures');
+});
+t('true-alpha assets bypass matte and quantization', () => {
+  const compose = fs.readFileSync(path.join(__dirname, 'compose_assets.py'), 'utf8');
+  const matte = fs.readFileSync(path.join(__dirname, 'art_matte.py'), 'utf8');
+  const runbook = fs.readFileSync(path.join(__dirname, 'RUNBOOK.md'), 'utf8');
+  assert(/TRUE-ALPHA image-2 downloads are preserved as RGBA/.test(compose),
+    'compose must preserve true-alpha downloads as RGBA');
+  assert(/has_true_alpha/.test(compose) && /save_true_alpha/.test(compose),
+    'compose must have a true-alpha direct path');
+  assert(/They are not matted and not palette-quantized/.test(compose),
+    'compose docs must forbid matte/quantize for true alpha');
+  assert(/m = al >= 8/.test(matte),
+    'art_matte true-alpha path must use source alpha directly');
+  assert(/skip matte generation/.test(runbook),
+    'runbook must tell operators to skip matte generation for true alpha');
+});
+t('generation plan requires concrete relic gear', () => {
+  const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
+  const plan = fs.readFileSync(planPath, 'utf8');
+  assert(/concrete ritual implement silhouettes/.test(plan),
+    'plan must require concrete relic implement silhouettes');
+  assert(/vajra\/dorje-like double-ended pronged sceptres/.test(plan),
+    'plan must include vajra/dorje-like structural reference');
+  assert(/Weak relic tropes/.test(plan),
+    'plan must forbid weak relic trope prompts');
+});
+t('generation plan rejects boring relic tablets and plaques', () => {
+  const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
+  const basePath = path.join(__dirname, 'BASE-DESIGN.md');
+  const notesPath = path.join(__dirname, 'REFERENCE-NOTES.md');
+  const plan = fs.readFileSync(planPath, 'utf8');
+  const base = fs.readFileSync(basePath, 'utf8');
+  const notes = fs.readFileSync(notesPath, 'utf8');
+  assert(!/\| (Rite foci \/ sceptres|Charms \/ relic curios|Off-hand foci) \|[^\n]*(tablet|plaque|ward plate)/i.test(plan),
+    'allocation table must not use tablets/plaques/ward plates as positive relic sources');
+  assert(/flat tablets, ward plates, carved slabs/.test(plan),
+    'plan must forbid flat tablet and ward-plate relic concepts');
+  assert(/flat tablets, plaques/.test(base),
+    'base design must reject flat tablets and plaques');
+  assert(/Bad relic gear[\s\S]*flat tablet/.test(notes),
+    'reference notes must classify flat tablets as bad relic gear');
+});
+t('generation plan rejects weak prop-like bases', () => {
+  const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
+  const plan = fs.readFileSync(planPath, 'utf8');
+  assert(/Base-worthy gear rule/.test(plan),
+    'plan must include a base-worthiness guardrail');
+  assert(/Weak base-item concepts/.test(plan),
+    'plan must list weak prop-like base concepts');
+  assert(!/\| Shields \/ bucklers \|[^\n]*Wicker/.test(plan),
+    'shield allocation must not use wicker as a positive source');
+  assert(!/\| Rite foci \/ sceptres \|[^\n]*baton/i.test(plan),
+    'rite allocation must not use batons as positive sources');
+  assert(!/\| Throwing \/ sidearms \|[^\n]*Throwing knives, darts, hand stones/i.test(plan),
+    'sidearm allocation must not use joke-sized thrown objects as positive sources');
+  assert(/avoid bows\/slings, tiny darts, and hand stones/.test(plan),
+    'sidearm allocation must explicitly reject tiny darts and hand stones');
+  assert(!/\| Charms \/ relic curios \|[^\n]*ancestor tokens, shrine miniatures/i.test(plan),
+    'curio allocation must not use shrine miniatures as positive sources');
+  assert(/no loose tiny charms or shrine miniatures/.test(plan),
+    'curio allocation must explicitly reject shrine miniatures');
+});
+t('wearable item prompts require plausible construction', () => {
+  const brief = fs.readFileSync(path.join(__dirname, 'ASSET-BRIEF.md'), 'utf8');
+  const plan = fs.readFileSync(path.join(__dirname, 'GENERATION-PLAN.md'), 'utf8');
+  const targets = fs.readFileSync(path.join(__dirname, 'targets.tsv'), 'utf8');
+  const manifest = fs.readFileSync(path.join(__dirname, 'verdigris-manifest.tsv'), 'utf8');
+  assert(/WEARABLE\/CARRIED CONSTRUCTION MUST BE PLAUSIBLE/.test(brief),
+    'brief must require plausible wearable construction');
+  assert(/Bone armour must be assembled from smaller bone plates/.test(plan),
+    'plan must forbid magic one-piece bone armour plates');
+  assert(!/bone shin guards?[^\n]*(single|solid|one-piece|perfect)/i.test(plan + targets + manifest),
+    'bone shin guards must not be one solid perfect plate');
+  assert(!/greaves_jade[^\n]*single piece/i.test(targets + manifest),
+    'jade greaves must not be a single magic shell');
+  assert(/greaves_jade[^\n]*leather backing[^\n]*side straps/i.test(targets),
+    'jade greaves target must include backing and straps');
+  assert(/bracers_bronzeplate[^\n]*leather backing[^\n]*straps/i.test(targets),
+    'bracer target must include backing and straps');
+});
 
 /* ---------------- crafting: sear/patience/pigment/omen ---------------- */
 t('sear adds a brand and spends patience', () => {
-  const it = forge.generateItem({ ilvl: 40, formId: 'khopesh', materialId: 'bronze', brands: 0 });
+  const it = forge.generateItem({ ilvl: 40, formId: 'dagger', materialId: 'bronze', brands: 0 });
   const r = forge.sear(it);
   assert(!r.error, r.error);
   eq(r.item.brands.length, 1);
   eq(r.item.patience, it.patience - 1);
 });
 t('patience exhaustion closes crafting', () => {
-  let it = forge.generateItem({ ilvl: 40, formId: 'khopesh', materialId: 'bronze', brands: 0 });
+  let it = forge.generateItem({ ilvl: 40, formId: 'dagger', materialId: 'bronze', brands: 0 });
   let guard = 0;
   while (it.patience > 0 && guard++ < 30) {
     const r = it.brands.length ? forge.efface(it) : forge.sear(it);
@@ -114,8 +316,8 @@ t('firing ascends, scars, silences, or shatters — and hide never skips tiers',
   assert(seen.ascend && seen.scar && seen.silent && seen.shatter, JSON.stringify(seen));
 });
 t('top materials cannot be fired', () => {
-  const it = forge.generateItem({ ilvl: 79, formId: 'wrap', materialId: 'rivetmail', brands: 0 });
-  assert(forge.fire(it).error, 'rivetmail must refuse the kiln');
+  const it = forge.generateItem({ ilvl: 79, formId: 'wrap', materialId: 'bronzescale', brands: 0 });
+  assert(forge.fire(it).error, 'retired mail ascension must refuse the kiln');
 });
 
 /* ---------------- trophies ---------------- */
@@ -127,7 +329,7 @@ t('trophy fragments complete and socket', () => {
     stash = r.stash; completed = r.completed;
   }
   assert(completed, '5/5 completes');
-  const it = forge.generateItem({ ilvl: 30, formId: 'spear', materialId: 'bronze', brands: 0 });
+  const it = forge.generateItem({ ilvl: 30, formId: 'spear', materialId: 'copper', brands: 0 });
   const r = forge.socketTrophy(it, 'boar_tusk', stash);
   assert(!r.error, r.error);
   eq(r.item.trophies.length, 1);
@@ -175,7 +377,7 @@ t('the full life of an item: bonds to tier III then awakening', () => {
   assert(forge.isSated(it), 'awakened full item is sated');
 });
 t('sever scars the slot', () => {
-  let it = forge.generateItem({ ilvl: 30, formId: 'spear', materialId: 'bronze', brands: 0 });
+  let it = forge.generateItem({ ilvl: 30, formId: 'spear', materialId: 'copper', brands: 0 });
   const r0 = forge.attune(it, 100, { slaughter: 2 }, { charName: 'X', archetype: 'redhand' });
   it = r0.item;
   if (!it.bonds.length) return; // rng gave a tier-up instead; fine
@@ -226,7 +428,7 @@ t('panoply detects player-authored sets', () => {
   assert(/Panoply \(2\)/.test(ps[0].bonus.label));
 });
 t('tooltip returns structured UI-agnostic lines', () => {
-  const it = forge.generateItem({ ilvl: 40, formId: 'khopesh', materialId: 'bronze', brands: 2 });
+  const it = forge.generateItem({ ilvl: 40, formId: 'dagger', materialId: 'bronze', brands: 2 });
   const lines = forge.tooltip(it, { archetype: 'redhand' });
   assert(lines.every(l => l.section && typeof l.text === 'string'), 'line shape');
   assert(lines.some(l => l.section === 'name'), 'has name');

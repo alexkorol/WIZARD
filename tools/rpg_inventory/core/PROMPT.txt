@@ -31,8 +31,8 @@ asset: crisp hard edges, precise surface detail, photoreal material
 textures. Neutral-to-cold white balance - deep neutral blacks,
 slate-grey shadows, bone-white highlights; warm tones only where the
 material itself is warm, never an overall wash; no sepia, no yellow
-cast, no amber haze, no vignette. Rich tangible materials with worn
-edges and battle wear, made only of the materials named. Rendered as a
+cast, no amber haze, no vignette. Clean readable material surfaces with
+subtle use-wear only, made only of the materials named. Rendered as a
 PNG with a fully TRANSPARENT background - true alpha transparency, no
 background at all, NOT a painted checkerboard pattern. If transparency
 is impossible, fall back to one flat uniform mid-grey fill. The object
