@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Arcane Lattice — Hyperdimensional Spellcrafter</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: #05060f; color: #e6eaff; font-family: Georgia, serif; overflow: hidden; }
+  #app { display: flex; width: 100vw; height: 100vh; }
+  #view { position: relative; flex: 1; min-width: 0; }
+  #view canvas { display: block; }
+  .hud { position: absolute; pointer-events: none; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(170,185,235,0.65); }
+  #hint-controls { top: 10px; left: 14px; }
+  #tierlabel { top: 10px; right: 14px; color: rgba(232,217,160,0.85); }
+  #strata { bottom: 10px; left: 14px; font-size: 12px; text-transform: none; letter-spacing: 0; }
+  #tip { display: none; position: absolute; z-index: 5; padding: 6px 10px; border-radius: 8px; font-size: 12px;
+        background: rgba(10,12,25,0.92); border: 1px solid rgba(130,150,255,0.4); pointer-events: none; }
+  #panel { width: 360px; height: 100%; overflow-y: auto; padding: 20px;
+           background: linear-gradient(180deg, #0b0e1d 0%, #070812 100%);
+           border-left: 1px solid rgba(120,140,255,0.2); }
+  #panel h1 { font-size: 24px; font-weight: 500; color: #e8d9a0; letter-spacing: 0.04em; }
+  #panel .sub { font-size: 12px; color: rgba(170,180,220,0.55); margin: 4px 0 16px; }
+  .box { border: 1px solid rgba(120,140,255,0.18); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px;
+         background: rgba(20,24,48,0.55); transition: border-color 0.3s, box-shadow 0.3s; }
+  .box.ready { border-color: rgba(255,215,0,0.45); box-shadow: 0 0 24px rgba(255,215,0,0.1); }
+  #spelltitle { font-size: 19px; color: #ffd700; }
+  #spellarch { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(170,180,220,0.6); margin-top: 3px; }
+  #spellbody { font-size: 14px; line-height: 1.65; color: rgba(225,230,245,0.9); margin-top: 8px; }
+  #spellhybrid { display: none; font-size: 13px; color: #f0a05a; margin-top: 8px; }
+  #spellstats { display: none; gap: 14px; margin-top: 10px; font-size: 13px; flex-wrap: wrap; }
+  button { font-family: inherit; font-size: 14px; width: 100%; padding: 10px 12px; margin-bottom: 8px;
+           border-radius: 10px; border: 1px solid rgba(120,140,255,0.3); background: rgba(40,46,80,0.5);
+           color: #dfe5ff; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+  button:hover:not(:disabled) { background: rgba(60,68,115,0.6); }
+  button:disabled { opacity: 0.35; cursor: not-allowed; }
+  #castbtn { font-size: 16px; letter-spacing: 0.15em; text-transform: uppercase; padding: 13px; }
+  #castbtn:not(:disabled) { background: linear-gradient(90deg, #8a6508, #c9a227, #8a6508); color: #1a1205;
+                            border-color: rgba(255,215,0,0.6); font-weight: 700; box-shadow: 0 0 22px rgba(255,215,0,0.25); }
+  #shiftbtn.active, #schismbtn.active { background: rgba(110,80,200,0.55); border-color: rgba(180,150,255,0.6); }
+  #instruction { display: none; font-size: 13px; padding: 9px 12px; border-radius: 10px; margin-bottom: 10px;
+                 border: 1px solid rgba(255,215,0,0.25); background: rgba(255,215,0,0.06); color: #e8d9a0; }
+  .histlabel { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(170,180,220,0.5); margin: 6px 0; }
+  .histitem { display: flex; align-items: center; justify-content: space-between; font-size: 13px;
+              padding: 6px 10px; margin-bottom: 6px; border: 1px solid rgba(120,140,255,0.15);
+              border-radius: 8px; background: rgba(20,24,48,0.5); color: rgba(210,218,240,0.85); }
+  .histitem button { width: auto; margin: 0 0 0 8px; padding: 2px 9px; font-size: 12px;
+                     background: rgba(180,40,40,0.45); border-color: rgba(255,120,120,0.3); color: #ffd5d5; }
+  #flash { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 0.8s;
+           background: radial-gradient(circle, rgba(255,235,180,0.3), transparent 70%); }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="view">
+    <div class="hud" id="hint-controls">drag to orbit &middot; scroll to zoom &middot; click nodes to weave</div>
+    <div class="hud" id="tierlabel">first veil &mdash; the plane</div>
+    <div class="hud" id="strata">0/7 strata woven</div>
+    <div id="tip"></div>
+    <div id="flash"></div>
+  </div>
+  <div id="panel">
+    <h1>The Arcane Lattice</h1>
+    <p class="sub">Energy descends only through adjacent channels. Bend the lattice itself to reach the impossible.</p>
+    <div class="box" id="spellbox">
+      <div id="spelltitle">The weave is incomplete</div>
+      <div id="spellarch"></div>
+      <div id="spellbody">Weave a connected path of one node per stratum, from Source down to Manifestation.</div>
+      <div id="spellhybrid"></div>
+      <div id="spellstats">
+        <span id="statpow" style="color:#ff8a8a"></span>
+        <span id="statmana" style="color:#8ab8ff"></span>
+        <span id="statinst" style="color:#f0c060"></span>
+        <span id="statdim" style="color:#8fe6b0"></span>
+        <span id="statstrain" style="color:#c98aff"></span>
+      </div>
+    </div>
+    <button id="castbtn" disabled>&#10038; Cast Spell &#10038;</button>
+    <button id="ascendbtn"><span id="ascendlabel">Ascend Initiation</span></button>
+    <button id="shiftbtn"><span id="shiftlabel">Paradigm Shift &middot; 3 left</span></button>
+    <button id="schismbtn"><span id="schismlabel">Schism &middot; 2 left</span></button>
+    <button id="resetbtn">Reset Lattice</button>
+    <div id="instruction"></div>
+    <div id="histwrap" style="display:none">
+      <div class="histlabel">Active alterations</div>
+      <div id="histlist"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  // ================= DATA =================
+  var ROWS = [
+    { id: 'Origin', y: 15, count: 1 },
+    { id: 'Alignment', y: 30, count: 2 },
+    { id: 'Focus', y: 45, count: 3 },
+    { id: 'Element', y: 60, count: 4 },
+    { id: 'Sphere', y: 75, count: 3 },
+    { id: 'Reach', y: 90, count: 2 },
+    { id: 'Manifestation', y: 105, count: 1 }
+  ];
+  var INITIAL = [
+    ['Source'],
+    ['Adversarial', 'Natural'],
+    ['Destructive', 'Sustaining', 'Creative'],
+    ['Fire', 'Air', 'Water', 'Earth'],
+    ['Body', 'Spirit', 'Mind'],
+    ['Outer', 'Inner'],
+    ['Manifestation']
+  ];
+  var COLORS = {
+    Source: '#FFA500', Adversarial: '#FF4444', Natural: '#50C878',
+    Destructive: '#DC143C', Sustaining: '#4682B4', Creative: '#9370DB',
+    Fire: '#FF6B6B', Air: '#E6E6FA', Water: '#1E90FF', Earth: '#B5651D',
+    Body: '#DAA520', Spirit: '#48D1CC', Mind: '#7B68EE',
+    Outer: '#4169E1', Inner: '#CD5C5C', Manifestation: '#7FFFD4'
+  };
+  var NATIVE = {
+    Source: 0, Adversarial: 1, Natural: 1,
+    Destructive: 2, Sustaining: 2, Creative: 2,
+    Fire: 3, Air: 3, Water: 3, Earth: 3,
+    Body: 4, Spirit: 4, Mind: 4,
+    Outer: 5, Inner: 5, Manifestation: 6
+  };
+  var FLAVOR = {
+    Source: { n: 'Akashic', p: 5 }, Adversarial: { n: 'Vile', p: 4 }, Natural: { n: 'Verdant', p: 3 },
+    Destructive: { n: 'Ruinous', p: 5 }, Sustaining: { n: 'Aegis', p: 3 }, Creative: { n: 'Genesis', p: 4 },
+    Fire: { n: 'Pyre', p: 4 }, Air: { n: 'Gale', p: 3 }, Water: { n: 'Tide', p: 3 }, Earth: { n: 'Granite', p: 4 },
+    Body: { n: 'Flesh', p: 3 }, Spirit: { n: 'Soul', p: 4 }, Mind: { n: 'Psyche', p: 4 },
+    Outer: { n: 'of the World', p: 3 }, Inner: { n: 'of the Self', p: 2 }, Manifestation: { n: '', p: 1 }
+  };
+  var FORMS = {
+    'Destructive|Outer': { Fire: 'a roaring fireball that detonates on impact', Air: 'a forking storm of lightning', Water: 'a spear of abyssal ice', Earth: 'a shattering seismic wave' },
+    'Destructive|Inner': { Fire: 'a withering curse of fever and ash', Air: 'a suffocating hex that steals breath', Water: 'a creeping curse of numbness', Earth: 'a petrifying affliction' },
+    'Sustaining|Outer': { Fire: 'a radiant ward of dancing embers', Air: 'a sheltering cyclone barrier', Water: 'a healing tide washing over allies', Earth: 'a bulwark of living stone' },
+    'Sustaining|Inner': { Fire: 'an inner-flame aura of relentless vigor', Air: 'a featherlight aura granting flight', Water: 'a regenerating lifestream within the veins', Earth: 'unbreakable stoneskin' },
+    'Creative|Outer': { Fire: 'a summoned salamander of living flame', Air: 'a conjured zephyr-djinn bound to service', Water: 'a sculpted servitor of flowing water', Earth: 'a golem risen from raw earth' },
+    'Creative|Inner': { Fire: 'an illusory mantle of burning glory', Air: 'a divination carried on whispering winds', Water: 'a scrying pool opened in the mind’s eye', Earth: 'a transmutation of flesh into enduring stone' }
+  };
+  var SPHERE_C = { Body: 'anchored to flesh and matter', Spirit: 'entwined with the soul', Mind: 'woven through thought itself' };
+  var ALIGN_C = { Adversarial: 'It hungers as it works, corrupting whatever it touches.', Natural: 'It flows in harmony with the natural order.' };
+  var CENTERS = ['r2s1', 'r3s1', 'r3s2', 'r4s1'];
+  var TIERS = ['first veil — the plane', 'second veil — the vessel', 'third veil — the tesseract'];
+
+  // Per-node VFX personality: behavior, particle count, secondary color, vortex speed, spin direction
+  var PROFILES = {
+    Source:        { beh: 'flare',  cnt: 7,  c2: '#FFE9B0', vs: 2.4, dir: -1 },
+    Adversarial:   { beh: 'embers', cnt: 6,  c2: '#FF3322', vs: 2.8, dir: -1 },
+    Natural:       { beh: 'wisps',  cnt: 6,  c2: '#9FE6A0', vs: 1.1, dir: 1 },
+    Destructive:   { beh: 'embers', cnt: 7,  c2: '#FF5A3C', vs: 3.2, dir: -1 },
+    Sustaining:    { beh: 'orbit',  cnt: 5,  c2: '#9FCBF0', vs: 0.8, dir: 1 },
+    Creative:      { beh: 'wisps',  cnt: 7,  c2: '#D6B5FF', vs: 1.8, dir: -1 },
+    Fire:          { beh: 'embers', cnt: 10, c2: '#FFD27A', vs: 3.6, dir: 1 },
+    Air:           { beh: 'arcs',   cnt: 5,  c2: '#CFE4FF', vs: 2.0, dir: -1 },
+    Water:         { beh: 'drips',  cnt: 7,  c2: '#9BD4FF', vs: 1.2, dir: 1 },
+    Earth:         { beh: 'dust',   cnt: 9,  c2: '#C9A36B', vs: 0.45, dir: 1 },
+    Body:          { beh: 'orbit',  cnt: 5,  c2: '#F0D080', vs: 0.9, dir: 1 },
+    Spirit:        { beh: 'wisps',  cnt: 7,  c2: '#A8F0E0', vs: 1.4, dir: 1 },
+    Mind:          { beh: 'orbit',  cnt: 7,  c2: '#C9B8FF', vs: 2.6, dir: -1 },
+    Outer:         { beh: 'flare',  cnt: 5,  c2: '#9FC0FF', vs: 1.3, dir: 1 },
+    Inner:         { beh: 'inhale', cnt: 6,  c2: '#FFAFA0', vs: 1.3, dir: -1 },
+    Manifestation: { beh: 'flare',  cnt: 6,  c2: '#BFFFE9', vs: 1.6, dir: 1 }
+  };
+
+  var SCALE = 0.2, SPACING = 17.5;
+
+  // ================= SLOTS & ADJACENCY =================
+  var slots = [], slotById = {};
+  ROWS.forEach(function (row, r) {
+    for (var i = 0; i < row.count; i++) {
+      var x = 50 + (i - (row.count - 1) / 2) * SPACING;
+      var s = {
+        id: 'r' + r + 's' + i, row: r, idx: i,
+        base: new THREE.Vector3((x - 50) * SCALE, (60 - row.y) * SCALE, 0),
+        smooth: null
+      };
+      s.smooth = s.base.clone();
+      slots.push(s);
+      slotById[s.id] = s;
+    }
+  });
+
+  function adjT(r, i) {
+    switch (r) {
+      case 0: return [0, 1];
+      case 1: return i === 0 ? [0, 1] : [1, 2];
+      case 2: return i === 0 ? [0, 1] : (i === 1 ? [1, 2] : [2, 3]);
+      case 3: return i === 0 ? [0] : (i === 1 ? [0, 1] : (i === 2 ? [1, 2] : [2]));
+      case 4: return i === 0 ? [0] : (i === 1 ? [0, 1] : [1]);
+      case 5: return [0];
+      default: return [];
+    }
+  }
+
+  var adjSet = {};
+  slots.forEach(function (s) {
+    adjT(s.row, s.idx).forEach(function (ti) {
+      adjSet[s.id + '|r' + (s.row + 1) + 's' + ti] = true;
+    });
+  });
+  function isAdj(upId, downId) { return !!adjSet[upId + '|' + downId]; }
+
+  // Tier-dependent adjacency. Tier 0 (Plane): base channels only. Tier 1 (Vessel):
+  // strata fold into rings, restoring the diamond's cut edges — the WRAP channels.
+  // Tier 2 (Tesseract): complete bipartite adjacency between neighboring strata.
+  // Slot-indexed (like adjT), so shifts/schisms don't move the channels.
+  var WRAP = [
+    ['r1s0', 'r2s2'], ['r1s1', 'r2s0'],   // Alignment→Focus complete
+    ['r2s0', 'r3s3'], ['r2s2', 'r3s0'],   // Focus→Element ring
+    ['r3s0', 'r4s2'], ['r3s3', 'r4s0'],   // Element→Sphere ring
+    ['r4s0', 'r5s1'], ['r4s2', 'r5s0']    // Sphere→Reach complete
+  ];
+  var wrapSet = {};
+  WRAP.forEach(function (p) { wrapSet[p[0] + '|' + p[1]] = true; });
+  function isWrap(upId, downId) { return !!wrapSet[upId + '|' + downId]; }
+  function adjAt(tier, upId, downId) {
+    if (!upId || !downId) return false;
+    if (slotById[downId].row !== slotById[upId].row + 1) return false;
+    if (isAdj(upId, downId)) return true;
+    if (tier >= 1 && isWrap(upId, downId)) return true;
+    return tier >= 2;
+  }
+
+  // ================= STATE =================
+  var st = {
+    assign: new Map(), selected: new Map(), mode: 'normal',
+    shiftsLeft: 3, schismsLeft: 2, shiftsUsed: 0, schismsUsed: 0,
+    history: [], shiftFirst: null, schismFirst: null,
+    comet: null, hover: null, tier: 0, maxTier: 2
+  };
+  slots.forEach(function (s) { st.assign.set(s.id, INITIAL[s.row][s.idx]); });
+
+  // ================= SCENE =================
+  var mount = document.getElementById('view');
+  var W = mount.clientWidth, H = mount.clientHeight;
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x05060f);
+  scene.fog = new THREE.FogExp2(0x05060f, 0.011);
+  var camera = new THREE.PerspectiveCamera(55, W / H, 0.1, 300);
+  var cam = { radius: 24, theta: 0, phi: 1.45 };
+  var renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(W, H);
+  mount.appendChild(renderer.domElement);
+  renderer.domElement.style.cursor = 'grab';
+
+  scene.add(new THREE.AmbientLight(0x404868, 1.2));
+  var key = new THREE.PointLight(0xaabbff, 1.1, 120); key.position.set(10, 14, 18); scene.add(key);
+  var rim = new THREE.PointLight(0xff88aa, 0.5, 100); rim.position.set(-14, -8, -12); scene.add(rim);
+  var flashL = new THREE.PointLight(0xfff2c0, 0, 60); scene.add(flashL);
+
+  var sg = new THREE.BufferGeometry(), spArr = new Float32Array(900 * 3);
+  for (var i = 0; i < 900; i++) {
+    var rr = 50 + Math.random() * 60, tt = Math.random() * 6.283, ph = Math.acos(2 * Math.random() - 1);
+    spArr[i * 3] = rr * Math.sin(ph) * Math.cos(tt);
+    spArr[i * 3 + 1] = rr * Math.cos(ph);
+    spArr[i * 3 + 2] = rr * Math.sin(ph) * Math.sin(tt);
+  }
+  sg.setAttribute('position', new THREE.BufferAttribute(spArr, 3));
+  var stars = new THREE.Points(sg, new THREE.PointsMaterial({ color: 0x8fa6ff, size: 0.3, transparent: true, opacity: 0.8 }));
+  scene.add(stars);
+
+  // ================= TEXTURES =================
+  function glowTexMake() {
+    var c = document.createElement('canvas'); c.width = c.height = 128;
+    var x = c.getContext('2d');
+    var g = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+    g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.25, 'rgba(255,255,255,0.55)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+    x.fillStyle = g; x.fillRect(0, 0, 128, 128);
+    return new THREE.CanvasTexture(c);
+  }
+  function spiralTexMake() {
+    var c = document.createElement('canvas'); c.width = c.height = 128;
+    var x = c.getContext('2d'); x.translate(64, 64);
+    for (var arm = 0; arm < 3; arm++) {
+      x.save(); x.rotate(arm * 2.094); x.beginPath();
+      for (var t = 0; t < 40; t++) {
+        var a = t * 0.16, r = 2 + t * 1.45;
+        var px = r * Math.cos(a), py = r * Math.sin(a);
+        if (t === 0) x.moveTo(px, py); else x.lineTo(px, py);
+      }
+      x.lineWidth = 7;
+      var lg = x.createLinearGradient(0, 0, 60, 0);
+      lg.addColorStop(0, 'rgba(255,255,255,0.95)'); lg.addColorStop(1, 'rgba(255,255,255,0)');
+      x.strokeStyle = lg; x.lineCap = 'round'; x.stroke(); x.restore();
+    }
+    return new THREE.CanvasTexture(c);
+  }
+  function ringTexMake() {
+    var c = document.createElement('canvas'); c.width = c.height = 128;
+    var x = c.getContext('2d');
+    var g = x.createRadialGradient(64, 64, 38, 64, 64, 58);
+    g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(0.5, 'rgba(255,255,255,0.9)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+    x.fillStyle = g; x.beginPath(); x.arc(64, 64, 60, 0, 6.283); x.fill();
+    return new THREE.CanvasTexture(c);
+  }
+  function labelTex(text) {
+    var c = document.createElement('canvas'); c.width = 512; c.height = 128;
+    var x = c.getContext('2d');
+    x.font = '600 50px Georgia,serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
+    x.shadowColor = 'rgba(0,0,0,0.9)'; x.shadowBlur = 12;
+    x.fillStyle = 'rgba(235,240,255,0.96)'; x.fillText(text, 256, 64);
+    return new THREE.CanvasTexture(c);
+  }
+  var glowTex = glowTexMake(), spiralTex = spiralTexMake(), ringTex = ringTexMake();
+
+  // ================= EDGES =================
+  // One line per consecutive-row channel. base = always shown; wrap = fades in
+  // at the Vessel; hyper = Tesseract only, revealed on hover or when woven.
+  var edges = [];
+  slots.forEach(function (s) {
+    slots.forEach(function (t) {
+      if (t.row !== s.row + 1) return;
+      var kind = isAdj(s.id, t.id) ? 'base' : (isWrap(s.id, t.id) ? 'wrap' : 'hyper');
+      var g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(6), 3));
+      var m = new THREE.LineBasicMaterial({ color: 0x2a3550, transparent: true, opacity: kind === 'base' ? 0.35 : 0 });
+      scene.add(new THREE.Line(g, m));
+      edges.push({ a: s.id, b: t.id, kind: kind, mat: m, geo: g });
+    });
+  });
+
+  // ================= NODES =================
+  function rnd(s) { return (Math.random() - 0.5) * 2 * s; }
+  function randUnit() {
+    return new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
+  }
+
+  function resetParticle(pt, beh, dir) {
+    pt.life = 0.5 + Math.random() * 0.7; pt.max = pt.life;
+    switch (beh) {
+      case 'embers':
+        pt.s.position.set(rnd(0.25), -0.1 + Math.random() * 0.2, rnd(0.25));
+        pt.v = new THREE.Vector3(rnd(0.25), 0.7 + Math.random() * 0.9, rnd(0.25));
+        break;
+      case 'flare':
+        var d = randUnit();
+        pt.s.position.copy(d.clone().multiplyScalar(0.35));
+        pt.v = d.multiplyScalar(0.9 + Math.random() * 1.1);
+        break;
+      case 'drips':
+        pt.s.position.set(rnd(0.3), -0.25, rnd(0.3));
+        pt.v = new THREE.Vector3(0, -(0.5 + Math.random() * 0.7), 0);
+        pt.life = 0.7 + Math.random() * 0.8; pt.max = pt.life;
+        break;
+      case 'dust':
+        pt.s.position.set(rnd(0.45), Math.random() * 0.4 - 0.1, rnd(0.45));
+        pt.v = new THREE.Vector3(rnd(0.12), -(0.12 + Math.random() * 0.18), rnd(0.12));
+        pt.life = 1.2 + Math.random() * 1.2; pt.max = pt.life;
+        break;
+      case 'wisps':
+        pt.ang = Math.random() * 6.28;
+        pt.rad = 0.35 + Math.random() * 0.25;
+        pt.yy = -0.35;
+        pt.angV = (0.8 + Math.random()) * dir;
+        pt.yV = 0.35 + Math.random() * 0.3;
+        pt.life = 1 + Math.random(); pt.max = pt.life;
+        break;
+      case 'orbit':
+        pt.ang = Math.random() * 6.28;
+        pt.rad = 0.7 + Math.random() * 0.35;
+        pt.angV = (1 + Math.random() * 1.4) * dir;
+        pt.life = 9999; pt.max = 9999;
+        break;
+      case 'inhale':
+        var d2 = randUnit();
+        pt.s.position.copy(d2.clone().multiplyScalar(1.2 + Math.random() * 0.6));
+        pt.v = d2.multiplyScalar(-(0.6 + Math.random() * 0.7));
+        break;
+      case 'arcs':
+        pt.s.position.copy(randUnit().multiplyScalar(0.5 + Math.random() * 0.6));
+        pt.life = 0.05 + Math.random() * 0.12; pt.max = pt.life;
+        break;
+    }
+  }
+
+  var sphereGeo = new THREE.SphereGeometry(0.36, 24, 24);
+  var icoGeo = new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(0.52, 0));
+  var torusGeo = new THREE.TorusGeometry(0.72, 0.028, 8, 40);
+  var meshes = {}, meshList = [];
+
+  Object.keys(COLORS).forEach(function (name) {
+    var col = new THREE.Color(COLORS[name]);
+    var prof = PROFILES[name];
+    var col2 = new THREE.Color(prof.c2);
+
+    var mat = new THREE.MeshPhongMaterial({ color: 0x0c0f1a, emissive: col, emissiveIntensity: 0.5, shininess: 90 });
+    var mesh = new THREE.Mesh(sphereGeo, mat);
+    mesh.userData.name = name;
+
+    var gm = new THREE.SpriteMaterial({ map: glowTex, color: col, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending, depthWrite: false });
+    var glow = new THREE.Sprite(gm); glow.scale.set(2.8, 2.8, 1); mesh.add(glow);
+
+    var vm = new THREE.SpriteMaterial({ map: spiralTex, color: col, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending, depthWrite: false });
+    vm.rotation = Math.random() * 6.28;
+    var vortex = new THREE.Sprite(vm); vortex.scale.set(1.9, 1.9, 1); mesh.add(vortex);
+
+    var rm = new THREE.SpriteMaterial({ map: ringTex, color: col2, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false });
+    var ringS = new THREE.Sprite(rm); ringS.scale.set(1.5, 1.5, 1); mesh.add(ringS);
+
+    var wire = new THREE.LineSegments(icoGeo, new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending }));
+    wire.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
+    mesh.add(wire);
+
+    var tor1 = new THREE.Mesh(torusGeo, new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending }));
+    tor1.rotation.set(1.1 + rnd(0.4), rnd(0.5), Math.random() * 6.28);
+    mesh.add(tor1);
+    var tor2 = new THREE.Mesh(torusGeo, new THREE.MeshBasicMaterial({ color: col2, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending }));
+    tor2.rotation.set(-1.1 + rnd(0.4), 0.6 + rnd(0.5), Math.random() * 6.28);
+    tor2.scale.setScalar(0.85);
+    mesh.add(tor2);
+
+    var parts = [];
+    for (var pi = 0; pi < prof.cnt; pi++) {
+      var pm = new THREE.SpriteMaterial({ map: glowTex, color: col2, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false });
+      var ps = new THREE.Sprite(pm);
+      var basescale = prof.beh === 'dust' ? 0.14 : prof.beh === 'arcs' ? 0.2 : 0.2 + Math.random() * 0.1;
+      ps.scale.set(basescale, basescale, 1);
+      mesh.add(ps);
+      var pt = { s: ps, m: pm, v: new THREE.Vector3(), life: Math.random(), max: 1, base: basescale };
+      resetParticle(pt, prof.beh, prof.dir);
+      pt.life *= Math.random();
+      parts.push(pt);
+    }
+
+    var bolts = [];
+    if (prof.beh === 'arcs') {
+      for (var bi = 0; bi < 2; bi++) {
+        var bg = new THREE.BufferGeometry();
+        bg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(6 * 3), 3));
+        var bm = new THREE.LineBasicMaterial({ color: col2, transparent: true, opacity: 0, blending: THREE.AdditiveBlending });
+        var bl = new THREE.Line(bg, bm);
+        mesh.add(bl);
+        bolts.push({ line: bl, geo: bg, mat: bm, timer: Math.random() * 0.1 });
+      }
+    }
+
+    var lm = new THREE.SpriteMaterial({ map: labelTex(name), transparent: true, depthWrite: false });
+    var label = new THREE.Sprite(lm); label.scale.set(3.2, 0.8, 1); label.position.set(0, 1.3, 0); mesh.add(label);
+
+    mesh.userData.fx = {
+      glow: gm, vortex: vm, vorSprite: vortex, ring: rm, ringSprite: ringS,
+      wire: wire, tor1: tor1, tor2: tor2, parts: parts, bolts: bolts,
+      prof: prof, phase: Math.random() * 6.28
+    };
+    scene.add(mesh);
+    meshes[name] = mesh;
+    meshList.push(mesh);
+  });
+
+  // ================= PATH, TESSERACT, FLOW =================
+  var PATH_N = 120;
+  var pathGeo = new THREE.BufferGeometry();
+  pathGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(PATH_N * 3), 3));
+  pathGeo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(PATH_N * 3), 3));
+  var pathLine = new THREE.Line(pathGeo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0, blending: THREE.AdditiveBlending }));
+  scene.add(pathLine);
+
+  var tessVerts = [], tessEdges = [];
+  for (var v = 0; v < 16; v++) tessVerts.push([(v & 1 ? 1 : -1), (v & 2 ? 1 : -1), (v & 4 ? 1 : -1), (v & 8 ? 1 : -1)]);
+  for (var a1 = 0; a1 < 16; a1++) for (var b1 = a1 + 1; b1 < 16; b1++) {
+    var dd = a1 ^ b1;
+    if (dd && !(dd & (dd - 1))) tessEdges.push([a1, b1]);
+  }
+  var tessGeo = new THREE.BufferGeometry();
+  tessGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(tessEdges.length * 6), 3));
+  var tessMat = new THREE.LineBasicMaterial({ color: 0x7f9bff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending });
+  scene.add(new THREE.LineSegments(tessGeo, tessMat));
+
+  var flow = [];
+  for (var f = 0; f < 18; f++) {
+    var fm = new THREE.SpriteMaterial({ map: glowTex, color: 0xffd700, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false });
+    var fs = new THREE.Sprite(fm); fs.scale.set(0.6, 0.6, 1); scene.add(fs);
+    flow.push({ s: fs, t: f / 18, m: fm });
+  }
+  var cometMat = new THREE.SpriteMaterial({ map: glowTex, color: 0xffffff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false });
+  var cometS = new THREE.Sprite(cometMat); cometS.scale.set(2.4, 2.4, 1); scene.add(cometS);
+  var bursts = [];
+
+  // ================= DIMENSIONAL PROJECTION =================
+  function project4(x, y, z, w, t) {
+    var a = t * 0.32, b = t * 0.21;
+    var ca = Math.cos(a), sa = Math.sin(a), cb = Math.cos(b), sb = Math.sin(b);
+    var x2 = x * ca - w * sa, w2 = x * sa + w * ca;
+    var z2 = z * cb - w2 * sb, w3 = z * sb + w2 * cb;
+    var P = 7, s = P / Math.max(2.5, P - w3);
+    return new THREE.Vector3(x2 * s, y * s, z2 * s);
+  }
+  function tierTarget(slot, t) {
+    if (st.tier === 0) return slot.base;
+    var row = ROWS[slot.row], n = row.count, y = slot.base.y;
+    var pos;
+    if (n === 1) pos = { x: 0, z: 0 };
+    else {
+      var ang = Math.PI / 2 + (slot.idx / n) * Math.PI * 2 + slot.row * 0.4;
+      var R = 0.8 + n * 0.85;
+      pos = { x: R * Math.cos(ang), z: R * Math.sin(ang) };
+    }
+    if (st.tier === 1) return new THREE.Vector3(pos.x, y, pos.z);
+    var w = (3 - slot.row) * 1.05;
+    return project4(pos.x, y, pos.z, w, t);
+  }
+
+  // ================= CORE LOGIC =================
+  function rev() {
+    var r = {};
+    st.assign.forEach(function (n, sid) { r[n] = sid; });
+    return r;
+  }
+  function chainLen() {
+    var r = 0;
+    while (st.selected.has(r)) r++;
+    return r;
+  }
+  function completeNodes() {
+    if (st.selected.size !== ROWS.length || chainLen() !== ROWS.length) return null;
+    var a = [];
+    for (var r = 0; r < ROWS.length; r++) a.push(st.assign.get(st.selected.get(r)));
+    return a;
+  }
+  function pruneFrom(row) {
+    for (var rr = row; rr < ROWS.length; rr++) st.selected.delete(rr);
+  }
+  function validateDownstream(fromRow) {
+    // Row 0 has no upstream channel — start adjacency checks at row 1
+    for (var rr = Math.max(fromRow + 1, 1); rr < ROWS.length; rr++) {
+      if (!st.selected.has(rr)) { pruneFrom(rr); return; }
+      if (!adjAt(st.tier, st.selected.get(rr - 1), st.selected.get(rr))) { pruneFrom(rr); return; }
+    }
+  }
+  function rotateAround(cid, dir) {
+    var c = slotById[cid];
+    var nb = slots.filter(function (s) { return s.id !== cid && s.base.distanceTo(c.base) < 3.9; });
+    if (nb.length < 3) return;
+    nb.sort(function (p, q) {
+      return Math.atan2(p.base.y - c.base.y, p.base.x - c.base.x) - Math.atan2(q.base.y - c.base.y, q.base.x - c.base.x);
+    });
+    var old = new Map(st.assign);
+    var m = nb.length;
+    nb.forEach(function (s, i) {
+      var t = nb[((i + dir) % m + m) % m];
+      st.assign.set(t.id, old.get(s.id));
+    });
+  }
+  function genSpell(n) {
+    var displaced = 0;
+    n.forEach(function (name, r) { if (NATIVE[name] !== r) displaced++; });
+    var title = ((FLAVOR[n[1]] ? FLAVOR[n[1]].n : n[1]) + ' ' + (FLAVOR[n[3]] ? FLAVOR[n[3]].n : n[3]) + ' ' + (FLAVOR[n[5]] ? FLAVOR[n[5]].n : '')).replace(/\s+/g, ' ').trim();
+    var ft = FORMS[n[2] + '|' + n[5]];
+    var form = ft && ft[n[3]];
+    var sc = SPHERE_C[n[4]] || ('channeled through the displaced essence of ' + n[4]);
+    var ac = ALIGN_C[n[1]] || ('Its moral axis is fractured — ' + n[1] + ' burns where alignment should reside.');
+    var arch, body;
+    if (form) {
+      arch = n[2] + ' · ' + n[3] + ' · ' + n[4] + ' · ' + n[5];
+      body = n[0] + ' energy condenses into ' + form + ', ' + sc + '. ' + ac;
+    } else {
+      arch = 'Aberrant hybrid weave';
+      body = n[0] + ' energy is forced through a warped channel — an aberrant weave of ' + n[2].toLowerCase() + ' and ' + n[3].toLowerCase() + ' resonance, ' + sc + '. ' + ac;
+    }
+    var hybrid = displaced > 0 ? ('⚠ ' + displaced + ' node' + (displaced > 1 ? 's' : '') + ' resonating outside ' + (displaced > 1 ? 'their' : 'its') + ' native stratum — the weave warps unpredictably, gaining power at the cost of control.') : null;
+    var base = 0;
+    n.forEach(function (name) { base += (FLAVOR[name] ? FLAVOR[name].p : 3); });
+    // Hyperchannel strain: every hop not present in the base lattice taxes the cast.
+    // Shifts/schisms rearrange nodes onto base channels, so they avoid this — by design.
+    var strain = 0;
+    for (var rr = 1; rr < ROWS.length; rr++) {
+      if (!isAdj(st.selected.get(rr - 1), st.selected.get(rr))) strain++;
+    }
+    var power = base + displaced * 2 + st.shiftsUsed + st.tier * 4;
+    var inst = Math.min(99, displaced * 17 + st.shiftsUsed * 4 + st.schismsUsed * 9 + st.tier * 6 + strain * 8);
+    var mana = Math.round(power * 3 + inst / 2);
+    return { title: title, arch: arch, body: body, hybrid: hybrid, power: power, inst: inst, mana: mana, strain: strain };
+  }
+
+  // ================= UI =================
+  var castbtn = document.getElementById('castbtn'), shiftbtn = document.getElementById('shiftbtn'),
+      schismbtn = document.getElementById('schismbtn'), resetbtn = document.getElementById('resetbtn'),
+      ascendbtn = document.getElementById('ascendbtn'), instrEl = document.getElementById('instruction');
+  var hintTimer = null;
+
+  function showHint(msg, sticky) {
+    instrEl.style.display = 'block';
+    instrEl.textContent = msg;
+    if (hintTimer) { clearTimeout(hintTimer); hintTimer = null; }
+    if (!sticky) {
+      hintTimer = setTimeout(function () {
+        if (st.mode === 'normal') instrEl.style.display = 'none';
+      }, 2600);
+    }
+  }
+
+  function updatePanel() {
+    document.getElementById('strata').textContent = chainLen() + '/7 strata woven';
+    document.getElementById('tierlabel').textContent = TIERS[st.tier];
+    document.getElementById('ascendlabel').textContent = st.tier < st.maxTier ? 'Ascend Initiation' : 'Return to the Plane';
+    ascendbtn.disabled = st.maxTier === 0;
+    var nodes = completeNodes();
+    var box = document.getElementById('spellbox');
+    if (nodes) {
+      var s = genSpell(nodes);
+      document.getElementById('spelltitle').textContent = s.title;
+      document.getElementById('spellarch').textContent = s.arch;
+      document.getElementById('spellbody').textContent = s.body;
+      var h = document.getElementById('spellhybrid');
+      if (s.hybrid) { h.style.display = 'block'; h.textContent = s.hybrid; } else h.style.display = 'none';
+      var stats = document.getElementById('spellstats');
+      stats.style.display = 'flex';
+      document.getElementById('statpow').textContent = 'Power ' + Math.round(s.power);
+      document.getElementById('statmana').textContent = 'Mana ' + Math.round(s.mana);
+      document.getElementById('statinst').textContent = 'Instability ' + Math.round(s.inst) + '%';
+      document.getElementById('statdim').textContent = 'Dimension ' + (st.tier + 3) + 'D';
+      var strainEl = document.getElementById('statstrain');
+      strainEl.style.display = s.strain ? 'inline' : 'none';
+      strainEl.textContent = 'Strain +' + (s.strain * 8) + '%';
+      castbtn.disabled = false;
+      box.classList.add('ready');
+    } else {
+      document.getElementById('spelltitle').textContent = 'The weave is incomplete';
+      document.getElementById('spellarch').textContent = '';
+      document.getElementById('spellbody').textContent = 'Weave a connected path of one node per stratum, from Source down to Manifestation.';
+      document.getElementById('spellhybrid').style.display = 'none';
+      document.getElementById('spellstats').style.display = 'none';
+      castbtn.disabled = true;
+      box.classList.remove('ready');
+    }
+    document.getElementById('shiftlabel').textContent = st.mode === 'shift' ? 'Cancel Paradigm Shift' : ('Paradigm Shift · ' + st.shiftsLeft + ' left');
+    document.getElementById('schismlabel').textContent = (st.mode === 'schism1' || st.mode === 'schism2') ? 'Cancel Schism' : ('Schism · ' + st.schismsLeft + ' left');
+    shiftbtn.disabled = st.shiftsLeft === 0 && st.mode !== 'shift';
+    schismbtn.disabled = st.schismsLeft === 0 && st.mode !== 'schism1' && st.mode !== 'schism2';
+    shiftbtn.classList.toggle('active', st.mode === 'shift');
+    schismbtn.classList.toggle('active', st.mode === 'schism1' || st.mode === 'schism2');
+    if (st.mode === 'shift') showHint(st.shiftFirst ? (st.shiftFirst.name + ' marked. Select a second node in the same layer to swap.') : 'Paradigm Shift: select the first node to displace.', true);
+    else if (st.mode === 'schism1') showHint('Schism: select the first inner nexus — its six satellites rotate clockwise.', true);
+    else if (st.mode === 'schism2') showHint('First nexus rotated clockwise. Now select the second nexus — its satellites rotate counter-clockwise.', true);
+    else if (!hintTimer) instrEl.style.display = 'none';
+
+    var hw = document.getElementById('histwrap'), hl = document.getElementById('histlist');
+    if (st.history.length) {
+      hw.style.display = 'block';
+      hl.innerHTML = '';
+      st.history.forEach(function (h, i) {
+        var d = document.createElement('div');
+        d.className = 'histitem';
+        var span = document.createElement('span');
+        span.textContent = h.label;
+        d.appendChild(span);
+        var b = document.createElement('button');
+        b.textContent = '✕';
+        b.setAttribute('aria-label', 'Revert this alteration');
+        b.addEventListener('click', function () { undoEntry(i); });
+        d.appendChild(b);
+        hl.appendChild(d);
+      });
+    } else hw.style.display = 'none';
+  }
+
+  function undoEntry(i) {
+    var e = st.history[i];
+    if (e.type === 'shift') {
+      var r = rev();
+      var sa = r[e.a], sb = r[e.b];
+      if (sa && sb) {
+        var tmp = st.assign.get(sa);
+        st.assign.set(sa, st.assign.get(sb));
+        st.assign.set(sb, tmp);
+      }
+      st.shiftsLeft++; st.shiftsUsed = Math.max(0, st.shiftsUsed - 1);
+    } else {
+      rotateAround(e.second, -1);
+      rotateAround(e.first, 1);
+      st.schismsLeft++; st.schismsUsed = Math.max(0, st.schismsUsed - 1);
+    }
+    st.history.splice(i, 1);
+    updatePanel();
+  }
+
+  function nodeClick(name) {
+    var r = rev();
+    var sid = r[name];
+    var slot = slotById[sid];
+
+    if (st.mode === 'shift') {
+      if (!st.shiftFirst) st.shiftFirst = { sid: sid, name: name };
+      else if (st.shiftFirst.sid !== sid && slotById[st.shiftFirst.sid].row === slot.row) {
+        var na = st.assign.get(st.shiftFirst.sid), nb = st.assign.get(sid);
+        st.assign.set(st.shiftFirst.sid, nb);
+        st.assign.set(sid, na);
+        st.history.push({ type: 'shift', a: na, b: nb, label: ROWS[slot.row].id + ': ' + na + ' ↔ ' + nb });
+        st.shiftsLeft--; st.shiftsUsed++;
+        st.shiftFirst = null; st.mode = 'normal';
+        validateDownstream(-1);
+      } else st.shiftFirst = { sid: sid, name: name };
+      updatePanel();
+      return;
+    }
+    if (st.mode === 'schism1') {
+      if (CENTERS.indexOf(sid) >= 0) {
+        rotateAround(sid, -1);
+        st.schismFirst = sid;
+        st.mode = 'schism2';
+        validateDownstream(-1);
+        updatePanel();
+      }
+      return;
+    }
+    if (st.mode === 'schism2') {
+      if (CENTERS.indexOf(sid) >= 0 && sid !== st.schismFirst) {
+        rotateAround(sid, 1);
+        st.history.push({ type: 'schism', first: st.schismFirst, second: sid, label: 'Schism: ' + st.schismFirst + ' ↻ / ' + sid + ' ↺' });
+        st.schismFirst = null; st.mode = 'normal';
+        st.schismsLeft--; st.schismsUsed++;
+        validateDownstream(-1);
+        updatePanel();
+      }
+      return;
+    }
+
+    // Normal weaving: energy may only descend through adjacent channels
+    var row = slot.row;
+    if (st.selected.get(row) === sid) {
+      pruneFrom(row);
+      updatePanel();
+      return;
+    }
+    if (row === 0) {
+      st.selected.set(0, sid);
+      validateDownstream(0);
+    } else {
+      var up = st.selected.get(row - 1);
+      if (!up) {
+        showHint('The weave must descend in order — select a node in the ' + ROWS[row - 1].id + ' stratum first.');
+        return;
+      }
+      if (!adjAt(st.tier, up, sid)) {
+        showHint('Energy cannot leap across the lattice — ' + st.assign.get(up) + ' has no channel to ' + name + ' at this veil. Use a Paradigm Shift, a Schism, or ascend to a higher veil to bring it within reach.');
+        return;
+      }
+      st.selected.set(row, sid);
+      validateDownstream(row);
+    }
+    updatePanel();
+  }
+
+  // TODO(progression): gate ascension — Vessel unlocks after the player's first
+  // schism, Tesseract at a later initiation milestone. Wire via ArcaneLattice.setMaxTier.
+  ascendbtn.addEventListener('click', function () {
+    var prev = st.tier;
+    st.tier = (st.tier + 1) % (st.maxTier + 1);
+    if (st.tier < prev) validateDownstream(0); // descending can sever wrap/hyper hops
+    updatePanel();
+  });
+  shiftbtn.addEventListener('click', function () {
+    if (st.mode === 'shift') { st.mode = 'normal'; st.shiftFirst = null; }
+    else if (st.shiftsLeft > 0) { st.mode = 'shift'; st.shiftFirst = null; st.schismFirst = null; }
+    updatePanel();
+  });
+  schismbtn.addEventListener('click', function () {
+    if (st.mode === 'schism1' || st.mode === 'schism2') { st.mode = 'normal'; st.schismFirst = null; }
+    else if (st.schismsLeft > 0) { st.mode = 'schism1'; st.shiftFirst = null; st.schismFirst = null; }
+    updatePanel();
+  });
+  resetbtn.addEventListener('click', function () {
+    st.assign = new Map();
+    slots.forEach(function (s) { st.assign.set(s.id, INITIAL[s.row][s.idx]); });
+    st.selected.clear();
+    st.mode = 'normal'; st.shiftsLeft = 3; st.schismsLeft = 2; st.shiftsUsed = 0; st.schismsUsed = 0;
+    st.history = []; st.shiftFirst = null; st.schismFirst = null; st.tier = 0;
+    updatePanel();
+  });
+  castbtn.addEventListener('click', function () {
+    var nodes = completeNodes();
+    if (!nodes) return;
+    st.comet = { t: 0 };
+    var fl = document.getElementById('flash');
+    fl.style.opacity = '1';
+    setTimeout(function () { fl.style.opacity = '0'; }, 250);
+    var cb = window.ArcaneLattice && window.ArcaneLattice.onCast;
+    if (typeof cb === 'function') cb(genSpell(nodes));
+  });
+
+  // ================= INPUT =================
+  var ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+  var dragging = false, dx0 = 0, dy0 = 0, movedAmt = 0;
+  function setNDC(e) {
+    var rect = renderer.domElement.getBoundingClientRect();
+    ndc.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    ndc.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+  }
+  function pick() {
+    ray.setFromCamera(ndc, camera);
+    var h = ray.intersectObjects(meshList, false);
+    return h.length ? h[0].object.userData.name : null;
+  }
+  var tip = document.getElementById('tip');
+  renderer.domElement.addEventListener('mousedown', function (e) { dragging = true; movedAmt = 0; dx0 = e.clientX; dy0 = e.clientY; });
+  renderer.domElement.addEventListener('mousemove', function (e) {
+    if (dragging) {
+      var dx = e.clientX - dx0, dy = e.clientY - dy0;
+      movedAmt += Math.abs(dx) + Math.abs(dy);
+      cam.theta -= dx * 0.0055;
+      cam.phi = Math.max(0.35, Math.min(2.75, cam.phi - dy * 0.0045));
+      dx0 = e.clientX; dy0 = e.clientY;
+    }
+    setNDC(e);
+    var n = pick();
+    st.hover = n;
+    renderer.domElement.style.cursor = n ? 'pointer' : 'grab';
+    if (n) {
+      var r = rev();
+      var slot = slotById[r[n]];
+      var native = NATIVE[n] === slot.row;
+      var rect = mount.getBoundingClientRect();
+      tip.style.display = 'block';
+      tip.style.left = (e.clientX - rect.left + 14) + 'px';
+      tip.style.top = (e.clientY - rect.top + 14) + 'px';
+      tip.innerHTML = '<b>' + n + '</b><br><span style="opacity:0.7">' + ROWS[slot.row].id + ' stratum' + (native ? '' : ' — ⚠ displaced') + '</span>';
+    } else tip.style.display = 'none';
+  });
+  renderer.domElement.addEventListener('mouseup', function (e) {
+    dragging = false;
+    if (movedAmt < 6) {
+      setNDC(e);
+      var n = pick();
+      if (n) nodeClick(n);
+    }
+  });
+  renderer.domElement.addEventListener('mouseleave', function () { dragging = false; tip.style.display = 'none'; });
+  renderer.domElement.addEventListener('wheel', function (e) {
+    e.preventDefault();
+    cam.radius = Math.max(10, Math.min(55, cam.radius + e.deltaY * 0.02));
+  }, { passive: false });
+  window.addEventListener('resize', function () {
+    var w = mount.clientWidth, h = mount.clientHeight;
+    if (!w || !h) return;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+
+  // ================= PATH CURVE =================
+  var curve = null, curveColors = [];
+  function rebuildPath() {
+    if (chainLen() !== ROWS.length) { curve = null; pathLine.material.opacity = 0; return; }
+    var pts = [], cols = [];
+    for (var r2 = 0; r2 < ROWS.length; r2++) {
+      var sl = slotById[st.selected.get(r2)];
+      pts.push(sl.smooth.clone());
+      cols.push(new THREE.Color(COLORS[st.assign.get(sl.id)]));
+    }
+    curve = new THREE.CatmullRomCurve3(pts);
+    curveColors = cols;
+    var pa = pathGeo.attributes.position, ca = pathGeo.attributes.color;
+    for (var i2 = 0; i2 < PATH_N; i2++) {
+      var t2 = i2 / (PATH_N - 1);
+      var p = curve.getPoint(t2);
+      pa.setXYZ(i2, p.x, p.y, p.z);
+      var fi = t2 * (cols.length - 1), lo = Math.min(Math.floor(fi), cols.length - 2), fr = fi - lo;
+      var cc = cols[lo].clone().lerp(cols[lo + 1], fr);
+      ca.setXYZ(i2, cc.r, cc.g, cc.b);
+    }
+    pa.needsUpdate = true; ca.needsUpdate = true;
+    pathLine.material.opacity = 0.9;
+  }
+  function pathColorAt(t2) {
+    if (!curveColors.length) return new THREE.Color(0xffd700);
+    var fi = t2 * (curveColors.length - 1), lo = Math.min(Math.floor(fi), curveColors.length - 2), fr = fi - lo;
+    return curveColors[lo].clone().lerp(curveColors[lo + 1], fr);
+  }
+
+  // ================= ANIMATION =================
+  var clock = new THREE.Clock(), time = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    var dt = Math.min(clock.getDelta(), 0.05);
+    time += dt;
+
+    if (!dragging) cam.theta += dt * 0.06;
+    camera.position.set(
+      cam.radius * Math.sin(cam.phi) * Math.sin(cam.theta),
+      cam.radius * Math.cos(cam.phi),
+      cam.radius * Math.sin(cam.phi) * Math.cos(cam.theta)
+    );
+    camera.lookAt(0, 0, 0);
+    stars.rotation.y += dt * 0.01;
+
+    slots.forEach(function (s) { s.smooth.lerp(tierTarget(s, time), 1 - Math.pow(0.002, dt)); });
+
+    var r = rev();
+    var selSet = {};
+    st.selected.forEach(function (sid) { selSet[sid] = true; });
+
+    // Valid next picks for path weaving (pulse softly in normal mode)
+    var validNext = {};
+    if (st.mode === 'normal') {
+      var cl = chainLen();
+      if (cl < ROWS.length) {
+        slots.forEach(function (s) {
+          if (s.row !== cl) return;
+          if (cl === 0 || adjAt(st.tier, st.selected.get(cl - 1), s.id)) validNext[s.id] = true;
+        });
+      }
+    }
+
+    Object.keys(meshes).forEach(function (name) {
+      var mesh = meshes[name];
+      var slot = slotById[r[name]];
+      mesh.position.lerp(slot.smooth, 1 - Math.pow(0.0015, dt));
+      var fx = mesh.userData.fx;
+      var prof = fx.prof;
+      var isSel = !!selSet[slot.id];
+      var isHover = st.hover === name;
+      var isMark = st.shiftFirst && st.shiftFirst.name === name;
+      var elig = false;
+      if (st.mode === 'shift') elig = true;
+      if (st.mode === 'schism1') elig = CENTERS.indexOf(slot.id) >= 0;
+      if (st.mode === 'schism2') elig = CENTERS.indexOf(slot.id) >= 0 && slot.id !== st.schismFirst;
+      var isNext = !!validNext[slot.id];
+
+      var pulse = 0.5 + 0.5 * Math.sin(time * 2.6 + fx.phase);
+      var energy = 0.5
+        + (elig ? 0.4 + 0.3 * pulse : 0)
+        + (isNext ? 0.18 + 0.14 * pulse : 0)
+        + (isSel ? 0.9 : 0)
+        + (isHover ? 0.45 : 0)
+        + (isMark ? 0.9 : 0);
+
+      mesh.material.emissiveIntensity = energy;
+      fx.glow.opacity = Math.min(1, 0.22 + energy * 0.3 + (isSel ? 0.18 * pulse : 0));
+      fx.vortex.rotation -= dt * prof.vs * prof.dir * (1 + energy * 0.8);
+      fx.vortex.opacity = Math.min(1, 0.4 + energy * 0.35);
+      fx.vorSprite.scale.setScalar(1.7 + 0.35 * pulse + (isSel ? 0.4 : 0));
+      fx.ring.rotation += dt * 0.8 * prof.dir;
+      fx.ring.opacity = 0.22 + energy * 0.25;
+      fx.ringSprite.scale.setScalar(1.35 + 0.5 * pulse);
+      fx.wire.rotation.y += dt * (0.4 + energy * 0.6) * prof.dir;
+      fx.wire.rotation.x += dt * 0.3;
+      fx.wire.material.opacity = 0.22 + energy * 0.3;
+      fx.tor1.rotation.z += dt * (0.7 + energy) * prof.dir;
+      fx.tor2.rotation.z -= dt * (0.5 + energy * 0.8) * prof.dir;
+      fx.tor1.material.opacity = 0.25 + energy * 0.3;
+      fx.tor2.material.opacity = 0.18 + energy * 0.25;
+      mesh.scale.setScalar(1 + (isHover ? 0.22 : 0) + (isSel ? 0.1 + 0.05 * pulse : 0) + (isMark ? 0.18 : 0));
+
+      // Personality particles
+      var eFac = 0.35 + Math.min(energy, 2) * 0.35;
+      fx.parts.forEach(function (pt) {
+        var beh = prof.beh;
+        if (beh === 'orbit') {
+          pt.ang += pt.angV * dt * (0.6 + energy * 0.5);
+          pt.s.position.set(Math.cos(pt.ang) * pt.rad, Math.sin(pt.ang * 2 + fx.phase) * 0.14, Math.sin(pt.ang) * pt.rad);
+          pt.m.opacity = (0.4 + 0.3 * Math.sin(time * 3 + pt.ang)) * eFac;
+        } else if (beh === 'wisps') {
+          pt.ang += pt.angV * dt;
+          pt.yy += pt.yV * dt;
+          pt.life -= dt;
+          var prog = 1 - Math.max(0, pt.life / pt.max);
+          var rad = pt.rad * (1 - prog * 0.55);
+          pt.s.position.set(Math.cos(pt.ang) * rad, pt.yy, Math.sin(pt.ang) * rad);
+          pt.m.opacity = Math.max(0, pt.life / pt.max) * eFac;
+          if (pt.life <= 0) resetParticle(pt, beh, prof.dir);
+        } else if (beh === 'arcs') {
+          pt.life -= dt;
+          pt.m.opacity = (0.3 + Math.random() * 0.5) * eFac;
+          var asc = pt.base * (0.6 + Math.random() * 0.8);
+          pt.s.scale.set(asc, asc, 1);
+          if (pt.life <= 0) resetParticle(pt, beh, prof.dir);
+        } else {
+          pt.s.position.addScaledVector(pt.v, dt);
+          pt.life -= dt;
+          if (beh === 'embers') pt.v.x += rnd(0.4) * dt;
+          if (beh === 'dust') pt.v.y -= 0.05 * dt;
+          pt.m.opacity = Math.max(0, pt.life / pt.max) * eFac * (beh === 'dust' ? 0.55 : 1);
+          if (pt.life <= 0) resetParticle(pt, beh, prof.dir);
+        }
+      });
+
+      // Air lightning bolts
+      fx.bolts.forEach(function (bolt) {
+        bolt.timer -= dt;
+        if (bolt.timer <= 0) {
+          var d = randUnit();
+          var perp = randUnit().cross(d).normalize();
+          var pa2 = bolt.geo.attributes.position;
+          for (var k = 0; k < 6; k++) {
+            var tk = k / 5;
+            var jit = (k > 0 && k < 5) ? (Math.random() - 0.5) * 0.3 : 0;
+            var px2 = d.x * (0.45 + tk * 0.8) + perp.x * jit;
+            var py2 = d.y * (0.45 + tk * 0.8) + perp.y * jit;
+            var pz2 = d.z * (0.45 + tk * 0.8) + perp.z * jit;
+            pa2.setXYZ(k, px2, py2, pz2);
+          }
+          pa2.needsUpdate = true;
+          bolt.timer = 0.04 + Math.random() * 0.12;
+          bolt.mat.opacity = (0.25 + Math.random() * 0.55) * (0.4 + Math.min(energy, 2) * 0.4);
+        }
+      });
+    });
+
+    edges.forEach(function (e) {
+      var A = slotById[e.a].smooth, B = slotById[e.b].smooth;
+      var pa = e.geo.attributes.position;
+      pa.setXYZ(0, A.x, A.y, A.z);
+      pa.setXYZ(1, B.x, B.y, B.z);
+      pa.needsUpdate = true;
+      var ra = slotById[e.a].row;
+      var act = st.selected.get(ra) === e.a && st.selected.get(ra + 1) === e.b;
+      var col, target;
+      if (e.kind === 'base') {
+        col = act ? 0xffd700 : 0x2a3550;
+        target = act ? 0.5 : 0.3;
+      } else if (e.kind === 'wrap') {
+        col = act ? 0xffd700 : 0x6a5acd;
+        target = st.tier >= 1 ? (act ? 0.5 : 0.25) : 0;
+      } else {
+        // hyper: tesseract only — too noisy to show all; reveal on hover or when woven
+        var hovSlot = st.hover ? r[st.hover] : null;
+        var hov = hovSlot && (e.a === hovSlot || e.b === hovSlot);
+        col = act ? 0xffd700 : 0x9b6bff;
+        target = st.tier === 2 ? (act ? 0.45 : (hov ? 0.18 : 0)) : 0;
+      }
+      e.mat.color.set(col);
+      e.mat.opacity += (target - e.mat.opacity) * Math.min(1, dt * 5);
+    });
+
+    rebuildPath();
+    flow.forEach(function (fp) {
+      if (!curve) { fp.m.opacity = 0; return; }
+      fp.t = (fp.t + dt * 0.1) % 1;
+      var p = curve.getPoint(fp.t);
+      fp.s.position.copy(p);
+      fp.m.color.copy(pathColorAt(fp.t));
+      fp.m.opacity = 0.55 + 0.3 * Math.sin(time * 5 + fp.t * 20);
+      fp.s.scale.setScalar(0.45 + 0.35 * Math.sin(time * 4 + fp.t * 12) + 0.3);
+    });
+
+    var tessOn = st.tier === 2;
+    tessMat.opacity += ((tessOn ? 0.14 : 0) - tessMat.opacity) * Math.min(1, dt * 3);
+    if (tessMat.opacity > 0.005) {
+      var tp = tessGeo.attributes.position;
+      for (var te = 0; te < tessEdges.length; te++) {
+        var va = tessVerts[tessEdges[te][0]], vb = tessVerts[tessEdges[te][1]];
+        var pA = project4(va[0] * 5.5, va[1] * 7, va[2] * 5.5, va[3] * 1.6, time);
+        var pB = project4(vb[0] * 5.5, vb[1] * 7, vb[2] * 5.5, vb[3] * 1.6, time);
+        tp.setXYZ(te * 2, pA.x, pA.y, pA.z);
+        tp.setXYZ(te * 2 + 1, pB.x, pB.y, pB.z);
+      }
+      tp.needsUpdate = true;
+    }
+
+    if (st.comet && curve) {
+      st.comet.t += dt * 0.45;
+      if (st.comet.t >= 1) {
+        var end = curve.getPoint(1);
+        var endCol = pathColorAt(1);
+        for (var b2 = 0; b2 < 60; b2++) {
+          var mixC = pathColorAt(Math.random());
+          var bm2 = new THREE.SpriteMaterial({ map: glowTex, color: mixC, transparent: true, opacity: 1, blending: THREE.AdditiveBlending, depthWrite: false });
+          var bs = new THREE.Sprite(bm2);
+          bs.scale.set(0.6, 0.6, 1);
+          bs.position.copy(end);
+          var vv = randUnit().multiplyScalar(3 + Math.random() * 7);
+          scene.add(bs);
+          bursts.push({ s: bs, v: vv, life: 1 });
+        }
+        flashL.color.copy(endCol);
+        flashL.position.copy(end);
+        flashL.intensity = 7;
+        st.comet = null;
+        cometMat.opacity = 0;
+      } else {
+        var cp = curve.getPoint(st.comet.t);
+        cometS.position.copy(cp);
+        var ccol = pathColorAt(st.comet.t);
+        cometMat.color.copy(ccol).lerp(new THREE.Color(0xffffff), 0.5);
+        cometMat.opacity = 1;
+        cometS.scale.setScalar(2 + 0.6 * Math.sin(time * 12));
+        flashL.color.copy(ccol);
+        flashL.position.copy(cp);
+        flashL.intensity = 2.5;
+        if (Math.random() < 0.5) {
+          var trm = new THREE.SpriteMaterial({ map: glowTex, color: ccol, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending, depthWrite: false });
+          var tr = new THREE.Sprite(trm);
+          tr.scale.set(0.4, 0.4, 1);
+          tr.position.copy(cp);
+          scene.add(tr);
+          bursts.push({ s: tr, v: new THREE.Vector3(rnd(0.3), rnd(0.3), rnd(0.3)), life: 0.6 });
+        }
+      }
+    } else if (!st.comet) {
+      flashL.intensity = Math.max(0, flashL.intensity - dt * 8);
+      cometMat.opacity = Math.max(0, cometMat.opacity - dt * 3);
+    }
+
+    for (var bi = bursts.length - 1; bi >= 0; bi--) {
+      var bb = bursts[bi];
+      bb.life -= dt * 0.9;
+      bb.s.position.addScaledVector(bb.v, dt);
+      bb.v.multiplyScalar(1 - dt * 1.5);
+      bb.s.material.opacity = Math.max(0, bb.life);
+      if (bb.life <= 0) {
+        scene.remove(bb.s);
+        bb.s.material.dispose();
+        bursts.splice(bi, 1);
+      }
+    }
+
+    renderer.render(scene, camera);
+  }
+  // ================= PUBLIC API =================
+  // Integration surface for the host game: lattice state in/out, cast hook,
+  // technique counters as player resources, ascension gating via setMaxTier.
+  window.ArcaneLattice = {
+    // Assign a function (spellData) — called with the genSpell output on every cast
+    onCast: null,
+    getState: function () {
+      var assign = {}, selected = {};
+      st.assign.forEach(function (n, sid) { assign[sid] = n; });
+      st.selected.forEach(function (sid, row) { selected[row] = sid; });
+      return {
+        assign: assign, selected: selected, tier: st.tier, maxTier: st.maxTier,
+        shiftsLeft: st.shiftsLeft, schismsLeft: st.schismsLeft,
+        shiftsUsed: st.shiftsUsed, schismsUsed: st.schismsUsed,
+        history: JSON.parse(JSON.stringify(st.history))
+      };
+    },
+    setState: function (data) {
+      if (!data) return;
+      if (data.assign) {
+        st.assign = new Map();
+        slots.forEach(function (s) { st.assign.set(s.id, data.assign[s.id] || INITIAL[s.row][s.idx]); });
+      }
+      st.selected = new Map();
+      if (data.selected) {
+        Object.keys(data.selected).forEach(function (row) { st.selected.set(+row, data.selected[row]); });
+      }
+      if (typeof data.maxTier === 'number') st.maxTier = Math.max(0, Math.min(2, data.maxTier));
+      if (typeof data.tier === 'number') st.tier = Math.max(0, Math.min(st.maxTier, data.tier));
+      if (typeof data.shiftsLeft === 'number') st.shiftsLeft = data.shiftsLeft;
+      if (typeof data.schismsLeft === 'number') st.schismsLeft = data.schismsLeft;
+      if (typeof data.shiftsUsed === 'number') st.shiftsUsed = data.shiftsUsed;
+      if (typeof data.schismsUsed === 'number') st.schismsUsed = data.schismsUsed;
+      if (data.history) st.history = data.history;
+      st.mode = 'normal'; st.shiftFirst = null; st.schismFirst = null;
+      validateDownstream(0);
+      updatePanel();
+    },
+    // Progression gate: 0 = Plane only, 1 = +Vessel, 2 = +Tesseract
+    setMaxTier: function (n) {
+      st.maxTier = Math.max(0, Math.min(2, n | 0));
+      if (st.tier > st.maxTier) { st.tier = st.maxTier; validateDownstream(0); }
+      updatePanel();
+    },
+    getSpell: function () {
+      var nodes = completeNodes();
+      return nodes ? genSpell(nodes) : null;
+    }
+  };
+
+  animate();
+  updatePanel();
+})();
+</script>
+</body>
+</html>
