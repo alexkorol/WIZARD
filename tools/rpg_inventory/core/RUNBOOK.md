@@ -49,6 +49,10 @@ mechanical loop. Filesystem is the only state; no memory required.
    and note it in GEN-LOG.
 6. Compose (local, free):
    - TRUE-ALPHA PNG: skip matte generation; `cd core && python3 compose_assets.py ART_ID`
+   - Source-image loadout batch on slate matte: preserve originals, run
+     `python3 core/chroma_key.py SOURCE_DIR --out CLEAN_DIR`, then promote the
+     cleaned RGBA cutout under the chosen `ART_ID` and compose through the
+     true-alpha path.
    - Flat fallback background: `python3 core/art_matte.py assets_staging ART_ID`,
      then `cd core && python3 compose_assets.py ART_ID`
 7. Look at the composed final on a checkerboard if in doubt (holes, halos,
@@ -65,7 +69,7 @@ mechanical loop. Filesystem is the only state; no memory required.
 | squished/square long item | canvas prefix missing/ignored | regen with P/L prefix |
 | backless helmet / facade | flat front view | 3/4 hero angle is in the style; if it still fails, add "showing the full dome and back of the helm" |
 | single boot/glove | pair not stated | DESC must say "a pair of, shown as a pair" |
-| stubby dagger/spear, short cords | model over-focuses on the head/pendant | state proportions: "long shaft, the entire weapon visible", "cord forming a full wearable neck-loop" |
+| stubby dagger/spear, shortened polearm, short cords | model over-focuses on the head/pendant and collapses long objects into one-handed props | state proportions: "tip to butt", "shaft at least five times the head length", "steep diagonal corner to corner", "cord forming a full wearable neck-loop" |
 | glowing/magical skymetal | fantasy prior | describe material only: "raw dark meteoric iron"; NEVER stack "not magical" negations (desaturates) |
 | composite primitive item | over-composed DESC | primitive = ONE material + minimal parts |
 | museum-photo stiffness | flat lighting/view | v2 style handles it; if not, "dynamic three-quarter view" reminder |
@@ -77,6 +81,13 @@ mechanical loop. Filesystem is the only state; no memory required.
 
 TRUE-ALPHA image-2 downloads are the preferred path. `core/compose_assets.py`
 crops directly from source alpha and preserves RGBA output.
+
+For source-image loadout extraction, ChatGPT batch output currently fails true
+alpha often enough that the working fallback is a flat olive-slate matte
+(`#737A68`) plus `core/chroma_key.py`. This script removes the sampled corner
+background everywhere it appears, including rings, chain gaps, and other
+interior openings. It also pulls the matte colour out of antialiased edge
+pixels. Small neutral residue is acceptable; hot magenta fringe is not.
 
 Use `core/art_matte.py` only for flat fallback backgrounds (black, mid-grey
 #7F7F7F, or blue-grey #6E7B8B for skymetal/rivetmail/flint items). Interior

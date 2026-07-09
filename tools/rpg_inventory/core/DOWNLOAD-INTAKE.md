@@ -32,6 +32,79 @@ Accepted assets promoted:
 - `bowl_bronze_offering.png`
 - `hideshield_rawhide_oval.png`
 
+## 2026-07-07 Poludnica Spirit hunter matte experiments
+
+Two Poludnica Spirit hunter source-image loadout batches were moved out of
+Downloads for alpha testing. These are not Sumerian/Babylonian; the earlier
+label came from a bad visual inference and was corrected by Alexei.
+
+- `assets_inbox/2026-07-07-poludnica-magenta-source/` and
+  `assets_inbox/2026-07-07-poludnica-magenta-cleaned/`: 10 images. Magenta
+  keyed out, but every item kept visible hot magenta edge fringe. Do not use
+  magenta as a future matte color.
+- `assets_inbox/2026-07-07-poludnica-slate-source/` and
+  `assets_inbox/2026-07-07-poludnica-slate-cleaned/`: 9 images. Slate matte
+  around `#737A68` keyed much better; remaining fringe reads as neutral dirt or
+  cloth fuzz. This is the current fallback matte for loadout extraction.
+
+Use `python3 core/chroma_key.py SOURCE_DIR --out CLEAN_DIR` for these slate
+batches, not `art_matte.py`. `art_matte.py` fills most interior holes by design;
+loadout jewelry, chain gaps, and ring openings need direct chroma keying.
+
+QA note: ragged cloth/body armor fringe can still drift too far into torn
+costume territory. Watch body armor and outer-layer slots for excessive dangling
+ragged bottoms, but treat small neutral edge residue as an alpha cleanup
+artifact rather than an item-design failure.
+
+## 2026-07-08 character-pair item extraction batch
+
+Alexei dropped a large generated item batch into Downloads for background
+removal testing and possible replacement of earlier placeholder art. 206 image
+files were available in Downloads and were copied, preserving originals, into:
+
+- `assets_inbox/2026-07-08-character-items-source/`
+- `assets_inbox/2026-07-08-character-items-cleaned/`
+
+All 206 sources are RGB PNGs at 1024x1536, with no true alpha. The corner
+background samples clustered around slate/olive (`#5c6050` through `#767e68`),
+so the batch used the slate matte route:
+
+```sh
+python tools/rpg_inventory/core/chroma_key.py \
+  tools/rpg_inventory/assets_inbox/2026-07-08-character-items-source \
+  --out tools/rpg_inventory/assets_inbox/2026-07-08-character-items-cleaned \
+  --replace
+```
+
+`chroma_key.py` keyed all 206 images. Review artifacts are in the cleaned
+folder:
+
+- `review.html`: source-vs-cleaned gallery for all images.
+- `contact_sheet_cleaned_01.png` through `contact_sheet_cleaned_04.png`:
+  cleaned alpha preview on checkerboard.
+- `contact_sheet_compare_01.png` through `contact_sheet_compare_04.png`:
+  source image beside cleaned result.
+
+Initial visual read: the slate matte cleanup is much better than magenta. Some
+veils, chains, fur, and ornate semi-transparent pieces have expected soft alpha
+edges, but there is no systematic hot fringe. Do not promote this batch blindly:
+many images are ornate character-slot pieces rather than generic item bases.
+Use the review gallery to label keepers, duplicates, replacement candidates, and
+discarded outputs before wiring anything into runtime packs.
+
+The public-facing review layer uses compact alpha WebP derivatives in
+`review_assets/2026-07-08-character-items/`, with first-pass taxonomy metadata in
+`core/character-item-taxonomy.js`. Open `taxonomy-review.html` from the RPG
+inventory project page to filter by slot, visual lane, and review status, then
+export corrected labels/notes from browser localStorage.
+
+Placeholder runtime implementation: the inventory page now loads the taxonomy
+metadata and uses the compact WebP art as an override layer on ordinary
+Vesselforge items. This is deliberately temporary: `Bracers` and `Rite Focus`
+were added as broad active bases, and taxonomy rows are mapped approximately to
+existing forms/materials so the art can appear in the backpack, paperdoll, loot
+drops, and tooltips while the next game-ready batches are generated.
+
 2026-07-07 10:32-10:37 manual follow-up accepted immediately: 4 accepted,
 0 duplicates. These images were moved out of Downloads, kept in
 `assets_inbox` for review provenance, and promoted into `assets/`.

@@ -74,6 +74,37 @@ ungrounded detail." A turtle-shell shield, feather-edged shield, tasselled
 spear, coin-strung belt, or veiled shawl can be excellent if the source image
 shows how it belongs to the equipment kit.
 
+## Self-Contained Character Prompt Rule
+
+Character/source prompts are not allowed to rely on chat context, project
+memory, or terse faction names. The image model has no durable knowledge of
+what "Jungle Empire", "Poludnica Spirit hunter", "Seven Kingdoms", or a class
+name means in Verdigris. Every final prompt must explicitly include:
+
+- full faction design language: materials, palette, construction, cultural
+  analogies, and banned cliches
+- class/stat gear grammar: what Warrior, Rogue, Mage, Hunter, Druid, or Bard
+  should look like in equipment terms
+- tier language: low/mid/high or Tier 1-5 construction quality and authority
+- rendering style, canvas, backdrop, spacing, and no-text/no-UI constraints
+- weapon distribution and long-weapon constraints
+
+Use composite prompt assembly if the prompt gets large: draft reusable blocks
+for faction, class, tier, render style, and composition, then concatenate them
+into one complete final prompt. Do not omit the expanded block just because the
+faction or class was described earlier in the chat.
+
+Do not optimize final character prompts for brevity. The desired output is not a
+short elegant spec; it is a fully loaded image-generation prompt with expanded
+paragraphs. A good final prompt repeats the relevant visual grammar in every
+place the model might need it: faction block, class block, tier block, weapon
+block, and per-character entry. Avoid title-only shorthand such as "Jungle
+Empire Rogue" or "Seven Kingdoms Mage" unless the surrounding text fully
+defines those terms again.
+
+Do not save Alexei's proprietary legacy character prompt examples in this repo.
+Only save distilled process rules and generic prompt structure.
+
 ## No-Repeat Rule
 
 When Alexei asks for "test prompts", that means new item concepts only. Do not

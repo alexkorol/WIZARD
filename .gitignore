@@ -6,3 +6,10 @@ __pycache__/
 *.py[cod]
 tools/rpg_inventory/assets_staging/*.png
 tools/rpg_inventory/core/.gen-lock
+tools/rpg_inventory/assets_inbox/2026-07-07-poludnica-*-source/
+tools/rpg_inventory/assets_inbox/2026-07-07-poludnica-*-cleaned/
+tools/rpg_inventory/assets_inbox/2026-07-08-character-items-source/
+tools/rpg_inventory/assets_inbox/2026-07-08-character-items-cleaned/
+
+# Local-only RPG inventory character-to-item pipeline notes and scratch work.
+tools/rpg_inventory/character_pipeline_local/
