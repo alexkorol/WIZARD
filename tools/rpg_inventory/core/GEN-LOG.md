@@ -72,3 +72,13 @@ skipped(locked) 2026-07-06 18:07 PDT
 2026-07-06 20:59 PDT  lunula_bronze DONE
 2026-07-06 20:59 PDT  signet_bronze DONE
 2026-07-06 20:59 PDT  NOTE: queue hit 89/89 mid-run -> extended ladders per BASE-DESIGN: added lunula_bronze (amulet T3, Bronze Lunula - crescent neck collar, silhouette-distinct from torc/gorget) and signet_bronze (ring T3, Bronze Signet - flat horned-sun seal face, distinct from coil/band). Both were the only tier gaps (T2->T4 jumps); helmet T2 skipped per redundancy warning + alias pool. All 6 gens this run passed gate first try (TRUE-ALPHA, square-prefix holding).
+2026-07-06 21:11 PDT  skipped(locked)
+2026-07-06 22:28 PDT  hideshield_oxhide DONE
+2026-07-06 22:28 PDT  boots_fur DONE
+2026-07-06 22:28 PDT  warclub_stone DONE
+2026-07-06 22:28 PDT  mirror_obsidian DONE
+2026-07-06 22:28 PDT  river_pearl DONE
+2026-07-06 22:28 PDT  dagger_tusk DONE
+2026-07-06 22:28 PDT  NOTE: COVERAGE COMPLETE 97/97 - queue empty. All 6 gens this run passed gate first try (TRUE-ALPHA, 0 strikes). Wave-1 renders ~10min (imgs invisible until eager-load+decode() kick - now standard in harvest JS); wave-2 ~4min. Run stopped at 2-wave cap (36/60 budget). Next run: queue will be empty -> extend ladders per BASE-DESIGN ⚑ rules, or Alexei curates new targets first.
+2026-07-06 23:21 PDT  skipped(rate-limit)
+2026-07-06 23:21 PDT  NOTE: queue was empty (97/97) -> extended ladders per BASE-DESIGN +6 rows: necklace_claw (amulet T1 strung-claw loop), wand_antler (ritefocus T1 forked tine), shield_turtleshell (shield T1 domed shell), mantle_feather (body T4 feather mantle), girdle_shell (belt T1 shell-disc row), curio_turquoise (turquoise beetle). Wave-1 (turtleshell/girdle_shell/mantle) SENT ok ~40s apart, then ChatGPT 'Too many requests' dialog blocked conversation polling ~12min in - imgs never visible. All 3 struck w/ chat paths for HARVEST FIRST next run (do NOT re-send). Wave-2 items (necklace_claw, wand_antler, curio_turquoise) never sent - clean in queue. Next run: max 2 new items per rate-limit rule; harvest the 3 pending first. Polling cadence may need slowing (reloads every ~60-90s tripped limiter).
