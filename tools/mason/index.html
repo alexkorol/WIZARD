@@ -486,7 +486,15 @@ function download(name, blobOrUrl) {
 }
 function exportSheet(mode) {
   var off = document.createElement('canvas');
-  Mason.renderSheet(off, params, mode);
+  var p2 = params;
+  if (mode === 'template') {
+    // render the template near the model's native input resolution so the
+    // guides stay crisp; slicing back is proportional, so any square
+    // output maps onto the same layout
+    var cols = Mason.sheetLayout(params.shape).cols;
+    p2 = Object.assign({}, params, { size: Math.max(params.size, Math.floor(1024 / cols)) });
+  }
+  Mason.renderSheet(off, p2, mode);
   off.toBlob(function (blob) {
     download('mason_' + params.shape + '_' + params.inner + '_on_' + params.outer + '_' + params.seed +
              (mode === 'template' ? '_template' : '') + '.png', blob);
@@ -600,7 +608,9 @@ function sheetPrompt() {
     '- The ' + Mason.TERRAINS[params.inner].name.toLowerCase() + ' must look identical in style across all cells; same for the ' +
     Mason.TERRAINS[params.outer].name.toLowerCase() + '.\n' +
     '- Flat, even lighting: no global light direction, no cast shadows, no vignette, no depth of field.\n' +
-    '- Fill the canvas edge to edge at the input’s exact aspect ratio. Do not add margins, labels, borders, or background.';
+    '- The input and output are both square. Keep the ' + layout.rows + 'x' + layout.cols +
+    ' cell grid aligned to the canvas edges: do not crop, letterbox, shift, or rescale the grid. ' +
+    'Fill the canvas edge to edge with no margins, labels, borders, or background.';
 }
 
 function copyText(btn, text) {

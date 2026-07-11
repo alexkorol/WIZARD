@@ -107,9 +107,17 @@ describes the two terrains and the transition treatment, and closes with
 hard rules: every cell is an independent tile, never continue shapes
 across cell frames, keep each cell's region placement exactly, no red in
 the final image, identical terrain style across cells, flat lighting, no
-margins, exact input aspect ratio. Use it with the template image as the
-edit input (image-to-image), not as a text-only generation, and at the
-model's highest input-fidelity setting.
+margins, grid aligned to the canvas edges. Use it with the template image
+as the edit input (image-to-image), not as a text-only generation, and at
+the model's highest input-fidelity setting.
+
+**Output sizes are fixed on these models** (gpt-image: 1024×1024,
+1536×1024, 1024×1536) — a template whose aspect doesn't match gets
+stretched or letterboxed before the model paints anything, which
+misaligns every cell. Both sheet layouts are therefore square by design
+(blob 7×7, hex 8×8): generate at **1024×1024** and the grid maps
+one-to-one. The template exports near 1024 px so the guides stay crisp,
+and slicing is proportional, so any square output resolution works.
 
 A useful salvage when Route 2 produces beautiful but misaligned art: crop
 a clean patch of each terrain out of it (any editor) and feed those to

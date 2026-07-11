@@ -60,11 +60,14 @@ for (let e = 0; e < 6; e++) {
   assert(Math.abs(Mason.wobble(p1, e, 1, 0.5) - 1) < 1e-9, `wobble not 1 at t=1 for edge ${e}`);
 }
 
-// sheet layout and metadata
+// sheet layout and metadata; both sheets must be square because image
+// models output fixed (square or 3:2) sizes and stretch anything else
 const sq = Mason.sheetLayout('square');
 assert(sq.tiles.length === 47, 'square sheet tile count');
+assert(sq.cols === sq.rows, `square sheet not square (${sq.cols}x${sq.rows})`);
 const hx = Mason.sheetLayout('hex');
 assert(hx.tiles.length === 64 && hx.cols === 8 && hx.rows === 8, 'hex sheet layout');
+assert(hx.cols === hx.rows, 'hex sheet not square');
 const meta = Mason.sheetMetadata(p1);
 assert(meta.lookup256.length === 256, 'metadata lookup table size');
 assert(meta.tiles.length === 47, 'metadata tile count');

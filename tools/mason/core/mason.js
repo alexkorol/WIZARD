@@ -481,7 +481,11 @@
 
   // ---------------------------------------------------------------- sheet builders
 
-  var SQUARE_SHEET_COLS = 8;
+  // 7x7 = 49 slots for the 47 blob tiles: a square sheet, because image
+  // models output fixed sizes (gpt-image: 1024x1024, 1536x1024, 1024x1536)
+  // and a non-matching aspect gets stretched or letterboxed before the
+  // model paints anything. The hex sheet is 8x8 and square already.
+  var SQUARE_SHEET_COLS = 7;
 
   function sheetLayout(shape) {
     if (shape === 'hex') {
