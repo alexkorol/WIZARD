@@ -61,16 +61,21 @@ cut the transitions. The tool's Inner/Outer texture buttons accept any PNG;
 the per-pixel samplers tile it across world space, so texture continuity
 across tiles is automatic and the seam guarantees still hold.
 
-Working prompt pattern for gpt-image-2 (or any capable model):
+The tool's **Texture prompt** button copies a ready prompt built from the
+selected terrain. The pattern:
 
-> top-down seamless tileable texture of mossy forest grass, 16-bit ARPG
-> pixel art style, no lighting direction, no border, uniform density
+> Top-down orthographic seamless tileable texture of dense green meadow
+> grass, 16-bit ARPG pixel art style. Uniform detail density across the
+> whole image, flat even lighting with no light direction, no shadows, no
+> vignette, no border, no focal object or centerpiece. The image must tile
+> perfectly when repeated: every edge continues seamlessly into the
+> opposite edge. Fill the entire canvas.
 
 Then: downscale to 64–128 px (nearest-neighbor), optionally quantize the
-palette, and import. Ask for "seamless/tileable" explicitly and verify by
-offsetting the image by half — models sometimes fake it. Turn the rim
-overlay off if the AI texture already carries edge detail, or leave it on
-for the procedural lip/foam/glow on top.
+palette, and import. Verify seamlessness by offsetting the image by half —
+models sometimes fake it. Turn the rim overlay off if the AI texture
+already carries edge detail, or leave it on for the procedural
+lip/foam/glow on top.
 
 This route is robust because the model only ever paints flat texture —
 it never has to align a 47-tile grid.
@@ -89,15 +94,22 @@ Field notes from real runs — image models fail this in two specific ways,
 so the prompt has to forbid both:
 
 1. **They keep the red guides as literal art** (glossy red piping along
-   every boundary). The import scrub heals this, but say it anyway:
-   *"the red lines are placement guides only — replace them with the
-   natural terrain transition; no red anywhere in the final image."*
+   every boundary). The import scrub heals this automatically.
 2. **They merge shapes across cells**, composing one nice picture instead
    of 47 independent tiles. This one is fatal — sliced tiles become
-   arbitrary fragments. Say: *"each red-framed cell is an independent
-   tile; do not merge or continue shapes across cell frames; keep the
-   white/black region placement of each cell exactly."* If the model
-   still merges cells, use Route 1 — it cannot fail this way.
+   arbitrary fragments. If the model merges cells despite the prompt, use
+   Route 1 — it cannot fail this way.
+
+The tool's **Sheet prompt** button copies a full prompt built from the
+current terrain pair and layout, engineered against both failure modes.
+It names the grid dimensions, explains the white/dark/red semantics,
+describes the two terrains and the transition treatment, and closes with
+hard rules: every cell is an independent tile, never continue shapes
+across cell frames, keep each cell's region placement exactly, no red in
+the final image, identical terrain style across cells, flat lighting, no
+margins, exact input aspect ratio. Use it with the template image as the
+edit input (image-to-image), not as a text-only generation, and at the
+model's highest input-fidelity setting.
 
 A useful salvage when Route 2 produces beautiful but misaligned art: crop
 a clean patch of each terrain out of it (any editor) and feed those to

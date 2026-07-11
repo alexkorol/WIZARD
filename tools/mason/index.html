@@ -145,6 +145,13 @@ canvas#board{image-rendering:pixelated;max-width:100%;max-height:100%;border:1px
       </div>
       <input type="file" id="fileInput" accept="image/png,image/webp,image/jpeg" style="display:none">
     </div>
+    <div>
+      <label>Image model prompts</label>
+      <div class="row">
+        <button id="promptTexture">Texture prompt</button>
+        <button id="promptSheet">Sheet prompt</button>
+      </div>
+    </div>
     <p class="hint">Paint with the mouse — left adds the inner terrain, Shift or right-drag erases. Two AI routes: import seamless textures (from gpt-image-2 or any model) and the Mason cuts the transitions; or export the template sheet, paint over it, and import the painted sheet back — the playground then autotiles with your art.</p>
     <div class="foot">
       Part of <a href="../../index.html">WIZARD</a> · <a href="https://github.com/alexkorol/WIZARD/tree/gh-pages/tools/mason">source &amp; docs</a>
@@ -545,6 +552,82 @@ fileInput.addEventListener('change', function () {
   };
   img.src = URL.createObjectURL(file);
 });
+
+// ---------------------------------------------------------------- prompt builders
+
+// terrain descriptors for the generated prompts
+var TERRAIN_DESC = {
+  grass: { tex: 'dense green meadow grass', edge: 'a grass lip slightly overhanging the boundary, with small blades breaking the line' },
+  sand: { tex: 'fine wind-rippled sand', edge: 'a soft crumbling sand edge' },
+  water: { tex: 'deep clear water with subtle ripples', edge: 'a thin line of pale froth on the water side of the boundary' },
+  stone: { tex: 'weathered grey flagstone rock', edge: 'a chipped, cracked stone rim' },
+  snow: { tex: 'fresh untouched snow', edge: 'a soft snow drift tapering over the boundary, with a faint cool shadow' },
+  lava: { tex: 'molten lava with glowing veins under a dark crust', edge: 'a blackened cooled-crust rim with faint heat glow bleeding past the boundary' },
+  dirt: { tex: 'packed dry earth with small stones', edge: 'a worn, slightly raised soil edge' },
+  void: { tex: 'starry black void', edge: 'a faint arcane glow tracing the boundary' }
+};
+
+function texturePrompt() {
+  var t = TERRAIN_DESC[params.inner] || { tex: Mason.TERRAINS[params.inner].name };
+  return 'Top-down orthographic seamless tileable texture of ' + t.tex + ', ' +
+    '16-bit ARPG pixel art style. Uniform detail density across the whole image, ' +
+    'flat even lighting with no light direction, no shadows, no vignette, no border, ' +
+    'no focal object or centerpiece. The image must tile perfectly when repeated: ' +
+    'every edge continues seamlessly into the opposite edge. Fill the entire canvas.';
+}
+
+function sheetPrompt() {
+  var layout = Mason.sheetLayout(params.shape);
+  var innerD = TERRAIN_DESC[params.inner] || { tex: Mason.TERRAINS[params.inner].name, edge: 'a natural transition' };
+  var outerD = TERRAIN_DESC[params.outer] || { tex: Mason.TERRAINS[params.outer].name };
+  var cellWord = params.shape === 'hex' ? 'hexagonal tile' : 'square tile';
+  return 'Repaint this tile template into a video-game terrain spritesheet, ' +
+    'keeping its geometry exactly.\n\n' +
+    'The input is a grid of ' + layout.rows + ' rows x ' + layout.cols + ' columns of cells. ' +
+    'Each cell is one independent ' + cellWord + '. In every cell the WHITE region is ' +
+    Mason.TERRAINS[params.inner].name.toLowerCase() + ', the DARK region is ' +
+    Mason.TERRAINS[params.outer].name.toLowerCase() + ', and the RED lines are placement guides: ' +
+    'the line inside a cell marks where the two terrains meet, the frame marks the cell edge.\n\n' +
+    'Paint, in 16-bit top-down orthographic pixel art:\n' +
+    '- every white region as ' + innerD.tex + '\n' +
+    '- every dark region as ' + outerD.tex + '\n' +
+    '- along each interior red line, ' + (innerD.edge || 'a natural transition between the two terrains') +
+    ', following the red line’s exact position and curvature\n\n' +
+    'Hard rules:\n' +
+    '- Treat every cell as a separate, independent tile. Never merge, extend, or continue any shape into a neighboring cell.\n' +
+    '- Keep each cell’s white/dark region shapes and boundary placement exactly as given.\n' +
+    '- No red anywhere in the final image; the red guides must be fully replaced by terrain art.\n' +
+    '- The ' + Mason.TERRAINS[params.inner].name.toLowerCase() + ' must look identical in style across all cells; same for the ' +
+    Mason.TERRAINS[params.outer].name.toLowerCase() + '.\n' +
+    '- Flat, even lighting: no global light direction, no cast shadows, no vignette, no depth of field.\n' +
+    '- Fill the canvas edge to edge at the input’s exact aspect ratio. Do not add margins, labels, borders, or background.';
+}
+
+function copyText(btn, text) {
+  window.__lastPrompt = text;
+  function done(ok) {
+    var old = btn.textContent;
+    btn.textContent = ok ? 'Copied' : 'Copy failed';
+    setTimeout(function () { btn.textContent = old; }, 1200);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(fallback()); });
+  } else done(fallback());
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+}
+
+document.getElementById('promptTexture').addEventListener('click', function () { copyText(this, texturePrompt()); });
+document.getElementById('promptSheet').addEventListener('click', function () { copyText(this, sheetPrompt()); });
 
 document.getElementById('exportPng').addEventListener('click', function () { exportSheet('art'); });
 document.getElementById('exportTemplate').addEventListener('click', function () { exportSheet('template'); });
