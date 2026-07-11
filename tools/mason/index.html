@@ -532,15 +532,22 @@ fileInput.addEventListener('change', function () {
   img.onload = function () {
     URL.revokeObjectURL(img.src);
     if (kind === 'sheet') {
+      // models with fixed output sizes often pad the square grid inside
+      // a 3:2 canvas; find the content rect before slicing
+      var work = document.createElement('canvas');
+      work.width = img.width; work.height = img.height;
+      var wg = work.getContext('2d');
+      wg.drawImage(img, 0, 0);
+      var crop = Mason.detectLetterbox(wg.getImageData(0, 0, img.width, img.height));
       // slice by the current layout; scales if the sheet was painted
       // at a different resolution than the current tile size
       var layout = Mason.sheetLayout(params.shape);
-      var cw = img.width / layout.cols, chh = img.height / layout.rows;
+      var cw = crop.w / layout.cols, chh = crop.h / layout.rows;
       art.sheet = layout.tiles.map(function (t) {
         var c = document.createElement('canvas');
         c.width = c.height = params.size;
         var g = c.getContext('2d');
-        g.drawImage(img, t.col * cw, t.row * chh, cw, chh, 0, 0, params.size, params.size);
+        g.drawImage(img, crop.x + t.col * cw, crop.y + t.row * chh, cw, chh, 0, 0, params.size, params.size);
         // models tend to keep the template's red guides; heal them out
         var im = g.getImageData(0, 0, params.size, params.size);
         if (Mason.scrubGuides(im)) g.putImageData(im, 0, 0);
@@ -577,11 +584,12 @@ var TERRAIN_DESC = {
 
 function texturePrompt() {
   var t = TERRAIN_DESC[params.inner] || { tex: Mason.TERRAINS[params.inner].name };
-  return 'Top-down orthographic seamless tileable texture of ' + t.tex + ', ' +
+  return 'A square 1024x1024 image: top-down orthographic seamless tileable texture of ' + t.tex + ', ' +
     '16-bit ARPG pixel art style. Uniform detail density across the whole image, ' +
     'flat even lighting with no light direction, no shadows, no vignette, no border, ' +
     'no focal object or centerpiece. The image must tile perfectly when repeated: ' +
-    'every edge continues seamlessly into the opposite edge. Fill the entire canvas.';
+    'every edge continues seamlessly into the opposite edge. Fill the entire canvas. ' +
+    'Output a square image, not landscape.';
 }
 
 function sheetPrompt() {
@@ -589,8 +597,8 @@ function sheetPrompt() {
   var innerD = TERRAIN_DESC[params.inner] || { tex: Mason.TERRAINS[params.inner].name, edge: 'a natural transition' };
   var outerD = TERRAIN_DESC[params.outer] || { tex: Mason.TERRAINS[params.outer].name };
   var cellWord = params.shape === 'hex' ? 'hexagonal tile' : 'square tile';
-  return 'Repaint this tile template into a video-game terrain spritesheet, ' +
-    'keeping its geometry exactly.\n\n' +
+  return 'Repaint this square tile template into a video-game terrain spritesheet, ' +
+    'keeping its geometry exactly. Output a square 1024x1024 image — not landscape, not 3:2.\n\n' +
     'The input is a grid of ' + layout.rows + ' rows x ' + layout.cols + ' columns of cells. ' +
     'Each cell is one independent ' + cellWord + '. In every cell the WHITE region is ' +
     Mason.TERRAINS[params.inner].name.toLowerCase() + ', the DARK region is ' +
@@ -608,8 +616,9 @@ function sheetPrompt() {
     '- The ' + Mason.TERRAINS[params.inner].name.toLowerCase() + ' must look identical in style across all cells; same for the ' +
     Mason.TERRAINS[params.outer].name.toLowerCase() + '.\n' +
     '- Flat, even lighting: no global light direction, no cast shadows, no vignette, no depth of field.\n' +
-    '- The input and output are both square. Keep the ' + layout.rows + 'x' + layout.cols +
-    ' cell grid aligned to the canvas edges: do not crop, letterbox, shift, or rescale the grid. ' +
+    '- The output must be a square image, exactly like the input. Never use a landscape or 3:2 canvas. ' +
+    'Keep the ' + layout.rows + 'x' + layout.cols +
+    ' cell grid aligned to the canvas edges: do not crop, letterbox, pad, shift, or rescale the grid. ' +
     'Fill the canvas edge to edge with no margins, labels, borders, or background.';
 }
 

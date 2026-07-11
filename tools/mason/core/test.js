@@ -100,6 +100,33 @@ assert(meta.tiles.length === 47, 'metadata tile count');
   assert(Buffer.from(clean.data).equals(Buffer.from(before)), 'clean art must be untouched');
 }
 
+// detectLetterbox: finds the content rect inside padded 3:2 output
+{
+  function noisy(img, x, y) { // textured content pixel
+    const o = (y * img.width + x) * 4;
+    const n = (x * 31 + y * 17) % 90;
+    img.data[o] = 40 + n; img.data[o + 1] = 100 + ((x * 7 + y * 13) % 80); img.data[o + 2] = 50; img.data[o + 3] = 255;
+  }
+  // 1536x1024-style padding: square content centered with flat black bands
+  const w = 192, h = 128, pad = 32; // content 128x128 with 32px pillarbox bands
+  const img = { width: w, height: h, data: new Uint8ClampedArray(w * h * 4) };
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const o = (y * w + x) * 4;
+    if (x < pad || x >= w - pad) { img.data[o] = 8; img.data[o + 1] = 8; img.data[o + 2] = 8; img.data[o + 3] = 255; }
+    else noisy(img, x, y);
+  }
+  const crop = Mason.detectLetterbox(img);
+  assert(Math.abs(crop.x - pad) <= 2 && Math.abs(crop.w - (w - 2 * pad)) <= 4,
+    `letterbox crop x/w wrong (${crop.x}, ${crop.w})`);
+  assert(crop.y === 0 && crop.h === h, `letterbox crop y/h should be full (${crop.y}, ${crop.h})`);
+
+  // no padding: full rect returned untouched
+  const clean = { width: 64, height: 64, data: new Uint8ClampedArray(64 * 64 * 4) };
+  for (let y = 0; y < 64; y++) for (let x = 0; x < 64; x++) noisy(clean, x, y);
+  const full = Mason.detectLetterbox(clean);
+  assert(full.x === 0 && full.y === 0 && full.w === 64 && full.h === 64, 'clean image should not be cropped');
+}
+
 // every terrain style has the fields the painters rely on
 for (const id of Object.keys(Mason.TERRAINS)) {
   const t = Mason.TERRAINS[id];

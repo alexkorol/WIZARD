@@ -112,12 +112,24 @@ as the edit input (image-to-image), not as a text-only generation, and at
 the model's highest input-fidelity setting.
 
 **Output sizes are fixed on these models** (gpt-image: 1024×1024,
-1536×1024, 1024×1536) — a template whose aspect doesn't match gets
-stretched or letterboxed before the model paints anything, which
-misaligns every cell. Both sheet layouts are therefore square by design
-(blob 7×7, hex 8×8): generate at **1024×1024** and the grid maps
-one-to-one. The template exports near 1024 px so the guides stay crisp,
-and slicing is proportional, so any square output resolution works.
+1536×1024, 1024×1536), and the auto setting is biased toward 3:2
+landscape — a template whose aspect doesn't match gets stretched or
+padded before the model paints anything, which misaligns every cell.
+Defenses, in order:
+
+1. Both sheet layouts are square by design (blob 7×7, hex 8×8), and the
+   generated prompts demand a square 1024×1024 output explicitly, twice.
+2. **Set the size parameter yourself when you can** — `size: "1024x1024"`
+   in the API, or say "square image" in a chat UI. Prompt text alone
+   doesn't always beat the auto-size bias.
+3. If a 3:2 output slips through anyway, the importer auto-detects flat
+   letterbox/pillarbox bands and slices from the content rect; a
+   uniformly *stretched* grid also survives, because slicing is
+   proportional. What nothing can save is a recomposed grid — that's a
+   regenerate.
+
+The template exports near 1024 px so the guides stay crisp at the
+model's input resolution.
 
 A useful salvage when Route 2 produces beautiful but misaligned art: crop
 a clean patch of each terrain out of it (any editor) and feed those to

@@ -479,6 +479,38 @@
     return true;
   }
 
+  // Detect uniform letterbox / pillarbox margins. Image models with fixed
+  // output sizes (gpt-image is biased toward 3:2 landscape) often pad a
+  // square sheet with flat bands; slicing must skip them. Returns the
+  // content rect {x, y, w, h} — the full image when no bands are found.
+  function detectLetterbox(img) {
+    var w = img.width, h = img.height, d = img.data;
+    function uniform(isRow, i) {
+      var n = isRow ? w : h;
+      var step = Math.max(1, n >> 6);
+      var sr = 0, sg = 0, sb = 0, count = 0;
+      var j, o;
+      for (j = 0; j < n; j += step) {
+        o = (isRow ? i * w + j : j * w + i) * 4;
+        sr += d[o]; sg += d[o + 1]; sb += d[o + 2]; count++;
+      }
+      var mr = sr / count, mg = sg / count, mb = sb / count;
+      var dev = 0;
+      for (j = 0; j < n; j += step) {
+        o = (isRow ? i * w + j : j * w + i) * 4;
+        dev += Math.abs(d[o] - mr) + Math.abs(d[o + 1] - mg) + Math.abs(d[o + 2] - mb);
+      }
+      return dev / count < 12; // flat band; painted terrain is far noisier
+    }
+    var maxX = Math.floor(w * 0.25), maxY = Math.floor(h * 0.25);
+    var x0 = 0; while (x0 < maxX && uniform(false, x0)) x0++;
+    var x1 = w; while (w - x1 < maxX && uniform(false, x1 - 1)) x1--;
+    var y0 = 0; while (y0 < maxY && uniform(true, y0)) y0++;
+    var y1 = h; while (h - y1 < maxY && uniform(true, y1 - 1)) y1--;
+    if (x1 - x0 < w * 0.5 || y1 - y0 < h * 0.5) return { x: 0, y: 0, w: w, h: h };
+    return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
+  }
+
   // ---------------------------------------------------------------- sheet builders
 
   // 7x7 = 49 slots for the 47 blob tiles: a square sheet, because image
@@ -568,6 +600,7 @@
     sheetLayout: sheetLayout,
     sheetMetadata: sheetMetadata,
     scrubGuides: scrubGuides,
+    detectLetterbox: detectLetterbox,
     hashString: hashString
   };
 });
