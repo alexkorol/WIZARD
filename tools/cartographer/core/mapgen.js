@@ -1295,6 +1295,18 @@
       }
     }
 
+    // pillars hold up the big chambers
+    b.rooms.forEach(function (room) {
+      if (room.w < 7 || room.h < 6) return;
+      var x1 = room.x + 2, x2 = room.x + room.w - 3;
+      var y1 = room.y + 2, y2 = room.y + room.h - 3;
+      [[x1, y1], [x2, y1], [x1, y2], [x2, y2]].forEach(function (p) {
+        if (b.isWalkable(p[0], p[1]) && free(p[0], p[1]) && rng.chance(0.85)) {
+          take('pillar', p[0], p[1]);
+        }
+      });
+    });
+
     // theme scatter decor
     var decor = theme.decor || {};
     var wallAdj = null; // lazily built list of walkable tiles hugging a wall

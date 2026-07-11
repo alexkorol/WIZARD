@@ -142,6 +142,7 @@ canvas#board{image-rendering:pixelated;max-width:100%;max-height:100%;border:1px
       </div>
       <div class="row" style="margin-top:.5rem">
         <button id="overlayBtn" class="active">Rim overlay: on</button>
+        <button id="seamlessBtn" class="active">Seamless fix: on</button>
       </div>
       <input type="file" id="fileInput" accept="image/png,image/webp,image/jpeg" style="display:none">
     </div>
@@ -197,6 +198,7 @@ document.getElementById('outer').value = 'water';
 // imported art: seamless textures and/or a painted-over sheet
 var art = { textures: {}, sheet: null, sheetShape: null };
 var overlayOn = true;
+var seamlessOn = true;
 
 function readParams(newSeed) {
   var seedField = document.getElementById('seed');
@@ -524,6 +526,12 @@ document.getElementById('overlayBtn').addEventListener('click', function () {
   this.classList.toggle('active', overlayOn);
   regen(false, false);
 });
+document.getElementById('seamlessBtn').addEventListener('click', function () {
+  seamlessOn = !seamlessOn;
+  this.textContent = 'Seamless fix: ' + (seamlessOn ? 'on' : 'off');
+  this.classList.toggle('active', seamlessOn);
+  // applies at import time; re-import textures to change already-loaded art
+});
 
 fileInput.addEventListener('change', function () {
   var file = fileInput.files[0];
@@ -557,11 +565,19 @@ fileInput.addEventListener('change', function () {
       art.sheetShape = params.shape;
       document.getElementById('importSheet').classList.add('active');
     } else {
+      // any image becomes a texture: center-square crop, cap the size,
+      // then force true wrap-seamlessness (models routinely fake it)
+      var side = Math.min(img.width, img.height);
+      var target = Math.min(side, 256);
       var c2 = document.createElement('canvas');
-      c2.width = img.width; c2.height = img.height;
+      c2.width = c2.height = target;
       var g = c2.getContext('2d');
-      g.drawImage(img, 0, 0);
-      art.textures[kind] = g.getImageData(0, 0, img.width, img.height);
+      g.drawImage(img,
+        (img.width - side) / 2, (img.height - side) / 2, side, side,
+        0, 0, target, target);
+      var texData = g.getImageData(0, 0, target, target);
+      if (seamlessOn) Mason.makeSeamless(texData);
+      art.textures[kind] = texData;
       document.getElementById(kind === 'inner' ? 'texInner' : 'texOuter').classList.add('active');
     }
     regen(false, false);

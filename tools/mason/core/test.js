@@ -145,6 +145,37 @@ assert(swapped.textures.inner === 'B', 'outerAsInner texture swap');
   assert(full.x === 0 && full.y === 0 && full.w === 64 && full.h === 64, 'clean image should not be cropped');
 }
 
+// makeSeamless: a texture with a hard wrap seam becomes continuous
+{
+  const w = 64, h = 64;
+  const img = { width: w, height: h, data: new Uint8ClampedArray(w * h * 4) };
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const o = (y * w + x) * 4;
+    // horizontal gradient: wraps with a hard seam at the x edges
+    img.data[o] = Math.round((x / (w - 1)) * 255);
+    img.data[o + 1] = 120 + ((x * 13 + y * 7) % 30); // some texture noise
+    img.data[o + 2] = 60;
+    img.data[o + 3] = 255;
+  }
+  function seamError(im) {
+    let worst = 0;
+    for (let y = 0; y < h; y++) {
+      const l = (y * w) * 4, r = (y * w + w - 1) * 4;
+      worst = Math.max(worst, Math.abs(im.data[l] - im.data[r]));
+    }
+    for (let x = 0; x < w; x++) {
+      const t = x * 4, b = ((h - 1) * w + x) * 4;
+      worst = Math.max(worst, Math.abs(im.data[t] - im.data[b]));
+    }
+    return worst;
+  }
+  const before = seamError(img);
+  assert(before > 200, `test texture should start with a hard seam (${before})`);
+  Mason.makeSeamless(img);
+  const after = seamError(img);
+  assert(after < 40, `makeSeamless left a visible seam (${after})`);
+}
+
 // every terrain style has the fields the painters rely on
 for (const id of Object.keys(Mason.TERRAINS)) {
   const t = Mason.TERRAINS[id];

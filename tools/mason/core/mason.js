@@ -479,6 +479,31 @@
     return true;
   }
 
+  // Make any texture wrap-seamless by construction: pixels near the edges
+  // are cross-faded toward the half-offset content, which is continuous
+  // across the wrap. Image models routinely fake "seamless"; this makes it
+  // true regardless. Mutates the image in place.
+  function makeSeamless(img, bandFrac) {
+    var w = img.width, h = img.height, d = img.data;
+    var band = Math.max(4, Math.floor(Math.min(w, h) * (bandFrac || 0.18)));
+    var src = new Uint8ClampedArray(d);
+    var hw = w >> 1, hh = h >> 1;
+    for (var y = 0; y < h; y++) {
+      for (var x = 0; x < w; x++) {
+        var e = Math.min(x, w - 1 - x, y, h - 1 - y);
+        if (e >= band) continue;
+        var t = 1 - e / band;
+        t = t * t * (3 - 2 * t); // smoothstep: 1 at the edge, 0 at the band
+        var o = (y * w + x) * 4;
+        var so = ((((y + hh) % h) * w + ((x + hw) % w))) * 4;
+        d[o] = src[o] * (1 - t) + src[so] * t;
+        d[o + 1] = src[o + 1] * (1 - t) + src[so + 1] * t;
+        d[o + 2] = src[o + 2] * (1 - t) + src[so + 2] * t;
+      }
+    }
+    return img;
+  }
+
   // Detect uniform letterbox / pillarbox margins. Image models with fixed
   // output sizes (gpt-image is biased toward 3:2 landscape) often pad a
   // square sheet with flat bands; slicing must skip them. Returns the
@@ -643,6 +668,7 @@
     sheetMetadata: sheetMetadata,
     scrubGuides: scrubGuides,
     detectLetterbox: detectLetterbox,
+    makeSeamless: makeSeamless,
     hashString: hashString
   };
 });

@@ -75,11 +75,15 @@ selected terrain. The pattern:
 > perfectly when repeated: every edge continues seamlessly into the
 > opposite edge. Fill the entire canvas.
 
-Then: downscale to 64–128 px (nearest-neighbor), optionally quantize the
-palette, and import. Verify seamlessness by offsetting the image by half —
-models sometimes fake it. Turn the rim overlay off if the AI texture
-already carries edge detail, or leave it on for the procedural
-lip/foam/glow on top.
+Import accepts **any image**: it is center-square cropped, capped at
+256 px, and — because models routinely fake "seamless" — run through a
+make-seamless pass that is tileable by construction (edges cross-fade
+toward the half-offset content, which is continuous across the wrap).
+That means a clean patch cropped out of *any* AI render works as a
+texture, not just purpose-generated ones. The pass is a toggle
+(Seamless fix) if your texture is already genuinely tileable. Turn the
+rim overlay off if the art carries its own edge detail, or leave it on
+for the procedural lip/foam/glow on top.
 
 This route is robust because the model only ever paints flat texture —
 it never has to align a 47-tile grid.
