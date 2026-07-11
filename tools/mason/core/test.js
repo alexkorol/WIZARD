@@ -61,16 +61,34 @@ for (let e = 0; e < 6; e++) {
 }
 
 // sheet layout and metadata; both sheets must be square because image
-// models output fixed (square or 3:2) sizes and stretch anything else
+// models output fixed (square or 3:2) sizes and stretch anything else.
+// Each layout carries the 100% tiles: full-inner lives among the masks
+// (fully-surrounded mask), and a dedicated pure-outer slot follows them.
 const sq = Mason.sheetLayout('square');
-assert(sq.tiles.length === 47, 'square sheet tile count');
+assert(sq.tiles.filter(t => t.role === 'mask').length === 47, 'square sheet mask tile count');
+assert(sq.tiles.filter(t => t.role === 'outer').length === 1, 'square sheet needs one pure-outer slot');
+assert(sq.tiles.some(t => t.mask === 255), 'square sheet needs the pure-inner mask tile');
 assert(sq.cols === sq.rows, `square sheet not square (${sq.cols}x${sq.rows})`);
 const hx = Mason.sheetLayout('hex');
-assert(hx.tiles.length === 64 && hx.cols === 8 && hx.rows === 8, 'hex sheet layout');
+assert(hx.tiles.filter(t => t.role === 'mask').length === 64, 'hex sheet mask tile count');
+assert(hx.tiles.filter(t => t.role === 'outer').length === 1, 'hex sheet needs one pure-outer slot');
+assert(hx.tiles.some(t => t.mask === 63), 'hex sheet needs the pure-inner mask tile');
 assert(hx.cols === hx.rows, 'hex sheet not square');
+// every slot fits inside the grid
+for (const layout of [sq, hx]) {
+  for (const t of layout.tiles) {
+    assert(t.col < layout.cols && t.row < layout.rows, `tile ${t.index} outside ${layout.cols}x${layout.rows} grid`);
+  }
+}
 const meta = Mason.sheetMetadata(p1);
 assert(meta.lookup256.length === 256, 'metadata lookup table size');
-assert(meta.tiles.length === 47, 'metadata tile count');
+assert(meta.tiles.length === 48, 'metadata tile count (47 masks + outer)');
+assert(meta.tiles.some(t => t.role === 'outer'), 'metadata must mark the outer slot');
+
+// outerAsInner: recasts the outer terrain and its texture as the tile's own
+const swapped = Mason.outerAsInner(Object.assign({}, p1, { textures: { inner: 'A', outer: 'B' } }));
+assert(swapped.inner === p1.outer, 'outerAsInner terrain swap');
+assert(swapped.textures.inner === 'B', 'outerAsInner texture swap');
 
 // scrubGuides: heals guide-red from surrounding art, leaves clean art alone
 {

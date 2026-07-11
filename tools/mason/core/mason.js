@@ -519,16 +519,34 @@
   // model paints anything. The hex sheet is 8x8 and square already.
   var SQUARE_SHEET_COLS = 7;
 
+  // Every sheet carries one extra slot after the mask tiles: the pure
+  // OUTER terrain tile ("100% terrain 2"). The pure inner tile is already
+  // among the masks (fully-surrounded mask). Layouts stay square for the
+  // fixed image-model output sizes.
   function sheetLayout(shape) {
     if (shape === 'hex') {
       var hexes = [];
-      for (var m = 0; m < 64; m++) hexes.push({ index: m, mask: m, col: m % 8, row: (m / 8) | 0 });
-      return { cols: 8, rows: 8, tiles: hexes };
+      for (var m = 0; m < 64; m++) hexes.push({ index: m, mask: m, role: 'mask', col: m % 9, row: (m / 9) | 0 });
+      hexes.push({ index: 64, mask: null, role: 'outer', col: 64 % 9, row: (64 / 9) | 0 });
+      return { cols: 9, rows: 9, tiles: hexes };
     }
     var tiles = BLOB_MASKS.map(function (mask, i) {
-      return { index: i, mask: mask, col: i % SQUARE_SHEET_COLS, row: (i / SQUARE_SHEET_COLS) | 0 };
+      return { index: i, mask: mask, role: 'mask', col: i % SQUARE_SHEET_COLS, row: (i / SQUARE_SHEET_COLS) | 0 };
     });
+    var oi = tiles.length;
+    tiles.push({ index: oi, mask: null, role: 'outer', col: oi % SQUARE_SHEET_COLS, row: (oi / SQUARE_SHEET_COLS) | 0 });
     return { cols: SQUARE_SHEET_COLS, rows: Math.ceil(tiles.length / SQUARE_SHEET_COLS), tiles: tiles };
+  }
+
+  // params with the outer terrain (and its texture) recast as the tile's
+  // own terrain — how plain outer tiles are painted
+  function outerAsInner(params) {
+    var p = {};
+    Object.keys(params).forEach(function (k) { p[k] = params[k]; });
+    p.inner = params.outer;
+    var tex = params.textures || {};
+    p.textures = { inner: tex.outer };
+    return p;
   }
 
   // Render the whole set onto a canvas. mode: 'art' (default) or 'template'.
@@ -541,6 +559,13 @@
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     layout.tiles.forEach(function (t) {
       var px = t.col * Ssz, py = t.row * Ssz;
+      if (t.role === 'outer') {
+        var op = outerAsInner(params);
+        if (mode === 'template' && params.shape !== 'hex') paintOuterTemplate(ctx, px, py, Ssz);
+        else if (params.shape === 'hex') paintHexTile(ctx, px, py, mode === 'template' ? templateParams(op) : op, 63, px, py);
+        else paintSquareTile(ctx, px, py, op, 255, px, py);
+        return;
+      }
       if (mode === 'template') {
         if (params.shape === 'hex') paintHexTile(ctx, px, py, templateParams(params), t.mask, 0, 0);
         else paintSquareTemplate(ctx, px, py, params, t.mask);
@@ -550,6 +575,22 @@
       }
     });
     return layout;
+  }
+
+  // template slot for the pure outer tile: all dark, red cell frame
+  function paintOuterTemplate(ctx, px, py, Ssz) {
+    var img = ctx.createImageData(Ssz, Ssz);
+    for (var v = 0; v < Ssz; v++) {
+      for (var u = 0; u < Ssz; u++) {
+        var o = (v * Ssz + u) * 4;
+        var frame = u === 0 || v === 0 || u === Ssz - 1 || v === Ssz - 1;
+        img.data[o] = frame ? 220 : 20;
+        img.data[o + 1] = frame ? 40 : 20;
+        img.data[o + 2] = frame ? 40 : 20;
+        img.data[o + 3] = 255;
+      }
+    }
+    ctx.putImageData(img, px, py);
   }
 
   function templateParams(params) {
@@ -574,7 +615,7 @@
         ? ['E', 'SE', 'SW', 'W', 'NW', 'NE']
         : ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
       tiles: layout.tiles.map(function (t) {
-        return { index: t.index, mask: t.mask, x: t.col * params.size, y: t.row * params.size };
+        return { index: t.index, mask: t.mask, role: t.role, x: t.col * params.size, y: t.row * params.size };
       })
     };
     if (params.shape === 'square') meta.lookup256 = BLOB_LOOKUP.slice();
@@ -592,6 +633,7 @@
     canonical: canonical,
     makeSetParams: makeSetParams,
     makeSampler: makeSampler,
+    outerAsInner: outerAsInner,
     wobble: wobble,
     hexGeometry: hexGeometry,
     paintSquareTile: paintSquareTile,

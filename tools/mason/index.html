@@ -304,13 +304,14 @@ function boardSize() {
 }
 
 function outerParams() {
-  // a plain tile of the outer terrain = a full-inner tile of that terrain;
-  // the outer texture must ride along as that tile's "inner" texture
-  var p = {};
-  Object.keys(params).forEach(function (k) { p[k] = params[k]; });
-  p.inner = params.outer;
-  p.textures = { inner: params.textures && params.textures.outer };
-  return p;
+  return Mason.outerAsInner(params);
+}
+
+// index of the pure-outer slot in the current layout
+function outerSlotIndex() {
+  var tiles = Mason.sheetLayout(params.shape).tiles;
+  for (var i = 0; i < tiles.length; i++) if (tiles[i].role === 'outer') return tiles[i].index;
+  return -1;
 }
 
 // imported painted sheet: slice index for a cell's mask
@@ -325,8 +326,8 @@ function drawCell(x, y) {
   if (params.shape === 'hex') {
     var pos = hexPos(x, y);
     var bx = Math.round(pos.x - S / 2), by = Math.round(pos.y - S / 2);
-    if (cellAt(x, y) && useSheet) {
-      var slice = sheetSlice(hexMask(x, y));
+    if (useSheet) {
+      var slice = cellAt(x, y) ? sheetSlice(hexMask(x, y)) : art.sheet[outerSlotIndex()];
       if (slice) { bctx.drawImage(slice, bx, by, S, S); return; }
     }
     sctx.clearRect(0, 0, S, S);
@@ -334,8 +335,8 @@ function drawCell(x, y) {
     else Mason.paintHexTile(sctx, 0, 0, outerParams(), 63, Math.round(pos.x), Math.round(pos.y));
     bctx.drawImage(scratch, bx, by);
   } else {
-    if (cellAt(x, y) && useSheet) {
-      var slice2 = sheetSlice(squareMask(x, y));
+    if (useSheet) {
+      var slice2 = cellAt(x, y) ? sheetSlice(squareMask(x, y)) : art.sheet[outerSlotIndex()];
       if (slice2) { bctx.drawImage(slice2, x * S, y * S, S, S); return; }
     }
     if (cellAt(x, y)) Mason.paintSquareTile(bctx, x * S, y * S, params, squareMask(x, y), x * S, y * S);
@@ -607,6 +608,8 @@ function sheetPrompt() {
     'Paint, in 16-bit top-down orthographic pixel art:\n' +
     '- every white region as ' + innerD.tex + '\n' +
     '- every dark region as ' + outerD.tex + '\n' +
+    '- cells that are entirely white are pure ' + Mason.TERRAINS[params.inner].name.toLowerCase() +
+    '; the cell that is entirely dark is pure ' + Mason.TERRAINS[params.outer].name.toLowerCase() + '\n' +
     '- along each interior red line, ' + (innerD.edge || 'a natural transition between the two terrains') +
     ', following the red line’s exact position and curvature\n\n' +
     'Hard rules:\n' +

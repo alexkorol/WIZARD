@@ -42,11 +42,15 @@ NW, NE) and bake all 64 edge combinations.
 
 ## Exports
 
-- **PNG sheet** — the tile set, 8 columns.
-- **JSON** — layout, per-tile masks, neighbor bit order, and (for square)
-  the 256-entry lookup table.
-- **AI template sheet** — the same layout rendered as flat masks with a red
-  boundary guide.
+- **PNG sheet** — the tile set, plus the two 100% swatches: the pure inner
+  tile (the fully-surrounded mask, already among the set) and a dedicated
+  pure outer tile in the slot after the masks. A game can draw whole
+  regions from one atlas.
+- **JSON** — layout, per-tile masks and roles, neighbor bit order, and
+  (for square) the 256-entry lookup table.
+- **AI template sheet** — the same layout rendered as flat masks with red
+  guides; the pure-outer slot is an all-dark cell, so the model paints a
+  clean swatch of each terrain.
 
 ## Deterministic vs. generative AI
 
@@ -117,7 +121,7 @@ landscape — a template whose aspect doesn't match gets stretched or
 padded before the model paints anything, which misaligns every cell.
 Defenses, in order:
 
-1. Both sheet layouts are square by design (blob 7×7, hex 8×8), and the
+1. Both sheet layouts are square by design (blob 7×7, hex 9×9), and the
    generated prompts demand a square 1024×1024 output explicitly, twice.
 2. **Set the size parameter yourself when you can** — `size: "1024x1024"`
    in the API, or say "square image" in a chat UI. Prompt text alone
