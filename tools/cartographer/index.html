@@ -197,6 +197,28 @@ canvas#view.dragging{cursor:grabbing}
       <button id="exportJson">Export JSON</button>
       <button id="exportPng">Export PNG</button>
     </div>
+    <div>
+      <label for="texTerrain">Texture pack</label>
+      <div class="row">
+        <select id="texTerrain">
+          <option value="grass">Grass</option>
+          <option value="water">Water</option>
+          <option value="floor">Floor</option>
+          <option value="path">Path</option>
+          <option value="sand">Sand</option>
+          <option value="lava">Lava</option>
+          <option value="murk">Murk</option>
+        </select>
+        <button id="texImport" style="flex:0 0 auto">Import</button>
+      </div>
+      <div class="row" style="margin-top:.5rem">
+        <button id="packSave">Save pack</button>
+        <button id="packLoad">Load pack</button>
+        <button id="packClear">Clear</button>
+      </div>
+      <input type="file" id="texFile" accept="image/png,image/webp,image/jpeg" style="display:none">
+      <input type="file" id="packFile" accept="application/json" style="display:none">
+    </div>
     <p class="hint">Drag to pan, scroll to zoom, double-click to re-center. Space rolls a new map. The engine is a single dependency-free file: <a href="core/mapgen.js" style="color:var(--ink-dim)">core/mapgen.js</a>.</p>
     <div class="foot">
       Part of <a href="../../index.html">WIZARD</a> · <a href="https://github.com/alexkorol/WIZARD/tree/gh-pages/tools/cartographer">source &amp; docs</a>
@@ -209,6 +231,7 @@ canvas#view.dragging{cursor:grabbing}
 </div>
 
 <script src="core/mapgen.js"></script>
+<script src="../mason/core/mason.js"></script>
 <script>
 (function () {
 'use strict';
@@ -267,6 +290,133 @@ var map = null;
 var pal = null;
 var indoor = true;
 
+// ------------------------------------------------------------ texture pack
+// Real art (AI-generated or hand-made) per terrain id. Ground tiles
+// pattern-fill from world-anchored textures; land tiles that touch a
+// liquid are painted as Mason transition tiles, so shorelines get real
+// borders cut through real art. Anything without a texture falls back
+// to the procedural painter.
+var texPack = {};                 // key -> { data: ImageData, canvas }
+var patternCache = new WeakMap(); // ctx -> { key: CanvasPattern }
+var masonParamCache = {};
+var liquidBase = document.createElement('canvas');
+var lbctx = liquidBase.getContext('2d');
+var MASON_STYLE = { floor: 'stone', grass: 'grass', sand: 'sand', path: 'dirt', water: 'water', lava: 'lava', murk: 'water' };
+
+function patternFor(g, key) {
+  var entry = patternCache.get(g);
+  if (!entry) { entry = {}; patternCache.set(g, entry); }
+  if (!entry[key]) entry[key] = g.createPattern(texPack[key].canvas, 'repeat');
+  return entry[key];
+}
+
+function groundKey(t) {
+  switch (t) {
+    case TILE.FLOOR: case TILE.DOOR: return 'floor';
+    case TILE.GRASS: case TILE.TREE: return 'grass';
+    case TILE.SAND: return 'sand';
+    case TILE.PATH: return 'path';
+    case TILE.RUBBLE: return indoor ? 'floor' : (map.theme === 'desert' ? 'sand' : 'grass');
+    case TILE.ROCK: return indoor ? 'floor' : 'grass';
+    default: return null;
+  }
+}
+function liquidTexKey(t) {
+  if (t === TILE.WATER || t === TILE.DEEP) return 'water';
+  if (t === TILE.LAVA) return 'lava';
+  if (t === TILE.MURK) return 'murk';
+  return null;
+}
+
+function masonParams(innerKey, outerKey) {
+  var ck = innerKey + '|' + outerKey + '|' + map.seed;
+  if (!masonParamCache[ck]) {
+    var p = Mason.makeSetParams({
+      seed: map.seed, size: TS,
+      inner: MASON_STYLE[innerKey], outer: MASON_STYLE[outerKey]
+    });
+    p.textures = { inner: texPack[innerKey].data, outer: texPack[outerKey].data };
+    p.overlay = 0.6;
+    p.borderFrac = 0.28;
+    masonParamCache[ck] = p;
+  }
+  return masonParamCache[ck];
+}
+
+// paints a textured base for a land tile; returns 'mason' | 'pattern' | false
+function paintTexturedGround(g, x, y, t) {
+  var key = groundKey(t);
+  if (!key || !texPack[key]) return false;
+  var px = x * TS, py = y * TS;
+  var mode = 'pattern';
+  // coastal tile: a Mason transition with the liquid as the outer terrain
+  var lk = null;
+  for (var i = 0; i < 8 && !lk; i++) {
+    var d = Mason.SQUARE_NEIGHBORS[i];
+    var cand = liquidTexKey(tget(x + d[0], y + d[1]));
+    if (cand && texPack[cand]) lk = cand;
+  }
+  if (lk) {
+    var mask = 0;
+    for (i = 0; i < 8; i++) {
+      var dd = Mason.SQUARE_NEIGHBORS[i];
+      var nk = liquidTexKey(tget(x + dd[0], y + dd[1]));
+      if (!(nk && texPack[nk])) mask |= 1 << i; // anything non-liquid counts as inner
+    }
+    Mason.paintSquareTile(g, px, py, masonParams(key, lk), mask, px, py);
+    mode = 'mason';
+  } else {
+    g.fillStyle = patternFor(g, key);
+    g.fillRect(px, py, TS, TS);
+  }
+  // keep the macro-scale variation as a light overlay
+  var m = macroTint(px, py) - 1;
+  g.fillStyle = m > 0 ? 'rgba(255,255,255,' + (m * 0.5).toFixed(3) + ')'
+                      : 'rgba(0,0,0,' + (-m * 0.6).toFixed(3) + ')';
+  g.fillRect(px, py, TS, TS);
+  return mode;
+}
+
+function setTexture(key, imageData) {
+  var c = document.createElement('canvas');
+  c.width = imageData.width; c.height = imageData.height;
+  c.getContext('2d').putImageData(imageData, 0, 0);
+  texPack[key] = { data: imageData, canvas: c };
+  patternCache = new WeakMap();
+  masonParamCache = {};
+  refreshTexLabels();
+}
+window.__importTexture = setTexture; // tooling hook
+
+function refreshTexLabels() {
+  var sel = document.getElementById('texTerrain');
+  if (!sel) return;
+  for (var i = 0; i < sel.options.length; i++) {
+    var o = sel.options[i];
+    var name = o.textContent.replace(' [set]', '');
+    o.textContent = name + (texPack[o.value] ? ' [set]' : '');
+  }
+}
+
+// bake pure liquid tiles from textures once per map; the frame loop
+// blits slices and animates brightness on top
+function bakeLiquidBase() {
+  liquidBase.width = map.width * TS;
+  liquidBase.height = map.height * TS;
+  lbctx = liquidBase.getContext('2d');
+  for (var i = 0; i < liquids.length; i++) {
+    var q = liquids[i];
+    var key = liquidTexKey(q.t);
+    if (!key || !texPack[key]) continue;
+    lbctx.fillStyle = patternFor(lbctx, key);
+    lbctx.fillRect(q.x * TS, q.y * TS, TS, TS);
+    if (q.t === TILE.DEEP) {
+      lbctx.fillStyle = 'rgba(0,4,24,0.4)';
+      lbctx.fillRect(q.x * TS, q.y * TS, TS, TS);
+    }
+  }
+}
+
 var staticC = document.createElement('canvas');   // baked terrain + static entities
 var frameC = document.createElement('canvas');    // per-frame composite
 var darkC = document.createElement('canvas');     // darkness layer
@@ -289,6 +439,7 @@ function paintBaseTile(g, x, y) {
   var t = tget(x, y);
   var h = tileHash(x, y, map.seed);
   var px = x * TS, py = y * TS;
+  var texMode = false; // 'mason' | 'pattern' | false
   switch (t) {
     case TILE.VOID:
       g.fillStyle = pal.bg; g.fillRect(px, py, TS, TS);
@@ -304,20 +455,47 @@ function paintBaseTile(g, x, y) {
         g.fillRect(px, py + 4, TS, 2);
       }
       break;
-    case TILE.FLOOR: paintFloor(g, px, py, h, pal.floor); break;
-    case TILE.GRASS: paintGrass(g, px, py, h); break;
-    case TILE.SAND: paintFloor(g, px, py, h, pal.sand, true); break;
-    case TILE.PATH: paintFloor(g, px, py, h, pal.path, true); break;
-    case TILE.RUBBLE: paintRubble(g, px, py, h); break;
+    case TILE.FLOOR:
+      texMode = paintTexturedGround(g, x, y, t);
+      if (!texMode) paintFloor(g, px, py, h, pal.floor);
+      break;
+    case TILE.GRASS:
+      texMode = paintTexturedGround(g, x, y, t);
+      if (!texMode) paintGrass(g, px, py, h);
+      break;
+    case TILE.SAND:
+      texMode = paintTexturedGround(g, x, y, t);
+      if (!texMode) paintFloor(g, px, py, h, pal.sand, true);
+      break;
+    case TILE.PATH:
+      texMode = paintTexturedGround(g, x, y, t);
+      if (!texMode) paintFloor(g, px, py, h, pal.path, true);
+      break;
+    case TILE.RUBBLE:
+      texMode = paintTexturedGround(g, x, y, t);
+      paintRubble(g, px, py, h, !!texMode);
+      break;
     case TILE.MURK:
     case TILE.WATER:
     case TILE.DEEP:
     case TILE.LAVA:
-      paintLiquid(g, x, y, 0); break;
+      var lk = liquidTexKey(t);
+      if (lk && texPack[lk]) g.drawImage(liquidBase, px, py, TS, TS, px, py, TS, TS);
+      else paintLiquid(g, x, y, 0);
+      break;
     case TILE.WALL: paintWall(g, x, y, h); break;
-    case TILE.DOOR: paintDoor(g, x, y, h); break;
-    case TILE.TREE: paintGrass(g, px, py, h); break; // canopy drawn in a second pass
-    case TILE.ROCK: paintRock(g, x, y, h); break;
+    case TILE.DOOR:
+      texMode = paintTexturedGround(g, x, y, t);
+      paintDoor(g, x, y, h, !!texMode);
+      break;
+    case TILE.TREE:
+      texMode = paintTexturedGround(g, x, y, t);
+      if (!texMode) paintGrass(g, px, py, h); // canopy drawn in a second pass
+      break;
+    case TILE.ROCK:
+      texMode = paintTexturedGround(g, x, y, t);
+      paintRock(g, x, y, h, !!texMode);
+      break;
     case TILE.BRIDGE: paintBridge(g, x, y, h); break;
   }
   // contact shadow where ground meets wall
@@ -328,7 +506,8 @@ function paintBaseTile(g, x, y) {
     if (tget(x + 1, y) === TILE.WALL) g.fillRect(px + TS - 3, py, 3, TS);
   }
   // wet or scorched ground where it meets a liquid
-  if (MapGen.WALKABLE.has(t)) {
+  // (skip when a Mason transition already owns this boundary)
+  if (MapGen.WALKABLE.has(t) && texMode !== 'mason') {
     [[0, -1, 0], [1, 0, 1], [0, 1, 2], [-1, 0, 3]].forEach(function (d) {
       var nt = tget(x + d[0], y + d[1]);
       var wet = nt === TILE.WATER || nt === TILE.DEEP || nt === TILE.MURK;
@@ -344,8 +523,9 @@ function paintBaseTile(g, x, y) {
       }
     });
   }
-  // path edges scalloped by encroaching grass
-  if (t === TILE.PATH) {
+  // path edges scalloped by encroaching grass (procedural look only;
+  // textured paths keep their own art)
+  if (t === TILE.PATH && !texMode) {
     g.fillStyle = shade(pal.grass[0], 1.02);
     [[0, -1], [1, 0], [0, 1], [-1, 0]].forEach(function (d) {
       if (tget(x + d[0], y + d[1]) !== TILE.GRASS) return;
@@ -410,9 +590,11 @@ function paintGrass(g, px, py, h) {
   }
 }
 
-function paintRubble(g, px, py, h) {
-  var under = indoor ? pal.floor : (map.theme === 'desert' ? pal.sand : pal.grass);
-  paintFloor(g, px, py, h, under, true);
+function paintRubble(g, px, py, h, skipBase) {
+  if (!skipBase) {
+    var under = indoor ? pal.floor : (map.theme === 'desert' ? pal.sand : pal.grass);
+    paintFloor(g, px, py, h, under, true);
+  }
   g.fillStyle = shade(pal.rubble, 1.05);
   g.fillRect(px + 2 + (h % 5), py + 3 + ((h >>> 3) % 5), 5, 4);
   g.fillStyle = shade(pal.rubble, 0.8);
@@ -453,9 +635,9 @@ function paintWall(g, x, y, h) {
   }
 }
 
-function paintDoor(g, x, y, h) {
+function paintDoor(g, x, y, h, skipBase) {
   var px = x * TS, py = y * TS;
-  paintFloor(g, px, py, h, pal.floor);
+  if (!skipBase) paintFloor(g, px, py, h, pal.floor);
   var vertical = tget(x - 1, y) === TILE.WALL && tget(x + 1, y) === TILE.WALL;
   g.fillStyle = shade(pal.door, 0.6);
   if (vertical) g.fillRect(px + 2, py + 1, TS - 4, TS - 2);
@@ -506,10 +688,12 @@ function paintTree(g, x, y, h) {
   g.beginPath(); g.arc(px + 5 + (h % 3), py + 5, 2, 0, 7); g.fill();
 }
 
-function paintRock(g, x, y, h) {
+function paintRock(g, x, y, h, skipBase) {
   var px = x * TS, py = y * TS;
-  if (indoor) paintFloor(g, px, py, h, pal.floor);
-  else paintFloor(g, px, py, h, [shadeHex(pal.rock, 0.55), shadeHex(pal.rock, 0.45)], true);
+  if (!skipBase) {
+    if (indoor) paintFloor(g, px, py, h, pal.floor);
+    else paintFloor(g, px, py, h, [shadeHex(pal.rock, 0.55), shadeHex(pal.rock, 0.45)], true);
+  }
   g.fillStyle = 'rgba(0,0,0,0.3)';
   g.beginPath(); g.ellipse(px + 8, py + 12, 6, 2.5, 0, 0, 7); g.fill();
   g.fillStyle = shade(pal.rock, 0.9 + (h % 12) / 100);
@@ -964,6 +1148,9 @@ function regenerate(newSeed) {
     }
   }
 
+  // textured liquids bake first: the terrain pass blits from this layer
+  bakeLiquidBase();
+
   // bake terrain, then canopies on top so they can spill across tile edges
   for (y = 0; y < map.height; y++)
     for (x = 0; x < map.width; x++) paintBaseTile(sctx, x, y);
@@ -1063,7 +1250,23 @@ function frame(now) {
   // animate liquids
   for (var i = 0; i < liquids.length; i++) {
     var q = liquids[i];
-    paintLiquid(fctx, q.x, q.y, time, q);
+    var qk = liquidTexKey(q.t);
+    if (qk && texPack[qk]) {
+      // textured liquid: blit the baked art, breathe the brightness
+      var qx = q.x * TS, qy = q.y * TS;
+      fctx.drawImage(liquidBase, qx, qy, TS, TS, qx, qy, TS, TS);
+      var speed = q.t === TILE.MURK ? 0.5 : 1.4;
+      var s = Math.sin(time * speed + (q.h % 628) / 100) * 0.06;
+      fctx.fillStyle = s > 0 ? 'rgba(255,255,255,' + s.toFixed(3) + ')'
+                             : 'rgba(0,0,0,' + (-s).toFixed(3) + ')';
+      fctx.fillRect(qx, qy, TS, TS);
+      if (q.t === TILE.WATER && (q.h + ((time * 0.7) | 0)) % 11 === 0) {
+        fctx.fillStyle = 'rgba(255,255,255,0.35)';
+        fctx.fillRect(qx + (q.h >>> 5) % 12, qy + (q.h >>> 8) % 12, 3, 1);
+      }
+    } else {
+      paintLiquid(fctx, q.x, q.y, time, q);
+    }
   }
 
   paintFlames(fctx, time);
@@ -1218,6 +1421,78 @@ document.getElementById('generate').addEventListener('click', function () { rege
 document.getElementById('roll').addEventListener('click', function () { regenerate(true); });
 document.getElementById('seed').addEventListener('keydown', function (e) {
   if (e.key === 'Enter') regenerate(false);
+});
+
+// ---------------------------------------------------------------- texture pack io
+
+document.getElementById('texImport').addEventListener('click', function () {
+  document.getElementById('texFile').value = '';
+  document.getElementById('texFile').click();
+});
+document.getElementById('texFile').addEventListener('change', function () {
+  var file = this.files[0];
+  if (!file) return;
+  var key = document.getElementById('texTerrain').value;
+  var img = new Image();
+  img.onload = function () {
+    URL.revokeObjectURL(img.src);
+    // same treatment as the Mason: center-square crop, size cap,
+    // forced wrap-seamlessness
+    var side = Math.min(img.width, img.height);
+    var target = Math.min(side, 256);
+    var c = document.createElement('canvas');
+    c.width = c.height = target;
+    var g = c.getContext('2d');
+    g.drawImage(img, (img.width - side) / 2, (img.height - side) / 2, side, side, 0, 0, target, target);
+    var data = g.getImageData(0, 0, target, target);
+    Mason.makeSeamless(data);
+    setTexture(key, data);
+    regenerate(false);
+  };
+  img.src = URL.createObjectURL(file);
+});
+document.getElementById('packSave').addEventListener('click', function () {
+  var pack = { format: 'wizard-texture-pack', version: 1, textures: {} };
+  Object.keys(texPack).forEach(function (k) { pack.textures[k] = texPack[k].canvas.toDataURL(); });
+  var blob = new Blob([JSON.stringify(pack)], { type: 'application/json' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'cartographer_texture_pack.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+document.getElementById('packLoad').addEventListener('click', function () {
+  document.getElementById('packFile').value = '';
+  document.getElementById('packFile').click();
+});
+document.getElementById('packFile').addEventListener('change', function () {
+  var file = this.files[0];
+  if (!file) return;
+  file.text().then(function (text) {
+    var pack = JSON.parse(text);
+    var keys = Object.keys(pack.textures || {});
+    var pending = keys.length;
+    if (!pending) return;
+    keys.forEach(function (k) {
+      var img = new Image();
+      img.onload = function () {
+        var c = document.createElement('canvas');
+        c.width = img.width; c.height = img.height;
+        var g = c.getContext('2d');
+        g.drawImage(img, 0, 0);
+        setTexture(k, g.getImageData(0, 0, img.width, img.height)); // saved packs are already seamless
+        if (--pending === 0) regenerate(false);
+      };
+      img.src = pack.textures[k];
+    });
+  });
+});
+document.getElementById('packClear').addEventListener('click', function () {
+  texPack = {};
+  patternCache = new WeakMap();
+  masonParamCache = {};
+  refreshTexLabels();
+  regenerate(false);
 });
 
 document.getElementById('exportJson').addEventListener('click', function () {

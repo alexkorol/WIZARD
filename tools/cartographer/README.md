@@ -89,17 +89,22 @@ least halfway along the axis and that the main path is contiguous — the
 "push forward, clear packs, reach the boss" loop is a build guarantee,
 not a hope.
 
-### Toward real tilesets
+### Real tilesets: the texture pack
 
-The demo's procedural renderer is a placeholder by design — the engine
-output is logical tile ids precisely so real art can replace it. The
-companion module [The Mason](../mason/) generates the transition/border
-tiles between terrain pairs (and imports AI-generated textures or painted
-sheets); its 8-neighbor mask convention matches what a Cartographer
-renderer needs for walls, water edges, and path edges. The intended
-pipeline: generate base textures per theme with an image model, cut
-transitions with the Mason, and map Cartographer tile ids onto the
-resulting atlas.
+The demo renders from a **texture pack** when one is loaded, falling back
+to the procedural painter for anything missing — partial packs work. Pick
+a terrain (grass, water, floor, path, sand, lava, murk) and import any
+image: it gets the Mason treatment (center-square crop, size cap, forced
+wrap-seamlessness), then ground tiles pattern-fill from the world-anchored
+texture. Land tiles that touch a liquid are painted as [Mason](../mason/)
+transition tiles inline — wobbled shorelines cut through the real art,
+with the liquid texture as the outer terrain. Packs save and load as a
+single JSON file, so a theme's art travels as one artifact.
+
+This is the AI-art pipeline end to end: generate or crop a texture per
+terrain with an image model (no structural constraints — the model only
+paints flat art), import, and the whole zone renders with it. Walls,
+entities, and lighting stay procedural on top.
 
 ### JSON interchange
 
