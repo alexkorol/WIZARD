@@ -703,6 +703,34 @@ function paintGate(g, px, py, isExit) {
   }
 }
 
+function paintSpawn(g, s) {
+  var px = s.x * TS, py = s.y * TS;
+  var h = tileHash(s.x, s.y, map.seed ^ 0x5117);
+  if (s.type === 'boss') {
+    // the arena holder: pale skull on a dark ring
+    g.fillStyle = 'rgba(120,20,20,0.55)';
+    g.beginPath(); g.arc(px + 8, py + 8, 7, 0, 7); g.fill();
+    g.fillStyle = '#e8e0d0';
+    g.beginPath(); g.arc(px + 8, py + 7, 4, 0, 7); g.fill();
+    g.fillRect(px + 5, py + 8, 6, 4);
+    g.fillStyle = '#1a0d0d';
+    g.fillRect(px + 6, py + 6, 2, 2); g.fillRect(px + 9, py + 6, 2, 2);
+    g.fillRect(px + 7, py + 10, 1, 2); g.fillRect(px + 9, py + 10, 1, 2);
+  } else {
+    // a pack: a knot of hostile dots; elites get an accent ring
+    if (s.type === 'elite') {
+      g.strokeStyle = pal.accent;
+      g.lineWidth = 1;
+      g.beginPath(); g.arc(px + 8, py + 8, 6, 0, 7); g.stroke();
+    }
+    g.fillStyle = 'rgba(190,60,45,0.95)';
+    for (var i = 0; i < 3 + (h % 2); i++) {
+      var ox = 4 + ((h >>> (i * 3)) % 8), oy = 4 + ((h >>> (i * 3 + 2)) % 8);
+      g.fillRect(px + ox, py + oy, 2, 2);
+    }
+  }
+}
+
 // animated overlays (flames, orbs, glints), drawn every frame
 function paintFlames(g, time) {
   for (var i = 0; i < flames.length; i++) {
@@ -785,6 +813,10 @@ function buildLights() {
         break;
     }
   });
+  // the boss radiates menace
+  if (map.boss) {
+    lights.push({ px: map.boss.x * TS + 8, py: map.boss.y * TS + 8, r: TS * 4, color: '255,60,40', flicker: 0.35, alpha: 0.7, phase: 1.7 });
+  }
 }
 
 function accentRgb() {
@@ -859,6 +891,9 @@ function regenerate(newSeed) {
   var sorted = map.entities.slice().sort(function (a, b2) { return a.y - b2.y; });
   sorted.forEach(function (e) { paintEntity(sctx, e); });
 
+  // monster spawns: packs, elites, and the boss
+  (map.spawns || []).forEach(function (s) { paintSpawn(sctx, s); });
+
   buildLights();
   bakeLavaGlow();
   startReveal();
@@ -920,7 +955,8 @@ function updateStats() {
     '<b>' + themeName + ' ' + zoneName + '</b><br>' +
     map.width + ' × ' + map.height + ' · seed ' + map.seed + '<br>' +
     (map.rooms.length ? map.rooms.length + ' rooms · ' : '') +
-    map.entities.length + ' entities · ' + liquids.length + ' liquid tiles';
+    (map.spawns ? (map.spawns.length - 1) + ' packs + boss · ' : '') +
+    map.entities.length + ' entities';
   document.getElementById('corner').textContent = themeName + ' ' + zoneName + ' · ' + map.seed;
 }
 

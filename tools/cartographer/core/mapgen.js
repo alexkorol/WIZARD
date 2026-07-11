@@ -1015,7 +1015,7 @@
 
   // ---------------------------------------------------------------- gates + decoration
 
-  function placeGates(b) {
+  function placeGates(b, carve) {
     if (b.gates && b.gates.length === 2) {
       b.entrance = b.gates[0];
       b.exit = b.gates[1];
@@ -1034,26 +1034,43 @@
         }
         if (ax >= 0) anchors.push({ x: ax, y: ay });
       });
-      if (anchors.length >= 2) {
-        // pick the two most distant anchors (walk distance)
-        var d0 = bfs(b, anchors[0].x, anchors[0].y);
-        var ent = anchors[0], bestD = -1;
-        anchors.forEach(function (p) {
-          var d = d0[p.y * b.w + p.x];
-          if (d > bestD) { bestD = d; ent = p; }
-        });
-        var d1 = bfs(b, ent.x, ent.y);
-        var ext = ent; bestD = -1;
-        anchors.forEach(function (p) {
-          var d = d1[p.y * b.w + p.x];
-          if (d > bestD) { bestD = d; ext = p; }
-        });
-        b.entrance = ent;
-        b.exit = ext;
+      // directional flow: the map has an axis; the portal sits in the
+      // starting band, the boss in the far band. D2/PoE map pacing:
+      // push forward, never backtrack.
+      var axis = b.axis;
+      var minP = Infinity, maxP = -Infinity;
+      var walk = [];
+      for (var wy = 0; wy < b.h; wy++) {
+        for (var wx = 0; wx < b.w; wx++) {
+          if (!walkable(b.tiles[wy * b.w + wx])) continue;
+          var proj = wx * axis[0] + wy * axis[1];
+          walk.push([wx, wy, proj]);
+          if (proj < minP) minP = proj;
+          if (proj > maxP) maxP = proj;
+        }
       }
+      var span = (maxP - minP) || 1;
+      function band(lo, hi) {
+        return walk.filter(function (c) {
+          var t = (c[2] - minP) / span;
+          return t >= lo && t <= hi;
+        });
+      }
+      function pickIn(cands) {
+        if (!cands.length) return null;
+        // prefer a room anchor inside the band
+        var inBand = anchors.filter(function (a) {
+          return cands.some(function (c) { return c[0] === a.x && c[1] === a.y; });
+        });
+        if (inBand.length) return b.rng.pick(inBand);
+        var c = b.rng.pick(cands);
+        return { x: c[0], y: c[1] };
+      }
+      b.entrance = pickIn(band(0, 0.14)) || pickIn(band(0, 0.3));
+      b.exit = pickIn(band(0.86, 1)) || pickIn(band(0.7, 1));
     }
-    if (!b.entrance) {
-      // double BFS: farthest pair of walkable tiles
+    if (!b.entrance || !b.exit) {
+      // fallback: farthest pair of walkable tiles
       var sx = -1, sy = -1;
       for (var i = 0; i < b.tiles.length; i++) {
         if (walkable(b.tiles[i])) { sx = i % b.w; sy = (i / b.w) | 0; break; }
@@ -1062,11 +1079,136 @@
       var a = farthestIndex(dA);
       var dB = bfs(b, a % b.w, (a / b.w) | 0);
       var z = farthestIndex(dB);
-      b.entrance = { x: a % b.w, y: (a / b.w) | 0 };
-      b.exit = { x: z % b.w, y: (z / b.w) | 0 };
+      b.entrance = b.entrance || { x: a % b.w, y: (a / b.w) | 0 };
+      b.exit = b.exit || { x: z % b.w, y: (z / b.w) | 0 };
+    }
+
+    // the boss arena: a fightable clearing carved around the far gate
+    carveArena(b, b.exit, carve);
+    b.boss = { x: b.exit.x, y: b.exit.y };
+    // the exit portal sits just past the boss, deeper along the axis
+    var ex = clamp(b.exit.x + b.axis[0] * 3, 1, b.w - 2);
+    var ey = clamp(b.exit.y + b.axis[1] * 3, 1, b.h - 2);
+    if (b.isWalkable(ex, ey) && !(ex === b.boss.x && ey === b.boss.y)) {
+      b.exit = { x: ex, y: ey };
     }
     b.addEntity('entrance', b.entrance.x, b.entrance.y);
     b.addEntity('exit', b.exit.x, b.exit.y);
+  }
+
+  // Blast a roughly circular arena around a point. Only opens terrain,
+  // so it can never disconnect the map; a safety tunnel links it to the
+  // rest of the zone in case the center sat inside solid rock.
+  function carveArena(b, at, carve) {
+    var rng = b.rng;
+    var r = rng.irange(4, 5);
+    at.x = clamp(at.x, r + 1, b.w - r - 2);
+    at.y = clamp(at.y, r + 1, b.h - r - 2);
+    for (var dy = -r; dy <= r; dy++) {
+      for (var dx = -r; dx <= r; dx++) {
+        var d2 = dx * dx + dy * dy;
+        if (d2 > r * r) continue;
+        var x = at.x + dx, y = at.y + dy;
+        var t = b.get(x, y);
+        if (!walkable(t)) {
+          // ragged rim: leave some solid nubs at the very edge
+          if (d2 > (r - 1) * (r - 1) && rng.chance(0.35)) continue;
+          b.set(x, y, carve);
+        }
+      }
+    }
+    var regs = walkableRegions(b);
+    if (regs.length > 1) ensureConnected(b, carve);
+  }
+
+  // Shortest walk from the portal to the boss: the spine of the map.
+  function computeMainPath(b) {
+    return aStar(b, b.entrance.x, b.entrance.y, b.boss.x, b.boss.y, function (t) {
+      return walkable(t) ? 1 : Infinity;
+    }) || [];
+  }
+
+  // Monster pack placement: packs pace the main path, extra packs and
+  // elites live in side pockets off it, the boss holds the arena.
+  function placeSpawns(b, path) {
+    var rng = b.rng;
+    var spawns = [];
+    var used = new Set();
+    function jitterSpot(x, y) {
+      for (var tries = 0; tries < 12; tries++) {
+        var nx = clamp(x + rng.irange(-2, 2), 1, b.w - 2);
+        var ny = clamp(y + rng.irange(-2, 2), 1, b.h - 2);
+        if (b.isWalkable(nx, ny) && !used.has(nx + ',' + ny)) return [nx, ny];
+      }
+      return null;
+    }
+    function add(type, x, y) {
+      used.add(x + ',' + y);
+      spawns.push({ type: type, x: x, y: y });
+    }
+
+    // along the spine
+    var next = rng.irange(6, 10);
+    for (var i = 0; i < path.length; i++) {
+      if (i < next) continue;
+      if (Math.abs(path[i][0] - b.boss.x) + Math.abs(path[i][1] - b.boss.y) < 7) break;
+      var s = jitterSpot(path[i][0], path[i][1]);
+      if (s) add('pack', s[0], s[1]);
+      next = i + rng.irange(7, 12);
+    }
+
+    // distance-from-spine field over walkable tiles
+    var dist = new Int32Array(b.w * b.h);
+    dist.fill(-1);
+    var queue = new Int32Array(b.w * b.h);
+    var head = 0, tail = 0;
+    path.forEach(function (c) {
+      var idx = c[1] * b.w + c[0];
+      if (dist[idx] === -1) { dist[idx] = 0; queue[tail++] = idx; }
+    });
+    while (head < tail) {
+      var qi = queue[head++];
+      var qx = qi % b.w, qy = (qi / b.w) | 0;
+      for (var d = 0; d < 4; d++) {
+        var nx = qx + DIR4[d][0], ny = qy + DIR4[d][1];
+        if (nx < 0 || ny < 0 || nx >= b.w || ny >= b.h) continue;
+        var ni = ny * b.w + nx;
+        if (dist[ni] === -1 && walkable(b.tiles[ni])) {
+          dist[ni] = dist[qi] + 1;
+          queue[tail++] = ni;
+        }
+      }
+    }
+
+    // side pockets: reward leaving the spine, elites in the deep ones
+    var pockets = [];
+    for (var y = 1; y < b.h - 1; y++) {
+      for (var x = 1; x < b.w - 1; x++) {
+        var di = dist[y * b.w + x];
+        if (di >= 6) pockets.push([x, y, di]);
+      }
+    }
+    rng.shuffle(pockets);
+    var want = Math.max(2, Math.floor(b.w * b.h / 260));
+    var placed = [];
+    for (var p = 0; p < pockets.length && placed.length < want; p++) {
+      var c = pockets[p];
+      var ok = true;
+      for (var q = 0; q < placed.length; q++) {
+        if (Math.abs(placed[q][0] - c[0]) + Math.abs(placed[q][1] - c[1]) < 8) { ok = false; break; }
+      }
+      if (!ok) continue;
+      placed.push(c);
+      add(c[2] >= 10 && rng.chance(0.45) ? 'elite' : 'pack', c[0], c[1]);
+    }
+
+    // the arena
+    add('boss', b.boss.x, b.boss.y);
+    for (var g = 0; g < 2; g++) {
+      var gs = jitterSpot(b.boss.x, b.boss.y);
+      if (gs) add('pack', gs[0], gs[1]);
+    }
+    b.spawns = spawns;
   }
 
   function decorate(b, theme) {
@@ -1074,6 +1216,7 @@
     var area = b.w * b.h;
     var occupied = new Set();
     b.entities.forEach(function (e) { occupied.add(e.x + ',' + e.y); });
+    (b.spawns || []).forEach(function (s) { occupied.add(s.x + ',' + s.y); });
     function free(x, y) { return !occupied.has(x + ',' + y); }
     function take(type, x, y) {
       occupied.add(x + ',' + y);
@@ -1520,7 +1663,10 @@
     var b = new MapBuilder(width, height, rng);
     zone.gen(b, th);
     ensureConnected(b, zone.carve);
-    placeGates(b);
+    b.axis = b.gates ? [1, 0] : rng.pick(zone.axes || [[1, 0], [-1, 0], [0, 1], [0, -1]]);
+    placeGates(b, zone.carve);
+    var mainPath = computeMainPath(b);
+    placeSpawns(b, mainPath);
     decorate(b, th);
 
     return {
@@ -1535,6 +1681,10 @@
       rooms: b.rooms,
       entrance: b.entrance,
       exit: b.exit,
+      boss: b.boss,
+      axis: b.axis,
+      mainPath: mainPath,
+      spawns: b.spawns,
       palette: th.palette,
       outdoor: th.outdoor,
       glowShrooms: th.glowShrooms
@@ -1562,6 +1712,10 @@
       entities: map.entities,
       entrance: map.entrance,
       exit: map.exit,
+      boss: map.boss,
+      axis: map.axis,
+      mainPath: map.mainPath,
+      spawns: map.spawns,
       palette: map.palette
     };
   }
