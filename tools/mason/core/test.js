@@ -69,6 +69,34 @@ const meta = Mason.sheetMetadata(p1);
 assert(meta.lookup256.length === 256, 'metadata lookup table size');
 assert(meta.tiles.length === 47, 'metadata tile count');
 
+// scrubGuides: heals guide-red from surrounding art, leaves clean art alone
+{
+  const w = 12, h = 12;
+  const img = { width: w, height: h, data: new Uint8ClampedArray(w * h * 4) };
+  for (let i = 0; i < w * h; i++) {
+    img.data[i * 4] = 50; img.data[i * 4 + 1] = 150; img.data[i * 4 + 2] = 60; img.data[i * 4 + 3] = 255;
+  }
+  for (let y = 0; y < h; y++) { // a red guide column like a kept boundary line
+    const o = (y * w + 5) * 4;
+    img.data[o] = 225; img.data[o + 1] = 45; img.data[o + 2] = 45;
+  }
+  assert(Mason.scrubGuides(img) === true, 'scrubGuides should report red found');
+  let reds = 0;
+  for (let i = 0; i < w * h; i++) {
+    const r = img.data[i * 4], g = img.data[i * 4 + 1];
+    if (r > 130 && r > g * 1.7 + 20) reds++;
+  }
+  assert(reds === 0, `scrubGuides left ${reds} guide pixels`);
+  const healed = (5 + 5 * w) * 4;
+  assert(img.data[healed + 1] > 100, 'healed pixel should take neighbor green');
+
+  const clean = { width: 4, height: 4, data: new Uint8ClampedArray(64) };
+  for (let i = 0; i < 16; i++) { clean.data[i * 4] = 80; clean.data[i * 4 + 1] = 120; clean.data[i * 4 + 2] = 200; clean.data[i * 4 + 3] = 255; }
+  const before = clean.data.slice();
+  assert(Mason.scrubGuides(clean) === false, 'clean art should report no guides');
+  assert(Buffer.from(clean.data).equals(Buffer.from(before)), 'clean art must be untouched');
+}
+
 // every terrain style has the fields the painters rely on
 for (const id of Object.keys(Mason.TERRAINS)) {
   const t = Mason.TERRAINS[id];

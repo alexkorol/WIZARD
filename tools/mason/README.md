@@ -77,13 +77,31 @@ it never has to align a 47-tile grid.
 
 ### Route 2 — painted sheet import (full control)
 
-Export the **AI template sheet** (flat masks with red boundary guides),
-give it to an image-editing model as the structural input ("repaint this
-tile template as grass meeting water, pixel art, keep the red boundary
-placement exactly"), then use **Painted sheet** to import the result. The
-tool slices it by the JSON layout and the playground autotiles with your
-art immediately — the fastest way to eyeball whether the model held the
+Export the **AI template sheet** (flat masks; the transition boundary and
+each cell's frame are drawn in guide-red), give it to an image-editing
+model as the structural input, then use **Painted sheet** to import the
+result. The tool slices it by the JSON layout, **automatically heals any
+guide-red the model kept in the art**, and the playground autotiles with
+it immediately — the fastest way to eyeball whether the model held the
 seams. Rescaling is handled if the model returned a different resolution.
+
+Field notes from real runs — image models fail this in two specific ways,
+so the prompt has to forbid both:
+
+1. **They keep the red guides as literal art** (glossy red piping along
+   every boundary). The import scrub heals this, but say it anyway:
+   *"the red lines are placement guides only — replace them with the
+   natural terrain transition; no red anywhere in the final image."*
+2. **They merge shapes across cells**, composing one nice picture instead
+   of 47 independent tiles. This one is fatal — sliced tiles become
+   arbitrary fragments. Say: *"each red-framed cell is an independent
+   tile; do not merge or continue shapes across cell frames; keep the
+   white/black region placement of each cell exactly."* If the model
+   still merges cells, use Route 1 — it cannot fail this way.
+
+A useful salvage when Route 2 produces beautiful but misaligned art: crop
+a clean patch of each terrain out of it (any editor) and feed those to
+Route 1 as textures.
 
 Hand-drawn sheets go through the same door: draw over the template in
 Aseprite, import, paint, export.

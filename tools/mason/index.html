@@ -524,7 +524,11 @@ fileInput.addEventListener('change', function () {
       art.sheet = layout.tiles.map(function (t) {
         var c = document.createElement('canvas');
         c.width = c.height = params.size;
-        c.getContext('2d').drawImage(img, t.col * cw, t.row * chh, cw, chh, 0, 0, params.size, params.size);
+        var g = c.getContext('2d');
+        g.drawImage(img, t.col * cw, t.row * chh, cw, chh, 0, 0, params.size, params.size);
+        // models tend to keep the template's red guides; heal them out
+        var im = g.getImageData(0, 0, params.size, params.size);
+        if (Mason.scrubGuides(im)) g.putImageData(im, 0, 0);
         return c;
       });
       art.sheetShape = params.shape;

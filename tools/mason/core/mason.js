@@ -426,11 +426,57 @@
         var o = (v * Ssz + u) * 4;
         var c = d < 0 ? 20 : 235;
         img.data[o] = c; img.data[o + 1] = c; img.data[o + 2] = c; img.data[o + 3] = 255;
-        if (Math.abs(d) < 1) { img.data[o] = 220; img.data[o + 1] = 40; img.data[o + 2] = 40; }
+        // guides share one scrubbable red family: the transition boundary
+        // and the cell frame (models must not merge shapes across cells)
+        if (Math.abs(d) < 1 || u === 0 || v === 0 || u === Ssz - 1 || v === Ssz - 1) {
+          img.data[o] = 220; img.data[o + 1] = 40; img.data[o + 2] = 40;
+        }
       }
     }
     ctx.putImageData(img, px, py);
     void real;
+  }
+
+  // Remove guide-red pixels (the template's boundary and grid markers)
+  // from imported painted art, healing them from surrounding colors.
+  // Image models tend to keep the red guides as literal art; this lets a
+  // painted-over template come back clean. Returns true if anything
+  // was scrubbed.
+  function scrubGuides(img) {
+    var w = img.width, h = img.height, d = img.data;
+    var marked = new Uint8Array(w * h);
+    var any = false;
+    for (var i = 0; i < w * h; i++) {
+      var r = d[i * 4], g = d[i * 4 + 1], b = d[i * 4 + 2];
+      if (r > 130 && r > g * 1.7 + 20 && r > b * 1.7 + 20) { marked[i] = 1; any = true; }
+    }
+    if (!any) return false;
+    for (var pass = 0; pass < 10; pass++) {
+      var remaining = 0;
+      for (var y = 0; y < h; y++) {
+        for (var x = 0; x < w; x++) {
+          var idx = y * w + x;
+          if (marked[idx] !== 1) continue;
+          var sr = 0, sg = 0, sb = 0, n = 0;
+          for (var dy = -1; dy <= 1; dy++) {
+            for (var dx = -1; dx <= 1; dx++) {
+              var nx = x + dx, ny = y + dy;
+              if (nx < 0 || ny < 0 || nx >= w || ny >= h) continue;
+              var ni = ny * w + nx;
+              if (marked[ni]) continue;
+              sr += d[ni * 4]; sg += d[ni * 4 + 1]; sb += d[ni * 4 + 2]; n++;
+            }
+          }
+          if (n >= 2) {
+            d[idx * 4] = sr / n; d[idx * 4 + 1] = sg / n; d[idx * 4 + 2] = sb / n;
+            marked[idx] = 2; // healed; becomes a donor next pass
+          } else remaining++;
+        }
+      }
+      for (i = 0; i < w * h; i++) if (marked[i] === 2) marked[i] = 0;
+      if (!remaining) break;
+    }
+    return true;
   }
 
   // ---------------------------------------------------------------- sheet builders
@@ -517,6 +563,7 @@
     renderSheet: renderSheet,
     sheetLayout: sheetLayout,
     sheetMetadata: sheetMetadata,
+    scrubGuides: scrubGuides,
     hashString: hashString
   };
 });
