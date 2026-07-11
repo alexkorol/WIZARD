@@ -130,7 +130,22 @@ canvas#board{image-rendering:pixelated;max-width:100%;max-height:100%;border:1px
         <button id="exportTemplate">AI template sheet</button>
       </div>
     </div>
-    <p class="hint">Paint with the mouse — left adds the inner terrain, hold Shift (or right-drag) to erase. The border art lives entirely on inner tiles, so every tile in the set butts seamlessly against every other. The template sheet is the AI hook: paint over it with an image model, slice it back with the JSON layout.</p>
+    <div>
+      <label>Custom art</label>
+      <div class="row">
+        <button id="texInner">Inner texture</button>
+        <button id="texOuter">Outer texture</button>
+      </div>
+      <div class="row" style="margin-top:.5rem">
+        <button id="importSheet">Painted sheet</button>
+        <button id="clearArt">Clear art</button>
+      </div>
+      <div class="row" style="margin-top:.5rem">
+        <button id="overlayBtn" class="active">Rim overlay: on</button>
+      </div>
+      <input type="file" id="fileInput" accept="image/png,image/webp,image/jpeg" style="display:none">
+    </div>
+    <p class="hint">Paint with the mouse — left adds the inner terrain, Shift or right-drag erases. Two AI routes: import seamless textures (from gpt-image-2 or any model) and the Mason cuts the transitions; or export the template sheet, paint over it, and import the painted sheet back — the playground then autotiles with your art.</p>
     <div class="foot">
       Part of <a href="../../index.html">WIZARD</a> · <a href="https://github.com/alexkorol/WIZARD/tree/gh-pages/tools/mason">source &amp; docs</a>
     </div>
@@ -172,6 +187,10 @@ var TER_IDS = Object.keys(Mason.TERRAINS);
 document.getElementById('inner').value = 'grass';
 document.getElementById('outer').value = 'water';
 
+// imported art: seamless textures and/or a painted-over sheet
+var art = { textures: {}, sheet: null, sheetShape: null };
+var overlayOn = true;
+
 function readParams(newSeed) {
   var seedField = document.getElementById('seed');
   var inner = document.getElementById('inner').value;
@@ -188,11 +207,15 @@ function readParams(newSeed) {
     outer: outer,
     seed: seed === '' ? undefined : seed
   });
+  params.textures = art.textures;
+  params.overlay = overlayOn ? 1 : 0;
   seedField.value = String(params.seed);
   scratch.width = scratch.height = params.size;
+  var artNote = art.sheet ? ' · painted sheet' :
+    ((art.textures.inner || art.textures.outer) ? ' · custom textures' : '');
   document.getElementById('corner').textContent =
     Mason.TERRAINS[inner].name + ' on ' + Mason.TERRAINS[outer].name + ' · ' +
-    (params.shape === 'hex' ? 'hex 64' : 'blob 47') + ' · ' + params.seed;
+    (params.shape === 'hex' ? 'hex 64' : 'blob 47') + ' · ' + params.seed + artNote;
 }
 
 // ---------------------------------------------------------------- playground state
@@ -274,22 +297,40 @@ function boardSize() {
 }
 
 function outerParams() {
-  // a plain tile of the outer terrain = a full-inner tile of that terrain
+  // a plain tile of the outer terrain = a full-inner tile of that terrain;
+  // the outer texture must ride along as that tile's "inner" texture
   var p = {};
   Object.keys(params).forEach(function (k) { p[k] = params[k]; });
   p.inner = params.outer;
+  p.textures = { inner: params.textures && params.textures.outer };
   return p;
+}
+
+// imported painted sheet: slice index for a cell's mask
+function sheetSlice(mask) {
+  var idx = params.shape === 'hex' ? mask : Mason.BLOB_LOOKUP[mask];
+  return art.sheet[idx] || null;
 }
 
 function drawCell(x, y) {
   var S = params.size;
+  var useSheet = art.sheet && art.sheetShape === params.shape;
   if (params.shape === 'hex') {
     var pos = hexPos(x, y);
+    var bx = Math.round(pos.x - S / 2), by = Math.round(pos.y - S / 2);
+    if (cellAt(x, y) && useSheet) {
+      var slice = sheetSlice(hexMask(x, y));
+      if (slice) { bctx.drawImage(slice, bx, by, S, S); return; }
+    }
     sctx.clearRect(0, 0, S, S);
     if (cellAt(x, y)) Mason.paintHexTile(sctx, 0, 0, params, hexMask(x, y), Math.round(pos.x), Math.round(pos.y));
     else Mason.paintHexTile(sctx, 0, 0, outerParams(), 63, Math.round(pos.x), Math.round(pos.y));
-    bctx.drawImage(scratch, Math.round(pos.x - S / 2), Math.round(pos.y - S / 2));
+    bctx.drawImage(scratch, bx, by);
   } else {
+    if (cellAt(x, y) && useSheet) {
+      var slice2 = sheetSlice(squareMask(x, y));
+      if (slice2) { bctx.drawImage(slice2, x * S, y * S, S, S); return; }
+    }
     if (cellAt(x, y)) Mason.paintSquareTile(bctx, x * S, y * S, params, squareMask(x, y), x * S, y * S);
     else Mason.paintSquareTile(bctx, x * S, y * S, outerParams(), 255, x * S, y * S);
   }
@@ -320,7 +361,16 @@ function repaintAround(x, y) {
 
 function drawSheet(mode) {
   var off = document.createElement('canvas');
-  Mason.renderSheet(off, params, mode);
+  if (mode === 'art' && art.sheet && art.sheetShape === params.shape) {
+    // show the imported painted sheet
+    var layout = Mason.sheetLayout(params.shape);
+    off.width = layout.cols * params.size;
+    off.height = layout.rows * params.size;
+    var og = off.getContext('2d');
+    layout.tiles.forEach(function (t, i) {
+      if (art.sheet[i]) og.drawImage(art.sheet[i], t.col * params.size, t.row * params.size);
+    });
+  } else Mason.renderSheet(off, params, mode);
   var scale = 2;
   board.width = off.width * scale;
   board.height = off.height * scale;
@@ -435,6 +485,63 @@ function exportSheet(mode) {
              (mode === 'template' ? '_template' : '') + '.png', blob);
   });
 }
+// ---------------------------------------------------------------- custom art import
+
+var pendingImport = null;
+var fileInput = document.getElementById('fileInput');
+function askFile(kind) { pendingImport = kind; fileInput.value = ''; fileInput.click(); }
+document.getElementById('texInner').addEventListener('click', function () { askFile('inner'); });
+document.getElementById('texOuter').addEventListener('click', function () { askFile('outer'); });
+document.getElementById('importSheet').addEventListener('click', function () { askFile('sheet'); });
+document.getElementById('clearArt').addEventListener('click', function () {
+  art.textures = {};
+  art.sheet = null;
+  art.sheetShape = null;
+  ['texInner', 'texOuter', 'importSheet'].forEach(function (id) {
+    document.getElementById(id).classList.remove('active');
+  });
+  regen(false, false);
+});
+document.getElementById('overlayBtn').addEventListener('click', function () {
+  overlayOn = !overlayOn;
+  this.textContent = 'Rim overlay: ' + (overlayOn ? 'on' : 'off');
+  this.classList.toggle('active', overlayOn);
+  regen(false, false);
+});
+
+fileInput.addEventListener('change', function () {
+  var file = fileInput.files[0];
+  if (!file || !pendingImport) return;
+  var kind = pendingImport;
+  var img = new Image();
+  img.onload = function () {
+    URL.revokeObjectURL(img.src);
+    if (kind === 'sheet') {
+      // slice by the current layout; scales if the sheet was painted
+      // at a different resolution than the current tile size
+      var layout = Mason.sheetLayout(params.shape);
+      var cw = img.width / layout.cols, chh = img.height / layout.rows;
+      art.sheet = layout.tiles.map(function (t) {
+        var c = document.createElement('canvas');
+        c.width = c.height = params.size;
+        c.getContext('2d').drawImage(img, t.col * cw, t.row * chh, cw, chh, 0, 0, params.size, params.size);
+        return c;
+      });
+      art.sheetShape = params.shape;
+      document.getElementById('importSheet').classList.add('active');
+    } else {
+      var c2 = document.createElement('canvas');
+      c2.width = img.width; c2.height = img.height;
+      var g = c2.getContext('2d');
+      g.drawImage(img, 0, 0);
+      art.textures[kind] = g.getImageData(0, 0, img.width, img.height);
+      document.getElementById(kind === 'inner' ? 'texInner' : 'texOuter').classList.add('active');
+    }
+    regen(false, false);
+  };
+  img.src = URL.createObjectURL(file);
+});
+
 document.getElementById('exportPng').addEventListener('click', function () { exportSheet('art'); });
 document.getElementById('exportTemplate').addEventListener('click', function () { exportSheet('template'); });
 document.getElementById('exportJson').addEventListener('click', function () {

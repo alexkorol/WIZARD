@@ -76,6 +76,31 @@ zones, short connections, loops instead of backtracking, and dead ends kept
 small and rewarding. The test suite enforces a clear-speed bound — the
 entrance-to-exit walk may never exceed 2.2× the map perimeter.
 
+### Directional flow
+
+Every map has a **flow axis**: the portal spawns in the starting band, a
+carved **boss arena** holds the far band, and the exit portal sits just
+past the boss. The engine computes the **main path** (portal to boss) and
+places **spawns**: monster packs pacing the spine every 7–12 tiles, extra
+packs and elites in side pockets off it, and the boss with guards in the
+arena. `map.boss`, `map.axis`, `map.mainPath`, and `map.spawns` all ship
+in the output and the JSON export. Tests enforce that the boss sits at
+least halfway along the axis and that the main path is contiguous — the
+"push forward, clear packs, reach the boss" loop is a build guarantee,
+not a hope.
+
+### Toward real tilesets
+
+The demo's procedural renderer is a placeholder by design — the engine
+output is logical tile ids precisely so real art can replace it. The
+companion module [The Mason](../mason/) generates the transition/border
+tiles between terrain pairs (and imports AI-generated textures or painted
+sheets); its 8-neighbor mask convention matches what a Cartographer
+renderer needs for walls, water edges, and path edges. The intended
+pipeline: generate base textures per theme with an image model, cut
+transitions with the Mason, and map Cartographer tile ids onto the
+resulting atlas.
+
 ### JSON interchange
 
 ```js

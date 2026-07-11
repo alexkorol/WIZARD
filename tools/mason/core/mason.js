@@ -213,6 +213,23 @@
     out[2] += (rgb[2] - out[2]) * k;
   }
 
+  // A sampler is (wx, wy, out) -> writes RGB. With a texture (an
+  // ImageData-like {width, height, data}) it tiles the texture across
+  // world space — the hook for AI-generated or hand-drawn art. Without
+  // one it falls back to the procedural terrain style.
+  function makeSampler(style, texture, seed) {
+    if (texture && texture.width && texture.data) {
+      var tw = texture.width, th = texture.height, td = texture.data;
+      return function (wx, wy, out) {
+        var tx = ((wx % tw) + tw) % tw;
+        var ty = ((wy % th) + th) % th;
+        var o = (ty * tw + tx) * 4;
+        out[0] = td[o]; out[1] = td[o + 1]; out[2] = td[o + 2];
+      };
+    }
+    return function (wx, wy, out) { sampleTerrain(style, wx, wy, seed, out); };
+  }
+
   // ---------------------------------------------------------------- square tile painter
 
   /*
@@ -234,6 +251,10 @@
     var foamRgb = innerStyle.foam ? hexRgb(innerStyle.foam) : null;
     var outerFoamRgb = outerStyle.foam ? hexRgb(outerStyle.foam) : null;
     var glowRgb = innerStyle.glow ? hexRgb(innerStyle.glow) : (innerStyle.glowRim ? hexRgb(innerStyle.rim) : null);
+    var tex = params.textures || {};
+    var sampleInner = makeSampler(innerStyle, tex.inner, seed);
+    var sampleOuter = makeSampler(outerStyle, tex.outer, seed);
+    var overlay = params.overlay != null ? params.overlay : 1;
 
     for (var v = 0; v < Ssz; v++) {
       for (var u = 0; u < Ssz; u++) {
@@ -251,10 +272,10 @@
 
         var wx = wx0 + u, wy = wy0 + v;
         if (d < 0) {
-          sampleTerrain(outerStyle, wx, wy, seed, color);
+          sampleOuter(wx, wy, color);
           // contact shading on the outer side of the boundary
-          if (d > -rimW) {
-            var kOut = 1 + d / rimW; // 1 at boundary -> 0 deep outside
+          if (d > -rimW && overlay > 0) {
+            var kOut = (1 + d / rimW) * overlay; // 1 at boundary -> 0 deep outside
             if (glowRgb) mixInto(color, glowRgb, kOut * 0.55);
             else color[0] *= 1 - kOut * 0.22, color[1] *= 1 - kOut * 0.22, color[2] *= 1 - kOut * 0.22;
             // lapping foam when the surrounding terrain is water
@@ -263,12 +284,12 @@
             }
           }
         } else {
-          sampleTerrain(innerStyle, wx, wy, seed, color);
-          if (d < rimW && isFinite(d)) {
-            var kIn = 1 - d / rimW;
+          sampleInner(wx, wy, color);
+          if (d < rimW && isFinite(d) && overlay > 0) {
+            var kIn = (1 - d / rimW) * overlay;
             mixInto(color, rimRgb, kIn * 0.7);
             if (foamRgb && d < rimW * 0.45 && hash2(wx, wy, seed ^ 0x77) % 5 < 2) {
-              mixInto(color, foamRgb, 0.8);
+              mixInto(color, foamRgb, 0.8 * overlay);
             }
           }
         }
@@ -279,7 +300,7 @@
     ctx.putImageData(img, px, py);
 
     // vector flourishes: grass tufts overhanging the boundary
-    if (innerStyle.tufts && m !== 255) {
+    if (innerStyle.tufts && m !== 255 && overlay > 0.3) {
       paintTufts(ctx, px, py, params, m, wx0, wy0);
     }
   }
@@ -334,6 +355,10 @@
     var rimRgb = hexRgb(innerStyle.rim);
     var foamRgb = innerStyle.foam ? hexRgb(innerStyle.foam) : null;
     var glowRgb = innerStyle.glow ? hexRgb(innerStyle.glow) : (innerStyle.glowRim ? hexRgb(innerStyle.rim) : null);
+    var tex = params.textures || {};
+    var sampleInner = makeSampler(innerStyle, tex.inner, seed);
+    var sampleOuter = makeSampler(outerStyle, tex.outer, seed);
+    var overlay = params.overlay != null ? params.overlay : 1;
 
     for (var v = 0; v < Ssz; v++) {
       for (var u = 0; u < Ssz; u++) {
@@ -356,18 +381,18 @@
         if (!insideHex) { data[o + 3] = 0; continue; }
         var wx = wx0 + u, wy = wy0 + v;
         if (d < 0) {
-          sampleTerrain(outerStyle, wx, wy, seed, color);
-          if (d > -rimW) {
-            var kOut = 1 + d / rimW;
+          sampleOuter(wx, wy, color);
+          if (d > -rimW && overlay > 0) {
+            var kOut = (1 + d / rimW) * overlay;
             if (glowRgb) mixInto(color, glowRgb, kOut * 0.55);
             else color[0] *= 1 - kOut * 0.22, color[1] *= 1 - kOut * 0.22, color[2] *= 1 - kOut * 0.22;
           }
         } else {
-          sampleTerrain(innerStyle, wx, wy, seed, color);
-          if (d < rimW && isFinite(d)) {
-            var kIn = 1 - d / rimW;
+          sampleInner(wx, wy, color);
+          if (d < rimW && isFinite(d) && overlay > 0) {
+            var kIn = (1 - d / rimW) * overlay;
             mixInto(color, rimRgb, kIn * 0.7);
-            if (foamRgb && d < rimW * 0.45 && hash2(wx, wy, seed ^ 0x77) % 5 < 2) mixInto(color, foamRgb, 0.8);
+            if (foamRgb && d < rimW * 0.45 && hash2(wx, wy, seed ^ 0x77) % 5 < 2) mixInto(color, foamRgb, 0.8 * overlay);
           }
         }
         data[o] = color[0]; data[o + 1] = color[1]; data[o + 2] = color[2]; data[o + 3] = 255;
@@ -484,6 +509,7 @@
     HEX_MASK_COUNT: HEX_MASK_COUNT,
     canonical: canonical,
     makeSetParams: makeSetParams,
+    makeSampler: makeSampler,
     wobble: wobble,
     hexGeometry: hexGeometry,
     paintSquareTile: paintSquareTile,

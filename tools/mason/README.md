@@ -52,12 +52,41 @@ NW, NE) and bake all 64 edge combinations.
 
 The generator itself is deterministic on purpose: border sets need per-seed
 reproducibility, pixel-exact composability, and zero marginal cost per
-variation. The AI hook is the **export contract** instead: render the
-template sheet, hand it to an image model as the structural guide, paint
-one style frame over it, and slice the result back into the same slots
-using the JSON layout. Structure stays procedural and testable; art
-direction can come from anywhere — the same mockup-to-asset pipeline used
-for the WIZARD orbs.
+variation. AI art enters through two supported routes.
+
+### Route 1 — texture import (recommended)
+
+Generate **seamless base textures** with an image model and let the Mason
+cut the transitions. The tool's Inner/Outer texture buttons accept any PNG;
+the per-pixel samplers tile it across world space, so texture continuity
+across tiles is automatic and the seam guarantees still hold.
+
+Working prompt pattern for gpt-image-2 (or any capable model):
+
+> top-down seamless tileable texture of mossy forest grass, 16-bit ARPG
+> pixel art style, no lighting direction, no border, uniform density
+
+Then: downscale to 64–128 px (nearest-neighbor), optionally quantize the
+palette, and import. Ask for "seamless/tileable" explicitly and verify by
+offsetting the image by half — models sometimes fake it. Turn the rim
+overlay off if the AI texture already carries edge detail, or leave it on
+for the procedural lip/foam/glow on top.
+
+This route is robust because the model only ever paints flat texture —
+it never has to align a 47-tile grid.
+
+### Route 2 — painted sheet import (full control)
+
+Export the **AI template sheet** (flat masks with red boundary guides),
+give it to an image-editing model as the structural input ("repaint this
+tile template as grass meeting water, pixel art, keep the red boundary
+placement exactly"), then use **Painted sheet** to import the result. The
+tool slices it by the JSON layout and the playground autotiles with your
+art immediately — the fastest way to eyeball whether the model held the
+seams. Rescaling is handled if the model returned a different resolution.
+
+Hand-drawn sheets go through the same door: draw over the template in
+Aseprite, import, paint, export.
 
 ## Integration
 
