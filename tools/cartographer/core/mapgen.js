@@ -598,6 +598,230 @@
     }
   }
 
+  // Platforms and walkways suspended over the void — the Arcane
+  // Sanctuary / Horazon's Memory archetype.
+  function genSanctum(b, theme) {
+    var rng = b.rng;
+    b.fill(TILE.VOID);
+    var attempts = Math.floor((b.w * b.h) / 40);
+    for (var a = 0; a < attempts; a++) {
+      var rw = rng.irange(5, 10), rh = rng.irange(4, 8);
+      var rx = rng.irange(2, b.w - rw - 3), ry = rng.irange(2, b.h - rh - 3);
+      var ok = true;
+      for (var r = 0; r < b.rooms.length && ok; r++) {
+        var o = b.rooms[r];
+        if (rx < o.x + o.w + 3 && rx + rw + 3 > o.x &&
+            ry < o.y + o.h + 3 && ry + rh + 3 > o.y) ok = false;
+      }
+      if (!ok) continue;
+      b.rect(rx, ry, rw, rh, TILE.FLOOR);
+      b.addRoom(rx, ry, rw, rh);
+    }
+    if (b.rooms.length < 2) {
+      b.rect(2, 2, b.w - 4, b.h - 4, TILE.FLOOR);
+      b.addRoom(2, 2, b.w - 4, b.h - 4);
+      return;
+    }
+
+    // MST + loop edges, carved as 2-wide walkways between nearest points
+    var n = b.rooms.length;
+    var inTree = new Uint8Array(n);
+    inTree[0] = 1;
+    var edges = [];
+    for (var added = 1; added < n; added++) {
+      var best = Infinity, bi = -1, bj = -1;
+      for (var i = 0; i < n; i++) {
+        if (!inTree[i]) continue;
+        for (var j = 0; j < n; j++) {
+          if (inTree[j]) continue;
+          var d = Math.abs(b.rooms[i].cx - b.rooms[j].cx) +
+                  Math.abs(b.rooms[i].cy - b.rooms[j].cy);
+          if (d < best) { best = d; bi = i; bj = j; }
+        }
+      }
+      inTree[bj] = 1;
+      edges.push([bi, bj]);
+    }
+    for (var e = 0; e < Math.max(1, Math.floor(n * 0.3)); e++) {
+      var i2 = rng.int(n), best2 = Infinity, j2 = -1;
+      for (var k = 0; k < n; k++) {
+        if (k === i2) continue;
+        var d2 = Math.abs(b.rooms[i2].cx - b.rooms[k].cx) +
+                 Math.abs(b.rooms[i2].cy - b.rooms[k].cy);
+        if (d2 < best2 && d2 > 0) { best2 = d2; j2 = k; }
+      }
+      if (j2 >= 0) edges.push([i2, j2]);
+    }
+    edges.forEach(function (ed) {
+      var ra = b.rooms[ed[0]], rb = b.rooms[ed[1]];
+      var ax = clamp(rb.cx, ra.x + 1, ra.x + ra.w - 2);
+      var ay = clamp(rb.cy, ra.y + 1, ra.y + ra.h - 2);
+      var bx = clamp(ax, rb.x + 1, rb.x + rb.w - 2);
+      var by = clamp(ay, rb.y + 1, rb.y + rb.h - 2);
+      var x, y;
+      if (rng.chance(0.5)) {
+        for (x = Math.min(ax, bx); x <= Math.max(ax, bx); x++) { walkway(x, ay); walkway(x, ay + 1); }
+        for (y = Math.min(ay, by); y <= Math.max(ay, by); y++) { walkway(bx, y); walkway(bx + 1, y); }
+      } else {
+        for (y = Math.min(ay, by); y <= Math.max(ay, by); y++) { walkway(ax, y); walkway(ax + 1, y); }
+        for (x = Math.min(ax, bx); x <= Math.max(ax, bx); x++) { walkway(x, by); walkway(x, by + 1); }
+      }
+    });
+    function walkway(x, y) {
+      if (b.inBounds(x, y) && b.get(x, y) === TILE.VOID) b.set(x, y, TILE.FLOOR);
+    }
+
+    // infernal variant: molten pools eating into the platforms
+    if (theme.liquid === 'lava') {
+      var noise = makeNoise(rng);
+      for (var y2 = 1; y2 < b.h - 1; y2++) {
+        for (var x2 = 1; x2 < b.w - 1; x2++) {
+          if (b.get(x2, y2) !== TILE.FLOOR) continue;
+          if (noise.fbm(x2 * 0.1, y2 * 0.1, 3) < 0.26) b.set(x2, y2, TILE.LAVA);
+        }
+      }
+    }
+  }
+
+  // A linear coastline: cliffs, a grass shelf, the beach highway,
+  // then open sea — PoE's Coast/Strand pacing.
+  function genShore(b, theme) {
+    var rng = b.rng;
+    var noise = makeNoise(rng);
+    var sandYs = [], seaYs = [];
+    for (var x = 0; x < b.w; x++) {
+      var n = noise.fbm(x * 0.05, 3.7, 3);
+      var seaY = Math.floor(b.h * 0.55 + (n - 0.5) * b.h * 0.4);
+      var sandY = seaY - 3 - Math.floor(noise.fbm(x * 0.08, 9.1, 3) * 4);
+      var cliffY = 2 + Math.floor(noise.fbm(x * 0.07, 15.3, 3) * 3);
+      sandYs.push(sandY); seaYs.push(seaY);
+      for (var y = 0; y < b.h; y++) {
+        var t;
+        if (y < cliffY) t = TILE.ROCK;
+        else if (y < sandY) {
+          var m = noise.fbm(x * 0.09, y * 0.09 + 20, 3);
+          t = (m > 0.6 && rng.chance(0.55)) ? TILE.TREE : TILE.GRASS;
+        }
+        else if (y < seaY) t = TILE.SAND;
+        else if (y < seaY + 3) t = TILE.WATER;
+        else t = TILE.DEEP;
+        b.set(x, y, t);
+      }
+    }
+
+    // harbor variant: plank piers striding into the water, warehouses on the shelf
+    if (theme.piers) {
+      var piers = rng.irange(2, 4);
+      for (var p = 0; p < piers; p++) {
+        var px = rng.irange(6, b.w - 8);
+        var start = sandYs[px] + 1;
+        var len = rng.irange(6, 10);
+        for (var py = start; py < Math.min(start + len, b.h - 2); py++) {
+          b.set(px, py, TILE.BRIDGE); b.set(px + 1, py, TILE.BRIDGE);
+        }
+      }
+      var sheds = rng.irange(2, 4);
+      for (var s = 0; s < sheds; s++) {
+        var sw = rng.irange(5, 8), sh = rng.irange(3, 5);
+        var sx = rng.irange(3, b.w - sw - 4);
+        var sy = rng.irange(4, Math.max(5, sandYs[sx] - sh - 3));
+        b.rect(sx, sy, sw, sh, TILE.WALL);
+        b.rect(sx + 1, sy + 1, sw - 2, sh - 2, TILE.FLOOR);
+        b.set(rng.irange(sx + 1, sx + sw - 2), sy + sh - 1, TILE.FLOOR);
+        b.addRoom(sx + 1, sy + 1, sw - 2, sh - 2);
+      }
+    }
+
+    // the beach is the highway: gates at its far ends
+    function beachPoint(x) {
+      var y = sandYs[x] + 1;
+      if (!b.isWalkable(x, y)) { b.set(x, y, TILE.SAND); }
+      return { x: x, y: y };
+    }
+    b.gates = [beachPoint(3), beachPoint(b.w - 4)];
+  }
+
+  // Street grid, plaza, and building blocks — Kehjistan Marketplace,
+  // Sarn, City of Ureh.
+  function genCity(b, theme) {
+    var rng = b.rng;
+    var ground = theme.ground === 'sand' ? TILE.SAND : TILE.GRASS;
+    b.fill(ground);
+    var noise = makeNoise(rng);
+
+    // streets on a loose grid, two tiles wide
+    var streetsX = [], streetsY = [];
+    var x = rng.irange(6, 12);
+    while (x < b.w - 6) { streetsX.push(x); x += rng.irange(13, 20); }
+    var y = rng.irange(5, 10);
+    while (y < b.h - 5) { streetsY.push(y); y += rng.irange(10, 16); }
+    streetsX.forEach(function (sx) {
+      for (var yy = 1; yy < b.h - 1; yy++) { b.set(sx, yy, TILE.PATH); b.set(sx + 1, yy, TILE.PATH); }
+    });
+    streetsY.forEach(function (sy) {
+      for (var xx = 1; xx < b.w - 1; xx++) { b.set(xx, sy, TILE.PATH); b.set(xx, sy + 1, TILE.PATH); }
+    });
+
+    // plaza at a central crossing
+    if (streetsX.length && streetsY.length) {
+      var cx = streetsX[rng.int(streetsX.length)], cy = streetsY[rng.int(streetsY.length)];
+      var pw = rng.irange(8, 11), ph = rng.irange(6, 8);
+      b.rect(clamp(cx - (pw >> 1), 1, b.w - pw - 1), clamp(cy - (ph >> 1), 1, b.h - ph - 1), pw, ph, TILE.PATH);
+    }
+
+    // buildings fill the blocks; doors spill onto the streets via alleys
+    var attempts = Math.floor((b.w * b.h) / 16);
+    for (var a = 0; a < attempts; a++) {
+      var rw = rng.irange(4, 8), rh = rng.irange(3, 6);
+      var rx = rng.irange(2, b.w - rw - 3), ry = rng.irange(2, b.h - rh - 3);
+      var ok = true;
+      for (var yy2 = ry - 1; yy2 < ry + rh + 1 && ok; yy2++) {
+        for (var xx2 = rx - 1; xx2 < rx + rw + 1 && ok; xx2++) {
+          var t = b.get(xx2, yy2);
+          if (t !== ground && t !== TILE.RUBBLE) ok = false;
+        }
+      }
+      if (!ok) continue;
+      b.rect(rx, ry, rw, rh, TILE.WALL);
+      b.rect(rx + 1, ry + 1, rw - 2, rh - 2, TILE.FLOOR);
+      b.addRoom(rx + 1, ry + 1, rw - 2, rh - 2);
+      // door + alley stub toward the nearest street
+      var side = rng.int(4);
+      var dx2, dy2, doorX, doorY;
+      if (side === 0) { doorX = rng.irange(rx + 1, rx + rw - 2); doorY = ry; dx2 = 0; dy2 = -1; }
+      else if (side === 1) { doorX = rng.irange(rx + 1, rx + rw - 2); doorY = ry + rh - 1; dx2 = 0; dy2 = 1; }
+      else if (side === 2) { doorX = rx; doorY = rng.irange(ry + 1, ry + rh - 2); dx2 = -1; dy2 = 0; }
+      else { doorX = rx + rw - 1; doorY = rng.irange(ry + 1, ry + rh - 2); dx2 = 1; dy2 = 0; }
+      b.set(doorX, doorY, TILE.FLOOR);
+      var ax = doorX + dx2, ay = doorY + dy2;
+      for (var step = 0; step < 10; step++) {
+        var t2 = b.get(ax, ay);
+        if (t2 === TILE.PATH || t2 === TILE.VOID || !b.inBounds(ax, ay)) break;
+        if (t2 === ground || t2 === TILE.RUBBLE) b.set(ax, ay, TILE.PATH);
+        else break;
+        ax += dx2; ay += dy2;
+      }
+      // decay for the derelict variant
+      if (theme.decay) {
+        for (var wy = ry; wy < ry + rh; wy++) {
+          for (var wx = rx; wx < rx + rw; wx++) {
+            if (b.get(wx, wy) === TILE.WALL && rng.chance(0.3)) b.set(wx, wy, TILE.RUBBLE);
+          }
+        }
+      }
+    }
+
+    // ground clutter between blocks
+    for (var gy = 1; gy < b.h - 1; gy++) {
+      for (var gx = 1; gx < b.w - 1; gx++) {
+        if (b.get(gx, gy) !== ground) continue;
+        var v = noise.fbm(gx * 0.1, gy * 0.1, 3);
+        if (theme.decay && v > 0.66 && rng.chance(0.5)) b.set(gx, gy, TILE.TREE);
+        else if (v < 0.22 && rng.chance(0.35)) b.set(gx, gy, TILE.RUBBLE);
+      }
+    }
+  }
+
   function genRuins(b, theme) {
     var rng = b.rng;
     var ground = theme.ground === 'sand' ? TILE.SAND : TILE.GRASS;
@@ -735,7 +959,15 @@
           }
         }
       }
-      if (b.isWalkable(ccx, ccy)) {
+      if (theme.stoneCircles && c > 0) {
+        // a ring of standing stones around the clearing
+        for (var k = 0; k < 6; k++) {
+          var mx = ccx + Math.round(Math.cos(k * Math.PI / 3) * (rad - 0.5));
+          var my = ccy + Math.round(Math.sin(k * Math.PI / 3) * (rad - 0.5));
+          if (b.isWalkable(mx, my)) b.addEntity('monolith', mx, my);
+        }
+        if (b.isWalkable(ccx, ccy)) b.addEntity(rng.pick(['shrine', 'waystone']), ccx, ccy);
+      } else if (b.isWalkable(ccx, ccy)) {
         b.addEntity(c === 0 ? 'shrine' : rng.pick(['campfire', 'waystone', 'statue']), ccx, ccy);
       }
     }
@@ -936,7 +1168,7 @@
       }
       return rng.shuffle(wallAdj);
     }
-    var nearWallTypes = new Set(['statue', 'sarcophagus', 'barrel', 'crystal']);
+    var nearWallTypes = new Set(['statue', 'sarcophagus', 'barrel', 'crystal', 'web']);
     Object.keys(decor).forEach(function (type) {
       var count = Math.round(decor[type] * area / 1000 * rng.range(0.7, 1.3));
       var pool = nearWallTypes.has(type) ? wallAdjacent() : null;
@@ -1000,6 +1232,9 @@
       ground: over.ground,
       glowShrooms: !!over.glowShrooms,
       outdoor: !!over.outdoor,
+      piers: !!over.piers,
+      decay: !!over.decay,
+      stoneCircles: !!over.stoneCircles,
       decor: over.decor || {}
     };
   }
@@ -1125,6 +1360,123 @@
       },
       decor: { plant: 2.8, mushroom: 1.8, bones: 0.9 }
     }),
+    prison: theme('prison', 'Prison', 'dungeon', {
+      torches: true,
+      palette: {
+        floor: ['#474b54', '#3d414a'], wallTop: '#2e313a', wallFace: '#1a1c22',
+        door: '#5a5f6a',
+        accent: '#8a9bb0', light: '210,220,255', darkness: 0.46
+      },
+      decor: { bones: 3.2, barrel: 1.2, statue: 0.5 }
+    }),
+    spider: theme('spider', 'Spider', 'caves', {
+      liquid: 'none',
+      palette: {
+        floor: ['#453c4a', '#3b3340'], wallTop: '#2b2530', wallFace: '#17141c',
+        accent: '#cfd8e8', light: '190,200,230', darkness: 0.52
+      },
+      decor: { web: 4.5, bones: 2.8, crystal: 0.4, mushroom: 0.6 }
+    }),
+    mines: theme('mines', 'Mines', 'caves', {
+      torches: true, liquid: 'water', liquidLevel: 0.26,
+      palette: {
+        floor: ['#5e4c3a', '#523f30'], wallTop: '#3a2e22', wallFace: '#221a12',
+        accent: '#e8b45a', light: '255,196,110', darkness: 0.5
+      },
+      decor: { crystal: 1.6, barrel: 1.8, bones: 1, plant: 0.3 }
+    }),
+    tomb: theme('tomb', 'Tomb', 'catacombs', {
+      torches: true,
+      palette: {
+        floor: ['#8a7452', '#7a6646'], wallTop: '#5a4a32', wallFace: '#382e1e',
+        accent: '#e8c56a', light: '255,214,130', darkness: 0.5
+      },
+      decor: { sarcophagus: 3, bones: 3.5, statue: 1.2, barrel: 0.4 }
+    }),
+    arcane: theme('arcane', 'Arcane', 'sanctum', {
+      palette: {
+        bg: '#0a0916',
+        floor: ['#6a6390', '#5c567e'], wallTop: '#3a3558', wallFace: '#242040',
+        accent: '#9f8fff', light: '160,140,255', darkness: 0.42,
+        voidGlow: true
+      },
+      decor: { crystal: 2.2, statue: 1, bones: 0.4 }
+    }),
+    infernal: theme('infernal', 'Infernal', 'sanctum', {
+      liquid: 'lava',
+      palette: {
+        bg: '#120806',
+        floor: ['#4c3b38', '#423230'], wallTop: '#2c201c', wallFace: '#180f0c',
+        accent: '#ff9d3f', light: '255,130,55', darkness: 0.5,
+        voidGlow: true
+      },
+      decor: { ember: 3, statue: 1.4, bones: 1.8 }
+    }),
+    coast: theme('coast', 'Coast', 'shore', {
+      outdoor: true,
+      palette: {
+        bg: '#0a0d10',
+        sand: ['#d8c08e', '#ccb482'], grass: ['#5c7c44', '#527239'],
+        tree: ['#2c4626', '#375630'], water: '#3a7a97', deep: '#26586f',
+        rock: '#8a8578', path: ['#c2ab7c', '#b6a072'],
+        accent: '#ffe08a', light: '255,230,170', darkness: 0.1
+      },
+      decor: { plant: 1.6, bones: 0.5, barrel: 0.4, rock: 0 }
+    }),
+    harbor: theme('harbor', 'Harbor', 'shore', {
+      outdoor: true, piers: true,
+      palette: {
+        bg: '#090b0e',
+        sand: ['#b09a70', '#a89066'], grass: ['#4c6039', '#445630'],
+        tree: ['#26381f', '#304829'], water: '#2c5a74', deep: '#1c3e52',
+        rock: '#6e6a5e', bridge: '#7a583a', path: ['#a08e66', '#94825c'],
+        accent: '#ffcf7a', light: '255,200,130', darkness: 0.35
+      },
+      decor: { barrel: 3, plant: 0.8, bones: 0.7 }
+    }),
+    market: theme('market', 'Market', 'city', {
+      outdoor: true, ground: 'sand',
+      palette: {
+        bg: '#12100a',
+        sand: ['#c2a878', '#b69c6e'], wallTop: '#977c54', wallFace: '#6a5538',
+        path: ['#ab9268', '#9d8560'], rubble: '#9a8662',
+        accent: '#ffd677', light: '255,220,150', darkness: 0.14
+      },
+      decor: { barrel: 3, statue: 1.2, plant: 0.5, bones: 0.3 }
+    }),
+    derelict: theme('derelict', 'Derelict', 'city', {
+      outdoor: true, decay: true,
+      palette: {
+        bg: '#0a0c0a',
+        grass: ['#4e5844', '#454e3b'], wallTop: '#5c625a', wallFace: '#3a3f38',
+        tree: ['#2a3d24', '#34492c'], path: ['#6a6456', '#5e594c'],
+        rubble: '#565c50',
+        accent: '#9fce7a', light: '200,235,160', darkness: 0.34
+      },
+      decor: { rubble: 0, plant: 3, bones: 1.4, statue: 1, barrel: 0.8 }
+    }),
+    tundra: theme('tundra', 'Tundra', 'wilds', {
+      outdoor: true, waterLevel: 0.3, treeDensity: 0.5,
+      palette: {
+        bg: '#0b0e10',
+        grass: ['#c4ced6', '#b4c2cc'], tree: ['#2e4a3c', '#3a5a4a'],
+        water: '#5a92b0', deep: '#3a6684', rock: '#8a949a',
+        path: ['#a6a89e', '#989a90'], murk: '#8aa2ac',
+        accent: '#bfe8ff', light: '200,235,255', darkness: 0.2
+      },
+      decor: { rock: 0, bones: 0.7, plant: 0.5, crystal: 0.3 }
+    }),
+    moor: theme('moor', 'Moor', 'wilds', {
+      outdoor: true, waterLevel: 0.27, treeDensity: 0.22, stoneCircles: true,
+      palette: {
+        bg: '#090a08',
+        grass: ['#485438', '#404a31'], tree: ['#2c3823', '#36452c'],
+        water: '#35505a', deep: '#22363e', rock: '#68685c',
+        path: ['#5e5646', '#524c3e'],
+        accent: '#a8c890', light: '200,220,160', darkness: 0.4
+      },
+      decor: { bones: 1.6, statue: 0.8, plant: 1.4, mushroom: 0.5 }
+    }),
     ash: theme('ash', 'Ash', 'wilds', {
       outdoor: true, waterLevel: 0.3, treeDensity: 0.3, liquid: 'lava', river: false,
       palette: {
@@ -1140,11 +1492,14 @@
   // ---------------------------------------------------------------- zones
 
   var ZONES = {
-    dungeon: { id: 'dungeon', name: 'Dungeon', gen: genDungeon, carve: TILE.FLOOR, themes: ['crypt', 'fortress', 'sewer'] },
-    caves: { id: 'caves', name: 'Caves', gen: genCaves, carve: TILE.FLOOR, themes: ['cavern', 'ice', 'lava', 'fungal'] },
-    catacombs: { id: 'catacombs', name: 'Catacombs', gen: genCatacombs, carve: TILE.FLOOR, themes: ['bone', 'flooded'] },
+    dungeon: { id: 'dungeon', name: 'Dungeon', gen: genDungeon, carve: TILE.FLOOR, themes: ['crypt', 'fortress', 'sewer', 'prison'] },
+    caves: { id: 'caves', name: 'Caves', gen: genCaves, carve: TILE.FLOOR, themes: ['cavern', 'ice', 'lava', 'fungal', 'spider', 'mines'] },
+    catacombs: { id: 'catacombs', name: 'Catacombs', gen: genCatacombs, carve: TILE.FLOOR, themes: ['bone', 'flooded', 'tomb'] },
+    sanctum: { id: 'sanctum', name: 'Sanctum', gen: genSanctum, carve: TILE.FLOOR, themes: ['arcane', 'infernal'] },
     ruins: { id: 'ruins', name: 'Ruins', gen: genRuins, carve: TILE.PATH, themes: ['desert', 'overgrown'] },
-    wilds: { id: 'wilds', name: 'Wilds', gen: genWilds, carve: TILE.PATH, themes: ['forest', 'swamp', 'ash'] }
+    city: { id: 'city', name: 'City', gen: genCity, carve: TILE.PATH, themes: ['market', 'derelict'] },
+    shore: { id: 'shore', name: 'Shore', gen: genShore, carve: TILE.PATH, themes: ['coast', 'harbor'] },
+    wilds: { id: 'wilds', name: 'Wilds', gen: genWilds, carve: TILE.PATH, themes: ['forest', 'swamp', 'ash', 'tundra', 'moor'] }
   };
 
   // ---------------------------------------------------------------- api

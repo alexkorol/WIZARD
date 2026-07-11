@@ -1,7 +1,7 @@
 # The Cartographer
 
 Procedural 2D zone generator in the spirit of Diablo 2 and Path of Exile area generation:
-five zone families, fourteen themes, seeded and deterministic. Built as a WIZARD module —
+eight zone families, twenty-six themes, seeded and deterministic. Built as a WIZARD module —
 the engine is one dependency-free file you can drop into any game project.
 
 **[Live demo](https://alexkorol.github.io/WIZARD/tools/cartographer/)** — drag to pan,
@@ -54,11 +54,18 @@ suggested walkability set; redefine it in your game if your rules differ.
 
 | Zone | Algorithm | Themes |
 |---|---|---|
-| Dungeon | packed rooms + doorway links + loops | Crypt, Fortress, Sewer |
-| Caves | cellular automata + liquid pools | Cavern, Ice, Lava, Fungal |
-| Catacombs | wide braided maze + galleries + chambers | Bone, Flooded |
+| Dungeon | packed rooms + doorway links + loops | Crypt, Fortress, Sewer, Prison |
+| Caves | cellular automata + liquid pools | Cavern, Ice, Lava, Fungal, Spider, Mines |
+| Catacombs | wide braided maze + galleries + chambers | Bone, Flooded, Tomb |
+| Sanctum | platforms + walkways over the void | Arcane, Infernal |
 | Ruins | decayed building shells + worn paths | Desert, Overgrown |
-| Wilds | fBm terrain + river + road | Forest, Swamp, Ash |
+| City | street grid + plaza + building blocks | Market, Derelict |
+| Shore | linear coastline, beach as the highway | Coast, Harbor |
+| Wilds | fBm terrain + river + road | Forest, Swamp, Ash, Tundra, Moor |
+
+The zone/theme roster is drawn from the Diablo 2 and Path of Exile tileset
+catalogues — arcane sanctuaries, desert tombs, spider lairs, harbor docks,
+street markets, frozen tundra, moors with stone circles.
 
 Every generator ends with the same guarantees: all walkable regions are stitched
 together, the entrance and exit are placed at far ends of the walk graph, and

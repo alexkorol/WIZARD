@@ -291,7 +291,19 @@ function paintBaseTile(g, x, y) {
   var px = x * TS, py = y * TS;
   switch (t) {
     case TILE.VOID:
-      g.fillStyle = pal.bg; g.fillRect(px, py, TS, TS); break;
+      g.fillStyle = pal.bg; g.fillRect(px, py, TS, TS);
+      if (pal.voidGlow && h % 23 === 0) { // faint stars in the abyss
+        g.fillStyle = 'rgba(255,255,255,' + (0.08 + (h >>> 5) % 20 / 100) + ')';
+        g.fillRect(px + (h >>> 7) % 15, py + (h >>> 10) % 15, 1, 1);
+      }
+      // platform face where a walkway hangs over the void
+      if (MapGen.WALKABLE.has(tget(x, y - 1))) {
+        g.fillStyle = pal.wallFace;
+        g.fillRect(px, py, TS, 5);
+        g.fillStyle = 'rgba(0,0,0,0.35)';
+        g.fillRect(px, py + 4, TS, 2);
+      }
+      break;
     case TILE.FLOOR: paintFloor(g, px, py, h, pal.floor); break;
     case TILE.GRASS: paintGrass(g, px, py, h); break;
     case TILE.SAND: paintFloor(g, px, py, h, pal.sand, true); break;
@@ -615,6 +627,23 @@ function paintEntity(g, e) {
         g.lineTo(bx + ((h >>> (i * 2)) % 3) - 1, py + 8 + (i % 3));
         g.stroke();
       }
+      break;
+    case 'monolith':
+      g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(px + 3, py + 13, 11, 2);
+      g.fillStyle = shade(pal.rock, 0.95); g.fillRect(px + 5, py + 1, 6, 13);
+      g.fillStyle = shade(pal.rock, 1.25); g.fillRect(px + 5, py + 1, 2, 13);
+      g.fillStyle = shade(pal.rock, 0.7); g.fillRect(px + 9, py + 2, 2, 12);
+      break;
+    case 'web':
+      g.strokeStyle = 'rgba(235,240,248,0.5)';
+      g.lineWidth = 1;
+      var wx = (h % 2) ? px + 2 : px + TS - 2, wy = py + 3;
+      for (var wi = 1; wi <= 3; wi++) {
+        g.beginPath();
+        g.arc(wx, wy, wi * 3, (h % 2) ? -0.3 : Math.PI - 1.2, (h % 2) ? 1.8 : Math.PI + 0.9);
+        g.stroke();
+      }
+      g.beginPath(); g.moveTo(wx, wy); g.lineTo(wx + ((h % 2) ? 8 : -8), wy + 9); g.stroke();
       break;
     case 'ember': break; // fully animated
     case 'torch':
