@@ -142,7 +142,7 @@
     .s2x2 { width: calc(var(--pc) * 2 + 4px); height: calc(var(--pc) * 2 + 4px); }
     .s2x3 { width: calc(var(--pc) * 2 + 4px); height: calc(var(--pc) * 3 + 6px); }
     .s2x4 { width: calc(var(--pc) * 2 + 4px); height: calc(var(--pc) * 4 + 8px); }
-    .doll-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .doll-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 0; }
     .doll-col { display: flex; flex-direction: column; gap: 10px; justify-content: space-between; }
     .ring-row { display: flex; gap: 4px; }
     .slot-row.doll { align-items: stretch; gap: 8px; }
@@ -278,7 +278,7 @@
     .heir-form input:focus { outline: none; border-color: var(--accent); }
 
     /* ---------- Right panel ---------- */
-    .inventory-panel { display: flex; flex-direction: column; gap: 6px; width: fit-content; max-width: 100%; overflow: visible; }
+    .inventory-panel { display: flex; flex-direction: column; gap: 0; width: fit-content; max-width: 100%; overflow: visible; }
     .section-title { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
     .pack-actions { display: flex; gap: 8px; }
     .pack-grids { display: flex; flex-direction: column; align-items: center; gap: 10px; }
@@ -1958,17 +1958,11 @@
       const packItems = inventory.filter(item => normalizePackId(item.packId) === def.id);
       return (
         <div key={def.id} className={`pack-block ${def.tone === 'main' ? 'main-pack' : ''}`}>
-          <div className="pack-title">
-            <span>{def.label} · {packItems.length} · {def.w}×{def.h}</span>
-            {def.tone === 'main' && (
-              <span className="pack-actions">
-                <button className="btn small" onClick={sortPack}>Sort</button>
-                <button className={`btn small ${benchOpen ? 'primary' : ''}`} aria-expanded={benchOpen} onClick={() => setBenchOpen(o => !o)}>
-                  {benchOpen ? 'Close Atelier' : `Atelier · ${satchelTotal}`}
-                </button>
-              </span>
-            )}
-          </div>
+          {def.tone !== 'main' && (
+            <div className="pack-title">
+              <span>{def.label} · {packItems.length} · {def.w}×{def.h}</span>
+            </div>
+          )}
           <div className={`grid-shell ${def.tone === 'mini' ? 'mini' : ''}`}>
             <div
               ref={el => {
@@ -2043,6 +2037,10 @@
             <button className="btn" onClick={restUp} disabled={fallen || curHp >= maxLife || character.gold < restCost}>Rest · {restCost}g</button>
             <button className="btn" onClick={spawnLoot}>Spawn Loot</button>
             <button className="btn" onClick={spawnTaxonomySet}>Spawn Set</button>
+            <button className="btn" onClick={sortPack}>Sort Pack</button>
+            <button className={`btn ${benchOpen ? 'primary' : ''}`} aria-expanded={benchOpen} onClick={() => setBenchOpen(o => !o)}>
+              {benchOpen ? 'Close Atelier' : `Atelier · ${satchelTotal}`}
+            </button>
             <a className="btn" href="core/playground.html">Playground</a>
             <a className="btn" href="taxonomy-review.html">Taxonomy</a>
             <button className="btn" onClick={resetVault}>Reset</button>
