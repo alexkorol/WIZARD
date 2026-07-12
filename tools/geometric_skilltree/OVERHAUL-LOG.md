@@ -2,6 +2,13 @@
 
 Newest entries first. This is the running memory for the north-star overhaul.
 
+## 2026-07-12 — Post-overhaul: pointer UX fixes (Alexei's field report)
+
+- Panning: drag now starts anywhere on the canvas — including on nodes and conduits, which cover most of a ten-ring lattice. A 5px movement threshold separates panning from clicking; node/conduit click handlers consult `viewController.wasDrag` so a drag that ends on a seat no longer allocates it. Pointer capture begins at the threshold, `pointercancel` is handled, and starting a pan hides any open tooltip.
+- Tooltips: the `max-width: 900px` media block was killing `#tooltip` with `!important` — a width proxy for touch that silently removed hover tooltips in any narrow desktop window. Removed; only the real `(hover: none), (pointer: coarse)` rule hides tooltips now.
+- Hover affordance: under `(hover: hover) and (pointer: fine)`, pointed-at nodes brighten and their ring sharpens, so mouse users can see what they are about to allocate before the tooltip arrives.
+- Verified with real pointer input in the browser: hover shows the full "Firm Grip" card with the glow; dragging from atop a node pans without allocating; a plain click still allocates. Console clean.
+
 ## 2026-07-12 — Post-overhaul: build codes
 
 - "Copy Build" / "Load Build" toolbar buttons serialize a whole allocation — active nodes, conduit variants, socketed carved stones, and class order — into one base64 code (plain JSON accepted on import too). Import validates seat existence, the 140-point budget, and the one-saga-stone limit, and lands as an undoable step with a narrated log line.

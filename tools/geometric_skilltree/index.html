@@ -1186,6 +1186,22 @@
       }
     }
 
+    /* Mouse users get a clear "you are pointing at this" response. Kept out of
+       touch devices where :hover sticks. */
+    @media (hover: hover) and (pointer: fine) {
+      .node-group:hover .node-shell,
+      .node-group:hover .node-core {
+        filter: brightness(1.45) saturate(1.15);
+      }
+      .node-group:hover .node-ring {
+        opacity: 1;
+        stroke-width: 2.2px;
+      }
+      .conduit-hit:hover {
+        cursor: pointer;
+      }
+    }
+
     .tooltip-title {
       color: var(--node-active);
       font-size: 13px;
@@ -1399,9 +1415,8 @@
         min-height: 32px;
       }
 
-      #tooltip {
-        display: none !important;
-      }
+      /* Tooltips stay available in narrow windows — only true touch devices
+         (the hover:none/pointer:coarse block above) hide them. */
     }
 
     @media (max-width: 560px) {
@@ -3934,6 +3949,7 @@
           line.style.setProperty("--path-extra-glow-color", colorMix(option.color, "#8ad4ff", 0.36 + depth * 0.24));
           hit.addEventListener("click", event => {
             event.stopPropagation();
+            if (window.viewController?.wasDrag) return;
             this.hideTooltip();
             this.tree.handleConduitClick(conduit.id, option.id);
           });
@@ -4013,6 +4029,7 @@
         group.appendChild(hit);
         group.addEventListener("click", event => {
           event.stopPropagation();
+          if (window.viewController?.wasDrag) return;
           this.hideTooltip();
           this.tree.handleNodeClick(node.id, { shiftKey: event.shiftKey });
         });
@@ -4111,6 +4128,7 @@
       }
 
       showNodeTooltip(event, node) {
+        if (window.viewController?.dragging) return;
         if (!this.shouldShowHoverTooltip(event)) return;
         const tooltip = document.getElementById("tooltip");
         const title = tooltip.querySelector(".tooltip-title");
@@ -4533,27 +4551,45 @@
       }
 
       bind() {
+        // Drag starts anywhere — including on nodes and conduits, which cover
+        // most of a ten-ring canvas. A small movement threshold separates
+        // panning from clicking; node/conduit click handlers consult wasDrag.
         this.container.addEventListener("pointerdown", event => {
-          if (event.target.closest(".node-group") || event.target.classList.contains("conduit-hit")) return;
-          this.dragging = true;
-          this.container.classList.add("dragging");
-          this.container.setPointerCapture(event.pointerId);
+          this.pressed = true;
+          this.wasDrag = false;
           this.last = { x: event.clientX, y: event.clientY };
+          this.pressOrigin = { x: event.clientX, y: event.clientY };
         });
         this.container.addEventListener("pointermove", event => {
-          if (!this.dragging) return;
+          if (!this.pressed) return;
+          if (!this.dragging) {
+            const travelled = Math.hypot(event.clientX - this.pressOrigin.x, event.clientY - this.pressOrigin.y);
+            if (travelled < 5) return;
+            this.dragging = true;
+            this.wasDrag = true;
+            this.container.classList.add("dragging");
+            const tooltip = document.getElementById("tooltip");
+            if (tooltip) tooltip.style.display = "none";
+            try {
+              this.container.setPointerCapture(event.pointerId);
+            } catch (_) {}
+            this.last = { x: event.clientX, y: event.clientY };
+          }
           this.x += event.clientX - this.last.x;
           this.y += event.clientY - this.last.y;
           this.last = { x: event.clientX, y: event.clientY };
           this.transform();
         });
-        this.container.addEventListener("pointerup", event => {
+        const endDrag = event => {
+          this.pressed = false;
           this.dragging = false;
           this.container.classList.remove("dragging");
           try {
             this.container.releasePointerCapture(event.pointerId);
           } catch (_) {}
-        });
+        };
+        this.container.addEventListener("pointerup", endDrag);
+        this.container.addEventListener("pointercancel", endDrag);
         this.container.addEventListener("wheel", event => {
           event.preventDefault();
           const next = this.scale * (event.deltaY > 0 ? 0.92 : 1.08);
