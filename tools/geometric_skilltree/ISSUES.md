@@ -1,24 +1,22 @@
 # Geometric Passive Tree Issues
 
-## Current Priorities
+## Current Priorities (post tree-overhaul, 2026-07-12)
 
-- Tune point economy after more hands-on allocation testing.
-- Write a level 1-100 progression model for expected skill/conduit point income, milestone density, and build respec cadence.
-- Add a clearer visual explanation for dual arc stat tradeoffs.
-- Add saved build import/export codes.
-- Add optional controller navigation focus rings for console-style planning.
+- Wire Waystone pattern hooks mechanically (currently authored as design text; e.g. "waves through this Waystone count +1 length").
+- Jewel drop/craft integration: roll carved stones through vesselforge instead of the curated stash (API already accepts arbitrary jewel JSON).
+- Near-complete pattern hints in the UI (e.g. "one conduit short of a loop crown").
+- Saved build import/export codes.
+- Revisit the meridian's pattern-power ceiling (~49% of DPS on a maximally committed line; envelope target is 20-30% for ordinary specialists — see OVERHAUL-LOG 2026-07-12).
+- Optional controller navigation focus rings for console-style planning.
 - Expand node iconography beyond letter/symbol markers.
-- Add a minimap once the tree grows beyond the current seven-ring demo.
-- Add tests for shape-bonus detection and allocation connectivity.
-- Add tests for hidden subtree unlock conditions.
-- Add additional animated visual treatments for symmetry and straight-axis chain bonuses.
-- Tune tiered loop boost values after more hands-on build planning.
+- Add a minimap.
 
 ## Design Backlog
 
-- More outer subtree archetypes.
-- Local mastery choice panels.
-- Additional geometric node roles that are earned by patterns rather than placed randomly.
-- Build templates for warrior, ranger, mage, summoner, spellblade, and hybrid support.
+- Subtree rework to themed "schools" with their own mini-pattern rules.
+- Pick-one mastery menus on the six ring-3 masteries and Waystones (PoE 3.16 lesson; data-driven choice nodes plus designer support).
+- More outer subtree archetypes; cluster-jewel-style subtree content.
+- Loadout points (PoE2 weapon-set analog) — keep the data model open.
+- Anoint analog ("votive oil") once balance settles.
 - Color-blind-safe palette variant.
 - Optional path planner that previews total node/arc cost to a clicked target.

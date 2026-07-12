@@ -141,8 +141,48 @@ function testPhase4AuthoredContent() {
   assert.equal(html.includes('effectTemplate'), false, 'Procedural effect templates must be deleted.');
 }
 
+/* §9 budget units: 1 BU ≈ one standard small. The table normalizes each stat's
+   amount to BU so the lint can flag seats far off their type target. Text
+   riders carry real power the table cannot see, so bands are generous. */
+const BU_PER_UNIT = {
+  attackDamage: 10, spellDamage: 10, projectileDamage: 10, minionDamage: 10,
+  attackSpeed: 4, castSpeed: 4, ailmentEffect: 10, physical_increased: 10,
+  ward_pct: 10, guard_increased: 10, evasion_increased: 10, cooldownRecovery: 5,
+  move: 4, reach_increased: 8, life: 20, spirit: 12, ward: 25, guard: 25,
+  evasion: 30, accuracy_flat: 40, heavy: 4, emberkiss: 4, critChance: 1,
+  crit_bonus_flat: 15, blockChance: 3, allResistances: 4, ember_res: 10,
+  river_resistance: 10, storm_res: 10, gloam_res: 10, str: 5, dex: 5, int: 5, attrs: 3
+};
+const BU_BANDS = {
+  small: [0.3, 1.7],
+  notable: [1.0, 4.5],
+  mastery: [1.0, 4.5],
+  waystone: [0.8, 4.5],
+  class: [0.8, 3.5]
+};
+
+function testBudgetLint() {
+  const data = loadTreeData();
+  const outliers = [];
+  Object.values(data.seats).forEach(seat => {
+    const band = BU_BANDS[seat.type];
+    if (!band || !seat.stat || !seat.amount) return;
+    const unit = BU_PER_UNIT[seat.stat];
+    if (!unit) {
+      outliers.push(`${seat.id} (${seat.name}): no BU normalization for stat "${seat.stat}"`);
+      return;
+    }
+    const bu = seat.amount / unit;
+    if (bu < band[0] || bu > band[1]) {
+      outliers.push(`${seat.id} (${seat.name}, ${seat.type}): ${bu.toFixed(2)} BU outside [${band[0]}, ${band[1]}]`);
+    }
+  });
+  assert.deepEqual(outliers, [], 'Budget lint should be clean.');
+}
+
 const tests = [
   ['TREE_DATA covers the ten-ring lattice', testMainSeatCoverage],
+  ['Budget lint: every seat sits inside its BU band', testBudgetLint],
   ['TREE_DATA seats carry Phase 0 authoring metadata', testSeatShape],
   ['Subtree gateways moved to the ring-10 corners', testRimGateways],
   ['index.html keeps file-compatible classic script loading', testFileCompatibleScriptLoading],

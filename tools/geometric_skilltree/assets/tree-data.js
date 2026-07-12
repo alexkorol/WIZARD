@@ -15,8 +15,8 @@
     "wave": {
       "minLength": 2,
       "minPercent": 10,
-      "crestPercent": 60,
-      "meridianEndpointPercent": 60
+      "crestPercent": 20,
+      "meridianEndpointPercent": 28
     },
     "flow": {
       "minLength": 3,
@@ -3380,10 +3380,10 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "Adds 7 Ember Damage to hits"
+        "Adds 6 Ember Damage to hits"
       ],
       "stat": "emberkiss",
-      "amount": 7,
+      "amount": 6,
       "tags": [],
       "clusterId": "kiln-sign",
       "status": "review",
@@ -4305,10 +4305,10 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "Adds 8 Ember Damage to hits"
+        "Adds 6 Ember Damage to hits"
       ],
       "stat": "emberkiss",
-      "amount": 8,
+      "amount": 6,
       "tags": [],
       "clusterId": "kiln-deep",
       "status": "review",

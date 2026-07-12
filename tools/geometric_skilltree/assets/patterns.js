@@ -20,7 +20,7 @@
   ];
 
   const DEFAULT_TUNING = {
-    wave: { minLength: 2, minPercent: 10, crestPercent: 60, meridianEndpointPercent: 60 },
+    wave: { minLength: 2, minPercent: 10, crestPercent: 20, meridianEndpointPercent: 28 },
     flow: { minLength: 3, minPercent: 25, maxPercent: 100, maxLength: 8 },
     loops: { maxRadius: 3 },
     vesica: { lensShare: 0.5 },
@@ -451,7 +451,7 @@
       progress: `${patterns.waves.length} wave${patterns.waves.length === 1 ? '' : 's'}; longest ${patterns.waves[0]?.length || 0}`,
       description: 'Alternate inner and outer conduits. Waves empower the nodes along their path.',
       attrs: {},
-      derived: { attackDamage: wavePower * 2, spellDamage: wavePower * 2 }
+      derived: { attackDamage: wavePower, spellDamage: wavePower }
     });
     const flowPower = patterns.flows.reduce((sum, flow) => sum + flowPercent(tuning, flow), 0);
     bonuses.push({
@@ -479,8 +479,8 @@
       active: patterns.loops.length > 0,
       progress: `${patterns.loops.length} loop crown${patterns.loops.length === 1 ? '' : 's'}; ${patterns.concentric.length} concentric`,
       description: 'Close radius 1-3 loops around allocated centers. Concentric crowns compound the center fantasy.',
-      attrs: { int: loopPower * 3, dex: loopPower * 3, str: loopPower * 3 },
-      derived: { spellDamage: loopPower * 9, guard: loopPower * 32, ward: loopPower * 32 }
+      attrs: { int: loopPower * 2, dex: loopPower * 2, str: loopPower * 2 },
+      derived: { spellDamage: loopPower * 6, guard: loopPower * 18, ward: loopPower * 18 }
     });
     bonuses.push({
       id: 'vesica',
@@ -551,7 +551,7 @@
       progress: `${patterns.circuits.redundant.length} redundant conduit${patterns.circuits.redundant.length === 1 ? '' : 's'}`,
       description: 'Maintain an alternate active route around allocated conduits.',
       attrs: patterns.circuits.redundant.length ? { dex: patterns.circuits.redundant.length, int: patterns.circuits.redundant.length } : {},
-      derived: patterns.circuits.redundant.length ? { ward: patterns.circuits.redundant.length * 18, evasion: patterns.circuits.redundant.length * 18 } : {}
+      derived: patterns.circuits.redundant.length ? { ward: patterns.circuits.redundant.length * 9, evasion: patterns.circuits.redundant.length * 9 } : {}
     });
     bonuses.push({
       id: 'enclosure',

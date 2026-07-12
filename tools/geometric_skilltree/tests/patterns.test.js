@@ -114,7 +114,7 @@ function testWavesAndAdditiveNodeBoosts() {
   assert.equal(result.rods.length, 1, 'The same straight path should also count as a rod.');
   assert.ok(result.nodeBoosts['0,0'].reasons.some(reason => reason.includes('wave')), 'Node boost should include wave reason text.');
   assert.ok(result.nodeBoosts['0,0'].reasons.some(reason => reason.includes('rod endpoint')), 'Node boost should include rod reason text.');
-  assert.equal(result.nodeBoosts['0,0'].percent, 15, 'Wave and rod boosts should stack additively in one node bucket.');
+  assert.equal(result.nodeBoosts['0,0'].percent, 13, 'Wave and rod boosts should stack additively in one node bucket.');
 }
 
 function testFlowsAndExclusiveSegments() {

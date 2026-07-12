@@ -1705,9 +1705,9 @@
     // Loop-crown empowerment curve. Concentric crowns (radius 1 + radius 2 around one
     // center) compound these factors multiplicatively instead of summing them.
     const LOOP_EMPOWER_TUNING = {
-      perRadius: 0.42,      // increase per loop-radius step
-      largeLoopStep: 0.16,  // extra per radius beyond 1
-      extraLoopStep: 0.12   // extra per additional loop when not concentric
+      perRadius: 0.32,      // increase per loop-radius step (0.42 pre-balance-pass)
+      largeLoopStep: 0.12,  // extra per radius beyond 1
+      extraLoopStep: 0.1    // extra per additional loop when not concentric
     };
     const NODE_SPACING = 72;
     const SUBTREE_SPACING = 58;

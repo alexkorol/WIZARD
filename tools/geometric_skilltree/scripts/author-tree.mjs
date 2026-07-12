@@ -286,7 +286,7 @@ const WEDGES = [
         { n: 'Overfire', s: 'ailmentEffect', a: 11, c: 'kiln-sign' },
         { n: 'Kilnstone Rings', s: 'guard', a: 30, c: 'kiln-sign' },
         { n: 'Ash Ink', s: 'spellDamage', a: 10, c: 'kiln-sign', x: ['Your rites char what they touch: +4% Ailment Effect (design text)'] },
-        { n: 'Ember Tithe', s: 'emberkiss', a: 7, c: 'kiln-sign' },
+        { n: 'Ember Tithe', s: 'emberkiss', a: 6, c: 'kiln-sign' },
         { n: 'Firing Order', s: 'attackDamage', a: 10, c: 'kiln-sign' }
       ],
       9: [
@@ -294,7 +294,7 @@ const WEDGES = [
         { n: 'Salted Flame', s: 'ailmentEffect', a: 12, c: 'kiln-deep' },
         { n: 'Old Burn Scars', s: 'ember_res', a: 14, c: 'kiln-deep', x: ['You cannot be Scalded while at full Life (design text)'] },
         { n: 'Clay Sweat', s: 'life', a: 25, c: 'kiln-deep' },
-        { n: 'Charmaster Habit', s: 'emberkiss', a: 8, c: 'kiln-deep' },
+        { n: 'Charmaster Habit', s: 'emberkiss', a: 6, c: 'kiln-deep' },
         { n: 'Roaring Draft', s: 'attackSpeed', a: 5, c: 'kiln-deep' }
       ],
       10: [

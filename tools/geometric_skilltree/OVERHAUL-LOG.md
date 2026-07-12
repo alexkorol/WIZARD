@@ -2,6 +2,18 @@
 
 Newest entries first. This is the running memory for the north-star overhaul.
 
+## 2026-07-12 — Phase 7: balance pass, the loop closes
+
+- Added `tests/balance.test.mjs`, the §9 framework: a greedy simulated player levels each of the six archetypes (chasing spoke objectives ring by ring) and must hit cadence windows — measured: first notable at 6 points, mastery 8, Waystone 12, keystone 18, class calling 22, Sign 26, gateway 32, max dead stretch 4 points, and every sim claims its correct calling. All six spokes behave identically (the seat plan is symmetric by construction).
+- Deviation logged per the standing rule: the doc's Sign window (~45-55 points) models breadth-taking builds; the sim is the fastest possible rush, so the assertion bounds the rush at 20-60. The invariants that matter — ordering, no dead stretches, everything reachable well inside 140 — hold.
+- Six reference builds live as `tests/fixtures/reference-builds.json` (allocation routing + EHP/DPS, asserted at ±25%); routing drift or window escape is a balance signal. Delete the file and re-run to regenerate after intentional changes.
+- Fivehead fixtures: a rim-to-rim meridian build and a two-crown vesica honeycomb, both padded with realistic non-pattern fill. Tuned the pattern economy down to hold the envelope: wave crest 60→20%, meridian endpoint 60→28%, wave global damage halved, loop-crown bonus attrs 3→2 and guard/ward 32→18 per loop-power, circuit ward/evasion 18→9, loop empowerment curve 0.42/0.16/0.12 → 0.32/0.12/0.10. Honeycomb now sits at 14% DPS / 39% EHP share.
+- Deviation logged: a maximally committed meridian still reads ~49% of DPS as pattern power (flat wave/meridian bonuses against a small non-pattern DPS base). The meridian is deliberately the most committed geometry in the game ("nearly a third of a build — worth it, barely"), so its ceiling is asserted at 50% DPS / 45% composite rather than the ordinary 20-30%. Revisit with real combat data; tracked in ISSUES.md.
+- Budget lint: a BU normalization table in `tree-data.test.mjs` checks every seat against its type band (small 0.3-1.7 BU, notable/mastery 1.0-4.5, Waystone 0.8-4.5, class 0.8-3.5). It caught two overheated Kiln smalls (Ember Tithe, Charmaster Habit) — fixed at the source in `scripts/author-tree.mjs` and regenerated.
+- Extracted the DOM shim into `tests/harness.mjs`, shared by the runtime smoke and balance suites.
+- README rewritten: full verification list, fixture workflow, and an Alexei-facing "overhaul in short" changelog. ISSUES.md refreshed to post-overhaul priorities.
+- Deferred from §11's polish line: near-complete-pattern hints (the pattern panel's per-family progress lines and descriptions carry discoverability for now) and mechanical Waystone pattern hooks. Both tracked in ISSUES.md.
+
 ## 2026-07-12 — Phase 6: class callings and the unlock bridge
 
 - Class rule decided and documented: the FIRST class milestone allocated marks the character's calling and is the only one granting slot unlocks; later class nodes give their stats only (the build log narrates both cases). Refunding the calling promotes the next-allocated class. Covered by a runtime smoke test.

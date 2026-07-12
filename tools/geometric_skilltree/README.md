@@ -121,15 +121,43 @@ Subtrees use authored positions outside the main ring and connect through gatewa
 
 ## Verification
 
-Run the existing progression tests:
+Run the full suite:
 
 ```bash
 node tools/geometric_skilltree/tests/progression.test.mjs
 node tools/geometric_skilltree/tests/patterns.test.js
+node tools/geometric_skilltree/tests/jewels.test.js
 node tools/geometric_skilltree/tests/tree-data.test.mjs
 node tools/geometric_skilltree/tests/runtime-smoke.test.mjs
+node tools/geometric_skilltree/tests/balance.test.mjs
 node tools/rpg_inventory/core/verdigris-stats.test.js
 node tools/rpg_inventory/core/test.js
 ```
 
+`balance.test.mjs` also maintains `tests/fixtures/reference-builds.json` — six
+greedy archetype builds used as EHP/DPS canaries. Delete the file and re-run
+after an intentional balance change to regenerate it. Run with
+`BALANCE_MEASURE=1` to print observed cadence/share numbers without asserting.
+
 The current UI is standalone and does not require a dev server.
+
+## The 2026-07 overhaul, in short
+
+What changed for anyone returning to this tool after June 2026:
+
+- The tree grew to ten rings (331 seats) and every seat is now hand-authored —
+  the old hash-generated filler is deleted. Six spoke identities (Champion,
+  Acrobat, Archmage, Reaver, Nightblade, Ritualist) and six themed wedges.
+- Geometry became buildcraft: waves, flows, meridians, loop crowns, vesicas,
+  grand orbits, symmetry, circuits, enclosures, rods, and crossroads all
+  detect, render, and pay through one tuning table.
+- The tree and Vesselforge share one stat engine (`verdigris-stats.js`);
+  Effective HP and DPS lead the sheet and every click shows its delta.
+- Carved stones socket into the tree — five families including seeded
+  saga-stones that deterministically rewrite whole neighborhoods.
+- Ring-8 Signs are birthsign keystones (exactly one per life); ring-7 class
+  callings unlock real gear slots on the Vesselforge page over a live bridge.
+- Designer mode (press `D`) lets you inspect, rename, annotate, lint, and
+  export the whole tree without leaving the page.
+- A balance suite simulates six leveling archetypes and pins the pattern-power
+  envelope so future edits can't silently break the cadence.
