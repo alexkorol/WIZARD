@@ -4,6 +4,7 @@ import { Script, createContext } from 'node:vm';
 
 const INDEX_PATH = new URL('../index.html', import.meta.url);
 const TREE_DATA_PATH = new URL('../assets/tree-data.js', import.meta.url);
+const STATS_PATH = new URL('../../rpg_inventory/core/verdigris-stats.js', import.meta.url);
 
 class FakeClassList {
   constructor(owner) {
@@ -184,6 +185,7 @@ function createRuntime() {
   };
   const context = {
     window,
+    self: window,
     document,
     console,
     Math,
@@ -210,6 +212,9 @@ function createRuntime() {
 
 function runStandaloneApp() {
   const runtime = createRuntime();
+  const statsSource = readFileSync(STATS_PATH, 'utf8');
+  new Script(statsSource, { filename: STATS_PATH.pathname }).runInContext(runtime);
+
   const treeDataSource = readFileSync(TREE_DATA_PATH, 'utf8');
   new Script(treeDataSource, { filename: TREE_DATA_PATH.pathname }).runInContext(runtime);
 
@@ -254,9 +259,26 @@ function testSubtreesAttachToRingTenGateways() {
   });
 }
 
+function testAllocationUpdatesHeadlineDeltas() {
+  const window = runStandaloneApp();
+  const beforePoints = window.skillTree.points.skill;
+  window.skillTree.tryAllocateNode('1,0');
+  const allocated = window.skillTree.nodes.get('1,0');
+  const deltaList = window.document.getElementById('delta-list');
+  assert.equal(allocated.active, true, 'Adjacent node should allocate.');
+  assert.equal(window.skillTree.points.skill, beforePoints - 2, 'Node plus conduit should cost two points.');
+  assert.ok(window.skillTree.lastDeltas.length > 0, 'Allocation should produce per-click deltas.');
+  assert.ok(deltaList.children.length > 0, 'UI delta list should render per-click deltas.');
+  assert.ok(
+    window.skillTree.lastDeltas.some(delta => delta.includes('Effective HP') || delta.includes('DPS')),
+    'Headline EHP/DPS delta should be visible after allocation.'
+  );
+}
+
 const tests = [
   ['Standalone classic scripts initialize the tree runtime', testRuntimeInitializes],
-  ['Subtrees attach to the ring-10 gateways at runtime', testSubtreesAttachToRingTenGateways]
+  ['Subtrees attach to the ring-10 gateways at runtime', testSubtreesAttachToRingTenGateways],
+  ['Allocation updates headline deltas', testAllocationUpdatesHeadlineDeltas]
 ];
 
 let passed = 0;

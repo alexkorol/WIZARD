@@ -2,6 +2,22 @@
 
 Newest entries first. This is the running memory for the north-star overhaul.
 
+## 2026-07-12 — Phase 1 stat engine
+
+- Added `tools/rpg_inventory/core/verdigris-stats.js`, a zero-dependency UMD module shared by Vesselforge and the passive tree.
+- Implemented the Phase 1 stat vocabulary: Physical, Ember, River, Storm, Gloam; STR/DEX/INT conversions; Life/Spirit/Ward/Guard/Evasion/Accuracy/Block/resistance layers; Gloam bypassing Ward; Ward recharge; EHP profiles for bruiser, ember caster, and mixed pack; additive `increased` vs protected multiplicative `more`.
+- Added `tools/rpg_inventory/core/verdigris-stats.test.js` with 44 stat checks covering registry aliases, caps, mitigation order, EHP, offense math, item-base reading, and legacy sheet fields.
+- Rewired `verdigris-pack.js` so `derive()` delegates to `VerdigrisStats.deriveSheet()`. The Vesselforge character panel now surfaces EHP, Guard, Evasion, Block, and Ember/River/Storm/Gloam resistances.
+- Rewired `tools/geometric_skilltree/index.html` to load the same stat module. Tree `computeStats()` now converts active nodes, boosts, shape bonuses, and conduit attributes into shared-stat inputs; the derived panel leads with Effective HP and DPS, and runtime smoke verifies a first allocation renders headline deltas.
+
+Acceptance notes:
+
+- `node tools/rpg_inventory/core/verdigris-stats.test.js` passes (44 tests).
+- `node tools/rpg_inventory/core/test.js` passes.
+- `node tools/geometric_skilltree/tests/progression.test.mjs` passes.
+- `node tools/geometric_skilltree/tests/tree-data.test.mjs` passes.
+- `node tools/geometric_skilltree/tests/runtime-smoke.test.mjs` passes.
+
 ## 2026-07-12 — Phase 0 scaffolding and tenth ring
 
 - Read `NORTH-STAR.md`, `research/POE1-PASSIVES.md`, and `research/POE2-PASSIVES.md` in full before code changes.

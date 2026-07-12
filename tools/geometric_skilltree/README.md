@@ -10,6 +10,7 @@ Open `index.html` directly in a browser.
 - Six hidden outer subtrees attached through shared gateway nodes on the main rim, similar in purpose to cluster/ascendancy-style expansions without copying Path of Exile layouts.
 - A single skill-point pool: every node costs 1 point and every path or extra loop link costs 1 point, so travel distance is itself the build cost.
 - Passive nodes provide build effects such as weapon damage, wards, minion damage, evasion, recovery, marks, ailments, and hybrid bonuses.
+- The derived-stat panel now consumes the shared Verdigris stat engine and leads with Effective HP and DPS against the standard mixed-pack profile. Per-allocation deltas surface headline changes first.
 - Passive hierarchy is geometric rather than random: inner notables, fixed axis masteries, ordered outer keystone seats, and rim gateways occupy repeatable ring roles.
 - Every node-to-node connection has two curved arc variants. Each arc has its own `STR`, `DEX`, and `INT` attribute mix.
 - Allocation flow: clicking or tapping an inactive allocatable node immediately spends the node and conduit points.
@@ -100,7 +101,7 @@ The important design takeaways are structural rather than cosmetic:
 
 ## Implementation Notes
 
-The app is a standalone HTML/SVG implementation with classic-script data assets. `assets/tree-data.js` defines `window.TREE_DATA`, including the Phase 0 bootstrap entries for every main-lattice seat. The main runtime classes are:
+The app is a standalone HTML/SVG implementation with classic-script data assets. `assets/tree-data.js` defines `window.TREE_DATA`, including the Phase 0 bootstrap entries for every main-lattice seat. `../rpg_inventory/core/verdigris-stats.js` defines the shared stat registry and EHP/DPS math consumed by both this tree and Vesselforge. The main runtime classes are:
 
 - `GeometricSkillTree`: builds nodes/conduits, handles allocation, refund, undo, stats, and shape bonuses.
 - `SVGRenderer`: draws rings, axis lines, nodes, conduits, subtrees, tooltips, and render states.
@@ -123,6 +124,8 @@ Run the existing progression tests:
 node tools/geometric_skilltree/tests/progression.test.mjs
 node tools/geometric_skilltree/tests/tree-data.test.mjs
 node tools/geometric_skilltree/tests/runtime-smoke.test.mjs
+node tools/rpg_inventory/core/verdigris-stats.test.js
+node tools/rpg_inventory/core/test.js
 ```
 
 The current UI is standalone and does not require a dev server.

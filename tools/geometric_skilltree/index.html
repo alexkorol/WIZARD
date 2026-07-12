@@ -1508,34 +1508,18 @@
     </div>
   </div>
 
+  <script src="../rpg_inventory/core/verdigris-stats.js"></script>
   <script src="assets/tree-data.js"></script>
   <script>
     const SVG_NS = "http://www.w3.org/2000/svg";
     const AUTHORED_TREE_DATA = window.TREE_DATA || {};
+    const VERDIGRIS_STATS = window.VerdigrisStats;
     const MAIN_RING_DEPTH = AUTHORED_TREE_DATA.mainRingDepth || 10;
     const NODE_SPACING = 72;
     const SUBTREE_SPACING = 58;
     // One pool: nodes and connections each cost 1 point, so travel is a real spend.
     // 140 points at max after the tenth ring. A center-to-rim route now costs 20 points.
     const START_POINTS = { skill: 140, ...(AUTHORED_TREE_DATA.startPoints || {}) };
-    const BASE_CHARACTER = {
-      life: 1000,
-      mana: 300,
-      armour: 0,
-      evasion: 0,
-      energyShield: 0,
-      attackDamage: 100,
-      spellDamage: 100,
-      projectileDamage: 100,
-      minionDamage: 100,
-      attackSpeed: 100,
-      castSpeed: 100,
-      critChance: 5,
-      allResistances: 0,
-      ailmentEffect: 0,
-      blockChance: 0,
-      cooldownRecovery: 0
-    };
     const AXIS_VECTORS = {
       int: { x: 0, y: -1 },
       dex: { x: -Math.sqrt(3) / 2, y: 0.5 },
@@ -2734,7 +2718,11 @@
 
       computeStats() {
         const attrs = { str: 0, dex: 0, int: 0 };
-        const derived = { ...BASE_CHARACTER };
+        const legacyMods = [];
+        const addLegacyMod = (stat, amount) => {
+          if (!stat || typeof amount !== "number" || !amount) return;
+          legacyMods.push({ stat, amount });
+        };
 
         this.conduits.forEach(conduit => {
           if (!conduit.allocated) return;
@@ -2745,13 +2733,11 @@
 
         this.nodes.forEach(node => {
           if (!node.active) return;
-          if (node.stat && typeof node.amount === "number") {
-            derived[node.stat] = (derived[node.stat] || 0) + node.amount;
-          }
+          addLegacyMod(node.stat, node.amount);
           const boost = this.getNodeBoost(node);
           if (boost) {
             if (node.stat && boost.directBonus) {
-              derived[node.stat] = (derived[node.stat] || 0) + boost.directBonus;
+              addLegacyMod(node.stat, boost.directBonus);
             }
             attrs.str += boost.attrBonus.str;
             attrs.dex += boost.attrBonus.dex;
@@ -2765,26 +2751,48 @@
             attrs[key] += value;
           });
           Object.entries(bonus.derived || {}).forEach(([key, value]) => {
-            derived[key] = (derived[key] || 0) + value;
+            addLegacyMod(key, value);
           });
         });
 
-        derived.life += Math.round(attrs.str * 7);
-        derived.mana += Math.round(attrs.int * 5);
-        derived.armour += Math.round(attrs.str * 8);
-        derived.evasion += Math.round(attrs.dex * 8);
-        derived.energyShield += Math.round(attrs.int * 6);
-        derived.attackDamage += Math.round(attrs.str * 0.55 + attrs.dex * 0.35);
-        derived.spellDamage += Math.round(attrs.int * 0.7);
-        derived.projectileDamage += Math.round(attrs.dex * 0.55);
-        derived.minionDamage += Math.round(attrs.int * 0.42);
-        derived.attackSpeed += round(attrs.dex * 0.08 + attrs.str * 0.03);
-        derived.castSpeed += round(attrs.int * 0.08 + attrs.dex * 0.02);
-        derived.critChance = round(derived.critChance + attrs.dex * 0.035 + attrs.int * 0.025);
-        derived.allResistances = round(derived.allResistances + attrs.int * 0.05 + attrs.str * 0.025);
-        derived.blockChance = round(Math.min(75, derived.blockChance + attrs.str * 0.015));
+        if (!VERDIGRIS_STATS) {
+          throw new Error("VerdigrisStats must load before the skill tree app.");
+        }
 
-        return { attrs, derived };
+        const sheet = VERDIGRIS_STATS.deriveSheet({
+          level: 100,
+          attributes: attrs,
+          legacyMods,
+          useDefaultWeapon: true,
+          profile: VERDIGRIS_STATS.STANDARD_FOES.mixedPack
+        });
+        const sums = sheet.sums || {};
+        const derived = {
+          effectiveHp: sheet.effectiveHp,
+          dps: sheet.dps,
+          life: sheet.life,
+          spirit: sheet.spirit,
+          ward: sheet.ward,
+          guard: sheet.guard,
+          evasion: sheet.evasion,
+          accuracy: sheet.accuracy,
+          blockChance: sheet.blockChance,
+          resEmber: sheet.resEmber,
+          resRiver: sheet.resRiver,
+          resStorm: sheet.resStorm,
+          resGloam: sheet.resGloam,
+          critChance: sheet.offense.critChance,
+          attackDamage: round(sums.attack_increased || 0),
+          spellDamage: round(sums.rite_increased || 0),
+          projectileDamage: round(sums.projectile_increased || 0),
+          minionDamage: round(sums.companion_increased || 0),
+          attackSpeed: round(sums.attack_speed_increased || 0),
+          castSpeed: round(sums.rite_speed_increased || 0),
+          ailmentEffect: round(sums.ailment_effect || 0),
+          cooldownRecovery: round(sums.cooldown_recovery || 0)
+        };
+
+        return { attrs, totalAttrs: sheet.attrs, derived, sheet };
       }
 
       computeDeltas(previous, next) {
@@ -2810,18 +2818,28 @@
       formatDerivedLabel(key) {
         return {
           life: "Life",
-          mana: "Mana",
-          armour: "Armour",
+          mana: "Spirit",
+          spirit: "Spirit",
+          effectiveHp: "Effective HP",
+          dps: "DPS vs Standard",
+          armour: "Guard",
+          guard: "Guard",
           evasion: "Evasion",
-          energyShield: "Energy Shield",
+          energyShield: "Ward",
+          ward: "Ward",
+          accuracy: "Accuracy",
           attackDamage: "Attack Damage",
-          spellDamage: "Spell Damage",
+          spellDamage: "Rite Damage",
           projectileDamage: "Projectile Damage",
-          minionDamage: "Minion Damage",
+          minionDamage: "Companion Damage",
           attackSpeed: "Attack Speed",
-          castSpeed: "Cast Speed",
+          castSpeed: "Rite Speed",
           critChance: "Critical Chance",
           allResistances: "All Resistances",
+          resEmber: "Ember Resistance",
+          resRiver: "River Resistance",
+          resStorm: "Storm Resistance",
+          resGloam: "Gloam Resistance",
           ailmentEffect: "Ailment Effect",
           blockChance: "Block Chance",
           cooldownRecovery: "Cooldown Recovery"
@@ -2838,6 +2856,10 @@
           "castSpeed",
           "critChance",
           "allResistances",
+          "resEmber",
+          "resRiver",
+          "resStorm",
+          "resGloam",
           "ailmentEffect",
           "blockChance",
           "cooldownRecovery"
@@ -3849,21 +3871,27 @@
       updateDerived() {
         const grid = document.getElementById("derived-grid");
         const labels = {
+          effectiveHp: ["Effective HP", ""],
+          dps: ["DPS", ""],
           life: ["Life", ""],
-          mana: ["Mana", ""],
-          armour: ["Armour", ""],
+          spirit: ["Spirit", ""],
+          ward: ["Ward", ""],
+          guard: ["Guard", ""],
           evasion: ["Evasion", ""],
-          energyShield: ["Energy Shield", ""],
+          accuracy: ["Accuracy", ""],
+          blockChance: ["Block", "%"],
+          resEmber: ["Ember Res", "%"],
+          resRiver: ["River Res", "%"],
+          resStorm: ["Storm Res", "%"],
+          resGloam: ["Gloam Res", "%"],
           attackDamage: ["Attack Damage", "%"],
-          spellDamage: ["Spell Damage", "%"],
+          spellDamage: ["Rite Damage", "%"],
           projectileDamage: ["Projectile Damage", "%"],
-          minionDamage: ["Minion Damage", "%"],
+          minionDamage: ["Companion Damage", "%"],
           attackSpeed: ["Attack Speed", "%"],
-          castSpeed: ["Cast Speed", "%"],
+          castSpeed: ["Rite Speed", "%"],
           critChance: ["Critical Chance", "%"],
-          allResistances: ["All Resistances", "%"],
           ailmentEffect: ["Ailment Effect", "%"],
-          blockChance: ["Block Chance", "%"],
           cooldownRecovery: ["Cooldown Recovery", "%"]
         };
         grid.innerHTML = "";

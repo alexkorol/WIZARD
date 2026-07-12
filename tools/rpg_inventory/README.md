@@ -89,7 +89,7 @@ gold or found while venturing.
 - Grid backpack (12×8) with pixel-accurate drag & drop, placement ghost, and
   collision checks — pointer events, works with touch
 - Paperdoll with 10 slots, swap-on-equip, and a live character sheet computed
-  from implicits + brands + bonds
+  from implicits + brands + bonds through the shared Verdigris stat engine
 - Atelier bench that expands above the backpack: drag an item into the socket
   (or tap one while the bench is open) and apply currencies
 - Venture Forth loop: gold, XP, loot, currency finds, and a chronicle log
@@ -116,14 +116,19 @@ Quest, Grim Dawn — see [DESIGN.md](DESIGN.md)):
   copper→bronze→obsidian→jade→skymetal→riveted-mail material ladder,
   macuahuitl/atlatl/khopesh-flavored forms, Redhand/Shieldbearer/Ashspeaker/
   Farwalker archetypes.
-- **`core/test.js`** — 22-test Node suite (`node core/test.js`).
+- **`core/verdigris-stats.js`** — zero-dependency UMD stat registry and combat
+  sheet: five damage channels, attributes, layered mitigation, EHP profiles,
+  and additive `increased` vs protected multiplicative `more` math. The passive
+  tree consumes the same module.
+- **`core/test.js`** — Vesselforge Node suite (`node core/test.js`).
+- **`core/verdigris-stats.test.js`** — stat-engine Node suite (`node core/verdigris-stats.test.js`).
 - **`core/playground.html`** — framework-free harness exercising the whole
   loop (also the target for automated asset integration).
 - **`core/ASSET-BRIEF.md`** — prompts and file list for the ChatGPT-Pro
   image-generation run.
 
 The React demo (`index.html`) now runs **on the core**: it loads
-`core/vesselforge.js` + `core/verdigris-pack.js` and keeps only UI concerns
+`core/vesselforge.js` + `core/verdigris-stats.js` + `core/verdigris-pack.js` and keeps only UI concerns
 (grid placement, drag engine, rendering, gold economy for craft ops).
 Item art resolves to `assets/{form}_{material}.png` per ASSET-BRIEF naming
 and falls back to inline SVG icons until the ChatGPT-Pro art run fills the

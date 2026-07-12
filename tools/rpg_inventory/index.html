@@ -13,6 +13,7 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="core/vesselforge.js"></script>
+  <script src="core/verdigris-stats.js"></script>
   <script src="core/verdigris-pack.js"></script>
 
   <style>
@@ -1343,12 +1344,16 @@
             <div className="stat-grid">
               <div>Life <strong>{sheet.life}</strong></div>
               <div>Spirit <strong>{sheet.spirit}</strong></div>
+              <div>EHP <strong>{sheet.effectiveHp}</strong></div>
               <div>Damage <strong>{sheet.damage || '—'}</strong></div>
               <div>Ward <strong>{sheet.ward}</strong></div>
+              <div>Guard <strong>{sheet.guard}</strong></div>
+              <div>Evasion <strong>{sheet.evasion}</strong></div>
+              <div>Block <strong>{sheet.block ? `${sheet.block}%` : '—'}</strong></div>
               <div>Move <strong>{sheet.move ? `+${sheet.move}%` : '—'}</strong></div>
               <div>Goods <strong>{sheet.goods ? `+${sheet.goods}%` : '—'}</strong></div>
               <div style={{ gridColumn: '1 / -1' }}>
-                Res <strong style={{ color: '#f87171' }}>{sheet.resEmber}</strong> ember / <strong style={{ color: '#93c5fd' }}>{sheet.resRiver}</strong> river
+                Res <strong style={{ color: '#f87171' }}>{sheet.resEmber}</strong> ember / <strong style={{ color: '#93c5fd' }}>{sheet.resRiver}</strong> river / <strong>{sheet.resStorm}</strong> storm / <strong>{sheet.resGloam}</strong> gloam
               </div>
             </div>
 

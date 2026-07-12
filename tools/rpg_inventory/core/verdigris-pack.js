@@ -10,9 +10,9 @@
    serializable except label templates ("{v}" placeholders) and derive().
    ============================================================================= */
 (function (root, factory) {
-  if (typeof module !== 'undefined' && module.exports) module.exports = factory();
-  else root.VerdigrisPack = factory();
-}(typeof self !== 'undefined' ? self : this, function () {
+  if (typeof module !== 'undefined' && module.exports) module.exports = factory(require('./verdigris-stats.js'));
+  else root.VerdigrisPack = factory(root.VerdigrisStats);
+}(typeof self !== 'undefined' ? self : this, function (VerdigrisStats) {
   'use strict';
 
   /* Tags: blade blunt reach hide ward life spirit ember river beast fortune swift blood */
@@ -301,30 +301,17 @@
 
     /* ---------------- character sheet derivation ---------------- */
     derive(sums, items, ctx) {
-      const s = (id) => sums[id] || 0;
-      const level = ctx.level || 1;
-      let ward = 0, dmg = 0;
-      items.forEach(it => {
-        const f = pack.forms[it.formId];
-        const m = pack.materials[it.materialId];
-        if (f.armor) ward += f.armor * m.statMult;
-      });
-      const mh = items.find(it => pack.forms[it.formId].weapon);
-      if (mh) {
-        const f = pack.forms[mh.formId], m = pack.materials[mh.materialId];
-        const avg = (f.weapon.dmg[0] + f.weapon.dmg[1]) / 2 * m.statMult + s('heavy') + s('emberkiss');
-        dmg = Math.round(avg * (1 + s('phys_pct') / 100 + s('keen') / 100) * f.weapon.aps * (1 + s('atk_speed') / 100));
+      if (!VerdigrisStats) {
+        throw new Error('VerdigrisStats must load before VerdigrisPack.');
       }
-      return {
-        life: Math.round(90 + 10 * (level - 1) + s('hale') + 2 * s('strongback') + s('life')),
-        spirit: Math.round(50 + s('spirited') + s('strongback') + s('spirit')),
-        ward: Math.round(ward * (1 + s('warded') / 100)),
-        damage: dmg,
-        move: Math.round(s('surefoot') + s('move')),
-        goods: Math.round(s('wealthy') + s('fortune')),
-        resEmber: Math.min(75, s('emberward') + s('ember_res')),
-        resRiver: Math.min(75, s('riverblessed')),
-      };
+      return VerdigrisStats.deriveSheet({
+        level: (ctx && ctx.level) || 1,
+        sums,
+        items,
+        forms: pack.forms,
+        materials: pack.materials,
+        attributes: ctx && ctx.attributes
+      });
     },
   };
 
