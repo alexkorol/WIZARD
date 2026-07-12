@@ -111,7 +111,7 @@ const SPOKES = {
     r6notable: { n: 'Third Reading', s: 'spellDamage', a: 26, fx: ['+15 to Spirit', 'Rites you repeat within four seconds gain +10% effect (design text)'] },
     classNode: {
       n: 'Archmage', s: 'spellDamage', a: 15,
-      fx: ['Unlocks: a second curio slot', 'Unlocks: rite-foci gain +1 socket', 'One of six callings; the first calling you take marks your class.']
+      fx: ['Unlocks: a second curio slot', 'Unlocks: rite-foci gain +1 socket', 'Unlocks: 2x2 Attendant focus seat', 'The first calling marks your class; every calling milestone grants its armoury unlock.']
     },
     r8notable: { n: 'Unwritten Chapter', s: 'ward_pct', a: 18, fx: ['+12% increased Rite Damage', 'You keep 10% of Ward when a hit would empty it (design text)'] },
     r9notable: { n: 'Deep Shelf', s: 'spellDamage', a: 30, fx: ['+30 to Ward', 'Rites cost 5% less Spirit (design text)'] },
@@ -134,7 +134,7 @@ const SPOKES = {
     r6notable: { n: 'Collector of Debts', s: 'gloam_res', a: 12, fx: ['+18% increased Ailment Effect', 'Wither you inflict stacks one deeper (design text)'] },
     classNode: {
       n: 'Nightblade', s: 'ailmentEffect', a: 12,
-      fx: ['Unlocks: trap and mark tools become equippable', 'Unlocks: venom vial slot', 'One of six callings; the first calling you take marks your class.']
+      fx: ['Unlocks: trap and mark tools become equippable', 'Unlocks: venom vial slot', 'Unlocks: 4x4 Preparation Case', 'The first calling marks your class; every calling milestone grants its armoury unlock.']
     },
     r8notable: { n: 'Ledger of Grudges', s: 'ailmentEffect', a: 20, fx: ['+1.5% to Critical Chance', 'Poisons you inflict on marked enemies deal 15% more (design text)'] },
     r9notable: { n: 'The Long Memory', s: 'gloam_res', a: 15, fx: ['+22% increased Ailment Effect', 'Enemies that kill your allies are marked for you (design text)'] },
@@ -157,7 +157,7 @@ const SPOKES = {
     r6notable: { n: 'Read the Wind', s: 'accuracy_flat', a: 60, fx: ['+12% increased Attack Speed', 'Your first hit on an unhurt enemy always lands (design text)'] },
     classNode: {
       n: 'Acrobat', s: 'evasion_increased', a: 12,
-      fx: ['Unlocks: a second weapon set for swapping', 'Unlocks: dual-wielding one-handers', 'One of six callings; the first calling you take marks your class.']
+      fx: ['Unlocks: a second weapon set for swapping', 'Unlocks: dual-wielding one-handers', 'Unlocks: 2x2 Quick Rig seat', 'The first calling marks your class; every calling milestone grants its armoury unlock.']
     },
     r8notable: { n: 'Between Raindrops', s: 'evasion_increased', a: 22, fx: ['+5% increased Movement Speed', 'Evading a hit hastens your next action by 10% (design text)'] },
     r9notable: { n: 'No Second Chance', s: 'crit_bonus_flat', a: 25, fx: ['+50 to Accuracy', 'Hits against enemies that just missed you gain +1% Critical Chance (design text)'] },
@@ -180,7 +180,7 @@ const SPOKES = {
     r6notable: { n: 'Running Volley', s: 'projectileDamage', a: 24, fx: ['+5% increased Movement Speed', 'Thrown hits while moving gain +10% damage (design text)'] },
     classNode: {
       n: 'Reaver', s: 'projectileDamage', a: 12,
-      fx: ['Unlocks: thrown weapons count as melee AND projectile', 'Unlocks: belt fetish slot', 'One of six callings; the first calling you take marks your class.']
+      fx: ['Unlocks: thrown weapons count as melee AND projectile', 'Unlocks: belt fetish slot', 'Unlocks: 4x4 Spoils Roll', 'The first calling marks your class; every calling milestone grants its armoury unlock.']
     },
     r8notable: { n: 'Storm of Handles', s: 'attackSpeed', a: 12, fx: ['+15% increased Projectile Damage', 'Your throws return to hand on kill (design text)'] },
     r9notable: { n: 'Nothing Wasted', s: 'projectileDamage', a: 28, fx: ['+40 to Accuracy', 'Missed throws can be recovered where they landed (design text)'] },
@@ -203,7 +203,7 @@ const SPOKES = {
     r6notable: { n: 'Oath of the Front Line', s: 'attackDamage', a: 24, fx: ['+20 to Life', 'Allies behind you take 10% less damage (design text)'] },
     classNode: {
       n: 'Champion', s: 'attackDamage', a: 12,
-      fx: ['Unlocks: tower shields become usable', 'Unlocks: war-horn curio slot', 'One of six callings; the first calling you take marks your class.']
+      fx: ['Unlocks: tower shields become usable', 'Unlocks: 2x2 War-call seat', 'The first calling marks your class; every calling milestone grants its armoury unlock.']
     },
     r8notable: { n: 'The Standing Order', s: 'guard_increased', a: 20, fx: ['+15% increased Attack Damage', 'While you have not moved recently, +15% Poise (design text)'] },
     r9notable: { n: 'Last Out of the Breach', s: 'life', a: 40, fx: ['+18% increased Attack Damage', 'Second Breath begins 25% sooner (design text)'] },
@@ -226,7 +226,7 @@ const SPOKES = {
     r6notable: { n: 'Battle Liturgy', s: 'minionDamage', a: 24, fx: ['+12% increased Rite Damage', 'Companions within your banner strike 10% faster (design text)'] },
     classNode: {
       n: 'Ritualist', s: 'minionDamage', a: 12,
-      fx: ['Unlocks: banners become usable', 'Unlocks: one martial companion-of-war', 'One of six callings; the first calling you take marks your class.']
+      fx: ['Unlocks: banners become usable', 'Unlocks: one martial companion-of-war', 'Unlocks: 4x4 Reliquary', 'The first calling marks your class; every calling milestone grants its armoury unlock.']
     },
     r8notable: { n: 'Keeper of the Column', s: 'minionDamage', a: 20, fx: ['+20 to Ward', 'Your companion shares your resistances (design text)'] },
     r9notable: { n: 'The Long Procession', s: 'spellDamage', a: 26, fx: ['+20 to Spirit', 'Rites you maintain persist 3 seconds after you fall (design text)'] },

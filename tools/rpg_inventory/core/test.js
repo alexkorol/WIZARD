@@ -94,19 +94,27 @@ t('rite focus is an off-hand focus, not a weapon damage base', () => {
   assert(/slotId === 'offHand'[\s\S]{0,90}k === 'focus'/.test(index),
     'off-hand equipment slot must accept focus items');
 });
-t('inventory layout has cloak slot and horizontal mini-pack system', () => {
+t('inventory layout has six unlock-driven auxiliary windows', () => {
   const index = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   eq(pack.forms.cloak.kind, 'cloak', 'cloak runtime kind');
   assert(/id: 'main', label: 'Backpack', w: 12, h: 6/.test(index),
     'main backpack must be the intended horizontal 12x6 layout');
-  assert(/id: 'relics', label: 'Relics & Charts', w: 4, h: 4/.test(index),
-    'relics mini-pack must exist as a 4x4 specialty grid');
-  assert(/id: 'utility', label: 'Reagents & Utility', w: 4, h: 4/.test(index),
-    'utility mini-pack must exist as a 4x4 specialty grid');
-  assert(/isRelicPackItem/.test(index) && /isUtilityPackItem/.test(index) && /canUsePack/.test(index),
+  assert(/id: 'spoils', label: 'Spoils Roll', w: 4, h: 4/.test(index),
+    'STR+DEX Spoils Roll must exist as a 4x4 specialty grid');
+  assert(/id: 'preparations', label: 'Preparation Case', w: 4, h: 4/.test(index),
+    'DEX+INT Preparation Case must exist as a 4x4 specialty grid');
+  assert(/id: 'reliquary', label: 'Reliquary', w: 4, h: 4/.test(index),
+    'INT+STR Reliquary must exist as a 4x4 specialty grid');
+  assert(/isSpoilsPackItem/.test(index) && /isPreparationsPackItem/.test(index) && /isReliquaryPackItem/.test(index) && /canUsePack/.test(index),
     'specialty pack placement must reject ordinary equipment');
-  assert(/sanctified/.test(index) && /Relic pack only holds/.test(index),
-    'relic pack must allow sanctified gear and explain rejected drops');
+  assert(/war_call_slot/.test(index) && /quick_rig_slot/.test(index) && /attendant_focus_slot/.test(index),
+    'pure-axis auxiliary seats must each have an independent unlock');
+  assert(/unlockedAuxWindows\.map/.test(index) && /className="aux-tab"/.test(index),
+    'every unlocked auxiliary window must render its own tab');
+  assert(pack.forms.warhorn.kind === 'warcall' && pack.forms.quickrig.kind === 'quickrig' && pack.forms.attendant.kind === 'attendant',
+    'three pure-axis auxiliary item kinds must exist');
+  assert([pack.forms.warhorn, pack.forms.quickrig, pack.forms.attendant].every(form => form.w === 2 && form.h === 2),
+    'pure-axis auxiliary equipment must use 2x2 item footprints');
   assert(/slotType="cloak" label="Cloak"/.test(index),
     'paperdoll must expose a cloak slot');
   assert(/item\.kind === 'cloak'\) return \['cloak'\]/.test(index),
@@ -165,8 +173,8 @@ t('generation plan keeps currency art lane closed', () => {
     'currency bucket must stay out of target counts');
   assert(!/Add 60 crafting\/currency rows/.test(plan),
     'generation order must not reintroduce currency rows');
-  assert(/Currency\/crafting-material candidates are out of scope/.test(plan),
-    'plan must carry the no-currency prompt rule');
+  assert(/Abstract currency candidates remain out of scope/.test(plan),
+    'plan must reject abstract currency while allowing concrete preparations');
   assert(/max 2 weapons/.test(plan),
     'plan must carry the prompt-batch weapon cap');
 });
@@ -221,8 +229,24 @@ t('source-image loadout extraction captures coherent kit detail', () => {
     'style experiments must record Alexei loadout breakthrough');
   assert(/Alex's idea/.test(loadout),
     'loadout doc must preserve attribution');
-  assert(/maximum 10 images/.test(loadout) && /Ring or compact finger jewelry/.test(loadout),
+  assert(/Generate 10 images\. No commentary\./.test(loadout) && /Ring or compact finger jewelry/.test(loadout),
     'loadout prompt must encode the 10-image slot constraint');
+  assert(/Generate 10 images\. No commentary\./.test(loadout),
+    'loadout prompt must start with an exact numeric image count');
+  assert(/Generate 6 images\. No commentary\./.test(loadout)
+      && /War-call instrument/.test(loadout)
+      && /Quick Rig/.test(loadout)
+      && /Attendant focus/.test(loadout)
+      && /Spoils Roll item/.test(loadout)
+      && /Preparation Case item/.test(loadout)
+      && /Reliquary item/.test(loadout),
+    'loadout pipeline must include the exact six-image auxiliary extraction pass');
+  assert(/Overt magical levitation, glow, orbiting components/.test(loadout),
+    'Attendant extraction must explicitly allow overt magical orbs');
+  assert(!/Generate images, no commentary\./.test(loadout),
+    'loadout prompt must not use a vague multi-image opener');
+  assert(/Output-file rule/.test(loadout) && /generate only slot 1/.test(loadout),
+    'loadout prompt must reject contact-sheet collapse and fall back to slot 1');
   assert(/Source-image loadout extraction lane/.test(plan),
     'generation plan must include source-image extraction as a production lane');
   assert(/feathers, tassels, scratches, shell plates/.test(all),
@@ -255,15 +279,19 @@ t('source-image loadout extraction captures coherent kit detail', () => {
     'loadout prompt must constrain shield front rendering');
   assert(/Solar symbols, eight-spoked wheel symbols, and human-face centerpieces/.test(loadout),
     'loadout prompt must constrain overused motifs');
+  assert(/Motif budget and anti-overmatching/.test(loadout) && /central round blue stone/.test(loadout + brief + style),
+    'loadout prompt must prevent overmatched repeated centerpieces');
   assert(/SLOT HYGIENE AND ANTI-COSTUME CLUTTER/.test(brief) && /Slot hygiene \/ anti-costume clutter/.test(fs.readFileSync(path.join(__dirname, '..', 'AGENTS.md'), 'utf8')),
     'brief and agent guidance must carry anti-costume clutter rules');
-  assert(/Foci and ritual tools belong to the\s+off-hand slot/.test(plan),
-    'generation plan must keep foci in the off-hand slot');
+  assert(/Held foci and ritual tools belong to the off-hand slot/.test(plan)
+      && /hands-free floating\/orbiting foci belong to the Attendant seat/.test(plan),
+    'generation plan must distinguish held foci from Attendants');
 });
 t('character source prompts are self-contained and non-proprietary', () => {
   const agents = fs.readFileSync(path.join(__dirname, '..', 'AGENTS.md'), 'utf8');
   const brief = fs.readFileSync(path.join(__dirname, 'ASSET-BRIEF.md'), 'utf8');
   const style = fs.readFileSync(path.join(__dirname, 'STYLE-EXPERIMENTS.md'), 'utf8');
+  const loadout = fs.readFileSync(path.join(__dirname, 'LOADOUT-EXTRACTION.md'), 'utf8');
   const docs = agents + brief + style;
   assert(/SELF-CONTAINED CHARACTER\/SOURCE PROMPTS/.test(brief),
     'brief must define self-contained character/source prompts as a hard rule');
@@ -283,8 +311,64 @@ t('character source prompts are self-contained and non-proprietary', () => {
     'style experiments must require expanded prompt paragraphs');
   assert(/do not assume lore familiarity/.test(brief + agents),
     'docs must forbid assumed lore familiarity with internal factions');
+  assert(/equipment bases are unisex/i.test(brief + style),
+    'docs must require unisex equipment bases with body-fit variation');
+  assert(/side-laid object|side-laid weapons or shields|Side-Laid Item Reference Rule/i.test(brief + style),
+    'docs must preserve side-laid weapons and shields as authoritative references');
+  assert(/CHARACTER CALIBRATION PROMPTS/.test(brief) && /separate-image sets/.test(agents + brief + style + loadout),
+    'docs must prefer separate-image sets for source-character calibration');
+  assert(/body\/silhouette archetype/.test(agents + brief + style + loadout),
+    'docs must require faction body/silhouette archetypes');
+  assert(/virtue\/vice/.test(agents + brief + style + loadout),
+    'docs must require faction virtue/vice gear pressure');
+  assert(/Do not write private elemental planning labels/.test(loadout) || /private elemental planning labels/.test(brief + agents),
+    'docs must keep private elemental planning labels out of final prompts');
+  assert(/belts, amulets, foci\/offhands, handwear, footwear, and outer\s+layers/.test(brief + loadout),
+    'docs must force minor slot progression across tiers');
+  assert(/every faction does not receive the same mirror disk|all foci do not become mirrors/.test(brief + style + loadout),
+    'docs must diversify Mage offhand/focus families');
   assert(/Prompt length is not the thing to optimize; visual specificity is/.test(brief),
     'brief must prioritize visual specificity over prompt brevity');
+  assert(/Northern Bronze Houses/.test(agents + brief + style + loadout),
+    'character prompt guidance must use the corrected northern faction taxonomy');
+  assert(/not a\s+marsh\/taiga faction/.test(brief) && /muddy grey-brown clothing/.test(loadout),
+    'docs must record why marsh/taiga language is invalid for northern prompts');
+  assert(/pale\s+hemmed wool and\s+linen/.test(agents + brief + style + loadout) && /bright\s+polished\s+bronze/.test(agents + brief),
+    'northern taxonomy must define a clean high-value Bronze Age material language');
+  assert(/STARTER FACTION LADDER UNIT/.test(brief) && /Generate 9 images\. No commentary\./.test(agents + brief + style),
+    'docs must define the exact nine-image faction ladder prompt unit');
+  assert(/Strength T1-T3,\s+Dexterity T1-T3,\s+(and\s+)?Intelligence T1-T3/.test(agents + brief + style),
+    'faction ladder must preserve the complete three-attribute by three-tier matrix');
+  assert(/must not\s+name fixed fantasy classes|never name fixed fantasy classes/.test(agents + brief + style),
+    'final character prompts must use attribute axes instead of named classes');
+  assert(/equipment problem-solving|equipment logic/.test(agents + brief + style),
+    'docs must define axes as gear logic rather than professions');
+  assert(/Do not add\s+an asymmetric tenth image|do not fill the model's tenth-image/.test(brief + style),
+    'faction ladder must not invent a tenth asymmetric concept');
+  assert(/TIER CONTRAST MUST BE MACROSCOPIC/.test(brief) && /at least five/.test(agents + brief + style),
+    'tier ladders must force several macro design changes between adjacent tiers');
+  assert(/richer, more saturated\s+faction-specific palette|richest controlled palette/.test(brief + style),
+    'tier ladders must explicitly escalate faction color richness');
+  assert(/workmanship and construction/.test(brief) && /not dangling clutter/.test(agents),
+    'high-tier intricacy must not regress into decorative clutter');
+  assert(/FACTION PALETTE IS NOT FACTION LIVERY/.test(brief) && /material-local/.test(agents + brief + style),
+    'faction prompts must treat palette as local material color rather than uniform livery');
+  assert(/roughly\s+one-third/.test(agents + brief + style) && /four separated\s+color-material zones/.test(agents + brief + style),
+    'character prompts must cap dominant dye and require several color-material zones');
+  assert(/different color hierarchies/.test(agents + brief + style),
+    'attribute axes must vary color hierarchy inside each faction');
+  assert(/SOURCE-CHARACTER COLOR ENVIRONMENT IS STRICTLY NEUTRAL/.test(brief) &&
+      /Neutral source-character color environment/.test(agents),
+    'durable rules must define the neutral source-character environment');
+  assert(/pure neutral-white/.test(agents + brief + style + loadout) &&
+      /neutral-white rim/.test(agents + brief + style + loadout),
+    'source-character prompts must use a neutral-white background and rim');
+  assert(/Do not use (a )?blue-gray (backdrop|background)/.test(agents + brief + style) &&
+      /global desaturation/.test(agents + brief + style),
+    'source-character prompts must reject the shared blue cast and subdued grade');
+  assert(/Only Nile Intelligence/.test(agents + brief) &&
+      /Northern, Cedar, and Silkroad/.test(agents + brief + style),
+    'blue palette drivers must be restricted to the assigned Nile Intelligence field');
   assert(/Do not save Alexei's proprietary legacy character prompts/.test(docs),
     'docs must protect proprietary legacy prompt examples');
   assert(!/Minoan Acrobat-Warrior[\s\S]{0,120}hyper-sculpted/.test(docs),
@@ -559,6 +643,66 @@ t('serialize/deserialize round-trips and rejects foreign packs', () => {
   let threw = false;
   try { forge.deserialize(JSON.stringify({ packId: 'other', state: {} })); } catch (e) { threw = true; }
   assert(threw, 'foreign pack save must be rejected');
+});
+
+/* ---------------- combat (verdigris-combat.js) ---------------- */
+const Combat = require('./verdigris-combat.js');
+const mkFighter = (bonds, awakenedTheme) => {
+  const it = forge.generateItem({ ilvl: 60, formId: 'hideshield', materialId: 'bronze', brands: 0 });
+  it.vessel = Math.max(it.vessel, bonds.length);
+  it.bonds = bonds;
+  if (awakenedTheme) it.awakened = { name: 'X', themeId: awakenedTheme, power: 'p', flavor: 'f' };
+  return it;
+};
+t('battle resolves deterministically with seeded rng and bonds fire', () => {
+  const mul = (seed) => { let a = seed >>> 0; return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let x = Math.imul(a ^ (a >>> 15), 1 | a); x = (x + Math.imul(x ^ (x >>> 7), 61 | x)) ^ x; return ((x ^ (x >>> 14)) >>> 0) / 4294967296; }; };
+  const shield = mkFighter([
+    { id: 'b1', modId: 'shieldwall', themeId: 'warding', base: 14, tier: 3, kinship: 'shieldbearer' },
+    { id: 'b2', modId: 'stand_ground', themeId: 'warding', base: 5, tier: 3, kinship: 'shieldbearer' },
+  ]);
+  const run = (seed) => Combat.resolveBattle(forge, pack, {
+    items: [shield], level: 6, charName: 'T', archetype: 'shieldbearer',
+    encounter: pack.encounters[1], rng: mul(seed),
+  });
+  const a = run(42), b = run(42);
+  eq(a.rounds, b.rounds, 'deterministic rounds');
+  eq(a.hp, b.hp, 'deterministic hp');
+  let anyProc = false;
+  for (let s = 1; s < 30 && !anyProc; s++) {
+    anyProc = run(s).log.some(l => /Shieldwall|Stand Your Ground/.test(l.text));
+  }
+  assert(anyProc, 'warding bonds proc on block across seeds');
+});
+t('last stand saves a doomed bearer exactly once', () => {
+  const relic = mkFighter([], 'warding');
+  // rng: never crit, never block/avoid, big foe hits -> death without Last Stand
+  const doomRng = (() => { let i = 0; return () => (i++ % 2 === 0 ? 0.99 : 0.5); })();
+  const r = Combat.resolveBattle(forge, pack, {
+    items: [relic], level: 30, hp: 2, charName: 'T', archetype: 'redhand',
+    encounter: pack.encounters[0], rng: doomRng,
+  });
+  const stands = r.log.filter(l => /LAST STAND/.test(l.text)).length;
+  assert(stands <= 1, 'last stand fires at most once');
+  if (!r.survived) assert(r.hp === 0, 'death reports 0 hp');
+});
+t('death is reported with a death log entry', () => {
+  let died = null;
+  for (let s = 0; s < 60 && !died; s++) {
+    const mul = (() => { let a = s + 7; return () => { a = (a * 16807) % 2147483647; return a / 2147483647; }; })();
+    const r = Combat.resolveBattle(forge, pack, {
+      items: [], level: 20, hp: 5, charName: 'T', archetype: 'redhand',
+      encounter: pack.encounters[5], rng: mul,
+    });
+    if (!r.survived) died = r;
+  }
+  assert(died, 'an unarmed wounded bearer can die');
+  assert(died.log.some(l => l.kind === 'death'), 'death entry logged');
+});
+t('venture accepts a pre-picked encounter', () => {
+  const c = forge.createCharacter({ name: 'T', archetype: 'redhand' });
+  const enc = pack.encounters[3];
+  const r = forge.venture(c, {}, { encounter: enc });
+  eq(r.encounter.text, enc.text, 'uses the provided encounter');
 });
 
 console.log(`\n${passed} passed, ${failed} failed`);

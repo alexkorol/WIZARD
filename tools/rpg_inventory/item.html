@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relic Card — Brands &amp; Bonds — WIZARD</title>
+  <meta name="description" content="A shared relic from Brands & Bonds: items remember their bearer. Sear Brands, grow Bonds — carry a vessel long enough and it awakens.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="core/vesselforge.js"></script>
+  <script src="core/verdigris-pack.js"></script>
+  <style>
+    :root {
+      --bg: #0d0c0a; --panel: #100f0c;
+      --hairline: rgba(233, 228, 216, 0.12);
+      --text: #e9e4d8; --muted: #9c9587; --dim: #6f695c;
+      --accent: #c9a227; --brand: #e0b84f; --bond: #a78bfa;
+      --trophy: #6ee7b7; --scar: #ef4444; --awake: #fb923c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Source Sans 3', sans-serif; font-size: 15px;
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 28px 14px;
+      background-image: radial-gradient(ellipse at 50% -10%, rgba(201,162,39,0.06), transparent 60%);
+    }
+    .card {
+      position: relative; width: 360px; max-width: 100%;
+      background: var(--panel); padding: 26px 22px 20px;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.7);
+    }
+    .card::before {
+      content: ""; position: absolute; inset: 0;
+      border: 14px solid transparent;
+      border-image: url('assets/frame_ornate.png') 118 / 14px stretch;
+      pointer-events: none; z-index: 2;
+    }
+    .card > * { position: relative; z-index: 1; }
+    .art-well {
+      position: relative; height: 190px; margin-bottom: 12px;
+      background: linear-gradient(165deg, rgba(22,20,17,0.86), rgba(9,8,7,0.94));
+      border: 1px solid rgba(168,144,92,0.22); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+      box-shadow: inset 0 0 22px rgba(0,0,0,0.6);
+    }
+    .art-well img.item-art {
+      max-width: 88%; max-height: 88%; object-fit: contain;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.7)); position: relative; z-index: 1;
+    }
+    .art-well .sigil { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 0; }
+    .art-well .glyph { font-size: 64px; color: var(--dim); }
+    .tt-name { font-family: 'Cinzel', serif; font-size: 1.15rem; line-height: 1.25; text-align: center; }
+    .tt-base { font-family: 'Cinzel', serif; font-size: 0.86rem; color: var(--muted); text-align: center; }
+    .tt-kind, .tt-vessel { font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); margin: 4px 0; text-align: center; }
+    .tt-divider { height: 18px; background: url('assets/divider.png') center / contain no-repeat; margin: 6px 0; opacity: 0.85; }
+    .tt-stat { color: #d6d0c2; margin-bottom: 3px; }
+    .tt-implicit { color: #8fb7e8; font-style: italic; margin-bottom: 2px; }
+    .tt-brand { color: var(--brand); margin-bottom: 3px; }
+    .tt-trophy { color: var(--trophy); margin-bottom: 3px; }
+    .tt-scar { color: var(--scar); margin-bottom: 3px; }
+    .tt-bond { margin-bottom: 3px; }
+    .tt-power { color: var(--awake); margin: 6px 0 3px; }
+    .tt-flavor { color: #b7a98a; font-style: italic; text-align: center; margin: 8px 0 2px; line-height: 1.4; font-size: 0.8rem; }
+    .estranged { opacity: 0.55; font-style: italic; }
+    .att { margin-top: 8px; }
+    .att .bar { height: 5px; background: rgba(233,228,216,0.08); border-radius: 3px; overflow: hidden; }
+    .att .fill { height: 100%; background: var(--accent); opacity: 0.7; }
+    .att .lbl { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); margin-bottom: 3px; }
+    .bearer {
+      margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--hairline);
+      color: var(--dim); font-size: 0.76rem; text-align: center; line-height: 1.4;
+    }
+    .actions { display: flex; gap: 10px; margin-top: 18px; }
+    .btn {
+      flex: 1; text-align: center; cursor: pointer; text-decoration: none;
+      background: rgba(233,228,216,0.04); color: var(--text);
+      border: 1px solid var(--hairline); border-radius: 8px;
+      padding: 9px 12px; font-family: 'Cinzel', serif; font-size: 0.72rem;
+      letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.18s ease;
+    }
+    .btn:hover { background: var(--accent); color: #0b0b0b; border-color: var(--accent); }
+    .note { margin-top: 14px; color: var(--dim); font-size: 0.74rem; text-align: center; max-width: 360px; line-height: 1.5; }
+    .note a { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="card" id="card"></div>
+  <p class="note" id="note"></p>
+
+  <script>
+    const pack = VerdigrisPack;
+    const forge = VesselForge.createForge(pack);
+    const ART_ALIASES = pack.artAliases || {};
+    const SIGIL_PATHS = {
+      slaughter: 'M6 3c2 6 2 12-1 18 M12 2c2.5 6.5 2.5 13.5 0 20 M18 3c-2 6-2 12 1 18',
+      warding: 'M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z M9 10h6l-3 5z',
+      spiritwork: 'M2 12c3-5.5 17-5.5 20 0-3 5.5-17 5.5-20 0z',
+      wayfaring: 'M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z',
+    };
+
+    const decodeShare = (hash) => {
+      const raw = decodeURIComponent(escape(atob(hash.replace(/-/g, '+').replace(/_/g, '/'))));
+      return JSON.parse(raw);
+    };
+    const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    const itemTint = (item) => {
+      if (!item.vessel) return { color: '#d6d0c2', glow: 'none' };
+      if (item.awakened) return { color: '#fb923c', glow: '0 0 26px rgba(249,115,22,0.35)' };
+      const nb = item.brands.length + item.trophies.length, nd = item.bonds.length;
+      if (nd > nb) {
+        const theme = pack.themes[forge.dominantBondTheme(item)];
+        return { color: theme.color, glow: `0 0 20px ${theme.color}44` };
+      }
+      if (nb > 0 || nd > 0) return { color: '#e0b84f', glow: '0 0 16px rgba(201,162,39,0.22)' };
+      return { color: '#d6d0c2', glow: 'none' };
+    };
+
+    const sampleRelic = () => {
+      const item = forge.generateItem({ ilvl: 62, formId: 'hideshield', materialId: 'bronze', brands: 0 });
+      item.vessel = 4;
+      item.brands = [{ id: 'sb', modId: 'hale', tier: 2, value: 32 }];
+      item.bonds = [
+        { id: 's1', modId: 'shieldwall', themeId: 'warding', base: 12, tier: 3, kinship: 'shieldbearer' },
+        { id: 's2', modId: 'stand_ground', themeId: 'warding', base: 4, tier: 3, kinship: 'shieldbearer' },
+        { id: 's3', modId: 'old_grudge', themeId: 'warding', base: 26, tier: 3, kinship: 'shieldbearer' },
+      ];
+      item.evolutions = 9;
+      item.att = { xp: 0, next: 575, tc: { warding: 22 } };
+      item.awakened = {
+        name: "Azrael's Unbroken Vigil", themeId: 'warding',
+        power: pack.themes.warding.power,
+        flavor: 'Bound to Azrael through 9 trials. It has learned to endure.',
+      };
+      return { v: 1, bearer: 'Azrael', archetype: 'shieldbearer', item };
+    };
+
+    let payload = null, isSample = false;
+    try {
+      const hash = location.hash.replace(/^#/, '');
+      if (hash) payload = decodeShare(hash);
+    } catch (err) { payload = null; }
+    if (!payload || !payload.item || !pack.forms[payload.item.formId]) {
+      payload = sampleRelic();
+      isSample = true;
+    }
+
+    const item = payload.item;
+    const tint = itemTint(item);
+    const lines = forge.tooltip(item, { archetype: payload.archetype });
+    const artId = `${item.formId}_${item.materialId}`;
+    const artPath = item.artOverride || `assets/${ART_ALIASES[artId] || artId}.png`;
+    const sigilTheme = item.bonds.length ? forge.dominantBondTheme(item) : null;
+
+    const rows = [];
+    let dividerShown = false;
+    lines.forEach(l => {
+      if (l.section === 'attune') return;
+      const cls = ({ name: 'tt-name', base: 'tt-base', kind: 'tt-kind', vessel: 'tt-vessel',
+        stat: 'tt-stat', implicit: 'tt-implicit', brand: 'tt-brand', bond: 'tt-bond',
+        trophy: 'tt-trophy', scar: 'tt-scar', power: 'tt-power', flavor: 'tt-flavor' })[l.section] || 'tt-stat';
+      if (l.section === 'implicit' && !dividerShown) { rows.push('<div class="tt-divider"></div>'); dividerShown = true; }
+      let style = '';
+      if (l.section === 'name') style = `color:${tint.color}`;
+      if (l.section === 'bond' && l.tone === 'bond') {
+        const b = item.bonds.find(bb => l.text.includes(pack.themes[bb.themeId].mods[bb.modId].name));
+        if (b) style = `color:${pack.themes[b.themeId].color}`;
+      }
+      rows.push(`<div class="${cls}${l.tone === 'estranged' ? ' estranged' : ''}"${style ? ` style="${style}"` : ''}>${esc(l.text)}</div>`);
+    });
+
+    const showAtt = item.vessel > 0 && !forge.isSated(item);
+    const attPct = showAtt ? Math.min(100, Math.round((item.att.xp / item.att.next) * 100)) : 0;
+    const archName = pack.archetypes[payload.archetype] ? pack.archetypes[payload.archetype].name : null;
+    const sigilSvg = sigilTheme && SIGIL_PATHS[sigilTheme]
+      ? `<div class="sigil" style="color:${pack.themes[sigilTheme].color};opacity:${item.awakened ? 0.18 : 0.11}">
+           <svg viewBox="0 0 24 24" width="130" height="130" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="${SIGIL_PATHS[sigilTheme]}"/></svg>
+         </div>` : '';
+
+    document.getElementById('card').innerHTML = `
+      <div class="art-well" style="box-shadow: inset 0 0 22px rgba(0,0,0,0.6), ${tint.glow}">
+        ${sigilSvg}
+        <img class="item-art" src="${esc(artPath)}" alt="" onerror="this.outerHTML='<span class=&quot;glyph&quot;>&#9672;</span>'">
+      </div>
+      ${rows.join('')}
+      ${showAtt ? `<div class="att"><div class="lbl">Attunement ${item.att.xp}/${item.att.next}</div><div class="bar"><div class="fill" style="width:${attPct}%"></div></div></div>` : ''}
+      ${payload.bearer ? `<div class="bearer">Borne by <b>${esc(payload.bearer)}</b>${archName ? ` the ${esc(archName)}` : ''} in the Green Lands.<br>Brands are seared. Bonds are earned. Items remember their bearer.</div>` : ''}
+      <div class="actions">
+        <button class="btn" id="copyBtn">Copy Link</button>
+        <a class="btn" href="index.html">Enter the Vault</a>
+      </div>`;
+
+    document.getElementById('note').innerHTML = isSample
+      ? 'This is a sample relic. Forge your own in <a href="index.html">Brands &amp; Bonds</a>, socket it in the Atelier, and share its card.'
+      : 'A relic from <a href="index.html">Brands &amp; Bonds</a> — a bronze-age ARPG itemization sandbox on the Vesselforge engine.';
+
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('copyBtn');
+      try {
+        await navigator.clipboard.writeText(location.href);
+        btn.textContent = 'Copied';
+      } catch (err) {
+        const ta = document.createElement('textarea');
+        ta.value = location.href; document.body.appendChild(ta);
+        ta.select(); document.execCommand('copy'); ta.remove();
+        btn.textContent = 'Copied';
+      }
+      setTimeout(() => { btn.textContent = 'Copy Link'; }, 1600);
+    });
+  </script>
+</body>
+</html>

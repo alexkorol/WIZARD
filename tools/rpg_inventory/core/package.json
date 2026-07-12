@@ -1,0 +1,37 @@
+{
+  "name": "vesselforge",
+  "version": "1.0.0",
+  "description": "Engine-agnostic, seedable, zero-dependency ARPG itemization engine: vessels, brands (crafted mods), bonds (earned conditional mods with kinship/estrangement), trophies, awakening, kiln ascension, and crafting-odds transparency via explainOdds().",
+  "main": "vesselforge.js",
+  "types": "vesselforge.d.ts",
+  "files": [
+    "vesselforge.js",
+    "vesselforge.d.ts",
+    "verdigris-pack.js",
+    "verdigris-combat.js",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "arpg",
+    "itemization",
+    "loot",
+    "item-generation",
+    "roguelike",
+    "roguelite",
+    "crafting",
+    "game-engine",
+    "seedable",
+    "rng"
+  ],
+  "author": "Alexei Korol",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexkorol/WIZARD.git",
+    "directory": "tools/rpg_inventory/core"
+  },
+  "homepage": "https://alexkorol.github.io/WIZARD/tools/rpg_inventory/core/playground.html"
+}

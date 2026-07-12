@@ -457,9 +457,9 @@
     }
     const charLevel = (c) => 1 + Math.floor(c.xp / 100);
 
-    function venture(character, equipment) {
+    function venture(character, equipment, opts = {}) {
       const c = JSON.parse(JSON.stringify(character));
-      const enc = pick(pack.encounters || [{ text: 'wandered the hills', themes: {} }]);
+      const enc = opts.encounter || pick(pack.encounters || [{ text: 'wandered the hills', themes: {} }]);
       const events = [];
       const gold = rint(20, 65);
       c.gold += gold;

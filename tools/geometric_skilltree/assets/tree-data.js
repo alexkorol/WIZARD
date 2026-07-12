@@ -2500,8 +2500,8 @@
       "effects": [
         "+12% increased Attack Damage",
         "Unlocks: tower shields become usable",
-        "Unlocks: war-horn curio slot",
-        "One of six callings; the first calling you take marks your class."
+        "Unlocks: 2x2 War-call seat",
+        "The first calling marks your class; every calling milestone grants its armoury unlock."
       ],
       "stat": "attackDamage",
       "amount": 12,
@@ -2633,7 +2633,8 @@
         "+12% increased Companion Damage",
         "Unlocks: banners become usable",
         "Unlocks: one martial companion-of-war",
-        "One of six callings; the first calling you take marks your class."
+        "Unlocks: 4x4 Reliquary",
+        "The first calling marks your class; every calling milestone grants its armoury unlock."
       ],
       "stat": "minionDamage",
       "amount": 12,
@@ -2765,7 +2766,8 @@
         "+15% increased Rite Damage",
         "Unlocks: a second curio slot",
         "Unlocks: rite-foci gain +1 socket",
-        "One of six callings; the first calling you take marks your class."
+        "Unlocks: 2x2 Attendant focus seat",
+        "The first calling marks your class; every calling milestone grants its armoury unlock."
       ],
       "stat": "spellDamage",
       "amount": 15,
@@ -2897,7 +2899,8 @@
         "+12% increased Ailment Effect",
         "Unlocks: trap and mark tools become equippable",
         "Unlocks: venom vial slot",
-        "One of six callings; the first calling you take marks your class."
+        "Unlocks: 4x4 Preparation Case",
+        "The first calling marks your class; every calling milestone grants its armoury unlock."
       ],
       "stat": "ailmentEffect",
       "amount": 12,
@@ -3029,7 +3032,8 @@
         "+12% increased Evasion",
         "Unlocks: a second weapon set for swapping",
         "Unlocks: dual-wielding one-handers",
-        "One of six callings; the first calling you take marks your class."
+        "Unlocks: 2x2 Quick Rig seat",
+        "The first calling marks your class; every calling milestone grants its armoury unlock."
       ],
       "stat": "evasion_increased",
       "amount": 12,
@@ -3161,7 +3165,8 @@
         "+12% increased Projectile Damage",
         "Unlocks: thrown weapons count as melee AND projectile",
         "Unlocks: belt fetish slot",
-        "One of six callings; the first calling you take marks your class."
+        "Unlocks: 4x4 Spoils Roll",
+        "The first calling marks your class; every calling milestone grants its armoury unlock."
       ],
       "stat": "projectileDamage",
       "amount": 12,

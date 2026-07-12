@@ -231,7 +231,7 @@
     sourcePath: `assets_inbox/${BATCH}-source`,
     cleanedPath: `assets_inbox/${BATCH}-cleaned`,
     statuses: ["review", "keep", "replace", "duplicate", "discard"],
-    slots: ["head", "amulet", "body", "cloak", "belt", "ring", "hands", "boots", "weapon", "shield", "focus", "odd"],
+    slots: ["head", "amulet", "body", "cloak", "belt", "ring", "hands", "boots", "weapon", "shield", "focus", "warcall", "quickrig", "attendant", "trophy", "reagent", "relic", "odd"],
   };
 
   window.VerdigrisCharacterItemTaxonomy = ITEMS.map(([n, slot, subtype, notes = ""]) => {

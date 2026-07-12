@@ -56,21 +56,23 @@
         radial-gradient(circle at 15% 40%, rgba(201, 162, 39, 0.05), transparent 36%),
         radial-gradient(circle at 80% 20%, rgba(110, 231, 183, 0.03), transparent 32%);
       padding-bottom: 40px;
+      padding-left: 176px;
     }
 
     .top-bar {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      padding: 14px 22px;
-      background: linear-gradient(90deg, #0d0c0a, #100f0c);
-      border-bottom: 1px solid var(--hairline);
-      position: sticky;
-      top: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 18px;
+      padding: 18px 14px;
+      background: linear-gradient(180deg, #0d0c0a, #100f0c);
+      border-right: 1px solid var(--hairline);
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 176px;
       z-index: 50;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      box-shadow: 8px 0 20px rgba(0,0,0,0.6);
+      overflow-y: auto;
     }
 
     .back-link {
@@ -89,16 +91,17 @@
     }
     .back-link:hover { color: var(--accent); border-color: var(--hairline); }
 
-    .title { font-family: 'Cinzel', serif; letter-spacing: 0.14em; font-size: 1.1rem; color: var(--text); }
+    .title { font-family: 'Cinzel', serif; letter-spacing: 0.12em; font-size: 0.95rem; color: var(--text); }
     .title strong { color: var(--accent); }
-    .subtext { color: var(--muted); font-size: 0.85rem; }
+    .subtext { color: var(--muted); font-size: 0.72rem; line-height: 1.4; margin-top: 5px; }
 
-    .top-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .top-actions { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+    .top-actions .btn { width: 100%; padding: 9px 8px; font-size: 0.68rem; text-align: center; }
     .gold-counter {
       display: flex; align-items: center; gap: 8px;
       background: #0b0a08;
       border: 1px solid rgba(201, 162, 39, 0.35);
-      padding: 8px 12px; border-radius: 10px;
+      padding: 8px 10px; border-radius: 10px;
       color: #e0c25e; font-family: 'JetBrains Mono', monospace;
       box-shadow: inset 0 0 12px rgba(0,0,0,0.5);
       white-space: nowrap;
@@ -124,7 +127,7 @@
        the portrait inventory frame docks right, the "world" shows between. */
     .main {
       display: flex; flex-wrap: wrap; gap: 24px;
-      padding: 24px 28px; max-width: 1500px; margin: 0 auto;
+      padding: 16px 20px; max-width: 1500px; margin: 0 auto;
       align-items: flex-start;
       justify-content: space-between;
     }
@@ -275,7 +278,7 @@
     .heir-form input:focus { outline: none; border-color: var(--accent); }
 
     /* ---------- Right panel ---------- */
-    .inventory-panel { display: flex; flex-direction: column; gap: 12px; width: fit-content; max-width: 100%; }
+    .inventory-panel { display: flex; flex-direction: column; gap: 6px; width: fit-content; max-width: 100%; overflow: visible; }
     .section-title { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
     .pack-actions { display: flex; gap: 8px; }
     .pack-grids { display: flex; flex-direction: column; align-items: center; gap: 10px; }
@@ -294,6 +297,76 @@
       max-width: 100%;
       justify-content: center;
     }
+
+    /* Specialty storage and non-core equipment stay off-canvas until needed. */
+    .aux-tab-stack {
+      position: absolute;
+      left: -37px;
+      top: 54px;
+      z-index: 33;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .aux-tab {
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      border: 1px solid rgba(201,162,39,0.38);
+      border-right-color: var(--panel);
+      border-radius: 8px 0 0 8px;
+      background: rgba(16,15,12,0.98);
+      color: #d9bd69;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      cursor: pointer;
+      box-shadow: -5px 5px 14px rgba(0,0,0,0.42);
+    }
+    .aux-tab[data-axis="str"] { border-color: rgba(248,113,113,0.48); color: #f3a19d; }
+    .aux-tab[data-axis="dex"] { border-color: rgba(134,239,172,0.48); color: #a7efbd; }
+    .aux-tab[data-axis="int"] { border-color: rgba(147,197,253,0.48); color: #a8cdf6; }
+    .aux-tab[data-axis="str-dex"] { border-color: rgba(251,191,36,0.48); color: #e9c46b; }
+    .aux-tab[data-axis="dex-int"] { border-color: rgba(45,212,191,0.48); color: #77d9cc; }
+    .aux-tab[data-axis="int-str"] { border-color: rgba(192,132,252,0.48); color: #cfa4f1; }
+    .aux-tab:hover { color: #fff0ad; border-color: var(--accent); }
+    .aux-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .aux-drawer {
+      position: absolute;
+      top: 0;
+      right: calc(100% + 8px);
+      z-index: 32;
+      width: max-content;
+      max-width: min(500px, calc(100vw - 210px));
+      max-height: calc(100vh - 32px);
+      overflow: auto;
+      padding: 14px;
+      background: rgba(13,12,10,0.98);
+      border: 1px solid rgba(201,162,39,0.28);
+      border-radius: 10px;
+      box-shadow: -16px 18px 42px rgba(0,0,0,0.68);
+      transform: translateX(14px) scale(0.98);
+      transform-origin: right top;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.18s ease, opacity 0.18s ease, visibility 0s linear 0.18s;
+    }
+    .aux-drawer.open {
+      transform: translateX(0) scale(1);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition-delay: 0s;
+    }
+    .aux-drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+    .aux-slot-window { min-width: 190px; }
+    .aux-slot-window .equip-slot { margin: 4px auto 0; }
 
     .grid-shell {
       position: relative; display: inline-block; max-width: 100%;
@@ -581,15 +654,52 @@
     .toast.bond { background: rgba(42,32,74,0.94); color: #ddd6fe; border: 1px solid rgba(167,139,250,0.6); }
     .toast.awake { background: rgba(66,32,9,0.95); color: #fed7aa; border: 1px solid rgba(251,146,60,0.7); }
 
+    @media (max-width: 1450px) {
+      .aux-drawer {
+        position: fixed;
+        inset: 16px auto auto 184px;
+        right: auto;
+        max-width: min(500px, calc(100vw - 200px));
+        max-height: calc(100vh - 32px);
+      }
+    }
+
     @media (max-width: 700px) {
       :root { --pc: 36px; }
+      .app-shell { padding-left: 0; padding-top: 48px; }
       .main { padding: 14px; gap: 16px; }
-      .top-bar { padding: 12px 14px; }
+      .top-bar {
+        inset: 0 0 auto 0;
+        width: auto;
+        height: 48px;
+        padding: 7px 10px;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        border-right: none;
+        border-bottom: 1px solid var(--hairline);
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+      .top-bar > div:first-child .subtext, .top-bar .back-link { display: none; }
+      .top-bar .title { font-size: 0.72rem; white-space: nowrap; }
+      .top-actions { flex-direction: row; align-items: center; gap: 6px; }
+      .top-actions .btn { width: auto; padding: 7px 8px; }
+      .gold-counter { padding: 6px 8px; }
       .inventory-panel { width: 100%; }
       .left-col { width: 100%; }
       .paperdoll { width: 100%; }
       .grid-shell { display: block; -webkit-overflow-scrolling: touch; }
       .mini-pack-row { grid-template-columns: 1fr; }
+      .aux-tab-stack { left: -30px; top: 40px; }
+      .aux-tab { width: 32px; }
+      .aux-drawer {
+        position: fixed;
+        inset: 54px auto auto 8px;
+        right: auto;
+        max-width: calc(100vw - 16px);
+        max-height: calc(100vh - 62px);
+      }
       .equip-slot .label { font-size: 0.52rem; }
       .atelier-socket { width: 100%; min-height: 150px; }
     }
@@ -618,10 +728,22 @@
 
   const PACK_DEFS = [
     { id: 'main', label: 'Backpack', w: 12, h: 6, tone: 'main' },
-    { id: 'relics', label: 'Relics & Charts', w: 4, h: 4, tone: 'mini' },
-    { id: 'utility', label: 'Reagents & Utility', w: 4, h: 4, tone: 'mini' },
+    { id: 'spoils', label: 'Spoils Roll', w: 4, h: 4, tone: 'mini', unlock: 'spoils_pack' },
+    { id: 'preparations', label: 'Preparation Case', w: 4, h: 4, tone: 'mini', unlock: 'preparations_pack' },
+    { id: 'reliquary', label: 'Reliquary', w: 4, h: 4, tone: 'mini', unlock: 'reliquary_pack' },
   ];
   const PACK_BY_ID = Object.fromEntries(PACK_DEFS.map(def => [def.id, def]));
+  const LEGACY_PACK_IDS = { relics: 'reliquary', utility: 'preparations' };
+  const AUX_WINDOWS = [
+    { id: 'warcall-window', label: 'War-call', axis: 'str', unlock: 'war_call_slot', slotId: 'warhorn' },
+    { id: 'quickrig-window', label: 'Quick Rig', axis: 'dex', unlock: 'quick_rig_slot', slotId: 'quickRig' },
+    { id: 'attendant-window', label: 'Attendant', axis: 'int', unlock: 'attendant_focus_slot', slotId: 'attendant' },
+    { id: 'spoils-window', label: 'Spoils Roll', axis: 'str-dex', unlock: 'spoils_pack', packId: 'spoils' },
+    { id: 'preparations-window', label: 'Preparation Case', axis: 'dex-int', unlock: 'preparations_pack', packId: 'preparations' },
+    { id: 'reliquary-window', label: 'Reliquary', axis: 'int-str', unlock: 'reliquary_pack', packId: 'reliquary' },
+  ];
+  const SLOT_UNLOCKS = { warhorn: 'war_call_slot', quickRig: 'quick_rig_slot', attendant: 'attendant_focus_slot' };
+  const UNLOCK_ALIASES = { war_call_slot: ['war_horn_curio'] };
   const MAIN_PACK_ID = 'main';
   const GRID_W = PACK_BY_ID[MAIN_PACK_ID].w;
   const GRID_H = PACK_BY_ID[MAIN_PACK_ID].h;
@@ -685,7 +807,7 @@
   const DEFAULT_EQUIPMENT = {
     head: null, amulet: null, mainHand: null, body: null, cloak: null, offHand: null,
     gloves: null, belt: null, boots: null, ring1: null, ring2: null,
-    warhorn: null, // war-horn curio seat; the passive tree's Champion calling unlocks it
+    warhorn: null, quickRig: null, attendant: null,
   };
 
   /* Cross-page bridge from the geometric passive tree (Phase 6): the tree
@@ -744,6 +866,9 @@
     if (item.kind === 'belt') return ['belt'];
     if (item.kind === 'amulet') return ['amulet'];
     if (item.kind === 'ring') return ['ring'];
+    if (item.kind === 'warcall') return ['warcall'];
+    if (item.kind === 'quickrig') return ['quickrig'];
+    if (item.kind === 'attendant') return ['attendant'];
     return ['focus'];
   };
   const randomFrom = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -773,6 +898,9 @@
     if (row.slot === 'boots') return /greave|shin|bronze|lapis|greenbone|gold/.test(sub) ? 'greaves' : 'sandals';
     if (row.slot === 'shield') return /buckler/.test(sub) ? 'buckler' : 'hideshield';
     if (row.slot === 'focus') return 'focus';
+    if (row.slot === 'warcall') return 'warhorn';
+    if (row.slot === 'quickrig') return 'quickrig';
+    if (row.slot === 'attendant') return 'attendant';
     if (row.slot === 'weapon') {
       if (/axe|pick/.test(sub)) return sub.includes('hand') ? 'handaxe' : 'greataxe';
       if (/club|mace/.test(sub)) return 'warclub';
@@ -832,7 +960,10 @@
   const itemIcon = (item) => (pack.forms[item.formId] || {}).icon || 'default';
 
   /* ---------------- grid placement (UI concern, not engine) ---------------- */
-  const normalizePackId = (packId) => PACK_BY_ID[packId] ? packId : MAIN_PACK_ID;
+  const normalizePackId = (packId) => {
+    const migrated = LEGACY_PACK_IDS[packId] || packId;
+    return PACK_BY_ID[migrated] ? migrated : MAIN_PACK_ID;
+  };
   const packSearchText = (item) => {
     const row = taxonomyRowFor(item);
     return [
@@ -849,7 +980,14 @@
   };
   const isSanctifiedItem = (item) =>
     Boolean(item?.sanctified || item?.consecrated || item?.awakened || item?.trophies?.length);
-  const isRelicPackItem = (item) => {
+  const isSpoilsPackItem = (item) => {
+    if (!item) return false;
+    const text = packSearchText(item);
+    return item.kind === 'trophy'
+      || item.trophy === true
+      || /\b(trophy|spoil|tusk|fang|claw|shell|carapace|hide|pelt|antler|monster part|hunt token)\b/.test(text);
+  };
+  const isReliquaryPackItem = (item) => {
     if (!item) return false;
     const text = packSearchText(item);
     return isSanctifiedItem(item)
@@ -858,9 +996,9 @@
       || item.kind === 'chart'
       || item.relic === true
       || item.chart === true
-      || /\b(relic|chart|map|codex|scroll|fragment|charm|trophy|keepsake|offering|omen)\b/.test(text);
+      || /\b(relic|chart|map|codex|scroll|fragment|charm|keepsake|offering|omen|sanctified|votive)\b/.test(text);
   };
-  const isUtilityPackItem = (item) => {
+  const isPreparationsPackItem = (item) => {
     if (!item) return false;
     const text = packSearchText(item);
     return item.kind === 'reagent'
@@ -871,14 +1009,16 @@
   const canUsePack = (item, packId = MAIN_PACK_ID) => {
     const targetPackId = normalizePackId(packId);
     if (targetPackId === 'main') return true;
-    if (targetPackId === 'relics') return isRelicPackItem(item);
-    if (targetPackId === 'utility') return isUtilityPackItem(item);
+    if (targetPackId === 'spoils') return isSpoilsPackItem(item);
+    if (targetPackId === 'preparations') return isPreparationsPackItem(item);
+    if (targetPackId === 'reliquary') return isReliquaryPackItem(item);
     return false;
   };
-  const packRejectReason = (packId) =>
-    normalizePackId(packId) === 'relics'
-      ? 'Relic pack only holds relics, charts, charms, trophies, or sanctified gear'
-      : 'Utility pack only holds reagents, herbs, pigments, tools, and supplies';
+  const packRejectReason = (packId) => ({
+    spoils: 'Spoils Roll only holds trophies, monster parts, and hunt-earned remains',
+    preparations: 'Preparation Case only holds reagents, venoms, pigments, tools, and field supplies',
+    reliquary: 'Reliquary only holds relics, charms, offerings, texts, and sanctified objects',
+  })[normalizePackId(packId)] || 'That item does not belong in this pack';
   const canPlaceItem = (inventory, item, x, y, ignoreId = null, packId = MAIN_PACK_ID) => {
     const targetPackId = normalizePackId(packId);
     const packDef = PACK_BY_ID[targetPackId];
@@ -904,7 +1044,8 @@
   };
   const findFreeSpotAnyPack = (inventory, item, preferredPackId = MAIN_PACK_ID) => {
     const first = normalizePackId(preferredPackId);
-    const order = [first, ...PACK_DEFS.map(def => def.id).filter(id => id !== first)];
+    // Specialty packs are explicit skill-tree rewards, never invisible overflow.
+    const order = first === MAIN_PACK_ID ? [MAIN_PACK_ID] : [first, MAIN_PACK_ID];
     for (const packId of order) {
       const pos = findFreeSpot(inventory, item, packId);
       if (pos) return pos;
@@ -940,7 +1081,9 @@
     if (slotId === 'belt') return k === 'belt';
     if (slotId === 'amulet') return k === 'amulet';
     if (slotId === 'ring1' || slotId === 'ring2') return k === 'ring';
-    if (slotId === 'warhorn') return k === 'curio';
+    if (slotId === 'warhorn') return k === 'warcall' || k === 'curio';
+    if (slotId === 'quickRig') return k === 'quickrig';
+    if (slotId === 'attendant') return k === 'attendant';
     return false;
   };
 
@@ -969,6 +1112,9 @@
     put(forge.generateItem({ ilvl: 28, formId: 'gorget', materialId: 'jade', brands: 1 }));
     put(forge.generateItem({ ilvl: 18, formId: 'ring', materialId: 'bone', brands: 0 }));
     put(forge.generateItem({ ilvl: 20, formId: 'curio', materialId: 'bone' }));
+    put(forge.generateItem({ ilvl: 24, formId: 'warhorn', materialId: 'bone', brands: 1 }));
+    put(forge.generateItem({ ilvl: 28, formId: 'quickrig', materialId: 'hide', brands: 1 }));
+    put(forge.generateItem({ ilvl: 32, formId: 'attendant', materialId: 'copper', brands: 1 }));
     ['batch_126', 'batch_132', 'batch_166', 'batch_173', 'batch_178', 'batch_190'].forEach((id, i) => {
       const row = TAXONOMY_BY_ID.get(id);
       if (row) put(generateTaxonomyLoot(36 + i * 4, row));
@@ -1270,6 +1416,7 @@
 
     const [benchOpen, setBenchOpen] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [openAuxId, setOpenAuxId] = useState(null);
     const [pigmentId, setPigmentId] = useState('');
     const [omenId, setOmenId] = useState('');
     const [dragState, setDragState] = useState(null);
@@ -1278,7 +1425,16 @@
     const [toast, setToast] = useState(null);
     const [treeBridge, setTreeBridge] = useState(readTreeBridge);
     const packGridRefs = useRef({});
-    const warhornUnlocked = (treeBridge.unlocks || []).includes('war_horn_curio');
+    const treeUnlocks = treeBridge.unlocks || [];
+    const hasUnlock = (flag) => treeUnlocks.includes(flag)
+      || (UNLOCK_ALIASES[flag] || []).some(alias => treeUnlocks.includes(alias));
+    const unlockedAuxWindows = AUX_WINDOWS.filter(def => hasUnlock(def.unlock));
+
+    useEffect(() => {
+      if (openAuxId && !AUX_WINDOWS.some(def => def.id === openAuxId && hasUnlock(def.unlock))) {
+        setOpenAuxId(null);
+      }
+    }, [openAuxId, treeBridge]);
 
     useEffect(() => {
       const sync = () => setTreeBridge(readTreeBridge());
@@ -1358,7 +1514,7 @@
     const packHitAt = (clientX, clientY, pad = 25) => {
       for (const def of PACK_DEFS) {
         const el = packGridRefs.current[def.id];
-        if (!el) continue;
+        if (!el || window.getComputedStyle(el).visibility !== 'visible') continue;
         const rect = el.getBoundingClientRect();
         if (clientX >= rect.left - pad && clientX <= rect.right + pad &&
             clientY >= rect.top - pad && clientY <= rect.bottom + pad) {
@@ -1416,8 +1572,9 @@
       const slotElement = elements.find(el => el.getAttribute && el.getAttribute('data-slot-id'));
       if (slotElement) {
         const slotId = slotElement.getAttribute('data-slot-id');
-        if (slotId === 'warhorn' && !warhornUnlocked) {
-          showToast('Locked — allocate Champion on the passive tree');
+        const requiredUnlock = SLOT_UNLOCKS[slotId];
+        if (requiredUnlock && !hasUnlock(requiredUnlock)) {
+          showToast('That auxiliary seat is not unlocked on the passive tree');
           setState(prev => returnToSource(prev, drag));
           return;
         }
@@ -1480,7 +1637,7 @@
       }
 
       setState(prev => returnToSource(prev, drag));
-    }, [dragState, benchOpen]);
+    }, [dragState, benchOpen, treeBridge]);
 
     useEffect(() => {
       const handleMove = (e) => {
@@ -2039,7 +2196,48 @@
 
           {/* ---------------- Inventory: portrait frame, PoE-style ---------------- */}
           <div className="panel inventory-panel">
-            <div className="panel-banner"><span>Inventory</span></div>
+            <div className="aux-tab-stack" aria-label="Unlocked auxiliary windows">
+              {unlockedAuxWindows.map(def => {
+                const isOpen = openAuxId === def.id;
+                return (
+                  <button
+                    key={def.id}
+                    className="aux-tab"
+                    data-axis={def.axis}
+                    onClick={() => setOpenAuxId(isOpen ? null : def.id)}
+                    aria-label={`${isOpen ? 'Close' : 'Open'} ${def.label}`}
+                    aria-expanded={isOpen}
+                    aria-controls={def.id}
+                    title={`${def.label} · ${def.axis.toUpperCase()}`}
+                  >
+                    {isOpen ? '>>' : '<<'}
+                  </button>
+                );
+              })}
+            </div>
+
+            {AUX_WINDOWS.map(def => {
+              const isOpen = openAuxId === def.id && hasUnlock(def.unlock);
+              return (
+                <aside key={def.id} id={def.id} className={`aux-drawer ${isOpen ? 'open' : ''}`} aria-hidden={!isOpen}>
+                  <div className="aux-drawer-head">
+                    <span className="section-title">{def.label} · {def.axis.toUpperCase()}</span>
+                    <button className="btn small" onClick={() => setOpenAuxId(null)}>Close</button>
+                  </div>
+                  {def.packId ? renderPackGrid(PACK_BY_ID[def.packId]) : (
+                    <div className="aux-slot-window">
+                      <EquipmentSlot
+                        slotType={def.slotId}
+                        label={def.label}
+                        size="s2x2"
+                        item={equipment[def.slotId]}
+                        {...slotProps}
+                      />
+                    </div>
+                  )}
+                </aside>
+              );
+            })}
 
             <div className="doll-wrap">
               <div className="slot-row doll">
@@ -2053,14 +2251,6 @@
                   <div className="ring-row">
                     <EquipmentSlot slotType="ring1" label="Ring" size="s1x1" item={equipment.ring1} {...slotProps} />
                     <EquipmentSlot slotType="ring2" label="Ring" size="s1x1" item={equipment.ring2} {...slotProps} />
-                    <EquipmentSlot
-                      slotType="warhorn"
-                      label={warhornUnlocked ? 'War-horn' : '🔒 War-horn'}
-                      size="s1x1"
-                      item={equipment.warhorn}
-                      locked={!warhornUnlocked}
-                      {...slotProps}
-                    />
                   </div>
                 </div>
                 <div className="doll-col">
@@ -2077,9 +2267,6 @@
 
             <div className="pack-grids">
               {renderPackGrid(PACK_BY_ID.main)}
-              <div className="mini-pack-row">
-                {PACK_DEFS.filter(def => def.tone === 'mini').map(renderPackGrid)}
-              </div>
             </div>
 
           </div>

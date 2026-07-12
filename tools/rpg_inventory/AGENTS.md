@@ -66,6 +66,23 @@ queue top-down, stay under budget, log to `GEN-LOG.md`, stop cleanly.
 5. **Style/tone:** concise and direct; do the work; don't over-ask or over-
    explain; don't grovel.
 
+## Inventory UI direction (2026-07-12)
+
+- Secondary storage and equipment are six independent collapsible side windows,
+  never one combined drawer. Each available window has its own small `<<` tab
+  beside the main-hand/hands edge; unavailable tabs stay absent because their
+  skill-tree unlock has not been allocated.
+- The three hybrid axes each unlock one 4x4 specialty pack: STR+DEX, DEX+INT,
+  and INT+STR. The three pure axes each unlock one 2x2 auxiliary equipment seat.
+- Canonical mapping: Champion/STR = War-call; Acrobat/DEX = Quick Rig;
+  Archmage/INT = Attendant focus; Reaver/STR+DEX = Spoils Roll;
+  Nightblade/DEX+INT = Preparation Case; Ritualist/INT+STR = Reliquary.
+- Attendant foci may be overtly magical, including semi-floating or orbiting
+  orbs, glow, levitation, and impossible suspension. Currency/reagent prompt
+  cautions do not restrict this equipment category.
+- Keep the core paperdoll and 12x6 backpack visible. Do not restore the redundant
+  Inventory banner, stacked specialty packs, or a desktop top action bar.
+
 ## Art direction
 
 The authoritative prompt spec lives in `core/ASSET-BRIEF.md` under
@@ -138,6 +155,87 @@ front straps, clamshells, dangling hardware, or utility rigging. Avoid invasive
 charms, chimes, tassels, tiny hanging rings, delicate costume chains, solar
 symbols, eight-spoked wheels, and repeated human-face motifs unless explicitly
 reviewed. Sets should be coordinated, not motif-cloned across every slot.
+In source-image itemization, also block "overmatched" sets: do not let every
+item repeat the same central round stone, blue gem, boss, eye, sun mark,
+medallion, or emblem. A set may share materials and construction language, but
+only one or two items should carry a strong focal motif; the rest should vary by
+shape, edge treatment, construction, weave, grip, plate layout, or fasteners.
+If ChatGPT collapses a multi-slot extraction into a single contact sheet, reject
+it. The first line of a multi-image prompt must state the exact count, e.g.
+`Generate 10 images. No commentary.` Do not write vague openers such as
+an image request with no number. The prompt must say separate independent image
+files, never a sheet; if the model cannot produce separate files, it should
+generate only slot 1 instead of putting multiple items into one image.
+**Character calibration feedback** (2026-07-09): separate-image sets usually
+beat dense collages for source-character calibration. Collages are acceptable
+for quick lineup sheets, but item-source prompts should default to separate
+images when possible. Faction blocks must describe body/silhouette archetype,
+not just palette: one faction may be taller and treasure-burdened, another
+compact and athletic, another lean and austere, another broad and shawled.
+Include a restrained virtue/vice tension when it helps the gear read. Do not
+write elemental labels such as air/fire/earth/ice into final prompts; those are
+private planning associations and poison the output. Steppe-sand prompts should
+include desert scarf, robe, sash, and travel-cloak clothing cues so they do not
+collapse into only Mongolian lamellar. Red mesa/rainforest prompts can lean more
+fantasy Aztec at higher tier, with Salish/Karui-like massing used carefully as
+supporting wood, shell, shield, and greenstone language rather than copied
+ceremony. Nile-ziggurat Intelligence-axis high tiers can show greed and earthly
+weight through bronze/brass mass, one bounded true-lapis textile field, and a
+few bright gold highlights; its Strength and Dexterity ladders use different
+accent families. The northern
+starter faction is the **Northern Bronze Houses**, not a marsh/taiga biome.
+Marsh, taiga, bog, peat, wet-weather, dark-wool, and bog-iron language made its
+characters muddy, grey-brown, and low-value, so none of those cues belong in
+new northern prompt blocks. Use clean northern Bronze Age craft instead: pale
+hemmed wool and linen, spatially separate madder-crimson, spruce-green, and
+golden-ochre woven borders, bright polished bronze, pale birch or ash wood,
+polished horn, restrained russet hide, tailored
+shawls, and rectangular mantles. Amber is a restrained jewelry or single-focus
+material, not a centerpiece repeated across every slot. Tier tests must make
+belts, amulets, foci, hands, feet, and cloaks progress too; do not only upgrade
+body armor. Mage/focus tests must assign distinct offhand object families and
+avoid every faction getting a mirror.
+**Starter faction ladder production unit** (2026-07-09): use four prompts,
+one per faction. Each prompt begins `Generate 9 images. No commentary.` and
+produces nine separate files in a 3-attribute-axis by 3-tier matrix: Strength
+T1-T3, Dexterity T1-T3, Intelligence T1-T3. Final character prompts must refer
+to these attribute axes, never name fixed fantasy classes. An axis describes
+how equipment solves problems; it does not choose the character's profession.
+Every file contains one male/female pair sharing the same unisex bases and
+coverage. Use the same recognizable pair through one axis's three tiers, then a
+different pair for the next axis. Do not invent a tenth image, and never
+collapse the request into a collage or contact sheet. The private builder is
+`character_pipeline_local/build_faction_ladder_prompt.py`.
+**Tier contrast correction** (2026-07-09): character ladders must not preserve
+one outfit and merely polish or recolor it. Between adjacent tiers, change at
+least five macro decisions among torso construction, headgear, weapon/offhand,
+outer-layer cut, belt structure, hands, and footwear. Tier 3 must add visibly
+more sophisticated segmentation, layering, edge work, woven patterning, and
+integrated construction detail. It also uses a richer faction-specific palette
+and brighter material highlights than Tier 2. More detail means workmanship,
+not dangling clutter, repeated gems, medallions, or symbols.
+**Material-local color, not faction livery** (2026-07-09): a faction palette
+must not become one dominant dye across every character or every slot. Bronze,
+copper, leather, wood, shell, obsidian, linen, and stone retain their own local
+colors. Excluding skin and background, no dyed hue should cover more than
+roughly one-third of a loadout. Use at least four separated color-material zones
+and assign different color hierarchies to Strength, Dexterity, and Intelligence
+within each faction. Do not match helmet, chest, mantle, belt, gloves, boots,
+shield, and weapon to the same hue.
+**Neutral source-character color environment** (2026-07-09): character ladder
+and source-character prompts use a flat pure neutral-white background, a
+neutral-white key, a neutral-white rim, and strictly neutral studio/daylight
+white balance. Do not use a blue-gray backdrop, cool rim, neutral-to-cool
+grading, or global desaturation for source characters; those cues contaminate
+every material with the same slate cast. Tier 1 communicates low cost through
+fewer components, simple seams, cheap materials, repairs, and incomplete
+matching, not faded color. Tier 2 adds larger clear dyed fields. Tier 3 adds the
+most vivid bounded dyes, brightest polish, and strongest pale/dark separation.
+Blue is not a shared faction signal: Northern, Cedar, and Silkroad production
+palettes avoid blue-family palette drivers. Only Nile Intelligence may use one
+bounded, saturated true-lapis ultramarine field. This exception applies to
+source-character generation; isolated item matte and extraction rules remain
+as specified by their own prompt blocks.
 
 ## Pipeline facts (so you don't rediscover them)
 
@@ -205,10 +303,12 @@ When asked for roastable prompt candidates, apply the pipeline rules in
 - Check `core/DOWNLOAD-INTAKE.md` before proposing candidates. Do not re-prompt
   silhouettes from a recent manual download burst until those images are
   reviewed, staged, or discarded.
-- No currency/crafting-material candidates unless Alexei explicitly reopens
-  that lane. Avoid crafting currencies, pigments, omens, ingots, molds,
-  generic orbs, seal weights, draughts, reagent stones, and abstract bench
-  tokens.
+- The DEX+INT Preparation Case reopens concrete reagent art: identifiable
+  herbs, roots, resins, venoms, pigments, measured powders, ampoules, tools,
+  charts, and trap components are valid. Still avoid abstract crafting
+  currencies, omen symbols, ingots, molds, seal weights, interchangeable
+  glowing reagent stones, and abstract bench tokens. Magical orbiting orbs are
+  valid Attendant equipment, not currency.
 - Default 12-candidate batches cap weapons at two and must include armour or
   helmets, shields/off-hands, limb or waist wearables, jewellery, and
   rite/relic/curio/trophy objects. Smaller batches keep weapons below 25%.
