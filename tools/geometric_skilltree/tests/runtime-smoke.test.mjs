@@ -5,6 +5,7 @@ import { Script, createContext } from 'node:vm';
 const INDEX_PATH = new URL('../index.html', import.meta.url);
 const TREE_DATA_PATH = new URL('../assets/tree-data.js', import.meta.url);
 const STATS_PATH = new URL('../../rpg_inventory/core/verdigris-stats.js', import.meta.url);
+const PATTERNS_PATH = new URL('../assets/patterns.js', import.meta.url);
 
 class FakeClassList {
   constructor(owner) {
@@ -218,6 +219,9 @@ function runStandaloneApp() {
   const treeDataSource = readFileSync(TREE_DATA_PATH, 'utf8');
   new Script(treeDataSource, { filename: TREE_DATA_PATH.pathname }).runInContext(runtime);
 
+  const patternsSource = readFileSync(PATTERNS_PATH, 'utf8');
+  new Script(patternsSource, { filename: PATTERNS_PATH.pathname }).runInContext(runtime);
+
   const html = readFileSync(INDEX_PATH, 'utf8');
   const mainScript = extractMainScript(html);
   new Script(mainScript, { filename: INDEX_PATH.pathname }).runInContext(runtime);
@@ -275,10 +279,60 @@ function testAllocationUpdatesHeadlineDeltas() {
   );
 }
 
+function setTinyPath(window, ids, sides) {
+  const tree = window.skillTree;
+  tree.nodes.forEach(node => {
+    node.active = ids.includes(node.id);
+  });
+  tree.conduits.forEach(conduit => {
+    conduit.allocatedVariant = null;
+  });
+  sides.forEach(([a, b, side]) => {
+    const conduit = tree.conduits.get([a, b].sort().join(':'));
+    assert.ok(conduit, `${a} -> ${b} conduit should exist.`);
+    conduit.allocatedVariant = side;
+  });
+  tree.recalculate();
+}
+
+function testPatternsRenderAndBoostStats() {
+  const window = runStandaloneApp();
+  setTinyPath(window, ['0,0', '1,0', '2,0', '3,0'], [
+    ['0,0', '1,0', 'inner'],
+    ['1,0', '2,0', 'outer'],
+    ['2,0', '3,0', 'inner']
+  ]);
+
+  assert.equal(window.skillTree.patternReport.waves.length, 1, 'Runtime should detect a wave after recalculation.');
+  assert.equal(window.skillTree.patternReport.rods.length, 1, 'Runtime should detect a straight rod after recalculation.');
+  assert.ok(window.skillTree.formatNodeBoostLines(window.skillTree.nodes.get('1,0')).some(line => line.includes('wave')), 'Wave boost text should be visible on path nodes.');
+  assert.ok(
+    window.document.getElementById('effects-layer').children.some(child => child.className.includes('pattern-wave')),
+    'SVG effects layer should render wave paths.'
+  );
+  assert.ok(
+    window.document.getElementById('bonus-list').children.length >= 10,
+    'Pattern panel should render the detector bonus rows.'
+  );
+
+  setTinyPath(window, ['0,0', '1,0', '2,0', '3,0'], [
+    ['0,0', '1,0', 'outer'],
+    ['1,0', '2,0', 'outer'],
+    ['2,0', '3,0', 'outer']
+  ]);
+  assert.equal(window.skillTree.patternReport.flows.length, 1, 'Runtime should detect a same-chirality flow.');
+  assert.equal(window.skillTree.patternConduitBoosts.size, 3, 'Each conduit in the flow should receive a flow boost.');
+  assert.ok(
+    window.document.getElementById('effects-layer').children.some(child => child.className.includes('pattern-flow')),
+    'SVG effects layer should render flow paths.'
+  );
+}
+
 const tests = [
   ['Standalone classic scripts initialize the tree runtime', testRuntimeInitializes],
   ['Subtrees attach to the ring-10 gateways at runtime', testSubtreesAttachToRingTenGateways],
-  ['Allocation updates headline deltas', testAllocationUpdatesHeadlineDeltas]
+  ['Allocation updates headline deltas', testAllocationUpdatesHeadlineDeltas],
+  ['Patterns render and boost runtime stats', testPatternsRenderAndBoostStats]
 ];
 
 let passed = 0;

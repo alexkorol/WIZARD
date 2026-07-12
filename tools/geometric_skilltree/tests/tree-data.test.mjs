@@ -83,11 +83,14 @@ function testFileCompatibleScriptLoading() {
   const html = readFileSync(INDEX_PATH, 'utf8');
   const statsScriptIndex = html.indexOf('<script src="../rpg_inventory/core/verdigris-stats.js"></script>');
   const dataScriptIndex = html.indexOf('<script src="assets/tree-data.js"></script>');
+  const patternsScriptIndex = html.indexOf('<script src="assets/patterns.js"></script>');
   const appScriptIndex = html.indexOf('<script>', dataScriptIndex);
   assert.ok(statsScriptIndex > 0, 'index.html should load verdigris-stats.js as a classic script.');
   assert.ok(dataScriptIndex > 0, 'index.html should load tree-data.js as a classic script.');
+  assert.ok(patternsScriptIndex > 0, 'index.html should load patterns.js as a classic script.');
   assert.ok(statsScriptIndex < dataScriptIndex, 'verdigris-stats.js should load before tree-data.js.');
-  assert.ok(appScriptIndex > dataScriptIndex, 'tree-data.js should load before the main app script.');
+  assert.ok(dataScriptIndex < patternsScriptIndex, 'tree-data.js should load before patterns.js.');
+  assert.ok(patternsScriptIndex < appScriptIndex, 'patterns.js should load before the main app script.');
   assert.equal(/<script\s+type=["']module["']/i.test(html), false, 'The standalone app should not require module scripts.');
   assert.equal(/\bfetch\s*\(/.test(html), false, 'The standalone app should not fetch data at runtime.');
 }

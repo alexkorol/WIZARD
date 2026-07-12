@@ -11,7 +11,43 @@
     "generatedAt": "2026-07-11",
     "intent": "Phase 0 bootstrap coverage data; every main lattice seat has an explicit entry."
   },
-  "patternTuning": {},
+  "patternTuning": {
+    "wave": {
+      "minLength": 2,
+      "minPercent": 10,
+      "crestPercent": 60,
+      "meridianEndpointPercent": 60
+    },
+    "flow": {
+      "minLength": 3,
+      "minPercent": 25,
+      "maxPercent": 100,
+      "maxLength": 8
+    },
+    "loops": {
+      "maxRadius": 3
+    },
+    "rods": {
+      "minLength": 3,
+      "endpointBonus": 4,
+      "endpointPercent": 8
+    },
+    "crossroads": {
+      "minDegree": 4,
+      "perExtra": 3
+    },
+    "symmetry": {
+      "mirrorAttrsPerPair": 0.8,
+      "trineAttrsPerTriple": 2,
+      "mandalaAttrsPerSet": 3
+    },
+    "grandOrbit": {
+      "attrsPerRing": 2
+    },
+    "enclosure": {
+      "guardPerNode": 12
+    }
+  },
   "seats": {
     "-10,0": {
       "id": "-10,0",

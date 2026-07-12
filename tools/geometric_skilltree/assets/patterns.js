@@ -1,0 +1,641 @@
+/* =============================================================================
+   VERDIGRIS GEOMETRIC PATTERNS
+   -----------------------------------------------------------------------------
+   Pure pattern detection for the passive tree. UMD: browser global
+   `VerdigrisPatterns` or Node require().
+   ============================================================================= */
+(function (root, factory) {
+  if (typeof module !== 'undefined' && module.exports) module.exports = factory();
+  else root.VerdigrisPatterns = factory();
+}(typeof self !== 'undefined' ? self : this, function () {
+  'use strict';
+
+  const HEX_DIRECTIONS = [
+    { q: 1, r: 0 },
+    { q: 1, r: -1 },
+    { q: 0, r: -1 },
+    { q: -1, r: 0 },
+    { q: -1, r: 1 },
+    { q: 0, r: 1 }
+  ];
+
+  const DEFAULT_TUNING = {
+    wave: { minLength: 2, minPercent: 10, crestPercent: 60, meridianEndpointPercent: 60 },
+    flow: { minLength: 3, minPercent: 25, maxPercent: 100, maxLength: 8 },
+    loops: { maxRadius: 3 },
+    rods: { minLength: 3, endpointBonus: 4, endpointPercent: 8 },
+    crossroads: { minDegree: 4, perExtra: 3 },
+    symmetry: { mirrorAttrsPerPair: 0.8, trineAttrsPerTriple: 2, mandalaAttrsPerSet: 3 },
+    grandOrbit: { attrsPerRing: 2 },
+    enclosure: { guardPerNode: 12 }
+  };
+
+  const axialKey = (q, r) => `${q},${r}`;
+  const edgeKey = (a, b) => [a, b].sort().join(':');
+  const sideOf = (conduit) => conduit.allocatedVariant === 'inner' ? 'L'
+    : conduit.allocatedVariant === 'outer' ? 'R'
+      : null;
+  const hexDistance = (q, r) => {
+    const s = -q - r;
+    return Math.max(Math.abs(q), Math.abs(r), Math.abs(s));
+  };
+  const cloneTuning = (tuning = {}) => ({
+    wave: { ...DEFAULT_TUNING.wave, ...(tuning.wave || {}) },
+    flow: { ...DEFAULT_TUNING.flow, ...(tuning.flow || {}) },
+    loops: { ...DEFAULT_TUNING.loops, ...(tuning.loops || {}) },
+    rods: { ...DEFAULT_TUNING.rods, ...(tuning.rods || {}) },
+    crossroads: { ...DEFAULT_TUNING.crossroads, ...(tuning.crossroads || {}) },
+    symmetry: { ...DEFAULT_TUNING.symmetry, ...(tuning.symmetry || {}) },
+    grandOrbit: { ...DEFAULT_TUNING.grandOrbit, ...(tuning.grandOrbit || {}) },
+    enclosure: { ...DEFAULT_TUNING.enclosure, ...(tuning.enclosure || {}) }
+  });
+
+  function normalize(input = {}) {
+    const nodes = Array.from(input.nodes || []);
+    const conduits = Array.from(input.conduits || []);
+    const nodeMap = new Map(nodes.map(node => [node.id, node]));
+    const mainNodes = nodes.filter(node => node.source !== 'subtree' && node.q != null && node.r != null);
+    const activeNodes = mainNodes.filter(node => node.active);
+    const activeSet = new Set(activeNodes.map(node => node.id));
+    const allocatedConduits = conduits
+      .filter(conduit => conduit.allocatedVariant && activeSet.has(conduit.fromId) && activeSet.has(conduit.toId))
+      .filter(conduit => {
+        const a = nodeMap.get(conduit.fromId);
+        const b = nodeMap.get(conduit.toId);
+        return a && b && a.source !== 'subtree' && b.source !== 'subtree';
+      })
+      .map(conduit => ({ ...conduit, side: sideOf(conduit) }))
+      .filter(conduit => conduit.side);
+    const conduitMap = new Map(allocatedConduits.map(conduit => [conduit.id, conduit]));
+    const adjacency = new Map(mainNodes.map(node => [node.id, []]));
+    allocatedConduits.forEach(conduit => {
+      adjacency.get(conduit.fromId)?.push({ nodeId: conduit.toId, conduit });
+      adjacency.get(conduit.toId)?.push({ nodeId: conduit.fromId, conduit });
+    });
+    return { nodes, mainNodes, activeNodes, activeSet, nodeMap, allocatedConduits, conduitMap, adjacency };
+  }
+
+  function pathScore(path, nodeMap) {
+    const rings = path.nodeIds.map(id => nodeMap.get(id)?.ring || 0);
+    return rings.reduce((sum, ring) => sum + ring, 0) / Math.max(1, rings.length);
+  }
+
+  function comparePath(a, b, nodeMap) {
+    if (b.length !== a.length) return b.length - a.length;
+    const score = pathScore(a, nodeMap) - pathScore(b, nodeMap);
+    if (Math.abs(score) > 0.001) return score;
+    return a.nodeIds.join('|').localeCompare(b.nodeIds.join('|'));
+  }
+
+  function enumeratePaths(ctx, mode, minLength) {
+    const paths = [];
+    ctx.allocatedConduits.forEach(startConduit => {
+      [
+        [startConduit.fromId, startConduit.toId],
+        [startConduit.toId, startConduit.fromId]
+      ].forEach(([fromId, toId]) => {
+        const initial = {
+          type: mode,
+          nodeIds: [fromId, toId],
+          conduitIds: [startConduit.id],
+          sides: [startConduit.side],
+          length: 1
+        };
+        extendPath(ctx, mode, initial, new Set([fromId, toId]), new Set([startConduit.id]), paths, minLength);
+      });
+    });
+    return dedupePaths(paths);
+  }
+
+  function extendPath(ctx, mode, path, seenNodes, seenConduits, out, minLength) {
+    if (path.length >= minLength) out.push({ ...path, nodeIds: path.nodeIds.slice(), conduitIds: path.conduitIds.slice(), sides: path.sides.slice() });
+    const at = path.nodeIds[path.nodeIds.length - 1];
+    const lastSide = path.sides[path.sides.length - 1];
+    const candidates = (ctx.adjacency.get(at) || [])
+      .filter(edge => !seenNodes.has(edge.nodeId) && !seenConduits.has(edge.conduit.id))
+      .filter(edge => mode === 'wave' ? edge.conduit.side !== lastSide : edge.conduit.side === lastSide)
+      .sort((a, b) => {
+        const ar = ctx.nodeMap.get(a.nodeId)?.ring || 0;
+        const br = ctx.nodeMap.get(b.nodeId)?.ring || 0;
+        if (ar !== br) return ar - br;
+        return a.nodeId.localeCompare(b.nodeId);
+      });
+    candidates.forEach(edge => {
+      seenNodes.add(edge.nodeId);
+      seenConduits.add(edge.conduit.id);
+      path.nodeIds.push(edge.nodeId);
+      path.conduitIds.push(edge.conduit.id);
+      path.sides.push(edge.conduit.side);
+      path.length += 1;
+      extendPath(ctx, mode, path, seenNodes, seenConduits, out, minLength);
+      path.length -= 1;
+      path.sides.pop();
+      path.conduitIds.pop();
+      path.nodeIds.pop();
+      seenConduits.delete(edge.conduit.id);
+      seenNodes.delete(edge.nodeId);
+    });
+  }
+
+  function dedupePaths(paths) {
+    const best = new Map();
+    paths.forEach(path => {
+      const key = path.conduitIds.slice().sort().join('|');
+      const current = best.get(key);
+      if (!current || path.length > current.length || path.nodeIds.join('|') < current.nodeIds.join('|')) {
+        best.set(key, path);
+      }
+    });
+    return Array.from(best.values());
+  }
+
+  function selectExclusivePaths(ctx, waveCandidates, flowCandidates) {
+    const selected = [];
+    const used = new Set();
+    waveCandidates.concat(flowCandidates)
+      .sort((a, b) => comparePath(a, b, ctx.nodeMap))
+      .forEach(path => {
+        if (path.conduitIds.some(id => used.has(id))) return;
+        path.conduitIds.forEach(id => used.add(id));
+        selected.push(path);
+      });
+    return {
+      waves: selected.filter(path => path.type === 'wave'),
+      flows: selected.filter(path => path.type === 'flow'),
+      used
+    };
+  }
+
+  function hexRingNodes(ctx, center, radius) {
+    if (!center || center.q == null || center.r == null || radius < 1) return null;
+    const nodes = [];
+    let q = center.q + HEX_DIRECTIONS[4].q * radius;
+    let r = center.r + HEX_DIRECTIONS[4].r * radius;
+    for (let side = 0; side < 6; side += 1) {
+      const dir = HEX_DIRECTIONS[side];
+      for (let step = 0; step < radius; step += 1) {
+        const node = ctx.nodeMap.get(axialKey(q, r));
+        if (!node) return null;
+        nodes.push(node);
+        q += dir.q;
+        r += dir.r;
+      }
+    }
+    return nodes;
+  }
+
+  function perimeterEdges(nodes) {
+    return nodes.map((node, index) => edgeKey(node.id, nodes[(index + 1) % nodes.length].id));
+  }
+
+  function isCompletedPerimeter(ctx, ringNodes) {
+    return ringNodes.every(node => ctx.activeSet.has(node.id))
+      && perimeterEdges(ringNodes).every(id => ctx.conduitMap.has(id));
+  }
+
+  function detectLoops(ctx, tuning) {
+    const loops = [];
+    const enclosures = [];
+    ctx.mainNodes.forEach(center => {
+      for (let radius = 1; radius <= tuning.loops.maxRadius; radius += 1) {
+        const ringNodes = hexRingNodes(ctx, center, radius);
+        if (!ringNodes || !isCompletedPerimeter(ctx, ringNodes)) continue;
+        const loop = {
+          centerId: center.id,
+          radius,
+          nodeIds: ringNodes.map(node => node.id),
+          conduitIds: perimeterEdges(ringNodes)
+        };
+        if (ctx.activeSet.has(center.id)) loops.push(loop);
+        else enclosures.push({ ...loop, enclosedNodeIds: [center.id] });
+      }
+    });
+    const byCenter = new Map();
+    loops.forEach(loop => {
+      if (!byCenter.has(loop.centerId)) byCenter.set(loop.centerId, []);
+      byCenter.get(loop.centerId).push(loop);
+    });
+    const concentric = Array.from(byCenter.entries())
+      .filter(([, centerLoops]) => centerLoops.some(loop => loop.radius === 1) && centerLoops.some(loop => loop.radius === 2))
+      .map(([centerId, centerLoops]) => ({ centerId, loopIds: centerLoops.map(loop => `${loop.centerId}:r${loop.radius}`) }));
+    const radiusOne = loops.filter(loop => loop.radius === 1);
+    const vesicas = [];
+    for (let i = 0; i < radiusOne.length; i += 1) {
+      for (let j = i + 1; j < radiusOne.length; j += 1) {
+        const shared = radiusOne[i].conduitIds.filter(id => radiusOne[j].conduitIds.includes(id));
+        if (shared.length === 1) {
+          const lens = shared[0].split(':');
+          vesicas.push({ centers: [radiusOne[i].centerId, radiusOne[j].centerId], sharedEdge: shared[0], lensNodeIds: lens });
+        }
+      }
+    }
+    return { loops, concentric, vesicas, enclosures };
+  }
+
+  function detectGrandOrbits(ctx) {
+    const maxRing = Math.max(0, ...ctx.mainNodes.map(node => node.ring || 0));
+    const orbits = [];
+    for (let ring = 1; ring <= maxRing; ring += 1) {
+      const nodes = ctx.mainNodes.filter(node => node.ring === ring);
+      if (!nodes.length || nodes.some(node => !ctx.activeSet.has(node.id))) continue;
+      const ordered = orderRing(nodes, ring);
+      if (ordered.length && perimeterEdges(ordered).every(id => ctx.conduitMap.has(id))) {
+        orbits.push({ ring, nodeIds: ordered.map(node => node.id), conduitIds: perimeterEdges(ordered) });
+      }
+    }
+    return orbits;
+  }
+
+  function orderRing(nodes, ring) {
+    const byId = new Map(nodes.map(node => [node.id, node]));
+    const ordered = [];
+    let q = HEX_DIRECTIONS[4].q * ring;
+    let r = HEX_DIRECTIONS[4].r * ring;
+    for (let side = 0; side < 6; side += 1) {
+      const dir = HEX_DIRECTIONS[side];
+      for (let step = 0; step < ring; step += 1) {
+        const node = byId.get(axialKey(q, r));
+        if (node) ordered.push(node);
+        q += dir.q;
+        r += dir.r;
+      }
+    }
+    return ordered.length === nodes.length ? ordered : [];
+  }
+
+  function mirrorKey(node) {
+    return axialKey(-node.q - node.r, node.r);
+  }
+
+  function rotate60Key(node) {
+    return axialKey(-node.r, node.q + node.r);
+  }
+
+  function rotateKey(id, turns) {
+    let [q, r] = id.split(',').map(Number);
+    for (let i = 0; i < turns; i += 1) {
+      const nextQ = -r;
+      const nextR = q + r;
+      q = nextQ; r = nextR;
+    }
+    return axialKey(q, r);
+  }
+
+  function sortedSetKey(ids) {
+    return ids.slice().sort().join('|');
+  }
+
+  function detectSymmetry(ctx) {
+    const mirrorPairs = [];
+    ctx.activeNodes.forEach(node => {
+      if (node.q > 0 || (node.q === 0 && node.r >= 0)) return;
+      const mirror = ctx.nodeMap.get(mirrorKey(node));
+      if (mirror && ctx.activeSet.has(mirror.id) && mirror.id !== node.id) {
+        mirrorPairs.push([node.id, mirror.id]);
+      }
+    });
+    let mirroredConduits = 0;
+    ctx.allocatedConduits.forEach(conduit => {
+      const a = ctx.nodeMap.get(conduit.fromId);
+      const b = ctx.nodeMap.get(conduit.toId);
+      if (!a || !b || a.id > b.id) return;
+      const ma = mirrorKey(a);
+      const mb = mirrorKey(b);
+      if (ctx.conduitMap.has(edgeKey(ma, mb))) mirroredConduits += 1;
+    });
+    const trineSeen = new Set();
+    const trines = [];
+    const mandalaSeen = new Set();
+    const mandalas = [];
+    ctx.activeNodes.forEach(node => {
+      if (node.id === '0,0') return;
+      const triple = [node.id, rotateKey(node.id, 2), rotateKey(node.id, 4)];
+      if (triple.every(id => ctx.activeSet.has(id))) {
+        const key = sortedSetKey(triple);
+        if (!trineSeen.has(key)) {
+          trineSeen.add(key);
+          trines.push(triple.sort());
+        }
+      }
+      const sextet = [0, 1, 2, 3, 4, 5].map(turn => rotateKey(node.id, turn));
+      if (sextet.every(id => ctx.activeSet.has(id))) {
+        const key = sortedSetKey(sextet);
+        if (!mandalaSeen.has(key)) {
+          mandalaSeen.add(key);
+          mandalas.push(sextet.sort());
+        }
+      }
+    });
+    return { mirrorPairs, mirroredConduits, trines, mandalas };
+  }
+
+  function detectRods(ctx, tuning) {
+    const rods = [];
+    const seen = new Set();
+    ctx.activeNodes.forEach(node => {
+      HEX_DIRECTIONS.forEach(dir => {
+        const prev = ctx.nodeMap.get(axialKey(node.q - dir.q, node.r - dir.r));
+        if (prev && ctx.activeSet.has(prev.id) && ctx.conduitMap.has(edgeKey(prev.id, node.id))) return;
+        const nodeIds = [node.id];
+        const conduitIds = [];
+        let current = node;
+        while (true) {
+          const next = ctx.nodeMap.get(axialKey(current.q + dir.q, current.r + dir.r));
+          if (!next || !ctx.activeSet.has(next.id)) break;
+          const conduitId = edgeKey(current.id, next.id);
+          if (!ctx.conduitMap.has(conduitId)) break;
+          conduitIds.push(conduitId);
+          nodeIds.push(next.id);
+          current = next;
+        }
+        if (conduitIds.length >= tuning.rods.minLength) {
+          const key = conduitIds.slice().sort().join('|');
+          if (!seen.has(key)) {
+            seen.add(key);
+            rods.push({ nodeIds, conduitIds, length: conduitIds.length, direction: { ...dir } });
+          }
+        }
+      });
+    });
+    return rods;
+  }
+
+  function detectCrossroads(ctx, tuning) {
+    return ctx.activeNodes
+      .map(node => ({ nodeId: node.id, degree: (ctx.adjacency.get(node.id) || []).length }))
+      .filter(item => item.degree >= tuning.crossroads.minDegree);
+  }
+
+  function hasAlternateActiveRoute(ctx, blockedConduit) {
+    const start = blockedConduit.fromId;
+    const target = blockedConduit.toId;
+    const visited = new Set([start]);
+    const queue = [start];
+    while (queue.length) {
+      const id = queue.shift();
+      for (const edge of ctx.adjacency.get(id) || []) {
+        if (edge.conduit.id === blockedConduit.id || visited.has(edge.nodeId)) continue;
+        if (edge.nodeId === target) return true;
+        visited.add(edge.nodeId);
+        queue.push(edge.nodeId);
+      }
+    }
+    return false;
+  }
+
+  function detectCircuits(ctx) {
+    const redundant = ctx.allocatedConduits.filter(conduit => hasAlternateActiveRoute(ctx, conduit));
+    return { redundant };
+  }
+
+  function detectMeridians(ctx, waves, depth) {
+    return waves.filter(wave => {
+      if (!wave.nodeIds.includes('0,0')) return false;
+      const first = ctx.nodeMap.get(wave.nodeIds[0]);
+      const last = ctx.nodeMap.get(wave.nodeIds[wave.nodeIds.length - 1]);
+      return first && last && first.ring === depth && last.ring === depth;
+    });
+  }
+
+  function addNodeBoost(nodeBoosts, nodeId, percent, reason) {
+    if (!nodeBoosts[nodeId]) nodeBoosts[nodeId] = { percent: 0, reasons: [] };
+    nodeBoosts[nodeId].percent += percent;
+    nodeBoosts[nodeId].reasons.push(reason);
+  }
+
+  function addConduitBoost(conduitBoosts, conduitId, percent, reason) {
+    if (!conduitBoosts[conduitId]) conduitBoosts[conduitId] = { percent: 0, reasons: [] };
+    conduitBoosts[conduitId].percent += percent;
+    conduitBoosts[conduitId].reasons.push(reason);
+  }
+
+  function wavePercent(tuning, wave, index) {
+    const max = Math.max(tuning.wave.minLength, 10);
+    const lengthScale = Math.min(1, (wave.length - tuning.wave.minLength) / (max - tuning.wave.minLength));
+    const endpointDistance = Math.min(index, wave.nodeIds.length - 1 - index);
+    const centerScale = wave.nodeIds.length <= 2 ? 0 : endpointDistance / Math.floor(wave.nodeIds.length / 2);
+    const base = tuning.wave.minPercent + (tuning.wave.crestPercent - tuning.wave.minPercent) * lengthScale;
+    return Math.round(base * (0.45 + centerScale * 0.55));
+  }
+
+  function flowPercent(tuning, flow) {
+    const minLength = tuning.flow.minLength;
+    const maxLength = Math.max(minLength, tuning.flow.maxLength);
+    const lengthScale = maxLength === minLength ? 1 : Math.min(1, (flow.length - minLength) / (maxLength - minLength));
+    return Math.round(tuning.flow.minPercent + (tuning.flow.maxPercent - tuning.flow.minPercent) * lengthScale);
+  }
+
+  function buildBonuses(patterns, tuning) {
+    const bonuses = [];
+    const wavePower = patterns.waves.reduce((sum, wave) => sum + wave.length, 0);
+    bonuses.push({
+      id: 'wave',
+      name: 'Waves',
+      active: patterns.waves.length > 0,
+      progress: `${patterns.waves.length} wave${patterns.waves.length === 1 ? '' : 's'}; longest ${patterns.waves[0]?.length || 0}`,
+      description: 'Alternate inner and outer conduits. Waves empower the nodes along their path.',
+      attrs: {},
+      derived: { attackDamage: wavePower * 2, spellDamage: wavePower * 2 }
+    });
+    const flowPower = patterns.flows.reduce((sum, flow) => sum + flowPercent(tuning, flow), 0);
+    bonuses.push({
+      id: 'flow',
+      name: 'Flows',
+      active: patterns.flows.length > 0,
+      progress: `${patterns.flows.length} flow${patterns.flows.length === 1 ? '' : 's'}; longest ${patterns.flows[0]?.length || 0}; +${flowPower}% total conduit effect`,
+      description: 'Keep conduit chirality the same for long runs. Flows empower the attribute layer.',
+      attrs: {},
+      derived: {}
+    });
+    bonuses.push({
+      id: 'meridian',
+      name: 'Great Wave Meridian',
+      active: patterns.meridians.length > 0,
+      progress: `${patterns.meridians.length} rim-to-rim wave${patterns.meridians.length === 1 ? '' : 's'}`,
+      description: 'Run an alternating wave from rim to rim through the origin.',
+      attrs: patterns.meridians.length ? { str: 10, dex: 10, int: 10 } : {},
+      derived: patterns.meridians.length ? { cooldownRecovery: 10, attackDamage: 12, spellDamage: 12 } : {}
+    });
+    const loopPower = patterns.loops.reduce((sum, loop) => sum + loop.radius, 0);
+    bonuses.push({
+      id: 'circle',
+      name: 'Loop Crowns',
+      active: patterns.loops.length > 0,
+      progress: `${patterns.loops.length} loop crown${patterns.loops.length === 1 ? '' : 's'}; ${patterns.concentric.length} concentric`,
+      description: 'Close radius 1-3 loops around allocated centers. Concentric crowns compound the center fantasy.',
+      attrs: { int: loopPower * 3, dex: loopPower * 3, str: loopPower * 3 },
+      derived: { spellDamage: loopPower * 9, guard: loopPower * 32, ward: loopPower * 32 }
+    });
+    bonuses.push({
+      id: 'vesica',
+      name: 'Vesica Lenses',
+      active: patterns.vesicas.length > 0,
+      progress: `${patterns.vesicas.length} twin-loop lens${patterns.vesicas.length === 1 ? '' : 'es'}`,
+      description: 'Complete two radius-1 loops sharing exactly one edge.',
+      attrs: {},
+      derived: patterns.vesicas.length ? { critChance: patterns.vesicas.length, ailmentEffect: patterns.vesicas.length * 3 } : {}
+    });
+    bonuses.push({
+      id: 'orbit',
+      name: 'Grand Orbits',
+      active: patterns.grandOrbits.length > 0,
+      progress: `${patterns.grandOrbits.map(orbit => `r${orbit.ring}`).join(', ') || 'none'}`,
+      description: 'Allocate a complete ring around the origin.',
+      attrs: patterns.grandOrbits.reduce((out, orbit) => {
+        out.str += orbit.ring * tuning.grandOrbit.attrsPerRing;
+        out.dex += orbit.ring * tuning.grandOrbit.attrsPerRing;
+        out.int += orbit.ring * tuning.grandOrbit.attrsPerRing;
+        return out;
+      }, { str: 0, dex: 0, int: 0 }),
+      derived: {}
+    });
+    bonuses.push({
+      id: 'mirror',
+      name: 'Mirror Symmetry',
+      active: patterns.symmetry.mirrorPairs.length + patterns.symmetry.mirroredConduits > 0,
+      progress: `${patterns.symmetry.mirrorPairs.length} node pairs; ${patterns.symmetry.mirroredConduits} conduit pairs`,
+      description: 'Match allocation across the vertical INT axis.',
+      attrs: {
+        int: Math.round(patterns.symmetry.mirrorPairs.length * tuning.symmetry.mirrorAttrsPerPair),
+        dex: Math.round(patterns.symmetry.mirrorPairs.length * tuning.symmetry.mirrorAttrsPerPair),
+        str: Math.round(patterns.symmetry.mirrorPairs.length * tuning.symmetry.mirrorAttrsPerPair)
+      },
+      derived: patterns.symmetry.mirrorPairs.length ? { allResistances: Math.round(patterns.symmetry.mirrorPairs.length / 2) } : {}
+    });
+    bonuses.push({
+      id: 'trine',
+      name: 'Trine Symmetry',
+      active: patterns.symmetry.trines.length > 0,
+      progress: `${patterns.symmetry.trines.length} matched triple${patterns.symmetry.trines.length === 1 ? '' : 's'}`,
+      description: 'Repeat allocation under 120-degree rotation.',
+      attrs: {
+        str: patterns.symmetry.trines.length * tuning.symmetry.trineAttrsPerTriple,
+        dex: patterns.symmetry.trines.length * tuning.symmetry.trineAttrsPerTriple,
+        int: patterns.symmetry.trines.length * tuning.symmetry.trineAttrsPerTriple
+      },
+      derived: {}
+    });
+    bonuses.push({
+      id: 'mandala',
+      name: 'Mandala Symmetry',
+      active: patterns.symmetry.mandalas.length > 0,
+      progress: `${patterns.symmetry.mandalas.length} sixfold set${patterns.symmetry.mandalas.length === 1 ? '' : 's'}`,
+      description: 'Repeat allocation under every 60-degree rotation.',
+      attrs: {
+        str: patterns.symmetry.mandalas.length * tuning.symmetry.mandalaAttrsPerSet,
+        dex: patterns.symmetry.mandalas.length * tuning.symmetry.mandalaAttrsPerSet,
+        int: patterns.symmetry.mandalas.length * tuning.symmetry.mandalaAttrsPerSet
+      },
+      derived: {}
+    });
+    bonuses.push({
+      id: 'circuit',
+      name: 'Redundant Circuits',
+      active: patterns.circuits.redundant.length > 0,
+      progress: `${patterns.circuits.redundant.length} redundant conduit${patterns.circuits.redundant.length === 1 ? '' : 's'}`,
+      description: 'Maintain an alternate active route around allocated conduits.',
+      attrs: patterns.circuits.redundant.length ? { dex: patterns.circuits.redundant.length, int: patterns.circuits.redundant.length } : {},
+      derived: patterns.circuits.redundant.length ? { ward: patterns.circuits.redundant.length * 18, evasion: patterns.circuits.redundant.length * 18 } : {}
+    });
+    bonuses.push({
+      id: 'enclosure',
+      name: 'Warding Circles',
+      active: patterns.enclosures.length > 0,
+      progress: `${patterns.enclosures.length} enclosure${patterns.enclosures.length === 1 ? '' : 's'}`,
+      description: 'Close a circuit around one or more unallocated seats.',
+      attrs: {},
+      derived: patterns.enclosures.length ? { guard: patterns.enclosures.length * tuning.enclosure.guardPerNode } : {}
+    });
+    bonuses.push({
+      id: 'rod',
+      name: 'Rods',
+      active: patterns.rods.length > 0,
+      progress: `${patterns.rods.length} straight run${patterns.rods.length === 1 ? '' : 's'}; longest ${patterns.rods[0]?.length || 0}`,
+      description: 'Allocate straight runs of at least three conduits in any lattice direction.',
+      attrs: {},
+      derived: patterns.rods.length ? { attackDamage: patterns.rods.length * tuning.rods.endpointBonus } : {}
+    });
+    bonuses.push({
+      id: 'crossroad',
+      name: 'Crossroads',
+      active: patterns.crossroads.length > 0,
+      progress: `${patterns.crossroads.length} hub node${patterns.crossroads.length === 1 ? '' : 's'}`,
+      description: 'Allocate four or more conduits from a single node.',
+      attrs: patterns.crossroads.reduce((out, hub) => {
+        const bonus = Math.max(0, hub.degree - 3) * tuning.crossroads.perExtra;
+        out.str += bonus; out.dex += bonus; out.int += bonus;
+        return out;
+      }, { str: 0, dex: 0, int: 0 }),
+      derived: {}
+    });
+    return bonuses;
+  }
+
+  function detectPatterns(input = {}) {
+    const tuning = cloneTuning(input.tuning);
+    const ctx = normalize(input);
+    const depth = input.depth || Math.max(0, ...ctx.mainNodes.map(node => node.ring || 0));
+    const waveCandidates = enumeratePaths(ctx, 'wave', tuning.wave.minLength);
+    const flowCandidates = enumeratePaths(ctx, 'flow', tuning.flow.minLength);
+    const exclusive = selectExclusivePaths(ctx, waveCandidates, flowCandidates);
+    const loopData = detectLoops(ctx, tuning);
+    const grandOrbits = detectGrandOrbits(ctx);
+    const symmetry = detectSymmetry(ctx);
+    const rods = detectRods(ctx, tuning).sort((a, b) => b.length - a.length);
+    const crossroads = detectCrossroads(ctx, tuning);
+    const circuits = detectCircuits(ctx);
+    const meridians = detectMeridians(ctx, exclusive.waves, depth);
+    const nodeBoosts = {};
+    const conduitBoosts = {};
+    exclusive.waves.forEach(wave => {
+      wave.nodeIds.forEach((nodeId, index) => {
+        addNodeBoost(nodeBoosts, nodeId, wavePercent(tuning, wave, index), `wave length ${wave.length}`);
+      });
+    });
+    exclusive.flows.forEach(flow => {
+      const percent = flowPercent(tuning, flow);
+      flow.conduitIds.forEach(conduitId => {
+        addConduitBoost(conduitBoosts, conduitId, percent, `flow length ${flow.length}`);
+      });
+    });
+    meridians.forEach(wave => {
+      [wave.nodeIds[0], wave.nodeIds[wave.nodeIds.length - 1]].forEach(nodeId => {
+        addNodeBoost(nodeBoosts, nodeId, tuning.wave.meridianEndpointPercent, 'great wave endpoint');
+      });
+    });
+    rods.forEach(rod => {
+      [rod.nodeIds[0], rod.nodeIds[rod.nodeIds.length - 1]].forEach(nodeId => {
+        addNodeBoost(nodeBoosts, nodeId, tuning.rods.endpointPercent, `rod endpoint length ${rod.length}`);
+      });
+    });
+    const patterns = {
+      waves: exclusive.waves,
+      flows: exclusive.flows,
+      meridians,
+      loops: loopData.loops,
+      concentric: loopData.concentric,
+      vesicas: loopData.vesicas,
+      grandOrbits,
+      symmetry,
+      circuits,
+      enclosures: loopData.enclosures,
+      rods,
+      crossroads,
+      nodeBoosts,
+      conduitBoosts,
+      tuning
+    };
+    patterns.bonuses = buildBonuses(patterns, tuning);
+    return patterns;
+  }
+
+  return {
+    DEFAULT_TUNING,
+    HEX_DIRECTIONS,
+    axialKey,
+    edgeKey,
+    hexDistance,
+    rotate60Key,
+    detectPatterns
+  };
+}));

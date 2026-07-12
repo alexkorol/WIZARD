@@ -20,11 +20,9 @@ Open `index.html` directly in a browser.
 - Extra active-to-active arc allocation supports loop building and redundant routes.
 - One-by-one respec: click or right-click allocated nodes to refund them when graph connectivity allows it; click extra loop arcs to refund those arcs.
 - Outer subtree unlock rule: activate the shared rim gateway and complete at least one inner six-node circle.
-- Shape bonuses detect:
-  - Radius 1, 2, and 3 loops around an allocated center.
-  - Straight axis chains.
-  - Mirrored left/right allocation.
-  - Redundant circuit paths.
+- Pattern bonuses now detect waves, flows, great-wave meridians, radius 1-3 loop crowns, concentric crowns, vesica lenses, grand orbits, smooth mirror symmetry, trines, mandalas, redundant circuits, warding enclosures, rods, and crossroads.
+- Waves empower the nodes along alternating-chirality paths; flows amplify the attribute output of same-chirality conduits; loops keep the center-node empowerment fantasy.
+- The pattern panel lists every §5 pattern family, and the SVG debug overlay renders wave, flow, and rod paths alongside the existing loop-crown effects.
 - Completed loops visibly empower their center node, increase that node's own in-game stat effect, and add weighted attribute resonance.
 - Larger loop crowns render additional scalloped rings, perimeter petals, internal chords, pulse effects, and stronger center auras.
 - Loop/combo effects are attribute-aware: STR reads as restrained vitality pulses, DEX as light whirlwind arcs, INT as celestial orbit/star marks, and hybrid nodes blend those motifs by weight.
@@ -101,7 +99,7 @@ The important design takeaways are structural rather than cosmetic:
 
 ## Implementation Notes
 
-The app is a standalone HTML/SVG implementation with classic-script data assets. `assets/tree-data.js` defines `window.TREE_DATA`, including the Phase 0 bootstrap entries for every main-lattice seat. `../rpg_inventory/core/verdigris-stats.js` defines the shared stat registry and EHP/DPS math consumed by both this tree and Vesselforge. The main runtime classes are:
+The app is a standalone HTML/SVG implementation with classic-script data assets. `assets/tree-data.js` defines `window.TREE_DATA`, including the Phase 0 bootstrap entries for every main-lattice seat and the central `patternTuning` table. `assets/patterns.js` defines the pure `VerdigrisPatterns` detector used by the runtime and tests. `../rpg_inventory/core/verdigris-stats.js` defines the shared stat registry and EHP/DPS math consumed by both this tree and Vesselforge. The main runtime classes are:
 
 - `GeometricSkillTree`: builds nodes/conduits, handles allocation, refund, undo, stats, and shape bonuses.
 - `SVGRenderer`: draws rings, axis lines, nodes, conduits, subtrees, tooltips, and render states.
@@ -122,6 +120,7 @@ Run the existing progression tests:
 
 ```bash
 node tools/geometric_skilltree/tests/progression.test.mjs
+node tools/geometric_skilltree/tests/patterns.test.js
 node tools/geometric_skilltree/tests/tree-data.test.mjs
 node tools/geometric_skilltree/tests/runtime-smoke.test.mjs
 node tools/rpg_inventory/core/verdigris-stats.test.js

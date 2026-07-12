@@ -378,8 +378,47 @@
       animation: spoke-breathe 4.8s ease-in-out infinite alternate;
     }
 
+    .pattern-path-effect {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0.68;
+      filter: drop-shadow(0 0 7px currentColor);
+    }
+
+    .pattern-wave {
+      color: #92ddff;
+      stroke: currentColor;
+      stroke-width: 8;
+      stroke-dasharray: 18 14;
+      animation: pattern-flow 4.8s linear infinite;
+    }
+
+    .pattern-flow {
+      color: #74e5a8;
+      stroke: currentColor;
+      stroke-width: 6;
+      stroke-dasharray: 4 13;
+      animation: pattern-flow 6.5s linear infinite reverse;
+    }
+
+    .pattern-rod {
+      color: #f3d37a;
+      stroke: currentColor;
+      stroke-width: 4;
+      stroke-dasharray: 34 20;
+      opacity: 0.5;
+      animation: pattern-flow 8s linear infinite;
+    }
+
     @keyframes ring-flow {
       to { stroke-dashoffset: -60; }
+    }
+
+    @keyframes pattern-flow {
+      to { stroke-dashoffset: -96; }
     }
 
     @keyframes ring-spin {
@@ -1510,11 +1549,14 @@
 
   <script src="../rpg_inventory/core/verdigris-stats.js"></script>
   <script src="assets/tree-data.js"></script>
+  <script src="assets/patterns.js"></script>
   <script>
     const SVG_NS = "http://www.w3.org/2000/svg";
     const AUTHORED_TREE_DATA = window.TREE_DATA || {};
     const VERDIGRIS_STATS = window.VerdigrisStats;
+    const VERDIGRIS_PATTERNS = window.VerdigrisPatterns;
     const MAIN_RING_DEPTH = AUTHORED_TREE_DATA.mainRingDepth || 10;
+    const PATTERN_TUNING = AUTHORED_TREE_DATA.patternTuning || {};
     const NODE_SPACING = 72;
     const SUBTREE_SPACING = 58;
     // One pool: nodes and connections each cost 1 point, so travel is a real spend.
@@ -2202,6 +2244,9 @@
         this.searchTerm = "";
         this.empoweredNodes = new Set();
         this.empoweredNodeDetails = new Map();
+        this.patternReport = null;
+        this.patternNodeBoosts = new Map();
+        this.patternConduitBoosts = new Map();
         this.shapeBonuses = [];
         this.lastDeltas = [];
 
@@ -2707,6 +2752,17 @@
 
       recalculate() {
         const previousStats = this.stats || null;
+        if (!VERDIGRIS_PATTERNS) {
+          throw new Error("VerdigrisPatterns must load before the skill tree app.");
+        }
+        this.patternReport = VERDIGRIS_PATTERNS.detectPatterns({
+          nodes: Array.from(this.nodes.values()),
+          conduits: Array.from(this.conduits.values()),
+          depth: MAIN_RING_DEPTH,
+          tuning: PATTERN_TUNING
+        });
+        this.patternNodeBoosts = new Map(Object.entries(this.patternReport.nodeBoosts || {}));
+        this.patternConduitBoosts = new Map(Object.entries(this.patternReport.conduitBoosts || {}));
         this.empoweredNodeDetails = this.detectLoopEmpowerments();
         this.empoweredNodes = new Set(this.empoweredNodeDetails.keys());
         this.shapeBonuses = this.computeShapeBonuses();
@@ -2726,9 +2782,11 @@
 
         this.conduits.forEach(conduit => {
           if (!conduit.allocated) return;
-          attrs.str += conduit.attrs.str;
-          attrs.dex += conduit.attrs.dex;
-          attrs.int += conduit.attrs.int;
+          const flowBoost = this.patternConduitBoosts.get(conduit.id);
+          const multiplier = 1 + (flowBoost?.percent || 0) / 100;
+          attrs.str += round(conduit.attrs.str * multiplier);
+          attrs.dex += round(conduit.attrs.dex * multiplier);
+          attrs.int += round(conduit.attrs.int * multiplier);
         });
 
         this.nodes.forEach(node => {
@@ -2800,7 +2858,7 @@
           return [
             "Allocate nodes for passive effects.",
             "Allocate conduits for STR, DEX, and INT.",
-            "Close loops or mirror paths for geometry bonuses."
+            "Build loops, waves, flows, or mirrored paths for geometry bonuses."
           ];
         }
         const deltas = [];
@@ -2872,16 +2930,23 @@
 
       getNodeBoost(node) {
         const detail = this.empoweredNodeDetails.get(node.id);
-        if (!detail) return null;
-        const radiusTotal = detail.radiusTotal;
-        const loopCount = detail.loops.length;
-        const maxRadius = detail.maxRadius;
-        const multiplier = round(1 + radiusTotal * 0.42 + Math.max(0, maxRadius - 1) * 0.16 + Math.max(0, loopCount - 1) * 0.12);
+        const patternBoost = this.patternNodeBoosts.get(node.id);
+        if (!detail && !patternBoost) return null;
+        const radiusTotal = detail?.radiusTotal || 0;
+        const loopCount = detail?.loops.length || 0;
+        const maxRadius = detail?.maxRadius || 0;
+        const loopIncrease = detail
+          ? radiusTotal * 0.42 + Math.max(0, maxRadius - 1) * 0.16 + Math.max(0, loopCount - 1) * 0.12
+          : 0;
+        const patternPercent = patternBoost?.percent || 0;
+        const multiplier = round(1 + loopIncrease + patternPercent / 100);
         const percentIncrease = Math.round((multiplier - 1) * 100);
         const directBonus = node.stat && typeof node.amount === "number"
           ? round(node.amount * (multiplier - 1))
           : 0;
-        const attrScale = 4 + maxRadius * 3 + radiusTotal + Math.max(0, loopCount - 1) * 2;
+        const attrScale = detail
+          ? 4 + maxRadius * 3 + radiusTotal + Math.max(0, loopCount - 1) * 2 + Math.round(patternPercent / 15)
+          : Math.max(1, Math.round(patternPercent / 12));
         const attrBonus = {
           str: Math.round(node.weights.str * attrScale),
           dex: Math.round(node.weights.dex * attrScale),
@@ -2890,8 +2955,10 @@
         const primaryAttr = Object.entries(node.weights).sort((a, b) => b[1] - a[1])[0][0];
         if (attrBonus[primaryAttr] < 1) attrBonus[primaryAttr] = 1;
         return {
-          ...detail,
+          ...(detail || { nodeId: node.id, loops: [], maxRadius: 0, radiusTotal: 0 }),
           loopCount,
+          patternPercent,
+          patternReasons: patternBoost?.reasons || [],
           multiplier,
           percentIncrease,
           directBonus,
@@ -2902,11 +2969,15 @@
       formatNodeBoostLines(node) {
         const boost = this.getNodeBoost(node);
         if (!boost) return [];
-        const loopLabels = boost.loops.map(loop => loop.radius === 1 ? "inner loop" : `radius ${loop.radius} loop`);
-        const lines = [
-          `${boost.loopCount} completed loop${boost.loopCount === 1 ? "" : "s"} (${loopLabels.join(", ")}); largest radius ${boost.maxRadius}.`,
-          `${boost.percentIncrease}% increased center-node effect.`
-        ];
+        const lines = [];
+        if (boost.loopCount) {
+          const loopLabels = boost.loops.map(loop => loop.radius === 1 ? "inner loop" : `radius ${loop.radius} loop`);
+          lines.push(`${boost.loopCount} completed loop${boost.loopCount === 1 ? "" : "s"} (${loopLabels.join(", ")}); largest radius ${boost.maxRadius}.`);
+        }
+        if (boost.patternReasons.length) {
+          lines.push(`${boost.patternPercent}% increased effect from ${boost.patternReasons.join(", ")}.`);
+        }
+        lines.push(`${boost.percentIncrease}% total increased node effect.`);
         if (node.stat && boost.directBonus) {
           lines.push(`${this.formatDerivedBonus(node.stat, boost.directBonus)} from the boosted passive.`);
         }
@@ -2972,6 +3043,9 @@
       }
 
       computeShapeBonuses() {
+        if (this.patternReport?.bonuses) {
+          return this.patternReport.bonuses;
+        }
         const loopDetails = Array.from(this.empoweredNodeDetails.values());
         const loopTotals = { 1: 0, 2: 0, 3: 0 };
         loopDetails.forEach(detail => {
@@ -3233,6 +3307,7 @@
 
       renderPatternEffects() {
         this.layers.effects.replaceChildren();
+        this.renderPathPatternEffects();
         Array.from(this.tree.empoweredNodeDetails.values())
           .sort((a, b) => a.maxRadius - b.maxRadius)
           .forEach(detail => {
@@ -3267,6 +3342,37 @@
 
           this.layers.effects.appendChild(group);
         });
+      }
+
+      renderPathPatternEffects() {
+        const report = this.tree.patternReport;
+        if (!report) return;
+        [
+          ["waves", "pattern-wave"],
+          ["flows", "pattern-flow"],
+          ["rods", "pattern-rod"]
+        ].forEach(([key, className]) => {
+          (report[key] || []).forEach((pattern, index) => {
+            this.appendPatternPath(pattern.nodeIds, className, `${key}-${index}`);
+          });
+        });
+      }
+
+      appendPatternPath(nodeIds, className, key) {
+        const nodes = nodeIds
+          .map(id => this.tree.nodes.get(id))
+          .filter(Boolean);
+        if (nodes.length < 2 || nodes.some(node => !this.tree.isNodeVisible(node))) return;
+        const d = nodes
+          .map((node, index) => `${index ? "L" : "M"} ${round(node.pos.x)} ${round(node.pos.y)}`)
+          .join(" ");
+        const path = makeSvgEl("path", {
+          className: `pattern-path-effect ${className}`,
+          d
+        });
+        path.dataset.pattern = key;
+        path.style.animationDelay = `${-0.17 * nodes.length}s`;
+        this.layers.effects.appendChild(path);
       }
 
       effectStyleForNode(node) {
@@ -3733,7 +3839,7 @@
         const tier = progressionTier(node.ring);
         const boostLines = this.tree.formatNodeBoostLines(node);
         const boostHtml = boostLines.length
-          ? `<div class="tooltip-boost"><strong>Empowered center</strong>${boostLines.map(line => `<div>${line}</div>`).join("")}</div>`
+          ? `<div class="tooltip-boost"><strong>Empowered node</strong>${boostLines.map(line => `<div>${line}</div>`).join("")}</div>`
           : "";
         body.innerHTML = `
           <div>${status} ${node.type}. ${tier.label} ${tier.description}, ring ${node.ring}. ${attr} leaning.</div>
@@ -3863,7 +3969,7 @@
         const attrs = this.tree.stats.attrs;
         const max = Math.max(60, attrs.str, attrs.dex, attrs.int);
         ["str", "dex", "int"].forEach(key => {
-          document.getElementById(`attr-${key}`).textContent = attrs[key];
+          document.getElementById(`attr-${key}`).textContent = formatNumber(attrs[key]);
           document.getElementById(`bar-${key}`).style.width = `${Math.max(5, (attrs[key] / max) * 100)}%`;
         });
       }
@@ -3918,7 +4024,7 @@
         const effects = node.effects.map(line => `<li>${line}</li>`).join("");
         const boostLines = this.tree.formatNodeBoostLines(node);
         const boostHtml = boostLines.length
-          ? `<div class="boost-callout"><strong>Empowered Center</strong>${boostLines.map(line => `<div>${line}</div>`).join("")}</div>`
+          ? `<div class="boost-callout"><strong>Empowered Node</strong>${boostLines.map(line => `<div>${line}</div>`).join("")}</div>`
           : "";
         panel.innerHTML = `
           <h2 class="node-name">${node.name}</h2>
