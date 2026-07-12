@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#01030a">
+  <title>Verdigris — Splash Screen Demo</title>
+  <meta name="description" content="A real-time Three.js splash screen for Verdigris, a multiplayer action RPG set on a floating world before the age of iron.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main id="app">
+    <canvas id="world" aria-label="Animated floating world of Verdigris"></canvas>
+    <div class="vignette" aria-hidden="true"></div>
+    <header class="topbar">
+      <a class="back" href="../../index.html">WIZARD / XII</a>
+      <button id="sound" class="utility" type="button">SOUND OFF</button>
+    </header>
+    <section class="hero-copy">
+      <p class="eyebrow">A multiplayer action role-playing world</p>
+      <h1>VERDIGRIS</h1>
+      <div class="rule"></div>
+      <p class="tagline">One island. Endless falls. No world below.</p>
+      <nav aria-label="Splash screen menu">
+        <button class="primary" type="button">ENTER THE WORLD</button>
+        <button type="button">CREATE A HERO</button>
+        <button type="button">THE CHRONICLE</button>
+      </nav>
+    </section>
+    <aside class="quality-control">
+      <span id="fps">-- FPS</span>
+      <button id="quality" class="utility" type="button">HIGH</button>
+    </aside>
+    <p class="orbit-hint">DRAG TO ORBIT <i></i></p>
+    <div id="fallback" hidden>
+      <h2>WebGL is unavailable</h2>
+      <p>This experiment needs a browser with WebGL enabled.</p>
+    </div>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

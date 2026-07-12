@@ -24,6 +24,7 @@ and a petrified-stone plate, all aligned by silhouette-IoU.
 
 | Tool | Description |
 |---|---|
+| [Verdigris World Splash](tools/verdigris_splash/index.html) | Real-time Three.js menu world with atmospheric rim fog, shader waterfalls, and GPU droplets |
 | [Vessels of Life & Mana](tools/wizard_orbs/index.html) | WebGL2 orb engine over AI-rendered plates; poison/bleed/reservation sim |
 | [Health Globe v1](tools/health_globe/index.html) | The orb's predecessor — 100% procedural canvas, kept as a before/after comparison |
 | [Geometric Skill Tree](tools/geometric_skilltree/index.html) | Hexagonal passive tree inspired by Path of Exile, with dual point system |
