@@ -2,6 +2,18 @@
 
 Newest entries first. This is the running memory for the north-star overhaul.
 
+## 2026-07-12 — Phase 2 complete: concentric compounding and vesica lenses
+
+- Closed the two remaining §5.3 gaps from the WIP commit. Concentric crowns (radius-1 plus radius-2 loops around one center) now compound their empowerment multiplicatively instead of summing; the loop-empowerment curve moved into a named `LOOP_EMPOWER_TUNING` block. Verified live: an r1+r2 center reads 189% total increased effect (1.42 × 2.0 compounded) versus 154% under the old additive formula.
+- Vesica lens nodes now inherit a tunable share (`patternTuning.vesica.lensShare`, 0.5) of each crowned center's loop empowerment, delivered through `getNodeBoost` so it stacks additively with wave/rod boosts per the §5.7 stacking law. The origin contributes nothing as a vesica center, honoring the "origin has no build bonus" rule.
+- Tooltips gained explicit "Concentric crown" and "vesica lens" lines; `patterns.js` and the `tree-data.js` `patternTuning` block both carry the new vesica tunable.
+- Extended `tests/patterns.test.js`: vesicas expose exactly two lens nodes adjacent to both centers, and the tuning clone carries `lensShare` through to the app layer.
+
+Acceptance notes:
+
+- All suites green: patterns (8), runtime smoke (4), tree-data (4), progression (3), verdigris-stats (44).
+- Browser-verified over localhost (Phase 0's file:// blocker bypassed with a static server): built a twin-loop vesica plus an r1+r2 concentric crown in the live app; pattern panel, tooltips, and headline EHP/DPS all respond; console clean.
+
 ## 2026-07-12 — Phase 1 stat engine
 
 - Added `tools/rpg_inventory/core/verdigris-stats.js`, a zero-dependency UMD module shared by Vesselforge and the passive tree.

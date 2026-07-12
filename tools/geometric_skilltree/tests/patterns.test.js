@@ -187,7 +187,13 @@ function testLoopsConcentricVesicaGrandOrbitAndEnclosure() {
   assert.ok(result.loops.some(loop => loop.centerId === '0,0' && loop.radius === 1), 'Radius-1 loop crown should be detected.');
   assert.ok(result.loops.some(loop => loop.centerId === '0,0' && loop.radius === 2), 'Radius-2 loop crown should be detected.');
   assert.ok(result.concentric.some(item => item.centerId === '0,0'), 'Radius-1 plus radius-2 loops should form a concentric crown.');
-  assert.ok(result.vesicas.some(item => item.centers.includes('0,0') && item.centers.includes('2,-1')), 'Radius-1 loops sharing one edge should form a vesica.');
+  const vesica = result.vesicas.find(item => item.centers.includes('0,0') && item.centers.includes('2,-1'));
+  assert.ok(vesica, 'Radius-1 loops sharing one edge should form a vesica.');
+  assert.equal(vesica.lensNodeIds.length, 2, 'A vesica should expose its two lens nodes.');
+  vesica.lensNodeIds.forEach(id => {
+    assert.ok(vesica.centers.every(center => hexDistance(parseId(id).q - parseId(center).q, parseId(id).r - parseId(center).r) === 1), 'Lens nodes should sit adjacent to both centers.');
+  });
+  assert.equal(result.tuning.vesica.lensShare, 0.5, 'Vesica tuning should carry the lens share for the app layer.');
   assert.ok(result.grandOrbits.some(orbit => orbit.ring === 1), 'A complete ring around origin should form a grand orbit.');
 
   const enclosure = report({

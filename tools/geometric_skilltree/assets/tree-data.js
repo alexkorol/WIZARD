@@ -27,6 +27,9 @@
     "loops": {
       "maxRadius": 3
     },
+    "vesica": {
+      "lensShare": 0.5
+    },
     "rods": {
       "minLength": 3,
       "endpointBonus": 4,
