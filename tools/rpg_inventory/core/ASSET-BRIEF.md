@@ -144,6 +144,39 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    decoration: random lore marks, loose clutter, costume fragments, or detail
    that breaks readability/utility. Use `core/LOADOUT-EXTRACTION.md` for this
    mode.
+17. SELF-CONTAINED CHARACTER/SOURCE PROMPTS (2026-07-07). Do not shorten final
+   image-generation prompts by naming a faction, class, or tier and assuming
+   the model has project context. Every final prompt must restate the full
+   faction design language, class/stat gear grammar, tier progression or tier
+   target, rendering style, spacing/composition rules, and weapon constraints.
+   Composite assembly is fine: build prompts from reusable blocks or scripts if
+   needed, but the final prompt pasted into ChatGPT/image-2 must be complete.
+   Completeness is not a checklist of terse labels: do not optimize for
+   brevity, do not assume lore familiarity with Verdigris faction names,
+   and do not compress faction/class descriptions into title-case shorthand.
+   Prefer long, explicit, redundant prompt blocks that can stand alone in a
+   fresh image model session.
+   Do not save Alexei's proprietary legacy character prompts in this public repo;
+   save only distilled process rules and generic prompt structure.
+18. SLOT HYGIENE AND ANTI-COSTUME CLUTTER (2026-07-08). Item extraction prompts
+   must actively block invasive charms, dangles, chimes, tiny hanging rings,
+   delicate chains, and harness clutter unless those details are structural and
+   useful. Rings for fingers are compact bands, signets, coils, socket rings, or
+   seal rings; no dangling charms, tassels, chains, bells, or loose ornaments.
+   Amulets are pendants on a cord, twine, leather thong, or simple chain, with
+   the pendant filling most of the 1x1 image and the string curled behind or
+   around it; do not turn the amulet slot into a gorget, collar, or armor
+   throat-piece unless explicitly requested. Body armor must be the chest/body
+   piece only: open neck/chest read preferred, no attached collar/gorget, no
+   turtleneck, no built-in belt/skirt/faulds as the item thesis. Belts are
+   horizontal waist items for a 1x2 slot, not faulds, tassets, or skirts.
+   Shields show the front fighting face only: no clamshell opens, front-side
+   straps, dangling hardware, handle loops, or utility rigging on the visible
+   shield face. Helmets avoid vision-hazard dangles. Cloaks and armor avoid
+   stealth-hazard chimes, dangling charms, and excessive shredded gauze. Solar
+   symbols, eight-spoked wheel symbols, and human-face centerpieces are
+   high-risk overused motifs; avoid them by default, use them only as reviewed
+   exceptions, and never propagate the same motif across every slot in a set.
 
 ### Prompt changelog
 
@@ -179,6 +212,23 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
   tassels, shell, cords, chains, veils, stones, scratches, and ornaments are
   valid when they belong to the item; the banned failure is ungrounded detail
   pasted onto isolated prompt nouns.
+- 2026-07-07: ChatGPT batch true-alpha proved unreliable for source-image
+  loadout extraction. The working fallback is flat olive-slate matte
+  `#737A68` plus local `core/chroma_key.py`; magenta backgrounds are rejected
+  because their edge fringe is too visible.
+- 2026-07-07: source-image loadout extraction needs an explicit long-weapon
+  framing rule. Spears, pikes, staffs, standards, and polearms must be
+  full-length tip-to-butt, shaft-dominant, and set on a steep corner-to-corner
+  diagonal; shortened club/wand/mace-length versions are rejects.
+- 2026-07-07: character/source prompt construction must stay self-contained.
+  Do not truncate faction/class/tier descriptions into shorthand labels; use
+  composite prompt blocks if needed, but paste a complete prompt into image-2.
+  Prompt length is not the thing to optimize; visual specificity is.
+- 2026-07-08: slot-hygiene rule added from batch review. Future prompts must
+  suppress dangling ring jewelry, loose charms/chimes, excess harness rings,
+  motif spam, amulet-as-gorget drift, body-armor collars/belts, belt-as-skirt
+  drift, shield front hardware, gauze/ragged-cloth overuse, and delicate
+  costume-chain bias.
 
 ### Material-specific corrections (2026-07-05 review — do not relitigate)
 
@@ -301,6 +351,15 @@ alpha, do not run matte generation. `core/compose_assets.py` crops directly
 from the source alpha, preserves RGBA output, and skips palette quantization.
 This is the safe path for accepted manual image-2 downloads.
 
+Source-image loadout extraction route: if ChatGPT will not provide real alpha,
+generate on a flat olive-slate matte (`#737A68`) and run
+`python3 core/chroma_key.py SOURCE_DIR --out CLEAN_DIR`. This removes the
+sampled background color everywhere, including ring holes, chain gaps, and
+other interior openings. It also decontaminates antialiased edges. Promote the
+cleaned RGBA file under the chosen asset id and let `compose_assets.py` use the
+true-alpha path. A small neutral edge residue is acceptable if it reads as
+cloth fuzz or dirt; hot magenta fringe is not acceptable.
+
 `core/art_matte.py` is for flat-background fallback art. If it is accidentally
 run on a true-alpha PNG, it now writes the source alpha silhouette directly
 without hole filling, component pruning, or other reinterpretation.
@@ -384,13 +443,17 @@ as hammered bronze rather than gold filigree.
 2. Run `python3 core/qa_gate.py assets_staging/{file}.png CANVAS`, then eyeball
    the render against the checklist.
 3. If the staged PNG has true alpha, skip `art_matte.py`.
-4. If the staged PNG has a flat fallback background, run
+4. If it is a source-image loadout batch on slate matte, preserve the original
+   and run `python3 core/chroma_key.py SOURCE_DIR --out CLEAN_DIR`; promote the
+   cleaned RGBA under the chosen `ART_ID`.
+5. If the staged PNG has a flat fallback background for an ordinary single
+   item, run
    `python3 core/art_matte.py assets_staging {file}`.
-5. Every ~6 items run `python compose_assets.py` from
+6. Every ~6 items run `python compose_assets.py` from
    `tools\rpg_inventory\core\` (add `--wb` if the chunk trends yellow). This
    directly crops true-alpha RGBA inputs, or composites flat-background inputs
    with masks into `assets/`.
-6. Verify in the browser (`tools/rpg_inventory/index.html`): item art
+7. Verify in the browser (`tools/rpg_inventory/index.html`): item art
    replaces the SVG fallback automatically.
 
 ## Reject-and-redo checklist per image
@@ -399,6 +462,8 @@ as hammered bronze rather than gold filigree.
   single object, no text/watermark/frame.
 - **No yellow/sepia wash** — whites read bone-white, shadows read grey-black.
 - Silhouette reads clearly at 48px (squint test).
+- Spears, pikes, staffs, standards, and polearms are full length tip-to-butt;
+  the shaft remains the dominant element and is not collapsed into a short prop.
 - Matte matches framing; holes (shield grips, cord loops) are black.
 - Wearable/carryable objects explain how they are worn, held, slung, or
   attached through visible structure.

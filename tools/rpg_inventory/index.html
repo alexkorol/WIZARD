@@ -15,6 +15,7 @@
   <script src="core/vesselforge.js"></script>
   <script src="core/verdigris-stats.js"></script>
   <script src="core/verdigris-pack.js"></script>
+  <script src="core/character-item-taxonomy.js"></script>
 
   <style>
     :root {
@@ -31,7 +32,7 @@
       --trophy: #6ee7b7;
       --awake: #fb923c;
       --scar: #8b6a6a;
-      --cell-size: 48px;
+      --cell-size: 54px;
       --cell-gap: 2px;
     }
 
@@ -131,7 +132,7 @@
       width: 430px; max-width: 100%;
       flex-shrink: 0;
     }
-    :root { --pc: 50px; } /* paperdoll cell unit — slots sized in cell multiples like PoE */
+    :root { --pc: 54px; } /* paperdoll cell unit — slots sized in cell multiples like PoE */
     .s1x1 { width: var(--pc); height: var(--pc); }
     .s2x1 { width: calc(var(--pc) * 2 + 4px); height: calc(var(--pc) * 1 + 2px); }
     .s2x2 { width: calc(var(--pc) * 2 + 4px); height: calc(var(--pc) * 2 + 4px); }
@@ -139,6 +140,7 @@
     .s2x4 { width: calc(var(--pc) * 2 + 4px); height: calc(var(--pc) * 4 + 8px); }
     .doll-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 12px; }
     .doll-col { display: flex; flex-direction: column; gap: 10px; }
+    .doll-col.cloak-col { justify-content: flex-start; }
     .doll-col.thin-l { justify-content: flex-end; }
     .doll-col.thin-r { justify-content: space-between; }
     .slot-row.doll { align-items: stretch; gap: 8px; }
@@ -233,8 +235,19 @@
     /* ---------- Right panel ---------- */
     .inventory-panel { display: flex; flex-direction: column; gap: 12px; width: fit-content; max-width: 100%; }
     .section-title { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
-    .pack-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .pack-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; width: 100%; }
     .pack-actions { display: flex; gap: 8px; }
+    .pack-grids { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .pack-block { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; max-width: 100%; }
+    .pack-block.main-pack { align-items: center; }
+    .pack-title { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); padding-left: 2px; }
+    .mini-pack-row {
+      display: grid;
+      grid-template-columns: repeat(2, max-content);
+      gap: 10px;
+      max-width: 100%;
+      justify-content: center;
+    }
 
     .grid-shell {
       position: relative; display: inline-block; max-width: 100%;
@@ -243,6 +256,7 @@
       border-radius: 12px; border: 1px solid var(--panel-border);
       box-shadow: inset 0 0 0 1px rgba(233,228,216,0.02);
     }
+    .grid-shell.mini { padding: 8px; border-radius: 10px; }
 
     .inventory-grid {
       position: relative; display: grid; width: max-content;
@@ -250,6 +264,7 @@
       background: linear-gradient(rgba(10,9,7,0.55), rgba(10,9,7,0.55)), url('assets/slot_texture.png') repeat;
       border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden;
     }
+    .inventory-grid.mini { border-radius: 8px; }
 
     .grid-cell {
       width: var(--cell-size); height: var(--cell-size);
@@ -272,7 +287,7 @@
     .item.dragging { opacity: 0.92; transform: scale(1.05); cursor: grabbing; box-shadow: 0 18px 30px rgba(0,0,0,0.52); }
     .item .item-gloss { display: none; }
     .item-art {
-      max-width: 88%; max-height: 84%; object-fit: contain;
+      max-width: 92%; max-height: 90%; object-fit: contain;
       filter: drop-shadow(0 3px 7px rgba(0,0,0,0.65));
       pointer-events: none; position: relative; z-index: 1;
     }
@@ -528,6 +543,7 @@
       .left-col { width: 100%; }
       .paperdoll { width: 100%; }
       .grid-shell { display: block; -webkit-overflow-scrolling: touch; }
+      .mini-pack-row { grid-template-columns: 1fr; }
       .equip-slot .label { font-size: 0.52rem; }
       .atelier-socket { width: 100%; min-height: 150px; }
       .pack-head { flex-direction: column; align-items: flex-start; }
@@ -555,9 +571,16 @@
   const pack = VerdigrisPack;
   const forge = VesselForge.createForge(pack);
 
-  const GRID_W = 12;
-  const GRID_H = 8;
-  const TILE_SIZE = 48;
+  const PACK_DEFS = [
+    { id: 'main', label: 'Backpack', w: 12, h: 6, tone: 'main' },
+    { id: 'relics', label: 'Relics & Charts', w: 4, h: 4, tone: 'mini' },
+    { id: 'utility', label: 'Reagents & Utility', w: 4, h: 4, tone: 'mini' },
+  ];
+  const PACK_BY_ID = Object.fromEntries(PACK_DEFS.map(def => [def.id, def]));
+  const MAIN_PACK_ID = 'main';
+  const GRID_W = PACK_BY_ID[MAIN_PACK_ID].w;
+  const GRID_H = PACK_BY_ID[MAIN_PACK_ID].h;
+  const TILE_SIZE = 54;
   const CELL_GAP = 2;
   const SAVE_KEY = 'wizard_vesselforge_v3';
   const ROMAN = ['I', 'II', 'III'];
@@ -614,15 +637,24 @@
   };
 
   const DEFAULT_EQUIPMENT = {
-    head: null, amulet: null, mainHand: null, body: null, offHand: null,
+    head: null, amulet: null, mainHand: null, body: null, cloak: null, offHand: null,
     gloves: null, belt: null, boots: null, ring1: null, ring2: null,
   };
 
   const RETIRED_FORMS = new Set(pack.retiredForms || []);
   const RETIRED_MATERIALS = new Set(pack.retiredMaterials || []);
   const RETIRED_ART_IDS = new Set(pack.retiredArtIds || []);
+  const TAXONOMY_ITEMS = (window.VerdigrisCharacterItemTaxonomy || [])
+    .filter(row => row.slot !== 'odd');
+  const TAXONOMY_BY_ID = new Map(TAXONOMY_ITEMS.map(row => [row.id, row]));
+  const TAXONOMY_BY_SLOT = TAXONOMY_ITEMS.reduce((acc, row) => {
+    (acc[row.slot] ||= []).push(row);
+    return acc;
+  }, {});
 
   const artId = (item) => item ? `${item.formId}_${item.materialId}` : '';
+  const isRetiredCombo = (formId, materialId) =>
+    RETIRED_FORMS.has(formId) || RETIRED_MATERIALS.has(materialId) || RETIRED_ART_IDS.has(`${formId}_${materialId}`);
   const isKnownRuntimeItem = (item) => {
     const form = item && pack.forms[item.formId];
     return Boolean(
@@ -635,35 +667,215 @@
     );
   };
 
+  const titleCase = (value) => String(value || '')
+    .replace(/[-_]+/g, ' ')
+    .replace(/\b\w/g, ch => ch.toUpperCase());
+  const displayItemName = (item) => {
+    if (!item) return '';
+    if (item.displayName && !item.awakened) return item.displayName;
+    return forge.displayName(item);
+  };
+  const taxonomyRowFor = (item) => item && item.taxonomyId ? TAXONOMY_BY_ID.get(item.taxonomyId) : null;
+  const taxonomySlotsForKind = (item) => {
+    if (!item) return [];
+    if (item.kind === 'helmet') return ['head'];
+    if (item.kind === 'body') return ['body'];
+    if (item.kind === 'cloak') return ['cloak'];
+    if (item.kind === 'weapon') return ['weapon'];
+    if (item.kind === 'shield') return ['shield'];
+    if (item.kind === 'focus') return ['focus'];
+    if (item.kind === 'boots') return ['boots'];
+    if (item.kind === 'gloves') return ['hands'];
+    if (item.kind === 'belt') return ['belt'];
+    if (item.kind === 'amulet') return ['amulet'];
+    if (item.kind === 'ring') return ['ring'];
+    return ['focus'];
+  };
+  const randomFrom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  const decorateWithTaxonomyArt = (item, row = null) => {
+    if (!item) return item;
+    const pool = row ? [row] : taxonomySlotsForKind(item).flatMap(slot => TAXONOMY_BY_SLOT[slot] || []);
+    const picked = pool.length ? randomFrom(pool) : null;
+    if (!picked) return item;
+    return {
+      ...item,
+      taxonomyId: picked.id,
+      artOverride: picked.reviewImage,
+      displayName: titleCase(picked.subtype),
+      taxonomySlot: picked.slot,
+      taxonomyLane: picked.visualLane,
+    };
+  };
+  const formForTaxonomy = (row) => {
+    const sub = row.subtype || '';
+    if (row.slot === 'head') return /helm|helmet/.test(sub) ? 'helm' : 'crest';
+    if (row.slot === 'body') return 'wrap';
+    if (row.slot === 'cloak') return 'cloak';
+    if (row.slot === 'belt') return 'girdle';
+    if (row.slot === 'amulet') return 'gorget';
+    if (row.slot === 'ring') return 'ring';
+    if (row.slot === 'hands') return 'bracers';
+    if (row.slot === 'boots') return /greave|shin|bronze|lapis|greenbone|gold/.test(sub) ? 'greaves' : 'sandals';
+    if (row.slot === 'shield') return /buckler/.test(sub) ? 'buckler' : 'hideshield';
+    if (row.slot === 'focus') return 'focus';
+    if (row.slot === 'weapon') {
+      if (/axe|pick/.test(sub)) return sub.includes('hand') ? 'handaxe' : 'greataxe';
+      if (/club|mace/.test(sub)) return 'warclub';
+      if (/staff|scepter|focus/.test(sub)) return 'focus';
+      return 'dagger';
+    }
+    return 'curio';
+  };
+  const materialPrefsForTaxonomy = (row) => {
+    const text = `${row.visualLane || ''} ${row.subtype || ''}`.toLowerCase();
+    const prefs = [];
+    if (/obsidian|blackened/.test(text)) prefs.push('obsidian');
+    if (/jade|greenstone|green/.test(text)) prefs.push('jade');
+    if (/amber/.test(text)) prefs.push('amber');
+    if (/bone|fang|shell/.test(text)) prefs.push('bone');
+    if (/hide|leather|fur|rawhide|woven/.test(text)) prefs.push('hide', 'quilted');
+    if (/bronze|gold|lapis|red|gilded|copper|brass/.test(text)) prefs.push('bronze', 'copper', 'bronzescale');
+    const byLane = {
+      'gilded-veil': ['bronze', 'copper', 'jade', 'amber', 'bronzescale', 'quilted'],
+      'dark-shell': ['bronze', 'obsidian', 'bone', 'hide', 'copper'],
+      'northern-leather': ['hide', 'quilted', 'copper', 'bronze'],
+      'rawhide-bone': ['hide', 'bone', 'quilted', 'copper'],
+      'lapis-bronze': ['bronze', 'bronzescale', 'copper', 'jade'],
+      'greenbone-hide': ['jade', 'bone', 'hide', 'bronzescale', 'bronze'],
+      'red-bronze': ['bronze', 'copper', 'hide'],
+      'mixed-bronze': ['bronze', 'copper', 'hide', 'bone', 'obsidian'],
+    };
+    return [...prefs, ...(byLane[row.visualLane] || []), 'hide', 'copper', 'bronze', 'bone'];
+  };
+  const materialForTaxonomy = (row, formId) => {
+    const form = pack.forms[formId];
+    const allowed = form.materials || Object.keys(pack.materials);
+    return materialPrefsForTaxonomy(row).find(id => allowed.includes(id) && !isRetiredCombo(formId, id))
+      || allowed.find(id => !isRetiredCombo(formId, id))
+      || allowed[0];
+  };
+  const generateTaxonomyLoot = (ilvl, row = null) => {
+    const picked = row || randomFrom(TAXONOMY_ITEMS);
+    if (!picked) return forge.generateItem({ ilvl });
+    const formId = formForTaxonomy(picked);
+    const materialId = materialForTaxonomy(picked, formId);
+    const item = forge.generateItem({ ilvl, formId, materialId });
+    return decorateWithTaxonomyArt(item, picked);
+  };
+
   /* Art path per the ASSET-BRIEF naming; falls back to icon until generated. */
-  const artSrc = (item) => isKnownRuntimeItem(item) ? `assets/${artId(item)}.png` : null;
+  const artSrc = (item) => {
+    const row = taxonomyRowFor(item);
+    if (item?.artOverride) return item.artOverride;
+    if (row) return row.reviewImage;
+    return isKnownRuntimeItem(item) ? `assets/${artId(item)}.png` : null;
+  };
   const itemIcon = (item) => (pack.forms[item.formId] || {}).icon || 'default';
 
   /* ---------------- grid placement (UI concern, not engine) ---------------- */
-  const canPlaceItem = (inventory, item, x, y, ignoreId = null) => {
-    if (x < 0 || y < 0 || x + item.w > GRID_W || y + item.h > GRID_H) return false;
+  const normalizePackId = (packId) => PACK_BY_ID[packId] ? packId : MAIN_PACK_ID;
+  const packSearchText = (item) => {
+    const row = taxonomyRowFor(item);
+    return [
+      item?.kind,
+      item?.formId,
+      item?.taxonomySlot,
+      item?.taxonomyLane,
+      item?.displayName,
+      row?.slot,
+      row?.subtype,
+      row?.visualLane,
+      row?.label,
+    ].filter(Boolean).join(' ').toLowerCase();
+  };
+  const isSanctifiedItem = (item) =>
+    Boolean(item?.sanctified || item?.consecrated || item?.awakened || item?.trophies?.length);
+  const isRelicPackItem = (item) => {
+    if (!item) return false;
+    const text = packSearchText(item);
+    return isSanctifiedItem(item)
+      || item.kind === 'curio'
+      || item.kind === 'relic'
+      || item.kind === 'chart'
+      || item.relic === true
+      || item.chart === true
+      || /\b(relic|chart|map|codex|scroll|fragment|charm|trophy|keepsake|offering|omen)\b/.test(text);
+  };
+  const isUtilityPackItem = (item) => {
+    if (!item) return false;
+    const text = packSearchText(item);
+    return item.kind === 'reagent'
+      || item.kind === 'tool'
+      || item.utility === true
+      || /\b(reagent|herb|leaf|root|powder|pigment|ochre|oil|resin|salt|vial|bottle|ampoule|utility|breadcrumb|gathering)\b/.test(text);
+  };
+  const canUsePack = (item, packId = MAIN_PACK_ID) => {
+    const targetPackId = normalizePackId(packId);
+    if (targetPackId === 'main') return true;
+    if (targetPackId === 'relics') return isRelicPackItem(item);
+    if (targetPackId === 'utility') return isUtilityPackItem(item);
+    return false;
+  };
+  const packRejectReason = (packId) =>
+    normalizePackId(packId) === 'relics'
+      ? 'Relic pack only holds relics, charts, charms, trophies, or sanctified gear'
+      : 'Utility pack only holds reagents, herbs, pigments, tools, and supplies';
+  const canPlaceItem = (inventory, item, x, y, ignoreId = null, packId = MAIN_PACK_ID) => {
+    const targetPackId = normalizePackId(packId);
+    const packDef = PACK_BY_ID[targetPackId];
+    if (!canUsePack(item, targetPackId)) return false;
+    if (x < 0 || y < 0 || x + item.w > packDef.w || y + item.h > packDef.h) return false;
     for (const invItem of inventory) {
       if (invItem.id === item.id || invItem.id === ignoreId) continue;
+      if (normalizePackId(invItem.packId) !== targetPackId) continue;
       if (x < invItem.x + invItem.w && x + item.w > invItem.x &&
           y < invItem.y + invItem.h && y + item.h > invItem.y) return false;
     }
     return true;
   };
-  const findFreeSpot = (inventory, item) => {
-    for (let y = 0; y <= GRID_H - item.h; y++) {
-      for (let x = 0; x <= GRID_W - item.w; x++) {
-        if (canPlaceItem(inventory, item, x, y)) return { x, y };
+  const findFreeSpot = (inventory, item, packId = MAIN_PACK_ID) => {
+    const targetPackId = normalizePackId(packId);
+    const packDef = PACK_BY_ID[targetPackId];
+    for (let y = 0; y <= packDef.h - item.h; y++) {
+      for (let x = 0; x <= packDef.w - item.w; x++) {
+        if (canPlaceItem(inventory, item, x, y, item.id, targetPackId)) return { x, y, packId: targetPackId };
       }
     }
     return null;
+  };
+  const findFreeSpotAnyPack = (inventory, item, preferredPackId = MAIN_PACK_ID) => {
+    const first = normalizePackId(preferredPackId);
+    const order = [first, ...PACK_DEFS.map(def => def.id).filter(id => id !== first)];
+    for (const packId of order) {
+      const pos = findFreeSpot(inventory, item, packId);
+      if (pos) return pos;
+    }
+    return null;
+  };
+  const reflowInventory = (items) => {
+    const placed = [];
+    for (const item of items || []) {
+      if (!isKnownRuntimeItem(item)) continue;
+      const packId = normalizePackId(item.packId);
+      const x = Number.isFinite(item.x) ? item.x : 0;
+      const y = Number.isFinite(item.y) ? item.y : 0;
+      if (canPlaceItem(placed, item, x, y, item.id, packId)) {
+        placed.push({ ...item, x, y, packId });
+        continue;
+      }
+      const pos = findFreeSpotAnyPack(placed, item, packId);
+      if (pos) placed.push({ ...item, ...pos });
+    }
+    return placed;
   };
   const isSlotCompatible = (slotId, item) => {
     if (!item) return false;
     const k = item.kind;
     if (slotId === 'head') return k === 'helmet';
     if (slotId === 'body') return k === 'body';
+    if (slotId === 'cloak') return k === 'cloak';
     if (slotId === 'mainHand') return k === 'weapon';
-    if (slotId === 'offHand') return k === 'weapon' || k === 'shield';
+    if (slotId === 'offHand') return k === 'weapon' || k === 'shield' || k === 'focus';
     if (slotId === 'boots') return k === 'boots';
     if (slotId === 'gloves') return k === 'gloves';
     if (slotId === 'belt') return k === 'belt';
@@ -697,6 +909,10 @@
     put(forge.generateItem({ ilvl: 28, formId: 'gorget', materialId: 'jade', brands: 1 }));
     put(forge.generateItem({ ilvl: 18, formId: 'ring', materialId: 'bone', brands: 0 }));
     put(forge.generateItem({ ilvl: 20, formId: 'curio', materialId: 'bone' }));
+    ['batch_126', 'batch_132', 'batch_166', 'batch_173', 'batch_178', 'batch_190'].forEach((id, i) => {
+      const row = TAXONOMY_BY_ID.get(id);
+      if (row) put(generateTaxonomyLoot(36 + i * 4, row));
+    });
 
     // Pre-loved sandals shaped by some unknown Scout — estranged for a Guard.
     const sandals = forge.generateItem({ ilvl: 40, formId: 'sandals', materialId: 'quilted', brands: 0 });
@@ -761,7 +977,7 @@
 
     return {
       ...state,
-      inventory: (state.inventory || []).filter(isKnownRuntimeItem),
+      inventory: reflowInventory(state.inventory || []),
       equipment,
       atelierItem: isKnownRuntimeItem(state.atelierItem) ? state.atelierItem : null,
       satchel,
@@ -808,13 +1024,24 @@
     if (style.top + 430 > window.innerHeight) style.top = Math.max(6, window.innerHeight - 440);
 
     const lines = forge.tooltip(item, { archetype });
+    const row = taxonomyRowFor(item);
+    const tooltipLines = lines.map(l => (
+      l.section === 'name' && item.displayName && !item.awakened ? { ...l, text: item.displayName } : l
+    ));
+    if (row) {
+      const kindAt = tooltipLines.findIndex(l => l.section === 'kind');
+      tooltipLines.splice(Math.max(0, kindAt + 1), 0, {
+        section: 'kind',
+        text: `${row.id} · ${row.slot} · ${row.visualLane}`,
+      });
+    }
     const showAtt = item.vessel > 0 && !forge.isSated(item);
     const attPct = Math.min(100, Math.round((item.att.xp / item.att.next) * 100));
     let dividerShown = false;
 
     return (
       <div className="tooltip" style={{ ...style, boxShadow: `0 12px 35px rgba(0,0,0,0.6), ${tint.shadow}` }}>
-        {lines.map((l, i) => {
+        {tooltipLines.map((l, i) => {
           if (l.section === 'attune') return null; // custom bar below
           if (l.section === 'vessel') {
             return (
@@ -932,7 +1159,7 @@
     const [tooltip, setTooltip] = useState(null);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [toast, setToast] = useState(null);
-    const gridRef = useRef(null);
+    const packGridRefs = useRef({});
 
     const level = forge.charLevel(character);
     const agg = useMemo(
@@ -966,7 +1193,7 @@
       const source = sourceKind || (sourceSlot ? 'equipment' : 'inventory');
       setDragState({
         item, source, sourceSlot,
-        originalX: item.x, originalY: item.y,
+        originalX: item.x, originalY: item.y, originalPackId: normalizePackId(item.packId),
         startX, startY,
         grabOffsetX: startX - rect.left,
         grabOffsetY: startY - rect.top,
@@ -981,15 +1208,29 @@
     };
 
     const returnToSource = (prev, drag) => {
-      const { item, source, sourceSlot, originalX, originalY } = drag;
+      const { item, source, sourceSlot, originalX, originalY, originalPackId } = drag;
       if (source === 'equipment') return { ...prev, equipment: { ...prev.equipment, [sourceSlot]: item } };
       if (source === 'atelier') return { ...prev, atelierItem: item };
-      if (originalX != null && canPlaceItem(prev.inventory, item, originalX, originalY, item.id)) {
-        return { ...prev, inventory: [...prev.inventory, { ...item, x: originalX, y: originalY }] };
+      const packId = normalizePackId(originalPackId);
+      if (originalX != null && canPlaceItem(prev.inventory, item, originalX, originalY, item.id, packId)) {
+        return { ...prev, inventory: [...prev.inventory, { ...item, x: originalX, y: originalY, packId }] };
       }
-      const pos = findFreeSpot(prev.inventory, item);
+      const pos = findFreeSpotAnyPack(prev.inventory, item, packId);
       if (pos) return { ...prev, inventory: [...prev.inventory, { ...item, ...pos }] };
-      return { ...prev, inventory: [...prev.inventory, { ...item, x: originalX || 0, y: originalY || 0 }] };
+      return { ...prev, inventory: [...prev.inventory, { ...item, x: originalX || 0, y: originalY || 0, packId }] };
+    };
+
+    const packHitAt = (clientX, clientY, pad = 25) => {
+      for (const def of PACK_DEFS) {
+        const el = packGridRefs.current[def.id];
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (clientX >= rect.left - pad && clientX <= rect.right + pad &&
+            clientY >= rect.top - pad && clientY <= rect.bottom + pad) {
+          return { def, rect };
+        }
+      }
+      return null;
     };
 
     const finalizeDrop = useCallback((e) => {
@@ -1004,7 +1245,7 @@
         setState(prev => {
           let next = prev;
           if (prev.atelierItem) {
-            const pos = findFreeSpot(prev.inventory, prev.atelierItem);
+            const pos = findFreeSpotAnyPack(prev.inventory, prev.atelierItem);
             if (!pos) { showToast('No room in the pack to swap the socketed item'); return returnToSource(prev, drag); }
             next = { ...prev, inventory: [...prev.inventory, { ...prev.atelierItem, ...pos }] };
           }
@@ -1019,7 +1260,7 @@
 
       if (elements.some(el => el.getAttribute && el.getAttribute('data-trash-zone'))) {
         const price = forge.sellValue(item);
-        setState(prev => pushLog([{ kind: 'sys', text: `Sold ${forge.displayName(item)} for ${price}g.` }])({
+        setState(prev => pushLog([{ kind: 'sys', text: `Sold ${displayItemName(item)} for ${price}g.` }])({
           ...prev, character: { ...prev.character, gold: prev.character.gold + price },
         }));
         showToast(`Sold for ${price}g`, 'ok');
@@ -1030,7 +1271,7 @@
         if (!item.vessel) { showToast('A curio holds no vessel'); setState(prev => returnToSource(prev, drag)); return; }
         setState(prev => {
           if (!prev.atelierItem) return { ...prev, atelierItem: item };
-          const pos = findFreeSpot(prev.inventory, prev.atelierItem);
+          const pos = findFreeSpotAnyPack(prev.inventory, prev.atelierItem);
           if (!pos) { showToast('No room in the pack to swap the socketed item'); return returnToSource(prev, drag); }
           return { ...prev, inventory: [...prev.inventory, { ...prev.atelierItem, ...pos }], atelierItem: item };
         });
@@ -1053,17 +1294,18 @@
               if (isSlotCompatible(drag.sourceSlot, existing)) {
                 next = { ...next, equipment: { ...next.equipment, [drag.sourceSlot]: existing } };
               } else {
-                const pos = findFreeSpot(next.inventory, existing);
+                const pos = findFreeSpotAnyPack(next.inventory, existing, drag.originalPackId);
                 if (!pos) { showToast('No space to swap'); return returnToSource(prev, drag); }
                 next = { ...next, inventory: [...next.inventory, { ...existing, ...pos }] };
               }
             } else if (source === 'atelier') {
               next = { ...next, atelierItem: existing };
             } else {
-              if (drag.originalX != null && canPlaceItem(next.inventory, existing, drag.originalX, drag.originalY, existing.id)) {
-                next = { ...next, inventory: [...next.inventory, { ...existing, x: drag.originalX, y: drag.originalY }] };
+              const packId = normalizePackId(drag.originalPackId);
+              if (drag.originalX != null && canPlaceItem(next.inventory, existing, drag.originalX, drag.originalY, existing.id, packId)) {
+                next = { ...next, inventory: [...next.inventory, { ...existing, x: drag.originalX, y: drag.originalY, packId }] };
               } else {
-                const pos = findFreeSpot(next.inventory, existing);
+                const pos = findFreeSpotAnyPack(next.inventory, existing, packId);
                 if (!pos) { showToast('No space to swap'); return returnToSource(prev, drag); }
                 next = { ...next, inventory: [...next.inventory, { ...existing, ...pos }] };
               }
@@ -1074,24 +1316,27 @@
         return;
       }
 
-      if (gridRef.current) {
-        const gridRect = gridRef.current.getBoundingClientRect();
-        if (e.clientX >= gridRect.left - 25 && e.clientX <= gridRect.right + 25 &&
-            e.clientY >= gridRect.top - 25 && e.clientY <= gridRect.bottom + 25) {
-          const cellSize = TILE_SIZE + CELL_GAP;
-          let targetX = Math.floor((e.clientX - drag.grabOffsetX - gridRect.left) / cellSize);
-          let targetY = Math.floor((e.clientY - drag.grabOffsetY - gridRect.top) / cellSize);
-          targetX = Math.max(0, Math.min(GRID_W - item.w, targetX));
-          targetY = Math.max(0, Math.min(GRID_H - item.h, targetY));
-          setState(prev => {
-            if (canPlaceItem(prev.inventory, item, targetX, targetY, item.id)) {
-              return { ...prev, inventory: [...prev.inventory, { ...item, x: targetX, y: targetY }] };
-            }
-            showToast('Blocked');
-            return returnToSource(prev, drag);
-          });
+      const packHit = packHitAt(e.clientX, e.clientY);
+      if (packHit) {
+        const { def, rect: gridRect } = packHit;
+        if (!canUsePack(item, def.id)) {
+          showToast(packRejectReason(def.id));
+          setState(prev => returnToSource(prev, drag));
           return;
         }
+        const cellSize = TILE_SIZE + CELL_GAP;
+        let targetX = Math.floor((e.clientX - drag.grabOffsetX - gridRect.left) / cellSize);
+        let targetY = Math.floor((e.clientY - drag.grabOffsetY - gridRect.top) / cellSize);
+        targetX = Math.max(0, Math.min(def.w - item.w, targetX));
+        targetY = Math.max(0, Math.min(def.h - item.h, targetY));
+        setState(prev => {
+          if (canPlaceItem(prev.inventory, item, targetX, targetY, item.id, def.id)) {
+            return { ...prev, inventory: [...prev.inventory, { ...item, x: targetX, y: targetY, packId: def.id }] };
+          }
+          showToast('Blocked');
+          return returnToSource(prev, drag);
+        });
+        return;
       }
 
       setState(prev => returnToSource(prev, drag));
@@ -1118,17 +1363,17 @@
     };
 
     const getGhostPos = () => {
-      if (!dragState || !gridRef.current) return null;
-      const gridRect = gridRef.current.getBoundingClientRect();
-      if (mousePos.x < gridRect.left - 60 || mousePos.x > gridRect.right + 60 ||
-          mousePos.y < gridRect.top - 60 || mousePos.y > gridRect.bottom + 60) return null;
+      if (!dragState) return null;
+      const packHit = packHitAt(mousePos.x, mousePos.y, 60);
+      if (!packHit) return null;
+      const { def, rect: gridRect } = packHit;
       const cellSize = TILE_SIZE + CELL_GAP;
       let targetX = Math.floor((mousePos.x - dragState.grabOffsetX - gridRect.left) / cellSize);
       let targetY = Math.floor((mousePos.y - dragState.grabOffsetY - gridRect.top) / cellSize);
-      targetX = Math.max(0, Math.min(GRID_W - dragState.item.w, targetX));
-      targetY = Math.max(0, Math.min(GRID_H - dragState.item.h, targetY));
-      const isValid = canPlaceItem(inventory, dragState.item, targetX, targetY, dragState.item.id);
-      return { x: targetX, y: targetY, isValid };
+      targetX = Math.max(0, Math.min(def.w - dragState.item.w, targetX));
+      targetY = Math.max(0, Math.min(def.h - dragState.item.h, targetY));
+      const isValid = canPlaceItem(inventory, dragState.item, targetX, targetY, dragState.item.id, def.id);
+      return { x: targetX, y: targetY, packId: def.id, isValid };
     };
 
     /* -------- actions -------- */
@@ -1138,11 +1383,12 @@
         const events = [...r.events];
         let nextInv = prev.inventory;
         r.drops.forEach(d => {
-          if (!isKnownRuntimeItem(d)) return;
-          const pos = findFreeSpot(nextInv, d);
+          const item = decorateWithTaxonomyArt(d);
+          if (!isKnownRuntimeItem(item)) return;
+          const pos = findFreeSpotAnyPack(nextInv, item);
           if (pos) {
-            nextInv = [...nextInv, { ...d, ...pos }];
-            events.push({ kind: 'sys', text: `Found: ${forge.displayName(d)} (ilvl ${d.ilvl}).` });
+            nextInv = [...nextInv, { ...item, ...pos }];
+            events.push({ kind: 'sys', text: `Found: ${displayItemName(item)} (ilvl ${item.ilvl}).` });
           } else {
             events.push({ kind: 'sys', text: 'Found an item, but the pack was full. Left it in the mud.' });
           }
@@ -1158,11 +1404,30 @@
 
     const spawnLoot = () => {
       setState(prev => {
-        const item = forge.generateItem({ ilvl: Math.min(80, 10 + level * 3 + Math.floor(Math.random() * 15)) });
+        const item = generateTaxonomyLoot(Math.min(80, 10 + level * 3 + Math.floor(Math.random() * 15)));
         if (!isKnownRuntimeItem(item)) return prev;
-        const pos = findFreeSpot(prev.inventory, item);
+        const pos = findFreeSpotAnyPack(prev.inventory, item);
         if (!pos) { showToast('Backpack full'); return prev; }
         return { ...prev, inventory: [...prev.inventory, { ...item, ...pos }] };
+      });
+    };
+
+    const spawnTaxonomySet = () => {
+      setState(prev => {
+        const rows = [...TAXONOMY_ITEMS].sort(() => Math.random() - 0.5).slice(0, 18);
+        let nextInv = prev.inventory;
+        let added = 0;
+        for (const row of rows) {
+          const item = generateTaxonomyLoot(Math.min(80, 24 + level * 4 + Math.floor(Math.random() * 20)), row);
+          if (!isKnownRuntimeItem(item)) continue;
+          const pos = findFreeSpotAnyPack(nextInv, item);
+          if (!pos) continue;
+          nextInv = [...nextInv, { ...item, ...pos }];
+          added += 1;
+        }
+        if (!added) { showToast('Backpack full'); return prev; }
+        showToast(`Added ${added} batch items`, 'ok');
+        return pushLog([{ kind: 'sys', text: `Added ${added} character-batch placeholder items.` }])({ ...prev, inventory: nextInv });
       });
     };
 
@@ -1171,7 +1436,7 @@
         const sorted = [...prev.inventory].sort((a, b) => (b.w * b.h) - (a.w * a.h) || b.h - a.h);
         const placed = [];
         for (const it of sorted) {
-          const pos = findFreeSpot(placed, it);
+          const pos = findFreeSpotAnyPack(placed, it, normalizePackId(it.packId));
           if (!pos) { showToast('Could not sort'); return prev; }
           placed.push({ ...it, ...pos });
         }
@@ -1260,7 +1525,7 @@
     const returnSocketed = () => {
       setState(prev => {
         if (!prev.atelierItem) return prev;
-        const pos = findFreeSpot(prev.inventory, prev.atelierItem);
+        const pos = findFreeSpotAnyPack(prev.inventory, prev.atelierItem);
         if (!pos) { showToast('Backpack full'); return prev; }
         return { ...prev, inventory: [...prev.inventory, { ...prev.atelierItem, ...pos }], atelierItem: null };
       });
@@ -1282,8 +1547,46 @@
 
     /* -------- render -------- */
     const ghost = getGhostPos();
-    const gridCells = [];
-    for (let y = 0; y < GRID_H; y++) for (let x = 0; x < GRID_W; x++) gridCells.push(<div key={`${x}-${y}`} className="grid-cell" />);
+    const gridCellsFor = (def) => {
+      const cells = [];
+      for (let y = 0; y < def.h; y++) for (let x = 0; x < def.w; x++) cells.push(<div key={`${x}-${y}`} className="grid-cell" />);
+      return cells;
+    };
+    const renderPackGrid = (def) => {
+      const packItems = inventory.filter(item => normalizePackId(item.packId) === def.id);
+      return (
+        <div key={def.id} className={`pack-block ${def.tone === 'main' ? 'main-pack' : ''}`}>
+          <div className="pack-title">{def.label} · {packItems.length} · {def.w}×{def.h}</div>
+          <div className={`grid-shell ${def.tone === 'mini' ? 'mini' : ''}`}>
+            <div
+              ref={el => {
+                if (el) packGridRefs.current[def.id] = el;
+                else delete packGridRefs.current[def.id];
+              }}
+              data-pack-id={def.id}
+              className={`inventory-grid ${def.tone === 'mini' ? 'mini' : ''}`}
+              style={{ gridTemplateColumns: `repeat(${def.w}, ${TILE_SIZE}px)`, gridTemplateRows: `repeat(${def.h}, ${TILE_SIZE}px)` }}
+            >
+              {gridCellsFor(def)}
+              {ghost && dragState && ghost.packId === def.id && (
+                <div
+                  className={`ghost ${ghost.isValid ? 'valid' : 'invalid'}`}
+                  style={{
+                    left: ghost.x * (TILE_SIZE + CELL_GAP),
+                    top: ghost.y * (TILE_SIZE + CELL_GAP),
+                    width: dragState.item.w * TILE_SIZE + (dragState.item.w - 1) * CELL_GAP,
+                    height: dragState.item.h * TILE_SIZE + (dragState.item.h - 1) * CELL_GAP,
+                  }}
+                />
+              )}
+              {packItems.map(item => (
+                <ItemComponent key={item.id} item={item} onPointerDown={(e, it) => startDrag(e, it)} onHover={handleHover} />
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    };
 
     const slotProps = { onPointerDown: (e, item, slot) => startDrag(e, item, slot), draggingItem: dragState?.item, onHover: handleHover };
     const odds = atelierItem && atelierItem.vessel
@@ -1324,6 +1627,8 @@
             </div>
             <button className="btn primary" onClick={ventureForth}>Venture Forth</button>
             <button className="btn" onClick={spawnLoot}>Spawn Loot</button>
+            <button className="btn" onClick={spawnTaxonomySet}>Spawn Set</button>
+            <a className="btn" href="taxonomy-review.html">Taxonomy</a>
             <button className="btn" onClick={resetVault}>Reset</button>
           </div>
         </div>
@@ -1389,7 +1694,7 @@
                     {atelierItem ? (
                       <React.Fragment>
                         <div className="row-name" style={{ color: itemTint(atelierItem).color }}>
-                          {forge.displayName(atelierItem)}
+                          {displayItemName(atelierItem)}
                           <span style={{ color: 'var(--dim)', fontSize: '0.72rem', marginLeft: 8 }}>
                             {pack.materials[atelierItem.materialId].name} · Patience {atelierItem.patience}/{atelierItem.patienceMax}
                           </span>
@@ -1479,6 +1784,9 @@
                   <EquipmentSlot slotType="mainHand" label="Main Hand" size="s2x4" item={equipment.mainHand} {...slotProps} />
                   <EquipmentSlot slotType="gloves" label="Hands" size="s2x2" item={equipment.gloves} {...slotProps} />
                 </div>
+                <div className="doll-col cloak-col">
+                  <EquipmentSlot slotType="cloak" label="Cloak" size="s2x3" item={equipment.cloak} {...slotProps} />
+                </div>
                 <div className="doll-col thin-l">
                   <EquipmentSlot slotType="ring1" label="Ring" size="s1x1" item={equipment.ring1} {...slotProps} />
                 </div>
@@ -1499,7 +1807,7 @@
             </div>
 
             <div className="pack-head">
-              <div className="section-title">{inventory.length} items · {GRID_W}×{GRID_H}</div>
+              <div className="section-title">{inventory.length} items · main {GRID_W}×{GRID_H} · specialty packs 4×4</div>
               <div className="pack-actions">
                 <button className="btn small" onClick={sortPack}>Sort</button>
                 <button className={`btn small ${benchOpen ? 'primary' : ''}`} aria-expanded={benchOpen} onClick={() => setBenchOpen(o => !o)}>
@@ -1508,27 +1816,10 @@
               </div>
             </div>
 
-            <div className="grid-shell">
-              <div
-                ref={gridRef}
-                className="inventory-grid"
-                style={{ gridTemplateColumns: `repeat(${GRID_W}, ${TILE_SIZE}px)`, gridTemplateRows: `repeat(${GRID_H}, ${TILE_SIZE}px)` }}
-              >
-                {gridCells}
-                {ghost && dragState && (
-                  <div
-                    className={`ghost ${ghost.isValid ? 'valid' : 'invalid'}`}
-                    style={{
-                      left: ghost.x * (TILE_SIZE + CELL_GAP),
-                      top: ghost.y * (TILE_SIZE + CELL_GAP),
-                      width: dragState.item.w * TILE_SIZE + (dragState.item.w - 1) * CELL_GAP,
-                      height: dragState.item.h * TILE_SIZE + (dragState.item.h - 1) * CELL_GAP,
-                    }}
-                  />
-                )}
-                {inventory.map(item => (
-                  <ItemComponent key={item.id} item={item} onPointerDown={(e, it) => startDrag(e, it)} onHover={handleHover} />
-                ))}
+            <div className="pack-grids">
+              {renderPackGrid(PACK_BY_ID.main)}
+              <div className="mini-pack-row">
+                {PACK_DEFS.filter(def => def.tone === 'mini').map(renderPackGrid)}
               </div>
             </div>
 

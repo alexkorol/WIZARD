@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Mason — terrain border tile forge</title>
+<meta name="description" content="Generates complete autotile border sets for terrain transitions — square blob (47 tiles) and hex (64 combinations) — deterministic per seed, with PNG/JSON export and AI paint-over templates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0c0a;
+  --panel:#100f0c;
+  --ink:#e9e4d8;
+  --ink-dim:#9c9587;
+  --ink-faint:#6e685e;
+  --gold:#c9a227;
+  --gold-soft:rgba(201,162,39,.55);
+  --hairline:rgba(233,228,216,.12);
+  --serif:'Cinzel',Georgia,serif;
+  --sans:'Source Sans 3','Segoe UI',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden}
+.app{display:flex;height:100%}
+.side{
+  width:280px;flex:none;background:var(--panel);
+  border-right:1px solid var(--hairline);
+  padding:1.4rem 1.25rem 1rem;
+  display:flex;flex-direction:column;gap:.85rem;overflow-y:auto;
+}
+.side h1{font-family:var(--serif);font-weight:500;font-size:1.35rem;letter-spacing:.14em;margin:0}
+.side .sub{margin:.2rem 0 0;font-size:.8rem;color:var(--ink-dim);line-height:1.45}
+.rule{border:0;border-top:1px solid var(--hairline);margin:.2rem 0}
+label{display:block;font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+select,input[type=text]{
+  width:100%;background:#171613;color:var(--ink);
+  border:1px solid var(--hairline);border-radius:4px;
+  padding:.45rem .55rem;font:inherit;font-size:.9rem;
+}
+select:focus,input:focus{outline:1px solid var(--gold-soft)}
+.row{display:flex;gap:.5rem}
+.row>*{flex:1}
+button{
+  font:inherit;font-size:.85rem;font-weight:600;letter-spacing:.06em;
+  border-radius:4px;padding:.5rem .7rem;cursor:pointer;
+  border:1px solid var(--hairline);background:#171613;color:var(--ink);
+  transition:border-color .15s ease,background .15s ease;
+}
+button:hover{border-color:var(--gold-soft)}
+button.active{border-color:var(--gold-soft);color:var(--gold);background:rgba(201,162,39,.12)}
+.hint{font-size:.72rem;color:var(--ink-faint);line-height:1.5;margin:0}
+.foot{margin-top:auto;padding-top:.8rem;border-top:1px solid var(--hairline);font-size:.75rem;color:var(--ink-faint)}
+.foot a{color:var(--ink-dim);text-decoration:none}
+.foot a:hover{color:var(--gold)}
+.stage{flex:1;position:relative;min-width:0;display:flex;align-items:center;justify-content:center;overflow:auto;padding:1rem}
+canvas#board{image-rendering:pixelated;max-width:100%;max-height:100%;border:1px solid var(--hairline)}
+.corner{position:absolute;right:.9rem;bottom:.7rem;font-size:.7rem;letter-spacing:.1em;color:var(--ink-faint);pointer-events:none;text-transform:uppercase}
+@media (max-width:760px){
+  .app{flex-direction:column}
+  .side{width:100%;max-height:50%;border-right:0;border-bottom:1px solid var(--hairline);padding:.9rem 1rem}
+  .foot{display:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div>
+      <h1>THE MASON</h1>
+      <p class="sub">Border tile forge: complete autotile transition sets for where two terrains meet. Square blob and hex, carved from a seed.</p>
+    </div>
+    <hr class="rule">
+    <div class="row">
+      <div>
+        <label for="shape">Tiles</label>
+        <select id="shape">
+          <option value="square" selected>Square — 47 blob</option>
+          <option value="hex">Hex — 64 edges</option>
+        </select>
+      </div>
+      <div>
+        <label for="size">Size</label>
+        <select id="size">
+          <option value="24">24 px</option>
+          <option value="32" selected>32 px</option>
+          <option value="48">48 px</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="inner">Inner</label>
+        <select id="inner"></select>
+      </div>
+      <div>
+        <label for="outer">Outer</label>
+        <select id="outer"></select>
+      </div>
+    </div>
+    <div>
+      <label for="seed">Seed</label>
+      <div class="row">
+        <input type="text" id="seed" spellcheck="false" autocomplete="off">
+        <button id="roll" style="flex:0 0 auto">Roll</button>
+      </div>
+    </div>
+    <div>
+      <label>View</label>
+      <div class="row">
+        <button id="viewPlay" class="active">Playground</button>
+        <button id="viewSheet">Sheet</button>
+        <button id="viewTemplate">Template</button>
+      </div>
+    </div>
+    <div class="row" id="playTools">
+      <button id="scatter">Scatter</button>
+      <button id="clear">Clear</button>
+    </div>
+    <div>
+      <label>Export</label>
+      <div class="row">
+        <button id="exportPng">PNG sheet</button>
+        <button id="exportJson">JSON</button>
+      </div>
+      <div class="row" style="margin-top:.5rem">
+        <button id="exportTemplate">AI template sheet</button>
+      </div>
+    </div>
+    <div>
+      <label>Custom art</label>
+      <div class="row">
+        <button id="texInner">Inner texture</button>
+        <button id="texOuter">Outer texture</button>
+      </div>
+      <div class="row" style="margin-top:.5rem">
+        <button id="importSheet">Painted sheet</button>
+        <button id="clearArt">Clear art</button>
+      </div>
+      <div class="row" style="margin-top:.5rem">
+        <button id="overlayBtn" class="active">Rim overlay: on</button>
+        <button id="seamlessBtn" class="active">Seamless fix: on</button>
+      </div>
+      <input type="file" id="fileInput" accept="image/png,image/webp,image/jpeg" style="display:none">
+    </div>
+    <div>
+      <label>Image model prompts</label>
+      <div class="row">
+        <button id="promptTexture">Texture prompt</button>
+        <button id="promptSheet">Sheet prompt</button>
+      </div>
+    </div>
+    <p class="hint">Paint with the mouse — left adds the inner terrain, Shift or right-drag erases. Two AI routes: import seamless textures (from gpt-image-2 or any model) and the Mason cuts the transitions; or export the template sheet, paint over it, and import the painted sheet back — the playground then autotiles with your art.</p>
+    <div class="foot">
+      Part of <a href="../../index.html">WIZARD</a> · <a href="https://github.com/alexkorol/WIZARD/tree/gh-pages/tools/mason">source &amp; docs</a>
+    </div>
+  </aside>
+  <main class="stage">
+    <canvas id="board"></canvas>
+    <div class="corner" id="corner"></div>
+  </main>
+</div>
+
+<script src="core/mason.js"></script>
+<script>
+(function () {
+'use strict';
+
+var board = document.getElementById('board');
+var bctx = board.getContext('2d');
+var params = null;
+var view = 'play';
+
+// playground grid
+var COLS = 34, ROWS = 21;      // square
+var HCOLS = 26, HROWS = 15;    // hex (axial, rectangle-ish window)
+var cells = null;              // Uint8Array: 1 = inner terrain
+var scratch = document.createElement('canvas');
+var sctx = scratch.getContext('2d');
+
+// ---------------------------------------------------------------- setup
+
+var TER_IDS = Object.keys(Mason.TERRAINS);
+['inner', 'outer'].forEach(function (id) {
+  var sel = document.getElementById(id);
+  TER_IDS.forEach(function (t) {
+    var o = document.createElement('option');
+    o.value = t; o.textContent = Mason.TERRAINS[t].name;
+    sel.appendChild(o);
+  });
+});
+document.getElementById('inner').value = 'grass';
+document.getElementById('outer').value = 'water';
+
+// imported art: seamless textures and/or a painted-over sheet
+var art = { textures: {}, sheet: null, sheetShape: null };
+var overlayOn = true;
+var seamlessOn = true;
+
+function readParams(newSeed) {
+  var seedField = document.getElementById('seed');
+  var inner = document.getElementById('inner').value;
+  var outer = document.getElementById('outer').value;
+  if (inner === outer) {
+    outer = TER_IDS[(TER_IDS.indexOf(inner) + 1) % TER_IDS.length];
+    document.getElementById('outer').value = outer;
+  }
+  var seed = newSeed ? ((Math.random() * 0xFFFFFFFF) >>> 0) : seedField.value.trim();
+  params = Mason.makeSetParams({
+    shape: document.getElementById('shape').value,
+    size: parseInt(document.getElementById('size').value, 10),
+    inner: inner,
+    outer: outer,
+    seed: seed === '' ? undefined : seed
+  });
+  params.textures = art.textures;
+  params.overlay = overlayOn ? 1 : 0;
+  seedField.value = String(params.seed);
+  scratch.width = scratch.height = params.size;
+  var artNote = art.sheet ? ' · painted sheet' :
+    ((art.textures.inner || art.textures.outer) ? ' · custom textures' : '');
+  document.getElementById('corner').textContent =
+    Mason.TERRAINS[inner].name + ' on ' + Mason.TERRAINS[outer].name + ' · ' +
+    (params.shape === 'hex' ? 'hex 64' : 'blob 47') + ' · ' + params.seed + artNote;
+}
+
+// ---------------------------------------------------------------- playground state
+
+function gridDims() {
+  return params.shape === 'hex' ? { c: HCOLS, r: HROWS } : { c: COLS, r: ROWS };
+}
+
+function scatterCells() {
+  var g = gridDims();
+  cells = new Uint8Array(g.c * g.r);
+  // smooth value noise threshold for organic blobs
+  var seed = params.seed ^ 0xbeef;
+  function lattice(x, y) { return (Mason.hashString(x + ':' + y + ':' + seed) % 1000) / 1000; }
+  for (var y = 0; y < g.r; y++) {
+    for (var x = 0; x < g.c; x++) {
+      var fx = x / 5, fy = y / 5;
+      var x0 = Math.floor(fx), y0 = Math.floor(fy);
+      var u = fx - x0, v = fy - y0;
+      var s = (t) => t * t * (3 - 2 * t);
+      var n = lattice(x0, y0) * (1 - s(u)) * (1 - s(v)) +
+              lattice(x0 + 1, y0) * s(u) * (1 - s(v)) +
+              lattice(x0, y0 + 1) * (1 - s(u)) * s(v) +
+              lattice(x0 + 1, y0 + 1) * s(u) * s(v);
+      cells[y * g.c + x] = n > 0.5 ? 1 : 0;
+    }
+  }
+}
+
+function cellAt(x, y) {
+  var g = gridDims();
+  if (x < 0 || y < 0 || x >= g.c || y >= g.r) return -1; // out of bounds
+  return cells[y * g.c + x];
+}
+
+// out-of-bounds counts the same as the asking cell, so the window edge is seamless
+function neighborInner(x, y, self) {
+  var c = cellAt(x, y);
+  return c === -1 ? self : c;
+}
+
+function squareMask(x, y) {
+  var self = cellAt(x, y);
+  var m = 0;
+  Mason.SQUARE_NEIGHBORS.forEach(function (d, i) {
+    if (neighborInner(x + d[0], y + d[1], self)) m |= (1 << i);
+  });
+  return m;
+}
+
+function hexMask(q, r) {
+  var self = cellAt(q, r);
+  var m = 0;
+  Mason.HEX_NEIGHBORS.forEach(function (d, i) {
+    if (neighborInner(q + d[0], r + d[1], self)) m |= (1 << i);
+  });
+  return m;
+}
+
+// ---------------------------------------------------------------- playground rendering
+
+function hexPos(q, r) {
+  // pointy-top: horizontal pitch = hex width, vertical pitch = 3/4 height
+  var S = params.size;
+  var wpitch = S * Math.sqrt(3) / 2;
+  var x = wpitch * (q + r / 2) + S / 2;
+  var y = 0.75 * S * r + S / 2;
+  return { x: x, y: y };
+}
+
+function boardSize() {
+  var g = gridDims();
+  var S = params.size;
+  if (params.shape === 'hex') {
+    var wpitch = S * Math.sqrt(3) / 2;
+    return { w: Math.ceil(wpitch * (g.c + g.r / 2) + S), h: Math.ceil(0.75 * S * g.r + S) };
+  }
+  return { w: g.c * S, h: g.r * S };
+}
+
+function outerParams() {
+  return Mason.outerAsInner(params);
+}
+
+// index of the pure-outer slot in the current layout
+function outerSlotIndex() {
+  var tiles = Mason.sheetLayout(params.shape).tiles;
+  for (var i = 0; i < tiles.length; i++) if (tiles[i].role === 'outer') return tiles[i].index;
+  return -1;
+}
+
+// imported painted sheet: slice index for a cell's mask
+function sheetSlice(mask) {
+  var idx = params.shape === 'hex' ? mask : Mason.BLOB_LOOKUP[mask];
+  return art.sheet[idx] || null;
+}
+
+function drawCell(x, y) {
+  var S = params.size;
+  var useSheet = art.sheet && art.sheetShape === params.shape;
+  if (params.shape === 'hex') {
+    var pos = hexPos(x, y);
+    var bx = Math.round(pos.x - S / 2), by = Math.round(pos.y - S / 2);
+    if (useSheet) {
+      var slice = cellAt(x, y) ? sheetSlice(hexMask(x, y)) : art.sheet[outerSlotIndex()];
+      if (slice) { bctx.drawImage(slice, bx, by, S, S); return; }
+    }
+    sctx.clearRect(0, 0, S, S);
+    if (cellAt(x, y)) Mason.paintHexTile(sctx, 0, 0, params, hexMask(x, y), Math.round(pos.x), Math.round(pos.y));
+    else Mason.paintHexTile(sctx, 0, 0, outerParams(), 63, Math.round(pos.x), Math.round(pos.y));
+    bctx.drawImage(scratch, bx, by);
+  } else {
+    if (useSheet) {
+      var slice2 = cellAt(x, y) ? sheetSlice(squareMask(x, y)) : art.sheet[outerSlotIndex()];
+      if (slice2) { bctx.drawImage(slice2, x * S, y * S, S, S); return; }
+    }
+    if (cellAt(x, y)) Mason.paintSquareTile(bctx, x * S, y * S, params, squareMask(x, y), x * S, y * S);
+    else Mason.paintSquareTile(bctx, x * S, y * S, outerParams(), 255, x * S, y * S);
+  }
+}
+
+function drawBoard() {
+  var g = gridDims();
+  var size = boardSize();
+  board.width = size.w; board.height = size.h;
+  bctx.fillStyle = '#0d0c0a';
+  bctx.fillRect(0, 0, size.w, size.h);
+  for (var y = 0; y < g.r; y++)
+    for (var x = 0; x < g.c; x++) drawCell(x, y);
+}
+
+// repaint a changed cell plus its neighbor ring
+function repaintAround(x, y) {
+  var dirs = params.shape === 'hex' ? Mason.HEX_NEIGHBORS : Mason.SQUARE_NEIGHBORS;
+  drawCell(x, y);
+  var g = gridDims();
+  dirs.forEach(function (d) {
+    var nx = x + d[0], ny = y + d[1];
+    if (nx >= 0 && ny >= 0 && nx < g.c && ny < g.r) drawCell(nx, ny);
+  });
+}
+
+// ---------------------------------------------------------------- sheet views
+
+function drawSheet(mode) {
+  var off = document.createElement('canvas');
+  if (mode === 'art' && art.sheet && art.sheetShape === params.shape) {
+    // show the imported painted sheet
+    var layout = Mason.sheetLayout(params.shape);
+    off.width = layout.cols * params.size;
+    off.height = layout.rows * params.size;
+    var og = off.getContext('2d');
+    layout.tiles.forEach(function (t, i) {
+      if (art.sheet[i]) og.drawImage(art.sheet[i], t.col * params.size, t.row * params.size);
+    });
+  } else Mason.renderSheet(off, params, mode);
+  var scale = 2;
+  board.width = off.width * scale;
+  board.height = off.height * scale;
+  bctx.imageSmoothingEnabled = false;
+  bctx.fillStyle = '#0d0c0a';
+  bctx.fillRect(0, 0, board.width, board.height);
+  bctx.drawImage(off, 0, 0, board.width, board.height);
+  // hairline grid over the tiles
+  bctx.strokeStyle = 'rgba(233,228,216,0.12)';
+  var S = params.size * scale;
+  for (var x = 0; x <= board.width; x += S) { bctx.beginPath(); bctx.moveTo(x + 0.5, 0); bctx.lineTo(x + 0.5, board.height); bctx.stroke(); }
+  for (var y = 0; y <= board.height; y += S) { bctx.beginPath(); bctx.moveTo(0, y + 0.5); bctx.lineTo(board.width, y + 0.5); bctx.stroke(); }
+}
+
+function render() {
+  if (view === 'play') { drawBoard(); }
+  else if (view === 'sheet') { drawSheet('art'); }
+  else { drawSheet('template'); }
+  document.getElementById('playTools').style.display = view === 'play' ? '' : 'none';
+}
+
+// ---------------------------------------------------------------- painting input
+
+var painting = false, paintValue = 1;
+function eventCell(e) {
+  var rect = board.getBoundingClientRect();
+  var sx = board.width / rect.width, sy = board.height / rect.height;
+  var px = (e.clientX - rect.left) * sx, py = (e.clientY - rect.top) * sy;
+  var S = params.size;
+  var g = gridDims();
+  if (params.shape === 'hex') {
+    // nearest hex center wins
+    var best = null, bd = Infinity;
+    var rGuess = Math.round((py - S / 2) / (0.75 * S));
+    for (var r = Math.max(0, rGuess - 1); r <= Math.min(g.r - 1, rGuess + 1); r++) {
+      var wpitch = S * Math.sqrt(3) / 2;
+      var qGuess = Math.round((px - S / 2) / wpitch - r / 2);
+      for (var q = Math.max(0, qGuess - 1); q <= Math.min(g.c - 1, qGuess + 1); q++) {
+        var pos = hexPos(q, r);
+        var d = (pos.x - px) * (pos.x - px) + (pos.y - py) * (pos.y - py);
+        if (d < bd) { bd = d; best = [q, r]; }
+      }
+    }
+    return best;
+  }
+  var cx = Math.floor(px / S), cy = Math.floor(py / S);
+  if (cx < 0 || cy < 0 || cx >= g.c || cy >= g.r) return null;
+  return [cx, cy];
+}
+
+function paintAt(e) {
+  var c = eventCell(e);
+  if (!c) return;
+  var g = gridDims();
+  var i = c[1] * g.c + c[0];
+  if (cells[i] !== paintValue) {
+    cells[i] = paintValue;
+    repaintAround(c[0], c[1]);
+  }
+}
+
+board.addEventListener('pointerdown', function (e) {
+  if (view !== 'play') return;
+  e.preventDefault();
+  painting = true;
+  paintValue = (e.button === 2 || e.shiftKey) ? 0 : 1;
+  board.setPointerCapture(e.pointerId);
+  paintAt(e);
+});
+board.addEventListener('pointermove', function (e) { if (painting) paintAt(e); });
+board.addEventListener('pointerup', function () { painting = false; });
+board.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+
+// ---------------------------------------------------------------- controls
+
+function regen(newSeed, rescatter) {
+  readParams(newSeed);
+  if (rescatter || !cells || cells.length !== gridDims().c * gridDims().r) scatterCells();
+  render();
+}
+
+['shape', 'size', 'inner', 'outer'].forEach(function (id) {
+  document.getElementById(id).addEventListener('change', function () { regen(false, id === 'shape'); });
+});
+document.getElementById('roll').addEventListener('click', function () { regen(true, false); });
+document.getElementById('seed').addEventListener('keydown', function (e) { if (e.key === 'Enter') regen(false, false); });
+document.getElementById('scatter').addEventListener('click', function () { readParams(true); scatterCells(); render(); });
+document.getElementById('clear').addEventListener('click', function () { cells.fill(0); render(); });
+
+[['viewPlay', 'play'], ['viewSheet', 'sheet'], ['viewTemplate', 'template']].forEach(function (pair) {
+  document.getElementById(pair[0]).addEventListener('click', function () {
+    view = pair[1];
+    ['viewPlay', 'viewSheet', 'viewTemplate'].forEach(function (id) {
+      document.getElementById(id).classList.toggle('active', id === pair[0]);
+    });
+    render();
+  });
+});
+
+function download(name, blobOrUrl) {
+  var a = document.createElement('a');
+  a.href = typeof blobOrUrl === 'string' ? blobOrUrl : URL.createObjectURL(blobOrUrl);
+  a.download = name;
+  a.click();
+  if (typeof blobOrUrl !== 'string') URL.revokeObjectURL(a.href);
+}
+function exportSheet(mode) {
+  var off = document.createElement('canvas');
+  var p2 = params;
+  if (mode === 'template') {
+    // render the template near the model's native input resolution so the
+    // guides stay crisp; slicing back is proportional, so any square
+    // output maps onto the same layout
+    var cols = Mason.sheetLayout(params.shape).cols;
+    p2 = Object.assign({}, params, { size: Math.max(params.size, Math.floor(1024 / cols)) });
+  }
+  Mason.renderSheet(off, p2, mode);
+  off.toBlob(function (blob) {
+    download('mason_' + params.shape + '_' + params.inner + '_on_' + params.outer + '_' + params.seed +
+             (mode === 'template' ? '_template' : '') + '.png', blob);
+  });
+}
+// ---------------------------------------------------------------- custom art import
+
+var pendingImport = null;
+var fileInput = document.getElementById('fileInput');
+function askFile(kind) { pendingImport = kind; fileInput.value = ''; fileInput.click(); }
+document.getElementById('texInner').addEventListener('click', function () { askFile('inner'); });
+document.getElementById('texOuter').addEventListener('click', function () { askFile('outer'); });
+document.getElementById('importSheet').addEventListener('click', function () { askFile('sheet'); });
+document.getElementById('clearArt').addEventListener('click', function () {
+  art.textures = {};
+  art.sheet = null;
+  art.sheetShape = null;
+  ['texInner', 'texOuter', 'importSheet'].forEach(function (id) {
+    document.getElementById(id).classList.remove('active');
+  });
+  regen(false, false);
+});
+document.getElementById('overlayBtn').addEventListener('click', function () {
+  overlayOn = !overlayOn;
+  this.textContent = 'Rim overlay: ' + (overlayOn ? 'on' : 'off');
+  this.classList.toggle('active', overlayOn);
+  regen(false, false);
+});
+document.getElementById('seamlessBtn').addEventListener('click', function () {
+  seamlessOn = !seamlessOn;
+  this.textContent = 'Seamless fix: ' + (seamlessOn ? 'on' : 'off');
+  this.classList.toggle('active', seamlessOn);
+  // applies at import time; re-import textures to change already-loaded art
+});
+
+fileInput.addEventListener('change', function () {
+  var file = fileInput.files[0];
+  if (!file || !pendingImport) return;
+  var kind = pendingImport;
+  var img = new Image();
+  img.onload = function () {
+    URL.revokeObjectURL(img.src);
+    if (kind === 'sheet') {
+      // models with fixed output sizes often pad the square grid inside
+      // a 3:2 canvas; find the content rect before slicing
+      var work = document.createElement('canvas');
+      work.width = img.width; work.height = img.height;
+      var wg = work.getContext('2d');
+      wg.drawImage(img, 0, 0);
+      var crop = Mason.detectLetterbox(wg.getImageData(0, 0, img.width, img.height));
+      // slice by the current layout; scales if the sheet was painted
+      // at a different resolution than the current tile size
+      var layout = Mason.sheetLayout(params.shape);
+      var cw = crop.w / layout.cols, chh = crop.h / layout.rows;
+      art.sheet = layout.tiles.map(function (t) {
+        var c = document.createElement('canvas');
+        c.width = c.height = params.size;
+        var g = c.getContext('2d');
+        g.drawImage(img, crop.x + t.col * cw, crop.y + t.row * chh, cw, chh, 0, 0, params.size, params.size);
+        // models tend to keep the template's red guides; heal them out
+        var im = g.getImageData(0, 0, params.size, params.size);
+        if (Mason.scrubGuides(im)) g.putImageData(im, 0, 0);
+        return c;
+      });
+      art.sheetShape = params.shape;
+      document.getElementById('importSheet').classList.add('active');
+    } else {
+      // any image becomes a texture: center-square crop, cap the size,
+      // then force true wrap-seamlessness (models routinely fake it)
+      var side = Math.min(img.width, img.height);
+      var target = Math.min(side, 256);
+      var c2 = document.createElement('canvas');
+      c2.width = c2.height = target;
+      var g = c2.getContext('2d');
+      g.drawImage(img,
+        (img.width - side) / 2, (img.height - side) / 2, side, side,
+        0, 0, target, target);
+      var texData = g.getImageData(0, 0, target, target);
+      if (seamlessOn) Mason.makeSeamless(texData);
+      art.textures[kind] = texData;
+      document.getElementById(kind === 'inner' ? 'texInner' : 'texOuter').classList.add('active');
+    }
+    regen(false, false);
+  };
+  img.src = URL.createObjectURL(file);
+});
+
+// ---------------------------------------------------------------- prompt builders
+
+// terrain descriptors for the generated prompts
+var TERRAIN_DESC = {
+  grass: { tex: 'dense green meadow grass', edge: 'a grass lip slightly overhanging the boundary, with small blades breaking the line' },
+  sand: { tex: 'fine wind-rippled sand', edge: 'a soft crumbling sand edge' },
+  water: { tex: 'deep clear water with subtle ripples', edge: 'a thin line of pale froth on the water side of the boundary' },
+  stone: { tex: 'weathered grey flagstone rock', edge: 'a chipped, cracked stone rim' },
+  snow: { tex: 'fresh untouched snow', edge: 'a soft snow drift tapering over the boundary, with a faint cool shadow' },
+  lava: { tex: 'molten lava with glowing veins under a dark crust', edge: 'a blackened cooled-crust rim with faint heat glow bleeding past the boundary' },
+  dirt: { tex: 'packed dry earth with small stones', edge: 'a worn, slightly raised soil edge' },
+  void: { tex: 'starry black void', edge: 'a faint arcane glow tracing the boundary' }
+};
+
+function texturePrompt() {
+  var t = TERRAIN_DESC[params.inner] || { tex: Mason.TERRAINS[params.inner].name };
+  return 'A square 1024x1024 image: top-down orthographic seamless tileable texture of ' + t.tex + ', ' +
+    '16-bit ARPG pixel art style. Uniform detail density across the whole image, ' +
+    'flat even lighting with no light direction, no shadows, no vignette, no border, ' +
+    'no focal object or centerpiece. The image must tile perfectly when repeated: ' +
+    'every edge continues seamlessly into the opposite edge. Fill the entire canvas. ' +
+    'Output a square image, not landscape.';
+}
+
+function sheetPrompt() {
+  var layout = Mason.sheetLayout(params.shape);
+  var innerD = TERRAIN_DESC[params.inner] || { tex: Mason.TERRAINS[params.inner].name, edge: 'a natural transition' };
+  var outerD = TERRAIN_DESC[params.outer] || { tex: Mason.TERRAINS[params.outer].name };
+  var cellWord = params.shape === 'hex' ? 'hexagonal tile' : 'square tile';
+  return 'Repaint this square tile template into a video-game terrain spritesheet, ' +
+    'keeping its geometry exactly. Output a square 1024x1024 image — not landscape, not 3:2.\n\n' +
+    'The input is a grid of ' + layout.rows + ' rows x ' + layout.cols + ' columns of cells. ' +
+    'Each cell is one independent ' + cellWord + '. In every cell the WHITE region is ' +
+    Mason.TERRAINS[params.inner].name.toLowerCase() + ', the DARK region is ' +
+    Mason.TERRAINS[params.outer].name.toLowerCase() + ', and the RED lines are placement guides: ' +
+    'the line inside a cell marks where the two terrains meet, the frame marks the cell edge.\n\n' +
+    'Paint, in 16-bit top-down orthographic pixel art:\n' +
+    '- every white region as ' + innerD.tex + '\n' +
+    '- every dark region as ' + outerD.tex + '\n' +
+    '- cells that are entirely white are pure ' + Mason.TERRAINS[params.inner].name.toLowerCase() +
+    '; the cell that is entirely dark is pure ' + Mason.TERRAINS[params.outer].name.toLowerCase() + '\n' +
+    '- along each interior red line, ' + (innerD.edge || 'a natural transition between the two terrains') +
+    ', following the red line’s exact position and curvature\n\n' +
+    'Hard rules:\n' +
+    '- Treat every cell as a separate, independent tile. Never merge, extend, or continue any shape into a neighboring cell.\n' +
+    '- Keep each cell’s white/dark region shapes and boundary placement exactly as given.\n' +
+    '- No red anywhere in the final image; the red guides must be fully replaced by terrain art.\n' +
+    '- The ' + Mason.TERRAINS[params.inner].name.toLowerCase() + ' must look identical in style across all cells; same for the ' +
+    Mason.TERRAINS[params.outer].name.toLowerCase() + '.\n' +
+    '- Flat, even lighting: no global light direction, no cast shadows, no vignette, no depth of field.\n' +
+    '- The output must be a square image, exactly like the input. Never use a landscape or 3:2 canvas. ' +
+    'Keep the ' + layout.rows + 'x' + layout.cols +
+    ' cell grid aligned to the canvas edges: do not crop, letterbox, pad, shift, or rescale the grid. ' +
+    'Fill the canvas edge to edge with no margins, labels, borders, or background.';
+}
+
+function copyText(btn, text) {
+  window.__lastPrompt = text;
+  function done(ok) {
+    var old = btn.textContent;
+    btn.textContent = ok ? 'Copied' : 'Copy failed';
+    setTimeout(function () { btn.textContent = old; }, 1200);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(fallback()); });
+  } else done(fallback());
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+}
+
+document.getElementById('promptTexture').addEventListener('click', function () { copyText(this, texturePrompt()); });
+document.getElementById('promptSheet').addEventListener('click', function () { copyText(this, sheetPrompt()); });
+
+document.getElementById('exportPng').addEventListener('click', function () { exportSheet('art'); });
+document.getElementById('exportTemplate').addEventListener('click', function () { exportSheet('template'); });
+document.getElementById('exportJson').addEventListener('click', function () {
+  var meta = Mason.sheetMetadata(params);
+  download('mason_' + params.shape + '_' + params.seed + '.json',
+    new Blob([JSON.stringify(meta, null, 2)], { type: 'application/json' }));
+});
+
+// ---------------------------------------------------------------- go
+
+regen(true, true);
+
+})();
+</script>
+</body>
+</html>

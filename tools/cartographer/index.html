@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cartographer — procedural zone generator</title>
+<meta name="description" content="Procedural 2D map generator for action RPGs: five zone families, fourteen themes, seeded and deterministic, exportable to any game project.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0c0a;
+  --panel:#100f0c;
+  --ink:#e9e4d8;
+  --ink-dim:#9c9587;
+  --ink-faint:#6e685e;
+  --gold:#c9a227;
+  --gold-soft:rgba(201,162,39,.55);
+  --gold-faint:rgba(201,162,39,.22);
+  --hairline:rgba(233,228,216,.12);
+  --serif:'Cinzel',Georgia,serif;
+  --sans:'Source Sans 3','Segoe UI',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  overflow:hidden;
+}
+.app{display:flex;height:100%}
+
+/* ---------- sidebar ---------- */
+.side{
+  width:280px;
+  flex:none;
+  background:var(--panel);
+  border-right:1px solid var(--hairline);
+  padding:1.4rem 1.25rem 1rem;
+  display:flex;
+  flex-direction:column;
+  gap:.9rem;
+  overflow-y:auto;
+}
+.side h1{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:1.35rem;
+  letter-spacing:.14em;
+  margin:0;
+  color:var(--ink);
+}
+.side .sub{
+  margin:.2rem 0 0;
+  font-size:.8rem;
+  color:var(--ink-dim);
+  line-height:1.45;
+}
+.rule{border:0;border-top:1px solid var(--hairline);margin:.2rem 0}
+label{
+  display:block;
+  font-size:.68rem;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:.3rem;
+}
+select,input[type=text]{
+  width:100%;
+  background:#171613;
+  color:var(--ink);
+  border:1px solid var(--hairline);
+  border-radius:4px;
+  padding:.45rem .55rem;
+  font:inherit;
+  font-size:.9rem;
+}
+select:focus,input:focus{outline:1px solid var(--gold-soft)}
+.row{display:flex;gap:.5rem}
+.row>*{flex:1}
+.seed-row{display:flex;gap:.5rem}
+.seed-row input{flex:1;min-width:0}
+button{
+  font:inherit;
+  font-size:.85rem;
+  font-weight:600;
+  letter-spacing:.06em;
+  border-radius:4px;
+  padding:.5rem .8rem;
+  cursor:pointer;
+  border:1px solid var(--hairline);
+  background:#171613;
+  color:var(--ink);
+  transition:border-color .15s ease,background .15s ease;
+}
+button:hover{border-color:var(--gold-soft)}
+.btn-primary{
+  background:linear-gradient(180deg,rgba(201,162,39,.22),rgba(201,162,39,.08));
+  border-color:var(--gold-soft);
+  color:var(--gold);
+  width:100%;
+  padding:.65rem;
+  font-family:var(--serif);
+  font-size:.95rem;
+  letter-spacing:.12em;
+}
+.btn-primary:hover{background:rgba(201,162,39,.28)}
+.stats{
+  font-size:.78rem;
+  color:var(--ink-dim);
+  line-height:1.55;
+  border:1px solid var(--hairline);
+  border-radius:4px;
+  padding:.55rem .7rem;
+  background:rgba(0,0,0,.25);
+  min-height:3.2em;
+}
+.stats b{color:var(--ink);font-family:var(--serif);font-weight:500;letter-spacing:.05em}
+.hint{font-size:.72rem;color:var(--ink-faint);line-height:1.5;margin:0}
+.foot{
+  margin-top:auto;
+  padding-top:.8rem;
+  border-top:1px solid var(--hairline);
+  font-size:.75rem;
+  color:var(--ink-faint);
+}
+.foot a{color:var(--ink-dim);text-decoration:none}
+.foot a:hover{color:var(--gold)}
+
+/* ---------- stage ---------- */
+.stage{flex:1;position:relative;min-width:0}
+canvas#view{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+canvas#view.dragging{cursor:grabbing}
+.corner{
+  position:absolute;
+  right:.9rem;bottom:.7rem;
+  font-size:.7rem;
+  letter-spacing:.1em;
+  color:var(--ink-faint);
+  pointer-events:none;
+  text-transform:uppercase;
+}
+@media (max-width:760px){
+  .app{flex-direction:column}
+  .side{
+    width:100%;
+    max-height:46%;
+    border-right:0;
+    border-bottom:1px solid var(--hairline);
+    padding:.9rem 1rem;
+  }
+  .foot{display:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div>
+      <h1>THE CARTOGRAPHER</h1>
+      <p class="sub">Procedural zone generator. Every map is carved from a single seed — same seed, same map, in any game engine.</p>
+    </div>
+    <hr class="rule">
+    <div class="row">
+      <div>
+        <label for="zone">Zone</label>
+        <select id="zone"></select>
+      </div>
+      <div>
+        <label for="theme">Theme</label>
+        <select id="theme"></select>
+      </div>
+    </div>
+    <div>
+      <label for="size">Size</label>
+      <select id="size">
+        <option value="48x36">Small — 48 × 36</option>
+        <option value="72x54" selected>Medium — 72 × 54</option>
+        <option value="112x84">Large — 112 × 84</option>
+      </select>
+    </div>
+    <div>
+      <label for="seed">Seed</label>
+      <div class="seed-row">
+        <input type="text" id="seed" spellcheck="false" autocomplete="off">
+        <button id="roll" title="Random seed">Roll</button>
+      </div>
+    </div>
+    <button class="btn-primary" id="generate">NEW MAP</button>
+    <div class="stats" id="stats">…</div>
+    <div class="row">
+      <button id="exportJson">Export JSON</button>
+      <button id="exportPng">Export PNG</button>
+    </div>
+    <div>
+      <label for="texTerrain">Texture pack</label>
+      <div class="row">
+        <select id="texTerrain">
+          <option value="grass">Grass</option>
+          <option value="water">Water</option>
+          <option value="floor">Floor</option>
+          <option value="path">Path</option>
+          <option value="sand">Sand</option>
+          <option value="lava">Lava</option>
+          <option value="murk">Murk</option>
+        </select>
+        <button id="texImport" style="flex:0 0 auto">Import</button>
+      </div>
+      <div class="row" style="margin-top:.5rem">
+        <button id="packSave">Save pack</button>
+        <button id="packLoad">Load pack</button>
+        <button id="packClear">Clear</button>
+      </div>
+      <input type="file" id="texFile" accept="image/png,image/webp,image/jpeg" style="display:none">
+      <input type="file" id="packFile" accept="application/json" style="display:none">
+    </div>
+    <p class="hint">Drag to pan, scroll to zoom, double-click to re-center. Space rolls a new map. The engine is a single dependency-free file: <a href="core/mapgen.js" style="color:var(--ink-dim)">core/mapgen.js</a>.</p>
+    <div class="foot">
+      Part of <a href="../../index.html">WIZARD</a> · <a href="https://github.com/alexkorol/WIZARD/tree/gh-pages/tools/cartographer">source &amp; docs</a>
+    </div>
+  </aside>
+  <main class="stage">
+    <canvas id="view"></canvas>
+    <div class="corner" id="corner"></div>
+  </main>
+</div>
+
+<script src="core/mapgen.js"></script>
+<script src="../mason/core/mason.js"></script>
+<script>
+(function () {
+'use strict';
+
+var TS = 16; // tile pixel size in the offscreen buffers
+var TILE = MapGen.TILE;
+
+// ---------------------------------------------------------------- helpers
+
+function hexRgb(hex) {
+  var n = parseInt(hex.slice(1), 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+function rgbStr(c) { return 'rgb(' + (c[0] | 0) + ',' + (c[1] | 0) + ',' + (c[2] | 0) + ')'; }
+function shade(hex, f) {
+  var c = hexRgb(hex);
+  return rgbStr([Math.min(255, c[0] * f), Math.min(255, c[1] * f), Math.min(255, c[2] * f)]);
+}
+function shadeHex(hex, f) {
+  var c = hexRgb(hex).map(function (v) { return Math.min(255, Math.round(v * f)); });
+  return '#' + c.map(function (v) { return v.toString(16).padStart(2, '0'); }).join('');
+}
+function mix(hexA, hexB, t) {
+  var a = hexRgb(hexA), b = hexRgb(hexB);
+  return rgbStr([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]);
+}
+function tileHash(x, y, seed) {
+  var h = (x * 374761393 + y * 668265263 + seed) | 0;
+  h = Math.imul(h ^ (h >>> 13), 1274126177);
+  return (h ^ (h >>> 16)) >>> 0;
+}
+
+// glow sprite cache (white alpha gradient + tinted variants)
+var glowCache = {};
+function glowSprite(color) { // color: 'r,g,b' or 'alpha'
+  if (glowCache[color]) return glowCache[color];
+  var c = document.createElement('canvas');
+  c.width = c.height = 128;
+  var g = c.getContext('2d');
+  var grad = g.createRadialGradient(64, 64, 4, 64, 64, 64);
+  var rgb = color === 'alpha' ? '255,255,255' : color;
+  grad.addColorStop(0, 'rgba(' + rgb + ',1)');
+  grad.addColorStop(0.4, 'rgba(' + rgb + ',0.45)');
+  grad.addColorStop(1, 'rgba(' + rgb + ',0)');
+  g.fillStyle = grad;
+  g.fillRect(0, 0, 128, 128);
+  glowCache[color] = c;
+  return c;
+}
+
+// ---------------------------------------------------------------- state
+
+var view = document.getElementById('view');
+var vctx = view.getContext('2d');
+var map = null;
+var pal = null;
+var indoor = true;
+
+// ------------------------------------------------------------ texture pack
+// Real art (AI-generated or hand-made) per terrain id. Ground tiles
+// pattern-fill from world-anchored textures; land tiles that touch a
+// liquid are painted as Mason transition tiles, so shorelines get real
+// borders cut through real art. Anything without a texture falls back
+// to the procedural painter.
+var texPack = {};                 // key -> { data: ImageData, canvas }
+var patternCache = new WeakMap(); // ctx -> { key: CanvasPattern }
+var masonParamCache = {};
+var liquidBase = document.createElement('canvas');
+var lbctx = liquidBase.getContext('2d');
+var MASON_STYLE = { floor: 'stone', grass: 'grass', sand: 'sand', path: 'dirt', water: 'water', lava: 'lava', murk: 'water' };
+
+function patternFor(g, key) {
+  var entry = patternCache.get(g);
+  if (!entry) { entry = {}; patternCache.set(g, entry); }
+  if (!entry[key]) entry[key] = g.createPattern(texPack[key].canvas, 'repeat');
+  return entry[key];
+}
+
+function groundKey(t) {
+  switch (t) {
+    case TILE.FLOOR: case TILE.DOOR: return 'floor';
+    case TILE.GRASS: case TILE.TREE: return 'grass';
+    case TILE.SAND: return 'sand';
+    case TILE.PATH: return 'path';
+    case TILE.RUBBLE: return indoor ? 'floor' : (map.theme === 'desert' ? 'sand' : 'grass');
+    case TILE.ROCK: return indoor ? 'floor' : 'grass';
+    default: return null;
+  }
+}
+function liquidTexKey(t) {
+  if (t === TILE.WATER || t === TILE.DEEP) return 'water';
+  if (t === TILE.LAVA) return 'lava';
+  if (t === TILE.MURK) return 'murk';
+  return null;
+}
+
+function masonParams(innerKey, outerKey) {
+  var ck = innerKey + '|' + outerKey + '|' + map.seed;
+  if (!masonParamCache[ck]) {
+    var p = Mason.makeSetParams({
+      seed: map.seed, size: TS,
+      inner: MASON_STYLE[innerKey], outer: MASON_STYLE[outerKey]
+    });
+    p.textures = { inner: texPack[innerKey].data, outer: texPack[outerKey].data };
+    p.overlay = 0.6;
+    p.borderFrac = 0.28;
+    masonParamCache[ck] = p;
+  }
+  return masonParamCache[ck];
+}
+
+// paints a textured base for a land tile; returns 'mason' | 'pattern' | false
+function paintTexturedGround(g, x, y, t) {
+  var key = groundKey(t);
+  if (!key || !texPack[key]) return false;
+  var px = x * TS, py = y * TS;
+  var mode = 'pattern';
+  // coastal tile: a Mason transition with the liquid as the outer terrain
+  var lk = null;
+  for (var i = 0; i < 8 && !lk; i++) {
+    var d = Mason.SQUARE_NEIGHBORS[i];
+    var cand = liquidTexKey(tget(x + d[0], y + d[1]));
+    if (cand && texPack[cand]) lk = cand;
+  }
+  if (lk) {
+    var mask = 0;
+    for (i = 0; i < 8; i++) {
+      var dd = Mason.SQUARE_NEIGHBORS[i];
+      var nk = liquidTexKey(tget(x + dd[0], y + dd[1]));
+      if (!(nk && texPack[nk])) mask |= 1 << i; // anything non-liquid counts as inner
+    }
+    Mason.paintSquareTile(g, px, py, masonParams(key, lk), mask, px, py);
+    mode = 'mason';
+  } else {
+    g.fillStyle = patternFor(g, key);
+    g.fillRect(px, py, TS, TS);
+  }
+  // keep the macro-scale variation as a light overlay
+  var m = macroTint(px, py) - 1;
+  g.fillStyle = m > 0 ? 'rgba(255,255,255,' + (m * 0.5).toFixed(3) + ')'
+                      : 'rgba(0,0,0,' + (-m * 0.6).toFixed(3) + ')';
+  g.fillRect(px, py, TS, TS);
+  return mode;
+}
+
+function setTexture(key, imageData) {
+  var c = document.createElement('canvas');
+  c.width = imageData.width; c.height = imageData.height;
+  c.getContext('2d').putImageData(imageData, 0, 0);
+  texPack[key] = { data: imageData, canvas: c };
+  patternCache = new WeakMap();
+  masonParamCache = {};
+  refreshTexLabels();
+}
+window.__importTexture = setTexture; // tooling hook
+
+function refreshTexLabels() {
+  var sel = document.getElementById('texTerrain');
+  if (!sel) return;
+  for (var i = 0; i < sel.options.length; i++) {
+    var o = sel.options[i];
+    var name = o.textContent.replace(' [set]', '');
+    o.textContent = name + (texPack[o.value] ? ' [set]' : '');
+  }
+}
+
+// bake pure liquid tiles from textures once per map; the frame loop
+// blits slices and animates brightness on top
+function bakeLiquidBase() {
+  liquidBase.width = map.width * TS;
+  liquidBase.height = map.height * TS;
+  lbctx = liquidBase.getContext('2d');
+  for (var i = 0; i < liquids.length; i++) {
+    var q = liquids[i];
+    var key = liquidTexKey(q.t);
+    if (!key || !texPack[key]) continue;
+    lbctx.fillStyle = patternFor(lbctx, key);
+    lbctx.fillRect(q.x * TS, q.y * TS, TS, TS);
+    if (q.t === TILE.DEEP) {
+      lbctx.fillStyle = 'rgba(0,4,24,0.4)';
+      lbctx.fillRect(q.x * TS, q.y * TS, TS, TS);
+    }
+  }
+}
+
+var staticC = document.createElement('canvas');   // baked terrain + static entities
+var frameC = document.createElement('canvas');    // per-frame composite
+var darkC = document.createElement('canvas');     // darkness layer
+var lavaGlowC = document.createElement('canvas'); // baked lava glow
+var maskC = document.createElement('canvas');     // reveal mask
+var sctx, fctx, dctx, lgctx, mctx;
+
+var liquids = [];   // {x,y,t,phase,h,edges}
+var lights = [];    // {px,py,r,color,flicker,alpha,phase}
+var flames = [];    // animated entity overlays {type,x,y,phase}
+var reveal = { active: false, start: 0, dist: null, maxD: 1, shown: 0, order: null };
+
+var cam = { scale: 1, ox: 0, oy: 0 };
+
+// ---------------------------------------------------------------- terrain painting
+
+function isLand(t) { return t !== TILE.WATER && t !== TILE.DEEP && t !== TILE.LAVA && t !== TILE.VOID; }
+
+function paintBaseTile(g, x, y) {
+  var t = tget(x, y);
+  var h = tileHash(x, y, map.seed);
+  var px = x * TS, py = y * TS;
+  var texMode = false; // 'mason' | 'pattern' | false
+  switch (t) {
+    case TILE.VOID:
+      g.fillStyle = pal.bg; g.fillRect(px, py, TS, TS);
+      if (pal.voidGlow && h % 23 === 0) { // faint stars in the abyss
+        g.fillStyle = 'rgba(255,255,255,' + (0.08 + (h >>> 5) % 20 / 100) + ')';
+        g.fillRect(px + (h >>> 7) % 15, py + (h >>> 10) % 15, 1, 1);
+      }
+      // platform face where a walkway hangs over the void
+      if (MapGen.WALKABLE.has(tget(x, y - 1))) {
+        g.fillStyle = pal.wallFace;
+        g.fillRect(px, py, TS, 5);
+        g.fillStyle = 'rgba(0,0,0,0.35)';
+        g.fillRect(px, py + 4, TS, 2);
+      }
+      break;
+    case TILE.FLOOR:
+      texMode = paintTexturedGround(g, x, y, t);
+      if (!texMode) paintFloor(g, px, py, h, pal.floor);
+      break;
+    case TILE.GRASS:
+      texMode = paintTexturedGround(g, x, y, t);
+      if (!texMode) paintGrass(g, px, py, h);
+      break;
+    case TILE.SAND:
+      texMode = paintTexturedGround(g, x, y, t);
+      if (!texMode) paintFloor(g, px, py, h, pal.sand, true);
+      break;
+    case TILE.PATH:
+      texMode = paintTexturedGround(g, x, y, t);
+      if (!texMode) paintFloor(g, px, py, h, pal.path, true);
+      break;
+    case TILE.RUBBLE:
+      texMode = paintTexturedGround(g, x, y, t);
+      paintRubble(g, px, py, h, !!texMode);
+      break;
+    case TILE.MURK:
+    case TILE.WATER:
+    case TILE.DEEP:
+    case TILE.LAVA:
+      var lk = liquidTexKey(t);
+      if (lk && texPack[lk]) g.drawImage(liquidBase, px, py, TS, TS, px, py, TS, TS);
+      else paintLiquid(g, x, y, 0);
+      break;
+    case TILE.WALL: paintWall(g, x, y, h); break;
+    case TILE.DOOR:
+      texMode = paintTexturedGround(g, x, y, t);
+      paintDoor(g, x, y, h, !!texMode);
+      break;
+    case TILE.TREE:
+      texMode = paintTexturedGround(g, x, y, t);
+      if (!texMode) paintGrass(g, px, py, h); // canopy drawn in a second pass
+      break;
+    case TILE.ROCK:
+      texMode = paintTexturedGround(g, x, y, t);
+      paintRock(g, x, y, h, !!texMode);
+      break;
+    case TILE.BRIDGE: paintBridge(g, x, y, h); break;
+  }
+  // contact shadow where ground meets wall
+  if (t !== TILE.WALL && t !== TILE.VOID) {
+    g.fillStyle = 'rgba(0,0,0,0.22)';
+    if (tget(x, y - 1) === TILE.WALL) g.fillRect(px, py, TS, 4);
+    if (tget(x - 1, y) === TILE.WALL) g.fillRect(px, py, 3, TS);
+    if (tget(x + 1, y) === TILE.WALL) g.fillRect(px + TS - 3, py, 3, TS);
+  }
+  // wet or scorched ground where it meets a liquid
+  // (skip when a Mason transition already owns this boundary)
+  if (MapGen.WALKABLE.has(t) && texMode !== 'mason') {
+    [[0, -1, 0], [1, 0, 1], [0, 1, 2], [-1, 0, 3]].forEach(function (d) {
+      var nt = tget(x + d[0], y + d[1]);
+      var wet = nt === TILE.WATER || nt === TILE.DEEP || nt === TILE.MURK;
+      var hot = nt === TILE.LAVA;
+      if (!wet && !hot) return;
+      g.fillStyle = hot ? 'rgba(70,22,4,0.35)' : 'rgba(12,24,30,0.24)';
+      for (var i = 0; i < TS; i++) {
+        var th = 2 + tileHash(px + (d[1] ? i : 0), py + (d[0] ? i : 0), map.seed ^ 0x33) % 3;
+        if (d[2] === 0) g.fillRect(px + i, py, 1, th);
+        else if (d[2] === 1) g.fillRect(px + TS - th, py + i, th, 1);
+        else if (d[2] === 2) g.fillRect(px + i, py + TS - th, 1, th);
+        else g.fillRect(px, py + i, th, 1);
+      }
+    });
+  }
+  // path edges scalloped by encroaching grass (procedural look only;
+  // textured paths keep their own art)
+  if (t === TILE.PATH && !texMode) {
+    g.fillStyle = shade(pal.grass[0], 1.02);
+    [[0, -1], [1, 0], [0, 1], [-1, 0]].forEach(function (d) {
+      if (tget(x + d[0], y + d[1]) !== TILE.GRASS) return;
+      for (var i = 2; i < TS - 2; i += 3) {
+        var hh = tileHash(px + i, py + d[1] * 7, map.seed ^ 0x71);
+        if (hh % 3) continue;
+        var nib = 1 + hh % 2;
+        if (d[1] === -1) g.fillRect(px + i, py, 2, nib);
+        else if (d[1] === 1) g.fillRect(px + i, py + TS - nib, 2, nib);
+        else if (d[0] === -1) g.fillRect(px, py + i, nib, 2);
+        else g.fillRect(px + TS - nib, py + i, nib, 2);
+      }
+    });
+  }
+}
+
+// large-scale ground variation: organic patches of light and dark that
+// span many tiles, so floors stop reading as uniform noise
+function macroTint(px, py) {
+  var s = 0.14; // lattice step in tiles -> patches roughly 7 tiles wide
+  var fx = (px / TS) * s, fy = (py / TS) * s;
+  var x0 = Math.floor(fx), y0 = Math.floor(fy);
+  var u = fx - x0, v = fy - y0;
+  function l(a, b) { return (tileHash(a, b, map.seed ^ 0xace1) % 1000) / 1000; }
+  function sm(t) { return t * t * (3 - 2 * t); }
+  var n = l(x0, y0) * (1 - sm(u)) * (1 - sm(v)) + l(x0 + 1, y0) * sm(u) * (1 - sm(v)) +
+          l(x0, y0 + 1) * (1 - sm(u)) * sm(v) + l(x0 + 1, y0 + 1) * sm(u) * sm(v);
+  return 0.91 + n * 0.18;
+}
+
+function paintFloor(g, px, py, h, pair, warm) {
+  var base = pair[h % 2];
+  var f = (0.93 + ((h >>> 4) % 12) / 100) * macroTint(px, py);
+  g.fillStyle = shade(base, f);
+  g.fillRect(px, py, TS, TS);
+  if (h % 5 === 0) { // speckle
+    g.fillStyle = shade(base, 0.8);
+    g.fillRect(px + (h >>> 8) % 13, py + (h >>> 12) % 13, 2, 2);
+  }
+  if (!warm && h % 23 === 0) { // crack
+    g.strokeStyle = shade(base, 0.72);
+    g.lineWidth = 1;
+    g.beginPath();
+    var cx = px + 3 + (h >>> 6) % 8, cy = py + 3 + (h >>> 9) % 8;
+    g.moveTo(cx, cy);
+    g.lineTo(cx + 4 - (h >>> 5) % 8, cy + 5);
+    g.stroke();
+  }
+  if (warm && h % 9 === 0) {
+    g.fillStyle = shade(pair[0], 1.14);
+    g.fillRect(px + (h >>> 7) % 12, py + (h >>> 11) % 12, 2, 1);
+  }
+}
+
+function paintGrass(g, px, py, h) {
+  paintFloor(g, px, py, h, pal.grass, true);
+  var base = pal.grass[0];
+  for (var i = 0; i < 3; i++) {
+    var hx = (h >>> (3 * i + 2)) % 13, hy = (h >>> (3 * i + 5)) % 12;
+    g.fillStyle = i === 0 ? shade(base, 1.25) : shade(base, 0.78);
+    g.fillRect(px + 1 + hx, py + 2 + hy, 1, 2);
+  }
+}
+
+function paintRubble(g, px, py, h, skipBase) {
+  if (!skipBase) {
+    var under = indoor ? pal.floor : (map.theme === 'desert' ? pal.sand : pal.grass);
+    paintFloor(g, px, py, h, under, true);
+  }
+  g.fillStyle = shade(pal.rubble, 1.05);
+  g.fillRect(px + 2 + (h % 5), py + 3 + ((h >>> 3) % 5), 5, 4);
+  g.fillStyle = shade(pal.rubble, 0.8);
+  g.fillRect(px + 7 + ((h >>> 5) % 4), py + 8 + ((h >>> 7) % 3), 4, 3);
+  g.fillStyle = shade(pal.rubble, 1.25);
+  g.fillRect(px + 4 + ((h >>> 9) % 6), py + 2 + ((h >>> 11) % 8), 2, 2);
+}
+
+function paintWall(g, x, y, h) {
+  var px = x * TS, py = y * TS;
+  var southOpen = isLand(tget(x, y + 1)) ? tget(x, y + 1) !== TILE.WALL && tget(x, y + 1) !== TILE.VOID
+                                         : tget(x, y + 1) !== TILE.WALL && tget(x, y + 1) !== TILE.VOID;
+  g.fillStyle = shade(pal.wallTop, 0.96 + (h % 9) / 100);
+  g.fillRect(px, py, TS, TS);
+  // faint masonry seams on top face
+  if (h % 3 === 0) {
+    g.fillStyle = 'rgba(0,0,0,0.14)';
+    g.fillRect(px + (h >>> 4) % 8, py + (h >>> 6) % 14, 8, 1);
+  }
+  if (southOpen) {
+    var fh = 6; // face height
+    g.fillStyle = shade(pal.wallFace, 0.95 + (h % 11) / 100);
+    g.fillRect(px, py + TS - fh, TS, fh);
+    g.fillStyle = 'rgba(0,0,0,0.4)';
+    g.fillRect(px, py + TS - 1, TS, 1);
+    g.fillStyle = 'rgba(255,255,255,0.06)';
+    g.fillRect(px, py + TS - fh, TS, 1);
+    // brick seams on the face
+    g.fillStyle = 'rgba(0,0,0,0.25)';
+    g.fillRect(px + 4 + (h % 5), py + TS - fh + 2, 1, fh - 3);
+    g.fillRect(px + 10 + ((h >>> 3) % 4), py + TS - fh + 3, 1, fh - 4);
+  }
+  // rim light on top edge where north is open
+  var n = tget(x, y - 1);
+  if (n !== TILE.WALL && n !== TILE.VOID) {
+    g.fillStyle = 'rgba(255,255,255,0.07)';
+    g.fillRect(px, py, TS, 1);
+  }
+}
+
+function paintDoor(g, x, y, h, skipBase) {
+  var px = x * TS, py = y * TS;
+  if (!skipBase) paintFloor(g, px, py, h, pal.floor);
+  var vertical = tget(x - 1, y) === TILE.WALL && tget(x + 1, y) === TILE.WALL;
+  g.fillStyle = shade(pal.door, 0.6);
+  if (vertical) g.fillRect(px + 2, py + 1, TS - 4, TS - 2);
+  else g.fillRect(px + 1, py + 2, TS - 2, TS - 4);
+  g.fillStyle = pal.door;
+  if (vertical) {
+    g.fillRect(px + 3, py + 2, TS - 6, TS - 4);
+    g.fillStyle = shade(pal.door, 0.72);
+    g.fillRect(px + 7, py + 2, 1, TS - 4);
+    g.fillRect(px + 11, py + 2, 1, TS - 4);
+  } else {
+    g.fillRect(px + 2, py + 3, TS - 4, TS - 6);
+    g.fillStyle = shade(pal.door, 0.72);
+    g.fillRect(px + 2, py + 7, TS - 4, 1);
+    g.fillRect(px + 2, py + 11, TS - 4, 1);
+  }
+  g.fillStyle = pal.accent;
+  g.fillRect(px + (vertical ? 5 : TS - 6), py + (vertical ? TS - 6 : 5), 2, 2);
+}
+
+function paintTree(g, x, y, h) {
+  var px = x * TS, py = y * TS;
+  var treeNbrs = 0;
+  for (var d = 0; d < 4; d++) {
+    if (tget(x + [1, -1, 0, 0][d], y + [0, 0, 1, -1][d]) === TILE.TREE) treeNbrs++;
+  }
+  if (treeNbrs >= 3) {
+    // interior of a forest mass: solid canopy
+    g.fillStyle = shade(pal.tree[0], 0.9 + (h % 14) / 100);
+    g.fillRect(px, py, TS, TS);
+    g.fillStyle = shade(pal.tree[1], 0.95 + ((h >>> 5) % 14) / 100);
+    g.beginPath(); g.arc(px + 4 + (h % 9), py + 4 + ((h >>> 3) % 9), 4 + (h % 3), 0, 7); g.fill();
+    if (h % 5 === 0) {
+      g.fillStyle = shade(pal.tree[1], 1.3);
+      g.fillRect(px + (h >>> 6) % 14, py + (h >>> 9) % 14, 2, 1);
+    }
+    return;
+  }
+  // canopy: oversized overlapping blobs so adjacent trees knit into forest
+  g.fillStyle = 'rgba(0,0,0,0.28)';
+  g.beginPath(); g.ellipse(px + 9, py + 13, 6, 3, 0, 0, 7); g.fill();
+  var r = 7 + (h % 3);
+  g.fillStyle = shade(pal.tree[0], 0.95 + (h % 10) / 100);
+  g.beginPath(); g.arc(px + 8, py + 8, r + 1, 0, 7); g.fill();
+  g.fillStyle = shade(pal.tree[1], 0.95 + ((h >>> 5) % 12) / 100);
+  g.beginPath(); g.arc(px + 7 + (h % 3), py + 7, r - 1, 0, 7); g.fill();
+  g.fillStyle = shade(pal.tree[1], 1.3);
+  g.beginPath(); g.arc(px + 5 + (h % 3), py + 5, 2, 0, 7); g.fill();
+}
+
+function paintRock(g, x, y, h, skipBase) {
+  var px = x * TS, py = y * TS;
+  if (!skipBase) {
+    if (indoor) paintFloor(g, px, py, h, pal.floor);
+    else paintFloor(g, px, py, h, [shadeHex(pal.rock, 0.55), shadeHex(pal.rock, 0.45)], true);
+  }
+  g.fillStyle = 'rgba(0,0,0,0.3)';
+  g.beginPath(); g.ellipse(px + 8, py + 12, 6, 2.5, 0, 0, 7); g.fill();
+  g.fillStyle = shade(pal.rock, 0.9 + (h % 12) / 100);
+  g.beginPath();
+  g.moveTo(px + 2, py + 12);
+  g.lineTo(px + 4, py + 5 + (h % 3));
+  g.lineTo(px + 9, py + 3);
+  g.lineTo(px + 13, py + 7);
+  g.lineTo(px + 14, py + 12);
+  g.closePath(); g.fill();
+  g.fillStyle = shade(pal.rock, 1.25);
+  g.beginPath();
+  g.moveTo(px + 4, py + 6); g.lineTo(px + 9, py + 4); g.lineTo(px + 10, py + 6); g.closePath();
+  g.fill();
+}
+
+function paintBridge(g, x, y, h) {
+  var px = x * TS, py = y * TS;
+  g.fillStyle = shade(pal.deep, 0.9);
+  g.fillRect(px, py, TS, TS);
+  var horiz = MapGen.WALKABLE.has(tget(x - 1, y)) || MapGen.WALKABLE.has(tget(x + 1, y));
+  g.fillStyle = pal.bridge;
+  g.fillRect(px, py + 1, TS, TS - 2);
+  g.fillStyle = shade(pal.bridge, 0.7);
+  if (horiz) { for (var i = 2; i < TS; i += 4) g.fillRect(px + i, py + 1, 1, TS - 2); }
+  else { for (var j = 2; j < TS; j += 4) g.fillRect(px, py + j, TS, 1); }
+  g.fillStyle = shade(pal.bridge, 1.3);
+  g.fillRect(px, py + 1, TS, 1);
+  g.fillRect(px, py + TS - 2, TS, 1);
+}
+
+// liquid painting (also called per-frame with time)
+function paintLiquid(g, x, y, time, entry) {
+  var t = tget(x, y);
+  var px = x * TS, py = y * TS;
+  var h = entry ? entry.h : tileHash(x, y, map.seed);
+  var phase = (h % 628) / 100;
+  if (t === TILE.LAVA) {
+    var k = 0.5 + 0.5 * Math.sin(time * 1.4 + phase);
+    g.fillStyle = mix(pal.lava[1], pal.lava[0], 0.25 + 0.35 * k);
+    g.fillRect(px, py, TS, TS);
+    g.fillStyle = mix(pal.lava[0], '#ffe08a', 0.3 + 0.5 * k);
+    g.fillRect(px + 2 + (h % 6), py + 3 + ((h >>> 4) % 7), 4, 2);
+    g.fillRect(px + 8 - (h % 4), py + 10 - ((h >>> 6) % 5), 3, 2);
+    g.fillStyle = 'rgba(20,8,4,0.55)';
+    g.fillRect(px + (h >>> 3) % 10, py + (h >>> 7) % 12, 6, 1);
+    // cooled crust where lava meets land
+    var ledges = entry ? entry.edges : liquidEdges(x, y);
+    shoreBand(g, px, py, ledges, function () { return 'rgba(24,12,8,0.85)'; }, null);
+  } else {
+    var deep = t === TILE.DEEP;
+    var murk = t === TILE.MURK;
+    var base = murk ? pal.murk : (deep ? pal.deep : pal.water);
+    var speed = murk ? 0.5 : 1.4;
+    var f = (0.92 + (h % 12) / 100) + 0.06 * Math.sin(time * speed + phase);
+    g.fillStyle = shade(base, f * (deep ? 0.9 : 1));
+    g.fillRect(px, py, TS, TS);
+    // ripple flecks
+    if ((h + ((time * 0.7) | 0)) % 11 === 0) {
+      g.fillStyle = shade(base, 1.35);
+      g.fillRect(px + (h >>> 5) % 12, py + (h >>> 8) % 12, 3, 1);
+    }
+    // wobbled shoreline with foam flecks
+    var edges = entry ? entry.edges : liquidEdges(x, y);
+    var shoreColor = shade(base, 1.35);
+    var foamColor = murk ? null : shade(base, 1.9);
+    shoreBand(g, px, py, edges, function () { return shoreColor; }, foamColor);
+  }
+}
+
+// a shoreline band along each land-facing edge: thickness wobbles per
+// pixel column so coasts read as organic, with occasional foam flecks
+function shoreBand(g, px, py, edges, colorFn, foamColor) {
+  for (var e = 0; e < 4; e++) {
+    if (!edges[e]) continue;
+    g.fillStyle = colorFn(e);
+    for (var i = 0; i < TS; i++) {
+      var h = tileHash(px + (e % 2 ? 0 : i), py + (e % 2 ? i : 0), map.seed ^ (0x50 + e));
+      var th = 1 + h % 3;
+      if (e === 0) g.fillRect(px + i, py, 1, th);
+      else if (e === 1) g.fillRect(px + TS - th, py + i, th, 1);
+      else if (e === 2) g.fillRect(px + i, py + TS - th, 1, th);
+      else g.fillRect(px, py + i, th, 1);
+      if (foamColor && h % 7 === 0) {
+        g.fillStyle = foamColor;
+        if (e === 0) g.fillRect(px + i, py + th, 1, 1);
+        else if (e === 1) g.fillRect(px + TS - th - 1, py + i, 1, 1);
+        else if (e === 2) g.fillRect(px + i, py + TS - th - 1, 1, 1);
+        else g.fillRect(px + th, py + i, 1, 1);
+        g.fillStyle = colorFn(e);
+      }
+    }
+  }
+}
+
+function liquidEdges(x, y) {
+  return [
+    isLand(tget(x, y - 1)),
+    isLand(tget(x + 1, y)),
+    isLand(tget(x, y + 1)),
+    isLand(tget(x - 1, y))
+  ];
+}
+
+function tget(x, y) {
+  if (!map || x < 0 || y < 0 || x >= map.width || y >= map.height) return TILE.VOID;
+  return map.tiles[y * map.width + x];
+}
+
+// ---------------------------------------------------------------- entities
+
+function paintEntity(g, e) {
+  var px = e.x * TS, py = e.y * TS;
+  var h = tileHash(e.x, e.y, map.seed ^ 0x9e37);
+  switch (e.type) {
+    case 'entrance': case 'exit': paintGate(g, px, py, e.type === 'exit'); break;
+    case 'chest':
+      g.fillStyle = 'rgba(0,0,0,0.3)'; g.fillRect(px + 3, py + 12, 11, 2);
+      g.fillStyle = shade(pal.bridge, 0.85); g.fillRect(px + 3, py + 5, 10, 8);
+      g.fillStyle = shade(pal.bridge, 1.15); g.fillRect(px + 3, py + 5, 10, 3);
+      g.fillStyle = pal.accent; g.fillRect(px + 7, py + 5, 2, 8);
+      g.fillStyle = '#ffe9a8'; g.fillRect(px + 7, py + 8, 2, 2);
+      break;
+    case 'shrine':
+      g.fillStyle = 'rgba(0,0,0,0.3)'; g.fillRect(px + 2, py + 13, 12, 2);
+      g.fillStyle = shade(pal.rock, 0.9); g.fillRect(px + 4, py + 8, 8, 6);
+      g.fillStyle = shade(pal.rock, 1.15); g.fillRect(px + 3, py + 13, 10, 2);
+      g.fillStyle = shade(pal.rock, 1.05); g.fillRect(px + 5, py + 6, 6, 2);
+      break; // orb drawn animated
+    case 'statue':
+      g.fillStyle = 'rgba(0,0,0,0.3)'; g.fillRect(px + 3, py + 13, 10, 2);
+      g.fillStyle = shade(pal.rock, 0.8); g.fillRect(px + 4, py + 12, 8, 3);
+      g.fillStyle = shade(pal.rock, 1.1);
+      g.fillRect(px + 6, py + 5, 4, 7);
+      g.beginPath(); g.arc(px + 8, py + 4, 2, 0, 7); g.fill();
+      g.fillStyle = shade(pal.rock, 0.85);
+      g.fillRect(px + 5, py + 7, 2, 4); g.fillRect(px + 9, py + 7, 2, 4);
+      break;
+    case 'sarcophagus':
+      g.fillStyle = 'rgba(0,0,0,0.3)'; g.fillRect(px + 1, py + 12, 14, 2);
+      g.fillStyle = mix(pal.rock, '#e8ddb8', 0.35); g.fillRect(px + 2, py + 4, 12, 9);
+      g.fillStyle = 'rgba(0,0,0,0.3)'; g.fillRect(px + 3, py + 6, 10, 1); g.fillRect(px + 7, py + 6, 1, 6);
+      g.fillStyle = 'rgba(255,255,255,0.25)'; g.fillRect(px + 2, py + 4, 12, 1);
+      break;
+    case 'barrel':
+      g.fillStyle = 'rgba(0,0,0,0.3)'; g.fillRect(px + 4, py + 13, 9, 2);
+      g.fillStyle = pal.bridge; g.fillRect(px + 4, py + 4, 8, 10);
+      g.fillStyle = shade(pal.bridge, 1.2); g.fillRect(px + 6, py + 4, 2, 10);
+      g.fillStyle = 'rgba(0,0,0,0.4)'; g.fillRect(px + 4, py + 6, 8, 1); g.fillRect(px + 4, py + 11, 8, 1);
+      break;
+    case 'bones':
+      g.fillStyle = 'rgba(232,221,184,0.85)';
+      g.fillRect(px + 3 + (h % 4), py + 5 + ((h >>> 3) % 4), 4, 1);
+      g.fillRect(px + 8 - (h % 3), py + 9 + ((h >>> 5) % 3), 1, 3);
+      g.fillRect(px + 10, py + 6 + (h % 3), 2, 2);
+      break;
+    case 'crystal':
+      g.fillStyle = 'rgba(0,0,0,0.25)'; g.fillRect(px + 3, py + 13, 10, 2);
+      crystalShard(g, px + 5, py + 13, 3, 8, h);
+      crystalShard(g, px + 9, py + 13, 3, 6, h >>> 3);
+      crystalShard(g, px + 7, py + 14, 2, 4, h >>> 6);
+      break;
+    case 'mushroom':
+      shroom(g, px + 5, py + 12, 3, h);
+      shroom(g, px + 10, py + 13, 2, h >>> 4);
+      break;
+    case 'campfire':
+      g.fillStyle = shade(pal.rock, 0.9);
+      g.fillRect(px + 3, py + 11, 3, 2); g.fillRect(px + 10, py + 11, 3, 2);
+      g.fillRect(px + 6, py + 13, 4, 2); g.fillRect(px + 6, py + 8, 4, 2);
+      g.fillStyle = shade(pal.bridge, 0.8);
+      g.fillRect(px + 4, py + 10, 8, 2);
+      break; // flame animated
+    case 'waystone':
+      g.fillStyle = 'rgba(0,0,0,0.3)'; g.fillRect(px + 4, py + 13, 9, 2);
+      g.fillStyle = shade(pal.rock, 1.0); g.fillRect(px + 6, py + 2, 5, 12);
+      g.fillStyle = shade(pal.rock, 1.2); g.fillRect(px + 6, py + 2, 2, 12);
+      g.fillStyle = pal.accent;
+      g.fillRect(px + 8, py + 4, 1, 2); g.fillRect(px + 7, py + 7, 3, 1); g.fillRect(px + 8, py + 9, 1, 2);
+      break;
+    case 'plant':
+      g.strokeStyle = shade(pal.tree ? pal.tree[1] : '#3a5230', 1.3);
+      g.lineWidth = 1;
+      for (var i = 0; i < 4; i++) {
+        var bx = px + 4 + ((h >>> (i * 3)) % 8);
+        g.beginPath();
+        g.moveTo(bx, py + 13);
+        g.lineTo(bx + ((h >>> (i * 2)) % 3) - 1, py + 8 + (i % 3));
+        g.stroke();
+      }
+      break;
+    case 'pillar':
+      g.fillStyle = 'rgba(0,0,0,0.35)';
+      g.beginPath(); g.ellipse(px + 8, py + 13, 6, 2.5, 0, 0, 7); g.fill();
+      g.fillStyle = shade(pal.wallTop, 1.3);
+      g.fillRect(px + 4, py + 11, 8, 3); // base slab
+      g.fillStyle = shade(pal.wallTop, 1.55);
+      g.fillRect(px + 5, py + 3, 6, 9); // shaft
+      g.fillStyle = shade(pal.wallTop, 1.9);
+      g.fillRect(px + 5, py + 3, 2, 9); // lit edge
+      g.fillStyle = shade(pal.wallTop, 1.7);
+      g.fillRect(px + 4, py + 2, 8, 2); // capital
+      break;
+    case 'monolith':
+      g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(px + 3, py + 13, 11, 2);
+      g.fillStyle = shade(pal.rock, 0.95); g.fillRect(px + 5, py + 1, 6, 13);
+      g.fillStyle = shade(pal.rock, 1.25); g.fillRect(px + 5, py + 1, 2, 13);
+      g.fillStyle = shade(pal.rock, 0.7); g.fillRect(px + 9, py + 2, 2, 12);
+      break;
+    case 'web':
+      g.strokeStyle = 'rgba(235,240,248,0.5)';
+      g.lineWidth = 1;
+      var wx = (h % 2) ? px + 2 : px + TS - 2, wy = py + 3;
+      for (var wi = 1; wi <= 3; wi++) {
+        g.beginPath();
+        g.arc(wx, wy, wi * 3, (h % 2) ? -0.3 : Math.PI - 1.2, (h % 2) ? 1.8 : Math.PI + 0.9);
+        g.stroke();
+      }
+      g.beginPath(); g.moveTo(wx, wy); g.lineTo(wx + ((h % 2) ? 8 : -8), wy + 9); g.stroke();
+      break;
+    case 'ember': break; // fully animated
+    case 'torch':
+      // bracket on the wall face
+      g.fillStyle = shade(pal.bridge, 0.75);
+      g.fillRect(px + 7, py + 12, 2, 3);
+      break;
+  }
+}
+
+function crystalShard(g, bx, by, w, hgt, h) {
+  g.fillStyle = pal.accent;
+  g.beginPath();
+  g.moveTo(bx - w, by);
+  g.lineTo(bx - 1 + (h % 2), by - hgt);
+  g.lineTo(bx + w, by);
+  g.closePath(); g.fill();
+  g.fillStyle = 'rgba(255,255,255,0.5)';
+  g.beginPath();
+  g.moveTo(bx - 1 + (h % 2), by - hgt);
+  g.lineTo(bx + 1, by - (hgt >> 1));
+  g.lineTo(bx - 1, by - (hgt >> 1));
+  g.closePath(); g.fill();
+}
+
+function shroom(g, bx, by, r, h) {
+  g.fillStyle = 'rgba(232,221,184,0.8)';
+  g.fillRect(bx - 1, by - 3, 2, 3);
+  g.fillStyle = map.glowShrooms ? pal.accent : mix(pal.door, pal.accent, 0.3);
+  g.beginPath(); g.arc(bx, by - 3, r, Math.PI, 0); g.fill();
+  g.fillStyle = 'rgba(255,255,255,0.35)';
+  g.fillRect(bx - r + 1, by - 4, 2, 1);
+}
+
+function paintGate(g, px, py, isExit) {
+  if (indoor) {
+    // stairwell
+    g.fillStyle = 'rgba(0,0,0,0.55)';
+    g.fillRect(px + 1, py + 1, 14, 14);
+    for (var i = 0; i < 4; i++) {
+      var f = isExit ? 0.85 - i * 0.18 : 0.5 + i * 0.16;
+      g.fillStyle = shade(pal.floor[0], f);
+      g.fillRect(px + 2, py + 2 + i * 3, 12, 3);
+    }
+    g.strokeStyle = pal.accent;
+    g.lineWidth = 1;
+    g.strokeRect(px + 1.5, py + 1.5, 13, 13);
+  } else {
+    // standing stone arch
+    g.fillStyle = 'rgba(0,0,0,0.3)'; g.fillRect(px + 2, py + 13, 12, 2);
+    g.fillStyle = shade(pal.rock, 1.05);
+    g.fillRect(px + 3, py + 3, 3, 11);
+    g.fillRect(px + 10, py + 3, 3, 11);
+    g.fillRect(px + 3, py + 2, 10, 3);
+    g.fillStyle = pal.accent;
+    g.fillRect(px + 7, py + 6, 2, isExit ? 2 : 6);
+  }
+}
+
+function paintSpawn(g, s) {
+  var px = s.x * TS, py = s.y * TS;
+  var h = tileHash(s.x, s.y, map.seed ^ 0x5117);
+  if (s.type === 'boss') {
+    // the arena holder: pale skull on a dark ring
+    g.fillStyle = 'rgba(120,20,20,0.55)';
+    g.beginPath(); g.arc(px + 8, py + 8, 7, 0, 7); g.fill();
+    g.fillStyle = '#e8e0d0';
+    g.beginPath(); g.arc(px + 8, py + 7, 4, 0, 7); g.fill();
+    g.fillRect(px + 5, py + 8, 6, 4);
+    g.fillStyle = '#1a0d0d';
+    g.fillRect(px + 6, py + 6, 2, 2); g.fillRect(px + 9, py + 6, 2, 2);
+    g.fillRect(px + 7, py + 10, 1, 2); g.fillRect(px + 9, py + 10, 1, 2);
+  } else {
+    // a pack: a knot of hostile dots; elites get an accent ring
+    if (s.type === 'elite') {
+      g.strokeStyle = pal.accent;
+      g.lineWidth = 1;
+      g.beginPath(); g.arc(px + 8, py + 8, 6, 0, 7); g.stroke();
+    }
+    g.fillStyle = 'rgba(190,60,45,0.95)';
+    for (var i = 0; i < 3 + (h % 2); i++) {
+      var ox = 4 + ((h >>> (i * 3)) % 8), oy = 4 + ((h >>> (i * 3 + 2)) % 8);
+      g.fillRect(px + ox, py + oy, 2, 2);
+    }
+  }
+}
+
+// animated overlays (flames, orbs, glints), drawn every frame
+function paintFlames(g, time) {
+  for (var i = 0; i < flames.length; i++) {
+    var f = flames[i];
+    var px = f.x * TS, py = f.y * TS;
+    var w1 = Math.sin(time * 9 + f.phase), w2 = Math.sin(time * 13 + f.phase * 2);
+    if (f.type === 'torch' || f.type === 'campfire') {
+      var fx = px + 8, fy = f.type === 'torch' ? py + 12 : py + 10;
+      var hgt = (f.type === 'torch' ? 5 : 7) + w1 * 1.5;
+      g.fillStyle = 'rgba(255,140,40,0.9)';
+      g.beginPath();
+      g.moveTo(fx - 2.5, fy);
+      g.quadraticCurveTo(fx - 2 + w2, fy - hgt * 0.6, fx + w1, fy - hgt);
+      g.quadraticCurveTo(fx + 2 + w2, fy - hgt * 0.5, fx + 2.5, fy);
+      g.closePath(); g.fill();
+      g.fillStyle = 'rgba(255,230,140,0.95)';
+      g.beginPath();
+      g.moveTo(fx - 1, fy);
+      g.quadraticCurveTo(fx + w2 * 0.7, fy - hgt * 0.45, fx + w1 * 0.5, fy - hgt * 0.55);
+      g.quadraticCurveTo(fx + 1, fy - hgt * 0.3, fx + 1.2, fy);
+      g.closePath(); g.fill();
+    } else if (f.type === 'shrine') {
+      var k = 0.5 + 0.5 * Math.sin(time * 2 + f.phase);
+      g.fillStyle = pal.accent;
+      g.globalAlpha = 0.7 + 0.3 * k;
+      g.beginPath(); g.arc(px + 8, py + 4, 2.4 + k * 0.8, 0, 7); g.fill();
+      g.globalAlpha = 1;
+      g.fillStyle = 'rgba(255,255,255,0.8)';
+      g.fillRect(px + 7, py + 3, 1, 1);
+    } else if (f.type === 'ember') {
+      var k2 = 0.5 + 0.5 * Math.sin(time * 3 + f.phase);
+      g.fillStyle = 'rgba(255,' + (120 + k2 * 90 | 0) + ',50,' + (0.5 + 0.5 * k2) + ')';
+      g.fillRect(px + 4 + (f.phase * 7 % 6 | 0), py + 6 + (f.phase * 13 % 6 | 0), 2, 2);
+      g.fillRect(px + 9 - (f.phase * 5 % 4 | 0), py + 10 - (f.phase * 11 % 5 | 0), 1, 1);
+    } else if (f.type === 'crystal') {
+      var k3 = Math.max(0, Math.sin(time * 1.5 + f.phase));
+      g.fillStyle = 'rgba(255,255,255,' + (k3 * 0.8) + ')';
+      g.fillRect(px + 4 + (f.phase * 3 % 5 | 0), py + 5, 1, 1);
+    }
+  }
+}
+
+// ---------------------------------------------------------------- lighting
+
+function buildLights() {
+  lights = [];
+  flames = [];
+  var L = pal.light;
+  map.entities.forEach(function (e) {
+    var cx = e.x * TS + 8, cy = e.y * TS + 8;
+    switch (e.type) {
+      case 'torch':
+        lights.push({ px: cx, py: e.y * TS + 12, r: TS * 4.6, color: L, flicker: 1, alpha: 1, phase: cx * 0.7 });
+        flames.push({ type: 'torch', x: e.x, y: e.y, phase: cx * 0.13 });
+        break;
+      case 'campfire':
+        lights.push({ px: cx, py: cy, r: TS * 4.2, color: L, flicker: 1, alpha: 1, phase: cx });
+        flames.push({ type: 'campfire', x: e.x, y: e.y, phase: cy * 0.17 });
+        break;
+      case 'shrine':
+        lights.push({ px: cx, py: e.y * TS + 4, r: TS * 3, color: accentRgb(), flicker: 0.4, alpha: 0.9, phase: cx });
+        flames.push({ type: 'shrine', x: e.x, y: e.y, phase: cx * 0.11 });
+        break;
+      case 'crystal':
+        lights.push({ px: cx, py: cy, r: TS * 2.6, color: accentRgb(), flicker: 0.3, alpha: 0.8, phase: cy });
+        flames.push({ type: 'crystal', x: e.x, y: e.y, phase: cx * 0.19 });
+        break;
+      case 'waystone':
+        lights.push({ px: cx, py: cy, r: TS * 2.4, color: accentRgb(), flicker: 0.25, alpha: 0.7, phase: cx });
+        break;
+      case 'ember':
+        lights.push({ px: cx, py: cy, r: TS * 1.8, color: '255,120,50', flicker: 1, alpha: 0.8, phase: cy * 0.3 });
+        flames.push({ type: 'ember', x: e.x, y: e.y, phase: (cx % 100) / 16 });
+        break;
+      case 'mushroom':
+        if (map.glowShrooms) lights.push({ px: cx, py: cy, r: TS * 2.2, color: accentRgb(), flicker: 0.35, alpha: 0.65, phase: cx });
+        break;
+      case 'entrance': case 'exit':
+        lights.push({ px: cx, py: cy, r: TS * 3.6, color: L, flicker: 0.15, alpha: 0.8, phase: 0 });
+        break;
+    }
+  });
+  // the boss radiates menace
+  if (map.boss) {
+    lights.push({ px: map.boss.x * TS + 8, py: map.boss.y * TS + 8, r: TS * 4, color: '255,60,40', flicker: 0.35, alpha: 0.7, phase: 1.7 });
+  }
+}
+
+function accentRgb() {
+  var c = hexRgb(pal.accent);
+  return c[0] + ',' + c[1] + ',' + c[2];
+}
+
+function bakeLavaGlow() {
+  lgctx.clearRect(0, 0, lavaGlowC.width, lavaGlowC.height);
+  var sprite = glowSprite('255,110,40');
+  for (var i = 0; i < liquids.length; i++) {
+    var q = liquids[i];
+    if (q.t !== TILE.LAVA) continue;
+    var r = TS * 1.9;
+    lgctx.globalAlpha = 0.5;
+    lgctx.drawImage(sprite, q.x * TS + 8 - r, q.y * TS + 8 - r, r * 2, r * 2);
+  }
+  lgctx.globalAlpha = 1;
+}
+
+// ---------------------------------------------------------------- generate + bake
+
+function currentOptions(newSeed) {
+  var sz = document.getElementById('size').value.split('x');
+  var seedField = document.getElementById('seed');
+  var seed = newSeed ? ((Math.random() * 0xFFFFFFFF) >>> 0) : seedField.value.trim();
+  return {
+    zone: document.getElementById('zone').value,
+    theme: document.getElementById('theme').value || undefined,
+    width: parseInt(sz[0], 10),
+    height: parseInt(sz[1], 10),
+    seed: seed === '' ? undefined : seed
+  };
+}
+
+function regenerate(newSeed) {
+  var opts = currentOptions(newSeed);
+  if (opts.theme === 'random') opts.theme = undefined;
+  map = MapGen.generate(opts);
+  pal = map.palette;
+  indoor = !map.outdoor;
+  document.getElementById('seed').value = String(map.seed);
+
+  var W = map.width * TS, H = map.height * TS;
+  [staticC, frameC, darkC, lavaGlowC, maskC].forEach(function (c) { c.width = W; c.height = H; });
+  sctx = staticC.getContext('2d');
+  fctx = frameC.getContext('2d');
+  dctx = darkC.getContext('2d');
+  lgctx = lavaGlowC.getContext('2d');
+  mctx = maskC.getContext('2d');
+
+  // collect liquids
+  liquids = [];
+  for (var y = 0; y < map.height; y++) {
+    for (var x = 0; x < map.width; x++) {
+      var t = tget(x, y);
+      if (t === TILE.WATER || t === TILE.DEEP || t === TILE.LAVA || t === TILE.MURK) {
+        liquids.push({ x: x, y: y, t: t, h: tileHash(x, y, map.seed), edges: liquidEdges(x, y) });
+      }
+    }
+  }
+
+  // textured liquids bake first: the terrain pass blits from this layer
+  bakeLiquidBase();
+
+  // bake terrain, then canopies on top so they can spill across tile edges
+  for (y = 0; y < map.height; y++)
+    for (x = 0; x < map.width; x++) paintBaseTile(sctx, x, y);
+  for (y = 0; y < map.height; y++)
+    for (x = 0; x < map.width; x++) {
+      if (tget(x, y) === TILE.TREE) paintTree(sctx, x, y, tileHash(x, y, map.seed));
+    }
+
+  // bake static entities in painter order
+  var sorted = map.entities.slice().sort(function (a, b2) { return a.y - b2.y; });
+  sorted.forEach(function (e) { paintEntity(sctx, e); });
+
+  // monster spawns: packs, elites, and the boss
+  (map.spawns || []).forEach(function (s) { paintSpawn(sctx, s); });
+
+  buildLights();
+  bakeLavaGlow();
+  startReveal();
+  fitCamera();
+  updateStats();
+  // debug hook: the baked scene is reachable for tooling even when the
+  // tab is hidden and the animation loop is suspended
+  window.__bake = staticC;
+}
+
+// reveal: BFS distance from entrance across every tile (through walls too)
+function startReveal() {
+  var w = map.width, h = map.height;
+  var dist = new Int32Array(w * h); dist.fill(-1);
+  var qx = new Int32Array(w * h), head = 0, tail = 0;
+  var si = map.entrance.y * w + map.entrance.x;
+  dist[si] = 0; qx[tail++] = si;
+  // first pass: walkable
+  while (head < tail) {
+    var i = qx[head++];
+    var x = i % w, y = (i / w) | 0;
+    [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (d) {
+      var nx = x + d[0], ny = y + d[1];
+      if (nx < 0 || ny < 0 || nx >= w || ny >= h) return;
+      var ni = ny * w + nx;
+      if (dist[ni] === -1 && MapGen.WALKABLE.has(map.tiles[ni])) {
+        dist[ni] = dist[i] + 1; qx[tail++] = ni;
+      }
+    });
+  }
+  // second pass: flood the rest from the walkable frontier
+  head = 0; tail = 0;
+  for (var j = 0; j < w * h; j++) if (dist[j] >= 0) qx[tail++] = j;
+  while (head < tail) {
+    var i2 = qx[head++];
+    var x2 = i2 % w, y2 = (i2 / w) | 0;
+    [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (d) {
+      var nx = x2 + d[0], ny = y2 + d[1];
+      if (nx < 0 || ny < 0 || nx >= w || ny >= h) return;
+      var ni = ny * w + nx;
+      if (dist[ni] === -1) { dist[ni] = dist[i2] + 1; qx[tail++] = ni; }
+    });
+  }
+  var maxD = 1;
+  for (j = 0; j < dist.length; j++) if (dist[j] > maxD) maxD = dist[j];
+  mctx.clearRect(0, 0, maskC.width, maskC.height);
+  reveal = { active: true, start: performance.now(), dist: dist, maxD: maxD, shown: -1 };
+}
+
+function fitCamera() {
+  var vw = view.clientWidth, vh = view.clientHeight;
+  var W = map.width * TS, H = map.height * TS;
+  cam.scale = Math.min(vw / W, vh / H) * 0.94;
+  cam.ox = (vw - W * cam.scale) / 2;
+  cam.oy = (vh - H * cam.scale) / 2;
+}
+
+function updateStats() {
+  var zoneName = MapGen.ZONES[map.zone].name;
+  var themeName = MapGen.THEMES[map.theme].name;
+  document.getElementById('stats').innerHTML =
+    '<b>' + themeName + ' ' + zoneName + '</b><br>' +
+    map.width + ' × ' + map.height + ' · seed ' + map.seed + '<br>' +
+    (map.rooms.length ? map.rooms.length + ' rooms · ' : '') +
+    (map.spawns ? (map.spawns.length - 1) + ' packs + boss · ' : '') +
+    map.entities.length + ' entities';
+  document.getElementById('corner').textContent = themeName + ' ' + zoneName + ' · ' + map.seed;
+}
+
+// ---------------------------------------------------------------- frame loop
+
+function frame(now) {
+  requestAnimationFrame(frame);
+  if (!map) return;
+  var time = now / 1000;
+
+  // compose the frame at map resolution
+  fctx.globalCompositeOperation = 'source-over';
+  fctx.globalAlpha = 1;
+  fctx.drawImage(staticC, 0, 0);
+
+  // animate liquids
+  for (var i = 0; i < liquids.length; i++) {
+    var q = liquids[i];
+    var qk = liquidTexKey(q.t);
+    if (qk && texPack[qk]) {
+      // textured liquid: blit the baked art, breathe the brightness
+      var qx = q.x * TS, qy = q.y * TS;
+      fctx.drawImage(liquidBase, qx, qy, TS, TS, qx, qy, TS, TS);
+      var speed = q.t === TILE.MURK ? 0.5 : 1.4;
+      var s = Math.sin(time * speed + (q.h % 628) / 100) * 0.06;
+      fctx.fillStyle = s > 0 ? 'rgba(255,255,255,' + s.toFixed(3) + ')'
+                             : 'rgba(0,0,0,' + (-s).toFixed(3) + ')';
+      fctx.fillRect(qx, qy, TS, TS);
+      if (q.t === TILE.WATER && (q.h + ((time * 0.7) | 0)) % 11 === 0) {
+        fctx.fillStyle = 'rgba(255,255,255,0.35)';
+        fctx.fillRect(qx + (q.h >>> 5) % 12, qy + (q.h >>> 8) % 12, 3, 1);
+      }
+    } else {
+      paintLiquid(fctx, q.x, q.y, time, q);
+    }
+  }
+
+  paintFlames(fctx, time);
+
+  // lava glow (additive, pulsing)
+  if (lavaGlowC.width && liquids.length) {
+    fctx.globalCompositeOperation = 'lighter';
+    fctx.globalAlpha = 0.55 + 0.2 * Math.sin(time * 1.7);
+    fctx.drawImage(lavaGlowC, 0, 0);
+    fctx.globalAlpha = 1;
+  }
+
+  // colored light halos (additive)
+  fctx.globalCompositeOperation = 'lighter';
+  for (i = 0; i < lights.length; i++) {
+    var l = lights[i];
+    var fl = 1 - l.flicker * 0.25 * (0.5 + 0.5 * Math.sin(time * 8 + l.phase) * Math.sin(time * 5.3 + l.phase * 1.7));
+    fctx.globalAlpha = 0.16 * l.alpha * fl;
+    var s = glowSprite(l.color);
+    fctx.drawImage(s, l.px - l.r, l.py - l.r, l.r * 2, l.r * 2);
+  }
+  fctx.globalAlpha = 1;
+  fctx.globalCompositeOperation = 'source-over';
+
+  // darkness with light holes
+  if (pal.darkness > 0.02) {
+    dctx.globalCompositeOperation = 'source-over';
+    dctx.fillStyle = '#000';
+    dctx.fillRect(0, 0, darkC.width, darkC.height);
+    dctx.globalCompositeOperation = 'destination-out';
+    var alphaSprite = glowSprite('alpha');
+    for (i = 0; i < lights.length; i++) {
+      var l2 = lights[i];
+      var fl2 = 1 - l2.flicker * 0.2 * (0.5 + 0.5 * Math.sin(time * 8 + l2.phase));
+      dctx.globalAlpha = l2.alpha * fl2;
+      dctx.drawImage(alphaSprite, l2.px - l2.r * 1.15, l2.py - l2.r * 1.15, l2.r * 2.3, l2.r * 2.3);
+    }
+    if (lavaGlowC.width) {
+      dctx.globalAlpha = 0.9;
+      dctx.drawImage(lavaGlowC, 0, 0);
+    }
+    dctx.globalAlpha = 1;
+    fctx.globalAlpha = pal.darkness;
+    fctx.drawImage(darkC, 0, 0);
+    fctx.globalAlpha = 1;
+  }
+
+  // reveal mask
+  if (reveal.active) {
+    var t = Math.min(1, (now - reveal.start) / 1600);
+    var eased = 1 - Math.pow(1 - t, 3);
+    var threshold = Math.floor(eased * reveal.maxD);
+    if (threshold > reveal.shown) {
+      mctx.fillStyle = '#fff';
+      var w = map.width;
+      for (var k = 0; k < reveal.dist.length; k++) {
+        if (reveal.dist[k] > reveal.shown && reveal.dist[k] <= threshold) {
+          mctx.fillRect((k % w) * TS, ((k / w) | 0) * TS, TS, TS);
+        }
+      }
+      reveal.shown = threshold;
+    }
+    if (t >= 1) reveal.active = false;
+    else {
+      fctx.globalCompositeOperation = 'destination-in';
+      fctx.drawImage(maskC, 0, 0);
+      fctx.globalCompositeOperation = 'source-over';
+    }
+  }
+
+  // blit to screen
+  var dpr = window.devicePixelRatio || 1;
+  var vw = view.clientWidth, vh = view.clientHeight;
+  if (view.width !== vw * dpr || view.height !== vh * dpr) {
+    view.width = vw * dpr; view.height = vh * dpr;
+  }
+  vctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  vctx.fillStyle = pal.bg;
+  vctx.fillRect(0, 0, vw, vh);
+  vctx.imageSmoothingEnabled = cam.scale < 1;
+  vctx.setTransform(dpr * cam.scale, 0, 0, dpr * cam.scale, dpr * cam.ox, dpr * cam.oy);
+  vctx.drawImage(frameC, 0, 0);
+  // vignette
+  vctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  var vg = vctx.createRadialGradient(vw / 2, vh / 2, Math.min(vw, vh) * 0.45, vw / 2, vh / 2, Math.max(vw, vh) * 0.75);
+  vg.addColorStop(0, 'rgba(0,0,0,0)');
+  vg.addColorStop(1, 'rgba(0,0,0,0.5)');
+  vctx.fillStyle = vg;
+  vctx.fillRect(0, 0, vw, vh);
+}
+
+// ---------------------------------------------------------------- input
+
+var drag = null;
+view.addEventListener('pointerdown', function (e) {
+  drag = { x: e.clientX, y: e.clientY, ox: cam.ox, oy: cam.oy };
+  view.classList.add('dragging');
+  view.setPointerCapture(e.pointerId);
+});
+view.addEventListener('pointermove', function (e) {
+  if (!drag) return;
+  cam.ox = drag.ox + (e.clientX - drag.x);
+  cam.oy = drag.oy + (e.clientY - drag.y);
+});
+view.addEventListener('pointerup', function () { drag = null; view.classList.remove('dragging'); });
+view.addEventListener('wheel', function (e) {
+  e.preventDefault();
+  var rect = view.getBoundingClientRect();
+  var mx = e.clientX - rect.left, my = e.clientY - rect.top;
+  var factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+  var ns = Math.max(0.1, Math.min(8, cam.scale * factor));
+  cam.ox = mx - (mx - cam.ox) * (ns / cam.scale);
+  cam.oy = my - (my - cam.oy) * (ns / cam.scale);
+  cam.scale = ns;
+}, { passive: false });
+view.addEventListener('dblclick', fitCamera);
+window.addEventListener('resize', function () { if (map) fitCamera(); });
+window.addEventListener('keydown', function (e) {
+  if (e.code === 'Space' && document.activeElement.tagName !== 'INPUT') {
+    e.preventDefault();
+    regenerate(true);
+  }
+});
+
+// ---------------------------------------------------------------- controls
+
+var zoneSel = document.getElementById('zone');
+var themeSel = document.getElementById('theme');
+Object.keys(MapGen.ZONES).forEach(function (id) {
+  var o = document.createElement('option');
+  o.value = id; o.textContent = MapGen.ZONES[id].name;
+  zoneSel.appendChild(o);
+});
+function rebuildThemes() {
+  var zone = MapGen.ZONES[zoneSel.value];
+  themeSel.innerHTML = '';
+  var any = document.createElement('option');
+  any.value = 'random'; any.textContent = 'Random';
+  themeSel.appendChild(any);
+  zone.themes.forEach(function (id) {
+    var o = document.createElement('option');
+    o.value = id; o.textContent = MapGen.THEMES[id].name;
+    themeSel.appendChild(o);
+  });
+}
+rebuildThemes();
+
+zoneSel.addEventListener('change', function () { rebuildThemes(); regenerate(false); });
+themeSel.addEventListener('change', function () { regenerate(false); });
+document.getElementById('size').addEventListener('change', function () { regenerate(false); });
+document.getElementById('generate').addEventListener('click', function () { regenerate(true); });
+document.getElementById('roll').addEventListener('click', function () { regenerate(true); });
+document.getElementById('seed').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') regenerate(false);
+});
+
+// ---------------------------------------------------------------- texture pack io
+
+document.getElementById('texImport').addEventListener('click', function () {
+  document.getElementById('texFile').value = '';
+  document.getElementById('texFile').click();
+});
+document.getElementById('texFile').addEventListener('change', function () {
+  var file = this.files[0];
+  if (!file) return;
+  var key = document.getElementById('texTerrain').value;
+  var img = new Image();
+  img.onload = function () {
+    URL.revokeObjectURL(img.src);
+    // same treatment as the Mason: center-square crop, size cap,
+    // forced wrap-seamlessness
+    var side = Math.min(img.width, img.height);
+    var target = Math.min(side, 256);
+    var c = document.createElement('canvas');
+    c.width = c.height = target;
+    var g = c.getContext('2d');
+    g.drawImage(img, (img.width - side) / 2, (img.height - side) / 2, side, side, 0, 0, target, target);
+    var data = g.getImageData(0, 0, target, target);
+    Mason.makeSeamless(data);
+    setTexture(key, data);
+    regenerate(false);
+  };
+  img.src = URL.createObjectURL(file);
+});
+document.getElementById('packSave').addEventListener('click', function () {
+  var pack = { format: 'wizard-texture-pack', version: 1, textures: {} };
+  Object.keys(texPack).forEach(function (k) { pack.textures[k] = texPack[k].canvas.toDataURL(); });
+  var blob = new Blob([JSON.stringify(pack)], { type: 'application/json' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'cartographer_texture_pack.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+document.getElementById('packLoad').addEventListener('click', function () {
+  document.getElementById('packFile').value = '';
+  document.getElementById('packFile').click();
+});
+document.getElementById('packFile').addEventListener('change', function () {
+  var file = this.files[0];
+  if (!file) return;
+  file.text().then(function (text) {
+    var pack = JSON.parse(text);
+    var keys = Object.keys(pack.textures || {});
+    var pending = keys.length;
+    if (!pending) return;
+    keys.forEach(function (k) {
+      var img = new Image();
+      img.onload = function () {
+        var c = document.createElement('canvas');
+        c.width = img.width; c.height = img.height;
+        var g = c.getContext('2d');
+        g.drawImage(img, 0, 0);
+        setTexture(k, g.getImageData(0, 0, img.width, img.height)); // saved packs are already seamless
+        if (--pending === 0) regenerate(false);
+      };
+      img.src = pack.textures[k];
+    });
+  });
+});
+document.getElementById('packClear').addEventListener('click', function () {
+  texPack = {};
+  patternCache = new WeakMap();
+  masonParamCache = {};
+  refreshTexLabels();
+  regenerate(false);
+});
+
+document.getElementById('exportJson').addEventListener('click', function () {
+  if (!map) return;
+  var data = JSON.stringify(MapGen.toJSON(map), null, 2);
+  var blob = new Blob([data], { type: 'application/json' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'cartographer_' + map.zone + '_' + map.theme + '_' + map.seed + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+document.getElementById('exportPng').addEventListener('click', function () {
+  if (!map) return;
+  frameC.toBlob(function (blob) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'cartographer_' + map.zone + '_' + map.theme + '_' + map.seed + '.png';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+});
+
+// ---------------------------------------------------------------- go
+
+regenerate(true);
+requestAnimationFrame(frame);
+
+})();
+</script>
+</body>
+</html>

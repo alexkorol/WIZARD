@@ -40,7 +40,7 @@ base vocabulary to mutate.
 | Clubs / maces | 18 | Femur clubs, cudgels, copper maces, star-maces, mauls. |
 | Two-hand heavy weapons | 18 | Greatclubs, greataxes, macuahuitls, execution blades, temple mauls. |
 | Spears / polearms | 18 | Spears, harpoons, pikes, glaives, warspears; keep full weapon visible. |
-| Rite foci / sceptres | 18 | Heavy hand bells, pronged hand-sceptres, mace-like idol-staves, handled reliquaries, offering bowls, priest tools with real mass. |
+| Rite tools / sceptres | 18 | Off-hand ritual tools with real mass: heavy hand bells, pronged hand-sceptres, mace-like idol-staves, handled reliquaries, offering bowls, priest tools. Not main-hand weapon damage bases unless explicitly weaponized. |
 | Caster rods / wands | 12 | Short heavy rods distinct from sceptres; thick grips, blunt finials, sockets, or capped heads. Avoid pencil-thin wands. |
 | Throwing / sidearms | 12 | Throwing knives, heavy javelins, throwing clubs; avoid bows/slings, tiny darts, and hand stones. |
 | Body armour | 24 | Hide wraps, linen, boiled leather, studded jerkins, scale vests, sheet-bronze corslets. |
@@ -49,8 +49,8 @@ base vocabulary to mutate.
 | Boots / greaves | 18 | Sandals, boots, shin guards, greaves; pair shown as pair. |
 | Belts / girdles | 18 | Cords, sashes, girdles, plated belts, warbelts; landscape canvas. |
 | Shields / bucklers | 24 | Hide-over-wood, rawhide, round, tower, sheet-bronze, scale; strong front read, plain bosses on bases. |
-| Amulets / neckpieces | 18 | Pendants, torcs, collars, lunulae, gorgets, sigils. |
-| Rings / seals | 18 | Bone rings, coils, signets, bands, plain seal rings, socket rings. |
+| Amulets / pendants | 18 | Pendant-first neck loot: stones, beads, metal pieces, lunulae, small charms on cord/twine/leather/simple chain. Avoid gorgets/collars unless the slot is intentionally armor-like. |
+| Rings / seals | 18 | Bone rings, coils, signets, bands, plain seal rings, socket rings. Compact finger jewelry only; no dangling charms, chains, tassels, bells, or chimes. |
 | Charms / relic curios | 24 | Reliquary boxes, trophy settings, handled votive vessels, compact caskets; no loose tiny charms or shrine miniatures. |
 | Off-hand foci | 12 | Targes, bossed ward bucklers, reliquary shields, heavy hand-guards; caster/ward variants. |
 | Alias / reuse pool | 12 | D2-style renamed tiers using already-good art where acceptable. |
@@ -116,7 +116,10 @@ ask it to extract separate transparent paperdoll-slot item icons from the gear
 the character wears.
 
 This is especially useful for shields, belts, footwear, armor, offhands, relic
-gear, and coherent faction/set families. It solves a different problem than
+gear, and coherent faction/set families. Bracers/vambraces are the hand/glove
+slot, not a separate paperdoll slot. Foci and ritual tools belong to the
+off-hand slot like shields unless an individual base is explicitly designed as
+a main-hand weapon. It solves a different problem than
 prompt wording: the source image carries the whole equipment system, including
 material palette, construction logic, ornament density, straps/attachments, and
 slot relationships.
@@ -124,11 +127,17 @@ slot relationships.
 Guardrail: details are allowed when grounded in the source kit. Feathers,
 tassels, shell plates, scratches, cords, chains, coins, veils, stones, and
 symbols can be valid item details if they are physically integrated and improve
-the object. Reject ungrounded decoration, body-part crops, paperdoll UI,
-contact sheets, baked checkerboards, and any extracted item that does not read
-as usable loot.
+the object. Reject ungrounded decoration, slot drift, body-part crops,
+paperdoll UI, contact sheets, baked checkerboards, and any extracted item that
+does not read as usable loot.
 
 ## Naming rules for the large manifest
+
+Use `NAMEBANK-PRE-AD.md` when selecting base names, construction terms, rare
+prestige buckets, and medieval false-friend filters. The short version: ordinary
+base gear should come from pre-AD archaeological forms and construction
+language, while spectacular votive/display/precious pieces move to uniques,
+awakened relics, shrine loot, or faction prestige sets.
 
 - Player-facing names are base names, not material IDs.
 - Avoid repeated `material noun` rows unless the silhouette changes.
@@ -149,6 +158,24 @@ as usable loot.
   quivers need a visible shoulder strap; shields need a grip, arm loop, or
   clear hand/arm use; greaves/bracers need backing or side straps. Avoid
   one-piece magic shells that cannot be donned.
+- Slot identity is part of the prompt, not cleanup after the fact. Rings are
+  compact finger rings with no dangling charms, chains, tassels, bells, or
+  chimes. Amulets are pendant-first objects on a long-ish cord, twine, leather
+  string, or simple chain, with the pendant filling most of the 1x1 image;
+  avoid gorgets/collars for the amulet slot. Body armor should isolate the
+  chest/body piece with an open neck/chest read and no attached gorget, collar,
+  turtleneck, belt, skirt, faulds, tassets, or cloak. Belts are horizontal 1x2
+  waist items, not skirts/faulds/tassets. Shields show the front fighting face
+  only, with no front-side straps, dangling hardware, random rings, handle
+  loops, utility rigging, or clamshell construction.
+- Motif restraint: solar symbols, eight-spoked wheel symbols, and human-face
+  centerpieces are overrepresented. Avoid them by default on base items. If a
+  source set clearly contains one, use it on at most one extracted item; the
+  set should read coordinated, not matchy.
+- Use gauze, translucent cloth, shredded cloth, and ragged fringe sparingly.
+  Prefer opaque linen, wool, hide, leather, bark cloth, felt, woven fiber, or
+  thicker silk-like panels. Cloak edges can be worn but should not become alpha
+  cleanup noise or shredded costume trash.
 - Bone armour must be assembled from smaller bone plates, splints, or sections
   on hide/leather backing. Do not prompt a perfect solid shin-guard-shaped
   bone plate; no animal grows a clean greave-shaped bone.
@@ -188,12 +215,31 @@ as usable loot.
   socket, vessel, patience, trophy affinity, theme bias, block, speed, ward,
   spirit, reach, crit, or carry capacity.
 
+## Slot expansion notes
+
+These are design notes, not implemented inventory UI yet:
+
+- Female-only earring slot is a likely future jewelry slot.
+- Utility belts may unlock two smaller pack areas under the main inventory:
+  one for relics and charms, one for reagents and utility objects such as
+  gathering leaves, breadcrumbs, reagent powders, and liquid containers.
+
 ## Forbidden / high-risk concepts
 
 Retire these unless reconceived into a reliable icon:
 
 - Atlatls / spear-throwers.
 - Loose slings and long dangling cords.
+- Invasive dangling charms, chimes, tassels, tiny hanging rings, and delicate
+  costume chains on rings, helmets, armor, cloaks, shields, or weapons.
+- Solar symbols, eight-spoked wheels, and human-face centerpieces on ordinary
+  base items, especially repeated across every slot in one set.
+- Amulets rendered as gorgets, collars, chokers, or throat armor unless
+  intentionally reviewed as armor-like neck gear.
+- Body armor that includes attached collars/gorgets/turtlenecks/belts/skirts,
+  or belts rendered as faulds, tassets, aprons, and hanging costume panels.
+- Shields with front-side straps, dangling rings, utility hardware, clamshell
+  openings, or visible back-side handle construction on the front-facing icon.
 - Fingerless handwraps or objects that read as feet/hands ambiguously.
 - Tiny toggles, buckles, clasps, and explicit closures as decoration. Broad
   straps, lacing, backing, shoulder straps, and arm loops are required when

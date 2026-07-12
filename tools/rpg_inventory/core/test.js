@@ -73,6 +73,47 @@ t('jade is restricted to non-weapons or blunt weapon bases', () => {
       `${artId} is a jade blade/reach target`);
   }
 });
+t('rite focus is an off-hand focus, not a weapon damage base', () => {
+  const form = pack.forms.focus;
+  eq(form.kind, 'focus', 'focus runtime kind');
+  assert(!form.weapon, 'focus must not carry weapon damage');
+  ['warded', 'hale', 'spirited', 'emberkiss', 'riverblessed', 'emberward', 'wealthy', 'strongback'].forEach(modId => {
+    assert(pack.brandMods[modId].kinds.includes('focus'), `${modId} can roll on focus`);
+  });
+  assert(pack.trophies.river_pearl.kinds.includes('focus'), 'river pearl can bind to focus');
+  assert(pack.trophies.knucklebone.kinds.includes('focus'), 'knucklebone can bind to focus');
+
+  const it = forge.generateItem({ ilvl: 60, formId: 'focus', materialId: 'bronze', brands: 2 });
+  eq(it.kind, 'focus');
+  const lines = forge.tooltip(it, { archetype: 'ashspeaker' });
+  assert(!lines.some(l => /Damage \d/.test(l.text)), 'focus tooltip must not show weapon damage');
+
+  const index = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  assert(/item\.kind === 'focus'\) return \['focus'\]/.test(index),
+    'taxonomy art selection must treat focus as focus');
+  assert(/slotId === 'offHand'[\s\S]{0,90}k === 'focus'/.test(index),
+    'off-hand equipment slot must accept focus items');
+});
+t('inventory layout has cloak slot and horizontal mini-pack system', () => {
+  const index = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  eq(pack.forms.cloak.kind, 'cloak', 'cloak runtime kind');
+  assert(/id: 'main', label: 'Backpack', w: 12, h: 6/.test(index),
+    'main backpack must be the intended horizontal 12x6 layout');
+  assert(/id: 'relics', label: 'Relics & Charts', w: 4, h: 4/.test(index),
+    'relics mini-pack must exist as a 4x4 specialty grid');
+  assert(/id: 'utility', label: 'Reagents & Utility', w: 4, h: 4/.test(index),
+    'utility mini-pack must exist as a 4x4 specialty grid');
+  assert(/isRelicPackItem/.test(index) && /isUtilityPackItem/.test(index) && /canUsePack/.test(index),
+    'specialty pack placement must reject ordinary equipment');
+  assert(/sanctified/.test(index) && /Relic pack only holds/.test(index),
+    'relic pack must allow sanctified gear and explain rejected drops');
+  assert(/slotType="cloak" label="Cloak"/.test(index),
+    'paperdoll must expose a cloak slot');
+  assert(/item\.kind === 'cloak'\) return \['cloak'\]/.test(index),
+    'taxonomy art selection must treat cloak as its own slot');
+  assert(/findFreeSpotAnyPack/.test(index) && /packGridRefs/.test(index),
+    'drag and placement code must support multiple pack grids');
+});
 t('retired forms and art ids cannot be generated', () => {
   const retiredIds = new Set(pack.retiredArtIds || []);
   const retiredForms = new Set(pack.retiredForms || []);
@@ -129,6 +170,18 @@ t('generation plan keeps currency art lane closed', () => {
   assert(/max 2 weapons/.test(plan),
     'plan must carry the prompt-batch weapon cap');
 });
+t('pre-AD namebank is linked and filters medieval defaults', () => {
+  const plan = fs.readFileSync(path.join(__dirname, 'GENERATION-PLAN.md'), 'utf8');
+  const namebank = fs.readFileSync(path.join(__dirname, 'NAMEBANK-PRE-AD.md'), 'utf8');
+  assert(/NAMEBANK-PRE-AD\.md/.test(plan),
+    'generation plan must link the pre-AD namebank');
+  assert(/flange-hilted bronze sword/.test(namebank) && /ge dagger-axe/.test(namebank),
+    'namebank must preserve strong pre-AD prompt examples');
+  assert(/Rare Or Ceremonial Bucket/.test(namebank) && /Medieval Defaults To Suppress/.test(namebank),
+    'namebank must separate prestige items and medieval negatives');
+  assert(/False Friends/.test(namebank) && /halberd/.test(namebank) && /rapier/.test(namebank),
+    'namebank must preserve ambiguous-term filtering');
+});
 t('test prompts require novelty checks', () => {
   const planPath = path.join(__dirname, 'GENERATION-PLAN.md');
   const briefPath = path.join(__dirname, 'ASSET-BRIEF.md');
@@ -159,6 +212,8 @@ t('source-image loadout extraction captures coherent kit detail', () => {
   const notes = fs.readFileSync(path.join(__dirname, 'REFERENCE-NOTES.md'), 'utf8');
   const plan = fs.readFileSync(path.join(__dirname, 'GENERATION-PLAN.md'), 'utf8');
   const loadout = fs.readFileSync(path.join(__dirname, 'LOADOUT-EXTRACTION.md'), 'utf8');
+  const runbook = fs.readFileSync(path.join(__dirname, 'RUNBOOK.md'), 'utf8');
+  const chroma = fs.readFileSync(path.join(__dirname, 'chroma_key.py'), 'utf8');
   const all = brief + style + notes + plan + loadout;
   assert(/SOURCE-IMAGE LOADOUT EXTRACTION/.test(brief),
     'brief must define source-image loadout extraction as a pipeline mode');
@@ -166,7 +221,7 @@ t('source-image loadout extraction captures coherent kit detail', () => {
     'style experiments must record Alexei loadout breakthrough');
   assert(/Alex's idea/.test(loadout),
     'loadout doc must preserve attribution');
-  assert(/maximum 10 images/.test(loadout) && /Ring or small hand jewelry/.test(loadout),
+  assert(/maximum 10 images/.test(loadout) && /Ring or compact finger jewelry/.test(loadout),
     'loadout prompt must encode the 10-image slot constraint');
   assert(/Source-image loadout extraction lane/.test(plan),
     'generation plan must include source-image extraction as a production lane');
@@ -174,6 +229,66 @@ t('source-image loadout extraction captures coherent kit detail', () => {
     'docs must allow integrated source-derived details');
   assert(/ungrounded detail/.test(all) && /baked white\/gray checkerboard/.test(loadout),
     'docs must reject pasted-on detail and checkerboard alpha failures');
+  assert(/#737A68/.test(loadout + runbook + brief),
+    'loadout extraction must document the slate matte fallback');
+  assert(/chroma_key\.py/.test(loadout + runbook + brief),
+    'loadout extraction must route slate batches through chroma_key.py');
+  assert(/magenta backgrounds are rejected|hot magenta fringe/.test(brief + runbook + loadout),
+    'docs must reject magenta matte fringe');
+  assert(/sample_background/.test(chroma) && /including ring holes/.test(chroma),
+    'chroma_key.py must key sampled background through interior holes');
+  assert(/ragged fringe/.test(loadout) && /body armor/.test(loadout),
+    'loadout QA must track ragged body armor fringe');
+  assert(/Long weapon framing rule/.test(loadout),
+    'loadout prompt must include explicit long weapon framing');
+  assert(/shaft at least five times the length of the head/.test(loadout),
+    'loadout prompt must preserve polearm shaft proportions');
+  assert(/shortened into a club\/wand\/mace-length/.test(loadout),
+    'loadout QA must reject shortened long weapons');
+  assert(/polearms shortened into clubs/.test(fs.readFileSync(path.join(__dirname, '..', 'AGENTS.md'), 'utf8')),
+    'agent guidance must reject shortened polearms in loadout extraction');
+  assert(/Slot hygiene rules/.test(loadout) && /Rings for fingers must be compact/.test(loadout),
+    'loadout prompt must include slot hygiene rules for rings');
+  assert(/Amulets must be one pendant/.test(loadout) && /Belts must render as horizontal/.test(loadout),
+    'loadout prompt must prevent amulet and belt slot drift');
+  assert(/Shields must show the front fighting face only/.test(loadout),
+    'loadout prompt must constrain shield front rendering');
+  assert(/Solar symbols, eight-spoked wheel symbols, and human-face centerpieces/.test(loadout),
+    'loadout prompt must constrain overused motifs');
+  assert(/SLOT HYGIENE AND ANTI-COSTUME CLUTTER/.test(brief) && /Slot hygiene \/ anti-costume clutter/.test(fs.readFileSync(path.join(__dirname, '..', 'AGENTS.md'), 'utf8')),
+    'brief and agent guidance must carry anti-costume clutter rules');
+  assert(/Foci and ritual tools belong to the\s+off-hand slot/.test(plan),
+    'generation plan must keep foci in the off-hand slot');
+});
+t('character source prompts are self-contained and non-proprietary', () => {
+  const agents = fs.readFileSync(path.join(__dirname, '..', 'AGENTS.md'), 'utf8');
+  const brief = fs.readFileSync(path.join(__dirname, 'ASSET-BRIEF.md'), 'utf8');
+  const style = fs.readFileSync(path.join(__dirname, 'STYLE-EXPERIMENTS.md'), 'utf8');
+  const docs = agents + brief + style;
+  assert(/SELF-CONTAINED CHARACTER\/SOURCE PROMPTS/.test(brief),
+    'brief must define self-contained character/source prompts as a hard rule');
+  assert(/Character\/source prompts must be self-contained/.test(agents),
+    'agent guidance must forbid shorthand character prompt context');
+  assert(/full faction design language/.test(style),
+    'style experiments must require expanded faction design language');
+  assert(/class\/stat gear grammar/.test(style),
+    'style experiments must require expanded class/stat gear grammar');
+  assert(/tier language/.test(style),
+    'style experiments must require expanded tier language');
+  assert(/Use composite prompt assembly/.test(style),
+    'style experiments must recommend composite prompt assembly for large prompts');
+  assert(/Do not optimize final character prompts for brevity/.test(style),
+    'style experiments must forbid brevity-optimized character prompts');
+  assert(/fully loaded image-generation prompt with expanded\s+paragraphs/.test(style),
+    'style experiments must require expanded prompt paragraphs');
+  assert(/do not assume lore familiarity/.test(brief + agents),
+    'docs must forbid assumed lore familiarity with internal factions');
+  assert(/Prompt length is not the thing to optimize; visual specificity is/.test(brief),
+    'brief must prioritize visual specificity over prompt brevity');
+  assert(/Do not save Alexei's proprietary legacy character prompts/.test(docs),
+    'docs must protect proprietary legacy prompt examples');
+  assert(!/Minoan Acrobat-Warrior[\s\S]{0,120}hyper-sculpted/.test(docs),
+    'docs must not contain pasted proprietary legacy prompt examples');
 });
 t('true-alpha assets bypass matte and quantization', () => {
   const compose = fs.readFileSync(path.join(__dirname, 'compose_assets.py'), 'utf8');
