@@ -1555,6 +1555,11 @@
           <p class="choice-copy">Pick the curved arc that should carry the new connection. Each arc can lean toward a different attribute mix.</p>
           <div class="choice-list" id="choice-list"></div>
         </div>
+        <div class="choice-panel" id="jewel-panel">
+          <p class="choice-title">Carved Stones</p>
+          <p class="choice-copy" id="jewel-panel-copy">Choose a stone for this socket. Stones swap freely out of combat.</p>
+          <div class="choice-list" id="jewel-list"></div>
+        </div>
       </aside>
 
       <aside class="hud-panel" id="designer-panel" aria-label="Designer tools">
@@ -1670,11 +1675,13 @@
   <script src="../rpg_inventory/core/verdigris-stats.js"></script>
   <script src="assets/tree-data.js"></script>
   <script src="assets/patterns.js"></script>
+  <script src="assets/jewels.js"></script>
   <script>
     const SVG_NS = "http://www.w3.org/2000/svg";
     const AUTHORED_TREE_DATA = window.TREE_DATA || {};
     const VERDIGRIS_STATS = window.VerdigrisStats;
     const VERDIGRIS_PATTERNS = window.VerdigrisPatterns;
+    const VERDIGRIS_JEWELS = window.VerdigrisJewels;
     const MAIN_RING_DEPTH = AUTHORED_TREE_DATA.mainRingDepth || 10;
     const PATTERN_TUNING = AUTHORED_TREE_DATA.patternTuning || {};
     // Loop-crown empowerment curve. Concentric crowns (radius 1 + radius 2 around one
@@ -2166,6 +2173,10 @@
         this.patternConduitBoosts = new Map();
         this.shapeBonuses = [];
         this.lastDeltas = [];
+        this.socketedJewels = new Map();
+        this.jewelPickerFor = null;
+        this.sagaState = new Map();
+        this.sagaTestimony = 0;
 
         this.buildMainTree();
         this.buildSubtrees();
@@ -2348,8 +2359,95 @@
         this.points = { ...START_POINTS };
         this.pending = null;
         this.selectedNodeId = "0,0";
+        this.socketedJewels = new Map();
+        this.jewelPickerFor = null;
         this.log = ["Build reset to origin."];
         this.recalculate();
+      }
+
+      /* ---- carved stones (jewels), Phase 5 ---- */
+
+      jewelAt(socketId) {
+        return this.socketedJewels.get(socketId) || null;
+      }
+
+      activeJewels() {
+        const out = [];
+        this.socketedJewels.forEach((jewel, socketId) => {
+          const socket = this.nodes.get(socketId);
+          if (socket?.active) out.push({ socket, jewel });
+        });
+        return out;
+      }
+
+      openJewelPicker(socketId) {
+        this.jewelPickerFor = socketId;
+        this.selectedNodeId = socketId;
+        this.recalculate();
+      }
+
+      closeJewelPicker() {
+        if (!this.jewelPickerFor) return;
+        this.jewelPickerFor = null;
+        this.recalculate();
+      }
+
+      socketJewel(socketId, jewelId) {
+        const socket = this.nodes.get(socketId);
+        const jewel = (VERDIGRIS_JEWELS?.STASH || []).find(entry => entry.id === jewelId);
+        if (!socket || socket.type !== "socket" || !socket.active || !jewel) return;
+        if (jewel.family === "saga") {
+          const existingSaga = Array.from(this.socketedJewels.entries())
+            .find(([otherId, other]) => other.family === "saga" && otherId !== socketId);
+          if (existingSaga) {
+            this.commit("Only one saga-stone may be socketed at a time.");
+            this.recalculate();
+            return;
+          }
+        }
+        this.socketedJewels.set(socketId, jewel);
+        this.jewelPickerFor = null;
+        this.commit(`Socketed ${jewel.name} into ${socket.name}. Stones swap freely out of combat.`);
+        this.recalculate();
+      }
+
+      unsocketJewel(socketId) {
+        const jewel = this.socketedJewels.get(socketId);
+        if (!jewel) return;
+        this.socketedJewels.delete(socketId);
+        this.jewelPickerFor = null;
+        this.commit(`Removed ${jewel.name}.`);
+        this.recalculate();
+      }
+
+      patternStones() {
+        return this.activeJewels()
+          .filter(({ jewel }) => jewel.family === "pattern")
+          .map(({ socket, jewel }) => ({
+            q: socket.q, r: socket.r,
+            radius: jewel.radius || 2,
+            effect: jewel.pattern.effect,
+            value: jewel.pattern.value
+          }));
+      }
+
+      computeSagaState() {
+        this.sagaState = new Map();
+        this.sagaTestimony = 0;
+        if (!VERDIGRIS_JEWELS) return;
+        const sagaEntry = this.activeJewels().find(({ jewel }) => jewel.family === "saga");
+        if (!sagaEntry) return;
+        const { socket, jewel } = sagaEntry;
+        const radius = jewel.radius || 2;
+        this.nodes.forEach(node => {
+          if (node.source !== "main" || node.q == null) return;
+          if (VERDIGRIS_JEWELS.hexDistance(node.q, node.r, socket.q, socket.r) > radius) return;
+          const transform = VERDIGRIS_JEWELS.sagaTransform(jewel, node);
+          if (transform) {
+            this.sagaState.set(node.id, transform);
+            if (transform.testimony && node.active) this.sagaTestimony += transform.testimony;
+          }
+        });
       }
 
       getNode(id) {
@@ -2454,7 +2552,10 @@
         if (this.pending) this.pending = null;
 
         if (node.active) {
-          if (node.id !== "0,0") {
+          if (node.type === "socket") {
+            // Click an active socket to manage its carved stone; right-click refunds.
+            this.openJewelPicker(id);
+          } else if (node.id !== "0,0") {
             this.refundNode(id);
           } else {
             this.pending = null;
@@ -2590,6 +2691,10 @@
         this.saveHistory();
         node.active = false;
         this.points.skill += node.cost;
+        if (node.type === "socket") {
+          this.socketedJewels.delete(node.id);
+          if (this.jewelPickerFor === node.id) this.jewelPickerFor = null;
+        }
         node.connections.forEach(neighborId => {
           const conduit = this.conduits.get(edgeKey(node.id, neighborId));
           if (conduit && conduit.allocated) {
@@ -2671,11 +2776,13 @@
         if (!VERDIGRIS_PATTERNS) {
           throw new Error("VerdigrisPatterns must load before the skill tree app.");
         }
+        this.computeSagaState();
         this.patternReport = VERDIGRIS_PATTERNS.detectPatterns({
           nodes: Array.from(this.nodes.values()),
           conduits: Array.from(this.conduits.values()),
           depth: MAIN_RING_DEPTH,
-          tuning: PATTERN_TUNING
+          tuning: PATTERN_TUNING,
+          stones: this.patternStones()
         });
         this.patternNodeBoosts = new Map(Object.entries(this.patternReport.nodeBoosts || {}));
         this.patternConduitBoosts = new Map(Object.entries(this.patternReport.conduitBoosts || {}));
@@ -2697,18 +2804,68 @@
           legacyMods.push({ stat, amount });
         };
 
+        // Change-stones rewrite the attribute layer of conduits in their radius.
+        const changeStones = this.activeJewels().filter(({ jewel }) => jewel.family === "change");
         this.conduits.forEach(conduit => {
           if (!conduit.allocated) return;
           const flowBoost = this.patternConduitBoosts.get(conduit.id);
           const multiplier = 1 + (flowBoost?.percent || 0) / 100;
-          attrs.str += round(conduit.attrs.str * multiplier);
-          attrs.dex += round(conduit.attrs.dex * multiplier);
-          attrs.int += round(conduit.attrs.int * multiplier);
+          const gained = {
+            str: round(conduit.attrs.str * multiplier),
+            dex: round(conduit.attrs.dex * multiplier),
+            int: round(conduit.attrs.int * multiplier)
+          };
+          changeStones.forEach(({ socket, jewel }) => {
+            const from = this.nodes.get(conduit.fromId);
+            const to = this.nodes.get(conduit.toId);
+            const inRadius = [from, to].some(node => node && node.q != null
+              && VERDIGRIS_JEWELS.hexDistance(node.q, node.r, socket.q, socket.r) <= (jewel.radius || 2));
+            if (!inRadius) return;
+            const moved = gained[jewel.change.from];
+            if (!moved) return;
+            gained[jewel.change.to] += round(moved * (jewel.change.rate || 1));
+            gained[jewel.change.from] = 0;
+          });
+          attrs.str += gained.str;
+          attrs.dex += gained.dex;
+          attrs.int += gained.int;
         });
+
+        // Whorl-stones are plain stat sticks.
+        this.activeJewels().forEach(({ jewel }) => {
+          if (jewel.family !== "whorl") return;
+          jewel.mods.forEach(mod => addLegacyMod(mod.stat, mod.amount));
+        });
+
+        // Eye-stones: allocated seats in radius also grant a mod (conquered
+        // saga nodes are firewalled from every other radius stone).
+        const eyeStones = this.activeJewels().filter(({ jewel }) => jewel.family === "eye");
 
         this.nodes.forEach(node => {
           if (!node.active) return;
-          addLegacyMod(node.stat, node.amount);
+          const saga = this.sagaState.get(node.id);
+          if (saga) {
+            if (!saga.blank) {
+              let amount = saga.amount;
+              if (saga.scalesWithTestimony) {
+                const perTestimony = VERDIGRIS_JEWELS.SAGAS["quiet-survey"].perTestimonyPercent;
+                amount = round(amount * (1 + this.sagaTestimony * perTestimony / 100));
+              }
+              addLegacyMod(saga.stat, amount);
+              saga.extraMods.forEach(mod => addLegacyMod(mod.stat, mod.amount));
+            }
+          } else {
+            addLegacyMod(node.stat, node.amount);
+            eyeStones.forEach(({ socket, jewel }) => {
+              if (node.source !== "main" || node.q == null) return;
+              const scopeMatch = jewel.grant.scope === "small"
+                ? node.type === "small"
+                : ["notable", "mastery"].includes(node.type);
+              if (!scopeMatch) return;
+              if (VERDIGRIS_JEWELS.hexDistance(node.q, node.r, socket.q, socket.r) > (jewel.radius || 2)) return;
+              addLegacyMod(jewel.grant.stat, jewel.grant.amount);
+            });
+          }
           const boost = this.getNodeBoost(node);
           if (boost) {
             if (node.stat && boost.directBonus) {
@@ -3927,6 +4084,53 @@
         this.updateLog();
         this.updateDeltas();
         this.updateChoices();
+        this.updateJewelPicker();
+      }
+
+      updateJewelPicker() {
+        const panel = document.getElementById("jewel-panel");
+        const list = document.getElementById("jewel-list");
+        const copy = document.getElementById("jewel-panel-copy");
+        if (!panel || !list) return;
+        list.innerHTML = "";
+        const socketId = this.tree.jewelPickerFor;
+        const socket = socketId ? this.tree.nodes.get(socketId) : null;
+        if (!socket || !socket.active) {
+          panel.classList.remove("active");
+          return;
+        }
+        panel.classList.add("active");
+        this.openMobilePanel("details");
+        const current = this.tree.jewelAt(socketId);
+        if (copy) {
+          copy.textContent = current
+            ? `${socket.name} holds ${current.name}. Choose a different stone or remove it.`
+            : `${socket.name} is empty. Choose a carved stone; stones swap freely out of combat.`;
+        }
+        (VERDIGRIS_JEWELS?.STASH || []).forEach(jewel => {
+          const btn = document.createElement("button");
+          const isCurrent = current?.id === jewel.id;
+          btn.className = `choice-btn ${isCurrent ? "current" : "swap"}`;
+          btn.type = "button";
+          const desc = VERDIGRIS_JEWELS.describe(jewel).join(" · ") || jewel.family;
+          btn.innerHTML = `<strong>${isCurrent ? "Socketed: " : ""}${jewel.name}</strong><span>${desc}</span>`;
+          btn.addEventListener("click", () => this.tree.socketJewel(socketId, jewel.id));
+          list.appendChild(btn);
+        });
+        if (current) {
+          const remove = document.createElement("button");
+          remove.className = "choice-btn danger";
+          remove.type = "button";
+          remove.innerHTML = `<strong>Remove ${current.name}</strong><span>The socket stays allocated; the stone returns to the stash.</span>`;
+          remove.addEventListener("click", () => this.tree.unsocketJewel(socketId));
+          list.appendChild(remove);
+        }
+        const close = document.createElement("button");
+        close.className = "choice-btn";
+        close.type = "button";
+        close.innerHTML = `<strong>Close</strong><span>Keep things as they are.</span>`;
+        close.addEventListener("click", () => this.tree.closeJewelPicker());
+        list.appendChild(close);
       }
 
       updateAttributes() {
@@ -3985,7 +4189,15 @@
         panel.style.setProperty("--axis-color", color);
         panel.style.setProperty("--axis-light", colorMix(color, "#ffffff", 0.24));
         const tags = node.tags.map(tag => `<span class="tag-pill">${tag}</span>`).join("");
-        const effects = node.effects.map(line => `<li>${line}</li>`).join("");
+        const saga = this.tree.sagaState?.get(node.id);
+        const socketJewel = node.type === "socket" ? this.tree.jewelAt(node.id) : null;
+        let effects = node.effects.map(line => `<li>${line}</li>`).join("");
+        if (saga) {
+          effects += saga.lines.map(line => `<li><em>Conquered — ${line}</em></li>`).join("");
+        }
+        if (socketJewel) {
+          effects += `<li><em>Socketed: ${socketJewel.name}</em></li>`;
+        }
         const boostLines = this.tree.formatNodeBoostLines(node);
         const boostHtml = boostLines.length
           ? `<div class="boost-callout"><strong>Empowered Node</strong>${boostLines.map(line => `<div>${line}</div>`).join("")}</div>`

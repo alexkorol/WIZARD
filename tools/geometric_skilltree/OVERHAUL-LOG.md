@@ -2,6 +2,17 @@
 
 Newest entries first. This is the running memory for the north-star overhaul.
 
+## 2026-07-12 — Phase 5: carved stones (jewels)
+
+- Added `assets/jewels.js` (`VerdigrisJewels`, UMD): the five carved-stone families with a curated demo stash — Whorl-stones (plain registry mods), Eye-stones (allocated smalls/notables in radius also grant a mod), Change-stones (conduit attributes in radius rewritten at an overpaying rate, per the PoE transformation lesson), Saga-stones (seeded deterministic transforms), and Pattern-stones (geometry benders).
+- Five sagas span five transformation philosophies, echoing the Timeless-jewel spectrum: the Drowned Court (full reroll from seeded pools), the Kilnfathers (additive ember riders), the First Herd (smalls rebase onto Strength), the Quiet Survey (smalls grant Testimony, notables scale per Testimony), the Salt Oath (blank-and-boost). Same seed always tells the same story — verified by a determinism test and live re-socketing. Conquered nodes are firewalled from every other radius stone, and only one saga-stone may be socketed.
+- Pattern-stones are resolved inside the detector: `detectPatterns` accepts a `stones` array; `wave-length` counts touching waves longer for payoff, `loop-gap` lets a loop centered in radius miss one perimeter conduit and still crown. Both covered by detector tests.
+- Tree wiring: clicking an active socket opens a Carved Stones picker (right panel); stones swap freely; refunding a socket returns its stone; reset clears all stones. `computeStats` applies whorl mods, eye grants (skipping conquered nodes), change-stone attribute rewrites on conduits in radius, and saga transforms including Testimony scaling. The selection panel shows conquered lines and socketed stones.
+- `verdigris-pack.js` gained the `whorlstone` form (`kind: 'jewel'`) so carved stones exist as vessels on the inventory side; jade/amber/obsidian materials, socketable implicit. Pack tests stay green.
+- Tests: new `tests/jewels.test.js` (stash registry validation, saga seed determinism, per-philosophy transforms), pattern-stone detector test, and a runtime smoke that sockets/swaps/unsockets stones end to end with the saga firewall. Full suite green.
+- Browser-verified: pathed to The Red Field Socket, socketed a whorl through the real picker UI, then a Salt Oath saga — watched a small blank, a mastery double, and the sheet respond; re-socketing reproduced identical transforms; console clean.
+- Deferred: jewel drop/craft integration with vesselforge rolls (the picker accepts arbitrary jewel JSON, so the API surface is ready); eye/change stones currently read lattice radius only, not subtree seats.
+
 ## 2026-07-12 — Phase 4: authored tree, generator deleted
 
 - Read `research/POE1-PASSIVES.md` and `research/POE2-PASSIVES.md` in full before authoring, per the north star's Phase 4 precondition.

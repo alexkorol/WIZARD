@@ -52,6 +52,16 @@
     enclosure: { ...DEFAULT_TUNING.enclosure, ...(tuning.enclosure || {}) }
   });
 
+  // Pattern-stones (Phase 5): geometry-bending jewels resolved inside the
+  // detector. Each stone: { q, r, radius, effect: 'wave-length'|'loop-gap', value }.
+  function stonesFor(input, effect) {
+    return (input.stones || []).filter(stone => stone.effect === effect);
+  }
+
+  function withinStoneRadius(stone, q, r) {
+    return hexDistance(q - stone.q, r - stone.r) <= (stone.radius || 2);
+  }
+
   function normalize(input = {}) {
     const nodes = Array.from(input.nodes || []);
     const conduits = Array.from(input.conduits || []);
@@ -190,18 +200,21 @@
     return nodes.map((node, index) => edgeKey(node.id, nodes[(index + 1) % nodes.length].id));
   }
 
-  function isCompletedPerimeter(ctx, ringNodes) {
-    return ringNodes.every(node => ctx.activeSet.has(node.id))
-      && perimeterEdges(ringNodes).every(id => ctx.conduitMap.has(id));
+  function isCompletedPerimeter(ctx, ringNodes, allowedGaps = 0) {
+    if (!ringNodes.every(node => ctx.activeSet.has(node.id))) return false;
+    const missing = perimeterEdges(ringNodes).filter(id => !ctx.conduitMap.has(id)).length;
+    return missing <= allowedGaps;
   }
 
-  function detectLoops(ctx, tuning) {
+  function detectLoops(ctx, tuning, gapStones = []) {
     const loops = [];
     const enclosures = [];
     ctx.mainNodes.forEach(center => {
+      const allowedGaps = gapStones.reduce((max, stone) =>
+        withinStoneRadius(stone, center.q, center.r) ? Math.max(max, stone.value || 1) : max, 0);
       for (let radius = 1; radius <= tuning.loops.maxRadius; radius += 1) {
         const ringNodes = hexRingNodes(ctx, center, radius);
-        if (!ringNodes || !isCompletedPerimeter(ctx, ringNodes)) continue;
+        if (!ringNodes || !isCompletedPerimeter(ctx, ringNodes, allowedGaps)) continue;
         const loop = {
           centerId: center.id,
           radius,
@@ -413,7 +426,8 @@
 
   function wavePercent(tuning, wave, index) {
     const max = Math.max(tuning.wave.minLength, 10);
-    const lengthScale = Math.min(1, (wave.length - tuning.wave.minLength) / (max - tuning.wave.minLength));
+    const length = wave.effectiveLength || wave.length;
+    const lengthScale = Math.min(1, (length - tuning.wave.minLength) / (max - tuning.wave.minLength));
     const endpointDistance = Math.min(index, wave.nodeIds.length - 1 - index);
     const centerScale = wave.nodeIds.length <= 2 ? 0 : endpointDistance / Math.floor(wave.nodeIds.length / 2);
     const base = tuning.wave.minPercent + (tuning.wave.crestPercent - tuning.wave.minPercent) * lengthScale;
@@ -580,7 +594,18 @@
     const waveCandidates = enumeratePaths(ctx, 'wave', tuning.wave.minLength);
     const flowCandidates = enumeratePaths(ctx, 'flow', tuning.flow.minLength);
     const exclusive = selectExclusivePaths(ctx, waveCandidates, flowCandidates);
-    const loopData = detectLoops(ctx, tuning);
+    const waveStones = stonesFor(input, 'wave-length');
+    exclusive.waves.forEach(wave => {
+      const bonus = waveStones.reduce((sum, stone) => {
+        const touches = wave.nodeIds.some(id => {
+          const node = ctx.nodeMap.get(id);
+          return node && node.q != null && withinStoneRadius(stone, node.q, node.r);
+        });
+        return sum + (touches ? (stone.value || 1) : 0);
+      }, 0);
+      if (bonus > 0) wave.effectiveLength = wave.length + bonus;
+    });
+    const loopData = detectLoops(ctx, tuning, stonesFor(input, 'loop-gap'));
     const grandOrbits = detectGrandOrbits(ctx);
     const symmetry = detectSymmetry(ctx);
     const rods = detectRods(ctx, tuning).sort((a, b) => b.length - a.length);

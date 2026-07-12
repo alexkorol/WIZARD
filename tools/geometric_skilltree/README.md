@@ -33,6 +33,7 @@ Open `index.html` directly in a browser.
 - Concentric crowns (radius-1 plus radius-2 loops on one center) compound their empowerment multiplicatively; vesica lens nodes inherit half of each crowned center's empowerment.
 - Four visual themes: modern, 90s RPG, stone dungeon, and terminal/ASCII.
 - Search, undo, reset, pan/zoom, center, desktop hover tooltips, click/tap allocation, and right-click refund.
+- Carved stones (jewels): click an allocated socket to open the stone picker. Five families — Whorl (plain mods), Eye (radius grants), Change (conduit attribute rewrites), Saga (seeded deterministic transforms; same seed, same story; limit one; conquered nodes ignore other stones), and Pattern (geometry benders resolved inside the detector, e.g. waves count longer, loops may miss one conduit). Stones swap freely; `assets/jewels.js` holds the stash and saga tables.
 - Designer mode (`Design` button, `D` hotkey, or `?design=1`): seat inspector with live edits and registry-validated stat ids, status/type/stat/cluster overlays with legends, annotation pins, a lint panel with click-to-jump, localStorage-persisted overrides, and tree-data.js/annotation export plus merge-import. Player mode carries zero designer chrome.
 
 ## Interaction Model

@@ -265,8 +265,47 @@ function testPatternBonusesExposeEveryFamily() {
   );
 }
 
+function testPatternStones() {
+  // wave-length: a stone in radius lengthens the wave for payoff purposes.
+  const base = {
+    activeIds: ['0,0', '1,0', '1,-1'],
+    conduits: [
+      conduit('0,0', '1,0', 'inner'),
+      conduit('1,0', '1,-1', 'outer')
+    ]
+  };
+  const without = report(base);
+  const withStone = detectPatterns({
+    nodes: lattice(3, base.activeIds),
+    conduits: base.conduits,
+    depth: 3,
+    stones: [{ q: 1, r: 0, radius: 2, effect: 'wave-length', value: 1 }]
+  });
+  assert.equal(without.waves[0].effectiveLength, undefined, 'No stone, no bonus length.');
+  assert.equal(withStone.waves[0].effectiveLength, 3, 'A wave-length stone should count the wave one longer.');
+  assert.ok(
+    withStone.nodeBoosts['1,0'].percent > without.nodeBoosts['1,0'].percent,
+    'The longer effective wave should pay its nodes more.'
+  );
+
+  // loop-gap: a stone lets a loop miss one perimeter conduit and still crown.
+  const r1 = ringIds('0,0', 1);
+  const loopConduits = perimeterConduits(r1).slice(0, 5); // one edge missing
+  const gapless = report({ depth: 2, activeIds: activeSet(['0,0'], r1), conduits: loopConduits });
+  assert.equal(gapless.loops.length, 0, 'A broken ring is not a loop without help.');
+  const bridged = detectPatterns({
+    nodes: lattice(2, activeSet(['0,0'], r1)),
+    conduits: loopConduits,
+    depth: 2,
+    stones: [{ q: 0, r: 0, radius: 2, effect: 'loop-gap', value: 1 }]
+  });
+  assert.ok(bridged.loops.some(loop => loop.centerId === '0,0' && loop.radius === 1),
+    'A loop-gap stone should crown the broken ring.');
+}
+
 const tests = [
   ['waves and additive node boost stacking', testWavesAndAdditiveNodeBoosts],
+  ['pattern-stones bend wave length and loop gaps', testPatternStones],
   ['flows and wave/flow segment exclusivity', testFlowsAndExclusiveSegments],
   ['deterministic tie-breaking chooses the closer wave', testTieBreakingChoosesCloserWave],
   ['great wave meridian detection', testMeridian],

@@ -6,6 +6,7 @@ const INDEX_PATH = new URL('../index.html', import.meta.url);
 const TREE_DATA_PATH = new URL('../assets/tree-data.js', import.meta.url);
 const STATS_PATH = new URL('../../rpg_inventory/core/verdigris-stats.js', import.meta.url);
 const PATTERNS_PATH = new URL('../assets/patterns.js', import.meta.url);
+const JEWELS_PATH = new URL('../assets/jewels.js', import.meta.url);
 
 class FakeClassList {
   constructor(owner) {
@@ -222,6 +223,9 @@ function runStandaloneApp() {
   const patternsSource = readFileSync(PATTERNS_PATH, 'utf8');
   new Script(patternsSource, { filename: PATTERNS_PATH.pathname }).runInContext(runtime);
 
+  const jewelsSource = readFileSync(JEWELS_PATH, 'utf8');
+  new Script(jewelsSource, { filename: JEWELS_PATH.pathname }).runInContext(runtime);
+
   const html = readFileSync(INDEX_PATH, 'utf8');
   const mainScript = extractMainScript(html);
   new Script(mainScript, { filename: INDEX_PATH.pathname }).runInContext(runtime);
@@ -380,13 +384,57 @@ function testSignExclusivity() {
   assert.equal(tree.nodes.get(signs[1].id).active, false, 'A second Sign allocation must be refused.');
 }
 
+function testJewelSockets() {
+  const window = runStandaloneApp();
+  const tree = window.skillTree;
+  const sockets = Array.from(tree.nodes.values()).filter(node => node.type === 'socket');
+  assert.equal(sockets.length, 12, 'Twelve socket seats should exist.');
+
+  const socket = sockets[0];
+  socket.active = true;
+  tree.recalculate();
+  const beforeAttack = tree.stats.derived.attackDamage;
+
+  tree.socketJewel(socket.id, 'whorl-red');
+  assert.equal(tree.jewelAt(socket.id)?.id, 'whorl-red', 'Whorl-stone should socket.');
+  assert.ok(tree.stats.derived.attackDamage > beforeAttack, 'A whorl-stone should move the sheet.');
+
+  // Saga limit: a second saga-stone is refused.
+  const second = sockets[1];
+  second.active = true;
+  tree.socketJewel(socket.id, 'saga-salt-608');
+  tree.socketJewel(second.id, 'saga-drowned-773');
+  const sagas = Array.from(tree.socketedJewels.values()).filter(jewel => jewel.family === 'saga');
+  assert.equal(sagas.length, 1, 'Only one saga-stone may be socketed.');
+
+  // Saga transform is live and conquered nodes are firewalled from eye-stones.
+  const neighborId = Array.from(tree.nodes.values())
+    .find(node => node.source === 'main' && node.type === 'small' && node.id !== socket.id
+      && window.VerdigrisJewels.hexDistance(node.q, node.r, socket.q, socket.r) <= 2)?.id;
+  assert.ok(neighborId, 'A small seat should sit within saga radius.');
+  tree.nodes.get(neighborId).active = true;
+  tree.recalculate();
+  assert.ok(tree.sagaState.has(neighborId), 'The saga should conquer nodes in radius.');
+
+  tree.unsocketJewel(socket.id);
+  assert.equal(tree.jewelAt(socket.id), null, 'Stones remove cleanly.');
+  assert.equal(tree.sagaState.size, 0, 'Removing the saga-stone lifts the transform.');
+
+  // Pattern-stones flow into the detector.
+  tree.socketJewel(socket.id, 'pattern-crest');
+  tree.recalculate();
+  assert.ok(Array.isArray(tree.patternStones()) && tree.patternStones().length === 1,
+    'Pattern-stones should be handed to the detector.');
+}
+
 const tests = [
   ['Standalone classic scripts initialize the tree runtime', testRuntimeInitializes],
   ['Subtrees attach to the ring-10 gateways at runtime', testSubtreesAttachToRingTenGateways],
   ['Allocation updates headline deltas', testAllocationUpdatesHeadlineDeltas],
   ['Patterns render and boost runtime stats', testPatternsRenderAndBoostStats],
   ['Designer mode edits seats live and exports tree data', testDesignerMode],
-  ['Only one Sign may be allocated', testSignExclusivity]
+  ['Only one Sign may be allocated', testSignExclusivity],
+  ['Carved stones socket, transform, and firewall', testJewelSockets]
 ];
 
 let passed = 0;
