@@ -161,7 +161,7 @@ class FakeDocument {
 }
 
 export function extractMainScript(html) {
-  const marker = '<script src="assets/tree-data.js"></script>';
+  const marker = '<script src="assets/tree-data.js?v=';
   const dataScriptIndex = html.indexOf(marker);
   assert.ok(dataScriptIndex > 0, 'tree-data.js script tag should exist.');
   const scriptStart = html.indexOf('<script>', dataScriptIndex + marker.length);

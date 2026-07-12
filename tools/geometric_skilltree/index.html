@@ -1694,10 +1694,13 @@
     </div>
   </div>
 
-  <script src="../rpg_inventory/core/verdigris-stats.js"></script>
-  <script src="assets/tree-data.js"></script>
-  <script src="assets/patterns.js"></script>
-  <script src="assets/jewels.js"></script>
+  <!-- The ?v= query pins each asset to this HTML so the gh-pages CDN can never
+       serve fresh markup with stale data (10-minute cache skew). Bump when
+       shipping asset changes. -->
+  <script src="../rpg_inventory/core/verdigris-stats.js?v=10"></script>
+  <script src="assets/tree-data.js?v=10"></script>
+  <script src="assets/patterns.js?v=10"></script>
+  <script src="assets/jewels.js?v=10"></script>
   <script>
     const SVG_NS = "http://www.w3.org/2000/svg";
     const AUTHORED_TREE_DATA = window.TREE_DATA || {};

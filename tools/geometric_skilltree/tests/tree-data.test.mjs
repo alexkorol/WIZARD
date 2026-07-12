@@ -82,9 +82,9 @@ function testRimGateways() {
 
 function testFileCompatibleScriptLoading() {
   const html = readFileSync(INDEX_PATH, 'utf8');
-  const statsScriptIndex = html.indexOf('<script src="../rpg_inventory/core/verdigris-stats.js"></script>');
-  const dataScriptIndex = html.indexOf('<script src="assets/tree-data.js"></script>');
-  const patternsScriptIndex = html.indexOf('<script src="assets/patterns.js"></script>');
+  const statsScriptIndex = html.indexOf('<script src="../rpg_inventory/core/verdigris-stats.js?v=');
+  const dataScriptIndex = html.indexOf('<script src="assets/tree-data.js?v=');
+  const patternsScriptIndex = html.indexOf('<script src="assets/patterns.js?v=');
   const appScriptIndex = html.indexOf('<script>', dataScriptIndex);
   assert.ok(statsScriptIndex > 0, 'index.html should load verdigris-stats.js as a classic script.');
   assert.ok(dataScriptIndex > 0, 'index.html should load tree-data.js as a classic script.');
