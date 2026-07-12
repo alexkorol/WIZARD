@@ -406,7 +406,7 @@
     .item.dragging { opacity: 0.92; transform: scale(1.05); cursor: grabbing; box-shadow: 0 18px 30px rgba(0,0,0,0.52); }
     .item .item-gloss { display: none; }
     .item-art {
-      max-width: 92%; max-height: 90%; object-fit: contain;
+      max-width: 96%; max-height: 96%; object-fit: contain;
       filter: drop-shadow(0 3px 7px rgba(0,0,0,0.65));
       pointer-events: none; position: relative; z-index: 1;
     }
@@ -747,8 +747,21 @@
   const MAIN_PACK_ID = 'main';
   const GRID_W = PACK_BY_ID[MAIN_PACK_ID].w;
   const GRID_H = PACK_BY_ID[MAIN_PACK_ID].h;
-  const TILE_SIZE = 54;
+  let TILE_SIZE = 54;
+  let PAPERDOLL_CELL = 78;
   const CELL_GAP = 2;
+  const syncInventoryScale = () => {
+    const compact = window.innerWidth <= 700;
+    const nextTile = compact ? 54 : Math.round(Math.max(54, Math.min(72, window.innerHeight * 0.0565)));
+    const nextPaperdoll = compact ? 36 : Math.round(Math.max(78, Math.min(104, window.innerHeight * 0.082)));
+    if (nextTile === TILE_SIZE && nextPaperdoll === PAPERDOLL_CELL) return false;
+    TILE_SIZE = nextTile;
+    PAPERDOLL_CELL = nextPaperdoll;
+    document.documentElement.style.setProperty('--cell-size', `${TILE_SIZE}px`);
+    document.documentElement.style.setProperty('--pc', `${PAPERDOLL_CELL}px`);
+    return true;
+  };
+  syncInventoryScale();
   const SAVE_KEY = 'wizard_vesselforge_v3';
   const LEGACY_KEY = 'wizard_vesselforge_legacy_v1';
   const ROMAN = ['I', 'II', 'III'];
@@ -1424,6 +1437,7 @@
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [toast, setToast] = useState(null);
     const [treeBridge, setTreeBridge] = useState(readTreeBridge);
+    const [, setLayoutVersion] = useState(0);
     const packGridRefs = useRef({});
     const treeUnlocks = treeBridge.unlocks || [];
     const hasUnlock = (flag) => treeUnlocks.includes(flag)
@@ -1446,6 +1460,14 @@
         window.removeEventListener('focus', sync);
         clearInterval(poll);
       };
+    }, []);
+
+    useEffect(() => {
+      const resize = () => {
+        if (syncInventoryScale()) setLayoutVersion(version => version + 1);
+      };
+      window.addEventListener('resize', resize);
+      return () => window.removeEventListener('resize', resize);
     }, []);
 
     const level = forge.charLevel(character);

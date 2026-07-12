@@ -103,6 +103,11 @@ t('inventory layout has six unlock-driven auxiliary windows', () => {
     'main backpack must not render a title or action strip');
   assert(/className="top-actions"[\s\S]*onClick=\{sortPack\}>Sort Pack<[\s\S]*Atelier/.test(index),
     'sort and Atelier controls must live in the side command rail');
+  assert(/syncInventoryScale/.test(index) && /window\.innerHeight \* 0\.0565/.test(index)
+      && /window\.innerHeight \* 0\.082/.test(index),
+    'inventory cells and paperdoll slots must scale with tall viewports');
+  assert(/max-width: 96%; max-height: 96%/.test(index),
+    'item art must fill the enlarged cells');
   assert(/id: 'spoils', label: 'Spoils Roll', w: 4, h: 4/.test(index),
     'STR+DEX Spoils Roll must exist as a 4x4 specialty grid');
   assert(/id: 'preparations', label: 'Preparation Case', w: 4, h: 4/.test(index),
