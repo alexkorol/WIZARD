@@ -16,7 +16,9 @@
       "minLength": 2,
       "minPercent": 10,
       "crestPercent": 20,
-      "meridianEndpointPercent": 28
+      "meridianEndpointPercent": 28,
+      "amplitudePercentPerUnit": 12,
+      "amplitudeMax": 3
     },
     "flow": {
       "minLength": 3,

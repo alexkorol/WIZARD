@@ -258,6 +258,21 @@ function testIronMilestoneLoopBoost() {
   assert.ok(boosted > plain, `The Iron Milestone should empower the crowned center further (${boosted} vs ${plain}).`);
 }
 
+function testWaveFirstAutoPathing() {
+  const window = runStandaloneApp();
+  const tree = window.skillTree;
+  ['1,0', '2,0', '3,0', '4,0'].forEach(id => tree.tryAllocateNode(id));
+  const variants = ['0,0:1,0', '1,0:2,0', '2,0:3,0', '3,0:4,0']
+    .map(id => tree.conduits.get(id).allocatedVariant);
+  assert.ok(variants.every(Boolean), 'Every step should allocate a conduit.');
+  for (let i = 1; i < variants.length; i += 1) {
+    assert.notEqual(variants[i], variants[i - 1],
+      `Auto-pathing should alternate chirality by default (step ${i}: ${variants[i - 1]} then ${variants[i]}).`);
+  }
+  assert.ok(tree.patternReport.waves.some(wave => wave.length >= 3),
+    'Default pathing should read as a wave.');
+}
+
 function testBuildCodeRoundTrip() {
   const window = runStandaloneApp();
   const tree = window.skillTree;
@@ -290,6 +305,7 @@ const tests = [
   ['Class calling publishes unlock flags over the bridge', testClassCallingAndBridge],
   ['The Iron Milestone empowers loops that carry it', testIronMilestoneLoopBoost],
   ['Build codes round-trip a whole allocation', testBuildCodeRoundTrip],
+  ['Auto-pathing extends waves by default', testWaveFirstAutoPathing],
   ['Subtrees attach to the ring-10 gateways at runtime', testSubtreesAttachToRingTenGateways],
   ['Allocation updates headline deltas', testAllocationUpdatesHeadlineDeltas],
   ['Patterns render and boost runtime stats', testPatternsRenderAndBoostStats],

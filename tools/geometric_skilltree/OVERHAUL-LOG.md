@@ -2,6 +2,13 @@
 
 Newest entries first. This is the running memory for the north-star overhaul.
 
+## 2026-07-12 — Post-overhaul: amplitude waves, pattern spotlight, wave-first pathing (Alexei's discovery)
+
+- Alexei found emergent "high-amplitude" waves — alternating paths that sweep across rings in wide S-curves instead of zigzagging tightly. The detector now measures each wave's amplitude (peak perpendicular deviation from the endpoint chord, in lattice units) and node empowerment scales with it: `wave.amplitudePercentPerUnit` (12%/unit) capped at `amplitudeMax` (3) in PATTERN_TUNING. A straight wave or the meridian reads amplitude 0 and pays exactly as before; the balance fixtures held. The Waves panel row surfaces peak amplitude.
+- Hovering an active shape-bonus row spotlights that pattern's constructs on the tree: non-member nodes and conduits drop to a dim filter, member nodes brighten. Membership comes straight from the pattern report per family (waves, flows, meridians, crowns + centers, vesica centers/lenses/shared edge, orbits, mirror pairs and mirrored conduits — the detector now returns their ids — trines, mandalas, circuits, enclosures with their warded seats, rods, crossroads). Filter-based so it never fights the search dim's inline opacity.
+- Auto-pathing now extends waves by default: the automatic conduit choice adds a strong preference for the variant that alternates chirality with allocated conduits at the connection node. Attribute leaning still breaks ties among alternating options, and the other arc stays one click away. Clicking six nodes in a row now reads as one wave without any manual arc switching.
+- Tests: amplitude (straight = 0, swings > 0, higher pays more at equal length), wave-first auto-pathing alternation, panel text. Full suite green; asset pins bumped to v=11.
+
 ## 2026-07-12 — Post-overhaul: pointer UX fixes (Alexei's field report)
 
 - Panning: drag now starts anywhere on the canvas — including on nodes and conduits, which cover most of a ten-ring lattice. A 5px movement threshold separates panning from clicking; node/conduit click handlers consult `viewController.wasDrag` so a drag that ends on a seat no longer allocates it. Pointer capture begins at the threshold, `pointercancel` is handled, and starting a pan hides any open tooltip.

@@ -386,8 +386,41 @@ function testWaystoneHooks() {
     'An enclosure carrying the Votive Milestone should guard 50% more.');
 }
 
+function testWaveAmplitude() {
+  const straight = report({
+    activeIds: ['0,0', '1,0', '2,0', '3,0'],
+    conduits: [
+      conduit('0,0', '1,0', 'inner'),
+      conduit('1,0', '2,0', 'outer'),
+      conduit('2,0', '3,0', 'inner')
+    ]
+  });
+  assert.equal(straight.waves[0].amplitude, 0, 'A straight wave has zero amplitude.');
+
+  // Same length, but the middle swings off the chord.
+  const bent = report({
+    activeIds: ['0,0', '1,0', '1,-1', '2,-1'],
+    conduits: [
+      conduit('0,0', '1,0', 'inner'),
+      conduit('1,0', '1,-1', 'outer'),
+      conduit('1,-1', '2,-1', 'inner')
+    ]
+  });
+  assert.equal(bent.waves.length, 1, 'The bent path should still read as one wave.');
+  assert.ok(bent.waves[0].amplitude > 0, 'A swinging wave has positive amplitude.');
+
+  const straightMid = straight.nodeBoosts['1,0'].percent;
+  const bentMid = bent.nodeBoosts['1,0'].percent;
+  assert.ok(bentMid > straightMid,
+    `Higher amplitude should pay more at the same length (${bentMid}% vs ${straightMid}%).`);
+
+  assert.ok(straight.bonuses.find(bonus => bonus.id === 'wave').progress.includes('amplitude'),
+    'The wave panel row should surface peak amplitude.');
+}
+
 const tests = [
   ['waves and additive node boost stacking', testWavesAndAdditiveNodeBoosts],
+  ['wave amplitude scales the payoff', testWaveAmplitude],
   ['pattern-stones bend wave length and loop gaps', testPatternStones],
   ['waystone hooks keep their authored promises', testWaystoneHooks],
   ['flows and wave/flow segment exclusivity', testFlowsAndExclusiveSegments],

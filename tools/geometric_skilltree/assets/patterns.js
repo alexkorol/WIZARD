@@ -20,7 +20,11 @@
   ];
 
   const DEFAULT_TUNING = {
-    wave: { minLength: 2, minPercent: 10, crestPercent: 20, meridianEndpointPercent: 28 },
+    // amplitudePercentPerUnit: extra node empowerment per lattice unit of wave
+    // amplitude (peak deviation from the endpoint chord), capped at amplitudeMax.
+    // High-amplitude waves sweep across rings instead of zigzagging tightly —
+    // they cost far more travel, so they pay more.
+    wave: { minLength: 2, minPercent: 10, crestPercent: 20, meridianEndpointPercent: 28, amplitudePercentPerUnit: 12, amplitudeMax: 3 },
     flow: { minLength: 3, minPercent: 25, maxPercent: 100, maxLength: 8 },
     loops: { maxRadius: 3 },
     vesica: { lensShare: 0.5 },
@@ -330,13 +334,17 @@
       }
     });
     let mirroredConduits = 0;
+    const mirroredConduitIds = [];
     ctx.allocatedConduits.forEach(conduit => {
       const a = ctx.nodeMap.get(conduit.fromId);
       const b = ctx.nodeMap.get(conduit.toId);
       if (!a || !b || a.id > b.id) return;
       const ma = mirrorKey(a);
       const mb = mirrorKey(b);
-      if (ctx.conduitMap.has(edgeKey(ma, mb))) mirroredConduits += 1;
+      if (ctx.conduitMap.has(edgeKey(ma, mb))) {
+        mirroredConduits += 1;
+        mirroredConduitIds.push(conduit.id, edgeKey(ma, mb));
+      }
     });
     const trineSeen = new Set();
     const trines = [];
@@ -361,7 +369,7 @@
         }
       }
     });
-    return { mirrorPairs, mirroredConduits, trines, mandalas };
+    return { mirrorPairs, mirroredConduits, mirroredConduitIds, trines, mandalas };
   }
 
   function detectRods(ctx, tuning) {
@@ -444,6 +452,35 @@
     conduitBoosts[conduitId].reasons.push(reason);
   }
 
+  // Amplitude: how far a wave's crest swings from the straight line between
+  // its endpoints, in lattice units. A straight wave (or the meridian) is 0;
+  // the wide S-curves that sweep across rings score 2-4.
+  function waveAmplitude(ctx, wave) {
+    const flat = id => {
+      const node = ctx.nodeMap.get(id);
+      if (!node || node.q == null) return null;
+      return { x: node.q + node.r / 2, y: node.r * Math.sqrt(3) / 2 };
+    };
+    const points = wave.nodeIds.map(flat).filter(Boolean);
+    if (points.length < 3) return 0;
+    const first = points[0];
+    const last = points[points.length - 1];
+    const chord = { x: last.x - first.x, y: last.y - first.y };
+    const chordLength = Math.hypot(chord.x, chord.y);
+    if (chordLength < 0.001) {
+      return Math.max(...points.map(p => Math.hypot(p.x - first.x, p.y - first.y)));
+    }
+    return Math.max(...points.slice(1, -1).map(p => {
+      const cross = (p.x - first.x) * chord.y - (p.y - first.y) * chord.x;
+      return Math.abs(cross) / chordLength;
+    }));
+  }
+
+  function amplitudeScale(tuning, wave) {
+    const amp = Math.min(wave.amplitude || 0, tuning.wave.amplitudeMax);
+    return 1 + amp * tuning.wave.amplitudePercentPerUnit / 100;
+  }
+
   function wavePercent(tuning, wave, index) {
     const max = Math.max(tuning.wave.minLength, 10);
     const length = wave.effectiveLength || wave.length;
@@ -451,7 +488,7 @@
     const endpointDistance = Math.min(index, wave.nodeIds.length - 1 - index);
     const centerScale = wave.nodeIds.length <= 2 ? 0 : endpointDistance / Math.floor(wave.nodeIds.length / 2);
     const base = tuning.wave.minPercent + (tuning.wave.crestPercent - tuning.wave.minPercent) * lengthScale;
-    return Math.round(base * (0.45 + centerScale * 0.55));
+    return Math.round(base * (0.45 + centerScale * 0.55) * amplitudeScale(tuning, wave));
   }
 
   function flowPercent(tuning, flow) {
@@ -469,8 +506,8 @@
       id: 'wave',
       name: 'Waves',
       active: patterns.waves.length > 0,
-      progress: `${patterns.waves.length} wave${patterns.waves.length === 1 ? '' : 's'}; longest ${patterns.waves[0]?.length || 0}`,
-      description: 'Alternate inner and outer conduits. Waves empower the nodes along their path.',
+      progress: `${patterns.waves.length} wave${patterns.waves.length === 1 ? '' : 's'}; longest ${patterns.waves[0]?.length || 0}; peak amplitude ${Math.max(0, ...patterns.waves.map(wave => wave.amplitude || 0))}`,
+      description: 'Alternate inner and outer conduits. Waves empower the nodes along their path; wide swings (amplitude) pay more.',
       attrs: {},
       derived: { attackDamage: wavePower, spellDamage: wavePower }
     });
@@ -646,6 +683,7 @@
         return sum + (touches ? (stone.value || 1) : 0);
       }, 0);
       if (bonus > 0) wave.effectiveLength = wave.length + bonus;
+      wave.amplitude = Math.round(waveAmplitude(ctx, wave) * 10) / 10;
     });
 
     // Flow-length: Unlit-Milestone-style hooks count flows through them longer.
