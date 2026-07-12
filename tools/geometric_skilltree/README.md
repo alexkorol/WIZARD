@@ -28,8 +28,10 @@ Open `index.html` directly in a browser.
 - Loop/combo effects are attribute-aware: STR reads as restrained vitality pulses, DEX as light whirlwind arcs, INT as celestial orbit/star marks, and hybrid nodes blend those motifs by weight.
 - Nodes use weighted STR/DEX/INT SVG gradients so off-axis nodes visually blend their stat correspondence instead of using only three flat colors.
 - Allocated outer nodes and conduits gain stronger stroke, glow, and color intensity to read as higher-tier progression without adding global layer bands.
+- Concentric crowns (radius-1 plus radius-2 loops on one center) compound their empowerment multiplicatively; vesica lens nodes inherit half of each crowned center's empowerment.
 - Four visual themes: modern, 90s RPG, stone dungeon, and terminal/ASCII.
 - Search, undo, reset, pan/zoom, center, desktop hover tooltips, click/tap allocation, and right-click refund.
+- Designer mode (`Design` button, `D` hotkey, or `?design=1`): seat inspector with live edits and registry-validated stat ids, status/type/stat/cluster overlays with legends, annotation pins, a lint panel with click-to-jump, localStorage-persisted overrides, and tree-data.js/annotation export plus merge-import. Player mode carries zero designer chrome.
 
 ## Interaction Model
 

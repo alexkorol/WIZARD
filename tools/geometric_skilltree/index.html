@@ -1425,6 +1425,45 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* Designer mode (Phase 3): zero chrome unless body.designer-on. */
+    #designer-panel {
+      top: 16px;
+      left: 16px;
+      width: 342px;
+      max-height: calc(100vh - 32px);
+      display: none;
+      flex-direction: column;
+      z-index: 14;
+    }
+    body.designer-on #designer-panel { display: flex; }
+    body.designer-on #left-panel { display: none; }
+    .designer-help { font-size: 11px; opacity: 0.72; margin: 4px 0 8px; line-height: 1.45; }
+    .designer-field { display: flex; flex-direction: column; gap: 3px; margin-bottom: 7px; font-size: 11px; }
+    .designer-field input,
+    .designer-field select,
+    .designer-field textarea {
+      background: rgba(10, 14, 22, 0.72);
+      border: 1px solid var(--panel-border);
+      border-radius: 5px;
+      color: inherit;
+      font: inherit;
+      font-size: 12px;
+      padding: 5px 7px;
+    }
+    .designer-field textarea { resize: vertical; }
+    .designer-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin: 6px 0; }
+    #designer-seat-id { font-weight: 600; opacity: 0.9; }
+    #designer-validation { font-size: 11px; color: #f87171; }
+    #designer-validation.ok { color: #4ade80; }
+    .designer-legend-item { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; margin: 2px 8px 2px 0; }
+    .designer-swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+    .designer-lint-item { font-size: 11px; padding: 4px 6px; border-radius: 5px; cursor: pointer; border: 1px solid transparent; }
+    .designer-lint-item:hover { border-color: var(--panel-border); background: rgba(255, 255, 255, 0.05); }
+    .designer-lint-ok { font-size: 11px; color: #4ade80; }
+    #designer-toggle-btn[aria-pressed="true"] { outline: 1px solid #eab308; color: #eab308; }
+    .designer-overlay-dot { pointer-events: none; }
+    .designer-pin { cursor: help; }
   </style>
 </head>
 <body class="theme-modern">
@@ -1518,6 +1557,84 @@
         </div>
       </aside>
 
+      <aside class="hud-panel" id="designer-panel" aria-label="Designer tools">
+        <div class="panel-scroll">
+          <h1 class="app-title">Designer Mode</h1>
+          <div class="designer-help">Click a seat to inspect and edit it. Shift+click keeps normal allocation so you can feel a node immediately. Press D or the Design button to leave.</div>
+
+          <section class="section">
+            <div class="section-title">Overlay</div>
+            <div class="designer-field">
+              <select id="designer-overlay-mode" aria-label="Overlay mode">
+                <option value="status">Status heatmap</option>
+                <option value="type">Node type coverage</option>
+                <option value="stat">Stat coverage</option>
+                <option value="cluster">Cluster map</option>
+                <option value="none">No overlay</option>
+              </select>
+            </div>
+            <div id="designer-legend"></div>
+          </section>
+
+          <section class="section">
+            <div class="section-title">Seat Inspector</div>
+            <div class="designer-row">Seat <span id="designer-seat-id">none selected</span></div>
+            <div class="designer-field"><label for="designer-name">Name</label><input id="designer-name" type="text"></div>
+            <div class="designer-field"><label for="designer-type">Type</label>
+              <select id="designer-type">
+                <option value="small">small</option>
+                <option value="notable">notable</option>
+                <option value="mastery">mastery</option>
+                <option value="keystone">keystone</option>
+                <option value="waystone">waystone</option>
+                <option value="sign">sign</option>
+                <option value="class">class</option>
+                <option value="socket">socket</option>
+                <option value="gateway">gateway</option>
+                <option value="origin">origin</option>
+              </select>
+            </div>
+            <div class="designer-field"><label for="designer-status">Status</label>
+              <select id="designer-status">
+                <option value="empty">empty</option>
+                <option value="draft">draft</option>
+                <option value="review">review</option>
+                <option value="final">final</option>
+                <option value="cut">cut</option>
+              </select>
+            </div>
+            <div class="designer-field"><label for="designer-stat">Stat (registry id)</label><input id="designer-stat" type="text" list="designer-stat-ids"><datalist id="designer-stat-ids"></datalist></div>
+            <div class="designer-field"><label for="designer-amount">Amount</label><input id="designer-amount" type="number" step="0.5"></div>
+            <div class="designer-field"><label for="designer-tags">Tags (comma separated)</label><input id="designer-tags" type="text"></div>
+            <div class="designer-field"><label for="designer-cluster">Cluster id</label><input id="designer-cluster" type="text"></div>
+            <div class="designer-field"><label for="designer-effects">Effect lines (one per line)</label><textarea id="designer-effects" rows="3"></textarea></div>
+            <div class="designer-field"><label for="designer-notes">Notes</label><textarea id="designer-notes" rows="3" placeholder="jot anything here"></textarea></div>
+            <div class="designer-row">
+              <button class="icon-btn" id="designer-apply-btn" type="button">Apply</button>
+              <span id="designer-validation"></span>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-title">Lint</div>
+            <div id="designer-lint"></div>
+          </section>
+
+          <section class="section">
+            <div class="section-title">Data</div>
+            <div class="designer-row">
+              <button class="icon-btn" id="designer-export-tree-btn" type="button">Export tree-data.js</button>
+              <button class="icon-btn" id="designer-export-notes-btn" type="button">Export annotations</button>
+            </div>
+            <div class="designer-row">
+              <label class="icon-btn" for="designer-import-input">Import JSON</label>
+              <input id="designer-import-input" type="file" accept=".json,.js" hidden>
+              <button class="icon-btn danger" id="designer-clear-btn" type="button">Clear local edits</button>
+            </div>
+          </section>
+        </div>
+      </aside>
+
       <div class="hud-panel" id="bottom-toolbar">
         <div class="toolbar-group" aria-label="View controls">
           <button class="icon-btn square" id="zoom-out-btn" aria-label="Zoom out" type="button">-</button>
@@ -1531,6 +1648,9 @@
         <div class="toolbar-group" aria-label="Search">
           <label class="sr-only" for="search-input">Search passives</label>
           <input class="search-input" id="search-input" type="search" placeholder="Search nodes or tags">
+        </div>
+        <div class="toolbar-group" aria-label="Designer">
+          <button class="icon-btn" id="designer-toggle-btn" aria-label="Toggle designer mode" aria-pressed="false" type="button">Design</button>
         </div>
         <div class="toolbar-group" aria-label="Theme">
           <button class="theme-btn active" data-theme="modern" type="button">Modern</button>
@@ -2546,9 +2666,17 @@
         return { conduitId, optionId };
       }
 
-      handleNodeClick(id) {
+      handleNodeClick(id, opts = {}) {
         const node = this.nodes.get(id);
         if (!node) return;
+
+        // Design mode: plain click inspects; Shift+click keeps allocation behavior.
+        if (window.designer?.enabled && !opts.shiftKey) {
+          this.pending = null;
+          this.selectedNodeId = id;
+          this.recalculate();
+          return;
+        }
 
         if (this.pending) this.pending = null;
 
@@ -2777,6 +2905,7 @@
         this.lastDeltas = this.computeDeltas(previousStats, this.stats);
         if (window.renderer) window.renderer.update();
         if (window.ui) window.ui.update();
+        if (window.designer) window.designer.onTreeUpdate();
       }
 
       computeStats() {
@@ -3783,7 +3912,7 @@
         group.addEventListener("click", event => {
           event.stopPropagation();
           this.hideTooltip();
-          this.tree.handleNodeClick(node.id);
+          this.tree.handleNodeClick(node.id, { shiftKey: event.shiftKey });
         });
         group.addEventListener("contextmenu", event => {
           event.preventDefault();
@@ -4270,15 +4399,514 @@
         this.transform();
       }
 
+      focusOn(pos) {
+        const rect = this.svg.getBoundingClientRect();
+        this.x = rect.width / 2 - pos.x * this.scale;
+        this.y = rect.height / 2 - pos.y * this.scale;
+        this.transform();
+      }
+
       transform() {
         this.group.setAttribute("transform", `translate(${round(this.x)},${round(this.y)}) scale(${round(this.scale)})`);
       }
     }
 
+    /* =========================================================================
+       DESIGNER MODE (Phase 3) — annotation, status tracking, lint, heatmaps,
+       and tree-data export. Player mode carries zero designer chrome; all
+       designer state persists to localStorage and round-trips as JSON.
+       ========================================================================= */
+    const DESIGNER_STORAGE_KEY = "verdigris-tree-designer-v1";
+    const DESIGNER_STATUS_COLORS = {
+      empty: "#64748b",
+      draft: "#eab308",
+      review: "#38bdf8",
+      final: "#4ade80",
+      cut: "#ef4444"
+    };
+    const DESIGNER_TYPE_COLORS = {
+      origin: "#f8fafc",
+      small: "#64748b",
+      notable: "#38bdf8",
+      mastery: "#a78bfa",
+      keystone: "#f97316",
+      waystone: "#2dd4bf",
+      sign: "#f472b6",
+      class: "#4ade80",
+      socket: "#e879f9",
+      gateway: "#facc15"
+    };
+
+    // Phase 0 stamped every seat with the same boilerplate note; annotation pins
+    // only mark notes a human actually wrote.
+    const DESIGNER_BOOTSTRAP_NOTE = "Phase 0 bootstrap from the old procedural generator; replace during authoring.";
+
+    function designerReadStore() {
+      try {
+        return JSON.parse(window.localStorage.getItem(DESIGNER_STORAGE_KEY) || "{}") || {};
+      } catch (_) {
+        return {};
+      }
+    }
+
+    function designerWriteStore(data) {
+      try {
+        window.localStorage.setItem(DESIGNER_STORAGE_KEY, JSON.stringify(data));
+      } catch (_) {}
+    }
+
+    // Local designer edits are merged onto the authored data BEFORE the tree is
+    // built, so an edit session survives reloads without touching the repo file.
+    function designerApplyStoredOverrides() {
+      const stored = designerReadStore();
+      const overrides = stored.seatOverrides || {};
+      if (AUTHORED_TREE_DATA.seats) {
+        Object.entries(overrides).forEach(([key, patch]) => {
+          AUTHORED_TREE_DATA.seats[key] = { ...(AUTHORED_TREE_DATA.seats[key] || {}), ...patch };
+        });
+      }
+      return stored;
+    }
+
+    class DesignerController {
+      constructor(tree, renderer, storedState) {
+        this.tree = tree;
+        this.renderer = renderer;
+        this.enabled = false;
+        this.overlayMode = storedState.overlayMode || "status";
+        this.seatOverrides = { ...(storedState.seatOverrides || {}) };
+        this.formSeatId = null;
+        this.overlayLayer = null;
+        this.bind();
+        this.populateStatDatalist();
+        let urlWantsDesign = false;
+        try {
+          urlWantsDesign = new URLSearchParams(window.location.search).get("design") === "1";
+        } catch (_) {}
+        if (urlWantsDesign || storedState.enabled) this.setEnabled(true);
+      }
+
+      bind() {
+        const on = (id, type, handler) => {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener(type, handler);
+        };
+        on("designer-toggle-btn", "click", () => this.setEnabled(!this.enabled));
+        on("designer-overlay-mode", "change", event => {
+          this.overlayMode = event.target.value;
+          this.persist();
+          this.refreshOverlay();
+          this.renderLegend();
+        });
+        on("designer-apply-btn", "click", () => this.applyForm());
+        ["designer-name", "designer-type", "designer-status", "designer-stat", "designer-amount",
+          "designer-tags", "designer-cluster", "designer-effects", "designer-notes"].forEach(id => {
+          on(id, "change", () => this.applyForm());
+        });
+        on("designer-export-tree-btn", "click", () => this.exportTreeData());
+        on("designer-export-notes-btn", "click", () => this.exportAnnotations());
+        on("designer-import-input", "change", event => this.importFile(event));
+        on("designer-clear-btn", "click", () => this.clearLocalEdits());
+        document.addEventListener("keydown", event => {
+          const tag = event.target?.tagName || "";
+          if (["INPUT", "TEXTAREA", "SELECT"].includes(tag)) return;
+          if (event.key === "d" || event.key === "D") this.setEnabled(!this.enabled);
+        });
+      }
+
+      setEnabled(enabled) {
+        this.enabled = Boolean(enabled);
+        document.body.classList.toggle("designer-on", this.enabled);
+        const btn = document.getElementById("designer-toggle-btn");
+        if (btn) btn.setAttribute("aria-pressed", String(this.enabled));
+        const overlaySelect = document.getElementById("designer-overlay-mode");
+        if (overlaySelect) overlaySelect.value = this.overlayMode;
+        this.persist();
+        this.formSeatId = null;
+        this.onTreeUpdate();
+      }
+
+      persist() {
+        designerWriteStore({
+          enabled: this.enabled,
+          overlayMode: this.overlayMode,
+          seatOverrides: this.seatOverrides
+        });
+      }
+
+      populateStatDatalist() {
+        const datalist = document.getElementById("designer-stat-ids");
+        if (!datalist || !VERDIGRIS_STATS) return;
+        const ids = Object.keys(VERDIGRIS_STATS.STAT_REGISTRY || {})
+          .concat(Object.keys(VERDIGRIS_STATS.ALIASES || {}))
+          .sort();
+        datalist.innerHTML = ids.map(id => `<option value="${id}"></option>`).join("");
+      }
+
+      statResolves(statId) {
+        if (!statId) return true;
+        const registry = VERDIGRIS_STATS?.STAT_REGISTRY || {};
+        const aliases = VERDIGRIS_STATS?.ALIASES || {};
+        return Boolean(registry[statId] || aliases[statId]);
+      }
+
+      seatFor(nodeId) {
+        if (!AUTHORED_TREE_DATA.seats) AUTHORED_TREE_DATA.seats = {};
+        if (!AUTHORED_TREE_DATA.seats[nodeId]) {
+          const node = this.tree.nodes.get(nodeId);
+          if (!node) return null;
+          AUTHORED_TREE_DATA.seats[nodeId] = {
+            id: nodeId, q: node.q, r: node.r, ring: node.ring,
+            type: node.type, axis: node.axis, effects: node.effects.slice(),
+            stat: node.stat, amount: node.amount, tags: node.tags.slice(),
+            clusterId: node.clusterId || "", status: node.status || "empty",
+            notes: node.notes || "", name: node.name
+          };
+        }
+        return AUTHORED_TREE_DATA.seats[nodeId];
+      }
+
+      fillForm(node) {
+        this.formSeatId = node.id;
+        const set = (id, value) => {
+          const el = document.getElementById(id);
+          if (el) el.value = value;
+        };
+        const label = document.getElementById("designer-seat-id");
+        if (label) label.textContent = `${node.id} (ring ${node.ring}, ${node.axis})`;
+        set("designer-name", node.name || "");
+        set("designer-type", node.type || "small");
+        set("designer-status", node.status || "empty");
+        set("designer-stat", node.stat || "");
+        set("designer-amount", typeof node.amount === "number" ? node.amount : 0);
+        set("designer-tags", (node.tags || []).join(", "));
+        set("designer-cluster", node.clusterId || "");
+        set("designer-effects", (node.effects || []).join("\n"));
+        set("designer-notes", node.notes || "");
+        this.setValidation("", true);
+      }
+
+      setValidation(message, ok) {
+        const el = document.getElementById("designer-validation");
+        if (!el) return;
+        el.textContent = message;
+        el.classList.toggle("ok", Boolean(ok));
+      }
+
+      readForm() {
+        const get = id => document.getElementById(id)?.value ?? "";
+        return {
+          name: get("designer-name").trim(),
+          type: get("designer-type") || "small",
+          status: get("designer-status") || "draft",
+          stat: get("designer-stat").trim() || null,
+          amount: Number(get("designer-amount")) || 0,
+          tags: get("designer-tags").split(",").map(tag => tag.trim()).filter(Boolean),
+          clusterId: get("designer-cluster").trim(),
+          effects: get("designer-effects").split("\n").map(line => line.trim()).filter(Boolean),
+          notes: get("designer-notes")
+        };
+      }
+
+      applyForm() {
+        if (!this.enabled || !this.formSeatId) return;
+        const node = this.tree.nodes.get(this.formSeatId);
+        if (!node || node.source === "subtree") return;
+        const patch = this.readForm();
+        if (!this.statResolves(patch.stat)) {
+          this.setValidation(`Unknown stat id "${patch.stat}" — not in the registry.`, false);
+          return;
+        }
+        const seat = this.seatFor(node.id);
+        Object.assign(seat, patch);
+        this.seatOverrides[node.id] = { ...(this.seatOverrides[node.id] || {}), ...patch };
+        this.persist();
+        this.applySeatToNode(seat, node);
+        this.setValidation("Applied.", true);
+        this.tree.recalculate();
+      }
+
+      applySeatToNode(seat, node) {
+        node.name = seat.name || node.name;
+        node.type = seat.type || node.type;
+        node.cost = costForType(node.type);
+        node.effects = Array.isArray(seat.effects) && seat.effects.length ? seat.effects.slice() : node.effects;
+        node.stat = node.type === "origin" ? null : (seat.stat || null);
+        node.amount = node.type === "origin" ? 0 : (typeof seat.amount === "number" ? seat.amount : 0);
+        node.tags = normalizeSeatTags(seat, node.axis, node.type, node.ring);
+        node.status = seat.status || "empty";
+        node.notes = seat.notes || "";
+        node.clusterId = seat.clusterId || "";
+        node.seat = seat;
+        const els = this.renderer.nodeEls.get(node.id);
+        if (els) {
+          els.icon.textContent = this.renderer.iconText(node);
+          Object.keys(DESIGNER_TYPE_COLORS).forEach(type => els.group.classList.remove(`type-${type}`));
+          els.group.classList.add(`type-${node.type}`);
+        }
+      }
+
+      ensureOverlayLayer() {
+        if (this.overlayLayer) return this.overlayLayer;
+        const viewport = document.getElementById("viewport-group");
+        if (!viewport) return null;
+        this.overlayLayer = makeSvgEl("g", { id: "designer-layer" });
+        viewport.appendChild(this.overlayLayer);
+        return this.overlayLayer;
+      }
+
+      overlayColorFor(node) {
+        if (this.overlayMode === "status") return DESIGNER_STATUS_COLORS[node.status] || DESIGNER_STATUS_COLORS.empty;
+        if (this.overlayMode === "type") return DESIGNER_TYPE_COLORS[node.type] || "#94a3b8";
+        if (this.overlayMode === "stat") return node.stat ? this.hashColor(node.stat) : null;
+        if (this.overlayMode === "cluster") return node.clusterId ? this.hashColor(node.clusterId) : null;
+        return null;
+      }
+
+      hashColor(value) {
+        let hash = 0;
+        const text = String(value);
+        for (let i = 0; i < text.length; i += 1) hash = (hash * 31 + text.charCodeAt(i)) >>> 0;
+        return `hsl(${hash % 360}, 70%, 55%)`;
+      }
+
+      refreshOverlay() {
+        const layer = this.ensureOverlayLayer();
+        if (!layer) return;
+        layer.replaceChildren();
+        if (!this.enabled) return;
+        this.tree.nodes.forEach(node => {
+          if (node.source !== "main") return;
+          if (this.overlayMode !== "none") {
+            const color = this.overlayColorFor(node);
+            if (color) {
+              layer.appendChild(makeSvgEl("circle", {
+                cx: node.pos.x, cy: node.pos.y,
+                r: radiusForType(node.type) + 9,
+                fill: color, opacity: 0.36,
+                className: "designer-overlay-dot"
+              }));
+            }
+          }
+          if (node.notes && node.notes !== DESIGNER_BOOTSTRAP_NOTE) {
+            const pin = makeSvgEl("circle", {
+              cx: node.pos.x + 11, cy: node.pos.y - 11, r: 4,
+              fill: "#eab308", stroke: "#0b0e14", "stroke-width": 1.4,
+              className: "designer-pin"
+            });
+            const title = makeSvgEl("title");
+            title.textContent = node.notes;
+            pin.appendChild(title);
+            layer.appendChild(pin);
+          }
+        });
+      }
+
+      renderLegend() {
+        const legend = document.getElementById("designer-legend");
+        if (!legend) return;
+        let entries = [];
+        if (this.overlayMode === "status") {
+          entries = Object.entries(DESIGNER_STATUS_COLORS);
+        } else if (this.overlayMode === "type") {
+          entries = Object.entries(DESIGNER_TYPE_COLORS);
+        } else if (this.overlayMode === "stat" || this.overlayMode === "cluster") {
+          const counts = new Map();
+          this.tree.nodes.forEach(node => {
+            if (node.source !== "main") return;
+            const key = this.overlayMode === "stat" ? node.stat : node.clusterId;
+            if (key) counts.set(key, (counts.get(key) || 0) + 1);
+          });
+          entries = Array.from(counts.entries())
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 12)
+            .map(([key, count]) => [`${key} (${count})`, this.hashColor(key)]);
+        }
+        legend.innerHTML = entries.map(([label, color]) =>
+          `<span class="designer-legend-item"><span class="designer-swatch" style="background:${color}"></span>${label}</span>`
+        ).join("");
+      }
+
+      runLint() {
+        const issues = [];
+        const seats = AUTHORED_TREE_DATA.seats || {};
+        const namedNames = new Map();
+        this.tree.nodes.forEach(node => {
+          if (node.source !== "main") return;
+          const seat = seats[node.id];
+          if (!seat) {
+            issues.push({ label: `Missing seat entry for ${node.id}`, seatId: node.id });
+            return;
+          }
+          if (seat.status === "empty") issues.push({ label: `Empty seat ${node.id}`, seatId: node.id });
+          if (seat.stat && !this.statResolves(seat.stat)) {
+            issues.push({ label: `Unresolved stat "${seat.stat}" on ${node.id}`, seatId: node.id });
+          }
+          if (!seat.clusterId && node.type === "small") {
+            issues.push({ label: `Small seat ${node.id} has no cluster id`, seatId: node.id });
+          }
+          if (!["small", "origin"].includes(node.type) && seat.name) {
+            if (namedNames.has(seat.name)) {
+              issues.push({ label: `Duplicate named seat "${seat.name}" (${namedNames.get(seat.name)} and ${node.id})`, seatId: node.id });
+            } else {
+              namedNames.set(seat.name, node.id);
+            }
+          }
+        });
+        Object.keys(this.seatOverrides).forEach(key => {
+          if (!this.tree.nodes.has(key)) {
+            issues.push({ label: `Orphan local edit for missing seat ${key}`, seatId: null });
+          }
+        });
+        return issues;
+      }
+
+      renderLint() {
+        const panel = document.getElementById("designer-lint");
+        if (!panel) return;
+        const issues = this.runLint();
+        if (!issues.length) {
+          panel.innerHTML = `<div class="designer-lint-ok">Lint clean.</div>`;
+          return;
+        }
+        const shown = issues.slice(0, 40);
+        panel.innerHTML = shown.map((issue, index) =>
+          `<div class="designer-lint-item" data-lint-index="${index}" data-seat-id="${issue.seatId || ""}">${issue.label}</div>`
+        ).join("") + (issues.length > shown.length ? `<div class="designer-help">…and ${issues.length - shown.length} more.</div>` : "");
+        panel.querySelectorAll(".designer-lint-item").forEach(el => {
+          el.addEventListener("click", () => {
+            const seatId = el.dataset?.seatId || el.getAttribute("data-seat-id");
+            if (seatId) this.jumpToSeat(seatId);
+          });
+        });
+      }
+
+      jumpToSeat(seatId) {
+        const node = this.tree.nodes.get(seatId);
+        if (!node) return;
+        this.tree.selectedNodeId = seatId;
+        if (window.viewController?.focusOn) window.viewController.focusOn(node.pos);
+        this.tree.recalculate();
+      }
+
+      mergedTreeData() {
+        return {
+          ...AUTHORED_TREE_DATA,
+          metadata: {
+            ...(AUTHORED_TREE_DATA.metadata || {}),
+            designerExportAt: typeof Date !== "undefined" ? new Date().toISOString().slice(0, 10) : ""
+          }
+        };
+      }
+
+      buildTreeDataFileBody() {
+        return `(function(global) {\n  global.TREE_DATA = ${JSON.stringify(this.mergedTreeData(), null, 2)};\n})(typeof window !== "undefined" ? window : globalThis);\n`;
+      }
+
+      download(filename, text, mime) {
+        try {
+          const blob = new Blob([text], { type: mime || "application/octet-stream" });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+          this.tree.commit(`Designer: exported ${filename}.`);
+        } catch (error) {
+          this.tree.commit(`Designer: export failed (${error.message}).`);
+        }
+        this.tree.recalculate();
+      }
+
+      exportTreeData() {
+        this.download("tree-data.js", this.buildTreeDataFileBody(), "text/javascript");
+      }
+
+      exportAnnotations() {
+        this.download("tree-annotations.json", JSON.stringify({ seatOverrides: this.seatOverrides }, null, 2), "application/json");
+      }
+
+      importFile(event) {
+        const file = event.target?.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.importText(String(reader.result));
+          event.target.value = "";
+        };
+        reader.readAsText(file);
+      }
+
+      importText(text) {
+        let parsed = null;
+        try {
+          parsed = JSON.parse(text);
+        } catch (_) {
+          const start = text.indexOf("{");
+          const end = text.lastIndexOf("}");
+          if (start >= 0 && end > start) {
+            try { parsed = JSON.parse(text.slice(start, end + 1)); } catch (_) {}
+          }
+        }
+        if (!parsed) {
+          this.tree.commit("Designer: import failed — could not parse JSON.");
+          this.tree.recalculate();
+          return;
+        }
+        const incoming = parsed.seatOverrides || parsed.seats || parsed;
+        let merged = 0;
+        let conflicts = 0;
+        Object.entries(incoming).forEach(([key, patch]) => {
+          if (typeof patch !== "object" || patch === null) return;
+          if (this.seatOverrides[key] && JSON.stringify(this.seatOverrides[key]) !== JSON.stringify(patch)) conflicts += 1;
+          this.seatOverrides[key] = { ...(this.seatOverrides[key] || {}), ...patch };
+          if (AUTHORED_TREE_DATA.seats?.[key]) {
+            Object.assign(AUTHORED_TREE_DATA.seats[key], patch);
+            const node = this.tree.nodes.get(key);
+            if (node && node.source === "main") this.applySeatToNode(AUTHORED_TREE_DATA.seats[key], node);
+            merged += 1;
+          }
+        });
+        this.persist();
+        this.tree.commit(`Designer: imported ${merged} seat edit${merged === 1 ? "" : "s"}${conflicts ? `, ${conflicts} conflict${conflicts === 1 ? "" : "s"} overwritten by import` : ""}.`);
+        this.tree.recalculate();
+      }
+
+      clearLocalEdits() {
+        this.seatOverrides = {};
+        this.persist();
+        this.tree.commit("Designer: cleared local edits. Reload the page to restore repo data.");
+        this.tree.recalculate();
+      }
+
+      onTreeUpdate() {
+        this.refreshOverlay();
+        if (!this.enabled) return;
+        this.renderLegend();
+        this.renderLint();
+        const selectedId = this.tree.selectedNodeId;
+        if (selectedId && selectedId !== this.formSeatId) {
+          const node = this.tree.nodes.get(selectedId);
+          if (node && node.source === "main") {
+            this.fillForm(node);
+          } else if (node) {
+            this.formSeatId = null;
+            const label = document.getElementById("designer-seat-id");
+            if (label) label.textContent = `${node.id} — subtree seats are authored in SUBTREES and not editable here yet`;
+          }
+        }
+      }
+    }
+
+    const DESIGNER_BOOT_STATE = designerApplyStoredOverrides();
     window.skillTree = new GeometricSkillTree();
     window.renderer = new SVGRenderer(window.skillTree);
     window.ui = new UIController(window.skillTree);
     window.viewController = new ViewController();
+    window.designer = new DesignerController(window.skillTree, window.renderer, DESIGNER_BOOT_STATE);
     window.skillTree.recalculate();
   </script>
 </body>

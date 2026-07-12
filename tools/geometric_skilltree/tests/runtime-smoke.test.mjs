@@ -328,11 +328,54 @@ function testPatternsRenderAndBoostStats() {
   );
 }
 
+function testDesignerMode() {
+  const window = runStandaloneApp();
+  const designer = window.designer;
+  assert.ok(designer, 'DesignerController should initialize.');
+  assert.equal(designer.enabled, false, 'Designer starts disabled — player mode carries no designer chrome.');
+
+  designer.setEnabled(true);
+  assert.ok(window.document.body.classList.contains('designer-on'), 'Enabling designer mode should mark the body.');
+
+  const beforePoints = window.skillTree.points.skill;
+  window.skillTree.handleNodeClick('1,0');
+  assert.equal(window.skillTree.points.skill, beforePoints, 'Design-mode clicks should inspect, not allocate.');
+  assert.equal(window.skillTree.selectedNodeId, '1,0', 'Design-mode clicks should select the seat.');
+
+  window.document.getElementById('designer-name').value = 'Oath of the Front Line';
+  window.document.getElementById('designer-status').value = 'review';
+  window.document.getElementById('designer-notes').value = 'first authored seat';
+  designer.applyForm();
+  const edited = window.skillTree.nodes.get('1,0');
+  assert.equal(edited.name, 'Oath of the Front Line', 'Applying the form should rename the live node.');
+  assert.equal(edited.status, 'review', 'Applying the form should update seat status.');
+  assert.equal(edited.notes, 'first authored seat', 'Applying the form should store the note.');
+  assert.ok(designer.seatOverrides['1,0'], 'Edits should be tracked as local overrides.');
+
+  const body = designer.buildTreeDataFileBody();
+  assert.ok(body.startsWith('(function(global)'), 'Export should emit a classic-script file body.');
+  assert.ok(body.includes('"Oath of the Front Line"'), 'Export should carry the edited seat data.');
+
+  window.document.getElementById('designer-stat').value = 'bogusStat';
+  designer.applyForm();
+  assert.notEqual(window.skillTree.nodes.get('1,0').stat, 'bogusStat', 'Unknown stat ids should be rejected by registry validation.');
+
+  const issues = designer.runLint();
+  assert.ok(Array.isArray(issues), 'Lint should return an issue list.');
+
+  window.skillTree.handleNodeClick('1,0', { shiftKey: true });
+  assert.ok(window.skillTree.nodes.get('1,0').active, 'Shift+click should keep normal allocation in design mode.');
+
+  designer.setEnabled(false);
+  assert.equal(window.document.body.classList.contains('designer-on'), false, 'Disabling designer mode should clean the body class.');
+}
+
 const tests = [
   ['Standalone classic scripts initialize the tree runtime', testRuntimeInitializes],
   ['Subtrees attach to the ring-10 gateways at runtime', testSubtreesAttachToRingTenGateways],
   ['Allocation updates headline deltas', testAllocationUpdatesHeadlineDeltas],
-  ['Patterns render and boost runtime stats', testPatternsRenderAndBoostStats]
+  ['Patterns render and boost runtime stats', testPatternsRenderAndBoostStats],
+  ['Designer mode edits seats live and exports tree data', testDesignerMode]
 ];
 
 let passed = 0;

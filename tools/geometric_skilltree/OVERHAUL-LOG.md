@@ -2,6 +2,20 @@
 
 Newest entries first. This is the running memory for the north-star overhaul.
 
+## 2026-07-12 — Phase 3: designer mode
+
+- Added `DesignerController` to `index.html`: toggled by the `Design` toolbar button, the `D` hotkey, or `?design=1`. Player mode carries zero designer chrome — the panel, heatmap, and pins exist only while `body.designer-on` is set.
+- Seat inspector: in design mode a plain click inspects a seat instead of allocating (Shift+click keeps allocation so a node can be felt immediately). Editable fields: name, type, status (`empty/draft/review/final/cut`), stat (validated against the shared registry with a datalist of every id and alias; unknown ids are rejected), amount, tags, cluster id, effect lines, and free-text notes. Edits apply live to the running tree and node visuals.
+- Overlays: status heatmap (default), node-type coverage, stat coverage, and cluster map, each with a legend; hash-colored for open vocabularies. Annotation pins mark seats with human-written notes (the Phase 0 bootstrap boilerplate note is excluded) and show the note on hover.
+- Lint panel: missing seat entries, `empty` seats, unresolved stat ids, duplicate named seats, smalls without cluster ids, orphan local edits. Clicking an issue selects and centers the offending seat (new `ViewController.focusOn`). The bootstrap data immediately shows its known duplicates ("Berserker", "Gladiator", …) — the Phase 4 kill list.
+- Data flow: edits persist to localStorage as per-seat overrides and are merged onto `TREE_DATA.seats` before the tree builds, so sessions survive reloads without touching the repo file. "Export tree-data.js" downloads a complete classic-script file body for committing back; "Export annotations" emits the overrides as JSON; import merges either format by seat and reports conflicts to the build log; "Clear local edits" resets to repo data.
+- Decisions: subtree seats are authored in `SUBTREES` and are read-only in the inspector for now; conduits have no authored data yet so the inspector is node-focused. Both revisit in Phase 4/5.
+
+Acceptance notes:
+
+- New runtime smoke test drives the whole flow headlessly: toggle, inspect-not-allocate, rename/status/note edit, override tracking, export body contents, registry rejection, Shift+click allocation, clean disable. All 5 smoke tests green; full suite green.
+- Browser-verified over localhost: clicked a ring-5 mastery, renamed it "Blue Arithmetic" with a review status and a note through the real form; edit survived a reload via localStorage merge; exactly one annotation pin rendered; `D` returned to a chrome-free player mode. Test edits cleared afterward.
+
 ## 2026-07-12 — Phase 2 complete: concentric compounding and vesica lenses
 
 - Closed the two remaining §5.3 gaps from the WIP commit. Concentric crowns (radius-1 plus radius-2 loops around one center) now compound their empowerment multiplicatively instead of summing; the loop-empowerment curve moved into a named `LOOP_EMPOWER_TUNING` block. Verified live: an r1+r2 center reads 189% total increased effect (1.42 × 2.0 compounded) versus 154% under the old additive formula.
