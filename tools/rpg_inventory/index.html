@@ -201,6 +201,10 @@
       color: var(--accent);
     }
     .equip-slot .label { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; padding: 0 6px; }
+    .equip-slot.occupied > .label,
+    .equip-slot.occupied::before,
+    .equip-slot.occupied::after { display: none !important; content: none !important; }
+    .equip-slot.occupied .item-sigil { display: none; }
 
     .stat-grid {
       margin-top: 4px; width: 100%;
@@ -1357,6 +1361,7 @@
     const cls = ['equip-slot', size];
     if (highlight) cls.push('highlight');
     if (locked) cls.push('locked');
+    if (item && !locked) cls.push('occupied');
     return (
       <div data-slot-id={slotType} className={cls.join(' ')}>
         {item && !locked ? (
