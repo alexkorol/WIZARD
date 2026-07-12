@@ -1223,7 +1223,11 @@
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Iron Milestone"
+      "name": "The Iron Milestone",
+      "patternHook": {
+        "effect": "loop-boost",
+        "value": 0.25
+      }
     },
     "-4,5": {
       "id": "-4,5",
@@ -1320,7 +1324,11 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Votive Milestone"
+      "name": "The Votive Milestone",
+      "patternHook": {
+        "effect": "enclosure-boost",
+        "value": 0.5
+      }
     },
     "1,4": {
       "id": "1,4",
@@ -1417,7 +1425,11 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Blue Milestone"
+      "name": "The Blue Milestone",
+      "patternHook": {
+        "effect": "wave-length",
+        "value": 1
+      }
     },
     "5,-1": {
       "id": "5,-1",
@@ -1514,7 +1526,11 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Unlit Milestone"
+      "name": "The Unlit Milestone",
+      "patternHook": {
+        "effect": "flow-length",
+        "value": 1
+      }
     },
     "4,-5": {
       "id": "4,-5",
@@ -1611,7 +1627,10 @@
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Swift Milestone"
+      "name": "The Swift Milestone",
+      "patternHook": {
+        "effect": "rod-double"
+      }
     },
     "-1,-4": {
       "id": "-1,-4",
@@ -1698,7 +1717,7 @@
       "axis": "hybrid",
       "effects": [
         "+16% increased Projectile Damage",
-        "Waves and flows may both claim conduits touching this Waystone (design text)",
+        "Waves and flows may both claim conduits touching this Waystone",
         "-10% increased Reach",
         "Soldiers bet knives against the stone. The stone keeps them."
       ],
@@ -1708,7 +1727,10 @@
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Thrown Milestone"
+      "name": "The Thrown Milestone",
+      "patternHook": {
+        "effect": "shared-claim"
+      }
     },
     "-5,1": {
       "id": "-5,1",

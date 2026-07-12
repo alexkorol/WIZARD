@@ -2,7 +2,6 @@
 
 ## Current Priorities (post tree-overhaul, 2026-07-12)
 
-- Wire Waystone pattern hooks mechanically (currently authored as design text; e.g. "waves through this Waystone count +1 length").
 - Jewel drop/craft integration: roll carved stones through vesselforge instead of the curated stash (API already accepts arbitrary jewel JSON).
 - Near-complete pattern hints in the UI (e.g. "one conduit short of a loop crown").
 - Saved build import/export codes.

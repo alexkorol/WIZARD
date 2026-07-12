@@ -2466,6 +2466,16 @@
         this.recalculate();
       }
 
+      activeWaystoneHooks() {
+        const hooks = [];
+        this.nodes.forEach(node => {
+          if (node.type !== "waystone" || !node.active) return;
+          const hook = node.seat?.patternHook;
+          if (hook) hooks.push({ q: node.q, r: node.r, id: node.id, ...hook });
+        });
+        return hooks;
+      }
+
       patternStones() {
         return this.activeJewels()
           .filter(({ jewel }) => jewel.family === "pattern")
@@ -2834,12 +2844,15 @@
           throw new Error("VerdigrisPatterns must load before the skill tree app.");
         }
         this.computeSagaState();
+        const waystoneHooks = this.activeWaystoneHooks();
+        this.loopBoostHooks = waystoneHooks.filter(hook => hook.effect === "loop-boost");
         this.patternReport = VERDIGRIS_PATTERNS.detectPatterns({
           nodes: Array.from(this.nodes.values()),
           conduits: Array.from(this.conduits.values()),
           depth: MAIN_RING_DEPTH,
           tuning: PATTERN_TUNING,
-          stones: this.patternStones()
+          stones: this.patternStones(),
+          waystones: waystoneHooks
         });
         this.patternNodeBoosts = new Map(Object.entries(this.patternReport.nodeBoosts || {}));
         this.patternConduitBoosts = new Map(Object.entries(this.patternReport.conduitBoosts || {}));
@@ -3075,16 +3088,25 @@
       loopIncreaseFor(detail, concentric) {
         if (!detail) return 0;
         const { perRadius, largeLoopStep, extraLoopStep } = LOOP_EMPOWER_TUNING;
+        let increase;
         if (concentric) {
           // Concentric crowns compound: empower the center once per loop, multiplicatively.
-          return detail.loops.reduce(
+          increase = detail.loops.reduce(
             (factor, loop) => factor * (1 + loop.radius * perRadius + Math.max(0, loop.radius - 1) * largeLoopStep),
             1
           ) - 1;
+        } else {
+          increase = detail.radiusTotal * perRadius
+            + Math.max(0, detail.maxRadius - 1) * largeLoopStep
+            + Math.max(0, detail.loops.length - 1) * extraLoopStep;
         }
-        return detail.radiusTotal * perRadius
-          + Math.max(0, detail.maxRadius - 1) * largeLoopStep
-          + Math.max(0, detail.loops.length - 1) * extraLoopStep;
+        // The Iron Milestone: loops carrying it empower their center further.
+        (this.loopBoostHooks || []).forEach(hook => {
+          if (detail.loops.some(loop => loop.nodeIds?.includes(hook.id))) {
+            increase *= 1 + (hook.value || 0.25);
+          }
+        });
+        return increase;
       }
 
       vesicaLensIncrease(nodeId) {

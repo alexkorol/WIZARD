@@ -59,7 +59,14 @@
   }
 
   function withinStoneRadius(stone, q, r) {
-    return hexDistance(q - stone.q, r - stone.r) <= (stone.radius || 2);
+    const radius = stone.radius == null ? 2 : stone.radius;
+    return hexDistance(q - stone.q, r - stone.r) <= radius;
+  }
+
+  // Waystone pattern hooks: authored ring-5 seats whose promises the detector
+  // keeps. Each hook: { q, r, id, effect, value } for an ACTIVE waystone.
+  function hooksFor(input, effect) {
+    return (input.waystones || []).filter(hook => hook.effect === effect);
   }
 
   function normalize(input = {}) {
@@ -161,20 +168,33 @@
     return Array.from(best.values());
   }
 
-  function selectExclusivePaths(ctx, waveCandidates, flowCandidates) {
+  function selectExclusivePaths(ctx, waveCandidates, flowCandidates, sharedClaimIds = new Set()) {
     const selected = [];
-    const used = new Set();
+    // Conduits touching a shared-claim Waystone may serve one wave AND one
+    // flow (never two of the same family); everything else is exclusive.
+    const usedBy = new Map();
+    const takenBy = (id) => usedBy.get(id) || new Set();
     waveCandidates.concat(flowCandidates)
       .sort((a, b) => comparePath(a, b, ctx.nodeMap))
       .forEach(path => {
-        if (path.conduitIds.some(id => used.has(id))) return;
-        path.conduitIds.forEach(id => used.add(id));
+        const blocked = path.conduitIds.some(id => {
+          const takers = takenBy(id);
+          if (!takers.size) return false;
+          if (!sharedClaimIds.has(id)) return true;
+          return takers.has(path.type);
+        });
+        if (blocked) return;
+        path.conduitIds.forEach(id => {
+          const takers = takenBy(id);
+          takers.add(path.type);
+          usedBy.set(id, takers);
+        });
         selected.push(path);
       });
     return {
       waves: selected.filter(path => path.type === 'wave'),
       flows: selected.filter(path => path.type === 'flow'),
-      used
+      used: new Set(usedBy.keys())
     };
   }
 
@@ -437,7 +457,8 @@
   function flowPercent(tuning, flow) {
     const minLength = tuning.flow.minLength;
     const maxLength = Math.max(minLength, tuning.flow.maxLength);
-    const lengthScale = maxLength === minLength ? 1 : Math.min(1, (flow.length - minLength) / (maxLength - minLength));
+    const length = flow.effectiveLength || flow.length;
+    const lengthScale = maxLength === minLength ? 1 : Math.min(1, (length - minLength) / (maxLength - minLength));
     return Math.round(tuning.flow.minPercent + (tuning.flow.maxPercent - tuning.flow.minPercent) * lengthScale);
   }
 
@@ -560,7 +581,14 @@
       progress: `${patterns.enclosures.length} enclosure${patterns.enclosures.length === 1 ? '' : 's'}`,
       description: 'Close a circuit around one or more unallocated seats.',
       attrs: {},
-      derived: patterns.enclosures.length ? { guard: patterns.enclosures.length * tuning.enclosure.guardPerNode } : {}
+      derived: patterns.enclosures.length
+        ? {
+          guard: patterns.enclosures.reduce(
+            (sum, enclosure) => sum + Math.round(tuning.enclosure.guardPerNode * (enclosure.guardMultiplier || 1)),
+            0
+          )
+        }
+        : {}
     });
     bonuses.push({
       id: 'rod',
@@ -593,8 +621,22 @@
     const depth = input.depth || Math.max(0, ...ctx.mainNodes.map(node => node.ring || 0));
     const waveCandidates = enumeratePaths(ctx, 'wave', tuning.wave.minLength);
     const flowCandidates = enumeratePaths(ctx, 'flow', tuning.flow.minLength);
-    const exclusive = selectExclusivePaths(ctx, waveCandidates, flowCandidates);
-    const waveStones = stonesFor(input, 'wave-length');
+
+    // Shared-claim Waystones exempt their touching conduits from wave/flow
+    // exclusivity (one wave and one flow may both count them).
+    const sharedClaimIds = new Set();
+    hooksFor(input, 'shared-claim').forEach(hook => {
+      const nodeId = axialKey(hook.q, hook.r);
+      ctx.allocatedConduits.forEach(conduit => {
+        if (conduit.fromId === nodeId || conduit.toId === nodeId) sharedClaimIds.add(conduit.id);
+      });
+    });
+    const exclusive = selectExclusivePaths(ctx, waveCandidates, flowCandidates, sharedClaimIds);
+
+    // Wave-length: pattern-stones (radius) and Blue-Milestone-style hooks
+    // (exact seat) count touching waves longer for payoff purposes.
+    const waveStones = stonesFor(input, 'wave-length')
+      .concat(hooksFor(input, 'wave-length').map(hook => ({ ...hook, radius: 0 })));
     exclusive.waves.forEach(wave => {
       const bonus = waveStones.reduce((sum, stone) => {
         const touches = wave.nodeIds.some(id => {
@@ -605,7 +647,25 @@
       }, 0);
       if (bonus > 0) wave.effectiveLength = wave.length + bonus;
     });
+
+    // Flow-length: Unlit-Milestone-style hooks count flows through them longer.
+    const flowHooks = hooksFor(input, 'flow-length');
+    exclusive.flows.forEach(flow => {
+      const bonus = flowHooks.reduce((sum, hook) =>
+        sum + (flow.nodeIds.includes(axialKey(hook.q, hook.r)) ? (hook.value || 1) : 0), 0);
+      if (bonus > 0) flow.effectiveLength = flow.length + bonus;
+    });
+
     const loopData = detectLoops(ctx, tuning, stonesFor(input, 'loop-gap'));
+
+    // Enclosure-boost: Votive-Milestone-style hooks strengthen warding circles
+    // whose perimeter carries the Waystone.
+    const enclosureHooks = hooksFor(input, 'enclosure-boost');
+    loopData.enclosures.forEach(enclosure => {
+      const bonus = enclosureHooks.reduce((sum, hook) =>
+        sum + (enclosure.nodeIds.includes(axialKey(hook.q, hook.r)) ? (hook.value || 0.5) : 0), 0);
+      enclosure.guardMultiplier = 1 + bonus;
+    });
     const grandOrbits = detectGrandOrbits(ctx);
     const symmetry = detectSymmetry(ctx);
     const rods = detectRods(ctx, tuning).sort((a, b) => b.length - a.length);
@@ -630,9 +690,17 @@
         addNodeBoost(nodeBoosts, nodeId, tuning.wave.meridianEndpointPercent, 'great wave endpoint');
       });
     });
+    const rodHookIds = new Set(hooksFor(input, 'rod-double').map(hook => axialKey(hook.q, hook.r)));
     rods.forEach(rod => {
-      [rod.nodeIds[0], rod.nodeIds[rod.nodeIds.length - 1]].forEach(nodeId => {
-        addNodeBoost(nodeBoosts, nodeId, tuning.rods.endpointPercent, `rod endpoint length ${rod.length}`);
+      const endpoints = [rod.nodeIds[0], rod.nodeIds[rod.nodeIds.length - 1]];
+      const doubled = endpoints.some(nodeId => rodHookIds.has(nodeId));
+      endpoints.forEach(nodeId => {
+        addNodeBoost(
+          nodeBoosts,
+          nodeId,
+          tuning.rods.endpointPercent * (doubled ? 2 : 1),
+          `rod endpoint length ${rod.length}${doubled ? ' (Waystone doubled)' : ''}`
+        );
       });
     });
     const patterns = {

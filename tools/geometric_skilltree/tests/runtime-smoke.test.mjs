@@ -229,9 +229,39 @@ function testClassCallingAndBridge() {
   assert.equal(tree.stats.characterClass, 'Acrobat', 'Refunding the calling promotes the next allocated class.');
 }
 
+function testIronMilestoneLoopBoost() {
+  const window = runStandaloneApp();
+  const tree = window.skillTree;
+  const iron = Array.from(tree.nodes.values()).find(node => node.name === 'The Iron Milestone');
+  assert.ok(iron?.seat?.patternHook, 'The Iron Milestone should carry its pattern hook.');
+
+  // Close a radius-1 loop around a center adjacent to the milestone so the
+  // milestone sits on the loop's perimeter.
+  const HEX = [[1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1], [0, 1]];
+  const center = tree.nodes.get(`${iron.q + 1},${iron.r - 1}`);
+  assert.ok(center, 'A center adjacent to the milestone should exist.');
+  const ring = HEX.map(([dq, dr]) => `${center.q + dq},${center.r + dr}`);
+  tree.nodes.forEach(node => { node.active = node.id === '0,0'; });
+  [center.id, ...ring].forEach(id => { tree.nodes.get(id).active = true; });
+  tree.conduits.forEach(conduit => { conduit.allocatedVariant = null; });
+  ring.forEach((id, index) => {
+    const conduit = tree.conduits.get([id, ring[(index + 1) % ring.length]].sort().join(':'));
+    if (conduit) conduit.allocatedVariant = 'inner';
+  });
+  tree.recalculate();
+  assert.ok(ring.includes(iron.id), 'The milestone should sit on the loop perimeter.');
+  const boosted = tree.getNodeBoost(center).multiplier;
+
+  delete iron.seat.patternHook;
+  tree.recalculate();
+  const plain = tree.getNodeBoost(center).multiplier;
+  assert.ok(boosted > plain, `The Iron Milestone should empower the crowned center further (${boosted} vs ${plain}).`);
+}
+
 const tests = [
   ['Standalone classic scripts initialize the tree runtime', testRuntimeInitializes],
   ['Class calling publishes unlock flags over the bridge', testClassCallingAndBridge],
+  ['The Iron Milestone empowers loops that carry it', testIronMilestoneLoopBoost],
   ['Subtrees attach to the ring-10 gateways at runtime', testSubtreesAttachToRingTenGateways],
   ['Allocation updates headline deltas', testAllocationUpdatesHeadlineDeltas],
   ['Patterns render and boost runtime stats', testPatternsRenderAndBoostStats],

@@ -2,6 +2,13 @@
 
 Newest entries first. This is the running memory for the north-star overhaul.
 
+## 2026-07-12 — Post-overhaul: Waystone pattern hooks go mechanical
+
+- The six ring-5 Waystones' pattern promises are now engine rules, not design text. Each waystone seat carries a `patternHook` in tree-data (authored in `scripts/author-tree.mjs`); the app hands active hooks to the detector as a `waystones` input alongside pattern-stones.
+- The Blue Milestone: waves through it count +1 length (reuses the pattern-stone wave machinery at radius 0). The Unlit Milestone: flows through it count +1 length (`flowPercent` now pays effective length). The Swift Milestone: rods ending on it pay both endpoints double, with "(Waystone doubled)" in the boost reason. The Thrown Milestone: conduits touching it are exempt from wave/flow exclusivity — one wave and one flow may both claim them, but never two of the same family (the selection tracker is per-family). The Iron Milestone: loops carrying it on their perimeter empower their center a further +25% (app-side, in `loopIncreaseFor`). The Votive Milestone: enclosures carrying it guard +50% (per-enclosure `guardMultiplier`).
+- Tests: five detector checks in `patterns.test.js` ("waystone hooks keep their authored promises") plus a runtime smoke that crowns a center adjacent to the Iron Milestone and compares multipliers with the hook removed. Full suite green; balance fixtures held inside their windows.
+- Browser-verified: a two-conduit wave through the Blue Milestone reads effective length 3 in the live app; console clean.
+
 ## 2026-07-12 — Phase 7: balance pass, the loop closes
 
 - Added `tests/balance.test.mjs`, the §9 framework: a greedy simulated player levels each of the six archetypes (chasing spoke objectives ring by ring) and must hit cadence windows — measured: first notable at 6 points, mastery 8, Waystone 12, keystone 18, class calling 22, Sign 26, gateway 32, max dead stretch 4 points, and every sim claims its correct calling. All six spokes behave identically (the seat plan is symmetric by construction).

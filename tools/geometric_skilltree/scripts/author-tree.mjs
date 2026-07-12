@@ -105,6 +105,7 @@ const SPOKES = {
     r4small: { n: 'Steady Hand of the Scribe', s: 'castSpeed', a: 5 },
     waystone: {
       n: 'The Blue Milestone', s: 'ward', a: 30,
+      hook: { effect: 'wave-length', value: 1 },
       fx: ['Waves passing through this Waystone count +1 length', 'Ward recharge is 10% slower', 'Half the journey up the blue road, marked in lapis.']
     },
     r6notable: { n: 'Third Reading', s: 'spellDamage', a: 26, fx: ['+15 to Spirit', 'Rites you repeat within four seconds gain +10% effect (design text)'] },
@@ -127,6 +128,7 @@ const SPOKES = {
     r4small: { n: 'Soft Boots', s: 'evasion', a: 25 },
     waystone: {
       n: 'The Unlit Milestone', s: 'ailmentEffect', a: 12,
+      hook: { effect: 'flow-length', value: 1 },
       fx: ['Flows passing through this Waystone count +1 length', 'You show your position when you strike: +5% damage taken for two seconds (design text)', 'A marker stone with the lamp long stolen.']
     },
     r6notable: { n: 'Collector of Debts', s: 'gloam_res', a: 12, fx: ['+18% increased Ailment Effect', 'Wither you inflict stacks one deeper (design text)'] },
@@ -149,6 +151,7 @@ const SPOKES = {
     r4small: { n: 'Quick Breath', s: 'attackSpeed', a: 5 },
     waystone: {
       n: 'The Swift Milestone', s: 'evasion', a: 45,
+      hook: { effect: 'rod-double' },
       fx: ['Rods ending on this Waystone empower both endpoints twice', 'You cannot Block while you keep this pace (design text)', 'Runners touch the stone and do not stop.']
     },
     r6notable: { n: 'Read the Wind', s: 'accuracy_flat', a: 60, fx: ['+12% increased Attack Speed', 'Your first hit on an unhurt enemy always lands (design text)'] },
@@ -171,7 +174,8 @@ const SPOKES = {
     r4small: { n: 'Loose Shoulders', s: 'attackSpeed', a: 5 },
     waystone: {
       n: 'The Thrown Milestone', s: 'projectileDamage', a: 16,
-      fx: ['Waves and flows may both claim conduits touching this Waystone (design text)', '-10% increased Reach', 'Soldiers bet knives against the stone. The stone keeps them.']
+      hook: { effect: 'shared-claim' },
+      fx: ['Waves and flows may both claim conduits touching this Waystone', '-10% increased Reach', 'Soldiers bet knives against the stone. The stone keeps them.']
     },
     r6notable: { n: 'Running Volley', s: 'projectileDamage', a: 24, fx: ['+5% increased Movement Speed', 'Thrown hits while moving gain +10% damage (design text)'] },
     classNode: {
@@ -193,6 +197,7 @@ const SPOKES = {
     r4small: { n: 'Scarred Knuckles', s: 'physical_increased', a: 8 },
     waystone: {
       n: 'The Iron Milestone', s: 'guard', a: 30,
+      hook: { effect: 'loop-boost', value: 0.25 },
       fx: ['Loops closed around this Waystone empower their center +25% further', 'Your Evasion is 10% lower while you hold the line (design text)', 'Half the column rests here; half never needed to.']
     },
     r6notable: { n: 'Oath of the Front Line', s: 'attackDamage', a: 24, fx: ['+20 to Life', 'Allies behind you take 10% less damage (design text)'] },
@@ -215,6 +220,7 @@ const SPOKES = {
     r4small: { n: 'Ash Blessing', s: 'ember_res', a: 10 },
     waystone: {
       n: 'The Votive Milestone', s: 'spirit', a: 20,
+      hook: { effect: 'enclosure-boost', value: 0.5 },
       fx: ['Enclosures you close around this Waystone guard 50% more', 'Your rites cost 5% more Spirit (design text)', 'Offerings pile at its foot. Take nothing.']
     },
     r6notable: { n: 'Battle Liturgy', s: 'minionDamage', a: 24, fx: ['+12% increased Rite Damage', 'Companions within your banner strike 10% faster (design text)'] },
@@ -704,7 +710,8 @@ function seatFromEntry(entry, { id, q, r, ring, type, cluster, status = 'review'
     clusterId: entry.c || cluster,
     status,
     notes: '',
-    name: entry.n
+    name: entry.n,
+    ...(entry.hook ? { patternHook: entry.hook } : {})
   };
 }
 

@@ -303,9 +303,93 @@ function testPatternStones() {
     'A loop-gap stone should crown the broken ring.');
 }
 
+function testWaystoneHooks() {
+  // Blue Milestone: waves through the seat count +1 length.
+  const waveBase = {
+    activeIds: ['0,0', '1,0', '1,-1'],
+    conduits: [conduit('0,0', '1,0', 'inner'), conduit('1,0', '1,-1', 'outer')]
+  };
+  const blue = detectPatterns({
+    nodes: lattice(3, waveBase.activeIds),
+    conduits: waveBase.conduits,
+    depth: 3,
+    waystones: [{ q: 1, r: 0, id: '1,0', effect: 'wave-length', value: 1 }]
+  });
+  assert.equal(blue.waves[0].effectiveLength, 3, 'A wave through the Blue Milestone counts +1 length.');
+
+  // Unlit Milestone: flows through the seat count +1 length (pays a longer flow rate).
+  const flowIds = ['0,0', '1,0', '2,0', '3,0'];
+  const flowConduits = [conduit('0,0', '1,0', 'outer'), conduit('1,0', '2,0', 'outer'), conduit('2,0', '3,0', 'outer')];
+  const plainFlow = report({ activeIds: flowIds, conduits: flowConduits });
+  const unlit = detectPatterns({
+    nodes: lattice(3, flowIds),
+    conduits: flowConduits,
+    depth: 3,
+    waystones: [{ q: 2, r: 0, id: '2,0', effect: 'flow-length', value: 1 }]
+  });
+  assert.equal(unlit.flows[0].effectiveLength, 4, 'A flow through the Unlit Milestone counts +1 length.');
+  assert.ok(
+    unlit.conduitBoosts[edgeKey('0,0', '1,0')].percent > plainFlow.conduitBoosts[edgeKey('0,0', '1,0')].percent,
+    'The longer effective flow should pay its conduits more.'
+  );
+
+  // Swift Milestone: rods ending on it empower both endpoints twice.
+  const rodIds = ['-1,0', '0,0', '1,0', '2,0'];
+  const rodConduits = [conduit('-1,0', '0,0', 'inner'), conduit('0,0', '1,0', 'outer'), conduit('1,0', '2,0', 'inner')];
+  const plainRod = report({ activeIds: rodIds, conduits: rodConduits });
+  const swift = detectPatterns({
+    nodes: lattice(3, rodIds),
+    conduits: rodConduits,
+    depth: 3,
+    waystones: [{ q: 2, r: 0, id: '2,0', effect: 'rod-double' }]
+  });
+  const rodShare = boosts => boosts['-1,0'].reasons.filter(reason => reason.includes('rod')).length;
+  assert.ok(rodShare(swift.nodeBoosts) === rodShare(plainRod.nodeBoosts), 'Same rod count either way.');
+  assert.ok(
+    swift.nodeBoosts['-1,0'].percent > plainRod.nodeBoosts['-1,0'].percent,
+    'A rod ending on the Swift Milestone should pay both endpoints double.'
+  );
+
+  // Thrown Milestone: a wave and a flow may both claim conduits touching it.
+  const sharedIds = ['0,0', '1,0', '2,0', '3,0', '1,-1'];
+  const sharedConduits = [
+    conduit('0,0', '1,0', 'outer'),
+    conduit('1,0', '2,0', 'outer'),
+    conduit('2,0', '3,0', 'outer'),
+    conduit('1,0', '1,-1', 'inner')
+  ];
+  const noShare = report({ activeIds: sharedIds, conduits: sharedConduits });
+  const shared = detectPatterns({
+    nodes: lattice(3, sharedIds),
+    conduits: sharedConduits,
+    depth: 3,
+    waystones: [{ q: 1, r: 0, id: '1,0', effect: 'shared-claim' }]
+  });
+  assert.ok(
+    shared.waves.length + shared.flows.length > noShare.waves.length + noShare.flows.length,
+    'Sharing conduits at the Thrown Milestone should let a wave and a flow coexist.'
+  );
+
+  // Votive Milestone: enclosures carrying it guard more.
+  const r1 = ringIds('0,0', 1);
+  const votiveId = r1[0];
+  const [vq, vr] = votiveId.split(',').map(Number);
+  const plainEnclosure = report({ depth: 2, activeIds: r1, conduits: perimeterConduits(r1) });
+  const votive = detectPatterns({
+    nodes: lattice(2, r1),
+    conduits: perimeterConduits(r1),
+    depth: 2,
+    waystones: [{ q: vq, r: vr, id: votiveId, effect: 'enclosure-boost', value: 0.5 }]
+  });
+  const guardOf = result => result.bonuses.find(bonus => bonus.id === 'enclosure').derived.guard;
+  assert.equal(guardOf(votive), Math.round(guardOf(plainEnclosure) * 1.5),
+    'An enclosure carrying the Votive Milestone should guard 50% more.');
+}
+
 const tests = [
   ['waves and additive node boost stacking', testWavesAndAdditiveNodeBoosts],
   ['pattern-stones bend wave length and loop gaps', testPatternStones],
+  ['waystone hooks keep their authored promises', testWaystoneHooks],
   ['flows and wave/flow segment exclusivity', testFlowsAndExclusiveSegments],
   ['deterministic tie-breaking chooses the closer wave', testTieBreakingChoosesCloserWave],
   ['great wave meridian detection', testMeridian],
