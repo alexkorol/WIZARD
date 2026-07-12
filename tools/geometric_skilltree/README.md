@@ -6,7 +6,7 @@ Open `index.html` directly in a browser.
 
 ## Current Feature Set
 
-- Nine-ring main hex lattice (271 nodes) with `INT` running center-to-up, `DEX` center-to-bottom-left, and `STR` center-to-bottom-right. A maxed character has 123 points (100 from levels, 23 from quests) — about 61 node+path steps, under a quarter of the lattice — so builds must choose.
+- Ten-ring main hex lattice (331 nodes) with `INT` running center-to-up, `DEX` center-to-bottom-left, and `STR` center-to-bottom-right. A maxed character has 140 points after the Phase 0 overhaul scaffold, and a center-to-rim route now costs 20 points before optional side paths.
 - Six hidden outer subtrees attached through shared gateway nodes on the main rim, similar in purpose to cluster/ascendancy-style expansions without copying Path of Exile layouts.
 - A single skill-point pool: every node costs 1 point and every path or extra loop link costs 1 point, so travel distance is itself the build cost.
 - Passive nodes provide build effects such as weapon damage, wards, minion damage, evasion, recovery, marks, ailments, and hybrid bonuses.
@@ -66,7 +66,7 @@ The tree should behave like a full character progression system, not a decorativ
 - Rings 3-4 are specialization: axis masteries and stronger local notables start to define a build's school.
 - Rings 5-6 are advanced commitment: expensive outer routing, larger pattern payoffs, and the first keystone seats.
 - Rings 7-8 are outer mastery: class-named milestones (Champion, Acrobat, Archmage) and the Signs — birthsign-style keystones with a defining bonus and a real price.
-- Ring 9 and attached subtrees are capstone expansion: gateways, build-defining routes, and optional endgame branches.
+- Ring 9 is the pre-rim deep notable layer; ring 10 and attached subtrees are capstone expansion: gateways, build-defining routes, and optional endgame branches.
 - Curved paths are the attribute/travel layer. Nodes are passive-effect rewards. Shape patterns are a third layer that converts geometry into build power.
 - Node size and type should follow geometric rules: ring seats, axes, side midpoints, gateways, and earned pattern upgrades. Random large nodes are explicitly out of scope.
 
@@ -100,7 +100,7 @@ The important design takeaways are structural rather than cosmetic:
 
 ## Implementation Notes
 
-The app is a single-file HTML/SVG implementation. The main runtime classes are:
+The app is a standalone HTML/SVG implementation with classic-script data assets. `assets/tree-data.js` defines `window.TREE_DATA`, including the Phase 0 bootstrap entries for every main-lattice seat. The main runtime classes are:
 
 - `GeometricSkillTree`: builds nodes/conduits, handles allocation, refund, undo, stats, and shape bonuses.
 - `SVGRenderer`: draws rings, axis lines, nodes, conduits, subtrees, tooltips, and render states.
@@ -121,6 +121,8 @@ Run the existing progression tests:
 
 ```bash
 node tools/geometric_skilltree/tests/progression.test.mjs
+node tools/geometric_skilltree/tests/tree-data.test.mjs
+node tools/geometric_skilltree/tests/runtime-smoke.test.mjs
 ```
 
 The current UI is standalone and does not require a dev server.

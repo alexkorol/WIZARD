@@ -1411,7 +1411,7 @@
       <aside class="hud-panel" id="left-panel">
         <div class="panel-scroll">
           <h1 class="app-title">Geometric Passive Tree</h1>
-          <div class="app-subtitle">Nine-ring RPG tree with deliberate node picks, conduit routing, outer subtrees, and geometry combo bonuses.</div>
+          <div class="app-subtitle">Ten-ring RPG tree with deliberate node picks, conduit routing, outer subtrees, and geometry combo bonuses.</div>
 
           <section class="section">
             <div class="section-title">Point Pool</div>
@@ -1508,14 +1508,16 @@
     </div>
   </div>
 
+  <script src="assets/tree-data.js"></script>
   <script>
     const SVG_NS = "http://www.w3.org/2000/svg";
-    const MAIN_RING_DEPTH = 9;
+    const AUTHORED_TREE_DATA = window.TREE_DATA || {};
+    const MAIN_RING_DEPTH = AUTHORED_TREE_DATA.mainRingDepth || 10;
     const NODE_SPACING = 72;
     const SUBTREE_SPACING = 58;
     // One pool: nodes and connections each cost 1 point, so travel is a real spend.
-    // 123 points at max: 100 from levels, 23 from quests. ~61 node+path steps of a 271-node lattice.
-    const START_POINTS = { skill: 123 };
+    // 140 points at max after the tenth ring. A center-to-rim route now costs 20 points.
+    const START_POINTS = { skill: 140, ...(AUTHORED_TREE_DATA.startPoints || {}) };
     const BASE_CHARACTER = {
       life: 1000,
       mana: 300,
@@ -1689,7 +1691,7 @@
       {
         id: "genius",
         title: "Genius Circle",
-        gateway: { q: 9, r: 0 },
+        gateway: { q: 10, r: 0 },
         axis: "int",
         nodes: [
           { id: "genius-core", name: "Proof Engine", type: "notable", stat: "spellDamage", amount: 22, effects: ["+22% Spell Damage", "Completed circles add +5 INT"], tag: "spell" },
@@ -1705,7 +1707,7 @@
       {
         id: "ranger",
         title: "Ranger's Writ",
-        gateway: { q: 0, r: -9 },
+        gateway: { q: 0, r: -10 },
         axis: "dex",
         nodes: [
           { id: "ranger-core", name: "Distance Contract", type: "notable", stat: "projectileDamage", amount: 24, effects: ["+24% Projectile Damage", "First projectile after a dodge pierces"], tag: "projectile" },
@@ -1720,7 +1722,7 @@
       {
         id: "vanguard",
         title: "Vanguard Oath",
-        gateway: { q: -9, r: 9 },
+        gateway: { q: -10, r: 10 },
         axis: "str",
         nodes: [
           { id: "vanguard-core", name: "Raised Banner", type: "notable", stat: "armour", amount: 260, effects: ["+260 Armour", "Allies behind you gain +8% damage"], tag: "armour" },
@@ -1736,7 +1738,7 @@
       {
         id: "spellblade",
         title: "Spellblade Annex",
-        gateway: { q: 9, r: -9 },
+        gateway: { q: 10, r: -10 },
         axis: "hybrid",
         nodes: [
           { id: "spellblade-core", name: "Edge Formula", type: "notable", stat: "spellDamage", amount: 18, effects: ["+18% Spell Damage", "+18% Attack Damage if you cast recently"], tag: "hybrid" },
@@ -1752,7 +1754,7 @@
       {
         id: "skirmish",
         title: "Skirmish Annex",
-        gateway: { q: -9, r: 0 },
+        gateway: { q: -10, r: 0 },
         axis: "hybrid",
         nodes: [
           { id: "skirmish-core", name: "Brawler's Angle", type: "notable", stat: "attackDamage", amount: 18, effects: ["+18% close-range and thrown damage"], tag: "weapon" },
@@ -1767,7 +1769,7 @@
       {
         id: "seer",
         title: "Seer's Annex",
-        gateway: { q: 0, r: 9 },
+        gateway: { q: 0, r: 10 },
         axis: "hybrid",
         nodes: [
           { id: "seer-core", name: "Hidden Mark", type: "notable", stat: "ailmentEffect", amount: 19, effects: ["+19% Mark, Hex, and Ailment Effect"], tag: "ailment" },
@@ -2059,6 +2061,32 @@
       return type === "origin" ? 0 : 1;
     }
 
+    function authoredSeatFor(q, r) {
+      return AUTHORED_TREE_DATA.seats?.[axialKey(q, r)] || null;
+    }
+
+    function normalizeSeatTags(seat, axis, type, ring) {
+      const tags = Array.isArray(seat?.tags) ? seat.tags.slice() : [];
+      if (!tags.includes(AXIS_META[axis].short)) tags.unshift(AXIS_META[axis].short);
+      if (!tags.includes(type)) tags.push(type);
+      if (ring === MAIN_RING_DEPTH && !tags.includes("outer")) tags.push("outer");
+      return Array.from(new Set(tags));
+    }
+
+    function statFromSeat(seat) {
+      if (!seat) return null;
+      if (seat.stat) return seat.stat;
+      const mod = Array.isArray(seat.mods) ? seat.mods[0] : null;
+      return mod?.stat || null;
+    }
+
+    function amountFromSeat(seat) {
+      if (!seat) return 0;
+      if (typeof seat.amount === "number") return seat.amount;
+      const mod = Array.isArray(seat.mods) ? seat.mods[0] : null;
+      return typeof mod?.amount === "number" ? mod.amount : 0;
+    }
+
     function radiusForType(type, boost = null) {
       const base = {
         origin: 14,
@@ -2206,27 +2234,34 @@
             const pos = axialToPixel(q, r);
             const weights = axisWeightsFromPosition(pos);
             const axis = dominantAxis(weights);
-            const type = nodeTypeFor(q, r, ring);
-            const template = type === "keystone"
-              ? keystoneTemplate(axis, q, r, ring)
-              : type === "notable"
-                ? notableTemplate(axis, q, r, ring)
-                : type === "mastery"
-                  ? masteryTemplate(axis, ring)
-                  : effectTemplate(axis, q, r, ring);
-            const name = type === "origin" ? "Origin" : makeNodeName(template, q, r, ring, type);
-            const effects = type === "origin"
-              ? ["Starting point. No passive bonus."]
-              : type === "keystone"
-                ? template.lines
-                : type === "notable" || type === "mastery"
+            const seat = authoredSeatFor(q, r);
+            const type = seat?.type || nodeTypeFor(q, r, ring);
+            let name = seat?.name;
+            let effects = Array.isArray(seat?.effects) ? seat.effects.slice() : null;
+            let stat = statFromSeat(seat);
+            let amount = amountFromSeat(seat);
+            let tags = normalizeSeatTags(seat, axis, type, ring);
+            if (!seat) {
+              const template = type === "keystone"
+                ? keystoneTemplate(axis, q, r, ring)
+                : type === "notable"
+                  ? notableTemplate(axis, q, r, ring)
+                  : type === "mastery"
+                    ? masteryTemplate(axis, ring)
+                    : effectTemplate(axis, q, r, ring);
+              name = type === "origin" ? "Origin" : makeNodeName(template, q, r, ring, type);
+              effects = type === "origin"
+                ? ["Starting point. No passive bonus."]
+                : type === "keystone"
                   ? template.lines
-                  : [template.line];
-            const stat = type === "keystone" ? null : template.stat;
-            const amount = type === "keystone" ? 0 : template.amount;
-            const tags = [AXIS_META[axis].short, type];
-            if (template.tag) tags.push(template.tag);
-            if (ring === MAIN_RING_DEPTH) tags.push("outer");
+                  : type === "notable" || type === "mastery"
+                    ? template.lines
+                    : [template.line];
+              stat = type === "keystone" ? null : template.stat;
+              amount = type === "keystone" ? 0 : template.amount;
+              if (template.tag) tags.push(template.tag);
+              tags = Array.from(new Set(tags));
+            }
             const node = new SkillNode({
               id: axialKey(q, r),
               q,
@@ -2243,6 +2278,10 @@
             });
             node.stat = type === "origin" ? null : stat;
             node.amount = type === "origin" ? 0 : amount;
+            node.seat = seat;
+            node.status = seat?.status || "empty";
+            node.notes = seat?.notes || "";
+            node.clusterId = seat?.clusterId || "";
             this.nodes.set(node.id, node);
           }
         }
