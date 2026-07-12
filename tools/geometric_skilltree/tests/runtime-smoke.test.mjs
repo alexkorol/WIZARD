@@ -273,6 +273,25 @@ function testWaveFirstAutoPathing() {
     'Default pathing should read as a wave.');
 }
 
+function testPanelCollapse() {
+  const window = runStandaloneApp();
+  const ui = window.ui;
+  const body = window.document.body;
+  assert.equal(body.classList.contains('left-collapsed'), false, 'Panels start open.');
+
+  ui.setPanelCollapsed('left', true);
+  assert.equal(body.classList.contains('left-collapsed'), true, 'The stats panel collapses.');
+  assert.equal(body.classList.contains('right-collapsed'), false, 'Sides collapse independently.');
+
+  ui.toggleFocusMode();
+  assert.equal(body.classList.contains('left-collapsed'), true, 'Focus mode collapses both panels.');
+  assert.equal(body.classList.contains('right-collapsed'), true, 'Focus mode collapses both panels.');
+
+  ui.toggleFocusMode();
+  assert.equal(body.classList.contains('left-collapsed'), false, 'Focus mode toggles back to both open.');
+  assert.equal(body.classList.contains('right-collapsed'), false, 'Focus mode toggles back to both open.');
+}
+
 function testBuildCodeRoundTrip() {
   const window = runStandaloneApp();
   const tree = window.skillTree;
@@ -306,6 +325,7 @@ const tests = [
   ['The Iron Milestone empowers loops that carry it', testIronMilestoneLoopBoost],
   ['Build codes round-trip a whole allocation', testBuildCodeRoundTrip],
   ['Auto-pathing extends waves by default', testWaveFirstAutoPathing],
+  ['Side panels collapse into focus mode', testPanelCollapse],
   ['Subtrees attach to the ring-10 gateways at runtime', testSubtreesAttachToRingTenGateways],
   ['Allocation updates headline deltas', testAllocationUpdatesHeadlineDeltas],
   ['Patterns render and boost runtime stats', testPatternsRenderAndBoostStats],

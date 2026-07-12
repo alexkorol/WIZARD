@@ -2,6 +2,11 @@
 
 Newest entries first. This is the running memory for the north-star overhaul.
 
+## 2026-07-12 — Post-overhaul: collapsible panels / focus mode
+
+- Both desktop side panels now collapse: a small chevron in each panel's corner slides it off-screen, a slim edge tab brings it back, and `F` toggles both at once for a tree-only view (the designer panel follows the left side). State persists to localStorage. Mobile keeps its existing Stats/Details toggles; the collapse chrome is hidden under 900px.
+- Covered by a runtime smoke test (independent sides, focus-mode toggle both ways) and browser-verified at desktop width: collapse, edge tabs, `F`, persistence across reload, clean console. No asset changes, so the v=11 pins stand.
+
 ## 2026-07-12 — Post-overhaul: amplitude waves, pattern spotlight, wave-first pathing (Alexei's discovery)
 
 - Alexei found emergent "high-amplitude" waves — alternating paths that sweep across rings in wide S-curves instead of zigzagging tightly. The detector now measures each wave's amplitude (peak perpendicular deviation from the endpoint chord, in lattice units) and node empowerment scales with it: `wave.amplitudePercentPerUnit` (12%/unit) capped at `amplitudeMax` (3) in PATTERN_TUNING. A straight wave or the meridian reads amplitude 0 and pays exactly as before; the balance fixtures held. The Waves panel row surfaces peak amplitude.

@@ -1186,6 +1186,71 @@
       }
     }
 
+    /* Collapsible side panels (desktop): focus on the tree when you want to.
+       Mobile keeps its own Stats/Details toggles. */
+    .panel-collapse-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--panel-border);
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      z-index: 6;
+      opacity: 0.7;
+    }
+    .panel-collapse-btn:hover { opacity: 1; }
+    #right-panel .panel-collapse-btn { right: auto; left: 10px; }
+    .panel-edge-tab {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 22px;
+      height: 64px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      pointer-events: auto;
+      z-index: 15;
+      opacity: 0.8;
+    }
+    .panel-edge-tab:hover { opacity: 1; }
+    .panel-edge-tab.left { left: 0; border-left: none; border-radius: 0 8px 8px 0; }
+    .panel-edge-tab.right { right: 0; border-right: none; border-radius: 8px 0 0 8px; }
+    @media (min-width: 901px) {
+      #left-panel, #right-panel, #designer-panel {
+        transition: transform 200ms ease, opacity 200ms ease;
+      }
+      body.left-collapsed #left-panel,
+      body.left-collapsed #designer-panel {
+        transform: translateX(calc(-100% - 24px));
+        opacity: 0;
+        pointer-events: none;
+      }
+      body.right-collapsed #right-panel {
+        transform: translateX(calc(100% + 24px));
+        opacity: 0;
+        pointer-events: none;
+      }
+      body.left-collapsed .panel-edge-tab.left { display: flex; }
+      body.right-collapsed .panel-edge-tab.right { display: flex; }
+    }
+    @media (max-width: 900px) {
+      .panel-collapse-btn, .panel-edge-tab { display: none !important; }
+    }
+
     /* Hovering an active shape-bonus row spotlights its constructs on the tree. */
     #main-svg.pattern-highlighting .node-group:not(.pattern-member),
     #main-svg.pattern-highlighting #conduit-layer > g:not(.pattern-member) {
@@ -1514,6 +1579,7 @@
       <div class="mobile-panel-backdrop" id="mobile-panel-backdrop" aria-hidden="true"></div>
 
       <aside class="hud-panel" id="left-panel">
+        <button class="panel-collapse-btn" id="collapse-left-btn" type="button" aria-label="Hide the stats panel" title="Hide panel (F hides both)">‹</button>
         <div class="panel-scroll">
           <h1 class="app-title">Geometric Passive Tree</h1>
           <div class="app-subtitle">Ten-ring RPG tree with deliberate node picks, conduit routing, outer subtrees, and geometry combo bonuses.</div>
@@ -1568,6 +1634,7 @@
       </aside>
 
       <aside class="hud-panel" id="right-panel">
+        <button class="panel-collapse-btn" id="collapse-right-btn" type="button" aria-label="Hide the details panel" title="Hide panel (F hides both)">›</button>
         <div class="panel-scroll">
           <div class="section-title">Selected Passive</div>
           <div id="selection-panel"></div>
@@ -1671,6 +1738,9 @@
           </section>
         </div>
       </aside>
+
+      <button class="panel-edge-tab left" id="expand-left-btn" type="button" aria-label="Show the stats panel" title="Show stats">›</button>
+      <button class="panel-edge-tab right" id="expand-right-btn" type="button" aria-label="Show the details panel" title="Show details">‹</button>
 
       <div class="hud-panel" id="bottom-toolbar">
         <div class="toolbar-group" aria-label="View controls">
@@ -4326,6 +4396,26 @@
           });
         });
 
+        // Collapsible desktop panels: per-side buttons, edge tabs to reopen,
+        // and F toggles both for a tree-only view. State survives reloads.
+        this.panelState = (() => {
+          try {
+            return JSON.parse(window.localStorage.getItem("verdigris-tree-panels") || "{}") || {};
+          } catch (_) {
+            return {};
+          }
+        })();
+        this.applyPanelState();
+        document.getElementById("collapse-left-btn")?.addEventListener("click", () => this.setPanelCollapsed("left", true));
+        document.getElementById("collapse-right-btn")?.addEventListener("click", () => this.setPanelCollapsed("right", true));
+        document.getElementById("expand-left-btn")?.addEventListener("click", () => this.setPanelCollapsed("left", false));
+        document.getElementById("expand-right-btn")?.addEventListener("click", () => this.setPanelCollapsed("right", false));
+        document.addEventListener("keydown", event => {
+          const tag = event.target?.tagName || "";
+          if (["INPUT", "TEXTAREA", "SELECT"].includes(tag)) return;
+          if (event.key === "f" || event.key === "F") this.toggleFocusMode();
+        });
+
         document.getElementById("mobile-stats-toggle").addEventListener("click", () => this.toggleMobilePanel("stats"));
         document.getElementById("mobile-details-toggle").addEventListener("click", () => this.toggleMobilePanel("details"));
         document.getElementById("mobile-panel-backdrop").addEventListener("click", () => this.closeMobilePanels());
@@ -4333,6 +4423,26 @@
           if (event.key === "Escape") this.closeMobilePanels();
         });
         this.mobileQuery.addEventListener("change", () => this.closeMobilePanels());
+      }
+
+      applyPanelState() {
+        document.body.classList.toggle("left-collapsed", Boolean(this.panelState.left));
+        document.body.classList.toggle("right-collapsed", Boolean(this.panelState.right));
+        try {
+          window.localStorage.setItem("verdigris-tree-panels", JSON.stringify(this.panelState));
+        } catch (_) {}
+      }
+
+      setPanelCollapsed(side, collapsed) {
+        this.panelState[side] = Boolean(collapsed);
+        this.applyPanelState();
+      }
+
+      toggleFocusMode() {
+        const anyOpen = !this.panelState.left || !this.panelState.right;
+        this.panelState.left = anyOpen;
+        this.panelState.right = anyOpen;
+        this.applyPanelState();
       }
 
       toggleMobilePanel(panel) {

@@ -34,6 +34,7 @@ Open `index.html` directly in a browser.
 - Four visual themes: modern, 90s RPG, stone dungeon, and terminal/ASCII.
 - Search, undo, reset, pan/zoom, center, desktop hover tooltips, click/tap allocation, and right-click refund.
 - Build codes: `Copy Build` serializes the whole allocation (nodes, conduit variants, carved stones, calling) into one shareable string; `Load Build` restores it with budget and validity checks.
+- Collapsible panels: chevrons hide either side panel, edge tabs bring them back, and `F` toggles both for a tree-only focus view (persisted across reloads).
 - Carved stones (jewels): click an allocated socket to open the stone picker. Five families — Whorl (plain mods), Eye (radius grants), Change (conduit attribute rewrites), Saga (seeded deterministic transforms; same seed, same story; limit one; conquered nodes ignore other stones), and Pattern (geometry benders resolved inside the detector, e.g. waves count longer, loops may miss one conduit). Stones swap freely; `assets/jewels.js` holds the stash and saga tables.
 - Designer mode (`Design` button, `D` hotkey, or `?design=1`): seat inspector with live edits and registry-validated stat ids, status/type/stat/cluster overlays with legends, annotation pins, a lint panel with click-to-jump, localStorage-persisted overrides, and tree-data.js/annotation export plus merge-import. Player mode carries zero designer chrome.
 
