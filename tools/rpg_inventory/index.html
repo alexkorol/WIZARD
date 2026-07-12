@@ -15,6 +15,7 @@
   <script src="core/vesselforge.js"></script>
   <script src="core/verdigris-stats.js"></script>
   <script src="core/verdigris-pack.js"></script>
+  <script src="core/verdigris-combat.js"></script>
   <script src="core/character-item-taxonomy.js"></script>
 
   <style>
@@ -132,17 +133,15 @@
       width: 430px; max-width: 100%;
       flex-shrink: 0;
     }
-    :root { --pc: 54px; } /* paperdoll cell unit — slots sized in cell multiples like PoE */
+    :root { --pc: 78px; } /* paperdoll cell unit — slots sized in cell multiples like PoE */
     .s1x1 { width: var(--pc); height: var(--pc); }
     .s2x1 { width: calc(var(--pc) * 2 + 4px); height: calc(var(--pc) * 1 + 2px); }
     .s2x2 { width: calc(var(--pc) * 2 + 4px); height: calc(var(--pc) * 2 + 4px); }
     .s2x3 { width: calc(var(--pc) * 2 + 4px); height: calc(var(--pc) * 3 + 6px); }
     .s2x4 { width: calc(var(--pc) * 2 + 4px); height: calc(var(--pc) * 4 + 8px); }
-    .doll-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 12px; }
-    .doll-col { display: flex; flex-direction: column; gap: 10px; }
-    .doll-col.cloak-col { justify-content: flex-start; }
-    .doll-col.thin-l { justify-content: flex-end; }
-    .doll-col.thin-r { justify-content: space-between; }
+    .doll-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .doll-col { display: flex; flex-direction: column; gap: 10px; justify-content: space-between; }
+    .ring-row { display: flex; gap: 4px; }
     .slot-row.doll { align-items: stretch; gap: 8px; }
 
     .panel {
@@ -187,8 +186,11 @@
       transition: all 0.2s ease;
       overflow: hidden;
     }
-    .equip-slot.belt { min-width: 150px; min-height: 46px; }
-    .equip-slot.tall { min-height: 120px; }
+    .equip-slot.locked {
+      opacity: 0.55;
+      border-style: dashed;
+      cursor: not-allowed;
+    }
     .equip-slot.highlight {
       border-color: var(--accent);
       box-shadow: 0 0 14px rgba(201, 162, 39, 0.32);
@@ -231,16 +233,60 @@
     .chronicle .entry.craft { color: var(--brand); }
     .chronicle .entry.sys, .chronicle .entry.deed { color: var(--dim); }
     .chronicle .entry.deed { color: var(--muted); }
+    .chronicle .entry.death { color: var(--scar); font-weight: 700; }
+
+    /* ---------- Life bar & permadeath ---------- */
+    .hp-bar { height: 6px; width: 100%; background: rgba(233,228,216,0.08); border-radius: 3px; overflow: hidden; margin: 4px 0 8px; }
+    .hp-fill { height: 100%; background: linear-gradient(90deg, #7f1d1d, #c72222); border-radius: 3px; transition: width 0.3s ease; }
+    .death-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(5, 4, 3, 0.9);
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+      animation: toastIn 0.3s ease;
+    }
+    .death-panel {
+      width: 470px; max-width: 100%; max-height: 92vh; overflow-y: auto;
+      background: var(--panel); padding: 28px 26px; position: relative;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.85);
+    }
+    .death-panel::before {
+      content: ""; position: absolute; inset: 0;
+      border: 14px solid transparent;
+      border-image: url('assets/frame_ornate.png') 118 / 14px stretch;
+      pointer-events: none;
+    }
+    .death-panel > * { position: relative; }
+    .death-title { font-family: 'Cinzel', serif; font-size: 1.35rem; color: var(--scar); text-align: center; letter-spacing: 0.06em; }
+    .death-sub { color: var(--muted); text-align: center; font-size: 0.85rem; margin: 8px 0 4px; line-height: 1.5; }
+    .relic-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 7px 10px; margin-top: 7px;
+      border: 1px solid var(--hairline); border-radius: 9px;
+      background: rgba(0,0,0,0.3);
+    }
+    .relic-row img { width: 42px; height: 42px; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.7)); }
+    .relic-row .r-name { font-family: 'Cinzel', serif; font-size: 0.85rem; }
+    .relic-row .r-kin { color: var(--dim); font-size: 0.72rem; }
+    .heir-form { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+    .heir-form input {
+      flex: 1; min-width: 140px; background: #0b0a08; border: 1px solid var(--hairline);
+      color: var(--text); font-family: 'Cinzel', serif; border-radius: 7px; padding: 8px 10px;
+    }
+    .heir-form input:focus { outline: none; border-color: var(--accent); }
 
     /* ---------- Right panel ---------- */
     .inventory-panel { display: flex; flex-direction: column; gap: 12px; width: fit-content; max-width: 100%; }
     .section-title { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
-    .pack-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; width: 100%; }
     .pack-actions { display: flex; gap: 8px; }
     .pack-grids { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-    .pack-block { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; max-width: 100%; }
+    .pack-block { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; max-width: 100%; }
     .pack-block.main-pack { align-items: center; }
-    .pack-title { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); padding-left: 2px; }
+    .pack-block.main-pack .pack-title { align-self: stretch; }
+    .pack-title {
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim);
+      padding: 0 2px;
+    }
     .mini-pack-row {
       display: grid;
       grid-template-columns: repeat(2, max-content);
@@ -546,7 +592,6 @@
       .mini-pack-row { grid-template-columns: 1fr; }
       .equip-slot .label { font-size: 0.52rem; }
       .atelier-socket { width: 100%; min-height: 150px; }
-      .pack-head { flex-direction: column; align-items: flex-start; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -583,6 +628,7 @@
   const TILE_SIZE = 54;
   const CELL_GAP = 2;
   const SAVE_KEY = 'wizard_vesselforge_v3';
+  const LEGACY_KEY = 'wizard_vesselforge_legacy_v1';
   const ROMAN = ['I', 'II', 'III'];
 
   /* Demo economy: craft operations & tools priced in gold. */
@@ -639,6 +685,15 @@
   const DEFAULT_EQUIPMENT = {
     head: null, amulet: null, mainHand: null, body: null, cloak: null, offHand: null,
     gloves: null, belt: null, boots: null, ring1: null, ring2: null,
+    warhorn: null, // war-horn curio seat; the passive tree's Champion calling unlocks it
+  };
+
+  /* Cross-page bridge from the geometric passive tree (Phase 6): the tree
+     publishes { class, unlocks[] } to localStorage on every recalculation. */
+  const BRIDGE_STORAGE_KEY = 'verdigris-bridge';
+  const readTreeBridge = () => {
+    try { return JSON.parse(localStorage.getItem(BRIDGE_STORAGE_KEY)) || {}; }
+    catch (err) { return {}; }
   };
 
   const RETIRED_FORMS = new Set(pack.retiredForms || []);
@@ -763,12 +818,16 @@
     return decorateWithTaxonomyArt(item, picked);
   };
 
-  /* Art path per the ASSET-BRIEF naming; falls back to icon until generated. */
+  /* Art path per the ASSET-BRIEF naming; ladder-named finals resolve through
+     pack.artAliases; falls back to icon until generated. */
+  const ART_ALIASES = pack.artAliases || {};
   const artSrc = (item) => {
     const row = taxonomyRowFor(item);
     if (item?.artOverride) return item.artOverride;
     if (row) return row.reviewImage;
-    return isKnownRuntimeItem(item) ? `assets/${artId(item)}.png` : null;
+    if (!isKnownRuntimeItem(item)) return null;
+    const id = artId(item);
+    return `assets/${ART_ALIASES[id] || id}.png`;
   };
   const itemIcon = (item) => (pack.forms[item.formId] || {}).icon || 'default';
 
@@ -881,6 +940,7 @@
     if (slotId === 'belt') return k === 'belt';
     if (slotId === 'amulet') return k === 'amulet';
     if (slotId === 'ring1' || slotId === 'ring2') return k === 'ring';
+    if (slotId === 'warhorn') return k === 'curio';
     return false;
   };
 
@@ -946,12 +1006,14 @@
 
     const character = forge.createCharacter({ name: 'Azrael', archetype: 'shieldbearer', gold: 600 });
     character.fragments = { boar_tusk: 3, river_pearl: 1 };
+    character.generation = 1;
 
     return {
       character,
       inventory: inv,
       equipment: { ...DEFAULT_EQUIPMENT },
       atelierItem: null,
+      hp: null,
       satchel: { red_ochre: 2, woad: 1, soot: 1, marsh_ochre: 0, entrail_omen: 1, bird_omen: 0, smoke_omen: 0, blood_omen: 1 },
       log: [
         { kind: 'sys', text: 'The vault opens on the Green Lands. Sear Brands, grow Bonds, bind Trophies — the vessel remembers all three.' },
@@ -977,10 +1039,12 @@
 
     return {
       ...state,
+      character: { generation: 1, ...state.character },
       inventory: reflowInventory(state.inventory || []),
       equipment,
       atelierItem: isKnownRuntimeItem(state.atelierItem) ? state.atelierItem : null,
       satchel,
+      hp: typeof state.hp === 'number' ? Math.max(0, state.hp) : null,
     };
   };
 
@@ -1129,17 +1193,70 @@
     );
   };
 
-  const EquipmentSlot = ({ slotType, item, label, size = 's2x2', onPointerDown, draggingItem, onHover }) => {
-    const highlight = isSlotCompatible(slotType, draggingItem);
+  const EquipmentSlot = ({ slotType, item, label, size = 's2x2', onPointerDown, draggingItem, onHover, locked = false }) => {
+    const highlight = !locked && isSlotCompatible(slotType, draggingItem);
     const cls = ['equip-slot', size];
     if (highlight) cls.push('highlight');
+    if (locked) cls.push('locked');
     return (
       <div data-slot-id={slotType} className={cls.join(' ')}>
-        {item ? (
+        {item && !locked ? (
           <ItemComponent item={item} inSlot onPointerDown={(e) => onPointerDown(e, item, slotType)} onHover={onHover} />
         ) : (
           <span className="label">{label}</span>
         )}
+      </div>
+    );
+  };
+
+  const DeathOverlay = ({ legacy, onMantle }) => {
+    const fallenInfo = legacy && legacy.fallen;
+    const relics = (legacy && legacy.relics) || [];
+    const [heirName, setHeirName] = useState('');
+    const [heirArch, setHeirArch] = useState(fallenInfo ? fallenInfo.archetype : Object.keys(pack.archetypes)[0]);
+    return (
+      <div className="death-overlay">
+        <div className="death-panel">
+          <div className="death-title">{fallenInfo ? fallenInfo.name : 'The bearer'} has fallen</div>
+          <div className="death-sub">
+            {fallenInfo ? `Level ${fallenInfo.level} · ${pack.archetypes[fallenInfo.archetype] ? pack.archetypes[fallenInfo.archetype].name : ''} · ${fallenInfo.text}` : 'The chronicle records the end.'}
+            <br />
+            {relics.length
+              ? 'What was carried long enough to remember, survives. The rest is lost to the Green Lands.'
+              : 'Nothing had learned enough to survive. The heir starts from bare hands.'}
+          </div>
+          {relics.map((rel, i) => {
+            const kin = rel.bonds && rel.bonds[0] && rel.bonds[0].kinship;
+            const tint = itemTint(rel);
+            return (
+              <div key={i} className="relic-row" style={{ borderColor: tint.border }}>
+                <ArtImg src={artSrc(rel)} fallbackIcon={itemIcon(rel)} size={30} />
+                <div>
+                  <div className="r-name" style={{ color: tint.color }}>{displayItemName(rel)}</div>
+                  <div className="r-kin">
+                    {rel.awakened ? 'Awakened relic' : 'Memento'}
+                    {kin && pack.archetypes[kin] ? ` · its bonds answer fully to a ${pack.archetypes[kin].name}` : ''}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+          <div className="heir-form">
+            <input
+              placeholder="Name the heir"
+              value={heirName}
+              onChange={(e) => setHeirName(e.target.value)}
+              aria-label="Heir name"
+              spellCheck="false"
+            />
+            <select className="arch-select" value={heirArch} onChange={(e) => setHeirArch(e.target.value)} aria-label="Heir archetype">
+              {Object.entries(pack.archetypes).map(([id, a]) => <option key={id} value={id}>{a.name}</option>)}
+            </select>
+            <button className="btn primary" onClick={() => onMantle(heirName.trim() || 'Nameless', heirArch)}>
+              Take up the mantle
+            </button>
+          </div>
+        </div>
       </div>
     );
   };
@@ -1159,7 +1276,21 @@
     const [tooltip, setTooltip] = useState(null);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [toast, setToast] = useState(null);
+    const [treeBridge, setTreeBridge] = useState(readTreeBridge);
     const packGridRefs = useRef({});
+    const warhornUnlocked = (treeBridge.unlocks || []).includes('war_horn_curio');
+
+    useEffect(() => {
+      const sync = () => setTreeBridge(readTreeBridge());
+      window.addEventListener('storage', sync);
+      window.addEventListener('focus', sync);
+      const poll = setInterval(sync, 3000);
+      return () => {
+        window.removeEventListener('storage', sync);
+        window.removeEventListener('focus', sync);
+        clearInterval(poll);
+      };
+    }, []);
 
     const level = forge.charLevel(character);
     const agg = useMemo(
@@ -1167,6 +1298,10 @@
       [equipment, character.archetype, level]
     );
     const satchelTotal = Object.values(satchel).reduce((a, b) => a + b, 0);
+    const maxLife = Math.max(1, agg.sheet.life || 1);
+    const curHp = state.hp == null ? maxLife : Math.min(state.hp, maxLife);
+    const fallen = state.hp === 0;
+    const restCost = 30 + level * 10;
 
     useEffect(() => {
       try { localStorage.setItem(SAVE_KEY, forge.serialize(state)); } catch (err) { /* storage blocked */ }
@@ -1281,6 +1416,11 @@
       const slotElement = elements.find(el => el.getAttribute && el.getAttribute('data-slot-id'));
       if (slotElement) {
         const slotId = slotElement.getAttribute('data-slot-id');
+        if (slotId === 'warhorn' && !warhornUnlocked) {
+          showToast('Locked — allocate Champion on the passive tree');
+          setState(prev => returnToSource(prev, drag));
+          return;
+        }
         if (!isSlotCompatible(slotId, item)) {
           showToast('Incompatible slot');
           setState(prev => returnToSource(prev, drag));
@@ -1376,11 +1516,60 @@
       return { x: targetX, y: targetY, packId: def.id, isValid };
     };
 
+    /* -------- legacy (permadeath heirlooms) -------- */
+    const readLegacy = () => {
+      try { return JSON.parse(localStorage.getItem(LEGACY_KEY)) || null; } catch (err) { return null; }
+    };
+    const harvestRelics = (st) => {
+      const all = [
+        ...st.inventory,
+        ...Object.values(st.equipment).filter(Boolean),
+        ...(st.atelierItem ? [st.atelierItem] : []),
+      ];
+      const relics = all.filter(it => it.awakened);
+      const memento = all
+        .filter(it => !it.awakened && (it.bonds || []).length > 0)
+        .sort((a, b) => (b.evolutions || 0) - (a.evolutions || 0))[0];
+      if (memento) relics.push(memento);
+      return relics.map(({ x, y, packId, ...rest }) => rest);
+    };
+
     /* -------- actions -------- */
     const ventureForth = () => {
       setState(prev => {
-        const r = forge.venture(prev.character, prev.equipment);
-        const events = [...r.events];
+        if (prev.hp === 0) return prev;
+        const enc = pack.encounters[Math.floor(Math.random() * pack.encounters.length)];
+        const lvl = forge.charLevel(prev.character);
+        const battle = VerdigrisCombat.resolveBattle(forge, pack, {
+          items: Object.values(prev.equipment),
+          level: lvl,
+          hp: prev.hp == null ? maxLife : Math.min(prev.hp, maxLife),
+          charName: prev.character.name,
+          archetype: prev.character.archetype,
+          encounter: enc,
+        });
+        const events = [{ kind: 'deed', text: `${prev.character.name} ${enc.text}.` }, ...battle.log];
+
+        if (!battle.survived) {
+          const legacy = {
+            generation: prev.character.generation || 1,
+            fallen: {
+              name: prev.character.name, archetype: prev.character.archetype,
+              level: lvl, text: enc.text, when: Date.now(),
+            },
+            relics: harvestRelics(prev),
+          };
+          try { localStorage.setItem(LEGACY_KEY, JSON.stringify(legacy)); } catch (err) { /* storage blocked */ }
+          setTimeout(() => setToast({ msg: `${prev.character.name} has fallen.`, tone: 'err' }), 0);
+          return pushLog(events)({ ...prev, hp: 0 });
+        }
+
+        const r = forge.venture(prev.character, prev.equipment, { encounter: enc });
+        const spoils = Math.round(battle.kills * (12 + 2 * lvl) * battle.spoilsMult);
+        r.character.gold += spoils;
+        const ventureGold = r.character.gold - prev.character.gold;
+        events.push({ kind: 'sys', text: `Gold gathered: +${ventureGold}g.` });
+        events.push(...r.events.slice(1));
         let nextInv = prev.inventory;
         r.drops.forEach(d => {
           const item = decorateWithTaxonomyArt(d);
@@ -1398,8 +1587,50 @@
         }
         const big = events.find(e => e.kind === 'awake') || events.find(e => e.kind === 'bond');
         if (big) setTimeout(() => setToast({ msg: big.text, tone: toneOf(big) }), 0);
-        return pushLog(events)({ ...prev, character: r.character, equipment: r.equipment, inventory: nextInv });
+        return pushLog(events)({
+          ...prev, character: r.character, equipment: r.equipment, inventory: nextInv, hp: battle.hp,
+        });
       });
+    };
+
+    const restUp = () => {
+      setState(prev => {
+        if (prev.hp === 0 || prev.hp == null) return prev;
+        if (prev.character.gold < restCost) { showToast('Not enough gold to rest'); return prev; }
+        return pushLog([{ kind: 'sys', text: `Rested at the waystation. Wounds close. (-${restCost}g)` }])({
+          ...prev, hp: null, character: { ...prev.character, gold: prev.character.gold - restCost },
+        });
+      });
+    };
+
+    const takeUpMantle = (heirName, heirArchetype) => {
+      const legacy = readLegacy() || { generation: character.generation || 1, relics: [], fallen: null };
+      const heir = forge.createCharacter({ name: heirName || 'Nameless', archetype: heirArchetype, gold: 150 });
+      heir.generation = (legacy.generation || 1) + 1;
+      const inv = [];
+      const put = (item) => {
+        const pos = findFreeSpotAnyPack(inv, item);
+        if (pos) inv.push({ ...item, ...pos });
+      };
+      put(forge.generateItem({ ilvl: 6, brands: 1 }));
+      put(forge.generateItem({ ilvl: 6, brands: 0 }));
+      (legacy.relics || []).forEach(put);
+      const entries = (legacy.relics || []).map(rel => ({
+        kind: 'bond',
+        text: `Inherited: ${displayItemName(rel)} — it remembers ${legacy.fallen ? legacy.fallen.name : 'another hand'}.`,
+      }));
+      entries.unshift({ kind: 'awake', text: `Generation ${heir.generation}. ${heir.name} takes up the mantle.` });
+      try { localStorage.removeItem(LEGACY_KEY); } catch (err) { /* storage blocked */ }
+      setState({
+        character: heir,
+        inventory: inv,
+        equipment: { ...DEFAULT_EQUIPMENT },
+        atelierItem: null,
+        satchel: { red_ochre: 1, woad: 0, soot: 0, marsh_ochre: 0, entrail_omen: 0, bird_omen: 0, smoke_omen: 0, blood_omen: 1 },
+        hp: null,
+        log: entries,
+      });
+      setBenchOpen(false);
     };
 
     const spawnLoot = () => {
@@ -1509,6 +1740,20 @@
       });
     };
 
+    const shareSocketed = () => {
+      if (!atelierItem) { showToast('Socket an item first'); return; }
+      const payload = { v: 1, bearer: character.name, archetype: character.archetype, item: atelierItem };
+      const hash = btoa(unescape(encodeURIComponent(JSON.stringify(payload))))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      const url = new URL('item.html', window.location.href).href + '#' + hash;
+      const copied = () => showToast('Relic card link copied', 'ok');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(copied, () => window.open(url, '_blank'));
+      } else {
+        window.open(url, '_blank');
+      }
+    };
+
     const buyTool = (toolId) => {
       setState(prev => {
         const cost = TOOL_PRICES[toolId];
@@ -1556,7 +1801,17 @@
       const packItems = inventory.filter(item => normalizePackId(item.packId) === def.id);
       return (
         <div key={def.id} className={`pack-block ${def.tone === 'main' ? 'main-pack' : ''}`}>
-          <div className="pack-title">{def.label} · {packItems.length} · {def.w}×{def.h}</div>
+          <div className="pack-title">
+            <span>{def.label} · {packItems.length} · {def.w}×{def.h}</span>
+            {def.tone === 'main' && (
+              <span className="pack-actions">
+                <button className="btn small" onClick={sortPack}>Sort</button>
+                <button className={`btn small ${benchOpen ? 'primary' : ''}`} aria-expanded={benchOpen} onClick={() => setBenchOpen(o => !o)}>
+                  {benchOpen ? 'Close Atelier' : `Atelier · ${satchelTotal}`}
+                </button>
+              </span>
+            )}
+          </div>
           <div className={`grid-shell ${def.tone === 'mini' ? 'mini' : ''}`}>
             <div
               ref={el => {
@@ -1614,6 +1869,8 @@
           />
         )}
 
+        {fallen && <DeathOverlay legacy={readLegacy()} onMantle={takeUpMantle} />}
+
         <div className="top-bar">
           <div>
             <a className="back-link" href="../../index.html">&larr; WIZARD</a>
@@ -1625,9 +1882,11 @@
               <span style={{ width: 8, height: 8, borderRadius: 4, background: '#e0c25e', display: 'inline-block', boxShadow: '0 0 5px rgba(201,162,39,0.8)' }} />
               {character.gold.toLocaleString()}
             </div>
-            <button className="btn primary" onClick={ventureForth}>Venture Forth</button>
+            <button className="btn primary" onClick={ventureForth} disabled={fallen}>Venture Forth</button>
+            <button className="btn" onClick={restUp} disabled={fallen || curHp >= maxLife || character.gold < restCost}>Rest · {restCost}g</button>
             <button className="btn" onClick={spawnLoot}>Spawn Loot</button>
             <button className="btn" onClick={spawnTaxonomySet}>Spawn Set</button>
+            <a className="btn" href="core/playground.html">Playground</a>
             <a className="btn" href="taxonomy-review.html">Taxonomy</a>
             <button className="btn" onClick={resetVault}>Reset</button>
           </div>
@@ -1646,8 +1905,11 @@
               <span className="char-level">Lv {level} · {character.xp % 100}/100</span>
             </div>
 
+            <div className="hp-bar" title={`Life ${curHp}/${maxLife}`}>
+              <div className="hp-fill" style={{ width: `${Math.round((curHp / maxLife) * 100)}%` }} />
+            </div>
             <div className="stat-grid">
-              <div>Life <strong>{sheet.life}</strong></div>
+              <div>Life <strong>{curHp}/{maxLife}</strong></div>
               <div>Spirit <strong>{sheet.spirit}</strong></div>
               <div>EHP <strong>{sheet.effectiveHp}</strong></div>
               <div>Damage <strong>{sheet.damage || '—'}</strong></div>
@@ -1723,6 +1985,7 @@
                           <button className="btn small" onClick={() => runOp('resonate')}>Resonate ◈ · {OP_COST.resonate}g</button>
                           <button className="btn small" onClick={() => runOp('sever')}>Sever · {OP_COST.sever}g</button>
                           <button className="btn small" disabled={!trophyReady} onClick={bindTrophy}>Bind Trophy ✧</button>
+                          <button className="btn small" onClick={shareSocketed}>Share Card</button>
                         </div>
 
                         {odds.length > 0 && (
@@ -1784,35 +2047,31 @@
                   <EquipmentSlot slotType="mainHand" label="Main Hand" size="s2x4" item={equipment.mainHand} {...slotProps} />
                   <EquipmentSlot slotType="gloves" label="Hands" size="s2x2" item={equipment.gloves} {...slotProps} />
                 </div>
-                <div className="doll-col cloak-col">
+                <div className="doll-col">
                   <EquipmentSlot slotType="cloak" label="Cloak" size="s2x3" item={equipment.cloak} {...slotProps} />
-                </div>
-                <div className="doll-col thin-l">
-                  <EquipmentSlot slotType="ring1" label="Ring" size="s1x1" item={equipment.ring1} {...slotProps} />
+                  <EquipmentSlot slotType="amulet" label="Neck" size="s2x2" item={equipment.amulet} {...slotProps} />
+                  <div className="ring-row">
+                    <EquipmentSlot slotType="ring1" label="Ring" size="s1x1" item={equipment.ring1} {...slotProps} />
+                    <EquipmentSlot slotType="ring2" label="Ring" size="s1x1" item={equipment.ring2} {...slotProps} />
+                    <EquipmentSlot
+                      slotType="warhorn"
+                      label={warhornUnlocked ? 'War-horn' : '🔒 War-horn'}
+                      size="s1x1"
+                      item={equipment.warhorn}
+                      locked={!warhornUnlocked}
+                      {...slotProps}
+                    />
+                  </div>
                 </div>
                 <div className="doll-col">
                   <EquipmentSlot slotType="head" label="Head" size="s2x2" item={equipment.head} {...slotProps} />
                   <EquipmentSlot slotType="body" label="Body" size="s2x3" item={equipment.body} {...slotProps} />
                   <EquipmentSlot slotType="belt" label="Waist" size="s2x1" item={equipment.belt} {...slotProps} />
                 </div>
-                <div className="doll-col thin-r">
-                  <EquipmentSlot slotType="amulet" label="Neck" size="s1x1" item={equipment.amulet} {...slotProps} />
-                  <EquipmentSlot slotType="ring2" label="Ring" size="s1x1" item={equipment.ring2} {...slotProps} />
-                </div>
                 <div className="doll-col">
                   <EquipmentSlot slotType="offHand" label="Off Hand" size="s2x4" item={equipment.offHand} {...slotProps} />
                   <EquipmentSlot slotType="boots" label="Feet" size="s2x2" item={equipment.boots} {...slotProps} />
                 </div>
-              </div>
-            </div>
-
-            <div className="pack-head">
-              <div className="section-title">{inventory.length} items · main {GRID_W}×{GRID_H} · specialty packs 4×4</div>
-              <div className="pack-actions">
-                <button className="btn small" onClick={sortPack}>Sort</button>
-                <button className={`btn small ${benchOpen ? 'primary' : ''}`} aria-expanded={benchOpen} onClick={() => setBenchOpen(o => !o)}>
-                  {benchOpen ? 'Close Atelier' : `Atelier · ${satchelTotal}`}
-                </button>
               </div>
             </div>
 
@@ -1849,6 +2108,11 @@
               <span key={id} className="pill">✧ {pack.trophies[id].name} {Math.min(n, pack.trophies[id].fragments)}/{pack.trophies[id].fragments}{n >= pack.trophies[id].fragments ? ' ✓' : ''}</span>
             ))}
             {!Object.values(character.fragments).some(n => n > 0) && <span style={{ color: 'var(--dim)', fontSize: '0.75rem' }}>none yet — hunt</span>}
+          </div>
+          <div className="section-title">Lineage</div>
+          <div style={{ color: 'var(--dim)', fontSize: '0.75rem', lineHeight: 1.5 }}>
+            Generation {character.generation || 1}. When a bearer falls, awakened relics and the
+            most-storied memento pass to the heir — estranged, unless the heir walks the same path.
           </div>
           <div className="section-title">Chronicle</div>
           <div className="chronicle">

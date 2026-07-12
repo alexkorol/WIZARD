@@ -2,6 +2,15 @@
 
 Newest entries first. This is the running memory for the north-star overhaul.
 
+## 2026-07-12 — Phase 6: class callings and the unlock bridge
+
+- Class rule decided and documented: the FIRST class milestone allocated marks the character's calling and is the only one granting slot unlocks; later class nodes give their stats only (the build log narrates both cases). Refunding the calling promotes the next-allocated class. Covered by a runtime smoke test.
+- Unlock flags ride the stat sheet (`stats.characterClass`, `stats.unlocks`) per the `CLASS_UNLOCKS` table: Champion → tower_shield + war_horn_curio, Acrobat → second_weapon_set + dual_wield_one_handers, Archmage → second_curio + rite_focus_socket, Reaver → thrown_melee_projectile + belt_fetish, Nightblade → trap_mark_tools + venom_vials, Ritualist → banners + war_companion.
+- Cross-page bridge: the tree publishes `{ class, unlocks, updatedAt }` to `localStorage["verdigris-bridge"]` (and `window.VerdigrisBridge`) on every recalculation. A "Calling" panel in the tree's left column shows the live state.
+- Vesselforge end-to-end demo: the paperdoll gained a war-horn curio seat that renders locked (dashed, padlocked label) until the bridge carries `war_horn_curio`; drops onto the locked seat bounce with "Locked — allocate Champion on the passive tree". The page re-reads the bridge on storage events, window focus, and a slow poll.
+- Browser-verified end to end: armoury page showed the locked seat; pathing 7 rings up the STR spoke to Champion in the tree published the bridge; returning to the armoury showed the seat unlocked. Console clean on both pages.
+- Note: rpg_inventory/index.html and verdigris-pack.js carry pre-existing local WIP alongside these changes (flagged in the commit messages).
+
 ## 2026-07-12 — Phase 5: carved stones (jewels)
 
 - Added `assets/jewels.js` (`VerdigrisJewels`, UMD): the five carved-stone families with a curated demo stash — Whorl-stones (plain registry mods), Eye-stones (allocated smalls/notables in radius also grant a mod), Change-stones (conduit attributes in radius rewritten at an overpaying rate, per the PoE transformation lesson), Saga-stones (seeded deterministic transforms), and Pattern-stones (geometry benders).

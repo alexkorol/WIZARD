@@ -427,8 +427,39 @@ function testJewelSockets() {
     'Pattern-stones should be handed to the detector.');
 }
 
+function testClassCallingAndBridge() {
+  const window = runStandaloneApp();
+  const tree = window.skillTree;
+  const classes = Array.from(tree.nodes.values()).filter(node => node.type === 'class');
+  assert.equal(classes.length, 6, 'Six class milestones should exist.');
+
+  const champion = classes.find(node => node.name === 'Champion');
+  const acrobat = classes.find(node => node.name === 'Acrobat');
+  assert.ok(champion && acrobat, 'Champion and Acrobat milestones should exist.');
+
+  champion.active = true;
+  tree.classOrder.push(champion.id);
+  tree.recalculate();
+  assert.equal(tree.stats.characterClass, 'Champion', 'The first class allocated marks the calling.');
+  assert.ok(tree.stats.unlocks.includes('war_horn_curio'), 'Champion unlocks the war-horn curio slot.');
+  assert.equal(window.VerdigrisBridge.class, 'Champion', 'The bridge payload publishes the calling.');
+  assert.ok(window.VerdigrisBridge.unlocks.includes('tower_shield'), 'The bridge payload carries unlock flags.');
+
+  acrobat.active = true;
+  tree.classOrder.push(acrobat.id);
+  tree.recalculate();
+  assert.equal(tree.stats.characterClass, 'Champion', 'A second class node gives stats only; the calling stays first.');
+  assert.equal(tree.stats.unlocks.includes('second_weapon_set'), false, 'Only the first calling grants unlocks.');
+
+  champion.active = false;
+  tree.classOrder = tree.classOrder.filter(id => id !== champion.id);
+  tree.recalculate();
+  assert.equal(tree.stats.characterClass, 'Acrobat', 'Refunding the calling promotes the next allocated class.');
+}
+
 const tests = [
   ['Standalone classic scripts initialize the tree runtime', testRuntimeInitializes],
+  ['Class calling publishes unlock flags over the bridge', testClassCallingAndBridge],
   ['Subtrees attach to the ring-10 gateways at runtime', testSubtreesAttachToRingTenGateways],
   ['Allocation updates headline deltas', testAllocationUpdatesHeadlineDeltas],
   ['Patterns render and boost runtime stats', testPatternsRenderAndBoostStats],

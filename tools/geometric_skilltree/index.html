@@ -1529,6 +1529,11 @@
           </section>
 
           <section class="section">
+            <div class="section-title">Calling</div>
+            <div class="delta-list" id="calling-display"></div>
+          </section>
+
+          <section class="section">
             <div class="section-title">Recent Results</div>
             <div class="delta-list" id="delta-list"></div>
           </section>
@@ -1684,6 +1689,19 @@
     const VERDIGRIS_JEWELS = window.VerdigrisJewels;
     const MAIN_RING_DEPTH = AUTHORED_TREE_DATA.mainRingDepth || 10;
     const PATTERN_TUNING = AUTHORED_TREE_DATA.patternTuning || {};
+    // §8: the FIRST class milestone allocated marks the character's calling and is
+    // the only one granting its slot unlocks; later class nodes give stats only.
+    // Unlock flags ride the stat sheet and cross to rpg_inventory over the bridge.
+    const CLASS_UNLOCKS = {
+      Champion: ["tower_shield", "war_horn_curio"],
+      Acrobat: ["second_weapon_set", "dual_wield_one_handers"],
+      Archmage: ["second_curio", "rite_focus_socket"],
+      Reaver: ["thrown_melee_projectile", "belt_fetish"],
+      Nightblade: ["trap_mark_tools", "venom_vials"],
+      Ritualist: ["banners", "war_companion"]
+    };
+    const BRIDGE_STORAGE_KEY = "verdigris-bridge";
+
     // Loop-crown empowerment curve. Concentric crowns (radius 1 + radius 2 around one
     // center) compound these factors multiplicatively instead of summing them.
     const LOOP_EMPOWER_TUNING = {
@@ -2177,6 +2195,7 @@
         this.jewelPickerFor = null;
         this.sagaState = new Map();
         this.sagaTestimony = 0;
+        this.classOrder = [];
 
         this.buildMainTree();
         this.buildSubtrees();
@@ -2361,8 +2380,35 @@
         this.selectedNodeId = "0,0";
         this.socketedJewels = new Map();
         this.jewelPickerFor = null;
+        this.classOrder = [];
         this.log = ["Build reset to origin."];
         this.recalculate();
+      }
+
+      /* ---- class milestones & unlock bridge (Phase 6) ---- */
+
+      characterClassNode() {
+        const firstId = this.classOrder.find(id => this.nodes.get(id)?.active);
+        return firstId ? this.nodes.get(firstId) : null;
+      }
+
+      getUnlocks() {
+        const classNode = this.characterClassNode();
+        return classNode ? (CLASS_UNLOCKS[classNode.name] || []) : [];
+      }
+
+      publishBridge() {
+        const classNode = this.characterClassNode();
+        const payload = {
+          class: classNode ? classNode.name : null,
+          unlocks: this.getUnlocks(),
+          updatedAt: Date.now()
+        };
+        window.VerdigrisBridge = payload;
+        try {
+          window.localStorage.setItem(BRIDGE_STORAGE_KEY, JSON.stringify(payload));
+        } catch (_) {}
+        return payload;
       }
 
       /* ---- carved stones (jewels), Phase 5 ---- */
@@ -2604,6 +2650,14 @@
         if (!option) return;
         this.saveHistory();
         node.active = true;
+        if (node.type === "class" && !this.classOrder.includes(node.id)) {
+          this.classOrder.push(node.id);
+          if (this.classOrder.length === 1) {
+            this.commit(`${node.name} is your calling. Its slot unlocks now reach the armoury.`);
+          } else {
+            this.commit(`${node.name} allocated for its stats; your calling stays ${this.characterClassNode()?.name}.`);
+          }
+        }
         conduit.allocatedVariant = option.id;
         this.points.skill -= node.cost + 1;
         this.pending = null;
@@ -2694,6 +2748,9 @@
         if (node.type === "socket") {
           this.socketedJewels.delete(node.id);
           if (this.jewelPickerFor === node.id) this.jewelPickerFor = null;
+        }
+        if (node.type === "class") {
+          this.classOrder = this.classOrder.filter(id => id !== node.id);
         }
         node.connections.forEach(neighborId => {
           const conduit = this.conduits.get(edgeKey(node.id, neighborId));
@@ -2790,6 +2847,7 @@
         this.empoweredNodes = new Set(this.empoweredNodeDetails.keys());
         this.shapeBonuses = this.computeShapeBonuses();
         this.stats = this.computeStats();
+        this.publishBridge();
         this.lastDeltas = this.computeDeltas(previousStats, this.stats);
         if (window.renderer) window.renderer.update();
         if (window.ui) window.ui.update();
@@ -2924,7 +2982,15 @@
           cooldownRecovery: round(sums.cooldown_recovery || 0)
         };
 
-        return { attrs, totalAttrs: sheet.attrs, derived, sheet };
+        const classNode = this.characterClassNode();
+        return {
+          attrs,
+          totalAttrs: sheet.attrs,
+          derived,
+          sheet,
+          characterClass: classNode ? classNode.name : null,
+          unlocks: this.getUnlocks()
+        };
       }
 
       computeDeltas(previous, next) {
@@ -4085,6 +4151,19 @@
         this.updateDeltas();
         this.updateChoices();
         this.updateJewelPicker();
+        this.updateCalling();
+      }
+
+      updateCalling() {
+        const display = document.getElementById("calling-display");
+        if (!display) return;
+        const stats = this.tree.stats;
+        if (!stats.characterClass) {
+          display.innerHTML = `<div>No calling yet. The first class milestone you allocate (ring 7) marks your class and unlocks its gear slots.</div>`;
+          return;
+        }
+        const unlockText = stats.unlocks.map(flag => flag.replace(/_/g, " ")).join(", ");
+        display.innerHTML = `<div><strong>${stats.characterClass}</strong></div><div>Unlocked: ${unlockText}.</div><div>The armoury page reads these unlocks live.</div>`;
       }
 
       updateJewelPicker() {
