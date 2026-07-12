@@ -2,6 +2,11 @@
 
 Newest entries first. This is the running memory for the north-star overhaul.
 
+## 2026-07-12 — Post-overhaul: the edge vesica is real, and now it looks real
+
+- Alexei suspected the edge-form vesica was unobtainable because the shared edge would need "both arcs at once." It doesn't — loop perimeters are variant-agnostic by design, so ONE allocated arc serves both circles (verified: 11 conduits, both centers crown, lens +32%). The suspicion pointed at a genuine legibility bug though: the single arc bows around only one circle, so the other looked broken.
+- Fix: when a conduit's allocated arc serves two completed loops, the renderer ghosts in the alternate arc (dashed, faint, in the conduit's own color) so both crowns visibly close. Covered by a runtime smoke test (edge vesica obtainable + ghost class present) and verified visually in the browser.
+
 ## 2026-07-12 — Post-overhaul: vesica piscis (Alexei's second discovery)
 
 - Alexei built two loop crowns with ADJACENT centers — each center sitting on the other's ring, the true vesica piscis — and the detector only knew the edge-sharing form (centers two apart). Vesicas now come in two forms: `edge` (rings share one conduit, lens = that conduit's two nodes, share 0.5) and `piscis` (centers one apart, lens = the two common neighbors, share `piscisLensShare` 0.75 — the deeper overlap pays more). Piscis also counts double in the global vesica bonus, and the panel row calls it out.

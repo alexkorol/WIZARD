@@ -292,6 +292,47 @@ function testPanelCollapse() {
   assert.equal(body.classList.contains('right-collapsed'), false, 'Focus mode toggles back to both open.');
 }
 
+function testEdgeVesicaAndGhostArc() {
+  const window = runStandaloneApp();
+  const tree = window.skillTree;
+  const HEX = [[1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1], [0, 1]];
+  const ringIds = (cq, cr) => {
+    const out = [];
+    let q = cq + HEX[4][0];
+    let r = cr + HEX[4][1];
+    for (let side = 0; side < 6; side += 1) {
+      out.push(`${q},${r}`);
+      q += HEX[side][0];
+      r += HEX[side][1];
+    }
+    return out;
+  };
+  const centers = [[2, -1], [4, -2]];
+  const ids = new Set(centers.map(([q, r]) => `${q},${r}`));
+  const edges = new Set();
+  centers.forEach(([cq, cr]) => {
+    const ring = ringIds(cq, cr);
+    ring.forEach(id => ids.add(id));
+    ring.forEach((id, i) => edges.add([id, ring[(i + 1) % ring.length]].sort().join(':')));
+  });
+  tree.nodes.forEach(node => { node.active = node.id === '0,0' || ids.has(node.id); });
+  tree.conduits.forEach(conduit => { conduit.allocatedVariant = null; });
+  edges.forEach(id => { const conduit = tree.conduits.get(id); if (conduit) conduit.allocatedVariant = 'inner'; });
+  tree.recalculate();
+
+  // One allocated arc serves both perimeters: 11 conduits, two crowns, a lens.
+  assert.equal(edges.size, 11, 'The edge vesica costs 6+6-1 perimeter conduits.');
+  const vesica = tree.patternReport.vesicas.find(entry => entry.form === 'edge');
+  assert.ok(vesica, 'The edge-form vesica is obtainable with single-variant conduits.');
+  assert.equal(tree.patternReport.loops.length, 2, 'Both centers crown off the shared edge.');
+
+  // The shared conduit's alternate arc ghosts in so both circles read whole.
+  const conduit = tree.conduits.get(vesica.sharedEdge);
+  const alternate = conduit.options.find(option => option.id !== conduit.allocatedVariant);
+  const variantEl = window.renderer.conduitEls.get(conduit.id).variants.get(alternate.id);
+  assert.ok(variantEl.line.classList.contains('ghost-loop'), 'The alternate arc of the shared edge should render as a ghost.');
+}
+
 function testBuildCodeRoundTrip() {
   const window = runStandaloneApp();
   const tree = window.skillTree;
@@ -326,6 +367,7 @@ const tests = [
   ['Build codes round-trip a whole allocation', testBuildCodeRoundTrip],
   ['Auto-pathing extends waves by default', testWaveFirstAutoPathing],
   ['Side panels collapse into focus mode', testPanelCollapse],
+  ['Edge vesicas build with one arc and ghost the other', testEdgeVesicaAndGhostArc],
   ['Subtrees attach to the ring-10 gateways at runtime', testSubtreesAttachToRingTenGateways],
   ['Allocation updates headline deltas', testAllocationUpdatesHeadlineDeltas],
   ['Patterns render and boost runtime stats', testPatternsRenderAndBoostStats],

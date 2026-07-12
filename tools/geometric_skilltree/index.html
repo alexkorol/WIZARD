@@ -533,6 +533,15 @@
       pointer-events: stroke;
     }
 
+    /* The alternate arc of a conduit whose one allocated arc serves two
+       completed loops — drawn as a ghost so both circles read whole. */
+    .conduit-path.ghost-loop {
+      stroke: var(--path-color);
+      stroke-width: calc(var(--path-allocated-width) * 0.55);
+      stroke-dasharray: 5 8;
+      opacity: 0.45;
+    }
+
     .conduit-hit:hover + .conduit-path {
       stroke-width: 4.2;
       opacity: 0.72;
@@ -4227,13 +4236,20 @@
           els.halo.style.display = visible ? "" : "none";
           els.label.style.display = visible ? "" : "none";
         });
+        // A single allocated arc can serve the perimeters of TWO completed
+        // loops at once (the edge-form vesica). Ghost the alternate arc on
+        // such conduits so both circles visibly close.
+        const loopUse = new Map();
+        (this.tree.patternReport?.loops || []).forEach(loop => {
+          (loop.conduitIds || []).forEach(id => loopUse.set(id, (loopUse.get(id) || 0) + 1));
+        });
         this.tree.conduits.forEach(conduit => {
           const el = this.conduitEls.get(conduit.id);
           const visible = this.tree.isConduitVisible(conduit);
           el.group.style.display = visible ? "" : "none";
           conduit.options.forEach(option => {
             const variantEl = el.variants.get(option.id);
-            variantEl.line.classList.remove("allocated", "available", "pending", "swap-option", "extra");
+            variantEl.line.classList.remove("allocated", "available", "pending", "swap-option", "extra", "ghost-loop");
             if (!visible) return;
             const choiceId = this.tree.choiceId(conduit.id, option.id);
             if (conduit.allocatedVariant === option.id) {
@@ -4245,6 +4261,9 @@
               variantEl.line.classList.add("pending");
             } else if (conduit.allocated && conduit.allocatedVariant !== option.id) {
               variantEl.line.classList.add("swap-option");
+              if ((loopUse.get(conduit.id) || 0) >= 2) {
+                variantEl.line.classList.add("ghost-loop");
+              }
             } else if (!conduit.allocated && this.tree.isAvailableConduit(conduit, option.id)) {
               variantEl.line.classList.add("available");
             }
