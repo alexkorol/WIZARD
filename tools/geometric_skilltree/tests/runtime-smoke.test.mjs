@@ -258,10 +258,38 @@ function testIronMilestoneLoopBoost() {
   assert.ok(boosted > plain, `The Iron Milestone should empower the crowned center further (${boosted} vs ${plain}).`);
 }
 
+function testBuildCodeRoundTrip() {
+  const window = runStandaloneApp();
+  const tree = window.skillTree;
+  ['1,0', '2,0', '3,0'].forEach(id => tree.tryAllocateNode(id));
+  const socket = Array.from(tree.nodes.values()).find(node => node.type === 'socket');
+  socket.active = true;
+  tree.recalculate();
+  tree.socketJewel(socket.id, 'whorl-red');
+
+  const activeBefore = Array.from(tree.nodes.values()).filter(n => n.active).map(n => n.id).sort();
+  const variantsBefore = Array.from(tree.conduits.values()).filter(c => c.allocated).map(c => [c.id, c.allocatedVariant]).sort();
+  const code = tree.exportBuildCode();
+  assert.ok(typeof code === 'string' && code.length > 0, 'Export should produce a code.');
+
+  tree.reset();
+  assert.equal(Array.from(tree.nodes.values()).filter(n => n.active).length, 1, 'Reset should clear the build.');
+
+  assert.equal(tree.importBuildCode(code), true, 'A valid code should import.');
+  const activeAfter = Array.from(tree.nodes.values()).filter(n => n.active).map(n => n.id).sort();
+  const variantsAfter = Array.from(tree.conduits.values()).filter(c => c.allocated).map(c => [c.id, c.allocatedVariant]).sort();
+  assert.deepEqual(activeAfter, activeBefore, 'Import should restore the allocated nodes.');
+  assert.deepEqual(variantsAfter, variantsBefore, 'Import should restore conduit variants.');
+  assert.equal(tree.jewelAt(socket.id)?.id, 'whorl-red', 'Import should restore socketed stones.');
+
+  assert.equal(tree.importBuildCode('not a build code'), false, 'Garbage codes should be rejected.');
+}
+
 const tests = [
   ['Standalone classic scripts initialize the tree runtime', testRuntimeInitializes],
   ['Class calling publishes unlock flags over the bridge', testClassCallingAndBridge],
   ['The Iron Milestone empowers loops that carry it', testIronMilestoneLoopBoost],
+  ['Build codes round-trip a whole allocation', testBuildCodeRoundTrip],
   ['Subtrees attach to the ring-10 gateways at runtime', testSubtreesAttachToRingTenGateways],
   ['Allocation updates headline deltas', testAllocationUpdatesHeadlineDeltas],
   ['Patterns render and boost runtime stats', testPatternsRenderAndBoostStats],

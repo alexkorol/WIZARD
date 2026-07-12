@@ -4,7 +4,6 @@
 
 - Jewel drop/craft integration: roll carved stones through vesselforge instead of the curated stash (API already accepts arbitrary jewel JSON).
 - Near-complete pattern hints in the UI (e.g. "one conduit short of a loop crown").
-- Saved build import/export codes.
 - Revisit the meridian's pattern-power ceiling (~49% of DPS on a maximally committed line; envelope target is 20-30% for ordinary specialists — see OVERHAUL-LOG 2026-07-12).
 - Optional controller navigation focus rings for console-style planning.
 - Expand node iconography beyond letter/symbol markers.

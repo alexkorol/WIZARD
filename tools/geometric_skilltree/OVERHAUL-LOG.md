@@ -2,6 +2,11 @@
 
 Newest entries first. This is the running memory for the north-star overhaul.
 
+## 2026-07-12 — Post-overhaul: build codes
+
+- "Copy Build" / "Load Build" toolbar buttons serialize a whole allocation — active nodes, conduit variants, socketed carved stones, and class order — into one base64 code (plain JSON accepted on import too). Import validates seat existence, the 140-point budget, and the one-saga-stone limit, and lands as an undoable step with a narrated log line.
+- Copy uses the clipboard with a prompt fallback; a five-node spoke build reads as a ~220-character code. Round-trip covered by a runtime smoke test (allocation + variants + stones restored; garbage codes rejected). Browser-verified; console clean.
+
 ## 2026-07-12 — Post-overhaul: Waystone pattern hooks go mechanical
 
 - The six ring-5 Waystones' pattern promises are now engine rules, not design text. Each waystone seat carries a `patternHook` in tree-data (authored in `scripts/author-tree.mjs`); the app hands active hooks to the detector as a `waystones` input alongside pattern-stones.

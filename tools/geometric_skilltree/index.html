@@ -1654,6 +1654,8 @@
         <div class="toolbar-group" aria-label="Build controls">
           <button class="icon-btn" id="undo-btn" aria-label="Undo the last allocation" type="button">Undo</button>
           <button class="icon-btn danger" id="reset-btn" aria-label="Reset all allocations" type="button">Reset</button>
+          <button class="icon-btn" id="export-build-btn" aria-label="Copy a shareable build code" type="button">Copy Build</button>
+          <button class="icon-btn" id="import-build-btn" aria-label="Load a build code" type="button">Load Build</button>
         </div>
         <div class="toolbar-group" aria-label="Search">
           <label class="sr-only" for="search-input">Search passives</label>
@@ -2383,6 +2385,80 @@
         this.classOrder = [];
         this.log = ["Build reset to origin."];
         this.recalculate();
+      }
+
+      /* ---- build codes: share a whole allocation as one string ---- */
+
+      exportBuildCode() {
+        const payload = {
+          v: 1,
+          n: Array.from(this.nodes.values())
+            .filter(node => node.active && node.id !== "0,0")
+            .map(node => node.id),
+          c: Array.from(this.conduits.values())
+            .filter(conduit => conduit.allocated)
+            .map(conduit => [conduit.id, conduit.allocatedVariant]),
+          j: Array.from(this.socketedJewels.entries()).map(([socketId, jewel]) => [socketId, jewel.id]),
+          k: this.classOrder.slice()
+        };
+        const json = JSON.stringify(payload);
+        try {
+          return window.btoa(unescape(encodeURIComponent(json)));
+        } catch (_) {
+          return json;
+        }
+      }
+
+      importBuildCode(code) {
+        if (!code || !code.trim()) return false;
+        let json = code.trim();
+        try {
+          json = decodeURIComponent(escape(window.atob(json)));
+        } catch (_) { /* plain JSON codes are accepted too */ }
+        let data = null;
+        try {
+          data = JSON.parse(json);
+        } catch (_) {}
+        if (!data || data.v !== 1 || !Array.isArray(data.n)) {
+          this.commit("That build code could not be read.");
+          this.recalculate();
+          return false;
+        }
+        const nodeIds = data.n.filter(id => this.nodes.has(id) && id !== "0,0");
+        const conduitPicks = (Array.isArray(data.c) ? data.c : [])
+          .filter(entry => Array.isArray(entry) && this.conduits.has(entry[0]) && ["inner", "outer"].includes(entry[1]));
+        const cost = nodeIds.reduce((sum, id) => sum + this.nodes.get(id).cost, 0) + conduitPicks.length;
+        if (cost > START_POINTS.skill) {
+          this.commit(`That build costs ${cost} points; only ${START_POINTS.skill} exist.`);
+          this.recalculate();
+          return false;
+        }
+        this.saveHistory();
+        this.nodes.forEach(node => { node.active = node.id === "0,0"; });
+        this.conduits.forEach(conduit => { conduit.allocatedVariant = null; });
+        this.socketedJewels = new Map();
+        this.jewelPickerFor = null;
+        this.pending = null;
+        nodeIds.forEach(id => { this.nodes.get(id).active = true; });
+        conduitPicks.forEach(([id, variant]) => { this.conduits.get(id).allocatedVariant = variant; });
+        this.classOrder = (Array.isArray(data.k) ? data.k : [])
+          .filter(id => nodeIds.includes(id) && this.nodes.get(id)?.type === "class");
+        let sagaSeen = false;
+        (Array.isArray(data.j) ? data.j : []).forEach(([socketId, jewelId]) => {
+          const socket = this.nodes.get(socketId);
+          const jewel = (VERDIGRIS_JEWELS?.STASH || []).find(entry => entry.id === jewelId);
+          if (!socket || socket.type !== "socket" || !socket.active || !jewel) return;
+          if (jewel.family === "saga") {
+            if (sagaSeen) return;
+            sagaSeen = true;
+          }
+          this.socketedJewels.set(socketId, jewel);
+        });
+        this.points = { skill: START_POINTS.skill - cost };
+        this.selectedNodeId = "0,0";
+        this.commit(`Build loaded: ${nodeIds.length} passives, ${conduitPicks.length} paths, ${this.socketedJewels.size} stones (${cost} points).`);
+        this.recalculate();
+        return true;
       }
 
       /* ---- class milestones & unlock bridge (Phase 6) ---- */
@@ -4112,6 +4188,25 @@
       bind() {
         document.getElementById("reset-btn").addEventListener("click", () => this.tree.reset());
         document.getElementById("undo-btn").addEventListener("click", () => this.tree.undo());
+        document.getElementById("export-build-btn")?.addEventListener("click", async () => {
+          const code = this.tree.exportBuildCode();
+          let copied = false;
+          try {
+            await navigator.clipboard.writeText(code);
+            copied = true;
+          } catch (_) {}
+          if (copied) {
+            this.tree.commit("Build code copied to the clipboard.");
+            this.tree.recalculate();
+          } else if (typeof window.prompt === "function") {
+            window.prompt("Copy this build code:", code);
+          }
+        });
+        document.getElementById("import-build-btn")?.addEventListener("click", () => {
+          if (typeof window.prompt !== "function") return;
+          const code = window.prompt("Paste a build code:");
+          if (code) this.tree.importBuildCode(code);
+        });
         document.getElementById("search-input").addEventListener("input", event => {
           this.tree.searchTerm = event.target.value;
           this.update();
