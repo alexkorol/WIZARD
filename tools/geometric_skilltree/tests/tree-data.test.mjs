@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { Script } from 'node:vm';
+import { createRequire } from 'node:module';
 
 const TREE_DATA_PATH = new URL('../assets/tree-data.js', import.meta.url);
 const INDEX_PATH = new URL('../index.html', import.meta.url);
@@ -95,11 +96,57 @@ function testFileCompatibleScriptLoading() {
   assert.equal(/\bfetch\s*\(/.test(html), false, 'The standalone app should not fetch data at runtime.');
 }
 
+function testPhase4AuthoredContent() {
+  const require = createRequire(import.meta.url);
+  const stats = require('../../rpg_inventory/core/verdigris-stats.js');
+  const data = loadTreeData();
+  const seats = Object.values(data.seats);
+
+  const unauthored = seats.filter(seat => ['empty', 'draft'].includes(seat.status));
+  assert.deepEqual(unauthored.map(seat => seat.id), [], 'Phase 4: zero empty or draft seats remain.');
+
+  const named = seats.filter(seat => !['small', 'origin', 'socket'].includes(seat.type));
+  const seen = new Map();
+  named.forEach(seat => {
+    assert.equal(seen.has(seat.name), false, `Duplicate named seat "${seat.name}" (${seen.get(seat.name)} and ${seat.id}).`);
+    seen.set(seat.name, seat.id);
+  });
+
+  seats.forEach(seat => {
+    if (!seat.stat) return;
+    const resolved = stats.STAT_REGISTRY[seat.stat] || stats.STAT_REGISTRY[stats.ALIASES[seat.stat]];
+    assert.ok(resolved, `${seat.id} stat "${seat.stat}" must resolve in the shared registry.`);
+  });
+
+  seats.forEach(seat => {
+    if (seat.type === 'small') {
+      assert.ok(seat.clusterId, `Small seat ${seat.id} must belong to a cluster.`);
+    }
+  });
+
+  const roleCounts = seats.reduce((out, seat) => {
+    out[seat.type] = (out[seat.type] || 0) + 1;
+    return out;
+  }, {});
+  assert.equal(roleCounts.waystone, 6, 'Six ring-5 Waystones.');
+  assert.equal(roleCounts.keystone, 6, 'Six ring-6 keystones.');
+  assert.equal(roleCounts.sign, 6, 'Six ring-8 Signs.');
+  assert.equal(roleCounts.class, 6, 'Six ring-7 class milestones.');
+  assert.equal(roleCounts.socket, 12, 'Twelve jewel socket seats.');
+  assert.equal(roleCounts.mastery, 6, 'Six ring-3 masteries.');
+  assert.equal(roleCounts.gateway, 6, 'Six ring-10 gateways.');
+
+  const html = readFileSync(INDEX_PATH, 'utf8');
+  assert.equal(html.includes('NODE_EFFECTS'), false, 'The hash-pool generator must be deleted.');
+  assert.equal(html.includes('effectTemplate'), false, 'Procedural effect templates must be deleted.');
+}
+
 const tests = [
   ['TREE_DATA covers the ten-ring lattice', testMainSeatCoverage],
   ['TREE_DATA seats carry Phase 0 authoring metadata', testSeatShape],
   ['Subtree gateways moved to the ring-10 corners', testRimGateways],
-  ['index.html keeps file-compatible classic script loading', testFileCompatibleScriptLoading]
+  ['index.html keeps file-compatible classic script loading', testFileCompatibleScriptLoading],
+  ['Phase 4: fully authored tree with unique named seats', testPhase4AuthoredContent]
 ];
 
 let passed = 0;

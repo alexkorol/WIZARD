@@ -370,12 +370,23 @@ function testDesignerMode() {
   assert.equal(window.document.body.classList.contains('designer-on'), false, 'Disabling designer mode should clean the body class.');
 }
 
+function testSignExclusivity() {
+  const window = runStandaloneApp();
+  const tree = window.skillTree;
+  const signs = Array.from(tree.nodes.values()).filter(node => node.type === 'sign');
+  assert.equal(signs.length, 6, 'The authored tree should place six Signs.');
+  signs[0].active = true;
+  tree.tryAllocateNode(signs[1].id);
+  assert.equal(tree.nodes.get(signs[1].id).active, false, 'A second Sign allocation must be refused.');
+}
+
 const tests = [
   ['Standalone classic scripts initialize the tree runtime', testRuntimeInitializes],
   ['Subtrees attach to the ring-10 gateways at runtime', testSubtreesAttachToRingTenGateways],
   ['Allocation updates headline deltas', testAllocationUpdatesHeadlineDeltas],
   ['Patterns render and boost runtime stats', testPatternsRenderAndBoostStats],
-  ['Designer mode edits seats live and exports tree data', testDesignerMode]
+  ['Designer mode edits seats live and exports tree data', testDesignerMode],
+  ['Only one Sign may be allocated', testSignExclusivity]
 ];
 
 let passed = 0;

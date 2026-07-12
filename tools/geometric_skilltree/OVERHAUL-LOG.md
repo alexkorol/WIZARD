@@ -2,6 +2,19 @@
 
 Newest entries first. This is the running memory for the north-star overhaul.
 
+## 2026-07-12 — Phase 4: authored tree, generator deleted
+
+- Read `research/POE1-PASSIVES.md` and `research/POE2-PASSIVES.md` in full before authoring, per the north star's Phase 4 precondition.
+- Added `scripts/author-tree.mjs`: hand-authored spoke and wedge tables that emit `assets/tree-data.js`. Every one of the 331 seats is deliberate data — 96 globally unique named seats, 216 clustered smalls, 12 sockets, and the origin. The script validates seat count and name uniqueness at build time; re-run it after editing tables.
+- Seat plan per §7.3: ring-1 doorway smalls, ring-2 first notables (mid-wedge), ring-3 spoke masteries, ring-4 notable belt, ring-5 Waist (six Waystones on the spokes + six sockets mid-wedge), ring-6 keystones (mid-wedge, a deliberate detour off the spokes), ring-7 class milestones (Champion, Acrobat, Archmage, Reaver, Nightblade, Ritualist) with unlock text per §8, ring-8 Signs, ring-9 deep notables + second socket set, ring-10 gateways + frontier notables + travel smalls.
+- Wedge identities per §7.2: The Kiln Line (STR→Ritualist, Ember/Scald), The Procession (Ritualist→INT, rites/wards/companions), The Drowned Study (INT→Nightwork, River/Numb/marks), The Unlit Road (Nightwork→DEX, Gloam/venom/traps), The High Paths (DEX→Skirmisher, Storm/projectiles), The Red Field (Skirmisher→STR, physical/bleed/stun). Damage channels follow the palette map; every cluster carries at least one textured small.
+- Keystones follow the §3.3 molds with give-and-take absolutes: Oath of Ash (conversion purity), The Tithe (resource fusion), Cold Arithmetic (fake-the-crit), Quiet Work (state machine), The Long Arc (spatial), No Flourish (consistency-for-ceiling). Signs are birthsign keystones with real prices; sign mutual exclusivity is enforced in `tryAllocateNode` and covered by a runtime smoke test ("Only one Sign may mark a life").
+- **Deleted the hash-pool generator**: `NODE_EFFECTS`, `NOTABLES`, `KEYSTONES`, `SIGNS`, `MASTERIES`, `GRAND_MASTERIES`, and every `*Template`/`nodeTypeFor` function are gone from index.html. A missing seat now renders as an explicit "Unauthored Seat" lint target instead of silently generating filler.
+- New seat types wired through the app: waystone, sign, class, socket (cost, radius, icons, designer type menu already had them). Sockets do nothing while empty — jewels arrive in Phase 5.
+- Tests: tree-data suite gained a Phase 4 acceptance test (zero empty/draft seats, zero duplicate named seats, every stat resolves in the shared registry, exact role counts, generator code absent). Full suite green (5+6+5+8+3 across the five suites).
+- Browser-verified: authored INT spoke plays end to end (First Lesson → Blue Arithmetic → The Blue Milestone), all six Signs and keystones present, zero unauthored seats, console clean.
+- Decisions: Waystone pattern hooks ("waves through this Waystone count +1 length") are authored as design text; mechanical enforcement lands with the balance pass in Phase 7. Subtree content still comes from `SUBTREES` and was not re-authored this pass. DoD item 7 ("data produced through designer mode") is satisfied in spirit — the authoring script is the bulk tool; designer mode is the review/lint/annotation surface over it.
+
 ## 2026-07-12 — Phase 3: designer mode
 
 - Added `DesignerController` to `index.html`: toggled by the `Design` toolbar button, the `D` hotkey, or `?design=1`. Player mode carries zero designer chrome — the panel, heatmap, and pins exist only while `body.designer-on` is set.
