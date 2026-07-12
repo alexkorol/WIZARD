@@ -74,6 +74,22 @@ ungrounded detail." A turtle-shell shield, feather-edged shield, tasselled
 spear, coin-strung belt, or veiled shawl can be excellent if the source image
 shows how it belongs to the equipment kit.
 
+For itemization, also watch for motif cloning. Image-2 often turns a coherent
+kit into an overmatched set by placing the same round blue stone, central gem,
+boss, medallion, sun, eye, face, or emblem on every slot. This is a reject.
+Prompts should set a motif budget: one or two strong focal motifs per extracted
+set at most. Other items should coordinate through construction, materials,
+edge shapes, plate layout, weave, stitching, grip wrap, carved rims, and
+silhouette rather than repeated centerpieces.
+
+Separate-image extraction is mandatory for itemization batches. The first line
+must state the exact image count, for example `Generate 10 images. No
+commentary.` Do not use vague openers that omit the number. If a prompt asks
+for 10 slots, the model must produce separate independent image files, not a
+contact sheet, collage, grid, lineup, paperdoll, or multi-item canvas. If the
+model cannot produce separate files, it should generate only the first slot
+instead of collapsing all slots into one sheet.
+
 ## Self-Contained Character Prompt Rule
 
 Character/source prompts are not allowed to rely on chat context, project
@@ -82,10 +98,14 @@ what "Jungle Empire", "Poludnica Spirit hunter", "Seven Kingdoms", or a class
 name means in Verdigris. Every final prompt must explicitly include:
 
 - full faction design language: materials, palette, construction, cultural
-  analogies, and banned cliches
+  analogies, body/silhouette archetype, virtue/vice tension, and banned
+  cliches
 - class/stat gear grammar: what Warrior, Rogue, Mage, Hunter, Druid, or Bard
   should look like in equipment terms
 - tier language: low/mid/high or Tier 1-5 construction quality and authority
+- gender presentation rule: equipment bases are unisex; character fit may vary
+  by body, but coverage, protection level, construction, material logic, and
+  slot identity stay the same
 - rendering style, canvas, backdrop, spacing, and no-text/no-UI constraints
 - weapon distribution and long-weapon constraints
 
@@ -104,6 +124,144 @@ defines those terms again.
 
 Do not save Alexei's proprietary legacy character prompt examples in this repo.
 Only save distilled process rules and generic prompt structure.
+
+## Calibration Prompt Feedback Loop
+
+The 2026-07-09 character prompt tests showed that prompts asking for multiple
+separate images usually preserve faction identity and readable silhouettes
+better than dense collages. Collages are still useful for quick lineup sheets,
+but they are high-risk when the goal is item-source characters or tier reads.
+Default to separate-image sets for calibration unless Alex explicitly asks for
+a single sheet.
+
+The starter production ladder uses one faction per request, not one
+attribute/tier across all factions. Run four full prompts. Each prompt requests
+exactly nine separate image files: Strength T1-T3, Dexterity T1-T3, and
+Intelligence T1-T3. Do not put fixed fantasy class names into final character
+prompts. Attribute axes describe equipment logic, not profession: Strength is
+load, leverage, stability, impact, and resistance; Dexterity is balance,
+articulation, mobility, recovery, and precise handling; Intelligence is
+preparation, precision, measurement, ordered systems, and focus integration.
+Each image contains one male/female pair sharing the same unisex bases and
+coverage. Reuse the same recognizable pair across an axis's three tiers so gear
+progression can be judged without body-type noise; switch to a different pair
+for the next axis. Nine is the complete matrix, so do not fill the model's
+tenth-image capacity with an asymmetric extra concept.
+
+Tier progression must alter macro design, not only finish. Between each
+adjacent tier, force at least five visible changes among torso construction,
+headgear outline, main-hand silhouette, offhand construction, mantle or shawl
+cut, belt structure, hand protection, and footwear. Tier 3 should introduce
+more sophisticated segmentation, layering, articulated pieces, edge treatment,
+woven borders, inlay, and precise joins. These details must belong to the
+construction rather than becoming loose ornaments.
+
+Color progression is also tiered while lighting and grading stay fixed. Tier 1
+uses a limited low-cost palette whose colors remain clean and legible, Tier 2
+adds larger saturated textile fields, and Tier 3 uses the faction's richest
+distributed palette with substantially more vivid color and bright material
+highlights. Faction-specific tier blocks must name those colors directly so
+higher tiers do not remain a slightly cleaner copy of lower tiers. Poverty is
+shown through materials and construction, never a global gray filter.
+
+Faction palette is not faction livery. Keep color material-local: natural metal
+stays metallic, leather and wood retain their own browns or blacks, shell stays
+pale, obsidian stays black, linen stays pale unless explicitly dyed, and stone
+keeps its own color. Excluding skin and background, no single dyed hue should
+occupy more than roughly one-third of the loadout. Use at least four separated
+color-material zones and avoid repeating one accent across headgear, torso,
+mantle, belt, hands, feet, shield, and weapon.
+
+Strength, Dexterity, and Intelligence receive different color hierarchies
+inside the same faction palette. This preserves faction identity through craft
+and material choice while preventing all nine characters from looking like one
+uniform team or one monochrome costume.
+
+Source-character color calibration must be spectrally neutral. Use a pure
+neutral-white studio background, neutral-white key light, neutral-white rim
+light, and strictly neutral daylight/studio white balance. Do not use a
+blue-gray backdrop, cool rim light, neutral-to-cool grading, or global
+desaturation in character ladder prompts. Those shared cues become an unwanted
+slate-blue material color on every item, tier, and faction. Blue is not a shared
+faction signal: Northern, Cedar, and Silkroad prompt palettes avoid blue-family
+drivers. Nile Intelligence alone may receive one bounded, saturated true-lapis
+ultramarine field; Nile Strength and Dexterity use different hardstone accent
+families. This correction applies to source-character renders, not the separate
+isolated-item matte and lighting recipe.
+
+Every faction block must define more than clothing palette. Add a body and
+silhouette archetype so the factions do not become the same figure with
+different accent colors:
+
+- one faction can read taller, heavily built, burdened, or monumental
+- one can read compact, explosive, athletic, or predatory
+- one can read lean, austere, agile, or travel-worn
+- one can read broad, grounded, shawled, cloaked, or weather-hardened
+
+Add a restrained virtue/vice tension to each faction. This is not lore prose
+for the model to decorate literally; it is a design pressure that changes the
+gear. Example: a greedy river-palace Intelligence-axis loadout may be weighed
+down by bronze, brass, one bounded true-lapis cloth field, and a few high-tier
+gold highlights. The Northern Bronze
+Houses show oath-bound order shading into rigid pride through clean patterned
+shawls, hemmed rectangular mantles, pale wool and linen, polished bronze, pale
+wood, horn, and restrained amber jewelry.
+
+Do not use a biome label when it becomes an unwanted grading and wear command.
+The discarded marsh/taiga framing made northern characters muddy, dark,
+weather-beaten, and grey-brown. New Northern Bronze Houses prompts must use
+craft and social language rather than marsh, taiga, bog, peat, damp, or
+wet-weather survival language. Keep their value structure deliberately bright:
+bone-white or natural pale cloth, spatially separate madder crimson,
+spruce-green, and golden-ochre woven borders, bright bronze, golden amber used
+on at most one focal slot, pale wood, polished horn, and clean russet leather
+backing.
+
+Tier prompts must force slot progression. Belts, amulets, foci, footwear,
+cloaks, and handwear often get stuck while torso armor improves. For every tier
+test, explicitly say how the belt, amulet, offhand/focus, outer layer, hands,
+and footwear change from scavenged to trained to dazzling.
+
+Mage and focus prompts need object diversity. Do not let all foci become
+mirrors. Assign different offhand families per faction: carved amber or river
+stone focus, spirit-net focus, vajra/dorje-like double-ended pronged implement
+used only as structural inspiration, hardstone scepter, compact mirror disk, or
+handled reliquary-like tool. Keep these as offhand/focus objects, not weapons
+or vague glowing idols.
+
+Avoid muddy sameness. If a previous run collapsed into dark grey silhouettes,
+the next prompt must call for different values and material reads: pale wool
+with crimson, spruce-green, and ochre borders against bright bronze; red clay
+cotton against obsidian and shell; luminous sand felt against crimson, saffron,
+black lacquer, and brass; or brilliant Nile linen against carnelian, malachite,
+black leather, and selected true lapis only where the axis assigns it.
+
+## Unisex Equipment And Fit Rule
+
+Character/source prompts should not split the gear language into revealing
+female armor and covered male armor. Treat every item base as unisex. A female
+or feminine-presenting character may have a more fitted, waist-shaped, or
+body-contoured version of the same gear, and a male or masculine-presenting
+character may have broader proportions or a heavier stance, but both should
+share coverage, protection level, construction, material system, and slot
+identity.
+
+Use body-fit variation, not different item categories. A cuirass remains a
+cuirass, a mantle remains a mantle, a belt remains a horizontal belt, and a
+shield remains the same shield family across character presentation.
+
+## Side-Laid Item Reference Rule
+
+If a character/source image shows a weapon or shield laid beside the character,
+treat that side-laid object as the authoritative item reference during
+extraction. It should be copied as a complete object, not reinterpreted from the
+held pose. Preserve its full silhouette, material proportions, head-to-shaft
+ratio, shield outline, and visible construction. Do not shorten, thicken, crop,
+or simplify it into a smaller prop during itemization.
+
+For large weapons and shields that keep distorting in 10-slot extraction, run a
+separate item-only extraction pass for that slot: one isolated image, full
+object visible, steep diagonal for long weapons, and no character body parts.
 
 ## No-Repeat Rule
 

@@ -83,6 +83,29 @@ Not every class needs all five rungs; 3–5 each is fine (like D2's three).
   ladder out of flat tablets, plaques, tiny trinkets, shrine miniatures, or
   loose charms.
 
+### Auxiliary equipment (2x2 unlock seats)
+
+- **War-call** (pure STR): Aurochs War Horn · Copper Signal Drum · Bronze
+  Command Horn · Jade Command Rattle · Iron Thunder Horn. Complete rallying
+  instruments or compact standards with physical authority.
+- **Quick Rig** (pure DEX): Hunter's Quick Rig · Copper Dart Case · Bronze
+  Quiver Harness · Nightglass Knife Roll · Skymetal Trap Case. The silhouette
+  includes its fast-access carrying structure; never extract a torso wearing it.
+- **Attendant focus** (pure INT): Bone Wisp Orb · Copper Orbit · Bronze Caged
+  Light · Jade Attendant · Black Star Attendant. These are hands-free magical
+  foci, so overt hovering, glow, orbiting parts, and impossible suspension are
+  part of the class rather than prompt failures.
+
+### Specialty-pack contents (4x4 hybrid-axis windows)
+
+- **Spoils Roll** (STR+DEX): dressed trophies, monster parts, mounted hunt
+  tokens, shells, fangs, claws, antlers, hides, and carapaces.
+- **Preparation Case** (DEX+INT): concrete reagents, venoms, resins, gathered
+  plants, pigments, measured powders, ampoules, compact instruments, charts,
+  and trap components. These are physical loot objects, not currency symbols.
+- **Reliquary** (INT+STR): relics, charms, offerings, sanctified objects,
+  codices, scroll cases, votive vessels, ancestor fragments, and shrine tokens.
+
 ## How current art maps in (don't waste the good gens)
 
 Most existing finals slot straight into a rung, just renamed:

@@ -101,3 +101,21 @@ shield_turtleshell	shield	1	Turtleshell Shield	P	a shield made from the domed sh
 mantle_feather	body	4	Feathered Mantle	P	a shoulder mantle of layered glossy black-dyed feathers falling in overlapping rows from a plain hide yoke
 girdle_shell	belt	1	Shell Girdle	L	a belt of overlapping round white shell discs stitched onto a rawhide band, laid out horizontally
 curio_turquoise	curio	-	Turquoise Beetle Curio	S	a strange small curio: a beetle carved from bright blue-green turquoise, its wing cases incised with fine straight lines
+warhorn_bone	warcall	1	Aurochs War Horn	S	a complete heavy aurochs horn war-call instrument, dark polished horn with a broad rawhide-wrapped mouthpiece and a sturdy shoulder cord gathered behind it
+warhorn_bronze	warcall	3	Bronze Command Horn	S	a compact curved bronze war horn with a flared bell, hammered ribs, and a dark leather grip, complete instrument shown alone
+warhorn_skymetal	warcall	5	Iron Thunder Horn	S	a massive curved signal horn of raw dark meteoric iron, cold grey-black with a wide bell and plain leather-bound grip, complete object
+quickrig_hide	quickrig	1	Hunter's Quick Rig	S	a complete fast-access hide harness holding a compact quiver and two secured knife sheaths, broad shoulder strap coiled behind, shown alone without a body
+quickrig_bronze	quickrig	3	Bronze Dart Case	S	a rigid bronze-faced dart case with several heavy darts visible above the rim, backed by a wide leather carrying harness, complete 2x2 rig
+quickrig_obsidian	quickrig	4	Nightglass Knife Roll	S	a partially opened dark hide knife roll displaying several short obsidian blades in fitted pockets, with its broad carrying strap curled behind
+attendant_copper	attendant	2	Copper Orbit	S	an overtly magical hands-free focus: a glowing ember orb suspended inside three rotating hammered-copper rings, floating as a complete isolated object
+attendant_jade	attendant	4	Jade Attendant	S	an overtly magical polished jade orb levitating above a broken circular bronze cradle, with two smaller jade satellites orbiting it
+attendant_skymetal	attendant	5	Black Star Attendant	S	an overtly magical sphere of raw dark meteoric iron floating inside a tilted orbit of fractured iron segments, cold white light shining through the gaps
+trophy_bone	spoil	1	Dressed Wolf Fang	S	a large wolf fang hunt trophy drilled and bound at the root with a short rawhide mounting wrap, complete strong silhouette
+trophy_hide	spoil	2	Painted Beast Pelt	S	a compact folded trophy pelt with the cured hide face visible, edged in red ochre stitching and rolled for carrying
+trophy_amber	spoil	4	Amber Carapace	S	a large translucent amber beetle carapace trophy mounted in a simple dark wooden carrying frame, complete object
+preparation_hide	preparation	1	Field Herb Bundle	S	an identifiable bundle of three medicinal roots and broad leaves wrapped tightly in hide cord, gathered preparation shown alone
+preparation_copper	preparation	2	Copper Venom Ampoule	S	a squat copper ampoule of prepared venom, its narrow neck rising from a protective leather carrying sleeve, complete physical container
+preparation_amber	preparation	4	Amber Resin Measure	S	a small hard amber-resin cake cut into measured wedges inside a shallow horn measuring dish, concrete prepared reagent
+relic_bone	reliquary	1	Ancestor Knucklebones	S	three worn ancestor knucklebones kept in a small open bone reliquary box lined with dark hide, credible ritual object
+relic_bronze	reliquary	3	Bronze Votive Coffer	S	a compact heavy bronze reliquary coffer with a raised lid, concentric rim bands, and side carrying loops, no symbols
+relic_jade	reliquary	4	Jade Offering Vessel	S	a substantial polished jade offering vessel with two short handles and a deep usable bowl, complete ritual object with no emblem

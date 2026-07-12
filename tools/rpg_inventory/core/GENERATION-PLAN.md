@@ -53,8 +53,11 @@ base vocabulary to mutate.
 | Rings / seals | 18 | Bone rings, coils, signets, bands, plain seal rings, socket rings. Compact finger jewelry only; no dangling charms, chains, tassels, bells, or chimes. |
 | Charms / relic curios | 24 | Reliquary boxes, trophy settings, handled votive vessels, compact caskets; no loose tiny charms or shrine miniatures. |
 | Off-hand foci | 12 | Targes, bossed ward bucklers, reliquary shields, heavy hand-guards; caster/ward variants. |
+| War-call instruments | 12 | 2x2 auxiliary-seat horns, signal drums, command rattles, and compact standards with strong carried silhouettes. |
+| Quick rigs | 12 | 2x2 quivers, knife rolls, dart cases, sling-pouches, trap cases, and fast-access harnesses; show the complete rig, not a body crop. |
+| Attendant foci | 12 | 2x2 semi-floating or orbiting magical orbs, caged lights, rotating rings, hovering mirrors, bound stones, and other hands-free foci. Overt magic is allowed. |
 | Alias / reuse pool | 12 | D2-style renamed tiers using already-good art where acceptable. |
-| Non-weapon expansion reserve | 60 | Extra armour, shields, wearable jewellery, belts, greaves/bracers, rite foci, relic gear, and trophies. Do not spend this reserve on weapons or currency/crafting materials. |
+| Non-weapon expansion reserve | 24 | Extra armour, shields, wearable jewellery, belts, greaves/bracers, rite foci, auxiliary gear, relic gear, and trophies. Do not spend this reserve on weapons or abstract currency. |
 | **Total** | **420** |  |
 
 ## Uniques and awakened relics
@@ -75,22 +78,26 @@ specific oath board.
 
 ## Non-Equipment Art
 
-The non-equipment art budget is for trophies, relics, faction/set support, and
-UI. Do not expand the currency/crafting-material lane unless Alexei explicitly
-reopens it.
+The non-equipment art budget fills the three hybrid-axis specialty packs plus a
+small UI reserve. Concrete reagents and preparations are now an intentional
+item lane; abstract crafting currency remains closed.
 
-- 40 trophies/fragments: tusks, claws, fangs, pearls, shells, feathers, scales,
-  knucklebones, antlers, chitin, ember carapaces.
-- 40 shrine/faction tokens: Redhand, Shieldbearer, Ashspeaker, Farwalker,
-  settlement and wilderness variants.
-- 20 UI/support pieces: frames, slots, sockets, dividers, vendor and inventory
-  accents if needed.
+- 30 Spoils Roll contents (STR+DEX): tusks, claws, fangs, pearls, shells,
+  feathers, scales, knucklebones, antlers, chitin, ember carapaces, dressed
+  hides, and mounted hunt tokens.
+- 30 Preparation Case contents (DEX+INT): identifiable herbs, roots, resins,
+  venoms, oils, powders, pigments, measured salts, ampoules, compact instruments,
+  folded charts, and prepared trap components. Every item needs a concrete
+  physical identity, container, bundle, or gathered plant silhouette.
+- 30 Reliquary contents (INT+STR): relics, charms, offerings, sanctified
+  objects, codices, scroll cases, votive vessels, ancestor fragments, and
+  faction or shrine tokens.
+- 10 UI/support pieces: frames, slots, sockets, dividers, and inventory accents.
 
-Do not generate crafting currencies, generic orbs, sigils-as-currency, stones,
-draughts, pigments, ingots, molds, seal weights, or omen/currency abstractions
-for the production manifest. Existing gameplay pigments/omens can remain as
-legacy mechanics/UI until separately redesigned; they are not a source for new
-image rows.
+Do not generate abstract currencies, sigils-as-currency, interchangeable glowing
+stones, ingots, molds, seal weights, or omen abstractions. This does not prohibit
+magical orbs as Attendant equipment, or concrete reagents/pigments prepared as
+recognizable loot objects for the Preparation Case.
 
 ## Generation order
 
@@ -115,11 +122,12 @@ breakthrough: give image-2 a full character/loadout source image first, then
 ask it to extract separate transparent paperdoll-slot item icons from the gear
 the character wears.
 
-This is especially useful for shields, belts, footwear, armor, offhands, relic
-gear, and coherent faction/set families. Bracers/vambraces are the hand/glove
-slot, not a separate paperdoll slot. Foci and ritual tools belong to the
-off-hand slot like shields unless an individual base is explicitly designed as
-a main-hand weapon. It solves a different problem than
+This is especially useful for shields, belts, footwear, armor, offhands,
+War-calls, Quick Rigs, Attendants, specialty-pack contents, relic gear, and
+coherent faction/set families. Bracers/vambraces are the hand/glove slot, not a
+separate paperdoll slot. Held foci and ritual tools belong to the off-hand slot;
+hands-free floating/orbiting foci belong to the Attendant seat. It solves a
+different problem than
 prompt wording: the source image carries the whole equipment system, including
 material palette, construction logic, ornament density, straps/attachments, and
 slot relationships.
@@ -199,10 +207,10 @@ awakened relics, shrine loot, or faction prestige sets.
   duplicate/exclusion notes, discarded rows, and queued reworks. Style
   calibration follows the same rule unless Alexei explicitly names an existing
   item and asks to restyle that exact item.
-- Currency/crafting-material candidates are out of scope. Do not propose or
-  generate crafting currencies, pigments, omen objects, ingots, molds, generic
-  orbs, seal weights, or abstract bench reagents unless Alexei explicitly
-  reopens that lane.
+- Abstract currency candidates remain out of scope. Do not propose crafting
+  currencies, omen symbols, ingots, molds, seal weights, interchangeable
+  glowing reagent stones, or abstract bench tokens. Concrete Preparation Case
+  reagents/pigments and magical Attendant orbs are explicitly in scope.
 - Relic gear should be built from concrete ritual implement silhouettes, not
   weak AI-trope "mystic trinkets." Good structural references include
   vajra/dorje-like double-ended pronged sceptres, heavy paired hand bells,
@@ -215,14 +223,20 @@ awakened relics, shrine loot, or faction prestige sets.
   socket, vessel, patience, trophy affinity, theme bias, block, speed, ward,
   spirit, reach, crit, or carry capacity.
 
-## Slot expansion notes
+## Auxiliary slot and specialty-pack system
 
-These are design notes, not implemented inventory UI yet:
+The inventory implements six independent skill-tree windows:
 
-- Female-only earring slot is a likely future jewelry slot.
-- Utility belts may unlock two smaller pack areas under the main inventory:
-  one for relics and charms, one for reagents and utility objects such as
-  gathering leaves, breadcrumbs, reagent powders, and liquid containers.
+- Pure STR: 2x2 War-call seat.
+- Pure DEX: 2x2 Quick Rig seat.
+- Pure INT: 2x2 Attendant focus seat.
+- STR+DEX: 4x4 Spoils Roll.
+- DEX+INT: 4x4 Preparation Case.
+- INT+STR: 4x4 Reliquary.
+
+Each category needs both isolated base-item prompts and representation in the
+second-pass source-character extraction prompt. Do not collapse them back into
+one utility drawer or treat their art as generic curios.
 
 ## Forbidden / high-risk concepts
 
@@ -250,11 +264,11 @@ Retire these unless reconceived into a reliable icon:
   weapons. Keep jade weapons blunt/mace-like only.
 - Mail, rivetmail hauberks, mail aventails, chain/ring mail, and riveted iron
   strip armour until the tech tier is explicitly reintroduced.
-- Currency/crafting-material art: crafting currencies, pigments, omens, ingots,
-  molds, generic orbs, seal weights, draughts, reagent stones, and abstract
-  bench-tool tokens.
+- Abstract currency art: crafting-currency sigils, omen symbols, ingots, molds,
+  seal weights, interchangeable glowing reagent stones, and abstract bench
+  tokens. Concrete preparations and Attendant orbs are exempt.
 - Weak relic tropes: floating crystals, vague glowing idols, generic magic
-  orbs, symbol-covered plaques, flat tablets, ward plates, carved slabs,
+  orbs used as Reliquary filler, symbol-covered plaques, flat tablets, ward plates, carved slabs,
   generic hand-held boards, smoky amulets, tiny charm clusters, and decorative
   stands. Relic gear needs one strong held/worn/handled object.
 - Weak base-item concepts: wicker shields, rite batons, pencil-thin wands,

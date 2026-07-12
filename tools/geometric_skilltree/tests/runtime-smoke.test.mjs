@@ -214,14 +214,16 @@ function testClassCallingAndBridge() {
   tree.recalculate();
   assert.equal(tree.stats.characterClass, 'Champion', 'The first class allocated marks the calling.');
   assert.ok(tree.stats.unlocks.includes('war_horn_curio'), 'Champion unlocks the war-horn curio slot.');
+  assert.ok(tree.stats.unlocks.includes('war_call_slot'), 'Champion unlocks the War-call window.');
   assert.equal(window.VerdigrisBridge.class, 'Champion', 'The bridge payload publishes the calling.');
   assert.ok(window.VerdigrisBridge.unlocks.includes('tower_shield'), 'The bridge payload carries unlock flags.');
 
   acrobat.active = true;
   tree.classOrder.push(acrobat.id);
   tree.recalculate();
-  assert.equal(tree.stats.characterClass, 'Champion', 'A second class node gives stats only; the calling stays first.');
-  assert.equal(tree.stats.unlocks.includes('second_weapon_set'), false, 'Only the first calling grants unlocks.');
+  assert.equal(tree.stats.characterClass, 'Champion', 'A second class node leaves the first calling in place.');
+  assert.ok(tree.stats.unlocks.includes('second_weapon_set'), 'Every allocated class milestone contributes unlocks.');
+  assert.ok(tree.stats.unlocks.includes('quick_rig_slot'), 'Acrobat unlocks the Quick Rig window.');
 
   champion.active = false;
   tree.classOrder = tree.classOrder.filter(id => id !== champion.id);

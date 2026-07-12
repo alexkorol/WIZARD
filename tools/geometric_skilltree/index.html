@@ -1800,16 +1800,16 @@
     const VERDIGRIS_JEWELS = window.VerdigrisJewels;
     const MAIN_RING_DEPTH = AUTHORED_TREE_DATA.mainRingDepth || 10;
     const PATTERN_TUNING = AUTHORED_TREE_DATA.patternTuning || {};
-    // §8: the FIRST class milestone allocated marks the character's calling and is
-    // the only one granting its slot unlocks; later class nodes give stats only.
-    // Unlock flags ride the stat sheet and cross to rpg_inventory over the bridge.
+    // §8: the FIRST class milestone allocated determines the Calling; every
+    // allocated class milestone contributes its
+    // own armoury window unlock. Flags cross to rpg_inventory over the bridge.
     const CLASS_UNLOCKS = {
-      Champion: ["tower_shield", "war_horn_curio"],
-      Acrobat: ["second_weapon_set", "dual_wield_one_handers"],
-      Archmage: ["second_curio", "rite_focus_socket"],
-      Reaver: ["thrown_melee_projectile", "belt_fetish"],
-      Nightblade: ["trap_mark_tools", "venom_vials"],
-      Ritualist: ["banners", "war_companion"]
+      Champion: ["tower_shield", "war_horn_curio", "war_call_slot"],
+      Acrobat: ["second_weapon_set", "dual_wield_one_handers", "quick_rig_slot"],
+      Archmage: ["second_curio", "rite_focus_socket", "attendant_focus_slot"],
+      Reaver: ["thrown_melee_projectile", "belt_fetish", "spoils_pack"],
+      Nightblade: ["trap_mark_tools", "venom_vials", "preparations_pack"],
+      Ritualist: ["banners", "war_companion", "reliquary_pack"]
     };
     const BRIDGE_STORAGE_KEY = "verdigris-bridge";
 
@@ -2578,8 +2578,10 @@
       }
 
       getUnlocks() {
-        const classNode = this.characterClassNode();
-        return classNode ? (CLASS_UNLOCKS[classNode.name] || []) : [];
+        return [...new Set(this.classOrder
+          .map(id => this.nodes.get(id))
+          .filter(node => node?.active)
+          .flatMap(node => CLASS_UNLOCKS[node.name] || []))];
       }
 
       publishBridge() {
@@ -2865,7 +2867,7 @@
           if (this.classOrder.length === 1) {
             this.commit(`${node.name} is your calling. Its slot unlocks now reach the armoury.`);
           } else {
-            this.commit(`${node.name} allocated for its stats; your calling stays ${this.characterClassNode()?.name}.`);
+            this.commit(`${node.name} adds its armoury unlocks; your calling stays ${this.characterClassNode()?.name}.`);
           }
         }
         conduit.allocatedVariant = option.id;
@@ -4514,7 +4516,7 @@
         if (!display) return;
         const stats = this.tree.stats;
         if (!stats.characterClass) {
-          display.innerHTML = `<div>No calling yet. The first class milestone you allocate (ring 7) marks your class and unlocks its gear slots.</div>`;
+          display.innerHTML = `<div>No calling yet. The first class milestone you allocate (ring 7) marks your class; every active class milestone contributes its armoury window.</div>`;
           return;
         }
         const unlockText = stats.unlocks.map(flag => flag.replace(/_/g, " ")).join(", ");

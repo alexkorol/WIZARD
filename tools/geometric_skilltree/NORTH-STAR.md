@@ -655,20 +655,21 @@ Six class nodes at ring 7 spoke seats, one per spoke identity:
 
 | Spoke | Class node | Unlock direction (wire what's feasible) |
 |---|---|---|
-| STR | **Champion** | tower shields usable; war-horn/banner curio slot unlocked |
-| DEX | **Acrobat** | second weapon set (swap); dual-wield one-handers |
-| INT | **Archmage** | second curio slot; rite-foci gain +1 socket |
-| STR+DEX | **Reaver** | thrown weapons count as melee AND projectile; belt fetish slot |
-| DEX+INT | **Nightblade** | trap/mark tools equippable; venom vials slot |
-| INT+STR | **Ritualist** | banners; companion-of-war (one martial companion) |
+| STR | **Champion** | tower shields; 2x2 War-call auxiliary seat |
+| DEX | **Acrobat** | second weapon set; 2x2 Quick Rig auxiliary seat |
+| INT | **Archmage** | rite-focus socketing; 2x2 Attendant focus seat |
+| STR+DEX | **Reaver** | thrown melee/projectile rules; 4x4 Spoils Roll |
+| DEX+INT | **Nightblade** | trap/mark tools and venom; 4x4 Preparation Case |
+| INT+STR | **Ritualist** | banners and companions; 4x4 Reliquary |
 
-Mechanics: allocating a class node sets `character.class` (first one allocated;
-allocating a second is allowed but only the first grants its slot unlock — or make
-them mutually exclusive like Signs; decide, document, test). Slot/type unlocks are
-delivered as **flags in the stat sheet** (`unlocks: ['tower_shield', 'second_weapon_set', …]`)
-that `rpg_inventory/index.html` and `verdigris-pack.js` can consume — implement the
-flag plumbing and at least one visible end-to-end demo (e.g. the paperdoll shows a
-locked curio slot that unlocks when the tree state says so; a minimal
+Mechanics: the first allocated class node sets `character.class`; later class
+milestones do not replace that Calling, but every active class milestone grants
+its own armoury flags. This lets hybrid paths accumulate a few of the six side
+windows without exposing all six by default. Slot/type unlocks are delivered as
+**flags in the stat sheet** (`unlocks: ['war_call_slot', 'spoils_pack', …]`)
+that `rpg_inventory/index.html` and `verdigris-pack.js` consume. The inventory
+renders one independent `<<` tab for each unlocked auxiliary seat or specialty
+pack and omits unavailable tabs; a minimal
 `window.VerdigrisBridge` object or localStorage handshake between the two pages is
 acceptable for now; document it).
 
@@ -756,8 +757,8 @@ unmet. If blocked, log the blocker in OVERHAUL-LOG.md and pick the next unblocke
   detector integration tests. *(Accept: all five families demonstrably work; same-seed
   saga-stone reproducibility test.)*
 - **Phase 6 — Class milestones & unlocks.** §8 nodes, flags, and the cross-page bridge
-  with one visible end-to-end slot unlock. *(Accept: allocate Champion → curio slot
-  visibly unlocks in rpg_inventory demo.)*
+  with six independently gated armoury windows. *(Accept: each class milestone adds
+  exactly its own `<<` tab in the rpg_inventory demo.)*
 - **Phase 7 — Balance & polish.** Cadence sim + six reference builds + two fivehead
   fixtures; tune PATTERN_TUNING and node budgets until §9 targets pass; tooltip/UX
   polish (near-complete-pattern hints, "what this point does" hover preview); final
