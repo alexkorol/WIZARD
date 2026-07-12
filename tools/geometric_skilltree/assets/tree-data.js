@@ -30,7 +30,8 @@
       "maxRadius": 3
     },
     "vesica": {
-      "lensShare": 0.5
+      "lensShare": 0.5,
+      "piscisLensShare": 0.75
     },
     "rods": {
       "minLength": 3,

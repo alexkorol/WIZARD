@@ -2,6 +2,11 @@
 
 Newest entries first. This is the running memory for the north-star overhaul.
 
+## 2026-07-12 — Post-overhaul: vesica piscis (Alexei's second discovery)
+
+- Alexei built two loop crowns with ADJACENT centers — each center sitting on the other's ring, the true vesica piscis — and the detector only knew the edge-sharing form (centers two apart). Vesicas now come in two forms: `edge` (rings share one conduit, lens = that conduit's two nodes, share 0.5) and `piscis` (centers one apart, lens = the two common neighbors, share `piscisLensShare` 0.75 — the deeper overlap pays more). Piscis also counts double in the global vesica bonus, and the panel row calls it out.
+- Detector test covers geometry (both centers crown, lens touches both centers, centers excluded from the lens) and tuning; browser-verified with Alexei's exact construct — lens nodes read +48% increased effect, matching 0.32 × 0.75 × two crowned centers. Asset pins bumped to v=12.
+
 ## 2026-07-12 — Post-overhaul: collapsible panels / focus mode
 
 - Both desktop side panels now collapse: a small chevron in each panel's corner slides it off-screen, a slim edge tab brings it back, and `F` toggles both at once for a tree-only view (the designer panel follows the left side). State persists to localStorage. Mobile keeps its existing Stats/Details toggles; the collapse chrome is hidden under 900px.

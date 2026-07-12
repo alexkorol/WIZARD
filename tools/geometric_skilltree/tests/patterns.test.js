@@ -418,9 +418,44 @@ function testWaveAmplitude() {
     'The wave panel row should surface peak amplitude.');
 }
 
+function testVesicaPiscis() {
+  // Two crowns with ADJACENT centers: each center sits on the other's ring.
+  const centerA = '2,-1';
+  const centerB = '3,-1';
+  const ringA = ringIds(centerA, 1);
+  const ringB = ringIds(centerB, 1);
+  const result = report({
+    depth: 4,
+    activeIds: activeSet([centerA, centerB], ringA, ringB),
+    conduits: [...perimeterConduits(ringA), ...perimeterConduits(ringB)]
+  });
+
+  assert.ok(result.loops.some(loop => loop.centerId === centerA && loop.radius === 1), 'Center A should crown.');
+  assert.ok(result.loops.some(loop => loop.centerId === centerB && loop.radius === 1), 'Center B should crown.');
+
+  const piscis = result.vesicas.find(vesica => vesica.form === 'piscis');
+  assert.ok(piscis, 'Adjacent-center twin crowns should form a vesica piscis.');
+  assert.deepEqual(piscis.centers.sort(), [centerA, centerB].sort(), 'The piscis should name both centers.');
+  assert.equal(piscis.lensNodeIds.length, 2, 'The piscis lens is the two shared neighbors.');
+  piscis.lensNodeIds.forEach(id => {
+    const { q, r } = parseId(id);
+    [centerA, centerB].forEach(centerId => {
+      const c = parseId(centerId);
+      assert.equal(hexDistance(q - c.q, r - c.r), 1, `Lens node ${id} should touch both centers.`);
+    });
+    assert.ok(id !== centerA && id !== centerB, 'Centers themselves are not lens nodes.');
+  });
+  assert.equal(result.tuning.vesica.piscisLensShare, 0.75, 'The piscis lens share should ride the tuning.');
+  assert.ok(
+    result.bonuses.find(bonus => bonus.id === 'vesica').progress.includes('piscis'),
+    'The panel row should call out the piscis form.'
+  );
+}
+
 const tests = [
   ['waves and additive node boost stacking', testWavesAndAdditiveNodeBoosts],
   ['wave amplitude scales the payoff', testWaveAmplitude],
+  ['vesica piscis: adjacent-center twin crowns', testVesicaPiscis],
   ['pattern-stones bend wave length and loop gaps', testPatternStones],
   ['waystone hooks keep their authored promises', testWaystoneHooks],
   ['flows and wave/flow segment exclusivity', testFlowsAndExclusiveSegments],

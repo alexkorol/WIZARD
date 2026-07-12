@@ -1779,10 +1779,10 @@
   <!-- The ?v= query pins each asset to this HTML so the gh-pages CDN can never
        serve fresh markup with stale data (10-minute cache skew). Bump when
        shipping asset changes. -->
-  <script src="../rpg_inventory/core/verdigris-stats.js?v=11"></script>
-  <script src="assets/tree-data.js?v=11"></script>
-  <script src="assets/patterns.js?v=11"></script>
-  <script src="assets/jewels.js?v=11"></script>
+  <script src="../rpg_inventory/core/verdigris-stats.js?v=12"></script>
+  <script src="assets/tree-data.js?v=12"></script>
+  <script src="assets/patterns.js?v=12"></script>
+  <script src="assets/jewels.js?v=12"></script>
   <script>
     const SVG_NS = "http://www.w3.org/2000/svg";
     const AUTHORED_TREE_DATA = window.TREE_DATA || {};
@@ -3303,14 +3303,17 @@
       vesicaLensIncrease(nodeId) {
         const vesicas = this.patternReport?.vesicas || [];
         if (!vesicas.length) return 0;
-        const lensShare = this.patternReport?.tuning?.vesica?.lensShare ?? 0.5;
+        const tuning = this.patternReport?.tuning?.vesica || {};
         let total = 0;
         vesicas.forEach(vesica => {
           if (!vesica.lensNodeIds.includes(nodeId)) return;
+          const share = vesica.form === "piscis"
+            ? (tuning.piscisLensShare ?? 0.75)
+            : (tuning.lensShare ?? 0.5);
           vesica.centers.forEach(centerId => {
             if (centerId === nodeId) return;
             const centerDetail = this.empoweredNodeDetails.get(centerId);
-            total += this.loopIncreaseFor(centerDetail, this.isConcentricCenter(centerId)) * lensShare;
+            total += this.loopIncreaseFor(centerDetail, this.isConcentricCenter(centerId)) * share;
           });
         });
         return total;

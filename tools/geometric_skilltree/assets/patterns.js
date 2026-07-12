@@ -27,7 +27,10 @@
     wave: { minLength: 2, minPercent: 10, crestPercent: 20, meridianEndpointPercent: 28, amplitudePercentPerUnit: 12, amplitudeMax: 3 },
     flow: { minLength: 3, minPercent: 25, maxPercent: 100, maxLength: 8 },
     loops: { maxRadius: 3 },
-    vesica: { lensShare: 0.5 },
+    // Two vesica forms: 'edge' (centers 2 apart, rings share one conduit) and
+    // 'piscis' (centers adjacent, each center on the other's ring — the true
+    // vesica piscis). The deeper overlap pays its lens nodes more.
+    vesica: { lensShare: 0.5, piscisLensShare: 0.75 },
     rods: { minLength: 3, endpointBonus: 4, endpointPercent: 8 },
     crossroads: { minDegree: 4, perExtra: 3 },
     symmetry: { mirrorAttrsPerPair: 0.8, trineAttrsPerTriple: 2, mandalaAttrsPerSet: 3 },
@@ -261,10 +264,24 @@
     const vesicas = [];
     for (let i = 0; i < radiusOne.length; i += 1) {
       for (let j = i + 1; j < radiusOne.length; j += 1) {
-        const shared = radiusOne[i].conduitIds.filter(id => radiusOne[j].conduitIds.includes(id));
-        if (shared.length === 1) {
-          const lens = shared[0].split(':');
-          vesicas.push({ centers: [radiusOne[i].centerId, radiusOne[j].centerId], sharedEdge: shared[0], lensNodeIds: lens });
+        const a = radiusOne[i];
+        const b = radiusOne[j];
+        const [aq, ar] = a.centerId.split(',').map(Number);
+        const [bq, br] = b.centerId.split(',').map(Number);
+        const centerDistance = hexDistance(aq - bq, ar - br);
+        if (centerDistance === 1) {
+          // True vesica piscis: each center lies on the other's ring; the two
+          // common neighbors are the lens.
+          const lens = a.nodeIds.filter(id => b.nodeIds.includes(id) && id !== a.centerId && id !== b.centerId);
+          if (lens.length === 2) {
+            vesicas.push({ centers: [a.centerId, b.centerId], form: 'piscis', lensNodeIds: lens });
+          }
+        } else {
+          const shared = a.conduitIds.filter(id => b.conduitIds.includes(id));
+          if (shared.length === 1) {
+            const lens = shared[0].split(':');
+            vesicas.push({ centers: [a.centerId, b.centerId], form: 'edge', sharedEdge: shared[0], lensNodeIds: lens });
+          }
         }
       }
     }
@@ -540,14 +557,16 @@
       attrs: { int: loopPower * 2, dex: loopPower * 2, str: loopPower * 2 },
       derived: { spellDamage: loopPower * 6, guard: loopPower * 18, ward: loopPower * 18 }
     });
+    const piscisCount = patterns.vesicas.filter(vesica => vesica.form === 'piscis').length;
+    const vesicaWeight = patterns.vesicas.length + piscisCount; // piscis counts double
     bonuses.push({
       id: 'vesica',
       name: 'Vesica Lenses',
       active: patterns.vesicas.length > 0,
-      progress: `${patterns.vesicas.length} twin-loop lens${patterns.vesicas.length === 1 ? '' : 'es'}`,
-      description: 'Complete two radius-1 loops sharing exactly one edge.',
+      progress: `${patterns.vesicas.length} twin-loop lens${patterns.vesicas.length === 1 ? '' : 'es'}${piscisCount ? ` (${piscisCount} vesica piscis)` : ''}`,
+      description: 'Overlap two loop crowns: rings sharing an edge, or the true vesica piscis with each center on the other’s ring.',
       attrs: {},
-      derived: patterns.vesicas.length ? { critChance: patterns.vesicas.length, ailmentEffect: patterns.vesicas.length * 3 } : {}
+      derived: patterns.vesicas.length ? { critChance: vesicaWeight, ailmentEffect: vesicaWeight * 3 } : {}
     });
     bonuses.push({
       id: 'orbit',
