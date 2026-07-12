@@ -99,6 +99,10 @@ t('inventory layout has six unlock-driven auxiliary windows', () => {
   eq(pack.forms.cloak.kind, 'cloak', 'cloak runtime kind');
   assert(/id: 'main', label: 'Backpack', w: 12, h: 6/.test(index),
     'main backpack must be the intended horizontal 12x6 layout');
+  assert(/def\.tone !== 'main'[\s\S]{0,120}<div className="pack-title">/.test(index),
+    'main backpack must not render a title or action strip');
+  assert(/className="top-actions"[\s\S]*onClick=\{sortPack\}>Sort Pack<[\s\S]*Atelier/.test(index),
+    'sort and Atelier controls must live in the side command rail');
   assert(/id: 'spoils', label: 'Spoils Roll', w: 4, h: 4/.test(index),
     'STR+DEX Spoils Roll must exist as a 4x4 specialty grid');
   assert(/id: 'preparations', label: 'Preparation Case', w: 4, h: 4/.test(index),
