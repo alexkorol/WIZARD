@@ -1812,6 +1812,7 @@
       Ritualist: ["banners", "war_companion", "reliquary_pack"]
     };
     const BRIDGE_STORAGE_KEY = "verdigris-bridge";
+    const BUILD_STORAGE_KEY = "verdigris-skill-tree-build";
 
     // Loop-crown empowerment curve. Concentric crowns (radius 1 + radius 2 around one
     // center) compound these factors multiplicatively instead of summing them.
@@ -2310,7 +2311,7 @@
 
         this.buildMainTree();
         this.buildSubtrees();
-        this.recalculate();
+        if (!this.restorePersistedBuild()) this.recalculate();
       }
 
       buildMainTree() {
@@ -2498,6 +2499,20 @@
 
       /* ---- build codes: share a whole allocation as one string ---- */
 
+      restorePersistedBuild() {
+        let code = "";
+        try {
+          code = window.localStorage.getItem(BUILD_STORAGE_KEY) || "";
+        } catch (_) {}
+        return code ? this.importBuildCode(code, { silent: true }) : false;
+      }
+
+      persistBuild() {
+        try {
+          window.localStorage.setItem(BUILD_STORAGE_KEY, this.exportBuildCode());
+        } catch (_) {}
+      }
+
       exportBuildCode() {
         const payload = {
           v: 1,
@@ -2518,7 +2533,7 @@
         }
       }
 
-      importBuildCode(code) {
+      importBuildCode(code, { silent = false } = {}) {
         if (!code || !code.trim()) return false;
         let json = code.trim();
         try {
@@ -2529,7 +2544,7 @@
           data = JSON.parse(json);
         } catch (_) {}
         if (!data || data.v !== 1 || !Array.isArray(data.n)) {
-          this.commit("That build code could not be read.");
+          if (!silent) this.commit("That build code could not be read.");
           this.recalculate();
           return false;
         }
@@ -2538,11 +2553,11 @@
           .filter(entry => Array.isArray(entry) && this.conduits.has(entry[0]) && ["inner", "outer"].includes(entry[1]));
         const cost = nodeIds.reduce((sum, id) => sum + this.nodes.get(id).cost, 0) + conduitPicks.length;
         if (cost > START_POINTS.skill) {
-          this.commit(`That build costs ${cost} points; only ${START_POINTS.skill} exist.`);
+          if (!silent) this.commit(`That build costs ${cost} points; only ${START_POINTS.skill} exist.`);
           this.recalculate();
           return false;
         }
-        this.saveHistory();
+        if (!silent) this.saveHistory();
         this.nodes.forEach(node => { node.active = node.id === "0,0"; });
         this.conduits.forEach(conduit => { conduit.allocatedVariant = null; });
         this.socketedJewels = new Map();
@@ -2565,7 +2580,7 @@
         });
         this.points = { skill: START_POINTS.skill - cost };
         this.selectedNodeId = "0,0";
-        this.commit(`Build loaded: ${nodeIds.length} passives, ${conduitPicks.length} paths, ${this.socketedJewels.size} stones (${cost} points).`);
+        if (!silent) this.commit(`Build loaded: ${nodeIds.length} passives, ${conduitPicks.length} paths, ${this.socketedJewels.size} stones (${cost} points).`);
         this.recalculate();
         return true;
       }
@@ -3063,6 +3078,7 @@
         this.shapeBonuses = this.computeShapeBonuses();
         this.stats = this.computeStats();
         this.publishBridge();
+        this.persistBuild();
         this.lastDeltas = this.computeDeltas(previousStats, this.stats);
         if (window.renderer) window.renderer.update();
         if (window.ui) window.ui.update();
