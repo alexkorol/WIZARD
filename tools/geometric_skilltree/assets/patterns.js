@@ -32,6 +32,12 @@
     // vesica piscis). The deeper overlap pays its lens nodes more.
     vesica: { lensShare: 0.5, piscisLensShare: 0.75 },
     rods: { minLength: 3, endpointBonus: 4, endpointPercent: 8 },
+    // Wave/flow selection extracts one best path at a time; perPath caps DFS
+    // edge expansions for a single extraction and budget caps the whole
+    // selection pass. Dense cyclic builds have exponentially many simple
+    // paths; past a cap the detector keeps the best paths found so far
+    // instead of exhausting memory. Realistic builds finish well under both.
+    search: { budget: 120000, perPath: 12000 },
     crossroads: { minDegree: 4, perExtra: 3 },
     symmetry: { mirrorAttrsPerPair: 0.8, trineAttrsPerTriple: 2, mandalaAttrsPerSet: 3 },
     grandOrbit: { attrsPerRing: 2 },
@@ -53,6 +59,7 @@
     loops: { ...DEFAULT_TUNING.loops, ...(tuning.loops || {}) },
     vesica: { ...DEFAULT_TUNING.vesica, ...(tuning.vesica || {}) },
     rods: { ...DEFAULT_TUNING.rods, ...(tuning.rods || {}) },
+    search: { ...DEFAULT_TUNING.search, ...(tuning.search || {}) },
     crossroads: { ...DEFAULT_TUNING.crossroads, ...(tuning.crossroads || {}) },
     symmetry: { ...DEFAULT_TUNING.symmetry, ...(tuning.symmetry || {}) },
     grandOrbit: { ...DEFAULT_TUNING.grandOrbit, ...(tuning.grandOrbit || {}) },
@@ -113,95 +120,142 @@
     return a.nodeIds.join('|').localeCompare(b.nodeIds.join('|'));
   }
 
-  function enumeratePaths(ctx, mode, minLength) {
-    const paths = [];
-    ctx.allocatedConduits.forEach(startConduit => {
-      [
+  // Depth-first search for the single best path (longest, then closest to
+  // origin, then lexicographically first — comparePath order) through the
+  // not-yet-claimed conduits. Exhaustively enumerating every simple path and
+  // sorting afterwards is exponential on cyclic builds, so instead the best
+  // path is extracted, its conduits claimed, and the search repeated on what
+  // remains — the same greedy result, without materializing the path set.
+  function findBestPath(ctx, mode, minLength, isBlocked, budget) {
+    let best = null;
+    const path = { nodeIds: [], conduitIds: [], sides: [], length: 0 };
+    const seenNodes = new Set();
+    const seenConduits = new Set();
+
+    const consider = () => {
+      if (path.length < minLength) return;
+      if (best && path.length < best.length) return;
+      if (!best || comparePath(path, best, ctx.nodeMap) < 0) {
+        best = {
+          type: mode,
+          nodeIds: path.nodeIds.slice(),
+          conduitIds: path.conduitIds.slice(),
+          sides: path.sides.slice(),
+          length: path.length
+        };
+      }
+    };
+
+    const extend = () => {
+      if (budget.spent >= budget.limit) return;
+      const at = path.nodeIds[path.nodeIds.length - 1];
+      const lastSide = path.sides[path.sides.length - 1];
+      const candidates = (ctx.adjacency.get(at) || [])
+        .filter(edge => !seenNodes.has(edge.nodeId) && !seenConduits.has(edge.conduit.id) && !isBlocked(edge.conduit.id))
+        .filter(edge => mode === 'wave' ? edge.conduit.side !== lastSide : edge.conduit.side === lastSide)
+        .sort((a, b) => {
+          const ar = ctx.nodeMap.get(a.nodeId)?.ring || 0;
+          const br = ctx.nodeMap.get(b.nodeId)?.ring || 0;
+          if (ar !== br) return ar - br;
+          return a.nodeId.localeCompare(b.nodeId);
+        });
+      for (const edge of candidates) {
+        if (budget.spent >= budget.limit) return;
+        budget.spent += 1;
+        seenNodes.add(edge.nodeId);
+        seenConduits.add(edge.conduit.id);
+        path.nodeIds.push(edge.nodeId);
+        path.conduitIds.push(edge.conduit.id);
+        path.sides.push(edge.conduit.side);
+        path.length += 1;
+        consider();
+        extend();
+        path.length -= 1;
+        path.sides.pop();
+        path.conduitIds.pop();
+        path.nodeIds.pop();
+        seenConduits.delete(edge.conduit.id);
+        seenNodes.delete(edge.nodeId);
+      }
+    };
+
+    for (const startConduit of ctx.allocatedConduits) {
+      if (budget.spent >= budget.limit) break;
+      if (isBlocked(startConduit.id)) continue;
+      for (const [fromId, toId] of [
         [startConduit.fromId, startConduit.toId],
         [startConduit.toId, startConduit.fromId]
-      ].forEach(([fromId, toId]) => {
-        const initial = {
-          type: mode,
-          nodeIds: [fromId, toId],
-          conduitIds: [startConduit.id],
-          sides: [startConduit.side],
-          length: 1
-        };
-        extendPath(ctx, mode, initial, new Set([fromId, toId]), new Set([startConduit.id]), paths, minLength);
-      });
-    });
-    return dedupePaths(paths);
-  }
-
-  function extendPath(ctx, mode, path, seenNodes, seenConduits, out, minLength) {
-    if (path.length >= minLength) out.push({ ...path, nodeIds: path.nodeIds.slice(), conduitIds: path.conduitIds.slice(), sides: path.sides.slice() });
-    const at = path.nodeIds[path.nodeIds.length - 1];
-    const lastSide = path.sides[path.sides.length - 1];
-    const candidates = (ctx.adjacency.get(at) || [])
-      .filter(edge => !seenNodes.has(edge.nodeId) && !seenConduits.has(edge.conduit.id))
-      .filter(edge => mode === 'wave' ? edge.conduit.side !== lastSide : edge.conduit.side === lastSide)
-      .sort((a, b) => {
-        const ar = ctx.nodeMap.get(a.nodeId)?.ring || 0;
-        const br = ctx.nodeMap.get(b.nodeId)?.ring || 0;
-        if (ar !== br) return ar - br;
-        return a.nodeId.localeCompare(b.nodeId);
-      });
-    candidates.forEach(edge => {
-      seenNodes.add(edge.nodeId);
-      seenConduits.add(edge.conduit.id);
-      path.nodeIds.push(edge.nodeId);
-      path.conduitIds.push(edge.conduit.id);
-      path.sides.push(edge.conduit.side);
-      path.length += 1;
-      extendPath(ctx, mode, path, seenNodes, seenConduits, out, minLength);
-      path.length -= 1;
-      path.sides.pop();
-      path.conduitIds.pop();
-      path.nodeIds.pop();
-      seenConduits.delete(edge.conduit.id);
-      seenNodes.delete(edge.nodeId);
-    });
-  }
-
-  function dedupePaths(paths) {
-    const best = new Map();
-    paths.forEach(path => {
-      const key = path.conduitIds.slice().sort().join('|');
-      const current = best.get(key);
-      if (!current || path.length > current.length || path.nodeIds.join('|') < current.nodeIds.join('|')) {
-        best.set(key, path);
+      ]) {
+        seenNodes.add(fromId);
+        seenNodes.add(toId);
+        seenConduits.add(startConduit.id);
+        path.nodeIds.push(fromId, toId);
+        path.conduitIds.push(startConduit.id);
+        path.sides.push(startConduit.side);
+        path.length = 1;
+        consider();
+        extend();
+        seenNodes.clear();
+        seenConduits.clear();
+        path.nodeIds.length = 0;
+        path.conduitIds.length = 0;
+        path.sides.length = 0;
+        path.length = 0;
+        if (budget.spent >= budget.limit) break;
       }
-    });
-    return Array.from(best.values());
+    }
+    return best;
   }
 
-  function selectExclusivePaths(ctx, waveCandidates, flowCandidates, sharedClaimIds = new Set()) {
-    const selected = [];
+  function selectExclusivePaths(ctx, tuning, sharedClaimIds = new Set()) {
     // Conduits touching a shared-claim Waystone may serve one wave AND one
     // flow (never two of the same family); everything else is exclusive.
-    const usedBy = new Map();
-    const takenBy = (id) => usedBy.get(id) || new Set();
-    waveCandidates.concat(flowCandidates)
-      .sort((a, b) => comparePath(a, b, ctx.nodeMap))
-      .forEach(path => {
-        const blocked = path.conduitIds.some(id => {
-          const takers = takenBy(id);
-          if (!takers.size) return false;
-          if (!sharedClaimIds.has(id)) return true;
-          return takers.has(path.type);
-        });
-        if (blocked) return;
-        path.conduitIds.forEach(id => {
-          const takers = takenBy(id);
-          takers.add(path.type);
-          usedBy.set(id, takers);
-        });
-        selected.push(path);
+    const claims = new Map();
+    const blockedFor = type => id => {
+      const takers = claims.get(id);
+      if (!takers || !takers.size) return false;
+      if (!sharedClaimIds.has(id)) return true;
+      return takers.has(type);
+    };
+    const global = { spent: 0, limit: tuning.search.budget };
+    let exhausted = false;
+    const minLengths = { wave: tuning.wave.minLength, flow: tuning.flow.minLength };
+    const waves = [];
+    const flows = [];
+    // Claims only grow, so a still-unblocked candidate stays the best of its
+    // family; only invalidated candidates need a fresh search.
+    const candidates = { wave: undefined, flow: undefined };
+    while (true) {
+      for (const type of ['wave', 'flow']) {
+        if (candidates[type] === undefined) {
+          const budget = { spent: 0, limit: Math.min(tuning.search.perPath, global.limit - global.spent) };
+          candidates[type] = findBestPath(ctx, type, minLengths[type], blockedFor(type), budget);
+          global.spent += budget.spent;
+          if (budget.spent >= budget.limit) exhausted = true;
+        }
+      }
+      const wave = candidates.wave;
+      const flow = candidates.flow;
+      const chosen = wave && flow
+        ? (comparePath(wave, flow, ctx.nodeMap) <= 0 ? wave : flow)
+        : (wave || flow);
+      if (!chosen) break;
+      chosen.conduitIds.forEach(id => {
+        if (!claims.has(id)) claims.set(id, new Set());
+        claims.get(id).add(chosen.type);
       });
+      (chosen.type === 'wave' ? waves : flows).push(chosen);
+      candidates[chosen.type] = undefined;
+      const other = chosen.type === 'wave' ? 'flow' : 'wave';
+      if (candidates[other] && candidates[other].conduitIds.some(id => blockedFor(other)(id))) {
+        candidates[other] = undefined;
+      }
+    }
     return {
-      waves: selected.filter(path => path.type === 'wave'),
-      flows: selected.filter(path => path.type === 'flow'),
-      used: new Set(usedBy.keys())
+      waves,
+      flows,
+      used: new Set(claims.keys()),
+      searchExhausted: exhausted
     };
   }
 
@@ -675,8 +729,6 @@
     const tuning = cloneTuning(input.tuning);
     const ctx = normalize(input);
     const depth = input.depth || Math.max(0, ...ctx.mainNodes.map(node => node.ring || 0));
-    const waveCandidates = enumeratePaths(ctx, 'wave', tuning.wave.minLength);
-    const flowCandidates = enumeratePaths(ctx, 'flow', tuning.flow.minLength);
 
     // Shared-claim Waystones exempt their touching conduits from wave/flow
     // exclusivity (one wave and one flow may both count them).
@@ -687,7 +739,7 @@
         if (conduit.fromId === nodeId || conduit.toId === nodeId) sharedClaimIds.add(conduit.id);
       });
     });
-    const exclusive = selectExclusivePaths(ctx, waveCandidates, flowCandidates, sharedClaimIds);
+    const exclusive = selectExclusivePaths(ctx, tuning, sharedClaimIds);
 
     // Wave-length: pattern-stones (radius) and Blue-Milestone-style hooks
     // (exact seat) count touching waves longer for payoff purposes.
@@ -775,6 +827,7 @@
       crossroads,
       nodeBoosts,
       conduitBoosts,
+      searchExhausted: exclusive.searchExhausted,
       tuning
     };
     patterns.bonuses = buildBonuses(patterns, tuning);

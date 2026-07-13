@@ -3,49 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Geometric Passive Tree</title>
+  <title>Verdigris Passive Tree</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #07090d;
-      --panel: rgba(10, 13, 18, 0.92);
-      --panel-solid: #10141d;
-      --panel-soft: rgba(16, 20, 29, 0.74);
-      --panel-border: #2e3647;
-      --panel-border-strong: #526071;
-      --text: #eef3f8;
-      --muted: #9ba8b9;
-      --faint: #627083;
-      --ink: #06080b;
-      --path-locked: rgba(83, 95, 112, 0.22);
-      --path-ready: #c0c8d4;
-      --path-active: #f3d37a;
-      --path-extra: #8ad4ff;
-      --danger: #e07373;
-      --success: #78c994;
-      --warning: #f0c86c;
-      --str: #f06a54;
-      --dex: #56c88b;
-      --int: #6e9cff;
-      --hybrid: #d7bc7c;
-      --node-locked: #141922;
-      --node-locked-stroke: #27303d;
-      --node-ready: #344052;
-      --node-ready-stroke: #ced7e4;
-      --node-active: #ead18c;
+      --bg: #0d0c0a;
+      --panel: rgba(16, 15, 12, 0.93);
+      --panel-solid: #100f0c;
+      --panel-soft: rgba(233, 228, 216, 0.035);
+      --panel-border: rgba(233, 228, 216, 0.12);
+      --panel-border-strong: rgba(224, 184, 79, 0.5);
+      --text: #e9e4d8;
+      --muted: #9c9587;
+      --faint: #6f695c;
+      --ink: #0b0a08;
+      --accent: #c9a227;
+      --gold-soft: #c9a96a;
+      --gold-dim: #8a7146;
+      --path-locked: rgba(233, 228, 216, 0.13);
+      --path-ready: #b9b2a4;
+      --path-active: #c9a96a;
+      --path-extra: #7fbfa3;
+      --danger: #b06a5f;
+      --success: #7fbfa3;
+      --warning: #e0b84f;
+      --str: #b0674c;
+      --dex: #6f9a7c;
+      --int: #7286a8;
+      --hybrid: #c9a96a;
+      --node-locked: #14120e;
+      --node-locked-stroke: #2b2419;
+      --node-ready: #3a3328;
+      --node-ready-stroke: #b9b2a4;
+      --node-active: #e0b84f;
       --shadow: rgba(0, 0, 0, 0.55);
-      --ring: rgba(167, 183, 204, 0.08);
-      --font: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --ring: rgba(201, 162, 39, 0.07);
+      --font: "Source Sans 3", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --display: "Cinzel", Georgia, serif;
+      --mono: "JetBrains Mono", Consolas, monospace;
     }
 
     body.theme-modern {
-      --bg: #07090d;
-      --panel: rgba(10, 13, 18, 0.92);
-      --panel-solid: #10141d;
-      --panel-soft: rgba(16, 20, 29, 0.74);
-      --panel-border: #2e3647;
-      --node-active: #ead18c;
-      --path-active: #f3d37a;
-      --font: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --bg: #0d0c0a;
+      --panel: rgba(16, 15, 12, 0.93);
+      --panel-solid: #100f0c;
+      --panel-soft: rgba(233, 228, 216, 0.035);
+      --panel-border: rgba(233, 228, 216, 0.12);
+      --node-active: #e0b84f;
+      --path-active: #c9a96a;
+      --font: "Source Sans 3", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     body.theme-classic {
@@ -62,6 +70,8 @@
       --path-active: #ffd978;
       --ring: rgba(255, 218, 120, 0.09);
       --font: Georgia, "Times New Roman", serif;
+      --display: Georgia, "Times New Roman", serif;
+      --mono: "Courier New", monospace;
     }
 
     body.theme-stone {
@@ -78,6 +88,8 @@
       --path-active: #d4dda8;
       --ring: rgba(210, 222, 188, 0.08);
       --font: "Trebuchet MS", Verdana, sans-serif;
+      --display: "Trebuchet MS", Verdana, sans-serif;
+      --mono: Consolas, monospace;
     }
 
     body.theme-terminal {
@@ -95,6 +107,8 @@
       --path-ready: #b6ffca;
       --ring: rgba(125, 255, 156, 0.08);
       --font: Consolas, "Courier New", monospace;
+      --display: Consolas, "Courier New", monospace;
+      --mono: Consolas, "Courier New", monospace;
     }
 
     * {
@@ -109,8 +123,8 @@
       overflow: hidden;
       color: var(--text);
       background:
-        radial-gradient(circle at 48% 46%, rgba(125, 151, 189, 0.16), transparent 42%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 34%),
+        radial-gradient(circle at 48% 44%, rgba(201, 162, 39, 0.055), transparent 46%),
+        radial-gradient(circle at 14% 82%, rgba(110, 231, 183, 0.03), transparent 34%),
         var(--bg);
       font-family: var(--font);
       user-select: none;
@@ -147,39 +161,44 @@
 
     .axis-line {
       stroke: currentColor;
-      stroke-width: 1.4;
-      stroke-dasharray: 10 9;
-      opacity: 0.22;
+      stroke-width: 0.8;
+      stroke-dasharray: 1 7;
+      opacity: 0.3;
       pointer-events: none;
     }
 
     .axis-label {
       fill: currentColor;
-      font-size: 12px;
-      font-weight: 700;
+      font-family: var(--display);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
       paint-order: stroke;
-      stroke: rgba(0, 0, 0, 0.85);
-      stroke-width: 4px;
+      stroke: rgba(13, 12, 10, 0.85);
+      stroke-width: 3px;
       stroke-linejoin: round;
       pointer-events: none;
     }
 
     .subtree-halo {
-      fill: rgba(255, 255, 255, 0.015);
-      stroke: rgba(215, 226, 240, 0.13);
-      stroke-width: 1;
+      fill: rgba(233, 228, 216, 0.012);
+      stroke: rgba(201, 162, 39, 0.14);
+      stroke-width: 0.8;
+      stroke-dasharray: 2 5;
       pointer-events: none;
     }
 
     .subtree-title {
-      fill: var(--muted);
-      font-size: 10px;
-      font-weight: 700;
+      fill: var(--faint);
+      font-family: var(--display);
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
       pointer-events: none;
       paint-order: stroke;
-      stroke: rgba(0, 0, 0, 0.82);
-      stroke-width: 4px;
+      stroke: rgba(13, 12, 10, 0.8);
+      stroke-width: 3px;
       stroke-linejoin: round;
     }
 
@@ -187,195 +206,86 @@
       pointer-events: none;
     }
 
+    /* Loop crowns render as engraved filigree: hairline rings and pale
+       washes, no glow filters or blend modes — those forced a full-canvas
+       repaint every animation frame once a build had a few crowns. */
     .circle-bonus-effect {
       pointer-events: none;
-      opacity: 0.92;
-      mix-blend-mode: screen;
-    }
-
-    .circle-bonus-effect.effect-blend {
-      opacity: 0.84;
+      opacity: 0.9;
     }
 
     .circle-bonus-disc {
-      fill: var(--effect-fill, rgba(140, 210, 255, 0.05));
+      fill: var(--effect-color, var(--gold-soft));
       stroke: none;
-      opacity: 0.55;
+      opacity: 0.04;
     }
 
     .circle-bonus-ring {
       fill: none;
-      stroke: var(--effect-color, #9fdcff);
-      stroke-width: 3.5;
-      stroke-linecap: round;
-      opacity: 0.9;
-      filter: drop-shadow(0 0 7px var(--effect-glow, rgba(150, 220, 255, 0.62)));
+      stroke: var(--effect-color, var(--gold-soft));
+      stroke-width: 1;
+      opacity: 0.6;
     }
 
     .circle-bonus-ring.inner {
-      stroke-width: 1.6;
-      opacity: 0.58;
-      stroke-dasharray: 9 10;
-      animation: ring-spin 8s linear infinite;
+      stroke-width: 0.7;
+      opacity: 0.4;
+      stroke-dasharray: 2 6;
+      animation: ring-spin 26s linear infinite;
     }
 
     .circle-bonus-ring.outer {
-      stroke-dasharray: 42 18;
-      animation: ring-flow 5.5s linear infinite;
+      stroke-dasharray: 30 5 2 5;
+      animation: ring-flow 22s linear infinite;
     }
 
     .circle-bonus-effect.effect-primary-str .circle-bonus-ring.outer {
-      stroke-dasharray: 34 24;
-      animation: vitality-ring 4.8s ease-in-out infinite;
+      stroke-dasharray: 22 4 8 4;
     }
 
     .circle-bonus-effect.effect-primary-dex .circle-bonus-ring.outer {
-      stroke-dasharray: 20 18;
-      animation: ring-flow 3.9s linear infinite;
+      stroke-dasharray: 14 6;
     }
 
     .circle-bonus-effect.effect-primary-int .circle-bonus-ring.outer {
-      stroke-dasharray: 3 12 28 20;
-      animation: ring-flow 8.8s linear infinite;
+      stroke-dasharray: 2 5 30 5;
     }
 
     .circle-bonus-ring.large {
-      stroke-width: 2.4;
-      opacity: 0.72;
-      stroke-dasharray: 18 10 4 10;
-      animation: ring-flow 9s linear infinite;
+      stroke-width: 0.9;
+      opacity: 0.5;
+      stroke-dasharray: 16 6 3 6;
+      animation: ring-flow 30s linear infinite;
     }
 
     .circle-bonus-ring.scallop {
-      stroke-width: 1.2;
-      opacity: 0.42;
-      stroke-dasharray: 2 11;
-      animation: ring-spin 12s linear infinite reverse;
-    }
-
-    .circle-bonus-wave {
-      fill: none;
-      stroke: var(--effect-color, #9fdcff);
-      stroke-width: 1.5;
-      stroke-dasharray: 3 13;
-      opacity: 0.26;
-      animation: loop-wave 3.8s ease-in-out infinite;
-    }
-
-    .circle-bonus-pulse {
-      fill: none;
-      stroke: var(--effect-color, #9fdcff);
-      stroke-width: 2;
-      opacity: 0;
-      animation: circle-pulse 2.8s ease-out infinite;
+      stroke-width: 0.6;
+      opacity: 0.32;
+      stroke-dasharray: 1 7;
+      animation: ring-spin 34s linear infinite reverse;
     }
 
     .circle-bonus-center-aura {
       fill: none;
-      stroke: var(--effect-color, #9fdcff);
-      stroke-width: 2;
-      stroke-dasharray: 5 7;
-      opacity: 0.72;
-      filter: drop-shadow(0 0 8px var(--effect-glow, rgba(150, 220, 255, 0.7)));
-      animation: center-aura 4.6s linear infinite;
+      stroke: var(--effect-color, var(--gold-soft));
+      stroke-width: 0.9;
+      stroke-dasharray: 3 5;
+      opacity: 0.65;
+      animation: center-aura 14s linear infinite;
     }
 
     .circle-bonus-spoke {
-      stroke: var(--effect-color, #9fdcff);
-      stroke-width: 1.4;
+      stroke: var(--effect-color, var(--gold-soft));
+      stroke-width: 0.6;
       stroke-linecap: round;
-      stroke-dasharray: 4 9;
-      opacity: 0.35;
-      animation: spoke-breathe 2.4s ease-in-out infinite alternate;
+      stroke-dasharray: 1 6;
+      opacity: 0.22;
     }
 
     .circle-bonus-spoke.strong {
-      stroke-width: 1.8;
-      stroke-dasharray: 9 12;
-      opacity: 0.42;
-    }
-
-    .circle-bonus-chord {
-      stroke: var(--effect-color, #9fdcff);
-      stroke-width: 1;
-      stroke-linecap: round;
-      stroke-dasharray: 2 8;
-      opacity: 0.22;
-      animation: spoke-breathe 3.2s ease-in-out infinite alternate;
-    }
-
-    .circle-bonus-petal {
-      fill: var(--effect-fill, rgba(140, 210, 255, 0.05));
-      stroke: var(--effect-color, #9fdcff);
-      stroke-width: 1.5;
-      opacity: 0.52;
-      filter: drop-shadow(0 0 6px var(--effect-glow, rgba(150, 220, 255, 0.42)));
-      animation: petal-bloom 3.6s ease-in-out infinite alternate;
-    }
-
-    .circle-bonus-vitality {
-      fill: none;
-      stroke: var(--str-effect-color, var(--effect-color, #ff9b82));
-      stroke-width: 2;
-      opacity: 0;
-      filter: drop-shadow(0 0 7px var(--str-effect-glow, var(--effect-glow, rgba(255, 128, 95, 0.45))));
-      transform-box: fill-box;
-      transform-origin: center;
-      animation: vitality-pulse 3.6s ease-out infinite;
-    }
-
-    .circle-bonus-vitality.outer {
-      stroke-width: 1.3;
-      animation-duration: 4.7s;
-    }
-
-    .circle-bonus-whirl {
-      fill: none;
-      stroke: var(--dex-effect-color, var(--effect-color, #78e5ab));
-      stroke-width: 1.45;
-      stroke-linecap: round;
-      stroke-dasharray: 26 44;
-      opacity: var(--local-effect-opacity, 0.2);
-      filter: drop-shadow(0 0 5px var(--dex-effect-glow, var(--effect-glow, rgba(100, 230, 160, 0.35))));
-      transform-box: fill-box;
-      transform-origin: center;
-      animation: whirl-turn 6.2s linear infinite;
-    }
-
-    .circle-bonus-whirl.reverse {
-      stroke-width: 1;
-      animation-direction: reverse;
-      animation-duration: 7.4s;
-    }
-
-    .circle-bonus-orbit {
-      fill: none;
-      stroke: var(--int-effect-color, var(--effect-color, #a9c4ff));
-      stroke-width: 1;
-      stroke-dasharray: 1 13;
-      opacity: var(--local-effect-opacity, 0.2);
-      filter: drop-shadow(0 0 5px var(--int-effect-glow, var(--effect-glow, rgba(130, 170, 255, 0.38))));
-      animation: ring-spin 13s linear infinite reverse;
-    }
-
-    .circle-bonus-star {
-      fill: var(--int-effect-color, var(--effect-color, #b7caff));
-      stroke: var(--int-effect-color, var(--effect-color, #b7caff));
       stroke-width: 0.8;
-      opacity: var(--local-effect-opacity, 0.2);
-      filter: drop-shadow(0 0 5px var(--int-effect-glow, var(--effect-glow, rgba(130, 170, 255, 0.42))));
-      transform-box: fill-box;
-      transform-origin: center;
-      animation: star-twinkle 3.9s ease-in-out infinite alternate;
-    }
-
-    .circle-bonus-constellation {
-      stroke: var(--int-effect-color, var(--effect-color, #b7caff));
-      stroke-width: 0.85;
-      stroke-linecap: round;
-      stroke-dasharray: 1 8;
-      opacity: var(--local-effect-opacity, 0.16);
-      animation: spoke-breathe 4.8s ease-in-out infinite alternate;
+      stroke-dasharray: 4 6;
+      opacity: 0.3;
     }
 
     .pattern-path-effect {
@@ -383,34 +293,32 @@
       stroke-linecap: round;
       stroke-linejoin: round;
       pointer-events: none;
-      mix-blend-mode: screen;
-      opacity: 0.68;
-      filter: drop-shadow(0 0 7px currentColor);
+      opacity: 0.5;
     }
 
     .pattern-wave {
-      color: #92ddff;
+      color: #a8b6c9;
       stroke: currentColor;
-      stroke-width: 8;
-      stroke-dasharray: 18 14;
-      animation: pattern-flow 4.8s linear infinite;
+      stroke-width: 2;
+      stroke-dasharray: 12 8;
+      animation: pattern-flow 14s linear infinite;
     }
 
     .pattern-flow {
-      color: #74e5a8;
+      color: #7fbfa3;
       stroke: currentColor;
-      stroke-width: 6;
-      stroke-dasharray: 4 13;
-      animation: pattern-flow 6.5s linear infinite reverse;
+      stroke-width: 1.6;
+      stroke-dasharray: 3 9;
+      animation: pattern-flow 18s linear infinite reverse;
     }
 
     .pattern-rod {
-      color: #f3d37a;
+      color: #c9a96a;
       stroke: currentColor;
-      stroke-width: 4;
-      stroke-dasharray: 34 20;
-      opacity: 0.5;
-      animation: pattern-flow 8s linear infinite;
+      stroke-width: 1.2;
+      stroke-dasharray: 22 12;
+      opacity: 0.42;
+      animation: pattern-flow 24s linear infinite;
     }
 
     @keyframes ring-flow {
@@ -425,53 +333,8 @@
       to { stroke-dashoffset: -76; }
     }
 
-    @keyframes vitality-ring {
-      0%, 100% { stroke-width: 2.8; opacity: 0.58; }
-      45% { stroke-width: 3.9; opacity: 0.92; }
-    }
-
-    @keyframes circle-pulse {
-      0% { r: 42px; opacity: 0.45; }
-      65% { opacity: 0.16; }
-      100% { r: 100px; opacity: 0; }
-    }
-
-    @keyframes loop-wave {
-      0%, 100% { opacity: 0.14; stroke-width: 1; }
-      45% { opacity: 0.38; stroke-width: 2.1; }
-    }
-
     @keyframes center-aura {
       to { stroke-dashoffset: -72; }
-    }
-
-    @keyframes spoke-breathe {
-      from { opacity: 0.18; }
-      to { opacity: 0.46; }
-    }
-
-    @keyframes petal-bloom {
-      from { opacity: 0.34; stroke-width: 1; }
-      to { opacity: 0.68; stroke-width: 2.2; }
-    }
-
-    @keyframes vitality-pulse {
-      0% { transform: scale(0.78); opacity: 0; }
-      32% { opacity: var(--local-effect-opacity, 0.24); }
-      72% { opacity: var(--local-effect-faint, 0.08); }
-      100% { transform: scale(1.16); opacity: 0; }
-    }
-
-    @keyframes whirl-turn {
-      to {
-        transform: rotate(360deg);
-        stroke-dashoffset: -70;
-      }
-    }
-
-    @keyframes star-twinkle {
-      from { opacity: var(--local-effect-faint, 0.09); transform: scale(0.88); }
-      to { opacity: var(--local-effect-opacity, 0.22); transform: scale(1.12); }
     }
 
     .conduit-hit,
@@ -483,47 +346,43 @@
       fill: none;
       stroke: var(--path-locked);
       stroke-linecap: round;
-      stroke-width: 3.2;
-      opacity: 0.46;
+      stroke-width: 0.8;
+      opacity: 0.5;
       pointer-events: none;
       transition: stroke 160ms ease, stroke-width 160ms ease, opacity 160ms ease;
     }
 
     .conduit-path.available {
       stroke: var(--path-available-color, var(--path-ready));
-      stroke-width: var(--path-available-width, 2.7px);
-      stroke-dasharray: 7 8;
-      opacity: var(--path-available-opacity, 0.46);
+      stroke-width: var(--path-available-width, 1px);
+      stroke-dasharray: 4 6;
+      opacity: var(--path-available-opacity, 0.5);
     }
 
     .conduit-path.pending {
-      stroke: var(--path-preview-color, #c8d1dc);
-      stroke-width: var(--path-pending-width, 4px);
-      stroke-dasharray: 6 8;
-      opacity: var(--path-pending-opacity, 0.72);
-      filter: drop-shadow(0 0 var(--path-pending-glow, 2px) var(--path-preview-glow, rgba(220, 230, 242, 0.22)));
+      stroke: var(--path-preview-color, #d8d2c4);
+      stroke-width: var(--path-pending-width, 1.6px);
+      stroke-dasharray: 5 6;
+      opacity: var(--path-pending-opacity, 0.85);
     }
 
     .conduit-path.swap-option {
-      stroke: var(--path-preview-color, #aeb8c5);
-      stroke-width: var(--path-available-width, 2.7px);
-      stroke-dasharray: 4 10;
-      opacity: 0.28;
-      filter: none;
+      stroke: var(--path-preview-color, #b9b2a4);
+      stroke-width: var(--path-available-width, 1px);
+      stroke-dasharray: 2 8;
+      opacity: 0.24;
     }
 
     .conduit-path.allocated {
       stroke: var(--path-color, var(--path-active));
-      stroke-width: var(--path-allocated-width, 5px);
+      stroke-width: var(--path-allocated-width, 1.8px);
       opacity: 1;
-      filter: drop-shadow(0 0 var(--path-allocated-glow, 4px) var(--path-glow, var(--path-color, var(--path-active))));
     }
 
     .conduit-path.extra {
       stroke: var(--path-extra-color, var(--path-extra));
-      stroke-width: var(--path-extra-width, 4.5px);
-      opacity: 1;
-      filter: drop-shadow(0 0 var(--path-extra-glow, 5px) var(--path-extra-glow-color, rgba(138, 212, 255, 0.45)));
+      stroke-width: var(--path-extra-width, 1.6px);
+      opacity: 0.95;
     }
 
     .conduit-hit {
@@ -537,20 +396,20 @@
        completed loops — drawn as a ghost so both circles read whole. */
     .conduit-path.ghost-loop {
       stroke: var(--path-color);
-      stroke-width: calc(var(--path-allocated-width) * 0.55);
-      stroke-dasharray: 5 8;
+      stroke-width: calc(var(--path-allocated-width, 1.8px) * 0.6);
+      stroke-dasharray: 4 6;
       opacity: 0.45;
     }
 
     .conduit-hit:hover + .conduit-path {
-      stroke-width: 4.2;
-      opacity: 0.72;
+      stroke-width: 1.5;
+      opacity: 0.75;
     }
 
     .conduit-hit:hover + .conduit-path.allocated,
     .conduit-hit:hover + .conduit-path.pending {
-      stroke-width: 5.3;
-      opacity: 0.9;
+      stroke-width: 2.3;
+      opacity: 1;
     }
 
     .conduit-hit:hover + .conduit-path.allocated {
@@ -573,28 +432,29 @@
     .node-shell {
       fill: var(--node-shell-fill, var(--axis-dim, var(--node-locked)));
       stroke: var(--axis-muted, var(--node-locked-stroke));
-      stroke-width: var(--node-locked-stroke-width, 2px);
+      stroke-width: var(--node-locked-stroke-width, 1px);
       opacity: var(--node-shell-opacity, 1);
     }
 
     .node-ring {
       fill: none;
-      stroke: rgba(255, 255, 255, 0.11);
-      stroke-width: 1.4;
+      stroke: rgba(233, 228, 216, 0.12);
+      stroke-width: 0.8;
       opacity: 0;
     }
 
     .node-core {
-      fill: var(--node-core-fill, var(--axis-color, #2b3442));
-      stroke: rgba(0, 0, 0, 0.35);
-      stroke-width: 1;
-      opacity: var(--node-core-locked-opacity, 0.54);
+      fill: var(--node-core-fill, var(--axis-color, #3a3328));
+      stroke: rgba(11, 10, 8, 0.5);
+      stroke-width: 0.8;
+      opacity: var(--node-core-locked-opacity, 0.5);
     }
 
     .node-icon {
-      fill: rgba(255, 255, 255, 0.74);
-      font-size: 9px;
-      font-weight: 800;
+      fill: rgba(233, 228, 216, 0.78);
+      font-family: var(--mono);
+      font-size: 7.5px;
+      font-weight: 400;
       text-anchor: middle;
       dominant-baseline: central;
       pointer-events: none;
@@ -603,110 +463,92 @@
     .node-group.available .node-shell {
       fill: var(--node-shell-fill, var(--axis-mid, var(--node-ready)));
       stroke: var(--axis-light, var(--node-ready-stroke));
-      stroke-width: var(--node-available-stroke-width, 2.5px);
-      filter: drop-shadow(0 0 var(--node-available-glow, 4px) var(--axis-glow, rgba(206, 215, 228, 0.38)));
+      stroke-width: var(--node-available-stroke-width, 1.1px);
     }
 
     .node-group.available .node-core {
       fill: var(--node-core-fill, var(--axis-color, var(--node-ready-stroke)));
-      opacity: var(--node-core-available-opacity, 0.86);
+      opacity: var(--node-core-available-opacity, 0.85);
     }
 
     .node-group.active .node-shell {
-      fill: var(--node-shell-fill, #1b1720);
+      fill: var(--node-shell-fill, #191510);
       stroke: var(--axis-light, var(--node-active));
-      stroke-width: var(--node-active-stroke-width, 2.5px);
-      filter: drop-shadow(0 0 var(--node-active-glow, 6px) var(--axis-glow, rgba(234, 209, 140, 0.5)));
+      stroke-width: var(--node-active-stroke-width, 1.3px);
     }
 
     .node-group.active .node-core {
       fill: var(--node-core-fill, var(--axis-light, var(--node-active)));
       opacity: var(--node-core-active-opacity, 1);
-      filter: drop-shadow(0 0 var(--node-core-active-glow, 0px) var(--axis-glow, transparent));
     }
 
     .node-group.active .node-ring {
       opacity: var(--node-active-ring-opacity, 0);
-      stroke: var(--axis-light, rgba(255, 255, 255, 0.18));
-      stroke-width: var(--node-active-ring-width, 1.2px);
+      stroke: var(--axis-light, rgba(233, 228, 216, 0.2));
+      stroke-width: var(--node-active-ring-width, 0.8px);
     }
 
     .node-group.pending .node-shell {
-      stroke: #ffffff;
-      stroke-dasharray: 4 3;
-      filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.65));
-    }
-
-    .node-group.selected .node-ring,
-    .node-group.empowered .node-ring {
-      opacity: 1;
-      stroke: #ffffff;
+      stroke: #e9e4d8;
+      stroke-dasharray: 3 3;
     }
 
     .node-group.type-notable .node-ring,
     .node-group.type-mastery .node-ring,
     .node-group.type-keystone .node-ring,
     .node-group.type-gateway .node-ring {
-      opacity: var(--node-passive-ring-opacity, 0.12);
-      stroke: var(--axis-muted, rgba(255, 255, 255, 0.16));
-      stroke-width: var(--node-passive-ring-width, 1.2px);
+      opacity: var(--node-passive-ring-opacity, 0.14);
+      stroke: var(--axis-muted, rgba(233, 228, 216, 0.18));
+      stroke-width: var(--node-passive-ring-width, 0.8px);
     }
 
     .node-group.selected .node-ring,
     .node-group.empowered .node-ring {
       opacity: 1;
-      stroke: #ffffff;
+      stroke: var(--warning);
     }
 
     .node-group.empowered .node-shell {
-      stroke-width: 3;
-      filter: drop-shadow(0 0 10px var(--axis-glow, rgba(255, 234, 170, 0.6)));
+      stroke-width: 1.6;
     }
 
     .node-group.empowered .node-ring {
-      stroke: var(--axis-light, #ffffff);
-      stroke-width: 1.8;
-      stroke-dasharray: 5 5;
-      filter: drop-shadow(0 0 5px var(--axis-glow, rgba(255, 234, 170, 0.55)));
-      animation: center-aura 5.2s linear infinite;
+      stroke: var(--axis-light, var(--warning));
+      stroke-width: 0.9;
+      stroke-dasharray: 4 4;
+      animation: center-aura 12s linear infinite;
     }
 
     .node-group.empowered.boost-r2 .node-shell,
     .node-group.empowered.boost-r3 .node-shell {
-      stroke-width: 3.8;
-      filter: drop-shadow(0 0 14px var(--axis-glow, rgba(255, 234, 170, 0.76)));
-    }
-
-    .node-group.empowered.boost-r3 .node-shell {
-      filter: drop-shadow(0 0 18px var(--axis-glow, rgba(255, 234, 170, 0.9)));
+      stroke-width: 1.9;
     }
 
     .node-group.empowered.boost-concentric .node-ring {
-      stroke-dasharray: 2 4 9 5;
-      stroke-width: 2.4;
+      stroke-dasharray: 2 3 7 3;
+      stroke-width: 1.1;
     }
 
     .node-group.empowered .node-icon {
-      fill: #ffffff;
+      fill: #e9e4d8;
     }
 
     .node-group.type-origin .node-shell {
-      fill: #f4f7ff;
-      stroke: #ffffff;
-      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.82));
+      fill: #d8d2c4;
+      stroke: var(--gold-soft);
     }
 
     .node-group.type-origin .node-core {
-      fill: #10141d;
+      fill: #100f0c;
       opacity: 1;
     }
 
     .node-group.type-keystone .node-shell {
-      stroke-width: 3;
+      stroke-width: 1.6;
     }
 
     .node-group.type-keystone .node-core {
-      fill: var(--axis-light, #f3d37a);
+      fill: var(--axis-light, var(--gold-soft));
     }
 
     .node-group.type-mastery .node-shell {
@@ -714,7 +556,7 @@
     }
 
     .node-group:hover .node-shell {
-      transform: scale(1.12);
+      transform: scale(1.08);
     }
 
     .node-hit {
@@ -734,10 +576,9 @@
       position: absolute;
       background: var(--panel);
       border: 1px solid var(--panel-border);
-      border-radius: 8px;
-      box-shadow: 0 18px 60px var(--shadow);
+      border-radius: 6px;
+      box-shadow: 0 14px 44px var(--shadow);
       pointer-events: auto;
-      backdrop-filter: blur(12px);
     }
 
     #left-panel {
@@ -774,20 +615,27 @@
 
     .app-title {
       margin: 0;
-      font-size: 18px;
-      line-height: 1.1;
-      font-weight: 800;
+      font-family: var(--display);
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    .app-title strong {
+      color: var(--accent);
+      font-weight: 700;
     }
 
     .app-subtitle {
       margin-top: 6px;
       color: var(--muted);
       font-size: 12px;
-      line-height: 1.35;
+      line-height: 1.4;
     }
 
     .section {
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid var(--panel-border);
       margin-top: 14px;
       padding-top: 14px;
     }
@@ -798,9 +646,10 @@
       align-items: center;
       gap: 12px;
       margin-bottom: 10px;
-      color: var(--text);
-      font-size: 12px;
-      font-weight: 800;
+      color: var(--muted);
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
     }
 
@@ -836,8 +685,10 @@
     .point-value {
       display: block;
       margin-top: 3px;
-      font-size: 22px;
-      font-weight: 800;
+      font-family: var(--mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: #e0c25e;
     }
 
     .point-sub {
@@ -861,15 +712,17 @@
 
     .bar-label {
       color: var(--muted);
-      font-weight: 800;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
     }
 
     .bar-track {
       position: relative;
-      height: 8px;
+      height: 4px;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 999px;
+      background: rgba(233, 228, 216, 0.08);
+      border-radius: 2px;
     }
 
     .bar-fill {
@@ -878,13 +731,14 @@
       width: 0;
       border-radius: inherit;
       background: currentColor;
-      box-shadow: 0 0 12px currentColor;
       transition: width 220ms ease;
     }
 
     .bar-value {
       text-align: right;
-      font-weight: 800;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
     }
 
     .derived-grid {
@@ -896,23 +750,26 @@
     .derived-cell {
       padding: 9px;
       background: var(--panel-soft);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 6px;
+      border: 1px solid var(--panel-border);
+      border-radius: 5px;
       min-height: 58px;
     }
 
     .derived-label {
       display: block;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.25;
+      color: var(--faint);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.3;
     }
 
     .derived-value {
       display: block;
       margin-top: 4px;
-      font-size: 17px;
-      font-weight: 800;
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 700;
     }
 
     .delta-list,
@@ -927,17 +784,17 @@
     .log-item {
       padding: 9px 10px;
       background: var(--panel-soft);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 6px;
+      border: 1px solid var(--panel-border);
+      border-radius: 5px;
       color: var(--muted);
       font-size: 12px;
       line-height: 1.35;
     }
 
     .bonus-item.active {
-      border-color: rgba(120, 201, 148, 0.55);
+      border-color: rgba(110, 231, 183, 0.35);
       color: var(--text);
-      background: rgba(79, 154, 104, 0.12);
+      background: rgba(110, 231, 183, 0.06);
     }
 
     .bonus-item.locked {
@@ -952,9 +809,11 @@
 
     .node-name {
       margin: 0;
-      font-size: 16px;
-      line-height: 1.2;
-      font-weight: 800;
+      font-family: var(--display);
+      font-size: 15px;
+      line-height: 1.3;
+      font-weight: 700;
+      letter-spacing: 0.04em;
       color: var(--node-active);
     }
 
@@ -1038,9 +897,9 @@
 
     .choice-panel {
       display: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid var(--panel-border);
       padding: 14px 16px 16px;
-      background: rgba(255, 255, 255, 0.035);
+      background: rgba(233, 228, 216, 0.03);
     }
 
     .choice-panel.active {
@@ -1049,8 +908,9 @@
 
     .choice-title {
       margin: 0 0 8px;
-      font-size: 12px;
-      font-weight: 800;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--warning);
     }
@@ -1084,15 +944,15 @@
 
     .choice-btn.current {
       border-color: color-mix(in srgb, var(--node-active) 52%, var(--panel-border));
-      background: rgba(234, 209, 140, 0.1);
+      background: rgba(201, 162, 39, 0.08);
     }
 
     .choice-btn.swap {
-      border-color: rgba(120, 201, 148, 0.42);
+      border-color: rgba(110, 231, 183, 0.32);
     }
 
     .choice-btn.danger {
-      border-color: rgba(224, 115, 115, 0.5);
+      border-color: rgba(176, 106, 95, 0.55);
     }
 
     .choice-btn:disabled {
@@ -1136,15 +996,17 @@
       min-width: 34px;
       padding: 0 10px;
       cursor: pointer;
-      font-size: 12px;
-      font-weight: 800;
+      font-family: var(--display);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
       transition: border 150ms ease, background 150ms ease, color 150ms ease;
     }
 
     .icon-btn.square {
       width: 34px;
       padding: 0;
-      font-size: 16px;
+      font-size: 15px;
     }
 
     .theme-btn:hover,
@@ -1152,13 +1014,14 @@
     .icon-btn:hover,
     .icon-btn:focus-visible {
       border-color: var(--panel-border-strong);
-      background: rgba(255, 255, 255, 0.09);
+      background: rgba(201, 162, 39, 0.09);
+      color: #e0c25e;
       outline: none;
     }
 
     .icon-btn.danger:hover {
       border-color: var(--danger);
-      color: #ffd1d1;
+      color: #d8a79e;
     }
 
     .search-input {
@@ -1183,9 +1046,9 @@
       display: none;
       padding: 12px;
       pointer-events: none;
-      background: rgba(3, 5, 8, 0.95);
+      background: rgba(13, 12, 10, 0.96);
       border: 1px solid var(--panel-border-strong);
-      border-radius: 6px;
+      border-radius: 5px;
       box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65);
     }
 
@@ -1290,8 +1153,10 @@
 
     .tooltip-title {
       color: var(--node-active);
+      font-family: var(--display);
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 700;
+      letter-spacing: 0.04em;
       margin-bottom: 5px;
     }
 
@@ -1364,7 +1229,7 @@
         padding: 0 13px;
         border: 1px solid var(--panel-border-strong);
         border-radius: 999px;
-        background: rgba(10, 13, 18, 0.9);
+        background: rgba(13, 12, 10, 0.92);
         color: var(--text);
         box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
         backdrop-filter: blur(12px);
@@ -1382,7 +1247,7 @@
       }
 
       .mobile-panel-toggle[aria-expanded="true"] {
-        background: color-mix(in srgb, var(--node-active) 18%, rgba(10, 13, 18, 0.94));
+        background: color-mix(in srgb, var(--node-active) 16%, rgba(13, 12, 10, 0.95));
         border-color: var(--node-active);
       }
 
@@ -1544,7 +1409,7 @@
     .designer-field input,
     .designer-field select,
     .designer-field textarea {
-      background: rgba(10, 14, 22, 0.72);
+      background: rgba(11, 10, 8, 0.72);
       border: 1px solid var(--panel-border);
       border-radius: 5px;
       color: inherit;
@@ -1590,7 +1455,7 @@
       <aside class="hud-panel" id="left-panel">
         <button class="panel-collapse-btn" id="collapse-left-btn" type="button" aria-label="Hide the stats panel" title="Hide panel (F hides both)">‹</button>
         <div class="panel-scroll">
-          <h1 class="app-title">Geometric Passive Tree</h1>
+          <h1 class="app-title">Verdigris <strong>Passive Tree</strong></h1>
           <div class="app-subtitle">Ten-ring RPG tree with deliberate node picks, conduit routing, outer subtrees, and geometry combo bonuses.</div>
 
           <section class="section">
@@ -1771,7 +1636,7 @@
           <button class="icon-btn" id="designer-toggle-btn" aria-label="Toggle designer mode" aria-pressed="false" type="button">Design</button>
         </div>
         <div class="toolbar-group" aria-label="Theme">
-          <button class="theme-btn active" data-theme="modern" type="button">Modern</button>
+          <button class="theme-btn active" data-theme="modern" type="button">Verdigris</button>
           <button class="theme-btn" data-theme="classic" type="button">90s</button>
           <button class="theme-btn" data-theme="stone" type="button">Stone</button>
           <button class="theme-btn" data-theme="terminal" type="button">ASCII</button>
@@ -1788,10 +1653,10 @@
   <!-- The ?v= query pins each asset to this HTML so the gh-pages CDN can never
        serve fresh markup with stale data (10-minute cache skew). Bump when
        shipping asset changes. -->
-  <script src="../rpg_inventory/core/verdigris-stats.js?v=12"></script>
-  <script src="assets/tree-data.js?v=12"></script>
-  <script src="assets/patterns.js?v=12"></script>
-  <script src="assets/jewels.js?v=12"></script>
+  <script src="../rpg_inventory/core/verdigris-stats.js?v=13"></script>
+  <script src="assets/tree-data.js?v=13"></script>
+  <script src="assets/patterns.js?v=13"></script>
+  <script src="assets/jewels.js?v=13"></script>
   <script>
     const SVG_NS = "http://www.w3.org/2000/svg";
     const AUTHORED_TREE_DATA = window.TREE_DATA || {};
@@ -1831,11 +1696,13 @@
       dex: { x: -Math.sqrt(3) / 2, y: 0.5 },
       str: { x: Math.sqrt(3) / 2, y: 0.5 }
     };
+    // Muted Verdigris palette: rust, patina, and slate ink instead of the
+    // saturated marker colors — matches rpg_inventory and wizard_orbs.
     const AXIS_META = {
-      str: { label: "Strength", short: "STR", color: "#f06a54", path: "Iron Route" },
-      dex: { label: "Dexterity", short: "DEX", color: "#56c88b", path: "Quickstep Trace" },
-      int: { label: "Intelligence", short: "INT", color: "#6e9cff", path: "Memory Thread" },
-      hybrid: { label: "Hybrid", short: "HYB", color: "#d7bc7c", path: "Braided Span" }
+      str: { label: "Strength", short: "STR", color: "#b0674c", path: "Iron Route" },
+      dex: { label: "Dexterity", short: "DEX", color: "#6f9a7c", path: "Quickstep Trace" },
+      int: { label: "Intelligence", short: "INT", color: "#7286a8", path: "Memory Thread" },
+      hybrid: { label: "Hybrid", short: "HYB", color: "#c9a96a", path: "Braided Span" }
     };
     const HEX_DIRECTIONS = [
       { q: 1, r: 0 },
@@ -2061,22 +1928,6 @@
       return weightedAxisColor(weights);
     }
 
-    function nodeSpectrum(weights) {
-      const sorted = Object.entries(weights).sort((a, b) => b[1] - a[1]);
-      const primary = sorted[0][0];
-      const secondary = sorted[1][0];
-      const tertiary = sorted[2][0];
-      const blend = weightedAxisColor(weights);
-      return {
-        primary: AXIS_META[primary].color,
-        secondary: AXIS_META[secondary].color,
-        tertiary: AXIS_META[tertiary].color,
-        blend,
-        primaryWeight: sorted[0][1],
-        secondaryWeight: sorted[1][1]
-      };
-    }
-
     function ringProgress(ring) {
       return clamp((ring || 0) / MAIN_RING_DEPTH, 0, 1);
     }
@@ -2085,12 +1936,10 @@
       const progress = ringProgress(ring);
       return {
         progress,
-        stroke: 2.2 + progress * 1.45,
-        availableStroke: 2.35 + progress * 0.5,
-        glow: 4.8 + progress * 9,
-        coreGlow: progress * 5,
+        stroke: 1.1 + progress * 0.6,
+        availableStroke: 0.9 + progress * 0.4,
         ringOpacity: progress > 0.58 ? 0.12 + progress * 0.18 : 0,
-        ringWidth: 1 + progress * 1.05
+        ringWidth: 0.7 + progress * 0.5
       };
     }
 
@@ -3075,6 +2924,7 @@
         this.patternConduitBoosts = new Map(Object.entries(this.patternReport.conduitBoosts || {}));
         this.empoweredNodeDetails = this.detectLoopEmpowerments();
         this.empoweredNodes = new Set(this.empoweredNodeDetails.keys());
+        this.nodeBoostCache = new Map();
         this.shapeBonuses = this.computeShapeBonuses();
         this.stats = this.computeStats();
         this.publishBridge();
@@ -3347,6 +3197,17 @@
       }
 
       getNodeBoost(node) {
+        // Recomputed inputs are fixed between recalculations, and every
+        // renderer/UI pass asks for every node — cache per recalculate.
+        if (this.nodeBoostCache && this.nodeBoostCache.has(node.id)) {
+          return this.nodeBoostCache.get(node.id);
+        }
+        const boost = this.computeNodeBoost(node);
+        if (this.nodeBoostCache) this.nodeBoostCache.set(node.id, boost);
+        return boost;
+      }
+
+      computeNodeBoost(node) {
         const detail = this.empoweredNodeDetails.get(node.id);
         const patternBoost = this.patternNodeBoosts.get(node.id);
         const lensIncrease = this.vesicaLensIncrease(node.id);
@@ -3624,62 +3485,6 @@
         this.update();
       }
 
-      safeId(id) {
-        return String(id).replace(/[^\w-]/g, "_");
-      }
-
-      ensureNodeGradients(node) {
-        const safe = this.safeId(node.id);
-        const coreId = `node-core-grad-${safe}`;
-        const shellId = `node-shell-grad-${safe}`;
-        if (document.getElementById(coreId)) {
-          return { coreId, shellId };
-        }
-
-        const spectrum = nodeSpectrum(node.weights);
-        const depth = ringProgress(node.ring);
-        const core = makeSvgEl("radialGradient", {
-          id: coreId,
-          cx: "34%",
-          cy: "28%",
-          r: "78%"
-        });
-        [
-          ["0%", colorMix(spectrum.primary, "#ffffff", 0.28 + depth * 0.18), "1"],
-          ["45%", colorMix(spectrum.blend, "#ffffff", depth * 0.08), "0.96"],
-          ["76%", colorMix(spectrum.secondary, spectrum.blend, 0.38 + depth * 0.12), "0.88"],
-          ["100%", colorMix(spectrum.tertiary, "#05070c", 0.74 - depth * 0.1), "0.74"]
-        ].forEach(([offset, color, opacity]) => {
-          core.appendChild(makeSvgEl("stop", {
-            offset,
-            "stop-color": color,
-            "stop-opacity": opacity
-          }));
-        });
-
-        const shell = makeSvgEl("radialGradient", {
-          id: shellId,
-          cx: "50%",
-          cy: "50%",
-          r: "74%"
-        });
-        [
-          ["0%", colorMix(spectrum.blend, "#111722", 0.38 - depth * 0.08), "0.8"],
-          ["62%", colorMix(spectrum.blend, "#080b12", 0.62 - depth * 0.12), "0.76"],
-          ["100%", colorMix(spectrum.primary, "#020305", 0.72 - depth * 0.12), "0.94"]
-        ].forEach(([offset, color, opacity]) => {
-          shell.appendChild(makeSvgEl("stop", {
-            offset,
-            "stop-color": color,
-            "stop-opacity": opacity
-          }));
-        });
-
-        this.layers.defs.appendChild(core);
-        this.layers.defs.appendChild(shell);
-        return { coreId, shellId };
-      }
-
       drawBackground() {
         Object.entries(AXIS_VECTORS).forEach(([axis, vector]) => {
           const length = MAIN_RING_DEPTH * NODE_SPACING * 1.28;
@@ -3810,10 +3615,7 @@
             transform: `translate(${node.pos.x},${node.pos.y})`
           });
           group.dataset.effectAxes = effectStyle.axes.join(" ");
-          group.style.setProperty("--effect-color", colorMix(color, "#dff4ff", 0.28));
-          group.style.setProperty("--effect-glow", colorMix(color, "#ffffff", 0.12));
-          group.style.setProperty("--effect-fill", colorMix(color, "#05080d", 0.68));
-          this.applyEffectStyleVars(group, effectStyle);
+          group.style.setProperty("--effect-color", colorMix(color, "#e9e4d8", 0.3));
           const aura = makeSvgEl("circle", {
             className: "circle-bonus-center-aura",
             r: radiusForType(node.type, boost) + 8
@@ -3873,230 +3675,56 @@
         return { axes, primary, weights };
       }
 
-      applyEffectStyleVars(group, effectStyle) {
-        const colorTargets = {
-          str: ["#ffd1c1", "#2b0806"],
-          dex: ["#c7f7d8", "#062413"],
-          int: ["#dbe7ff", "#070d2b"]
-        };
-        effectStyle.axes.forEach(axis => {
-          const [light, dark] = colorTargets[axis];
-          const base = AXIS_META[axis].color;
-          const weight = effectStyle.weights[axis] || 0;
-          group.style.setProperty(`--${axis}-effect-color`, colorMix(base, light, 0.2));
-          group.style.setProperty(`--${axis}-effect-glow`, colorMix(base, dark, 0.22));
-          group.style.setProperty(`--${axis}-effect-opacity`, `${round(clamp(weight * 0.5, 0.1, 0.36))}`);
-        });
-      }
-
+      // Loop crowns as engraved filigree: one hairline ring per loop, a faint
+      // wash under the largest, a dashed counter-ring on wide crowns, and six
+      // corner spokes on the innermost. A dense build once carried hundreds
+      // of glowing animated elements here; now a triple crown costs ~13
+      // static-or-dashoffset elements and no filters.
       appendLoopEffect(group, center, loop, loopIndex, effectStyle) {
         const ringNodes = loop.nodeIds
           .map(id => this.tree.nodes.get(id))
           .filter(Boolean);
         const radiusPx = NODE_SPACING * loop.radius * 1.03;
-        const delay = `${loopIndex * -0.45}s`;
-        const disc = makeSvgEl("circle", {
-          className: "circle-bonus-disc",
-          r: radiusPx + 10 + loop.radius * 4
-        });
-        disc.style.opacity = loop.radius === 1 ? "0.36" : "0.2";
-        group.appendChild(disc);
+
+        if (loopIndex === 0) {
+          group.appendChild(makeSvgEl("circle", {
+            className: "circle-bonus-disc",
+            r: radiusPx + 8
+          }));
+        }
 
         const ring = makeSvgEl("circle", {
           className: `circle-bonus-ring ${loop.radius === 1 ? "outer" : "large"}`,
           r: radiusPx
         });
-        ring.style.animationDelay = delay;
+        ring.style.animationDelay = `${loopIndex * -3.5}s`;
         group.appendChild(ring);
 
-        const inner = makeSvgEl("circle", {
-          className: `circle-bonus-ring ${loop.radius === 1 ? "inner" : "scallop"}`,
-          r: Math.max(22, radiusPx - NODE_SPACING * 0.46)
-        });
-        inner.style.animationDelay = `${loopIndex * -0.7}s`;
-        group.appendChild(inner);
-
-        const wave = makeSvgEl("circle", {
-          className: "circle-bonus-wave",
-          r: radiusPx + 16
-        });
-        wave.style.animationDelay = `${loopIndex * -0.55}s`;
-        group.appendChild(wave);
-
-        if (loop.radius === 1) {
-          const pulse = makeSvgEl("circle", {
-            className: "circle-bonus-pulse",
-            r: NODE_SPACING * 0.58
+        if (loop.radius > 1) {
+          const counter = makeSvgEl("circle", {
+            className: "circle-bonus-ring scallop",
+            r: Math.max(22, radiusPx - NODE_SPACING * 0.46)
           });
-          pulse.style.animationDelay = `${loopIndex * -0.4}s`;
-          group.appendChild(pulse);
-        }
-
-        this.appendAxisLoopEffects(group, center, loop, ringNodes, radiusPx, loopIndex, effectStyle);
-
-        ringNodes.forEach((ringNode, index) => {
-          const x = ringNode.pos.x - center.pos.x;
-          const y = ringNode.pos.y - center.pos.y;
-          const spoke = makeSvgEl("line", {
-            className: `circle-bonus-spoke${loop.radius > 1 && index % loop.radius === 0 ? " strong" : ""}`,
-            x1: 0,
-            y1: 0,
-            x2: x,
-            y2: y
+          counter.style.animationDelay = `${loopIndex * -5}s`;
+          group.appendChild(counter);
+        } else {
+          const inner = makeSvgEl("circle", {
+            className: "circle-bonus-ring inner",
+            r: Math.max(18, radiusPx - NODE_SPACING * 0.4)
           });
-          spoke.style.animationDelay = `${(index % 6) * -0.12}s`;
-          group.appendChild(spoke);
+          inner.style.animationDelay = `${loopIndex * -4}s`;
+          group.appendChild(inner);
 
-          if (loop.radius > 1) {
-            const petal = makeSvgEl("circle", {
-              className: "circle-bonus-petal",
-              cx: x,
-              cy: y,
-              r: 7 + loop.radius * 3
-            });
-            petal.style.animationDelay = `${index * -0.08}s`;
-            group.appendChild(petal);
-          }
-        });
-
-        if (loop.radius > 1 && ringNodes.length) {
-          const chordStep = loop.radius === 2 ? 3 : 4;
-          for (let index = 0; index < ringNodes.length; index += loop.radius) {
-            const a = ringNodes[index];
-            const b = ringNodes[(index + chordStep) % ringNodes.length];
-            if (!a || !b) continue;
-            const chord = makeSvgEl("line", {
-              className: "circle-bonus-chord",
-              x1: a.pos.x - center.pos.x,
-              y1: a.pos.y - center.pos.y,
-              x2: b.pos.x - center.pos.x,
-              y2: b.pos.y - center.pos.y
-            });
-            chord.style.animationDelay = `${index * -0.1}s`;
-            group.appendChild(chord);
-          }
-        }
-      }
-
-      appendAxisLoopEffects(group, center, loop, ringNodes, radiusPx, loopIndex, effectStyle) {
-        if (effectStyle.axes.includes("str")) {
-          this.appendStrengthLoopEffect(group, radiusPx, loop.radius, loopIndex, effectStyle.weights.str);
-        }
-        if (effectStyle.axes.includes("dex")) {
-          this.appendDexLoopEffect(group, radiusPx, loop.radius, loopIndex, effectStyle.weights.dex);
-        }
-        if (effectStyle.axes.includes("int")) {
-          this.appendIntLoopEffect(group, center, loop, ringNodes, radiusPx, loopIndex, effectStyle.weights.int);
-        }
-      }
-
-      effectOpacity(weight, max = 0.34) {
-        return round(clamp((weight || 0) * max, 0.08, max));
-      }
-
-      setLocalEffectOpacity(el, opacity) {
-        el.style.setProperty("--local-effect-opacity", `${opacity}`);
-        el.style.setProperty("--local-effect-faint", `${round(opacity * 0.36)}`);
-      }
-
-      appendStrengthLoopEffect(group, radiusPx, radius, loopIndex, weight) {
-        const opacity = this.effectOpacity(weight, 0.32);
-        [0.56, 0.78].forEach((scale, index) => {
-          const pulse = makeSvgEl("circle", {
-            className: `circle-bonus-vitality ${index ? "outer" : "inner"}`,
-            r: Math.max(30, radiusPx * scale)
+          ringNodes.forEach(ringNode => {
+            group.appendChild(makeSvgEl("line", {
+              className: "circle-bonus-spoke",
+              x1: 0,
+              y1: 0,
+              x2: ringNode.pos.x - center.pos.x,
+              y2: ringNode.pos.y - center.pos.y
+            }));
           });
-          this.setLocalEffectOpacity(pulse, index ? round(opacity * 0.72) : opacity);
-          pulse.style.animationDelay = `${loopIndex * -0.42 + index * -1.18}s`;
-          if (radius > 1) pulse.style.animationDuration = `${round(4.2 + radius * 0.45)}s`;
-          group.appendChild(pulse);
-        });
-      }
-
-      appendDexLoopEffect(group, radiusPx, radius, loopIndex, weight) {
-        const opacity = this.effectOpacity(weight, 0.3);
-        const arcs = radius > 1 ? 4 : 3;
-        for (let index = 0; index < arcs; index += 1) {
-          const ring = radiusPx + 10 - index * 9;
-          const start = index * (Math.PI * 2 / arcs) + loopIndex * 0.28;
-          const end = start + Math.PI * (0.58 + radius * 0.08);
-          const arc = makeSvgEl("path", {
-            className: `circle-bonus-whirl${index % 2 ? " reverse" : ""}`,
-            d: this.arcPath(ring, start, end)
-          });
-          this.setLocalEffectOpacity(arc, round(opacity * (index % 2 ? 0.66 : 1)));
-          arc.style.animationDelay = `${loopIndex * -0.38 + index * -0.52}s`;
-          group.appendChild(arc);
         }
-      }
-
-      appendIntLoopEffect(group, center, loop, ringNodes, radiusPx, loopIndex, weight) {
-        const opacity = this.effectOpacity(weight, 0.3);
-        const orbit = makeSvgEl("circle", {
-          className: "circle-bonus-orbit",
-          r: radiusPx + 24
-        });
-        this.setLocalEffectOpacity(orbit, round(opacity * 0.72));
-        orbit.style.animationDelay = `${loopIndex * -0.62}s`;
-        group.appendChild(orbit);
-
-        const starCount = loop.radius > 1 ? 6 : 4;
-        for (let index = 0; index < starCount; index += 1) {
-          const angle = index * (Math.PI * 2 / starCount) + Math.PI / 6 + loopIndex * 0.2;
-          const starRadius = radiusPx + (index % 2 ? 28 : 14);
-          const x = Math.cos(angle) * starRadius;
-          const y = Math.sin(angle) * starRadius;
-          const star = makeSvgEl("polygon", {
-            className: "circle-bonus-star",
-            points: this.starPoints(x, y, 4.4 + loop.radius * 0.9, 1.5 + loop.radius * 0.25, 4, angle)
-          });
-          this.setLocalEffectOpacity(star, round(opacity * (index % 2 ? 0.74 : 1)));
-          star.style.animationDelay = `${index * -0.28 + loopIndex * -0.36}s`;
-          group.appendChild(star);
-        }
-
-        if (loop.radius > 1 && ringNodes.length) {
-          for (let index = 0; index < ringNodes.length; index += Math.max(2, loop.radius)) {
-            const a = ringNodes[index];
-            const b = ringNodes[(index + loop.radius + 1) % ringNodes.length];
-            if (!a || !b) continue;
-            const line = makeSvgEl("line", {
-              className: "circle-bonus-constellation",
-              x1: a.pos.x - center.pos.x,
-              y1: a.pos.y - center.pos.y,
-              x2: b.pos.x - center.pos.x,
-              y2: b.pos.y - center.pos.y
-            });
-            this.setLocalEffectOpacity(line, round(opacity * 0.58));
-            line.style.animationDelay = `${index * -0.12}s`;
-            group.appendChild(line);
-          }
-        }
-      }
-
-      arcPath(radius, startAngle, endAngle) {
-        const start = {
-          x: Math.cos(startAngle) * radius,
-          y: Math.sin(startAngle) * radius
-        };
-        const end = {
-          x: Math.cos(endAngle) * radius,
-          y: Math.sin(endAngle) * radius
-        };
-        const largeArc = Math.abs(endAngle - startAngle) > Math.PI ? 1 : 0;
-        const sweep = endAngle > startAngle ? 1 : 0;
-        return `M ${round(start.x)} ${round(start.y)} A ${round(radius)} ${round(radius)} 0 ${largeArc} ${sweep} ${round(end.x)} ${round(end.y)}`;
-      }
-
-      starPoints(cx, cy, outer, inner, points = 4, rotation = 0) {
-        const total = points * 2;
-        const coordinates = [];
-        for (let index = 0; index < total; index += 1) {
-          const radius = index % 2 === 0 ? outer : inner;
-          const angle = rotation - Math.PI / 2 + index * Math.PI / points;
-          coordinates.push(`${round(cx + Math.cos(angle) * radius)},${round(cy + Math.sin(angle) * radius)}`);
-        }
-        return coordinates.join(" ");
       }
 
       drawConduit(conduit) {
@@ -4116,25 +3744,18 @@
           line.dataset.conduitId = conduit.id;
           line.dataset.variantId = option.id;
           const depth = conduit.depth;
-          const activeColor = colorMix(option.color, "#ffffff", 0.06 + depth * 0.2);
-          const glowColor = colorMix(option.color, "#ffffff", 0.02 + depth * 0.16);
+          const activeColor = colorMix(option.color, "#e9e4d8", 0.08 + depth * 0.18);
           line.style.setProperty("--path-depth", `${round(depth)}`);
           line.style.setProperty("--path-color", activeColor);
-          line.style.setProperty("--path-glow", colorMix(glowColor, "#05080d", 0.04));
-          line.style.setProperty("--path-allocated-width", `${round(4.45 + depth * 1.75)}px`);
-          line.style.setProperty("--path-allocated-glow", `${round(3.4 + depth * 8.4)}px`);
-          line.style.setProperty("--path-available-color", colorMix(option.color, "#1d2430", 0.68 - depth * 0.1));
-          line.style.setProperty("--path-available-width", `${round(2.45 + depth * 0.45)}px`);
-          line.style.setProperty("--path-available-opacity", `${round(0.34 + depth * 0.1)}`);
-          line.style.setProperty("--path-preview-color", colorMix(option.color, "#d8dee8", 0.34 + depth * 0.16));
-          line.style.setProperty("--path-preview-glow", colorMix(option.color, "#ffffff", 0.12 + depth * 0.18));
-          line.style.setProperty("--path-pending-width", `${round(3.5 + depth * 1.2)}px`);
-          line.style.setProperty("--path-pending-glow", `${round(1.8 + depth * 4.4)}px`);
-          line.style.setProperty("--path-pending-opacity", `${round(0.62 + depth * 0.18)}`);
-          line.style.setProperty("--path-extra-color", colorMix(activeColor, "#8ad4ff", 0.34 + depth * 0.22));
-          line.style.setProperty("--path-extra-width", `${round(4.2 + depth * 1.65)}px`);
-          line.style.setProperty("--path-extra-glow", `${round(4 + depth * 7.5)}px`);
-          line.style.setProperty("--path-extra-glow-color", colorMix(option.color, "#8ad4ff", 0.36 + depth * 0.24));
+          line.style.setProperty("--path-allocated-width", `${round(1.4 + depth * 0.65)}px`);
+          line.style.setProperty("--path-available-color", colorMix(option.color, "#1c1811", 0.62 - depth * 0.1));
+          line.style.setProperty("--path-available-width", `${round(0.9 + depth * 0.25)}px`);
+          line.style.setProperty("--path-available-opacity", `${round(0.38 + depth * 0.1)}`);
+          line.style.setProperty("--path-preview-color", colorMix(option.color, "#d8d2c4", 0.34 + depth * 0.16));
+          line.style.setProperty("--path-pending-width", `${round(1.3 + depth * 0.5)}px`);
+          line.style.setProperty("--path-pending-opacity", `${round(0.66 + depth * 0.18)}`);
+          line.style.setProperty("--path-extra-color", colorMix(activeColor, "#7fbfa3", 0.4 + depth * 0.2));
+          line.style.setProperty("--path-extra-width", `${round(1.3 + depth * 0.55)}px`);
           hit.addEventListener("click", event => {
             event.stopPropagation();
             if (window.viewController?.wasDrag) return;
@@ -4180,30 +3801,23 @@
         group.dataset.nodeId = node.id;
         const color = axisColor(node.axis, node.weights);
         const depth = ringIntensity(node.ring);
-        const gradients = this.ensureNodeGradients(node);
         group.style.setProperty("--axis-color", color);
         group.style.setProperty("--depth", `${round(depth.progress)}`);
-        group.style.setProperty("--axis-light", colorMix(color, "#ffffff", 0.18 + depth.progress * 0.18));
-        group.style.setProperty("--axis-glow", colorMix(color, "#ffffff", 0.04 + depth.progress * 0.16));
-        group.style.setProperty("--axis-muted", colorMix(color, "#10141d", 0.6 - depth.progress * 0.1));
-        group.style.setProperty("--axis-dim", colorMix(color, "#10141d", 0.8 - depth.progress * 0.1));
-        group.style.setProperty("--axis-mid", colorMix(color, "#10141d", 0.44 - depth.progress * 0.12));
-        group.style.setProperty("--node-locked-stroke-width", `${round(1.7 + depth.progress * 0.65)}px`);
+        group.style.setProperty("--axis-light", colorMix(color, "#e9e4d8", 0.24 + depth.progress * 0.16));
+        group.style.setProperty("--axis-muted", colorMix(color, "#100f0c", 0.58 - depth.progress * 0.1));
+        group.style.setProperty("--axis-dim", colorMix(color, "#100f0c", 0.82 - depth.progress * 0.08));
+        group.style.setProperty("--axis-mid", colorMix(color, "#100f0c", 0.46 - depth.progress * 0.12));
+        group.style.setProperty("--node-locked-stroke-width", `${round(0.7 + depth.progress * 0.3)}px`);
         group.style.setProperty("--node-shell-opacity", `${round(0.84 + depth.progress * 0.16)}`);
         group.style.setProperty("--node-active-stroke-width", `${round(depth.stroke)}px`);
         group.style.setProperty("--node-available-stroke-width", `${round(depth.availableStroke)}px`);
-        group.style.setProperty("--node-active-glow", `${round(depth.glow)}px`);
-        group.style.setProperty("--node-available-glow", `${round(3.2 + depth.progress * 3.2)}px`);
-        group.style.setProperty("--node-core-active-glow", `${round(depth.coreGlow)}px`);
-        group.style.setProperty("--node-core-locked-opacity", `${round(0.44 + depth.progress * 0.16)}`);
+        group.style.setProperty("--node-core-locked-opacity", `${round(0.42 + depth.progress * 0.16)}`);
         group.style.setProperty("--node-core-available-opacity", `${round(0.78 + depth.progress * 0.12)}`);
         group.style.setProperty("--node-core-active-opacity", `${round(0.9 + depth.progress * 0.1)}`);
         group.style.setProperty("--node-active-ring-opacity", `${round(depth.ringOpacity)}`);
         group.style.setProperty("--node-active-ring-width", `${round(depth.ringWidth)}px`);
         group.style.setProperty("--node-passive-ring-opacity", `${round(0.08 + depth.progress * 0.16)}`);
-        group.style.setProperty("--node-passive-ring-width", `${round(1 + depth.progress * 0.9)}px`);
-        group.style.setProperty("--node-core-fill", `url(#${gradients.coreId})`);
-        group.style.setProperty("--node-shell-fill", `url(#${gradients.shellId})`);
+        group.style.setProperty("--node-passive-ring-width", `${round(0.7 + depth.progress * 0.4)}px`);
         const shell = makeSvgEl("circle", { className: "node-shell", r: radiusForType(node.type) });
         const ring = makeSvgEl("circle", { className: "node-ring", r: radiusForType(node.type) + 6 });
         const core = makeSvgEl("circle", { className: "node-core", r: Math.max(3, radiusForType(node.type) - 4) });
@@ -4261,6 +3875,19 @@
         (this.tree.patternReport?.loops || []).forEach(loop => {
           (loop.conduitIds || []).forEach(id => loopUse.set(id, (loopUse.get(id) || 0) + 1));
         });
+        // The detector already ran this alternate-route BFS for every main
+        // conduit; re-running it per conduit per frame is quadratic. Subtree
+        // conduits sit outside the detector, so only they still need the BFS.
+        const detectorRedundant = new Set(
+          (this.tree.patternReport?.circuits?.redundant || []).map(entry => entry.id)
+        );
+        const isRedundant = conduit => {
+          if (detectorRedundant.has(conduit.id)) return true;
+          const from = this.tree.nodes.get(conduit.fromId);
+          const to = this.tree.nodes.get(conduit.toId);
+          if (from?.source !== "subtree" && to?.source !== "subtree") return false;
+          return this.tree.hasAlternateActiveRoute(conduit);
+        };
         this.tree.conduits.forEach(conduit => {
           const el = this.conduitEls.get(conduit.id);
           const visible = this.tree.isConduitVisible(conduit);
@@ -4272,7 +3899,7 @@
             const choiceId = this.tree.choiceId(conduit.id, option.id);
             if (conduit.allocatedVariant === option.id) {
               variantEl.line.classList.add("allocated");
-              if (this.tree.hasAlternateActiveRoute(conduit) || conduit.extra) {
+              if (conduit.extra || isRedundant(conduit)) {
                 variantEl.line.classList.add("extra");
               }
             } else if (pendingChoices.has(choiceId)) {
