@@ -109,8 +109,10 @@ t('inventory layout has six unlock-driven auxiliary windows', () => {
   assert(/max-width: 96%; max-height: 96%/.test(index),
     'item art must fill the enlarged cells');
   assert(/if \(item && !locked\) cls\.push\('occupied'\)/.test(index)
-      && /\.equip-slot\.occupied \.item-sigil \{ display: none; \}/.test(index),
-    'occupied equipment slots must hide placeholder labels and vector sigils beneath transparent art');
+      && /\.equip-slot\.occupied > \.label/.test(index),
+    'occupied equipment slots must hide placeholder labels beneath transparent art');
+  assert(!/item-sigil/.test(index) && !/const SIGILS/.test(index),
+    'bonded vector watermarks must never attach to item art in slots, inventory, or drag ghosts');
   assert(/id: 'spoils', label: 'Spoils Roll', w: 4, h: 4/.test(index),
     'STR+DEX Spoils Roll must exist as a 4x4 specialty grid');
   assert(/id: 'preparations', label: 'Preparation Case', w: 4, h: 4/.test(index),
