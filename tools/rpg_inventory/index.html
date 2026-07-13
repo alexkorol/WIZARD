@@ -204,7 +204,6 @@
     .equip-slot.occupied > .label,
     .equip-slot.occupied::before,
     .equip-slot.occupied::after { display: none !important; content: none !important; }
-    .equip-slot.occupied .item-sigil { display: none; }
 
     .stat-grid {
       margin-top: 4px; width: 100%;
@@ -414,7 +413,6 @@
       filter: drop-shadow(0 3px 7px rgba(0,0,0,0.65));
       pointer-events: none; position: relative; z-index: 1;
     }
-    .item-sigil { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 0; }
     .item .pip-strip {
       position: absolute; bottom: 2px; left: 0; right: 0;
       display: flex; justify-content: center; gap: 2px;
@@ -804,14 +802,6 @@
     curio: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M12 3l6 5-6 13-6-13z" /><path d="M18 8H6" /><path d="M12 3l-2 5 2 13 2-13z" /></svg>),
     tool: ({ size = 22 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><circle cx="12" cy="12" r="7" /><path d="M12 5v-2" /><path d="M12 21v-2" /><path d="M5 12H3" /><path d="M21 12h-2" /></svg>),
     default: ({ size = 26 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><rect x="4" y="4" width="16" height="16" rx="2" /><path d="M8 12h8" /><path d="M12 8v8" /></svg>),
-  };
-
-  /* Theme sigils — influence watermark behind bonded item art. */
-  const SIGILS = {
-    slaughter: ({ size = 40 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M6 3c2 6 2 12-1 18" /><path d="M12 2c2.5 6.5 2.5 13.5 0 20" /><path d="M18 3c-2 6-2 12 1 18" /></svg>),
-    warding: ({ size = 40 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z" /><path d="M9 10h6l-3 5z" /></svg>),
-    spiritwork: ({ size = 40 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M2 12c3-5.5 17-5.5 20 0-3 5.5-17 5.5-20 0z" /><circle cx="12" cy="12" r="2.6" /></svg>),
-    wayfaring: ({ size = 40 }) => (<svg viewBox="0 0 24 24" width={size} height={size} {...iconProps}><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" /></svg>),
   };
 
   const ArtImg = ({ src, fallbackIcon, size }) => {
@@ -1332,16 +1322,6 @@
         onPointerEnter={(e) => onHover && onHover(item, e)}
         onPointerLeave={() => onHover && onHover(null, null)}
       >
-        {(() => {
-          const wm = item.bonds.length ? forge.dominantBondTheme(item) : null;
-          if (!wm || !SIGILS[wm]) return null;
-          const Sigil = SIGILS[wm];
-          return (
-            <div className="item-sigil" style={{ color: pack.themes[wm].color, opacity: item.awakened ? 0.2 : 0.13 }}>
-              <Sigil size={Math.min(item.w, item.h) * TILE_SIZE * 0.72} />
-            </div>
-          );
-        })()}
         <ArtImg src={artSrc(item)} fallbackIcon={itemIcon(item)} size={Math.max(22, Math.min(item.w, item.h) * 18)} />
         {item.vessel > 0 && (item.brands.length || item.bonds.length || item.trophies.length || item.scars) > 0 && (
           <div className="pip-strip">
