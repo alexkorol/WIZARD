@@ -305,11 +305,15 @@
     .aux-tab-stack {
       position: absolute;
       left: -37px;
-      top: 54px;
+      top: 16px;
+      bottom: 16px;
       z-index: 33;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      display: grid;
+      grid-template-columns: 34px;
+      grid-template-rows: repeat(6, minmax(34px, 1fr));
+      align-items: center;
+      justify-items: end;
+      pointer-events: none;
     }
     .aux-tab {
       width: 34px;
@@ -324,6 +328,7 @@
       font-size: 0.72rem;
       cursor: pointer;
       box-shadow: -5px 5px 14px rgba(0,0,0,0.42);
+      pointer-events: auto;
     }
     .aux-tab[data-axis="str"] { border-color: rgba(248,113,113,0.48); color: #f3a19d; }
     .aux-tab[data-axis="dex"] { border-color: rgba(134,239,172,0.48); color: #a7efbd; }
@@ -332,14 +337,16 @@
     .aux-tab[data-axis="dex-int"] { border-color: rgba(45,212,191,0.48); color: #77d9cc; }
     .aux-tab[data-axis="int-str"] { border-color: rgba(192,132,252,0.48); color: #cfa4f1; }
     .aux-tab:hover { color: #fff0ad; border-color: var(--accent); }
+    .aux-tab[aria-expanded="true"] { color: #fff0ad; border-color: var(--accent); background: rgba(32,28,19,0.99); }
     .aux-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .aux-drawer {
-      position: absolute;
+      position: fixed;
       top: 0;
-      right: calc(100% + 8px);
+      left: 0;
       z-index: 32;
+      box-sizing: border-box;
       width: max-content;
-      max-width: min(500px, calc(100vw - 210px));
+      max-width: min(500px, calc(100vw - 16px));
       max-height: calc(100vh - 32px);
       overflow: auto;
       padding: 14px;
@@ -347,15 +354,15 @@
       border: 1px solid rgba(201,162,39,0.28);
       border-radius: 10px;
       box-shadow: -16px 18px 42px rgba(0,0,0,0.68);
-      transform: translateX(14px) scale(0.98);
-      transform-origin: right top;
+      transform: scale(0.98);
+      transform-origin: right center;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
       transition: transform 0.18s ease, opacity 0.18s ease, visibility 0s linear 0.18s;
     }
     .aux-drawer.open {
-      transform: translateX(0) scale(1);
+      transform: scale(1);
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
@@ -585,7 +592,8 @@
     .drawer {
       position: fixed;
       top: 76px; right: 0; bottom: 24px;
-      width: 320px; max-width: 86vw;
+      box-sizing: border-box;
+      width: min(320px, 86vw); max-width: none;
       background: rgba(13, 12, 10, 0.97);
       border: 1px solid var(--hairline);
       border-right: none;
@@ -619,7 +627,8 @@
       letter-spacing: 0.2em;
     }
     .drawer-tab:hover { color: var(--accent); }
-    .drawer-tab.open { right: min(320px, 86vw); }
+    .drawer-tab.open { right: 0; color: var(--accent); }
+    .drawer-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .drawer .chronicle { max-height: none; flex: 1; }
     .drawer-quote { color: var(--dim); font-size: 0.75rem; font-style: italic; line-height: 1.45; }
 
@@ -658,10 +667,7 @@
 
     @media (max-width: 1450px) {
       .aux-drawer {
-        position: fixed;
-        inset: 16px auto auto 184px;
-        right: auto;
-        max-width: min(500px, calc(100vw - 200px));
+        max-width: min(500px, calc(100vw - 16px));
         max-height: calc(100vh - 32px);
       }
     }
@@ -693,12 +699,9 @@
       .paperdoll { width: 100%; }
       .grid-shell { display: block; -webkit-overflow-scrolling: touch; }
       .mini-pack-row { grid-template-columns: 1fr; }
-      .aux-tab-stack { left: -30px; top: 40px; }
+      .aux-tab-stack { left: -30px; top: 12px; bottom: 12px; grid-template-columns: 32px; }
       .aux-tab { width: 32px; }
       .aux-drawer {
-        position: fixed;
-        inset: 54px auto auto 8px;
-        right: auto;
         max-width: calc(100vw - 16px);
         max-height: calc(100vh - 62px);
       }
@@ -718,7 +721,7 @@
 <div id="root"></div>
 
 <script type="text/babel">
-  const { useState, useEffect, useRef, useCallback, useMemo } = React;
+  const { useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo } = React;
 
   /* =====================================================================
      UI layer only — all item rules live in core/vesselforge.js, all
@@ -737,12 +740,12 @@
   const PACK_BY_ID = Object.fromEntries(PACK_DEFS.map(def => [def.id, def]));
   const LEGACY_PACK_IDS = { relics: 'reliquary', utility: 'preparations' };
   const AUX_WINDOWS = [
-    { id: 'warcall-window', label: 'War-call', axis: 'str', unlock: 'war_call_slot', slotId: 'warhorn' },
-    { id: 'quickrig-window', label: 'Quick Rig', axis: 'dex', unlock: 'quick_rig_slot', slotId: 'quickRig' },
-    { id: 'attendant-window', label: 'Attendant', axis: 'int', unlock: 'attendant_focus_slot', slotId: 'attendant' },
-    { id: 'spoils-window', label: 'Spoils Roll', axis: 'str-dex', unlock: 'spoils_pack', packId: 'spoils' },
-    { id: 'preparations-window', label: 'Preparation Case', axis: 'dex-int', unlock: 'preparations_pack', packId: 'preparations' },
-    { id: 'reliquary-window', label: 'Reliquary', axis: 'int-str', unlock: 'reliquary_pack', packId: 'reliquary' },
+    { id: 'warcall-window', label: 'War-call', axis: 'str', lane: 1, unlock: 'war_call_slot', slotId: 'warhorn' },
+    { id: 'quickrig-window', label: 'Quick Rig', axis: 'dex', lane: 2, unlock: 'quick_rig_slot', slotId: 'quickRig' },
+    { id: 'attendant-window', label: 'Attendant', axis: 'int', lane: 3, unlock: 'attendant_focus_slot', slotId: 'attendant' },
+    { id: 'spoils-window', label: 'Spoils Roll', axis: 'str-dex', lane: 4, unlock: 'spoils_pack', packId: 'spoils' },
+    { id: 'preparations-window', label: 'Preparation Case', axis: 'dex-int', lane: 5, unlock: 'preparations_pack', packId: 'preparations' },
+    { id: 'reliquary-window', label: 'Reliquary', axis: 'int-str', lane: 6, unlock: 'reliquary_pack', packId: 'reliquary' },
   ];
   const SLOT_UNLOCKS = { warhorn: 'war_call_slot', quickRig: 'quick_rig_slot', attendant: 'attendant_focus_slot' };
   const UNLOCK_ALIASES = { war_call_slot: ['war_horn_curio'] };
@@ -1415,6 +1418,7 @@
     const [benchOpen, setBenchOpen] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [openAuxId, setOpenAuxId] = useState(null);
+    const [auxDrawerPos, setAuxDrawerPos] = useState(null);
     const [pigmentId, setPigmentId] = useState('');
     const [omenId, setOmenId] = useState('');
     const [dragState, setDragState] = useState(null);
@@ -1424,6 +1428,8 @@
     const [treeBridge, setTreeBridge] = useState(readTreeBridge);
     const [, setLayoutVersion] = useState(0);
     const packGridRefs = useRef({});
+    const auxTabRefs = useRef({});
+    const auxDrawerRefs = useRef({});
     const treeUnlocks = treeBridge.unlocks || [];
     const hasUnlock = (flag) => treeUnlocks.includes(flag)
       || (UNLOCK_ALIASES[flag] || []).some(alias => treeUnlocks.includes(alias));
@@ -1434,6 +1440,37 @@
         setOpenAuxId(null);
       }
     }, [openAuxId, treeBridge]);
+
+    useLayoutEffect(() => {
+      if (!openAuxId) {
+        setAuxDrawerPos(null);
+        return undefined;
+      }
+      const placeBesideTab = () => {
+        const tab = auxTabRefs.current[openAuxId];
+        const drawer = auxDrawerRefs.current[openAuxId];
+        if (!tab || !drawer) return;
+        const tabRect = tab.getBoundingClientRect();
+        const drawerRect = drawer.getBoundingClientRect();
+        const edge = 8;
+        const gap = 8;
+        const leftOfTab = tabRect.left - gap - drawerRect.width;
+        const rightOfTab = tabRect.right + gap;
+        const maxLeft = Math.max(edge, window.innerWidth - drawerRect.width - edge);
+        const left = Math.max(edge, Math.min(leftOfTab >= edge ? leftOfTab : rightOfTab, maxLeft));
+        const maxTop = Math.max(edge, window.innerHeight - drawerRect.height - edge);
+        const top = Math.max(edge, Math.min(tabRect.top + tabRect.height / 2 - drawerRect.height / 2, maxTop));
+        const next = { id: openAuxId, left: Math.round(left), top: Math.round(top) };
+        setAuxDrawerPos(prev => prev && prev.id === next.id && prev.left === next.left && prev.top === next.top ? prev : next);
+      };
+      placeBesideTab();
+      window.addEventListener('resize', placeBesideTab);
+      window.addEventListener('scroll', placeBesideTab, true);
+      return () => {
+        window.removeEventListener('resize', placeBesideTab);
+        window.removeEventListener('scroll', placeBesideTab, true);
+      };
+    }, [openAuxId]);
 
     useEffect(() => {
       const sync = () => setTreeBridge(readTreeBridge());
@@ -2207,8 +2244,14 @@
                 return (
                   <button
                     key={def.id}
+                    ref={el => {
+                      if (el) auxTabRefs.current[def.id] = el;
+                      else delete auxTabRefs.current[def.id];
+                    }}
                     className="aux-tab"
                     data-axis={def.axis}
+                    style={{ gridRow: def.lane }}
+                    type="button"
                     onClick={() => setOpenAuxId(isOpen ? null : def.id)}
                     aria-label={`${isOpen ? 'Close' : 'Open'} ${def.label}`}
                     aria-expanded={isOpen}
@@ -2223,11 +2266,22 @@
 
             {AUX_WINDOWS.map(def => {
               const isOpen = openAuxId === def.id && hasUnlock(def.unlock);
+              const isPositioned = isOpen && auxDrawerPos?.id === def.id;
               return (
-                <aside key={def.id} id={def.id} className={`aux-drawer ${isOpen ? 'open' : ''}`} aria-hidden={!isOpen}>
+                <aside
+                  key={def.id}
+                  ref={el => {
+                    if (el) auxDrawerRefs.current[def.id] = el;
+                    else delete auxDrawerRefs.current[def.id];
+                  }}
+                  id={def.id}
+                  className={`aux-drawer ${isPositioned ? 'open' : ''}`}
+                  style={isPositioned ? { left: auxDrawerPos.left, top: auxDrawerPos.top } : undefined}
+                  aria-hidden={!isPositioned}
+                >
                   <div className="aux-drawer-head">
                     <span className="section-title">{def.label} · {def.axis.toUpperCase()}</span>
-                    <button className="btn small" onClick={() => setOpenAuxId(null)}>Close</button>
+                    <button className="btn small" type="button" onClick={() => setOpenAuxId(null)}>Close</button>
                   </div>
                   {def.packId ? renderPackGrid(PACK_BY_ID[def.packId]) : (
                     <div className="aux-slot-window">
@@ -2287,13 +2341,20 @@
         {/* Side drawer: chronicle & sundries, out of the way. */}
         <button
           className={`drawer-tab ${drawerOpen ? 'open' : ''}`}
+          type="button"
           onClick={() => setDrawerOpen(o => !o)}
           aria-expanded={drawerOpen}
-          title="Chronicle"
+          aria-controls="character-record-drawer"
+          aria-label={`${drawerOpen ? 'Close' : 'Open'} character record`}
+          title={`${drawerOpen ? 'Close' : 'Open'} character record`}
         >
-          {drawerOpen ? '››' : '‹‹ Chronicle'}
+          {drawerOpen ? '›› Close' : '‹‹ Chronicle'}
         </button>
-        <div className={`drawer ${drawerOpen ? 'open' : ''}`}>
+        <div id="character-record-drawer" className={`drawer ${drawerOpen ? 'open' : ''}`} aria-hidden={!drawerOpen}>
+          <div className="drawer-head">
+            <span className="section-title">Character Record</span>
+            <button className="btn small" type="button" onClick={() => setDrawerOpen(false)}>Close</button>
+          </div>
           <div className="section-title">Trophy Fragments</div>
           <div>
             {Object.entries(character.fragments).filter(([, n]) => n > 0).map(([id, n]) => (
