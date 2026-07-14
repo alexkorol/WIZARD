@@ -7,7 +7,9 @@ Open `index.html` directly in a browser.
 ## Current Feature Set
 
 - Ten-ring main hex lattice (331 nodes) with `INT` running center-to-up, `DEX` center-to-bottom-left, and `STR` center-to-bottom-right. A maxed character has 140 points after the Phase 0 overhaul scaffold, and a center-to-rim route now costs 20 points before optional side paths.
-- Six hidden outer subtrees attached through shared gateway nodes on the main rim, similar in purpose to cluster/ascendancy-style expansions without copying Path of Exile layouts.
+- Six ascendancy circles hidden behind the rim corners, each named after its corner (Attendant, Quick Rig, Warcall, Preparations, Trophies, Relics) and holding 13 passives themed to that corner's armoury window: an entry notable, eight smalls, two more notables, a mastery, and a capstone keystone. Every circle is the same seed-of-life wheel — a mastery hub, six seats on the hub's ring, and six seats on the outer intersections — with the entry facing the gate and the keystone at the apex.
+- The six ring-10 rim corners double as armoury unlock seats, alternating slot/pack around the outer hex: Attendant (INT), Quick Rig (DEX), and Warcall (STR) each unlock an extra gear-slot window on the Vesselforge page; Preparations (DEX/INT), Relics (INT/STR), and Trophies (DEX/STR) each unlock a 4×4 pack. Allocating a corner publishes its flag over the same bridge the class milestones use — no calling required — and each corner is also the gate to its ascendancy circle.
+- Player notes on anything: toggle the Notes button (hotkey `N`) and click any node or conduit to write a note on it, or Alt+click one directly. Gold pins mark noted targets; hover a pin to read, click it to edit, and the selection panel carries an Add Note button. Notes ride build codes, so they persist across reloads and travel with shared builds, and they survive reset on purpose.
 - A single skill-point pool: every node costs 1 point and every path or extra loop link costs 1 point, so travel distance is itself the build cost.
 - Every seat is authored data (`assets/tree-data.js`, emitted by `scripts/author-tree.mjs`): 96 unique named seats across six spoke identities (Champion, Acrobat, Archmage, Reaver, Nightblade, Ritualist) and six themed wedges (Kiln Line, Procession, Drowned Study, Unlit Road, High Paths, Red Field). No procedurally generated content remains.
 - Named seat plan by ring: doorway smalls (1), first notables (2), masteries (3), notable belt (4), the Waist — Waystones plus jewel sockets (5), keystones (6), class milestones (7), the Signs — birthsign keystones, exactly one allocatable per character (8), deep notables plus a second socket set (9), gateways and frontier notables (10).
@@ -21,7 +23,7 @@ Open `index.html` directly in a browser.
 - Allocated conduits can be refunded without removing either endpoint node when another active route keeps the graph connected.
 - Extra active-to-active arc allocation supports loop building and redundant routes.
 - One-by-one respec: click or right-click allocated nodes to refund them when graph connectivity allows it; click extra loop arcs to refund those arcs.
-- Outer subtree unlock rule: activate the shared rim gateway and complete at least one inner six-node circle.
+- Outer circle unlock rule: allocate a rim corner and its ascendancy circle opens beyond it, along with its armoury window.
 - Pattern bonuses now detect waves, flows, great-wave meridians, radius 1-3 loop crowns, concentric crowns, vesica lenses, grand orbits, smooth mirror symmetry, trines, mandalas, redundant circuits, warding enclosures, rods, and crossroads.
 - Waves empower the nodes along alternating-chirality paths; flows amplify the attribute output of same-chirality conduits; loops keep the center-node empowerment fantasy.
 - The pattern panel lists every §5 pattern family, and the SVG debug overlay renders wave, flow, and rod paths alongside the existing loop-crown effects.
@@ -48,6 +50,7 @@ Open `index.html` directly in a browser.
 6. Right-click an allocated conduit to refund that path directly; if it is required for connectivity, the build log explains why it is blocked.
 7. Click or right-click an allocated node to refund it, unless doing so would disconnect allocated nodes from the origin.
 8. Use `Undo`, `Reset`, zoom buttons, mouse wheel, and drag panning for planning.
+9. Toggle `Notes` (or hold Alt) and click any node or conduit to annotate it; click a gold pin to edit or remove that note.
 
 ## Game Design Rules
 
@@ -60,7 +63,7 @@ The demo uses a few rules that should survive if this is adapted into a full RPG
 - Notables are local rewards and should shape build identity at repeatable ring seats.
 - Masteries summarize a local school and sit on fixed axis milestones.
 - Keystones should be rare and rule-changing, with tradeoffs; in the main lattice they belong at ordered outer seats, not scattered throughout.
-- Gateways should touch the outside of the main tree and lead to compact, themed subtrees only after a shape-combo unlock.
+- Gateways should touch the outside of the main tree and lead to compact, themed subtrees once their corner seat is allocated.
 - Geometric combo bonuses should reward deliberate shapes, not random wandering. Larger concentric loops around the same center should feel like a meaningful investment, not only a cosmetic flourish.
 - Extra arc spending should matter because it enables loops, symmetry, redundant circuits, and alternate attribute routing.
 

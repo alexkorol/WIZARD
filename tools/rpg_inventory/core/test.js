@@ -125,6 +125,19 @@ t('inventory layout has six unlock-driven auxiliary windows', () => {
     'pure-axis auxiliary seats must each have an independent unlock');
   assert(/unlockedAuxWindows\.map/.test(index) && /className="aux-tab"/.test(index),
     'every unlocked auxiliary window must render its own tab');
+  assert(/grid-template-rows: repeat\(6, minmax\(34px, 1fr\)\)/.test(index)
+      && /style=\{\{ gridRow: def\.lane \}\}/.test(index)
+      && /lane: 1[\s\S]*lane: 2[\s\S]*lane: 3[\s\S]*lane: 4[\s\S]*lane: 5[\s\S]*lane: 6/.test(index),
+    'auxiliary tabs must keep six stable vertical edge lanes even when some unlocks are absent');
+  assert(/auxTabRefs/.test(index) && /auxDrawerRefs/.test(index)
+      && /placeBesideTab/.test(index)
+      && /tabRect\.top \+ tabRect\.height \/ 2 - drawerRect\.height \/ 2/.test(index)
+      && /leftOfTab >= edge \? leftOfTab : rightOfTab/.test(index),
+    'each auxiliary window must anchor beside its own tab and flip inward when the left edge has no room');
+  assert(/\.drawer-tab\.open \{ right: 0;/.test(index)
+      && /id="character-record-drawer"/.test(index)
+      && /onClick=\{\(\) => setDrawerOpen\(false\)\}>Close/.test(index),
+    'the character record must keep a reachable toggle and an explicit close control');
   assert(pack.forms.warhorn.kind === 'warcall' && pack.forms.quickrig.kind === 'quickrig' && pack.forms.attendant.kind === 'attendant',
     'three pure-axis auxiliary item kinds must exist');
   assert([pack.forms.warhorn, pack.forms.quickrig, pack.forms.attendant].every(form => form.w === 2 && form.h === 2),
