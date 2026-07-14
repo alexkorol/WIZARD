@@ -1430,6 +1430,68 @@
     #designer-toggle-btn[aria-pressed="true"] { outline: 1px solid #eab308; color: #eab308; }
     .designer-overlay-dot { pointer-events: none; }
     .designer-pin { cursor: help; }
+
+    /* Player notes: annotate any node or conduit. Pins mark noted seats/arcs. */
+    #annotate-toggle-btn[aria-pressed="true"] { outline: 1px solid #c9a96a; color: #c9a96a; }
+    body.annotate-on #canvas-container { cursor: crosshair; }
+    .note-pin { cursor: pointer; }
+    .note-pin circle {
+      fill: #c9a96a;
+      stroke: #191612;
+      stroke-width: 1px;
+    }
+    .note-pin:hover circle { fill: #e3c98d; }
+    .tooltip-note {
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid var(--panel-border);
+      color: #c9a96a;
+      font-style: italic;
+      white-space: pre-wrap;
+    }
+    .selection-note {
+      margin-top: 8px;
+      padding: 8px;
+      border: 1px solid var(--panel-border);
+      border-left: 2px solid #c9a96a;
+      border-radius: 5px;
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+    .selection-note strong { color: #c9a96a; display: block; margin-bottom: 3px; font-style: normal; }
+    #note-editor {
+      position: absolute;
+      z-index: 22;
+      width: 270px;
+      display: none;
+      padding: 12px;
+      background: rgba(13, 12, 10, 0.97);
+      border: 1px solid var(--panel-border-strong);
+      border-radius: 5px;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65);
+    }
+    #note-editor-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #c9a96a;
+      margin-bottom: 6px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    #note-editor textarea {
+      width: 100%;
+      box-sizing: border-box;
+      resize: vertical;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--panel-border);
+      border-radius: 5px;
+      color: inherit;
+      font: inherit;
+      font-size: 12px;
+      padding: 6px 7px;
+    }
+    .note-editor-actions { display: flex; gap: 6px; margin-top: 8px; }
   </style>
 </head>
 <body class="theme-modern">
@@ -1443,6 +1505,7 @@
           <g id="conduit-layer"></g>
           <g id="node-layer"></g>
           <g id="label-layer"></g>
+          <g id="note-layer"></g>
         </g>
       </svg>
     </div>
@@ -1632,6 +1695,9 @@
           <label class="sr-only" for="search-input">Search passives</label>
           <input class="search-input" id="search-input" type="search" placeholder="Search nodes or tags">
         </div>
+        <div class="toolbar-group" aria-label="Notes">
+          <button class="icon-btn" id="annotate-toggle-btn" aria-label="Toggle note mode: click any node or path to annotate it" aria-pressed="false" title="Note mode (N): click any node or path to write a note on it. Alt+click works anytime." type="button">Notes</button>
+        </div>
         <div class="toolbar-group" aria-label="Designer">
           <button class="icon-btn" id="designer-toggle-btn" aria-label="Toggle designer mode" aria-pressed="false" type="button">Design</button>
         </div>
@@ -1647,6 +1713,16 @@
     <div id="tooltip">
       <div class="tooltip-title"></div>
       <div class="tooltip-body"></div>
+    </div>
+
+    <div id="note-editor" role="dialog" aria-label="Note editor">
+      <div id="note-editor-title">Note</div>
+      <textarea id="note-editor-text" rows="4" placeholder="Route intent, respec debts, pattern plans..."></textarea>
+      <div class="note-editor-actions">
+        <button class="icon-btn" id="note-save-btn" type="button">Save</button>
+        <button class="icon-btn danger" id="note-remove-btn" type="button">Remove</button>
+        <button class="icon-btn" id="note-close-btn" type="button">Close</button>
+      </div>
     </div>
   </div>
 
@@ -1676,8 +1752,22 @@
       Nightblade: ["trap_mark_tools", "venom_vials", "preparations_pack"],
       Ritualist: ["banners", "war_companion", "reliquary_pack"]
     };
+    // The six ring-10 rim corners double as armoury unlock seats: the pure
+    // attribute corners (INT up, DEX lower-left, STR lower-right) each grant an
+    // extra gear-slot window, the hybrid corners each grant a 4x4 pack, so the
+    // outer hex alternates slot / pack / slot / pack / slot / pack. Flags are
+    // shared with CLASS_UNLOCKS, so the armoury page needs no new vocabulary.
+    const GATE_UNLOCKS = {
+      attendant: { name: "Attendant", flag: "attendant_focus_slot", grant: "the Attendant window — an extra focus slot" },
+      quickrig: { name: "Quick Rig", flag: "quick_rig_slot", grant: "the Quick Rig window — an extra tool slot" },
+      warcall: { name: "Warcall", flag: "war_call_slot", grant: "the War-call window — an extra horn slot" },
+      preparations: { name: "Preparations", flag: "preparations_pack", grant: "the Preparation Case — a 4×4 pack" },
+      trophies: { name: "Trophies", flag: "spoils_pack", grant: "the Spoils Roll — a 4×4 pack" },
+      relics: { name: "Relics", flag: "reliquary_pack", grant: "the Reliquary — a 4×4 pack" }
+    };
     const BRIDGE_STORAGE_KEY = "verdigris-bridge";
     const BUILD_STORAGE_KEY = "verdigris-skill-tree-build";
+    const NOTE_MAX_LENGTH = 500;
 
     // Loop-crown empowerment curve. Concentric crowns (radius 1 + radius 2 around one
     // center) compound these factors multiplicatively instead of summing them.
@@ -1719,100 +1809,171 @@
     };
     const SEARCH_DIM_OPACITY = 0.18;
 
+    // Ascendancy circles: one behind each rim unlock corner, 13 gateway-themed
+    // passives each (entry notable, eight smalls, two notables, one mastery,
+    // one capstone keystone). Allocating the corner seat opens its circle;
+    // there is no separate shape-combo requirement.
+    //
+    // All six share one seed-of-life wheel: a center seat, the six circle
+    // centers at radius 96 (hexagon flat toward the gate), and the six outer
+    // intersections at radius 96·√3 ≈ 166. Entry sits at the intersection
+    // nearest the rim, the keystone at the apex opposite it, the notables on
+    // the side circle centers, the mastery in the hub. Every conduit is a
+    // lattice edge: 96 between touching circles, 166 along the outer rim.
+    const WHEEL_LAYOUT = [
+      [0, 0],                   // 0 entry — outer intersection facing the gate
+      [-48, 83], [48, 83],      // 1-2 circle centers, front pair
+      [-96, 166], [96, 166],    // 3-4 circle centers, side pair (notables)
+      [-48, 249], [48, 249],    // 5-6 circle centers, rear pair
+      [0, 166],                 // 7 hub (mastery)
+      [-144, 83], [144, 83],    // 8-9 outer intersections, front flanks
+      [-144, 249], [144, 249],  // 10-11 outer intersections, rear flanks
+      [0, 332]                  // 12 apex (keystone)
+    ];
+    const WHEEL_LINKS = [
+      [0, 1], [0, 2], [8, 1], [8, 3], [9, 2], [9, 4], [10, 3], [10, 5], [11, 4], [11, 6], [12, 5], [12, 6],
+      [1, 2], [1, 3], [2, 4], [3, 5], [4, 6], [5, 6],
+      [7, 1], [7, 2], [7, 3], [7, 4], [7, 5], [7, 6],
+      [0, 8], [0, 9], [8, 10], [9, 11], [10, 12], [11, 12]
+    ];
     const SUBTREES = [
       {
-        id: "genius",
-        title: "Genius Circle",
+        id: "attendant",
+        title: "Attendant",
         gateway: { q: 10, r: 0 },
         axis: "int",
         nodes: [
-          { id: "genius-core", name: "Proof Engine", type: "notable", stat: "spellDamage", amount: 22, effects: ["+22% Spell Damage", "Completed circles add +5 INT"], tag: "spell" },
-          { id: "genius-left", name: "Marginal Note", type: "small", stat: "mana", amount: 45, effects: ["+45 maximum Mana"], tag: "mana" },
-          { id: "genius-right", name: "Axiomatic Spark", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Spell Critical Strike Chance"], tag: "critical" },
-          { id: "genius-lower", name: "Blue Library", type: "small", stat: "energyShield", amount: 70, effects: ["+70 Energy Shield"], tag: "energy-shield" },
-          { id: "genius-cross", name: "Impossible Lemma", type: "mastery", stat: "castSpeed", amount: 9, effects: ["+9% Cast Speed", "Every allocated loop conduit grants +1% Spell Damage"], tag: "spell" },
-          { id: "genius-apex", name: "The Last Footnote", type: "keystone", stat: null, amount: 0, effects: ["Allocated masteries also count as one small circle node", "Conduits from this circle cost no extra points"], tag: "theory" }
+          { id: "attendant-core", name: "Second Pair of Hands", type: "notable", stat: "castSpeed", amount: 8, effects: ["+8% Rite Speed", "Your attendant hands you what you reach for: draughts pour without pausing your rite"], tag: "spell" },
+          { id: "attendant-candle", name: "Candle Duty", type: "small", stat: "spirit", amount: 45, effects: ["+45 maximum Spirit"], tag: "mana" },
+          { id: "attendant-inkwell", name: "Inkwell", type: "small", stat: "ward", amount: 60, effects: ["+60 Ward"], tag: "energy-shield" },
+          { id: "attendant-order", name: "Standing Order", type: "notable", stat: "castSpeed", amount: 6, effects: ["+6% Rite Speed", "Rites repeated within four seconds cost 10% less Spirit"], tag: "spell" },
+          { id: "attendant-pour", name: "Measured Pour", type: "notable", stat: "ward", amount: 70, effects: ["+70 Ward", "Ward recharge begins 20% sooner"], tag: "energy-shield" },
+          { id: "attendant-service", name: "Quiet Service", type: "small", stat: "cooldownRecovery", amount: 6, effects: ["+6% Cooldown Recovery Rate"], tag: "utility" },
+          { id: "attendant-floor", name: "Swept Floor", type: "small", stat: "gloam_res", amount: 8, effects: ["+8% Gloam Resistance"], tag: "resistance" },
+          { id: "attendant-watch", name: "Night Watch", type: "mastery", stat: "cooldownRecovery", amount: 10, effects: ["+10% Cooldown Recovery Rate", "While your Ward is full, your rites reach 15% further"], tag: "utility" },
+          { id: "attendant-flame", name: "Kept Flame", type: "small", stat: "spellDamage", amount: 8, effects: ["+8% Rite Damage"], tag: "spell" },
+          { id: "attendant-lens", name: "Polished Lens", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
+          { id: "attendant-errand", name: "Errand Run", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
+          { id: "attendant-lamp", name: "Warm Lamplight", type: "small", stat: "spirit", amount: 40, effects: ["+40 maximum Spirit"], tag: "mana" },
+          { id: "attendant-servant", name: "The Good Servant", type: "keystone", stat: null, amount: 0, effects: ["Your attendant focus grants its bonuses to your companions as well", "Your attendant window holds nothing but a focus"], tag: "spell" }
         ],
-        layout: [[0, 0], [-76, -26], [76, -26], [-54, 74], [54, 74], [0, 150]],
-        links: [[0, 1], [0, 2], [1, 3], [2, 4], [3, 4, true], [3, 5], [4, 5]]
+        layout: WHEEL_LAYOUT,
+        links: WHEEL_LINKS
       },
       {
-        id: "ranger",
-        title: "Ranger's Writ",
+        id: "quickrig",
+        title: "Quick Rig",
         gateway: { q: 0, r: -10 },
         axis: "dex",
         nodes: [
-          { id: "ranger-core", name: "Distance Contract", type: "notable", stat: "projectileDamage", amount: 24, effects: ["+24% Projectile Damage", "First projectile after a dodge pierces"], tag: "projectile" },
-          { id: "ranger-low", name: "Low Branch", type: "small", stat: "evasion", amount: 95, effects: ["+95 Evasion Rating"], tag: "evasion" },
-          { id: "ranger-far", name: "Long String", type: "small", stat: "attackSpeed", amount: 4, effects: ["+4% Attack Speed with bows and thrown weapons"], tag: "projectile" },
-          { id: "ranger-mark", name: "Green Measure", type: "notable", stat: "critChance", amount: 1.8, effects: ["+1.8% Critical Strike Chance", "Projectiles have +12% Critical Damage Bonus"], tag: "critical" },
-          { id: "ranger-apex", name: "No Loose Ends", type: "keystone", stat: null, amount: 0, effects: ["Projectiles returning to you grant +18 DEX", "You cannot gain bonuses from shields"], tag: "projectile" }
+          { id: "quickrig-core", name: "Fast Hands", type: "notable", stat: "attackSpeed", amount: 8, effects: ["+8% Attack Speed", "Swapping to your quick rig tool takes no time"], tag: "weapon" },
+          { id: "quickrig-straps", name: "Oiled Straps", type: "small", stat: "evasion", amount: 85, effects: ["+85 Evasion Rating"], tag: "evasion" },
+          { id: "quickrig-buckle", name: "Spare Buckle", type: "small", stat: "blockChance", amount: 2, effects: ["+2% Block Chance"], tag: "block" },
+          { id: "quickrig-fit", name: "Snap Fit", type: "notable", stat: "attackSpeed", amount: 6, effects: ["+6% Attack Speed", "Your quick rig tool counts as equipped even while stowed"], tag: "weapon" },
+          { id: "quickrig-sleeves", name: "Loose Sleeves", type: "notable", stat: "evasion", amount: 110, effects: ["+110 Evasion Rating", "Evasion counts 10% higher while you are moving"], tag: "evasion" },
+          { id: "quickrig-pocket", name: "Third Pocket", type: "small", stat: "goods_find", amount: 8, effects: ["+8% Goods Found"], tag: "utility" },
+          { id: "quickrig-cord", name: "Waxed Cord", type: "small", stat: "attackSpeed", amount: 4, effects: ["+4% Attack Speed"], tag: "weapon" },
+          { id: "quickrig-reach", name: "Everything In Reach", type: "mastery", stat: "cooldownRecovery", amount: 10, effects: ["+10% Cooldown Recovery Rate", "Tools in your quick rig recover 20% faster"], tag: "utility" },
+          { id: "quickrig-hem", name: "Weighted Hem", type: "small", stat: "accuracy_flat", amount: 60, effects: ["+60 Accuracy"], tag: "accuracy" },
+          { id: "quickrig-knot", name: "Double Knot", type: "small", stat: "life", amount: 55, effects: ["+55 maximum Life"], tag: "life" },
+          { id: "quickrig-release", name: "Quick Release", type: "small", stat: "move", amount: 5, effects: ["+5% Movement Speed"], tag: "utility" },
+          { id: "quickrig-grip", name: "Chalked Grip", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
+          { id: "quickrig-nothing", name: "Drop Nothing", type: "keystone", stat: null, amount: 0, effects: ["Using your quick rig tool cannot be interrupted and takes no time", "You cannot block for two seconds after using it"], tag: "weapon" }
         ],
-        layout: [[0, 0], [-68, 42], [52, 74], [-96, 132], [10, 180]],
-        links: [[0, 1], [0, 2], [1, 3], [2, 4], [3, 4, true]]
+        layout: WHEEL_LAYOUT,
+        links: WHEEL_LINKS
       },
       {
-        id: "vanguard",
-        title: "Vanguard Oath",
+        id: "warcall",
+        title: "Warcall",
         gateway: { q: -10, r: 10 },
         axis: "str",
         nodes: [
-          { id: "vanguard-core", name: "Raised Banner", type: "notable", stat: "armour", amount: 260, effects: ["+260 Armour", "Allies behind you gain +8% damage"], tag: "armour" },
-          { id: "vanguard-haft", name: "Heavy Answer", type: "small", stat: "attackDamage", amount: 10, effects: ["+10% Heavy Weapon Damage"], tag: "weapon" },
-          { id: "vanguard-blood", name: "Red Reserve", type: "small", stat: "life", amount: 70, effects: ["+70 maximum Life"], tag: "life" },
-          { id: "vanguard-lock", name: "Shield Lock", type: "small", stat: "blockChance", amount: 3, effects: ["+3% Block Chance"], tag: "block" },
-          { id: "vanguard-wall", name: "Line Cannot Break", type: "mastery", stat: "allResistances", amount: 5, effects: ["+5% to all Elemental Resistances", "Armour also reduces reflected hit damage"], tag: "resistance" },
-          { id: "vanguard-apex", name: "Hold the Door", type: "keystone", stat: null, amount: 0, effects: ["While blocking, nearby allies count as on your path", "Your movement speed is 25% lower"], tag: "block" }
+          { id: "warcall-core", name: "Deep Breath", type: "notable", stat: "life", amount: 60, effects: ["+60 maximum Life", "Your war-horn's call carries 25% further"], tag: "life" },
+          { id: "warcall-lip", name: "Brass Lip", type: "small", stat: "attackDamage", amount: 8, effects: ["+8% Attack Damage"], tag: "weapon" },
+          { id: "warcall-note", name: "Long Note", type: "small", stat: "guard", amount: 120, effects: ["+120 Guard"], tag: "armour" },
+          { id: "warcall-rally", name: "Rally Point", type: "notable", stat: "guard", amount: 180, effects: ["+180 Guard", "Allies who hear your horn gain +60 Guard"], tag: "armour" },
+          { id: "warcall-second", name: "Second Wind", type: "notable", stat: "life", amount: 80, effects: ["+80 maximum Life", "Sounding your horn restores 8% Life, once per fight"], tag: "life" },
+          { id: "warcall-pace", name: "Drummer's Pace", type: "small", stat: "attackSpeed", amount: 4, effects: ["+4% Attack Speed"], tag: "weapon" },
+          { id: "warcall-lungs", name: "Iron Lungs", type: "small", stat: "life", amount: 60, effects: ["+60 maximum Life"], tag: "life" },
+          { id: "warcall-line", name: "Held Line", type: "mastery", stat: "blockChance", amount: 4, effects: ["+4% Block Chance", "While your horn still echoes, you cannot be pushed back"], tag: "block" },
+          { id: "warcall-wind", name: "Carrying Wind", type: "small", stat: "allResistances", amount: 3, effects: ["+3% to all Resistances"], tag: "resistance" },
+          { id: "warcall-pole", name: "Standard Pole", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
+          { id: "warcall-voice", name: "Loud Voice", type: "small", stat: "ailmentEffect", amount: 8, effects: ["+8% Mark and Shout Effect"], tag: "ailment" },
+          { id: "warcall-chest", name: "Broad Chest", type: "small", stat: "guard", amount: 110, effects: ["+110 Guard"], tag: "armour" },
+          { id: "warcall-one", name: "One Voice", type: "keystone", stat: null, amount: 0, effects: ["Your shouts and horn calls affect you twice", "Their effect on allies is halved"], tag: "shout" }
         ],
-        layout: [[0, 0], [-58, 56], [58, 56], [0, 116], [-46, 176], [46, 228]],
-        links: [[0, 1], [0, 2], [1, 3], [2, 3], [3, 4], [3, 5], [4, 5, true]]
+        layout: WHEEL_LAYOUT,
+        links: WHEEL_LINKS
       },
       {
-        id: "spellblade",
-        title: "Spellblade Annex",
+        id: "preparations",
+        title: "Preparations",
         gateway: { q: 10, r: -10 },
         axis: "hybrid",
         nodes: [
-          { id: "spellblade-core", name: "Edge Formula", type: "notable", stat: "spellDamage", amount: 18, effects: ["+18% Spell Damage", "+18% Attack Damage if you cast recently"], tag: "hybrid" },
-          { id: "spellblade-ink", name: "Hot Ink", type: "small", stat: "castSpeed", amount: 5, effects: ["+5% Cast Speed"], tag: "spell" },
-          { id: "spellblade-wrist", name: "Wrist Ward", type: "small", stat: "energyShield", amount: 64, effects: ["+64 Energy Shield"], tag: "energy-shield" },
-          { id: "spellblade-tempo", name: "One-Beat Riposte", type: "small", stat: "attackSpeed", amount: 5, effects: ["+5% Attack Speed after casting"], tag: "weapon" },
-          { id: "spellblade-sigil", name: "Burning Guard", type: "notable", stat: "allResistances", amount: 4, effects: ["+4% to all Elemental Resistances", "Blocking ignites nearby enemies"], tag: "resistance" },
-          { id: "spellblade-apex", name: "Cast Through Steel", type: "keystone", stat: null, amount: 0, effects: ["Attack skills can trigger your lowest-cost spell", "Triggered spells deal 40% less damage"], tag: "hybrid" }
+          { id: "preparations-core", name: "Checked Twice", type: "notable", stat: "evasion", amount: 90, effects: ["+90 Evasion Rating", "Nothing in your preparation case spoils or leaks"], tag: "evasion" },
+          { id: "preparations-vial", name: "Spare Vial", type: "small", stat: "life", amount: 50, effects: ["+50 maximum Life"], tag: "life" },
+          { id: "preparations-chalk", name: "Chalk Marks", type: "small", stat: "accuracy_flat", amount: 55, effects: ["+55 Accuracy"], tag: "accuracy" },
+          { id: "preparations-dose", name: "Measured Dose", type: "notable", stat: "ailmentEffect", amount: 15, effects: ["+15% Ailment Effect", "Your vials apply one extra ailment stack"], tag: "ailment" },
+          { id: "preparations-contingency", name: "Contingency", type: "notable", stat: "cooldownRecovery", amount: 8, effects: ["+8% Cooldown Recovery Rate", "The first trap you place each fight costs nothing"], tag: "utility" },
+          { id: "preparations-thread", name: "Waxed Thread", type: "small", stat: "evasion", amount: 70, effects: ["+70 Evasion Rating"], tag: "evasion" },
+          { id: "preparations-start", name: "Early Start", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
+          { id: "preparations-wasted", name: "Nothing Wasted", type: "mastery", stat: "goods_find", amount: 12, effects: ["+12% Goods Found", "Using a prepared item refunds it one time in five"], tag: "utility" },
+          { id: "preparations-hands", name: "Steady Hands", type: "small", stat: "castSpeed", amount: 4, effects: ["+4% Rite Speed"], tag: "spell" },
+          { id: "preparations-map", name: "Folded Map", type: "small", stat: "int", amount: 8, effects: ["+8 Intelligence"], tag: "attribute" },
+          { id: "preparations-shoes", name: "Quiet Shoes", type: "small", stat: "evasion", amount: 70, effects: ["+70 Evasion Rating"], tag: "evasion" },
+          { id: "preparations-kit", name: "Packed Kit", type: "small", stat: "dex", amount: 8, effects: ["+8 Dexterity"], tag: "attribute" },
+          { id: "preparations-plan", name: "The Plan Holds", type: "keystone", stat: null, amount: 0, effects: ["Once per fight, a preparation cancels the hit that would have killed you", "Each item in your preparation case works once per fight"], tag: "hybrid" }
         ],
-        layout: [[0, 0], [-84, 18], [68, 50], [-44, 112], [78, 130], [8, 208]],
-        links: [[0, 1], [0, 2], [1, 3], [2, 4], [3, 5], [4, 5], [3, 4, true]]
+        layout: WHEEL_LAYOUT,
+        links: WHEEL_LINKS
       },
       {
-        id: "skirmish",
-        title: "Skirmish Annex",
+        id: "trophies",
+        title: "Trophies",
         gateway: { q: -10, r: 0 },
         axis: "hybrid",
         nodes: [
-          { id: "skirmish-core", name: "Brawler's Angle", type: "notable", stat: "attackDamage", amount: 18, effects: ["+18% close-range and thrown damage"], tag: "weapon" },
-          { id: "skirmish-step", name: "Side Step Guard", type: "small", stat: "evasion", amount: 82, effects: ["+82 Evasion Rating"], tag: "evasion" },
-          { id: "skirmish-haft", name: "Short Haft", type: "small", stat: "attackSpeed", amount: 5, effects: ["+5% Melee Attack Speed"], tag: "blade" },
-          { id: "skirmish-hook", name: "Hook and Heel", type: "small", stat: "blockChance", amount: 2, effects: ["+2% Block Chance while dual wielding or using a buckler"], tag: "block" },
-          { id: "skirmish-apex", name: "Win the Space", type: "keystone", stat: null, amount: 0, effects: ["Moving into melee range grants advantage", "Retreating removes it for 3 seconds"], tag: "hybrid" }
+          { id: "trophies-core", name: "First Blood", type: "notable", stat: "attackDamage", amount: 10, effects: ["+10% Attack Damage", "Your first hit on an unwounded enemy has Advantage"], tag: "weapon" },
+          { id: "trophies-hilt", name: "Notched Hilt", type: "small", stat: "attackDamage", amount: 6, effects: ["+6% Attack Damage"], tag: "weapon" },
+          { id: "trophies-chase", name: "Long Chase", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
+          { id: "trophies-proof", name: "Proof of the Kill", type: "notable", stat: "critChance", amount: 1.8, effects: ["+1.8% Critical Chance", "Killing blows leave a spoil one time in ten"], tag: "critical" },
+          { id: "trophies-pelts", name: "Weighed Pelts", type: "notable", stat: "goods_find", amount: 15, effects: ["+15% Goods Found", "Beasts drop one extra spoil"], tag: "utility" },
+          { id: "trophies-scars", name: "Old Scars", type: "small", stat: "life", amount: 55, effects: ["+55 maximum Life"], tag: "life" },
+          { id: "trophies-eye", name: "Keen Eye", type: "small", stat: "accuracy_flat", amount: 65, effects: ["+65 Accuracy"], tag: "accuracy" },
+          { id: "trophies-wall", name: "Wall of Horns", type: "mastery", stat: "beast_damage_increased", amount: 15, effects: ["+15% increased Damage against Beasts", "Every trophy in your spoils roll grants +1% Attack Damage, up to ten"], tag: "weapon" },
+          { id: "trophies-knife", name: "Skinner's Knife", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
+          { id: "trophies-pack", name: "Heavy Pack", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
+          { id: "trophies-step", name: "Soft Step", type: "small", stat: "dex", amount: 8, effects: ["+8 Dexterity"], tag: "attribute" },
+          { id: "trophies-boast", name: "Loud Boast", type: "small", stat: "crit_bonus_flat", amount: 10, effects: ["+10% Advantage Bonus"], tag: "critical" },
+          { id: "trophies-home", name: "Take It Home", type: "keystone", stat: null, amount: 0, effects: ["Every trophy in your spoils roll grants +2 to all Attributes", "Spoils cannot be sold or traded"], tag: "hybrid" }
         ],
-        layout: [[0, 0], [-82, 52], [82, 52], [-24, 126], [40, 190]],
-        links: [[0, 1], [0, 2], [1, 3], [2, 3, true], [3, 4]]
+        layout: WHEEL_LAYOUT,
+        links: WHEEL_LINKS
       },
       {
-        id: "seer",
-        title: "Seer's Annex",
+        id: "relics",
+        title: "Relics",
         gateway: { q: 0, r: 10 },
         axis: "hybrid",
         nodes: [
-          { id: "seer-core", name: "Hidden Mark", type: "notable", stat: "ailmentEffect", amount: 19, effects: ["+19% Mark, Hex, and Ailment Effect"], tag: "ailment" },
-          { id: "seer-silent", name: "Silent Cast", type: "small", stat: "castSpeed", amount: 5, effects: ["+5% Cast Speed while unseen"], tag: "spell" },
-          { id: "seer-night", name: "Night Step", type: "small", stat: "evasion", amount: 88, effects: ["+88 Evasion Rating"], tag: "evasion" },
-          { id: "seer-ink", name: "Black Ledger", type: "small", stat: "minionDamage", amount: 8, effects: ["+8% Minion and Trap Damage"], tag: "minion" },
-          { id: "seer-lens", name: "Wrong Future", type: "mastery", stat: "cooldownRecovery", amount: 10, effects: ["+10% Cooldown Recovery Rate", "Hexed enemies have 10% reduced Critical Damage Bonus"], tag: "spell" },
-          { id: "seer-apex", name: "Seen First", type: "keystone", stat: null, amount: 0, effects: ["Marked enemies are always revealed", "Unmarked enemies take 15% less damage from you"], tag: "ailment" }
+          { id: "relics-core", name: "Dusted Shelf", type: "notable", stat: "ward", amount: 65, effects: ["+65 Ward", "Relics in your reliquary keep their blessings between fights"], tag: "energy-shield" },
+          { id: "relics-smoke", name: "Censer Smoke", type: "small", stat: "gloam_res", amount: 8, effects: ["+8% Gloam Resistance"], tag: "resistance" },
+          { id: "relics-names", name: "Old Names", type: "small", stat: "spirit", amount: 40, effects: ["+40 maximum Spirit"], tag: "mana" },
+          { id: "relics-glass", name: "Warded Glass", type: "notable", stat: "ward", amount: 75, effects: ["+75 Ward", "Ward recharge cannot be interrupted while you carry a relic"], tag: "energy-shield" },
+          { id: "relics-faith", name: "Patient Faith", type: "notable", stat: "allResistances", amount: 4, effects: ["+4% to all Resistances", "Each relic in your reliquary grants +2% Gloam Resistance"], tag: "resistance" },
+          { id: "relics-case", name: "Gilt Case", type: "small", stat: "guard", amount: 110, effects: ["+110 Guard"], tag: "armour" },
+          { id: "relics-candles", name: "Candle Row", type: "small", stat: "ember_res", amount: 8, effects: ["+8% Ember Resistance"], tag: "resistance" },
+          { id: "relics-weight", name: "Saint's Weight", type: "mastery", stat: "spellDamage", amount: 12, effects: ["+12% Rite Damage", "Your heaviest relic is carried for you by a companion"], tag: "spell" },
+          { id: "relics-bone", name: "Bone and Gold", type: "small", stat: "minionDamage", amount: 8, effects: ["+8% Companion Damage"], tag: "minion" },
+          { id: "relics-steps", name: "Worn Steps", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
+          { id: "relics-litany", name: "Litany", type: "small", stat: "castSpeed", amount: 4, effects: ["+4% Rite Speed"], tag: "spell" },
+          { id: "relics-bowl", name: "Offering Bowl", type: "small", stat: "goods_find", amount: 8, effects: ["+8% Goods Found"], tag: "utility" },
+          { id: "relics-reverence", name: "Carried Reverence", type: "keystone", stat: null, amount: 0, effects: ["Relics in your reliquary grant their bonuses as if worn", "Your reliquary cannot be opened during a fight"], tag: "hybrid" }
         ],
-        layout: [[0, 0], [-64, 40], [64, 40], [-88, 118], [28, 130], [-20, 210]],
-        links: [[0, 1], [0, 2], [1, 3], [2, 4], [3, 5], [4, 5], [1, 4, true]]
+        layout: WHEEL_LAYOUT,
+        links: WHEEL_LINKS
       }
     ];
 
@@ -1828,6 +1989,14 @@
       const rounded = round(value);
       if (Number.isInteger(rounded)) return String(rounded);
       return rounded.toFixed(Math.abs(rounded) < 10 ? 2 : 1).replace(/0+$/, "").replace(/\.$/, "");
+    }
+
+    // Player note text flows into innerHTML surfaces (tooltips, the selection
+    // panel), so it must be escaped.
+    function escapeHtml(text) {
+      return String(text).replace(/[&<>"']/g, ch => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[ch]));
     }
 
     function colorMix(hexA, hexB, t) {
@@ -2157,6 +2326,10 @@
         this.sagaState = new Map();
         this.sagaTestimony = 0;
         this.classOrder = [];
+        // Player notes on nodes and conduits. They ride the build code, so
+        // they persist and share with the build, but they are not allocations:
+        // reset and undo leave them alone.
+        this.annotations = { nodes: {}, conduits: {} };
 
         this.buildMainTree();
         this.buildSubtrees();
@@ -2222,11 +2395,15 @@
           const gateway = this.nodes.get(gatewayId);
           if (!gateway) return;
           gateway.type = "gateway";
-          gateway.name = `${config.title} Gate`;
-          gateway.tags = Array.from(new Set([...gateway.tags, "gateway", config.title]));
+          const unlockSeat = GATE_UNLOCKS[config.id];
+          gateway.name = unlockSeat ? unlockSeat.name : `${config.title} Gate`;
+          gateway.tags = Array.from(new Set([
+            ...gateway.tags, "gateway", config.title,
+            ...(unlockSeat ? ["unlock", unlockSeat.flag.endsWith("pack") ? "pack" : "slot"] : [])
+          ]));
           gateway.effects = [
-            `Shared gate for the ${config.title} outer circle.`,
-            "Unlock condition: allocate this gate and complete any inner six-node circle."
+            ...(unlockSeat ? [`Allocated: unlocks ${unlockSeat.grant} in the armoury.`] : []),
+            `Allocated: opens the ${config.title} circle beyond the rim.`
           ];
           gateway.stat = null;
           gateway.amount = 0;
@@ -2374,6 +2551,7 @@
           j: Array.from(this.socketedJewels.entries()).map(([socketId, jewel]) => [socketId, jewel.id]),
           k: this.classOrder.slice()
         };
+        if (this.hasAnnotations()) payload.a = this.annotations;
         const json = JSON.stringify(payload);
         try {
           return window.btoa(unescape(encodeURIComponent(json)));
@@ -2427,11 +2605,69 @@
           }
           this.socketedJewels.set(socketId, jewel);
         });
+        // Notes travel with the code when present; a code without notes keeps
+        // whatever the player already wrote.
+        if (data.a && typeof data.a === "object") {
+          const cleanNotes = (source, has) => {
+            const out = {};
+            Object.entries(source && typeof source === "object" ? source : {}).forEach(([id, text]) => {
+              if (typeof text !== "string" || !text.trim() || !has(id)) return;
+              out[id] = text.trim().slice(0, NOTE_MAX_LENGTH);
+            });
+            return out;
+          };
+          this.annotations = {
+            nodes: cleanNotes(data.a.nodes, id => this.nodes.has(id)),
+            conduits: cleanNotes(data.a.conduits, id => this.conduits.has(id))
+          };
+        }
         this.points = { skill: START_POINTS.skill - cost };
         this.selectedNodeId = "0,0";
         if (!silent) this.commit(`Build loaded: ${nodeIds.length} passives, ${conduitPicks.length} paths, ${this.socketedJewels.size} stones (${cost} points).`);
         this.recalculate();
         return true;
+      }
+
+      /* ---- player notes: annotate nodes and conduits ---- */
+
+      annotationBucket(kind) {
+        return kind === "conduit" ? this.annotations.conduits : this.annotations.nodes;
+      }
+
+      annotationLabel(kind, id) {
+        if (kind === "conduit") {
+          const conduit = this.conduits.get(id);
+          const from = conduit ? this.nodes.get(conduit.fromId) : null;
+          const to = conduit ? this.nodes.get(conduit.toId) : null;
+          return from && to ? `the ${from.name} — ${to.name} path` : "that path";
+        }
+        return this.nodes.get(id)?.name || "that node";
+      }
+
+      getAnnotation(kind, id) {
+        return this.annotationBucket(kind)[id] || "";
+      }
+
+      setAnnotation(kind, id, text) {
+        const exists = kind === "conduit" ? this.conduits.has(id) : this.nodes.has(id);
+        if (!exists) return;
+        const bucket = this.annotationBucket(kind);
+        const trimmed = String(text || "").trim().slice(0, NOTE_MAX_LENGTH);
+        if (trimmed) {
+          bucket[id] = trimmed;
+          this.commit(`Note saved on ${this.annotationLabel(kind, id)}.`);
+        } else if (bucket[id]) {
+          delete bucket[id];
+          this.commit(`Note removed from ${this.annotationLabel(kind, id)}.`);
+        } else {
+          return;
+        }
+        this.recalculate();
+      }
+
+      hasAnnotations() {
+        return Object.keys(this.annotations.nodes).length > 0
+          || Object.keys(this.annotations.conduits).length > 0;
       }
 
       /* ---- class milestones & unlock bridge (Phase 6) ---- */
@@ -2442,10 +2678,17 @@
       }
 
       getUnlocks() {
-        return [...new Set(this.classOrder
+        const classFlags = this.classOrder
           .map(id => this.nodes.get(id))
           .filter(node => node?.active)
-          .flatMap(node => CLASS_UNLOCKS[node.name] || []))];
+          .flatMap(node => CLASS_UNLOCKS[node.name] || []);
+        // The rim corners are class-agnostic: any build that walks to a corner
+        // earns its armoury window (GATE_UNLOCKS), calling or no calling.
+        const gateFlags = SUBTREES
+          .filter(config => GATE_UNLOCKS[config.id]
+            && this.nodes.get(axialKey(config.gateway.q, config.gateway.r))?.active)
+          .map(config => GATE_UNLOCKS[config.id].flag);
+        return [...new Set([...classFlags, ...gateFlags])];
       }
 
       publishBridge() {
@@ -2570,7 +2813,9 @@
         const config = SUBTREES.find(entry => entry.id === subtreeId);
         if (!config) return false;
         const gateway = this.nodes.get(axialKey(config.gateway.q, config.gateway.r));
-        return Boolean(gateway?.active && this.empoweredNodes.size > 0);
+        // Allocating the corner seat is the whole unlock: the ascendancy
+        // circle opens with the armoury window.
+        return Boolean(gateway?.active);
       }
 
       isNodeVisible(node) {
@@ -3470,7 +3715,8 @@
           effects: document.getElementById("effects-layer"),
           conduits: document.getElementById("conduit-layer"),
           nodes: document.getElementById("node-layer"),
-          labels: document.getElementById("label-layer")
+          labels: document.getElementById("label-layer"),
+          notes: document.getElementById("note-layer")
         };
         this.nodeEls = new Map();
         this.conduitEls = new Map();
@@ -3513,20 +3759,32 @@
           const gateway = this.tree.nodes.get(axialKey(config.gateway.q, config.gateway.r));
           if (!gateway) return;
           const outward = normalizeVector(gateway.pos);
-          const center = {
-            x: gateway.pos.x + outward.x * 392,
-            y: gateway.pos.y + outward.y * 392
+          const tangent = { x: -outward.y, y: outward.x };
+          const base = {
+            x: gateway.pos.x + outward.x * 292,
+            y: gateway.pos.y + outward.y * 292
           };
+          // Size the halo from the authored layout so the bigger ascendancy
+          // circles stay enclosed no matter how deep they reach.
+          const points = config.layout.map(([t, o]) => ({
+            x: base.x + tangent.x * t + outward.x * o,
+            y: base.y + tangent.y * t + outward.y * o
+          }));
+          const center = {
+            x: points.reduce((sum, point) => sum + point.x, 0) / points.length,
+            y: points.reduce((sum, point) => sum + point.y, 0) / points.length
+          };
+          const radius = Math.max(...points.map(point => Math.hypot(point.x - center.x, point.y - center.y))) + 48;
           const halo = makeSvgEl("circle", {
             cx: center.x,
             cy: center.y,
-            r: 150,
+            r: round(radius),
             className: "subtree-halo"
           });
           this.layers.background.appendChild(halo);
           const label = makeSvgEl("text", {
-            x: center.x,
-            y: center.y + outward.y * 146,
+            x: center.x + outward.x * (radius + 16),
+            y: center.y + outward.y * (radius + 16),
             className: "subtree-title",
             "text-anchor": "middle"
           });
@@ -3760,6 +4018,10 @@
             event.stopPropagation();
             if (window.viewController?.wasDrag) return;
             this.hideTooltip();
+            if (window.annotator?.shouldIntercept(event)) {
+              window.annotator.openEditor("conduit", conduit.id, event);
+              return;
+            }
             this.tree.handleConduitClick(conduit.id, option.id);
           });
           hit.addEventListener("contextmenu", event => {
@@ -3833,6 +4095,10 @@
           event.stopPropagation();
           if (window.viewController?.wasDrag) return;
           this.hideTooltip();
+          if (window.annotator?.shouldIntercept(event)) {
+            window.annotator.openEditor("node", node.id, event);
+            return;
+          }
           this.tree.handleNodeClick(node.id, { shiftKey: event.shiftKey });
         });
         group.addEventListener("contextmenu", event => {
@@ -3936,12 +4202,53 @@
           el.core.setAttribute("r", Math.max(3, radiusForType(node.type, boost) - 4));
           el.ring.setAttribute("r", radiusForType(node.type, boost) + 6);
           if (term) {
-            const haystack = `${node.name} ${node.tags.join(" ")} ${node.effects.join(" ")}`.toLowerCase();
+            const note = this.tree.getAnnotation("node", node.id);
+            const haystack = `${node.name} ${node.tags.join(" ")} ${node.effects.join(" ")} ${note}`.toLowerCase();
             group.style.opacity = haystack.includes(term) ? "1" : SEARCH_DIM_OPACITY;
           } else {
             group.style.opacity = "1";
           }
         });
+
+        this.syncNotePins();
+      }
+
+      // Gold pins mark annotated nodes and conduits. The layer is rebuilt on
+      // every update; with no notes it stays empty and costs nothing.
+      syncNotePins() {
+        const layer = this.layers.notes;
+        if (!layer || typeof layer.replaceChildren !== "function") return;
+        const pins = [];
+        const addPin = (kind, id, x, y, note) => {
+          const pin = makeSvgEl("g", {
+            className: "note-pin",
+            transform: `translate(${round(x)},${round(y)})`
+          });
+          pin.appendChild(makeSvgEl("circle", { r: 4.5 }));
+          pin.addEventListener("click", event => {
+            event.stopPropagation();
+            if (window.viewController?.wasDrag) return;
+            this.hideTooltip();
+            window.annotator?.openEditor(kind, id, event);
+          });
+          pin.addEventListener("mouseenter", event => this.showNoteTooltip(event, note));
+          pin.addEventListener("mouseleave", () => this.hideTooltip());
+          pins.push(pin);
+        };
+        Object.entries(this.tree.annotations.nodes).forEach(([id, note]) => {
+          const node = this.tree.nodes.get(id);
+          if (!node || !this.tree.isNodeVisible(node)) return;
+          const offset = radiusForType(node.type) + 5;
+          addPin("node", id, node.pos.x + offset * 0.85, node.pos.y - offset * 0.85, note);
+        });
+        Object.entries(this.tree.annotations.conduits).forEach(([id, note]) => {
+          const conduit = this.tree.conduits.get(id);
+          if (!conduit || !this.tree.isConduitVisible(conduit)) return;
+          const from = this.tree.nodes.get(conduit.fromId);
+          const to = this.tree.nodes.get(conduit.toId);
+          addPin("conduit", id, (from.pos.x + to.pos.x) / 2, (from.pos.y + to.pos.y) / 2, note);
+        });
+        layer.replaceChildren(...pins);
       }
 
       shouldShowHoverTooltip(event) {
@@ -3969,10 +4276,13 @@
         const boostHtml = boostLines.length
           ? `<div class="tooltip-boost"><strong>Empowered node</strong>${boostLines.map(line => `<div>${line}</div>`).join("")}</div>`
           : "";
+        const note = this.tree.getAnnotation("node", node.id);
+        const noteHtml = note ? `<div class="tooltip-note">Note: ${escapeHtml(note)}</div>` : "";
         body.innerHTML = `
           <div>${status} ${node.type}. ${tier.label} ${tier.description}, ring ${node.ring}. ${attr} leaning.</div>
           <div style="margin-top:6px;">${node.effects.join("<br>")}</div>
           ${boostHtml}
+          ${noteHtml}
           <div style="margin-top:6px;color:var(--faint);">Cost: ${node.cost} point + 1 for the connecting path. Click or right-click allocated nodes to refund.</div>
         `;
         this.placeTooltip(event);
@@ -3997,10 +4307,24 @@
             ? "Click to edit this conduit. Right-click to refund this path if the allocated graph remains connected."
             : "Click to switch this connection to this alternate curved arc without unallocating either node."
           : "Each node pair has two arcs. Pick the arc whose stats and shape work for the build.";
+        const note = this.tree.getAnnotation("conduit", conduit.id);
+        const noteHtml = note ? `<div class="tooltip-note">Note: ${escapeHtml(note)}</div>` : "";
         body.innerHTML = `
           <div>${state} ${tier.label} curved arc.</div>
           <div style="margin-top:6px;">${this.tree.formatAttrs(option.attrs)}</div>
+          ${noteHtml}
           <div style="margin-top:6px;color:var(--faint);">${editHint}</div>
+        `;
+        this.placeTooltip(event);
+      }
+
+      showNoteTooltip(event, note) {
+        if (!this.shouldShowHoverTooltip(event)) return;
+        const tooltip = document.getElementById("tooltip");
+        tooltip.querySelector(".tooltip-title").textContent = "Note";
+        tooltip.querySelector(".tooltip-body").innerHTML = `
+          <div class="tooltip-note">${escapeHtml(note)}</div>
+          <div style="margin-top:6px;color:var(--faint);">Click the pin to edit or remove this note.</div>
         `;
         this.placeTooltip(event);
       }
@@ -4158,12 +4482,15 @@
         const display = document.getElementById("calling-display");
         if (!display) return;
         const stats = this.tree.stats;
+        const unlockText = stats.unlocks.map(flag => flag.replace(/_/g, " ")).join(", ");
+        const unlockHtml = stats.unlocks.length
+          ? `<div>Unlocked: ${unlockText}.</div><div>The armoury page reads these unlocks live.</div>`
+          : "";
         if (!stats.characterClass) {
-          display.innerHTML = `<div>No calling yet. The first class milestone you allocate (ring 7) marks your class; every active class milestone contributes its armoury window.</div>`;
+          display.innerHTML = `<div>No calling yet. The first class milestone you allocate (ring 7) marks your class; class milestones and the six rim corners each add their armoury window.</div>${unlockHtml}`;
           return;
         }
-        const unlockText = stats.unlocks.map(flag => flag.replace(/_/g, " ")).join(", ");
-        display.innerHTML = `<div><strong>${stats.characterClass}</strong></div><div>Unlocked: ${unlockText}.</div><div>The armoury page reads these unlocks live.</div>`;
+        display.innerHTML = `<div><strong>${stats.characterClass}</strong></div>${unlockHtml}`;
       }
 
       updateJewelPicker() {
@@ -4281,6 +4608,13 @@
         const boostHtml = boostLines.length
           ? `<div class="boost-callout"><strong>Empowered Node</strong>${boostLines.map(line => `<div>${line}</div>`).join("")}</div>`
           : "";
+        const note = this.tree.getAnnotation("node", node.id);
+        const noteHtml = note
+          ? `<div class="selection-note"><strong>Note</strong>${escapeHtml(note)}</div>`
+          : "";
+        const refundHtml = node.active && node.id !== "0,0"
+          ? `<button class="icon-btn danger" id="refund-node-btn" type="button">Refund Node</button>`
+          : "";
         panel.innerHTML = `
           <h2 class="node-name">${node.name}</h2>
           <div class="node-meta">
@@ -4293,11 +4627,19 @@
           </div>
           <ul class="effect-list">${effects}</ul>
           ${boostHtml}
-          ${node.active && node.id !== "0,0" ? `<div class="selection-actions"><button class="icon-btn danger" id="refund-node-btn" type="button">Refund Node</button></div>` : ""}
+          ${noteHtml}
+          <div class="selection-actions">
+            ${refundHtml}
+            <button class="icon-btn" id="note-node-btn" type="button">${note ? "Edit Note" : "Add Note"}</button>
+          </div>
         `;
         const refund = document.getElementById("refund-node-btn");
         if (refund) {
           refund.addEventListener("click", () => this.tree.refundNode(node.id));
+        }
+        const noteBtn = document.getElementById("note-node-btn");
+        if (noteBtn) {
+          noteBtn.addEventListener("click", event => window.annotator?.openEditor("node", node.id, event));
         }
       }
 
@@ -4999,12 +5341,100 @@
       }
     }
 
+    /* =========================================================================
+       PLAYER NOTES — annotate any node or conduit. Toggle the Notes button
+       (hotkey N) and click a target, Alt+click one directly, or click a pin
+       to edit. Notes ride the build code, so they persist and share.
+       ========================================================================= */
+    class AnnotationController {
+      constructor(tree) {
+        this.tree = tree;
+        this.modeOn = false;
+        this.target = null;
+        this.bind();
+      }
+
+      bind() {
+        const on = (id, type, handler) => {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener(type, handler);
+        };
+        on("annotate-toggle-btn", "click", () => this.setMode(!this.modeOn));
+        on("note-save-btn", "click", () => this.save());
+        on("note-remove-btn", "click", () => this.remove());
+        on("note-close-btn", "click", () => this.close());
+        document.addEventListener("keydown", event => {
+          if (event.key === "Escape") {
+            this.close();
+            return;
+          }
+          const tag = event.target?.tagName || "";
+          if (["INPUT", "TEXTAREA", "SELECT"].includes(tag)) return;
+          if (event.key === "n" || event.key === "N") this.setMode(!this.modeOn);
+        });
+      }
+
+      setMode(on) {
+        this.modeOn = Boolean(on);
+        document.body.classList.toggle("annotate-on", this.modeOn);
+        const btn = document.getElementById("annotate-toggle-btn");
+        if (btn) btn.setAttribute("aria-pressed", String(this.modeOn));
+        if (!this.modeOn) this.close();
+      }
+
+      // Note mode captures every node/conduit click; Alt+click annotates even
+      // with the mode off.
+      shouldIntercept(event) {
+        return this.modeOn || Boolean(event?.altKey);
+      }
+
+      openEditor(kind, id, event = null) {
+        this.target = { kind, id };
+        const editor = document.getElementById("note-editor");
+        const title = document.getElementById("note-editor-title");
+        const text = document.getElementById("note-editor-text");
+        if (!editor || !title || !text) return;
+        title.textContent = `Note — ${this.tree.annotationLabel(kind, id).replace(/^the /, "")}`;
+        text.value = this.tree.getAnnotation(kind, id);
+        editor.style.display = "block";
+        const x = event && typeof event.clientX === "number"
+          ? clamp(event.clientX + 14, 12, window.innerWidth - 300)
+          : Math.max(12, (window.innerWidth - 280) / 2);
+        const y = event && typeof event.clientY === "number"
+          ? clamp(event.clientY + 14, 12, window.innerHeight - 220)
+          : Math.max(12, window.innerHeight / 3);
+        editor.style.left = `${x}px`;
+        editor.style.top = `${y}px`;
+        if (typeof text.focus === "function") text.focus();
+      }
+
+      save() {
+        if (!this.target) return;
+        const text = document.getElementById("note-editor-text");
+        this.tree.setAnnotation(this.target.kind, this.target.id, text ? text.value : "");
+        this.close();
+      }
+
+      remove() {
+        if (!this.target) return;
+        this.tree.setAnnotation(this.target.kind, this.target.id, "");
+        this.close();
+      }
+
+      close() {
+        const editor = document.getElementById("note-editor");
+        if (editor) editor.style.display = "none";
+        this.target = null;
+      }
+    }
+
     const DESIGNER_BOOT_STATE = designerApplyStoredOverrides();
     window.skillTree = new GeometricSkillTree();
     window.renderer = new SVGRenderer(window.skillTree);
     window.ui = new UIController(window.skillTree);
     window.viewController = new ViewController();
     window.designer = new DesignerController(window.skillTree, window.renderer, DESIGNER_BOOT_STATE);
+    window.annotator = new AnnotationController(window.skillTree);
     window.skillTree.recalculate();
   </script>
 </body>

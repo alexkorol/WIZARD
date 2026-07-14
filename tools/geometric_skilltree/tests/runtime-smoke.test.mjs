@@ -21,12 +21,12 @@ function testRuntimeInitializes() {
 function testSubtreesAttachToRingTenGateways() {
   const window = runStandaloneApp();
   const expectedLinks = [
-    ['10,0', 'genius-core'],
-    ['0,-10', 'ranger-core'],
-    ['-10,10', 'vanguard-core'],
-    ['10,-10', 'spellblade-core'],
-    ['-10,0', 'skirmish-core'],
-    ['0,10', 'seer-core']
+    ['10,0', 'attendant-core'],
+    ['0,-10', 'quickrig-core'],
+    ['-10,10', 'warcall-core'],
+    ['10,-10', 'preparations-core'],
+    ['-10,0', 'trophies-core'],
+    ['0,10', 'relics-core']
   ];
 
   expectedLinks.forEach(([gatewayId, subtreeRootId]) => {
@@ -231,6 +231,110 @@ function testClassCallingAndBridge() {
   assert.equal(tree.stats.characterClass, 'Acrobat', 'Refunding the calling promotes the next allocated class.');
 }
 
+function testAscendancyClusters() {
+  const window = runStandaloneApp();
+  const tree = window.skillTree;
+  const clusterIds = ['attendant', 'quickrig', 'warcall', 'preparations', 'trophies', 'relics'];
+  clusterIds.forEach(id => {
+    const nodes = Array.from(tree.nodes.values()).filter(node => node.subtree === id);
+    assert.ok(nodes.length >= 10 && nodes.length <= 15, `${id} should hold 10-15 passives (has ${nodes.length}).`);
+    assert.equal(nodes.filter(node => node.type === 'keystone').length, 1, `${id} should cap with exactly one keystone.`);
+    assert.ok(nodes.filter(node => node.type === 'notable').length >= 3, `${id} should carry at least three notables.`);
+    assert.equal(nodes.filter(node => node.type === 'mastery').length, 1, `${id} should carry one mastery.`);
+    assert.ok(!tree.isSubtreeUnlocked(id), `${id} should stay hidden before its corner opens.`);
+  });
+
+  // Seed-of-life regularity: every wheel conduit spans one of the two lattice
+  // edge lengths — ~96 between touching circles, ~166 along the outer rim.
+  let wheelConduits = 0;
+  tree.conduits.forEach(conduit => {
+    const a = tree.nodes.get(conduit.fromId);
+    const b = tree.nodes.get(conduit.toId);
+    if (a?.source !== 'subtree' || b?.source !== 'subtree') return;
+    wheelConduits += 1;
+    const length = Math.hypot(a.pos.x - b.pos.x, a.pos.y - b.pos.y);
+    assert.ok((length > 93 && length < 99) || (length > 163 && length < 169),
+      `${conduit.fromId} -> ${conduit.toId} should sit on the seed-of-life grid (got ${length.toFixed(1)}).`);
+  });
+  assert.equal(wheelConduits, 6 * 30, 'Each wheel should carry its thirty seed-of-life edges.');
+
+  // Allocating the corner seat alone opens its circle.
+  tree.nodes.get('10,0').active = true;
+  tree.recalculate();
+  assert.ok(tree.isSubtreeUnlocked('attendant'), 'Allocating the corner should open its ascendancy circle.');
+  assert.ok(!tree.isSubtreeUnlocked('warcall'), 'Other corners stay closed until their own gate opens.');
+  assert.ok(tree.isNodeVisible(tree.nodes.get('attendant-servant')), 'The unlocked circle should reveal its keystone.');
+
+  tree.nodes.get('10,0').active = false;
+  tree.recalculate();
+  assert.ok(!tree.isSubtreeUnlocked('attendant'), 'Refunding the corner should close its circle again.');
+}
+
+function testRimUnlockSeats() {
+  const window = runStandaloneApp();
+  const tree = window.skillTree;
+  // Outer hex: slot / pack / slot / pack / slot / pack. Pure attribute corners
+  // grant an extra gear-slot window, hybrid corners grant a 4x4 pack.
+  const expected = [
+    ['10,0', 'Attendant', 'attendant_focus_slot'],
+    ['0,-10', 'Quick Rig', 'quick_rig_slot'],
+    ['-10,10', 'Warcall', 'war_call_slot'],
+    ['10,-10', 'Preparations', 'preparations_pack'],
+    ['-10,0', 'Trophies', 'spoils_pack'],
+    ['0,10', 'Relics', 'reliquary_pack']
+  ];
+  expected.forEach(([id, name, flag]) => {
+    const node = tree.nodes.get(id);
+    assert.ok(node, `${id} should exist.`);
+    assert.equal(node.name, name, `${id} should be named ${name}.`);
+    assert.equal(node.type, 'gateway', `${name} should stay a subtree gateway.`);
+    assert.ok(!tree.stats.unlocks.includes(flag), `${flag} should start locked.`);
+    node.active = true;
+    tree.recalculate();
+    assert.ok(tree.stats.unlocks.includes(flag), `${name} should grant ${flag} when allocated.`);
+    assert.ok(window.VerdigrisBridge.unlocks.includes(flag), `${flag} should cross the bridge.`);
+    node.active = false;
+    tree.recalculate();
+    assert.ok(!tree.stats.unlocks.includes(flag), `Refunding ${name} should revoke ${flag}.`);
+  });
+}
+
+function testAnnotations() {
+  const window = runStandaloneApp();
+  const tree = window.skillTree;
+  tree.setAnnotation('node', '1,0', 'wave anchor, keep this seat');
+  tree.setAnnotation('conduit', '0,0:1,0', 'switch to outer for the flow');
+  assert.equal(tree.getAnnotation('node', '1,0'), 'wave anchor, keep this seat', 'Node notes should store.');
+  assert.equal(tree.getAnnotation('conduit', '0,0:1,0'), 'switch to outer for the flow', 'Conduit notes should store.');
+
+  const layer = window.document.getElementById('note-layer');
+  assert.equal(layer.children.length, 2, 'Both notes should render pins.');
+
+  const code = tree.exportBuildCode();
+  tree.setAnnotation('node', '1,0', '');
+  assert.equal(tree.getAnnotation('node', '1,0'), '', 'Saving empty text should remove the note.');
+  assert.equal(layer.children.length, 1, 'Removing a note should remove its pin.');
+
+  assert.equal(tree.importBuildCode(code), true, 'Annotated build codes should import.');
+  assert.equal(tree.getAnnotation('node', '1,0'), 'wave anchor, keep this seat', 'Import should restore node notes.');
+  assert.equal(tree.getAnnotation('conduit', '0,0:1,0'), 'switch to outer for the flow', 'Import should restore conduit notes.');
+
+  tree.reset();
+  assert.equal(tree.getAnnotation('node', '1,0'), 'wave anchor, keep this seat', 'Reset clears allocations, not notes.');
+
+  const annotator = window.annotator;
+  assert.ok(annotator, 'AnnotationController should initialize.');
+  annotator.setMode(true);
+  assert.ok(annotator.shouldIntercept({}), 'Note mode should intercept node and conduit clicks.');
+  annotator.openEditor('node', '1,0');
+  window.document.getElementById('note-editor-text').value = 'rewritten through the editor';
+  annotator.save();
+  assert.equal(tree.getAnnotation('node', '1,0'), 'rewritten through the editor', 'The editor should save through the controller.');
+  annotator.setMode(false);
+  assert.ok(!annotator.shouldIntercept({}), 'Plain clicks should pass through with note mode off.');
+  assert.ok(annotator.shouldIntercept({ altKey: true }), 'Alt+click should annotate with note mode off.');
+}
+
 function testIronMilestoneLoopBoost() {
   const window = runStandaloneApp();
   const tree = window.skillTree;
@@ -365,6 +469,9 @@ function testBuildCodeRoundTrip() {
 const tests = [
   ['Standalone classic scripts initialize the tree runtime', testRuntimeInitializes],
   ['Class calling publishes unlock flags over the bridge', testClassCallingAndBridge],
+  ['Rim corners grant their slot and pack unlocks', testRimUnlockSeats],
+  ['Ascendancy circles hold 10-15 themed passives behind their corners', testAscendancyClusters],
+  ['Notes annotate nodes and conduits and ride build codes', testAnnotations],
   ['The Iron Milestone empowers loops that carry it', testIronMilestoneLoopBoost],
   ['Build codes round-trip a whole allocation', testBuildCodeRoundTrip],
   ['Auto-pathing extends waves by default', testWaveFirstAutoPathing],
