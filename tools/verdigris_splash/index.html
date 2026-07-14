@@ -3,43 +3,104 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#01030a">
-  <title>Verdigris — Splash Screen Demo</title>
-  <meta name="description" content="A real-time Three.js splash screen for Verdigris, a multiplayer action RPG set on a floating world before the age of iron.">
+  <meta name="theme-color" content="#061015">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23061116' d='M32 3 58 18v28L32 61 6 46V18Z'/%3E%3Cpath fill='none' stroke='%234ca99a' stroke-width='4' d='m17 17 15 32 15-32'/%3E%3C/svg%3E">
+  <title>Verdigris — The World Before Iron</title>
+  <meta name="description" content="An original real-time Three.js main-menu world for Verdigris: continents, oceans, mountain kingdoms, copper craft, and waterfalls above an endless abyss.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
-  <main id="app">
-    <canvas id="world" aria-label="Animated floating world of Verdigris"></canvas>
-    <div class="vignette" aria-hidden="true"></div>
+  <main id="app" aria-describedby="scene-description">
+    <canvas id="world" aria-label="The floating world of Verdigris, with continents, oceans, mountains, and the Crownlands"></canvas>
+    <div class="grade" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
     <header class="topbar">
-      <a class="back" href="../../index.html">WIZARD / XII</a>
-      <button id="sound" class="utility" type="button">SOUND OFF</button>
+      <a class="back" href="../../index.html" aria-label="Return to the Wizard experiments index">
+        <span class="back-mark" aria-hidden="true">V</span>
+        <span>WIZARD ARCHIVE <b>/ XII</b></span>
+      </a>
+      <div class="world-state" aria-label="Scene status">
+        <i aria-hidden="true"></i>
+        <span id="world-state-text">THE WORLD TURNS ABOVE THE ABYSS</span>
+      </div>
     </header>
-    <section class="hero-copy">
-      <p class="eyebrow">A multiplayer action role-playing world</p>
-      <h1>VERDIGRIS</h1>
-      <div class="rule"></div>
-      <p class="tagline">One island. Endless falls. No world below.</p>
-      <nav aria-label="Splash screen menu">
-        <button class="primary" type="button">ENTER THE WORLD</button>
-        <button type="button">CREATE A HERO</button>
-        <button type="button">THE CHRONICLE</button>
-      </nav>
-    </section>
-    <aside class="quality-control">
-      <span id="fps">-- FPS</span>
-      <button id="quality" class="utility" type="button">HIGH</button>
+
+    <aside class="view-switch" aria-label="Choose scene view">
+      <span class="view-label">View</span>
+      <button type="button" data-view="epic" aria-pressed="true"><i aria-hidden="true"></i>World</button>
+      <button type="button" data-view="crownlands" aria-pressed="false"><i aria-hidden="true"></i>Crownlands</button>
     </aside>
-    <p class="orbit-hint">DRAG TO ORBIT <i></i></p>
+
+    <section class="hero-copy" aria-labelledby="title">
+      <div class="sigil" aria-hidden="true">
+        <svg viewBox="0 0 80 80" role="presentation">
+          <path d="M40 4 67 20v32L40 76 13 52V20Z"/>
+          <path d="m25 25 15 33 15-33M18 40h44M40 12v10"/>
+          <circle cx="40" cy="40" r="5"/>
+        </svg>
+      </div>
+      <p class="eyebrow"><span>Chronicle I</span> Before the age of iron</p>
+      <div class="wordmark-wrap">
+        <h1 id="title">VERDIGRIS</h1>
+        <span class="wordmark-echo" aria-hidden="true">VERDIGRIS</span>
+      </div>
+      <p id="tagline" class="tagline">Continents adrift. Oceans without a shore below.</p>
+      <div class="ornament" aria-hidden="true"><i></i><b>◆</b><i></i></div>
+      <nav aria-label="Main menu">
+        <button class="menu-item primary" type="button" data-menu-action="continue">
+          <span class="index">I</span><span class="label">Enter the world</span><span class="chevron">›</span>
+        </button>
+        <button class="menu-item" type="button" data-menu-action="hero">
+          <span class="index">II</span><span class="label">Forge a wanderer</span><span class="chevron">›</span>
+        </button>
+        <button class="menu-item" type="button" data-menu-action="chronicle">
+          <span class="index">III</span><span class="label">Read the chronicle</span><span class="chevron">›</span>
+        </button>
+      </nav>
+      <p id="menu-status" class="menu-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <p id="scene-description" class="sr-only">A cinematic floating disc-world of several continents and oceans. Mountain ranges, forests, desert kingdoms, island cities, and waterfalls gather above a luminous abyss. An optional Crownlands view moves closer to the ancient observatory.</p>
+
+    <aside class="scene-controls" aria-label="Scene quality controls">
+      <div class="performance" aria-label="Live rendering performance"><span id="fps">--</span><small>FPS</small></div>
+      <label class="quality-label" for="quality">Quality</label>
+      <div class="select-wrap">
+        <select id="quality" aria-describedby="quality-state">
+          <option value="auto">Auto</option>
+          <option value="high">High</option>
+          <option value="balanced">Balanced</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+      <span id="quality-state" class="quality-state">AUTO</span>
+    </aside>
+
+    <p class="parallax-hint" aria-hidden="true"><span>Move to stir the wind</span><i></i></p>
+
     <div id="fallback" hidden>
-      <h2>WebGL is unavailable</h2>
-      <p>This experiment needs a browser with WebGL enabled.</p>
+      <div class="fallback-art" aria-hidden="true"><i></i><b></b><span></span></div>
+      <div class="fallback-copy">
+        <p>Before the age of iron</p>
+        <h2>VERDIGRIS</h2>
+        <div class="ornament"><i></i><b>◆</b><i></i></div>
+        <p class="fallback-message">The living world requires WebGL. The chronicle remains open.</p>
+        <a href="../../index.html">Return to the archive</a>
+      </div>
     </div>
   </main>
-  <script type="module" src="app.js"></script>
+
+  <script>
+    window.__verdigrisBootTimer = window.setTimeout(function () {
+      var fallback = document.getElementById("fallback");
+      if (fallback) fallback.hidden = false;
+    }, 7000);
+  </script>
+  <script type="module" src="app.js?v=17"></script>
 </body>
 </html>
