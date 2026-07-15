@@ -15,7 +15,7 @@
 </head>
 <body>
   <main id="app" aria-describedby="scene-description">
-    <canvas id="world" aria-label="The floating world of Verdigris, with continents, oceans, mountains, and the Crownlands"></canvas>
+    <canvas id="world" tabindex="0" aria-label="The floating world of Verdigris. Drag to orbit; scroll or pinch to zoom"></canvas>
     <div class="grade" aria-hidden="true"></div>
     <div class="grain" aria-hidden="true"></div>
 
@@ -65,7 +65,7 @@
       <p id="menu-status" class="menu-status" role="status" aria-live="polite"></p>
     </section>
 
-    <p id="scene-description" class="sr-only">A cinematic floating disc-world of several continents and oceans. Mountain ranges, forests, desert kingdoms, island cities, and waterfalls gather above a luminous abyss. An optional Crownlands view moves closer to the ancient observatory.</p>
+    <p id="scene-description" class="sr-only">A cinematic floating disc-world of several continents and oceans. Mountain ranges, forests, desert kingdoms, island cities, and waterfalls gather above a luminous abyss. An optional Crownlands view moves closer to the ancient observatory. Drag the scene to orbit, use the mouse wheel or a pinch gesture to zoom, or focus the scene and use arrow, plus, minus, and Home keys.</p>
 
     <aside class="scene-controls" aria-label="Scene quality controls">
       <div class="performance" aria-label="Live rendering performance"><span id="fps">--</span><small>FPS</small></div>
@@ -81,7 +81,7 @@
       <span id="quality-state" class="quality-state">AUTO</span>
     </aside>
 
-    <p class="parallax-hint" aria-hidden="true"><span>Move to stir the wind</span><i></i></p>
+    <p class="parallax-hint" aria-hidden="true"><span>Drag to orbit · Scroll to zoom</span><i></i></p>
 
     <div id="fallback" hidden>
       <div class="fallback-art" aria-hidden="true"><i></i><b></b><span></span></div>
@@ -101,6 +101,6 @@
       if (fallback) fallback.hidden = false;
     }, 7000);
   </script>
-  <script type="module" src="app.js?v=17"></script>
+  <script type="module" src="app.js?v=20"></script>
 </body>
 </html>

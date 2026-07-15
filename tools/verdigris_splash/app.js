@@ -432,6 +432,17 @@ function continentHeightLocal(config, x, z) {
   const ridgeNoise = 0.68 + Math.pow(1 - Math.abs(fbm(x * 1.24 + config.seed, z * 1.24 - config.seed)), 2) * 0.42;
   const ridgeBreaks = 0.6 + Math.pow(Math.abs(Math.sin((x * 1.37 + z * 0.83) * 2.35 + config.seed)), 1.85) * 0.52;
   const ridge = Math.exp(-Math.pow(ridgeDistance / ridgeWidth, 2)) * ridgeHeight * ridgeNoise * ridgeBreaks * 0.88;
+  const ridgeDx = bx - ax;
+  const ridgeDz = bz - az;
+  const ridgeLength = Math.max(0.001, Math.hypot(ridgeDx, ridgeDz));
+  const branchSign = config.seed % 2 === 0 ? 1 : -1;
+  const branchStartX = mix(ax, bx, 0.48);
+  const branchStartZ = mix(az, bz, 0.48);
+  const branchEndX = branchStartX - ridgeDz / ridgeLength * config.rz * 0.68 * branchSign + ridgeDx / ridgeLength * config.rx * 0.12;
+  const branchEndZ = branchStartZ + ridgeDx / ridgeLength * config.rz * 0.68 * branchSign + ridgeDz / ridgeLength * config.rz * 0.12;
+  const branchDistance = distanceToSegment(x, z, branchStartX, branchStartZ, branchEndX, branchEndZ);
+  const branch = config.islet ? 0 : Math.exp(-Math.pow(branchDistance / (ridgeWidth * 0.82), 2))
+    * ridgeHeight * ridgeNoise * (0.22 + ridgeBreaks * 0.14);
   let peaks = 0;
   for (let index = 0; index < config.peaks.length; index += 1) {
     const [px, pz, amplitude] = config.peaks[index];
@@ -446,7 +457,7 @@ function continentHeightLocal(config, x, z) {
   const edgeTerrace = smooth(0.72, 0.98, metric);
   const terracedCoast = Math.floor(coast * 4) / 4;
   const shapedCoast = mix(coast, terracedCoast, edgeTerrace * 0.42);
-  return WORLD_WATER_LEVEL + 0.075 + shapedCoast * Math.max(0.035, shelf + detail + ridge + peaks - valley);
+  return WORLD_WATER_LEVEL + 0.075 + shapedCoast * Math.max(0.035, shelf + detail + ridge + branch + peaks - valley);
 }
 
 function continentSlopeLocal(config, x, z) {
@@ -485,10 +496,10 @@ function epicLandSample(x, z) {
 function epicBiomeColor(config, x, z, height, slope, target) {
   const variation = fbm(x * 1.8 + config.seed, z * 1.8 - config.seed) * 0.5 + 0.5;
   const palettes = {
-    temperate: { low: [0.035, 0.16, 0.07], mid: [0.07, 0.23, 0.085], rock: [0.18, 0.17, 0.14], cap: [0.38, 0.4, 0.35] },
-    lush: { low: [0.02, 0.13, 0.085], mid: [0.035, 0.205, 0.105], rock: [0.15, 0.18, 0.15], cap: [0.34, 0.39, 0.33] },
-    verdant: { low: [0.04, 0.17, 0.065], mid: [0.08, 0.255, 0.075], rock: [0.19, 0.18, 0.13], cap: [0.4, 0.41, 0.32] },
-    desert: { low: [0.3, 0.105, 0.025], mid: [0.43, 0.17, 0.035], rock: [0.25, 0.1, 0.045], cap: [0.47, 0.29, 0.13] },
+    temperate: { low: [0.035, 0.16, 0.07], mid: [0.07, 0.23, 0.085], rock: [0.15, 0.16, 0.125], cap: [0.27, 0.31, 0.255] },
+    lush: { low: [0.02, 0.13, 0.085], mid: [0.035, 0.205, 0.105], rock: [0.12, 0.17, 0.135], cap: [0.23, 0.31, 0.25] },
+    verdant: { low: [0.04, 0.17, 0.065], mid: [0.08, 0.255, 0.075], rock: [0.16, 0.17, 0.115], cap: [0.29, 0.32, 0.22] },
+    desert: { low: [0.3, 0.105, 0.025], mid: [0.43, 0.17, 0.035], rock: [0.22, 0.085, 0.035], cap: [0.42, 0.24, 0.1] },
     alpine: { low: [0.045, 0.14, 0.085], mid: [0.1, 0.2, 0.11], rock: [0.21, 0.23, 0.22], cap: [0.5, 0.53, 0.49] },
   };
   const palette = palettes[config.biome];
@@ -683,6 +694,120 @@ function createEpicCoastlines() {
     const geometry = new THREE.BufferGeometry().setFromPoints(positions);
     group.add(new THREE.LineLoop(geometry, material));
   });
+  return group;
+}
+
+function createEpicShallowsGeometry() {
+  const segments = 96;
+  const positions = [];
+  const colors = [];
+  const indices = [];
+  const point = { x: 0, z: 0 };
+  EPIC_CONTINENTS.forEach((config) => {
+    const offset = positions.length / 3;
+    for (let ring = 0; ring < 2; ring += 1) {
+      for (let segment = 0; segment < segments; segment += 1) {
+        const angle = segment / segments * TAU;
+        const boundary = continentBoundaryScale(config, angle) * (ring === 0 ? 1.008 : 1.075);
+        const localX = Math.cos(angle) * config.rx * boundary;
+        const localZ = Math.sin(angle) * config.rz * boundary;
+        continentToWorld(config, localX, localZ, point);
+        positions.push(point.x, WORLD_WATER_LEVEL + 0.027, point.z);
+        if (ring === 0) colors.push(0.16, 0.58, 0.53);
+        else colors.push(0.018, 0.17, 0.22);
+      }
+    }
+    for (let segment = 0; segment < segments; segment += 1) {
+      const next = (segment + 1) % segments;
+      indices.push(offset + segment, offset + segments + segment, offset + segments + next);
+      indices.push(offset + segment, offset + segments + next, offset + next);
+    }
+  });
+  const geometry = new THREE.BufferGeometry();
+  geometry.setIndex(indices);
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+  return geometry;
+}
+
+function createEpicRoutes() {
+  const riverPositions = [];
+  const roadPositions = [];
+  const point = { x: 0, z: 0 };
+
+  function appendPath(config, start, end, segments, wiggle, lift, target) {
+    const directX = end[0] - start[0];
+    const directZ = end[1] - start[1];
+    const length = Math.max(0.001, Math.hypot(directX, directZ));
+    const normalX = -directZ / length;
+    const normalZ = directX / length;
+    const bend = Math.sin(config.seed * 0.73) * wiggle * 1.8;
+    const controlX = (start[0] + end[0]) * 0.5 + normalX * bend;
+    const controlZ = (start[1] + end[1]) * 0.5 + normalZ * bend;
+    let previousX = 0;
+    let previousY = 0;
+    let previousZ = 0;
+    for (let index = 0; index <= segments; index += 1) {
+      const t = index / segments;
+      const inverse = 1 - t;
+      const meanderEnvelope = Math.sin(t * Math.PI);
+      const meander = (
+        Math.sin(t * Math.PI * 4 + config.seed) * wiggle
+        + Math.sin(t * Math.PI * 7 - config.seed * 0.31) * wiggle * 0.34
+      ) * meanderEnvelope;
+      const localX = inverse * inverse * start[0] + 2 * inverse * t * controlX + t * t * end[0] + normalX * meander;
+      const localZ = inverse * inverse * start[1] + 2 * inverse * t * controlZ + t * t * end[1] + normalZ * meander;
+      continentToWorld(config, localX, localZ, point);
+      const y = continentHeightLocal(config, localX, localZ) + lift;
+      if (index > 0) target.push(previousX, previousY, previousZ, point.x, y, point.z);
+      previousX = point.x;
+      previousY = y;
+      previousZ = point.z;
+    }
+  }
+
+  EPIC_CONTINENTS.forEach((config) => {
+    if (config.islet) return;
+    const source = config.peaks[0] || [0, 0];
+    const riverAngle = (config.seed * 0.137) % TAU;
+    const riverBoundary = continentBoundaryScale(config, riverAngle) * 0.9;
+    appendPath(
+      config,
+      [source[0] * 0.84, source[1] * 0.84],
+      [Math.cos(riverAngle) * config.rx * riverBoundary, Math.sin(riverAngle) * config.rz * riverBoundary],
+      24,
+      0.088,
+      0.025,
+      riverPositions,
+    );
+    if (config.capital) {
+      for (let branchIndex = 0; branchIndex < 2; branchIndex += 1) {
+        const roadAngle = (config.seed * 0.071 + branchIndex * 2.15) % TAU;
+        const roadBoundary = continentBoundaryScale(config, roadAngle) * 0.58;
+        appendPath(
+          config,
+          config.capital,
+          [Math.cos(roadAngle) * config.rx * roadBoundary, Math.sin(roadAngle) * config.rz * roadBoundary],
+          15,
+          0.025,
+          0.031,
+          roadPositions,
+        );
+      }
+    }
+  });
+
+  const rivers = new THREE.LineSegments(
+    new THREE.BufferGeometry().setAttribute("position", new THREE.Float32BufferAttribute(riverPositions, 3)),
+    new THREE.LineBasicMaterial({ color: 0x4ca7a6, transparent: true, opacity: 0.43, depthWrite: false }),
+  );
+  const roads = new THREE.LineSegments(
+    new THREE.BufferGeometry().setAttribute("position", new THREE.Float32BufferAttribute(roadPositions, 3)),
+    new THREE.LineBasicMaterial({ color: 0xb88955, transparent: true, opacity: 0.38, depthWrite: false }),
+  );
+  const group = new THREE.Group();
+  group.renderOrder = 4;
+  group.add(rivers, roads);
   return group;
 }
 
@@ -884,7 +1009,115 @@ function createEpicCapitals(materials) {
   foundations.castShadow = halls.castShadow = keeps.castShadow = roofs.castShadow = buttresses.castShadow = true;
   const group = new THREE.Group();
   group.add(foundations, halls, keeps, roofs, beacons, buttresses);
-  return group;
+  return { group, sites };
+}
+
+function createEpicCityLights(capitalSites) {
+  const random = seeded(12041);
+  const positions = [];
+  const phases = [];
+  const sizes = [];
+  capitalSites.forEach((site) => {
+    for (let index = 0; index < 16; index += 1) {
+      const angle = random() * TAU;
+      const radius = mix(0.12, 0.58, Math.pow(random(), 1.35)) * site.scale;
+      const x = site.x + Math.cos(angle) * radius;
+      const z = site.z + Math.sin(angle) * radius * 0.68;
+      const sample = epicLandSample(x, z);
+      if (!sample || sample.metric > 0.9) continue;
+      positions.push(x, sample.height + 0.055 + random() * 0.025, z);
+      phases.push(random());
+      sizes.push(mix(0.15, 0.28, random()));
+    }
+  });
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute("aPhase", new THREE.Float32BufferAttribute(phases, 1));
+  geometry.setAttribute("aSize", new THREE.Float32BufferAttribute(sizes, 1));
+  const material = new THREE.ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    uniforms: { uTime: { value: 0 }, uPulse: { value: 0 } },
+    vertexShader: `
+      attribute float aPhase;
+      attribute float aSize;
+      varying float vPhase;
+      void main(){
+        vPhase=aPhase;
+        vec4 mvPosition=modelViewMatrix*vec4(position,1.0);
+        gl_PointSize=aSize*(275.0/max(5.0,-mvPosition.z));
+        gl_Position=projectionMatrix*mvPosition;
+      }
+    `,
+    fragmentShader: `
+      uniform float uTime;
+      uniform float uPulse;
+      varying float vPhase;
+      void main(){
+        vec2 centered=gl_PointCoord-0.5;
+        float disc=smoothstep(0.5,0.08,length(centered));
+        float twinkle=0.62+sin(uTime*1.45+vPhase*6.28318)*0.22;
+        vec3 color=mix(vec3(0.92,0.38,0.12),vec3(1.0,0.82,0.46),vPhase);
+        gl_FragColor=vec4(color,disc*(twinkle+uPulse*0.55));
+      }
+    `,
+  });
+  const points = new THREE.Points(geometry, material);
+  points.renderOrder = 5;
+  return { points, material, maxCount: positions.length / 3 };
+}
+
+function createEpicBeaconMesh(capitalSites) {
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x70e6d4,
+    transparent: true,
+    opacity: 0,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+  });
+  const mesh = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.018, 0.13, 2.6, 8, 1, true), material, capitalSites.length);
+  const matrix = new THREE.Matrix4();
+  const position = new THREE.Vector3();
+  const quaternion = new THREE.Quaternion();
+  const scale = new THREE.Vector3();
+  capitalSites.forEach((site, index) => {
+    position.set(site.x, site.y + 2.02 * site.scale, site.z);
+    scale.set(site.scale, site.scale, site.scale);
+    matrix.compose(position, quaternion, scale);
+    mesh.setMatrixAt(index, matrix);
+  });
+  mesh.visible = false;
+  mesh.frustumCulled = false;
+  mesh.renderOrder = 6;
+  return { mesh, material };
+}
+
+function createEpicCloudWisps(texture) {
+  const positions = [
+    -5.2, 2.6, -1.1,
+    -2.1, 3.15, 2.4,
+    1.3, 2.75, -2.8,
+    4.4, 3.35, 0.8,
+    6.0, 2.6, -1.7,
+    0.2, 3.8, 1.1,
+  ];
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  const material = new THREE.PointsMaterial({
+    color: 0x92b9b6,
+    map: texture,
+    size: 4.1,
+    sizeAttenuation: true,
+    transparent: true,
+    opacity: 0.12,
+    alphaTest: 0.012,
+    depthWrite: false,
+  });
+  const points = new THREE.Points(geometry, material);
+  points.renderOrder = 7;
+  return points;
 }
 
 function createCliffFragments(material) {
@@ -1674,10 +1907,14 @@ function boot() {
         float fresnel = pow(1.0 - abs(dot(viewDir, vec3(0.0, 1.0, 0.0))), 2.35);
         float longWave = noise(vWorld.xz * 0.52 + vec2(uTime * 0.035, -uTime * 0.028));
         float glint = smoothstep(0.76, 0.96, noise(vWorld.xz * 2.1 + vec2(uTime * 0.12, 0.0))) * 0.13;
+        float currentNoise = noise(vWorld.xz * 0.34 + vec2(-uTime * 0.018, uTime * 0.024));
+        float currentWave = sin(vWorld.x * 1.08 + vWorld.z * 0.43 + uTime * 0.22 + currentNoise * 4.4) * 0.5 + 0.5;
+        float current = smoothstep(0.88, 0.99, currentWave) * smoothstep(0.32, 0.78, longWave);
         float rim = smoothstep(0.89, 1.0, vEdge);
         vec3 deep = vec3(0.012, 0.135, 0.205);
         vec3 surface = vec3(0.025, 0.36, 0.43);
         vec3 color = mix(deep, surface, 0.32 + fresnel * 0.46 + longWave * 0.12 + glint);
+        color += vec3(0.08, 0.36, 0.39) * current * (0.035 + fresnel * 0.06);
         color += vec3(0.12, 0.62, 0.58) * rim * (0.22 + uPulse * 0.15);
         color += vec3(0.16, 0.42, 0.38) * max(vWave, 0.0) * 1.8;
         float alpha = 0.82 + fresnel * 0.1 + rim * 0.06;
@@ -1778,6 +2015,15 @@ function boot() {
   });
   const epicOcean = new THREE.Mesh(createEpicOceanGeometry(), epicOceanMaterial);
   epicOcean.renderOrder = 2;
+  const epicShallowsMaterial = new THREE.MeshBasicMaterial({
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.34,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+  });
+  const epicShallows = new THREE.Mesh(createEpicShallowsGeometry(), epicShallowsMaterial);
+  epicShallows.renderOrder = 3;
   const epicContinents = new THREE.Group();
   EPIC_CONTINENTS.forEach((config) => {
     const continent = shadow(new THREE.Mesh(createContinentGeometry(config), epicTerrainMaterial));
@@ -1787,11 +2033,14 @@ function boot() {
   const epicCliffs = shadow(new THREE.Mesh(createEpicCliffGeometry(), undersideMaterial));
   const epicCoastlines = createEpicCoastlines();
   epicCoastlines.renderOrder = 3;
+  const epicRoutes = createEpicRoutes();
   const epicWaterfalls = new THREE.Mesh(createEpicWaterfallGeometry(), waterfallMaterial);
   epicWaterfalls.renderOrder = 4;
   const epicTrees = createEpicTrees();
   const epicLandmarks = createEpicLandmarks(materials);
   const epicCapitals = createEpicCapitals(materials);
+  const epicCityLights = createEpicCityLights(epicCapitals.sites);
+  const epicBeacons = createEpicBeaconMesh(epicCapitals.sites);
   const epicAbyss = createAbyss();
   epicAbyss.group.scale.set(1.58, 1, 1.38);
   const epicRimMaterial = new THREE.MeshBasicMaterial({ color: 0x49c8bd, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending, depthWrite: false });
@@ -1802,20 +2051,26 @@ function boot() {
   epicWorld.add(
     epicUnderside,
     epicOcean,
+    epicShallows,
     epicCliffs,
     epicContinents,
     epicCoastlines,
+    epicRoutes,
     epicWaterfalls,
     epicTrees.trunks,
     epicTrees.crowns,
     epicLandmarks,
-    epicCapitals,
+    epicCapitals.group,
+    epicCityLights.points,
+    epicBeacons.mesh,
     epicAbyss.group,
     epicRim,
   );
 
   const clouds = createCloudLayer();
   scene.add(clouds.group);
+  const epicCloudWisps = createEpicCloudWisps(clouds.texture);
+  epicWorld.add(epicCloudWisps);
   const flock = createFlock();
   const lightning = createLightning();
   scene.add(flock, lightning);
@@ -1850,9 +2105,9 @@ function boot() {
   scene.add(stormLight);
 
   const profiles = {
-    high: { dpr: 1.65, shadows: true, shadowSize: 2048, trees: 360, epicTrees: 860, motes: 320, clouds: 10 },
-    balanced: { dpr: 1.2, shadows: true, shadowSize: 1024, trees: 230, epicTrees: 620, motes: 200, clouds: 7 },
-    low: { dpr: 1, shadows: false, shadowSize: 512, trees: 120, epicTrees: 340, motes: 90, clouds: 4 },
+    high: { dpr: 1.65, shadows: true, shadowSize: 2048, trees: 360, epicTrees: 860, epicLights: 96, motes: 320, clouds: 10 },
+    balanced: { dpr: 1.2, shadows: true, shadowSize: 1024, trees: 230, epicTrees: 620, epicLights: 72, motes: 200, clouds: 7 },
+    low: { dpr: 1, shadows: false, shadowSize: 512, trees: 120, epicTrees: 340, epicLights: 42, motes: 90, clouds: 4 },
   };
   let requestedQuality = "auto";
   let autoQuality = detectAutoQuality();
@@ -1864,6 +2119,42 @@ function boot() {
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const previewMoment = new URLSearchParams(location.search).get("moment") === "crown";
+  const cameraControl = {
+    dragging: false,
+    pointers: new Map(),
+    lastX: 0,
+    lastY: 0,
+    pinchDistance: 0,
+    yaw: 0,
+    pitch: 0,
+    zoom: 0,
+    yawTarget: 0,
+    pitchTarget: 0,
+    zoomTarget: 0,
+    lastInput: 0,
+  };
+
+  function resetCameraControl(immediate = false) {
+    cameraControl.yawTarget = 0;
+    cameraControl.pitchTarget = 0;
+    cameraControl.zoomTarget = 0;
+    cameraControl.lastInput = 0;
+    if (immediate) {
+      cameraControl.yaw = 0;
+      cameraControl.pitch = 0;
+      cameraControl.zoom = 0;
+    }
+  }
+
+  function markCameraInput() {
+    cameraControl.lastInput = performance.now();
+  }
+
+  function pinchDistance() {
+    const points = [...cameraControl.pointers.values()];
+    if (points.length < 2) return 0;
+    return Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
+  }
 
   function applyQuality(nextQuality) {
     activeQuality = nextQuality;
@@ -1874,6 +2165,8 @@ function boot() {
     sun.shadow.mapSize.set(profile.shadowSize, profile.shadowSize);
     trees.trunks.count = trees.crowns.count = Math.min(profile.trees, trees.maxCount);
     epicTrees.trunks.count = epicTrees.crowns.count = Math.min(profile.epicTrees, epicTrees.maxCount);
+    epicCityLights.points.geometry.setDrawRange(0, Math.min(profile.epicLights, epicCityLights.maxCount));
+    epicCloudWisps.visible = activeQuality !== "low";
     motes.geometry.setDrawRange(0, profile.motes);
     for (let index = 0; index < clouds.sprites.length; index += 1) {
       clouds.sprites[index].visible = index < profile.clouds;
@@ -1974,12 +2267,13 @@ function boot() {
       ? "THE WORLD TURNS ABOVE THE ABYSS"
       : "THE CROWN IS WAKING";
     canvas.setAttribute("aria-label", epicActive
-      ? "The whole floating world of Verdigris, with continents, oceans, mountain ranges, kingdoms, and waterfalls"
-      : "The Crownlands island and the ancient Crown of Tides citadel");
+      ? "The whole floating world of Verdigris. Drag to orbit; scroll or pinch to zoom"
+      : "The Crownlands island and the ancient Crown of Tides citadel. Drag to orbit; scroll or pinch to zoom");
     if (announce) {
       menuStatus.textContent = epicActive ? "World view: the whole of Verdigris." : "Crownlands view: the observatory province.";
       menuStatus.classList.add("is-visible");
     }
+    resetCameraControl(true);
     resize();
   }
 
@@ -1994,14 +2288,96 @@ function boot() {
     adaptiveCooldown = performance.now() + 12000;
   });
 
+  canvas.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    event.preventDefault();
+    canvas.focus({ preventScroll: true });
+    canvas.setPointerCapture(event.pointerId);
+    cameraControl.pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    cameraControl.dragging = true;
+    cameraControl.lastX = event.clientX;
+    cameraControl.lastY = event.clientY;
+    cameraControl.pinchDistance = pinchDistance();
+    canvas.classList.add("is-dragging");
+    markCameraInput();
+  });
+
   canvas.addEventListener("pointermove", (event) => {
+    if (cameraControl.pointers.has(event.pointerId)) {
+      cameraControl.pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (cameraControl.pointers.size > 1) {
+        const distance = pinchDistance();
+        if (cameraControl.pinchDistance > 0) {
+          const pinchScale = Math.max(260, Math.min(innerWidth, innerHeight));
+          cameraControl.zoomTarget = clamp(
+            cameraControl.zoomTarget - (distance - cameraControl.pinchDistance) / pinchScale * 0.88,
+            -0.22,
+            0.35,
+          );
+        }
+        cameraControl.pinchDistance = distance;
+      } else {
+        const dx = event.clientX - cameraControl.lastX;
+        const dy = event.clientY - cameraControl.lastY;
+        cameraControl.yawTarget = clamp(cameraControl.yawTarget - dx * 0.00215, -0.25, 0.25);
+        cameraControl.pitchTarget = clamp(cameraControl.pitchTarget - dy * 0.00185, -0.16, 0.14);
+        cameraControl.lastX = event.clientX;
+        cameraControl.lastY = event.clientY;
+      }
+      markCameraInput();
+      return;
+    }
     if (reducedMotion) return;
     pointer.tx = clamp(event.clientX / innerWidth * 2 - 1, -1, 1);
     pointer.ty = clamp(event.clientY / innerHeight * 2 - 1, -1, 1);
   }, { passive: true });
+
+  function endCameraPointer(event) {
+    cameraControl.pointers.delete(event.pointerId);
+    if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
+    if (cameraControl.pointers.size === 0) {
+      cameraControl.dragging = false;
+      cameraControl.pinchDistance = 0;
+      canvas.classList.remove("is-dragging");
+    } else {
+      const remaining = cameraControl.pointers.values().next().value;
+      cameraControl.lastX = remaining.x;
+      cameraControl.lastY = remaining.y;
+      cameraControl.pinchDistance = 0;
+    }
+    markCameraInput();
+  }
+
+  canvas.addEventListener("pointerup", endCameraPointer);
+  canvas.addEventListener("pointercancel", endCameraPointer);
+
+  canvas.addEventListener("wheel", (event) => {
+    event.preventDefault();
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1;
+    cameraControl.zoomTarget = clamp(cameraControl.zoomTarget + event.deltaY * unit * 0.00065, -0.22, 0.35);
+    markCameraInput();
+  }, { passive: false });
+
+  canvas.addEventListener("keydown", (event) => {
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    const handled = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "+", "=", "-", "_", "Home"].includes(event.key);
+    if (!handled) return;
+    event.preventDefault();
+    if (event.key === "ArrowLeft") cameraControl.yawTarget = clamp(cameraControl.yawTarget + 0.045, -0.25, 0.25);
+    if (event.key === "ArrowRight") cameraControl.yawTarget = clamp(cameraControl.yawTarget - 0.045, -0.25, 0.25);
+    if (event.key === "ArrowUp") cameraControl.pitchTarget = clamp(cameraControl.pitchTarget + 0.035, -0.16, 0.14);
+    if (event.key === "ArrowDown") cameraControl.pitchTarget = clamp(cameraControl.pitchTarget - 0.035, -0.16, 0.14);
+    if (event.key === "+" || event.key === "=") cameraControl.zoomTarget = clamp(cameraControl.zoomTarget - 0.07, -0.22, 0.35);
+    if (event.key === "-" || event.key === "_") cameraControl.zoomTarget = clamp(cameraControl.zoomTarget + 0.07, -0.22, 0.35);
+    if (event.key === "Home") resetCameraControl();
+    else markCameraInput();
+  });
+
   canvas.addEventListener("pointerleave", () => {
-    pointer.tx = 0;
-    pointer.ty = 0;
+    if (!cameraControl.dragging) {
+      pointer.tx = 0;
+      pointer.ty = 0;
+    }
   }, { passive: true });
 
   document.querySelectorAll("[data-menu-action]").forEach((button) => {
@@ -2031,7 +2407,7 @@ function boot() {
   let averageFps = 60;
 
   const debug = {
-    version: "verdigris-menu-2.0",
+    version: "verdigris-menu-2.1",
     quality: activeQuality,
     fps: 0,
     frameMs: 0,
@@ -2066,17 +2442,41 @@ function boot() {
     pointer.tx *= pointerReturn;
     pointer.ty *= pointerReturn;
 
-    const orbit = reducedMotion ? 0 : Math.sin(phase * TAU) * 0.28;
-    const lift = reducedMotion ? 0 : Math.sin(phase * TAU * 2 - 0.7) * 0.08;
-    camera.position.set(
-      baseCamera.x + orbit + pointer.x * 0.19,
-      baseCamera.y + lift - pointer.y * 0.1,
-      baseCamera.z - orbit * 0.42,
-    );
+    if (!cameraControl.dragging && now - cameraControl.lastInput > 5200) {
+      const returnSpring = Math.exp(-delta * 0.72);
+      cameraControl.yawTarget *= returnSpring;
+      cameraControl.pitchTarget *= returnSpring;
+      cameraControl.zoomTarget *= returnSpring;
+    }
+    const cameraSpring = 1 - Math.exp(-delta * (cameraControl.dragging ? 12 : 6.5));
+    cameraControl.yaw += (cameraControl.yawTarget - cameraControl.yaw) * cameraSpring;
+    cameraControl.pitch += (cameraControl.pitchTarget - cameraControl.pitch) * cameraSpring;
+    cameraControl.zoom += (cameraControl.zoomTarget - cameraControl.zoom) * cameraSpring;
+
+    const loopAngle = phase * TAU;
+    const loopYaw = reducedMotion ? 0 : Math.sin(loopAngle) * 0.044 + Math.sin(loopAngle * 2 - 0.45) * 0.008;
+    const loopPitch = reducedMotion ? 0 : Math.sin(loopAngle - 0.82) * 0.021;
+    const loopPan = reducedMotion ? 0 : Math.sin(loopAngle + 0.4) * 0.13;
+    const loopLift = reducedMotion ? 0 : Math.sin(loopAngle * 2 - 0.62) * 0.055;
     cameraTarget.set(
-      baseCamera.tx + pointer.x * 0.08,
-      baseCamera.ty - pointer.y * 0.045,
-      baseCamera.tz,
+      baseCamera.tx + loopPan + pointer.x * 0.065,
+      baseCamera.ty + loopLift - pointer.y * 0.04,
+      baseCamera.tz + Math.cos(loopAngle - 0.3) * (reducedMotion ? 0 : 0.045),
+    );
+    const baseDx = baseCamera.x - baseCamera.tx;
+    const baseDy = baseCamera.y - baseCamera.ty;
+    const baseDz = baseCamera.z - baseCamera.tz;
+    const baseDistance = Math.sqrt(baseDx * baseDx + baseDy * baseDy + baseDz * baseDz);
+    const baseYaw = Math.atan2(baseDx, baseDz);
+    const basePitch = Math.asin(baseDy / baseDistance);
+    const cameraYaw = baseYaw + loopYaw + cameraControl.yaw + pointer.x * 0.007;
+    const cameraPitch = clamp(basePitch + loopPitch + cameraControl.pitch - pointer.y * 0.004, 0.24, 1.18);
+    const cameraDistance = baseDistance * clamp(1 + cameraControl.zoom, 0.78, 1.35);
+    const cameraHorizontal = Math.cos(cameraPitch) * cameraDistance;
+    camera.position.set(
+      cameraTarget.x + Math.sin(cameraYaw) * cameraHorizontal,
+      cameraTarget.y + Math.sin(cameraPitch) * cameraDistance,
+      cameraTarget.z + Math.cos(cameraYaw) * cameraHorizontal,
     );
     camera.lookAt(cameraTarget);
 
@@ -2086,6 +2486,8 @@ function boot() {
     waterMaterial.uniforms.uPulse.value = crownPulse;
     epicOceanMaterial.uniforms.uTime.value = time;
     epicOceanMaterial.uniforms.uPulse.value = crownPulse;
+    epicCityLights.material.uniforms.uTime.value = time;
+    epicCityLights.material.uniforms.uPulse.value = crownPulse;
     waterfallMaterial.uniforms.uTime.value = time;
     waterfallMaterial.uniforms.uPulse.value = crownPulse;
     waterMist.material.uniforms.uTime.value = time;
@@ -2130,6 +2532,11 @@ function boot() {
     epicAbyss.glowMaterial.uniforms.uPulse.value = crownPulse * 0.75;
     epicAbyssLight.intensity = 10 + crownPulse * 10;
     epicRimMaterial.opacity = 0.12 + crownPulse * 0.09;
+    epicShallowsMaterial.opacity = 0.3 + crownPulse * 0.1;
+    epicBeacons.mesh.visible = crownPulse > 0.11 && !reducedMotion;
+    epicBeacons.material.opacity = crownPulse * 0.155;
+    epicCloudWisps.position.x = reducedMotion ? 0 : Math.sin(time * 0.042) * 0.22;
+    epicCloudWisps.position.z = reducedMotion ? 0 : Math.cos(time * 0.034) * 0.12;
     sun.intensity = 4.1 + crownPulse * 0.5;
 
     renderer.render(scene, camera);
@@ -2151,12 +2558,19 @@ function boot() {
       debug.geometryCount = renderer.info.memory.geometries;
       debug.viewport = { width: canvas.clientWidth, height: canvas.clientHeight, dpr: renderer.getPixelRatio() };
       debug.loopPhase = Math.round(phase * 1000) / 1000;
+      debug.cameraYaw = Math.round(cameraControl.yaw * 1000) / 1000;
+      debug.cameraPitch = Math.round(cameraControl.pitch * 1000) / 1000;
+      debug.cameraZoom = Math.round(cameraControl.zoom * 1000) / 1000;
       canvas.dataset.fps = String(debug.fps);
       canvas.dataset.frameMs = String(debug.frameMs);
       canvas.dataset.drawCalls = String(debug.drawCalls);
       canvas.dataset.triangles = String(debug.triangles);
       canvas.dataset.quality = activeQuality;
       canvas.dataset.variant = activeVariant;
+      canvas.dataset.cameraYaw = String(debug.cameraYaw);
+      canvas.dataset.cameraPitch = String(debug.cameraPitch);
+      canvas.dataset.cameraZoom = String(debug.cameraZoom);
+      canvas.dataset.cameraDragging = String(cameraControl.dragging);
       frames = 0;
       sampleStart = now;
 
