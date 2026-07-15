@@ -23,12 +23,13 @@ node --check app.js
 ## Architecture and assets
 
 - `app.js` builds both views deterministically from seed values. There are no downloaded models or image textures.
-- World mode uses nine continuous indexed heightfields: six large named regions plus three outlying island groups. Each has an authored coastline, ridge axis, peak system, valley cut, terraces, and biome palette driven by height and slope.
-- A separate elliptical ocean surface uses animated swell, long-wave variation, Fresnel response, and a luminous outer rim. The whole-world underside is an asymmetric terraced ring mesh with fractured shelves and dark strata; seven soft-flowing waterfalls descend into a scaled abyssal vortex.
-- World vegetation uses two instanced meshes with deterministic forest masks. Settlements reuse instanced stone/copper components; six larger capitals add foundations, halls, keeps, roofs, rune beacons, and buttress rhythm. Islets and coastline loops supply ocean scale cues.
+- World mode uses nine continuous indexed heightfields: six large named regions plus three outlying island groups. Each has an authored coastline, a primary and branching ridge system, peak groups, valley cuts, terraces, and a biome palette driven by height and slope.
+- A separate elliptical ocean surface uses animated swell, long-wave variation, restrained current highlights, Fresnel response, and a luminous outer rim. Batched shallow-water shelves transition each coast into the ocean. The whole-world underside is an asymmetric terraced ring mesh with fractured shelves and dark strata; seven soft-flowing waterfalls descend into a scaled abyssal vortex.
+- World vegetation uses two instanced meshes with deterministic forest masks. Rivers meander from mountain sources toward the coast and subtle road lines connect capitals to their hinterlands. Settlements reuse instanced stone/copper components; six larger capitals add foundations, halls, keeps, roofs, warm window lights, rune beacons, and buttress rhythm. Islets and coastline loops supply ocean scale cues.
 - Crownlands retains its denser continuous radial heightfield with authored ridges, valleys, plateaus, basins, and river masks. Its localized water covers two basins and their connecting river rather than blanketing the terrain.
 - The Crown of Tides is original procedural geometry: stepped foundations, masonry rhythm, bridge rails, buttresses, open arches, copper bands, an armillary crown, emissive rune windows, and a timed activation beam.
-- Repeated trees, settlements, waystones, motes, mist, and flock are instanced or batched. The soft cloud texture is generated at runtime on a small canvas.
+- Repeated trees, settlements, waystones, motes, mist, and flock are instanced or batched. The soft cloud texture is generated at runtime on a small canvas and reused for drifting world-space cloud wisps.
+- The loop's activation beat wakes every capital with a synchronized teal beacon while city windows brighten and the abyss answers below. It remains deterministic and can be held for review with `?moment=crown`.
 - The 36-second loop is deterministic and now uses a restrained spherical pan/tilt path around each responsive hero composition. Dragging provides bounded yaw/pitch orbiting; wheel, trackpad, and pinch input provide bounded zoom. Keyboard users can navigate with arrows, plus/minus, and Home. After a short inspection pause, all offsets spring smoothly back into the authored loop.
 - Rendering stops while the tab is hidden, and `pagehide` disposes GPU resources.
 - No Blender or glTF export step is used; this keeps the source reproducible and the transfer small.
@@ -37,11 +38,11 @@ node --check app.js
 
 `Auto` starts from coarse-pointer, viewport, memory, and logical-core hints, then can step down after sustained low frame rate. Manual selection disables adaptive changes until `Auto` is selected again.
 
-| Tier | DPR cap | Shadow map | Crown trees | World trees | Motes | Clouds |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| High | 1.65 | 2048 | 360 | 860 | 320 | 10 |
-| Balanced | 1.20 | 1024 | 230 | 620 | 200 | 7 |
-| Low | 1.00 | off | 120 | 340 | 90 | 4 |
+| Tier | DPR cap | Shadow map | Crown trees | World trees | City lights | Motes | Clouds |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| High | 1.65 | 2048 | 360 | 860 | 96 | 320 | 10 |
+| Balanced | 1.20 | 1024 | 230 | 620 | 72 | 200 | 7 |
+| Low | 1.00 | off | 120 | 340 | 42 | 90 | 4 |
 
 Geometry is reused across tiers; controls change draw ranges, instance counts, shadows, and pixel ratio without rebuilding the scene. The renderer uses ACES tone mapping, explicit DPR caps, batched props, and no post-processing pass.
 
@@ -51,12 +52,15 @@ Measurements were taken on 2026-07-14 in the Codex in-app Chromium browser, serv
 
 | View / tier | Observed FPS | Frame time | Draw calls | Triangles |
 | --- | ---: | ---: | ---: | ---: |
-| World, 1440×810 High | 60 | 16.7 ms | 51 | 135,808 |
-| World, 1440×810 Auto/Balanced | 60 | 16.7 ms | 48 | 122,362 |
-| World, 390×844 fresh Auto/Balanced | 60 | 16.7 ms | 48 | 122,362 |
-| Crownlands, 1440×810 Auto/Balanced | 60 | 16.7 ms | 52 | about 54,000 |
+| World, 1280x720 Auto/Balanced | 60 | 16.7 ms | 54 | 125,818 |
+| World, 390x844 fresh Auto/Balanced | 60 | 16.7 ms | 54 | 125,818 |
+| World, 1728x720 Auto after settling to Balanced | 60 | 16.7 ms | 54 | 125,818 |
+| World activation beat, 1280x720 Auto/Balanced | 60 | 16.7 ms | 56 | 126,010 |
+| Crownlands, 1440x810 Auto/Balanced | 60 | 16.7 ms | 52 | about 54,000 |
 
-`node validate.mjs` reports the exact local raw/gzip totals; local source is about 128 KB before compression. A direct 2026-07-14 fetch of every referenced CDN response measured 338,908 bytes for Three.js, 1,332 bytes for the font CSS, and 1,114,220 bytes for all six font files. This deliberately conservative all-assets total stays below 1.6 MB raw. Browser compression, caching, and loading only used font faces can reduce transfer further, so the experience remains far below the 12 MB target.
+At 1728x720, Auto initially selected High and measured 37.8 FPS in this test browser; after 5.2 seconds of sustained pressure it stepped down to Balanced and recovered to the 60 Hz ceiling. This is the intended adaptive path rather than a claim that High reaches 60 FPS on every GPU.
+
+`node validate.mjs` reports the exact local raw/gzip totals. A direct 2026-07-14 fetch of every referenced CDN response measured 338,908 bytes for Three.js, 1,332 bytes for the font CSS, and 1,114,220 bytes for all six font files. This deliberately conservative all-assets total stays below 1.6 MB raw. Browser compression, caching, and loading only used font faces can reduce transfer further, so the experience remains far below the 12 MB target.
 
 ## Accessibility and fallback
 

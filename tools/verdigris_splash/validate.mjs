@@ -28,6 +28,9 @@ assert(html.includes('value="auto"') && html.includes('value="balanced"') && htm
 assert(app.includes("createTerrainGeometry") && app.includes("heightAt"), "continuous terrain pipeline is missing");
 assert(app.includes("createEpicOceanGeometry") && app.includes("createContinentGeometry"), "epic world geometry pipeline is missing");
 assert(app.includes("createEpicCapitals") && app.includes("createEpicTrees"), "epic world landmarks are missing");
+assert(app.includes("createEpicShallowsGeometry") && app.includes("createEpicRoutes"), "world coast or route detail is missing");
+assert(app.includes("createEpicCityLights") && app.includes("createEpicBeaconMesh"), "world activation details are missing");
+assert(app.includes("createEpicCloudWisps") && app.includes("currentWave"), "world atmosphere or ocean currents are missing");
 assert(app.includes("setVariant") && app.includes("activeVariant"), "scene view switching is missing");
 assert(app.includes("cameraControl") && app.includes('addEventListener("pointerdown"'), "drag camera controls are missing");
 assert(app.includes('addEventListener("wheel"') && app.includes('addEventListener("keydown"'), "zoom or keyboard camera controls are missing");
