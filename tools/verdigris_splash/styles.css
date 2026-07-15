@@ -48,8 +48,11 @@ select { -webkit-tap-highlight-color: transparent; }
   height: 100%;
   display: block;
   touch-action: none;
-  cursor: crosshair;
+  cursor: grab;
 }
+
+#world.is-dragging { cursor: grabbing; }
+#world:focus-visible { outline: 1px solid rgba(139, 216, 202, .48); outline-offset: -3px; }
 
 .grade,
 .grain {

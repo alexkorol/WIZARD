@@ -1864,6 +1864,42 @@ function boot() {
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const previewMoment = new URLSearchParams(location.search).get("moment") === "crown";
+  const cameraControl = {
+    dragging: false,
+    pointers: new Map(),
+    lastX: 0,
+    lastY: 0,
+    pinchDistance: 0,
+    yaw: 0,
+    pitch: 0,
+    zoom: 0,
+    yawTarget: 0,
+    pitchTarget: 0,
+    zoomTarget: 0,
+    lastInput: 0,
+  };
+
+  function resetCameraControl(immediate = false) {
+    cameraControl.yawTarget = 0;
+    cameraControl.pitchTarget = 0;
+    cameraControl.zoomTarget = 0;
+    cameraControl.lastInput = 0;
+    if (immediate) {
+      cameraControl.yaw = 0;
+      cameraControl.pitch = 0;
+      cameraControl.zoom = 0;
+    }
+  }
+
+  function markCameraInput() {
+    cameraControl.lastInput = performance.now();
+  }
+
+  function pinchDistance() {
+    const points = [...cameraControl.pointers.values()];
+    if (points.length < 2) return 0;
+    return Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
+  }
 
   function applyQuality(nextQuality) {
     activeQuality = nextQuality;
@@ -1974,12 +2010,13 @@ function boot() {
       ? "THE WORLD TURNS ABOVE THE ABYSS"
       : "THE CROWN IS WAKING";
     canvas.setAttribute("aria-label", epicActive
-      ? "The whole floating world of Verdigris, with continents, oceans, mountain ranges, kingdoms, and waterfalls"
-      : "The Crownlands island and the ancient Crown of Tides citadel");
+      ? "The whole floating world of Verdigris. Drag to orbit; scroll or pinch to zoom"
+      : "The Crownlands island and the ancient Crown of Tides citadel. Drag to orbit; scroll or pinch to zoom");
     if (announce) {
       menuStatus.textContent = epicActive ? "World view: the whole of Verdigris." : "Crownlands view: the observatory province.";
       menuStatus.classList.add("is-visible");
     }
+    resetCameraControl(true);
     resize();
   }
 
@@ -1994,14 +2031,96 @@ function boot() {
     adaptiveCooldown = performance.now() + 12000;
   });
 
+  canvas.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    event.preventDefault();
+    canvas.focus({ preventScroll: true });
+    canvas.setPointerCapture(event.pointerId);
+    cameraControl.pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    cameraControl.dragging = true;
+    cameraControl.lastX = event.clientX;
+    cameraControl.lastY = event.clientY;
+    cameraControl.pinchDistance = pinchDistance();
+    canvas.classList.add("is-dragging");
+    markCameraInput();
+  });
+
   canvas.addEventListener("pointermove", (event) => {
+    if (cameraControl.pointers.has(event.pointerId)) {
+      cameraControl.pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (cameraControl.pointers.size > 1) {
+        const distance = pinchDistance();
+        if (cameraControl.pinchDistance > 0) {
+          const pinchScale = Math.max(260, Math.min(innerWidth, innerHeight));
+          cameraControl.zoomTarget = clamp(
+            cameraControl.zoomTarget - (distance - cameraControl.pinchDistance) / pinchScale * 0.88,
+            -0.22,
+            0.35,
+          );
+        }
+        cameraControl.pinchDistance = distance;
+      } else {
+        const dx = event.clientX - cameraControl.lastX;
+        const dy = event.clientY - cameraControl.lastY;
+        cameraControl.yawTarget = clamp(cameraControl.yawTarget - dx * 0.00215, -0.25, 0.25);
+        cameraControl.pitchTarget = clamp(cameraControl.pitchTarget - dy * 0.00185, -0.16, 0.14);
+        cameraControl.lastX = event.clientX;
+        cameraControl.lastY = event.clientY;
+      }
+      markCameraInput();
+      return;
+    }
     if (reducedMotion) return;
     pointer.tx = clamp(event.clientX / innerWidth * 2 - 1, -1, 1);
     pointer.ty = clamp(event.clientY / innerHeight * 2 - 1, -1, 1);
   }, { passive: true });
+
+  function endCameraPointer(event) {
+    cameraControl.pointers.delete(event.pointerId);
+    if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
+    if (cameraControl.pointers.size === 0) {
+      cameraControl.dragging = false;
+      cameraControl.pinchDistance = 0;
+      canvas.classList.remove("is-dragging");
+    } else {
+      const remaining = cameraControl.pointers.values().next().value;
+      cameraControl.lastX = remaining.x;
+      cameraControl.lastY = remaining.y;
+      cameraControl.pinchDistance = 0;
+    }
+    markCameraInput();
+  }
+
+  canvas.addEventListener("pointerup", endCameraPointer);
+  canvas.addEventListener("pointercancel", endCameraPointer);
+
+  canvas.addEventListener("wheel", (event) => {
+    event.preventDefault();
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1;
+    cameraControl.zoomTarget = clamp(cameraControl.zoomTarget + event.deltaY * unit * 0.00065, -0.22, 0.35);
+    markCameraInput();
+  }, { passive: false });
+
+  canvas.addEventListener("keydown", (event) => {
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    const handled = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "+", "=", "-", "_", "Home"].includes(event.key);
+    if (!handled) return;
+    event.preventDefault();
+    if (event.key === "ArrowLeft") cameraControl.yawTarget = clamp(cameraControl.yawTarget + 0.045, -0.25, 0.25);
+    if (event.key === "ArrowRight") cameraControl.yawTarget = clamp(cameraControl.yawTarget - 0.045, -0.25, 0.25);
+    if (event.key === "ArrowUp") cameraControl.pitchTarget = clamp(cameraControl.pitchTarget + 0.035, -0.16, 0.14);
+    if (event.key === "ArrowDown") cameraControl.pitchTarget = clamp(cameraControl.pitchTarget - 0.035, -0.16, 0.14);
+    if (event.key === "+" || event.key === "=") cameraControl.zoomTarget = clamp(cameraControl.zoomTarget - 0.07, -0.22, 0.35);
+    if (event.key === "-" || event.key === "_") cameraControl.zoomTarget = clamp(cameraControl.zoomTarget + 0.07, -0.22, 0.35);
+    if (event.key === "Home") resetCameraControl();
+    else markCameraInput();
+  });
+
   canvas.addEventListener("pointerleave", () => {
-    pointer.tx = 0;
-    pointer.ty = 0;
+    if (!cameraControl.dragging) {
+      pointer.tx = 0;
+      pointer.ty = 0;
+    }
   }, { passive: true });
 
   document.querySelectorAll("[data-menu-action]").forEach((button) => {
@@ -2031,7 +2150,7 @@ function boot() {
   let averageFps = 60;
 
   const debug = {
-    version: "verdigris-menu-2.0",
+    version: "verdigris-menu-2.1",
     quality: activeQuality,
     fps: 0,
     frameMs: 0,
@@ -2066,17 +2185,41 @@ function boot() {
     pointer.tx *= pointerReturn;
     pointer.ty *= pointerReturn;
 
-    const orbit = reducedMotion ? 0 : Math.sin(phase * TAU) * 0.28;
-    const lift = reducedMotion ? 0 : Math.sin(phase * TAU * 2 - 0.7) * 0.08;
-    camera.position.set(
-      baseCamera.x + orbit + pointer.x * 0.19,
-      baseCamera.y + lift - pointer.y * 0.1,
-      baseCamera.z - orbit * 0.42,
-    );
+    if (!cameraControl.dragging && now - cameraControl.lastInput > 5200) {
+      const returnSpring = Math.exp(-delta * 0.72);
+      cameraControl.yawTarget *= returnSpring;
+      cameraControl.pitchTarget *= returnSpring;
+      cameraControl.zoomTarget *= returnSpring;
+    }
+    const cameraSpring = 1 - Math.exp(-delta * (cameraControl.dragging ? 12 : 6.5));
+    cameraControl.yaw += (cameraControl.yawTarget - cameraControl.yaw) * cameraSpring;
+    cameraControl.pitch += (cameraControl.pitchTarget - cameraControl.pitch) * cameraSpring;
+    cameraControl.zoom += (cameraControl.zoomTarget - cameraControl.zoom) * cameraSpring;
+
+    const loopAngle = phase * TAU;
+    const loopYaw = reducedMotion ? 0 : Math.sin(loopAngle) * 0.044 + Math.sin(loopAngle * 2 - 0.45) * 0.008;
+    const loopPitch = reducedMotion ? 0 : Math.sin(loopAngle - 0.82) * 0.021;
+    const loopPan = reducedMotion ? 0 : Math.sin(loopAngle + 0.4) * 0.13;
+    const loopLift = reducedMotion ? 0 : Math.sin(loopAngle * 2 - 0.62) * 0.055;
     cameraTarget.set(
-      baseCamera.tx + pointer.x * 0.08,
-      baseCamera.ty - pointer.y * 0.045,
-      baseCamera.tz,
+      baseCamera.tx + loopPan + pointer.x * 0.065,
+      baseCamera.ty + loopLift - pointer.y * 0.04,
+      baseCamera.tz + Math.cos(loopAngle - 0.3) * (reducedMotion ? 0 : 0.045),
+    );
+    const baseDx = baseCamera.x - baseCamera.tx;
+    const baseDy = baseCamera.y - baseCamera.ty;
+    const baseDz = baseCamera.z - baseCamera.tz;
+    const baseDistance = Math.sqrt(baseDx * baseDx + baseDy * baseDy + baseDz * baseDz);
+    const baseYaw = Math.atan2(baseDx, baseDz);
+    const basePitch = Math.asin(baseDy / baseDistance);
+    const cameraYaw = baseYaw + loopYaw + cameraControl.yaw + pointer.x * 0.007;
+    const cameraPitch = clamp(basePitch + loopPitch + cameraControl.pitch - pointer.y * 0.004, 0.24, 1.18);
+    const cameraDistance = baseDistance * clamp(1 + cameraControl.zoom, 0.78, 1.35);
+    const cameraHorizontal = Math.cos(cameraPitch) * cameraDistance;
+    camera.position.set(
+      cameraTarget.x + Math.sin(cameraYaw) * cameraHorizontal,
+      cameraTarget.y + Math.sin(cameraPitch) * cameraDistance,
+      cameraTarget.z + Math.cos(cameraYaw) * cameraHorizontal,
     );
     camera.lookAt(cameraTarget);
 
@@ -2151,12 +2294,19 @@ function boot() {
       debug.geometryCount = renderer.info.memory.geometries;
       debug.viewport = { width: canvas.clientWidth, height: canvas.clientHeight, dpr: renderer.getPixelRatio() };
       debug.loopPhase = Math.round(phase * 1000) / 1000;
+      debug.cameraYaw = Math.round(cameraControl.yaw * 1000) / 1000;
+      debug.cameraPitch = Math.round(cameraControl.pitch * 1000) / 1000;
+      debug.cameraZoom = Math.round(cameraControl.zoom * 1000) / 1000;
       canvas.dataset.fps = String(debug.fps);
       canvas.dataset.frameMs = String(debug.frameMs);
       canvas.dataset.drawCalls = String(debug.drawCalls);
       canvas.dataset.triangles = String(debug.triangles);
       canvas.dataset.quality = activeQuality;
       canvas.dataset.variant = activeVariant;
+      canvas.dataset.cameraYaw = String(debug.cameraYaw);
+      canvas.dataset.cameraPitch = String(debug.cameraPitch);
+      canvas.dataset.cameraZoom = String(debug.cameraZoom);
+      canvas.dataset.cameraDragging = String(cameraControl.dragging);
       frames = 0;
       sampleStart = now;
 

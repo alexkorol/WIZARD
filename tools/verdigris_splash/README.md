@@ -29,7 +29,8 @@ node --check app.js
 - Crownlands retains its denser continuous radial heightfield with authored ridges, valleys, plateaus, basins, and river masks. Its localized water covers two basins and their connecting river rather than blanketing the terrain.
 - The Crown of Tides is original procedural geometry: stepped foundations, masonry rhythm, bridge rails, buttresses, open arches, copper bands, an armillary crown, emissive rune windows, and a timed activation beam.
 - Repeated trees, settlements, waystones, motes, mist, and flock are instanced or batched. The soft cloud texture is generated at runtime on a small canvas.
-- The 36-second loop is deterministic. Camera drift and pointer parallax stay narrow and decay back to the hero composition. Rendering stops while the tab is hidden, and `pagehide` disposes GPU resources.
+- The 36-second loop is deterministic and now uses a restrained spherical pan/tilt path around each responsive hero composition. Dragging provides bounded yaw/pitch orbiting; wheel, trackpad, and pinch input provide bounded zoom. Keyboard users can navigate with arrows, plus/minus, and Home. After a short inspection pause, all offsets spring smoothly back into the authored loop.
+- Rendering stops while the tab is hidden, and `pagehide` disposes GPU resources.
 - No Blender or glTF export step is used; this keeps the source reproducible and the transfer small.
 
 ## Quality tiers
@@ -55,11 +56,11 @@ Measurements were taken on 2026-07-14 in the Codex in-app Chromium browser, serv
 | World, 390×844 fresh Auto/Balanced | 60 | 16.7 ms | 48 | 122,362 |
 | Crownlands, 1440×810 Auto/Balanced | 60 | 16.7 ms | 52 | about 54,000 |
 
-`node validate.mjs` reports the exact local raw/gzip totals; local source is about 121 KB before compression. A direct 2026-07-14 fetch of every referenced CDN response measured 338,908 bytes for Three.js, 1,332 bytes for the font CSS, and 1,114,220 bytes for all six font files. This deliberately conservative all-assets total stays below 1.6 MB raw. Browser compression, caching, and loading only used font faces can reduce transfer further, so the experience remains far below the 12 MB target.
+`node validate.mjs` reports the exact local raw/gzip totals; local source is about 128 KB before compression. A direct 2026-07-14 fetch of every referenced CDN response measured 338,908 bytes for Three.js, 1,332 bytes for the font CSS, and 1,114,220 bytes for all six font files. This deliberately conservative all-assets total stays below 1.6 MB raw. Browser compression, caching, and loading only used font faces can reduce transfer further, so the experience remains far below the 12 MB target.
 
 ## Accessibility and fallback
 
-- Menu items, World/Crownlands buttons, and the quality selector are native keyboard controls with visible `:focus-visible` treatment and live-region feedback.
+- Menu items, World/Crownlands buttons, the scene canvas, and the quality selector support keyboard interaction with visible `:focus-visible` treatment and live-region feedback.
 - `prefers-reduced-motion` fixes the cinematic phase, removes pointer/camera motion, and suppresses the flock/lightning beat.
 - Text contrast is protected by a scene grade and local wordmark scrim at desktop, ultrawide, and portrait breakpoints.
 - If the Three.js module cannot load, a seven-second watchdog reveals an authored CSS fallback. If WebGL construction fails, the fallback appears immediately.
