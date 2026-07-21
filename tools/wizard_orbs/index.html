@@ -192,9 +192,9 @@
     </div>
     <div class="row">
       <div class="seg" role="group" aria-label="Render quality">
-        <button data-q="ultra" aria-pressed="false">Ultra</button>
+        <button data-q="ultra" aria-pressed="true">Ultra</button>
         <button data-q="high" aria-pressed="false">High</button>
-        <button data-q="perf" aria-pressed="true">50×</button>
+        <button data-q="perf" aria-pressed="false">50×</button>
       </div>
       <button id="btnVals" class="tgl" aria-pressed="true">Values</button>
     </div>
@@ -790,7 +790,7 @@ const S = {
   beat: 0,
   hpRegen: false, mpRegen: true,
   channeling: false, boss: false, showVals: true,
-  oct: 3, resScale: 0.4, dprCap: 1.0, fpsCap: reduced ? 12 : 30,
+  oct: 5, resScale: 1.0, dprCap: 2.0, fpsCap: reduced ? 12 : 60,
   time: 0,
   /* statuses */
   poison: 0,

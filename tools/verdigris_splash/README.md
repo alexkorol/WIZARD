@@ -1,6 +1,6 @@
 # Verdigris main-menu world
 
-An original real-time Three.js menu for **Verdigris**: a complete floating disc-world before iron, with oceans, six named continental regions, island chains, mountain systems, forests, copper-roofed capitals, rim waterfalls, and an endless abyss. The default **World** view presents the full atlas; the selectable **Crownlands** view preserves the closer living-diorama composition around the Crown of Tides observatory. Menu actions provide prototype feedback rather than navigating into a game.
+An original real-time Three.js menu for **Verdigris**: a complete floating disc-world before iron, with oceans, island chains, mountain systems, rim waterfalls, auroral curtains, nebulae, and an endless abyss. The default **World** view presents the optimized Celestial Island mesh; the selectable **Crownlands** view preserves the closer living-diorama composition around the Crown of Tides observatory. Menu actions provide prototype feedback rather than navigating into a game.
 
 ## Run locally
 
@@ -20,11 +20,34 @@ node validate.mjs
 node --check app.js
 ```
 
+## Rebuild the Celestial Island assets
+
+The checked-in outputs under `assets/world/` are reproducible from the source STL. Install `tools/requirements.txt`, then run:
+
+```powershell
+python tools/build_world_assets.py "C:\path\to\Meshy_AI_Celestial Island_generate.stl" --output assets/world --heightmap-size 2048 --target-faces 120000
+```
+
+The build selects the largest connected body as the world, removes the separate moon and tiny detached debris, rasterizes only the topmost upward-facing surface, preserves the source model's circular horizontal proportions with one uniform X/Z scale, and reduces the runtime mesh from about 1.9 million to about 120,000 triangles. It writes:
+
+- `celestial_world_heightmap_16bit.png` — terrain elevation data, with the underside excluded.
+- `celestial_world_heightmap_preview.png` and `celestial_world_topographic_reference.png` — human/image-model references.
+- `celestial_world_underside_depthmap_16bit.png` — underside relief, where white hangs farthest into the abyss and black stays nearest the rim plane.
+- `celestial_world_underside_depthmap_preview.png` and `celestial_world_underside_topographic_reference.png` — readable bottom-geometry references, north-up and pixel-aligned with the top maps.
+- `celestial_world_underside_texture.png` — the art-directed dark-stone underside surface used by the menu shell.
+- `celestial_world_footprint.png` — the hard world boundary.
+- `celestial_world_texture_prompt.txt` — paste-ready varied-territory texture prompt.
+- `celestial_world_top_texture.png` — the shadeless varied-territory top-down base-color texture, projected only onto upward-facing terrain and ocean geometry so the 3D scene supplies all shading.
+- `celestial_world_optimized_no_moon.stl` — cleaned, decimated Z-up interchange mesh.
+- `celestial_world_runtime.glb` — Y-up, vertex-colored game mesh used by the menu.
+- `celestial_world_build_report.json` — component removal, height range, transform, and reduction audit.
+
 ## Architecture and assets
 
-- `app.js` builds both views deterministically from seed values. There are no downloaded models or image textures.
+- `app.js` loads the local optimized GLB for World view and builds Crownlands plus a procedural World fallback deterministically. If the model fails to load, the existing procedural atlas remains visible.
+- The imported world projects the varied-territory atlas onto the complete upward-facing mesh, including its detailed sea, then lets the 3D normals and scene lights provide shading; the procedural moving ocean is used only as a fallback if the GLB fails. It retains seven perimeter waterfalls, restrained mist and abyss lighting, drifting cloud wisps, three shader aurora curtains, and a cyan/violet nebula field in the sky. Below the rim, the supplied dark-stone texture wraps a mostly shallow underside that narrows into a central spinning-top peak, with smaller hanging stone forms around it. A muted, irregular glacial wall replaces the luminous cyan torus and opens around each waterfall.
 - World mode uses nine continuous indexed heightfields: six large named regions plus three outlying island groups. Each has an authored coastline, a primary and branching ridge system, peak groups, valley cuts, terraces, and a biome palette driven by height and slope.
-- A separate elliptical ocean surface uses animated swell, long-wave variation, restrained current highlights, Fresnel response, and a luminous outer rim. Batched shallow-water shelves transition each coast into the ocean. The whole-world underside is a closed, fractured stone bowl that deepens toward the world's core: an emissive vein shader radiates branching blue energy across the lower shells, converging on a white-hot core with a halo and concentric ripple rings embedded at the apex. Seven soft-flowing waterfalls pour off the rim past the veined rock. The model reads correctly from every side — map from above, energy web from below, glowing fissures in profile.
+- The procedural fallback retains an animated ocean, shallow-water shelves, and a closed underside shell. With the imported world active, its ocean and generated backfaces are suppressed in favor of the shaded atlas and the art-directed slate-and-stalactite shell. Seven soft-flowing waterfalls continue past the rim in both cases.
 - World vegetation uses two instanced meshes with deterministic forest masks. Rivers meander from mountain sources toward the coast and subtle road lines connect capitals to their hinterlands. Settlements reuse instanced stone/copper components; six larger capitals add foundations, halls, keeps, roofs, warm window lights, rune beacons, and buttress rhythm. Islets and coastline loops supply ocean scale cues.
 - Crownlands retains its denser continuous radial heightfield with authored ridges, valleys, plateaus, basins, and river masks. Its localized water covers two basins and their connecting river rather than blanketing the terrain.
 - The Crown of Tides is original procedural geometry: stepped foundations, masonry rhythm, bridge rails, buttresses, open arches, copper bands, an armillary crown, emissive rune windows, and a timed activation beam.
@@ -33,7 +56,7 @@ node --check app.js
 - The 36-second loop is deterministic and now uses a restrained spherical pan/tilt path around each responsive hero composition. Dragging provides bounded yaw/pitch orbiting — the pitch range extends below the horizon so the veined underside can be inspected — and wheel, trackpad, and pinch input provide bounded zoom. Keyboard users can navigate with arrows, plus/minus, and Home. After a short inspection pause, all offsets spring smoothly back into the authored loop.
 - `?camera=top|bottom|front|back|left|right|core` pins the camera to an authored orthographic-style still of the current view for review and screenshots, and `window.__VERDIGRIS_DEBUG__.capture(view)` returns the same framing as a JPEG data URL without needing the loop to run.
 - Rendering stops while the tab is hidden, and `pagehide` disposes GPU resources.
-- No Blender or glTF export step is used; this keeps the source reproducible and the transfer small.
+- The Python conversion tool replaces a manual Blender cleanup/export step while producing standard STL and glTF outputs that can still be opened in Blender.
 
 ## Quality tiers
 
@@ -61,9 +84,9 @@ Measurements were taken on 2026-07-14 in the Codex in-app Chromium browser, serv
 
 At 1728x720, Auto initially selected High and measured 37.8 FPS in this test browser; after 5.2 seconds of sustained pressure it stepped down to Balanced and recovered to the 60 Hz ceiling. This is the intended adaptive path rather than a claim that High reaches 60 FPS on every GPU.
 
-The later underside rework (closed veined bowl, embedded core, halo, and ripple rings in place of the detached abyss vortex) changes the totals by under a thousand triangles and one draw call net, so the table above remains representative.
+The imported shell and atmosphere stay close to the measured geometry totals; the local validation command reports exact current source and asset sizes.
 
-`node validate.mjs` reports the exact local raw/gzip totals. A direct 2026-07-14 fetch of every referenced CDN response measured 338,908 bytes for Three.js, 1,332 bytes for the font CSS, and 1,114,220 bytes for all six font files. This deliberately conservative all-assets total stays below 1.6 MB raw. Browser compression, caching, and loading only used font faces can reduce transfer further, so the experience remains far below the 12 MB target.
+`node validate.mjs` reports the exact local raw/gzip totals. A direct 2026-07-14 fetch of every referenced CDN response measured 338,908 bytes for Three.js, 1,332 bytes for the font CSS, and 1,114,220 bytes for all six font files. The optimized GLB plus the two world textures add about 8.7 MB, keeping the deliberately conservative all-assets total near 10.3 MB raw and below the 12 MB target. Browser compression, caching, and loading only used font faces can reduce transfer further.
 
 ## Accessibility and fallback
 
@@ -75,7 +98,7 @@ The later underside rework (closed veined bowl, embedded core, halo, and ripple 
 
 ## Provenance and licenses
 
-All scene composition, geometry, shaders, procedural textures, UI art, and animation in this directory were created for this demo. No proprietary game art, logos, characters, compositions, models, or audio are used.
+The Celestial Island source was supplied by the project owner as a Meshy generation based on their GPT Image mockup; this repository contains the cleaned, moon-free derivative and its documented build outputs. The scene composition, shaders, procedural atmosphere, UI art, and animation were created for this demo. No third-party game art, logos, characters, audio, or copied commercial-world geometry are used.
 
 Third-party runtime dependencies:
 
@@ -85,6 +108,6 @@ Third-party runtime dependencies:
 ## Known limitations
 
 - The WebGL experience requires network access to the pinned Three.js CDN URL and Google Fonts; the static fallback covers module/WebGL failure but is intentionally non-interactive.
-- There is no post-processing bloom or compressed model pipeline because the scene uses no external meshes or textures. Emissive glows use small additive shaders instead.
+- There is no post-processing bloom or Draco requirement. The decimated local GLB is about 3.1 MB; emissive glows use small additive shaders.
 - Integrated/mobile GPU results vary. Auto quality is conservative on a fresh narrow-viewport load, and users can force Low when browser/device hints are inaccurate.
 - Menu destinations are outside this visual prototype.

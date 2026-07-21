@@ -1,12 +1,13 @@
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js";
+import * as THREE from "three";
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/GLTFLoader.js";
 
 const TAU = Math.PI * 2;
 const LOOP_SECONDS = 36;
 const WATER_LEVEL = 0.285;
 const ISLAND_RX = 5.9;
 const ISLAND_RZ = 4.2;
-const WORLD_RX = 8.35;
-const WORLD_RZ = 5.85;
+const WORLD_RX = 7.4;
+const WORLD_RZ = 7.4;
 const WORLD_WATER_LEVEL = 0.14;
 
 const EPIC_CONTINENTS = [
@@ -20,6 +21,19 @@ const EPIC_CONTINENTS = [
   { name: "Sunken Stars", x: 2.25, z: 3.88, rx: 0.68, rz: 0.42, rotation: -0.38, seed: 239, biome: "desert", islet: true, ridge: [-0.34, -0.03, 0.32, 0.06, 0.22, 0.22], peaks: [[-0.02, 0, 0.16]] },
   { name: "Gale Teeth", x: 6.25, z: 2.85, rx: 0.58, rz: 0.38, rotation: 0.15, seed: 277, biome: "alpine", islet: true, ridge: [-0.3, 0.02, 0.28, -0.04, 0.2, 0.25], peaks: [[0.04, 0, 0.18]] },
 ];
+
+const EPIC_WATERFALLS = [
+  { angle: 0.14, width: 0.46, length: 4.05, seed: 0.4 },
+  { angle: 0.88, width: 0.31, length: 3.45, seed: 1.3 },
+  { angle: 1.76, width: 0.42, length: 3.9, seed: 2.1 },
+  { angle: 2.62, width: 0.27, length: 3.15, seed: 3.7 },
+  { angle: 3.46, width: 0.36, length: 3.75, seed: 4.4 },
+  { angle: 4.55, width: 0.25, length: 3.3, seed: 5.6 },
+  { angle: 5.55, width: 0.4, length: 4.0, seed: 6.2 },
+];
+
+const EPIC_UNDERSIDE_PROFILES = [1, 0.985, 0.955, 0.92, 0.86, 0.78, 0.69, 0.6, 0.51, 0.42, 0.34, 0.27, 0.2, 0.14, 0.09, 0.05];
+const EPIC_UNDERSIDE_DEPTHS = [0.04, -0.32, -0.46, -0.56, -0.65, -0.74, -0.83, -0.93, -1.05, -1.2, -1.42, -1.72, -2.12, -2.65, -3.28, -3.92];
 
 const canvas = document.querySelector("#world");
 const fallback = document.querySelector("#fallback");
@@ -643,10 +657,11 @@ function createEpicOceanGeometry() {
 
 function createEpicUndersideGeometry() {
   const segments = 192;
-  const profiles = [1, 0.985, 0.95, 0.885, 0.795, 0.68, 0.545, 0.395, 0.24, 0.1];
-  const depths = [0.08, -0.62, -1.3, -2.02, -2.7, -3.32, -3.86, -4.28, -4.56, -4.72];
+  const profiles = EPIC_UNDERSIDE_PROFILES;
+  const depths = EPIC_UNDERSIDE_DEPTHS;
   const positions = [];
   const colors = [];
+  const uvs = [];
   const indices = [];
   for (let level = 0; level < profiles.length; level += 1) {
     for (let segment = 0; segment < segments; segment += 1) {
@@ -657,11 +672,13 @@ function createEpicUndersideGeometry() {
       const x = Math.cos(angle) * WORLD_RX * boundary * profiles[level] * fracture;
       const z = Math.sin(angle) * WORLD_RZ * boundary * profiles[level] * fracture;
       const y = depths[level]
-        + Math.sin(angle * 7 + level) * 0.07 * levelRatio
-        - hash2(Math.floor(segment / 9) + 17, level * 3) * 0.14 * levelRatio;
-      const band = (level % 3) * 0.01 + hash2(segment, level) * 0.014;
+        + Math.sin(angle * 7 + level) * 0.045 * (0.35 + levelRatio)
+        - hash2(Math.floor(segment / 9) + 17, level * 3) * 0.085 * (0.2 + levelRatio);
+      const band = (level % 3) * 0.018 + hash2(segment, level) * 0.026;
+      const stone = 0.22 - levelRatio * 0.085 + band;
       positions.push(x, y, z);
-      colors.push(0.034 + band, 0.045 + band * 0.8, 0.047 + band * 0.65);
+      colors.push(stone * 0.72, stone * 0.9, stone);
+      uvs.push((x / WORLD_RX + 1) * 0.5, (z / WORLD_RZ + 1) * 0.5);
     }
   }
   for (let level = 0; level < profiles.length - 1; level += 1) {
@@ -673,12 +690,119 @@ function createEpicUndersideGeometry() {
     }
   }
   const apexIndex = positions.length / 3;
-  positions.push(0, -4.8, 0);
-  colors.push(0.042, 0.052, 0.062);
+  positions.push(0, -4.42, 0);
+  colors.push(0.085, 0.115, 0.14);
+  uvs.push(0.5, 0.5);
   const lastRing = (profiles.length - 1) * segments;
   for (let segment = 0; segment < segments; segment += 1) {
     const next = (segment + 1) % segments;
     indices.push(apexIndex, lastRing + segment, lastRing + next);
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setIndex(indices);
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+  geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
+  geometry.computeVertexNormals();
+  return geometry;
+}
+
+function epicUndersideDepthAt(radial) {
+  if (radial >= EPIC_UNDERSIDE_PROFILES[0]) return EPIC_UNDERSIDE_DEPTHS[0];
+  const last = EPIC_UNDERSIDE_PROFILES.length - 1;
+  if (radial <= EPIC_UNDERSIDE_PROFILES[last]) return EPIC_UNDERSIDE_DEPTHS[last];
+  for (let index = 0; index < last; index += 1) {
+    const outer = EPIC_UNDERSIDE_PROFILES[index];
+    const inner = EPIC_UNDERSIDE_PROFILES[index + 1];
+    if (radial <= outer && radial >= inner) {
+      const t = (outer - radial) / (outer - inner);
+      return mix(EPIC_UNDERSIDE_DEPTHS[index], EPIC_UNDERSIDE_DEPTHS[index + 1], t);
+    }
+  }
+  return -3.92;
+}
+
+function createEpicStalactites() {
+  const count = 96;
+  const random = seeded(77123);
+  const geometry = new THREE.ConeGeometry(1, 1, 7, 2);
+  geometry.rotateX(Math.PI);
+  const material = new THREE.MeshStandardMaterial({
+    color: 0x536168,
+    vertexColors: true,
+    roughness: 1,
+    metalness: 0,
+    flatShading: true,
+    emissive: 0x02070a,
+    emissiveIntensity: 0.08,
+  });
+  const mesh = new THREE.InstancedMesh(geometry, material, count);
+  mesh.name = "Underside hanging stone";
+  const matrix = new THREE.Matrix4();
+  const quaternion = new THREE.Quaternion();
+  const position = new THREE.Vector3();
+  const scale = new THREE.Vector3();
+  const color = new THREE.Color();
+  for (let index = 0; index < count; index += 1) {
+    const angle = random() * TAU;
+    const radial = 0.16 + Math.pow(random(), 0.7) * 0.72;
+    const boundary = worldBoundaryScale(angle);
+    const length = (0.22 + Math.pow(random(), 2.15) * 0.76) * (1.05 - radial * 0.25);
+    const radius = 0.045 + random() * 0.085 + length * 0.025;
+    const baseY = epicUndersideDepthAt(radial) - 0.015;
+    position.set(
+      Math.cos(angle) * WORLD_RX * boundary * radial,
+      baseY - length * 0.5,
+      Math.sin(angle) * WORLD_RZ * boundary * radial,
+    );
+    quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0), random() * TAU);
+    scale.set(radius * (0.78 + random() * 0.36), length, radius);
+    matrix.compose(position, quaternion, scale);
+    mesh.setMatrixAt(index, matrix);
+    color.setRGB(0.14 + random() * 0.055, 0.17 + random() * 0.055, 0.19 + random() * 0.06);
+    mesh.setColorAt(index, color);
+  }
+  mesh.instanceMatrix.needsUpdate = true;
+  if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  return mesh;
+}
+
+function waterfallBreakAt(angle) {
+  return EPIC_WATERFALLS.some((fall) => {
+    const distance = Math.abs(Math.atan2(Math.sin(angle - fall.angle), Math.cos(angle - fall.angle)));
+    return distance < fall.width / WORLD_RX * 0.62 + 0.018;
+  });
+}
+
+function createEpicIceWallGeometry() {
+  const segments = 192;
+  const positions = [];
+  const colors = [];
+  const indices = [];
+  for (let segment = 0; segment <= segments; segment += 1) {
+    const wrapped = segment % segments;
+    const angle = wrapped / segments * TAU;
+    const boundary = worldBoundaryScale(angle);
+    const topNoise = hash2(Math.floor(wrapped / 3) + 101, 431) - 0.5;
+    const tooth = Math.pow(hash2(Math.floor(wrapped / 4) + 37, 619), 2.1);
+    const wallRadius = boundary * (1.003 + topNoise * 0.0015);
+    const topY = WORLD_WATER_LEVEL + 0.01 + topNoise * 0.055;
+    const bottomY = -0.22 - tooth * 0.32 - Math.sin(angle * 11) * 0.028;
+    positions.push(
+      Math.cos(angle) * WORLD_RX * wallRadius, topY, Math.sin(angle) * WORLD_RZ * wallRadius,
+      Math.cos(angle) * WORLD_RX * wallRadius, bottomY, Math.sin(angle) * WORLD_RZ * wallRadius,
+    );
+    const frost = tooth * 0.035;
+    colors.push(0.16 + frost, 0.22 + frost, 0.24 + frost, 0.07 + frost, 0.105 + frost, 0.12 + frost);
+  }
+  for (let segment = 0; segment < segments; segment += 1) {
+    const angle = (segment + 0.5) / segments * TAU;
+    if (waterfallBreakAt(angle)) continue;
+    const current = segment * 2;
+    const next = current + 2;
+    indices.push(current, current + 1, next + 1, current, next + 1, next);
   }
   const geometry = new THREE.BufferGeometry();
   geometry.setIndex(indices);
@@ -823,15 +947,7 @@ function createEpicRoutes() {
 }
 
 function createEpicWaterfallGeometry() {
-  const falls = [
-    { angle: 0.18, width: 0.34, length: 3.8, seed: 0.4 },
-    { angle: 0.92, width: 0.22, length: 3.25, seed: 1.3 },
-    { angle: 1.76, width: 0.3, length: 3.65, seed: 2.1 },
-    { angle: 2.73, width: 0.18, length: 2.9, seed: 3.7 },
-    { angle: 3.62, width: 0.24, length: 3.5, seed: 4.4 },
-    { angle: 4.78, width: 0.16, length: 3.0, seed: 5.6 },
-    { angle: 5.55, width: 0.26, length: 3.75, seed: 6.2 },
-  ];
+  const falls = EPIC_WATERFALLS;
   const acrossSegments = 5;
   const downSegments = 36;
   const positions = [];
@@ -873,6 +989,57 @@ function createEpicWaterfallGeometry() {
   geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
   geometry.setAttribute("aSeed", new THREE.Float32BufferAttribute(seeds, 1));
   return geometry;
+}
+
+function createEpicWaterMist() {
+  const random = seeded(88021);
+  const count = 280;
+  const positions = new Float32Array(count * 3);
+  const data = new Float32Array(count * 3);
+  for (let index = 0; index < count; index += 1) {
+    const fall = EPIC_WATERFALLS[index % EPIC_WATERFALLS.length];
+    const boundary = worldBoundaryScale(fall.angle);
+    positions[index * 3] = Math.cos(fall.angle) * WORLD_RX * boundary;
+    positions[index * 3 + 1] = WORLD_WATER_LEVEL - fall.length;
+    positions[index * 3 + 2] = Math.sin(fall.angle) * WORLD_RZ * boundary;
+    data[index * 3] = random();
+    data[index * 3 + 1] = (random() - 0.5) * fall.width * 1.9;
+    data[index * 3 + 2] = random();
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute("aData", new THREE.BufferAttribute(data, 3));
+  const material = new THREE.ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    uniforms: { uTime: { value: 0 } },
+    vertexShader: `
+      uniform float uTime;
+      attribute vec3 aData;
+      varying float vAlpha;
+      void main(){
+        vec3 p=position;
+        float life=mod(aData.x+uTime*(0.026+aData.z*0.025),1.0);
+        p.x+=aData.y*(0.32+life)+sin(aData.z*24.0+uTime*0.8)*life*0.2;
+        p.z+=cos(aData.x*37.0+uTime*0.55)*life*0.24;
+        p.y+=life*(0.48+aData.z*0.4);
+        vec4 mv=modelViewMatrix*vec4(p,1.0);
+        gl_PointSize=(2.0+aData.z*4.0)*(100.0/-mv.z);
+        vAlpha=(1.0-life)*smoothstep(0.0,0.2,life)*0.09;
+        gl_Position=projectionMatrix*mv;
+      }
+    `,
+    fragmentShader: `
+      varying float vAlpha;
+      void main(){
+        float d=length(gl_PointCoord-0.5);
+        float a=smoothstep(0.5,0.04,d)*vAlpha;
+        gl_FragColor=vec4(0.52,0.9,1.0,a);
+      }
+    `,
+  });
+  return new THREE.Points(geometry, material);
 }
 
 function createEpicTrees() {
@@ -1675,6 +1842,105 @@ function createCitadel(materials) {
   return { group, ringGroup, ringA, ringB, ringC, core, coreGlow, beam };
 }
 
+function createAuroraCurtains() {
+  const group = new THREE.Group();
+  group.name = "Aurora curtains";
+  const materials = [];
+  const configurations = [
+    { center: -Math.PI * 0.52, arc: 1.55, radius: 11.8, base: 3.2, height: 5.8, seed: 0.7, cyan: [0.16, 1.0, 0.84], violet: [0.42, 0.28, 1.0] },
+    { center: -Math.PI * 0.33, arc: 0.78, radius: 13.6, base: 4.05, height: 4.7, seed: 2.3, cyan: [0.12, 0.72, 1.0], violet: [0.72, 0.26, 1.0] },
+    { center: -Math.PI * 0.72, arc: 0.72, radius: 14.7, base: 4.4, height: 4.15, seed: 4.9, cyan: [0.2, 1.0, 0.76], violet: [0.3, 0.44, 1.0] },
+  ];
+  configurations.forEach((config) => {
+    const alongSegments = 84;
+    const verticalSegments = 12;
+    const positions = [];
+    const uvs = [];
+    const indices = [];
+    for (let vertical = 0; vertical <= verticalSegments; vertical += 1) {
+      const v = vertical / verticalSegments;
+      for (let along = 0; along <= alongSegments; along += 1) {
+        const u = along / alongSegments;
+        const angle = config.center + (u - 0.5) * config.arc;
+        const wave = Math.sin(u * Math.PI * 5 + config.seed) * 0.34 + Math.sin(u * Math.PI * 11 - config.seed) * 0.12;
+        const radius = config.radius + wave * (0.18 + v * 0.24);
+        positions.push(
+          Math.cos(angle) * radius,
+          config.base + v * config.height + wave * (0.22 + v * 0.48),
+          Math.sin(angle) * radius,
+        );
+        uvs.push(u, v);
+      }
+    }
+    const stride = alongSegments + 1;
+    for (let vertical = 0; vertical < verticalSegments; vertical += 1) {
+      for (let along = 0; along < alongSegments; along += 1) {
+        const a = vertical * stride + along;
+        const b = a + stride;
+        indices.push(a, b, b + 1, a, b + 1, a + 1);
+      }
+    }
+    const geometry = new THREE.BufferGeometry();
+    geometry.setIndex(indices);
+    geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
+    const material = new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+      blending: THREE.AdditiveBlending,
+      fog: false,
+      uniforms: {
+        uTime: { value: 0 },
+        uIntensity: { value: 1 },
+        uSeed: { value: config.seed },
+        uCyan: { value: new THREE.Color(...config.cyan) },
+        uViolet: { value: new THREE.Color(...config.violet) },
+      },
+      vertexShader: `
+        uniform float uTime;
+        uniform float uSeed;
+        varying vec2 vUv;
+        varying float vFold;
+        void main(){
+          vUv=uv;
+          vec3 p=position;
+          float fold=sin(uv.x*31.0+uSeed*4.0+uTime*0.16)+sin(uv.x*67.0-uTime*0.11+uSeed);
+          p.y += fold*0.055*uv.y;
+          p.xz *= 1.0 + sin(uv.x*18.0-uTime*0.12+uSeed)*0.0025*uv.y;
+          vFold=fold;
+          gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+        uniform float uIntensity;
+        uniform float uSeed;
+        uniform vec3 uCyan;
+        uniform vec3 uViolet;
+        varying vec2 vUv;
+        varying float vFold;
+        float hash(float n){return fract(sin(n)*43758.5453);}
+        float noise(float x){float i=floor(x),f=fract(x);f=f*f*(3.0-2.0*f);return mix(hash(i),hash(i+1.0),f);}
+        void main(){
+          float ribbons=pow(0.5+0.5*sin(vUv.x*118.0+noise(vUv.x*29.0+uSeed)*8.0+uTime*0.22),3.0);
+          float broad=0.42+0.58*noise(vUv.x*18.0-uTime*0.035+uSeed*7.0);
+          float vertical=smoothstep(0.0,0.12,vUv.y)*smoothstep(1.0,0.56,vUv.y);
+          float ends=smoothstep(0.0,0.1,vUv.x)*smoothstep(1.0,0.9,vUv.x);
+          float pulse=0.76+0.24*sin(uTime*0.19+uSeed+vUv.x*7.0);
+          float alpha=vertical*ends*broad*(0.12+ribbons*0.32+abs(vFold)*0.025)*pulse*uIntensity;
+          vec3 color=mix(uCyan,uViolet,clamp(vUv.x*0.72+noise(vUv.x*8.0+uSeed)*0.3,0.0,1.0));
+          color*=0.72+ribbons*0.62;
+          gl_FragColor=vec4(color,alpha);
+        }
+      `,
+    });
+    materials.push(material);
+    group.add(new THREE.Mesh(geometry, material));
+  });
+  return { group, materials };
+}
+
 function createSky() {
   return new THREE.Mesh(
     new THREE.SphereGeometry(46, 48, 28),
@@ -1709,6 +1975,12 @@ function createSky() {
           float sun = pow(max(dot(d, sunDir), 0.0), 80.0);
           float sunHalo = pow(max(dot(d, sunDir), 0.0), 8.0);
           color += vec3(0.95, 0.47, 0.2) * sun * 1.8 + vec3(0.2, 0.12, 0.08) * sunHalo;
+          float nebulaA = sin(d.x * 9.0 + d.z * 13.0 + sin(d.y * 7.0) * 2.4 + uTime * 0.018);
+          float nebulaB = sin(d.x * 21.0 - d.z * 8.0 + d.y * 15.0 - uTime * 0.011);
+          float nebula = smoothstep(0.44, 0.94, nebulaA * 0.68 + nebulaB * 0.32)
+            * smoothstep(-0.18, 0.36, d.y) * smoothstep(0.88, 0.24, d.y);
+          vec3 nebulaColor = mix(vec3(0.05, 0.38, 0.55), vec3(0.32, 0.08, 0.48), d.x * 0.5 + 0.5);
+          color += nebulaColor * nebula * (0.18 + horizon * 0.2);
           float band = sin(d.x * 12.0 + d.z * 9.0 + sin(d.z * 5.0) * 2.0 + uTime * 0.025);
           float cloud = smoothstep(0.48, 0.82, band) * smoothstep(-0.02, 0.16, d.y) * smoothstep(0.34, 0.12, d.y);
           color = mix(color, vec3(0.12, 0.2, 0.21), cloud * 0.18);
@@ -1744,55 +2016,11 @@ function createStars() {
   }));
 }
 
-function createVeinedUndersideMaterial() {
-  const material = new THREE.MeshStandardMaterial({
-    color: 0x52645f,
-    vertexColors: true,
-    roughness: 0.98,
-    metalness: 0.02,
-    flatShading: true,
+function createVeinedUndersideMaterial(undersideTexture) {
+  return new THREE.MeshBasicMaterial({
+    map: undersideTexture,
+    color: 0x9fb0b5,
   });
-  material.onBeforeCompile = (shader) => {
-    shader.uniforms.uVeinTime = { value: 0 };
-    shader.uniforms.uVeinPulse = { value: 0 };
-    material.userData.shader = shader;
-    shader.vertexShader = shader.vertexShader
-      .replace("#include <common>", "#include <common>\nvarying vec3 vVeinPos;")
-      .replace("#include <begin_vertex>", "#include <begin_vertex>\nvVeinPos = position;");
-    shader.fragmentShader = shader.fragmentShader
-      .replace("#include <common>", `#include <common>
-        uniform float uVeinTime;
-        uniform float uVeinPulse;
-        varying vec3 vVeinPos;
-        float veinHash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
-        float veinNoise(vec2 p){
-          vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);
-          return mix(mix(veinHash(i),veinHash(i+vec2(1.0,0.0)),f.x),mix(veinHash(i+vec2(0.0,1.0)),veinHash(i+vec2(1.0)),f.x),f.y);
-        }
-      `)
-      .replace("#include <emissivemap_fragment>", `#include <emissivemap_fragment>
-        {
-          vec2 veinQ = vec2(vVeinPos.x / ${WORLD_RX.toFixed(2)}, vVeinPos.z / ${WORLD_RZ.toFixed(2)});
-          float veinR = length(veinQ);
-          float veinDepth = clamp(-vVeinPos.y / 4.8, 0.0, 1.0);
-          float veinAngle = atan(veinQ.y, veinQ.x);
-          float wobble = (veinNoise(veinQ * 7.0 + 3.7) - 0.5) * (0.5 + veinR * 1.3);
-          float jitter = (veinNoise(veinQ * 16.0 - 8.3) - 0.5) * 0.4;
-          float branchA = abs(sin(veinAngle * 9.0 + wobble * 3.1 + jitter + veinR * 2.6));
-          float branchB = abs(sin(veinAngle * 22.0 - wobble * 4.6 + jitter * 2.0 - veinR * 5.4 + 1.7));
-          float veinA = pow(smoothstep(0.94, 1.0, branchA), 2.2);
-          float veinB = pow(smoothstep(0.95, 1.0, branchB), 2.0) * smoothstep(0.85, 0.28, veinR);
-          float envelope = smoothstep(0.06, 0.42, veinDepth) * smoothstep(1.02, 0.5, veinR);
-          float flicker = 0.84 + 0.16 * sin(uVeinTime * 1.9 + veinAngle * 5.0 + veinR * 11.0);
-          float core = smoothstep(0.5, 0.04, veinR) * smoothstep(0.42, 1.0, veinDepth);
-          float energy = (veinA * 1.05 + veinB * 0.6) * envelope * flicker + core * 2.4;
-          energy *= 0.78 + uVeinPulse * 0.95;
-          vec3 veinColor = mix(vec3(0.09, 0.3, 0.98), vec3(0.68, 0.87, 1.0), clamp(core * 1.5 + veinA * 0.18, 0.0, 1.0));
-          totalEmissiveRadiance += veinColor * energy;
-        }
-      `);
-  };
-  return material;
 }
 
 function createRadialGlowTexture() {
@@ -2128,8 +2356,21 @@ function boot() {
   const epicWorld = new THREE.Group();
   epicWorld.name = "Verdigris world atlas";
   scene.add(epicWorld);
-  const epicUndersideMaterial = createVeinedUndersideMaterial();
+  const epicUndersideTexture = new THREE.TextureLoader().load("assets/world/celestial_world_underside_texture.png?v=3");
+  epicUndersideTexture.colorSpace = THREE.SRGBColorSpace;
+  epicUndersideTexture.wrapS = THREE.ClampToEdgeWrapping;
+  epicUndersideTexture.wrapT = THREE.ClampToEdgeWrapping;
+  epicUndersideTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+  const epicUndersideMaterial = createVeinedUndersideMaterial(epicUndersideTexture);
   const epicUnderside = shadow(new THREE.Mesh(createEpicUndersideGeometry(), epicUndersideMaterial));
+  const epicStalactites = createEpicStalactites();
+  const epicIceWallMaterial = new THREE.MeshBasicMaterial({
+    color: 0x586d74,
+    vertexColors: true,
+    side: THREE.DoubleSide,
+  });
+  const epicIceWall = shadow(new THREE.Mesh(createEpicIceWallGeometry(), epicIceWallMaterial));
+  epicIceWall.name = "Broken glacial rim";
   const epicTerrainMaterial = new THREE.MeshStandardMaterial({
     vertexColors: true,
     roughness: 0.95,
@@ -2139,6 +2380,7 @@ function boot() {
   });
   const epicOcean = new THREE.Mesh(createEpicOceanGeometry(), epicOceanMaterial);
   epicOcean.renderOrder = 2;
+  epicOcean.position.y = 0.018;
   const epicShallowsMaterial = new THREE.MeshBasicMaterial({
     vertexColors: true,
     transparent: true,
@@ -2160,19 +2402,65 @@ function boot() {
   const epicRoutes = createEpicRoutes();
   const epicWaterfalls = new THREE.Mesh(createEpicWaterfallGeometry(), waterfallMaterial);
   epicWaterfalls.renderOrder = 4;
+  const epicWaterMist = createEpicWaterMist();
+  epicWaterMist.renderOrder = 5;
   const epicTrees = createEpicTrees();
   const epicLandmarks = createEpicLandmarks(materials);
   const epicCapitals = createEpicCapitals(materials);
   const epicCityLights = createEpicCityLights(epicCapitals.sites);
   const epicBeacons = createEpicBeaconMesh(epicCapitals.sites);
   const worldCore = createWorldCore();
-  const epicRimMaterial = new THREE.MeshBasicMaterial({ color: 0x49c8bd, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending, depthWrite: false });
-  const epicRim = new THREE.Mesh(new THREE.TorusGeometry(WORLD_RX, 0.045, 7, 192), epicRimMaterial);
-  epicRim.rotation.x = Math.PI / 2;
-  epicRim.scale.y = WORLD_RZ / WORLD_RX;
-  epicRim.position.y = WORLD_WATER_LEVEL - 0.018;
+  const meshyWorld = new THREE.Group();
+  meshyWorld.name = "Optimized Meshy world (moon removed)";
+  let meshyTextureLoaded = false;
+  const meshyTopTexture = new THREE.TextureLoader().load(
+    "assets/world/celestial_world_top_texture.png?v=5",
+    () => {
+      meshyTextureLoaded = true;
+      canvas.dataset.meshyTexture = "loaded";
+    },
+    undefined,
+    () => { canvas.dataset.meshyTexture = "vertex-color-fallback"; },
+  );
+  meshyTopTexture.colorSpace = THREE.SRGBColorSpace;
+  meshyTopTexture.flipY = false;
+  meshyTopTexture.wrapS = THREE.ClampToEdgeWrapping;
+  meshyTopTexture.wrapT = THREE.ClampToEdgeWrapping;
+  meshyTopTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+  const meshyWorldMaterial = new THREE.MeshStandardMaterial({
+    color: 0xa0c7aa,
+    vertexColors: true,
+    roughness: 0.88,
+    metalness: 0.015,
+    emissive: 0x061322,
+    emissiveIntensity: 0.2,
+  });
+  meshyWorldMaterial.onBeforeCompile = (shader) => {
+    shader.uniforms.uWorldTopMap = { value: meshyTopTexture };
+    shader.vertexShader = shader.vertexShader
+      .replace("#include <common>", "#include <common>\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying vec3 vUndersidePosition;")
+      .replace("#include <begin_vertex>", `#include <begin_vertex>
+        vWorldTopUv = vec2(
+          (position.x + ${WORLD_RX.toFixed(2)}) / ${(WORLD_RX * 2).toFixed(2)},
+          (position.z + ${WORLD_RZ.toFixed(2)}) / ${(WORLD_RZ * 2).toFixed(2)}
+        );
+        vWorldTopMask = smoothstep(-0.04, 0.28, normal.y)
+          * smoothstep(${(WORLD_WATER_LEVEL - 0.14).toFixed(2)}, ${(WORLD_WATER_LEVEL + 0.03).toFixed(2)}, position.y);
+        vUndersidePosition = position;
+      `);
+    shader.fragmentShader = shader.fragmentShader
+      .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldTopMap;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying vec3 vUndersidePosition;")
+      .replace("#include <color_fragment>", `#include <color_fragment>
+        if (vUndersidePosition.y < -0.04) discard;
+        vec3 worldTopColor = texture2D(uWorldTopMap, vWorldTopUv).rgb;
+        float worldTopInk = smoothstep(0.018, 0.08, max(max(worldTopColor.r, worldTopColor.g), worldTopColor.b));
+        diffuseColor.rgb = mix(diffuseColor.rgb, worldTopColor, vWorldTopMask * worldTopInk * 0.98);
+      `);
+  };
   epicWorld.add(
     epicUnderside,
+    epicStalactites,
+    epicIceWall,
     epicOcean,
     epicShallows,
     epicCliffs,
@@ -2180,6 +2468,7 @@ function boot() {
     epicCoastlines,
     epicRoutes,
     epicWaterfalls,
+    epicWaterMist,
     epicTrees.trunks,
     epicTrees.crowns,
     epicLandmarks,
@@ -2187,7 +2476,49 @@ function boot() {
     epicCityLights.points,
     epicBeacons.mesh,
     worldCore.group,
-    epicRim,
+    meshyWorld,
+  );
+
+  const aurora = createAuroraCurtains();
+  epicWorld.add(aurora.group);
+  const proceduralEpicGeography = [
+    epicOcean,
+    epicShallows,
+    epicCliffs,
+    epicContinents,
+    epicCoastlines,
+    epicRoutes,
+    epicTrees.trunks,
+    epicTrees.crowns,
+    epicLandmarks,
+    epicCapitals.group,
+    epicCityLights.points,
+    epicBeacons.mesh,
+    worldCore.group,
+  ];
+  let meshyWorldLoaded = false;
+  let meshyWorldLoadError = "";
+  new GLTFLoader().load(
+    "assets/world/celestial_world_runtime.glb",
+    (gltf) => {
+      gltf.scene.name = "Celestial world runtime mesh";
+      gltf.scene.traverse((object) => {
+        if (!object.isMesh) return;
+        object.material = meshyWorldMaterial;
+        object.castShadow = true;
+        object.receiveShadow = true;
+      });
+      meshyWorld.add(gltf.scene);
+      proceduralEpicGeography.forEach((object) => { object.visible = false; });
+      meshyWorldLoaded = true;
+      canvas.dataset.meshyWorld = "loaded";
+    },
+    undefined,
+    (error) => {
+      meshyWorldLoadError = String(error?.message || error || "unknown load error");
+      canvas.dataset.meshyWorld = "procedural-fallback";
+      console.warn("Optimized Verdigris world could not load; keeping procedural fallback.", error);
+    },
   );
 
   const clouds = createCloudLayer();
@@ -2222,7 +2553,11 @@ function boot() {
   world.add(crownLight);
   const epicAbyssLight = new THREE.PointLight(0x5f9dff, 12, 19, 1.8);
   epicAbyssLight.position.set(0, -5.5, 0);
-  epicWorld.add(epicAbyssLight);
+  const epicUnderfill = new THREE.DirectionalLight(0x5790a0, 1.75);
+  epicUnderfill.position.set(-5, -11, 4);
+  const epicUnderfillViolet = new THREE.DirectionalLight(0x6d5a8b, 0.65);
+  epicUnderfillViolet.position.set(6, -8, -5);
+  epicWorld.add(epicAbyssLight, epicUnderfill, epicUnderfillViolet);
   const stormLight = new THREE.PointLight(0x74ded4, 0, 28, 1.4);
   stormLight.position.set(8, 6, -7);
   scene.add(stormLight);
@@ -2317,6 +2652,9 @@ function boot() {
     epicTrees.trunks.count = epicTrees.crowns.count = Math.min(profile.epicTrees, epicTrees.maxCount);
     epicCityLights.points.geometry.setDrawRange(0, Math.min(profile.epicLights, epicCityLights.maxCount));
     epicCloudWisps.visible = activeQuality !== "low";
+    aurora.materials.forEach((material) => {
+      material.uniforms.uIntensity.value = activeQuality === "low" ? 0.62 : activeQuality === "balanced" ? 0.84 : 1;
+    });
     motes.geometry.setDrawRange(0, profile.motes);
     for (let index = 0; index < clouds.sprites.length; index += 1) {
       clouds.sprites[index].visible = index < profile.clouds;
@@ -2557,7 +2895,7 @@ function boot() {
   let averageFps = 60;
 
   const debug = {
-    version: "verdigris-menu-2.2",
+    version: "verdigris-menu-2.4",
     quality: activeQuality,
     fps: 0,
     frameMs: 0,
@@ -2565,6 +2903,9 @@ function boot() {
     triangles: 0,
     loopSeconds: LOOP_SECONDS,
     transferableBytes: 0,
+    meshyWorldLoaded: false,
+    meshyTextureLoaded: false,
+    meshyWorldLoadError: "",
   };
   window.__VERDIGRIS_DEBUG__ = debug;
   debug.capture = (view = null, type = "image/jpeg", quality = 0.62) => {
@@ -2658,8 +2999,10 @@ function boot() {
     waterfallMaterial.uniforms.uTime.value = time;
     waterfallMaterial.uniforms.uPulse.value = crownPulse;
     waterMist.material.uniforms.uTime.value = time;
+    epicWaterMist.material.uniforms.uTime.value = time;
     sky.material.uniforms.uTime.value = time;
     sky.material.uniforms.uStorm.value = Math.max(crownPulse, lightningPulse);
+    aurora.materials.forEach((material) => { material.uniforms.uTime.value = time; });
     motes.material.uniforms.uTime.value = time;
 
     for (let index = 0; index < clouds.sprites.length; index += 1) {
@@ -2705,10 +3048,9 @@ function boot() {
       veinShader.uniforms.uVeinTime.value = time;
       veinShader.uniforms.uVeinPulse.value = crownPulse;
     }
-    epicAbyssLight.intensity = 10 + crownPulse * 10;
-    epicRimMaterial.opacity = 0.12 + crownPulse * 0.09;
+    epicAbyssLight.intensity = 1.4 + crownPulse * 2.2;
     epicShallowsMaterial.opacity = 0.3 + crownPulse * 0.1;
-    epicBeacons.mesh.visible = crownPulse > 0.11 && !reducedMotion;
+    epicBeacons.mesh.visible = !meshyWorldLoaded && crownPulse > 0.11 && !reducedMotion;
     epicBeacons.material.opacity = crownPulse * 0.155;
     epicCloudWisps.position.x = reducedMotion ? 0 : Math.sin(time * 0.042) * 0.22;
     epicCloudWisps.position.z = reducedMotion ? 0 : Math.cos(time * 0.034) * 0.12;
@@ -2736,6 +3078,9 @@ function boot() {
       debug.cameraYaw = Math.round(cameraControl.yaw * 1000) / 1000;
       debug.cameraPitch = Math.round(cameraControl.pitch * 1000) / 1000;
       debug.cameraZoom = Math.round(cameraControl.zoom * 1000) / 1000;
+      debug.meshyWorldLoaded = meshyWorldLoaded;
+      debug.meshyWorldLoadError = meshyWorldLoadError;
+      debug.meshyTextureLoaded = meshyTextureLoaded;
       canvas.dataset.fps = String(debug.fps);
       canvas.dataset.frameMs = String(debug.frameMs);
       canvas.dataset.drawCalls = String(debug.drawCalls);
@@ -2783,6 +3128,7 @@ function boot() {
     });
     renderer.renderLists.dispose();
     clouds.texture.dispose();
+    meshyTopTexture.dispose();
     renderer.dispose();
   }
 
