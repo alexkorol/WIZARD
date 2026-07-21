@@ -2211,6 +2211,13 @@
       return el;
     }
 
+    // The tree has roughly ten thousand SVG descendants. Avoid invalidating
+    // style on all of them when a recalculation leaves most visual state
+    // unchanged.
+    function setStyleIfChanged(el, name, value) {
+      if (el.style[name] !== value) el.style[name] = value;
+    }
+
     class SkillNode {
       constructor({ id, q, r, pos, ring, type, axis, weights, name, effects, tags, subtree = null, source = "main" }) {
         this.id = id;
@@ -2326,6 +2333,8 @@
         this.sagaState = new Map();
         this.sagaTestimony = 0;
         this.classOrder = [];
+        this.modelRevision = 0;
+        this.annotationRevision = 0;
         // Player notes on nodes and conduits. They ride the build code, so
         // they persist and share with the build, but they are not allocations:
         // reset and undo leave them alone.
@@ -2572,7 +2581,7 @@
         } catch (_) {}
         if (!data || data.v !== 1 || !Array.isArray(data.n)) {
           if (!silent) this.commit("That build code could not be read.");
-          this.recalculate();
+          this.recalculate({ modelChanged: false });
           return false;
         }
         const nodeIds = data.n.filter(id => this.nodes.has(id) && id !== "0,0");
@@ -2581,7 +2590,7 @@
         const cost = nodeIds.reduce((sum, id) => sum + this.nodes.get(id).cost, 0) + conduitPicks.length;
         if (cost > START_POINTS.skill) {
           if (!silent) this.commit(`That build costs ${cost} points; only ${START_POINTS.skill} exist.`);
-          this.recalculate();
+          this.recalculate({ modelChanged: false });
           return false;
         }
         if (!silent) this.saveHistory();
@@ -2662,7 +2671,9 @@
         } else {
           return;
         }
-        this.recalculate();
+        this.annotationRevision += 1;
+        this.persistBuild();
+        this.recalculate({ modelChanged: false });
       }
 
       hasAnnotations() {
@@ -2723,13 +2734,13 @@
       openJewelPicker(socketId) {
         this.jewelPickerFor = socketId;
         this.selectedNodeId = socketId;
-        this.recalculate();
+        this.recalculate({ modelChanged: false });
       }
 
       closeJewelPicker() {
         if (!this.jewelPickerFor) return;
         this.jewelPickerFor = null;
-        this.recalculate();
+        this.recalculate({ modelChanged: false });
       }
 
       socketJewel(socketId, jewelId) {
@@ -2741,7 +2752,7 @@
             .find(([otherId, other]) => other.family === "saga" && otherId !== socketId);
           if (existingSaga) {
             this.commit("Only one saga-stone may be socketed at a time.");
-            this.recalculate();
+            this.recalculate({ modelChanged: false });
             return;
           }
         }
@@ -2912,7 +2923,7 @@
         if (window.designer?.enabled && !opts.shiftKey) {
           this.pending = null;
           this.selectedNodeId = id;
-          this.recalculate();
+          this.recalculate({ modelChanged: false });
           return;
         }
 
@@ -2926,7 +2937,7 @@
             this.refundNode(id);
           } else {
             this.pending = null;
-            this.recalculate();
+            this.recalculate({ modelChanged: false });
           }
           return;
         }
@@ -2941,25 +2952,25 @@
           const born = Array.from(this.nodes.values()).find(other => other.type === "sign" && other.active);
           if (born && born.id !== node.id) {
             this.commit(`You were born under ${born.name}. Only one Sign may mark a life — refund it first.`);
-            this.recalculate();
+            this.recalculate({ modelChanged: false });
             return;
           }
         }
         if (this.points.skill < node.cost + 1) {
           this.commit(`Not enough skill points for ${node.name} (needs ${node.cost + 1} with its path).`);
-          this.recalculate();
+          this.recalculate({ modelChanged: false });
           return;
         }
         const choices = this.getActiveNeighborConduitChoices(node);
         if (!choices.length) {
           this.commit(`${node.name} is not adjacent to an allocated node.`);
-          this.recalculate();
+          this.recalculate({ modelChanged: false });
           return;
         }
         const choice = this.chooseAutomaticAllocation(node, choices);
         if (!choice) {
           this.commit(`${node.name} has no available conduit route.`);
-          this.recalculate();
+          this.recalculate({ modelChanged: false });
           return;
         }
         this.allocateNodeWithConduit(node, choice.conduit, choice.option.id);
@@ -3035,7 +3046,7 @@
           conduitId: id,
           choices: conduit.options.map(option => this.choiceId(id, option.id))
         };
-        this.recalculate();
+        this.recalculate({ modelChanged: false });
       }
 
       changeConduitVariant(id, optionId) {
@@ -3044,7 +3055,7 @@
         if (!conduit || !option || !conduit.allocated) return;
         if (conduit.allocatedVariant === option.id) {
           this.pending = null;
-          this.recalculate();
+          this.recalculate({ modelChanged: false });
           return;
         }
         this.saveHistory();
@@ -3060,7 +3071,7 @@
         if (!node || node.id === "0,0" || !node.active) return;
         if (!this.canRefundNode(id)) {
           this.commit(`${node.name} supports another allocated path and cannot be refunded first.`);
-          this.recalculate();
+          this.recalculate({ modelChanged: false });
           return;
         }
         this.saveHistory();
@@ -3090,7 +3101,7 @@
         if (!conduit || !conduit.allocated) return;
         if (!this.canRefundConduit(id)) {
           this.commit("That arc supports allocated nodes and cannot be removed first.");
-          this.recalculate();
+          this.recalculate({ modelChanged: false });
           return;
         }
         this.saveHistory();
@@ -3149,32 +3160,37 @@
           .join(", ") || "+1 flexible attribute";
       }
 
-      recalculate() {
+      recalculate({ modelChanged = true } = {}) {
         const previousStats = this.stats || null;
         if (!VERDIGRIS_PATTERNS) {
           throw new Error("VerdigrisPatterns must load before the skill tree app.");
         }
-        this.computeSagaState();
-        const waystoneHooks = this.activeWaystoneHooks();
-        this.loopBoostHooks = waystoneHooks.filter(hook => hook.effect === "loop-boost");
-        this.patternReport = VERDIGRIS_PATTERNS.detectPatterns({
-          nodes: Array.from(this.nodes.values()),
-          conduits: Array.from(this.conduits.values()),
-          depth: MAIN_RING_DEPTH,
-          tuning: PATTERN_TUNING,
-          stones: this.patternStones(),
-          waystones: waystoneHooks
-        });
-        this.patternNodeBoosts = new Map(Object.entries(this.patternReport.nodeBoosts || {}));
-        this.patternConduitBoosts = new Map(Object.entries(this.patternReport.conduitBoosts || {}));
-        this.empoweredNodeDetails = this.detectLoopEmpowerments();
-        this.empoweredNodes = new Set(this.empoweredNodeDetails.keys());
-        this.nodeBoostCache = new Map();
-        this.shapeBonuses = this.computeShapeBonuses();
-        this.stats = this.computeStats();
-        this.publishBridge();
-        this.persistBuild();
-        this.lastDeltas = this.computeDeltas(previousStats, this.stats);
+        if (modelChanged || !this.stats) {
+          this.computeSagaState();
+          const waystoneHooks = this.activeWaystoneHooks();
+          this.loopBoostHooks = waystoneHooks.filter(hook => hook.effect === "loop-boost");
+          this.patternReport = VERDIGRIS_PATTERNS.detectPatterns({
+            nodes: Array.from(this.nodes.values()),
+            conduits: Array.from(this.conduits.values()),
+            depth: MAIN_RING_DEPTH,
+            tuning: PATTERN_TUNING,
+            stones: this.patternStones(),
+            waystones: waystoneHooks
+          });
+          this.patternNodeBoosts = new Map(Object.entries(this.patternReport.nodeBoosts || {}));
+          this.patternConduitBoosts = new Map(Object.entries(this.patternReport.conduitBoosts || {}));
+          this.empoweredNodeDetails = this.detectLoopEmpowerments();
+          this.empoweredNodes = new Set(this.empoweredNodeDetails.keys());
+          this.nodeBoostCache = new Map();
+          this.shapeBonuses = this.computeShapeBonuses();
+          this.stats = this.computeStats();
+          this.publishBridge();
+          this.persistBuild();
+          this.lastDeltas = this.computeDeltas(previousStats, this.stats);
+          this.modelRevision += 1;
+        } else {
+          this.lastDeltas = [];
+        }
         if (window.renderer) window.renderer.update();
         if (window.ui) window.ui.update();
         if (window.designer) window.designer.onTreeUpdate();
@@ -3853,6 +3869,20 @@
       }
 
       renderPatternEffects() {
+        const report = this.tree.patternReport || {};
+        const signature = JSON.stringify([
+          ["waves", "flows", "rods"].map(key =>
+            (report[key] || []).map(pattern => pattern.nodeIds || [])
+          ),
+          Array.from(this.tree.empoweredNodeDetails.values()).map(detail => [
+            detail.nodeId,
+            detail.maxRadius,
+            (detail.loops || []).map(loop => loop.radius)
+          ]),
+          SUBTREES.map(config => this.tree.isSubtreeUnlocked(config.id))
+        ]);
+        if (signature === this.patternEffectSignature) return;
+        this.patternEffectSignature = signature;
         this.layers.effects.replaceChildren();
         this.renderPathPatternEffects();
         Array.from(this.tree.empoweredNodeDetails.values())
@@ -4127,12 +4157,33 @@
       }
 
       update() {
+        const pendingKey = this.tree.pending
+          ? `${this.tree.pending.mode}:${this.tree.pending.nodeId || this.tree.pending.conduitId || ""}:${this.tree.pending.choices.join(",")}`
+          : "";
+        const renderSignature = [
+          this.tree.modelRevision,
+          this.tree.annotationRevision,
+          this.tree.selectedNodeId,
+          this.tree.searchTerm,
+          pendingKey
+        ].join("|");
+        const svg = document.getElementById("main-svg");
+        if (renderSignature === this.renderSignature) {
+          if (svg) svg.dataset.rendererWorkUnits = "0";
+          return;
+        }
+        this.renderSignature = renderSignature;
+        if (svg) svg.dataset.rendererWorkUnits = String(
+          this.tree.nodes.size + Array.from(this.tree.conduits.values())
+            .reduce((sum, conduit) => sum + conduit.options.length, 0)
+        );
         const pendingChoices = new Set(this.tree.pending ? this.tree.pending.choices : []);
         this.renderPatternEffects();
         this.subtreeEls.forEach((els, subtreeId) => {
           const visible = this.tree.isSubtreeUnlocked(subtreeId);
-          els.halo.style.display = visible ? "" : "none";
-          els.label.style.display = visible ? "" : "none";
+          const display = visible ? "" : "none";
+          setStyleIfChanged(els.halo, "display", display);
+          setStyleIfChanged(els.label, "display", display);
         });
         // A single allocated arc can serve the perimeters of TWO completed
         // loops at once (the edge-form vesica). Ghost the alternate arc on
@@ -4157,26 +4208,29 @@
         this.tree.conduits.forEach(conduit => {
           const el = this.conduitEls.get(conduit.id);
           const visible = this.tree.isConduitVisible(conduit);
-          el.group.style.display = visible ? "" : "none";
+          setStyleIfChanged(el.group, "display", visible ? "" : "none");
           conduit.options.forEach(option => {
             const variantEl = el.variants.get(option.id);
-            variantEl.line.classList.remove("allocated", "available", "pending", "swap-option", "extra", "ghost-loop");
-            if (!visible) return;
             const choiceId = this.tree.choiceId(conduit.id, option.id);
-            if (conduit.allocatedVariant === option.id) {
-              variantEl.line.classList.add("allocated");
-              if (conduit.extra || isRedundant(conduit)) {
-                variantEl.line.classList.add("extra");
-              }
-            } else if (pendingChoices.has(choiceId)) {
-              variantEl.line.classList.add("pending");
-            } else if (conduit.allocated && conduit.allocatedVariant !== option.id) {
-              variantEl.line.classList.add("swap-option");
-              if ((loopUse.get(conduit.id) || 0) >= 2) {
-                variantEl.line.classList.add("ghost-loop");
-              }
-            } else if (!conduit.allocated && this.tree.isAvailableConduit(conduit, option.id)) {
-              variantEl.line.classList.add("available");
+            const allocated = visible && conduit.allocatedVariant === option.id;
+            const pending = visible && !allocated && pendingChoices.has(choiceId);
+            const swap = visible && !allocated && !pending && conduit.allocated
+              && conduit.allocatedVariant !== option.id;
+            const available = visible && !allocated && !pending && !swap && !conduit.allocated
+              && this.tree.isAvailableConduit(conduit, option.id);
+            const extra = allocated && (conduit.extra || isRedundant(conduit));
+            const ghostLoop = swap && (loopUse.get(conduit.id) || 0) >= 2;
+            const stateKey = (+allocated) | (+available << 1) | (+pending << 2)
+              | (+swap << 3) | (+extra << 4) | (+ghostLoop << 5);
+            if (variantEl.stateKey !== stateKey) {
+              variantEl.stateKey = stateKey;
+              variantEl.line.classList.remove("allocated", "available", "pending", "swap-option", "extra", "ghost-loop");
+              if (allocated) variantEl.line.classList.add("allocated");
+              if (available) variantEl.line.classList.add("available");
+              if (pending) variantEl.line.classList.add("pending");
+              if (swap) variantEl.line.classList.add("swap-option");
+              if (extra) variantEl.line.classList.add("extra");
+              if (ghostLoop) variantEl.line.classList.add("ghost-loop");
             }
           });
         });
@@ -4186,27 +4240,37 @@
           const el = this.nodeEls.get(node.id);
           const group = el.group;
           const visible = this.tree.isNodeVisible(node);
-          group.style.display = visible ? "" : "none";
+          setStyleIfChanged(group, "display", visible ? "" : "none");
           if (!visible) return;
-          group.classList.remove("active", "available", "pending", "selected", "empowered", "boost-r1", "boost-r2", "boost-r3", "boost-concentric");
-          if (node.active) group.classList.add("active");
-          if (!node.active && this.tree.isAvailableNode(node)) group.classList.add("available");
-          if (this.tree.pending && this.tree.pending.nodeId === node.id) group.classList.add("pending");
-          if (this.tree.selectedNodeId === node.id) group.classList.add("selected");
+          const available = !node.active && this.tree.isAvailableNode(node);
+          const pending = this.tree.pending && this.tree.pending.nodeId === node.id;
+          const selected = this.tree.selectedNodeId === node.id;
           const boost = this.tree.getNodeBoost(node);
-          if (boost) {
-            group.classList.add("empowered", `boost-r${boost.maxRadius}`);
-            if (boost.loopCount > 1) group.classList.add("boost-concentric");
+          const stateKey = (+node.active) | (+available << 1) | (+Boolean(pending) << 2)
+            | (+selected << 3) | ((boost?.maxRadius || 0) << 4) | (+(boost && boost.loopCount > 1) << 7);
+          if (el.stateKey !== stateKey || el.stateType !== node.type) {
+            el.stateKey = stateKey;
+            el.stateType = node.type;
+            group.classList.remove("active", "available", "pending", "selected", "empowered", "boost-r1", "boost-r2", "boost-r3", "boost-concentric");
+            if (node.active) group.classList.add("active");
+            if (available) group.classList.add("available");
+            if (pending) group.classList.add("pending");
+            if (selected) group.classList.add("selected");
+            if (boost) {
+              group.classList.add("empowered", `boost-r${boost.maxRadius}`);
+              if (boost.loopCount > 1) group.classList.add("boost-concentric");
+            }
+            const radius = radiusForType(node.type, boost);
+            el.shell.setAttribute("r", radius);
+            el.core.setAttribute("r", Math.max(3, radius - 4));
+            el.ring.setAttribute("r", radius + 6);
           }
-          el.shell.setAttribute("r", radiusForType(node.type, boost));
-          el.core.setAttribute("r", Math.max(3, radiusForType(node.type, boost) - 4));
-          el.ring.setAttribute("r", radiusForType(node.type, boost) + 6);
           if (term) {
             const note = this.tree.getAnnotation("node", node.id);
             const haystack = `${node.name} ${node.tags.join(" ")} ${node.effects.join(" ")} ${note}`.toLowerCase();
-            group.style.opacity = haystack.includes(term) ? "1" : SEARCH_DIM_OPACITY;
+            setStyleIfChanged(group, "opacity", haystack.includes(term) ? "1" : SEARCH_DIM_OPACITY);
           } else {
-            group.style.opacity = "1";
+            setStyleIfChanged(group, "opacity", "1");
           }
         });
 
@@ -4218,6 +4282,12 @@
       syncNotePins() {
         const layer = this.layers.notes;
         if (!layer || typeof layer.replaceChildren !== "function") return;
+        const signature = JSON.stringify([
+          this.tree.annotations,
+          SUBTREES.map(config => this.tree.isSubtreeUnlocked(config.id))
+        ]);
+        if (signature === this.notePinsSignature) return;
+        this.notePinsSignature = signature;
         const pins = [];
         const addPin = (kind, id, x, y, note) => {
           const pin = makeSvgEl("g", {
@@ -4364,7 +4434,7 @@
           } catch (_) {}
           if (copied) {
             this.tree.commit("Build code copied to the clipboard.");
-            this.tree.recalculate();
+            this.tree.recalculate({ modelChanged: false });
           } else if (typeof window.prompt === "function") {
             window.prompt("Copy this build code:", code);
           }
@@ -5226,7 +5296,7 @@
         if (!node) return;
         this.tree.selectedNodeId = seatId;
         if (window.viewController?.focusOn) window.viewController.focusOn(node.pos);
-        this.tree.recalculate();
+        this.tree.recalculate({ modelChanged: false });
       }
 
       mergedTreeData() {
@@ -5258,7 +5328,7 @@
         } catch (error) {
           this.tree.commit(`Designer: export failed (${error.message}).`);
         }
-        this.tree.recalculate();
+        this.tree.recalculate({ modelChanged: false });
       }
 
       exportTreeData() {
@@ -5293,7 +5363,7 @@
         }
         if (!parsed) {
           this.tree.commit("Designer: import failed — could not parse JSON.");
-          this.tree.recalculate();
+          this.tree.recalculate({ modelChanged: false });
           return;
         }
         const incoming = parsed.seatOverrides || parsed.seats || parsed;
@@ -5435,7 +5505,7 @@
     window.viewController = new ViewController();
     window.designer = new DesignerController(window.skillTree, window.renderer, DESIGNER_BOOT_STATE);
     window.annotator = new AnnotationController(window.skillTree);
-    window.skillTree.recalculate();
+    window.skillTree.recalculate({ modelChanged: false });
   </script>
 </body>
 </html>

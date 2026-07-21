@@ -121,6 +121,10 @@ t('inventory layout has six unlock-driven auxiliary windows', () => {
     'INT+STR Reliquary must exist as a 4x4 specialty grid');
   assert(/isSpoilsPackItem/.test(index) && /isPreparationsPackItem/.test(index) && /isReliquaryPackItem/.test(index) && /canUsePack/.test(index),
     'specialty pack placement must reject ordinary equipment');
+  assert(/spine mount\|stinger\|hoof/.test(index)
+      && /ointment\|palette\|cosmetic grinder/.test(index)
+      && /pyxis\|ampulla\|coffer\|censer/.test(index),
+    'specialty pack classifiers must recognize researched auxiliary families');
   assert(/war_call_slot/.test(index) && /quick_rig_slot/.test(index) && /attendant_focus_slot/.test(index),
     'pure-axis auxiliary seats must each have an independent unlock');
   assert(/unlockedAuxWindows\.map/.test(index) && /className="aux-tab"/.test(index),
@@ -261,15 +265,20 @@ t('source-image loadout extraction captures coherent kit detail', () => {
   assert(/Generate 10 images\. No commentary\./.test(loadout),
     'loadout prompt must start with an exact numeric image count');
   assert(/Generate 6 images\. No commentary\./.test(loadout)
-      && /War-call instrument/.test(loadout)
+      && /One 2x2 War-call/.test(loadout)
       && /Quick Rig/.test(loadout)
       && /Attendant focus/.test(loadout)
-      && /Spoils Roll item/.test(loadout)
+      && /Spoils Roll crafting material/.test(loadout)
       && /Preparation Case item/.test(loadout)
       && /Reliquary item/.test(loadout),
     'loadout pipeline must include the exact six-image auxiliary extraction pass');
   assert(/Overt magical levitation, glow, orbiting components/.test(loadout),
     'Attendant extraction must explicitly allow overt magical orbs');
+  assert(/SPOILS ARE RAW CRAFT MATERIALS, NOT PRESTIGE TROPHIES/.test(loadout)
+      && /ready to sell or consume in item crafting/.test(loadout)
+      && /Do not polish, lacquer,\s+gild, jewel, engrave/.test(loadout)
+      && /natural asymmetry, cracks, growth ridges/.test(loadout),
+    'Spoils extraction must generate minimally processed crafting stock, not ornate trophies');
   assert(!/Generate images, no commentary\./.test(loadout),
     'loadout prompt must not use a vague multi-image opener');
   assert(/Output-file rule/.test(loadout) && /generate only slot 1/.test(loadout),
@@ -302,6 +311,36 @@ t('source-image loadout extraction captures coherent kit detail', () => {
     'loadout prompt must include slot hygiene rules for rings');
   assert(/Amulets must be one pendant/.test(loadout) && /Belts must render as horizontal/.test(loadout),
     'loadout prompt must prevent amulet and belt slot drift');
+  assert(/only clearly visible source lower-body components/.test(loadout)
+      && /Most armor studies\s+should not contain pants or leggings/.test(loadout)
+      && /Never invent an underlayer/.test(loadout),
+    'source itemization must keep observed lower pieces without inventing pants');
+  assert(/Those lower-body pieces belong in the body-armor image/.test(loadout)
+      && /greaves stay with body armor/.test(loadout),
+    'source itemization must not reinterpret skirts, tassets, or greaves as belts or footwear');
+  assert(/Belt 2:1 geometry rule/.test(loadout)
+      && /at least twice as wide as it is tall/.test(loadout)
+      && /Remove, tuck, or omit\s+long tassels, fringe, sash tails/.test(loadout),
+    'source itemization belts must fit the shallow horizontal slot');
+  assert(/Closed-toe footwear is the default/.test(loadout)
+      && /only when the source\s+unmistakably shows them/.test(loadout)
+      && /complete enclosed toe box/.test(loadout),
+    'source itemization must not invent open-toe footwear');
+  assert(/Body armor ends at the greaves or ankle/.test(loadout)
+      && /Exclude boots, shoes, sandals/.test(loadout)
+      && /empty\s+exploded gear composition/.test(loadout),
+    'body armor must exclude footwear and avoid invisible mannequins');
+  assert(/Anatomy is\s+zero tolerance/.test(loadout)
+      && /face, ears, ear shapes, hair/.test(loadout)
+      && /deep neutral interior shadow rather than anatomy/.test(loadout),
+    'source itemization must reject anatomy inside armor, helmets, and footwear');
+  assert(/ANATOMY FIREWALL - FIRST PASS/.test(loadout)
+      && /FINAL ANATOMY AUDIT - REPEAT BEFORE GENERATING/.test(loadout)
+      && /no toes, no tummy or abdomen, and no hair/.test(loadout),
+    'source itemization must repeat specific anatomy bans before output');
+  assert(/hair is anatomy, not equipment/i.test(loadout)
+      && /If an empty sandal cannot be rendered without toes or feet, omit it/.test(loadout),
+    'source itemization must omit hair-bound headgear and anatomy-filled sandals');
   assert(/Shields must show the front fighting face only/.test(loadout),
     'loadout prompt must constrain shield front rendering');
   assert(/Solar symbols, eight-spoked wheel symbols, and human-face centerpieces/.test(loadout),
@@ -313,6 +352,68 @@ t('source-image loadout extraction captures coherent kit detail', () => {
   assert(/Held foci and ritual tools belong to the off-hand slot/.test(plan)
       && /hands-free floating\/orbiting foci belong to the Attendant seat/.test(plan),
     'generation plan must distinguish held foci from Attendants');
+});
+t('ancient equipment taxonomy drives family-level prompt coverage', () => {
+  const taxonomy = fs.readFileSync(path.join(__dirname, 'ANCIENT-EQUIPMENT-TAXONOMY.md'), 'utf8');
+  const loadout = fs.readFileSync(path.join(__dirname, 'LOADOUT-EXTRACTION.md'), 'utf8');
+  const agents = fs.readFileSync(path.join(__dirname, '..', 'AGENTS.md'), 'utf8');
+  assert(/deep prehistory through the end of the 6th century AD/.test(taxonomy),
+    'taxonomy must preserve the full historical ceiling');
+  assert(/\| W-EARLY-01 \|/.test(taxonomy)
+      && /\| W-RANGE-/.test(taxonomy)
+      && /\| S-\d+ \|/.test(taxonomy)
+      && /\| H-\d+ \|/.test(taxonomy)
+      && /\| B-\d+ \|/.test(taxonomy),
+    'taxonomy must cover weapons, ranged gear, shields, headgear, and body armor');
+  assert(/\| WC-20 \|/.test(taxonomy)
+      && /\| Q-24 \|/.test(taxonomy)
+      && /\| AT-16 \|/.test(taxonomy)
+      && /\| SP-16 \|/.test(taxonomy)
+      && /\| PR-20 \|/.test(taxonomy)
+      && /\| RL-20 \|/.test(taxonomy),
+    'taxonomy must give all six unlockable auxiliary lanes schedulable family IDs');
+  assert(/\| SP-02 \| paired tusks \|/.test(taxonomy)
+      && /saleable and consumable crafting ingredients/.test(taxonomy)
+      && /Do not polish, lacquer, gild, jewel/.test(taxonomy),
+    'Spoils taxonomy must preserve raw crafting-material treatment');
+  assert(/\| A-12 \| hide combat mitts \|/.test(taxonomy)
+      && /\| A-14 \| short wrist cuffs \|/.test(taxonomy)
+      && /bracers and vambraces are only two families/.test(taxonomy),
+    'hand taxonomy must diversify beyond bracers');
+  assert(/\| A-16 \| half-gauntlets \|/.test(taxonomy)
+      && /never trim at the wrist and isolate only its forearm shell/.test(taxonomy)
+      && /half-gauntlet or gauntlet/.test(loadout),
+    'handwear extraction must preserve source protection crossing the wrist');
+  assert(/Do not turn every hands-slot item into bracers/.test(loadout)
+      && /Never amputate the hand body from mitts or\s+gloves/.test(loadout)
+      && /bracers are not the hands-slot default/.test(agents),
+    'extraction and agent guidance must preserve mitt, glove, cuff, and wrap families');
+  assert(/polycandelon lamp wheel/.test(loadout)
+      && /combined gorytos bowcase-quiver/.test(loadout)
+      && /two-piece bronze cosmetic grinder/.test(loadout)
+      && /neutral-geometry 5th-6th-century ampulla/.test(loadout),
+    'six-image prompt must carry researched ancient construction families');
+  assert(/six-lane pass may extrapolate same-culture objects/.test(loadout)
+      && /Never\s+combine several listed families into one category mashup/.test(loadout),
+    'auxiliary inference must allow coherent design without category mashups');
+  assert(/SOURCE EVIDENCE OVERRIDES THE GENERIC LIST/.test(loadout)
+      && /If the source character is a beast/.test(loadout)
+      && /Never generate sticks, twigs, branches, firewood/.test(loadout)
+      && /rough gem-bearing nodule/.test(taxonomy),
+    'Spoils must derive useful source or beast materials instead of generic sticks');
+  assert(/Quick Rigs are worn load-bearing equipment, not handheld containers/.test(taxonomy)
+      && /never assigned to the off-hand slot/.test(loadout)
+      && /purse, handbag, satchel, messenger bag, briefcase, suitcase/.test(loadout)
+      && /backboard\/pack frame/.test(agents),
+    'Quick Rigs must remain back/flank-worn equipment rather than handheld luggage');
+  assert(/Coverage priority codes/.test(taxonomy) && /P3/.test(taxonomy),
+    'taxonomy must expose schedulable coverage priorities');
+  assert(/Taxonomy coverage rule/.test(loadout)
+      && /may break a tie among\s+source-supported choices; it may never add an object absent/.test(loadout),
+    'extraction must steer diversity without fabricating source evidence');
+  assert(/Track coverage\s+at family level/.test(agents)
+      && /Mail is\s+historically inside the research ceiling but remains production-locked/.test(agents),
+    'agent guidance must preserve taxonomy tracking and the mail production lock');
 });
 t('character source prompts are self-contained and non-proprietary', () => {
   const agents = fs.readFileSync(path.join(__dirname, '..', 'AGENTS.md'), 'utf8');

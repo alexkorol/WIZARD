@@ -62,9 +62,18 @@ queue top-down, stay under budget, log to `GEN-LOG.md`, stop cleanly.
    the user find them later.
 4. **We are not married to specific items.** If the AI can't render something
    reliably (atlatls/spear-throwers, bows, loose slings, fingerless hand-wraps),
-   drop or reconceive it (e.g. grips → bracers) rather than burning tokens.
+   drop or reconceive it rather than burning tokens. For the hands slot, try
+   closed mitts, gloves, or short cuffs before falling back to another bracer.
 5. **Style/tone:** concise and direct; do the work; don't over-ask or over-
    explain; don't grovel.
+6. **Finish routine repo work yourself.** When an in-scope change requires a
+   builder, formatter, test, QA command, or generated-artifact refresh, run it
+   before handing off. Report the completed result; do not give Alexei a command
+   as a next step when the agent can safely execute it. Include commands only as
+   optional reference or when execution is genuinely blocked. Whenever the final
+   response includes a build or verification command, explicitly label whether
+   the agent already ran it and report its success or failure; never present an
+   already-run command as an unlabeled instruction for Alexei to execute.
 
 ## Inventory UI direction (2026-07-12)
 
@@ -80,6 +89,57 @@ queue top-down, stay under budget, log to `GEN-LOG.md`, stop cleanly.
 - Attendant foci may be overtly magical, including semi-floating or orbiting
   orbs, glow, levitation, and impossible suspension. Currency/reagent prompt
   cautions do not restrict this equipment category.
+- The six-lane research vocabulary is authoritative in
+  `core/ANCIENT-EQUIPMENT-TAXONOMY.md`: WC (War-call), Q (Quick Rig), AT
+  (Attendant), SP (Spoils), PR (Preparation), and RL (Reliquary). Rotate these
+  family IDs across batches. Do not collapse War-call to horns, Quick Rig to
+  quivers, Attendant to bare orbs, Preparation to potion bottles, or Reliquary
+  to boxes/crystals. Spoils are the exception to the finished-item look: they
+  are raw or minimally field-processed monster materials sold or consumed in
+  crafting. Show practical washing, scraping, drying, salting, trimming, plain
+  tying, or rough wrapping, but no polishing, gilding, gems, engraving, metal
+  caps, display mounts, impossible horns, or finished trophy objects. Prefer
+  the raw precursor of a conspicuous material in the source gear; rough uncut
+  stone in natural matrix is valid when that stone is visibly used. For a beast
+  source, use one dry, detached, species-specific horn, tooth, claw sheath,
+  scale patch, carapace, quill, hide/pelt, or stinger supported by its body.
+  Never use whole heads/limbs, gore, sticks, twigs, firewood, or generic stick
+  bundles as Spoils. The
+  six-image auxiliary pass
+  may extrapolate same-culture objects from a source character's craft language;
+  that permission does not extend to inventing missing core paperdoll gear.
+- Quick Rigs are worn load-bearing gear on the back or flank. Their complete
+  backboard/pack frame, shoulder harness, side straps, and secured contents stay
+  readable in character art and isolated studies. They never occupy a hand or
+  off-hand slot and never resemble purses, handbags, satchels, messenger bags,
+  briefcases, suitcases, doctor bags, lunchboxes, clutches, handled boxes, or
+  modern luggage.
+- Build the targeted paste-ready six-image prompt with
+  `character_pipeline_local/build_auxiliary_extraction_prompt.py --write`.
+  Its six lane flags accept WC, Q, AT, SP, PR, and RL family IDs, allowing a
+  batch to fill known taxonomy gaps rather than leaving all choices to the
+  image model. The source prompt remains `core/LOADOUT-EXTRACTION.md`.
+- The separator builder has two modes. Standard `--write` remains strictly
+  source-observed. `--combined-auxiliary --write` builds a second prompt that
+  mixes one auxiliary or unlockable study into a limited number of boards while
+  retaining at least three observed equipment studies per combined board. Keep
+  the combined prompt compact: its builder omits standard-only duplicate
+  taxonomy/auxiliary/motif blocks and enforces a 23,500-character prompt ceiling.
+  Add combined-mode rules to its compact block instead of repeating whole
+  standard blocks.
+- The unattended phone lineup prompt is block-built from
+  `character_pipeline_local/SEVEN-TIER-LINEUP-PROMPT-BLOCKS.md` by
+  `build_seven_tier_lineup_prompt.py --write`. It produces seven independent
+  four-faction tier images with adult human-form units only. Preserve its silent
+  28-unit coverage ledger: exactly one of the six unlockable lanes per unit,
+  every lane used four or five times across low/mid/high tiers, four different
+  lanes per image, and deliberate coverage of underrepresented core and wearable
+  families. Examples are open construction banks, not fixed assignments; keep
+  the self-generated wildcard seed and default-family budget so unattended runs
+  do not converge on either fantasy defaults or one prompt-suggested novelty.
+  Polearms are hard-forbidden in this phone lineup: no spear, pike, glaive,
+  halberd, lance, trident, poleaxe, weapon staff, long-shafted axe/hammer,
+  weapon-length standard, or near-substitute.
 - Keep the core paperdoll and 12x6 backpack visible. Do not restore the redundant
   Inventory banner, stacked specialty packs, or a desktop top action bar.
 
@@ -148,9 +208,20 @@ when pasted into a fresh image model session with no prior context.
 Only save distilled, generic process rules and non-proprietary prompt structure.
 **Slot hygiene / anti-costume clutter** (2026-07-08): rings are compact finger
 objects, not dangling charm jewelry. Amulets are pendant-first objects on
-cord/twine/leather/simple chain, not gorgets or collars. Body armor should not
-include attached collars, turtlenecks, belts, skirts, faulds, or tassets. Belts
-are horizontal waist items. Shields show the front fighting face only, with no
+cord/twine/leather/simple chain, not gorgets or collars. In source-image
+separation and extraction, body armor excludes detachable collars, gorgets,
+neckwear, belts, sashes, and outer layers but includes the complete lower-body
+assembly only to the extent it is clearly visible in the source: skirts, kilts,
+robe hems, trousers/pants, leggings, faulds, tassets, cuisses, and greaves.
+Most body-armor studies should not contain pants or leggings. Never invent an
+underlayer, undersuit, trousers, or leggings to connect components, cover bare
+space, or make armor look complete. Belts are true horizontal waist items only; never classify
+lower garments or leg armor as belts. Source-separator and extraction belt
+studies target a shallow 2:1 slot: visible silhouette at least twice as wide as
+tall, laid straight or in a shallow arc. Remove, tuck, or omit long tassels,
+fringe, sash tails, hanging cords, straps, pouches, apron panels, tassets, and
+other vertical rigging. If a waist item cannot retain its identity as a clean
+horizontal band, omit it; body armor stays ungirdled. Shields show the front fighting face only, with no
 front straps, clamshells, dangling hardware, or utility rigging. Avoid invasive
 charms, chimes, tassels, tiny hanging rings, delicate costume chains, solar
 symbols, eight-spoked wheels, and repeated human-face motifs unless explicitly
@@ -222,6 +293,58 @@ roughly one-third of a loadout. Use at least four separated color-material zones
 and assign different color hierarchies to Strength, Dexterity, and Intelligence
 within each faction. Do not match helmet, chest, mantle, belt, gloves, boots,
 shield, and weapon to the same hue.
+**Four-character separator pass** (2026-07-12): when a source generation
+contains four characters in one composite, split it into exactly four separate
+3:2 landscape reference boards before final slot extraction. Preserve source
+order and character identity; never merge, average, duplicate, or exchange gear
+between characters. Each board contains one full-body character plus exactly
+four or five enlarged, non-overlapping, equippable item studies from that
+character only. Preserve long cloak/robe/body-piece length and integral shoulder
+armor. Keep separable belts, amulets, necklaces, gorgets, and outer layers out
+of the body-armor study. The separated body armor must be explicitly ungirdled
+and beltless, with all detachable waist, neck, and outer-layer gear removed even
+when the full-body character wears it. If a plain belt, gorget, necklace, or
+similar accessory is not worth one of the four or five studies, omit it; never
+leave an unselected accessory overlaid on the armor. The body-armor study must
+still include every source-visible skirt/pants/leggings, fauld, tasset,
+cuisse, and greave as one empty assembly; absent or ambiguous pieces stay
+absent. Pants and leggings are exceptional, never completeness filler. Those pieces are neither belt nor
+footwear studies in this lane and must never become separate surrounding item
+studies. Use a small-gap exploded gear arrangement, not an
+invisible mannequin: torso above, lower garment below, and empty paired greaves
+below/beside it. Body armor ends at the greaves/ankle and must never include
+boots, shoes, sandals, soles, toe boxes, feet, or skin. Source-image footwear defaults to closed toe:
+boots and shoes need a complete enclosed toe box, and open-toe sandals are valid
+only when unmistakably present in the source. Ambiguous or obscured footwear
+must not be reinvented as sandals. All footwear studies are empty pairs with no
+feet, toes, skin, or flesh-colored filler. Claw weapons are main/off-hand weapons with grips or
+fastening structures, never gloves or grafted anatomy. All surrounding item
+studies use anatomy zero tolerance: no hands, fingers, arms, legs, knees,
+ankles, feet, heels, toes, heads, faces, ears, hair, necks, skin, ghost limbs,
+flesh-colored filler, or mannequin fragments. Helmet interiors use neutral dark
+shadow rather than heads, ears, faces, or hair. Repeat the anatomy prohibition
+near the start, inside body-armor/headgear/footwear rules, and in a final audit;
+generic "no body parts" wording is insufficient. Explicitly repeat no toes,
+feet, tummy/belly/abdomen/midriff, thighs, skin, ears, scalp, hair, braids, or
+locs. Never extract a hairstyle as headgear. If anatomy cannot be removed from a
+study, omit that study and choose another item. Source-separator boards use the same pure
+neutral-white color environment as source characters; the later isolated-item
+pass still uses the olive-slate matte. The local prompt source is
+`character_pipeline_local/SEPARATOR-PROMPT-BLOCKS.md` and its builder.
+**Hand-slot diversity** (2026-07-12): bracers are not the hands-slot default.
+Character ladders rotate source-visible mitts, closed-finger gloves, short wrist
+cuffs or bands, flexible wraps, archer guards, bracers, and vambraces; across a
+nine-image faction ladder, at most two images use true forearm bracers or
+vambraces, with at least one mitt, glove, half-gauntlet/gauntlet, short
+cuff/band, and wrap family. The
+separator preserves the observed family: mitts/gloves retain their hand body,
+cuffs stop near the wrist, wraps remain flexible, and only true bracers extend
+substantially along the forearm. Never convert all handwear into bracers merely
+because the model renders them easily. Empty extracted handwear is a complete
+pair unless the source unmistakably uses one asymmetric item. Any protection
+crossing the wrist onto the backhand, palm, knuckles, or fingers is a
+half-gauntlet or gauntlet; preserve its complete empty hand cage and never trim
+it at the wrist into a bracer.
 **Neutral source-character color environment** (2026-07-09): character ladder
 and source-character prompts use a flat pure neutral-white background, a
 neutral-white key, a neutral-white rim, and strictly neutral studio/daylight
@@ -296,6 +419,17 @@ proposed ladders live in `core/BASE-DESIGN.md`.
   `core/verdigris-pack.js` so the game cannot roll it again.
 
 ## Prompt ideation guardrails
+
+The authoritative deep-prehistory-through-AD-600 family list is
+`core/ANCIENT-EQUIPMENT-TAXONOMY.md`. Use its family IDs, construction
+definitions, priorities, and model-risk notes when planning character lineups,
+separator selections, item extraction, and auxiliary batches. Track coverage
+at family level, not only at slot level. Prefer underrepresented P2/P3 families
+when source evidence permits, but never fabricate a taxonomy target into a
+source character. Keep individual kits culturally and technologically coherent;
+the broad chronology is a project library, not one mixed panoply. Mail is
+historically inside the research ceiling but remains production-locked until an
+explicit project decision reopens it.
 
 When asked for roastable prompt candidates, apply the pipeline rules in
 `core/GENERATION-PLAN.md`, not just chat memory:

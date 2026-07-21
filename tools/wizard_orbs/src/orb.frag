@@ -8,6 +8,8 @@ uniform sampler2D uEmpty;   // empty-glass plate
 uniform sampler2D uPack;    // r: sphere depth/thickness, g: ambient occlusion
 uniform sampler2D uStone;   // petrified-orb plate for reservations
 uniform vec2  uRes;
+uniform vec2  uViewOrigin; // cropped overlay origin in full-art UV space
+uniform vec2  uViewSize;   // cropped overlay extent in full-art UV space
 uniform float uTime;
 uniform float uHP;        // displayed 0..1
 uniform float uMP;
@@ -454,9 +456,20 @@ vec3 orbContent(vec2 p, bool life, vec3 empty, float thick, vec3 stoneTex){
 }
 
 void main(){
-  vec2 uv = gl_FragCoord.xy / uRes;
-  vec3 art = texture(uArt, uv).rgb;
+  vec2 uv = uViewOrigin + (gl_FragCoord.xy / uRes) * uViewSize;
   float m  = texture(uMask, uv).r;
+  vec2 px = uv * ART;
+  vec2 pL = (px - ORBL.xy) / ORBL.z;
+  vec2 pR = (px - ORBR.xy) / ORBR.z;
+  float rL = length(pL);
+  float rR = length(pR);
+  float aL = m * smoothstep(1.015, 0.995, rL);
+  float aR = m * smoothstep(1.015, 0.995, rR);
+  // The JPEG underneath owns every static pixel. Reject the crop's empty
+  // corners and center gap before any procedural noise or relighting work.
+  if (max(aL, aR) <= 0.001) discard;
+
+  vec3 art = texture(uArt, uv).rgb;
   vec3 empty = texture(uEmpty, uv).rgb;
   vec2 pack = texture(uPack, uv).rg;
   float thick = smoothstep(0.40, 0.98, pack.r);
@@ -466,12 +479,6 @@ void main(){
   float stoneM = smoothstep(0.05, 0.22, luma(art));
   float clothy = smoothstep(0.16, 0.52, pack.g);
   art *= mix(1.0, mix(0.82, 1.07, clothy), stoneM);  // skin darker, marble drapery lighter
-
-  vec2 px = uv * ART;
-  vec2 pL = (px - ORBL.xy) / ORBL.z;
-  vec2 pR = (px - ORBR.xy) / ORBR.z;
-  float rL = length(pL);
-  float rR = length(pR);
 
   // light spill onto statues, pedestals, floor
   float beat = beatEnv(uBeat) * smoothstep(0.5, 0.1, uHP);
@@ -527,8 +534,6 @@ void main(){
   }
 
   vec3 col = base;
-  float aL = m * smoothstep(1.015, 0.995, rL);
-  float aR = m * smoothstep(1.015, 0.995, rR);
   vec3 stoneTex = texture(uStone, uv).rgb;
   if (aL > 0.001) col = mix(col, orbContent(pL, true,  empty, thick, stoneTex), aL);
   if (aR > 0.001) col = mix(col, orbContent(pR, false, empty, thick, stoneTex), aR);
