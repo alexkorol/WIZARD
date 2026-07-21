@@ -827,6 +827,13 @@
     try { return JSON.parse(localStorage.getItem(BRIDGE_STORAGE_KEY)) || {}; }
     catch (err) { return {}; }
   };
+  const sameTreeBridge = (left = {}, right = {}) => {
+    const leftUnlocks = Array.isArray(left.unlocks) ? left.unlocks : [];
+    const rightUnlocks = Array.isArray(right.unlocks) ? right.unlocks : [];
+    return left.class === right.class
+      && leftUnlocks.length === rightUnlocks.length
+      && leftUnlocks.every((flag, index) => flag === rightUnlocks[index]);
+  };
 
   const RETIRED_FORMS = new Set(pack.retiredForms || []);
   const RETIRED_MATERIALS = new Set(pack.retiredMaterials || []);
@@ -995,7 +1002,7 @@
     const text = packSearchText(item);
     return item.kind === 'trophy'
       || item.trophy === true
-      || /\b(trophy|spoil|tusk|fang|claw|shell|carapace|hide|pelt|antler|monster part|hunt token)\b/.test(text);
+      || /\b(trophy|spoil|spoils|tusk|tooth|fang|claw|horn|antler|jaw|shell|carapace|scale patch|hide|pelt|feather fan|spine mount|stinger|hoof|monster part|hunt token)\b/.test(text);
   };
   const isReliquaryPackItem = (item) => {
     if (!item) return false;
@@ -1006,7 +1013,7 @@
       || item.kind === 'chart'
       || item.relic === true
       || item.chart === true
-      || /\b(relic|chart|map|codex|scroll|fragment|charm|keepsake|offering|omen|sanctified|votive)\b/.test(text);
+      || /\b(relic|reliquary|pyxis|ampulla|coffer|censer|ritual lamp|codex|scroll|diptych|fragment|charm|keepsake|offering|libation|seal set|ritual bell|staff head|ceremonial ladle|shrine key|omen|sanctified|votive)\b/.test(text);
   };
   const isPreparationsPackItem = (item) => {
     if (!item) return false;
@@ -1014,7 +1021,7 @@
     return item.kind === 'reagent'
       || item.kind === 'tool'
       || item.utility === true
-      || /\b(reagent|herb|leaf|root|powder|pigment|ochre|oil|resin|salt|vial|bottle|ampoule|utility|breadcrumb|gathering)\b/.test(text);
+      || /\b(reagent|preparation|herb|leaf|root|powder|pigment|ochre|oil|unguent|resin|incense cake|salt|vial|bottle|ampoule|ointment|palette|cosmetic grinder|mortar|pestle|salve stick|probe case|surgical roll|bandage|suture|fletching kit|poison pot|fire-making|tinder|trap trigger|utility|breadcrumb|gathering)\b/.test(text);
   };
   const canUsePack = (item, packId = MAIN_PACK_ID) => {
     const targetPackId = normalizePackId(packId);
@@ -1025,9 +1032,9 @@
     return false;
   };
   const packRejectReason = (packId) => ({
-    spoils: 'Spoils Roll only holds trophies, monster parts, and hunt-earned remains',
-    preparations: 'Preparation Case only holds reagents, venoms, pigments, tools, and field supplies',
-    reliquary: 'Reliquary only holds relics, charms, offerings, texts, and sanctified objects',
+    spoils: 'Spoils Roll only holds harvested monster parts and raw crafting materials',
+    preparations: 'Preparation Case only holds gathered or prepared reagents, medical and craft tools, and field supplies',
+    reliquary: 'Reliquary only holds ritual containers, vessels, texts, relics, offerings, and sanctified objects',
   })[normalizePackId(packId)] || 'That item does not belong in this pack';
   const canPlaceItem = (inventory, item, x, y, ignoreId = null, packId = MAIN_PACK_ID) => {
     const targetPackId = normalizePackId(packId);
@@ -1473,7 +1480,10 @@
     }, [openAuxId]);
 
     useEffect(() => {
-      const sync = () => setTreeBridge(readTreeBridge());
+      const sync = () => {
+        const next = readTreeBridge();
+        setTreeBridge(prev => sameTreeBridge(prev, next) ? prev : next);
+      };
       window.addEventListener('storage', sync);
       window.addEventListener('focus', sync);
       const poll = setInterval(sync, 3000);
@@ -1683,19 +1693,32 @@
       setState(prev => returnToSource(prev, drag));
     }, [dragState, benchOpen, treeBridge]);
 
+    const trackingPointer = Boolean(dragState || tooltip);
     useEffect(() => {
+      if (!trackingPointer) return undefined;
+      let moveFrame = 0;
+      let nextPoint = null;
+      const flushMove = () => {
+        moveFrame = 0;
+        if (!nextPoint) return;
+        const point = nextPoint;
+        nextPoint = null;
+        if (dragState) setMousePos(point);
+        if (tooltip) setTooltip(prev => (prev ? { ...prev, ...point } : null));
+      };
       const handleMove = (e) => {
-        setMousePos({ x: e.clientX, y: e.clientY });
-        if (tooltip) setTooltip(prev => (prev ? { ...prev, x: e.clientX, y: e.clientY } : null));
+        nextPoint = { x: e.clientX, y: e.clientY };
+        if (!moveFrame) moveFrame = window.requestAnimationFrame(flushMove);
       };
       const handleUp = (e) => finalizeDrop(e);
       window.addEventListener('pointermove', handleMove);
       window.addEventListener('pointerup', handleUp);
       return () => {
+        if (moveFrame) window.cancelAnimationFrame(moveFrame);
         window.removeEventListener('pointermove', handleMove);
         window.removeEventListener('pointerup', handleUp);
       };
-    }, [finalizeDrop, tooltip]);
+    }, [finalizeDrop, trackingPointer]);
 
     const handleHover = (item, e) => {
       if (dragState || !item) { setTooltip(null); return; }
@@ -2045,9 +2068,11 @@
     const sheet = agg.sheet;
     const trophyReady = atelierItem && Object.entries(character.fragments).some(([id, n]) =>
       n >= pack.trophies[id].fragments && pack.trophies[id].kinds.includes(atelierItem.kind));
+    const renderCount = useRef(0);
+    renderCount.current += 1;
 
     return (
-      <div className="app-shell">
+      <div className="app-shell" data-render-count={renderCount.current}>
         {tooltip && <Tooltip item={tooltip.item} position={tooltip} equipped={tooltip.equipped} archetype={character.archetype} />}
 
         {dragState && (

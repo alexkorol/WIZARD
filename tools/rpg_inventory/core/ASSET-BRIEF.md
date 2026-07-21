@@ -267,17 +267,26 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
 26. SIX AUXILIARY ITEM LANES (2026-07-12). Treat these as first-class slot
    identities in isolated generation, source-character design, and extraction:
    pure STR War-calls, pure DEX Quick Rigs, pure INT Attendant foci, STR+DEX
-   Spoils, DEX+INT Preparations, and INT+STR Reliquary objects. War-calls are
-   complete 2x2 horns/drums/rattles/compact standards. Quick Rigs are complete
-   2x2 quivers, knife rolls, dart cases, sling-pouches, trap cases, or
-   fast-access harnesses shown without a body. Attendants are hands-free 2x2
-   magical foci; overt levitation, glow, orbiting parts, and impossible
-   suspension are allowed, including unapologetically magical orbs. Spoils are
-   dressed trophies and monster remains. Preparations are concrete identifiable
-   reagents, venoms, gathered plants, pigments, instruments, charts, or trap
-   components, never abstract currency. Reliquary objects are relics, charms,
-   offerings, sanctified objects, ritual texts, and ancestor fragments. Use the
-   exact second-pass six-image prompt in `LOADOUT-EXTRACTION.md`.
+   Spoils, DEX+INT Preparations, and INT+STR Reliquary objects. War-calls include
+   complete 2x2 horns, ancient trumpets, drums, rattles, sistra, bells, clappers,
+   and compact standards. Quick Rigs include complete 2x2 quivers, gorytoi,
+   dart racks, sling-bullet side carriers, and back/side-mounted
+   knife/fletching/medicine frames, pigment cases, and trap rigs shown without
+   a body but with the complete harness. Quick Rigs are never handheld,
+   off-hand, purse-like, briefcase-like, or modern luggage. Attendants reinterpret ancient
+   lamp wheels, censers, lamps, mirrors, bells, vessels, pyxides, spindles,
+   rings, and scale cages as hands-free magical foci; overt levitation, glow,
+   orbiting parts, and impossible suspension are allowed. Spoils are raw or
+   minimally field-processed nonhuman crafting products, valuable as saleable
+   material and as ingredients for equipment: washed, scraped, dried, salted,
+   trimmed, plainly tied, or roughly wrapped, never polished, jeweled, capped,
+   encrusted, display-mounted, or converted into finished prestige trophies.
+   Preparations are concrete
+   gathered, measured, mixed, packed, or tool-bearing reagents and field kits,
+   never abstract currency. Reliquaries are strong containers, vessels,
+   books/cases, preserved fragments, or handled ritual objects. Use the exact
+   researched second-pass six-image prompt in `LOADOUT-EXTRACTION.md` and the
+   family IDs in `ANCIENT-EQUIPMENT-TAXONOMY.md`.
 
 ### Prompt changelog
 
@@ -547,6 +556,10 @@ boar_tusk (large tusk trophy setting), wolf_fang (large fang trophy setting),
 river_pearl (large baroque pearl in a carved shell setting), ember_shell
 (glowing red-veined beetle carapace), knucklebone (polished ancestor
 knucklebone with plain carved marks).
+
+These five are finished socketable trophy artifacts in the older crafting
+system. They are not Spoils Roll contents. Spoils Roll art stays raw or
+minimally preserved crafting stock as defined in rule 26.
 
 ## Legacy craft tools (frozen)
 

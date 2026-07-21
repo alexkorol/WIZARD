@@ -36,6 +36,10 @@ screenshots/        ← README images
 - Orb geometry constants are baked in the shader: ORBL=(541,484.5,252),
   ORBR=(1128,483,252) in art pixels (1672×941, y-up). New plates must be aligned to
   this frame (the originals were aligned by silhouette-IoU at scale 1.635).
+- The full-resolution `art.jpg` is the sharp static stage background. WebGL is a
+  transparent, cropped `ORB_VIEW` overlay around the two dynamic spheres. Keep
+  the crop, `uViewOrigin`/`uViewSize`, alpha context, and shader early-discard in
+  sync; reverting to a full-stage default canvas breaks the 50× work budget.
 - `levelFromFill()` in template.html must stay continuous and monotone — naive
   volume-true mapping makes the surface sprint at the top/bottom of the sphere
   (that's why it blends to linear near the poles). Any surface-attached glow must

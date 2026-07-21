@@ -30,7 +30,7 @@
                     0 0 120px -30px var(--life-glow),0 0 120px -30px var(--mana-glow);}
   .stage::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:4px;
          box-shadow:inset 0 0 90px 10px rgba(0,0,0,.55)}
-  canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  canvas{position:absolute;display:block;z-index:1}
   .corner{position:absolute;width:26px;height:26px;border:1px solid var(--gold-dim);pointer-events:none;z-index:3}
   .corner.tl{top:7px;left:7px;border-right:0;border-bottom:0}
   .corner.tr{top:7px;right:7px;border-left:0;border-bottom:0}
@@ -192,9 +192,9 @@
     </div>
     <div class="row">
       <div class="seg" role="group" aria-label="Render quality">
-        <button data-q="ultra" aria-pressed="true">Ultra</button>
+        <button data-q="ultra" aria-pressed="false">Ultra</button>
         <button data-q="high" aria-pressed="false">High</button>
-        <button data-q="perf" aria-pressed="false">Performance</button>
+        <button data-q="perf" aria-pressed="true">50×</button>
       </div>
       <button id="btnVals" class="tgl" aria-pressed="true">Values</button>
     </div>
@@ -228,6 +228,11 @@ const EMPTY_B64 = '__EMPTY__';
 const PACK_B64 = '__PACK__';
 const STONE_B64 = '__STONE__';
 const HP_MAX = 1000, MP_MAX = 800;
+const ART_SIZE = { w: 1672, h: 941 };
+// Only this art-space rectangle contains pixels the shader may change. The
+// full-resolution JPEG remains the stage background, so statues and frame art
+// stay crisp while the procedural overlay does a fraction of the old work.
+const ORB_VIEW = { x0: 270, y0: 210, x1: 1400, y1: 755 };
 
 /* ============================ STATE =========================== */
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -239,7 +244,7 @@ const S = {
   beat: 0,
   hpRegen: false, mpRegen: true,
   channeling: false, boss: false, showVals: true,
-  oct: 5, resScale: 1.0, dprCap: 2.0,
+  oct: 3, resScale: 0.4, dprCap: 1.0, fpsCap: reduced ? 12 : 30,
   time: 0,
   /* statuses */
   poison: 0,
@@ -300,30 +305,49 @@ function levelFromFill(f){
 /* ============================ UI ============================== */
 const $ = id => document.getElementById(id);
 const hpSlider = $('hpSlider'), mpSlider = $('mpSlider');
+const sliderCache = { hpValue: null, mpValue: null, hpBackground: '', mpBackground: '' };
 
 function sync(){
-  hpSlider.value = Math.round(S.hp * HP_MAX);
-  mpSlider.value = Math.round(S.mp * MP_MAX);
+  const hpValue = Math.round(S.hp * HP_MAX), mpValue = Math.round(S.mp * MP_MAX);
+  if (sliderCache.hpValue !== hpValue) { sliderCache.hpValue = hpValue; hpSlider.value = hpValue; }
+  if (sliderCache.mpValue !== mpValue) { sliderCache.mpValue = mpValue; mpSlider.value = mpValue; }
   const hc = (S.hp*100).toFixed(1), mc = (S.mp*100).toFixed(1);
-  hpSlider.style.background = `linear-gradient(90deg, var(--life) ${hc}%, #241e15 ${hc}%)`;
-  mpSlider.style.background = `linear-gradient(90deg, var(--mana) ${mc}%, #241e15 ${mc}%)`;
+  const hpBackground = `linear-gradient(90deg, var(--life) ${hc}%, #241e15 ${hc}%)`;
+  const mpBackground = `linear-gradient(90deg, var(--mana) ${mc}%, #241e15 ${mc}%)`;
+  if (sliderCache.hpBackground !== hpBackground) { sliderCache.hpBackground = hpBackground; hpSlider.style.background = hpBackground; }
+  if (sliderCache.mpBackground !== mpBackground) { sliderCache.mpBackground = mpBackground; mpSlider.style.background = mpBackground; }
 }
-function chip(id, on){ $(id).classList.toggle('on', !!on); }
+function setText(el, value){
+  const next = String(value);
+  if (el.textContent !== next) el.textContent = next;
+}
+function toggleClass(el, name, on){
+  const next = !!on;
+  if (el.classList.contains(name) !== next) el.classList.toggle(name, next);
+}
+const readout = {
+  hpVal: $('hpVal'), mpVal: $('mpVal'), hpLab: $('hpLab'), mpLab: $('mpLab'),
+  hpBar: $('hpBar'), mpBar: $('mpBar'), chipPoison: $('chipPoison'),
+  poisonPct: $('poisonPct'), chipBleed: $('chipBleed'), bleedN: $('bleedN'),
+  resLineL: $('resLineL'), resPctL: $('resPctL'), resLineR: $('resLineR'), resPctR: $('resPctR')
+};
 function syncReadouts(){
-  $('hpVal').textContent = Math.round(S.hpD * HP_MAX);
-  $('mpVal').textContent = Math.round(S.mpD * MP_MAX);
-  $('hpLab').textContent = `${Math.round(S.hp*HP_MAX)} / ${HP_MAX}`;
-  $('mpLab').textContent = `${Math.round(S.mp*MP_MAX)} / ${MP_MAX}`;
-  $('hpBar').style.transform = `scaleX(${S.hpD.toFixed(3)})`;
-  $('mpBar').style.transform = `scaleX(${S.mpD.toFixed(3)})`;
-  chip('chipPoison', S.poison > 0.005);
-  $('poisonPct').textContent = Math.ceil(S.poison * 100) + '%';
-  chip('chipBleed', S.bleedT.length > 0);
-  $('bleedN').textContent = '×' + S.bleedT.length;
-  $('resLineL').classList.toggle('on', S.resL > 0.005);
-  $('resPctL').textContent = Math.round(S.resL*100) + '%';
-  $('resLineR').classList.toggle('on', S.resR > 0.005);
-  $('resPctR').textContent = Math.round(S.resR*100) + '%';
+  setText(readout.hpVal, Math.round(S.hpD * HP_MAX));
+  setText(readout.mpVal, Math.round(S.mpD * MP_MAX));
+  setText(readout.hpLab, `${Math.round(S.hp*HP_MAX)} / ${HP_MAX}`);
+  setText(readout.mpLab, `${Math.round(S.mp*MP_MAX)} / ${MP_MAX}`);
+  const hpTransform = `scaleX(${S.hpD.toFixed(3)})`;
+  const mpTransform = `scaleX(${S.mpD.toFixed(3)})`;
+  if (readout.hpBar.style.transform !== hpTransform) readout.hpBar.style.transform = hpTransform;
+  if (readout.mpBar.style.transform !== mpTransform) readout.mpBar.style.transform = mpTransform;
+  toggleClass(readout.chipPoison, 'on', S.poison > 0.005);
+  setText(readout.poisonPct, Math.ceil(S.poison * 100) + '%');
+  toggleClass(readout.chipBleed, 'on', S.bleedT.length > 0);
+  setText(readout.bleedN, '×' + S.bleedT.length);
+  toggleClass(readout.resLineL, 'on', S.resL > 0.005);
+  setText(readout.resPctL, Math.round(S.resL*100) + '%');
+  toggleClass(readout.resLineR, 'on', S.resR > 0.005);
+  setText(readout.resPctR, Math.round(S.resR*100) + '%');
 }
 
 hpSlider.addEventListener('input', () => setHP(hpSlider.value / HP_MAX, false));
@@ -368,13 +392,19 @@ function wireRes(slider, lab, set){
 wireRes($('resLSlider'), $('resLLab'), v => { S.resL = v; setHP(S.hp); });
 wireRes($('resRSlider'), $('resRLab'), v => { S.resR = v; setMP(S.mp); });
 
-const QUAL = { ultra:[5, 1.0, 2.0], high:[4, 0.85, 1.75], perf:[3, 0.66, 1.5] };
+const QUAL = {
+  ultra: [5, 1.0, 2.0, 60],
+  high:  [4, 0.7, 1.5, 45],
+  perf:  [3, 0.4, 1.0, 30]
+};
 document.querySelectorAll('[data-q]').forEach(b => {
   b.onclick = () => {
     document.querySelectorAll('[data-q]').forEach(x => x.setAttribute('aria-pressed','false'));
     b.setAttribute('aria-pressed','true');
-    const [oct, scale, dprCap] = QUAL[b.dataset.q];
+    const [oct, scale, dprCap, fpsCap] = QUAL[b.dataset.q];
     S.oct = oct; S.resScale = scale; S.dprCap = dprCap;
+    S.fpsCap = reduced ? Math.min(12, fpsCap) : fpsCap;
+    lastDraw = performance.now() - 1000;
     resize();
   };
 });
@@ -398,7 +428,15 @@ addEventListener('keyup', e => { if (e.key.toLowerCase() === 'e') S.channeling =
 
 /* ============================ WEBGL =========================== */
 const canvas = $('gl');
-const gl = canvas.getContext('webgl2', { antialias:false, alpha:false, powerPreference:'high-performance' });
+const stage = document.querySelector('.stage');
+stage.style.backgroundImage = `url(data:image/jpeg;base64,${ART_B64})`;
+stage.style.backgroundSize = '100% 100%';
+stage.style.backgroundRepeat = 'no-repeat';
+canvas.style.left = `${ORB_VIEW.x0 / ART_SIZE.w * 100}%`;
+canvas.style.bottom = `${ORB_VIEW.y0 / ART_SIZE.h * 100}%`;
+canvas.style.width = `${(ORB_VIEW.x1 - ORB_VIEW.x0) / ART_SIZE.w * 100}%`;
+canvas.style.height = `${(ORB_VIEW.y1 - ORB_VIEW.y0) / ART_SIZE.h * 100}%`;
+const gl = canvas.getContext('webgl2', { antialias:false, alpha:true, premultipliedAlpha:true, powerPreference:'high-performance' });
 if (!gl){
   document.querySelector('.stage').innerHTML =
     '<div style="display:grid;place-items:center;height:100%;color:#9a9183;font-family:var(--mono);font-size:12px;letter-spacing:.2em">WEBGL2 IS REQUIRED — ENABLE HARDWARE ACCELERATION AND RELOAD</div>';
@@ -428,7 +466,7 @@ gl.enableVertexAttribArray(0);
 gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
 const U = {};
-['uArt','uMask','uNorm','uEmpty','uPack','uStone','uRes','uTime','uHP','uMP','uLvlL','uLvlR',
+['uArt','uMask','uNorm','uEmpty','uPack','uStone','uRes','uViewOrigin','uViewSize','uTime','uHP','uMP','uLvlL','uLvlR',
  'uSloshL','uSloshR','uBeat','uOct','uFlashL','uFlashR','uFullL','uFullR',
  'uPoison','uBleed','uResL','uResR','uResLvlL','uResLvlR']
   .forEach(n => U[n] = gl.getUniformLocation(prog, n));
@@ -466,13 +504,17 @@ function resize(){
 addEventListener('resize', resize);
 
 /* ============================ LOOP ============================ */
-let last = performance.now(), fpsE = 60, fpsTick = 0;
+let last = performance.now(), lastDraw = -1000, fpsE = S.fpsCap, fpsTick = 0;
 const fpsEl = $('fps');
 const motion = reduced ? 0.45 : 1.0;
 
 function frame(now){
   requestAnimationFrame(frame);
   if (document.hidden) { last = now; return; }
+  const drawInterval = 1000 / S.fpsCap;
+  const drawElapsed = now - lastDraw;
+  if (drawElapsed < drawInterval) return;
+  lastDraw = now - (drawElapsed % drawInterval);
   let dt = Math.min((now - last) / 1000, 0.05);
   last = now;
 
@@ -538,8 +580,9 @@ function frame(now){
   syncReadouts();
 
   /* draw */
-  resize();
   gl.uniform2f(U.uRes, canvas.width, canvas.height);
+  gl.uniform2f(U.uViewOrigin, ORB_VIEW.x0 / ART_SIZE.w, ORB_VIEW.y0 / ART_SIZE.h);
+  gl.uniform2f(U.uViewSize, (ORB_VIEW.x1 - ORB_VIEW.x0) / ART_SIZE.w, (ORB_VIEW.y1 - ORB_VIEW.y0) / ART_SIZE.h);
   gl.uniform1f(U.uTime, S.time);
   gl.uniform1f(U.uHP, S.hpD);
   gl.uniform1f(U.uMP, S.mpD);

@@ -643,8 +643,8 @@ function createEpicOceanGeometry() {
 
 function createEpicUndersideGeometry() {
   const segments = 192;
-  const profiles = [1, 0.98, 0.91, 0.79, 0.65, 0.5, 0.34, 0.18, 0.07];
-  const depths = [0.08, -0.42, -0.95, -1.55, -2.18, -2.85, -3.55, -4.2, -4.72];
+  const profiles = [1, 0.985, 0.95, 0.885, 0.795, 0.68, 0.545, 0.395, 0.24, 0.1];
+  const depths = [0.08, -0.62, -1.3, -2.02, -2.7, -3.32, -3.86, -4.28, -4.56, -4.72];
   const positions = [];
   const colors = [];
   const indices = [];
@@ -653,9 +653,12 @@ function createEpicUndersideGeometry() {
       const angle = segment / segments * TAU + Math.sin(level * 0.74) * 0.018;
       const boundary = worldBoundaryScale(angle);
       const fracture = 0.93 + hash2(Math.floor(segment / 6), level + 51) * 0.11;
+      const levelRatio = level / (profiles.length - 1);
       const x = Math.cos(angle) * WORLD_RX * boundary * profiles[level] * fracture;
       const z = Math.sin(angle) * WORLD_RZ * boundary * profiles[level] * fracture;
-      const y = depths[level] + Math.sin(angle * 7 + level) * 0.08 * (level / profiles.length);
+      const y = depths[level]
+        + Math.sin(angle * 7 + level) * 0.07 * levelRatio
+        - hash2(Math.floor(segment / 9) + 17, level * 3) * 0.14 * levelRatio;
       const band = (level % 3) * 0.01 + hash2(segment, level) * 0.014;
       positions.push(x, y, z);
       colors.push(0.034 + band, 0.045 + band * 0.8, 0.047 + band * 0.65);
@@ -666,8 +669,16 @@ function createEpicUndersideGeometry() {
     const lower = (level + 1) * segments;
     for (let segment = 0; segment < segments; segment += 1) {
       const next = (segment + 1) % segments;
-      indices.push(upper + segment, lower + segment, lower + next, upper + segment, lower + next, upper + next);
+      indices.push(upper + segment, lower + next, lower + segment, upper + segment, upper + next, lower + next);
     }
+  }
+  const apexIndex = positions.length / 3;
+  positions.push(0, -4.8, 0);
+  colors.push(0.042, 0.052, 0.062);
+  const lastRing = (profiles.length - 1) * segments;
+  for (let segment = 0; segment < segments; segment += 1) {
+    const next = (segment + 1) % segments;
+    indices.push(apexIndex, lastRing + segment, lastRing + next);
   }
   const geometry = new THREE.BufferGeometry();
   geometry.setIndex(indices);
@@ -1733,6 +1744,118 @@ function createStars() {
   }));
 }
 
+function createVeinedUndersideMaterial() {
+  const material = new THREE.MeshStandardMaterial({
+    color: 0x52645f,
+    vertexColors: true,
+    roughness: 0.98,
+    metalness: 0.02,
+    flatShading: true,
+  });
+  material.onBeforeCompile = (shader) => {
+    shader.uniforms.uVeinTime = { value: 0 };
+    shader.uniforms.uVeinPulse = { value: 0 };
+    material.userData.shader = shader;
+    shader.vertexShader = shader.vertexShader
+      .replace("#include <common>", "#include <common>\nvarying vec3 vVeinPos;")
+      .replace("#include <begin_vertex>", "#include <begin_vertex>\nvVeinPos = position;");
+    shader.fragmentShader = shader.fragmentShader
+      .replace("#include <common>", `#include <common>
+        uniform float uVeinTime;
+        uniform float uVeinPulse;
+        varying vec3 vVeinPos;
+        float veinHash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+        float veinNoise(vec2 p){
+          vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);
+          return mix(mix(veinHash(i),veinHash(i+vec2(1.0,0.0)),f.x),mix(veinHash(i+vec2(0.0,1.0)),veinHash(i+vec2(1.0)),f.x),f.y);
+        }
+      `)
+      .replace("#include <emissivemap_fragment>", `#include <emissivemap_fragment>
+        {
+          vec2 veinQ = vec2(vVeinPos.x / ${WORLD_RX.toFixed(2)}, vVeinPos.z / ${WORLD_RZ.toFixed(2)});
+          float veinR = length(veinQ);
+          float veinDepth = clamp(-vVeinPos.y / 4.8, 0.0, 1.0);
+          float veinAngle = atan(veinQ.y, veinQ.x);
+          float wobble = (veinNoise(veinQ * 7.0 + 3.7) - 0.5) * (0.5 + veinR * 1.3);
+          float jitter = (veinNoise(veinQ * 16.0 - 8.3) - 0.5) * 0.4;
+          float branchA = abs(sin(veinAngle * 9.0 + wobble * 3.1 + jitter + veinR * 2.6));
+          float branchB = abs(sin(veinAngle * 22.0 - wobble * 4.6 + jitter * 2.0 - veinR * 5.4 + 1.7));
+          float veinA = pow(smoothstep(0.94, 1.0, branchA), 2.2);
+          float veinB = pow(smoothstep(0.95, 1.0, branchB), 2.0) * smoothstep(0.85, 0.28, veinR);
+          float envelope = smoothstep(0.06, 0.42, veinDepth) * smoothstep(1.02, 0.5, veinR);
+          float flicker = 0.84 + 0.16 * sin(uVeinTime * 1.9 + veinAngle * 5.0 + veinR * 11.0);
+          float core = smoothstep(0.5, 0.04, veinR) * smoothstep(0.42, 1.0, veinDepth);
+          float energy = (veinA * 1.05 + veinB * 0.6) * envelope * flicker + core * 2.4;
+          energy *= 0.78 + uVeinPulse * 0.95;
+          vec3 veinColor = mix(vec3(0.09, 0.3, 0.98), vec3(0.68, 0.87, 1.0), clamp(core * 1.5 + veinA * 0.18, 0.0, 1.0));
+          totalEmissiveRadiance += veinColor * energy;
+        }
+      `);
+  };
+  return material;
+}
+
+function createRadialGlowTexture() {
+  const size = 128;
+  const glowCanvas = document.createElement("canvas");
+  glowCanvas.width = size;
+  glowCanvas.height = size;
+  const context = glowCanvas.getContext("2d");
+  const gradient = context.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+  gradient.addColorStop(0, "rgba(255,255,255,1)");
+  gradient.addColorStop(0.22, "rgba(190,220,255,0.85)");
+  gradient.addColorStop(0.55, "rgba(110,160,255,0.3)");
+  gradient.addColorStop(1, "rgba(60,110,255,0)");
+  context.fillStyle = gradient;
+  context.fillRect(0, 0, size, size);
+  const texture = new THREE.CanvasTexture(glowCanvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+function createWorldCore() {
+  const group = new THREE.Group();
+  const coreMaterial = new THREE.MeshBasicMaterial({
+    color: new THREE.Color(2.5, 2.85, 3.2),
+    fog: false,
+  });
+  const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.3, 1), coreMaterial);
+  core.position.y = -4.78;
+  const haloMaterial = new THREE.SpriteMaterial({
+    map: createRadialGlowTexture(),
+    color: 0x86b8ff,
+    transparent: true,
+    opacity: 0.55,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  });
+  const halo = new THREE.Sprite(haloMaterial);
+  halo.scale.set(3.1, 3.1, 1);
+  halo.position.y = -4.9;
+  const ringMaterial = new THREE.MeshBasicMaterial({
+    color: 0x5f9dff,
+    transparent: true,
+    opacity: 0.16,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+  });
+  const rings = new THREE.InstancedMesh(new THREE.TorusGeometry(1, 0.02, 6, 80), ringMaterial, 5);
+  const matrix = new THREE.Matrix4();
+  const quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
+  const position = new THREE.Vector3();
+  const scale = new THREE.Vector3();
+  for (let index = 0; index < 5; index += 1) {
+    const radius = 0.55 + index * 0.42;
+    position.set(0, -4.86 + index * 0.065, 0);
+    scale.set(radius, radius * 0.7, radius);
+    matrix.compose(position, quaternion, scale);
+    rings.setMatrixAt(index, matrix);
+  }
+  group.add(core, halo, rings);
+  return { group, core, coreMaterial, halo, haloMaterial, rings, ringMaterial };
+}
+
 function createAbyss() {
   const group = new THREE.Group();
   const ringMaterial = new THREE.MeshBasicMaterial({
@@ -2005,7 +2128,8 @@ function boot() {
   const epicWorld = new THREE.Group();
   epicWorld.name = "Verdigris world atlas";
   scene.add(epicWorld);
-  const epicUnderside = shadow(new THREE.Mesh(createEpicUndersideGeometry(), undersideMaterial));
+  const epicUndersideMaterial = createVeinedUndersideMaterial();
+  const epicUnderside = shadow(new THREE.Mesh(createEpicUndersideGeometry(), epicUndersideMaterial));
   const epicTerrainMaterial = new THREE.MeshStandardMaterial({
     vertexColors: true,
     roughness: 0.95,
@@ -2041,8 +2165,7 @@ function boot() {
   const epicCapitals = createEpicCapitals(materials);
   const epicCityLights = createEpicCityLights(epicCapitals.sites);
   const epicBeacons = createEpicBeaconMesh(epicCapitals.sites);
-  const epicAbyss = createAbyss();
-  epicAbyss.group.scale.set(1.58, 1, 1.38);
+  const worldCore = createWorldCore();
   const epicRimMaterial = new THREE.MeshBasicMaterial({ color: 0x49c8bd, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending, depthWrite: false });
   const epicRim = new THREE.Mesh(new THREE.TorusGeometry(WORLD_RX, 0.045, 7, 192), epicRimMaterial);
   epicRim.rotation.x = Math.PI / 2;
@@ -2063,7 +2186,7 @@ function boot() {
     epicCapitals.group,
     epicCityLights.points,
     epicBeacons.mesh,
-    epicAbyss.group,
+    worldCore.group,
     epicRim,
   );
 
@@ -2097,8 +2220,8 @@ function boot() {
   const crownLight = new THREE.PointLight(0x6fe0cc, 3.8, 6, 2);
   crownLight.position.copy(citadel.group.position).add(new THREE.Vector3(0, 2.5, 0));
   world.add(crownLight);
-  const epicAbyssLight = new THREE.PointLight(0x3bcfc5, 12, 19, 1.8);
-  epicAbyssLight.position.set(0, -4.25, 0.8);
+  const epicAbyssLight = new THREE.PointLight(0x5f9dff, 12, 19, 1.8);
+  epicAbyssLight.position.set(0, -5.5, 0);
   epicWorld.add(epicAbyssLight);
   const stormLight = new THREE.PointLight(0x74ded4, 0, 28, 1.4);
   stormLight.position.set(8, 6, -7);
@@ -2119,6 +2242,33 @@ function boot() {
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const previewMoment = new URLSearchParams(location.search).get("moment") === "crown";
+  const FIXED_VIEWS = {
+    top: { offset: [0.02, 30, 0.02], fov: 33 },
+    bottom: { offset: [0.02, -30, 0.02], fov: 33 },
+    core: { offset: [0.02, -10, 0.02], fov: 33 },
+    front: { offset: [0, -1.35, 29], fov: 33 },
+    back: { offset: [0, -1.35, -29], fov: 33 },
+    left: { offset: [-29, -1.35, 0], fov: 33 },
+    right: { offset: [29, -1.35, 0], fov: 33 },
+  };
+  const cameraParam = new URLSearchParams(location.search).get("camera");
+  let fixedViewName = Object.prototype.hasOwnProperty.call(FIXED_VIEWS, cameraParam || "") ? cameraParam : null;
+
+  function poseFixedCamera(name) {
+    const view = FIXED_VIEWS[name];
+    if (!view) return false;
+    const anchor = activeVariant === "epic" ? epicWorld : world;
+    const anchorScale = anchor.scale.x;
+    camera.position.set(
+      anchor.position.x + view.offset[0] * anchorScale,
+      anchor.position.y + view.offset[1] * anchorScale,
+      anchor.position.z + view.offset[2] * anchorScale,
+    );
+    camera.fov = view.fov;
+    camera.updateProjectionMatrix();
+    camera.lookAt(anchor.position.x, anchor.position.y - 1.3 * anchorScale, anchor.position.z);
+    return true;
+  }
   const cameraControl = {
     dragging: false,
     pointers: new Map(),
@@ -2320,7 +2470,7 @@ function boot() {
         const dx = event.clientX - cameraControl.lastX;
         const dy = event.clientY - cameraControl.lastY;
         cameraControl.yawTarget = clamp(cameraControl.yawTarget - dx * 0.00215, -0.25, 0.25);
-        cameraControl.pitchTarget = clamp(cameraControl.pitchTarget - dy * 0.00185, -0.16, 0.14);
+        cameraControl.pitchTarget = clamp(cameraControl.pitchTarget - dy * 0.00185, -0.78, 0.14);
         cameraControl.lastX = event.clientX;
         cameraControl.lastY = event.clientY;
       }
@@ -2365,8 +2515,8 @@ function boot() {
     event.preventDefault();
     if (event.key === "ArrowLeft") cameraControl.yawTarget = clamp(cameraControl.yawTarget + 0.045, -0.25, 0.25);
     if (event.key === "ArrowRight") cameraControl.yawTarget = clamp(cameraControl.yawTarget - 0.045, -0.25, 0.25);
-    if (event.key === "ArrowUp") cameraControl.pitchTarget = clamp(cameraControl.pitchTarget + 0.035, -0.16, 0.14);
-    if (event.key === "ArrowDown") cameraControl.pitchTarget = clamp(cameraControl.pitchTarget - 0.035, -0.16, 0.14);
+    if (event.key === "ArrowUp") cameraControl.pitchTarget = clamp(cameraControl.pitchTarget + 0.035, -0.78, 0.14);
+    if (event.key === "ArrowDown") cameraControl.pitchTarget = clamp(cameraControl.pitchTarget - 0.035, -0.78, 0.14);
     if (event.key === "+" || event.key === "=") cameraControl.zoomTarget = clamp(cameraControl.zoomTarget - 0.07, -0.22, 0.35);
     if (event.key === "-" || event.key === "_") cameraControl.zoomTarget = clamp(cameraControl.zoomTarget + 0.07, -0.22, 0.35);
     if (event.key === "Home") resetCameraControl();
@@ -2407,7 +2557,7 @@ function boot() {
   let averageFps = 60;
 
   const debug = {
-    version: "verdigris-menu-2.1",
+    version: "verdigris-menu-2.2",
     quality: activeQuality,
     fps: 0,
     frameMs: 0,
@@ -2417,6 +2567,22 @@ function boot() {
     transferableBytes: 0,
   };
   window.__VERDIGRIS_DEBUG__ = debug;
+  debug.capture = (view = null, type = "image/jpeg", quality = 0.62) => {
+    const previous = fixedViewName;
+    if (view && FIXED_VIEWS[view]) fixedViewName = view;
+    if (fixedViewName) {
+      poseFixedCamera(fixedViewName);
+    } else {
+      camera.position.set(baseCamera.x, baseCamera.y, baseCamera.z);
+      camera.fov = baseCamera.fov;
+      camera.updateProjectionMatrix();
+      camera.lookAt(baseCamera.tx, baseCamera.ty, baseCamera.tz);
+    }
+    renderer.render(scene, camera);
+    const data = canvas.toDataURL(type, quality);
+    fixedViewName = previous;
+    return data;
+  };
 
   function pulseAt(phase, center, width) {
     let distance = Math.abs(phase - center);
@@ -2470,7 +2636,7 @@ function boot() {
     const baseYaw = Math.atan2(baseDx, baseDz);
     const basePitch = Math.asin(baseDy / baseDistance);
     const cameraYaw = baseYaw + loopYaw + cameraControl.yaw + pointer.x * 0.007;
-    const cameraPitch = clamp(basePitch + loopPitch + cameraControl.pitch - pointer.y * 0.004, 0.24, 1.18);
+    const cameraPitch = clamp(basePitch + loopPitch + cameraControl.pitch - pointer.y * 0.004, -0.26, 1.18);
     const cameraDistance = baseDistance * clamp(1 + cameraControl.zoom, 0.78, 1.35);
     const cameraHorizontal = Math.cos(cameraPitch) * cameraDistance;
     camera.position.set(
@@ -2479,6 +2645,7 @@ function boot() {
       cameraTarget.z + Math.cos(cameraYaw) * cameraHorizontal,
     );
     camera.lookAt(cameraTarget);
+    if (fixedViewName) poseFixedCamera(fixedViewName);
 
     world.rotation.y = -0.24 + (reducedMotion ? 0 : Math.sin(phase * TAU - 0.4) * 0.026);
     epicWorld.rotation.y = -0.105 + (reducedMotion ? 0 : Math.sin(phase * TAU - 0.25) * 0.018);
@@ -2527,9 +2694,17 @@ function boot() {
     abyss.glowMaterial.uniforms.uPulse.value = crownPulse;
     abyssLight.intensity = 9 + crownPulse * 12;
     crownLight.intensity = 3.3 + crownPulse * 7;
-    epicAbyss.group.rotation.y = time * 0.022;
-    epicAbyss.ringMaterial.opacity = 0.055 + crownPulse * 0.1;
-    epicAbyss.glowMaterial.uniforms.uPulse.value = crownPulse * 0.75;
+    worldCore.group.rotation.y = time * 0.045;
+    worldCore.ringMaterial.opacity = 0.13 + crownPulse * 0.2;
+    const corePulse = 2.5 + crownPulse * 1.7 + Math.sin(time * 2.3) * 0.18;
+    worldCore.coreMaterial.color.setRGB(corePulse, corePulse * 1.14, corePulse * 1.28);
+    worldCore.haloMaterial.opacity = 0.5 + crownPulse * 0.34 + Math.sin(time * 1.4) * 0.06;
+    worldCore.core.scale.setScalar(1 + crownPulse * 0.32 + Math.sin(time * 2.1) * 0.04);
+    const veinShader = epicUndersideMaterial.userData.shader;
+    if (veinShader) {
+      veinShader.uniforms.uVeinTime.value = time;
+      veinShader.uniforms.uVeinPulse.value = crownPulse;
+    }
     epicAbyssLight.intensity = 10 + crownPulse * 10;
     epicRimMaterial.opacity = 0.12 + crownPulse * 0.09;
     epicShallowsMaterial.opacity = 0.3 + crownPulse * 0.1;

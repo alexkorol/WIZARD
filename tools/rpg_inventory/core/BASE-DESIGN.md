@@ -81,30 +81,53 @@ Not every class needs all five rungs; 3–5 each is fine (like D2's three).
 - **Curio / relic** (spirit flavour): use substantial reliquary boxes,
   offering bowls, forked standards, and trophy settings. Do not build a tier
   ladder out of flat tablets, plaques, tiny trinkets, shrine miniatures, or
-  loose charms.
+  loose charms. Finished socketable trophy settings in this curio lane are
+  distinct from raw Spoils Roll crafting materials.
 
 ### Auxiliary equipment (2x2 unlock seats)
 
 - **War-call** (pure STR): Aurochs War Horn · Copper Signal Drum · Bronze
   Command Horn · Jade Command Rattle · Iron Thunder Horn. Complete rallying
-  instruments or compact standards with physical authority.
+  instruments or compact standards with physical authority. Alternative base
+  silhouettes come from the researched WC families: Bronze Age broad-curved
+  trumpets, straight salpinges/Etruscan trumpets, hooked litui, braced cornua,
+  carnyx-like vertical trumpets, sistra, clappers, bells, standard finials, and
+  bounded vexilla. Do not make five material skins of the same horn.
 - **Quick Rig** (pure DEX): Hunter's Quick Rig · Copper Dart Case · Bronze
   Quiver Harness · Nightglass Knife Roll · Skymetal Trap Case. The silhouette
   includes its fast-access carrying structure; never extract a torso wearing it.
+  Alternative Q families include combined gorytoi, lidded quivers, weighted-
+  dart racks, sling-bullet side carriers, archer belt kits, fletching cases,
+  medicine back-frame rigs, pigment-and-seal cases, and fire-and-trap cases.
+  Every Quick Rig is worn on the back or flank with a visible frame/harness,
+  never handheld, off-hand equipment, purse-like, or briefcase-like.
 - **Attendant focus** (pure INT): Bone Wisp Orb · Copper Orbit · Bronze Caged
   Light · Jade Attendant · Black Star Attendant. These are hands-free magical
   foci, so overt hovering, glow, orbiting parts, and impossible suspension are
-  part of the class rather than prompt failures.
+  part of the class rather than prompt failures. Do not make the full ladder
+  five spheres: derive alternate structures from polycandelon lamp wheels,
+  chained censers, suspended oil lamps, backed mirrors, bells and yokes,
+  pyxides, seal-cylinder spindles, vessels, and scale cages.
 
 ### Specialty-pack contents (4x4 hybrid-axis windows)
 
-- **Spoils Roll** (STR+DEX): dressed trophies, monster parts, mounted hunt
-  tokens, shells, fangs, claws, antlers, hides, and carapaces.
+- **Spoils Roll** (STR+DEX): harvested monster parts, shells, fangs, claws,
+  antlers, hides, sinew, feathers, scales, and carapaces. These are saleable
+  and consumable raw crafting products, not finished trophies. Allow washing,
+  scraping, drying, salting, trimming, plain tying, or rough wrapping only.
+  Preserve natural irregularity; do not polish, jewel, metal-cap, display-mount,
+  or convert the material into a finished item. Avoid wet gore and human remains.
 - **Preparation Case** (DEX+INT): concrete reagents, venoms, resins, gathered
   plants, pigments, measured powders, ampoules, compact instruments, charts,
-  and trap components. These are physical loot objects, not currency symbols.
+  and trap components. Include ancient ointment palettes, two-piece cosmetic
+  grinders, pyxides, medicinal salve-stick cases, medicine rolls, fletching
+  kits, fire packets, and trap-trigger packets. These are physical loot objects,
+  not currency symbols or generic potion-shop bottles.
 - **Reliquary** (INT+STR): relics, charms, offerings, sanctified objects,
   codices, scroll cases, votive vessels, ancestor fragments, and shrine tokens.
+  Include deep boxes, votive coffers, pyxides, neutral-geometry Late Antique
+  ampullae, censers, lamps, diptychs, wrapped relics, seal sets, bells, staff
+  heads, ladles, and shrine keys. Avoid flat plaques and generic crystals.
 
 ## How current art maps in (don't waste the good gens)
 

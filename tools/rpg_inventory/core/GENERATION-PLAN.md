@@ -53,9 +53,9 @@ base vocabulary to mutate.
 | Rings / seals | 18 | Bone rings, coils, signets, bands, plain seal rings, socket rings. Compact finger jewelry only; no dangling charms, chains, tassels, bells, or chimes. |
 | Charms / relic curios | 24 | Reliquary boxes, trophy settings, handled votive vessels, compact caskets; no loose tiny charms or shrine miniatures. |
 | Off-hand foci | 12 | Targes, bossed ward bucklers, reliquary shields, heavy hand-guards; caster/ward variants. |
-| War-call instruments | 12 | 2x2 auxiliary-seat horns, signal drums, command rattles, and compact standards with strong carried silhouettes. |
-| Quick rigs | 12 | 2x2 quivers, knife rolls, dart cases, sling-pouches, trap cases, and fast-access harnesses; show the complete rig, not a body crop. |
-| Attendant foci | 12 | 2x2 semi-floating or orbiting magical orbs, caged lights, rotating rings, hovering mirrors, bound stones, and other hands-free foci. Overt magic is allowed. |
+| War-call instruments | 12 | 2x2 animal horns, Bronze Age curved trumpets, straight salpinges/Etruscan trumpets, hooked litui, cornua, carnyx-like trumpets, drums, sistra, bells, clappers, and compact standards. Do not spend the lane on twelve horn variants. |
+| Quick rigs | 12 | 2x2 back/flank-worn quivers, gorytoi, weighted-dart racks, sling-bullet side carriers, and framed knife/fletching/medicine/pigment/trap/fire kits; show the complete backboard and harness without a body, never a handheld purse, satchel, briefcase, or off-hand object. |
+| Attendant foci | 12 | 2x2 hands-free magical reinterpretations of polycandelon lamp wheels, chained censers, suspended lamps, backed mirrors, bells, pyxides, seal-cylinder spindles, vessels, rings, and scale cages. Overt magic is allowed; cap bare-orb silhouettes. |
 | Alias / reuse pool | 12 | D2-style renamed tiers using already-good art where acceptable. |
 | Non-weapon expansion reserve | 24 | Extra armour, shields, wearable jewellery, belts, greaves/bracers, rite foci, auxiliary gear, relic gear, and trophies. Do not spend this reserve on weapons or abstract currency. |
 | **Total** | **420** |  |
@@ -82,16 +82,23 @@ The non-equipment art budget fills the three hybrid-axis specialty packs plus a
 small UI reserve. Concrete reagents and preparations are now an intentional
 item lane; abstract crafting currency remains closed.
 
-- 30 Spoils Roll contents (STR+DEX): tusks, claws, fangs, pearls, shells,
-  feathers, scales, knucklebones, antlers, chitin, ember carapaces, dressed
-  hides, and mounted hunt tokens.
+- 30 Spoils Roll contents (STR+DEX): raw tusks tied in plain pairs, rough horn,
+  trimmed antler, dry jaw sections, hide-wrapped fang or claw bundles, shell
+  pieces, carapace chunks, natural scale patches, minimally cured pelt rolls,
+  scraped hide sheets, plain-tied feathers, wrapped spine or stinger sections,
+  hooves, talon sheaths, and sinew bundles. These are saleable and consumable
+  crafting stock. Allow only washing, scraping, drying, salting, trimming,
+  plain tying, or rough wrapping; no polish, jewels, metal caps, display mounts,
+  impossible horns, finished weapons, or armor.
 - 30 Preparation Case contents (DEX+INT): identifiable herbs, roots, resins,
-  venoms, oils, powders, pigments, measured salts, ampoules, compact instruments,
-  folded charts, and prepared trap components. Every item needs a concrete
-  physical identity, container, bundle, or gathered plant silhouette.
-- 30 Reliquary contents (INT+STR): relics, charms, offerings, sanctified
-  objects, codices, scroll cases, votive vessels, ancestor fragments, and
-  faction or shrine tokens.
+  venoms, oils, powders, pigments, measured salts, ampoules, ointment palettes,
+  cosmetic grinders, pyxides, medicinal salve-stick cases, medical rolls,
+  fletching kits, fire packets, and prepared trap components. Every item needs
+  a concrete gathered, measured, mixed, packed, or tool-bearing identity.
+- 30 Reliquary contents (INT+STR): deep relic boxes, votive coffers, pyxides,
+  neutral-geometry Late Antique ampullae, offering bowls, libation vessels,
+  censers, lamps, codices, scroll cases, diptychs, wrapped fragments, textile
+  bundles, seal sets, bells, staff heads, ladles, and shrine keys.
 - 10 UI/support pieces: frames, slots, sockets, dividers, and inventory accents.
 
 Do not generate abstract currencies, sigils-as-currency, interchangeable glowing

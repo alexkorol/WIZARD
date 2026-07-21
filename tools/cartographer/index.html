@@ -430,6 +430,9 @@ var flames = [];    // animated entity overlays {type,x,y,phase}
 var reveal = { active: false, start: 0, dist: null, maxD: 1, shown: 0, order: null };
 
 var cam = { scale: 1, ox: 0, oy: 0 };
+var STEP_X = [1, -1, 0, 0], STEP_Y = [0, 0, 1, -1];
+var vignette = null;
+var ANIM_SCALE = 0.2; // static art stays full-res; only the effects layer is reduced
 
 // ---------------------------------------------------------------- terrain painting
 
@@ -1130,7 +1133,11 @@ function regenerate(newSeed) {
   document.getElementById('seed').value = String(map.seed);
 
   var W = map.width * TS, H = map.height * TS;
-  [staticC, frameC, darkC, lavaGlowC, maskC].forEach(function (c) { c.width = W; c.height = H; });
+  [staticC, lavaGlowC, maskC].forEach(function (c) { c.width = W; c.height = H; });
+  [frameC, darkC].forEach(function (c) {
+    c.width = Math.max(1, Math.ceil(W * ANIM_SCALE));
+    c.height = Math.max(1, Math.ceil(H * ANIM_SCALE));
+  });
   sctx = staticC.getContext('2d');
   fctx = frameC.getContext('2d');
   dctx = darkC.getContext('2d');
@@ -1187,14 +1194,14 @@ function startReveal() {
   while (head < tail) {
     var i = qx[head++];
     var x = i % w, y = (i / w) | 0;
-    [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (d) {
-      var nx = x + d[0], ny = y + d[1];
-      if (nx < 0 || ny < 0 || nx >= w || ny >= h) return;
+    for (var d = 0; d < 4; d++) {
+      var nx = x + STEP_X[d], ny = y + STEP_Y[d];
+      if (nx < 0 || ny < 0 || nx >= w || ny >= h) continue;
       var ni = ny * w + nx;
       if (dist[ni] === -1 && MapGen.WALKABLE.has(map.tiles[ni])) {
         dist[ni] = dist[i] + 1; qx[tail++] = ni;
       }
-    });
+    }
   }
   // second pass: flood the rest from the walkable frontier
   head = 0; tail = 0;
@@ -1202,12 +1209,12 @@ function startReveal() {
   while (head < tail) {
     var i2 = qx[head++];
     var x2 = i2 % w, y2 = (i2 / w) | 0;
-    [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (d) {
-      var nx = x2 + d[0], ny = y2 + d[1];
-      if (nx < 0 || ny < 0 || nx >= w || ny >= h) return;
-      var ni = ny * w + nx;
-      if (dist[ni] === -1) { dist[ni] = dist[i2] + 1; qx[tail++] = ni; }
-    });
+    for (d = 0; d < 4; d++) {
+      var nx2 = x2 + STEP_X[d], ny2 = y2 + STEP_Y[d];
+      if (nx2 < 0 || ny2 < 0 || nx2 >= w || ny2 >= h) continue;
+      var ni2 = ny2 * w + nx2;
+      if (dist[ni2] === -1) { dist[ni2] = dist[i2] + 1; qx[tail++] = ni2; }
+    }
   }
   var maxD = 1;
   for (j = 0; j < dist.length; j++) if (dist[j] > maxD) maxD = dist[j];
@@ -1237,15 +1244,23 @@ function updateStats() {
 
 // ---------------------------------------------------------------- frame loop
 
+var frameInterval = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1000 / 8 : 1000 / 24;
+var lastFrameAt = -frameInterval;
 function frame(now) {
   requestAnimationFrame(frame);
-  if (!map) return;
+  if (!map || document.hidden) return;
+  var frameElapsed = now - lastFrameAt;
+  if (frameElapsed < frameInterval) return;
+  lastFrameAt = now - (frameElapsed % frameInterval);
   var time = now / 1000;
 
-  // compose the frame at map resolution
+  // Compose only the animated effects at reduced resolution. The baked map is
+  // drawn directly to the display at full resolution below.
+  fctx.setTransform(1, 0, 0, 1, 0, 0);
+  fctx.clearRect(0, 0, frameC.width, frameC.height);
+  fctx.setTransform(ANIM_SCALE, 0, 0, ANIM_SCALE, 0, 0);
   fctx.globalCompositeOperation = 'source-over';
   fctx.globalAlpha = 1;
-  fctx.drawImage(staticC, 0, 0);
 
   // animate liquids
   for (var i = 0; i < liquids.length; i++) {
@@ -1293,9 +1308,12 @@ function frame(now) {
 
   // darkness with light holes
   if (pal.darkness > 0.02) {
+    dctx.setTransform(1, 0, 0, 1, 0, 0);
+    dctx.clearRect(0, 0, darkC.width, darkC.height);
+    dctx.setTransform(ANIM_SCALE, 0, 0, ANIM_SCALE, 0, 0);
     dctx.globalCompositeOperation = 'source-over';
     dctx.fillStyle = '#000';
-    dctx.fillRect(0, 0, darkC.width, darkC.height);
+    dctx.fillRect(0, 0, staticC.width, staticC.height);
     dctx.globalCompositeOperation = 'destination-out';
     var alphaSprite = glowSprite('alpha');
     for (i = 0; i < lights.length; i++) {
@@ -1309,6 +1327,7 @@ function frame(now) {
       dctx.drawImage(lavaGlowC, 0, 0);
     }
     dctx.globalAlpha = 1;
+    fctx.setTransform(1, 0, 0, 1, 0, 0);
     fctx.globalAlpha = pal.darkness;
     fctx.drawImage(darkC, 0, 0);
     fctx.globalAlpha = 1;
@@ -1330,31 +1349,36 @@ function frame(now) {
       reveal.shown = threshold;
     }
     if (t >= 1) reveal.active = false;
-    else {
-      fctx.globalCompositeOperation = 'destination-in';
-      fctx.drawImage(maskC, 0, 0);
-      fctx.globalCompositeOperation = 'source-over';
-    }
   }
 
   // blit to screen
-  var dpr = window.devicePixelRatio || 1;
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
   var vw = view.clientWidth, vh = view.clientHeight;
   if (view.width !== vw * dpr || view.height !== vh * dpr) {
     view.width = vw * dpr; view.height = vh * dpr;
+    vignette = null;
   }
   vctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   vctx.fillStyle = pal.bg;
   vctx.fillRect(0, 0, vw, vh);
   vctx.imageSmoothingEnabled = cam.scale < 1;
   vctx.setTransform(dpr * cam.scale, 0, 0, dpr * cam.scale, dpr * cam.ox, dpr * cam.oy);
-  vctx.drawImage(frameC, 0, 0);
+  vctx.drawImage(staticC, 0, 0);
+  vctx.imageSmoothingEnabled = true;
+  vctx.drawImage(frameC, 0, 0, frameC.width, frameC.height, 0, 0, staticC.width, staticC.height);
+  if (reveal.active) {
+    vctx.globalCompositeOperation = 'destination-in';
+    vctx.drawImage(maskC, 0, 0);
+    vctx.globalCompositeOperation = 'source-over';
+  }
   // vignette
   vctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  var vg = vctx.createRadialGradient(vw / 2, vh / 2, Math.min(vw, vh) * 0.45, vw / 2, vh / 2, Math.max(vw, vh) * 0.75);
-  vg.addColorStop(0, 'rgba(0,0,0,0)');
-  vg.addColorStop(1, 'rgba(0,0,0,0.5)');
-  vctx.fillStyle = vg;
+  if (!vignette) {
+    vignette = vctx.createRadialGradient(vw / 2, vh / 2, Math.min(vw, vh) * 0.45, vw / 2, vh / 2, Math.max(vw, vh) * 0.75);
+    vignette.addColorStop(0, 'rgba(0,0,0,0)');
+    vignette.addColorStop(1, 'rgba(0,0,0,0.5)');
+  }
+  vctx.fillStyle = vignette;
   vctx.fillRect(0, 0, vw, vh);
 }
 
@@ -1507,7 +1531,13 @@ document.getElementById('exportJson').addEventListener('click', function () {
 });
 document.getElementById('exportPng').addEventListener('click', function () {
   if (!map) return;
-  frameC.toBlob(function (blob) {
+  var exportC = document.createElement('canvas');
+  exportC.width = staticC.width; exportC.height = staticC.height;
+  var exportCtx = exportC.getContext('2d');
+  exportCtx.drawImage(staticC, 0, 0);
+  exportCtx.imageSmoothingEnabled = true;
+  exportCtx.drawImage(frameC, 0, 0, frameC.width, frameC.height, 0, 0, exportC.width, exportC.height);
+  exportC.toBlob(function (blob) {
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = 'cartographer_' + map.zone + '_' + map.theme + '_' + map.seed + '.png';
