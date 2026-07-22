@@ -22,8 +22,10 @@ const css = contents.get("styles.css").toString("utf8");
 const app = contents.get("app.js").toString("utf8");
 const runtimeModelPath = path.join(root, "assets", "world", "celestial_world_runtime.glb");
 const runtimeModel = await stat(runtimeModelPath);
-const topTexturePath = path.join(root, "assets", "world", "celestial_world_top_texture.png");
+const topTexturePath = path.join(root, "assets", "world", "celestial_world_top_texture_4k_detail.webp");
 const topTexture = await stat(topTexturePath);
+const topTextureMasterPath = path.join(root, "assets", "world", "celestial_world_top_texture_4k_detail.png");
+const topTextureMaster = await stat(topTextureMasterPath);
 const undersideDepthmapPath = path.join(root, "assets", "world", "celestial_world_underside_depthmap_16bit.png");
 const undersideDepthmap = await stat(undersideDepthmapPath);
 await stat(path.join(root, "assets", "world", "celestial_world_underside_topographic_reference.png"));
@@ -43,7 +45,7 @@ assert(app.includes("createEpicCityLights") && app.includes("createEpicBeaconMes
 assert(app.includes("createRegionalWeather") && app.includes("createRegionalLightning") && app.includes("sunGlint"), "regional weather or shimmering ocean is missing");
 assert(app.includes("createSpectacleHalos") && app.includes("createStormCrown") && app.includes("createWaterfallHalos"), "cinematic weather, storm, or waterfall radiance is missing");
 assert(app.includes("GLTFLoader") && app.includes("celestial_world_runtime.glb"), "optimized Meshy world loader is missing");
-assert(app.includes("celestial_world_top_texture.png") && app.includes("uWorldTopMap"), "top-surface texture projection is missing");
+assert(app.includes("celestial_world_top_texture_4k_detail.webp") && app.includes("uWorldTopMap"), "4K top-surface texture projection is missing");
 assert(app.includes("celestial_world_underside_texture.png") && app.includes("epicUndersideTexture"), "sculpted underside texture is missing");
 assert(app.includes("createEpicStalactites") && app.includes("createEpicIceWallGeometry"), "spinning-top underside or broken ice rim is missing");
 assert(app.includes("const proceduralEpicGeography = [\n    epicShallows") && !app.includes("const proceduralEpicGeography = [\n    epicOcean"), "animated ocean must remain visible over the shaded atlas");
@@ -78,7 +80,8 @@ for (const [file, buffer] of contents) {
 
 assert(rawBytes < 1_000_000, `local first-view source is unexpectedly large (${rawBytes} bytes)`);
 assert(runtimeModel.size < 4_000_000, `runtime world model is unexpectedly large (${runtimeModel.size} bytes)`);
-assert(topTexture.size < 3_000_000, `top-surface texture is unexpectedly large (${topTexture.size} bytes)`);
+assert(topTexture.size < 5_000_000, `4K runtime top-surface texture is unexpectedly large (${topTexture.size} bytes)`);
+assert(topTextureMaster.size < 25_000_000, `4K master top-surface texture is unexpectedly large (${topTextureMaster.size} bytes)`);
 assert(undersideTexture.size < 3_000_000, `underside texture is unexpectedly large (${undersideTexture.size} bytes)`);
 const gameBounds = buildReport.game_bounds;
 const gameWidth = gameBounds[1][0] - gameBounds[0][0];
@@ -91,6 +94,7 @@ console.log(JSON.stringify({
   total: { rawBytes, gzipBytes },
   runtimeModel: { rawBytes: runtimeModel.size },
   topTexture: { rawBytes: topTexture.size },
+  topTextureMaster: { rawBytes: topTextureMaster.size },
   undersideTexture: { rawBytes: undersideTexture.size },
   undersideDepthmap: { rawBytes: undersideDepthmap.size },
   externalRuntime: [

@@ -38,6 +38,8 @@ The build selects the largest connected body as the world, removes the separate 
 - `celestial_world_footprint.png` — the hard world boundary.
 - `celestial_world_texture_prompt.txt` — paste-ready varied-territory texture prompt.
 - `celestial_world_top_texture.png` — the shadeless varied-territory top-down base-color texture, projected only onto upward-facing terrain and ocean geometry so the 3D scene supplies all shading.
+- `celestial_world_top_texture_4k_detail.png` — the 4096×4096 reference-quality master assembled from sixteen overlapping image-model detail repaints with feathered seams and an original-map structural guide.
+- `celestial_world_top_texture_4k_detail.webp` — the visually matched, browser-efficient 4K runtime derivative used by the menu scene.
 - `celestial_world_optimized_no_moon.stl` — cleaned, decimated Z-up interchange mesh.
 - `celestial_world_runtime.glb` — Y-up, vertex-colored game mesh used by the menu.
 - `celestial_world_build_report.json` — component removal, height range, transform, and reduction audit.
@@ -45,7 +47,7 @@ The build selects the largest connected body as the world, removes the separate 
 ## Architecture and assets
 
 - `app.js` loads the local optimized GLB for World view and builds Crownlands plus a procedural World fallback deterministically. If the model fails to load, the existing procedural atlas remains visible.
-- The imported world projects the varied-territory atlas onto the complete upward-facing mesh, including its detailed sea, then lets the 3D normals and scene lights provide shading; the procedural moving ocean is used only as a fallback if the GLB fails. It retains seven perimeter waterfalls, restrained mist and abyss lighting, drifting cloud wisps, three shader aurora curtains, and a cyan/violet nebula field in the sky. Below the rim, the supplied dark-stone texture wraps a mostly shallow underside that narrows into a central spinning-top peak, with smaller hanging stone forms around it. A muted, irregular glacial wall replaces the luminous cyan torus and opens around each waterfall.
+- The imported world projects the feather-stitched 4K varied-territory atlas onto the complete upward-facing mesh, including its detailed sea, then lets the 3D normals and scene lights provide shading; the procedural moving ocean is used only as a fallback if the GLB fails. It retains seven perimeter waterfalls, restrained mist and abyss lighting, drifting cloud wisps, three shader aurora curtains, and a cyan/violet nebula field in the sky. Below the rim, the supplied dark-stone texture wraps a mostly shallow underside that narrows into a central spinning-top peak, with smaller hanging stone forms around it. A muted, irregular glacial wall replaces the luminous cyan torus and opens around each waterfall.
 - World mode uses nine continuous indexed heightfields: six large named regions plus three outlying island groups. Each has an authored coastline, a primary and branching ridge system, peak groups, valley cuts, terraces, and a biome palette driven by height and slope.
 - The procedural fallback retains an animated ocean, shallow-water shelves, and a closed underside shell. With the imported world active, its ocean and generated backfaces are suppressed in favor of the shaded atlas and the art-directed slate-and-stalactite shell. Seven soft-flowing waterfalls continue past the rim in both cases.
 - World vegetation uses two instanced meshes with deterministic forest masks. Rivers meander from mountain sources toward the coast and subtle road lines connect capitals to their hinterlands. Settlements reuse instanced stone/copper components; six larger capitals add foundations, halls, keeps, roofs, warm window lights, rune beacons, and buttress rhythm. Islets and coastline loops supply ocean scale cues.
@@ -86,7 +88,7 @@ At 1728x720, Auto initially selected High and measured 37.8 FPS in this test bro
 
 The imported shell and atmosphere stay close to the measured geometry totals; the local validation command reports exact current source and asset sizes.
 
-`node validate.mjs` reports the exact local raw/gzip totals. A direct 2026-07-14 fetch of every referenced CDN response measured 338,908 bytes for Three.js, 1,332 bytes for the font CSS, and 1,114,220 bytes for all six font files. The optimized GLB plus the two world textures add about 8.7 MB, keeping the deliberately conservative all-assets total near 10.3 MB raw and below the 12 MB target. Browser compression, caching, and loading only used font faces can reduce transfer further.
+`node validate.mjs` reports the exact local raw/gzip totals. A direct 2026-07-14 fetch of every referenced CDN response measured 338,908 bytes for Three.js, 1,332 bytes for the font CSS, and 1,114,220 bytes for all six font files. The menu loads the roughly 4 MB WebP derivative of the 4K top atlas rather than the 22 MB reference PNG; browser caching and loading only used font faces reduce repeat transfer further.
 
 ## Accessibility and fallback
 

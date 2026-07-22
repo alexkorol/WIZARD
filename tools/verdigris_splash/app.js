@@ -2719,7 +2719,7 @@ function boot() {
   meshyWorld.name = "Optimized Meshy world (moon removed)";
   let meshyTextureLoaded = false;
   const meshyTopTexture = new THREE.TextureLoader().load(
-    "assets/world/celestial_world_top_texture.png?v=5",
+    "assets/world/celestial_world_top_texture_4k_detail.webp?v=1",
     () => {
       meshyTextureLoaded = true;
       canvas.dataset.meshyTexture = "loaded";

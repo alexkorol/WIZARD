@@ -13,3 +13,6 @@ tools/rpg_inventory/assets_inbox/2026-07-08-character-items-cleaned/
 
 # Local-only RPG inventory character-to-item pipeline notes and scratch work.
 tools/rpg_inventory/character_pipeline_local/
+
+# Local intermediate image-model tiles for the Verdigris 4K atlas pipeline.
+tools/verdigris_splash/tmp/
