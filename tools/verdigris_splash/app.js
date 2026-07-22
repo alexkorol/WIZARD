@@ -790,19 +790,23 @@ function createEpicIceWallGeometry() {
     const boundary = worldBoundaryScale(angle);
     const topNoise = hash2(Math.floor(wrapped / 3) + 101, 431) - 0.5;
     const tooth = Math.pow(hash2(Math.floor(wrapped / 4) + 37, 619), 2.1);
-    const wallRadius = boundary * (1.003 + topNoise * 0.0015);
-    const topY = WORLD_WATER_LEVEL + 0.01 + topNoise * 0.055;
-    const bottomY = -0.22 - tooth * 0.32 - Math.sin(angle * 11) * 0.028;
+    const frostArc = smooth(-0.28, 0.7, Math.sin(angle * 3.0 + 0.45) + Math.sin(angle * 7.0 - 1.15) * 0.34);
+    const wallRadius = boundary * (1.001 + topNoise * 0.0008);
+    const topY = WORLD_WATER_LEVEL + 0.014 + topNoise * 0.018;
+    const bottomY = -0.12 - tooth * (0.13 + frostArc * 0.2) - Math.sin(angle * 11) * 0.012;
     positions.push(
       Math.cos(angle) * WORLD_RX * wallRadius, topY, Math.sin(angle) * WORLD_RZ * wallRadius,
       Math.cos(angle) * WORLD_RX * wallRadius, bottomY, Math.sin(angle) * WORLD_RZ * wallRadius,
     );
-    const frost = tooth * 0.035;
-    colors.push(0.16 + frost, 0.22 + frost, 0.24 + frost, 0.07 + frost, 0.105 + frost, 0.12 + frost);
+    const frost = frostArc * (0.035 + tooth * 0.055);
+    colors.push(0.29 + frost, 0.315 + frost, 0.31 + frost, 0.095 + frost * 0.34, 0.115 + frost * 0.4, 0.12 + frost * 0.46);
   }
   for (let segment = 0; segment < segments; segment += 1) {
     const angle = (segment + 0.5) / segments * TAU;
     if (waterfallBreakAt(angle)) continue;
+    const frostArc = smooth(-0.28, 0.7, Math.sin(angle * 3.0 + 0.45) + Math.sin(angle * 7.0 - 1.15) * 0.34);
+    const shelfBreakup = hash2(Math.floor(segment / 5) + 307, 733);
+    if (frostArc * 0.78 + shelfBreakup * 0.22 < 0.28) continue;
     const current = segment * 2;
     const next = current + 2;
     indices.push(current, current + 1, next + 1, current, next + 1, next);
@@ -813,6 +817,61 @@ function createEpicIceWallGeometry() {
   geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
   geometry.computeVertexNormals();
   return geometry;
+}
+
+function createEpicRimIcicles() {
+  const entries = [];
+  const segments = 192;
+  for (let segment = 0; segment < segments; segment += 1) {
+    const angle = (segment + 0.5) / segments * TAU;
+    if (waterfallBreakAt(angle)) continue;
+    const cluster = Math.sin(angle * 3 + 0.45) + Math.sin(angle * 7 - 1.15) * 0.34;
+    const presence = hash2(segment + 211, 887);
+    if (cluster < -0.08 || presence < 0.64) continue;
+    const boundary = worldBoundaryScale(angle);
+    const length = 0.09 + Math.pow(hash2(segment + 73, 991), 1.7) * (0.18 + smooth(-0.08, 0.92, cluster) * 0.28);
+    entries.push({ angle, boundary, length, seed: presence });
+  }
+
+  const geometry = new THREE.ConeGeometry(1, 1, 6, 1);
+  geometry.rotateX(Math.PI);
+  const material = new THREE.MeshStandardMaterial({
+    color: 0x9eb2b3,
+    vertexColors: true,
+    roughness: 0.72,
+    metalness: 0.015,
+    emissive: 0x031012,
+    emissiveIntensity: 0.08,
+  });
+  const mesh = new THREE.InstancedMesh(geometry, material, entries.length);
+  mesh.name = "Localized glacial rim icicles";
+  const matrix = new THREE.Matrix4();
+  const quaternion = new THREE.Quaternion();
+  const position = new THREE.Vector3();
+  const scale = new THREE.Vector3();
+  const color = new THREE.Color();
+  entries.forEach((entry, index) => {
+    const radialX = Math.cos(entry.angle);
+    const radialZ = Math.sin(entry.angle);
+    position.set(
+      radialX * WORLD_RX * entry.boundary * 1.002,
+      WORLD_WATER_LEVEL - 0.03 - entry.length * 0.5,
+      radialZ * WORLD_RZ * entry.boundary * 1.002,
+    );
+    quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0), entry.angle);
+    const radius = 0.022 + entry.seed * 0.025;
+    scale.set(radius, entry.length, radius * 0.82);
+    matrix.compose(position, quaternion, scale);
+    mesh.setMatrixAt(index, matrix);
+    const frost = 0.44 + entry.seed * 0.2;
+    color.setRGB(frost * 0.75, frost * 0.86, frost * 0.88);
+    mesh.setColorAt(index, color);
+  });
+  mesh.instanceMatrix.needsUpdate = true;
+  if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  return mesh;
 }
 
 function createEpicCoastlines() {
@@ -2978,16 +3037,18 @@ function boot() {
   const epicUnderside = shadow(new THREE.Mesh(createEpicUndersideGeometry(), epicUndersideMaterial));
   const epicStalactites = createEpicStalactites();
   const epicIceWallMaterial = new THREE.MeshStandardMaterial({
-    color: 0xa2bcc1,
+    color: 0xb8bfbb,
     vertexColors: true,
-    roughness: 0.68,
-    metalness: 0.035,
-    emissive: 0x0a2830,
-    emissiveIntensity: 0.34,
+    roughness: 0.79,
+    metalness: 0.015,
+    emissive: 0x0b1516,
+    emissiveIntensity: 0.24,
+    flatShading: true,
     side: THREE.DoubleSide,
   });
   const epicIceWall = shadow(new THREE.Mesh(createEpicIceWallGeometry(), epicIceWallMaterial));
-  epicIceWall.name = "Broken glacial rim";
+  epicIceWall.name = "Terrain-blended glacial rim";
+  const epicRimIcicles = createEpicRimIcicles();
   const epicTerrainMaterial = new THREE.MeshStandardMaterial({
     vertexColors: true,
     roughness: 0.95,
@@ -3165,6 +3226,7 @@ function boot() {
     epicUnderside,
     epicStalactites,
     epicIceWall,
+    epicRimIcicles,
     epicOcean,
     epicShallows,
     epicCliffs,
@@ -3187,7 +3249,6 @@ function boot() {
   const proceduralEpicGeography = [
     epicUnderside,
     epicStalactites,
-    epicIceWall,
     epicShallows,
     epicCliffs,
     epicContinents,
@@ -3203,7 +3264,7 @@ function boot() {
   let meshyWorldLoaded = false;
   let meshyWorldLoadError = "";
   new GLTFLoader().load(
-    "assets/world/celestial_world_runtime_tapered.glb?v=2",
+    "assets/world/celestial_world_runtime_tapered.glb?v=3",
     (gltf) => {
       gltf.scene.name = "Celestial world runtime mesh";
       gltf.scene.traverse((object) => {

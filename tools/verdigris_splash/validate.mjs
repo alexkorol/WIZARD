@@ -51,7 +51,7 @@ assert(app.includes("createEpicCityLights") && app.includes("createEpicBeaconMes
 assert(app.includes("createVolumetricWeather") && app.includes("Ray-marched regional atmosphere") && app.includes("uCameraLocal"), "ray-marched volumetric weather is missing");
 assert(app.includes("createRegionalLightning") && app.includes("sunGlint"), "regional lightning or shimmering ocean is missing");
 assert(app.includes("createSpectacleHalos") && app.includes("createStormCrown") && app.includes("createWaterfallHalos"), "cinematic weather, storm, or waterfall radiance is missing");
-assert(app.includes("GLTFLoader") && app.includes("celestial_world_runtime_tapered.glb?v=2"), "current Blender-refined Meshy world loader is missing");
+assert(app.includes("GLTFLoader") && app.includes("celestial_world_runtime_tapered.glb?v=3"), "current Blender-refined Meshy world loader is missing");
 assert(app.includes("celestial_world_top_texture_4k_detail.webp") && app.includes("uWorldTopMap"), "4K top-surface texture projection is missing");
 assert(app.includes("celestial_world_underside_texture.png") && app.includes("epicUndersideTexture"), "sculpted underside texture is missing");
 assert(app.includes("createEpicStalactites") && app.includes("createEpicIceWallGeometry"), "procedural fallback underside is missing");
@@ -66,6 +66,8 @@ assert(app.includes("deepBlueChroma") && app.includes("cyanChroma") && app.inclu
 assert(!app.includes("max(atlasColor.r * 0.86, atlasColor.g * 0.72)") && !app.includes("max(worldTopColor.r * 0.86, worldTopColor.g * 0.72)"), "neutral dark terrain can still leak into the sea mask");
 assert(app.includes("illuminationLandMask") && app.includes("reefSignal * reefPulse * worldSeaMask") && app.includes("lavaSignal * lavaPulse * illuminationLandMask"), "illumination channels are not gated to their terrain class");
 assert(app.includes("celestial_world_illumination_map_4k.png?v=1") && app.includes("uWorldIlluminationMap") && app.includes("totalEmissiveRadiance"), "stitched world illumination map is not active");
+assert(app.includes("createEpicRimIcicles") && app.includes("Terrain-blended glacial rim") && app.includes("Localized glacial rim icicles"), "terrain-blended ice rim or localized icicles are missing");
+assert(app.includes("celestial_world_runtime_tapered.glb?v=3"), "rim-relaxed Blender mesh is not cache-busted");
 assert(app.includes("lavaSignal") && app.includes("reefSignal") && app.includes("groveSignal"), "biome-specific illumination controls are missing");
 assert(!app.includes("dot(vWorld.xz, vec2(5.7, 1.8))") && app.includes("dot(reflectionUv, flowDirection)"), "fixed-direction ocean reflection streaks have returned");
 assert(blenderScript.includes("soften_summits") && blenderScript.includes("softened_summit_vertices"), "Blender summit softening pass is missing");

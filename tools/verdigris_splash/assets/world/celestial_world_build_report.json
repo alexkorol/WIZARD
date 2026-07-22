@@ -197,9 +197,12 @@
     "runtime_water_level": 0.14
   },
   "blender_refinement": {
-    "softened_summit_vertices": 1084,
+    "softened_summit_vertices": 1031,
     "source_summit_y": 1.424409,
     "refined_summit_y": 0.804003,
-    "summit_height_reduction_percent": 43.556
+    "summit_height_reduction_percent": 43.556,
+    "sea_rim_relaxed_vertices": 586,
+    "sea_rim_highest_before": 0.457493,
+    "sea_rim_highest_after": 0.260535
   }
 }

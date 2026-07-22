@@ -5,7 +5,9 @@ authored underside relief while compressing the outer hanging mass and keeping
 the deepest central forms, producing a shallower disc that resolves into a
 single spinning-top peak instead of a hemisphere.  It also relaxes only the
 extreme upper summits so their projected atlas texture does not stretch across
-needle-like slopes.
+needle-like slopes.  Finally, atlas-classified sea near the perimeter is
+relaxed back to the water plane so low Meshy mounds cannot read as bulging
+water beneath the runtime ocean and glacial rim.
 """
 
 from __future__ import annotations
@@ -17,6 +19,10 @@ from pathlib import Path
 import bmesh
 import bpy
 from mathutils import Vector
+
+
+WORLD_RX = 7.18
+WORLD_RY = 7.40
 
 
 def arguments() -> tuple[Path, Path, Path]:
@@ -41,6 +47,56 @@ def world_bounds(objects: list[bpy.types.Object]) -> tuple[Vector, Vector]:
 def smoothstep(edge0: float, edge1: float, value: float) -> float:
     amount = min(1.0, max(0.0, (value - edge0) / max(0.000001, edge1 - edge0)))
     return amount * amount * (3.0 - 2.0 * amount)
+
+
+def flatten_painted_sea(obj: bpy.types.Object, atlas_path: Path, rim_z: float = 0.10) -> dict[str, float]:
+    """Relax only blue/cyan top-surface rim vertices toward the water plane."""
+    image = bpy.data.images.load(str(atlas_path), check_existing=True)
+    image.colorspace_settings.name = "Non-Color"
+    width, height = image.size
+    pixels = list(image.pixels[:])
+    inverse = obj.matrix_world.inverted()
+    flattened = 0
+    highest_before = rim_z
+    highest_after = rim_z
+
+    for vertex in obj.data.vertices:
+        world = obj.matrix_world @ vertex.co
+        normal = (obj.matrix_world.to_3x3() @ vertex.normal).normalized()
+        radial = math.hypot(world.x / WORLD_RX, world.y / WORLD_RY)
+        if radial < 0.64 or world.z < rim_z - 0.035 or normal.z < 0.045:
+            continue
+
+        # The exported glTF maps Blender -Y to runtime +Z.  TextureLoader uses
+        # flipY=false, matching the north-up atlas used by the runtime shader.
+        u = min(1.0, max(0.0, (world.x / WORLD_RX + 1.0) * 0.5))
+        v = min(1.0, max(0.0, 0.5 - world.y / (WORLD_RY * 2.0)))
+        pixel_x = min(width - 1, max(0, int(round(u * (width - 1)))))
+        pixel_y = min(height - 1, max(0, int(round((1.0 - v) * (height - 1)))))
+        offset = (pixel_y * width + pixel_x) * 4
+        red, green, blue = pixels[offset : offset + 3]
+        deep_blue = blue - max(red, green)
+        cyan = min(green, blue) - red
+        water_chroma = max(deep_blue, cyan * 0.78)
+        water_weight = smoothstep(0.018, 0.095, water_chroma)
+        perimeter_weight = smoothstep(0.58, 0.84, radial)
+        flatten_weight = smoothstep(0.08, 0.55, water_weight * perimeter_weight) * 0.985
+        if flatten_weight < 0.035:
+            continue
+
+        highest_before = max(highest_before, world.z)
+        target = rim_z + 0.014 + math.sin(world.x * 2.7 + world.y * 1.9) * 0.004
+        world.z += (target - world.z) * flatten_weight
+        highest_after = max(highest_after, world.z)
+        vertex.co = inverse @ world
+        flattened += 1
+
+    obj.data.update()
+    return {
+        "vertices": flattened,
+        "highest_before": round(highest_before, 6),
+        "highest_after": round(highest_after, 6),
+    }
 
 
 def soften_summits(obj: bpy.types.Object, shoulder_z: float = 0.34) -> int:
@@ -194,6 +250,10 @@ def main() -> None:
         raise RuntimeError("No mesh objects found in source GLB")
 
     before = world_bounds(meshes)
+    atlas_path = source.parent / "celestial_world_top_texture.png"
+    if not atlas_path.exists():
+        raise FileNotFoundError(f"Missing top atlas for sea-rim classification: {atlas_path}")
+    sea_relaxation = [flatten_painted_sea(obj, atlas_path, rim_z=0.10) for obj in meshes]
     softened = sum(soften_summits(obj) for obj in meshes)
     changed = sum(taper_mesh(obj, rim_z=0.10, bottom_z=before[0].z, radius=7.4) for obj in meshes)
     after = world_bounds(meshes)
@@ -216,6 +276,7 @@ def main() -> None:
         {
             "objects": len(meshes),
             "softened_summit_vertices": softened,
+            "sea_rim_relaxation": sea_relaxation,
             "changed_vertices": changed,
             "before": [tuple(round(value, 4) for value in vector) for vector in before],
             "after": [tuple(round(value, 4) for value in vector) for vector in after],
