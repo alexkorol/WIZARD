@@ -2615,6 +2615,8 @@ function boot() {
       uPulse: { value: 0 },
       uWorldTopMap: { value: null },
       uWorldReliefMap: { value: null },
+      uSunWorld: { value: new THREE.Vector3(-4.35, 4.75, 4.5) },
+      uWorldCenter: { value: new THREE.Vector3() },
     },
     vertexShader: `
       uniform float uTime;
@@ -2645,6 +2647,8 @@ function boot() {
       uniform float uPulse;
       uniform sampler2D uWorldTopMap;
       uniform sampler2D uWorldReliefMap;
+      uniform vec3 uSunWorld;
+      uniform vec3 uWorldCenter;
       varying float vEdge;
       varying vec3 vWorld;
       varying float vWave;
@@ -2678,6 +2682,18 @@ function boot() {
         float fresnel = pow(1.0 - clamp(dot(viewDir, normal), 0.0, 1.0), 1.55);
         vec3 sunDirection = normalize(vec3(-0.46, 0.82, 0.34));
         float sunGlint = pow(max(dot(reflect(-sunDirection, normal), viewDir), 0.0), 18.0);
+        float viewElevation = clamp(dot(viewDir, vec3(0.0, 1.0, 0.0)), 0.0, 1.0);
+        float grazingReflection = pow(1.0 - viewElevation, 1.18);
+        vec2 sunRoadOrigin = uWorldCenter.xz;
+        vec2 sunToCamera = cameraPosition.xz - uSunWorld.xz;
+        vec2 sunRoadDirection = sunToCamera / max(length(sunToCamera), 0.001);
+        vec2 sunRoadOffset = vWorld.xz - sunRoadOrigin;
+        float sunRoadAlong = dot(sunRoadOffset, sunRoadDirection);
+        float sunRoadLateral = abs(sunRoadOffset.x * sunRoadDirection.y - sunRoadOffset.y * sunRoadDirection.x);
+        float sunRoadWidth = 0.62 + clamp(sunRoadAlong + 8.0, 0.0, 18.0) * 0.062;
+        float sunRoadShape = exp(-pow(sunRoadLateral / max(sunRoadWidth, 0.08), 2.0));
+        float sunRoadLength = 1.0 - smoothstep(8.0, 13.0, abs(sunRoadAlong));
+        float sunRoadBase = sunRoadShape * sunRoadLength * grazingReflection;
         float rippleA = sin(vWorld.x * 4.8 + vWorld.z * 1.35 + uTime * 1.08);
         float rippleB = sin(vWorld.z * 6.2 - vWorld.x * 0.75 - uTime * 0.86);
         float rippleC = sin((vWorld.x + vWorld.z) * 10.5 + uTime * 1.34);
@@ -2701,20 +2717,24 @@ function boot() {
         float topographicFoam = clamp(foamFront * (0.38 + foamBreakup * 0.62) + foamFlecks * 0.12, 0.0, 1.0) * foamZone;
         float sparkleNoise = noise(vWorld.xz * 14.0 + vec2(uTime * 0.7, -uTime * 0.48));
         float sparkle = smoothstep(0.89, 0.985, sparkleNoise) * (0.35 + sunGlint * 1.8);
+        float sunRoadSpark = sunRoadBase * clamp(reflectionStreak * 1.35 + sparkle * 0.9 + crest * 0.18, 0.0, 1.65);
         float rim = smoothstep(0.89, 1.0, vEdge);
         vec3 deep = atlasColor * vec3(0.68, 0.8, 0.92);
-        vec3 skyReflection = mix(vec3(0.075, 0.34, 0.44), vec3(0.34, 0.68, 0.72), fresnel);
-        vec3 color = mix(deep, skyReflection, 0.23 + fresnel * 0.65);
+        vec3 horizonBlue = mix(vec3(0.025, 0.14, 0.24), vec3(0.18, 0.39, 0.47), clamp(fresnel + grazingReflection * 0.34, 0.0, 1.0));
+        vec3 skyReflection = mix(horizonBlue, vec3(0.62, 0.39, 0.22), sunRoadBase * 0.56);
+        vec3 color = mix(deep, skyReflection, clamp(0.12 + fresnel * 0.5 + grazingReflection * 0.065, 0.0, 0.72));
         color += vec3(0.18, 0.62, 0.72) * crest * (0.085 + fresnel * 0.18);
-        color += vec3(0.42, 0.8, 0.9) * shimmerLines * (0.22 + fresnel * 0.44);
-        color += vec3(0.48, 0.86, 0.96) * reflectionStreak * (0.34 + fresnel * 0.4);
-        color += vec3(0.82, 0.98, 0.95) * topographicFoam * (0.88 + fresnel * 0.32);
+        color += vec3(0.34, 0.67, 0.78) * shimmerLines * (0.16 + fresnel * 0.31);
+        color += vec3(0.35, 0.69, 0.82) * reflectionStreak * (0.2 + fresnel * 0.28);
+        color += vec3(0.74, 0.91, 0.89) * topographicFoam * (0.7 + fresnel * 0.22);
         color += vec3(1.0, 0.82, 0.5) * sunGlint * 1.7;
+        color += vec3(1.0, 0.61, 0.22) * sunRoadBase * 0.82;
+        color += vec3(1.0, 0.94, 0.7) * sunRoadSpark * 1.85;
         color += vec3(0.72, 0.95, 1.0) * sparkle * 0.88;
         color += vec3(0.1, 0.48, 0.52) * rim * (0.08 + uPulse * 0.08);
         color += vec3(0.12, 0.32, 0.34) * max(vWave, 0.0) * 1.25;
         float shoreline = smoothstep(0.055, 0.42, seaMask);
-        float alpha = (0.24 + fresnel * 0.5 + shimmerLines * 0.2 + reflectionStreak * 0.23 + topographicFoam * 0.62 + sunGlint * 0.25 + sparkle * 0.12 + rim * 0.025) * shoreline;
+        float alpha = (0.2 + fresnel * 0.42 + grazingReflection * 0.055 + shimmerLines * 0.14 + reflectionStreak * 0.17 + topographicFoam * 0.5 + sunGlint * 0.25 + sunRoadBase * 0.3 + sunRoadSpark * 0.42 + sparkle * 0.1 + rim * 0.025) * shoreline;
         gl_FragColor = vec4(color, clamp(alpha, 0.0, 0.82));
       }
     `,
@@ -3535,6 +3555,8 @@ function boot() {
     waterMaterial.uniforms.uPulse.value = crownPulse;
     epicOceanMaterial.uniforms.uTime.value = time;
     epicOceanMaterial.uniforms.uPulse.value = crownPulse;
+    spectacleHalos.sun.sprite.getWorldPosition(epicOceanMaterial.uniforms.uSunWorld.value);
+    epicWorld.getWorldPosition(epicOceanMaterial.uniforms.uWorldCenter.value);
     if (meshyWorldShader) meshyWorldShader.uniforms.uWaterTime.value = time;
     epicCityLights.material.uniforms.uTime.value = time;
     epicCityLights.material.uniforms.uPulse.value = crownPulse;

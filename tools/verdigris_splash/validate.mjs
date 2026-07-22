@@ -54,6 +54,7 @@ assert(!app.includes("createWorldCore") && !app.includes("worldCore"), "the reje
 assert(app.includes("const proceduralEpicGeography = [\n    epicUnderside") && !app.includes("const proceduralEpicGeography = [\n    epicOcean"), "generated underside overlays must be hidden while the stable reflective sea remains");
 assert(app.includes("seaMask < 0.055") && app.includes("skyReflection") && app.includes("sunGlint") && app.includes("sparkle"), "stable reflective water skin is missing");
 assert(app.includes("topographyGradient") && app.includes("flowDirection") && app.includes("topographicFoam") && app.includes("foamZone"), "heightmap-directed dynamic foam is missing");
+assert(app.includes("sunRoadBase") && app.includes("sunRoadSpark") && app.includes("uSunWorld") && app.includes("grazingReflection"), "grazing-angle ocean sun road is missing");
 assert(app.includes("uWorldUndersideMap") && !app.includes("vUndersidePosition.y < -0.04) discard"), "the authored Meshy underside is not being rendered");
 assert(app.includes("Depth-stacked volumetric auroras") && app.includes("auroraLayers") && app.includes("nebula"), "depth-stacked aurora or nebula atmosphere is missing");
 assert(app.includes("setVariant") && app.includes("activeVariant"), "scene view switching is missing");
@@ -61,6 +62,7 @@ assert(app.includes("cameraControl") && app.includes('addEventListener("pointerd
 assert(app.includes('addEventListener("wheel"') && app.includes('addEventListener("keydown"'), "zoom or keyboard camera controls are missing");
 assert(app.includes("visibilitychange") && app.includes("pagehide"), "lifecycle throttling/disposal hooks are missing");
 assert(app.includes("prefers-reduced-motion"), "reduced-motion support is missing");
+assert(html.includes('class="tilt-shift"') && css.includes("backdrop-filter: blur(1.15px)"), "restrained tilt-shift focus treatment is missing");
 assert(!/SOUND\s+(?:ON|OFF)/i.test(html + app), "do not expose an inert sound toggle");
 assert(!/data:[^;]+;base64,[A-Za-z0-9+/=]{4096,}/.test(html + css + app), "large embedded base64 payload detected");
 assert(!/(?:src|href)="http:\/\//i.test(html), "insecure external asset URL detected");

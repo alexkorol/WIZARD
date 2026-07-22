@@ -54,6 +54,37 @@ select { -webkit-tap-highlight-color: transparent; }
 #world.is-dragging { cursor: grabbing; }
 #world:focus-visible { outline: 1px solid rgba(139, 216, 202, .48); outline-offset: -3px; }
 
+.tilt-shift {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+}
+
+.tilt-shift::before,
+.tilt-shift::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 18%;
+  background: rgba(2, 7, 10, .001);
+  -webkit-backdrop-filter: blur(1.15px);
+  backdrop-filter: blur(1.15px);
+}
+
+.tilt-shift::before {
+  top: 0;
+  -webkit-mask-image: linear-gradient(#000 0%, rgba(0, 0, 0, .62) 42%, transparent 100%);
+  mask-image: linear-gradient(#000 0%, rgba(0, 0, 0, .62) 42%, transparent 100%);
+}
+
+.tilt-shift::after {
+  bottom: 0;
+  -webkit-mask-image: linear-gradient(transparent 0%, rgba(0, 0, 0, .62) 58%, #000 100%);
+  mask-image: linear-gradient(transparent 0%, rgba(0, 0, 0, .62) 58%, #000 100%);
+}
+
 .grade,
 .grain {
   position: absolute;
@@ -556,7 +587,8 @@ select:focus-visible { border-color: var(--focus); box-shadow: 0 0 0 2px rgba(76
 
 @media (forced-colors: active) {
   .grade,
-  .grain { display: none; }
+  .grain,
+  .tilt-shift { display: none; }
   h1 { color: CanvasText; background: none; filter: none; }
   .wordmark-echo { display: none; }
   .menu-item { border: 1px solid ButtonText; }
