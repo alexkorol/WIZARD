@@ -1,0 +1,18 @@
+Use case: precise-object-edit
+Asset type: overlapping tile {tile_number} of 16 from a 4K fantasy world atlas albedo texture for a real-time 3D disk-world
+Tile location: row {row} of 4, column {column} of 4. Preserve black outside the circular world if it is visible.
+Input image: Image 1 is the edit target and must remain the exact square crop.
+
+Primary request: repaint this exact tile at much higher perceived resolution and add convincing micro-detail only. Preserve the exact macro geography, every coastline, island silhouette, mountain location, river course, road/path, biome boundary, reef, and water/land ratio.
+
+Terrain detail: add fine erosion channels, layered rock strata, varied forest canopy clusters, small clearings, subtle river tributaries only where implied, believable beach grain, coastal shelves, reefs, volcanic fractures, snow and scree breakup, and tiny settlement/road texture where already present.
+
+Water detail: retain the same dark navy and turquoise palette; add fine-scale current lines, subtle depth variation, reef texture, and tiny wave structure without large blobs.
+
+Style/medium: orthographic top-down fantasy game-world albedo texture; richly detailed hand-painted realism; shadeless/unlit color information suitable for projection onto 3D geometry.
+
+Composition: do not zoom, rotate, crop, translate, or reframe. Keep the outer 12 percent on every side compositionally locked so neighboring overlap tiles can be feather-blended.
+
+Lighting: no directional lighting, no cast shadows, no atmospheric haze, no vignette, no glossy highlights, no baked sun direction.
+
+Constraints: preserve all existing features at the borders exactly; increase detail without redesigning geography; seamless-looking border continuity; no text, labels, icons, compass, border, watermark, UI, extra islands, deleted islands, or invented major roads.

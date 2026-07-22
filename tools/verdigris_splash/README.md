@@ -40,6 +40,7 @@ The build selects the largest connected body as the world, removes the separate 
 - `celestial_world_top_texture.png` — the shadeless varied-territory top-down base-color texture, projected only onto upward-facing terrain and ocean geometry so the 3D scene supplies all shading.
 - `celestial_world_top_texture_4k_detail.png` — the 4096×4096 reference-quality master assembled from sixteen overlapping image-model detail repaints with feathered seams and an original-map structural guide.
 - `celestial_world_top_texture_4k_detail.webp` — the visually matched, browser-efficient 4K runtime derivative used by the menu scene.
+- `celestial_world_4k_tile_detail_prompt.txt` — the exact constrained detail-paint prompt template used for every overlapping tile.
 - `celestial_world_optimized_no_moon.stl` — cleaned, decimated Z-up interchange mesh.
 - `celestial_world_runtime.glb` — Y-up, vertex-colored game mesh used by the menu.
 - `celestial_world_build_report.json` — component removal, height range, transform, and reduction audit.
