@@ -40,12 +40,12 @@ assert(app.includes("createEpicOceanGeometry") && app.includes("createContinentG
 assert(app.includes("createEpicCapitals") && app.includes("createEpicTrees"), "epic world landmarks are missing");
 assert(app.includes("createEpicShallowsGeometry") && app.includes("createEpicRoutes"), "world coast or route detail is missing");
 assert(app.includes("createEpicCityLights") && app.includes("createEpicBeaconMesh"), "world activation details are missing");
-assert(app.includes("createEpicCloudWisps") && app.includes("currentWave"), "world atmosphere or ocean currents are missing");
+assert(app.includes("createRegionalWeather") && app.includes("createRegionalLightning") && app.includes("sunGlint"), "regional weather or shimmering ocean is missing");
 assert(app.includes("GLTFLoader") && app.includes("celestial_world_runtime.glb"), "optimized Meshy world loader is missing");
 assert(app.includes("celestial_world_top_texture.png") && app.includes("uWorldTopMap"), "top-surface texture projection is missing");
 assert(app.includes("celestial_world_underside_texture.png") && app.includes("epicUndersideTexture"), "sculpted underside texture is missing");
 assert(app.includes("createEpicStalactites") && app.includes("createEpicIceWallGeometry"), "spinning-top underside or broken ice rim is missing");
-assert(app.includes("const proceduralEpicGeography = [\n    epicOcean"), "procedural ocean must be hidden after the shaded atlas loads");
+assert(app.includes("const proceduralEpicGeography = [\n    epicShallows") && !app.includes("const proceduralEpicGeography = [\n    epicOcean"), "animated ocean must remain visible over the shaded atlas");
 assert(app.includes("createAuroraCurtains") && app.includes("nebula"), "aurora or nebula atmosphere is missing");
 assert(app.includes("setVariant") && app.includes("activeVariant"), "scene view switching is missing");
 assert(app.includes("cameraControl") && app.includes('addEventListener("pointerdown"'), "drag camera controls are missing");

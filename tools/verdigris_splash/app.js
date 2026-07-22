@@ -1596,6 +1596,163 @@ function createCloudLayer() {
   return { group, sprites, texture };
 }
 
+function createRegionalWeather(texture) {
+  const group = new THREE.Group();
+  group.name = "Regional weather systems";
+  const random = seeded(91731);
+  const textureRandom = seeded(12811);
+  const weatherCanvas = document.createElement("canvas");
+  weatherCanvas.width = weatherCanvas.height = 256;
+  const weatherContext = weatherCanvas.getContext("2d");
+  weatherContext.clearRect(0, 0, 256, 256);
+  for (let index = 0; index < 30; index += 1) {
+    const x = mix(28, 228, textureRandom());
+    const y = mix(74, 182, textureRandom());
+    const radius = mix(28, 68, textureRandom());
+    const gradient = weatherContext.createRadialGradient(x, y, 0, x, y, radius);
+    gradient.addColorStop(0, `rgba(235,244,241,${mix(0.38, 0.72, textureRandom())})`);
+    gradient.addColorStop(0.46, `rgba(176,199,199,${mix(0.14, 0.28, textureRandom())})`);
+    gradient.addColorStop(1, "rgba(88,116,124,0)");
+    weatherContext.fillStyle = gradient;
+    weatherContext.fillRect(0, 0, 256, 256);
+  }
+  const weatherTexture = new THREE.CanvasTexture(weatherCanvas);
+  weatherTexture.colorSpace = THREE.SRGBColorSpace;
+  const sprites = [];
+  const regions = [
+    { name: "Gale Teeth storm", center: [5.35, 1.6, 1.8], spread: [2.25, 0.7, 1.45], count: 13, color: 0x536978, opacity: 0.78, scale: [2.1, 4.0], speed: 0.055 },
+    { name: "High March rain", center: [-2.2, 1.25, -1.7], spread: [2.5, 0.55, 1.35], count: 10, color: 0x718b91, opacity: 0.62, scale: [1.8, 3.5], speed: 0.035 },
+    { name: "Aster Vale sunlight", center: [-2.7, 1.8, 3.55], spread: [2.05, 0.65, 1.0], count: 8, color: 0xffe4b0, opacity: 0.46, scale: [1.7, 3.15], speed: 0.026 },
+    { name: "Lantern mist", center: [4.65, 0.62, -3.2], spread: [2.0, 0.28, 1.2], count: 10, color: 0xa7d1ce, opacity: 0.58, scale: [1.6, 3.2], speed: 0.022 },
+  ];
+  const materials = regions.map((region) => new THREE.SpriteMaterial({
+    map: weatherTexture,
+    color: region.color,
+    transparent: true,
+    opacity: region.opacity,
+    alphaTest: 0.008,
+    depthWrite: false,
+    fog: true,
+  }));
+
+  regions.forEach((region, regionIndex) => {
+    for (let index = 0; index < region.count; index += 1) {
+      const sprite = new THREE.Sprite(materials[regionIndex]);
+      const angle = random() * TAU;
+      const radius = Math.sqrt(random());
+      const x = region.center[0] + Math.cos(angle) * region.spread[0] * radius;
+      const z = region.center[2] + Math.sin(angle) * region.spread[2] * radius;
+      const y = region.center[1] + (random() - 0.5) * region.spread[1];
+      const width = mix(region.scale[0], region.scale[1], random());
+      sprite.position.set(x, y, z);
+      sprite.scale.set(width, width * mix(0.22, 0.36, random()), 1);
+      sprite.renderOrder = regionIndex === 3 ? 9 : 8;
+      sprite.userData = {
+        baseX: x,
+        baseY: y,
+        baseZ: z,
+        phase: random() * TAU,
+        speed: region.speed * mix(0.72, 1.28, random()),
+        region: regionIndex,
+      };
+      group.add(sprite);
+      sprites.push(sprite);
+    }
+  });
+
+  const rimMistMaterial = new THREE.SpriteMaterial({
+    map: weatherTexture,
+    color: 0x9bc4c7,
+    transparent: true,
+    opacity: 0.36,
+    depthWrite: false,
+    fog: true,
+  });
+  for (let index = 0; index < 18; index += 1) {
+    if (index % 5 === 2) continue;
+    const angle = index / 18 * TAU + (random() - 0.5) * 0.18;
+    const boundary = worldBoundaryScale(angle);
+    const sprite = new THREE.Sprite(rimMistMaterial);
+    const x = Math.cos(angle) * WORLD_RX * boundary * 0.96;
+    const z = Math.sin(angle) * WORLD_RZ * boundary * 0.96;
+    sprite.position.set(x, mix(0.28, 0.72, random()), z);
+    const width = mix(1.5, 2.8, random());
+    sprite.scale.set(width, width * mix(0.2, 0.32, random()), 1);
+    sprite.renderOrder = 9;
+    sprite.userData = { baseX: x, baseY: sprite.position.y, baseZ: z, phase: random() * TAU, speed: mix(0.012, 0.026, random()), region: 4 };
+    group.add(sprite);
+    sprites.push(sprite);
+  }
+
+  return { group, sprites, materials, rimMistMaterial, texture: weatherTexture };
+}
+
+function createRegionalLightning() {
+  const group = new THREE.Group();
+  group.name = "Moving rim lightning";
+  const random = seeded(33219);
+  const bolts = [];
+  const origins = [
+    [5.65, 3.25, 1.45],
+    [4.55, 2.95, 2.55],
+    [-2.6, 2.6, -2.35],
+  ];
+  origins.forEach((origin, boltIndex) => {
+    const points = [];
+    let x = origin[0];
+    let y = origin[1];
+    let z = origin[2];
+    for (let index = 0; index < 13; index += 1) {
+      points.push(new THREE.Vector3(x, y, z));
+      x += (random() - 0.5) * 0.2;
+      z += (random() - 0.5) * 0.13;
+      y -= mix(0.14, 0.24, random());
+    }
+    const material = new THREE.LineBasicMaterial({
+      color: boltIndex === 2 ? 0x9ce9ff : 0xc4f4ff,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), material);
+    line.frustumCulled = false;
+    line.renderOrder = 12;
+    line.userData.phase = [0.18, 0.45, 0.665][boltIndex];
+    group.add(line);
+    bolts.push(line);
+  });
+  return { group, bolts };
+}
+
+function createRegionalSunshafts() {
+  const group = new THREE.Group();
+  group.name = "Local sunlight shafts";
+  const material = new THREE.MeshBasicMaterial({
+    color: 0xffd9a0,
+    transparent: true,
+    opacity: 0.02,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+    fog: true,
+  });
+  const shafts = [
+    { x: -3.3, z: 3.4, y: 3.6, radius: 0.9, height: 5.8, tilt: 0.08 },
+    { x: -1.9, z: 3.9, y: 3.2, radius: 0.62, height: 5.1, tilt: -0.12 },
+    { x: 0.2, z: -3.55, y: 3.45, radius: 0.5, height: 5.35, tilt: 0.16 },
+  ];
+  shafts.forEach((shaft, index) => {
+    const mesh = new THREE.Mesh(new THREE.CylinderGeometry(shaft.radius * 0.18, shaft.radius, shaft.height, 20, 1, true), material);
+    mesh.position.set(shaft.x, shaft.y, shaft.z);
+    mesh.rotation.z = shaft.tilt;
+    mesh.rotation.x = index === 2 ? -0.12 : 0.04;
+    mesh.renderOrder = 7;
+    group.add(mesh);
+  });
+  return { group, material };
+}
+
 function createAmbientMotes() {
   const maxCount = 440;
   const random = seeded(557);
@@ -1847,9 +2004,9 @@ function createAuroraCurtains() {
   group.name = "Aurora curtains";
   const materials = [];
   const configurations = [
-    { center: -Math.PI * 0.52, arc: 1.55, radius: 11.8, base: 3.2, height: 5.8, seed: 0.7, cyan: [0.16, 1.0, 0.84], violet: [0.42, 0.28, 1.0] },
-    { center: -Math.PI * 0.33, arc: 0.78, radius: 13.6, base: 4.05, height: 4.7, seed: 2.3, cyan: [0.12, 0.72, 1.0], violet: [0.72, 0.26, 1.0] },
-    { center: -Math.PI * 0.72, arc: 0.72, radius: 14.7, base: 4.4, height: 4.15, seed: 4.9, cyan: [0.2, 1.0, 0.76], violet: [0.3, 0.44, 1.0] },
+    { center: -0.72, arc: 1.05, radius: 8.25, base: 0.7, height: 3.65, seed: 0.7, cyan: [0.16, 1.0, 0.84], violet: [0.42, 0.28, 1.0] },
+    { center: 2.45, arc: 0.78, radius: 8.65, base: 0.95, height: 3.15, seed: 2.3, cyan: [0.12, 0.72, 1.0], violet: [0.72, 0.26, 1.0] },
+    { center: 0.82, arc: 0.64, radius: 9.1, base: 1.15, height: 2.75, seed: 4.9, cyan: [0.2, 1.0, 0.76], violet: [0.3, 0.44, 1.0] },
   ];
   configurations.forEach((config) => {
     const alongSegments = 84;
@@ -1923,12 +2080,12 @@ function createAuroraCurtains() {
         float hash(float n){return fract(sin(n)*43758.5453);}
         float noise(float x){float i=floor(x),f=fract(x);f=f*f*(3.0-2.0*f);return mix(hash(i),hash(i+1.0),f);}
         void main(){
-          float ribbons=pow(0.5+0.5*sin(vUv.x*118.0+noise(vUv.x*29.0+uSeed)*8.0+uTime*0.22),3.0);
+          float ribbons=pow(0.5+0.5*sin(vUv.x*52.0+noise(vUv.x*17.0+uSeed)*6.0+uTime*0.22),2.2);
           float broad=0.42+0.58*noise(vUv.x*18.0-uTime*0.035+uSeed*7.0);
           float vertical=smoothstep(0.0,0.12,vUv.y)*smoothstep(1.0,0.56,vUv.y);
           float ends=smoothstep(0.0,0.1,vUv.x)*smoothstep(1.0,0.9,vUv.x);
           float pulse=0.76+0.24*sin(uTime*0.19+uSeed+vUv.x*7.0);
-          float alpha=vertical*ends*broad*(0.12+ribbons*0.32+abs(vFold)*0.025)*pulse*uIntensity;
+          float alpha=vertical*ends*broad*(0.045+ribbons*0.15+abs(vFold)*0.018)*pulse*uIntensity;
           vec3 color=mix(uCyan,uViolet,clamp(vUv.x*0.72+noise(vUv.x*8.0+uSeed)*0.3,0.0,1.0));
           color*=0.72+ribbons*0.62;
           gl_FragColor=vec4(color,alpha);
@@ -2017,10 +2174,27 @@ function createStars() {
 }
 
 function createVeinedUndersideMaterial(undersideTexture) {
-  return new THREE.MeshBasicMaterial({
+  const material = new THREE.MeshStandardMaterial({
     map: undersideTexture,
-    color: 0x9fb0b5,
+    color: 0xb4c2c5,
+    roughness: 0.92,
+    metalness: 0.015,
+    emissive: 0x081016,
+    emissiveIntensity: 0.16,
   });
+  material.onBeforeCompile = (shader) => {
+    shader.uniforms.uVeinTime = { value: 0 };
+    shader.uniforms.uVeinPulse = { value: 0 };
+    shader.fragmentShader = shader.fragmentShader.replace("#include <map_fragment>", `
+      vec4 sampledDiffuseColor = texture2D(map, vMapUv);
+      float undersideInk = smoothstep(0.018, 0.13, max(max(sampledDiffuseColor.r, sampledDiffuseColor.g), sampledDiffuseColor.b));
+      vec3 rimStone = vec3(0.22, 0.29, 0.32);
+      sampledDiffuseColor.rgb = mix(rimStone, sampledDiffuseColor.rgb * 1.18, undersideInk);
+      diffuseColor *= sampledDiffuseColor;
+    `);
+    material.userData.shader = shader;
+  };
+  return material;
 }
 
 function createRadialGlowTexture() {
@@ -2146,7 +2320,7 @@ function boot() {
 
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 0.96;
+  renderer.toneMappingExposure = 1.04;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   const scene = new THREE.Scene();
@@ -2232,12 +2406,18 @@ function boot() {
       varying float vEdge;
       varying vec3 vWorld;
       varying float vWave;
+      varying vec3 vWaveNormal;
       void main() {
         vec3 p = position;
-        float wave = sin(p.x * 1.45 + uTime * 0.34) * 0.014 + cos(p.z * 1.72 - uTime * 0.29) * 0.012;
+        float waveA = p.x * 1.45 + p.z * 0.38 + uTime * 0.34;
+        float waveB = p.z * 1.72 - p.x * 0.24 - uTime * 0.29;
+        float wave = sin(waveA) * 0.021 + cos(waveB) * 0.017;
         p.y += wave;
         vEdge = aEdge;
         vWave = wave;
+        float slopeX = cos(waveA) * 0.021 * 1.45 + sin(waveB) * 0.017 * 0.24;
+        float slopeZ = cos(waveA) * 0.021 * 0.38 + sin(waveB) * 0.017 * 1.72;
+        vWaveNormal = normalize(mat3(modelMatrix) * vec3(-slopeX, 1.0, -slopeZ));
         vWorld = (modelMatrix * vec4(p, 1.0)).xyz;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
       }
@@ -2248,6 +2428,7 @@ function boot() {
       varying float vEdge;
       varying vec3 vWorld;
       varying float vWave;
+      varying vec3 vWaveNormal;
       float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
       float noise(vec2 p){
         vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);
@@ -2255,20 +2436,27 @@ function boot() {
       }
       void main() {
         vec3 viewDir = normalize(cameraPosition - vWorld);
-        float fresnel = pow(1.0 - abs(dot(viewDir, vec3(0.0, 1.0, 0.0))), 2.35);
-        float longWave = noise(vWorld.xz * 0.52 + vec2(uTime * 0.035, -uTime * 0.028));
-        float glint = smoothstep(0.76, 0.96, noise(vWorld.xz * 2.1 + vec2(uTime * 0.12, 0.0))) * 0.13;
-        float currentNoise = noise(vWorld.xz * 0.34 + vec2(-uTime * 0.018, uTime * 0.024));
-        float currentWave = sin(vWorld.x * 1.08 + vWorld.z * 0.43 + uTime * 0.22 + currentNoise * 4.4) * 0.5 + 0.5;
-        float current = smoothstep(0.88, 0.99, currentWave) * smoothstep(0.32, 0.78, longWave);
+        vec3 normal = normalize(vWaveNormal);
+        float fresnel = pow(1.0 - clamp(dot(viewDir, normal), 0.0, 1.0), 3.0);
+        vec3 sunDirection = normalize(vec3(-0.46, 0.82, 0.34));
+        float sunGlint = pow(max(dot(reflect(-sunDirection, normal), viewDir), 0.0), 72.0);
+        float rippleA = sin(vWorld.x * 4.8 + vWorld.z * 1.35 + uTime * 1.08);
+        float rippleB = sin(vWorld.z * 6.2 - vWorld.x * 0.75 - uTime * 0.86);
+        float rippleC = sin((vWorld.x + vWorld.z) * 10.5 + uTime * 1.34);
+        float crest = smoothstep(0.84, 1.0, rippleA * 0.46 + rippleB * 0.38 + rippleC * 0.16);
+        float sparkleNoise = noise(vWorld.xz * 14.0 + vec2(uTime * 0.7, -uTime * 0.48));
+        float sparkle = smoothstep(0.94, 0.995, sparkleNoise) * (0.35 + sunGlint * 1.8);
+        float basinDepth = 0.5 + 0.5 * noise(vWorld.xz * 0.18);
         float rim = smoothstep(0.89, 1.0, vEdge);
-        vec3 deep = vec3(0.012, 0.135, 0.205);
-        vec3 surface = vec3(0.025, 0.36, 0.43);
-        vec3 color = mix(deep, surface, 0.32 + fresnel * 0.46 + longWave * 0.12 + glint);
-        color += vec3(0.08, 0.36, 0.39) * current * (0.035 + fresnel * 0.06);
-        color += vec3(0.12, 0.62, 0.58) * rim * (0.22 + uPulse * 0.15);
-        color += vec3(0.16, 0.42, 0.38) * max(vWave, 0.0) * 1.8;
-        float alpha = 0.82 + fresnel * 0.1 + rim * 0.06;
+        vec3 deep = vec3(0.008, 0.085, 0.17);
+        vec3 surface = vec3(0.018, 0.28, 0.39);
+        vec3 color = mix(deep, surface, 0.24 + fresnel * 0.56 + basinDepth * 0.08);
+        color += vec3(0.22, 0.72, 0.82) * crest * (0.05 + fresnel * 0.12);
+        color += vec3(1.0, 0.86, 0.58) * sunGlint * 0.9;
+        color += vec3(0.72, 0.95, 1.0) * sparkle * 0.52;
+        color += vec3(0.1, 0.48, 0.52) * rim * (0.08 + uPulse * 0.08);
+        color += vec3(0.12, 0.32, 0.34) * max(vWave, 0.0) * 1.25;
+        float alpha = 0.72 + fresnel * 0.2 + rim * 0.035;
         gl_FragColor = vec4(color, alpha);
       }
     `,
@@ -2364,9 +2552,13 @@ function boot() {
   const epicUndersideMaterial = createVeinedUndersideMaterial(epicUndersideTexture);
   const epicUnderside = shadow(new THREE.Mesh(createEpicUndersideGeometry(), epicUndersideMaterial));
   const epicStalactites = createEpicStalactites();
-  const epicIceWallMaterial = new THREE.MeshBasicMaterial({
-    color: 0x586d74,
+  const epicIceWallMaterial = new THREE.MeshStandardMaterial({
+    color: 0xa2bcc1,
     vertexColors: true,
+    roughness: 0.68,
+    metalness: 0.035,
+    emissive: 0x0a2830,
+    emissiveIntensity: 0.34,
     side: THREE.DoubleSide,
   });
   const epicIceWall = shadow(new THREE.Mesh(createEpicIceWallGeometry(), epicIceWallMaterial));
@@ -2427,34 +2619,56 @@ function boot() {
   meshyTopTexture.wrapS = THREE.ClampToEdgeWrapping;
   meshyTopTexture.wrapT = THREE.ClampToEdgeWrapping;
   meshyTopTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+  const meshyReliefTexture = new THREE.TextureLoader().load("assets/world/celestial_world_heightmap_16bit.png?v=2");
+  meshyReliefTexture.flipY = false;
+  meshyReliefTexture.wrapS = THREE.ClampToEdgeWrapping;
+  meshyReliefTexture.wrapT = THREE.ClampToEdgeWrapping;
+  meshyReliefTexture.minFilter = THREE.LinearFilter;
+  meshyReliefTexture.magFilter = THREE.LinearFilter;
   const meshyWorldMaterial = new THREE.MeshStandardMaterial({
     color: 0xa0c7aa,
     vertexColors: true,
-    roughness: 0.88,
-    metalness: 0.015,
-    emissive: 0x061322,
-    emissiveIntensity: 0.2,
+    roughness: 0.72,
+    metalness: 0.025,
+    emissive: 0x02090d,
+    emissiveIntensity: 0.055,
   });
   meshyWorldMaterial.onBeforeCompile = (shader) => {
     shader.uniforms.uWorldTopMap = { value: meshyTopTexture };
+    shader.uniforms.uWorldReliefMap = { value: meshyReliefTexture };
     shader.vertexShader = shader.vertexShader
-      .replace("#include <common>", "#include <common>\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying vec3 vUndersidePosition;")
+      .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldReliefMap;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying float vWorldRelief;\nvarying vec3 vUndersidePosition;")
       .replace("#include <begin_vertex>", `#include <begin_vertex>
         vWorldTopUv = vec2(
           (position.x + ${WORLD_RX.toFixed(2)}) / ${(WORLD_RX * 2).toFixed(2)},
           (position.z + ${WORLD_RZ.toFixed(2)}) / ${(WORLD_RZ * 2).toFixed(2)}
         );
+        vWorldRelief = texture2D(uWorldReliefMap, vWorldTopUv).r;
         vWorldTopMask = smoothstep(-0.04, 0.28, normal.y)
           * smoothstep(${(WORLD_WATER_LEVEL - 0.14).toFixed(2)}, ${(WORLD_WATER_LEVEL + 0.03).toFixed(2)}, position.y);
+        float topFacing = smoothstep(0.12, 0.82, normal.y);
+        float landRelief = smoothstep(${(WORLD_WATER_LEVEL + 0.015).toFixed(3)}, ${(WORLD_WATER_LEVEL + 0.28).toFixed(3)}, position.y);
+        transformed.y += max(0.0, position.y - ${WORLD_WATER_LEVEL.toFixed(2)}) * 0.46 * topFacing;
+        transformed.y += pow(max(vWorldRelief - 0.16, 0.0), 1.32) * 0.44 * topFacing * landRelief;
         vUndersidePosition = position;
       `);
     shader.fragmentShader = shader.fragmentShader
-      .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldTopMap;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying vec3 vUndersidePosition;")
+      .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldTopMap;\nuniform sampler2D uWorldReliefMap;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying float vWorldRelief;\nvarying vec3 vUndersidePosition;")
       .replace("#include <color_fragment>", `#include <color_fragment>
         if (vUndersidePosition.y < -0.04) discard;
         vec3 worldTopColor = texture2D(uWorldTopMap, vWorldTopUv).rgb;
         float worldTopInk = smoothstep(0.018, 0.08, max(max(worldTopColor.r, worldTopColor.g), worldTopColor.b));
         diffuseColor.rgb = mix(diffuseColor.rgb, worldTopColor, vWorldTopMask * worldTopInk * 0.98);
+        vec2 reliefTexel = vec2(0.00065104);
+        float reliefLeft = texture2D(uWorldReliefMap, vWorldTopUv - vec2(reliefTexel.x, 0.0)).r;
+        float reliefRight = texture2D(uWorldReliefMap, vWorldTopUv + vec2(reliefTexel.x, 0.0)).r;
+        float reliefDown = texture2D(uWorldReliefMap, vWorldTopUv - vec2(0.0, reliefTexel.y)).r;
+        float reliefUp = texture2D(uWorldReliefMap, vWorldTopUv + vec2(0.0, reliefTexel.y)).r;
+        vec3 reliefNormal = normalize(vec3((reliefLeft - reliefRight) * 5.8, 0.42, (reliefDown - reliefUp) * 5.8));
+        float reliefLight = clamp(dot(reliefNormal, normalize(vec3(-0.58, 0.72, 0.38))), 0.0, 1.0);
+        float reliefShade = mix(0.66, 1.3, smoothstep(0.08, 0.92, reliefLight));
+        float reliefStrength = vWorldTopMask * worldTopInk * smoothstep(0.1, 0.82, vWorldRelief);
+        diffuseColor.rgb *= mix(1.0, reliefShade, reliefStrength * 0.72);
       `);
   };
   epicWorld.add(
@@ -2482,7 +2696,6 @@ function boot() {
   const aurora = createAuroraCurtains();
   epicWorld.add(aurora.group);
   const proceduralEpicGeography = [
-    epicOcean,
     epicShallows,
     epicCliffs,
     epicContinents,
@@ -2524,15 +2737,18 @@ function boot() {
   const clouds = createCloudLayer();
   scene.add(clouds.group);
   const epicCloudWisps = createEpicCloudWisps(clouds.texture);
-  epicWorld.add(epicCloudWisps);
+  const regionalWeather = createRegionalWeather(clouds.texture);
+  const regionalLightning = createRegionalLightning();
+  const regionalSunshafts = createRegionalSunshafts();
+  epicWorld.add(epicCloudWisps, regionalWeather.group, regionalLightning.group, regionalSunshafts.group);
   const flock = createFlock();
   const lightning = createLightning();
   scene.add(flock, lightning);
 
-  const hemisphere = new THREE.HemisphereLight(0x82b6b3, 0x1b1310, 1.72);
+  const hemisphere = new THREE.HemisphereLight(0x89b9bb, 0x161111, 0.92);
   scene.add(hemisphere);
-  const sun = new THREE.DirectionalLight(0xffc58a, 3.55);
-  sun.position.set(2, 12, 8);
+  const sun = new THREE.DirectionalLight(0xffc27a, 4.5);
+  sun.position.set(-9, 10.5, 7.5);
   sun.castShadow = true;
   sun.shadow.camera.left = -11;
   sun.shadow.camera.right = 11;
@@ -2542,9 +2758,22 @@ function boot() {
   sun.shadow.camera.far = 30;
   sun.shadow.bias = -0.00035;
   scene.add(sun);
-  const fill = new THREE.DirectionalLight(0x4a9fa4, 1.35);
+  const fill = new THREE.DirectionalLight(0x4a9fa4, 0.72);
   fill.position.set(-7, 5, -7);
   scene.add(fill);
+  const regionalSunTarget = new THREE.Object3D();
+  regionalSunTarget.position.set(-2.8, WORLD_WATER_LEVEL, 3.45);
+  const regionalSun = new THREE.SpotLight(0xffd494, 6.4, 18, 0.42, 0.82, 1.15);
+  regionalSun.position.set(-5.8, 9.2, 5.6);
+  regionalSun.target = regionalSunTarget;
+  epicWorld.add(regionalSun, regionalSunTarget);
+  const regionalStormLights = [
+    new THREE.PointLight(0xa6e8ff, 0, 7.5, 1.7),
+    new THREE.PointLight(0x7cc8ff, 0, 6.5, 1.8),
+  ];
+  regionalStormLights[0].position.set(5.3, 2.25, 1.8);
+  regionalStormLights[1].position.set(-2.55, 2.0, -2.1);
+  epicWorld.add(...regionalStormLights);
   const abyssLight = new THREE.PointLight(0x49d6c8, 11, 13, 2);
   abyssLight.position.set(0, -4.4, 1.5);
   world.add(abyssLight);
@@ -2563,9 +2792,9 @@ function boot() {
   scene.add(stormLight);
 
   const profiles = {
-    high: { dpr: 1.65, shadows: true, shadowSize: 2048, trees: 360, epicTrees: 860, epicLights: 96, motes: 320, clouds: 10 },
-    balanced: { dpr: 1.2, shadows: true, shadowSize: 1024, trees: 230, epicTrees: 620, epicLights: 72, motes: 200, clouds: 7 },
-    low: { dpr: 1, shadows: false, shadowSize: 512, trees: 120, epicTrees: 340, epicLights: 42, motes: 90, clouds: 4 },
+    high: { dpr: 1.65, shadows: true, shadowSize: 2048, trees: 360, epicTrees: 860, epicLights: 96, motes: 320, clouds: 10, regionalWeather: 56 },
+    balanced: { dpr: 1.2, shadows: true, shadowSize: 1024, trees: 230, epicTrees: 620, epicLights: 72, motes: 200, clouds: 7, regionalWeather: 56 },
+    low: { dpr: 1, shadows: false, shadowSize: 512, trees: 120, epicTrees: 340, epicLights: 42, motes: 90, clouds: 4, regionalWeather: 30 },
   };
   let requestedQuality = "auto";
   let autoQuality = detectAutoQuality();
@@ -2659,6 +2888,11 @@ function boot() {
     for (let index = 0; index < clouds.sprites.length; index += 1) {
       clouds.sprites[index].visible = index < profile.clouds;
     }
+    for (let index = 0; index < regionalWeather.sprites.length; index += 1) {
+      regionalWeather.sprites[index].visible = index < profile.regionalWeather;
+    }
+    regionalSunshafts.group.visible = activeQuality === "high";
+    regionalLightning.bolts.forEach((bolt, index) => { bolt.visible = activeQuality !== "low" || index === 0; });
     qualityState.textContent = requestedQuality === "auto" ? `AUTO · ${activeQuality.toUpperCase()}` : activeQuality.toUpperCase();
     resize();
   }
@@ -2895,7 +3129,7 @@ function boot() {
   let averageFps = 60;
 
   const debug = {
-    version: "verdigris-menu-2.4",
+    version: "verdigris-menu-2.5",
     quality: activeQuality,
     fps: 0,
     frameMs: 0,
@@ -3012,6 +3246,36 @@ function boot() {
       if (sprite.position.x > 17) sprite.position.x -= 30;
     }
 
+    for (let index = 0; index < regionalWeather.sprites.length; index += 1) {
+      const sprite = regionalWeather.sprites[index];
+      const localTime = time * sprite.userData.speed + sprite.userData.phase;
+      const stormDrift = sprite.userData.region === 0 ? 0.48 : sprite.userData.region === 4 ? 0.14 : 0.28;
+      sprite.position.x = sprite.userData.baseX + Math.sin(localTime) * stormDrift;
+      sprite.position.z = sprite.userData.baseZ + Math.cos(localTime * 0.78) * stormDrift * 0.56;
+      sprite.position.y = sprite.userData.baseY + Math.sin(localTime * 1.34) * (sprite.userData.region === 4 ? 0.055 : 0.11);
+    }
+    regionalWeather.materials[0].opacity = 0.76 + Math.sin(time * 0.11) * 0.07;
+    regionalWeather.materials[2].opacity = 0.43 + Math.sin(time * 0.075 + 1.2) * 0.045;
+    regionalWeather.rimMistMaterial.opacity = 0.35 + Math.sin(time * 0.09) * 0.04;
+    regionalSunshafts.material.opacity = 0.017 + Math.sin(time * 0.12 + 0.8) * 0.005;
+    regionalWeather.group.rotation.y = reducedMotion ? 0 : Math.sin(time * 0.026) * 0.045;
+    regionalLightning.group.rotation.y = reducedMotion ? 0 : Math.sin(time * 0.037 - 0.7) * 0.11;
+    aurora.group.rotation.y = reducedMotion ? 0 : Math.sin(time * 0.018) * 0.035;
+
+    let localStormPulseA = 0;
+    let localStormPulseB = 0;
+    regionalLightning.bolts.forEach((bolt, index) => {
+      const firstFlash = reducedMotion ? 0 : pulseAt(phase, bolt.userData.phase, 0.0045);
+      const echoFlash = reducedMotion ? 0 : pulseAt(phase, (bolt.userData.phase + 0.014) % 1, 0.0028) * 0.65;
+      const boltPulse = clamp(firstFlash + echoFlash);
+      bolt.material.opacity = boltPulse * 0.95;
+      if (index < 2) localStormPulseA = Math.max(localStormPulseA, boltPulse);
+      else localStormPulseB = Math.max(localStormPulseB, boltPulse);
+    });
+    regionalStormLights[0].intensity = localStormPulseA * 13;
+    regionalStormLights[1].intensity = localStormPulseB * 10;
+    regionalSun.intensity = 6.2 + Math.sin(time * 0.095) * 0.9;
+
     const flockVisible = !reducedMotion && phase > 0.34 && phase < 0.59;
     const flockProgress = clamp((phase - 0.34) / 0.25);
     flock.material.opacity = flockVisible ? Math.sin(flockProgress * Math.PI) * 0.42 : 0;
@@ -3054,7 +3318,7 @@ function boot() {
     epicBeacons.material.opacity = crownPulse * 0.155;
     epicCloudWisps.position.x = reducedMotion ? 0 : Math.sin(time * 0.042) * 0.22;
     epicCloudWisps.position.z = reducedMotion ? 0 : Math.cos(time * 0.034) * 0.12;
-    sun.intensity = 4.1 + crownPulse * 0.5;
+    sun.intensity = 4.4 + crownPulse * 0.55;
 
     renderer.render(scene, camera);
     frames += 1;
@@ -3128,7 +3392,9 @@ function boot() {
     });
     renderer.renderLists.dispose();
     clouds.texture.dispose();
+    regionalWeather.texture.dispose();
     meshyTopTexture.dispose();
+    meshyReliefTexture.dispose();
     renderer.dispose();
   }
 
