@@ -1,34 +1,51 @@
-# The Endless Descent
+# The Verdigris Vault
 
-An infinite, deterministic Sokoban campaign for WIZARD. Every floor is generated in the browser from a run seed and floor number.
+A finite, pre-forged Sokoban campaign for integration into Verdigris. The shipped page contains 24 frozen stages, their verified proof routes, and a compact movement engine. It performs no level generation or solver search in the browser.
 
-## Solvability and difficulty
+## Runtime architecture
 
-The generator starts with every crate on a goal, then makes only legal reverse pulls. Replaying those pulls backward is always a valid solution. A push-space A* solver independently challenges each candidate using wall-aware reverse-push distances, minimum-cost box-goal matching, canonical keeper regions, static taboo cells, transposition pruning, and frozen 2x2 deadlocks.
+- `levels.js` is the generated campaign artifact: geometry, initial state, proof route, taboo cells, difficulty evidence, and post-solve analysis.
+- `runtime.js` contains only grid coordinates, directions, hydration, and access to precomputed taboo cells.
+- `game.js` handles play, undo, reset, stored-route hints, replay, progression, and local campaign records.
+- `index.html` loads `levels.js`, `runtime.js`, and `game.js`. It deliberately does not load `core.js`.
 
-Solvability is not difficulty. Starting at floor 100, the generator builds irregular rooms, alcoves, and one-cell corridors in exterior void. A dedicated goal chamber connects to staging rooms through a storage strait, and deep starts place at least half their crates outside it. More importantly, deep candidates now face a rising adversarial search gate. A chamber that looks intricate but collapses in a few hundred solver states is rejected. The deepest band must survive at least 8,000 expanded states from the same solver that proves Thinking Rabbit Original #1 in 97 pushes and 15,415 states.
+Stages load immediately and behave identically on GitHub Pages or inside Verdigris. If the player leaves the stored proof branch, hints ask them to undo or reset instead of launching an expensive search.
 
-Difficulty therefore grows through search resistance, interaction density, box-line changes, counterintuitive pushes, box-controlled barriers, storage order, and interwoven subproblems. Crate count deliberately tops out at six and the expert board stays dense: tests against authored levels showed that more crates and more empty acreage can make the logical decomposition easier, not harder.
+## Offline forge
 
-The research basis includes [Jarusek and Pelanek](https://www.fi.muni.cz/~xpelanek/publications/stairs2010-final.pdf), [Taylor and Parberry](https://ianparberry.com/techreports/LARC-2011-01.pdf), [Bento et al.](https://www.ijcai.org/proceedings/2019/646), and [Junghanns and Schaeffer](https://www.sciencedirect.com/science/article/pii/S0004370201001096). The authored-level benchmark uses the external Thinking Rabbit and Microban collections without vendoring either pack. See [RESEARCH.md](RESEARCH.md).
+`core.js` is the offline generator and solver laboratory. `forge-campaign.js` uses it to create candidates, run a second solver pass, validate routes, sort the survivors by measured difficulty, and write `levels.js`.
 
-Optimization numbers remain sealed until the first solve. Solver-complete floors are push-optimal; smaller floors are then optimized for the fewest player moves among those push-optimal routes. When a deep candidate exceeds the browser search budget, its reverse-forged route is labeled verified rather than optimal. Unlimited undo and static-deadlock warnings keep experimentation humane.
+The current pack uses a fixed forge seed and source-depth schedule. Later candidates receive an additional 50,000- or 100,000-state search after generation. If that search proves a shorter push route, the pack stores it. If the candidate survives the complete budget, the constructive route remains explicitly labeled as verified rather than optimal.
 
-The floor debugger accepts any floor from 1 to 1,000,000. **Descend one floor** advances without requiring the current puzzle to be solved.
+Rebuild the frozen campaign intentionally with:
+
+```bash
+node forge-campaign.js
+node test-campaign.js
+```
+
+Do not run the forge during page load or ordinary deployment.
+
+## Difficulty ordering
+
+The tutorials remain first. The remaining candidates are sorted offline using solver effort, pushes, box interdependence, counterintuitive progress, goal evictions, storage transfers, and box-controlled barriers. The shipped order is frozen, so it can also be playtested and manually rearranged without changing the runtime architecture.
 
 ## Controls
 
 - Arrow keys or WASD: move / push
 - U or Z: undo one move
 - R: reset the chamber
-- H: highlight the next verified push
+- H: show the next push while still on the stored proof branch
 - Swipe or use the on-screen direction pad on touch devices
 
-Progress and the deterministic run seed are saved locally. Starting a new descent creates an entirely new sequence.
+Progress is stored locally under the Vault I campaign version.
 
 ## Verification
 
 ```bash
+node test-campaign.js
 node test-core.js
 node benchmark-authored.js https://sokoboko.garoof.no/ 1 250000
 ```
+
+`test-campaign.js` replays every frozen proof, checks precomputed taboo cells, verifies monotonic campaign ordering, and asserts that the browser bundle neither loads nor calls the offline solver.

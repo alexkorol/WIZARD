@@ -37,3 +37,11 @@ The irregular-layout pass was necessary but insufficient. With a stronger forwar
 The solver now uses empty-board reverse-push distance maps instead of Manhattan distance, minimum-cost box-goal matching, canonical keeper-reachability regions, static taboo squares, a transposition table, and frozen 2x2 deadlock rejection. It proves Original #1 within its browser-safe budget. Original #2 still exceeds the current practical budget, reinforcing Junghanns and Schaeffer's conclusion that Sokoban needs layers of domain knowledge rather than generic search alone.
 
 Generation now treats that solver as an adversary. The solver-state requirement rises with depth to 8,000 states, and candidates below the band are rejected even when they have long routes or impressive-looking geometry. Six interacting crates on a dense board replaced the former eight-crate warehouse escalation because the latter encouraged independent subproblems and walking.
+
+## Verdigris campaign architecture
+
+The infinite browser-forge experiment was retired for the Verdigris component. A finite game benefits more from offline computation, stable playtesting, and deliberate progression than from generating an unbounded sequence during play.
+
+Vault I contains 24 frozen stages. The forge generates and validates candidates under Node, gives later levels a second 50,000- or 100,000-state solver pass, stores stronger routes when found, and sorts the campaign before emitting `levels.js`. The shipped page loads only that data, a minimal movement runtime, and the UI. Solver code, candidate rejection, and difficulty search are no longer on the player's critical path.
+
+This separation also makes future intelligence upgrades safe: a native solver, pattern database, human-authored mutation pass, or larger compute budget can regenerate the campaign artifact without changing the Verdigris game client.

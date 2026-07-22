@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>The Endless Descent — Infinite Sokoban</title>
-  <meta name="description" content="An infinite procession of generated, solver-verified Sokoban theorems whose difficulty is measured in misdirection, interdependence, and chokepoints.">
+  <title>The Verdigris Vault — A Forged Sokoban Campaign</title>
+  <meta name="description" content="A finite campaign of 24 offline-forged Sokoban chambers for Verdigris, ordered by solver resistance and logical interdependence.">
   <meta name="theme-color" content="#0b100f">
-  <meta property="og:title" content="The Endless Descent — Infinite Sokoban">
-  <meta property="og:description" content="Infinite solver-verified chambers measured by interdependence, misdirection, and chokepoints.">
+  <meta property="og:title" content="The Verdigris Vault — A Forged Sokoban Campaign">
+  <meta property="og:description" content="Twenty-four pre-forged chambers measured by solver resistance, misdirection, and interdependence.">
   <meta property="og:image" content="assets/theorem-vault.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,38 +23,38 @@
       <span class="sigil" aria-hidden="true">✦</span>
       <span>WIZARD</span>
     </a>
-    <div class="run-mark" title="Every run creates a deterministic sequence of unique floors">
-      <span>Descent</span>
+    <div class="run-mark" title="A frozen, offline-validated Verdigris campaign">
+      <span>Campaign</span>
       <strong id="run-code">—</strong>
     </div>
-    <button class="text-button" id="new-run" type="button">New descent</button>
+    <button class="text-button" id="new-run" type="button">Reset campaign</button>
   </header>
 
   <main>
     <section class="intro" aria-labelledby="game-title">
-      <p class="eyebrow">A procedural puzzle beneath WIZARD</p>
-      <h1 id="game-title">The Endless Descent</h1>
-      <p class="lede">Every chamber is new. Every chamber is proven. Push the reliquaries onto their seals, then go deeper.</p>
+      <p class="eyebrow">A forged puzzle vault for Verdigris</p>
+      <h1 id="game-title">The Verdigris Vault</h1>
+      <p class="lede">Twenty-four chambers. Forged offline, solver-tested, and ordered into a deliberate Sokoban campaign.</p>
     </section>
 
     <section class="game-shell" aria-label="Sokoban game">
       <aside class="floor-panel" aria-label="Floor information">
         <div class="depth-rule"><span></span><i></i><span></span></div>
-        <p class="label">Depth</p>
-        <p class="floor-number"><span>Floor</span><strong id="floor-number">01</strong></p>
+        <p class="label">Vault progress</p>
+        <p class="floor-number"><span>Stage</span><strong id="floor-number">01</strong></p>
         <div class="difficulty">
           <span id="difficulty-title">Tutorial</span>
           <div class="pips" id="difficulty-pips" aria-label="Difficulty"></div>
         </div>
         <p class="motif"><span>Chamber thesis</span><strong id="motif-name">Sealed until solved</strong></p>
         <form class="floor-jump" id="floor-jump">
-          <label for="floor-input">Debug floor</label>
+          <label for="floor-input">Stage select</label>
           <div>
-            <input id="floor-input" name="floor" type="number" min="1" max="1000000" step="1" value="1" inputmode="numeric" aria-label="Floor number">
+            <input id="floor-input" name="floor" type="number" min="1" max="24" step="1" value="1" inputmode="numeric" aria-label="Stage number">
             <button type="submit">Enter</button>
           </div>
         </form>
-        <button class="debug-descend" id="descend-debug" type="button">Descend one floor <span aria-hidden="true">↓</span></button>
+        <button class="debug-descend" id="descend-debug" type="button">Next stage <span aria-hidden="true">↓</span></button>
         <p class="lesson" id="lesson">The first law of the deep: a reliquary may be pushed, but never pulled.</p>
         <dl class="measurements">
           <div class="spoiler"><dt id="solution-label">Proof length</dt><dd><span id="optimal-pushes">sealed</span></dd></div>
@@ -65,17 +65,17 @@
 
       <div class="chamber-column">
         <div class="status-line" role="status" aria-live="polite">
-          <span id="status">Carving chamber…</span>
+          <span id="status">Opening the forged campaign…</span>
           <span class="live-stats" id="live-stats" hidden><b id="move-count">0</b> steps · <b id="push-count">0</b> pushes</span>
         </div>
 
         <div class="board-frame" id="chamber">
-          <div class="board-loading" id="board-loading"><span></span>Carving a solvable chamber</div>
+          <div class="board-loading" id="board-loading"><span></span>Opening a forged chamber</div>
           <div class="board" id="board" role="grid" aria-label="Sokoban chamber" tabindex="0"></div>
           <div class="victory" id="victory" hidden>
             <div class="victory-sigil" aria-hidden="true">✦</div>
             <p>Thesis revealed · <span id="victory-motif">Packing Order</span></p>
-            <h2 id="victory-thesis">There is always another floor.</h2>
+            <h2 id="victory-thesis">The next theorem waits deeper in the vault.</h2>
             <div class="analysis-grid" aria-label="Solution analysis">
               <div><strong id="analysis-grade">A</strong><span>proof grade</span></div>
               <div><strong id="analysis-lines">0</strong><span>route moves</span></div>
@@ -85,7 +85,7 @@
             </div>
             <div class="victory-actions">
               <button class="secondary-button" id="replay-proof" type="button">Watch shortest proof</button>
-              <button class="primary-button" id="descend" type="button">Descend to floor <span>02</span></button>
+              <button class="primary-button" id="descend" type="button">Descend to stage <span>02</span></button>
             </div>
           </div>
         </div>
@@ -121,14 +121,14 @@
           <strong id="archive-fragments">0 / 8</strong>
         </div>
         <p class="archive-note" id="archive-note">The archive opens after the first proof.</p>
-        <p class="guarantee"><span aria-hidden="true">◇</span> This chamber was reverse-forged from a solved state, then checked by a push-optimal search.</p>
+        <p class="guarantee"><span aria-hidden="true">◇</span> This chamber was forged and solver-tested offline. No search engine runs in your browser.</p>
       </aside>
     </section>
 
     <section class="method-note" aria-labelledby="method-title">
       <p class="eyebrow">The intelligence beneath the stone</p>
       <h2 id="method-title">Not longer. More entangled.</h2>
-      <p>Each floor is selected for a distinct logical shape: shared lanes, changing box assignments, pushes that initially move away from every goal, and false finishes that must be undone. Far below, irregular rooms and alcoves surround a storage chamber with a narrow throat; crates cross between zones and eventually become the barriers. Deep candidates must also resist the same box-goal solver used on classic authored levels. The numbers stay hidden until the first solve so the chamber remains a puzzle, not a spreadsheet.</p>
+      <p>The vault was forged ahead of release, so candidate generation and solver search could spend far more time than an interactive page allows. The final 24 were frozen, validated, and ordered by solver resistance, shared lanes, counterintuitive pushes, box barriers, and storage dependencies. The browser now contains only the campaign, its proof routes, and the rules of play.</p>
       <div class="method-marks" aria-label="Difficulty signals">
         <span>Solver resistance</span><span>Countermarches</span><span>Box barriers</span><span>Storage straits</span>
       </div>
@@ -136,11 +136,12 @@
   </main>
 
   <footer>
-    <p>Unique by seed · deterministic by floor · locally saved</p>
+    <p>24 frozen stages · offline solver tested · locally saved</p>
     <p>Crates can be pushed, never pulled. The old laws remain.</p>
   </footer>
 
-  <script src="core.js"></script>
+  <script src="levels.js"></script>
+  <script src="runtime.js"></script>
   <script src="game.js"></script>
 </body>
 </html>

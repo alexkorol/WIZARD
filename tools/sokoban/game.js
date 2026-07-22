@@ -1,8 +1,9 @@
 (function () {
   'use strict';
 
-  var Core = window.SokobanCore;
-  var STORAGE_KEY = 'wizard.sokoban.descent.v1';
+  var Core = window.SokobanRuntime;
+  var Campaign = window.SokobanCampaign;
+  var STORAGE_KEY = 'wizard.sokoban.vault.v2';
   var lessons = [
     'The first law of the deep: a reliquary may be pushed, but never pulled.',
     'A reliquary in an unmarked corner is lost. Read the stone before you push.',
@@ -19,30 +20,20 @@
   var replaying = false;
   var replayToken = 0;
   var analysisRevealed = false;
-  var archiveThresholds = [1, 4, 12, 25, 50, 100, 250, 800];
+  var archiveThresholds = [1, 4, 8, 12, 16, 20, 22, 24];
 
   function byId(id) { return document.getElementById(id); }
 
   function loadSave() {
     try {
       var stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      if (stored && stored.seed && stored.floor) return stored;
+      if (stored && stored.floor) return stored;
     } catch (error) { /* Start fresh if storage is unavailable or corrupt. */ }
-    return { seed: createSeed(), floor: 1, cleared: 0, bestEfficiency: null };
+    return { floor: 1, cleared: 0, bestEfficiency: null };
   }
 
   function persist() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(save)); } catch (error) { /* Game remains playable without persistence. */ }
-  }
-
-  function createSeed() {
-    var value = Date.now() >>> 0;
-    if (window.crypto && window.crypto.getRandomValues) {
-      var values = new Uint32Array(1);
-      window.crypto.getRandomValues(values);
-      value = values[0];
-    }
-    return value.toString(36).toUpperCase().slice(-6).padStart(6, '0');
   }
 
   function cacheElements() {
@@ -58,40 +49,38 @@
 
   function loadFloor(number) {
     replayToken += 1;
-    save.floor = Math.max(1, number);
+    save.floor = Math.min(Campaign.levels.length, Math.max(1, number));
     persist();
     els['board-loading'].classList.remove('hidden');
     els.victory.hidden = true;
     replaying = false;
     analysisRevealed = (save.cleared || 0) >= save.floor;
     els['live-stats'].hidden = !analysisRevealed;
-    els.status.textContent = 'Carving chamber…';
+    els.status.textContent = 'Opening the forged chamber…';
     els.board.setAttribute('aria-busy', 'true');
     hint = null;
     window.setTimeout(function () {
       try {
-        level = Core.generate(save.seed, save.floor);
+        level = Core.hydrate(Campaign.levels[save.floor - 1]);
         state = { player: level.player, boxes: level.boxes.slice(), moves: 0, pushes: 0, solved: false };
         history = [];
         updateMeta();
         render();
         els['board-loading'].classList.add('hidden');
         els.board.setAttribute('aria-busy', 'false');
-        els.status.textContent = save.floor <= 4 ? 'Tutorial chamber · solver verified' :
-          level.config.minSearchStates > 0 && level.solution.states >= level.config.minSearchStates ?
-            level.boxes.length + '-relic theorem · resisted ' + compactNumber(level.solution.states) + ' oracle states' :
-          level.boxes.length >= 5 ? level.boxes.length + '-relic theorem · constructive proof verified' :
-            'Chamber verified · no dead start';
+        els.status.textContent = save.floor <= 4 ? 'Tutorial chamber · forged and solver verified' :
+          level.boxes.length + '-relic theorem · tested offline across ' +
+            compactNumber(level.solution.states) + (level.solution.proof === 'offline-constructive' ? '+ oracle states' : ' oracle states');
         els.board.focus({ preventScroll: true });
       } catch (error) {
         els.status.textContent = error.message || 'The chamber could not be carved.';
-        els['board-loading'].innerHTML = '<span></span>Try a new descent';
+        els['board-loading'].innerHTML = '<span></span>Reload the campaign pack';
       }
     }, 40);
   }
 
   function updateMeta() {
-    els['run-code'].textContent = save.seed;
+    els['run-code'].textContent = Campaign.name;
     els['floor-number'].textContent = String(save.floor).padStart(2, '0');
     els['floor-input'].value = save.floor;
     els['difficulty-title'].textContent = level.rating.title;
@@ -103,11 +92,12 @@
       level.solution.actions.length + ' pushes · ' + level.solution.moves + ' moves' : 'sealed';
     els['box-count'].textContent = level.boxes.length;
     els['proof-states'].textContent = analysisRevealed ?
-      (level.solution.proof === 'search' ? compactNumber(level.solution.states) + ' states' :
+      (level.solution.proof === 'search' || level.solution.proof === 'offline-search' ?
+        compactNumber(level.solution.states) + ' states' :
         level.solution.proof === 'bounds' ? 'distance bound' :
           level.solution.proof === 'lexicographic' ? 'dual optimum' :
             level.solution.proof === 'move-search' ? 'movement search' :
-              compactNumber(level.solution.states) + '+ states') : 'solver checked';
+              compactNumber(level.solution.states) + '+ states') : 'forged offline';
     els['replay-proof'].textContent = level.solution.moveOptimal ? 'Watch optimal route' : 'Watch clean route';
     els['floors-cleared'].textContent = save.cleared || 0;
     els['best-efficiency'].textContent = save.bestEfficiency ? Math.round(save.bestEfficiency * 100) + '%' : '—';
@@ -120,7 +110,11 @@
       els['difficulty-pips'].appendChild(pip);
     }
     els['difficulty-pips'].setAttribute('aria-label', 'Difficulty ' + pipCount + ' of 5');
-    els.descend.querySelector('span').textContent = String(save.floor + 1).padStart(2, '0');
+    var atEnd = save.floor >= Campaign.levels.length;
+    els.descend.disabled = atEnd;
+    els.descend.innerHTML = atEnd ? 'Campaign complete' :
+      'Descend to stage <span>' + String(save.floor + 1).padStart(2, '0') + '</span>';
+    els['descend-debug'].disabled = atEnd;
   }
 
   function updateArchive() {
@@ -135,14 +129,14 @@
       'IV. Shared space is the true currency.',
       'V. Boxes are not independent variables.',
       'VI. The shortest proof may feel impossible.',
-      'VII. The abyss is finite only to machines.',
-      'VIII. Floor 800 remembers your name.'
+      'VII. The final chambers outlast the lesser oracle.',
+      'VIII. The Verdigris Vault remembers your proof.'
     ];
     els['archive-note'].textContent = notes[fragments];
   }
 
   function dynamicLesson() {
-    if (level.config.minSearchStates >= 6500) return 'The oracle rejected every easy arrangement. Expect attractive pushes that poison a later box-goal matching.';
+    if (level.solution.states >= 100000) return 'This chamber survived the full offline oracle budget. Expect attractive pushes that poison a later box-goal matching.';
     if (level.boxes.length >= 5) return 'The deep archive composes several box dependencies at once. Solve the packing order, not one relic at a time.';
     if (level.boxes.length >= 4) return 'At this depth, the order of pushes is the puzzle. Preserve lanes behind every reliquary.';
     if (level.solution.analysis.switches >= 3) return 'The shortest rite changes between reliquaries. Keep their paths from crossing too soon.';
@@ -265,7 +259,7 @@
     updateMeta();
     updateVictory(efficiency);
     render();
-    announce('Floor ' + save.floor + ' cleared in ' + state.moves + ' moves · ' + state.pushes + ' pushes.');
+    announce('Stage ' + save.floor + ' cleared in ' + state.moves + ' moves · ' + state.pushes + ' pushes.');
     window.setTimeout(function () {
       els.victory.hidden = false;
       els.descend.focus();
@@ -313,36 +307,7 @@
       announce('Next verified push: ' + Core.directionName(hint.direction) + '. Gold marks the destination.');
       return;
     }
-    if (level.boxes.length >= 5) {
-      announce('You have left the verified branch. Undo or reset to rejoin its proof.');
-      return;
-    }
-    announce('The oracle is tracing a shortest path…');
-    window.setTimeout(function () {
-      var result = Core.solve({
-        width: level.width,
-        height: level.height,
-        floor: level.floor,
-        goals: level.goals,
-        boxes: state.boxes,
-        player: state.player
-      }, { limit: level.boxes.length >= 4 ? 15000 : 90000 });
-      if (result.solved && result.firstPush) {
-        hint = result.firstPush;
-        render();
-        announce('Next optimal push: ' + Core.directionName(hint.direction) + '. Gold marks the destination.');
-      } else if (result.solved) {
-        announce('All seals are already restored.');
-      } else if (result.limited) {
-        hint = null;
-        render();
-        announce('The oracle could not finish this deep search. Undo or reset for the proven route.');
-      } else {
-        hint = null;
-        render();
-        announce('No path remains from here. Undo or reset the chamber.');
-      }
-    }, 20);
+    announce('You have left the stored proof branch. Undo or reset to rejoin it.');
   }
 
   function knownRouteHint() {
@@ -443,11 +408,11 @@
   }
 
   function newRun() {
-    var accepted = window.confirm('Begin a new descent? Your current floor will be replaced, but your best record remains.');
+    var accepted = window.confirm('Reset the Verdigris Vault campaign? Your cleared-stage record will be erased.');
     if (!accepted) return;
-    save.seed = createSeed();
     save.floor = 1;
     save.cleared = 0;
+    save.bestEfficiency = null;
     persist();
     loadFloor(1);
   }
@@ -461,7 +426,9 @@
     } else if (key === 'u' || key === 'z') { event.preventDefault(); undo(); }
     else if (key === 'r') { event.preventDefault(); reset(); }
     else if (key === 'h') { event.preventDefault(); showHint(); }
-    else if (key === 'enter' && state && state.solved) { event.preventDefault(); loadFloor(save.floor + 1); }
+    else if (key === 'enter' && state && state.solved && save.floor < Campaign.levels.length) {
+      event.preventDefault(); loadFloor(save.floor + 1);
+    }
   }
 
   function bindEvents() {
@@ -471,13 +438,17 @@
     els.hint.addEventListener('click', showHint);
     els['replay-proof'].addEventListener('click', replayProof);
     els['new-run'].addEventListener('click', newRun);
-    els.descend.addEventListener('click', function () { loadFloor(save.floor + 1); });
-    els['descend-debug'].addEventListener('click', function () { loadFloor(save.floor + 1); });
+    els.descend.addEventListener('click', function () {
+      if (save.floor < Campaign.levels.length) loadFloor(save.floor + 1);
+    });
+    els['descend-debug'].addEventListener('click', function () {
+      if (save.floor < Campaign.levels.length) loadFloor(save.floor + 1);
+    });
     els['floor-jump'].addEventListener('submit', function (event) {
       event.preventDefault();
       var requested = Math.floor(Number(els['floor-input'].value));
-      if (!Number.isFinite(requested)) return announce('Enter a valid floor number.');
-      loadFloor(Math.min(1000000, Math.max(1, requested)));
+      if (!Number.isFinite(requested)) return announce('Enter a valid stage number.');
+      loadFloor(Math.min(Campaign.levels.length, Math.max(1, requested)));
     });
     document.querySelectorAll('[data-direction]').forEach(function (button) {
       button.addEventListener('click', function () { move(Number(button.dataset.direction)); });
@@ -499,7 +470,7 @@
   loadFloor(save.floor);
 
   function updateLedgerOnly() {
-    els['run-code'].textContent = save.seed;
+    els['run-code'].textContent = Campaign.name;
     els['floors-cleared'].textContent = save.cleared || 0;
     els['best-efficiency'].textContent = save.bestEfficiency ? Math.round(save.bestEfficiency * 100) + '%' : '—';
     updateArchive();
