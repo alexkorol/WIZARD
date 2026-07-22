@@ -1558,13 +1558,14 @@ function createCloudLayer() {
   const context = textureCanvas.getContext("2d");
   context.clearRect(0, 0, 256, 256);
   const random = seeded(744);
-  for (let index = 0; index < 22; index += 1) {
+  for (let index = 0; index < 16; index += 1) {
     const x = mix(38, 218, random());
     const y = mix(90, 168, random());
-    const radius = mix(34, 82, random());
+    const radius = mix(22, 58, random());
     const gradient = context.createRadialGradient(x, y, 0, x, y, radius);
-    gradient.addColorStop(0, `rgba(198,220,211,${mix(0.12, 0.3, random())})`);
-    gradient.addColorStop(0.48, "rgba(132,169,164,.11)");
+    gradient.addColorStop(0, `rgba(214,228,222,${mix(0.06, 0.15, random())})`);
+    gradient.addColorStop(0.38, "rgba(151,181,178,.055)");
+    gradient.addColorStop(0.72, "rgba(116,150,151,.018)");
     gradient.addColorStop(1, "rgba(80,116,119,0)");
     context.fillStyle = gradient;
     context.fillRect(0, 0, 256, 256);
@@ -1575,7 +1576,7 @@ function createCloudLayer() {
     map: texture,
     color: 0x9bb6b0,
     transparent: true,
-    opacity: 0.26,
+    opacity: 0.13,
     depthWrite: false,
     fog: true,
   });
@@ -1605,13 +1606,14 @@ function createRegionalWeather(texture) {
   weatherCanvas.width = weatherCanvas.height = 256;
   const weatherContext = weatherCanvas.getContext("2d");
   weatherContext.clearRect(0, 0, 256, 256);
-  for (let index = 0; index < 30; index += 1) {
+  for (let index = 0; index < 14; index += 1) {
     const x = mix(28, 228, textureRandom());
     const y = mix(74, 182, textureRandom());
-    const radius = mix(28, 68, textureRandom());
+    const radius = mix(18, 46, textureRandom());
     const gradient = weatherContext.createRadialGradient(x, y, 0, x, y, radius);
-    gradient.addColorStop(0, `rgba(235,244,241,${mix(0.38, 0.72, textureRandom())})`);
-    gradient.addColorStop(0.46, `rgba(176,199,199,${mix(0.14, 0.28, textureRandom())})`);
+    gradient.addColorStop(0, `rgba(235,244,241,${mix(0.16, 0.38, textureRandom())})`);
+    gradient.addColorStop(0.34, `rgba(185,207,205,${mix(0.06, 0.14, textureRandom())})`);
+    gradient.addColorStop(0.7, "rgba(130,158,161,.025)");
     gradient.addColorStop(1, "rgba(88,116,124,0)");
     weatherContext.fillStyle = gradient;
     weatherContext.fillRect(0, 0, 256, 256);
@@ -1620,17 +1622,17 @@ function createRegionalWeather(texture) {
   weatherTexture.colorSpace = THREE.SRGBColorSpace;
   const sprites = [];
   const regions = [
-    { name: "Gale Teeth storm", center: [5.35, 2.0, 1.8], spread: [2.45, 1.45, 1.6], count: 17, color: 0x465d70, opacity: 0.84, scale: [2.6, 5.2], speed: 0.055 },
-    { name: "High March rain", center: [-2.2, 1.25, -1.7], spread: [2.5, 0.55, 1.35], count: 10, color: 0x718b91, opacity: 0.62, scale: [1.8, 3.5], speed: 0.035 },
-    { name: "Aster Vale sunlight", center: [-2.7, 1.8, 3.55], spread: [2.05, 0.65, 1.0], count: 8, color: 0xffe4b0, opacity: 0.46, scale: [1.7, 3.15], speed: 0.026 },
-    { name: "Lantern mist", center: [4.65, 0.62, -3.2], spread: [2.0, 0.28, 1.2], count: 10, color: 0xa7d1ce, opacity: 0.58, scale: [1.6, 3.2], speed: 0.022 },
+    { name: "Gale Teeth storm", center: [5.35, 2.0, 1.8], spread: [2.45, 1.45, 1.6], count: 17, color: 0x647584, opacity: 0.3, scale: [2.6, 5.2], speed: 0.055 },
+    { name: "High March rain", center: [-2.2, 1.25, -1.7], spread: [2.5, 0.55, 1.35], count: 10, color: 0x91a4a6, opacity: 0.21, scale: [1.8, 3.5], speed: 0.035 },
+    { name: "Aster Vale sunlight", center: [-2.7, 1.8, 3.55], spread: [2.05, 0.65, 1.0], count: 8, color: 0xffe4b0, opacity: 0.12, scale: [1.7, 3.15], speed: 0.026 },
+    { name: "Lantern mist", center: [4.65, 0.62, -3.2], spread: [2.0, 0.28, 1.2], count: 10, color: 0xb2cfcc, opacity: 0.18, scale: [1.6, 3.2], speed: 0.022 },
   ];
   const materials = regions.map((region) => new THREE.SpriteMaterial({
     map: weatherTexture,
     color: region.color,
     transparent: true,
     opacity: region.opacity,
-    alphaTest: 0.008,
+    alphaTest: 0.018,
     depthWrite: false,
     fog: true,
   }));
@@ -1664,7 +1666,7 @@ function createRegionalWeather(texture) {
     map: weatherTexture,
     color: 0x9bc4c7,
     transparent: true,
-    opacity: 0.36,
+    opacity: 0.18,
     depthWrite: false,
     fog: true,
   });
@@ -2702,9 +2704,12 @@ function boot() {
     emissive: 0x02090d,
     emissiveIntensity: 0.055,
   });
+  let meshyWorldShader = null;
   meshyWorldMaterial.onBeforeCompile = (shader) => {
+    meshyWorldShader = shader;
     shader.uniforms.uWorldTopMap = { value: meshyTopTexture };
     shader.uniforms.uWorldReliefMap = { value: meshyReliefTexture };
+    shader.uniforms.uWaterTime = { value: 0 };
     shader.vertexShader = shader.vertexShader
       .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldReliefMap;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying float vWorldRelief;\nvarying vec3 vUndersidePosition;")
       .replace("#include <begin_vertex>", `#include <begin_vertex>
@@ -2722,11 +2727,15 @@ function boot() {
         vUndersidePosition = position;
       `);
     shader.fragmentShader = shader.fragmentShader
-      .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldTopMap;\nuniform sampler2D uWorldReliefMap;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying float vWorldRelief;\nvarying vec3 vUndersidePosition;")
+      .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldTopMap;\nuniform sampler2D uWorldReliefMap;\nuniform float uWaterTime;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying float vWorldRelief;\nvarying vec3 vUndersidePosition;")
       .replace("#include <color_fragment>", `#include <color_fragment>
         if (vUndersidePosition.y < -0.04) discard;
         vec3 worldTopColor = texture2D(uWorldTopMap, vWorldTopUv).rgb;
         float worldTopInk = smoothstep(0.018, 0.08, max(max(worldTopColor.r, worldTopColor.g), worldTopColor.b));
+        float waterBlue = worldTopColor.b - max(worldTopColor.r * 0.86, worldTopColor.g * 0.72);
+        float worldSeaMask = vWorldTopMask * worldTopInk
+          * (1.0 - smoothstep(0.17, 0.31, vWorldRelief))
+          * smoothstep(0.012, 0.11, waterBlue);
         diffuseColor.rgb = mix(diffuseColor.rgb, worldTopColor, vWorldTopMask * worldTopInk * 0.98);
         vec2 reliefTexel = vec2(0.00065104);
         float reliefLeft = texture2D(uWorldReliefMap, vWorldTopUv - vec2(reliefTexel.x, 0.0)).r;
@@ -2736,8 +2745,21 @@ function boot() {
         vec3 reliefNormal = normalize(vec3((reliefLeft - reliefRight) * 5.8, 0.42, (reliefDown - reliefUp) * 5.8));
         float reliefLight = clamp(dot(reliefNormal, normalize(vec3(-0.58, 0.72, 0.38))), 0.0, 1.0);
         float reliefShade = mix(0.66, 1.3, smoothstep(0.08, 0.92, reliefLight));
-        float reliefStrength = vWorldTopMask * worldTopInk * smoothstep(0.1, 0.82, vWorldRelief);
+        float reliefStrength = vWorldTopMask * worldTopInk * smoothstep(0.1, 0.82, vWorldRelief) * (1.0 - worldSeaMask * 0.96);
         diffuseColor.rgb *= mix(1.0, reliefShade, reliefStrength * 0.72);
+        vec2 waterUv = vWorldTopUv * 128.0;
+        float rippleA = sin(dot(waterUv, vec2(0.96, 0.28)) + uWaterTime * 0.58);
+        float rippleB = sin(dot(waterUv, vec2(-0.24, 1.08)) - uWaterTime * 0.74 + 1.7);
+        float rippleC = sin(dot(waterUv, vec2(0.62, -0.78)) + uWaterTime * 0.43 + 4.1);
+        float rippleCrest = smoothstep(1.18, 1.78, rippleA * 0.82 + rippleB * 0.62 + rippleC * 0.34);
+        diffuseColor.rgb = mix(diffuseColor.rgb, worldTopColor * vec3(0.96, 0.99, 1.02), worldSeaMask * 0.18);
+        diffuseColor.rgb += vec3(0.24, 0.48, 0.62) * rippleCrest * worldSeaMask * 0.045;
+      `)
+      .replace("#include <roughnessmap_fragment>", `#include <roughnessmap_fragment>
+        roughnessFactor = mix(roughnessFactor, 0.22, worldSeaMask);
+      `)
+      .replace("#include <metalnessmap_fragment>", `#include <metalnessmap_fragment>
+        metalnessFactor = mix(metalnessFactor, 0.03, worldSeaMask);
       `);
   };
   epicWorld.add(
@@ -2764,6 +2786,7 @@ function boot() {
   const aurora = createAuroraCurtains();
   epicWorld.add(aurora.group);
   const proceduralEpicGeography = [
+    epicOcean,
     epicShallows,
     epicCliffs,
     epicContinents,
@@ -3310,6 +3333,7 @@ function boot() {
     waterMaterial.uniforms.uPulse.value = crownPulse;
     epicOceanMaterial.uniforms.uTime.value = time;
     epicOceanMaterial.uniforms.uPulse.value = crownPulse;
+    if (meshyWorldShader) meshyWorldShader.uniforms.uWaterTime.value = time;
     epicCityLights.material.uniforms.uTime.value = time;
     epicCityLights.material.uniforms.uPulse.value = crownPulse;
     waterfallMaterial.uniforms.uTime.value = time;
@@ -3336,9 +3360,9 @@ function boot() {
       sprite.position.z = sprite.userData.baseZ + Math.cos(localTime * 0.78) * stormDrift * 0.56;
       sprite.position.y = sprite.userData.baseY + Math.sin(localTime * 1.34) * (sprite.userData.region === 4 ? 0.055 : 0.11);
     }
-    regionalWeather.materials[0].opacity = 0.76 + Math.sin(time * 0.11) * 0.07;
-    regionalWeather.materials[2].opacity = 0.43 + Math.sin(time * 0.075 + 1.2) * 0.045;
-    regionalWeather.rimMistMaterial.opacity = 0.35 + Math.sin(time * 0.09) * 0.04;
+    regionalWeather.materials[0].opacity = 0.28 + Math.sin(time * 0.11) * 0.025;
+    regionalWeather.materials[2].opacity = 0.12 + Math.sin(time * 0.075 + 1.2) * 0.015;
+    regionalWeather.rimMistMaterial.opacity = 0.17 + Math.sin(time * 0.09) * 0.018;
     regionalSunshafts.material.opacity = 0.017 + Math.sin(time * 0.12 + 0.8) * 0.005;
     regionalWeather.group.rotation.y = reducedMotion ? 0 : Math.sin(time * 0.026) * 0.045;
     regionalLightning.group.rotation.y = reducedMotion ? 0 : Math.sin(time * 0.037 - 0.7) * 0.11;

@@ -49,7 +49,8 @@ assert(app.includes("celestial_world_top_texture_4k_detail.webp") && app.include
 assert(app.includes("celestial_world_underside_texture.png") && app.includes("epicUndersideTexture"), "sculpted underside texture is missing");
 assert(app.includes("createEpicStalactites") && app.includes("createEpicIceWallGeometry"), "spinning-top underside or broken ice rim is missing");
 assert(!app.includes("createWorldCore") && !app.includes("worldCore"), "the rejected glowing underside orb/core has returned");
-assert(app.includes("const proceduralEpicGeography = [\n    epicShallows") && !app.includes("const proceduralEpicGeography = [\n    epicOcean"), "animated ocean must remain visible over the shaded atlas");
+assert(app.includes("const proceduralEpicGeography = [\n    epicOcean"), "the blob-producing procedural ocean must be hidden when the textured world loads");
+assert(app.includes("worldSeaMask") && app.includes("roughnessFactor = mix(roughnessFactor, 0.22") && app.includes("uWaterTime"), "single-surface water shading is missing");
 assert(app.includes("createAuroraCurtains") && app.includes("nebula"), "aurora or nebula atmosphere is missing");
 assert(app.includes("setVariant") && app.includes("activeVariant"), "scene view switching is missing");
 assert(app.includes("cameraControl") && app.includes('addEventListener("pointerdown"'), "drag camera controls are missing");
