@@ -2615,6 +2615,7 @@ function boot() {
       uPulse: { value: 0 },
       uWorldTopMap: { value: null },
       uWorldReliefMap: { value: null },
+      uWorldIlluminationMap: { value: null },
       uSunWorld: { value: new THREE.Vector3(-4.35, 4.75, 4.5) },
       uWorldCenter: { value: new THREE.Vector3() },
     },
@@ -2653,6 +2654,7 @@ function boot() {
       uniform float uPulse;
       uniform sampler2D uWorldTopMap;
       uniform sampler2D uWorldReliefMap;
+      uniform sampler2D uWorldIlluminationMap;
       uniform vec3 uSunWorld;
       uniform vec3 uWorldCenter;
       varying float vEdge;
@@ -2671,6 +2673,7 @@ function boot() {
       void main() {
         vec3 atlasColor = texture2D(uWorldTopMap, vMapUv).rgb;
         float relief = texture2D(uWorldReliefMap, vMapUv).r;
+        vec3 worldIllumination = texture2D(uWorldIlluminationMap, vMapUv).rgb;
         vec2 reliefTexel = vec2(0.00048828125);
         vec2 mediumReliefStep = vec2(0.0065);
         vec2 wideReliefStep = vec2(0.024);
@@ -2769,6 +2772,9 @@ function boot() {
         color += vec3(1.0, 0.61, 0.22) * sunRoadBase * 0.82;
         color += vec3(1.0, 0.94, 0.7) * sunRoadSpark * 1.85;
         color += vec3(0.72, 0.95, 1.0) * sparkle * 0.88;
+        float reefEmission = smoothstep(0.018, 0.28, worldIllumination.b - worldIllumination.r * 0.35);
+        float reefLifePulse = 0.78 + 0.22 * sin(uTime * 0.46 + noise(vMapUv * 96.0) * 6.2831);
+        color += worldIllumination * reefEmission * reefLifePulse * 0.72;
         color += vec3(0.1, 0.48, 0.52) * rim * (0.08 + uPulse * 0.08);
         color += vec3(0.12, 0.32, 0.34) * max(vWave, 0.0) * 1.25;
         float shoreline = smoothstep(0.055, 0.42, seaMask);
@@ -2940,8 +2946,16 @@ function boot() {
   meshyReliefTexture.wrapT = THREE.ClampToEdgeWrapping;
   meshyReliefTexture.minFilter = THREE.LinearFilter;
   meshyReliefTexture.magFilter = THREE.LinearFilter;
+  const meshyIlluminationTexture = new THREE.TextureLoader().load("assets/world/celestial_world_illumination_map_4k.png?v=1");
+  meshyIlluminationTexture.flipY = false;
+  meshyIlluminationTexture.wrapS = THREE.ClampToEdgeWrapping;
+  meshyIlluminationTexture.wrapT = THREE.ClampToEdgeWrapping;
+  meshyIlluminationTexture.minFilter = THREE.LinearFilter;
+  meshyIlluminationTexture.magFilter = THREE.LinearFilter;
+  meshyIlluminationTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
   epicOceanMaterial.uniforms.uWorldTopMap.value = meshyTopTexture;
   epicOceanMaterial.uniforms.uWorldReliefMap.value = meshyReliefTexture;
+  epicOceanMaterial.uniforms.uWorldIlluminationMap.value = meshyIlluminationTexture;
   const meshyWorldMaterial = new THREE.MeshStandardMaterial({
     color: 0xa0c7aa,
     vertexColors: true,
@@ -2955,6 +2969,7 @@ function boot() {
     meshyWorldShader = shader;
     shader.uniforms.uWorldTopMap = { value: meshyTopTexture };
     shader.uniforms.uWorldReliefMap = { value: meshyReliefTexture };
+    shader.uniforms.uWorldIlluminationMap = { value: meshyIlluminationTexture };
     shader.uniforms.uWorldUndersideMap = { value: epicUndersideTexture };
     shader.uniforms.uWaterTime = { value: 0 };
     shader.vertexShader = shader.vertexShader
@@ -2974,7 +2989,7 @@ function boot() {
         vUndersidePosition = position;
       `);
     shader.fragmentShader = shader.fragmentShader
-      .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldTopMap;\nuniform sampler2D uWorldReliefMap;\nuniform sampler2D uWorldUndersideMap;\nuniform float uWaterTime;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying float vWorldRelief;\nvarying vec3 vUndersidePosition;")
+      .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldTopMap;\nuniform sampler2D uWorldReliefMap;\nuniform sampler2D uWorldUndersideMap;\nuniform sampler2D uWorldIlluminationMap;\nuniform float uWaterTime;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying float vWorldRelief;\nvarying vec3 vUndersidePosition;")
       .replace("#include <color_fragment>", `#include <color_fragment>
         vec3 worldTopColor = texture2D(uWorldTopMap, vWorldTopUv).rgb;
         vec3 worldUndersideColor = texture2D(uWorldUndersideMap, vWorldTopUv).rgb;
@@ -3022,6 +3037,19 @@ function boot() {
       .replace("#include <metalnessmap_fragment>", `#include <metalnessmap_fragment>
         metalnessFactor = mix(metalnessFactor, 0.03, worldSeaMask);
         metalnessFactor = mix(metalnessFactor, 0.015, undersideMask);
+      `)
+      .replace("#include <emissivemap_fragment>", `#include <emissivemap_fragment>
+        vec3 illuminationSignal = texture2D(uWorldIlluminationMap, vWorldTopUv).rgb;
+        float lavaSignal = smoothstep(0.035, 0.62, illuminationSignal.r - illuminationSignal.b * 0.55);
+        float reefSignal = smoothstep(0.012, 0.3, illuminationSignal.b - illuminationSignal.r * 0.35);
+        float groveSignal = smoothstep(0.008, 0.2, illuminationSignal.g - max(illuminationSignal.r, illuminationSignal.b) * 0.72);
+        float lavaPulse = 0.9 + 0.1 * sin(uWaterTime * 0.5 + vWorldTopUv.x * 31.0 + vWorldTopUv.y * 23.0);
+        float reefPulse = 0.76 + 0.24 * sin(uWaterTime * 0.4 + vWorldTopUv.x * 47.0 - vWorldTopUv.y * 37.0);
+        float grovePulse = 0.68 + 0.32 * sin(uWaterTime * 0.72 + vWorldTopUv.x * 113.0 + vWorldTopUv.y * 89.0);
+        float illuminationPulse = mix(1.0, lavaPulse, lavaSignal);
+        illuminationPulse = mix(illuminationPulse, reefPulse, reefSignal);
+        illuminationPulse = mix(illuminationPulse, grovePulse, groveSignal);
+        totalEmissiveRadiance += illuminationSignal * illuminationPulse * vWorldTopMask * 1.85;
       `);
   };
   epicWorld.add(
@@ -3794,6 +3822,7 @@ function boot() {
     waterfallHalos.texture.dispose();
     meshyTopTexture.dispose();
     meshyReliefTexture.dispose();
+    meshyIlluminationTexture.dispose();
     renderer.dispose();
   }
 

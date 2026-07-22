@@ -1,0 +1,184 @@
+{
+  "grid": 4,
+  "size": 4096,
+  "core": 1024,
+  "overlap": 96,
+  "tiles": [
+    {
+      "row": 0,
+      "column": 0,
+      "file": "illumination_r0_c0.png",
+      "bounds": [
+        0,
+        0,
+        1120,
+        1120
+      ]
+    },
+    {
+      "row": 0,
+      "column": 1,
+      "file": "illumination_r0_c1.png",
+      "bounds": [
+        928,
+        0,
+        2144,
+        1120
+      ]
+    },
+    {
+      "row": 0,
+      "column": 2,
+      "file": "illumination_r0_c2.png",
+      "bounds": [
+        1952,
+        0,
+        3168,
+        1120
+      ]
+    },
+    {
+      "row": 0,
+      "column": 3,
+      "file": "illumination_r0_c3.png",
+      "bounds": [
+        2976,
+        0,
+        4096,
+        1120
+      ]
+    },
+    {
+      "row": 1,
+      "column": 0,
+      "file": "illumination_r1_c0.png",
+      "bounds": [
+        0,
+        928,
+        1120,
+        2144
+      ]
+    },
+    {
+      "row": 1,
+      "column": 1,
+      "file": "illumination_r1_c1.png",
+      "bounds": [
+        928,
+        928,
+        2144,
+        2144
+      ]
+    },
+    {
+      "row": 1,
+      "column": 2,
+      "file": "illumination_r1_c2.png",
+      "bounds": [
+        1952,
+        928,
+        3168,
+        2144
+      ]
+    },
+    {
+      "row": 1,
+      "column": 3,
+      "file": "illumination_r1_c3.png",
+      "bounds": [
+        2976,
+        928,
+        4096,
+        2144
+      ]
+    },
+    {
+      "row": 2,
+      "column": 0,
+      "file": "illumination_r2_c0.png",
+      "bounds": [
+        0,
+        1952,
+        1120,
+        3168
+      ]
+    },
+    {
+      "row": 2,
+      "column": 1,
+      "file": "illumination_r2_c1.png",
+      "bounds": [
+        928,
+        1952,
+        2144,
+        3168
+      ]
+    },
+    {
+      "row": 2,
+      "column": 2,
+      "file": "illumination_r2_c2.png",
+      "bounds": [
+        1952,
+        1952,
+        3168,
+        3168
+      ]
+    },
+    {
+      "row": 2,
+      "column": 3,
+      "file": "illumination_r2_c3.png",
+      "bounds": [
+        2976,
+        1952,
+        4096,
+        3168
+      ]
+    },
+    {
+      "row": 3,
+      "column": 0,
+      "file": "illumination_r3_c0.png",
+      "bounds": [
+        0,
+        2976,
+        1120,
+        4096
+      ]
+    },
+    {
+      "row": 3,
+      "column": 1,
+      "file": "illumination_r3_c1.png",
+      "bounds": [
+        928,
+        2976,
+        2144,
+        4096
+      ]
+    },
+    {
+      "row": 3,
+      "column": 2,
+      "file": "illumination_r3_c2.png",
+      "bounds": [
+        1952,
+        2976,
+        3168,
+        4096
+      ]
+    },
+    {
+      "row": 3,
+      "column": 3,
+      "file": "illumination_r3_c3.png",
+      "bounds": [
+        2976,
+        2976,
+        4096,
+        4096
+      ]
+    }
+  ]
+}

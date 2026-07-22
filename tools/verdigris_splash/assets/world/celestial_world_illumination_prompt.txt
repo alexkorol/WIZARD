@@ -1,0 +1,15 @@
+Use case: precise-object-edit
+Asset type: source concept for a stitched RGB illumination/emission map for a real-time 3D fantasy world atlas
+Input image: Image 1 is the exact top-down world atlas and must remain perfectly aligned.
+
+Primary request: Convert the atlas into a pure illumination map on a completely black background while preserving every coastline, island, lava crack, reef, forest region, road, and biome location exactly. This is not a recolored beauty image; it is a material emission mask.
+
+Emission hierarchy:
+1. Volcanic lava cracks and caldera fissures: strongest emission, narrow detailed branching lines with hot white-yellow cores, orange edges, and restrained red falloff. Only illuminate cracks that visibly exist in Image 1; do not invent lava in other regions.
+2. Tropical reefs and shallow coastal shelves: low-intensity cyan/turquoise bioluminescence, fine broken organic contours and isolated reef points, much dimmer than lava. Do not illuminate deep ocean.
+3. Forests and fertile “good” biomes: extremely sparse, tiny soft green-gold firefly clusters, village pinpricks, and faint magical grove traces; never fill whole forests and never outline every tree.
+4. Snow, desert, mountains, ordinary grassland, and deep ocean: essentially black unless crossed by one of the existing features above.
+
+Composition: exact square orthographic alignment; no zoom, rotation, crop, translation, or reframing.
+Style: technically usable high-detail RGB emission texture, black means zero emission, colored light only where justified.
+Constraints: preserve exact geography and feature positions; no lighting, shadows, albedo, clouds, atmosphere, labels, text, UI, borders, stars, or general glow wash. Keep at least 88% of pixels near black. No invented lava cracks, settlements, or coastline changes.

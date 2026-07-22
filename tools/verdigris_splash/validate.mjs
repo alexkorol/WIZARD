@@ -31,6 +31,11 @@ const undersideDepthmapPath = path.join(root, "assets", "world", "celestial_worl
 const undersideDepthmap = await stat(undersideDepthmapPath);
 await stat(path.join(root, "assets", "world", "celestial_world_underside_topographic_reference.png"));
 const undersideTexture = await stat(path.join(root, "assets", "world", "celestial_world_underside_texture.png"));
+const illuminationMap = await stat(path.join(root, "assets", "world", "celestial_world_illumination_map_4k.png"));
+const illuminationManifest = JSON.parse(await readFile(path.join(root, "assets", "world", "illumination_tiles", "manifest.json"), "utf8"));
+await stat(path.join(root, "assets", "world", "celestial_world_illumination_concept_image2.png"));
+await stat(path.join(root, "assets", "world", "celestial_world_illumination_prompt.txt"));
+await stat(path.join(root, "tools", "build_illumination_map.py"));
 const buildReport = JSON.parse(await readFile(path.join(root, "assets", "world", "celestial_world_build_report.json"), "utf8"));
 
 assert(html.includes('id="world"'), "index.html must contain the WebGL canvas");
@@ -57,6 +62,8 @@ assert(app.includes("fineTopographyGradient") && app.includes("wideTopographyGra
 assert(app.includes("deepOcean") && app.includes("shallowOcean") && app.includes("depthColor") && !app.includes("atlasColor * vec3(0.68, 0.8, 0.92)"), "heightmap-controlled deep and shallow water color is missing");
 assert(app.includes("meshDeepOcean") && app.includes("meshShallowOcean") && app.includes("meshDepthColor") && app.includes("projectedTopColor"), "solid imported sea is bypassing heightmap depth colors");
 assert(!app.includes("worldTopColor * vec3(0.96, 0.99, 1.02)"), "inverted atlas sea color is being reintroduced beneath the reflective ocean");
+assert(app.includes("celestial_world_illumination_map_4k.png?v=1") && app.includes("uWorldIlluminationMap") && app.includes("totalEmissiveRadiance"), "stitched world illumination map is not active");
+assert(app.includes("lavaSignal") && app.includes("reefSignal") && app.includes("groveSignal"), "biome-specific illumination controls are missing");
 assert(!app.includes("dot(vWorld.xz, vec2(5.7, 1.8))") && app.includes("dot(reflectionUv, flowDirection)"), "fixed-direction ocean reflection streaks have returned");
 assert(blenderScript.includes("soften_summits") && blenderScript.includes("softened_summit_vertices"), "Blender summit softening pass is missing");
 assert(app.includes("* 0.1 * topFacing") && app.includes("* 0.12 * topFacing * landRelief"), "runtime terrain is over-extruding the refined summits");
@@ -97,6 +104,8 @@ assert(runtimeModel.size < 4_000_000, `runtime world model is unexpectedly large
 assert(topTexture.size < 5_000_000, `4K runtime top-surface texture is unexpectedly large (${topTexture.size} bytes)`);
 assert(topTextureMaster.size < 25_000_000, `4K master top-surface texture is unexpectedly large (${topTextureMaster.size} bytes)`);
 assert(undersideTexture.size < 3_000_000, `underside texture is unexpectedly large (${undersideTexture.size} bytes)`);
+assert(illuminationMap.size < 3_000_000, `4K illumination map is unexpectedly large (${illuminationMap.size} bytes)`);
+assert(illuminationManifest.tiles?.length === 16 && illuminationManifest.overlap === 96, "illumination-map tile stitch manifest is invalid");
 const gameBounds = buildReport.game_bounds;
 const gameWidth = gameBounds[1][0] - gameBounds[0][0];
 const gameDepth = gameBounds[1][2] - gameBounds[0][2];
