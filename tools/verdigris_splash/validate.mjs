@@ -66,7 +66,7 @@ assert(app.includes("cameraControl") && app.includes('addEventListener("pointerd
 assert(app.includes('addEventListener("wheel"') && app.includes('addEventListener("keydown"'), "zoom or keyboard camera controls are missing");
 assert(app.includes("visibilitychange") && app.includes("pagehide"), "lifecycle throttling/disposal hooks are missing");
 assert(app.includes("prefers-reduced-motion"), "reduced-motion support is missing");
-assert(html.includes('class="tilt-shift"') && css.includes("backdrop-filter: blur(1.15px)"), "restrained tilt-shift focus treatment is missing");
+assert(html.includes('class="tilt-shift"') && css.includes("backdrop-filter: blur(5.5px)") && css.includes("height: 34%"), "visible graded tilt-shift focus treatment is missing");
 assert(!/SOUND\s+(?:ON|OFF)/i.test(html + app), "do not expose an inert sound toggle");
 assert(!/data:[^;]+;base64,[A-Za-z0-9+/=]{4096,}/.test(html + css + app), "large embedded base64 payload detected");
 assert(!/(?:src|href)="http:\/\//i.test(html), "insecure external asset URL detected");
