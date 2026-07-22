@@ -65,15 +65,21 @@
       return tutorials[n - 1];
     }
     var depthBand = Math.floor(Math.log2(n));
-    var boxes = n < 10 ? 2 : n < 40 ? 3 : n < 2000 ? 4 : n < 50000 ? 5 : n < 200000 ? 6 : n < 500000 ? 7 : n < 800000 ? 7 : 8;
+    // Authored difficulty comes from interaction density, not warehouse area
+    // or crate count. Six tightly coupled crates are already enough to exceed
+    // our serious solver's comfortable range; adding empty acreage and two
+    // more independent crates made the old "deep" floors easier to reason about.
+    var boxes = n < 10 ? 2 : n < 40 ? 3 : n < 2000 ? 4 : n < 50000 ? 5 : 6;
     var minPushes = Math.max(8 + depthBand * 2, boxes * 4);
     var minScore = n < 10 ? 18 : n < 20 ? 26 : n < 40 ? 36 : n < 100 ? 45 :
       n < 2000 ? 60 : n < 10000 ? 72 : n < 50000 ? 82 : n < 200000 ? 92 : n < 500000 ? 104 : 116;
+    var minSearchStates = n < 100 ? 0 : n < 2000 ? 500 : n < 10000 ? 900 :
+      n < 50000 ? 1600 : n < 200000 ? 2800 : n < 500000 ? 4500 : n < 800000 ? 6500 : 8000;
     return {
       width: n < 10 ? 9 : n < 20 ? 10 : n < 40 ? 11 : n < 200 ? 12 : n < 2000 ? 13 :
-        n < 10000 ? 14 : n < 50000 ? 15 : n < 200000 ? 16 : n < 500000 ? 17 : n < 800000 ? 18 : 19,
+        n < 10000 ? 14 : n < 50000 ? 15 : 16,
       height: n < 20 ? 9 : n < 40 ? 10 : n < 200 ? 10 : n < 2000 ? 11 : n < 50000 ? 12 :
-        n < 200000 ? 13 : n < 800000 ? 14 : 15,
+        13,
       boxes: boxes,
       minPushes: minPushes,
       maxPushes: minPushes + 10,
@@ -82,7 +88,8 @@
       pulls: minPushes + 24 + boxes * 4,
       partitions: n < 10 ? 1 : n < 20 ? 2 : n < 40 ? 3 : Math.min(8, 4 + Math.floor((boxes - 4) / 2)),
       pillars: n < 20 ? 2 : n < 100 ? 3 : Math.min(9, boxes + 1),
-      solverLimit: boxes <= 3 ? 55000 : boxes === 4 ? 15000 : 2500,
+      solverLimit: boxes <= 3 ? 55000 : boxes === 4 ? 30000 : Math.max(3500, minSearchStates),
+      minSearchStates: minSearchStates,
       irregular: n >= 100,
       // Authored boards use a few legible chambers, not a carpet of tiny rooms.
       // Keeping the room count below the box count also leaves real exterior
@@ -427,18 +434,104 @@
     return costs[size - 1];
   }
 
-  function staticDeadSquares(level) {
+  // Empty-board reverse-push distances. Starting at each goal, move a
+  // hypothetical crate backwards only when both its previous square and the
+  // square the player would have stood on are floor. Unlike Manhattan
+  // distance, this respects walls, corners, and one-cell lanes while remaining
+  // an admissible lower bound when other crates are ignored.
+  function goalPullMaps(level) {
+    var floor = level.floor instanceof Set ? level.floor : new Set(level.floor);
+    var width = level.width;
+    return level.goals.map(function (goal) {
+      var distances = new Map([[goal, 0]]);
+      var queue = [goal];
+      for (var head = 0; head < queue.length; head += 1) {
+        var cell = queue[head];
+        var p = pointOf(cell, width);
+        for (var d = 0; d < DIRS.length; d += 1) {
+          var direction = DIRS[d];
+          var previous = indexOf(p.x - direction.x, p.y - direction.y, width);
+          var stand = indexOf(p.x - direction.x * 2, p.y - direction.y * 2, width);
+          if (!floor.has(previous) || !floor.has(stand) || distances.has(previous)) continue;
+          distances.set(previous, distances.get(cell) + 1);
+          queue.push(previous);
+        }
+      }
+      return distances;
+    });
+  }
+
+  function matchingDistance(boxes, pullMaps) {
+    var size = 1 << pullMaps.length;
+    var costs = new Array(size).fill(Infinity);
+    costs[0] = 0;
+    for (var boxIndex = 0; boxIndex < boxes.length; boxIndex += 1) {
+      var nextCosts = new Array(size).fill(Infinity);
+      for (var mask = 0; mask < size; mask += 1) {
+        if (!Number.isFinite(costs[mask])) continue;
+        for (var goalIndex = 0; goalIndex < pullMaps.length; goalIndex += 1) {
+          var bit = 1 << goalIndex;
+          if ((mask & bit) || !pullMaps[goalIndex].has(boxes[boxIndex])) continue;
+          var nextMask = mask | bit;
+          var distance = costs[mask] + pullMaps[goalIndex].get(boxes[boxIndex]);
+          if (distance < nextCosts[nextMask]) nextCosts[nextMask] = distance;
+        }
+      }
+      costs = nextCosts;
+    }
+    return costs[size - 1];
+  }
+
+  function reverseTargetMaps(level, targets) {
+    var floor = level.floor instanceof Set ? level.floor : new Set(level.floor);
+    var width = level.width;
+    return targets.map(function (target) {
+      var distances = new Map([[target, 0]]);
+      var queue = [target];
+      for (var head = 0; head < queue.length; head += 1) {
+        var cell = queue[head];
+        var point = pointOf(cell, width);
+        for (var d = 0; d < DIRS.length; d += 1) {
+          // Reverse edge of a pull: predecessor is on one side of the
+          // current box position and the puller's backing square is opposite.
+          var predecessor = indexOf(point.x + DIRS[d].x, point.y + DIRS[d].y, width);
+          var backing = indexOf(point.x - DIRS[d].x, point.y - DIRS[d].y, width);
+          if (!floor.has(predecessor) || !floor.has(backing) || distances.has(predecessor)) continue;
+          distances.set(predecessor, distances.get(cell) + 1);
+          queue.push(predecessor);
+        }
+      }
+      return distances;
+    });
+  }
+
+  function staticDeadSquares(level, knownPullMaps) {
     var floor = level.floor instanceof Set ? level.floor : new Set(level.floor);
     var goals = new Set(level.goals);
     var dead = new Set();
+    var pullMaps = knownPullMaps || goalPullMaps(level);
     floor.forEach(function (cell) {
       if (goals.has(cell)) return;
-      var p = pointOf(cell, level.width);
-      var verticalWall = !floor.has(indexOf(p.x, p.y - 1, level.width)) || !floor.has(indexOf(p.x, p.y + 1, level.width));
-      var horizontalWall = !floor.has(indexOf(p.x - 1, p.y, level.width)) || !floor.has(indexOf(p.x + 1, p.y, level.width));
-      if (verticalWall && horizontalWall) dead.add(cell);
+      if (!pullMaps.some(function (map) { return map.has(cell); })) dead.add(cell);
     });
     return dead;
+  }
+
+  function hasFrozenBlock(floor, width, boxes, goals, movedBox) {
+    var moved = pointOf(movedBox, width);
+    for (var offsetY = -1; offsetY <= 0; offsetY += 1) {
+      for (var offsetX = -1; offsetX <= 0; offsetX += 1) {
+        var block = [];
+        for (var y = 0; y < 2; y += 1) {
+          for (var x = 0; x < 2; x += 1) {
+            block.push(indexOf(moved.x + offsetX + x, moved.y + offsetY + y, width));
+          }
+        }
+        if (block.every(function (cell) { return !floor.has(cell) || boxes.has(cell); }) &&
+            block.some(function (cell) { return boxes.has(cell) && !goals.has(cell); })) return true;
+      }
+    }
+    return false;
   }
 
   function articulationPoints(floor, width) {
@@ -656,25 +749,78 @@
   function solve(level, options) {
     options = options || {};
     var limit = options.limit || 70000;
+    var heuristicWeight = Math.max(1, Number(options.heuristicWeight) || 1);
     var floor = level.floor instanceof Set ? level.floor : new Set(level.floor);
     var goalSet = new Set(level.goals);
     var width = level.width;
     var startBoxes = level.boxes.slice().sort(function (a, b) { return a - b; });
     var startReach = reachable(floor, width, level.player, new Set(startBoxes));
     var startKey = stateKey(startBoxes, startReach);
-    var queue = [{ boxes: startBoxes, player: level.player, key: startKey, depth: 0, access: startReach }];
-    var visited = new Set([startKey]);
+    var pullMaps = goalPullMaps(level);
+    var heuristicCache = new Map();
+    function heuristicFor(boxes) {
+      var key = boxes.join(',');
+      if (!heuristicCache.has(key)) heuristicCache.set(key, matchingDistance(boxes, pullMaps));
+      return heuristicCache.get(key);
+    }
+    var startHeuristic = heuristicFor(startBoxes);
+    var bestDepth = new Map([[startKey, 0]]);
     var parents = new Map();
     var solvedNode = null;
-    var deadSquares = staticDeadSquares(level);
+    var deadSquares = staticDeadSquares(level, pullMaps);
+    var heap = [];
+    var expanded = 0;
+
+    function less(a, b) {
+      return a.estimate < b.estimate || (a.estimate === b.estimate &&
+        (a.heuristic < b.heuristic || (a.heuristic === b.heuristic && a.depth > b.depth)));
+    }
+
+    function heapPush(node) {
+      heap.push(node);
+      var index = heap.length - 1;
+      while (index > 0) {
+        var parent = Math.floor((index - 1) / 2);
+        if (!less(heap[index], heap[parent])) break;
+        var hold = heap[index]; heap[index] = heap[parent]; heap[parent] = hold;
+        index = parent;
+      }
+    }
+
+    function heapPop() {
+      var first = heap[0];
+      var tail = heap.pop();
+      if (heap.length) {
+        heap[0] = tail;
+        var index = 0;
+        while (true) {
+          var left = index * 2 + 1;
+          var right = left + 1;
+          var smallest = index;
+          if (left < heap.length && less(heap[left], heap[smallest])) smallest = left;
+          if (right < heap.length && less(heap[right], heap[smallest])) smallest = right;
+          if (smallest === index) break;
+          var hold = heap[index]; heap[index] = heap[smallest]; heap[smallest] = hold;
+          index = smallest;
+        }
+      }
+      return first;
+    }
 
     function isSolved(boxes) {
       return boxes.every(function (box) { return goalSet.has(box); });
     }
 
-    if (isSolved(startBoxes)) solvedNode = queue[0];
-    for (var head = 0; !solvedNode && head < queue.length && visited.size < limit; head += 1) {
-      var node = queue[head];
+    if (!Number.isFinite(startHeuristic)) return { solved: false, states: 0, limited: false, deadlocked: true };
+    heapPush({
+      boxes: startBoxes, player: level.player, key: startKey, depth: 0,
+      heuristic: startHeuristic, estimate: startHeuristic * heuristicWeight, access: startReach
+    });
+    if (isSolved(startBoxes)) solvedNode = heap[0];
+    while (!solvedNode && heap.length && expanded < limit) {
+      var node = heapPop();
+      if (bestDepth.get(node.key) !== node.depth) continue;
+      expanded += 1;
       var boxSet = new Set(node.boxes);
       var access = node.access;
       for (var b = 0; b < node.boxes.length && !solvedNode; b += 1) {
@@ -688,19 +834,27 @@
           var nextBoxes = node.boxes.slice();
           nextBoxes[b] = destination;
           nextBoxes.sort(function (a, c) { return a - c; });
-          var nextReach = reachable(floor, width, box, new Set(nextBoxes));
+          var nextBoxSet = new Set(nextBoxes);
+          if (hasFrozenBlock(floor, width, nextBoxSet, goalSet, destination)) continue;
+          var heuristic = heuristicFor(nextBoxes);
+          if (!Number.isFinite(heuristic)) continue;
+          var nextReach = reachable(floor, width, box, nextBoxSet);
           var key = stateKey(nextBoxes, nextReach);
-          if (visited.has(key)) continue;
-          visited.add(key);
-          var child = { boxes: nextBoxes, player: box, key: key, depth: node.depth + 1, access: nextReach };
+          var nextDepth = node.depth + 1;
+          if (bestDepth.has(key) && bestDepth.get(key) <= nextDepth) continue;
+          bestDepth.set(key, nextDepth);
+          var child = {
+            boxes: nextBoxes, player: box, key: key, depth: nextDepth,
+            heuristic: heuristic, estimate: nextDepth + heuristic * heuristicWeight, access: nextReach
+          };
           parents.set(key, { previous: node.key, action: { box: box, destination: destination, direction: d } });
-          queue.push(child);
           if (isSolved(nextBoxes)) { solvedNode = child; break; }
+          heapPush(child);
         }
       }
     }
 
-    if (!solvedNode) return { solved: false, states: visited.size, limited: visited.size >= limit };
+    if (!solvedNode) return { solved: false, states: expanded, limited: expanded >= limit };
     var actions = [];
     var cursor = solvedNode.key;
     while (cursor !== startKey) {
@@ -712,10 +866,146 @@
     actions.reverse();
     return {
       solved: true,
+      optimal: heuristicWeight === 1,
       pushes: solvedNode.depth,
-      states: visited.size,
+      states: expanded,
       actions: actions,
       firstPush: actions[0] || null
+    };
+  }
+
+  function solveReverse(level, options) {
+    options = options || {};
+    var limit = options.limit || 250000;
+    var floor = level.floor instanceof Set ? level.floor : new Set(level.floor);
+    var width = level.width;
+    var targetBoxes = level.boxes.slice().sort(function (a, b) { return a - b; });
+    var solvedBoxes = level.goals.slice().sort(function (a, b) { return a - b; });
+    var targetMaps = reverseTargetMaps(level, targetBoxes);
+    var heuristicCache = new Map();
+    var targetKey = targetBoxes.join(',');
+    var roots = new Set();
+    var bestDepth = new Map();
+    var parents = new Map();
+    var heap = [];
+    var expanded = 0;
+
+    function less(a, b) {
+      return a.estimate < b.estimate || (a.estimate === b.estimate &&
+        (a.heuristic < b.heuristic || (a.heuristic === b.heuristic && a.depth > b.depth)));
+    }
+    function heapPush(node) {
+      heap.push(node);
+      var position = heap.length - 1;
+      while (position > 0) {
+        var parent = Math.floor((position - 1) / 2);
+        if (!less(heap[position], heap[parent])) break;
+        var hold = heap[position]; heap[position] = heap[parent]; heap[parent] = hold;
+        position = parent;
+      }
+    }
+    function heapPop() {
+      var first = heap[0];
+      var tail = heap.pop();
+      if (heap.length) {
+        heap[0] = tail;
+        var position = 0;
+        while (true) {
+          var left = position * 2 + 1;
+          var right = left + 1;
+          var smallest = position;
+          if (left < heap.length && less(heap[left], heap[smallest])) smallest = left;
+          if (right < heap.length && less(heap[right], heap[smallest])) smallest = right;
+          if (smallest === position) break;
+          var hold = heap[position]; heap[position] = heap[smallest]; heap[smallest] = hold;
+          position = smallest;
+        }
+      }
+      return first;
+    }
+    function heuristicFor(boxes) {
+      var key = boxes.join(',');
+      if (!heuristicCache.has(key)) heuristicCache.set(key, matchingDistance(boxes, targetMaps));
+      return heuristicCache.get(key);
+    }
+    function isTarget(node) {
+      return node.boxes.join(',') === targetKey && node.access.has(level.player);
+    }
+
+    // A solved Sokoban position does not prescribe the keeper's final square.
+    // Seed one canonical state for every connected keeper region around the
+    // packed crates so the reverse search does not guess the final component.
+    var solvedSet = new Set(solvedBoxes);
+    var unseeded = new Set(Array.from(floor).filter(function (cell) { return !solvedSet.has(cell); }));
+    while (unseeded.size) {
+      var representative = unseeded.values().next().value;
+      var access = reachable(floor, width, representative, solvedSet);
+      access.forEach(function (cell) { unseeded.delete(cell); });
+      var key = stateKey(solvedBoxes, access);
+      var heuristic = heuristicFor(solvedBoxes);
+      if (!Number.isFinite(heuristic)) continue;
+      var root = {
+        boxes: solvedBoxes, player: representative, key: key, depth: 0,
+        heuristic: heuristic, estimate: heuristic, access: access
+      };
+      roots.add(key);
+      bestDepth.set(key, 0);
+      heapPush(root);
+    }
+
+    var solvedNode = null;
+    while (!solvedNode && heap.length && expanded < limit) {
+      var node = heapPop();
+      if (bestDepth.get(node.key) !== node.depth) continue;
+      if (isTarget(node)) { solvedNode = node; break; }
+      expanded += 1;
+      var boxSet = new Set(node.boxes);
+      for (var b = 0; b < node.boxes.length; b += 1) {
+        var box = node.boxes[b];
+        var point = pointOf(box, width);
+        for (var d = 0; d < DIRS.length; d += 1) {
+          var direction = DIRS[d];
+          var near = indexOf(point.x - direction.x, point.y - direction.y, width);
+          var far = indexOf(point.x - direction.x * 2, point.y - direction.y * 2, width);
+          if (!node.access.has(near) || !floor.has(far) || boxSet.has(near) || boxSet.has(far)) continue;
+          var nextBoxes = node.boxes.slice();
+          nextBoxes[b] = near;
+          nextBoxes.sort(function (a, c) { return a - c; });
+          var nextSet = new Set(nextBoxes);
+          var nextAccess = reachable(floor, width, far, nextSet);
+          var key = stateKey(nextBoxes, nextAccess);
+          var nextDepth = node.depth + 1;
+          if (bestDepth.has(key) && bestDepth.get(key) <= nextDepth) continue;
+          bestDepth.set(key, nextDepth);
+          var heuristic = heuristicFor(nextBoxes);
+          if (!Number.isFinite(heuristic)) continue;
+          var child = {
+            boxes: nextBoxes, player: far, key: key, depth: nextDepth,
+            heuristic: heuristic, estimate: nextDepth + heuristic, access: nextAccess
+          };
+          // Stored action is the corresponding forward push, from child back
+          // toward its parent in the solved direction.
+          parents.set(key, {
+            previous: node.key,
+            action: { box: near, destination: box, direction: d }
+          });
+          heapPush(child);
+        }
+      }
+    }
+
+    if (!solvedNode) return { solved: false, states: expanded, limited: expanded >= limit, reverse: true };
+    var actions = [];
+    var cursor = solvedNode.key;
+    while (!roots.has(cursor)) {
+      var link = parents.get(cursor);
+      if (!link) break;
+      actions.push(link.action);
+      cursor = link.previous;
+    }
+    return {
+      solved: true, optimal: true, reverse: true, pushes: solvedNode.depth,
+      states: expanded, actions: actions, firstPush: actions[0] || null
     };
   }
 
@@ -902,8 +1192,7 @@
       boxes: scrambled.boxes,
       player: scrambled.player
     };
-    var solution = config.boxes > 4 ? { solved: false, limited: true, states: 0 } :
-      solve(level, { limit: config.solverLimit || 55000 });
+    var solution = solve(level, { limit: config.solverLimit || 55000 });
     if (!solution.solved && !solution.limited) return null;
     if (!solution.solved) {
       var boundsMeet = scrambled.knownSolution.length === scrambled.lowerBound;
@@ -1009,18 +1298,26 @@
       var candidateScore = ratingFor(levelNumber, candidate.solution).score;
       var pushFloor = Math.max(2, config.minPushes);
       var averageWalk = candidate.solution.moves / Math.max(1, candidate.solution.actions.length);
+      var searchStates = candidate.solution.states || 0;
       var distance = pushes < pushFloor ? (pushFloor - pushes) * 5 : 0;
       if (candidateScore < config.minScore) distance += (config.minScore - candidateScore) * 4;
-      if (candidateScore > config.maxScore) distance += (candidateScore - config.maxScore);
+      if (candidateScore > config.maxScore) {
+        distance += (candidateScore - config.maxScore) * (config.minSearchStates > 0 ? 0.1 : 1);
+      }
       if (averageWalk > 7) distance += (averageWalk - 7) * 18;
-      if (candidate.boxes.length >= 4 && candidate.solution.proof === 'constructive') distance += 30;
+      if (searchStates < (config.minSearchStates || 0)) {
+        distance += ((config.minSearchStates - searchStates) / Math.max(1, config.minSearchStates)) * 80;
+      }
+      if (candidate.boxes.length === 4 && candidate.solution.proof === 'constructive') distance += 30;
       if (levelNumber >= 20 && candidate.solution.analysis.boxesUsed < config.boxes) distance += 18;
       if (levelNumber >= 40 && candidate.solution.analysis.interdependence < Math.max(4, config.boxes * 2)) distance += 14;
       if (distance < bestDistance || (distance === bestDistance && best && candidate.solution.states > best.solution.states)) {
         best = candidate; bestDistance = distance;
       }
-      if (pushes >= config.minPushes && candidateScore >= config.minScore && candidateScore <= config.maxScore &&
+      if (pushes >= config.minPushes && candidateScore >= config.minScore &&
+          (config.minSearchStates > 0 || candidateScore <= config.maxScore) &&
           averageWalk <= 7 &&
+          searchStates >= (config.minSearchStates || 0) &&
           (levelNumber < 20 || candidate.solution.analysis.boxesUsed === config.boxes) &&
           (levelNumber < 40 || candidate.solution.analysis.interdependence >= Math.max(4, config.boxes * 2))) break;
     }
@@ -1043,13 +1340,18 @@
         }
         var fallbackScore = ratingFor(levelNumber, fallbackCandidate.solution).score;
         var fallbackWalk = fallbackCandidate.solution.moves / Math.max(1, fallbackCandidate.solution.actions.length);
+        var fallbackStates = fallbackCandidate.solution.states || 0;
         var fallbackRank = Math.max(0, config.minScore - fallbackScore) * 4 +
-          Math.max(0, fallbackScore - config.maxScore) + Math.max(0, fallbackWalk - 7) * 18;
+          Math.max(0, fallbackScore - config.maxScore) * (config.minSearchStates > 0 ? 0.1 : 1) +
+          Math.max(0, fallbackWalk - 7) * 18 +
+          Math.max(0, config.minSearchStates - fallbackStates) / Math.max(1, config.minSearchStates) * 80;
         if (fallbackRank < fallbackDistance) {
           best = fallbackCandidate;
           fallbackDistance = fallbackRank;
         }
-        if (fallbackScore >= config.minScore && fallbackScore <= config.maxScore && fallbackWalk <= 7) break;
+        if (fallbackScore >= config.minScore && (config.minSearchStates > 0 || fallbackScore <= config.maxScore) &&
+            fallbackWalk <= 7 &&
+            fallbackStates >= (config.minSearchStates || 0)) break;
       }
     }
     if (!best) throw new Error('The dungeon refused this seed. Try another descent.');
@@ -1086,6 +1388,7 @@
     visibleWalls: visibleWalls,
     signature: signature,
     solve: solve,
+    solveReverse: solveReverse,
     staticDeadSquares: staticDeadSquares
   };
 });

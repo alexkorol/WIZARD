@@ -72,16 +72,18 @@ replayPushes(abyss, abyss.solution.actions);
 assert.strictEqual(Core.routeMoveCount(abyss, abyss.solution.actions), abyss.solution.moves, 'floor 800 route movement must be exact');
 
 var terminal = Core.generate('TEST42', 999999);
-assert.ok(terminal.width >= 19 && terminal.height >= 15, 'floor 999999 must use the terminal warehouse size');
-assert.strictEqual(terminal.boxes.length, 8, 'floor 999999 must use eight boxes');
+assert.ok(terminal.width >= 16 && terminal.height >= 13, 'floor 999999 must retain a dense expert board');
+assert.strictEqual(terminal.boxes.length, 6, 'floor 999999 must use six tightly coupled boxes');
 assert.ok(terminal.solution.actions.length >= 40, 'floor 999999 must require a substantial constructive proof');
-assert.strictEqual(terminal.solution.analysis.boxesUsed, 8, 'floor 999999 proof must involve every box');
+assert.strictEqual(terminal.solution.analysis.boxesUsed, 6, 'floor 999999 proof must involve every box');
+assert.ok(terminal.solution.states >= terminal.config.minSearchStates,
+  'floor 999999 must resist the authored-level solver gate');
 assert.ok(terminal.solution.analysis.interdependence >= 16, 'floor 999999 must strongly interweave box subproblems');
 assert.ok(terminal.solution.analysis.structure >= 40, 'floor 999999 must contain warehouse-scale interior structure');
 assert.ok(terminal.solution.moves / terminal.solution.actions.length <= 7, 'floor 999999 proof must avoid excessive walking between pushes');
 assert.ok(terminal.solution.analysis.silhouetteCoverage <= 0.88, 'floor 999999 must have an irregular occupied silhouette');
 assert.ok(terminal.solution.analysis.storageEntries >= 4, 'floor 999999 must route boxes through the storage strait');
-assert.ok(terminal.boxes.filter(function (box) { return !terminal.floor.goalRegion.has(box); }).length >= 4,
+assert.ok(terminal.boxes.filter(function (box) { return !terminal.floor.goalRegion.has(box); }).length >= 3,
   'floor 999999 must begin with at least half its boxes outside the goal chamber');
 replayPushes(terminal, terminal.solution.actions);
 assert.strictEqual(Core.routeMoveCount(terminal, terminal.solution.actions), terminal.solution.moves, 'floor 999999 route movement must be exact');
@@ -90,6 +92,8 @@ assert.strictEqual(Core.generate('TEST42', 999999).signature, terminal.signature
 var humanScale = Core.generate('TEST42', 100000);
 assert.strictEqual(humanScale.boxes.length, 6, 'floor 100000 must use six active boxes');
 assert.ok(humanScale.solution.actions.length >= 40, 'floor 100000 must require a substantial proof');
+assert.ok(humanScale.solution.states >= humanScale.config.minSearchStates,
+  'floor 100000 must resist its solver difficulty gate');
 assert.ok(humanScale.solution.analysis.storageEntries >= 3, 'floor 100000 must enforce storage-chamber crossings');
 assert.ok(humanScale.solution.analysis.silhouetteCoverage >= 0.6 && humanScale.solution.analysis.silhouetteCoverage <= 0.88,
   'floor 100000 silhouette must resemble authored irregular levels');

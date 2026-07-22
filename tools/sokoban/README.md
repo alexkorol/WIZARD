@@ -2,32 +2,33 @@
 
 An infinite, deterministic Sokoban campaign for WIZARD. Every floor is generated in the browser from a run seed and floor number.
 
-## Solvability guarantee
+## Solvability and difficulty
 
-The generator starts with every crate already on a goal, then makes only legal reverse-pulls. Replaying those pulls backward is always a valid solution. Before a chamber is shown, a push-space breadth-first search attempts to prove the true minimum. At the deepest floors, a constructive replay remains the fallback when the search budget is exhausted.
+The generator starts with every crate on a goal, then makes only legal reverse pulls. Replaying those pulls backward is always a valid solution. A push-space A* solver independently challenges each candidate using wall-aware reverse-push distances, minimum-cost box-goal matching, canonical keeper regions, static taboo cells, transposition pruning, and frozen 2x2 deadlocks.
 
-Difficulty is not assigned from the floor number or push count alone. Starting at floor 100, the generator builds an irregular union of rooms, alcoves, and one-cell corridors in exterior void instead of subtracting walls from a rectangle. A dedicated goal chamber is connected to the staging rooms through a storage strait, and deep starts place at least half their crates outside it. Candidate chambers must meet a rising assignment-distance lower bound and are scored for box-line changes, switches between boxes, counterintuitive pushes, congestion, box-controlled barriers, strait entries, and interwoven subproblems. There is no floor-100 plateau: crate count rises from one to eight, boards grow from 7x7 to 19x15, every deep-proof crate must participate, and the constructive push target continues rising logarithmically through floor 1,000,000.
+Solvability is not difficulty. Starting at floor 100, the generator builds irregular rooms, alcoves, and one-cell corridors in exterior void. A dedicated goal chamber connects to staging rooms through a storage strait, and deep starts place at least half their crates outside it. More importantly, deep candidates now face a rising adversarial search gate. A chamber that looks intricate but collapses in a few hundred solver states is rejected. The deepest band must survive at least 8,000 expanded states from the same solver that proves Thinking Rabbit Original #1 in 97 pushes and 15,415 states.
 
-The scoring model follows published Sokoban difficulty work: [Jarusek and Pelanek](https://www.fi.muni.cz/~xpelanek/publications/stairs2010-final.pdf) found box changes and interwoven subproblems far more predictive of human difficulty than shortest-path length; [Taylor and Parberry](https://ianparberry.com/techreports/LARC-2011-01.pdf) used reverse generation, box lines, and rejected large open rectangles; [Bento et al.](https://www.ijcai.org/proceedings/2019/646) combined backward generation, novelty, and higher-order conflicts. A second design pass compared generated layouts with the 50 Thinking Rabbit originals and David W. Skinner's Microban set. See [RESEARCH.md](RESEARCH.md) for the measurements and resulting design rules.
+Difficulty therefore grows through search resistance, interaction density, box-line changes, counterintuitive pushes, box-controlled barriers, storage order, and interwoven subproblems. Crate count deliberately tops out at six and the expert board stays dense: tests against authored levels showed that more crates and more empty acreage can make the logical decomposition easier, not harder.
 
-Optimization numbers remain sealed until the first solve. For solver-complete floors, routes are optimized lexicographically: fewest pushes first, then fewest total player moves among those solutions. At extreme depths where exhaustive proof would make browser generation impractical, a movement-focused A* pass cleans the constructive route and labels it as verified rather than optimal. The reveal names the chamber's logical motif, reports both move and push counts, grades the player's proof, and can replay the route. Unlimited undo and visible static-deadlock warnings keep experimentation humane.
+The research basis includes [Jarusek and Pelanek](https://www.fi.muni.cz/~xpelanek/publications/stairs2010-final.pdf), [Taylor and Parberry](https://ianparberry.com/techreports/LARC-2011-01.pdf), [Bento et al.](https://www.ijcai.org/proceedings/2019/646), and [Junghanns and Schaeffer](https://www.sciencedirect.com/science/article/pii/S0004370201001096). The authored-level benchmark uses the external Thinking Rabbit and Microban collections without vendoring either pack. See [RESEARCH.md](RESEARCH.md).
 
-The floor debugger beside the board accepts any floor from 1 to 1,000,000. The adjacent **Descend one floor** button advances without requiring the current puzzle to be solved.
+Optimization numbers remain sealed until the first solve. Solver-complete floors are push-optimal; smaller floors are then optimized for the fewest player moves among those push-optimal routes. When a deep candidate exceeds the browser search budget, its reverse-forged route is labeled verified rather than optimal. Unlimited undo and static-deadlock warnings keep experimentation humane.
+
+The floor debugger accepts any floor from 1 to 1,000,000. **Descend one floor** advances without requiring the current puzzle to be solved.
 
 ## Controls
 
 - Arrow keys or WASD: move / push
 - U or Z: undo one move
 - R: reset the chamber
-- H: highlight the next push in a shortest solution
+- H: highlight the next verified push
 - Swipe or use the on-screen direction pad on touch devices
 
 Progress and the deterministic run seed are saved locally. Starting a new descent creates an entirely new sequence.
 
 ## Verification
 
-Run the dependency-free generator checks with:
-
 ```bash
 node test-core.js
+node benchmark-authored.js https://sokoboko.garoof.no/ 1 250000
 ```

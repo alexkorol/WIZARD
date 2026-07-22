@@ -78,6 +78,8 @@
         els['board-loading'].classList.add('hidden');
         els.board.setAttribute('aria-busy', 'false');
         els.status.textContent = save.floor <= 4 ? 'Tutorial chamber · solver verified' :
+          level.config.minSearchStates > 0 && level.solution.states >= level.config.minSearchStates ?
+            level.boxes.length + '-relic theorem · resisted ' + compactNumber(level.solution.states) + ' oracle states' :
           level.boxes.length >= 5 ? level.boxes.length + '-relic theorem · constructive proof verified' :
             'Chamber verified · no dead start';
         els.board.focus({ preventScroll: true });
@@ -104,7 +106,8 @@
       (level.solution.proof === 'search' ? compactNumber(level.solution.states) + ' states' :
         level.solution.proof === 'bounds' ? 'distance bound' :
           level.solution.proof === 'lexicographic' ? 'dual optimum' :
-            level.solution.proof === 'move-search' ? 'movement search' : 'constructive') : 'solver checked';
+            level.solution.proof === 'move-search' ? 'movement search' :
+              compactNumber(level.solution.states) + '+ states') : 'solver checked';
     els['replay-proof'].textContent = level.solution.moveOptimal ? 'Watch optimal route' : 'Watch clean route';
     els['floors-cleared'].textContent = save.cleared || 0;
     els['best-efficiency'].textContent = save.bestEfficiency ? Math.round(save.bestEfficiency * 100) + '%' : '—';
@@ -139,7 +142,7 @@
   }
 
   function dynamicLesson() {
-    if (level.boxes.length >= 7) return 'This is no longer a room—it is a warehouse proof. Treat every open lane as a resource shared by eight variables.';
+    if (level.config.minSearchStates >= 6500) return 'The oracle rejected every easy arrangement. Expect attractive pushes that poison a later box-goal matching.';
     if (level.boxes.length >= 5) return 'The deep archive composes several box dependencies at once. Solve the packing order, not one relic at a time.';
     if (level.boxes.length >= 4) return 'At this depth, the order of pushes is the puzzle. Preserve lanes behind every reliquary.';
     if (level.solution.analysis.switches >= 3) return 'The shortest rite changes between reliquaries. Keep their paths from crossing too soon.';

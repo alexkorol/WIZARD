@@ -29,3 +29,11 @@ The solver confirmed the gap. It solved the first 25 Microban tutorial/concept l
 - The constructive route remains a solvability certificate, but it is movement-cleaned and never presented as a shortest proof unless exhaustive search established that claim.
 
 The practical target is not "more walls." It is a smaller number of consequential boundaries whose state changes when a crate moves.
+
+## Solver-first correction
+
+The irregular-layout pass was necessary but insufficient. With a stronger forward solver, a previous floor 100000 collapsed in 153 expanded states and floor 999999 in 159, while Thinking Rabbit Original #1 required 97 pushes and 15,415 states. The visual difficulty score had therefore been rewarding complexity that did not survive search.
+
+The solver now uses empty-board reverse-push distance maps instead of Manhattan distance, minimum-cost box-goal matching, canonical keeper-reachability regions, static taboo squares, a transposition table, and frozen 2x2 deadlock rejection. It proves Original #1 within its browser-safe budget. Original #2 still exceeds the current practical budget, reinforcing Junghanns and Schaeffer's conclusion that Sokoban needs layers of domain knowledge rather than generic search alone.
+
+Generation now treats that solver as an adversary. The solver-state requirement rises with depth to 8,000 states, and candidates below the band are rejected even when they have long routes or impressive-looking geometry. Six interacting crates on a dense board replaced the former eight-crate warehouse escalation because the latter encouraged independent subproblems and walking.
