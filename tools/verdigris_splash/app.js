@@ -1689,6 +1689,124 @@ function createRegionalWeather(texture) {
   return { group, sprites, materials, rimMistMaterial, texture: weatherTexture };
 }
 
+function createVolumetricWeather() {
+  const group = new THREE.Group();
+  group.name = "Ray-marched regional atmosphere";
+  const volumes = [];
+  const geometry = new THREE.SphereGeometry(1, 24, 16);
+  const configurations = [
+    { name: "Gale Teeth thunderhead", position: [5.15, 2.35, 1.8], scale: [3.35, 1.18, 2.2], seed: 1.7, density: 1.65, threshold: 0.36, opacity: 0.92, shadow: 0x314b5d, light: 0xc8dde0, drift: [0.022, 0.008] },
+    { name: "High March rain shelf", position: [-2.35, 1.65, -1.75], scale: [3.15, 0.76, 1.92], seed: 4.1, density: 1.4, threshold: 0.39, opacity: 0.78, shadow: 0x536970, light: 0xd0ddda, drift: [0.014, -0.007] },
+    { name: "Aster Vale sunbreak", position: [-2.85, 2.7, 3.45], scale: [2.7, 1.04, 1.72], seed: 7.6, density: 1.25, threshold: 0.41, opacity: 0.68, shadow: 0x807970, light: 0xffedc5, drift: [0.01, 0.006] },
+    { name: "Lantern coast sea fog", position: [4.55, 0.72, -3.12], scale: [2.75, 0.42, 1.55], seed: 10.4, density: 1.45, threshold: 0.37, opacity: 0.72, shadow: 0x5d767a, light: 0xc8e4df, drift: [0.007, -0.01] },
+    { name: "North rim mist bank", position: [-0.8, 0.54, -5.65], scale: [2.6, 0.34, 0.92], seed: 13.8, density: 1.3, threshold: 0.4, opacity: 0.66, shadow: 0x56737b, light: 0xbde1e0, drift: [0.006, 0.004] },
+    { name: "Western waterfall fog", position: [-5.65, 0.38, 0.65], scale: [1.75, 0.5, 1.18], seed: 16.2, density: 1.5, threshold: 0.36, opacity: 0.76, shadow: 0x507984, light: 0xc9efec, drift: [0.004, -0.006] },
+    { name: "High wandering cloud deck", position: [0.1, 4.45, -0.5], scale: [5.2, 0.82, 2.25], seed: 20.1, density: 1.12, threshold: 0.42, opacity: 0.5, shadow: 0x64747a, light: 0xe0e7e3, drift: [0.017, 0.003] },
+  ];
+
+  configurations.forEach((config, index) => {
+    const material = new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      side: THREE.FrontSide,
+      fog: false,
+      uniforms: {
+        uTime: { value: 0 },
+        uSeed: { value: config.seed },
+        uDensity: { value: config.density },
+        uThreshold: { value: config.threshold },
+        uOpacity: { value: config.opacity },
+        uSteps: { value: 18 },
+        uCameraLocal: { value: new THREE.Vector3() },
+        uShadowColor: { value: new THREE.Color(config.shadow) },
+        uLightColor: { value: new THREE.Color(config.light) },
+        uWind: { value: new THREE.Vector2(config.drift[0], config.drift[1]) },
+      },
+      vertexShader: `
+        varying vec3 vLocalPosition;
+        void main(){
+          vLocalPosition=position;
+          gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+        uniform float uSeed;
+        uniform float uDensity;
+        uniform float uThreshold;
+        uniform float uOpacity;
+        uniform float uSteps;
+        uniform vec3 uCameraLocal;
+        uniform vec3 uShadowColor;
+        uniform vec3 uLightColor;
+        uniform vec2 uWind;
+        varying vec3 vLocalPosition;
+        float hash31(vec3 p){return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453);}
+        float noise3(vec3 p){
+          vec3 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);
+          return mix(mix(mix(hash31(i),hash31(i+vec3(1,0,0)),f.x),mix(hash31(i+vec3(0,1,0)),hash31(i+vec3(1,1,0)),f.x),f.y),mix(mix(hash31(i+vec3(0,0,1)),hash31(i+vec3(1,0,1)),f.x),mix(hash31(i+vec3(0,1,1)),hash31(i+vec3(1,1,1)),f.x),f.y),f.z);
+        }
+        float fbm(vec3 p){
+          float value=0.0,amplitude=0.52;
+          for(int octave=0;octave<4;octave++){value+=noise3(p)*amplitude;p=p*2.03+vec3(1.7,9.2,2.8);amplitude*=0.5;}
+          return value;
+        }
+        float densityAt(vec3 p){
+          vec3 wind=vec3(uWind.x*uTime,0.0,uWind.y*uTime);
+          float body=1.0-smoothstep(0.48,1.0,length(p));
+          float floorFade=smoothstep(-0.96,-0.48,p.y);
+          float ceilingFade=1.0-smoothstep(0.24,0.98,p.y);
+          float broad=fbm(p*2.15+wind+uSeed*0.73);
+          float detail=fbm(p*5.1-wind*1.7+uSeed*1.91);
+          return smoothstep(uThreshold,0.88,broad*0.78+detail*0.22)*body*floorFade*ceilingFade;
+        }
+        void main(){
+          vec3 rayOrigin=uCameraLocal;
+          vec3 rayDirection=normalize(vLocalPosition-rayOrigin);
+          float b=dot(rayOrigin,rayDirection);
+          float c=dot(rayOrigin,rayOrigin)-1.0;
+          float h=b*b-c;
+          if(h<0.0)discard;
+          h=sqrt(h);
+          float nearT=max(0.0,-b-h);
+          float farT=-b+h;
+          float span=max(0.001,farT-nearT);
+          float jitter=hash31(vec3(gl_FragCoord.xy,uSeed));
+          vec3 accumulated=vec3(0.0);
+          float alpha=0.0;
+          for(int stepIndex=0;stepIndex<24;stepIndex++){
+            if(float(stepIndex)>=uSteps)break;
+            float t=nearT+(float(stepIndex)+jitter)*span/uSteps;
+            vec3 p=rayOrigin+rayDirection*t;
+            float density=densityAt(p);
+            if(density>0.001){
+              float lightPhase=clamp(p.y*0.46+0.58+noise3(p*3.4+uSeed)*0.22,0.0,1.0);
+              vec3 sampleColor=mix(uShadowColor,uLightColor,lightPhase);
+              float sampleAlpha=(1.0-exp(-density*uDensity*span/uSteps*2.35))*uOpacity;
+              accumulated+=(1.0-alpha)*sampleColor*sampleAlpha;
+              alpha+=(1.0-alpha)*sampleAlpha;
+              if(alpha>0.96)break;
+            }
+          }
+          if(alpha<0.008)discard;
+          gl_FragColor=vec4(accumulated/max(alpha,0.001),alpha);
+        }
+      `,
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.name = config.name;
+    mesh.position.set(...config.position);
+    mesh.scale.set(...config.scale);
+    mesh.rotation.y = config.seed * 0.37;
+    mesh.renderOrder = 8 + index * 0.01;
+    mesh.userData.basePosition = mesh.position.clone();
+    mesh.userData.phase = config.seed;
+    group.add(mesh);
+    volumes.push({ mesh, material });
+  });
+  return { group, volumes, geometry };
+}
+
 function createRegionalLightning() {
   const group = new THREE.Group();
   group.name = "Moving rim lightning";
@@ -2116,101 +2234,122 @@ function createCitadel(materials) {
 
 function createAuroraCurtains() {
   const group = new THREE.Group();
-  group.name = "Aurora curtains";
+  group.name = "Depth-stacked volumetric auroras";
   const materials = [];
+  const meshes = [];
   const configurations = [
     { center: -0.72, arc: 1.05, radius: 8.25, base: 0.7, height: 3.65, seed: 0.7, cyan: [0.16, 1.0, 0.84], violet: [0.42, 0.28, 1.0] },
     { center: 2.45, arc: 0.78, radius: 8.65, base: 0.95, height: 3.15, seed: 2.3, cyan: [0.12, 0.72, 1.0], violet: [0.72, 0.26, 1.0] },
     { center: 0.82, arc: 0.64, radius: 9.1, base: 1.15, height: 2.75, seed: 4.9, cyan: [0.2, 1.0, 0.76], violet: [0.3, 0.44, 1.0] },
   ];
-  configurations.forEach((config) => {
-    const alongSegments = 84;
-    const verticalSegments = 12;
-    const positions = [];
-    const uvs = [];
-    const indices = [];
-    for (let vertical = 0; vertical <= verticalSegments; vertical += 1) {
-      const v = vertical / verticalSegments;
-      for (let along = 0; along <= alongSegments; along += 1) {
-        const u = along / alongSegments;
-        const angle = config.center + (u - 0.5) * config.arc;
-        const wave = Math.sin(u * Math.PI * 5 + config.seed) * 0.34 + Math.sin(u * Math.PI * 11 - config.seed) * 0.12;
-        const radius = config.radius + wave * (0.18 + v * 0.24);
-        positions.push(
-          Math.cos(angle) * radius,
-          config.base + v * config.height + wave * (0.22 + v * 0.48),
-          Math.sin(angle) * radius,
-        );
-        uvs.push(u, v);
-      }
-    }
-    const stride = alongSegments + 1;
-    for (let vertical = 0; vertical < verticalSegments; vertical += 1) {
-      for (let along = 0; along < alongSegments; along += 1) {
-        const a = vertical * stride + along;
-        const b = a + stride;
-        indices.push(a, b, b + 1, a, b + 1, a + 1);
-      }
-    }
-    const geometry = new THREE.BufferGeometry();
-    geometry.setIndex(indices);
-    geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
-    geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
-    const material = new THREE.ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      side: THREE.DoubleSide,
-      blending: THREE.AdditiveBlending,
-      fog: false,
-      uniforms: {
-        uTime: { value: 0 },
-        uIntensity: { value: 1 },
-        uSeed: { value: config.seed },
-        uCyan: { value: new THREE.Color(...config.cyan) },
-        uViolet: { value: new THREE.Color(...config.violet) },
-      },
-      vertexShader: `
-        uniform float uTime;
-        uniform float uSeed;
-        varying vec2 vUv;
-        varying float vFold;
-        void main(){
-          vUv=uv;
-          vec3 p=position;
-          float fold=sin(uv.x*31.0+uSeed*4.0+uTime*0.16)+sin(uv.x*67.0-uTime*0.11+uSeed);
-          p.y += fold*0.055*uv.y;
-          p.xz *= 1.0 + sin(uv.x*18.0-uTime*0.12+uSeed)*0.0025*uv.y;
-          vFold=fold;
-          gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.0);
+  configurations.forEach((config, configurationIndex) => {
+    for (let layer = 0; layer < 3; layer += 1) {
+      const alongSegments = 96;
+      const verticalSegments = 18;
+      const positions = [];
+      const uvs = [];
+      const indices = [];
+      const layerSeed = config.seed + layer * 1.731;
+      for (let vertical = 0; vertical <= verticalSegments; vertical += 1) {
+        const v = vertical / verticalSegments;
+        for (let along = 0; along <= alongSegments; along += 1) {
+          const u = along / alongSegments;
+          const angle = config.center + (u - 0.5) * config.arc + (layer - 1) * 0.018;
+          const fold = Math.sin(u * Math.PI * (4.5 + layer * 0.7) + layerSeed) * 0.38
+            + Math.sin(u * Math.PI * (10.0 + layer) - layerSeed) * 0.14
+            + Math.sin((u + v * 0.24) * Math.PI * 19 + layerSeed * 0.4) * 0.055;
+          const radius = config.radius + (layer - 1) * 0.22 + fold * (0.16 + v * 0.28);
+          positions.push(
+            Math.cos(angle) * radius,
+            config.base + layer * 0.07 + v * config.height * (0.94 + layer * 0.035) + fold * (0.18 + v * 0.5),
+            Math.sin(angle) * radius,
+          );
+          uvs.push(u, v);
         }
-      `,
-      fragmentShader: `
-        uniform float uTime;
-        uniform float uIntensity;
-        uniform float uSeed;
-        uniform vec3 uCyan;
-        uniform vec3 uViolet;
-        varying vec2 vUv;
-        varying float vFold;
-        float hash(float n){return fract(sin(n)*43758.5453);}
-        float noise(float x){float i=floor(x),f=fract(x);f=f*f*(3.0-2.0*f);return mix(hash(i),hash(i+1.0),f);}
-        void main(){
-          float ribbons=pow(0.5+0.5*sin(vUv.x*52.0+noise(vUv.x*17.0+uSeed)*6.0+uTime*0.22),2.2);
-          float broad=0.42+0.58*noise(vUv.x*18.0-uTime*0.035+uSeed*7.0);
-          float vertical=smoothstep(0.0,0.12,vUv.y)*smoothstep(1.0,0.56,vUv.y);
-          float ends=smoothstep(0.0,0.1,vUv.x)*smoothstep(1.0,0.9,vUv.x);
-          float pulse=0.76+0.24*sin(uTime*0.19+uSeed+vUv.x*7.0);
-          float alpha=vertical*ends*broad*(0.065+ribbons*0.22+abs(vFold)*0.024)*pulse*uIntensity;
-          vec3 color=mix(uCyan,uViolet,clamp(vUv.x*0.72+noise(vUv.x*8.0+uSeed)*0.3,0.0,1.0));
-          color*=0.72+ribbons*0.62;
-          gl_FragColor=vec4(color,alpha);
+      }
+      const stride = alongSegments + 1;
+      for (let vertical = 0; vertical < verticalSegments; vertical += 1) {
+        for (let along = 0; along < alongSegments; along += 1) {
+          const a = vertical * stride + along;
+          const b = a + stride;
+          indices.push(a, b, b + 1, a, b + 1, a + 1);
         }
-      `,
-    });
-    materials.push(material);
-    group.add(new THREE.Mesh(geometry, material));
+      }
+      const geometry = new THREE.BufferGeometry();
+      geometry.setIndex(indices);
+      geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+      geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
+      const material = new THREE.ShaderMaterial({
+        transparent: true,
+        depthWrite: false,
+        side: THREE.DoubleSide,
+        blending: THREE.AdditiveBlending,
+        fog: false,
+        uniforms: {
+          uTime: { value: 0 },
+          uIntensity: { value: 1 },
+          uSeed: { value: layerSeed },
+          uLayer: { value: layer },
+          uCyan: { value: new THREE.Color(...config.cyan) },
+          uViolet: { value: new THREE.Color(...config.violet) },
+        },
+        vertexShader: `
+          uniform float uTime;
+          uniform float uSeed;
+          uniform float uLayer;
+          varying vec2 vUv;
+          varying float vFold;
+          void main(){
+            vUv=uv;
+            vec3 p=position;
+            float slow=sin(uv.x*17.0+uSeed+uTime*(0.07+uLayer*0.012));
+            float fine=sin(uv.x*43.0-uv.y*7.0-uTime*0.11+uSeed*2.0);
+            float fold=slow+fine*0.42;
+            p.y+=fold*(0.035+uv.y*0.075);
+            p.xz*=1.0+sin(uv.x*13.0+uv.y*4.0-uTime*0.055+uSeed)*0.0045*uv.y;
+            vFold=fold;
+            gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.0);
+          }
+        `,
+        fragmentShader: `
+          uniform float uTime;
+          uniform float uIntensity;
+          uniform float uSeed;
+          uniform float uLayer;
+          uniform vec3 uCyan;
+          uniform vec3 uViolet;
+          varying vec2 vUv;
+          varying float vFold;
+          float hash21(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+          float noise2(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);return mix(mix(hash21(i),hash21(i+vec2(1,0)),f.x),mix(hash21(i+vec2(0,1)),hash21(i+vec2(1,1)),f.x),f.y);}
+          float fbm2(vec2 p){float v=0.0,a=0.55;for(int i=0;i<4;i++){v+=noise2(p)*a;p=p*2.04+vec2(5.2,1.3);a*=0.48;}return v;}
+          void main(){
+            vec2 flow=vec2(vUv.x*7.0+uTime*0.012,vUv.y*2.8-uTime*0.021);
+            float warp=fbm2(flow+uSeed)-0.5;
+            float filaments=pow(0.5+0.5*sin((vUv.x+warp*0.075)*92.0+uTime*0.18+uSeed*3.0),5.5);
+            float secondary=pow(0.5+0.5*sin((vUv.x-warp*0.045)*157.0-uTime*0.12+uSeed),7.0);
+            float veil=fbm2(vec2(vUv.x*13.0+warp*1.8,vUv.y*5.0-uTime*0.018)+uSeed*2.0);
+            float breakup=smoothstep(0.3,0.74,fbm2(vec2(vUv.x*18.0-uTime*0.009,vUv.y*7.0)+uSeed*4.0));
+            float vertical=smoothstep(0.0,0.1+veil*0.05,vUv.y)*smoothstep(1.0,0.46+veil*0.28,vUv.y);
+            float ends=smoothstep(0.0,0.08+warp*0.025,vUv.x)*smoothstep(1.0,0.9+warp*0.035,vUv.x);
+            float depthFade=0.52+uLayer*0.18;
+            float alpha=vertical*ends*breakup*(0.018+filaments*0.16+secondary*0.08+veil*0.035+abs(vFold)*0.008)*depthFade*uIntensity;
+            vec3 color=mix(uCyan,uViolet,clamp(vUv.y*0.3+vUv.x*0.42+veil*0.34+uLayer*0.12,0.0,1.0));
+            color*=0.62+filaments*0.72+secondary*0.42+veil*0.24;
+            gl_FragColor=vec4(color,alpha);
+          }
+        `,
+      });
+      materials.push(material);
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.renderOrder = 4 + configurationIndex * 0.1 + layer * 0.01;
+      mesh.userData.layer = layer;
+      mesh.userData.phase = layerSeed;
+      meshes.push(mesh);
+      group.add(mesh);
+    }
   });
-  return { group, materials };
+  return { group, materials, meshes };
 }
 
 function createSky() {
@@ -2828,14 +2967,14 @@ function boot() {
   scene.add(clouds.group);
   const epicCloudWisps = createEpicCloudWisps(clouds.texture);
   const regionalWeather = createRegionalWeather(clouds.texture);
+  const volumetricWeather = createVolumetricWeather();
   const regionalLightning = createRegionalLightning();
   const regionalSunshafts = createRegionalSunshafts();
   const spectacleHalos = createSpectacleHalos();
   const stormCrown = createStormCrown();
   const waterfallHalos = createWaterfallHalos();
   epicWorld.add(
-    epicCloudWisps,
-    regionalWeather.group,
+    volumetricWeather.group,
     regionalLightning.group,
     regionalSunshafts.group,
     spectacleHalos.group,
@@ -2898,9 +3037,9 @@ function boot() {
   scene.add(stormLight);
 
   const profiles = {
-    high: { dpr: 1.65, shadows: true, shadowSize: 2048, trees: 360, epicTrees: 860, epicLights: 96, motes: 320, clouds: 10, regionalWeather: 59 },
-    balanced: { dpr: 1.2, shadows: true, shadowSize: 1024, trees: 230, epicTrees: 620, epicLights: 72, motes: 200, clouds: 7, regionalWeather: 59 },
-    low: { dpr: 1, shadows: false, shadowSize: 512, trees: 120, epicTrees: 340, epicLights: 42, motes: 90, clouds: 4, regionalWeather: 30 },
+    high: { dpr: 1.65, shadows: true, shadowSize: 2048, trees: 360, epicTrees: 860, epicLights: 96, motes: 320, clouds: 10, regionalWeather: 59, volumeSteps: 24, volumes: 7, auroraLayers: 3 },
+    balanced: { dpr: 1.2, shadows: true, shadowSize: 1024, trees: 230, epicTrees: 620, epicLights: 72, motes: 200, clouds: 7, regionalWeather: 59, volumeSteps: 18, volumes: 6, auroraLayers: 2 },
+    low: { dpr: 1, shadows: false, shadowSize: 512, trees: 120, epicTrees: 340, epicLights: 42, motes: 90, clouds: 4, regionalWeather: 30, volumeSteps: 11, volumes: 3, auroraLayers: 1 },
   };
   let requestedQuality = "auto";
   let autoQuality = detectAutoQuality();
@@ -2985,10 +3124,14 @@ function boot() {
     trees.trunks.count = trees.crowns.count = Math.min(profile.trees, trees.maxCount);
     epicTrees.trunks.count = epicTrees.crowns.count = Math.min(profile.epicTrees, epicTrees.maxCount);
     epicCityLights.points.geometry.setDrawRange(0, Math.min(profile.epicLights, epicCityLights.maxCount));
-    epicCloudWisps.visible = activeQuality !== "low";
+    volumetricWeather.volumes.forEach(({ mesh, material }, index) => {
+      mesh.visible = index < profile.volumes;
+      material.uniforms.uSteps.value = profile.volumeSteps;
+    });
     aurora.materials.forEach((material) => {
       material.uniforms.uIntensity.value = activeQuality === "low" ? 0.78 : activeQuality === "balanced" ? 1.16 : 1.38;
     });
+    aurora.meshes.forEach((mesh) => { mesh.visible = mesh.userData.layer < profile.auroraLayers; });
     motes.geometry.setDrawRange(0, profile.motes);
     for (let index = 0; index < clouds.sprites.length; index += 1) {
       clouds.sprites[index].visible = index < profile.clouds;
@@ -3083,6 +3226,8 @@ function boot() {
     const epicActive = activeVariant === "epic";
     epicWorld.visible = epicActive;
     world.visible = !epicActive;
+    clouds.group.visible = !epicActive;
+    volumetricWeather.group.visible = epicActive;
     document.documentElement.dataset.view = activeVariant;
     variantButtons.forEach((button) => {
       button.setAttribute("aria-pressed", String(button.dataset.view === activeVariant));
@@ -3343,6 +3488,19 @@ function boot() {
     sky.material.uniforms.uTime.value = time;
     sky.material.uniforms.uStorm.value = Math.max(crownPulse, lightningPulse);
     aurora.materials.forEach((material) => { material.uniforms.uTime.value = time; });
+    aurora.meshes.forEach((mesh) => {
+      mesh.rotation.y = reducedMotion ? 0 : Math.sin(time * 0.012 + mesh.userData.phase) * (0.012 + mesh.userData.layer * 0.006);
+      mesh.position.y = reducedMotion ? 0 : Math.sin(time * 0.021 + mesh.userData.phase * 1.7) * 0.045;
+    });
+    volumetricWeather.volumes.forEach(({ mesh, material }, index) => {
+      const base = mesh.userData.basePosition;
+      const phaseOffset = mesh.userData.phase;
+      mesh.position.x = base.x + (reducedMotion ? 0 : Math.sin(time * 0.018 + phaseOffset) * (index === 6 ? 0.32 : 0.12));
+      mesh.position.z = base.z + (reducedMotion ? 0 : Math.cos(time * 0.014 + phaseOffset * 1.3) * (index === 6 ? 0.16 : 0.08));
+      material.uniforms.uTime.value = reducedMotion ? 7.0 : time;
+      mesh.updateWorldMatrix(true, false);
+      mesh.worldToLocal(material.uniforms.uCameraLocal.value.copy(camera.position));
+    });
     motes.material.uniforms.uTime.value = time;
 
     for (let index = 0; index < clouds.sprites.length; index += 1) {

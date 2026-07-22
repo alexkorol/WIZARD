@@ -42,7 +42,8 @@ assert(app.includes("createEpicOceanGeometry") && app.includes("createContinentG
 assert(app.includes("createEpicCapitals") && app.includes("createEpicTrees"), "epic world landmarks are missing");
 assert(app.includes("createEpicShallowsGeometry") && app.includes("createEpicRoutes"), "world coast or route detail is missing");
 assert(app.includes("createEpicCityLights") && app.includes("createEpicBeaconMesh"), "world activation details are missing");
-assert(app.includes("createRegionalWeather") && app.includes("createRegionalLightning") && app.includes("sunGlint"), "regional weather or shimmering ocean is missing");
+assert(app.includes("createVolumetricWeather") && app.includes("Ray-marched regional atmosphere") && app.includes("uCameraLocal"), "ray-marched volumetric weather is missing");
+assert(app.includes("createRegionalLightning") && app.includes("sunGlint"), "regional lightning or shimmering ocean is missing");
 assert(app.includes("createSpectacleHalos") && app.includes("createStormCrown") && app.includes("createWaterfallHalos"), "cinematic weather, storm, or waterfall radiance is missing");
 assert(app.includes("GLTFLoader") && app.includes("celestial_world_runtime.glb"), "optimized Meshy world loader is missing");
 assert(app.includes("celestial_world_top_texture_4k_detail.webp") && app.includes("uWorldTopMap"), "4K top-surface texture projection is missing");
@@ -51,7 +52,7 @@ assert(app.includes("createEpicStalactites") && app.includes("createEpicIceWallG
 assert(!app.includes("createWorldCore") && !app.includes("worldCore"), "the rejected glowing underside orb/core has returned");
 assert(app.includes("const proceduralEpicGeography = [\n    epicOcean"), "the blob-producing procedural ocean must be hidden when the textured world loads");
 assert(app.includes("worldSeaMask") && app.includes("roughnessFactor = mix(roughnessFactor, 0.22") && app.includes("uWaterTime"), "single-surface water shading is missing");
-assert(app.includes("createAuroraCurtains") && app.includes("nebula"), "aurora or nebula atmosphere is missing");
+assert(app.includes("Depth-stacked volumetric auroras") && app.includes("auroraLayers") && app.includes("nebula"), "depth-stacked aurora or nebula atmosphere is missing");
 assert(app.includes("setVariant") && app.includes("activeVariant"), "scene view switching is missing");
 assert(app.includes("cameraControl") && app.includes('addEventListener("pointerdown"'), "drag camera controls are missing");
 assert(app.includes('addEventListener("wheel"') && app.includes('addEventListener("keydown"'), "zoom or keyboard camera controls are missing");

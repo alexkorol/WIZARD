@@ -48,7 +48,7 @@ The build selects the largest connected body as the world, removes the separate 
 ## Architecture and assets
 
 - `app.js` loads the local optimized GLB for World view and builds Crownlands plus a procedural World fallback deterministically. If the model fails to load, the existing procedural atlas remains visible.
-- The imported world projects the feather-stitched 4K varied-territory atlas onto the complete upward-facing mesh, including its detailed sea. Water is shaded on that one surface with fine directional shimmer and lower roughness; the blob-prone translucent procedural ocean is hidden and used only as a fallback if the GLB fails. It retains seven perimeter waterfalls, restrained mist and abyss lighting, drifting cloud wisps, three shader aurora curtains, and a cyan/violet nebula field in the sky. Below the rim, the supplied dark-stone texture wraps a mostly shallow underside that narrows into a central spinning-top peak, with smaller hanging stone forms around it. A muted, irregular glacial wall replaces the luminous cyan torus and opens around each waterfall.
+- The imported world projects the feather-stitched 4K varied-territory atlas onto the complete upward-facing mesh, including its detailed sea. Water is shaded on that one surface with fine directional shimmer and lower roughness; the blob-prone translucent procedural ocean is hidden and used only as a fallback if the GLB fails. Seven ray-marched ellipsoidal weather volumes create internally layered thunderheads, rain shelves, sunlit clouds, high cloud decks, and low local fog banks with true camera parallax. Nine independently turbulent aurora shells form three depth-stacked arcs rather than repeated flat curtains. The world retains seven perimeter waterfalls, lightning, sun shafts, and a cyan/violet nebula field. Below the rim, the supplied dark-stone texture wraps a mostly shallow underside that narrows into a central spinning-top peak, with smaller hanging stone forms around it. A muted, irregular glacial wall replaces the luminous cyan torus and opens around each waterfall.
 - World mode uses nine continuous indexed heightfields: six large named regions plus three outlying island groups. Each has an authored coastline, a primary and branching ridge system, peak groups, valley cuts, terraces, and a biome palette driven by height and slope.
 - The procedural fallback retains an animated ocean, shallow-water shelves, and a closed underside shell. With the imported world active, its ocean and generated backfaces are suppressed in favor of the shaded atlas and the art-directed slate-and-stalactite shell. Seven soft-flowing waterfalls continue past the rim in both cases.
 - World vegetation uses two instanced meshes with deterministic forest masks. Rivers meander from mountain sources toward the coast and subtle road lines connect capitals to their hinterlands. Settlements reuse instanced stone/copper components; six larger capitals add foundations, halls, keeps, roofs, warm window lights, rune beacons, and buttress rhythm. Islets and coastline loops supply ocean scale cues.
@@ -65,11 +65,11 @@ The build selects the largest connected body as the world, removes the separate 
 
 `Auto` starts from coarse-pointer, viewport, memory, and logical-core hints, then can step down after sustained low frame rate. Manual selection disables adaptive changes until `Auto` is selected again.
 
-| Tier | DPR cap | Shadow map | Crown trees | World trees | City lights | Motes | Clouds |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| High | 1.65 | 2048 | 360 | 860 | 96 | 320 | 10 |
-| Balanced | 1.20 | 1024 | 230 | 620 | 72 | 200 | 7 |
-| Low | 1.00 | off | 120 | 340 | 42 | 90 | 4 |
+| Tier | DPR cap | Shadow map | Crown trees | World trees | City lights | Motes | Volume steps / regions | Aurora layers |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| High | 1.65 | 2048 | 360 | 860 | 96 | 320 | 24 / 7 | 3 |
+| Balanced | 1.20 | 1024 | 230 | 620 | 72 | 200 | 18 / 6 | 2 |
+| Low | 1.00 | off | 120 | 340 | 42 | 90 | 11 / 3 | 1 |
 
 Geometry is reused across tiers; controls change draw ranges, instance counts, shadows, and pixel ratio without rebuilding the scene. The renderer uses ACES tone mapping, explicit DPR caps, batched props, and no post-processing pass.
 
