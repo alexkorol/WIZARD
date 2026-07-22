@@ -71,4 +71,25 @@ assert.ok(abyss.rating.score >= 60, 'floor 800 must reach the abyss difficulty b
 replayPushes(abyss, abyss.solution.actions);
 assert.strictEqual(Core.routeMoveCount(abyss, abyss.solution.actions), abyss.solution.moves, 'floor 800 route movement must be exact');
 
-console.log('Verified 16 progressive floors plus a mazelike, replayable floor 800.');
+var terminal = Core.generate('TEST42', 999999);
+assert.ok(terminal.width >= 19 && terminal.height >= 15, 'floor 999999 must use the terminal warehouse size');
+assert.strictEqual(terminal.boxes.length, 8, 'floor 999999 must use eight boxes');
+assert.ok(terminal.solution.actions.length >= 40, 'floor 999999 must require a substantial constructive proof');
+assert.strictEqual(terminal.solution.analysis.boxesUsed, 8, 'floor 999999 proof must involve every box');
+assert.ok(terminal.solution.analysis.interdependence >= 16, 'floor 999999 must strongly interweave box subproblems');
+assert.ok(terminal.solution.analysis.structure >= 40, 'floor 999999 must contain warehouse-scale interior structure');
+assert.ok(terminal.solution.moves / terminal.solution.actions.length <= 7, 'floor 999999 proof must avoid excessive walking between pushes');
+assert.strictEqual(hasLargeOpenRectangle(terminal), false, 'floor 999999 must avoid large empty rooms');
+replayPushes(terminal, terminal.solution.actions);
+assert.strictEqual(Core.routeMoveCount(terminal, terminal.solution.actions), terminal.solution.moves, 'floor 999999 route movement must be exact');
+assert.strictEqual(Core.generate('TEST42', 999999).signature, terminal.signature, 'floor 999999 must remain deterministic');
+
+var depthSamples = [1, 12, 40, 800, 2000, 10000, 100000, 999999].map(Core.configFor);
+for (var depth = 1; depth < depthSamples.length; depth += 1) {
+  assert.ok(depthSamples[depth].width >= depthSamples[depth - 1].width, 'warehouse width must not shrink with depth');
+  assert.ok(depthSamples[depth].height >= depthSamples[depth - 1].height, 'warehouse height must not shrink with depth');
+  assert.ok(depthSamples[depth].boxes >= depthSamples[depth - 1].boxes, 'active box count must not shrink with depth');
+  assert.ok(depthSamples[depth].minPushes >= depthSamples[depth - 1].minPushes, 'push target must not shrink with depth');
+}
+
+console.log('Verified 16 progressive floors plus replayable floors 800 and 999999 with no deep-floor plateau.');

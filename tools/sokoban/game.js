@@ -77,7 +77,9 @@
         render();
         els['board-loading'].classList.add('hidden');
         els.board.setAttribute('aria-busy', 'false');
-        els.status.textContent = save.floor <= 4 ? 'Tutorial chamber · solver verified' : 'Chamber verified · no dead start';
+        els.status.textContent = save.floor <= 4 ? 'Tutorial chamber · solver verified' :
+          level.boxes.length >= 5 ? level.boxes.length + '-relic theorem · constructive proof verified' :
+            'Chamber verified · no dead start';
         els.board.focus({ preventScroll: true });
       } catch (error) {
         els.status.textContent = error.message || 'The chamber could not be carved.';
@@ -137,6 +139,8 @@
   }
 
   function dynamicLesson() {
+    if (level.boxes.length >= 7) return 'This is no longer a room—it is a warehouse proof. Treat every open lane as a resource shared by eight variables.';
+    if (level.boxes.length >= 5) return 'The deep archive composes several box dependencies at once. Solve the packing order, not one relic at a time.';
     if (level.boxes.length >= 4) return 'At this depth, the order of pushes is the puzzle. Preserve lanes behind every reliquary.';
     if (level.solution.analysis.switches >= 3) return 'The shortest rite changes between reliquaries. Keep their paths from crossing too soon.';
     if (!level.solution.optimal) return 'Every chamber has a proven route, even when the oracle cannot exhaust its entire state space.';
@@ -287,6 +291,8 @@
     if (!level || replaying) return;
     state = { player: level.player, boxes: level.boxes.slice(), moves: 0, pushes: 0, solved: false };
     history = [];
+    var walkDelay = level.solution.moves > 300 ? 18 : level.solution.moves > 140 ? 32 : 54;
+    var pushDelay = level.solution.moves > 300 ? 48 : level.solution.moves > 140 ? 76 : 115;
     hint = null;
     els.victory.hidden = true;
     render();
@@ -295,10 +301,15 @@
 
   function showHint() {
     if (!level || !state || state.solved || replaying) return;
-    if (history.length === 0 && level.solution.firstPush) {
-      hint = level.solution.firstPush;
+    var routeHint = knownRouteHint();
+    if (routeHint) {
+      hint = routeHint;
       render();
-      announce('Next proven push: ' + Core.directionName(hint.direction) + '. Gold marks the destination.');
+      announce('Next verified push: ' + Core.directionName(hint.direction) + '. Gold marks the destination.');
+      return;
+    }
+    if (level.boxes.length >= 5) {
+      announce('You have left the verified branch. Undo or reset to rejoin its proof.');
       return;
     }
     announce('The oracle is tracing a shortest path…');
@@ -327,6 +338,20 @@
         announce('No path remains from here. Undo or reset the chamber.');
       }
     }, 20);
+  }
+
+  function knownRouteHint() {
+    function boxKey(boxes) { return boxes.slice().sort(function (a, b) { return a - b; }).join(','); }
+    var boxes = level.boxes.slice();
+    var current = boxKey(state.boxes);
+    for (var i = 0; i < level.solution.actions.length; i += 1) {
+      if (boxKey(boxes) === current) return level.solution.actions[i];
+      var action = level.solution.actions[i];
+      var boxIndex = boxes.indexOf(action.box);
+      if (boxIndex === -1) return null;
+      boxes[boxIndex] = action.destination;
+    }
+    return null;
   }
 
   function walkPath(start, target, boxes) {
@@ -386,7 +411,7 @@
         state.player = Core.indexOf(player.x + step.x, player.y + step.y, level.width);
         state.moves += 1;
         render();
-        await pause(54);
+        await pause(walkDelay);
       }
       if (token !== replayToken) return;
       var boxIndex = state.boxes.indexOf(action.box);
@@ -396,7 +421,7 @@
       state.moves += 1;
       state.pushes += 1;
       render();
-      await pause(115);
+      await pause(pushDelay);
     }
     if (token !== replayToken) return;
     replaying = false;

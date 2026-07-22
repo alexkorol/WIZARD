@@ -65,20 +65,24 @@
       return tutorials[n - 1];
     }
     var depthBand = Math.floor(Math.log2(n));
-    var minPushes = Math.min(22, 5 + depthBand * 2);
-    var minScore = n < 10 ? 18 : n < 20 ? 26 : n < 40 ? 36 : n < 100 ? 45 : n < 400 ? 54 : 60;
+    var boxes = n < 10 ? 2 : n < 40 ? 3 : n < 2000 ? 4 : n < 50000 ? 5 : n < 200000 ? 6 : n < 500000 ? 7 : n < 800000 ? 7 : 8;
+    var minPushes = Math.max(8 + depthBand * 2, boxes * 4);
+    var minScore = n < 10 ? 18 : n < 20 ? 26 : n < 40 ? 36 : n < 100 ? 45 :
+      n < 2000 ? 60 : n < 10000 ? 72 : n < 50000 ? 82 : n < 200000 ? 92 : n < 500000 ? 104 : 116;
     return {
-      width: n < 10 ? 9 : n < 20 ? 10 : n < 40 ? 11 : n < 100 ? 12 : 13,
-      height: n < 20 ? 9 : n < 40 ? 10 : n < 100 ? 10 : 11,
-      boxes: n < 10 ? 2 : n < 40 ? 3 : 4,
+      width: n < 10 ? 9 : n < 20 ? 10 : n < 40 ? 11 : n < 200 ? 12 : n < 2000 ? 13 :
+        n < 10000 ? 14 : n < 50000 ? 15 : n < 200000 ? 16 : n < 500000 ? 17 : n < 800000 ? 18 : 19,
+      height: n < 20 ? 9 : n < 40 ? 10 : n < 200 ? 10 : n < 2000 ? 11 : n < 50000 ? 12 :
+        n < 200000 ? 13 : n < 800000 ? 14 : 15,
+      boxes: boxes,
       minPushes: minPushes,
-      maxPushes: minPushes + 4,
+      maxPushes: minPushes + 10,
       minScore: minScore,
-      maxScore: minScore + 18,
-      pulls: minPushes + 12,
-      partitions: n < 10 ? 1 : n < 20 ? 2 : n < 40 ? 3 : 4,
-      pillars: n < 20 ? 2 : n < 100 ? 3 : 4,
-      solverLimit: n < 40 ? 55000 : 15000
+      maxScore: minScore + 28,
+      pulls: minPushes + 24 + boxes * 4,
+      partitions: n < 10 ? 1 : n < 20 ? 2 : n < 40 ? 3 : Math.min(8, 4 + Math.floor((boxes - 4) / 2)),
+      pillars: n < 20 ? 2 : n < 100 ? 3 : Math.min(9, boxes + 1),
+      solverLimit: boxes <= 3 ? 55000 : boxes === 4 ? 15000 : 2500
     };
   }
 
@@ -256,7 +260,7 @@
             var g = pointOf(goal, width);
             return Math.abs(p.x - g.x) + Math.abs(p.y - g.y) === 2;
           });
-          return candidate.wallScore + adjacency * (count >= 3 ? 9 : 4) + (near ? 2 : 0) + candidate.noise;
+          return candidate.wallScore + adjacency * (count >= 6 ? 5 : count >= 3 ? 9 : 4) + (near ? 2 : 0) + candidate.noise;
         }
         return score(b) - score(a);
       });
@@ -266,22 +270,26 @@
   }
 
   function assignmentDistance(boxes, goals, width) {
-    var best = Infinity;
-    var used = new Array(goals.length).fill(false);
-    function visit(boxIndex, total) {
-      if (total >= best) return;
-      if (boxIndex === boxes.length) { best = total; return; }
+    var size = 1 << goals.length;
+    var costs = new Array(size).fill(Infinity);
+    costs[0] = 0;
+    for (var boxIndex = 0; boxIndex < boxes.length; boxIndex += 1) {
+      var nextCosts = new Array(size).fill(Infinity);
       var box = pointOf(boxes[boxIndex], width);
-      for (var goalIndex = 0; goalIndex < goals.length; goalIndex += 1) {
-        if (used[goalIndex]) continue;
-        var goal = pointOf(goals[goalIndex], width);
-        used[goalIndex] = true;
-        visit(boxIndex + 1, total + Math.abs(box.x - goal.x) + Math.abs(box.y - goal.y));
-        used[goalIndex] = false;
+      for (var mask = 0; mask < size; mask += 1) {
+        if (!Number.isFinite(costs[mask])) continue;
+        for (var goalIndex = 0; goalIndex < goals.length; goalIndex += 1) {
+          var bit = 1 << goalIndex;
+          if (mask & bit) continue;
+          var goal = pointOf(goals[goalIndex], width);
+          var nextMask = mask | bit;
+          var distance = costs[mask] + Math.abs(box.x - goal.x) + Math.abs(box.y - goal.y);
+          if (distance < nextCosts[nextMask]) nextCosts[nextMask] = distance;
+        }
       }
+      costs = nextCosts;
     }
-    visit(0, 0);
-    return best;
+    return costs[size - 1];
   }
 
   function staticDeadSquares(level) {
@@ -422,7 +430,8 @@
     for (var step = 0; step < pullCount; step += 1) {
       var boxSet = new Set(boxes.map(function (box) { return box.position; }));
       var currentDistance = assignmentDistance(Array.from(boxSet), goals, width);
-      var walkable = reachable(floor, width, player, boxSet);
+      var walking = walkDistances(floor, width, player, boxSet);
+      var walkable = new Set(walking.keys());
       var legal = [];
       boxes.forEach(function (box) {
         var p = pointOf(box.position, width);
@@ -436,7 +445,7 @@
           legal.push({
             box: box, id: box.id, direction: direction, from: box.position, to: near, player: far,
             isUndo: isUndo, visited: visited.has(key), key: key,
-            distance: assignmentDistance(positions, goals, width)
+            distance: assignmentDistance(positions, goals, width), walk: walking.get(near) || 0
           });
         });
       });
@@ -457,8 +466,8 @@
       }
       if (!legal.length) break;
       legal.sort(function (a, b) {
-        var aScore = -a.distance * 5 + used[a.id] * 2 + rng();
-        var bScore = -b.distance * 5 + used[b.id] * 2 + rng();
+        var aScore = -a.distance * 5 + used[a.id] * 2 + a.walk * 0.75 + rng();
+        var bScore = -b.distance * 5 + used[b.id] * 2 + b.walk * 0.75 + rng();
         return aScore - bScore;
       });
       var choicePool = legal.slice(0, Math.min(3, legal.length));
@@ -720,7 +729,9 @@
     var player = pick(rng, open);
     var extraPulls = Math.floor(rng() * 5);
     var scrambled = reverseScramble(floor, config.width, goals, player, config.pulls + extraPulls, config.minPushes, rng);
-    if (scrambled.pulls < config.minPushes || scrambled.lowerBound < config.minPushes || scrambled.touched < Math.min(config.boxes, 2)) return null;
+    if (scrambled.pulls < config.minPushes || scrambled.lowerBound < config.minPushes ||
+        scrambled.touched < Math.min(config.boxes, config.boxes >= 5 ? config.boxes : 2)) return null;
+    if (config.boxes >= 5 && scrambled.boxes.filter(function (box) { return goals.indexOf(box) !== -1; }).length > 1) return null;
     var level = {
       width: config.width,
       height: config.height,
@@ -729,7 +740,8 @@
       boxes: scrambled.boxes,
       player: scrambled.player
     };
-    var solution = solve(level, { limit: config.solverLimit || 55000 });
+    var solution = config.boxes > 4 ? { solved: false, limited: true, states: 0 } :
+      solve(level, { limit: config.solverLimit || 55000 });
     if (!solution.solved && !solution.limited) return null;
     if (!solution.solved) {
       var boundsMeet = scrambled.knownSolution.length === scrambled.lowerBound;
@@ -738,7 +750,7 @@
         optimal: boundsMeet,
         proof: boundsMeet ? 'bounds' : 'constructive',
         limited: true,
-        pushes: scrambled.lowerBound,
+        pushes: scrambled.knownSolution.length,
         lowerBound: scrambled.lowerBound,
         routePushes: scrambled.knownSolution.length,
         states: solution.states,
@@ -775,8 +787,7 @@
     var analysis = solution.analysis || { interest: 0 };
     // Human difficulty is driven much more by changes of box, direction, and
     // misleading progress than by raw solution length or search-space size.
-    var score = solution.pushes * 0.32 + (solution.moves || solution.pushes) * 0.07 +
-      analysis.interest + Math.log2(solution.states + 1) * 0.45;
+    var score = solution.pushes * 0.32 + analysis.interest + Math.log2(solution.states + 1) * 0.45;
     var title = 'Initiate';
     if (score >= 20) title = 'Delver';
     if (score >= 34) title = 'Pathfinder';
@@ -820,33 +831,74 @@
     var config = configFor(levelNumber);
     var best = null;
     var bestDistance = Infinity;
-    var attemptLimit = config.boxes >= 4 ? (levelNumber >= 400 ? 48 : 24) : config.boxes === 3 ? 36 : 24;
+    var attemptLimit = config.boxes > 4 ? 64 : config.boxes >= 4 ? (levelNumber >= 400 ? 48 : 24) : config.boxes === 3 ? 36 : 24;
     for (var attempt = 0; attempt < attemptLimit; attempt += 1) {
       var candidate = buildCandidate(campaignSeed, levelNumber, attempt, config);
       if (!candidate) continue;
-      refineRoute(candidate, candidate.boxes.length >= 4 ? 70000 : candidate.boxes.length === 3 ? 160000 : 90000);
+      if (candidate.boxes.length <= 4) {
+        refineRoute(candidate, candidate.boxes.length >= 4 ? 70000 : candidate.boxes.length === 3 ? 160000 : 90000);
+      } else {
+        candidate.solution.moves = routeMoveCount(candidate, candidate.solution.actions);
+        candidate.solution.moveOptimal = false;
+        candidate.solution.analysis = analyzeSolution(candidate, candidate.solution.actions);
+        candidate.solution.switches = candidate.solution.analysis.switches;
+      }
       var pushes = candidate.solution.pushes;
       var candidateScore = ratingFor(levelNumber, candidate.solution).score;
       var pushFloor = Math.max(2, config.minPushes);
+      var averageWalk = candidate.solution.moves / Math.max(1, candidate.solution.actions.length);
       var distance = pushes < pushFloor ? (pushFloor - pushes) * 5 : 0;
       if (candidateScore < config.minScore) distance += (config.minScore - candidateScore) * 4;
-      if (candidateScore > config.maxScore) distance += (candidateScore - config.maxScore) * 0.25;
+      if (candidateScore > config.maxScore) distance += (candidateScore - config.maxScore);
+      if (averageWalk > 7) distance += (averageWalk - 7) * 18;
       if (candidate.boxes.length >= 4 && candidate.solution.proof === 'constructive') distance += 30;
       if (levelNumber >= 20 && candidate.solution.analysis.boxesUsed < config.boxes) distance += 18;
-      if (levelNumber >= 40 && candidate.solution.analysis.interdependence < 4) distance += 14;
+      if (levelNumber >= 40 && candidate.solution.analysis.interdependence < Math.max(4, config.boxes * 2)) distance += 14;
       if (distance < bestDistance || (distance === bestDistance && best && candidate.solution.states > best.solution.states)) {
         best = candidate; bestDistance = distance;
       }
       if (pushes >= config.minPushes && candidateScore >= config.minScore && candidateScore <= config.maxScore &&
+          averageWalk <= 7 &&
           (levelNumber < 20 || candidate.solution.analysis.boxesUsed === config.boxes) &&
-          (levelNumber < 40 || candidate.solution.analysis.interdependence >= 4)) break;
+          (levelNumber < 40 || candidate.solution.analysis.interdependence >= Math.max(4, config.boxes * 2))) break;
     }
     if (!best) {
-      var fallback = Object.assign({}, config, { minPushes: 1, boxes: Math.min(2, config.boxes), pulls: 8, walls: 1 });
-      for (var retry = attemptLimit; retry < attemptLimit + 24 && !best; retry += 1) best = buildCandidate(campaignSeed, levelNumber, retry, fallback);
+      var fallback = Object.assign({}, config, {
+        minPushes: Math.max(config.boxes * 5, Math.floor(config.minPushes * 0.8)),
+        pulls: config.pulls + 10
+      });
+      var fallbackDistance = Infinity;
+      for (var retry = attemptLimit; retry < attemptLimit + 48; retry += 1) {
+        var fallbackCandidate = buildCandidate(campaignSeed, levelNumber, retry, fallback);
+        if (!fallbackCandidate) continue;
+        if (fallbackCandidate.boxes.length <= 4) {
+          refineRoute(fallbackCandidate, fallbackCandidate.boxes.length >= 4 ? 70000 : 90000);
+        } else {
+          fallbackCandidate.solution.moves = routeMoveCount(fallbackCandidate, fallbackCandidate.solution.actions);
+          fallbackCandidate.solution.moveOptimal = false;
+          fallbackCandidate.solution.analysis = analyzeSolution(fallbackCandidate, fallbackCandidate.solution.actions);
+          fallbackCandidate.solution.switches = fallbackCandidate.solution.analysis.switches;
+        }
+        var fallbackScore = ratingFor(levelNumber, fallbackCandidate.solution).score;
+        var fallbackWalk = fallbackCandidate.solution.moves / Math.max(1, fallbackCandidate.solution.actions.length);
+        var fallbackRank = Math.max(0, config.minScore - fallbackScore) * 4 +
+          Math.max(0, fallbackScore - config.maxScore) + Math.max(0, fallbackWalk - 7) * 18;
+        if (fallbackRank < fallbackDistance) {
+          best = fallbackCandidate;
+          fallbackDistance = fallbackRank;
+        }
+        if (fallbackScore >= config.minScore && fallbackScore <= config.maxScore && fallbackWalk <= 7) break;
+      }
     }
     if (!best) throw new Error('The dungeon refused this seed. Try another descent.');
-    if (best.solution.moves == null || best.solution.proof === 'constructive') refineRoute(best, best.boxes.length >= 4 ? 220000 : 160000);
+    if (best.boxes.length <= 4 && (best.solution.moves == null || best.solution.proof === 'constructive')) {
+      refineRoute(best, best.boxes.length >= 4 ? 220000 : 160000);
+    } else if (best.solution.moves == null) {
+      best.solution.moves = routeMoveCount(best, best.solution.actions);
+      best.solution.moveOptimal = false;
+      best.solution.analysis = analyzeSolution(best, best.solution.actions);
+      best.solution.switches = best.solution.analysis.switches;
+    }
     best.number = levelNumber;
     best.campaignSeed = campaignSeed;
     best.config = config;
