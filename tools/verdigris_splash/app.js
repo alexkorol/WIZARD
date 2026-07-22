@@ -1693,7 +1693,7 @@ function createVolumetricWeather() {
   const group = new THREE.Group();
   group.name = "Ray-marched regional atmosphere";
   const volumes = [];
-  const geometry = new THREE.SphereGeometry(1, 24, 16);
+  const geometry = new THREE.SphereGeometry(1, 40, 24);
   const configurations = [
     { name: "Gale Teeth thunderhead", position: [5.15, 2.35, 1.8], scale: [3.35, 1.18, 2.2], seed: 1.7, density: 1.65, threshold: 0.36, opacity: 0.92, shadow: 0x314b5d, light: 0xc8dde0, drift: [0.022, 0.008] },
     { name: "High March rain shelf", position: [-2.35, 1.65, -1.75], scale: [3.15, 0.76, 1.92], seed: 4.1, density: 1.4, threshold: 0.39, opacity: 0.78, shadow: 0x536970, light: 0xd0ddda, drift: [0.014, -0.007] },
@@ -1788,7 +1788,10 @@ function createVolumetricWeather() {
               if(alpha>0.96)break;
             }
           }
-          if(alpha<0.008)discard;
+          float shellFade=smoothstep(0.02,0.56,span);
+          accumulated*=shellFade;
+          alpha*=shellFade;
+          if(alpha<0.01)discard;
           gl_FragColor=vec4(accumulated/max(alpha,0.001),alpha);
         }
       `,
@@ -2538,7 +2541,7 @@ function boot() {
   scene.background = new THREE.Color(0x061116);
   scene.fog = new THREE.FogExp2(0x08171a, 0.018);
 
-  const camera = new THREE.PerspectiveCamera(38, 1, 0.08, 75);
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.08, 150);
   const cameraTarget = new THREE.Vector3();
   const world = new THREE.Group();
   scene.add(world);
@@ -2610,6 +2613,8 @@ function boot() {
     uniforms: {
       uTime: { value: 0 },
       uPulse: { value: 0 },
+      uWorldTopMap: { value: null },
+      uWorldReliefMap: { value: null },
     },
     vertexShader: `
       uniform float uTime;
@@ -2618,6 +2623,7 @@ function boot() {
       varying vec3 vWorld;
       varying float vWave;
       varying vec3 vWaveNormal;
+      varying vec2 vMapUv;
       void main() {
         vec3 p = position;
         float waveA = p.x * 1.45 + p.z * 0.38 + uTime * 0.34;
@@ -2629,6 +2635,7 @@ function boot() {
         float slopeX = cos(waveA) * 0.021 * 1.45 + sin(waveB) * 0.017 * 0.24;
         float slopeZ = cos(waveA) * 0.021 * 0.38 + sin(waveB) * 0.017 * 1.72;
         vWaveNormal = normalize(mat3(modelMatrix) * vec3(-slopeX, 1.0, -slopeZ));
+        vMapUv = vec2((p.x + ${WORLD_RX.toFixed(2)}) / ${(WORLD_RX * 2).toFixed(2)}, (p.z + ${WORLD_RZ.toFixed(2)}) / ${(WORLD_RZ * 2).toFixed(2)});
         vWorld = (modelMatrix * vec4(p, 1.0)).xyz;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
       }
@@ -2636,39 +2643,57 @@ function boot() {
     fragmentShader: `
       uniform float uTime;
       uniform float uPulse;
+      uniform sampler2D uWorldTopMap;
+      uniform sampler2D uWorldReliefMap;
       varying float vEdge;
       varying vec3 vWorld;
       varying float vWave;
       varying vec3 vWaveNormal;
+      varying vec2 vMapUv;
       float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
       float noise(vec2 p){
         vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);
         return mix(mix(hash(i),hash(i+vec2(1.0,0.0)),f.x),mix(hash(i+vec2(0.0,1.0)),hash(i+vec2(1.0)),f.x),f.y);
       }
       void main() {
+        vec3 atlasColor = texture2D(uWorldTopMap, vMapUv).rgb;
+        float relief = texture2D(uWorldReliefMap, vMapUv).r;
+        float atlasInk = smoothstep(0.018, 0.08, max(max(atlasColor.r, atlasColor.g), atlasColor.b));
+        float waterBlue = atlasColor.b - max(atlasColor.r * 0.86, atlasColor.g * 0.72);
+        float seaMask = atlasInk * (1.0 - smoothstep(0.17, 0.31, relief)) * smoothstep(0.012, 0.105, waterBlue);
+        if (seaMask < 0.055) discard;
         vec3 viewDir = normalize(cameraPosition - vWorld);
         vec3 normal = normalize(vWaveNormal);
-        float fresnel = pow(1.0 - clamp(dot(viewDir, normal), 0.0, 1.0), 3.0);
+        float fresnel = pow(1.0 - clamp(dot(viewDir, normal), 0.0, 1.0), 1.55);
         vec3 sunDirection = normalize(vec3(-0.46, 0.82, 0.34));
-        float sunGlint = pow(max(dot(reflect(-sunDirection, normal), viewDir), 0.0), 72.0);
+        float sunGlint = pow(max(dot(reflect(-sunDirection, normal), viewDir), 0.0), 18.0);
         float rippleA = sin(vWorld.x * 4.8 + vWorld.z * 1.35 + uTime * 1.08);
         float rippleB = sin(vWorld.z * 6.2 - vWorld.x * 0.75 - uTime * 0.86);
         float rippleC = sin((vWorld.x + vWorld.z) * 10.5 + uTime * 1.34);
         float crest = smoothstep(0.62, 0.94, rippleA * 0.46 + rippleB * 0.38 + rippleC * 0.16);
+        float broadWarp = noise(vWorld.xz * 0.42 + vec2(uTime * 0.035, -uTime * 0.024)) * 2.0 - 1.0;
+        float fineWarp = noise(vWorld.xz * 1.26 + vec2(-uTime * 0.075, uTime * 0.046)) * 2.0 - 1.0;
+        float waveLineA = pow(0.5 + 0.5 * sin(dot(vWorld.xz, vec2(5.7, 1.8)) + broadWarp * 4.2 + uTime * 1.26), 22.0);
+        float waveLineB = pow(0.5 + 0.5 * sin(dot(vWorld.xz, vec2(-1.15, 7.1)) + fineWarp * 2.7 - uTime * 0.92), 28.0);
+        float breakup = smoothstep(0.28, 0.74, noise(vWorld.xz * 1.14 + vec2(uTime * 0.065, -uTime * 0.052)));
+        float reflectionStreak = waveLineA * (0.22 + breakup * 0.78) + waveLineB * (0.2 - breakup * 0.11);
+        float shimmerLines = reflectionStreak * smoothstep(0.7, 0.97, noise(vWorld.xz * 4.6 + vec2(uTime * 0.38, -uTime * 0.29)));
         float sparkleNoise = noise(vWorld.xz * 14.0 + vec2(uTime * 0.7, -uTime * 0.48));
         float sparkle = smoothstep(0.89, 0.985, sparkleNoise) * (0.35 + sunGlint * 1.8);
-        float basinDepth = 0.5 + 0.5 * noise(vWorld.xz * 0.18);
         float rim = smoothstep(0.89, 1.0, vEdge);
-        vec3 deep = vec3(0.008, 0.085, 0.17);
-        vec3 surface = vec3(0.018, 0.28, 0.39);
-        vec3 color = mix(deep, surface, 0.24 + fresnel * 0.56 + basinDepth * 0.08);
-        color += vec3(0.22, 0.72, 0.82) * crest * (0.1 + fresnel * 0.16);
-        color += vec3(1.0, 0.86, 0.58) * sunGlint * 1.25;
-        color += vec3(0.72, 0.95, 1.0) * sparkle * 0.72;
+        vec3 deep = atlasColor * vec3(0.68, 0.8, 0.92);
+        vec3 skyReflection = mix(vec3(0.075, 0.34, 0.44), vec3(0.34, 0.68, 0.72), fresnel);
+        vec3 color = mix(deep, skyReflection, 0.23 + fresnel * 0.65);
+        color += vec3(0.18, 0.62, 0.72) * crest * (0.085 + fresnel * 0.18);
+        color += vec3(0.42, 0.8, 0.9) * shimmerLines * (0.22 + fresnel * 0.44);
+        color += vec3(0.48, 0.86, 0.96) * reflectionStreak * (0.34 + fresnel * 0.4);
+        color += vec3(1.0, 0.82, 0.5) * sunGlint * 1.7;
+        color += vec3(0.72, 0.95, 1.0) * sparkle * 0.88;
         color += vec3(0.1, 0.48, 0.52) * rim * (0.08 + uPulse * 0.08);
         color += vec3(0.12, 0.32, 0.34) * max(vWave, 0.0) * 1.25;
-        float alpha = 0.76 + fresnel * 0.2 + rim * 0.035;
-        gl_FragColor = vec4(color, alpha);
+        float shoreline = smoothstep(0.055, 0.42, seaMask);
+        float alpha = (0.24 + fresnel * 0.5 + shimmerLines * 0.2 + reflectionStreak * 0.23 + sunGlint * 0.25 + sparkle * 0.12 + rim * 0.025) * shoreline;
+        gl_FragColor = vec4(color, clamp(alpha, 0.0, 0.82));
       }
     `,
   });
@@ -2835,6 +2860,8 @@ function boot() {
   meshyReliefTexture.wrapT = THREE.ClampToEdgeWrapping;
   meshyReliefTexture.minFilter = THREE.LinearFilter;
   meshyReliefTexture.magFilter = THREE.LinearFilter;
+  epicOceanMaterial.uniforms.uWorldTopMap.value = meshyTopTexture;
+  epicOceanMaterial.uniforms.uWorldReliefMap.value = meshyReliefTexture;
   const meshyWorldMaterial = new THREE.MeshStandardMaterial({
     color: 0xa0c7aa,
     vertexColors: true,
@@ -2848,6 +2875,7 @@ function boot() {
     meshyWorldShader = shader;
     shader.uniforms.uWorldTopMap = { value: meshyTopTexture };
     shader.uniforms.uWorldReliefMap = { value: meshyReliefTexture };
+    shader.uniforms.uWorldUndersideMap = { value: epicUndersideTexture };
     shader.uniforms.uWaterTime = { value: 0 };
     shader.vertexShader = shader.vertexShader
       .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldReliefMap;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying float vWorldRelief;\nvarying vec3 vUndersidePosition;")
@@ -2866,16 +2894,20 @@ function boot() {
         vUndersidePosition = position;
       `);
     shader.fragmentShader = shader.fragmentShader
-      .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldTopMap;\nuniform sampler2D uWorldReliefMap;\nuniform float uWaterTime;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying float vWorldRelief;\nvarying vec3 vUndersidePosition;")
+      .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldTopMap;\nuniform sampler2D uWorldReliefMap;\nuniform sampler2D uWorldUndersideMap;\nuniform float uWaterTime;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying float vWorldRelief;\nvarying vec3 vUndersidePosition;")
       .replace("#include <color_fragment>", `#include <color_fragment>
-        if (vUndersidePosition.y < -0.04) discard;
         vec3 worldTopColor = texture2D(uWorldTopMap, vWorldTopUv).rgb;
+        vec3 worldUndersideColor = texture2D(uWorldUndersideMap, vWorldTopUv).rgb;
         float worldTopInk = smoothstep(0.018, 0.08, max(max(worldTopColor.r, worldTopColor.g), worldTopColor.b));
+        float worldUndersideInk = smoothstep(0.012, 0.095, max(max(worldUndersideColor.r, worldUndersideColor.g), worldUndersideColor.b));
+        float undersideMask = 1.0 - smoothstep(-0.08, 0.08, vUndersidePosition.y);
         float waterBlue = worldTopColor.b - max(worldTopColor.r * 0.86, worldTopColor.g * 0.72);
         float worldSeaMask = vWorldTopMask * worldTopInk
           * (1.0 - smoothstep(0.17, 0.31, vWorldRelief))
           * smoothstep(0.012, 0.11, waterBlue);
         diffuseColor.rgb = mix(diffuseColor.rgb, worldTopColor, vWorldTopMask * worldTopInk * 0.98);
+        vec3 undersideStone = worldUndersideColor * vec3(0.56, 0.68, 0.78);
+        diffuseColor.rgb = mix(diffuseColor.rgb, undersideStone, undersideMask * worldUndersideInk * 0.88);
         vec2 reliefTexel = vec2(0.00065104);
         float reliefLeft = texture2D(uWorldReliefMap, vWorldTopUv - vec2(reliefTexel.x, 0.0)).r;
         float reliefRight = texture2D(uWorldReliefMap, vWorldTopUv + vec2(reliefTexel.x, 0.0)).r;
@@ -2896,9 +2928,11 @@ function boot() {
       `)
       .replace("#include <roughnessmap_fragment>", `#include <roughnessmap_fragment>
         roughnessFactor = mix(roughnessFactor, 0.22, worldSeaMask);
+        roughnessFactor = mix(roughnessFactor, 0.8, undersideMask);
       `)
       .replace("#include <metalnessmap_fragment>", `#include <metalnessmap_fragment>
         metalnessFactor = mix(metalnessFactor, 0.03, worldSeaMask);
+        metalnessFactor = mix(metalnessFactor, 0.015, undersideMask);
       `);
   };
   epicWorld.add(
@@ -2925,7 +2959,9 @@ function boot() {
   const aurora = createAuroraCurtains();
   epicWorld.add(aurora.group);
   const proceduralEpicGeography = [
-    epicOcean,
+    epicUnderside,
+    epicStalactites,
+    epicIceWall,
     epicShallows,
     epicCliffs,
     epicContinents,
@@ -2941,7 +2977,7 @@ function boot() {
   let meshyWorldLoaded = false;
   let meshyWorldLoadError = "";
   new GLTFLoader().load(
-    "assets/world/celestial_world_runtime.glb",
+    "assets/world/celestial_world_runtime_tapered.glb?v=1",
     (gltf) => {
       gltf.scene.name = "Celestial world runtime mesh";
       gltf.scene.traverse((object) => {
@@ -2978,7 +3014,6 @@ function boot() {
     regionalLightning.group,
     regionalSunshafts.group,
     spectacleHalos.group,
-    stormCrown.group,
     waterfallHalos.group,
   );
   const flock = createFlock();

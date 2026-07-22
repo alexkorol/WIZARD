@@ -26,6 +26,7 @@ The checked-in outputs under `assets/world/` are reproducible from the source ST
 
 ```powershell
 python tools/build_world_assets.py "C:\path\to\Meshy_AI_Celestial Island_generate.stl" --output assets/world --heightmap-size 2048 --target-faces 120000
+blender --background --python tools/blender_taper_world.py -- assets/world/celestial_world_runtime.glb assets/world/celestial_world_runtime_tapered.glb "C:\Temp\verdigris_blender_qa"
 ```
 
 The build selects the largest connected body as the world, removes the separate moon and tiny detached debris, rasterizes only the topmost upward-facing surface, preserves the source model's circular horizontal proportions with one uniform X/Z scale, and reduces the runtime mesh from about 1.9 million to about 120,000 triangles. It writes:
@@ -42,13 +43,14 @@ The build selects the largest connected body as the world, removes the separate 
 - `celestial_world_top_texture_4k_detail.webp` — the visually matched, browser-efficient 4K runtime derivative used by the menu scene.
 - `celestial_world_4k_tile_detail_prompt.txt` — the exact constrained detail-paint prompt template used for every overlapping tile.
 - `celestial_world_optimized_no_moon.stl` — cleaned, decimated Z-up interchange mesh.
-- `celestial_world_runtime.glb` — Y-up, vertex-colored game mesh used by the menu.
+- `celestial_world_runtime.glb` — Y-up, vertex-colored intermediate game mesh.
+- `celestial_world_runtime_tapered.glb` — Blender-smoothed runtime mesh with Meshy's underside relief compressed at the rim and concentrated into a central taper; this is the asset used by the menu.
 - `celestial_world_build_report.json` — component removal, height range, transform, and reduction audit.
 
 ## Architecture and assets
 
 - `app.js` loads the local optimized GLB for World view and builds Crownlands plus a procedural World fallback deterministically. If the model fails to load, the existing procedural atlas remains visible.
-- The imported world projects the feather-stitched 4K varied-territory atlas onto the complete upward-facing mesh, including its detailed sea. Water is shaded on that one surface with fine directional shimmer and lower roughness; the blob-prone translucent procedural ocean is hidden and used only as a fallback if the GLB fails. Seven ray-marched ellipsoidal weather volumes create internally layered thunderheads, rain shelves, sunlit clouds, high cloud decks, and low local fog banks with true camera parallax. Nine independently turbulent aurora shells form three depth-stacked arcs rather than repeated flat curtains. The world retains seven perimeter waterfalls, lightning, sun shafts, and a cyan/violet nebula field. Below the rim, the supplied dark-stone texture wraps a mostly shallow underside that narrows into a central spinning-top peak, with smaller hanging stone forms around it. A muted, irregular glacial wall replaces the luminous cyan torus and opens around each waterfall.
+- The imported world projects the feather-stitched 4K varied-territory atlas onto the complete upward-facing mesh. A stable height/atlas-masked water skin follows its sea exactly and adds animated micro-waves, broad Fresnel sky reflection, warm directional glints, and fine sparkles without moving opacity blobs. Seven ray-marched ellipsoidal weather volumes create internally layered thunderheads, rain shelves, sunlit clouds, high cloud decks, and low local fog banks with true camera parallax. Nine independently turbulent aurora shells form three depth-stacked arcs rather than repeated flat curtains. The world retains seven perimeter waterfalls, lightning, sun shafts, and a cyan/violet nebula field. Below the rim, the real Meshy relief is retained and textured, then reshaped in Blender: the outer hanging mass is compressed and the deepest authored forms pull inward to one tapered spinning-top peak. The former generated rim wall and loose black cone field are suppressed when the runtime mesh loads.
 - World mode uses nine continuous indexed heightfields: six large named regions plus three outlying island groups. Each has an authored coastline, a primary and branching ridge system, peak groups, valley cuts, terraces, and a biome palette driven by height and slope.
 - The procedural fallback retains an animated ocean, shallow-water shelves, and a closed underside shell. With the imported world active, its ocean and generated backfaces are suppressed in favor of the shaded atlas and the art-directed slate-and-stalactite shell. Seven soft-flowing waterfalls continue past the rim in both cases.
 - World vegetation uses two instanced meshes with deterministic forest masks. Rivers meander from mountain sources toward the coast and subtle road lines connect capitals to their hinterlands. Settlements reuse instanced stone/copper components; six larger capitals add foundations, halls, keeps, roofs, warm window lights, rune beacons, and buttress rhythm. Islets and coastline loops supply ocean scale cues.
@@ -59,7 +61,7 @@ The build selects the largest connected body as the world, removes the separate 
 - The 36-second loop is deterministic and now uses a restrained spherical pan/tilt path around each responsive hero composition. Dragging provides bounded yaw/pitch orbiting — the pitch range extends below the horizon so the veined underside can be inspected — and wheel, trackpad, and pinch input provide bounded zoom. Keyboard users can navigate with arrows, plus/minus, and Home. After a short inspection pause, all offsets spring smoothly back into the authored loop.
 - `?camera=top|bottom|front|back|left|right` pins the camera to an authored orthographic-style still of the current view for review and screenshots, and `window.__VERDIGRIS_DEBUG__.capture(view)` returns the same framing as a JPEG data URL without needing the loop to run.
 - Rendering stops while the tab is hidden, and `pagehide` disposes GPU resources.
-- The Python conversion tool replaces a manual Blender cleanup/export step while producing standard STL and glTF outputs that can still be opened in Blender.
+- The Python conversion tool performs component cleanup, mapping, and decimation. The checked-in Blender pass then reshapes the underside in actual mesh space, recalculates normals, smooth-shades the result, exports the runtime GLB, and writes side/quarter/bottom QA renders.
 
 ## Quality tiers
 
