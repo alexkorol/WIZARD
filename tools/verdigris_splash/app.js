@@ -2328,49 +2328,6 @@ function createRadialGlowTexture() {
   return texture;
 }
 
-function createWorldCore() {
-  const group = new THREE.Group();
-  const coreMaterial = new THREE.MeshBasicMaterial({
-    color: new THREE.Color(2.5, 2.85, 3.2),
-    fog: false,
-  });
-  const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.3, 1), coreMaterial);
-  core.position.y = -4.78;
-  const haloMaterial = new THREE.SpriteMaterial({
-    map: createRadialGlowTexture(),
-    color: 0x86b8ff,
-    transparent: true,
-    opacity: 0.55,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-  });
-  const halo = new THREE.Sprite(haloMaterial);
-  halo.scale.set(3.1, 3.1, 1);
-  halo.position.y = -4.9;
-  const ringMaterial = new THREE.MeshBasicMaterial({
-    color: 0x5f9dff,
-    transparent: true,
-    opacity: 0.16,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-    side: THREE.DoubleSide,
-  });
-  const rings = new THREE.InstancedMesh(new THREE.TorusGeometry(1, 0.02, 6, 80), ringMaterial, 5);
-  const matrix = new THREE.Matrix4();
-  const quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
-  const position = new THREE.Vector3();
-  const scale = new THREE.Vector3();
-  for (let index = 0; index < 5; index += 1) {
-    const radius = 0.55 + index * 0.42;
-    position.set(0, -4.86 + index * 0.065, 0);
-    scale.set(radius, radius * 0.7, radius);
-    matrix.compose(position, quaternion, scale);
-    rings.setMatrixAt(index, matrix);
-  }
-  group.add(core, halo, rings);
-  return { group, core, coreMaterial, halo, haloMaterial, rings, ringMaterial };
-}
-
 function createAbyss() {
   const group = new THREE.Group();
   const ringMaterial = new THREE.MeshBasicMaterial({
@@ -2714,7 +2671,6 @@ function boot() {
   const epicCapitals = createEpicCapitals(materials);
   const epicCityLights = createEpicCityLights(epicCapitals.sites);
   const epicBeacons = createEpicBeaconMesh(epicCapitals.sites);
-  const worldCore = createWorldCore();
   const meshyWorld = new THREE.Group();
   meshyWorld.name = "Optimized Meshy world (moon removed)";
   let meshyTextureLoaded = false;
@@ -2802,7 +2758,6 @@ function boot() {
     epicCapitals.group,
     epicCityLights.points,
     epicBeacons.mesh,
-    worldCore.group,
     meshyWorld,
   );
 
@@ -2937,7 +2892,6 @@ function boot() {
   const FIXED_VIEWS = {
     top: { offset: [0.02, 30, 0.02], fov: 33 },
     bottom: { offset: [0.02, -30, 0.02], fov: 33 },
-    core: { offset: [0.02, -10, 0.02], fov: 33 },
     front: { offset: [0, -1.35, 29], fov: 33 },
     back: { offset: [0, -1.35, -29], fov: 33 },
     left: { offset: [-29, -1.35, 0], fov: 33 },
@@ -3442,12 +3396,6 @@ function boot() {
     abyss.glowMaterial.uniforms.uPulse.value = crownPulse;
     abyssLight.intensity = 9 + crownPulse * 12;
     crownLight.intensity = 3.3 + crownPulse * 7;
-    worldCore.group.rotation.y = time * 0.045;
-    worldCore.ringMaterial.opacity = 0.13 + crownPulse * 0.2;
-    const corePulse = 2.5 + crownPulse * 1.7 + Math.sin(time * 2.3) * 0.18;
-    worldCore.coreMaterial.color.setRGB(corePulse, corePulse * 1.14, corePulse * 1.28);
-    worldCore.haloMaterial.opacity = 0.5 + crownPulse * 0.34 + Math.sin(time * 1.4) * 0.06;
-    worldCore.core.scale.setScalar(1 + crownPulse * 0.32 + Math.sin(time * 2.1) * 0.04);
     const veinShader = epicUndersideMaterial.userData.shader;
     if (veinShader) {
       veinShader.uniforms.uVeinTime.value = time;

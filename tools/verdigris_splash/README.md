@@ -57,7 +57,7 @@ The build selects the largest connected body as the world, removes the separate 
 - Repeated trees, settlements, waystones, motes, mist, and flock are instanced or batched. The soft cloud texture is generated at runtime on a small canvas and reused for drifting world-space cloud wisps.
 - The loop's activation beat wakes every capital with a synchronized teal beacon while city windows brighten and the abyss answers below. It remains deterministic and can be held for review with `?moment=crown`.
 - The 36-second loop is deterministic and now uses a restrained spherical pan/tilt path around each responsive hero composition. Dragging provides bounded yaw/pitch orbiting — the pitch range extends below the horizon so the veined underside can be inspected — and wheel, trackpad, and pinch input provide bounded zoom. Keyboard users can navigate with arrows, plus/minus, and Home. After a short inspection pause, all offsets spring smoothly back into the authored loop.
-- `?camera=top|bottom|front|back|left|right|core` pins the camera to an authored orthographic-style still of the current view for review and screenshots, and `window.__VERDIGRIS_DEBUG__.capture(view)` returns the same framing as a JPEG data URL without needing the loop to run.
+- `?camera=top|bottom|front|back|left|right` pins the camera to an authored orthographic-style still of the current view for review and screenshots, and `window.__VERDIGRIS_DEBUG__.capture(view)` returns the same framing as a JPEG data URL without needing the loop to run.
 - Rendering stops while the tab is hidden, and `pagehide` disposes GPU resources.
 - The Python conversion tool replaces a manual Blender cleanup/export step while producing standard STL and glTF outputs that can still be opened in Blender.
 

@@ -48,6 +48,7 @@ assert(app.includes("GLTFLoader") && app.includes("celestial_world_runtime.glb")
 assert(app.includes("celestial_world_top_texture_4k_detail.webp") && app.includes("uWorldTopMap"), "4K top-surface texture projection is missing");
 assert(app.includes("celestial_world_underside_texture.png") && app.includes("epicUndersideTexture"), "sculpted underside texture is missing");
 assert(app.includes("createEpicStalactites") && app.includes("createEpicIceWallGeometry"), "spinning-top underside or broken ice rim is missing");
+assert(!app.includes("createWorldCore") && !app.includes("worldCore"), "the rejected glowing underside orb/core has returned");
 assert(app.includes("const proceduralEpicGeography = [\n    epicShallows") && !app.includes("const proceduralEpicGeography = [\n    epicOcean"), "animated ocean must remain visible over the shaded atlas");
 assert(app.includes("createAuroraCurtains") && app.includes("nebula"), "aurora or nebula atmosphere is missing");
 assert(app.includes("setVariant") && app.includes("activeVariant"), "scene view switching is missing");
