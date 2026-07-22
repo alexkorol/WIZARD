@@ -2802,8 +2802,10 @@ function boot() {
         vec2 crossedFlowA = normalize(flowDirection * 0.92 + flowTangent * 0.28);
         vec2 crossedFlowB = normalize(flowDirection * 0.84 - flowTangent * 0.36);
         float atlasInk = smoothstep(0.018, 0.08, max(max(atlasColor.r, atlasColor.g), atlasColor.b));
-        float waterBlue = atlasColor.b - max(atlasColor.r * 0.86, atlasColor.g * 0.72);
-        float seaMask = atlasInk * (1.0 - smoothstep(0.17, 0.31, relief)) * smoothstep(0.012, 0.105, waterBlue);
+        float deepBlueChroma = atlasColor.b - max(atlasColor.r, atlasColor.g);
+        float cyanChroma = min(atlasColor.g, atlasColor.b) - atlasColor.r;
+        float waterChroma = max(deepBlueChroma, cyanChroma * 0.78);
+        float seaMask = atlasInk * (1.0 - smoothstep(0.17, 0.31, relief)) * smoothstep(0.018, 0.095, waterChroma);
         if (seaMask < 0.055) discard;
         vec3 viewDir = normalize(cameraPosition - vWorld);
         float normalPhaseA = dot(vSurfacePos, flowDirection) * 5.15 - uTime * 1.08;
@@ -3097,9 +3099,11 @@ function boot() {
         float worldTopInk = smoothstep(0.018, 0.08, max(max(worldTopColor.r, worldTopColor.g), worldTopColor.b));
         float worldUndersideInk = smoothstep(0.012, 0.095, max(max(worldUndersideColor.r, worldUndersideColor.g), worldUndersideColor.b));
         float undersideMask = 1.0 - smoothstep(-0.08, 0.08, vUndersidePosition.y);
-        float waterBlue = worldTopColor.b - max(worldTopColor.r * 0.86, worldTopColor.g * 0.72);
+        float deepBlueChroma = worldTopColor.b - max(worldTopColor.r, worldTopColor.g);
+        float cyanChroma = min(worldTopColor.g, worldTopColor.b) - worldTopColor.r;
+        float waterChroma = max(deepBlueChroma, cyanChroma * 0.78);
         float seaClassification = (1.0 - smoothstep(0.17, 0.31, vWorldRelief))
-          * smoothstep(0.012, 0.11, waterBlue);
+          * smoothstep(0.018, 0.095, waterChroma);
         float worldSeaMask = vWorldTopMask * worldTopInk * seaClassification;
         vec3 meshDeepOcean = vec3(0.005, 0.045, 0.125);
         vec3 meshMidOcean = vec3(0.009, 0.155, 0.27);
@@ -3147,10 +3151,14 @@ function boot() {
         float lavaPulse = 0.9 + 0.1 * sin(uWaterTime * 0.5 + vWorldTopUv.x * 31.0 + vWorldTopUv.y * 23.0);
         float reefPulse = 0.76 + 0.24 * sin(uWaterTime * 0.4 + vWorldTopUv.x * 47.0 - vWorldTopUv.y * 37.0);
         float grovePulse = 0.68 + 0.32 * sin(uWaterTime * 0.72 + vWorldTopUv.x * 113.0 + vWorldTopUv.y * 89.0);
-        float illuminationPulse = mix(1.0, lavaPulse, lavaSignal);
-        illuminationPulse = mix(illuminationPulse, reefPulse, reefSignal);
-        illuminationPulse = mix(illuminationPulse, grovePulse, groveSignal);
-        totalEmissiveRadiance += illuminationSignal * illuminationPulse * vWorldTopMask * 1.85;
+        float illuminationLandMask = 1.0 - worldSeaMask;
+        vec3 lavaEmission = illuminationSignal * vec3(1.0, 0.34, 0.05)
+          * lavaSignal * lavaPulse * illuminationLandMask * 2.15;
+        vec3 reefEmission = illuminationSignal * vec3(0.06, 0.72, 1.0)
+          * reefSignal * reefPulse * worldSeaMask * 1.35;
+        vec3 groveEmission = illuminationSignal * vec3(0.14, 1.0, 0.12)
+          * groveSignal * grovePulse * illuminationLandMask * 0.62;
+        totalEmissiveRadiance += (lavaEmission + reefEmission + groveEmission) * vWorldTopMask;
       `);
   };
   epicWorld.add(

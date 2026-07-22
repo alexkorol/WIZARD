@@ -62,6 +62,9 @@ assert(app.includes("fineTopographyGradient") && app.includes("wideTopographyGra
 assert(app.includes("deepOcean") && app.includes("shallowOcean") && app.includes("depthColor") && !app.includes("atlasColor * vec3(0.68, 0.8, 0.92)"), "heightmap-controlled deep and shallow water color is missing");
 assert(app.includes("meshDeepOcean") && app.includes("meshShallowOcean") && app.includes("meshDepthColor") && app.includes("projectedTopColor"), "solid imported sea is bypassing heightmap depth colors");
 assert(!app.includes("worldTopColor * vec3(0.96, 0.99, 1.02)"), "inverted atlas sea color is being reintroduced beneath the reflective ocean");
+assert(app.includes("deepBlueChroma") && app.includes("cyanChroma") && app.includes("waterChroma"), "water masks are not using chromatic blue/cyan classification");
+assert(!app.includes("max(atlasColor.r * 0.86, atlasColor.g * 0.72)") && !app.includes("max(worldTopColor.r * 0.86, worldTopColor.g * 0.72)"), "neutral dark terrain can still leak into the sea mask");
+assert(app.includes("illuminationLandMask") && app.includes("reefSignal * reefPulse * worldSeaMask") && app.includes("lavaSignal * lavaPulse * illuminationLandMask"), "illumination channels are not gated to their terrain class");
 assert(app.includes("celestial_world_illumination_map_4k.png?v=1") && app.includes("uWorldIlluminationMap") && app.includes("totalEmissiveRadiance"), "stitched world illumination map is not active");
 assert(app.includes("lavaSignal") && app.includes("reefSignal") && app.includes("groveSignal"), "biome-specific illumination controls are missing");
 assert(!app.includes("dot(vWorld.xz, vec2(5.7, 1.8))") && app.includes("dot(reflectionUv, flowDirection)"), "fixed-direction ocean reflection streaks have returned");
