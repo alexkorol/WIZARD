@@ -44,9 +44,9 @@
   function cacheElements() {
     [
       'run-code', 'new-run', 'floor-number', 'difficulty-title', 'difficulty-pips', 'lesson',
-      'optimal-pushes', 'box-count', 'proof-states', 'status', 'move-count', 'push-count',
+      'optimal-pushes', 'solution-label', 'box-count', 'proof-states', 'status', 'move-count', 'push-count',
       'board-loading', 'board', 'victory', 'descend', 'undo', 'reset', 'hint',
-      'floors-cleared', 'best-efficiency'
+      'floors-cleared', 'best-efficiency', 'floor-jump', 'floor-input', 'descend-debug'
     ].forEach(function (id) { els[id] = byId(id); });
   }
 
@@ -79,11 +79,14 @@
   function updateMeta() {
     els['run-code'].textContent = save.seed;
     els['floor-number'].textContent = String(save.floor).padStart(2, '0');
+    els['floor-input'].value = save.floor;
     els['difficulty-title'].textContent = level.rating.title;
     els.lesson.textContent = lessons[save.floor - 1] || dynamicLesson();
-    els['optimal-pushes'].textContent = level.solution.pushes;
+    els['solution-label'].textContent = level.solution.optimal ? 'Optimal' : 'Minimum';
+    els['optimal-pushes'].textContent = level.solution.optimal ? level.solution.pushes : level.solution.lowerBound + '+';
     els['box-count'].textContent = level.boxes.length;
-    els['proof-states'].textContent = compactNumber(level.solution.states) + ' states';
+    els['proof-states'].textContent = level.solution.proof === 'search' ? compactNumber(level.solution.states) + ' states' :
+      level.solution.proof === 'bounds' ? 'distance bound' : 'constructive';
     els['floors-cleared'].textContent = save.cleared || 0;
     els['best-efficiency'].textContent = save.bestEfficiency ? Math.round(save.bestEfficiency * 100) + '%' : '—';
     var pipCount = Math.min(5, Math.max(1, Math.ceil(level.rating.score / 12)));
@@ -100,6 +103,7 @@
   function dynamicLesson() {
     if (level.boxes.length >= 4) return 'At this depth, the order of pushes is the puzzle. Preserve lanes behind every reliquary.';
     if (level.solution.switches >= 3) return 'The shortest rite changes between reliquaries. Keep their paths from crossing too soon.';
+    if (!level.solution.optimal) return 'Every chamber has a proven route. This one requires at least ' + level.solution.lowerBound + ' pushes.';
     return 'Every chamber has been solved before you enter. The shortest rite takes ' + level.solution.pushes + ' pushes.';
   }
 
@@ -230,6 +234,12 @@
 
   function showHint() {
     if (!level || !state || state.solved) return;
+    if (history.length === 0 && level.solution.firstPush) {
+      hint = level.solution.firstPush;
+      render();
+      announce('Next proven push: ' + Core.directionName(hint.direction) + '. Gold marks the destination.');
+      return;
+    }
     announce('The oracle is tracing a shortest path…');
     window.setTimeout(function () {
       var result = Core.solve({
@@ -239,13 +249,17 @@
         goals: level.goals,
         boxes: state.boxes,
         player: state.player
-      }, { limit: 90000 });
+      }, { limit: level.boxes.length >= 4 ? 15000 : 90000 });
       if (result.solved && result.firstPush) {
         hint = result.firstPush;
         render();
         announce('Next optimal push: ' + Core.directionName(hint.direction) + '. Gold marks the destination.');
       } else if (result.solved) {
         announce('All seals are already restored.');
+      } else if (result.limited) {
+        hint = null;
+        render();
+        announce('The oracle could not finish this deep search. Undo or reset for the proven route.');
       } else {
         hint = null;
         render();
@@ -283,6 +297,13 @@
     els.hint.addEventListener('click', showHint);
     els['new-run'].addEventListener('click', newRun);
     els.descend.addEventListener('click', function () { loadFloor(save.floor + 1); });
+    els['descend-debug'].addEventListener('click', function () { loadFloor(save.floor + 1); });
+    els['floor-jump'].addEventListener('submit', function (event) {
+      event.preventDefault();
+      var requested = Math.floor(Number(els['floor-input'].value));
+      if (!Number.isFinite(requested)) return announce('Enter a valid floor number.');
+      loadFloor(Math.min(1000000, Math.max(1, requested)));
+    });
     document.querySelectorAll('[data-direction]').forEach(function (button) {
       button.addEventListener('click', function () { move(Number(button.dataset.direction)); });
     });

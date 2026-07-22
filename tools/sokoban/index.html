@@ -43,9 +43,17 @@
           <span id="difficulty-title">Tutorial</span>
           <div class="pips" id="difficulty-pips" aria-label="Difficulty"></div>
         </div>
+        <form class="floor-jump" id="floor-jump">
+          <label for="floor-input">Debug floor</label>
+          <div>
+            <input id="floor-input" name="floor" type="number" min="1" max="1000000" step="1" value="1" inputmode="numeric" aria-label="Floor number">
+            <button type="submit">Enter</button>
+          </div>
+        </form>
+        <button class="debug-descend" id="descend-debug" type="button">Descend one floor <span aria-hidden="true">↓</span></button>
         <p class="lesson" id="lesson">The first law of the deep: a reliquary may be pushed, but never pulled.</p>
         <dl class="measurements">
-          <div><dt>Optimal</dt><dd><span id="optimal-pushes">—</span> pushes</dd></div>
+          <div><dt id="solution-label">Optimal</dt><dd><span id="optimal-pushes">—</span> pushes</dd></div>
           <div><dt>Relics</dt><dd id="box-count">—</dd></div>
           <div><dt>Proof</dt><dd id="proof-states">—</dd></div>
         </dl>

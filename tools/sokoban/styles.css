@@ -83,6 +83,14 @@ main { width: min(1440px, 100%); margin: 0 auto; padding: 0 clamp(1rem, 3vw, 3re
 .pips { display: flex; gap: .2rem; }
 .pips i { width: 5px; height: 11px; border: 1px solid rgba(213,164,66,.35); transform: skew(-10deg); }
 .pips i.on { border-color: var(--amber); background: var(--amber); box-shadow: 0 0 8px rgba(213,164,66,.35); }
+.floor-jump { margin-top: 1.3rem; }
+.floor-jump label { display: block; margin-bottom: .45rem; color: var(--faint); font: .62rem/1 var(--mono); text-transform: uppercase; letter-spacing: .14em; }
+.floor-jump div { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+.floor-jump input { min-width: 0; width: 100%; border: 1px solid var(--line); border-right: 0; padding: .58rem .65rem; color: var(--ink); background: rgba(5,9,8,.68); font: .76rem/1 var(--mono); }
+.floor-jump button, .debug-descend { border: 1px solid rgba(117,224,192,.28); color: var(--cyan); background: rgba(117,224,192,.055); cursor: pointer; font: 500 .62rem/1 var(--mono); text-transform: uppercase; letter-spacing: .1em; }
+.floor-jump button { padding: 0 .7rem; }
+.floor-jump button:hover, .debug-descend:hover { border-color: var(--cyan); background: rgba(117,224,192,.12); }
+.debug-descend { width: 100%; display: flex; justify-content: space-between; margin-top: .45rem; padding: .64rem .7rem; }
 .lesson { margin: 1.5rem 0; padding-left: 1rem; border-left: 1px solid var(--amber-deep); color: var(--dim); line-height: 1.55; font-size: .92rem; }
 .measurements { margin: 0; border-top: 1px solid var(--line); }
 .measurements div { display: flex; justify-content: space-between; gap: 1rem; padding: .7rem 0; border-bottom: 1px solid var(--line); }
@@ -168,6 +176,8 @@ footer p { margin: 0; }
   .depth-rule, .floor-panel > .label, .measurements { display: none; }
   .floor-number { margin: 0; }
   .difficulty { justify-self: end; }
+  .floor-jump { grid-column: 1; margin-top: .5rem; }
+  .debug-descend { grid-column: 2; grid-row: 2; align-self: end; margin: 0; width: auto; min-height: 2.25rem; }
   .lesson { grid-column: 1 / -1; margin: .3rem 0 .6rem; }
   .status-line { min-height: 1.8rem; }
   .board-frame { min-height: 300px; margin-inline: -.55rem; padding: 12px; }

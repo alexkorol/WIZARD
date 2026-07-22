@@ -6,7 +6,9 @@ An infinite, deterministic Sokoban campaign for WIZARD. Every floor is generated
 
 The generator starts with every crate already on a goal, then makes only legal reverse-pulls. Replaying those pulls backward is always a valid solution. Before a chamber is shown, an independent push-space breadth-first search solves it again and records the true minimum number of pushes.
 
-Difficulty is not assigned from the floor number alone. Candidate chambers are accepted against a rising minimum-push band, while crate count, required crate-switches, and the number of solver states contribute to the visible rating. The curve rises through the campaign and settles into an open-ended high-difficulty band so generation remains responsive on phones. This is an infinite supply of levels, not a claim of infinitely increasing computational difficulty.
+Difficulty is not assigned from the floor number alone. After the tutorial, full-width wall partitions create rooms, corridors, and one- or two-tile choke points. Candidate chambers must also meet a rising assignment-distance lower bound: even before considering walls or crate interference, no solution can use fewer than that many pushes. Crate count rises from one to four, boards grow from 7×7 to 13×11, and measured solver effort contributes to the visible rating. The curve settles into an open-ended abyss band so generation remains responsive.
+
+The floor debugger beside the board accepts any floor from 1 to 1,000,000. The adjacent **Descend one floor** button advances without requiring the current puzzle to be solved.
 
 ## Controls
 
