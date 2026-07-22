@@ -1026,7 +1026,7 @@ function createEpicWaterMist() {
         p.y+=life*(0.48+aData.z*0.4);
         vec4 mv=modelViewMatrix*vec4(p,1.0);
         gl_PointSize=(2.0+aData.z*4.0)*(100.0/-mv.z);
-        vAlpha=(1.0-life)*smoothstep(0.0,0.2,life)*0.09;
+        vAlpha=(1.0-life)*smoothstep(0.0,0.2,life)*0.18;
         gl_Position=projectionMatrix*mv;
       }
     `,
@@ -1620,7 +1620,7 @@ function createRegionalWeather(texture) {
   weatherTexture.colorSpace = THREE.SRGBColorSpace;
   const sprites = [];
   const regions = [
-    { name: "Gale Teeth storm", center: [5.35, 1.6, 1.8], spread: [2.25, 0.7, 1.45], count: 13, color: 0x536978, opacity: 0.78, scale: [2.1, 4.0], speed: 0.055 },
+    { name: "Gale Teeth storm", center: [5.35, 2.0, 1.8], spread: [2.45, 1.45, 1.6], count: 17, color: 0x465d70, opacity: 0.84, scale: [2.6, 5.2], speed: 0.055 },
     { name: "High March rain", center: [-2.2, 1.25, -1.7], spread: [2.5, 0.55, 1.35], count: 10, color: 0x718b91, opacity: 0.62, scale: [1.8, 3.5], speed: 0.035 },
     { name: "Aster Vale sunlight", center: [-2.7, 1.8, 3.55], spread: [2.05, 0.65, 1.0], count: 8, color: 0xffe4b0, opacity: 0.46, scale: [1.7, 3.15], speed: 0.026 },
     { name: "Lantern mist", center: [4.65, 0.62, -3.2], spread: [2.0, 0.28, 1.2], count: 10, color: 0xa7d1ce, opacity: 0.58, scale: [1.6, 3.2], speed: 0.022 },
@@ -1719,8 +1719,35 @@ function createRegionalLightning() {
     line.frustumCulled = false;
     line.renderOrder = 12;
     line.userData.phase = [0.18, 0.45, 0.665][boltIndex];
+    line.userData.energy = 1;
+    line.userData.storm = boltIndex;
     group.add(line);
     bolts.push(line);
+
+    for (let branchIndex = 0; branchIndex < 2; branchIndex += 1) {
+      const anchorIndex = 4 + branchIndex * 3;
+      const anchor = points[anchorIndex];
+      const branchPoints = [anchor.clone()];
+      let branchX = anchor.x;
+      let branchY = anchor.y;
+      let branchZ = anchor.z;
+      const direction = branchIndex === 0 ? -1 : 1;
+      for (let index = 0; index < 5; index += 1) {
+        branchX += direction * mix(0.09, 0.2, random()) + (random() - 0.5) * 0.08;
+        branchY -= mix(0.08, 0.15, random());
+        branchZ += (random() - 0.5) * 0.18;
+        branchPoints.push(new THREE.Vector3(branchX, branchY, branchZ));
+      }
+      const branchMaterial = material.clone();
+      const branch = new THREE.Line(new THREE.BufferGeometry().setFromPoints(branchPoints), branchMaterial);
+      branch.frustumCulled = false;
+      branch.renderOrder = 12;
+      branch.userData.phase = line.userData.phase;
+      branch.userData.energy = 0.58;
+      branch.userData.storm = boltIndex;
+      group.add(branch);
+      bolts.push(branch);
+    }
   });
   return { group, bolts };
 }
@@ -1751,6 +1778,92 @@ function createRegionalSunshafts() {
     group.add(mesh);
   });
   return { group, material };
+}
+
+function createSpectacleHalos() {
+  const group = new THREE.Group();
+  group.name = "Cinematic weather halos";
+  const texture = createRadialGlowTexture();
+  const makeSprite = (color, opacity, position, scale, blending = THREE.AdditiveBlending) => {
+    const material = new THREE.SpriteMaterial({
+      map: texture,
+      color,
+      transparent: true,
+      opacity,
+      blending,
+      depthWrite: false,
+      fog: false,
+    });
+    const sprite = new THREE.Sprite(material);
+    sprite.position.set(...position);
+    sprite.scale.set(...scale, 1);
+    sprite.renderOrder = 11;
+    group.add(sprite);
+    return { sprite, material };
+  };
+  const sun = makeSprite(0xffb85f, 0.72, [-4.35, 4.75, 4.5], [4.4, 4.4]);
+  const sunBreak = makeSprite(0xffdca0, 0.14, [-3.15, 2.55, 3.7], [5.5, 7.4]);
+  const storm = makeSprite(0x63bde8, 0.13, [5.2, 2.1, 1.8], [7.8, 5.6]);
+  const abyss = makeSprite(0x54d7e3, 0.32, [0, -3.9, 0], [5.2, 5.2]);
+  return { group, texture, sun, sunBreak, storm, abyss };
+}
+
+function createStormCrown() {
+  const group = new THREE.Group();
+  group.name = "Cyclonic storm crown";
+  group.position.set(5.15, 2.25, 1.8);
+  const rings = [];
+  for (let index = 0; index < 4; index += 1) {
+    const material = new THREE.MeshBasicMaterial({
+      color: index % 2 ? 0x70c6de : 0x8ed8e9,
+      transparent: true,
+      opacity: 0.055 - index * 0.007,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+      fog: true,
+    });
+    const radius = 1.25 + index * 0.48;
+    const ring = new THREE.Mesh(new THREE.RingGeometry(radius, radius + 0.045 + index * 0.018, 96), material);
+    ring.rotation.x = -Math.PI / 2;
+    ring.position.y = index * 0.06;
+    ring.scale.y = 0.72 + index * 0.04;
+    ring.renderOrder = 7;
+    group.add(ring);
+    rings.push(ring);
+  }
+  return { group, rings };
+}
+
+function createWaterfallHalos() {
+  const group = new THREE.Group();
+  group.name = "Waterfall radiance";
+  const texture = createRadialGlowTexture();
+  const material = new THREE.SpriteMaterial({
+    map: texture,
+    color: 0x6ee8f0,
+    transparent: true,
+    opacity: 0.44,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    fog: true,
+  });
+  const sprites = [];
+  EPIC_WATERFALLS.forEach((fall) => {
+    const boundary = worldBoundaryScale(fall.angle);
+    const sprite = new THREE.Sprite(material);
+    sprite.position.set(
+      Math.cos(fall.angle) * WORLD_RX * boundary * 1.015,
+      WORLD_WATER_LEVEL - 0.32,
+      Math.sin(fall.angle) * WORLD_RZ * boundary * 1.015,
+    );
+    const size = 1.4 + fall.width * 2.4;
+    sprite.scale.set(size, size * 2.6, 1);
+    sprite.renderOrder = 10;
+    group.add(sprite);
+    sprites.push(sprite);
+  });
+  return { group, texture, material, sprites };
 }
 
 function createAmbientMotes() {
@@ -2085,7 +2198,7 @@ function createAuroraCurtains() {
           float vertical=smoothstep(0.0,0.12,vUv.y)*smoothstep(1.0,0.56,vUv.y);
           float ends=smoothstep(0.0,0.1,vUv.x)*smoothstep(1.0,0.9,vUv.x);
           float pulse=0.76+0.24*sin(uTime*0.19+uSeed+vUv.x*7.0);
-          float alpha=vertical*ends*broad*(0.045+ribbons*0.15+abs(vFold)*0.018)*pulse*uIntensity;
+          float alpha=vertical*ends*broad*(0.065+ribbons*0.22+abs(vFold)*0.024)*pulse*uIntensity;
           vec3 color=mix(uCyan,uViolet,clamp(vUv.x*0.72+noise(vUv.x*8.0+uSeed)*0.3,0.0,1.0));
           color*=0.72+ribbons*0.62;
           gl_FragColor=vec4(color,alpha);
@@ -2137,7 +2250,7 @@ function createSky() {
           float nebula = smoothstep(0.44, 0.94, nebulaA * 0.68 + nebulaB * 0.32)
             * smoothstep(-0.18, 0.36, d.y) * smoothstep(0.88, 0.24, d.y);
           vec3 nebulaColor = mix(vec3(0.05, 0.38, 0.55), vec3(0.32, 0.08, 0.48), d.x * 0.5 + 0.5);
-          color += nebulaColor * nebula * (0.18 + horizon * 0.2);
+          color += nebulaColor * nebula * (0.3 + horizon * 0.34);
           float band = sin(d.x * 12.0 + d.z * 9.0 + sin(d.z * 5.0) * 2.0 + uTime * 0.025);
           float cloud = smoothstep(0.48, 0.82, band) * smoothstep(-0.02, 0.16, d.y) * smoothstep(0.34, 0.12, d.y);
           color = mix(color, vec3(0.12, 0.2, 0.21), cloud * 0.18);
@@ -2180,7 +2293,7 @@ function createVeinedUndersideMaterial(undersideTexture) {
     roughness: 0.92,
     metalness: 0.015,
     emissive: 0x081016,
-    emissiveIntensity: 0.16,
+    emissiveIntensity: 0.3,
   });
   material.onBeforeCompile = (shader) => {
     shader.uniforms.uVeinTime = { value: 0 };
@@ -2188,7 +2301,7 @@ function createVeinedUndersideMaterial(undersideTexture) {
     shader.fragmentShader = shader.fragmentShader.replace("#include <map_fragment>", `
       vec4 sampledDiffuseColor = texture2D(map, vMapUv);
       float undersideInk = smoothstep(0.018, 0.13, max(max(sampledDiffuseColor.r, sampledDiffuseColor.g), sampledDiffuseColor.b));
-      vec3 rimStone = vec3(0.22, 0.29, 0.32);
+      vec3 rimStone = vec3(0.3, 0.39, 0.42);
       sampledDiffuseColor.rgb = mix(rimStone, sampledDiffuseColor.rgb * 1.18, undersideInk);
       diffuseColor *= sampledDiffuseColor;
     `);
@@ -2443,20 +2556,20 @@ function boot() {
         float rippleA = sin(vWorld.x * 4.8 + vWorld.z * 1.35 + uTime * 1.08);
         float rippleB = sin(vWorld.z * 6.2 - vWorld.x * 0.75 - uTime * 0.86);
         float rippleC = sin((vWorld.x + vWorld.z) * 10.5 + uTime * 1.34);
-        float crest = smoothstep(0.84, 1.0, rippleA * 0.46 + rippleB * 0.38 + rippleC * 0.16);
+        float crest = smoothstep(0.62, 0.94, rippleA * 0.46 + rippleB * 0.38 + rippleC * 0.16);
         float sparkleNoise = noise(vWorld.xz * 14.0 + vec2(uTime * 0.7, -uTime * 0.48));
-        float sparkle = smoothstep(0.94, 0.995, sparkleNoise) * (0.35 + sunGlint * 1.8);
+        float sparkle = smoothstep(0.89, 0.985, sparkleNoise) * (0.35 + sunGlint * 1.8);
         float basinDepth = 0.5 + 0.5 * noise(vWorld.xz * 0.18);
         float rim = smoothstep(0.89, 1.0, vEdge);
         vec3 deep = vec3(0.008, 0.085, 0.17);
         vec3 surface = vec3(0.018, 0.28, 0.39);
         vec3 color = mix(deep, surface, 0.24 + fresnel * 0.56 + basinDepth * 0.08);
-        color += vec3(0.22, 0.72, 0.82) * crest * (0.05 + fresnel * 0.12);
-        color += vec3(1.0, 0.86, 0.58) * sunGlint * 0.9;
-        color += vec3(0.72, 0.95, 1.0) * sparkle * 0.52;
+        color += vec3(0.22, 0.72, 0.82) * crest * (0.1 + fresnel * 0.16);
+        color += vec3(1.0, 0.86, 0.58) * sunGlint * 1.25;
+        color += vec3(0.72, 0.95, 1.0) * sparkle * 0.72;
         color += vec3(0.1, 0.48, 0.52) * rim * (0.08 + uPulse * 0.08);
         color += vec3(0.12, 0.32, 0.34) * max(vWave, 0.0) * 1.25;
-        float alpha = 0.72 + fresnel * 0.2 + rim * 0.035;
+        float alpha = 0.76 + fresnel * 0.2 + rim * 0.035;
         gl_FragColor = vec4(color, alpha);
       }
     `,
@@ -2506,7 +2619,7 @@ function boot() {
         float sheet=0.32+bright;
         float fade=smoothstep(1.0,0.82,vUv.y)*smoothstep(0.0,0.025,vUv.y);
         vec3 color=mix(vec3(0.055,0.34,0.42),vec3(0.64,0.94,0.88),clamp(bright,0.0,1.0));
-        gl_FragColor=vec4(color,edge*sheet*fade*(0.62+uPulse*0.12));
+        gl_FragColor=vec4(color,edge*sheet*fade*(0.92+uPulse*0.18));
       }
     `,
   });
@@ -2707,7 +2820,6 @@ function boot() {
     epicCapitals.group,
     epicCityLights.points,
     epicBeacons.mesh,
-    worldCore.group,
   ];
   let meshyWorldLoaded = false;
   let meshyWorldLoadError = "";
@@ -2740,7 +2852,18 @@ function boot() {
   const regionalWeather = createRegionalWeather(clouds.texture);
   const regionalLightning = createRegionalLightning();
   const regionalSunshafts = createRegionalSunshafts();
-  epicWorld.add(epicCloudWisps, regionalWeather.group, regionalLightning.group, regionalSunshafts.group);
+  const spectacleHalos = createSpectacleHalos();
+  const stormCrown = createStormCrown();
+  const waterfallHalos = createWaterfallHalos();
+  epicWorld.add(
+    epicCloudWisps,
+    regionalWeather.group,
+    regionalLightning.group,
+    regionalSunshafts.group,
+    spectacleHalos.group,
+    stormCrown.group,
+    waterfallHalos.group,
+  );
   const flock = createFlock();
   const lightning = createLightning();
   scene.add(flock, lightning);
@@ -2761,6 +2884,9 @@ function boot() {
   const fill = new THREE.DirectionalLight(0x4a9fa4, 0.72);
   fill.position.set(-7, 5, -7);
   scene.add(fill);
+  const spectacleRim = new THREE.DirectionalLight(0x75dfff, 2.15);
+  spectacleRim.position.set(10, 2.8, -7);
+  scene.add(spectacleRim);
   const regionalSunTarget = new THREE.Object3D();
   regionalSunTarget.position.set(-2.8, WORLD_WATER_LEVEL, 3.45);
   const regionalSun = new THREE.SpotLight(0xffd494, 6.4, 18, 0.42, 0.82, 1.15);
@@ -2786,14 +2912,16 @@ function boot() {
   epicUnderfill.position.set(-5, -11, 4);
   const epicUnderfillViolet = new THREE.DirectionalLight(0x6d5a8b, 0.65);
   epicUnderfillViolet.position.set(6, -8, -5);
-  epicWorld.add(epicAbyssLight, epicUnderfill, epicUnderfillViolet);
+  const epicFrontGlow = new THREE.PointLight(0x70dbe5, 5.8, 15, 1.75);
+  epicFrontGlow.position.set(0, -1.8, 7.5);
+  epicWorld.add(epicAbyssLight, epicUnderfill, epicUnderfillViolet, epicFrontGlow);
   const stormLight = new THREE.PointLight(0x74ded4, 0, 28, 1.4);
   stormLight.position.set(8, 6, -7);
   scene.add(stormLight);
 
   const profiles = {
-    high: { dpr: 1.65, shadows: true, shadowSize: 2048, trees: 360, epicTrees: 860, epicLights: 96, motes: 320, clouds: 10, regionalWeather: 56 },
-    balanced: { dpr: 1.2, shadows: true, shadowSize: 1024, trees: 230, epicTrees: 620, epicLights: 72, motes: 200, clouds: 7, regionalWeather: 56 },
+    high: { dpr: 1.65, shadows: true, shadowSize: 2048, trees: 360, epicTrees: 860, epicLights: 96, motes: 320, clouds: 10, regionalWeather: 59 },
+    balanced: { dpr: 1.2, shadows: true, shadowSize: 1024, trees: 230, epicTrees: 620, epicLights: 72, motes: 200, clouds: 7, regionalWeather: 59 },
     low: { dpr: 1, shadows: false, shadowSize: 512, trees: 120, epicTrees: 340, epicLights: 42, motes: 90, clouds: 4, regionalWeather: 30 },
   };
   let requestedQuality = "auto";
@@ -2882,7 +3010,7 @@ function boot() {
     epicCityLights.points.geometry.setDrawRange(0, Math.min(profile.epicLights, epicCityLights.maxCount));
     epicCloudWisps.visible = activeQuality !== "low";
     aurora.materials.forEach((material) => {
-      material.uniforms.uIntensity.value = activeQuality === "low" ? 0.62 : activeQuality === "balanced" ? 0.84 : 1;
+      material.uniforms.uIntensity.value = activeQuality === "low" ? 0.78 : activeQuality === "balanced" ? 1.16 : 1.38;
     });
     motes.geometry.setDrawRange(0, profile.motes);
     for (let index = 0; index < clouds.sprites.length; index += 1) {
@@ -2906,35 +3034,35 @@ function boot() {
 
     if (activeVariant === "epic") {
       if (aspect < 0.82) {
-        baseCamera.x = 11.5;
-        baseCamera.y = 13.1;
-        baseCamera.z = 20.2;
+        baseCamera.x = 10.8;
+        baseCamera.y = 12.0;
+        baseCamera.z = 18.5;
         baseCamera.tx = 0.25;
         baseCamera.ty = 1.05;
         baseCamera.tz = 0;
         baseCamera.fov = 48;
         epicWorld.position.set(0, 1.65, 0);
-        epicWorld.scale.setScalar(0.88);
+        epicWorld.scale.setScalar(0.96);
       } else if (aspect > 2) {
-        baseCamera.x = 15.1;
-        baseCamera.y = 12.7;
-        baseCamera.z = 18.7;
+        baseCamera.x = 13.6;
+        baseCamera.y = 11.5;
+        baseCamera.z = 17.2;
         baseCamera.tx = 4.7;
         baseCamera.ty = 0.08;
         baseCamera.tz = -0.1;
         baseCamera.fov = 34;
         epicWorld.position.set(4.55, -0.2, 0);
-        epicWorld.scale.setScalar(1.06);
+        epicWorld.scale.setScalar(1.15);
       } else {
-        baseCamera.x = 13.4;
-        baseCamera.y = 12.4;
-        baseCamera.z = 18.8;
-        baseCamera.tx = 3.15;
-        baseCamera.ty = 0.2;
+        baseCamera.x = 11.8;
+        baseCamera.y = 9.25;
+        baseCamera.z = 16.2;
+        baseCamera.tx = 2.55;
+        baseCamera.ty = 0.08;
         baseCamera.tz = -0.12;
-        baseCamera.fov = 38;
-        epicWorld.position.set(3.05, -0.12, 0);
-        epicWorld.scale.setScalar(1);
+        baseCamera.fov = 37;
+        epicWorld.position.set(3.35, 0.18, 0);
+        epicWorld.scale.setScalar(1.1);
       }
     } else {
       if (aspect < 0.82) {
@@ -3129,7 +3257,7 @@ function boot() {
   let averageFps = 60;
 
   const debug = {
-    version: "verdigris-menu-2.5",
+    version: "verdigris-menu-2.6",
     quality: activeQuality,
     fps: 0,
     frameMs: 0,
@@ -3264,17 +3392,30 @@ function boot() {
 
     let localStormPulseA = 0;
     let localStormPulseB = 0;
-    regionalLightning.bolts.forEach((bolt, index) => {
-      const firstFlash = reducedMotion ? 0 : pulseAt(phase, bolt.userData.phase, 0.0045);
-      const echoFlash = reducedMotion ? 0 : pulseAt(phase, (bolt.userData.phase + 0.014) % 1, 0.0028) * 0.65;
-      const boltPulse = clamp(firstFlash + echoFlash);
-      bolt.material.opacity = boltPulse * 0.95;
-      if (index < 2) localStormPulseA = Math.max(localStormPulseA, boltPulse);
+    regionalLightning.bolts.forEach((bolt) => {
+      const fastStormPhase = (phase * 3 + bolt.userData.storm * 0.17) % 1;
+      const previewFlash = previewMoment && bolt.userData.storm === 2 ? 0.92 : 0;
+      const firstFlash = reducedMotion ? 0 : pulseAt(fastStormPhase, bolt.userData.phase, 0.008);
+      const echoFlash = reducedMotion ? 0 : pulseAt(fastStormPhase, (bolt.userData.phase + 0.025) % 1, 0.005) * 0.72;
+      const boltPulse = clamp(firstFlash + echoFlash + previewFlash);
+      bolt.material.opacity = boltPulse * 0.98 * bolt.userData.energy;
+      if (bolt.userData.storm < 2) localStormPulseA = Math.max(localStormPulseA, boltPulse);
       else localStormPulseB = Math.max(localStormPulseB, boltPulse);
     });
-    regionalStormLights[0].intensity = localStormPulseA * 13;
-    regionalStormLights[1].intensity = localStormPulseB * 10;
-    regionalSun.intensity = 6.2 + Math.sin(time * 0.095) * 0.9;
+    regionalStormLights[0].intensity = localStormPulseA * 18;
+    regionalStormLights[1].intensity = localStormPulseB * 15;
+    regionalSun.intensity = 7.4 + Math.sin(time * 0.095) * 1.25;
+    spectacleHalos.sun.material.opacity = 0.62 + Math.sin(time * 0.13) * 0.1;
+    spectacleHalos.sunBreak.material.opacity = 0.11 + Math.sin(time * 0.095 + 0.8) * 0.035;
+    spectacleHalos.storm.material.opacity = 0.12 + Math.max(localStormPulseA, localStormPulseB) * 0.46;
+    spectacleHalos.abyss.material.opacity = 0.3 + crownPulse * 0.22 + Math.sin(time * 0.2) * 0.035;
+    waterfallHalos.material.opacity = 0.38 + Math.sin(time * 0.24) * 0.09 + crownPulse * 0.12;
+    stormCrown.group.rotation.y = reducedMotion ? 0 : time * 0.04;
+    stormCrown.rings.forEach((ring, index) => {
+      ring.rotation.z = (index % 2 ? -1 : 1) * time * (0.018 + index * 0.006);
+      ring.material.opacity = 0.04 + Math.sin(time * 0.12 + index) * 0.012 + localStormPulseA * 0.08;
+    });
+    renderer.toneMappingExposure = 1.04 + localStormPulseA * 0.12 + localStormPulseB * 0.09 + crownPulse * 0.025;
 
     const flockVisible = !reducedMotion && phase > 0.34 && phase < 0.59;
     const flockProgress = clamp((phase - 0.34) / 0.25);
@@ -3312,7 +3453,7 @@ function boot() {
       veinShader.uniforms.uVeinTime.value = time;
       veinShader.uniforms.uVeinPulse.value = crownPulse;
     }
-    epicAbyssLight.intensity = 1.4 + crownPulse * 2.2;
+    epicAbyssLight.intensity = 5.4 + crownPulse * 5.2;
     epicShallowsMaterial.opacity = 0.3 + crownPulse * 0.1;
     epicBeacons.mesh.visible = !meshyWorldLoaded && crownPulse > 0.11 && !reducedMotion;
     epicBeacons.material.opacity = crownPulse * 0.155;
@@ -3393,6 +3534,8 @@ function boot() {
     renderer.renderLists.dispose();
     clouds.texture.dispose();
     regionalWeather.texture.dispose();
+    spectacleHalos.texture.dispose();
+    waterfallHalos.texture.dispose();
     meshyTopTexture.dispose();
     meshyReliefTexture.dispose();
     renderer.dispose();

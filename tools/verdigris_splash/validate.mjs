@@ -41,6 +41,7 @@ assert(app.includes("createEpicCapitals") && app.includes("createEpicTrees"), "e
 assert(app.includes("createEpicShallowsGeometry") && app.includes("createEpicRoutes"), "world coast or route detail is missing");
 assert(app.includes("createEpicCityLights") && app.includes("createEpicBeaconMesh"), "world activation details are missing");
 assert(app.includes("createRegionalWeather") && app.includes("createRegionalLightning") && app.includes("sunGlint"), "regional weather or shimmering ocean is missing");
+assert(app.includes("createSpectacleHalos") && app.includes("createStormCrown") && app.includes("createWaterfallHalos"), "cinematic weather, storm, or waterfall radiance is missing");
 assert(app.includes("GLTFLoader") && app.includes("celestial_world_runtime.glb"), "optimized Meshy world loader is missing");
 assert(app.includes("celestial_world_top_texture.png") && app.includes("uWorldTopMap"), "top-surface texture projection is missing");
 assert(app.includes("celestial_world_underside_texture.png") && app.includes("epicUndersideTexture"), "sculpted underside texture is missing");
