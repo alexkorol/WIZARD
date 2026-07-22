@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>The Endless Descent — Infinite Sokoban</title>
+  <meta name="description" content="An infinite procession of generated, solver-verified Sokoban chambers with a measured difficulty curve.">
+  <meta name="theme-color" content="#0b100f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#chamber">Skip to chamber</a>
+  <div class="mist" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="wizard-link" href="../../index.html" aria-label="Back to WIZARD collection">
+      <span class="sigil" aria-hidden="true">✦</span>
+      <span>WIZARD</span>
+    </a>
+    <div class="run-mark" title="Every run creates a deterministic sequence of unique floors">
+      <span>Descent</span>
+      <strong id="run-code">—</strong>
+    </div>
+    <button class="text-button" id="new-run" type="button">New descent</button>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="game-title">
+      <p class="eyebrow">A procedural puzzle beneath WIZARD</p>
+      <h1 id="game-title">The Endless Descent</h1>
+      <p class="lede">Every chamber is new. Every chamber is proven. Push the reliquaries onto their seals, then go deeper.</p>
+    </section>
+
+    <section class="game-shell" aria-label="Sokoban game">
+      <aside class="floor-panel" aria-label="Floor information">
+        <div class="depth-rule"><span></span><i></i><span></span></div>
+        <p class="label">Depth</p>
+        <p class="floor-number"><span>Floor</span><strong id="floor-number">01</strong></p>
+        <div class="difficulty">
+          <span id="difficulty-title">Tutorial</span>
+          <div class="pips" id="difficulty-pips" aria-label="Difficulty"></div>
+        </div>
+        <p class="lesson" id="lesson">The first law of the deep: a reliquary may be pushed, but never pulled.</p>
+        <dl class="measurements">
+          <div><dt>Optimal</dt><dd><span id="optimal-pushes">—</span> pushes</dd></div>
+          <div><dt>Relics</dt><dd id="box-count">—</dd></div>
+          <div><dt>Proof</dt><dd id="proof-states">—</dd></div>
+        </dl>
+      </aside>
+
+      <div class="chamber-column">
+        <div class="status-line" role="status" aria-live="polite">
+          <span id="status">Carving chamber…</span>
+          <span class="live-stats"><b id="move-count">0</b> steps · <b id="push-count">0</b> pushes</span>
+        </div>
+
+        <div class="board-frame" id="chamber">
+          <div class="board-loading" id="board-loading"><span></span>Carving a solvable chamber</div>
+          <div class="board" id="board" role="grid" aria-label="Sokoban chamber" tabindex="0"></div>
+          <div class="victory" id="victory" hidden>
+            <div class="victory-sigil" aria-hidden="true">✦</div>
+            <p>Seal restored</p>
+            <h2>There is always<br>another floor.</h2>
+            <button class="primary-button" id="descend" type="button">Descend to floor <span>02</span></button>
+          </div>
+        </div>
+
+        <div class="controls" aria-label="Game controls">
+          <div class="action-row">
+            <button id="undo" type="button"><kbd>U</kbd><span>Undo</span></button>
+            <button id="reset" type="button"><kbd>R</kbd><span>Reset</span></button>
+            <button id="hint" type="button"><kbd>H</kbd><span>Hint</span></button>
+          </div>
+          <div class="dpad" aria-label="Touch movement controls">
+            <button data-direction="0" aria-label="Move up">↑</button>
+            <button data-direction="3" aria-label="Move left">←</button>
+            <button data-direction="2" aria-label="Move down">↓</button>
+            <button data-direction="1" aria-label="Move right">→</button>
+          </div>
+          <p class="key-help"><kbd>WASD</kbd> or <kbd>arrow keys</kbd> to move</p>
+        </div>
+      </div>
+
+      <aside class="ledger" aria-label="Descent record">
+        <p class="label">Delver's ledger</p>
+        <div class="record">
+          <span>Floors cleared</span>
+          <strong id="floors-cleared">0</strong>
+        </div>
+        <div class="record">
+          <span>Best efficiency</span>
+          <strong id="best-efficiency">—</strong>
+        </div>
+        <p class="guarantee"><span aria-hidden="true">◇</span> This chamber was reverse-forged from a solved state, then checked by a push-optimal search.</p>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <p>Unique by seed · deterministic by floor · locally saved</p>
+    <p>Crates can be pushed, never pulled. The old laws remain.</p>
+  </footer>
+
+  <script src="core.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

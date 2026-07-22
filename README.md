@@ -36,6 +36,7 @@ and a petrified-stone plate, all aligned by silhouette-IoU.
 | [WordSphere](tools/wordsphere/index.html) | 3D spherical word visualization with momentum rotation |
 | [Chronicles — RP Account Creator](tools/rp_account_creator/index.html) | Found a House, send scions to die, inherit their relics — permadeath meta-progression with scribe-judged names |
 | [Wireframe Space Shooter](tools/space_shooter/index.html) | 3D wireframe space combat with radar and enemy variety |
+| [The Endless Descent](tools/sokoban/index.html) | Infinite seeded Sokoban with solver-verified levels and measured difficulty progression |
 
 ## How these are built
 
