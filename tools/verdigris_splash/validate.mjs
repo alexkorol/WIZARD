@@ -56,10 +56,12 @@ assert(app.includes("celestial_world_top_texture_4k_detail.webp") && app.include
 assert(app.includes("celestial_world_underside_texture.png") && app.includes("epicUndersideTexture"), "sculpted underside texture is missing");
 assert(app.includes("createEpicStalactites") && app.includes("createEpicIceWallGeometry"), "procedural fallback underside is missing");
 assert(!app.includes("createWorldCore") && !app.includes("worldCore"), "the rejected glowing underside orb/core has returned");
-assert(app.includes("const proceduralEpicGeography = [\n    epicUnderside") && !app.includes("const proceduralEpicGeography = [\n    epicOcean"), "generated underside overlays must be hidden while the stable reflective sea remains");
+assert(/const proceduralEpicGeography = \[\r?\n    epicUnderside/.test(app) && !/const proceduralEpicGeography = \[\r?\n    epicOcean/.test(app), "generated underside overlays must be hidden while the stable reflective sea remains");
 assert(app.includes("seaMask < 0.055") && app.includes("skyReflection") && app.includes("sunGlint") && app.includes("sparkle"), "stable reflective water skin is missing");
 assert(app.includes("fineTopographyGradient") && app.includes("wideTopographyGradient") && app.includes("flowDirection") && app.includes("topographicFoam") && app.includes("foamZone"), "multi-scale heightmap-directed ocean motion is missing");
 assert(app.includes("deepOcean") && app.includes("shallowOcean") && app.includes("depthColor") && !app.includes("atlasColor * vec3(0.68, 0.8, 0.92)"), "heightmap-controlled deep and shallow water color is missing");
+assert(app.includes("authoredWaterDepth") && app.includes("rejectGreenLand") && app.includes("rejectNeutralLand"), "authored water depth or terrain rejection mask is missing");
+assert(app.includes("surfaceMotionZone") && !app.includes("color += vec3(0.34, 0.67, 0.78) * shimmerLines") && !app.includes("color += vec3(0.35, 0.69, 0.82) * reflectionStreak"), "world-scale ocean wave bands have returned");
 assert(app.includes("meshDeepOcean") && app.includes("meshShallowOcean") && app.includes("meshDepthColor") && app.includes("projectedTopColor"), "solid imported sea is bypassing heightmap depth colors");
 assert(!app.includes("worldTopColor * vec3(0.96, 0.99, 1.02)"), "inverted atlas sea color is being reintroduced beneath the reflective ocean");
 assert(app.includes("deepBlueChroma") && app.includes("cyanChroma") && app.includes("waterChroma"), "water masks are not using chromatic blue/cyan classification");
@@ -67,6 +69,7 @@ assert(!app.includes("max(atlasColor.r * 0.86, atlasColor.g * 0.72)") && !app.in
 assert(app.includes("illuminationLandMask") && app.includes("reefSignal * reefPulse * worldSeaMask") && app.includes("lavaSignal * lavaPulse * illuminationLandMask"), "illumination channels are not gated to their terrain class");
 assert(app.includes("celestial_world_illumination_map_4k.png?v=1") && app.includes("uWorldIlluminationMap") && app.includes("totalEmissiveRadiance"), "stitched world illumination map is not active");
 assert(app.includes("createEpicRimIcicles") && app.includes("Terrain-blended glacial rim") && app.includes("Localized glacial rim icicles"), "terrain-blended ice rim or localized icicles are missing");
+assert(app.includes("vWorldSurfaceUp") && app.includes("rimSideMask"), "imported rim-side texture isolation is missing");
 assert(app.includes("celestial_world_runtime_tapered.glb?v=3"), "rim-relaxed Blender mesh is not cache-busted");
 assert(app.includes("lavaSignal") && app.includes("reefSignal") && app.includes("groveSignal"), "biome-specific illumination controls are missing");
 assert(!app.includes("dot(vWorld.xz, vec2(5.7, 1.8))") && app.includes("dot(reflectionUv, flowDirection)"), "fixed-direction ocean reflection streaks have returned");
@@ -82,6 +85,7 @@ assert(app.includes("visibilitychange") && app.includes("pagehide"), "lifecycle 
 assert(app.includes("prefers-reduced-motion"), "reduced-motion support is missing");
 assert(!html.includes('class="tilt-shift"') && !css.includes(".tilt-shift") && !css.includes("blur(5.5px)"), "screen-space tilt-shift overlay has returned");
 assert(app.includes("createFarRimDepthOfField") && app.includes("farFocusStart") && app.includes("farDistance") && app.includes("depthOfField.render"), "camera-depth far-rim focus treatment is missing");
+assert(app.includes("farScreenMask") && app.includes('quality === "low" ? 0.0012'), "subtle far-rim focus kernel is missing");
 assert(!/SOUND\s+(?:ON|OFF)/i.test(html + app), "do not expose an inert sound toggle");
 assert(!/data:[^;]+;base64,[A-Za-z0-9+/=]{4096,}/.test(html + css + app), "large embedded base64 payload detected");
 assert(!/(?:src|href)="http:\/\//i.test(html), "insecure external asset URL detected");

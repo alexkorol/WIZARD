@@ -27,12 +27,8 @@ const EPIC_CONTINENTS = [
 
 const EPIC_WATERFALLS = [
   { angle: 0.14, width: 0.46, length: 4.05, seed: 0.4 },
-  { angle: 0.88, width: 0.31, length: 3.45, seed: 1.3 },
-  { angle: 1.76, width: 0.42, length: 3.9, seed: 2.1 },
   { angle: 2.62, width: 0.27, length: 3.15, seed: 3.7 },
-  { angle: 3.46, width: 0.36, length: 3.75, seed: 4.4 },
   { angle: 4.55, width: 0.25, length: 3.3, seed: 5.6 },
-  { angle: 5.55, width: 0.4, length: 4.0, seed: 6.2 },
 ];
 
 const EPIC_UNDERSIDE_PROFILES = [1, 0.985, 0.955, 0.92, 0.86, 0.78, 0.69, 0.6, 0.51, 0.42, 0.34, 0.27, 0.2, 0.14, 0.09, 0.05];
@@ -793,13 +789,13 @@ function createEpicIceWallGeometry() {
     const frostArc = smooth(-0.28, 0.7, Math.sin(angle * 3.0 + 0.45) + Math.sin(angle * 7.0 - 1.15) * 0.34);
     const wallRadius = boundary * (1.001 + topNoise * 0.0008);
     const topY = WORLD_WATER_LEVEL + 0.014 + topNoise * 0.018;
-    const bottomY = -0.12 - tooth * (0.13 + frostArc * 0.2) - Math.sin(angle * 11) * 0.012;
+    const bottomY = -0.055 - tooth * (0.035 + frostArc * 0.085) - Math.sin(angle * 11) * 0.006;
     positions.push(
       Math.cos(angle) * WORLD_RX * wallRadius, topY, Math.sin(angle) * WORLD_RZ * wallRadius,
       Math.cos(angle) * WORLD_RX * wallRadius, bottomY, Math.sin(angle) * WORLD_RZ * wallRadius,
     );
     const frost = frostArc * (0.035 + tooth * 0.055);
-    colors.push(0.29 + frost, 0.315 + frost, 0.31 + frost, 0.095 + frost * 0.34, 0.115 + frost * 0.4, 0.12 + frost * 0.46);
+    colors.push(0.3 + frost, 0.315 + frost, 0.31 + frost, 0.13 + frost * 0.26, 0.14 + frost * 0.28, 0.145 + frost * 0.3);
   }
   for (let segment = 0; segment < segments; segment += 1) {
     const angle = (segment + 0.5) / segments * TAU;
@@ -827,21 +823,21 @@ function createEpicRimIcicles() {
     if (waterfallBreakAt(angle)) continue;
     const cluster = Math.sin(angle * 3 + 0.45) + Math.sin(angle * 7 - 1.15) * 0.34;
     const presence = hash2(segment + 211, 887);
-    if (cluster < -0.08 || presence < 0.64) continue;
+    if (cluster < 0.05 || presence < 0.82) continue;
     const boundary = worldBoundaryScale(angle);
-    const length = 0.09 + Math.pow(hash2(segment + 73, 991), 1.7) * (0.18 + smooth(-0.08, 0.92, cluster) * 0.28);
+    const length = 0.055 + Math.pow(hash2(segment + 73, 991), 1.7) * (0.1 + smooth(0.05, 0.92, cluster) * 0.14);
     entries.push({ angle, boundary, length, seed: presence });
   }
 
   const geometry = new THREE.ConeGeometry(1, 1, 6, 1);
   geometry.rotateX(Math.PI);
   const material = new THREE.MeshStandardMaterial({
-    color: 0x9eb2b3,
+    color: 0x687372,
     vertexColors: true,
-    roughness: 0.72,
+    roughness: 0.93,
     metalness: 0.015,
-    emissive: 0x031012,
-    emissiveIntensity: 0.08,
+    emissive: 0x000000,
+    emissiveIntensity: 0,
   });
   const mesh = new THREE.InstancedMesh(geometry, material, entries.length);
   mesh.name = "Localized glacial rim icicles";
@@ -859,12 +855,12 @@ function createEpicRimIcicles() {
       radialZ * WORLD_RZ * entry.boundary * 1.002,
     );
     quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0), entry.angle);
-    const radius = 0.022 + entry.seed * 0.025;
+    const radius = 0.014 + entry.seed * 0.014;
     scale.set(radius, entry.length, radius * 0.82);
     matrix.compose(position, quaternion, scale);
     mesh.setMatrixAt(index, matrix);
-    const frost = 0.44 + entry.seed * 0.2;
-    color.setRGB(frost * 0.75, frost * 0.86, frost * 0.88);
+    const frost = 0.28 + entry.seed * 0.1;
+    color.setRGB(frost * 0.86, frost * 0.92, frost * 0.92);
     mesh.setColorAt(index, color);
   });
   mesh.instanceMatrix.needsUpdate = true;
@@ -1028,9 +1024,13 @@ function createEpicWaterfallGeometry() {
     for (let down = 0; down <= downSegments; down += 1) {
       const v = down / downSegments;
       const outward = v * 0.24;
+      const centerWobble = (
+        Math.sin(v * Math.PI * 1.7 + fall.seed) * 0.34
+        + Math.sin(v * Math.PI * 4.6 + fall.seed * 1.9) * 0.1
+      ) * fall.width * Math.sin(v * Math.PI);
       for (let across = 0; across <= acrossSegments; across += 1) {
         const u = across / acrossSegments;
-        const width = (u - 0.5) * fall.width;
+        const width = (u - 0.5) * fall.width * (1.0 - v * 0.28) + centerWobble;
         positions.push(edgeX + tangentX * width + radialX * outward, WORLD_WATER_LEVEL - v * fall.length, edgeZ + tangentZ * width + radialZ * outward);
         uvs.push(u, v);
         seeds.push(fall.seed);
@@ -1074,7 +1074,7 @@ function createEpicWaterMist() {
   const material = new THREE.ShaderMaterial({
     transparent: true,
     depthWrite: false,
-    blending: THREE.AdditiveBlending,
+    blending: THREE.NormalBlending,
     uniforms: { uTime: { value: 0 } },
     vertexShader: `
       uniform float uTime;
@@ -1088,7 +1088,7 @@ function createEpicWaterMist() {
         p.y+=life*(0.48+aData.z*0.4);
         vec4 mv=modelViewMatrix*vec4(p,1.0);
         gl_PointSize=(2.0+aData.z*4.0)*(100.0/-mv.z);
-        vAlpha=(1.0-life)*smoothstep(0.0,0.2,life)*0.18;
+        vAlpha=(1.0-life)*smoothstep(0.0,0.2,life)*0.11;
         gl_Position=projectionMatrix*mv;
       }
     `,
@@ -1097,7 +1097,7 @@ function createEpicWaterMist() {
       void main(){
         float d=length(gl_PointCoord-0.5);
         float a=smoothstep(0.5,0.04,d)*vAlpha;
-        gl_FragColor=vec4(0.52,0.9,1.0,a);
+        gl_FragColor=vec4(0.43,0.57,0.59,a);
       }
     `,
   });
@@ -1757,12 +1757,12 @@ function createVolumetricWeather() {
   const volumes = [];
   const geometry = new THREE.SphereGeometry(1, 40, 24);
   const configurations = [
-    { name: "Gale Teeth thunderhead", position: [5.15, 2.35, 1.8], scale: [3.35, 1.18, 2.2], seed: 1.7, density: 1.65, threshold: 0.36, opacity: 0.92, shadow: 0x314b5d, light: 0xc8dde0, drift: [0.022, 0.008] },
-    { name: "High March rain shelf", position: [-2.35, 1.65, -1.75], scale: [3.15, 0.76, 1.92], seed: 4.1, density: 1.4, threshold: 0.39, opacity: 0.78, shadow: 0x536970, light: 0xd0ddda, drift: [0.014, -0.007] },
+    { name: "Gale Teeth thunderhead", position: [5.15, 2.35, 1.8], scale: [3.35, 1.18, 2.2], seed: 1.7, density: 1.65, threshold: 0.36, opacity: 0.82, shadow: 0x41454b, light: 0xd3d8da, drift: [0.022, 0.008] },
+    { name: "High March rain shelf", position: [-2.35, 1.65, -1.75], scale: [3.15, 0.76, 1.92], seed: 4.1, density: 1.4, threshold: 0.39, opacity: 0.7, shadow: 0x5c6063, light: 0xd7d9d6, drift: [0.014, -0.007] },
     { name: "Aster Vale sunbreak", position: [-2.85, 2.7, 3.45], scale: [2.7, 1.04, 1.72], seed: 7.6, density: 1.25, threshold: 0.41, opacity: 0.68, shadow: 0x807970, light: 0xffedc5, drift: [0.01, 0.006] },
-    { name: "Lantern coast sea fog", position: [4.55, 0.72, -3.12], scale: [2.75, 0.42, 1.55], seed: 10.4, density: 1.45, threshold: 0.37, opacity: 0.72, shadow: 0x5d767a, light: 0xc8e4df, drift: [0.007, -0.01] },
-    { name: "North rim mist bank", position: [-0.8, 0.54, -5.65], scale: [2.6, 0.34, 0.92], seed: 13.8, density: 1.3, threshold: 0.4, opacity: 0.66, shadow: 0x56737b, light: 0xbde1e0, drift: [0.006, 0.004] },
-    { name: "Western waterfall fog", position: [-5.65, 0.38, 0.65], scale: [1.75, 0.5, 1.18], seed: 16.2, density: 1.5, threshold: 0.36, opacity: 0.76, shadow: 0x507984, light: 0xc9efec, drift: [0.004, -0.006] },
+    { name: "Lantern coast sea fog", position: [4.55, 0.72, -3.12], scale: [2.75, 0.42, 1.55], seed: 10.4, density: 1.45, threshold: 0.37, opacity: 0.64, shadow: 0x656968, light: 0xd9ddda, drift: [0.007, -0.01] },
+    { name: "North rim mist bank", position: [-0.8, 0.54, -5.65], scale: [2.6, 0.34, 0.92], seed: 13.8, density: 1.3, threshold: 0.4, opacity: 0.58, shadow: 0x606568, light: 0xd2d8d7, drift: [0.006, 0.004] },
+    { name: "Western waterfall fog", position: [-5.65, 0.38, 0.65], scale: [1.75, 0.5, 1.18], seed: 16.2, density: 1.5, threshold: 0.36, opacity: 0.66, shadow: 0x616869, light: 0xdce2de, drift: [0.004, -0.006] },
     { name: "High wandering cloud deck", position: [0.1, 4.45, -0.5], scale: [5.2, 0.82, 2.25], seed: 20.1, density: 1.12, threshold: 0.42, opacity: 0.5, shadow: 0x64747a, light: 0xe0e7e3, drift: [0.017, 0.003] },
   ];
 
@@ -1988,8 +1988,8 @@ function createSpectacleHalos() {
   };
   const sun = makeSprite(0xffb85f, 0.72, [-4.35, 4.75, 4.5], [4.4, 4.4]);
   const sunBreak = makeSprite(0xffdca0, 0.14, [-3.15, 2.55, 3.7], [5.5, 7.4]);
-  const storm = makeSprite(0x63bde8, 0.13, [5.2, 2.1, 1.8], [7.8, 5.6]);
-  const abyss = makeSprite(0x54d7e3, 0.32, [0, -3.9, 0], [5.2, 5.2]);
+  const storm = makeSprite(0xa1abb0, 0.055, [5.2, 2.1, 1.8], [6.2, 4.7], THREE.NormalBlending);
+  const abyss = makeSprite(0x6b898d, 0.12, [0, -3.9, 0], [4.2, 4.2], THREE.NormalBlending);
   return { group, texture, sun, sunBreak, storm, abyss };
 }
 
@@ -2026,10 +2026,10 @@ function createWaterfallHalos() {
   const texture = createRadialGlowTexture();
   const material = new THREE.SpriteMaterial({
     map: texture,
-    color: 0x6ee8f0,
+    color: 0xb9d7d7,
     transparent: true,
-    opacity: 0.44,
-    blending: THREE.AdditiveBlending,
+    opacity: 0.09,
+    blending: THREE.NormalBlending,
     depthWrite: false,
     fog: true,
   });
@@ -2039,11 +2039,11 @@ function createWaterfallHalos() {
     const sprite = new THREE.Sprite(material);
     sprite.position.set(
       Math.cos(fall.angle) * WORLD_RX * boundary * 1.015,
-      WORLD_WATER_LEVEL - 0.32,
+      WORLD_WATER_LEVEL - fall.length + 0.08,
       Math.sin(fall.angle) * WORLD_RZ * boundary * 1.015,
     );
-    const size = 1.4 + fall.width * 2.4;
-    sprite.scale.set(size, size * 2.6, 1);
+    const size = 0.82 + fall.width * 1.3;
+    sprite.scale.set(size * 1.35, size * 0.32, 1);
     sprite.renderOrder = 10;
     group.add(sprite);
     sprites.push(sprite);
@@ -2612,22 +2612,19 @@ function createFarRimDepthOfField(renderer, scene, camera) {
     void main() {
       float viewZ = getViewZ(getDepth(vUv));
       float farDistance = max(0.0, -viewZ - focus - farFocusStart);
-      float circleOfConfusion = smoothstep(0.0, farFocusRange, farDistance);
+      float farScreenMask = smoothstep(0.44, 0.68, vUv.y);
+      float circleOfConfusion = smoothstep(0.0, farFocusRange, farDistance) * farScreenMask;
       vec2 radius = vec2(maxblur, maxblur * aspect) * circleOfConfusion;
-      vec4 color = texture2D(tColor, vUv) * 2.0;
+      vec4 color = texture2D(tColor, vUv) * 4.0;
       color += texture2D(tColor, vUv + vec2( 1.0,  0.0) * radius);
       color += texture2D(tColor, vUv + vec2(-1.0,  0.0) * radius);
       color += texture2D(tColor, vUv + vec2( 0.0,  1.0) * radius);
       color += texture2D(tColor, vUv + vec2( 0.0, -1.0) * radius);
-      color += texture2D(tColor, vUv + vec2( 0.7,  0.7) * radius) * 0.8;
-      color += texture2D(tColor, vUv + vec2(-0.7,  0.7) * radius) * 0.8;
-      color += texture2D(tColor, vUv + vec2( 0.7, -0.7) * radius) * 0.8;
-      color += texture2D(tColor, vUv + vec2(-0.7, -0.7) * radius) * 0.8;
-      color += texture2D(tColor, vUv + vec2( 0.38,  0.92) * radius) * 0.55;
-      color += texture2D(tColor, vUv + vec2(-0.92,  0.38) * radius) * 0.55;
-      color += texture2D(tColor, vUv + vec2(-0.38, -0.92) * radius) * 0.55;
-      color += texture2D(tColor, vUv + vec2( 0.92, -0.38) * radius) * 0.55;
-      gl_FragColor = color / 11.4;
+      color += texture2D(tColor, vUv + vec2( 0.62,  0.62) * radius) * 0.5;
+      color += texture2D(tColor, vUv + vec2(-0.62,  0.62) * radius) * 0.5;
+      color += texture2D(tColor, vUv + vec2( 0.62, -0.62) * radius) * 0.5;
+      color += texture2D(tColor, vUv + vec2(-0.62, -0.62) * radius) * 0.5;
+      gl_FragColor = color / 10.0;
       gl_FragColor.a = 1.0;
     }
   `;
@@ -2660,7 +2657,7 @@ function createFarRimDepthOfField(renderer, scene, camera) {
     setPixelRatio(value) { composer.setPixelRatio(value); },
     setSize(width, height) { composer.setSize(width, height); },
     setQuality(quality) {
-      bokehPass.uniforms.maxblur.value = quality === "low" ? 0.0075 : quality === "balanced" ? 0.0105 : 0.0135;
+      bokehPass.uniforms.maxblur.value = quality === "low" ? 0.0012 : quality === "balanced" ? 0.0018 : 0.0024;
     },
     render(delta, focusRoot) {
       focusRoot.getWorldPosition(focusPoint);
@@ -2693,7 +2690,7 @@ function boot() {
 
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.04;
+  renderer.toneMappingExposure = 1.1;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   const scene = new THREE.Scene();
@@ -2794,12 +2791,12 @@ function boot() {
         vec3 p = position;
         float waveA = p.x * 1.45 + p.z * 0.38 + uTime * 0.34;
         float waveB = p.z * 1.72 - p.x * 0.24 - uTime * 0.29;
-        float wave = sin(waveA) * 0.006 + cos(waveB) * 0.004;
+        float wave = sin(waveA) * 0.0008 + cos(waveB) * 0.0005;
         p.y += wave;
         vEdge = aEdge;
         vWave = wave;
-        float slopeX = cos(waveA) * 0.006 * 1.45 + sin(waveB) * 0.004 * 0.24;
-        float slopeZ = cos(waveA) * 0.006 * 0.38 + sin(waveB) * 0.004 * 1.72;
+        float slopeX = cos(waveA) * 0.0008 * 1.45 + sin(waveB) * 0.0005 * 0.24;
+        float slopeZ = cos(waveA) * 0.0008 * 0.38 + sin(waveB) * 0.0005 * 1.72;
         vWaveNormal = normalize(mat3(modelMatrix) * vec3(-slopeX, 1.0, -slopeZ));
         vMapUv = vec2((p.x + ${WORLD_RX.toFixed(2)}) / ${(WORLD_RX * 2).toFixed(2)}, (p.z + ${WORLD_RZ.toFixed(2)}) / ${(WORLD_RZ * 2).toFixed(2)});
         vSurfacePos = p.xz;
@@ -2861,16 +2858,21 @@ function boot() {
         vec2 crossedFlowA = normalize(flowDirection * 0.92 + flowTangent * 0.28);
         vec2 crossedFlowB = normalize(flowDirection * 0.84 - flowTangent * 0.36);
         float atlasInk = smoothstep(0.018, 0.08, max(max(atlasColor.r, atlasColor.g), atlasColor.b));
-        float deepBlueChroma = atlasColor.b - max(atlasColor.r, atlasColor.g);
+        float deepBlueChroma = atlasColor.b - atlasColor.r;
         float cyanChroma = min(atlasColor.g, atlasColor.b) - atlasColor.r;
-        float waterChroma = max(deepBlueChroma, cyanChroma * 0.78);
-        float seaMask = atlasInk * (1.0 - smoothstep(0.17, 0.31, relief)) * smoothstep(0.018, 0.095, waterChroma);
+        float waterChroma = max(deepBlueChroma * 0.82, cyanChroma);
+        float rejectGreenLand = 1.0 - smoothstep(0.035, 0.12, atlasColor.g - atlasColor.b);
+        float rejectNeutralLand = smoothstep(0.035, 0.11, atlasColor.b - atlasColor.r);
+        float seaMask = atlasInk * (1.0 - smoothstep(0.19, 0.34, relief))
+          * smoothstep(0.025, 0.11, waterChroma) * rejectGreenLand * rejectNeutralLand;
         if (seaMask < 0.055) discard;
+        float shallowZone = smoothstep(0.151, 0.17, relief) * (1.0 - smoothstep(0.205, 0.28, relief));
+        float surfaceMotionZone = clamp(shallowZone * 0.88 + smoothstep(0.0012, 0.009, topographySlope) * 0.22, 0.0, 1.0);
         vec3 viewDir = normalize(cameraPosition - vWorld);
         float normalPhaseA = dot(vSurfacePos, flowDirection) * 5.15 - uTime * 1.08;
         float normalPhaseB = dot(vSurfacePos, crossedFlowA) * 7.3 - uTime * 0.86;
-        float flowSlopeA = cos(normalPhaseA) * 0.062;
-        float flowSlopeB = cos(normalPhaseB) * 0.034;
+        float flowSlopeA = cos(normalPhaseA) * mix(0.006, 0.024, surfaceMotionZone);
+        float flowSlopeB = cos(normalPhaseB) * mix(0.0035, 0.013, surfaceMotionZone);
         vec3 flowWorldDirection = normalize(vSurfaceAxisX * flowDirection.x + vSurfaceAxisZ * flowDirection.y);
         vec3 crossedFlowWorld = normalize(vSurfaceAxisX * crossedFlowA.x + vSurfaceAxisZ * crossedFlowA.y);
         vec3 normal = normalize(vWaveNormal - flowWorldDirection * flowSlopeA - crossedFlowWorld * flowSlopeB);
@@ -2892,7 +2894,7 @@ function boot() {
         float rippleA = sin(dot(vSurfacePos, flowDirection) * 5.1 - uTime * 1.08);
         float rippleB = sin(dot(vSurfacePos, crossedFlowA) * 6.9 - uTime * 0.86);
         float rippleC = sin(dot(vSurfacePos, crossedFlowB) * 10.2 - uTime * 1.34);
-        float crest = smoothstep(0.62, 0.94, rippleA * 0.46 + rippleB * 0.38 + rippleC * 0.16);
+        float crest = smoothstep(0.62, 0.94, rippleA * 0.46 + rippleB * 0.38 + rippleC * 0.16) * surfaceMotionZone;
         vec2 reflectionUv = vSurfacePos - flowDirection * uTime * 0.2;
         float broadWarp = noise(reflectionUv * 0.42 + flowTangent * 1.7) * 2.0 - 1.0;
         float fineWarp = noise(reflectionUv * 1.26 - crossedFlowA * 2.3) * 2.0 - 1.0;
@@ -2906,7 +2908,6 @@ function boot() {
         float foamPhase = dot(foamUv, flowDirection) * 8.4 + foamWarp * 3.6;
         float foamFront = pow(0.5 + 0.5 * sin(foamPhase), 10.0);
         float foamBreakup = smoothstep(0.15, 0.65, noise(foamUv * 3.25 + vec2(uTime * 0.08, -uTime * 0.055)));
-        float shallowZone = smoothstep(0.151, 0.17, relief) * (1.0 - smoothstep(0.205, 0.28, relief));
         float slopeZone = smoothstep(0.00018, 0.0065, topographySlope);
         float foamZone = clamp(shallowZone * 0.9 + slopeZone * 1.15, 0.0, 1.0) * smoothstep(0.055, 0.3, seaMask);
         float foamFlecks = smoothstep(0.83, 0.975, noise(foamUv * 7.4 - flowDirection * uTime * 0.13));
@@ -2915,20 +2916,19 @@ function boot() {
         float sparkle = smoothstep(0.89, 0.985, sparkleNoise) * (0.35 + sunGlint * 1.8);
         float sunRoadSpark = sunRoadBase * clamp(reflectionStreak * 1.35 + sparkle * 0.9 + crest * 0.18, 0.0, 1.65);
         float rim = smoothstep(0.89, 1.0, vEdge);
-        vec3 deepOcean = vec3(0.006, 0.055, 0.145);
-        vec3 midOcean = vec3(0.012, 0.17, 0.29);
-        vec3 shallowOcean = vec3(0.055, 0.43, 0.47);
-        vec3 depthColor = mix(deepOcean, midOcean, smoothstep(0.152, 0.178, relief));
-        depthColor = mix(depthColor, shallowOcean, smoothstep(0.166, 0.215, relief));
         float atlasLuma = dot(atlasColor, vec3(0.2126, 0.7152, 0.0722));
+        float authoredWaterDepth = smoothstep(0.018, 0.21, atlasLuma);
+        vec3 deepOcean = vec3(0.008, 0.072, 0.18);
+        vec3 midOcean = vec3(0.012, 0.19, 0.34);
+        vec3 shallowOcean = vec3(0.07, 0.46, 0.48);
+        vec3 depthColor = mix(deepOcean, midOcean, smoothstep(0.08, 0.55, authoredWaterDepth));
+        depthColor = mix(depthColor, shallowOcean, smoothstep(0.58, 0.94, authoredWaterDepth));
         float atlasDetail = clamp(0.88 + (atlasLuma - 0.32) * 0.28, 0.8, 1.12);
         vec3 deep = depthColor * atlasDetail;
         vec3 horizonBlue = mix(vec3(0.025, 0.14, 0.24), vec3(0.18, 0.39, 0.47), clamp(fresnel + grazingReflection * 0.34, 0.0, 1.0));
         vec3 skyReflection = mix(horizonBlue, vec3(0.62, 0.39, 0.22), sunRoadBase * 0.56);
         vec3 color = mix(deep, skyReflection, clamp(0.12 + fresnel * 0.5 + grazingReflection * 0.065, 0.0, 0.72));
         color += vec3(0.18, 0.62, 0.72) * crest * (0.085 + fresnel * 0.18);
-        color += vec3(0.34, 0.67, 0.78) * shimmerLines * (0.16 + fresnel * 0.31);
-        color += vec3(0.35, 0.69, 0.82) * reflectionStreak * (0.2 + fresnel * 0.28);
         color += vec3(0.74, 0.91, 0.89) * topographicFoam * (0.7 + fresnel * 0.22);
         color += vec3(1.0, 0.82, 0.5) * sunGlint * 1.7;
         color += vec3(1.0, 0.61, 0.22) * sunRoadBase * 0.82;
@@ -2936,12 +2936,12 @@ function boot() {
         color += vec3(0.72, 0.95, 1.0) * sparkle * 0.88;
         float reefEmission = smoothstep(0.018, 0.28, worldIllumination.b - worldIllumination.r * 0.35);
         float reefLifePulse = 0.78 + 0.22 * sin(uTime * 0.46 + noise(vMapUv * 96.0) * 6.2831);
-        color += worldIllumination * reefEmission * reefLifePulse * 0.72;
-        color += vec3(0.1, 0.48, 0.52) * rim * (0.08 + uPulse * 0.08);
+        color += worldIllumination * reefEmission * reefLifePulse * shallowZone * 0.2;
+        color += vec3(0.16, 0.25, 0.27) * rim * 0.018;
         color += vec3(0.12, 0.32, 0.34) * max(vWave, 0.0) * 1.25;
         float shoreline = smoothstep(0.055, 0.42, seaMask);
-        float alpha = (0.2 + fresnel * 0.42 + grazingReflection * 0.055 + shimmerLines * 0.14 + reflectionStreak * 0.17 + topographicFoam * 0.5 + sunGlint * 0.25 + sunRoadBase * 0.3 + sunRoadSpark * 0.42 + sparkle * 0.1 + rim * 0.025) * shoreline;
-        gl_FragColor = vec4(color, clamp(alpha, 0.0, 0.82));
+        float alpha = (0.12 + fresnel * 0.34 + grazingReflection * 0.045 + topographicFoam * 0.52 + sunGlint * 0.22 + sunRoadBase * 0.24 + sunRoadSpark * 0.38 + sparkle * 0.08) * shoreline;
+        gl_FragColor = vec4(color, clamp(alpha, 0.0, 0.72));
       }
     `,
   });
@@ -2957,7 +2957,7 @@ function boot() {
     transparent: true,
     depthWrite: false,
     side: THREE.DoubleSide,
-    blending: THREE.AdditiveBlending,
+    blending: THREE.NormalBlending,
     uniforms: { uTime: { value: 0 }, uPulse: { value: 0 } },
     vertexShader: `
       uniform float uTime;
@@ -2987,10 +2987,11 @@ function boot() {
         float flow=noise(vec2(vUv.x*12.0+vSeed*3.0,vUv.y*34.0-uTime*4.2));
         float fine=noise(vec2(vUv.x*31.0+vSeed,vUv.y*60.0-uTime*6.1));
         float bright=smoothstep(0.48,0.9,channels)*0.42+flow*0.32+fine*0.12;
-        float sheet=0.32+bright;
+        float streamBreakup=smoothstep(0.34,0.72,noise(vec2(vUv.x*9.0+vSeed*2.0,vUv.y*22.0-uTime*2.6)));
+        float sheet=(0.035+bright*0.12)*(0.4+streamBreakup*0.6);
         float fade=smoothstep(1.0,0.82,vUv.y)*smoothstep(0.0,0.025,vUv.y);
-        vec3 color=mix(vec3(0.055,0.34,0.42),vec3(0.64,0.94,0.88),clamp(bright,0.0,1.0));
-        gl_FragColor=vec4(color,edge*sheet*fade*(0.92+uPulse*0.18));
+        vec3 color=mix(vec3(0.012,0.028,0.04),vec3(0.2,0.29,0.31),clamp(bright,0.0,1.0));
+        gl_FragColor=vec4(color,edge*sheet*fade);
       }
     `,
   });
@@ -3039,11 +3040,11 @@ function boot() {
   const epicIceWallMaterial = new THREE.MeshStandardMaterial({
     color: 0xb8bfbb,
     vertexColors: true,
-    roughness: 0.79,
+    roughness: 0.92,
     metalness: 0.015,
     emissive: 0x0b1516,
-    emissiveIntensity: 0.24,
-    flatShading: true,
+    emissiveIntensity: 0.08,
+    flatShading: false,
     side: THREE.DoubleSide,
   });
   const epicIceWall = shadow(new THREE.Mesh(createEpicIceWallGeometry(), epicIceWallMaterial));
@@ -3121,9 +3122,9 @@ function boot() {
   epicOceanMaterial.uniforms.uWorldReliefMap.value = meshyReliefTexture;
   epicOceanMaterial.uniforms.uWorldIlluminationMap.value = meshyIlluminationTexture;
   const meshyWorldMaterial = new THREE.MeshStandardMaterial({
-    color: 0xa0c7aa,
-    vertexColors: true,
-    roughness: 0.72,
+    color: 0x59605e,
+    vertexColors: false,
+    roughness: 0.78,
     metalness: 0.025,
     emissive: 0x02090d,
     emissiveIntensity: 0.055,
@@ -3137,47 +3138,57 @@ function boot() {
     shader.uniforms.uWorldUndersideMap = { value: epicUndersideTexture };
     shader.uniforms.uWaterTime = { value: 0 };
     shader.vertexShader = shader.vertexShader
-      .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldReliefMap;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying float vWorldRelief;\nvarying vec3 vUndersidePosition;")
+      .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldReliefMap;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying float vWorldRelief;\nvarying float vWorldSurfaceUp;\nvarying vec3 vUndersidePosition;")
       .replace("#include <begin_vertex>", `#include <begin_vertex>
         vWorldTopUv = vec2(
           (position.x + ${WORLD_RX.toFixed(2)}) / ${(WORLD_RX * 2).toFixed(2)},
           (position.z + ${WORLD_RZ.toFixed(2)}) / ${(WORLD_RZ * 2).toFixed(2)}
         );
         vWorldRelief = texture2D(uWorldReliefMap, vWorldTopUv).r;
-        vWorldTopMask = smoothstep(-0.04, 0.28, normal.y)
-          * smoothstep(${(WORLD_WATER_LEVEL - 0.14).toFixed(2)}, ${(WORLD_WATER_LEVEL + 0.03).toFixed(2)}, position.y);
+        vWorldTopMask = smoothstep(0.05, 0.32, normal.y)
+          * smoothstep(${(WORLD_WATER_LEVEL - 0.06).toFixed(2)}, ${(WORLD_WATER_LEVEL - 0.02).toFixed(2)}, position.y);
         float topFacing = smoothstep(0.12, 0.82, normal.y);
+        vWorldSurfaceUp = normal.y;
         float landRelief = smoothstep(${(WORLD_WATER_LEVEL + 0.015).toFixed(3)}, ${(WORLD_WATER_LEVEL + 0.28).toFixed(3)}, position.y);
         transformed.y += max(0.0, position.y - ${WORLD_WATER_LEVEL.toFixed(2)}) * 0.1 * topFacing;
         transformed.y += pow(max(vWorldRelief - 0.16, 0.0), 1.32) * 0.12 * topFacing * landRelief;
         vUndersidePosition = position;
       `);
     shader.fragmentShader = shader.fragmentShader
-      .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldTopMap;\nuniform sampler2D uWorldReliefMap;\nuniform sampler2D uWorldUndersideMap;\nuniform sampler2D uWorldIlluminationMap;\nuniform float uWaterTime;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying float vWorldRelief;\nvarying vec3 vUndersidePosition;")
+      .replace("#include <common>", "#include <common>\nuniform sampler2D uWorldTopMap;\nuniform sampler2D uWorldReliefMap;\nuniform sampler2D uWorldUndersideMap;\nuniform sampler2D uWorldIlluminationMap;\nuniform float uWaterTime;\nvarying vec2 vWorldTopUv;\nvarying float vWorldTopMask;\nvarying float vWorldRelief;\nvarying float vWorldSurfaceUp;\nvarying vec3 vUndersidePosition;")
       .replace("#include <color_fragment>", `#include <color_fragment>
         vec3 worldTopColor = texture2D(uWorldTopMap, vWorldTopUv).rgb;
         vec3 worldUndersideColor = texture2D(uWorldUndersideMap, vWorldTopUv).rgb;
         float worldTopInk = smoothstep(0.018, 0.08, max(max(worldTopColor.r, worldTopColor.g), worldTopColor.b));
         float worldUndersideInk = smoothstep(0.012, 0.095, max(max(worldUndersideColor.r, worldUndersideColor.g), worldUndersideColor.b));
         float undersideMask = 1.0 - smoothstep(-0.08, 0.08, vUndersidePosition.y);
-        float deepBlueChroma = worldTopColor.b - max(worldTopColor.r, worldTopColor.g);
+        float deepBlueChroma = worldTopColor.b - worldTopColor.r;
         float cyanChroma = min(worldTopColor.g, worldTopColor.b) - worldTopColor.r;
-        float waterChroma = max(deepBlueChroma, cyanChroma * 0.78);
-        float seaClassification = (1.0 - smoothstep(0.17, 0.31, vWorldRelief))
-          * smoothstep(0.018, 0.095, waterChroma);
+        float waterChroma = max(deepBlueChroma * 0.82, cyanChroma);
+        float rejectGreenLand = 1.0 - smoothstep(0.035, 0.12, worldTopColor.g - worldTopColor.b);
+        float rejectNeutralLand = smoothstep(0.035, 0.11, worldTopColor.b - worldTopColor.r);
+        float seaClassification = (1.0 - smoothstep(0.19, 0.34, vWorldRelief))
+          * smoothstep(0.025, 0.11, waterChroma) * rejectGreenLand * rejectNeutralLand;
         float worldSeaMask = vWorldTopMask * worldTopInk * seaClassification;
-        vec3 meshDeepOcean = vec3(0.005, 0.045, 0.125);
-        vec3 meshMidOcean = vec3(0.009, 0.155, 0.27);
-        vec3 meshShallowOcean = vec3(0.04, 0.41, 0.44);
-        vec3 meshDepthColor = mix(meshDeepOcean, meshMidOcean, smoothstep(0.152, 0.178, vWorldRelief));
-        meshDepthColor = mix(meshDepthColor, meshShallowOcean, smoothstep(0.166, 0.215, vWorldRelief));
         float meshAtlasLuma = dot(worldTopColor, vec3(0.2126, 0.7152, 0.0722));
+        float authoredWaterDepth = smoothstep(0.018, 0.21, meshAtlasLuma);
+        vec3 meshDeepOcean = vec3(0.007, 0.06, 0.16);
+        vec3 meshMidOcean = vec3(0.011, 0.18, 0.32);
+        vec3 meshShallowOcean = vec3(0.055, 0.44, 0.46);
+        vec3 meshDepthColor = mix(meshDeepOcean, meshMidOcean, smoothstep(0.08, 0.55, authoredWaterDepth));
+        meshDepthColor = mix(meshDepthColor, meshShallowOcean, smoothstep(0.58, 0.94, authoredWaterDepth));
         float meshAtlasDetail = clamp(0.9 + (meshAtlasLuma - 0.32) * 0.2, 0.84, 1.08);
         meshDepthColor *= meshAtlasDetail;
         vec3 projectedTopColor = mix(worldTopColor, meshDepthColor, seaClassification * worldTopInk * 0.985);
+        projectedTopColor = pow(max(projectedTopColor, vec3(0.0)), vec3(0.82));
         diffuseColor.rgb = mix(diffuseColor.rgb, projectedTopColor, vWorldTopMask * worldTopInk * 0.98);
-        vec3 undersideStone = worldUndersideColor * vec3(0.56, 0.68, 0.78);
+        vec3 undersideStone = pow(max(worldUndersideColor, vec3(0.0)), vec3(0.5)) * vec3(0.78, 0.8, 0.82);
         diffuseColor.rgb = mix(diffuseColor.rgb, undersideStone, undersideMask * worldUndersideInk * 0.88);
+        float rimSideSlope = 1.0 - smoothstep(0.18, 0.5, abs(vWorldSurfaceUp));
+        float rimSideHeight = smoothstep(-0.24, -0.04, vUndersidePosition.y)
+          * (1.0 - smoothstep(${(WORLD_WATER_LEVEL + 0.01).toFixed(2)}, ${(WORLD_WATER_LEVEL + 0.1).toFixed(2)}, vUndersidePosition.y));
+        float rimSideMask = rimSideSlope * rimSideHeight;
+        diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.075, 0.082, 0.08), rimSideMask * 0.96);
         vec2 reliefTexel = vec2(0.00065104);
         float reliefLeft = texture2D(uWorldReliefMap, vWorldTopUv - vec2(reliefTexel.x, 0.0)).r;
         float reliefRight = texture2D(uWorldReliefMap, vWorldTopUv + vec2(reliefTexel.x, 0.0)).r;
@@ -3185,9 +3196,10 @@ function boot() {
         float reliefUp = texture2D(uWorldReliefMap, vWorldTopUv + vec2(0.0, reliefTexel.y)).r;
         vec3 reliefNormal = normalize(vec3((reliefLeft - reliefRight) * 5.8, 0.42, (reliefDown - reliefUp) * 5.8));
         float reliefLight = clamp(dot(reliefNormal, normalize(vec3(-0.58, 0.72, 0.38))), 0.0, 1.0);
-        float reliefShade = mix(0.66, 1.3, smoothstep(0.08, 0.92, reliefLight));
+        float reliefShade = mix(0.82, 1.16, smoothstep(0.08, 0.92, reliefLight));
         float reliefStrength = vWorldTopMask * worldTopInk * smoothstep(0.1, 0.82, vWorldRelief) * (1.0 - worldSeaMask * 0.96);
-        diffuseColor.rgb *= mix(1.0, reliefShade, reliefStrength * 0.72);
+        diffuseColor.rgb *= mix(1.0, reliefShade, reliefStrength * 0.54);
+        diffuseColor.rgb *= mix(1.0, 1.08, vWorldTopMask * worldTopInk);
         vec2 waterUv = vWorldTopUv * 128.0;
         float rippleA = sin(dot(waterUv, vec2(0.96, 0.28)) + uWaterTime * 0.58);
         float rippleB = sin(dot(waterUv, vec2(-0.24, 1.08)) - uWaterTime * 0.74 + 1.7);
@@ -3199,10 +3211,12 @@ function boot() {
       .replace("#include <roughnessmap_fragment>", `#include <roughnessmap_fragment>
         roughnessFactor = mix(roughnessFactor, 0.22, worldSeaMask);
         roughnessFactor = mix(roughnessFactor, 0.8, undersideMask);
+        roughnessFactor = mix(roughnessFactor, 0.94, rimSideMask);
       `)
       .replace("#include <metalnessmap_fragment>", `#include <metalnessmap_fragment>
         metalnessFactor = mix(metalnessFactor, 0.03, worldSeaMask);
         metalnessFactor = mix(metalnessFactor, 0.015, undersideMask);
+        metalnessFactor = mix(metalnessFactor, 0.0, rimSideMask);
       `)
       .replace("#include <emissivemap_fragment>", `#include <emissivemap_fragment>
         vec3 illuminationSignal = texture2D(uWorldIlluminationMap, vWorldTopUv).rgb;
@@ -3213,13 +3227,15 @@ function boot() {
         float reefPulse = 0.76 + 0.24 * sin(uWaterTime * 0.4 + vWorldTopUv.x * 47.0 - vWorldTopUv.y * 37.0);
         float grovePulse = 0.68 + 0.32 * sin(uWaterTime * 0.72 + vWorldTopUv.x * 113.0 + vWorldTopUv.y * 89.0);
         float illuminationLandMask = 1.0 - worldSeaMask;
+        float reefShelf = smoothstep(0.145, 0.17, vWorldRelief) * (1.0 - smoothstep(0.205, 0.28, vWorldRelief));
         vec3 lavaEmission = illuminationSignal * vec3(1.0, 0.34, 0.05)
-          * lavaSignal * lavaPulse * illuminationLandMask * 2.15;
+          * lavaSignal * lavaPulse * illuminationLandMask * 1.45;
         vec3 reefEmission = illuminationSignal * vec3(0.06, 0.72, 1.0)
-          * reefSignal * reefPulse * worldSeaMask * 1.35;
+          * reefSignal * reefPulse * worldSeaMask * reefShelf * 0.48;
         vec3 groveEmission = illuminationSignal * vec3(0.14, 1.0, 0.12)
-          * groveSignal * grovePulse * illuminationLandMask * 0.62;
+          * groveSignal * grovePulse * illuminationLandMask * 0.34;
         totalEmissiveRadiance += (lavaEmission + reefEmission + groveEmission) * vWorldTopMask;
+        totalEmissiveRadiance += undersideStone * undersideMask * worldUndersideInk * 0.22;
       `);
   };
   epicWorld.add(
@@ -3308,9 +3324,9 @@ function boot() {
   const lightning = createLightning();
   scene.add(flock, lightning);
 
-  const hemisphere = new THREE.HemisphereLight(0x89b9bb, 0x161111, 0.92);
+  const hemisphere = new THREE.HemisphereLight(0xb1bfbd, 0x332c28, 1.42);
   scene.add(hemisphere);
-  const sun = new THREE.DirectionalLight(0xffc27a, 4.5);
+  const sun = new THREE.DirectionalLight(0xffc98b, 3.85);
   sun.position.set(-9, 10.5, 7.5);
   sun.castShadow = true;
   sun.shadow.camera.left = -11;
@@ -3321,10 +3337,10 @@ function boot() {
   sun.shadow.camera.far = 30;
   sun.shadow.bias = -0.00035;
   scene.add(sun);
-  const fill = new THREE.DirectionalLight(0x4a9fa4, 0.72);
+  const fill = new THREE.DirectionalLight(0x78999b, 0.72);
   fill.position.set(-7, 5, -7);
   scene.add(fill);
-  const spectacleRim = new THREE.DirectionalLight(0x75dfff, 2.15);
+  const spectacleRim = new THREE.DirectionalLight(0xa4dce0, 1.15);
   spectacleRim.position.set(10, 2.8, -7);
   scene.add(spectacleRim);
   const regionalSunTarget = new THREE.Object3D();
@@ -3346,11 +3362,11 @@ function boot() {
   const crownLight = new THREE.PointLight(0x6fe0cc, 3.8, 6, 2);
   crownLight.position.copy(citadel.group.position).add(new THREE.Vector3(0, 2.5, 0));
   world.add(crownLight);
-  const epicAbyssLight = new THREE.PointLight(0x5f9dff, 12, 19, 1.8);
+  const epicAbyssLight = new THREE.PointLight(0x829ba5, 9, 19, 1.8);
   epicAbyssLight.position.set(0, -5.5, 0);
-  const epicUnderfill = new THREE.DirectionalLight(0x5790a0, 1.75);
+  const epicUnderfill = new THREE.DirectionalLight(0x8a999d, 3.2);
   epicUnderfill.position.set(-5, -11, 4);
-  const epicUnderfillViolet = new THREE.DirectionalLight(0x6d5a8b, 0.65);
+  const epicUnderfillViolet = new THREE.DirectionalLight(0x756f82, 0.82);
   epicUnderfillViolet.position.set(6, -8, -5);
   const epicFrontGlow = new THREE.PointLight(0x70dbe5, 5.8, 15, 1.75);
   epicFrontGlow.position.set(0, -1.8, 7.5);
@@ -3869,18 +3885,18 @@ function boot() {
     });
     regionalStormLights[0].intensity = localStormPulseA * 18;
     regionalStormLights[1].intensity = localStormPulseB * 15;
-    regionalSun.intensity = 7.4 + Math.sin(time * 0.095) * 1.25;
+    regionalSun.intensity = 5.2 + Math.sin(time * 0.095) * 0.75;
     spectacleHalos.sun.material.opacity = 0.62 + Math.sin(time * 0.13) * 0.1;
     spectacleHalos.sunBreak.material.opacity = 0.11 + Math.sin(time * 0.095 + 0.8) * 0.035;
-    spectacleHalos.storm.material.opacity = 0.12 + Math.max(localStormPulseA, localStormPulseB) * 0.46;
-    spectacleHalos.abyss.material.opacity = 0.3 + crownPulse * 0.22 + Math.sin(time * 0.2) * 0.035;
-    waterfallHalos.material.opacity = 0.38 + Math.sin(time * 0.24) * 0.09 + crownPulse * 0.12;
+    spectacleHalos.storm.material.opacity = 0.045 + Math.max(localStormPulseA, localStormPulseB) * 0.12;
+    spectacleHalos.abyss.material.opacity = 0.1 + crownPulse * 0.045 + Math.sin(time * 0.2) * 0.012;
+    waterfallHalos.material.opacity = 0.07 + Math.sin(time * 0.24) * 0.012 + crownPulse * 0.015;
     stormCrown.group.rotation.y = reducedMotion ? 0 : time * 0.04;
     stormCrown.rings.forEach((ring, index) => {
       ring.rotation.z = (index % 2 ? -1 : 1) * time * (0.018 + index * 0.006);
       ring.material.opacity = 0.04 + Math.sin(time * 0.12 + index) * 0.012 + localStormPulseA * 0.08;
     });
-    renderer.toneMappingExposure = 1.04 + localStormPulseA * 0.12 + localStormPulseB * 0.09 + crownPulse * 0.025;
+    renderer.toneMappingExposure = 1.1 + localStormPulseA * 0.07 + localStormPulseB * 0.055 + crownPulse * 0.018;
 
     const flockVisible = !reducedMotion && phase > 0.34 && phase < 0.59;
     const flockProgress = clamp((phase - 0.34) / 0.25);
@@ -3912,13 +3928,13 @@ function boot() {
       veinShader.uniforms.uVeinTime.value = time;
       veinShader.uniforms.uVeinPulse.value = crownPulse;
     }
-    epicAbyssLight.intensity = 5.4 + crownPulse * 5.2;
+    epicAbyssLight.intensity = 8.4 + crownPulse * 2.6;
     epicShallowsMaterial.opacity = 0.3 + crownPulse * 0.1;
     epicBeacons.mesh.visible = !meshyWorldLoaded && crownPulse > 0.11 && !reducedMotion;
     epicBeacons.material.opacity = crownPulse * 0.155;
     epicCloudWisps.position.x = reducedMotion ? 0 : Math.sin(time * 0.042) * 0.22;
     epicCloudWisps.position.z = reducedMotion ? 0 : Math.cos(time * 0.034) * 0.12;
-    sun.intensity = 4.4 + crownPulse * 0.55;
+    sun.intensity = 3.75 + crownPulse * 0.4;
 
     depthOfField.render(delta, activeVariant === "epic" ? epicWorld : world);
     frames += 1;
