@@ -2982,10 +2982,19 @@ function boot() {
         float worldUndersideInk = smoothstep(0.012, 0.095, max(max(worldUndersideColor.r, worldUndersideColor.g), worldUndersideColor.b));
         float undersideMask = 1.0 - smoothstep(-0.08, 0.08, vUndersidePosition.y);
         float waterBlue = worldTopColor.b - max(worldTopColor.r * 0.86, worldTopColor.g * 0.72);
-        float worldSeaMask = vWorldTopMask * worldTopInk
-          * (1.0 - smoothstep(0.17, 0.31, vWorldRelief))
+        float seaClassification = (1.0 - smoothstep(0.17, 0.31, vWorldRelief))
           * smoothstep(0.012, 0.11, waterBlue);
-        diffuseColor.rgb = mix(diffuseColor.rgb, worldTopColor, vWorldTopMask * worldTopInk * 0.98);
+        float worldSeaMask = vWorldTopMask * worldTopInk * seaClassification;
+        vec3 meshDeepOcean = vec3(0.005, 0.045, 0.125);
+        vec3 meshMidOcean = vec3(0.009, 0.155, 0.27);
+        vec3 meshShallowOcean = vec3(0.04, 0.41, 0.44);
+        vec3 meshDepthColor = mix(meshDeepOcean, meshMidOcean, smoothstep(0.152, 0.178, vWorldRelief));
+        meshDepthColor = mix(meshDepthColor, meshShallowOcean, smoothstep(0.166, 0.215, vWorldRelief));
+        float meshAtlasLuma = dot(worldTopColor, vec3(0.2126, 0.7152, 0.0722));
+        float meshAtlasDetail = clamp(0.9 + (meshAtlasLuma - 0.32) * 0.2, 0.84, 1.08);
+        meshDepthColor *= meshAtlasDetail;
+        vec3 projectedTopColor = mix(worldTopColor, meshDepthColor, seaClassification * worldTopInk * 0.985);
+        diffuseColor.rgb = mix(diffuseColor.rgb, projectedTopColor, vWorldTopMask * worldTopInk * 0.98);
         vec3 undersideStone = worldUndersideColor * vec3(0.56, 0.68, 0.78);
         diffuseColor.rgb = mix(diffuseColor.rgb, undersideStone, undersideMask * worldUndersideInk * 0.88);
         vec2 reliefTexel = vec2(0.00065104);
@@ -3003,7 +3012,7 @@ function boot() {
         float rippleB = sin(dot(waterUv, vec2(-0.24, 1.08)) - uWaterTime * 0.74 + 1.7);
         float rippleC = sin(dot(waterUv, vec2(0.62, -0.78)) + uWaterTime * 0.43 + 4.1);
         float rippleCrest = smoothstep(1.18, 1.78, rippleA * 0.82 + rippleB * 0.62 + rippleC * 0.34);
-        diffuseColor.rgb = mix(diffuseColor.rgb, worldTopColor * vec3(0.96, 0.99, 1.02), worldSeaMask * 0.18);
+        diffuseColor.rgb = mix(diffuseColor.rgb, meshDepthColor * vec3(0.96, 0.99, 1.02), worldSeaMask * 0.22);
         diffuseColor.rgb += vec3(0.24, 0.48, 0.62) * rippleCrest * worldSeaMask * 0.045;
       `)
       .replace("#include <roughnessmap_fragment>", `#include <roughnessmap_fragment>
