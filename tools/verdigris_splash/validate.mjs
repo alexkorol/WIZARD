@@ -53,6 +53,7 @@ assert(app.includes("createEpicStalactites") && app.includes("createEpicIceWallG
 assert(!app.includes("createWorldCore") && !app.includes("worldCore"), "the rejected glowing underside orb/core has returned");
 assert(app.includes("const proceduralEpicGeography = [\n    epicUnderside") && !app.includes("const proceduralEpicGeography = [\n    epicOcean"), "generated underside overlays must be hidden while the stable reflective sea remains");
 assert(app.includes("seaMask < 0.055") && app.includes("skyReflection") && app.includes("sunGlint") && app.includes("sparkle"), "stable reflective water skin is missing");
+assert(app.includes("topographyGradient") && app.includes("flowDirection") && app.includes("topographicFoam") && app.includes("foamZone"), "heightmap-directed dynamic foam is missing");
 assert(app.includes("uWorldUndersideMap") && !app.includes("vUndersidePosition.y < -0.04) discard"), "the authored Meshy underside is not being rendered");
 assert(app.includes("Depth-stacked volumetric auroras") && app.includes("auroraLayers") && app.includes("nebula"), "depth-stacked aurora or nebula atmosphere is missing");
 assert(app.includes("setVariant") && app.includes("activeVariant"), "scene view switching is missing");

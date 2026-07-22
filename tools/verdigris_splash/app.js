@@ -2658,6 +2658,17 @@ function boot() {
       void main() {
         vec3 atlasColor = texture2D(uWorldTopMap, vMapUv).rgb;
         float relief = texture2D(uWorldReliefMap, vMapUv).r;
+        vec2 reliefTexel = vec2(0.00048828125);
+        float reliefLeft = texture2D(uWorldReliefMap, vMapUv - vec2(reliefTexel.x, 0.0)).r;
+        float reliefRight = texture2D(uWorldReliefMap, vMapUv + vec2(reliefTexel.x, 0.0)).r;
+        float reliefDown = texture2D(uWorldReliefMap, vMapUv - vec2(0.0, reliefTexel.y)).r;
+        float reliefUp = texture2D(uWorldReliefMap, vMapUv + vec2(0.0, reliefTexel.y)).r;
+        vec2 topographyGradient = vec2(reliefRight - reliefLeft, reliefUp - reliefDown);
+        float topographySlope = length(topographyGradient);
+        vec2 shoreDirection = topographyGradient / max(topographySlope, 0.00008);
+        vec2 prevailingCurrent = normalize(vec2(0.82, 0.31));
+        float topographyWeight = smoothstep(0.00035, 0.009, topographySlope);
+        vec2 flowDirection = normalize(mix(prevailingCurrent, shoreDirection, topographyWeight * 0.9));
         float atlasInk = smoothstep(0.018, 0.08, max(max(atlasColor.r, atlasColor.g), atlasColor.b));
         float waterBlue = atlasColor.b - max(atlasColor.r * 0.86, atlasColor.g * 0.72);
         float seaMask = atlasInk * (1.0 - smoothstep(0.17, 0.31, relief)) * smoothstep(0.012, 0.105, waterBlue);
@@ -2678,6 +2689,16 @@ function boot() {
         float breakup = smoothstep(0.28, 0.74, noise(vWorld.xz * 1.14 + vec2(uTime * 0.065, -uTime * 0.052)));
         float reflectionStreak = waveLineA * (0.22 + breakup * 0.78) + waveLineB * (0.2 - breakup * 0.11);
         float shimmerLines = reflectionStreak * smoothstep(0.7, 0.97, noise(vWorld.xz * 4.6 + vec2(uTime * 0.38, -uTime * 0.29)));
+        vec2 foamUv = vWorld.xz - flowDirection * uTime * 0.24;
+        float foamWarp = noise(foamUv * 0.68 + flowDirection.yx * 3.1) * 2.0 - 1.0;
+        float foamPhase = dot(foamUv, flowDirection) * 8.4 + foamWarp * 3.6;
+        float foamFront = pow(0.5 + 0.5 * sin(foamPhase), 10.0);
+        float foamBreakup = smoothstep(0.15, 0.65, noise(foamUv * 3.25 + vec2(uTime * 0.08, -uTime * 0.055)));
+        float shallowZone = smoothstep(0.151, 0.17, relief) * (1.0 - smoothstep(0.205, 0.28, relief));
+        float slopeZone = smoothstep(0.00018, 0.0065, topographySlope);
+        float foamZone = clamp(shallowZone * 0.9 + slopeZone * 1.15, 0.0, 1.0) * smoothstep(0.055, 0.3, seaMask);
+        float foamFlecks = smoothstep(0.83, 0.975, noise(foamUv * 7.4 - flowDirection * uTime * 0.13));
+        float topographicFoam = clamp(foamFront * (0.38 + foamBreakup * 0.62) + foamFlecks * 0.12, 0.0, 1.0) * foamZone;
         float sparkleNoise = noise(vWorld.xz * 14.0 + vec2(uTime * 0.7, -uTime * 0.48));
         float sparkle = smoothstep(0.89, 0.985, sparkleNoise) * (0.35 + sunGlint * 1.8);
         float rim = smoothstep(0.89, 1.0, vEdge);
@@ -2687,12 +2708,13 @@ function boot() {
         color += vec3(0.18, 0.62, 0.72) * crest * (0.085 + fresnel * 0.18);
         color += vec3(0.42, 0.8, 0.9) * shimmerLines * (0.22 + fresnel * 0.44);
         color += vec3(0.48, 0.86, 0.96) * reflectionStreak * (0.34 + fresnel * 0.4);
+        color += vec3(0.82, 0.98, 0.95) * topographicFoam * (0.88 + fresnel * 0.32);
         color += vec3(1.0, 0.82, 0.5) * sunGlint * 1.7;
         color += vec3(0.72, 0.95, 1.0) * sparkle * 0.88;
         color += vec3(0.1, 0.48, 0.52) * rim * (0.08 + uPulse * 0.08);
         color += vec3(0.12, 0.32, 0.34) * max(vWave, 0.0) * 1.25;
         float shoreline = smoothstep(0.055, 0.42, seaMask);
-        float alpha = (0.24 + fresnel * 0.5 + shimmerLines * 0.2 + reflectionStreak * 0.23 + sunGlint * 0.25 + sparkle * 0.12 + rim * 0.025) * shoreline;
+        float alpha = (0.24 + fresnel * 0.5 + shimmerLines * 0.2 + reflectionStreak * 0.23 + topographicFoam * 0.62 + sunGlint * 0.25 + sparkle * 0.12 + rim * 0.025) * shoreline;
         gl_FragColor = vec4(color, clamp(alpha, 0.0, 0.82));
       }
     `,
