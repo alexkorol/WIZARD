@@ -29,7 +29,7 @@ python tools/build_world_assets.py "C:\path\to\Meshy_AI_Celestial Island_generat
 blender --background --python tools/blender_taper_world.py -- assets/world/celestial_world_runtime.glb assets/world/celestial_world_runtime_tapered.glb "C:\Temp\verdigris_blender_qa"
 ```
 
-The build selects the largest connected body as the world, removes the separate moon and tiny detached debris, rasterizes only the topmost upward-facing surface, preserves the source model's circular horizontal proportions with one uniform X/Z scale, and reduces the runtime mesh from about 1.9 million to about 120,000 triangles. It writes:
+The build selects the largest connected body as the world, removes the separate moon and tiny detached debris, rasterizes only the topmost upward-facing surface, preserves the source model's circular horizontal proportions with one uniform X/Z scale, and reduces the runtime mesh from about 1.9 million to about 120,000 triangles. The Blender refinement vertically relaxes and softly compresses only the extreme summit range before recalculating normals, keeping broad mountain mass while preventing needle peaks and projected-texture stretching. It writes:
 
 - `celestial_world_heightmap_16bit.png` — terrain elevation data, with the underside excluded.
 - `celestial_world_heightmap_preview.png` and `celestial_world_topographic_reference.png` — human/image-model references.

@@ -1,9 +1,11 @@
-"""Taper the optimized Verdigris Meshy world in Blender and render QA views.
+"""Refine the optimized Verdigris Meshy world in Blender and render QA views.
 
 The source GLB is already cleaned and decimated.  This pass preserves its
 authored underside relief while compressing the outer hanging mass and keeping
 the deepest central forms, producing a shallower disc that resolves into a
-single spinning-top peak instead of a hemisphere.
+single spinning-top peak instead of a hemisphere.  It also relaxes only the
+extreme upper summits so their projected atlas texture does not stretch across
+needle-like slopes.
 """
 
 from __future__ import annotations
@@ -29,11 +31,56 @@ def look_at(camera: bpy.types.Object, target: Vector) -> None:
 
 
 def world_bounds(objects: list[bpy.types.Object]) -> tuple[Vector, Vector]:
-    points = [obj.matrix_world @ Vector(corner) for obj in objects for corner in obj.bound_box]
+    points = [obj.matrix_world @ vertex.co for obj in objects for vertex in obj.data.vertices]
     return (
         Vector((min(point.x for point in points), min(point.y for point in points), min(point.z for point in points))),
         Vector((max(point.x for point in points), max(point.y for point in points), max(point.z for point in points))),
     )
+
+
+def smoothstep(edge0: float, edge1: float, value: float) -> float:
+    amount = min(1.0, max(0.0, (value - edge0) / max(0.000001, edge1 - edge0)))
+    return amount * amount * (3.0 - 2.0 * amount)
+
+
+def soften_summits(obj: bpy.types.Object, shoulder_z: float = 0.34) -> int:
+    """Vertically relax and softly compress the tallest top-surface vertices."""
+    inverse = obj.matrix_world.inverted()
+    neighbors: list[list[int]] = [[] for _ in obj.data.vertices]
+    for edge in obj.data.edges:
+        first, second = edge.vertices
+        neighbors[first].append(second)
+        neighbors[second].append(first)
+
+    changed: set[int] = set()
+    for _ in range(2):
+        world_points = [obj.matrix_world @ vertex.co for vertex in obj.data.vertices]
+        revised_heights: dict[int, float] = {}
+        for index, point in enumerate(world_points):
+            if point.z <= 0.28 or not neighbors[index]:
+                continue
+            neighbor_height = sum(world_points[other].z for other in neighbors[index]) / len(neighbors[index])
+            blend = smoothstep(0.28, 0.78, point.z) * 0.32
+            revised_heights[index] = point.z + (neighbor_height - point.z) * blend
+        for index, height in revised_heights.items():
+            point = world_points[index]
+            point.z = height
+            obj.data.vertices[index].co = inverse @ point
+            changed.add(index)
+
+    # A rational shoulder curve preserves ordinary hills while preventing the
+    # last few percent of Meshy's height range from becoming thin needles.
+    for index, vertex in enumerate(obj.data.vertices):
+        world = obj.matrix_world @ vertex.co
+        if world.z <= shoulder_z:
+            continue
+        excess = world.z - shoulder_z
+        world.z = shoulder_z + excess * 0.72 / (1.0 + excess * 0.55)
+        vertex.co = inverse @ world
+        changed.add(index)
+
+    obj.data.update()
+    return len(changed)
 
 
 def taper_mesh(obj: bpy.types.Object, rim_z: float, bottom_z: float, radius: float) -> int:
@@ -147,6 +194,7 @@ def main() -> None:
         raise RuntimeError("No mesh objects found in source GLB")
 
     before = world_bounds(meshes)
+    softened = sum(soften_summits(obj) for obj in meshes)
     changed = sum(taper_mesh(obj, rim_z=0.10, bottom_z=before[0].z, radius=7.4) for obj in meshes)
     after = world_bounds(meshes)
 
@@ -167,6 +215,7 @@ def main() -> None:
         "VERDIGRIS_TAPER",
         {
             "objects": len(meshes),
+            "softened_summit_vertices": softened,
             "changed_vertices": changed,
             "before": [tuple(round(value, 4) for value in vector) for vector in before],
             "after": [tuple(round(value, 4) for value in vector) for vector in after],

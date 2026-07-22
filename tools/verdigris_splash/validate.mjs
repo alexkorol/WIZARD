@@ -22,7 +22,7 @@ const css = contents.get("styles.css").toString("utf8");
 const app = contents.get("app.js").toString("utf8");
 const runtimeModelPath = path.join(root, "assets", "world", "celestial_world_runtime_tapered.glb");
 const runtimeModel = await stat(runtimeModelPath);
-await stat(path.join(root, "tools", "blender_taper_world.py"));
+const blenderScript = await readFile(path.join(root, "tools", "blender_taper_world.py"), "utf8");
 const topTexturePath = path.join(root, "assets", "world", "celestial_world_top_texture_4k_detail.webp");
 const topTexture = await stat(topTexturePath);
 const topTextureMasterPath = path.join(root, "assets", "world", "celestial_world_top_texture_4k_detail.png");
@@ -46,7 +46,7 @@ assert(app.includes("createEpicCityLights") && app.includes("createEpicBeaconMes
 assert(app.includes("createVolumetricWeather") && app.includes("Ray-marched regional atmosphere") && app.includes("uCameraLocal"), "ray-marched volumetric weather is missing");
 assert(app.includes("createRegionalLightning") && app.includes("sunGlint"), "regional lightning or shimmering ocean is missing");
 assert(app.includes("createSpectacleHalos") && app.includes("createStormCrown") && app.includes("createWaterfallHalos"), "cinematic weather, storm, or waterfall radiance is missing");
-assert(app.includes("GLTFLoader") && app.includes("celestial_world_runtime_tapered.glb"), "Blender-tapered Meshy world loader is missing");
+assert(app.includes("GLTFLoader") && app.includes("celestial_world_runtime_tapered.glb?v=2"), "current Blender-refined Meshy world loader is missing");
 assert(app.includes("celestial_world_top_texture_4k_detail.webp") && app.includes("uWorldTopMap"), "4K top-surface texture projection is missing");
 assert(app.includes("celestial_world_underside_texture.png") && app.includes("epicUndersideTexture"), "sculpted underside texture is missing");
 assert(app.includes("createEpicStalactites") && app.includes("createEpicIceWallGeometry"), "procedural fallback underside is missing");
@@ -56,6 +56,8 @@ assert(app.includes("seaMask < 0.055") && app.includes("skyReflection") && app.i
 assert(app.includes("fineTopographyGradient") && app.includes("wideTopographyGradient") && app.includes("flowDirection") && app.includes("topographicFoam") && app.includes("foamZone"), "multi-scale heightmap-directed ocean motion is missing");
 assert(app.includes("deepOcean") && app.includes("shallowOcean") && app.includes("depthColor") && !app.includes("atlasColor * vec3(0.68, 0.8, 0.92)"), "heightmap-controlled deep and shallow water color is missing");
 assert(!app.includes("dot(vWorld.xz, vec2(5.7, 1.8))") && app.includes("dot(reflectionUv, flowDirection)"), "fixed-direction ocean reflection streaks have returned");
+assert(blenderScript.includes("soften_summits") && blenderScript.includes("softened_summit_vertices"), "Blender summit softening pass is missing");
+assert(app.includes("* 0.1 * topFacing") && app.includes("* 0.12 * topFacing * landRelief"), "runtime terrain is over-extruding the refined summits");
 assert(app.includes("sunRoadBase") && app.includes("sunRoadSpark") && app.includes("uSunWorld") && app.includes("grazingReflection"), "grazing-angle ocean sun road is missing");
 assert(app.includes("uWorldUndersideMap") && !app.includes("vUndersidePosition.y < -0.04) discard"), "the authored Meshy underside is not being rendered");
 assert(app.includes("Depth-stacked volumetric auroras") && app.includes("auroraLayers") && app.includes("nebula"), "depth-stacked aurora or nebula atmosphere is missing");
@@ -97,6 +99,8 @@ const gameBounds = buildReport.game_bounds;
 const gameWidth = gameBounds[1][0] - gameBounds[0][0];
 const gameDepth = gameBounds[1][2] - gameBounds[0][2];
 assert(Math.abs(gameWidth / gameDepth - 1) < 0.06, `runtime world is squashed (${gameWidth.toFixed(2)} x ${gameDepth.toFixed(2)})`);
+assert(buildReport.blender_refinement?.refined_summit_y < 0.9, "refined Blender summit height is still excessive");
+assert(buildReport.blender_refinement?.softened_summit_vertices > 100, "Blender summit refinement did not affect enough vertices");
 
 console.log(JSON.stringify({
   ok: true,

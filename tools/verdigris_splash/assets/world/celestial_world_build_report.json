@@ -195,5 +195,11 @@
     "scale_y": 0.008787262312129113,
     "scale_z": 0.00787910682625525,
     "runtime_water_level": 0.14
+  },
+  "blender_refinement": {
+    "softened_summit_vertices": 1084,
+    "source_summit_y": 1.424409,
+    "refined_summit_y": 0.804003,
+    "summit_height_reduction_percent": 43.556
   }
 }

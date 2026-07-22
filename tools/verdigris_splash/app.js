@@ -2969,8 +2969,8 @@ function boot() {
           * smoothstep(${(WORLD_WATER_LEVEL - 0.14).toFixed(2)}, ${(WORLD_WATER_LEVEL + 0.03).toFixed(2)}, position.y);
         float topFacing = smoothstep(0.12, 0.82, normal.y);
         float landRelief = smoothstep(${(WORLD_WATER_LEVEL + 0.015).toFixed(3)}, ${(WORLD_WATER_LEVEL + 0.28).toFixed(3)}, position.y);
-        transformed.y += max(0.0, position.y - ${WORLD_WATER_LEVEL.toFixed(2)}) * 0.46 * topFacing;
-        transformed.y += pow(max(vWorldRelief - 0.16, 0.0), 1.32) * 0.44 * topFacing * landRelief;
+        transformed.y += max(0.0, position.y - ${WORLD_WATER_LEVEL.toFixed(2)}) * 0.1 * topFacing;
+        transformed.y += pow(max(vWorldRelief - 0.16, 0.0), 1.32) * 0.12 * topFacing * landRelief;
         vUndersidePosition = position;
       `);
     shader.fragmentShader = shader.fragmentShader
@@ -3057,7 +3057,7 @@ function boot() {
   let meshyWorldLoaded = false;
   let meshyWorldLoadError = "";
   new GLTFLoader().load(
-    "assets/world/celestial_world_runtime_tapered.glb?v=1",
+    "assets/world/celestial_world_runtime_tapered.glb?v=2",
     (gltf) => {
       gltf.scene.name = "Celestial world runtime mesh";
       gltf.scene.traverse((object) => {
