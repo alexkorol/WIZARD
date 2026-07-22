@@ -2026,10 +2026,10 @@ function createWaterfallHalos() {
   const texture = createRadialGlowTexture();
   const material = new THREE.SpriteMaterial({
     map: texture,
-    color: 0x6ee8f0,
+    color: 0xb6d5d5,
     transparent: true,
-    opacity: 0.44,
-    blending: THREE.AdditiveBlending,
+    opacity: 0.085,
+    blending: THREE.NormalBlending,
     depthWrite: false,
     fog: true,
   });
@@ -2039,11 +2039,11 @@ function createWaterfallHalos() {
     const sprite = new THREE.Sprite(material);
     sprite.position.set(
       Math.cos(fall.angle) * WORLD_RX * boundary * 1.015,
-      WORLD_WATER_LEVEL - 0.32,
+      WORLD_WATER_LEVEL - fall.length + 0.04,
       Math.sin(fall.angle) * WORLD_RZ * boundary * 1.015,
     );
-    const size = 1.4 + fall.width * 2.4;
-    sprite.scale.set(size, size * 2.6, 1);
+    const size = 0.72 + fall.width * 1.35;
+    sprite.scale.set(size * 1.45, size * 0.34, 1);
     sprite.renderOrder = 10;
     group.add(sprite);
     sprites.push(sprite);
@@ -2583,7 +2583,7 @@ function detectAutoQuality() {
 function createFarRimDepthOfField(renderer, scene, camera) {
   const composer = new EffectComposer(renderer);
   const renderPass = new RenderPass(scene, camera);
-  const bokehPass = new BokehPass(scene, camera, { focus: 18, aperture: 0.004, maxblur: 0.012 });
+  const bokehPass = new BokehPass(scene, camera, { focus: 18, aperture: 0.002, maxblur: 0.0038 });
   const focusPoint = new THREE.Vector3();
   const viewDirection = new THREE.Vector3();
   let smoothedFocus = 18;
@@ -2614,20 +2614,20 @@ function createFarRimDepthOfField(renderer, scene, camera) {
       float farDistance = max(0.0, -viewZ - focus - farFocusStart);
       float circleOfConfusion = smoothstep(0.0, farFocusRange, farDistance);
       vec2 radius = vec2(maxblur, maxblur * aspect) * circleOfConfusion;
-      vec4 color = texture2D(tColor, vUv) * 2.0;
-      color += texture2D(tColor, vUv + vec2( 1.0,  0.0) * radius);
-      color += texture2D(tColor, vUv + vec2(-1.0,  0.0) * radius);
-      color += texture2D(tColor, vUv + vec2( 0.0,  1.0) * radius);
-      color += texture2D(tColor, vUv + vec2( 0.0, -1.0) * radius);
-      color += texture2D(tColor, vUv + vec2( 0.7,  0.7) * radius) * 0.8;
-      color += texture2D(tColor, vUv + vec2(-0.7,  0.7) * radius) * 0.8;
-      color += texture2D(tColor, vUv + vec2( 0.7, -0.7) * radius) * 0.8;
-      color += texture2D(tColor, vUv + vec2(-0.7, -0.7) * radius) * 0.8;
-      color += texture2D(tColor, vUv + vec2( 0.38,  0.92) * radius) * 0.55;
-      color += texture2D(tColor, vUv + vec2(-0.92,  0.38) * radius) * 0.55;
-      color += texture2D(tColor, vUv + vec2(-0.38, -0.92) * radius) * 0.55;
-      color += texture2D(tColor, vUv + vec2( 0.92, -0.38) * radius) * 0.55;
-      gl_FragColor = color / 11.4;
+      vec4 color = texture2D(tColor, vUv) * 0.28;
+      color += texture2D(tColor, vUv + vec2( 0.34,  0.0) * radius) * 0.11;
+      color += texture2D(tColor, vUv + vec2(-0.34,  0.0) * radius) * 0.11;
+      color += texture2D(tColor, vUv + vec2( 0.0,  0.34) * radius) * 0.11;
+      color += texture2D(tColor, vUv + vec2( 0.0, -0.34) * radius) * 0.11;
+      color += texture2D(tColor, vUv + vec2( 0.34,  0.34) * radius) * 0.055;
+      color += texture2D(tColor, vUv + vec2(-0.34,  0.34) * radius) * 0.055;
+      color += texture2D(tColor, vUv + vec2( 0.34, -0.34) * radius) * 0.055;
+      color += texture2D(tColor, vUv + vec2(-0.34, -0.34) * radius) * 0.055;
+      color += texture2D(tColor, vUv + vec2( 0.72,  0.0) * radius) * 0.015;
+      color += texture2D(tColor, vUv + vec2(-0.72,  0.0) * radius) * 0.015;
+      color += texture2D(tColor, vUv + vec2( 0.0,  0.72) * radius) * 0.015;
+      color += texture2D(tColor, vUv + vec2( 0.0, -0.72) * radius) * 0.015;
+      gl_FragColor = color;
       gl_FragColor.a = 1.0;
     }
   `;
@@ -2660,7 +2660,7 @@ function createFarRimDepthOfField(renderer, scene, camera) {
     setPixelRatio(value) { composer.setPixelRatio(value); },
     setSize(width, height) { composer.setSize(width, height); },
     setQuality(quality) {
-      bokehPass.uniforms.maxblur.value = quality === "low" ? 0.0075 : quality === "balanced" ? 0.0105 : 0.0135;
+      bokehPass.uniforms.maxblur.value = quality === "low" ? 0.0018 : quality === "balanced" ? 0.0028 : 0.0038;
     },
     render(delta, focusRoot) {
       focusRoot.getWorldPosition(focusPoint);
@@ -2692,8 +2692,8 @@ function boot() {
   }
 
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.04;
+  renderer.toneMapping = THREE.AgXToneMapping;
+  renderer.toneMappingExposure = 1.1;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   const scene = new THREE.Scene();
@@ -2792,15 +2792,10 @@ function boot() {
       varying vec3 vSurfaceAxisZ;
       void main() {
         vec3 p = position;
-        float waveA = p.x * 1.45 + p.z * 0.38 + uTime * 0.34;
-        float waveB = p.z * 1.72 - p.x * 0.24 - uTime * 0.29;
-        float wave = sin(waveA) * 0.006 + cos(waveB) * 0.004;
-        p.y += wave;
+        float wave = 0.0;
         vEdge = aEdge;
         vWave = wave;
-        float slopeX = cos(waveA) * 0.006 * 1.45 + sin(waveB) * 0.004 * 0.24;
-        float slopeZ = cos(waveA) * 0.006 * 0.38 + sin(waveB) * 0.004 * 1.72;
-        vWaveNormal = normalize(mat3(modelMatrix) * vec3(-slopeX, 1.0, -slopeZ));
+        vWaveNormal = normalize(mat3(modelMatrix) * vec3(0.0, 1.0, 0.0));
         vMapUv = vec2((p.x + ${WORLD_RX.toFixed(2)}) / ${(WORLD_RX * 2).toFixed(2)}, (p.z + ${WORLD_RZ.toFixed(2)}) / ${(WORLD_RZ * 2).toFixed(2)});
         vSurfacePos = p.xz;
         vSurfaceAxisX = normalize(mat3(modelMatrix) * vec3(1.0, 0.0, 0.0));
@@ -2855,7 +2850,8 @@ function boot() {
         vec2 shoreDirection = topographyGradient / max(topographySlope, 0.00008);
         vec2 basinOffset = vMapUv - vec2(0.5);
         vec2 basinGyre = normalize(vec2(-basinOffset.y, basinOffset.x) + vec2(0.18, 0.11));
-        float topographyWeight = smoothstep(0.00045, 0.018, topographySlope);
+        float shoreFlowZone = smoothstep(0.154, 0.178, relief) * (1.0 - smoothstep(0.215, 0.275, relief));
+        float topographyWeight = smoothstep(0.0012, 0.014, topographySlope) * shoreFlowZone;
         vec2 flowDirection = normalize(mix(basinGyre, shoreDirection, topographyWeight * 0.96));
         vec2 flowTangent = vec2(-flowDirection.y, flowDirection.x);
         vec2 crossedFlowA = normalize(flowDirection * 0.92 + flowTangent * 0.28);
@@ -2864,13 +2860,14 @@ function boot() {
         float deepBlueChroma = atlasColor.b - max(atlasColor.r, atlasColor.g);
         float cyanChroma = min(atlasColor.g, atlasColor.b) - atlasColor.r;
         float waterChroma = max(deepBlueChroma, cyanChroma * 0.78);
-        float seaMask = atlasInk * (1.0 - smoothstep(0.17, 0.31, relief)) * smoothstep(0.018, 0.095, waterChroma);
+        float seaMask = atlasInk * (1.0 - smoothstep(0.17, 0.245, relief)) * smoothstep(0.018, 0.095, waterChroma);
         if (seaMask < 0.055) discard;
         vec3 viewDir = normalize(cameraPosition - vWorld);
         float normalPhaseA = dot(vSurfacePos, flowDirection) * 5.15 - uTime * 1.08;
         float normalPhaseB = dot(vSurfacePos, crossedFlowA) * 7.3 - uTime * 0.86;
-        float flowSlopeA = cos(normalPhaseA) * 0.062;
-        float flowSlopeB = cos(normalPhaseB) * 0.034;
+        float surfMotionZone = smoothstep(0.154, 0.174, relief) * (1.0 - smoothstep(0.205, 0.255, relief));
+        float flowSlopeA = cos(normalPhaseA) * 0.018 * surfMotionZone;
+        float flowSlopeB = cos(normalPhaseB) * 0.009 * surfMotionZone;
         vec3 flowWorldDirection = normalize(vSurfaceAxisX * flowDirection.x + vSurfaceAxisZ * flowDirection.y);
         vec3 crossedFlowWorld = normalize(vSurfaceAxisX * crossedFlowA.x + vSurfaceAxisZ * crossedFlowA.y);
         vec3 normal = normalize(vWaveNormal - flowWorldDirection * flowSlopeA - crossedFlowWorld * flowSlopeB);
@@ -2892,7 +2889,7 @@ function boot() {
         float rippleA = sin(dot(vSurfacePos, flowDirection) * 5.1 - uTime * 1.08);
         float rippleB = sin(dot(vSurfacePos, crossedFlowA) * 6.9 - uTime * 0.86);
         float rippleC = sin(dot(vSurfacePos, crossedFlowB) * 10.2 - uTime * 1.34);
-        float crest = smoothstep(0.62, 0.94, rippleA * 0.46 + rippleB * 0.38 + rippleC * 0.16);
+        float crest = smoothstep(0.62, 0.94, rippleA * 0.46 + rippleB * 0.38 + rippleC * 0.16) * surfMotionZone;
         vec2 reflectionUv = vSurfacePos - flowDirection * uTime * 0.2;
         float broadWarp = noise(reflectionUv * 0.42 + flowTangent * 1.7) * 2.0 - 1.0;
         float fineWarp = noise(reflectionUv * 1.26 - crossedFlowA * 2.3) * 2.0 - 1.0;
@@ -2917,9 +2914,9 @@ function boot() {
         float rim = smoothstep(0.89, 1.0, vEdge);
         vec3 deepOcean = vec3(0.006, 0.055, 0.145);
         vec3 midOcean = vec3(0.012, 0.17, 0.29);
-        vec3 shallowOcean = vec3(0.055, 0.43, 0.47);
-        vec3 depthColor = mix(deepOcean, midOcean, smoothstep(0.152, 0.178, relief));
-        depthColor = mix(depthColor, shallowOcean, smoothstep(0.166, 0.215, relief));
+        vec3 shallowOcean = vec3(0.038, 0.31, 0.41);
+        vec3 depthColor = mix(deepOcean, midOcean, smoothstep(0.164, 0.19, relief));
+        depthColor = mix(depthColor, shallowOcean, smoothstep(0.184, 0.225, relief));
         float atlasLuma = dot(atlasColor, vec3(0.2126, 0.7152, 0.0722));
         float atlasDetail = clamp(0.88 + (atlasLuma - 0.32) * 0.28, 0.8, 1.12);
         vec3 deep = depthColor * atlasDetail;
@@ -2927,8 +2924,8 @@ function boot() {
         vec3 skyReflection = mix(horizonBlue, vec3(0.62, 0.39, 0.22), sunRoadBase * 0.56);
         vec3 color = mix(deep, skyReflection, clamp(0.12 + fresnel * 0.5 + grazingReflection * 0.065, 0.0, 0.72));
         color += vec3(0.18, 0.62, 0.72) * crest * (0.085 + fresnel * 0.18);
-        color += vec3(0.34, 0.67, 0.78) * shimmerLines * (0.16 + fresnel * 0.31);
-        color += vec3(0.35, 0.69, 0.82) * reflectionStreak * (0.2 + fresnel * 0.28);
+        color += vec3(0.34, 0.67, 0.78) * shimmerLines * (0.055 + fresnel * 0.12);
+        color += vec3(0.35, 0.69, 0.82) * reflectionStreak * (0.045 + fresnel * 0.08);
         color += vec3(0.74, 0.91, 0.89) * topographicFoam * (0.7 + fresnel * 0.22);
         color += vec3(1.0, 0.82, 0.5) * sunGlint * 1.7;
         color += vec3(1.0, 0.61, 0.22) * sunRoadBase * 0.82;
@@ -2936,11 +2933,10 @@ function boot() {
         color += vec3(0.72, 0.95, 1.0) * sparkle * 0.88;
         float reefEmission = smoothstep(0.018, 0.28, worldIllumination.b - worldIllumination.r * 0.35);
         float reefLifePulse = 0.78 + 0.22 * sin(uTime * 0.46 + noise(vMapUv * 96.0) * 6.2831);
-        color += worldIllumination * reefEmission * reefLifePulse * 0.72;
-        color += vec3(0.1, 0.48, 0.52) * rim * (0.08 + uPulse * 0.08);
-        color += vec3(0.12, 0.32, 0.34) * max(vWave, 0.0) * 1.25;
+        color += worldIllumination * reefEmission * reefLifePulse * shallowZone * 0.12;
+        color += vec3(0.055, 0.13, 0.17) * rim * (0.025 + uPulse * 0.025);
         float shoreline = smoothstep(0.055, 0.42, seaMask);
-        float alpha = (0.2 + fresnel * 0.42 + grazingReflection * 0.055 + shimmerLines * 0.14 + reflectionStreak * 0.17 + topographicFoam * 0.5 + sunGlint * 0.25 + sunRoadBase * 0.3 + sunRoadSpark * 0.42 + sparkle * 0.1 + rim * 0.025) * shoreline;
+        float alpha = (0.18 + fresnel * 0.34 + grazingReflection * 0.045 + shimmerLines * 0.05 + reflectionStreak * 0.055 + topographicFoam * 0.5 + sunGlint * 0.2 + sunRoadBase * 0.24 + sunRoadSpark * 0.34 + sparkle * 0.08 + rim * 0.012) * shoreline;
         gl_FragColor = vec4(color, clamp(alpha, 0.0, 0.82));
       }
     `,
@@ -2957,7 +2953,7 @@ function boot() {
     transparent: true,
     depthWrite: false,
     side: THREE.DoubleSide,
-    blending: THREE.AdditiveBlending,
+    blending: THREE.NormalBlending,
     uniforms: { uTime: { value: 0 }, uPulse: { value: 0 } },
     vertexShader: `
       uniform float uTime;
@@ -2986,11 +2982,12 @@ function boot() {
         float channels=noise(vec2(vUv.x*18.0+vSeed*5.0,uTime*0.08));
         float flow=noise(vec2(vUv.x*12.0+vSeed*3.0,vUv.y*34.0-uTime*4.2));
         float fine=noise(vec2(vUv.x*31.0+vSeed,vUv.y*60.0-uTime*6.1));
-        float bright=smoothstep(0.48,0.9,channels)*0.42+flow*0.32+fine*0.12;
-        float sheet=0.32+bright;
+        float strand=smoothstep(0.5,0.86,channels*0.62+fine*0.38);
+        float bright=strand*0.34+flow*0.18+fine*0.055;
+        float sheet=0.065+bright;
         float fade=smoothstep(1.0,0.82,vUv.y)*smoothstep(0.0,0.025,vUv.y);
-        vec3 color=mix(vec3(0.055,0.34,0.42),vec3(0.64,0.94,0.88),clamp(bright,0.0,1.0));
-        gl_FragColor=vec4(color,edge*sheet*fade*(0.92+uPulse*0.18));
+        vec3 color=mix(vec3(0.045,0.19,0.25),vec3(0.46,0.68,0.67),clamp(bright*1.45,0.0,1.0));
+        gl_FragColor=vec4(color,edge*sheet*fade*(0.62+uPulse*0.08));
       }
     `,
   });
@@ -3163,18 +3160,24 @@ function boot() {
         float deepBlueChroma = worldTopColor.b - max(worldTopColor.r, worldTopColor.g);
         float cyanChroma = min(worldTopColor.g, worldTopColor.b) - worldTopColor.r;
         float waterChroma = max(deepBlueChroma, cyanChroma * 0.78);
-        float seaClassification = (1.0 - smoothstep(0.17, 0.31, vWorldRelief))
+        float seaClassification = (1.0 - smoothstep(0.17, 0.245, vWorldRelief))
           * smoothstep(0.018, 0.095, waterChroma);
         float worldSeaMask = vWorldTopMask * worldTopInk * seaClassification;
         vec3 meshDeepOcean = vec3(0.005, 0.045, 0.125);
         vec3 meshMidOcean = vec3(0.009, 0.155, 0.27);
-        vec3 meshShallowOcean = vec3(0.04, 0.41, 0.44);
-        vec3 meshDepthColor = mix(meshDeepOcean, meshMidOcean, smoothstep(0.152, 0.178, vWorldRelief));
-        meshDepthColor = mix(meshDepthColor, meshShallowOcean, smoothstep(0.166, 0.215, vWorldRelief));
+        vec3 meshShallowOcean = vec3(0.032, 0.29, 0.39);
+        vec3 meshDepthColor = mix(meshDeepOcean, meshMidOcean, smoothstep(0.164, 0.19, vWorldRelief));
+        meshDepthColor = mix(meshDepthColor, meshShallowOcean, smoothstep(0.184, 0.225, vWorldRelief));
         float meshAtlasLuma = dot(worldTopColor, vec3(0.2126, 0.7152, 0.0722));
         float meshAtlasDetail = clamp(0.9 + (meshAtlasLuma - 0.32) * 0.2, 0.84, 1.08);
         meshDepthColor *= meshAtlasDetail;
         vec3 projectedTopColor = mix(worldTopColor, meshDepthColor, seaClassification * worldTopInk * 0.985);
+        float landTealLeak = (1.0 - seaClassification)
+          * smoothstep(0.02, 0.1, waterChroma)
+          * smoothstep(0.18, 0.3, vWorldRelief);
+        float landLuma = dot(worldTopColor, vec3(0.2126, 0.7152, 0.0722));
+        vec3 neutralLand = vec3(landLuma * 0.83, landLuma * 0.91, landLuma * 0.86);
+        projectedTopColor = mix(projectedTopColor, neutralLand, landTealLeak * 0.76);
         diffuseColor.rgb = mix(diffuseColor.rgb, projectedTopColor, vWorldTopMask * worldTopInk * 0.98);
         vec3 undersideStone = worldUndersideColor * vec3(0.56, 0.68, 0.78);
         diffuseColor.rgb = mix(diffuseColor.rgb, undersideStone, undersideMask * worldUndersideInk * 0.88);
@@ -3185,9 +3188,9 @@ function boot() {
         float reliefUp = texture2D(uWorldReliefMap, vWorldTopUv + vec2(0.0, reliefTexel.y)).r;
         vec3 reliefNormal = normalize(vec3((reliefLeft - reliefRight) * 5.8, 0.42, (reliefDown - reliefUp) * 5.8));
         float reliefLight = clamp(dot(reliefNormal, normalize(vec3(-0.58, 0.72, 0.38))), 0.0, 1.0);
-        float reliefShade = mix(0.66, 1.3, smoothstep(0.08, 0.92, reliefLight));
+        float reliefShade = mix(0.82, 1.14, smoothstep(0.08, 0.92, reliefLight));
         float reliefStrength = vWorldTopMask * worldTopInk * smoothstep(0.1, 0.82, vWorldRelief) * (1.0 - worldSeaMask * 0.96);
-        diffuseColor.rgb *= mix(1.0, reliefShade, reliefStrength * 0.72);
+        diffuseColor.rgb *= mix(1.0, reliefShade, reliefStrength * 0.48);
         vec2 waterUv = vWorldTopUv * 128.0;
         float rippleA = sin(dot(waterUv, vec2(0.96, 0.28)) + uWaterTime * 0.58);
         float rippleB = sin(dot(waterUv, vec2(-0.24, 1.08)) - uWaterTime * 0.74 + 1.7);
@@ -3214,11 +3217,11 @@ function boot() {
         float grovePulse = 0.68 + 0.32 * sin(uWaterTime * 0.72 + vWorldTopUv.x * 113.0 + vWorldTopUv.y * 89.0);
         float illuminationLandMask = 1.0 - worldSeaMask;
         vec3 lavaEmission = illuminationSignal * vec3(1.0, 0.34, 0.05)
-          * lavaSignal * lavaPulse * illuminationLandMask * 2.15;
+          * lavaSignal * lavaPulse * illuminationLandMask * 1.38;
         vec3 reefEmission = illuminationSignal * vec3(0.06, 0.72, 1.0)
-          * reefSignal * reefPulse * worldSeaMask * 1.35;
+          * reefSignal * reefPulse * worldSeaMask * 0.68;
         vec3 groveEmission = illuminationSignal * vec3(0.14, 1.0, 0.12)
-          * groveSignal * grovePulse * illuminationLandMask * 0.62;
+          * groveSignal * grovePulse * illuminationLandMask * 0.34;
         totalEmissiveRadiance += (lavaEmission + reefEmission + groveEmission) * vWorldTopMask;
       `);
   };
@@ -3308,9 +3311,9 @@ function boot() {
   const lightning = createLightning();
   scene.add(flock, lightning);
 
-  const hemisphere = new THREE.HemisphereLight(0x89b9bb, 0x161111, 0.92);
+  const hemisphere = new THREE.HemisphereLight(0x9bbfc0, 0x252024, 1.24);
   scene.add(hemisphere);
-  const sun = new THREE.DirectionalLight(0xffc27a, 4.5);
+  const sun = new THREE.DirectionalLight(0xffc98b, 3.2);
   sun.position.set(-9, 10.5, 7.5);
   sun.castShadow = true;
   sun.shadow.camera.left = -11;
@@ -3321,10 +3324,10 @@ function boot() {
   sun.shadow.camera.far = 30;
   sun.shadow.bias = -0.00035;
   scene.add(sun);
-  const fill = new THREE.DirectionalLight(0x4a9fa4, 0.72);
+  const fill = new THREE.DirectionalLight(0x6b9fa2, 0.96);
   fill.position.set(-7, 5, -7);
   scene.add(fill);
-  const spectacleRim = new THREE.DirectionalLight(0x75dfff, 2.15);
+  const spectacleRim = new THREE.DirectionalLight(0x8ccbd0, 0.92);
   spectacleRim.position.set(10, 2.8, -7);
   scene.add(spectacleRim);
   const regionalSunTarget = new THREE.Object3D();
@@ -3346,13 +3349,13 @@ function boot() {
   const crownLight = new THREE.PointLight(0x6fe0cc, 3.8, 6, 2);
   crownLight.position.copy(citadel.group.position).add(new THREE.Vector3(0, 2.5, 0));
   world.add(crownLight);
-  const epicAbyssLight = new THREE.PointLight(0x5f9dff, 12, 19, 1.8);
+  const epicAbyssLight = new THREE.PointLight(0x718fa8, 5.2, 19, 1.8);
   epicAbyssLight.position.set(0, -5.5, 0);
-  const epicUnderfill = new THREE.DirectionalLight(0x5790a0, 1.75);
+  const epicUnderfill = new THREE.DirectionalLight(0x6f9198, 1.32);
   epicUnderfill.position.set(-5, -11, 4);
-  const epicUnderfillViolet = new THREE.DirectionalLight(0x6d5a8b, 0.65);
+  const epicUnderfillViolet = new THREE.DirectionalLight(0x746a83, 0.42);
   epicUnderfillViolet.position.set(6, -8, -5);
-  const epicFrontGlow = new THREE.PointLight(0x70dbe5, 5.8, 15, 1.75);
+  const epicFrontGlow = new THREE.PointLight(0x82bfc1, 2.65, 15, 1.75);
   epicFrontGlow.position.set(0, -1.8, 7.5);
   epicWorld.add(epicAbyssLight, epicUnderfill, epicUnderfillViolet, epicFrontGlow);
   const stormLight = new THREE.PointLight(0x74ded4, 0, 28, 1.4);
@@ -3869,18 +3872,18 @@ function boot() {
     });
     regionalStormLights[0].intensity = localStormPulseA * 18;
     regionalStormLights[1].intensity = localStormPulseB * 15;
-    regionalSun.intensity = 7.4 + Math.sin(time * 0.095) * 1.25;
+    regionalSun.intensity = 4.7 + Math.sin(time * 0.095) * 0.58;
     spectacleHalos.sun.material.opacity = 0.62 + Math.sin(time * 0.13) * 0.1;
     spectacleHalos.sunBreak.material.opacity = 0.11 + Math.sin(time * 0.095 + 0.8) * 0.035;
     spectacleHalos.storm.material.opacity = 0.12 + Math.max(localStormPulseA, localStormPulseB) * 0.46;
     spectacleHalos.abyss.material.opacity = 0.3 + crownPulse * 0.22 + Math.sin(time * 0.2) * 0.035;
-    waterfallHalos.material.opacity = 0.38 + Math.sin(time * 0.24) * 0.09 + crownPulse * 0.12;
+    waterfallHalos.material.opacity = 0.065 + Math.sin(time * 0.24) * 0.012 + crownPulse * 0.018;
     stormCrown.group.rotation.y = reducedMotion ? 0 : time * 0.04;
     stormCrown.rings.forEach((ring, index) => {
       ring.rotation.z = (index % 2 ? -1 : 1) * time * (0.018 + index * 0.006);
       ring.material.opacity = 0.04 + Math.sin(time * 0.12 + index) * 0.012 + localStormPulseA * 0.08;
     });
-    renderer.toneMappingExposure = 1.04 + localStormPulseA * 0.12 + localStormPulseB * 0.09 + crownPulse * 0.025;
+    renderer.toneMappingExposure = 1.1 + localStormPulseA * 0.045 + localStormPulseB * 0.035 + crownPulse * 0.015;
 
     const flockVisible = !reducedMotion && phase > 0.34 && phase < 0.59;
     const flockProgress = clamp((phase - 0.34) / 0.25);
@@ -3912,13 +3915,13 @@ function boot() {
       veinShader.uniforms.uVeinTime.value = time;
       veinShader.uniforms.uVeinPulse.value = crownPulse;
     }
-    epicAbyssLight.intensity = 5.4 + crownPulse * 5.2;
+    epicAbyssLight.intensity = 3.25 + crownPulse * 2.4;
     epicShallowsMaterial.opacity = 0.3 + crownPulse * 0.1;
     epicBeacons.mesh.visible = !meshyWorldLoaded && crownPulse > 0.11 && !reducedMotion;
     epicBeacons.material.opacity = crownPulse * 0.155;
     epicCloudWisps.position.x = reducedMotion ? 0 : Math.sin(time * 0.042) * 0.22;
     epicCloudWisps.position.z = reducedMotion ? 0 : Math.cos(time * 0.034) * 0.12;
-    sun.intensity = 4.4 + crownPulse * 0.55;
+    sun.intensity = 3.2 + crownPulse * 0.34;
 
     depthOfField.render(delta, activeVariant === "epic" ? epicWorld : world);
     frames += 1;
