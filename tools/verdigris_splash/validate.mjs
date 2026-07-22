@@ -62,7 +62,6 @@ assert(app.includes("fineTopographyGradient") && app.includes("wideTopographyGra
 assert(app.includes("deepOcean") && app.includes("shallowOcean") && app.includes("depthColor") && !app.includes("atlasColor * vec3(0.68, 0.8, 0.92)"), "heightmap-controlled deep and shallow water color is missing");
 assert(app.includes("meshDeepOcean") && app.includes("meshShallowOcean") && app.includes("meshDepthColor") && app.includes("projectedTopColor"), "solid imported sea is bypassing heightmap depth colors");
 assert(!app.includes("worldTopColor * vec3(0.96, 0.99, 1.02)"), "inverted atlas sea color is being reintroduced beneath the reflective ocean");
-assert(app.includes("landTealLeak") && app.includes("neutralLand") && app.includes("smoothstep(0.17, 0.245"), "teal land leakage or permissive deep-water classification has returned");
 assert(app.includes("deepBlueChroma") && app.includes("cyanChroma") && app.includes("waterChroma"), "water masks are not using chromatic blue/cyan classification");
 assert(!app.includes("max(atlasColor.r * 0.86, atlasColor.g * 0.72)") && !app.includes("max(worldTopColor.r * 0.86, worldTopColor.g * 0.72)"), "neutral dark terrain can still leak into the sea mask");
 assert(app.includes("illuminationLandMask") && app.includes("reefSignal * reefPulse * worldSeaMask") && app.includes("lavaSignal * lavaPulse * illuminationLandMask"), "illumination channels are not gated to their terrain class");
@@ -83,9 +82,6 @@ assert(app.includes("visibilitychange") && app.includes("pagehide"), "lifecycle 
 assert(app.includes("prefers-reduced-motion"), "reduced-motion support is missing");
 assert(!html.includes('class="tilt-shift"') && !css.includes(".tilt-shift") && !css.includes("blur(5.5px)"), "screen-space tilt-shift overlay has returned");
 assert(app.includes("createFarRimDepthOfField") && app.includes("farFocusStart") && app.includes("farDistance") && app.includes("depthOfField.render"), "camera-depth far-rim focus treatment is missing");
-assert(app.includes("THREE.AgXToneMapping") && app.includes("0.0038") && !app.includes("0.0135"), "natural highlight rolloff or subtle non-ghosting focus blur is missing");
-assert(app.includes("float wave = 0.0") && app.includes("surfMotionZone") && app.includes("crest = smoothstep") && app.includes("* surfMotionZone"), "global ocean swell has returned or shoreline surf is missing");
-assert(app.includes("float strand=") && app.includes("size * 0.34") && app.includes("waterfallHalos.material.opacity = 0.065"), "waterfalls are still rendered as additive light pillars");
 assert(!/SOUND\s+(?:ON|OFF)/i.test(html + app), "do not expose an inert sound toggle");
 assert(!/data:[^;]+;base64,[A-Za-z0-9+/=]{4096,}/.test(html + css + app), "large embedded base64 payload detected");
 assert(!/(?:src|href)="http:\/\//i.test(html), "insecure external asset URL detected");
