@@ -82,7 +82,12 @@
       pulls: minPushes + 24 + boxes * 4,
       partitions: n < 10 ? 1 : n < 20 ? 2 : n < 40 ? 3 : Math.min(8, 4 + Math.floor((boxes - 4) / 2)),
       pillars: n < 20 ? 2 : n < 100 ? 3 : Math.min(9, boxes + 1),
-      solverLimit: boxes <= 3 ? 55000 : boxes === 4 ? 15000 : 2500
+      solverLimit: boxes <= 3 ? 55000 : boxes === 4 ? 15000 : 2500,
+      irregular: n >= 100,
+      // Authored boards use a few legible chambers, not a carpet of tiny rooms.
+      // Keeping the room count below the box count also leaves real exterior
+      // voids on the smaller deep boards instead of rebuilding a rectangle.
+      rooms: Math.min(8, Math.max(3, boxes))
     };
   }
 
@@ -111,7 +116,132 @@
     return false;
   }
 
+  function carveRect(floor, x, y, roomWidth, roomHeight, width) {
+    var cells = [];
+    for (var py = y; py < y + roomHeight; py += 1) {
+      for (var px = x; px < x + roomWidth; px += 1) {
+        var cell = indexOf(px, py, width);
+        floor.add(cell);
+        cells.push(cell);
+      }
+    }
+    return cells;
+  }
+
+  function carvePath(floor, from, to, width, horizontalFirst) {
+    var x = from.x;
+    var y = from.y;
+    floor.add(indexOf(x, y, width));
+    function horizontal() {
+      while (x !== to.x) { x += x < to.x ? 1 : -1; floor.add(indexOf(x, y, width)); }
+    }
+    function vertical() {
+      while (y !== to.y) { y += y < to.y ? 1 : -1; floor.add(indexOf(x, y, width)); }
+    }
+    if (horizontalFirst) { horizontal(); vertical(); } else { vertical(); horizontal(); }
+  }
+
+  function carveIrregularFloor(config, rng) {
+    var width = config.width;
+    var height = config.height;
+    var floor = new Set();
+    var storageWidth = Math.min(width - 4, config.boxes <= 4 ? 4 : config.boxes >= 7 ? 6 : 5);
+    var storageHeight = Math.min(height - 4, config.boxes <= 4 ? 4 : Math.max(4, Math.ceil(config.boxes / 2) + 3));
+    var storageOnLeft = rng() < 0.5;
+    var storageX = storageOnLeft ? 1 : width - storageWidth - 1;
+    var storageY = 1 + Math.floor(rng() * Math.max(1, height - storageHeight - 1));
+    var storageCells = carveRect(floor, storageX, storageY, storageWidth, storageHeight, width);
+    var doorY = storageY + 1 + Math.floor(rng() * Math.max(1, storageHeight - 2));
+    var doorX = storageOnLeft ? storageX + storageWidth - 1 : storageX;
+
+    var mainWidth = Math.min(5, Math.max(4, width - storageWidth - 4));
+    var mainHeight = Math.min(config.boxes <= 4 ? 4 : 5, Math.max(4, height - 4));
+    var mainX = storageOnLeft ? Math.min(width - mainWidth - 1, doorX + 3) : Math.max(1, doorX - mainWidth - 2);
+    var mainY = Math.max(1, Math.min(height - mainHeight - 1, doorY - Math.floor(mainHeight / 2)));
+    carveRect(floor, mainX, mainY, mainWidth, mainHeight, width);
+    var mainCenter = { x: mainX + Math.floor(mainWidth / 2), y: mainY + Math.floor(mainHeight / 2) };
+    carvePath(floor, { x: doorX, y: doorY }, mainCenter, width, true);
+
+    var rooms = [{ x: mainX, y: mainY, width: mainWidth, height: mainHeight, center: mainCenter }];
+    var roomTarget = config.rooms || config.boxes + 2;
+    for (var r = 1; r < roomTarget; r += 1) {
+      var placed = false;
+      for (var placement = 0; placement < 18 && !placed; placement += 1) {
+        var parent = pick(rng, rooms);
+        var roomSpan = config.boxes <= 4 ? 2 : 3;
+        var roomWidth = 3 + Math.floor(rng() * Math.min(roomSpan, Math.max(1, width - 5)));
+        var roomHeight = 3 + Math.floor(rng() * Math.min(roomSpan, Math.max(1, height - 5)));
+        var direction = Math.floor(rng() * 4);
+        var centerX = parent.center.x;
+        var centerY = parent.center.y;
+        if (direction === 0) centerY -= Math.ceil(parent.height / 2) + Math.ceil(roomHeight / 2) + 2;
+        if (direction === 1) centerX += Math.ceil(parent.width / 2) + Math.ceil(roomWidth / 2) + 2;
+        if (direction === 2) centerY += Math.ceil(parent.height / 2) + Math.ceil(roomHeight / 2) + 2;
+        if (direction === 3) centerX -= Math.ceil(parent.width / 2) + Math.ceil(roomWidth / 2) + 2;
+        centerX += Math.floor(rng() * 3) - 1;
+        centerY += Math.floor(rng() * 3) - 1;
+        var roomX = Math.max(1, Math.min(width - roomWidth - 1, centerX - Math.floor(roomWidth / 2)));
+        var roomY = Math.max(1, Math.min(height - roomHeight - 1, centerY - Math.floor(roomHeight / 2)));
+        var overlapsStorage = roomX < storageX + storageWidth + 1 && roomX + roomWidth + 1 > storageX &&
+          roomY < storageY + storageHeight + 1 && roomY + roomHeight + 1 > storageY;
+        if (overlapsStorage) continue;
+        var overlapCount = 0;
+        for (var checkY = roomY; checkY < roomY + roomHeight; checkY += 1) {
+          for (var checkX = roomX; checkX < roomX + roomWidth; checkX += 1) {
+            if (floor.has(indexOf(checkX, checkY, width))) overlapCount += 1;
+          }
+        }
+        if (overlapCount > roomWidth * roomHeight * 0.25) continue;
+        var newCenter = { x: roomX + Math.floor(roomWidth / 2), y: roomY + Math.floor(roomHeight / 2) };
+        carveRect(floor, roomX, roomY, roomWidth, roomHeight, width);
+        carvePath(floor, parent.center, newCenter, width, rng() < 0.5);
+        rooms.push({ x: roomX, y: roomY, width: roomWidth, height: roomHeight, center: newCenter });
+        placed = true;
+      }
+    }
+    var loopTarget = rooms.length >= 4 ? (config.boxes >= 7 ? 2 : 1) : 0;
+    for (var loop = 0; loop < loopTarget; loop += 1) {
+      var firstRoom = pick(rng, rooms);
+      var secondChoices = rooms.filter(function (room) {
+        return room !== firstRoom && Math.abs(room.center.x - firstRoom.center.x) +
+          Math.abs(room.center.y - firstRoom.center.y) >= 5;
+      });
+      if (secondChoices.length) carvePath(floor, firstRoom.center, pick(rng, secondChoices).center, width, rng() < 0.5);
+    }
+    var storageSet = new Set(storageCells);
+    var pillarCandidates = shuffle(rng, Array.from(floor).filter(function (cell) {
+      if (storageSet.has(cell)) return false;
+      var p = pointOf(cell, width);
+      return DIRS.every(function (d) { return floor.has(indexOf(p.x + d.x, p.y + d.y, width)); });
+    }));
+    var pillarTarget = Math.min(7, Math.max(1, config.pillars || 2));
+    var pillars = 0;
+    for (var pillar = 0; pillar < pillarCandidates.length && pillars < pillarTarget; pillar += 1) {
+      if (tryRemove(floor, [pillarCandidates[pillar]], width, config.boxes * 8 + 20)) pillars += 1;
+    }
+    floor.goalRegion = storageSet;
+    return floor;
+  }
+
+  function visibleWalls(floor, width, height) {
+    var walls = new Set();
+    floor.forEach(function (cell) {
+      var p = pointOf(cell, width);
+      for (var dy = -1; dy <= 1; dy += 1) {
+        for (var dx = -1; dx <= 1; dx += 1) {
+          var x = p.x + dx;
+          var y = p.y + dy;
+          if (x < 0 || y < 0 || x >= width || y >= height) continue;
+          var neighbor = indexOf(x, y, width);
+          if (!floor.has(neighbor)) walls.add(neighbor);
+        }
+      }
+    });
+    return walls;
+  }
+
   function carveFloor(config, rng) {
+    if (config.irregular) return carveIrregularFloor(config, rng);
     var width = config.width;
     var height = config.height;
     var floor = new Set();
@@ -242,7 +372,12 @@
   }
 
   function chooseGoals(floor, width, count, rng) {
-    var pool = goalCandidates(floor, width).map(function (cell) {
+    var candidates = goalCandidates(floor, width);
+    if (floor.goalRegion) {
+      var storageCandidates = candidates.filter(function (cell) { return floor.goalRegion.has(cell); });
+      if (storageCandidates.length >= count) candidates = storageCandidates;
+    }
+    var pool = candidates.map(function (cell) {
       var p = pointOf(cell, width);
       var walls = DIRS.filter(function (d) { return !floor.has(indexOf(p.x + d.x, p.y + d.y, width)); }).length;
       return { cell: cell, wallScore: walls * 4, noise: rng() * 2 };
@@ -345,7 +480,16 @@
     var goals = level.goals.slice();
     var goalSet = new Set(goals);
     var chokePoints = articulationPoints(level.floor, level.width);
-    var interiorStructure = Math.max(0, (level.width - 2) * (level.height - 2) - level.floor.size);
+    var interiorStructure = level.walls instanceof Set ? level.walls.size :
+      Math.max(0, (level.width - 2) * (level.height - 2) - level.floor.size);
+    var goalRegion = level.floor.goalRegion || null;
+    var initialBoxSet = new Set(boxes);
+    var initialReach = reachable(level.floor, level.width, level.player, initialBoxSet).size;
+    var barrierBoxes = boxes.filter(function (box) {
+      var without = new Set(initialBoxSet);
+      without.delete(box);
+      return reachable(level.floor, level.width, level.player, without).size > initialReach + 1;
+    }).length;
     var seenIds = new Set();
     var leftAndReturned = new Set();
     var lastId = null;
@@ -355,6 +499,7 @@
     var counterintuitive = 0;
     var goalEvictions = 0;
     var congestion = 0;
+    var storageEntries = 0;
 
     actions.forEach(function (action) {
       var boxIndex = boxes.indexOf(action.box);
@@ -372,6 +517,7 @@
       var after = assignmentDistance(boxes, goals, level.width);
       if (after > before) counterintuitive += 1;
       if (goalSet.has(action.box) && !goalSet.has(action.destination)) goalEvictions += 1;
+      if (goalRegion && !goalRegion.has(action.box) && goalRegion.has(action.destination)) storageEntries += 1;
       var destination = pointOf(action.destination, level.width);
       var degree = DIRS.filter(function (d) {
         return level.floor.has(indexOf(destination.x + d.x, destination.y + d.y, level.width));
@@ -385,10 +531,14 @@
     var interdependence = switches + leftAndReturned.size * 2 + Math.max(0, seenIds.size - 1);
     var interest = boxLines * 0.45 + switches * 0.9 + counterintuitive * 2.5 +
       goalEvictions * 4 + interdependence * 0.65 + Math.min(5, congestion * 0.2) +
-      Math.min(8, interiorStructure * 0.25) + Math.min(6, chokePoints.size * 0.6);
+      Math.min(8, interiorStructure * 0.25) + Math.min(6, chokePoints.size * 0.6) +
+      storageEntries * 2.5 + barrierBoxes * 3;
     var motif = 'Packing Order';
     var thesis = 'The destinations are simple; the order in which you occupy them is not.';
-    if (goalEvictions > 0) {
+    if (storageEntries >= Math.max(2, Math.ceil(seenIds.size / 2))) {
+      motif = 'Single Strait';
+      thesis = 'The storage chamber has one useful throat; filling its deepest seals first is part of the proof.';
+    } else if (goalEvictions > 0) {
       motif = 'False Finish';
       thesis = 'A sealed reliquary must move again before the chamber can close.';
     } else if (counterintuitive > 0) {
@@ -414,6 +564,10 @@
       boxesUsed: seenIds.size,
       chokepoints: chokePoints.size,
       structure: interiorStructure,
+      barrierBoxes: barrierBoxes,
+      storageEntries: storageEntries,
+      silhouetteCoverage: (level.floor.size + (level.walls instanceof Set ? level.walls.size : 0)) /
+        (level.width * level.height),
       interest: Math.round(interest),
       motif: motif,
       thesis: thesis
@@ -732,10 +886,18 @@
     if (scrambled.pulls < config.minPushes || scrambled.lowerBound < config.minPushes ||
         scrambled.touched < Math.min(config.boxes, config.boxes >= 5 ? config.boxes : 2)) return null;
     if (config.boxes >= 5 && scrambled.boxes.filter(function (box) { return goals.indexOf(box) !== -1; }).length > 1) return null;
+    if (config.boxes >= 5 && floor.goalRegion &&
+        scrambled.boxes.filter(function (box) { return !floor.goalRegion.has(box); }).length < Math.ceil(config.boxes * 0.5)) return null;
+    var walls = visibleWalls(floor, config.width, config.height);
+    // Irregularity is a structural contract, not merely a scoring preference.
+    // Reject candidates whose rooms and wall fringe have grown back into an
+    // almost complete rectangular envelope.
+    if (config.irregular && (floor.size + walls.size) / (config.width * config.height) > 0.88) return null;
     var level = {
       width: config.width,
       height: config.height,
       floor: floor,
+      walls: walls,
       goals: goals.slice(),
       boxes: scrambled.boxes,
       player: scrambled.player
@@ -921,6 +1083,7 @@
     analyzeSolution: analyzeSolution,
     optimizeRoute: optimizeRoute,
     routeMoveCount: routeMoveCount,
+    visibleWalls: visibleWalls,
     signature: signature,
     solve: solve,
     staticDeadSquares: staticDeadSquares

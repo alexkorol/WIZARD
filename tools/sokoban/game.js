@@ -52,7 +52,7 @@
       'board-loading', 'board', 'victory', 'descend', 'undo', 'reset', 'hint',
       'floors-cleared', 'best-efficiency', 'floor-jump', 'floor-input', 'descend-debug', 'live-stats',
       'motif-name', 'victory-motif', 'victory-thesis', 'analysis-grade', 'analysis-lines',
-      'analysis-switches', 'analysis-counter', 'replay-proof', 'archive-fragments', 'archive-note'
+      'analysis-switches', 'analysis-counter', 'analysis-straits', 'replay-proof', 'archive-fragments', 'archive-note'
     ].forEach(function (id) { els[id] = byId(id); });
   }
 
@@ -165,11 +165,12 @@
         var cell = Core.indexOf(x, y, level.width);
         var tile = document.createElement('div');
         var isFloor = floor.has(cell);
-        tile.className = 'tile ' + (isFloor ? 'floor' : 'wall');
+        var isWall = !isFloor && (!level.walls || level.walls.has(cell));
+        tile.className = 'tile ' + (isFloor ? 'floor' : isWall ? 'wall' : 'void');
         tile.setAttribute('role', 'gridcell');
         tile.style.setProperty('--texture-x', ((x * 83 + y * 29) % 101) + '%');
         tile.style.setProperty('--texture-y', ((x * 37 + y * 71) % 101) + '%');
-        if (!isFloor) tile.style.setProperty('--scratch', ((x * 19 + y * 31) % 18 - 9) + 'deg');
+        if (isWall) tile.style.setProperty('--scratch', ((x * 19 + y * 31) % 18 - 9) + 'deg');
         if (goals.has(cell)) tile.classList.add('goal');
         if (boxes.has(cell)) {
           tile.classList.add('box');
@@ -277,6 +278,7 @@
     els['analysis-lines'].textContent = level.solution.moves;
     els['analysis-switches'].textContent = analysis.switches;
     els['analysis-counter'].textContent = analysis.counterintuitive;
+    els['analysis-straits'].textContent = analysis.storageEntries || 0;
   }
 
   function announce(message) { els.status.textContent = message; }

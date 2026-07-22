@@ -114,6 +114,7 @@ main { width: min(1440px, 100%); margin: 0 auto; padding: 0 clamp(1rem, 3vw, 3re
 .tile { position: relative; aspect-ratio: 1; display: grid; place-items: center; min-width: 0; }
 .tile.wall { background-image: linear-gradient(rgba(18,27,23,.3), rgba(10,16,14,.72)), url('assets/theorem-stone.jpg'); background-position: center, var(--texture-x) var(--texture-y); background-size: auto, 540px auto; border: 1px solid #29352f; box-shadow: inset 2px 2px 0 rgba(255,255,255,.025), inset -2px -2px 0 rgba(0,0,0,.3); }
 .tile.wall::after { content: ''; position: absolute; inset: 10%; border-top: 1px solid rgba(255,255,255,.018); transform: rotate(var(--scratch, 0deg)); }
+.tile.void { background: transparent; }
 .tile.floor { background-image: linear-gradient(rgba(10,17,14,.78), rgba(10,17,14,.78)), url('assets/theorem-stone.jpg'); background-position: center, var(--texture-x) var(--texture-y); background-size: auto, 760px auto; border: 1px solid rgba(123,151,135,.075); }
 .tile.floor::before { content: ''; position: absolute; inset: 7%; border: 1px solid rgba(121,145,132,.026); }
 .tile.goal::after { content: ''; position: absolute; width: 45%; height: 45%; border: max(1px, .08em) solid var(--cyan); transform: rotate(45deg); box-shadow: 0 0 13px rgba(117,224,192,.45), inset 0 0 11px rgba(117,224,192,.2); animation: breathe 2.8s ease-in-out infinite; }
@@ -136,7 +137,7 @@ main { width: min(1440px, 100%); margin: 0 auto; padding: 0 clamp(1rem, 3vw, 3re
 .victory-sigil { color: var(--cyan); font-size: 1.5rem; text-shadow: 0 0 20px var(--cyan); animation: victoryPulse 1.3s ease-out infinite; }
 .victory p { margin: .65rem 0 .4rem; color: var(--amber); font: .65rem/1 var(--mono); text-transform: uppercase; letter-spacing: .18em; }
 .victory h2 { max-width: 38rem; margin: 0 0 1.2rem; font: 500 clamp(1.15rem, 3vw, 2rem)/1.25 var(--serif); letter-spacing: .035em; }
-.analysis-grid { width: min(100%, 34rem); display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); margin-bottom: 1rem; }
+.analysis-grid { width: min(100%, 38rem); display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--line); margin-bottom: 1rem; }
 .analysis-grid div { display: grid; gap: .28rem; padding: .7rem .45rem; border-right: 1px solid var(--line); }
 .analysis-grid div:last-child { border: 0; }
 .analysis-grid strong { color: var(--cyan); font: 500 1.05rem/1 var(--mono); }
@@ -218,6 +219,9 @@ footer p { margin: 0; }
   .analysis-grid { grid-template-columns: repeat(2, 1fr); }
   .analysis-grid div:nth-child(2) { border-right: 0; }
   .analysis-grid div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .analysis-grid div:nth-child(4) { border-right: 0; }
+  .analysis-grid div:nth-child(n+3) { border-bottom: 1px solid var(--line); }
+  .analysis-grid div:last-child { grid-column: 1 / -1; border-bottom: 0; }
   .victory-actions { display: grid; width: 100%; }
 }
 
