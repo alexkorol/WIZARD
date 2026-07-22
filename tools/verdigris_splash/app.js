@@ -2626,18 +2626,24 @@ function boot() {
       varying float vWave;
       varying vec3 vWaveNormal;
       varying vec2 vMapUv;
+      varying vec2 vSurfacePos;
+      varying vec3 vSurfaceAxisX;
+      varying vec3 vSurfaceAxisZ;
       void main() {
         vec3 p = position;
         float waveA = p.x * 1.45 + p.z * 0.38 + uTime * 0.34;
         float waveB = p.z * 1.72 - p.x * 0.24 - uTime * 0.29;
-        float wave = sin(waveA) * 0.021 + cos(waveB) * 0.017;
+        float wave = sin(waveA) * 0.006 + cos(waveB) * 0.004;
         p.y += wave;
         vEdge = aEdge;
         vWave = wave;
-        float slopeX = cos(waveA) * 0.021 * 1.45 + sin(waveB) * 0.017 * 0.24;
-        float slopeZ = cos(waveA) * 0.021 * 0.38 + sin(waveB) * 0.017 * 1.72;
+        float slopeX = cos(waveA) * 0.006 * 1.45 + sin(waveB) * 0.004 * 0.24;
+        float slopeZ = cos(waveA) * 0.006 * 0.38 + sin(waveB) * 0.004 * 1.72;
         vWaveNormal = normalize(mat3(modelMatrix) * vec3(-slopeX, 1.0, -slopeZ));
         vMapUv = vec2((p.x + ${WORLD_RX.toFixed(2)}) / ${(WORLD_RX * 2).toFixed(2)}, (p.z + ${WORLD_RZ.toFixed(2)}) / ${(WORLD_RZ * 2).toFixed(2)});
+        vSurfacePos = p.xz;
+        vSurfaceAxisX = normalize(mat3(modelMatrix) * vec3(1.0, 0.0, 0.0));
+        vSurfaceAxisZ = normalize(mat3(modelMatrix) * vec3(0.0, 0.0, 1.0));
         vWorld = (modelMatrix * vec4(p, 1.0)).xyz;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
       }
@@ -2654,6 +2660,9 @@ function boot() {
       varying float vWave;
       varying vec3 vWaveNormal;
       varying vec2 vMapUv;
+      varying vec2 vSurfacePos;
+      varying vec3 vSurfaceAxisX;
+      varying vec3 vSurfaceAxisZ;
       float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
       float noise(vec2 p){
         vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);
@@ -2663,22 +2672,43 @@ function boot() {
         vec3 atlasColor = texture2D(uWorldTopMap, vMapUv).rgb;
         float relief = texture2D(uWorldReliefMap, vMapUv).r;
         vec2 reliefTexel = vec2(0.00048828125);
+        vec2 mediumReliefStep = vec2(0.0065);
+        vec2 wideReliefStep = vec2(0.024);
         float reliefLeft = texture2D(uWorldReliefMap, vMapUv - vec2(reliefTexel.x, 0.0)).r;
         float reliefRight = texture2D(uWorldReliefMap, vMapUv + vec2(reliefTexel.x, 0.0)).r;
         float reliefDown = texture2D(uWorldReliefMap, vMapUv - vec2(0.0, reliefTexel.y)).r;
         float reliefUp = texture2D(uWorldReliefMap, vMapUv + vec2(0.0, reliefTexel.y)).r;
-        vec2 topographyGradient = vec2(reliefRight - reliefLeft, reliefUp - reliefDown);
+        vec2 fineTopographyGradient = vec2(reliefRight - reliefLeft, reliefUp - reliefDown);
+        vec2 mediumTopographyGradient = vec2(
+          texture2D(uWorldReliefMap, vMapUv + vec2(mediumReliefStep.x, 0.0)).r - texture2D(uWorldReliefMap, vMapUv - vec2(mediumReliefStep.x, 0.0)).r,
+          texture2D(uWorldReliefMap, vMapUv + vec2(0.0, mediumReliefStep.y)).r - texture2D(uWorldReliefMap, vMapUv - vec2(0.0, mediumReliefStep.y)).r
+        );
+        vec2 wideTopographyGradient = vec2(
+          texture2D(uWorldReliefMap, vMapUv + vec2(wideReliefStep.x, 0.0)).r - texture2D(uWorldReliefMap, vMapUv - vec2(wideReliefStep.x, 0.0)).r,
+          texture2D(uWorldReliefMap, vMapUv + vec2(0.0, wideReliefStep.y)).r - texture2D(uWorldReliefMap, vMapUv - vec2(0.0, wideReliefStep.y)).r
+        );
+        vec2 topographyGradient = fineTopographyGradient * 1.15 + mediumTopographyGradient * 0.58 + wideTopographyGradient * 0.24;
         float topographySlope = length(topographyGradient);
         vec2 shoreDirection = topographyGradient / max(topographySlope, 0.00008);
-        vec2 prevailingCurrent = normalize(vec2(0.82, 0.31));
-        float topographyWeight = smoothstep(0.00035, 0.009, topographySlope);
-        vec2 flowDirection = normalize(mix(prevailingCurrent, shoreDirection, topographyWeight * 0.9));
+        vec2 basinOffset = vMapUv - vec2(0.5);
+        vec2 basinGyre = normalize(vec2(-basinOffset.y, basinOffset.x) + vec2(0.18, 0.11));
+        float topographyWeight = smoothstep(0.00045, 0.018, topographySlope);
+        vec2 flowDirection = normalize(mix(basinGyre, shoreDirection, topographyWeight * 0.96));
+        vec2 flowTangent = vec2(-flowDirection.y, flowDirection.x);
+        vec2 crossedFlowA = normalize(flowDirection * 0.92 + flowTangent * 0.28);
+        vec2 crossedFlowB = normalize(flowDirection * 0.84 - flowTangent * 0.36);
         float atlasInk = smoothstep(0.018, 0.08, max(max(atlasColor.r, atlasColor.g), atlasColor.b));
         float waterBlue = atlasColor.b - max(atlasColor.r * 0.86, atlasColor.g * 0.72);
         float seaMask = atlasInk * (1.0 - smoothstep(0.17, 0.31, relief)) * smoothstep(0.012, 0.105, waterBlue);
         if (seaMask < 0.055) discard;
         vec3 viewDir = normalize(cameraPosition - vWorld);
-        vec3 normal = normalize(vWaveNormal);
+        float normalPhaseA = dot(vSurfacePos, flowDirection) * 5.15 - uTime * 1.08;
+        float normalPhaseB = dot(vSurfacePos, crossedFlowA) * 7.3 - uTime * 0.86;
+        float flowSlopeA = cos(normalPhaseA) * 0.062;
+        float flowSlopeB = cos(normalPhaseB) * 0.034;
+        vec3 flowWorldDirection = normalize(vSurfaceAxisX * flowDirection.x + vSurfaceAxisZ * flowDirection.y);
+        vec3 crossedFlowWorld = normalize(vSurfaceAxisX * crossedFlowA.x + vSurfaceAxisZ * crossedFlowA.y);
+        vec3 normal = normalize(vWaveNormal - flowWorldDirection * flowSlopeA - crossedFlowWorld * flowSlopeB);
         float fresnel = pow(1.0 - clamp(dot(viewDir, normal), 0.0, 1.0), 1.55);
         vec3 sunDirection = normalize(vec3(-0.46, 0.82, 0.34));
         float sunGlint = pow(max(dot(reflect(-sunDirection, normal), viewDir), 0.0), 18.0);
@@ -2694,18 +2724,19 @@ function boot() {
         float sunRoadShape = exp(-pow(sunRoadLateral / max(sunRoadWidth, 0.08), 2.0));
         float sunRoadLength = 1.0 - smoothstep(8.0, 13.0, abs(sunRoadAlong));
         float sunRoadBase = sunRoadShape * sunRoadLength * grazingReflection;
-        float rippleA = sin(vWorld.x * 4.8 + vWorld.z * 1.35 + uTime * 1.08);
-        float rippleB = sin(vWorld.z * 6.2 - vWorld.x * 0.75 - uTime * 0.86);
-        float rippleC = sin((vWorld.x + vWorld.z) * 10.5 + uTime * 1.34);
+        float rippleA = sin(dot(vSurfacePos, flowDirection) * 5.1 - uTime * 1.08);
+        float rippleB = sin(dot(vSurfacePos, crossedFlowA) * 6.9 - uTime * 0.86);
+        float rippleC = sin(dot(vSurfacePos, crossedFlowB) * 10.2 - uTime * 1.34);
         float crest = smoothstep(0.62, 0.94, rippleA * 0.46 + rippleB * 0.38 + rippleC * 0.16);
-        float broadWarp = noise(vWorld.xz * 0.42 + vec2(uTime * 0.035, -uTime * 0.024)) * 2.0 - 1.0;
-        float fineWarp = noise(vWorld.xz * 1.26 + vec2(-uTime * 0.075, uTime * 0.046)) * 2.0 - 1.0;
-        float waveLineA = pow(0.5 + 0.5 * sin(dot(vWorld.xz, vec2(5.7, 1.8)) + broadWarp * 4.2 + uTime * 1.26), 22.0);
-        float waveLineB = pow(0.5 + 0.5 * sin(dot(vWorld.xz, vec2(-1.15, 7.1)) + fineWarp * 2.7 - uTime * 0.92), 28.0);
-        float breakup = smoothstep(0.28, 0.74, noise(vWorld.xz * 1.14 + vec2(uTime * 0.065, -uTime * 0.052)));
+        vec2 reflectionUv = vSurfacePos - flowDirection * uTime * 0.2;
+        float broadWarp = noise(reflectionUv * 0.42 + flowTangent * 1.7) * 2.0 - 1.0;
+        float fineWarp = noise(reflectionUv * 1.26 - crossedFlowA * 2.3) * 2.0 - 1.0;
+        float waveLineA = pow(0.5 + 0.5 * sin(dot(reflectionUv, flowDirection) * 5.9 + broadWarp * 4.2), 22.0);
+        float waveLineB = pow(0.5 + 0.5 * sin(dot(reflectionUv, crossedFlowA) * 7.25 + fineWarp * 2.7), 28.0);
+        float breakup = smoothstep(0.28, 0.74, noise(reflectionUv * 1.14 + flowTangent * uTime * 0.035));
         float reflectionStreak = waveLineA * (0.22 + breakup * 0.78) + waveLineB * (0.2 - breakup * 0.11);
-        float shimmerLines = reflectionStreak * smoothstep(0.7, 0.97, noise(vWorld.xz * 4.6 + vec2(uTime * 0.38, -uTime * 0.29)));
-        vec2 foamUv = vWorld.xz - flowDirection * uTime * 0.24;
+        float shimmerLines = reflectionStreak * smoothstep(0.7, 0.97, noise(reflectionUv * 4.6 - crossedFlowB * uTime * 0.08));
+        vec2 foamUv = vSurfacePos - flowDirection * uTime * 0.24;
         float foamWarp = noise(foamUv * 0.68 + flowDirection.yx * 3.1) * 2.0 - 1.0;
         float foamPhase = dot(foamUv, flowDirection) * 8.4 + foamWarp * 3.6;
         float foamFront = pow(0.5 + 0.5 * sin(foamPhase), 10.0);
@@ -2715,11 +2746,18 @@ function boot() {
         float foamZone = clamp(shallowZone * 0.9 + slopeZone * 1.15, 0.0, 1.0) * smoothstep(0.055, 0.3, seaMask);
         float foamFlecks = smoothstep(0.83, 0.975, noise(foamUv * 7.4 - flowDirection * uTime * 0.13));
         float topographicFoam = clamp(foamFront * (0.38 + foamBreakup * 0.62) + foamFlecks * 0.12, 0.0, 1.0) * foamZone;
-        float sparkleNoise = noise(vWorld.xz * 14.0 + vec2(uTime * 0.7, -uTime * 0.48));
+        float sparkleNoise = noise((vSurfacePos - crossedFlowB * uTime * 0.31) * 14.0);
         float sparkle = smoothstep(0.89, 0.985, sparkleNoise) * (0.35 + sunGlint * 1.8);
         float sunRoadSpark = sunRoadBase * clamp(reflectionStreak * 1.35 + sparkle * 0.9 + crest * 0.18, 0.0, 1.65);
         float rim = smoothstep(0.89, 1.0, vEdge);
-        vec3 deep = atlasColor * vec3(0.68, 0.8, 0.92);
+        vec3 deepOcean = vec3(0.006, 0.055, 0.145);
+        vec3 midOcean = vec3(0.012, 0.17, 0.29);
+        vec3 shallowOcean = vec3(0.055, 0.43, 0.47);
+        vec3 depthColor = mix(deepOcean, midOcean, smoothstep(0.152, 0.178, relief));
+        depthColor = mix(depthColor, shallowOcean, smoothstep(0.166, 0.215, relief));
+        float atlasLuma = dot(atlasColor, vec3(0.2126, 0.7152, 0.0722));
+        float atlasDetail = clamp(0.88 + (atlasLuma - 0.32) * 0.28, 0.8, 1.12);
+        vec3 deep = depthColor * atlasDetail;
         vec3 horizonBlue = mix(vec3(0.025, 0.14, 0.24), vec3(0.18, 0.39, 0.47), clamp(fresnel + grazingReflection * 0.34, 0.0, 1.0));
         vec3 skyReflection = mix(horizonBlue, vec3(0.62, 0.39, 0.22), sunRoadBase * 0.56);
         vec3 color = mix(deep, skyReflection, clamp(0.12 + fresnel * 0.5 + grazingReflection * 0.065, 0.0, 0.72));

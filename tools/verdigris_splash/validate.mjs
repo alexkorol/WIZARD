@@ -53,7 +53,9 @@ assert(app.includes("createEpicStalactites") && app.includes("createEpicIceWallG
 assert(!app.includes("createWorldCore") && !app.includes("worldCore"), "the rejected glowing underside orb/core has returned");
 assert(app.includes("const proceduralEpicGeography = [\n    epicUnderside") && !app.includes("const proceduralEpicGeography = [\n    epicOcean"), "generated underside overlays must be hidden while the stable reflective sea remains");
 assert(app.includes("seaMask < 0.055") && app.includes("skyReflection") && app.includes("sunGlint") && app.includes("sparkle"), "stable reflective water skin is missing");
-assert(app.includes("topographyGradient") && app.includes("flowDirection") && app.includes("topographicFoam") && app.includes("foamZone"), "heightmap-directed dynamic foam is missing");
+assert(app.includes("fineTopographyGradient") && app.includes("wideTopographyGradient") && app.includes("flowDirection") && app.includes("topographicFoam") && app.includes("foamZone"), "multi-scale heightmap-directed ocean motion is missing");
+assert(app.includes("deepOcean") && app.includes("shallowOcean") && app.includes("depthColor") && !app.includes("atlasColor * vec3(0.68, 0.8, 0.92)"), "heightmap-controlled deep and shallow water color is missing");
+assert(!app.includes("dot(vWorld.xz, vec2(5.7, 1.8))") && app.includes("dot(reflectionUv, flowDirection)"), "fixed-direction ocean reflection streaks have returned");
 assert(app.includes("sunRoadBase") && app.includes("sunRoadSpark") && app.includes("uSunWorld") && app.includes("grazingReflection"), "grazing-angle ocean sun road is missing");
 assert(app.includes("uWorldUndersideMap") && !app.includes("vUndersidePosition.y < -0.04) discard"), "the authored Meshy underside is not being rendered");
 assert(app.includes("Depth-stacked volumetric auroras") && app.includes("auroraLayers") && app.includes("nebula"), "depth-stacked aurora or nebula atmosphere is missing");
