@@ -1,5 +1,8 @@
 import * as THREE from "three";
 import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/GLTFLoader.js";
+import { EffectComposer } from "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/postprocessing/RenderPass.js";
+import { BokehPass } from "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/postprocessing/BokehPass.js";
 
 const TAU = Math.PI * 2;
 const LOOP_SECONDS = 36;
@@ -2518,6 +2521,103 @@ function detectAutoQuality() {
   return "high";
 }
 
+function createFarRimDepthOfField(renderer, scene, camera) {
+  const composer = new EffectComposer(renderer);
+  const renderPass = new RenderPass(scene, camera);
+  const bokehPass = new BokehPass(scene, camera, { focus: 18, aperture: 0.004, maxblur: 0.012 });
+  const focusPoint = new THREE.Vector3();
+  const viewDirection = new THREE.Vector3();
+  let smoothedFocus = 18;
+
+  bokehPass.uniforms.farFocusStart = { value: 0.72 };
+  bokehPass.uniforms.farFocusRange = { value: 3.15 };
+  bokehPass.materialBokeh.fragmentShader = `
+    #include <common>
+    #include <packing>
+    varying vec2 vUv;
+    uniform sampler2D tColor;
+    uniform sampler2D tDepth;
+    uniform float maxblur;
+    uniform float nearClip;
+    uniform float farClip;
+    uniform float focus;
+    uniform float aspect;
+    uniform float farFocusStart;
+    uniform float farFocusRange;
+    float getDepth(const in vec2 screenPosition) {
+      return unpackRGBAToDepth(texture2D(tDepth, screenPosition));
+    }
+    float getViewZ(const in float depth) {
+      return perspectiveDepthToViewZ(depth, nearClip, farClip);
+    }
+    void main() {
+      float viewZ = getViewZ(getDepth(vUv));
+      float farDistance = max(0.0, -viewZ - focus - farFocusStart);
+      float circleOfConfusion = smoothstep(0.0, farFocusRange, farDistance);
+      vec2 radius = vec2(maxblur, maxblur * aspect) * circleOfConfusion;
+      vec4 color = texture2D(tColor, vUv) * 2.0;
+      color += texture2D(tColor, vUv + vec2( 1.0,  0.0) * radius);
+      color += texture2D(tColor, vUv + vec2(-1.0,  0.0) * radius);
+      color += texture2D(tColor, vUv + vec2( 0.0,  1.0) * radius);
+      color += texture2D(tColor, vUv + vec2( 0.0, -1.0) * radius);
+      color += texture2D(tColor, vUv + vec2( 0.7,  0.7) * radius) * 0.8;
+      color += texture2D(tColor, vUv + vec2(-0.7,  0.7) * radius) * 0.8;
+      color += texture2D(tColor, vUv + vec2( 0.7, -0.7) * radius) * 0.8;
+      color += texture2D(tColor, vUv + vec2(-0.7, -0.7) * radius) * 0.8;
+      color += texture2D(tColor, vUv + vec2( 0.38,  0.92) * radius) * 0.55;
+      color += texture2D(tColor, vUv + vec2(-0.92,  0.38) * radius) * 0.55;
+      color += texture2D(tColor, vUv + vec2(-0.38, -0.92) * radius) * 0.55;
+      color += texture2D(tColor, vUv + vec2( 0.92, -0.38) * radius) * 0.55;
+      gl_FragColor = color / 11.4;
+      gl_FragColor.a = 1.0;
+    }
+  `;
+  bokehPass.materialBokeh.needsUpdate = true;
+
+  const depthLayer = 1;
+  const baseBokehRender = bokehPass.render.bind(bokehPass);
+  bokehPass.render = (...args) => {
+    const previousMask = camera.layers.mask;
+    camera.layers.set(depthLayer);
+    baseBokehRender(...args);
+    camera.layers.mask = previousMask;
+  };
+
+  composer.addPass(renderPass);
+  composer.addPass(bokehPass);
+
+  function markOpaque(root) {
+    root.traverse((object) => {
+      if (!object.isMesh || !object.material) return;
+      const materials = Array.isArray(object.material) ? object.material : [object.material];
+      if (materials.every((material) => !material.transparent && material.depthWrite !== false)) {
+        object.layers.enable(depthLayer);
+      }
+    });
+  }
+
+  return {
+    markOpaque,
+    setPixelRatio(value) { composer.setPixelRatio(value); },
+    setSize(width, height) { composer.setSize(width, height); },
+    setQuality(quality) {
+      bokehPass.uniforms.maxblur.value = quality === "low" ? 0.0075 : quality === "balanced" ? 0.0105 : 0.0135;
+    },
+    render(delta, focusRoot) {
+      focusRoot.getWorldPosition(focusPoint);
+      camera.getWorldDirection(viewDirection);
+      const targetFocus = Math.max(camera.near, focusPoint.sub(camera.position).dot(viewDirection));
+      smoothedFocus += (targetFocus - smoothedFocus) * Math.min(1, Math.max(0.08, delta * 5.5));
+      bokehPass.uniforms.focus.value = smoothedFocus;
+      composer.render(delta);
+    },
+    dispose() {
+      composer.dispose();
+      bokehPass.dispose();
+    },
+  };
+}
+
 function boot() {
   let renderer;
   try {
@@ -2542,6 +2642,7 @@ function boot() {
   scene.fog = new THREE.FogExp2(0x08171a, 0.018);
 
   const camera = new THREE.PerspectiveCamera(38, 1, 0.08, 150);
+  const depthOfField = createFarRimDepthOfField(renderer, scene, camera);
   const cameraTarget = new THREE.Vector3();
   const world = new THREE.Group();
   scene.add(world);
@@ -3103,6 +3204,7 @@ function boot() {
         object.castShadow = true;
         object.receiveShadow = true;
       });
+      depthOfField.markOpaque(gltf.scene);
       meshyWorld.add(gltf.scene);
       proceduralEpicGeography.forEach((object) => { object.visible = false; });
       meshyWorldLoaded = true;
@@ -3269,7 +3371,10 @@ function boot() {
   function applyQuality(nextQuality) {
     activeQuality = nextQuality;
     const profile = profiles[activeQuality];
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, profile.dpr));
+    const renderPixelRatio = Math.min(devicePixelRatio || 1, profile.dpr);
+    renderer.setPixelRatio(renderPixelRatio);
+    depthOfField.setPixelRatio(renderPixelRatio);
+    depthOfField.setQuality(activeQuality);
     renderer.shadowMap.enabled = profile.shadows;
     sun.castShadow = profile.shadows;
     sun.shadow.mapSize.set(profile.shadowSize, profile.shadowSize);
@@ -3302,6 +3407,7 @@ function boot() {
     const height = Math.max(1, canvas.clientHeight);
     const aspect = width / height;
     renderer.setSize(width, height, false);
+    depthOfField.setSize(width, height);
     camera.aspect = aspect;
 
     if (activeVariant === "epic") {
@@ -3555,7 +3661,7 @@ function boot() {
       camera.updateProjectionMatrix();
       camera.lookAt(baseCamera.tx, baseCamera.ty, baseCamera.tz);
     }
-    renderer.render(scene, camera);
+    depthOfField.render(0.016, activeVariant === "epic" ? epicWorld : world);
     const data = canvas.toDataURL(type, quality);
     fixedViewName = previous;
     return data;
@@ -3745,7 +3851,7 @@ function boot() {
     epicCloudWisps.position.z = reducedMotion ? 0 : Math.cos(time * 0.034) * 0.12;
     sun.intensity = 4.4 + crownPulse * 0.55;
 
-    renderer.render(scene, camera);
+    depthOfField.render(delta, activeVariant === "epic" ? epicWorld : world);
     frames += 1;
 
     if (now - sampleStart >= 1000) {
@@ -3823,6 +3929,7 @@ function boot() {
     meshyTopTexture.dispose();
     meshyReliefTexture.dispose();
     meshyIlluminationTexture.dispose();
+    depthOfField.dispose();
     renderer.dispose();
   }
 
@@ -3830,6 +3937,8 @@ function boot() {
   document.addEventListener("visibilitychange", handleVisibility);
   addEventListener("pagehide", dispose, { once: true });
   qualitySelect.value = "auto";
+  depthOfField.markOpaque(world);
+  depthOfField.markOpaque(epicWorld);
   setVariant(activeVariant, false);
   applyQuality(autoQuality);
   fallback.hidden = true;
