@@ -10,7 +10,7 @@ Difficulty is not assigned from the floor number or push count alone. After the 
 
 The scoring model follows published Sokoban difficulty work: [Jarušek and Pelánek](https://www.fi.muni.cz/~xpelanek/publications/stairs2010-final.pdf) found box changes and interwoven subproblems far more predictive of human difficulty than shortest-path length; [Taylor and Parberry](https://ianparberry.com/techreports/LARC-2011-01.pdf) used reverse generation, box lines, and rejected large open rectangles; [Bento et al.](https://www.ijcai.org/proceedings/2019/646) combined backward generation, novelty, and higher-order conflicts.
 
-Optimization numbers remain sealed until the first solve. The reveal names the chamber's logical motif, reports its difficulty signals, grades the player's proof, and can replay the verified route. Unlimited undo and visible static-deadlock warnings keep experimentation humane.
+Optimization numbers remain sealed until the first solve. For solver-complete floors, routes are optimized lexicographically: fewest pushes first, then fewest total player moves among those solutions. At extreme depths where exhaustive proof would make browser generation impractical, a movement-focused A* pass cleans the constructive route and labels it as verified rather than optimal. The reveal names the chamber's logical motif, reports both move and push counts, grades the player's proof, and can replay the route. Unlimited undo and visible static-deadlock warnings keep experimentation humane.
 
 The floor debugger beside the board accepts any floor from 1 to 1,000,000. The adjacent **Descend one floor** button advances without requiring the current puzzle to be solved.
 

@@ -93,14 +93,17 @@
     els['difficulty-title'].textContent = level.rating.title;
     els.lesson.textContent = lessons[save.floor - 1] || dynamicLesson();
     els['motif-name'].textContent = analysisRevealed ? level.solution.analysis.motif : 'Sealed until solved';
-    els['solution-label'].textContent = analysisRevealed ? (level.solution.optimal ? 'Optimal' : 'Minimum') : 'Proof length';
+    els['solution-label'].textContent = analysisRevealed ?
+      (level.solution.moveOptimal ? 'Push / move optimum' : 'Verified route') : 'Proof length';
     els['optimal-pushes'].textContent = analysisRevealed ?
-      (level.solution.optimal ? level.solution.pushes + ' pushes' : level.solution.lowerBound + '+ pushes') : 'sealed';
+      level.solution.actions.length + ' pushes · ' + level.solution.moves + ' moves' : 'sealed';
     els['box-count'].textContent = level.boxes.length;
     els['proof-states'].textContent = analysisRevealed ?
       (level.solution.proof === 'search' ? compactNumber(level.solution.states) + ' states' :
-        level.solution.proof === 'bounds' ? 'distance bound' : 'constructive') : 'solver checked';
-    els['replay-proof'].textContent = level.solution.optimal ? 'Watch shortest proof' : 'Watch proven route';
+        level.solution.proof === 'bounds' ? 'distance bound' :
+          level.solution.proof === 'lexicographic' ? 'dual optimum' :
+            level.solution.proof === 'move-search' ? 'movement search' : 'constructive') : 'solver checked';
+    els['replay-proof'].textContent = level.solution.moveOptimal ? 'Watch optimal route' : 'Watch clean route';
     els['floors-cleared'].textContent = save.cleared || 0;
     els['best-efficiency'].textContent = save.bestEfficiency ? Math.round(save.bestEfficiency * 100) + '%' : '—';
     updateArchive();
@@ -245,14 +248,16 @@
     state.solved = true;
     analysisRevealed = true;
     els['live-stats'].hidden = false;
-    var efficiency = Math.min(1, level.solution.pushes / Math.max(1, state.pushes));
+    var pushEfficiency = Math.min(1, level.solution.actions.length / Math.max(1, state.pushes));
+    var moveEfficiency = Math.min(1, level.solution.moves / Math.max(1, state.moves));
+    var efficiency = (pushEfficiency + moveEfficiency) / 2;
     save.cleared = Math.max(save.cleared || 0, save.floor);
     save.bestEfficiency = save.bestEfficiency == null ? efficiency : Math.max(save.bestEfficiency, efficiency);
     persist();
     updateMeta();
     updateVictory(efficiency);
     render();
-    announce('Floor ' + save.floor + ' cleared in ' + state.pushes + ' pushes.');
+    announce('Floor ' + save.floor + ' cleared in ' + state.moves + ' moves · ' + state.pushes + ' pushes.');
     window.setTimeout(function () {
       els.victory.hidden = false;
       els.descend.focus();
@@ -265,7 +270,7 @@
     els['victory-motif'].textContent = analysis.motif;
     els['victory-thesis'].textContent = analysis.thesis;
     els['analysis-grade'].textContent = grade;
-    els['analysis-lines'].textContent = analysis.boxLines;
+    els['analysis-lines'].textContent = level.solution.moves;
     els['analysis-switches'].textContent = analysis.switches;
     els['analysis-counter'].textContent = analysis.counterintuitive;
   }
@@ -365,7 +370,7 @@
     els.victory.hidden = true;
     state = { player: level.player, boxes: level.boxes.slice(), moves: 0, pushes: 0, solved: false };
     history = [];
-    announce(level.solution.optimal ? 'Replaying the shortest proof…' : 'Replaying a verified proof…');
+    announce(level.solution.moveOptimal ? 'Replaying the least-push, least-move proof…' : 'Replaying the cleanest verified route…');
     render();
     await pause(280);
     for (var a = 0; a < level.solution.actions.length && token === replayToken; a += 1) {
@@ -398,7 +403,7 @@
     state.solved = isSolved();
     render();
     if (state.solved) {
-      announce('Proof complete: ' + state.pushes + ' pushes.');
+      announce('Route complete: ' + state.moves + ' moves · ' + state.pushes + ' pushes.');
       await pause(260);
       els.victory.hidden = false;
       els.descend.focus();

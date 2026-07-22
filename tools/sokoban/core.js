@@ -208,6 +208,25 @@
     return seen;
   }
 
+  function walkDistances(floor, width, start, boxSet) {
+    var distances = new Map();
+    if (!floor.has(start) || boxSet.has(start)) return distances;
+    var queue = [start];
+    distances.set(start, 0);
+    for (var head = 0; head < queue.length; head += 1) {
+      var cell = queue[head];
+      var p = pointOf(cell, width);
+      for (var d = 0; d < DIRS.length; d += 1) {
+        var next = indexOf(p.x + DIRS[d].x, p.y + DIRS[d].y, width);
+        if (floor.has(next) && !boxSet.has(next) && !distances.has(next)) {
+          distances.set(next, distances.get(cell) + 1);
+          queue.push(next);
+        }
+      }
+    }
+    return distances;
+  }
+
   function goalCandidates(floor, width) {
     return Array.from(floor).filter(function (cell) {
       var p = pointOf(cell, width);
@@ -222,17 +241,26 @@
     var pool = goalCandidates(floor, width).map(function (cell) {
       var p = pointOf(cell, width);
       var walls = DIRS.filter(function (d) { return !floor.has(indexOf(p.x + d.x, p.y + d.y, width)); }).length;
-      return { cell: cell, score: walls * 4 + rng() * 3 };
-    }).sort(function (a, b) { return b.score - a.score; });
+      return { cell: cell, wallScore: walls * 4, noise: rng() * 2 };
+    });
     var goals = [];
-    for (var i = 0; i < pool.length && goals.length < count; i += 1) {
-      var candidate = pool[i].cell;
-      var p = pointOf(candidate, width);
-      var touchesGoal = goals.some(function (goal) {
-        var g = pointOf(goal, width);
-        return Math.abs(p.x - g.x) + Math.abs(p.y - g.y) === 1;
+    while (pool.length && goals.length < count) {
+      pool.sort(function (a, b) {
+        function score(candidate) {
+          var p = pointOf(candidate.cell, width);
+          var adjacency = goals.filter(function (goal) {
+            var g = pointOf(goal, width);
+            return Math.abs(p.x - g.x) + Math.abs(p.y - g.y) === 1;
+          }).length;
+          var near = goals.some(function (goal) {
+            var g = pointOf(goal, width);
+            return Math.abs(p.x - g.x) + Math.abs(p.y - g.y) === 2;
+          });
+          return candidate.wallScore + adjacency * (count >= 3 ? 9 : 4) + (near ? 2 : 0) + candidate.noise;
+        }
+        return score(b) - score(a);
       });
-      if (touchesGoal || goals.length === 0 || rng() > 0.24) goals.push(candidate);
+      goals.push(pool.shift().cell);
     }
     return goals.length === count ? goals : null;
   }
@@ -309,6 +337,7 @@
     var goals = level.goals.slice();
     var goalSet = new Set(goals);
     var chokePoints = articulationPoints(level.floor, level.width);
+    var interiorStructure = Math.max(0, (level.width - 2) * (level.height - 2) - level.floor.size);
     var seenIds = new Set();
     var leftAndReturned = new Set();
     var lastId = null;
@@ -347,7 +376,8 @@
 
     var interdependence = switches + leftAndReturned.size * 2 + Math.max(0, seenIds.size - 1);
     var interest = boxLines * 0.45 + switches * 0.9 + counterintuitive * 2.5 +
-      goalEvictions * 4 + interdependence * 0.65 + Math.min(5, congestion * 0.2);
+      goalEvictions * 4 + interdependence * 0.65 + Math.min(5, congestion * 0.2) +
+      Math.min(8, interiorStructure * 0.25) + Math.min(6, chokePoints.size * 0.6);
     var motif = 'Packing Order';
     var thesis = 'The destinations are simple; the order in which you occupy them is not.';
     if (goalEvictions > 0) {
@@ -374,6 +404,8 @@
       congestion: congestion,
       interdependence: interdependence,
       boxesUsed: seenIds.size,
+      chokepoints: chokePoints.size,
+      structure: interiorStructure,
       interest: Math.round(interest),
       motif: motif,
       thesis: thesis
@@ -524,6 +556,159 @@
     };
   }
 
+  function optimizeRoute(level, options) {
+    options = options || {};
+    var moveObjective = options.objective === 'moves';
+    var heuristicWeight = options.heuristicWeight || 1;
+    var floor = level.floor instanceof Set ? level.floor : new Set(level.floor);
+    var goals = level.goals.slice();
+    var goalSet = new Set(goals);
+    var width = level.width;
+    var pushLimit = options.pushLimit == null ? Infinity : options.pushLimit;
+    var stateLimit = options.limit || 180000;
+    var deadSquares = staticDeadSquares(level);
+    var startBoxes = level.boxes.slice().sort(function (a, b) { return a - b; });
+    function exactKey(boxes, player, pushes) {
+      return boxes.join(',') + '|' + player + (moveObjective ? '|' + pushes : '');
+    }
+    var startKey = exactKey(startBoxes, level.player, 0);
+    var best = new Map();
+    var parents = new Map();
+    var heap = [];
+    var expanded = 0;
+
+    function less(a, b) {
+      if (moveObjective) {
+        return a.estimate < b.estimate || (a.estimate === b.estimate &&
+          (a.moves < b.moves || (a.moves === b.moves && a.pushes < b.pushes)));
+      }
+      return a.pushes < b.pushes || (a.pushes === b.pushes && a.moves < b.moves);
+    }
+
+    function heapPush(node) {
+      heap.push(node);
+      var index = heap.length - 1;
+      while (index > 0) {
+        var parent = Math.floor((index - 1) / 2);
+        if (!less(heap[index], heap[parent])) break;
+        var hold = heap[index]; heap[index] = heap[parent]; heap[parent] = hold;
+        index = parent;
+      }
+    }
+
+    function heapPop() {
+      var first = heap[0];
+      var tail = heap.pop();
+      if (heap.length) {
+        heap[0] = tail;
+        var index = 0;
+        while (true) {
+          var left = index * 2 + 1;
+          var right = left + 1;
+          var smallest = index;
+          if (left < heap.length && less(heap[left], heap[smallest])) smallest = left;
+          if (right < heap.length && less(heap[right], heap[smallest])) smallest = right;
+          if (smallest === index) break;
+          var hold = heap[index]; heap[index] = heap[smallest]; heap[smallest] = hold;
+          index = smallest;
+        }
+      }
+      return first;
+    }
+
+    function solved(boxes) {
+      return boxes.every(function (box) { return goalSet.has(box); });
+    }
+
+    best.set(startKey, { pushes: 0, moves: 0 });
+    heapPush({
+      boxes: startBoxes, player: level.player, key: startKey, pushes: 0, moves: 0,
+      estimate: assignmentDistance(startBoxes, goals, width) * heuristicWeight
+    });
+    var solvedNode = solved(startBoxes) ? heap[0] : null;
+
+    while (!solvedNode && heap.length && expanded < stateLimit) {
+      var node = heapPop();
+      var record = best.get(node.key);
+      if (!record || record.pushes !== node.pushes || record.moves !== node.moves) continue;
+      if (solved(node.boxes)) { solvedNode = node; break; }
+      if (node.pushes + assignmentDistance(node.boxes, goals, width) > pushLimit) continue;
+      expanded += 1;
+      var boxSet = new Set(node.boxes);
+      var distances = walkDistances(floor, width, node.player, boxSet);
+      for (var b = 0; b < node.boxes.length; b += 1) {
+        var box = node.boxes[b];
+        var p = pointOf(box, width);
+        for (var d = 0; d < DIRS.length; d += 1) {
+          var direction = DIRS[d];
+          var stand = indexOf(p.x - direction.x, p.y - direction.y, width);
+          var destination = indexOf(p.x + direction.x, p.y + direction.y, width);
+          if (!distances.has(stand) || !floor.has(destination) || boxSet.has(destination) || deadSquares.has(destination)) continue;
+          var nextPushes = node.pushes + 1;
+          if (nextPushes > pushLimit) continue;
+          var nextBoxes = node.boxes.slice();
+          nextBoxes[b] = destination;
+          nextBoxes.sort(function (a, c) { return a - c; });
+          if (nextPushes + assignmentDistance(nextBoxes, goals, width) > pushLimit) continue;
+          var nextMoves = node.moves + distances.get(stand) + 1;
+          var key = exactKey(nextBoxes, box, nextPushes);
+          var previousBest = best.get(key);
+          if (previousBest && (moveObjective ? previousBest.moves <= nextMoves :
+              (previousBest.pushes < nextPushes ||
+              (previousBest.pushes === nextPushes && previousBest.moves <= nextMoves)))) continue;
+          best.set(key, { pushes: nextPushes, moves: nextMoves });
+          parents.set(key, { previous: node.key, action: { box: box, destination: destination, direction: d } });
+          heapPush({
+            boxes: nextBoxes, player: box, key: key, pushes: nextPushes, moves: nextMoves,
+            estimate: moveObjective ? nextMoves + assignmentDistance(nextBoxes, goals, width) * heuristicWeight : 0
+          });
+        }
+      }
+    }
+
+    if (!solvedNode) return { solved: false, limited: expanded >= stateLimit, states: expanded };
+    var actions = [];
+    var cursor = solvedNode.key;
+    while (cursor !== startKey) {
+      var link = parents.get(cursor);
+      if (!link) break;
+      actions.push(link.action);
+      cursor = link.previous;
+    }
+    actions.reverse();
+    return {
+      solved: true,
+      optimal: !moveObjective,
+      moveOptimal: !moveObjective,
+      objective: moveObjective ? 'moves' : 'pushes-then-moves',
+      pushes: solvedNode.pushes,
+      moves: solvedNode.moves,
+      states: expanded,
+      actions: actions,
+      firstPush: actions[0] || null
+    };
+  }
+
+  function routeMoveCount(level, actions) {
+    var boxes = level.boxes.slice();
+    var player = level.player;
+    var moves = 0;
+    for (var i = 0; i < actions.length; i += 1) {
+      var action = actions[i];
+      var boxIndex = boxes.indexOf(action.box);
+      if (boxIndex === -1) return Infinity;
+      var direction = DIRS[action.direction];
+      var source = pointOf(action.box, level.width);
+      var stand = indexOf(source.x - direction.x, source.y - direction.y, level.width);
+      var distances = walkDistances(level.floor, level.width, player, new Set(boxes));
+      if (!distances.has(stand)) return Infinity;
+      moves += distances.get(stand) + 1;
+      boxes[boxIndex] = action.destination;
+      player = action.box;
+    }
+    return moves;
+  }
+
   function buildCandidate(campaignSeed, levelNumber, attempt, config) {
     var seed = campaignSeed + ':' + levelNumber + ':' + attempt;
     var rng = randomFrom(seed);
@@ -590,7 +775,8 @@
     var analysis = solution.analysis || { interest: 0 };
     // Human difficulty is driven much more by changes of box, direction, and
     // misleading progress than by raw solution length or search-space size.
-    var score = solution.pushes * 0.32 + analysis.interest + Math.log2(solution.states + 1) * 0.45;
+    var score = solution.pushes * 0.32 + (solution.moves || solution.pushes) * 0.07 +
+      analysis.interest + Math.log2(solution.states + 1) * 0.45;
     var title = 'Initiate';
     if (score >= 20) title = 'Delver';
     if (score >= 34) title = 'Pathfinder';
@@ -600,20 +786,52 @@
     return { score: Math.round(score), title: levelNumber <= 4 ? 'Tutorial' : title };
   }
 
+  function refineRoute(level, limit) {
+    var pushProof = level.solution;
+    var optimized = optimizeRoute(level, {
+      pushLimit: pushProof.routePushes || pushProof.pushes,
+      limit: limit,
+      objective: 'moves',
+      heuristicWeight: pushProof.optimal ? 1 : 4
+    });
+    if (optimized.solved) {
+      optimized.optimal = Boolean(pushProof.optimal && optimized.pushes === pushProof.pushes);
+      optimized.moveOptimal = optimized.optimal;
+      optimized.proof = optimized.optimal ? 'lexicographic' : 'move-search';
+      optimized.lowerBound = pushProof.lowerBound;
+      optimized.routePushes = optimized.pushes;
+      optimized.pushStates = pushProof.states;
+      optimized.moveStates = optimized.states;
+      optimized.states += pushProof.states;
+      optimized.analysis = analyzeSolution(level, optimized.actions);
+      optimized.switches = optimized.analysis.switches;
+      level.solution = optimized;
+    } else {
+      pushProof.moves = routeMoveCount(level, pushProof.actions);
+      pushProof.moveOptimal = false;
+      pushProof.moveStates = optimized.states;
+      pushProof.analysis = analyzeSolution(level, pushProof.actions);
+      pushProof.switches = pushProof.analysis.switches;
+    }
+    return level;
+  }
+
   function generate(campaignSeed, levelNumber) {
     var config = configFor(levelNumber);
     var best = null;
     var bestDistance = Infinity;
-    var attemptLimit = config.boxes >= 4 ? 18 : config.boxes === 3 ? 36 : 24;
+    var attemptLimit = config.boxes >= 4 ? (levelNumber >= 400 ? 48 : 24) : config.boxes === 3 ? 36 : 24;
     for (var attempt = 0; attempt < attemptLimit; attempt += 1) {
       var candidate = buildCandidate(campaignSeed, levelNumber, attempt, config);
       if (!candidate) continue;
+      refineRoute(candidate, candidate.boxes.length >= 4 ? 70000 : candidate.boxes.length === 3 ? 160000 : 90000);
       var pushes = candidate.solution.pushes;
       var candidateScore = ratingFor(levelNumber, candidate.solution).score;
       var pushFloor = Math.max(2, config.minPushes);
       var distance = pushes < pushFloor ? (pushFloor - pushes) * 5 : 0;
       if (candidateScore < config.minScore) distance += (config.minScore - candidateScore) * 4;
       if (candidateScore > config.maxScore) distance += (candidateScore - config.maxScore) * 0.25;
+      if (candidate.boxes.length >= 4 && candidate.solution.proof === 'constructive') distance += 30;
       if (levelNumber >= 20 && candidate.solution.analysis.boxesUsed < config.boxes) distance += 18;
       if (levelNumber >= 40 && candidate.solution.analysis.interdependence < 4) distance += 14;
       if (distance < bestDistance || (distance === bestDistance && best && candidate.solution.states > best.solution.states)) {
@@ -628,6 +846,7 @@
       for (var retry = attemptLimit; retry < attemptLimit + 24 && !best; retry += 1) best = buildCandidate(campaignSeed, levelNumber, retry, fallback);
     }
     if (!best) throw new Error('The dungeon refused this seed. Try another descent.');
+    if (best.solution.moves == null || best.solution.proof === 'constructive') refineRoute(best, best.boxes.length >= 4 ? 220000 : 160000);
     best.number = levelNumber;
     best.campaignSeed = campaignSeed;
     best.config = config;
@@ -648,6 +867,8 @@
     pointOf: pointOf,
     reachable: reachable,
     analyzeSolution: analyzeSolution,
+    optimizeRoute: optimizeRoute,
+    routeMoveCount: routeMoveCount,
     signature: signature,
     solve: solve,
     staticDeadSquares: staticDeadSquares

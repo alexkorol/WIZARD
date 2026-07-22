@@ -52,6 +52,8 @@ for (var floor = 1; floor <= 16; floor += 1) {
   assert.ok(level.rating.score >= level.config.minScore, 'floor ' + floor + ' must reach its measured difficulty band');
   assert.strictEqual(hasLargeOpenRectangle(level), false, 'floor ' + floor + ' must avoid large empty rooms');
   assert.ok(level.solution.analysis && level.solution.analysis.motif, 'floor ' + floor + ' must expose a logical motif');
+  assert.strictEqual(level.solution.moveOptimal, true, 'floor ' + floor + ' must prove least moves among least pushes');
+  assert.strictEqual(Core.routeMoveCount(level, level.solution.actions), level.solution.moves, 'floor ' + floor + ' must report exact route movement');
   assert.ok(level.config.minPushes >= previousTarget, 'difficulty target must never decrease');
   previousTarget = level.config.minPushes;
   var replay = Core.generate('TEST42', floor);
@@ -67,5 +69,6 @@ assert.strictEqual(hasLargeOpenRectangle(abyss), false, 'floor 800 must avoid la
 assert.ok(abyss.solution.analysis.interdependence >= 4, 'floor 800 must interweave box subproblems');
 assert.ok(abyss.rating.score >= 60, 'floor 800 must reach the abyss difficulty band');
 replayPushes(abyss, abyss.solution.actions);
+assert.strictEqual(Core.routeMoveCount(abyss, abyss.solution.actions), abyss.solution.moves, 'floor 800 route movement must be exact');
 
 console.log('Verified 16 progressive floors plus a mazelike, replayable floor 800.');
