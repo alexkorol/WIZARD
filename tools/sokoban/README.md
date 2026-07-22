@@ -4,9 +4,13 @@ An infinite, deterministic Sokoban campaign for WIZARD. Every floor is generated
 
 ## Solvability guarantee
 
-The generator starts with every crate already on a goal, then makes only legal reverse-pulls. Replaying those pulls backward is always a valid solution. Before a chamber is shown, an independent push-space breadth-first search solves it again and records the true minimum number of pushes.
+The generator starts with every crate already on a goal, then makes only legal reverse-pulls. Replaying those pulls backward is always a valid solution. Before a chamber is shown, a push-space breadth-first search attempts to prove the true minimum. At the deepest floors, a constructive replay remains the fallback when the search budget is exhausted.
 
-Difficulty is not assigned from the floor number alone. After the tutorial, full-width wall partitions create rooms, corridors, and one- or two-tile choke points. Candidate chambers must also meet a rising assignment-distance lower bound: even before considering walls or crate interference, no solution can use fewer than that many pushes. Crate count rises from one to four, boards grow from 7×7 to 13×11, and measured solver effort contributes to the visible rating. The curve settles into an open-ended abyss band so generation remains responsive.
+Difficulty is not assigned from the floor number or push count alone. After the tutorial, partitions, pillars, and an anti-open-room pass create rooms, corridors, and one- or two-tile choke points. Candidate chambers must meet a rising assignment-distance lower bound and are scored for box-line changes, switches between boxes, counterintuitive pushes, congestion, and interwoven subproblems. Crate count rises from one to four and boards grow from 7×7 to 13×11.
+
+The scoring model follows published Sokoban difficulty work: [Jarušek and Pelánek](https://www.fi.muni.cz/~xpelanek/publications/stairs2010-final.pdf) found box changes and interwoven subproblems far more predictive of human difficulty than shortest-path length; [Taylor and Parberry](https://ianparberry.com/techreports/LARC-2011-01.pdf) used reverse generation, box lines, and rejected large open rectangles; [Bento et al.](https://www.ijcai.org/proceedings/2019/646) combined backward generation, novelty, and higher-order conflicts.
+
+Optimization numbers remain sealed until the first solve. The reveal names the chamber's logical motif, reports its difficulty signals, grades the player's proof, and can replay the verified route. Unlimited undo and visible static-deadlock warnings keep experimentation humane.
 
 The floor debugger beside the board accepts any floor from 1 to 1,000,000. The adjacent **Descend one floor** button advances without requiring the current puzzle to be solved.
 

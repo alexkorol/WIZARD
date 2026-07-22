@@ -60,13 +60,13 @@
       { width: 9, height: 8, boxes: 2, minPushes: 7, maxPushes: 11, pulls: 15, partitions: 1, pillars: 1 }
     ];
     if (n <= tutorials.length) {
-      tutorials[n - 1].minScore = [4, 8, 13, 16][n - 1];
-      tutorials[n - 1].maxScore = [8, 13, 18, 22][n - 1];
+      tutorials[n - 1].minScore = [4, 5, 10, 14][n - 1];
+      tutorials[n - 1].maxScore = [10, 12, 17, 22][n - 1];
       return tutorials[n - 1];
     }
     var depthBand = Math.floor(Math.log2(n));
     var minPushes = Math.min(22, 5 + depthBand * 2);
-    var minScore = n < 10 ? 18 : n < 20 ? 26 : n < 40 ? 31 : n < 100 ? 36 : 40;
+    var minScore = n < 10 ? 18 : n < 20 ? 26 : n < 40 ? 36 : n < 100 ? 45 : n < 400 ? 54 : 60;
     return {
       width: n < 10 ? 9 : n < 20 ? 10 : n < 40 ? 11 : n < 100 ? 12 : 13,
       height: n < 20 ? 9 : n < 40 ? 10 : n < 100 ? 10 : 11,
@@ -74,7 +74,7 @@
       minPushes: minPushes,
       maxPushes: minPushes + 4,
       minScore: minScore,
-      maxScore: minScore + 10,
+      maxScore: minScore + 18,
       pulls: minPushes + 12,
       partitions: n < 10 ? 1 : n < 20 ? 2 : n < 40 ? 3 : 4,
       pillars: n < 20 ? 2 : n < 100 ? 3 : 4,
@@ -157,6 +157,37 @@
       if (p.x <= 1 || p.x >= width - 2 || p.y <= 1 || p.y >= height - 2) continue;
       if (tryRemove(floor, [cell], width, minimum)) placed += 1;
     }
+
+    // Large rectangles produce walking, not reasoning. Break every 4x3 / 3x4
+    // open patch, the same anti-room heuristic used by classic PCG research.
+    var rectangleShapes = [[4, 3], [3, 4]];
+    for (var pass = 0; pass < 64; pass += 1) {
+      var patches = [];
+      rectangleShapes.forEach(function (shape) {
+        for (var top = 1; top <= height - shape[1] - 1; top += 1) {
+          for (var left = 1; left <= width - shape[0] - 1; left += 1) {
+            var cells = [];
+            for (var py = 0; py < shape[1]; py += 1) {
+              for (var px = 0; px < shape[0]; px += 1) cells.push(indexOf(left + px, top + py, width));
+            }
+            if (cells.every(function (candidate) { return floor.has(candidate); })) patches.push(cells);
+          }
+        }
+      });
+      if (!patches.length) break;
+      var removedPatch = false;
+      shuffle(rng, patches);
+      for (var patchIndex = 0; patchIndex < patches.length && !removedPatch; patchIndex += 1) {
+        var inner = shuffle(rng, patches[patchIndex].filter(function (candidate) {
+          var p = pointOf(candidate, width);
+          return p.x > 1 && p.x < width - 2 && p.y > 1 && p.y < height - 2;
+        }));
+        for (var innerIndex = 0; innerIndex < inner.length && !removedPatch; innerIndex += 1) {
+          removedPatch = tryRemove(floor, [inner[innerIndex]], width, minimum);
+        }
+      }
+      if (!removedPatch) break;
+    }
     return floor;
   }
 
@@ -188,15 +219,20 @@
   }
 
   function chooseGoals(floor, width, count, rng) {
-    var pool = shuffle(rng, goalCandidates(floor, width));
+    var pool = goalCandidates(floor, width).map(function (cell) {
+      var p = pointOf(cell, width);
+      var walls = DIRS.filter(function (d) { return !floor.has(indexOf(p.x + d.x, p.y + d.y, width)); }).length;
+      return { cell: cell, score: walls * 4 + rng() * 3 };
+    }).sort(function (a, b) { return b.score - a.score; });
     var goals = [];
     for (var i = 0; i < pool.length && goals.length < count; i += 1) {
-      var p = pointOf(pool[i], width);
-      var separated = goals.every(function (goal) {
+      var candidate = pool[i].cell;
+      var p = pointOf(candidate, width);
+      var touchesGoal = goals.some(function (goal) {
         var g = pointOf(goal, width);
-        return Math.abs(p.x - g.x) + Math.abs(p.y - g.y) > 1;
+        return Math.abs(p.x - g.x) + Math.abs(p.y - g.y) === 1;
       });
-      if (separated) goals.push(pool[i]);
+      if (touchesGoal || goals.length === 0 || rng() > 0.24) goals.push(candidate);
     }
     return goals.length === count ? goals : null;
   }
@@ -218,6 +254,130 @@
     }
     visit(0, 0);
     return best;
+  }
+
+  function staticDeadSquares(level) {
+    var floor = level.floor instanceof Set ? level.floor : new Set(level.floor);
+    var goals = new Set(level.goals);
+    var dead = new Set();
+    floor.forEach(function (cell) {
+      if (goals.has(cell)) return;
+      var p = pointOf(cell, level.width);
+      var verticalWall = !floor.has(indexOf(p.x, p.y - 1, level.width)) || !floor.has(indexOf(p.x, p.y + 1, level.width));
+      var horizontalWall = !floor.has(indexOf(p.x - 1, p.y, level.width)) || !floor.has(indexOf(p.x + 1, p.y, level.width));
+      if (verticalWall && horizontalWall) dead.add(cell);
+    });
+    return dead;
+  }
+
+  function articulationPoints(floor, width) {
+    var discovery = new Map();
+    var low = new Map();
+    var parent = new Map();
+    var result = new Set();
+    var time = 0;
+
+    function visit(cell) {
+      discovery.set(cell, ++time);
+      low.set(cell, discovery.get(cell));
+      var children = 0;
+      var p = pointOf(cell, width);
+      DIRS.forEach(function (d) {
+        var next = indexOf(p.x + d.x, p.y + d.y, width);
+        if (!floor.has(next)) return;
+        if (!discovery.has(next)) {
+          parent.set(next, cell);
+          children += 1;
+          visit(next);
+          low.set(cell, Math.min(low.get(cell), low.get(next)));
+          if (!parent.has(cell) && children > 1) result.add(cell);
+          if (parent.has(cell) && low.get(next) >= discovery.get(cell)) result.add(cell);
+        } else if (parent.get(cell) !== next) {
+          low.set(cell, Math.min(low.get(cell), discovery.get(next)));
+        }
+      });
+    }
+
+    if (floor.size) visit(floor.values().next().value);
+    return result;
+  }
+
+  function analyzeSolution(level, actions) {
+    var boxes = level.boxes.slice();
+    var identities = new Map();
+    boxes.forEach(function (box, id) { identities.set(box, id); });
+    var goals = level.goals.slice();
+    var goalSet = new Set(goals);
+    var chokePoints = articulationPoints(level.floor, level.width);
+    var seenIds = new Set();
+    var leftAndReturned = new Set();
+    var lastId = null;
+    var lastDirection = null;
+    var boxLines = 0;
+    var switches = 0;
+    var counterintuitive = 0;
+    var goalEvictions = 0;
+    var congestion = 0;
+
+    actions.forEach(function (action) {
+      var boxIndex = boxes.indexOf(action.box);
+      if (boxIndex === -1) return;
+      var id = identities.get(action.box);
+      if (lastId !== id || lastDirection !== action.direction) boxLines += 1;
+      if (lastId !== null && lastId !== id) {
+        switches += 1;
+        if (seenIds.has(id)) leftAndReturned.add(id);
+      }
+      var before = assignmentDistance(boxes, goals, level.width);
+      identities.delete(action.box);
+      identities.set(action.destination, id);
+      boxes[boxIndex] = action.destination;
+      var after = assignmentDistance(boxes, goals, level.width);
+      if (after > before) counterintuitive += 1;
+      if (goalSet.has(action.box) && !goalSet.has(action.destination)) goalEvictions += 1;
+      var destination = pointOf(action.destination, level.width);
+      var degree = DIRS.filter(function (d) {
+        return level.floor.has(indexOf(destination.x + d.x, destination.y + d.y, level.width));
+      }).length;
+      if (degree <= 2 || chokePoints.has(action.box) || chokePoints.has(action.destination)) congestion += 1;
+      seenIds.add(id);
+      lastId = id;
+      lastDirection = action.direction;
+    });
+
+    var interdependence = switches + leftAndReturned.size * 2 + Math.max(0, seenIds.size - 1);
+    var interest = boxLines * 0.45 + switches * 0.9 + counterintuitive * 2.5 +
+      goalEvictions * 4 + interdependence * 0.65 + Math.min(5, congestion * 0.2);
+    var motif = 'Packing Order';
+    var thesis = 'The destinations are simple; the order in which you occupy them is not.';
+    if (goalEvictions > 0) {
+      motif = 'False Finish';
+      thesis = 'A sealed reliquary must move again before the chamber can close.';
+    } else if (counterintuitive > 0) {
+      motif = 'Countermarch';
+      thesis = 'Progress begins by pushing at least one reliquary farther from every seal.';
+    } else if (interdependence >= 6) {
+      motif = 'Braided Proof';
+      thesis = 'The reliquaries share a route; solving one means making room for another.';
+    } else if (congestion >= Math.max(3, Math.floor(actions.length / 3))) {
+      motif = 'Shared Lane';
+      thesis = 'A narrow lane is both transport route and scarce working space.';
+    } else if (boxLines >= Math.max(5, seenIds.size * 2)) {
+      motif = 'Broken Vector';
+      thesis = 'The shortest proof changes direction more often than distance suggests.';
+    }
+    return {
+      boxLines: boxLines,
+      switches: switches,
+      counterintuitive: counterintuitive,
+      goalEvictions: goalEvictions,
+      congestion: congestion,
+      interdependence: interdependence,
+      boxesUsed: seenIds.size,
+      interest: Math.round(interest),
+      motif: motif,
+      thesis: thesis
+    };
   }
 
   function reverseScramble(floor, width, goals, player, pullCount, targetDistance, rng) {
@@ -311,14 +471,7 @@
     var visited = new Set([startKey]);
     var parents = new Map();
     var solvedNode = null;
-    var deadSquares = new Set();
-    floor.forEach(function (cell) {
-      if (goalSet.has(cell)) return;
-      var p = pointOf(cell, width);
-      var verticalWall = !floor.has(indexOf(p.x, p.y - 1, width)) || !floor.has(indexOf(p.x, p.y + 1, width));
-      var horizontalWall = !floor.has(indexOf(p.x - 1, p.y, width)) || !floor.has(indexOf(p.x + 1, p.y, width));
-      if (verticalWall && horizontalWall) deadSquares.add(cell);
-    });
+    var deadSquares = staticDeadSquares(level);
 
     function isSolved(boxes) {
       return boxes.every(function (box) { return goalSet.has(box); });
@@ -362,15 +515,10 @@
       cursor = link.previous;
     }
     actions.reverse();
-    var switches = 0;
-    for (var i = 1; i < actions.length; i += 1) {
-      if (actions[i - 1].destination !== actions[i].box) switches += 1;
-    }
     return {
       solved: true,
       pushes: solvedNode.depth,
       states: visited.size,
-      switches: switches,
       actions: actions,
       firstPush: actions[0] || null
     };
@@ -419,6 +567,8 @@
       solution.lowerBound = solution.pushes;
       solution.routePushes = solution.pushes;
     }
+    solution.analysis = analyzeSolution(level, solution.actions);
+    solution.switches = solution.analysis.switches;
     level.solution = solution;
     level.reversePulls = scrambled.pulls;
     level.distanceLowerBound = scrambled.lowerBound;
@@ -437,12 +587,16 @@
   }
 
   function ratingFor(levelNumber, solution) {
-    var score = solution.pushes + solution.switches * 1.5 + Math.log2(solution.states + 1);
+    var analysis = solution.analysis || { interest: 0 };
+    // Human difficulty is driven much more by changes of box, direction, and
+    // misleading progress than by raw solution length or search-space size.
+    var score = solution.pushes * 0.32 + analysis.interest + Math.log2(solution.states + 1) * 0.45;
     var title = 'Initiate';
-    if (score >= 18) title = 'Delver';
-    if (score >= 28) title = 'Pathfinder';
-    if (score >= 40) title = 'Warden';
-    if (score >= 54) title = 'Abyssal';
+    if (score >= 20) title = 'Delver';
+    if (score >= 34) title = 'Pathfinder';
+    if (score >= 50) title = 'Warden';
+    if (score >= 68) title = 'Abyssal';
+    if (score >= 88) title = 'Oracular';
     return { score: Math.round(score), title: levelNumber <= 4 ? 'Tutorial' : title };
   }
 
@@ -450,7 +604,7 @@
     var config = configFor(levelNumber);
     var best = null;
     var bestDistance = Infinity;
-    var attemptLimit = config.boxes >= 4 ? 14 : 20;
+    var attemptLimit = config.boxes >= 4 ? 18 : config.boxes === 3 ? 36 : 24;
     for (var attempt = 0; attempt < attemptLimit; attempt += 1) {
       var candidate = buildCandidate(campaignSeed, levelNumber, attempt, config);
       if (!candidate) continue;
@@ -459,11 +613,15 @@
       var pushFloor = Math.max(2, config.minPushes);
       var distance = pushes < pushFloor ? (pushFloor - pushes) * 5 : 0;
       if (candidateScore < config.minScore) distance += (config.minScore - candidateScore) * 4;
-      else if (candidateScore > config.maxScore) distance += (candidateScore - config.maxScore) * 0.25;
+      if (candidateScore > config.maxScore) distance += (candidateScore - config.maxScore) * 0.25;
+      if (levelNumber >= 20 && candidate.solution.analysis.boxesUsed < config.boxes) distance += 18;
+      if (levelNumber >= 40 && candidate.solution.analysis.interdependence < 4) distance += 14;
       if (distance < bestDistance || (distance === bestDistance && best && candidate.solution.states > best.solution.states)) {
         best = candidate; bestDistance = distance;
       }
-      if (pushes >= config.minPushes && candidateScore >= config.minScore) break;
+      if (pushes >= config.minPushes && candidateScore >= config.minScore && candidateScore <= config.maxScore &&
+          (levelNumber < 20 || candidate.solution.analysis.boxesUsed === config.boxes) &&
+          (levelNumber < 40 || candidate.solution.analysis.interdependence >= 4)) break;
     }
     if (!best) {
       var fallback = Object.assign({}, config, { minPushes: 1, boxes: Math.min(2, config.boxes), pulls: 8, walls: 1 });
@@ -489,7 +647,9 @@
     indexOf: indexOf,
     pointOf: pointOf,
     reachable: reachable,
+    analyzeSolution: analyzeSolution,
     signature: signature,
-    solve: solve
+    solve: solve,
+    staticDeadSquares: staticDeadSquares
   };
 });

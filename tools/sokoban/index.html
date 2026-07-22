@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>The Endless Descent — Infinite Sokoban</title>
-  <meta name="description" content="An infinite procession of generated, solver-verified Sokoban chambers with a measured difficulty curve.">
+  <meta name="description" content="An infinite procession of generated, solver-verified Sokoban theorems whose difficulty is measured in misdirection, interdependence, and chokepoints.">
   <meta name="theme-color" content="#0b100f">
+  <meta property="og:title" content="The Endless Descent — Infinite Sokoban">
+  <meta property="og:description" content="Infinite solver-verified chambers measured by interdependence, misdirection, and chokepoints.">
+  <meta property="og:image" content="assets/theorem-vault.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
@@ -43,6 +46,7 @@
           <span id="difficulty-title">Tutorial</span>
           <div class="pips" id="difficulty-pips" aria-label="Difficulty"></div>
         </div>
+        <p class="motif"><span>Chamber thesis</span><strong id="motif-name">Sealed until solved</strong></p>
         <form class="floor-jump" id="floor-jump">
           <label for="floor-input">Debug floor</label>
           <div>
@@ -53,7 +57,7 @@
         <button class="debug-descend" id="descend-debug" type="button">Descend one floor <span aria-hidden="true">↓</span></button>
         <p class="lesson" id="lesson">The first law of the deep: a reliquary may be pushed, but never pulled.</p>
         <dl class="measurements">
-          <div><dt id="solution-label">Optimal</dt><dd><span id="optimal-pushes">—</span> pushes</dd></div>
+          <div class="spoiler"><dt id="solution-label">Proof length</dt><dd><span id="optimal-pushes">sealed</span></dd></div>
           <div><dt>Relics</dt><dd id="box-count">—</dd></div>
           <div><dt>Proof</dt><dd id="proof-states">—</dd></div>
         </dl>
@@ -62,7 +66,7 @@
       <div class="chamber-column">
         <div class="status-line" role="status" aria-live="polite">
           <span id="status">Carving chamber…</span>
-          <span class="live-stats"><b id="move-count">0</b> steps · <b id="push-count">0</b> pushes</span>
+          <span class="live-stats" id="live-stats" hidden><b id="move-count">0</b> steps · <b id="push-count">0</b> pushes</span>
         </div>
 
         <div class="board-frame" id="chamber">
@@ -70,9 +74,18 @@
           <div class="board" id="board" role="grid" aria-label="Sokoban chamber" tabindex="0"></div>
           <div class="victory" id="victory" hidden>
             <div class="victory-sigil" aria-hidden="true">✦</div>
-            <p>Seal restored</p>
-            <h2>There is always<br>another floor.</h2>
-            <button class="primary-button" id="descend" type="button">Descend to floor <span>02</span></button>
+            <p>Thesis revealed · <span id="victory-motif">Packing Order</span></p>
+            <h2 id="victory-thesis">There is always another floor.</h2>
+            <div class="analysis-grid" aria-label="Solution analysis">
+              <div><strong id="analysis-grade">A</strong><span>proof grade</span></div>
+              <div><strong id="analysis-lines">0</strong><span>box lines</span></div>
+              <div><strong id="analysis-switches">0</strong><span>box changes</span></div>
+              <div><strong id="analysis-counter">0</strong><span>countermarches</span></div>
+            </div>
+            <div class="victory-actions">
+              <button class="secondary-button" id="replay-proof" type="button">Watch shortest proof</button>
+              <button class="primary-button" id="descend" type="button">Descend to floor <span>02</span></button>
+            </div>
           </div>
         </div>
 
@@ -102,8 +115,22 @@
           <span>Best efficiency</span>
           <strong id="best-efficiency">—</strong>
         </div>
+        <div class="record">
+          <span>Archive fragments</span>
+          <strong id="archive-fragments">0 / 8</strong>
+        </div>
+        <p class="archive-note" id="archive-note">The archive opens after the first proof.</p>
         <p class="guarantee"><span aria-hidden="true">◇</span> This chamber was reverse-forged from a solved state, then checked by a push-optimal search.</p>
       </aside>
+    </section>
+
+    <section class="method-note" aria-labelledby="method-title">
+      <p class="eyebrow">The intelligence beneath the stone</p>
+      <h2 id="method-title">Not longer. More entangled.</h2>
+      <p>Each floor is selected for a distinct logical shape: shared lanes, changing box assignments, pushes that initially move away from every goal, and false finishes that must be undone. The numbers stay hidden until the first solve so the chamber remains a puzzle, not a spreadsheet.</p>
+      <div class="method-marks" aria-label="Difficulty signals">
+        <span>Box changes</span><span>Countermarches</span><span>Chokepoints</span><span>Goal evictions</span>
+      </div>
     </section>
   </main>
 
