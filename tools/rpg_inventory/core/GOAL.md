@@ -51,3 +51,23 @@ research notes from PoE/Diablo live in `REFERENCE-NOTES.md`.
 Web apps only · pace the quota · QA on the fly (qa_gate + eyeball) · move
 forward not sideways · when Alexei gives feedback, bake it into AGENTS.md /
 ASSET-BRIEF.md immediately so no session relearns it.
+
+## Codex weekly-quota correction (2026-07-24)
+
+The image-generation allowance and Codex weekly agent quota are separate
+constraints. A six-to-eight-agent research tree can consume substantial weekly
+quota while producing zero images. Reserve broad parallelism for locked
+one-call image generation. Use the main agent or at most two bounded agents for
+source/dedupe audits, stop when one full wave is ready, and report strict
+accepted art per generation call.
+
+## Default manual-web production unit (2026-07-27 correction)
+
+Routine roster expansion uses one coherent faction + attribute axis + tier
+loadout as the generation unit. Attach two reviewed character/loadout
+references and request up to ten separate paperdoll-slot item images. The
+character references control item family, materials, construction, palette,
+and context. Historical moodboards are optional plausibility boundaries, not
+object shopping lists. Individually predesigned prompts are exceptional tools
+for stubborn high-value gaps after loadout extraction and curation, not the
+default 300-item production method.

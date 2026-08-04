@@ -20,6 +20,21 @@ being pasted onto a noun.
 This was Alex's idea. Preserve that attribution in summaries and future process
 notes.
 
+## Mixed Reference Board Contract
+
+For the current manual web-app workflow, attach two prompt-specific ladder
+references as Images A and B, then exactly one matching mixed faction board as
+Image C. Follow `MIXED-REFERENCE-BOARD-POLICY.md`.
+
+Images A/B remain the only authority for faction, axis, tier, material balance,
+item membership, and coherent loadout design. Image C must visibly combine
+approved faction characters, equipped/loadout context, family-range sheets,
+complete replicas/reconstructions, ARPG-readable item studies, and bounded
+construction anchors. Use only a compatible tile's narrow `TRANSFER` scope.
+Never average board tiles, import board-only materials/items, copy game art, or
+use Image C to fill unsupported slots. Skip weak slots instead of inventing
+filler.
+
 ## When To Use
 
 Use this mode when:

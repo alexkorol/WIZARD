@@ -55,10 +55,13 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    qa_gate detects both; compose_assets uses source alpha directly for true
    alpha, and art_matte is only for flat fallback backgrounds. Painted
    checkerboard = reject.
-3. Do not prompt tiny closure hardware as decoration (toggles, buckles,
+3. Do not prompt tiny hard closure hardware as decoration (toggles, buckles,
    clasps). But wearable/carryable gear must still have credible structural
    attachment: broad straps, lacing, side ties, leather backing, shoulder
-   straps, or front/back plates joined at the shoulder and sides.
+   straps, or front/back plates joined at the shoulder and sides. A cloth belt
+   is never an impossible seamless textile ring: show two credible textile ends
+   closed by one simple low-profile hand tie or knot, with no bronze/brass
+   clasp or buckle.
 4. DESCs (targets.tsv) hold ONLY item content — materials, construction,
    proportions ("a pair of, shown as a pair", "entire weapon visible") —
    never render-style words.
@@ -71,6 +74,15 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    over a plain leather backing, sheet-bronze plates over leather) and
    then the construction must dominate the read instead of becoming a
    hair-thin detail.
+5a. MATERIAL VALUE HIERARCHY (2026-07-24, Alexei). Copper alloy is expensive
+   elite material in the pre-ancient setting, not generic visual punctuation.
+   Reed, bast, common wood, ordinary cloth, and plain-hide bases stay
+   organic-led. Never add polished bronze/brass collars, caps, rivets, plates,
+   fittings, or trim just to make cheap material look higher-tier or to echo a
+   faction palette. Progress organic items through better weave, fitting,
+   lacquer, lamination, load paths, join quality, and labor. Copper alloy is
+   allowed only as the explicit item thesis or a small historically required
+   load-bearing fitting.
 6. GENERIC COLOR LANGUAGE FOR BASES (2026-07-07). Do not encode lore/fashion
    specificity into base rows: no oxblood, burgundy, glossy black-dyed trim,
    lapis, turquoise chips, gold wire, feather tassels, cowrie rows, tusk
@@ -129,6 +141,8 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    made and donned that way. Bone armour is assembled from smaller bone plates,
    splints, or sections on hide/leather backing; never a perfect solid
    shin-guard-shaped bone plate.
+   Cloth belts must show the break in the band and the simple textile tie that
+   closes them; a continuous woven hoop is a construction failure.
 15. NO BORING FORCED RELIC BASES (2026-07-07). Flat tablets, ward plates,
    symbol plaques, carved slabs, and generic hand-held boards are not exciting
    ARPG loot bases. Relic gear needs a strong held/worn/handled implement with
@@ -145,6 +159,19 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    decoration: random lore marks, loose clutter, costume fragments, or detail
    that breaks readability/utility. Use `core/LOADOUT-EXTRACTION.md` for this
    mode.
+16a. VISUAL-SOURCE GATE FOR EXPANSION BASES (2026-07-24, Alexei). Select and
+   inspect the actual object image before naming or describing a gap item. The
+   primary object source must visibly show the silhouette, material roles,
+   joins, closure, and proportions: either equipment actually worn or laid out
+   in a reviewed loadout/character reference, or a specific artifact photo or
+   credible reconstruction. Pinterest is a pre-brief discovery route and must
+   be paired with museum/catalogue verification; it is not post-hoc mood
+   decoration. Transcribe the observed object. Do not synthesize a speculative
+   construction from a faction palette, a historical object name, and generic
+   plausibility prose. PoE references control footprint, icon readability, and
+   base progression only. No inspected local visual source means no generation.
+   Same-culture auxiliary extrapolation is paused for the current 300-item
+   expansion unless Alexei explicitly approves an exception.
 17. SELF-CONTAINED CHARACTER/SOURCE PROMPTS (2026-07-07). Do not shorten final
    image-generation prompts by naming a faction, class, or tier and assuming
    the model has project context. Every final prompt must restate the full
@@ -273,7 +300,11 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    dart racks, sling-bullet side carriers, and back/side-mounted
    knife/fletching/medicine frames, pigment cases, and trap rigs shown without
    a body but with the complete harness. Quick Rigs are never handheld,
-   off-hand, purse-like, briefcase-like, or modern luggage. Attendants reinterpret ancient
+   off-hand, purse-like, briefcase-like, or modern luggage. Quiver, arrow-case,
+   and gorytos art shows the complete standalone container with a capped mouth
+   or a visibly open empty mouth. Never include arrows, shafts, fletching, bow
+   parts, or a combined archery set; arrows are separate inventory items.
+   Attendants reinterpret ancient
    lamp wheels, censers, lamps, mirrors, bells, vessels, pyxides, spindles,
    rings, and scale cages as hands-free magical foci; overt levitation, glow,
    orbiting parts, and impossible suspension are allowed. Spoils are raw or

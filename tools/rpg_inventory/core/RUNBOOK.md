@@ -1,10 +1,18 @@
 # RUNBOOK — the asset-generation loop (any agent: Fable, Claude Code, Codex)
 
-Read `AGENTS.md` (one level up) and `core/GOAL.md` first. This file is the
-mechanical loop. Filesystem is the only state; no memory required.
+Read `AGENTS.md` (one level up), `core/GOAL.md`, and
+`core/EXPANSION-CORRECTIONS-2026-07-24.md` first. This file is the mechanical
+loop. Filesystem is the only state; no memory required.
 
 ## Session start
 
+0. For 300-item expansion work, confirm every proposed row passes the visual
+   source and prior-art gates in
+   `core/EXPANSION-CORRECTIONS-2026-07-24.md`. Check existing assets,
+   post-calibration triage, expansion-ready supply maps, and all promoted reuse
+   rows by visual construction family before writing a prompt. A roster row is
+   not generation-ready merely because it has a written description or a new
+   name.
 1. `python3 core/status.py` — coverage, today's budget usage, prioritized
    queue. It applies `core/asset-review.js`: discarded items are retired, and
    rework items are queued before ordinary missing targets. If 40 gens already
@@ -104,3 +112,26 @@ see-through holes. Helmet eyes must be OPAQUE.
   immediately.
 - Review exports that mark individual items as rework/discard belong in
   `core/asset-review.js`.
+
+## 2026-07-24 quota and source-triage addendum
+
+- Read the latest `SESSION-HANDOFF-*.md` before launching agents.
+- Six to eight agents are for one-call locked generation waves only.
+- For routine manual web roster expansion, a locked generation call is one
+  coherent wildcard loadout request: two reviewed character/loadout references
+  at one faction + axis + tier, producing up to ten separate paperdoll-slot
+  item images. Do not replace this with ten independently designed item briefs.
+  Coverage selects which ladder points to run, not what material recipe to
+  impose on each item. Current pack:
+  `assets_staging/manual-web-wildcard-wave-01/`.
+- Source research is serial or at most two bounded agents. Stop research when
+  six generation-ready calls exist; do not recursively audit replacements.
+- Apply the E1-E7 evidence taxonomy in
+  `EXPANSION-CORRECTIONS-2026-07-24.md` before assembling exceptional isolated
+  gap-item prompts. Do not use it to dismantle a coherent character loadout
+  into unrelated artifact commissions.
+- Verify exact object identity, date, material, technique, completeness, every
+  mechanically important view, game-roster value, and visual macro dedupe.
+- Hold/reject E3-E6 rows unless a clearly bounded E2 completion source exists.
+- At session end record strict usable additions, total image calls, and unrun
+  ready manifests. Do not describe audits as item-art throughput.

@@ -87,3 +87,39 @@ skipped(locked) 2026-07-06 18:07 PDT
 2026-07-07 12:30 PDT  MANUAL INTAKE ACCEPTED 3/3: quiver_rawhide, bowl_bronze_offering, hideshield_rawhide_oval. All three were true-alpha downloads and passed qa_gate. Fixed compose_assets.py so true-alpha image-2 saves bypass matte generation and palette quantization; recomposed all accepted manual intake assets as direct RGBA. Kept existing hideshield_hide and added hideshield_rawhide_oval as a distinct shield silhouette.
 2026-07-07 12:49 PDT  STYLE REFERENCE NOTE (SUPERSEDED): initial read was too defensive and treated attached character renders as render-stack evidence only.
 2026-07-07 13:32 PDT  LOADOUT EXTRACTION BREAKTHROUGH: Alexei's test used a full character/source image as the equipment source and asked image-2 for separate paperdoll-slot item icons. This works better than isolated item DESCs because the source image carries a coherent equipment system: silhouette family, materials, attachment logic, ornament density, and slot relationships. Details like feathers, tassels, shell plates, cords, chains, veils, stones, scratches, and symbols are valid when integrated into the item. The failure mode is ungrounded decoration pasted onto a prompt in a vacuum. Added LOADOUT-EXTRACTION.md and corrected the style guardrails.
+2026-07-24 20:47 PDT  source_plateau_recurve_bow DONE (rare complete coherent bow; square matte salvaged by local alpha/reframing)
+2026-07-24 20:47 PDT  source_plateau_woven_quiver HOLD (organic construction good, but arrows visible; quiver must be empty)
+2026-07-24 20:47 PDT  source_plateau_felt_helm REDUNDANT (prior art already promoted as helmet_ridged_hide_point; duplicate prompt retired)
+2026-07-24 20:47 PDT  source_plateau_riding_coat HOLD (felt/wool source drifted to smooth leather and excess panels)
+2026-07-24 20:47 PDT  source_north_leaf_sword SKIP (ornament/workshop drift)
+2026-07-24 20:47 PDT  source_north_oval_shield SKIP (unsupported repeated copper-alloy hardware)
+2026-07-24 20:47 PDT  source_north_banded_corselet SKIP (machine-regular plates/rivets; later-period drift)
+2026-07-24 20:47 PDT  source_north_bronze_cap SKIP (medieval spangenhelm construction drift)
+2026-07-24 20:47 PDT  NOTE: eight-agent source-observed pilot generated exactly once per item. Strict result 1 accept, 2 hold, 4 reject, 1 duplicate/reuse. Added mandatory prior-art visual gate before Wave 02.
+2026-07-24 21:25 PDT  source_dustwind_clipped_body_shield DONE
+2026-07-24 21:25 PDT  source_dustwind_woven_lobed_buckler DONE
+2026-07-24 21:25 PDT  source_stonewood_bound_longbow DONE (rare complete bow; square matte fixed through alpha autocrop/reframing)
+2026-07-24 21:25 PDT  source_north_socketed_hook_sickle DONE (complete source-grounded weapon; square matte fixed through alpha autocrop/reframing)
+2026-07-24 21:25 PDT  source_dustwind_bronze_lozenge_amulet HOLD (cord cropped; incomplete wearable loop)
+2026-07-24 21:25 PDT  source_river_calf_wrap_sandals SKIP (loose calf ties float around invisible legs)
+2026-07-24 21:25 PDT  source_river_shell_scale_corselet DONE (direct crop/alpha salvage from existing isolated board; no generation)
+2026-07-24 21:25 PDT  NOTE: Wave 02 strict result 4 generated accepts, 1 direct-salvage accept, 1 hold, 1 reject. Chroma decontamination caused false red speckles; accepted outputs re-keyed with --no-decontaminate.
+2026-07-24 22:03 PDT  source_river_paddle_cudgel DONE (direct crop/alpha salvage from existing isolated board; complete plain wood club, no generation)
+2026-07-24 22:20 PDT  source_river_faience_barrel_pendant DONE (complete cord loop; simple faience-and-fiber construction; alpha salvage passed)
+2026-07-24 22:20 PDT  wpn_dag_flint_lancet DONE (monolithic Type-I flint body; no invented handle or metal)
+2026-07-24 22:20 PDT  wpn_throw_badarian_stick DONE (source-faithful unequal shallow-elbow hardwood missile)
+2026-07-24 22:20 PDT  feet_woven_fibre_sandals DONE (true pair; cords rest naturally with no invisible-leg support)
+2026-07-24 22:20 PDT  wpn_short_loop_knife DONE (integral one-piece iron blade, strap handle, and open terminal loop)
+2026-07-24 22:20 PDT  source_river_bast_rib_corselet HOLD (square canvas plus over-regular rigid reed/stem interpretation; source intended bast ribs on continuous backing)
+2026-07-24 22:20 PDT  focus_copper_sistrum HOLD (mechanics pass, but the render reads polished golden bronze/brass rather than the restrained copper rung)
+2026-07-24 22:20 PDT  NOTE: Wave 03 generated 7 items in parallel, one locked call each, no rerolls. Strict result 5 generated accepts and 2 holds; accepted cutouts keyed with --no-decontaminate and passed true-alpha QA.
+2026-07-24 23:05 PDT  wpn_bow_holmegaard_flat DONE (source-faithful broad flat elm limbs, deep narrow grip, complete string and tips; numeric 5% thin-bow coverage reject overridden after direct visual/source comparison)
+2026-07-24 23:05 PDT  focus_copper_ladle DONE (BM N.120 bowl, open trough spout, and high returning strap handle preserved; restrained localized tarnish only)
+2026-07-24 23:05 PDT  relic_stone_pyxis DONE (Getty 88.AA.83 body tooling, compact pierced lugs, recessed lid seat, and conservative plain fitted disc lid)
+2026-07-24 23:05 PDT  amulet_calcite_drop DONE (small pale calcite vessel/drop on one complete bast/flax cord loop; no metal setting or cropped cord)
+2026-07-24 23:05 PDT  shield_bronze_yetholm DONE (one-piece front fighting face with dense concentric structural ribs and alternating tiny punched-boss fields)
+2026-07-24 23:05 PDT  wpn_axe_abydos_adze HOLD (assembly and long blade proportions match the BM/Met sources, but burial-green corrosion was copied into an active-service item)
+2026-07-24 23:05 PDT  NOTE: Wave 04 generated 6 items in parallel, one locked call each, no rerolls. Strict result 5 accepts and 1 hold. All accepted cutouts keyed with --no-decontaminate; four passed true-alpha QA directly and the complete source-faithful flatbow retains a documented thin-silhouette metric exception. Strict expansion total today: 17 accepted.
+2026-07-24 23:16 PDT  helmet_light_bronze_pilos DONE (exact Pilot-02 prior generation reused; official Met/Getty pilos source and strict dedupe pass; locally re-keyed with --no-decontaminate instead of regenerating)
+2026-07-24 23:16 PDT  NOTE: helmet_light_bronze_pilos salvage true-alpha QA PASS at 859x971, 65% coverage, 0% edge. Strict expansion total today: 18 accepted.
+2026-07-24 23:45 PDT  NOTE: SESSION WRAP. Strict expansion total remains 18 accepted. Wave 05 has six locked source-audited prompts and a preflight report, but 0/6 raw outputs; five dispatched generation agents were interrupted and the sixth was never started after the user flagged excessive Codex weekly-quota use. Future sessions must reserve 6-8 agents for ready image calls, keep research serial/2-agent maximum, and stop auditing once a wave is ready.

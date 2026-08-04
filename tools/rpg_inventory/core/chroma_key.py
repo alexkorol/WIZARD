@@ -38,7 +38,14 @@ def sample_background(arr):
     return np.median(corners, axis=0)
 
 
-def chroma_key(src, soft=SOFT_DEFAULT, hard=HARD_DEFAULT, crop=True, pad=16):
+def chroma_key(
+    src,
+    soft=SOFT_DEFAULT,
+    hard=HARD_DEFAULT,
+    crop=True,
+    pad=16,
+    decontaminate=True,
+):
     rgb = src.convert('RGB')
     arr = np.asarray(rgb).astype(np.float32)
     bg = sample_background(arr)
@@ -53,7 +60,7 @@ def chroma_key(src, soft=SOFT_DEFAULT, hard=HARD_DEFAULT, crop=True, pad=16):
     # visible one-pixel matte halo without blurring the item.
     out_rgb = arr.copy()
     semi = (alpha > 0.02) & (alpha < 0.98)
-    if np.any(semi):
+    if decontaminate and np.any(semi):
         a = alpha[semi][:, None]
         out_rgb[semi] = np.clip((arr[semi] - bg * (1 - a)) / np.maximum(a, 0.02), 0, 255)
 
@@ -89,6 +96,15 @@ def main():
     ap.add_argument('--no-crop', action='store_true')
     ap.add_argument('--replace', action='store_true',
                     help='write <name>.png instead of <name>_clean.png; use only after preserving originals')
+    ap.add_argument(
+        '--no-decontaminate',
+        action='store_true',
+        help=(
+            'preserve source RGB in semitransparent pixels; use when matte '
+            'division creates false red/magenta speckling inside brown or '
+            'olive-adjacent subject textures'
+        ),
+    )
     args = ap.parse_args()
 
     source_dir = Path(args.source_dir)
@@ -102,7 +118,8 @@ def main():
             print(f'skip {stem}: no PNG')
             continue
         out, bg = chroma_key(Image.open(src_path), soft=args.soft, hard=args.hard,
-                             crop=not args.no_crop)
+                             crop=not args.no_crop,
+                             decontaminate=not args.no_decontaminate)
         out_name = f'{stem}.png' if args.replace else f'{stem}_clean.png'
         out_path = out_dir / out_name
         out.save(out_path, optimize=True)
