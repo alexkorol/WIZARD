@@ -1,0 +1,1155 @@
+{
+  "01817d6c-cbed-4ce6-aad5-2fdf9ab7e6c5.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "e76507e4ebd114ec077137c41e9d36c40682e0af6a96efe23ed6783210bdfb75",
+    "art_id": "pc2_001"
+  },
+  "152dca1a-b17e-46c3-b11a-611e28fb28b5.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "1e39546bcae1c423f523f1b6fe1f0dde17b528455ed3a2d1f9d1e8e2623765c9",
+    "art_id": "pc2_002"
+  },
+  "37f5cc23-7b70-4d89-8c3a-18c76b6aff62.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "8d80b353dcd0b3f1ae0ccca29aed2f4b3a4e5ee32aa0c3e643bd69970c6bdcec"
+  },
+  "6e3de3da-df7b-495a-9728-c0ab0cd9020e.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "4bce26cd9c997ad96b7510616df8e542bb998b88e80e99c43e874459d620a111",
+    "art_id": "pc2_004"
+  },
+  "7e6a9c77-64fb-4736-ad90-4652ae7f03cb.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "07d737f178e2ce78ac18432fce1316e755a1a21afb3254e2a7630d721b51be65",
+    "art_id": "pc2_005"
+  },
+  "ChatGPT Image Aug 13, 2026, 06_54_47 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "7b91ff4d9bc9ae8485207c618670fce4e84e209f209c166ceb6b0fa8c7cda89b"
+  },
+  "ChatGPT Image Aug 13, 2026, 06_55_07 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "4606de3eddb207fe63fd1e92470a47dd06343160e390a909fbd9e061e3b82974",
+    "art_id": "pc2_007"
+  },
+  "ChatGPT Image Aug 13, 2026, 06_55_18 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "3948a149dacdd991ba5336fb9f819cf11efbc45ee01f3e7f3bafef1ecd21039b",
+    "art_id": "pc2_008"
+  },
+  "ChatGPT Image Aug 13, 2026, 06_55_30 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "e5128db698d7414d53218de0562b7aaac981c49a364bd1dfaf73e2283a0bc21b",
+    "art_id": "pc2_009"
+  },
+  "ChatGPT Image Aug 13, 2026, 06_55_41 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "28b177bec56f274f55a9868fd465727e46d2eaf601f58a8e99b59decfab4637d",
+    "art_id": "pc2_010"
+  },
+  "ChatGPT Image Aug 13, 2026, 06_55_56 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "087cf0a04388778a7cef65d0e427f57f509dc6cd5b0cde11c78391c1c0242cf4",
+    "art_id": "pc2_011"
+  },
+  "ChatGPT Image Aug 13, 2026, 06_56_08 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "76626ced3a0de15a4f5e908bdbf1348a0d9dadd92d5a4a971bd5632ed3c87c11",
+    "art_id": "pc2_012"
+  },
+  "ChatGPT Image Aug 13, 2026, 06_56_15 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "80a48c2eaded25c4fe15b02621a751db531f47e842232edaeda7ce0f30118f5c"
+  },
+  "ChatGPT Image Aug 13, 2026, 06_56_26 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "5553d57c089205ebfc0152c3ab355959d2ee9040b86f11ddf32d87a6c659d5e5",
+    "art_id": "pc2_014"
+  },
+  "ChatGPT Image Aug 13, 2026, 06_56_32 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "ca5dc320a3dddf885329b78daa96fd77854b66e23f0f8334c98078c2fa7aa90a",
+    "art_id": "pc2_015"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_10_34 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "40dbb64c2ca5cd590ccdbff6c231063823f6a38166de9ea3a3ee6c296aaf24f5",
+    "art_id": "pc2_016"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_10_51 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "484a580c2726da0e8724ba7c34d059c0765bf8cb68a660e66595f6078c970c98"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_10_59 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "f82c9e8958c77236551ff2076a32624c0e91bcbd28071275bb52f59a6cd7910b"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_11_08 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "5ba9fa7fe9002ab0f2e2bf4ee229434661bc5794465cdc0de7c8ba7ab48d4af6"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_11_21 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "447df29d7a1f003a466c4df21f53aa092a8ae3984435ce215136a618f86581a0"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_11_28 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "d1f7bf0ab672f961214409899106cabb962d03fb19b609cc4952067e62ded361",
+    "art_id": "pc2_021"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_11_37 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "f462c9bdc18ed8c5ccea6645ca1a447744ad3dc2ade6f28ecdb7bf9263a5da1e",
+    "art_id": "pc2_022"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_11_44 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "1079c472ab70d8a734955469c53eda15f1aabdb6ca6ece5c7912c9932387a866"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_15_26 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "b5eb32ebdbf6e020667dfb1fd4bcfd628ea2910cd7847288db2869e974075f70"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_15_35 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "a6608a86514a7150849067fc4ef961cc65e247b871b04036367c9476dd473486"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_15_46 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "4ed0d071a2ca9c8d5c52427f81aabb453cd09f4ea12ed65250b12d2efcb1df69"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_15_57 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "8adeb8c3083c03733186763a576c7e3e4c7d99e5c1e0ae88c25a3061b724d738"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_16_02 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "04c2977b33be105468314961405391498790fbeed0f5bf40ec97a0f29421b5e0"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_16_15 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "ffda14e8664ccab851c504917fb48c9754e1c1e734bf05ede1bf42fbab59026d",
+    "art_id": "pc2_029"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_16_23 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "ed49e563848f39ebafaa1097eaba15896daf3af23fe9c3e4bfc7cf008402b2f0"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_16_42 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "9c391a44d43f49fa796ac18637aaa303f11d932fabb84f8621ceacf73fe71902"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_30_16 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "6f81607957e8f2e12b935a82d96603b09fb54f7489bbb767df79a269fceab3db"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_30_30 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "23f15d35abc4bee514b097ba631ca279d988f6c6eec973b432673afe6aeb045a",
+    "art_id": "pc2_033"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_30_37 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "5e53723b42f9291eeac28c89b2a77add827fffa98b546b2aaf3a76f176ffac56"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_30_47 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "4cf8bcc1d3f65fecd6e5b70441ea244b82e37533c6a3aa69ae87cc2deb3c5241"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_31_08 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "5a939608e0d3f0d1cce0c8494b022bdc64e0f8a00fc02ccf1aa0ff3f93c6ed6b"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_31_14 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "b4ccc942d033f4709703f9cf14e16194efc749ce4546c1562c9750b804c9f83f"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_31_21 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "7a4395fc5099736b1dff9e94e5fc8d351ac63931b2a677821ccdd671cad481a7",
+    "art_id": "pc2_038"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_31_28 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "ddc7db5aa6077e61881a06f8faa6fc974b44553c7bfd718a6cda447d057f934c",
+    "art_id": "pc2_039"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_38_14 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "acf8a3d94ad75cea9c3f61e2bec26d9e63208ed458b925162a35b7863af346fd"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_38_26 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "babfd1f5a535062f9e1a8104ca8c07a88d87890ea2f364f3744e46bbefe12975"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_38_40 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "ae17e661a89b0b6f999e3448d71d884b4d2304b979f73c7d75466416e0a6e668",
+    "art_id": "pc2_042"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_38_46 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "748efc654cf3522b4a374e8161cfba19301ae2d689ab6dfd9750eee442ff3bb2",
+    "art_id": "pc2_043"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_38_54 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "cdea7eb0cb2c4ec83a9872f6b93aec8be2117ebe6bb869a2792d2aaf7a920495"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_39_02 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "d365bbc6f848aa6904fea64f8768cf81df92276308d98e0f98a2f915e107c88c"
+  },
+  "ChatGPT Image Aug 13, 2026, 07_57_52 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "83404e64a83729450cc29481f658f4de47d8aa2bd616850f8f6bc552e29a6cda",
+    "art_id": "pc2_046"
+  },
+  "ChatGPT Image Aug 13, 2026, 09_08_11 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "334969077d5878bdd9aaf51a3f83ae2eada928fe8839e610e673f27b5ee1f16e",
+    "art_id": "pc2_047"
+  },
+  "ChatGPT Image Aug 13, 2026, 09_08_25 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "5bd3dc6dfb392a312627fc0afeefc7b90a237ca94c8b79f4df84891b819c7525",
+    "art_id": "pc2_048"
+  },
+  "ChatGPT Image Aug 13, 2026, 09_27_34 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "526b0f5a0b2fc4ddaca45ab1c6b5665c8fdceb9091187c324bd2be202b79b2a3"
+  },
+  "ChatGPT Image Aug 13, 2026, 09_27_41 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "2be59413e62f7527b9da11eaf03558c72705500703e3e41bff97fb37541baf2a",
+    "art_id": "pc2_050"
+  },
+  "ChatGPT Image Aug 13, 2026, 09_27_48 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "d3bcca3d09b744b9fdeb88af7a66d97076562e185c2742d97751ca2e280dbd8e",
+    "art_id": "pc2_051"
+  },
+  "ChatGPT Image Aug 13, 2026, 09_27_56 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "fd34937377889b7cf20d6a040f212836c22ca9267da3ab2f4687843d0780dc0f",
+    "art_id": "pc2_052"
+  },
+  "ChatGPT Image Aug 13, 2026, 09_28_06 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "3ced67c8829692b422a9e98b7b8faa23199a7fa283b9680f6894800a98332336"
+  },
+  "ChatGPT Image Aug 13, 2026, 09_28_13 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "d8be2ec49774918abd3c733a84b355d7682bc9107fd6254baf9e9327033dea6e",
+    "art_id": "pc2_054"
+  },
+  "ChatGPT Image Aug 13, 2026, 09_28_19 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "3e2708e0b0f9911a34196960d66e12da41baa1061961c3d10aa5dccd5b2c4775",
+    "art_id": "pc2_055"
+  },
+  "ChatGPT Image Aug 13, 2026, 09_28_25 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "d7630b9ae761ae9a49cd986b53947fccba4759d96386c462f1b087aeaf393dba",
+    "art_id": "pc2_056"
+  },
+  "ChatGPT Image Aug 13, 2026, 09_28_35 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "4119ab079133559a69c275c606f8e74f907b796debdafd6cae2a8053324c44a7",
+    "art_id": "pc2_057"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_09_28 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "83fd6d69a84800699632f7ef8c04f73a00ed9c0e1405ae55239609da264ff4cd",
+    "art_id": "pc2_058"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_09_39 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "f8d0067f0a3a00d828b0852ef447d9edc6b2b09141f5d161d6477ac31dc04f71"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_09_46 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "e6467feeb6a80aa42a4559189bba3dd603c32216723c790761c37b0d7c7c5061",
+    "art_id": "pc2_060"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_09_54 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "3e49cb737a147f6263e231dfbfaa93f891321d4c75084495cc9daeee709e91ce",
+    "art_id": "pc2_061"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_10_01 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "14fb32561bdb15352259140970567feeffb4aa2c30c64fc79b682f7e566cff76"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_10_08 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "eb49114ff15b57ab1a6504f3f2fae9300dcbf3b55ab309495469176239dc6bd4"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_10_15 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "8879f7299132593c6992e698f3a8ad60fb4eb9ef54594f87c6d513e8e78ed88e",
+    "art_id": "pc2_064"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_12_33 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "92362602851e2fa42d8d35f48cf313ff0675a87697d2e069a642666156334ba9"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_12_42 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "4ac41fd5f36e92533d4566ad08b7b0fb4beb851092fcfa118fc5dd541bd1e06b"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_12_58 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "f2c4f4bfdc40053bebeeffa6fb15be09272c3cb001c30e966acfd6a46eaaec6e"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_13_11 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "1eb423bc0bd098c6a70642907cee633be4ef26dcc3c06e5bc17e7d55baaba19d",
+    "art_id": "pc2_068"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_18_09 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "65c592169d71fc6fd32c072523b79a9b3fdba706c8cd3eb299a11530b05a0976",
+    "art_id": "pc2_069"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_21_06 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "9760ff3ee8b443585066325c33e6b0970ebba2c69b62af4baecc4c6f8a3341ba",
+    "art_id": "pc2_070"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_21_21 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "1727473f1bf21c01151c44b6c04558868a85926529896765c9fa99d7b8e22d36"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_21_33 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "7f54cbada2f193e97ea1ed9c68bcfa82a65699a5a93651551bf68afcf0c87aac",
+    "art_id": "pc2_072"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_21_53 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "9f93b83c27876294d5da86493f7102e2d38e5e1fb7066e9b4ad9a8afa8ca1170"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_22_05 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "00f23ab1cb648570e5e3dd8f3f8fa0c0c3f5418247de3da389e32807770276cb"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_22_16 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "b58e75677d3f435bb3368b7dbf57962267efc291322f084a2e5e42d2a32b0e07"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_37_19 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "b49beb1a5de55a00e746a8928a15ced23da8073098b6d2170d1843be2b4084d8",
+    "art_id": "pc2_076"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_37_26 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "b458196f359b7a29c3ac6f3dd418f3325b9180c21f32defb89ce807ccb9f747d",
+    "art_id": "pc2_077"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_37_34 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "d4b2595a144fa355c0779bd06b6e82d1a64fa3b1acab1053b733fb9cc53aedb1",
+    "art_id": "pc2_078"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_37_44 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "9828c5aaadc18df1361ead7b57ac86ead60948fbdee2bbe31d74525dd5ecc028",
+    "art_id": "pc2_079"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_37_51 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "077c04b79150d98594e60c3c7a9d7eb591e64cf185fb331a5df79f3ac7b1a3bb",
+    "art_id": "pc2_080"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_50_45 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "ccd2d80840758f859a19aecf73dc0890ca61ab869c2da739ddb081f27875744f"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_50_51 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "040bf18c366bc21ae94dc84cd3059cade307bda25efec5f532bd4a1efaa7470e",
+    "art_id": "pc2_082"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_50_58 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "0508cea7b885bce7dac322710c8c1bd9a81ae694cb42625d4cc99f5273e45c72"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_51_04 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "b471346ccd5ddbbbe92eaec97b7e5ea0d723f4cf95e2ef28daf89b96771d86b9",
+    "art_id": "pc2_084"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_51_16 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "dfaeee2fd41f80404ac7dc5c387485bc8dfd4e5ee20b33af85d09413d775dacd"
+  },
+  "ChatGPT Image Aug 13, 2026, 10_51_32 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "921d0fe137072d0d4ff8967bfb0a8e5607c8a54742e62c30e5ea420af7e4ea83",
+    "art_id": "pc2_086"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_06_20 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "1f0b93ea9d32f954af796ff2f34850a4ed2f3e35b9bdb73f1f20becc2ebf9951",
+    "art_id": "pc2_087"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_06_29 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "f2f75216fa1391e75cd0791b35eb87ade16f1ba3b0452c51afdcc47939de49e8",
+    "art_id": "pc2_088"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_06_35 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "3105aff642baddc32a7201ec6ae463cc63aa0810a20f7cdd9f77d401e6727d1b",
+    "art_id": "pc2_089"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_06_41 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "062a400e874bc624ecbc673e7021a0e680a12606d5801bf9b179cff37920648b",
+    "art_id": "pc2_090"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_06_47 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "4f91a0282121a55d1fbb10d9552324c4bdb1ded2fb8833e55d67a234dd802030",
+    "art_id": "pc2_091"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_06_54 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "1d6c2ca11b000412517f6d1af461e0781bf7c6ebf873e3a0aeb7165f306b9683"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_07_01 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "9d2d48d3a0263d2a3eb336cf259cf4fb367e8274a1d2a35930c6032fdd8d7b6a",
+    "art_id": "pc2_093"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_07_11 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "8ea82c8d8beae735aadd76e2a202712e4683756dc6763f4f6c433cc0c4fe8749"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_16_06 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "b2417fb4924a0e1a928cc955434765904ece2054b7ac57978e8ba9a6880a896e"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_16_14 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "fe65e438c2dab2c37ef48de39b2f1afdbb3723010eaec5dc4bb817d293313337"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_16_23 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "4646c53f1fee6a275317b0dcafa4b62df9245fddb886eac15d76211d4120a34e"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_16_32 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "de2cf7a006b3a20e6b03992179df2136ca3e00b48a6a3242f3accdabff15aabc"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_16_40 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "3d6173c5eb35f371f0c9914a8897be48e7288abd830bf95f66b1bbe95c15fb13",
+    "art_id": "pc2_099"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_16_48 PM.png": {
+    "decision": "hold",
+    "agent_verdict": "promote",
+    "sha256": "60acd4367ad152f582e12d715e171ba20eace016c188e5e71165bbf9a39bbad7",
+    "notes": "QA hold: full neck cord is cropped by the top frame edge."
+  },
+  "ChatGPT Image Aug 13, 2026, 11_16_56 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "9118bd8ce9ab237f4337072ddef6f630f48db16d125c49f435a79baa0071367d",
+    "art_id": "pc2_101"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_17_04 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "d003d2ace05a854d9672b3d176e701139acf6652472cdc850071171cc1893fec",
+    "art_id": "pc2_102"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_25_55 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "dc5718c92564db2a8d3b32e5cc71eb785c1e6a2d5723d69750e8d7bc070e842f",
+    "art_id": "pc2_103"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_26_07 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "95b0d85d421be0407a8c323a77dea3d1d1f81dc79397683628ff36126b4457c0"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_26_14 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "ad3943556afcc76a19feb7b68ee69ae9f7819e163dafa7706db87d6250d3493d",
+    "art_id": "pc2_105"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_26_26 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "bf1122f4818f1eca9af7dbb728d6acc05934149993bc427343054a9738f32251",
+    "art_id": "pc2_106"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_51_41 PM.png": {
+    "decision": "hold",
+    "agent_verdict": "promote",
+    "sha256": "f1840889df8de90d539a99c46e8c31a06bb2fabedf2f2008b77d518fe68b685d",
+    "notes": "QA hold: full neck cord is cropped by the top frame edge."
+  },
+  "ChatGPT Image Aug 13, 2026, 11_51_50 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "2525284ab428a6bdb0a712965062e33ce629641f53f229038a2ee20efdd53ebe",
+    "art_id": "pc2_108"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_52_12 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "70a9e7540cbb65df233dcd3c6e189cb38d6c956d2312aa06bd48b3302bb91912",
+    "art_id": "pc2_109"
+  },
+  "ChatGPT Image Aug 13, 2026, 11_52_22 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "1609da11f29528dc9aefeb01e4f4e953137e3627bc6295306a55cdc03ac83d49",
+    "art_id": "pc2_110"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_45_02 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "2afd01f2853a86477f51a290ec49577688852f63bc5312a9af7248dca334dce7"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_45_19 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "84dc6cb2ec372a42ec83db26dd0c28a5337df7a62b3805353949093a39672ccd"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_45_32 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "332b6cabad5dcd37d2b8442a5b357708a1671b2a5986142d1baddf5ab3a9400c",
+    "art_id": "pc2_113"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_45_42 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "bd315935d2f99457c31fcac3c01b836a8142c9ea2171d680d8174283d0430659",
+    "art_id": "pc2_114"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_45_49 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "0d75e0f533b68d7a8e9b0dfaf3d53aea741d3c874a39cc9a6d250ae2b666794e",
+    "art_id": "pc2_115"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_45_57 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "0cf01f50e2a92b7b173a5bf65df7f519e0213df2c8805f4c0ccf8d097722c0aa",
+    "art_id": "pc2_116"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_51_09 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "6ba35e1c6d5d8fc0bf9cd367fe274e5f938a6c4a5cbfeca7301418b83bd275e9"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_51_22 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "9252ed0e356125799edd5491e87d53ccf01cb42bb8a4019471aa91cb9bc1975b",
+    "art_id": "pc2_118"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_51_31 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "b7865d854408b620dc45fe881c8f6666622ce80c1c7ce5c0390fec293e46f798",
+    "art_id": "pc2_119"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_51_44 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "c858f69368d2afc593e24a5557464f43a8ff02785875fa92d379d19c41df1b76",
+    "art_id": "pc2_120"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_51_52 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "a99db40897b47f830946950e264483e9e7294a44d3176c102090efcbc5c1c1ff"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_56_55 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "7207d3cc3760f39766b3c00ed4d5e52470f79bb8882ad243f34818bfe52a6ce2",
+    "art_id": "pc2_122"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_57_04 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "17ce89b0de4107508f5665f64fdd19a032fd72f5b50337cee25a794ed63cffc3",
+    "art_id": "pc2_123"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_57_14 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "fed0c2b67694d7d92dc359dfc4c54f7c85de598cbef61ca50fb7eaebfe238f38"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_57_25 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "2c3b39683ba4fb4054c629254736280de1a6bdc92c0e6e4e6d401e5c2e4da614"
+  },
+  "ChatGPT Image Aug 14, 2026, 08_57_47 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "49b5b96b4cba52f4cba7001621aecb16c79bee98f6fd2d34900fdc4bdd47321f",
+    "art_id": "pc2_126"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_05_44 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "68fdfb7ddac8202867a0f10d7f96ffb6f6f535d35ece29627bbc5bd4be3afeac",
+    "art_id": "pc2_127"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_05_59 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "9f44aabc64f1777aa384f6f25b6e665bffddb9bfc788762da240222c2adf5591",
+    "art_id": "pc2_128"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_06_10 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "b91dd696e1fe97ad11ce3e6eb24a770c914ef3d10e9152e907f72e6418aa9391",
+    "art_id": "pc2_129"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_06_19 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "bf5c8e1c06d468c04c2f84317e82d79571f33b582e05509f0d300ae2083a3b23",
+    "art_id": "pc2_130"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_06_28 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "f4e6701e51f8879d4f1bf76ef61f350ebd258f6265d5124c7aadcf9b6f06432c",
+    "art_id": "pc2_131"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_06_36 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "28fe934488f8600a3d7b9620460cdfd0c36545e8045674c893f250c120f0beb9",
+    "art_id": "pc2_132"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_06_45 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "a27808a3dc0c201494213e6bd2e2a81e6bb5582cb76c91142b55f05002177e5a",
+    "art_id": "pc2_133"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_06_59 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "d4344038756d9f5f9b13365031f766ddc952ad751a772d3f5268963a906c2248",
+    "art_id": "pc2_134"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_13_37 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "ff74538c5fa37aa01f5debc82058e6533a5d681ccb9a65cc945b0540e4cba333"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_13_50 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "aa6c2860965c8edc6544d2d2f993d5b62af291dad6fe241b6e6d709097f6bf83",
+    "art_id": "pc2_136"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_14_10 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "82d03764af5210ad15dcc79626f1b380123125532ec4e2c017b508eab6300545",
+    "art_id": "pc2_137"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_14_20 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "067c04a33309f48fd866bd383407e7043c87cb95afb509b1e2d8f3e18a48f89a"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_30_26 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "f7adda40559df3ef8261fee72b1f080234c9aece64ba11615b0e7110408158f6"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_30_42 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "19b7e2bc614ec19726d17336c2f2842166119d1d099295b888a0b796e04ae8b4",
+    "art_id": "pc2_140"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_30_51 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "b0b9a3f03db6b81f2e014de7be506e1986fce544d568cd22690be44c8c17cda8",
+    "art_id": "pc2_141"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_30_59 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "8b4afc9df08b387f4228eab85178b138b68358e3743f0a94d26118cfe709a4b5",
+    "art_id": "pc2_142"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_31_08 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "862274c49a1e1836f8124d738ee51f67e315232d685d495fa9a66657d175e49b",
+    "art_id": "pc2_143"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_31_18 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "319fd37a94612fe369a21a05d11049eeeb38e1d29e2cb4fd736fb69e3a23dac4"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_31_27 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "18298d6d9f71a9c46ec0e0b9e6591e5f14e3dd659c376cf4347430c3e308ac87"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_39_49 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "539e7de88c5fd35977eadc7cf10bebc3babf2258f5e3ab09e9872827c7c8a7fe",
+    "art_id": "pc2_146"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_39_58 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "6477a6974a300bb506fc647e030ccf45208ddb02fba585e44e21c57a42f6de02",
+    "art_id": "pc2_147"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_40_07 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "c89e0e5550b9f3996de57f079affde7b8353b86ce5f74d6a4c719877b0316597"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_40_18 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "0c43987706188209cd78ab0320c8083e3a35e86b66d3cb2313c17e58f2defa09"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_40_40 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "b492d7fc9ea1fc00145915b00b12ff1b9a28942d4eb31680b65b3c03426d271b"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_44_26 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "6bd47b3c94676f0d616afb7dfddc5c3a8f7acb3d720dc9a7539ddc1dbccfbd4b"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_44_42 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "077c38d1ddb5a6ed5cc49f7b5f0d90792ce7493b8c2638a1c60082f5526e9f00"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_44_55 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "3bacb1b197db0ef94a5097c4a684ae1a4dc85517afa6a6845acc8acb5ee579d1",
+    "art_id": "pc2_153"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_45_04 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "be3f6b933cafbf4d71806a53fdbecfb9d3c2aacec9df1cd8d7c6387460e866a0",
+    "art_id": "pc2_154"
+  },
+  "ChatGPT Image Aug 14, 2026, 09_54_09 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "400a9cbd8560a11ceec447048029a770ca8d51755148b0e9ed7d0d264c84f492"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_20_13 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "3436eb4e58e5b88566e8bb705d0453cbebc171465e4d6164ad852f1aa0e0f948",
+    "art_id": "pc2_156"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_20_35 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "67f5edf895cd146a5f10ccad879f3b57784a270765d188f216738d6b78fd6e93",
+    "art_id": "pc2_157"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_20_51 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "79c56ff17f46257a23586210237fd45e7d74d5b400d090b3b31b00aab9e66230"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_21_01 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "a0b520dd744d2564bac1009756d35df07a194bdeeeabf17dceee84a0748d7d35",
+    "art_id": "pc2_159"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_21_11 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "e119de95c96030202d6daff7dbbe7504a306e77f0aa88a2be440d4353caf379a",
+    "art_id": "pc2_160"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_21_26 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "9beed2c6e5c4acd94d9095e00b717f2af89f4a0be762936973ba8b1cf907ce89",
+    "art_id": "pc2_161"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_21_35 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "9a2d4c76c7ec72eaeb06ffa9adf724c6f952466af9ba55836e93d571b3665207"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_21_44 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "0d07d2217a8c5a4372ddb842e43ae62b0f327083ab9cbb4c2095340fd9f7b82c",
+    "art_id": "pc2_163"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_51_05 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "5bd09109fde1557771b35c79ff9d77c4026b928633cf46fb0f0ed4519c918526",
+    "art_id": "pc2_164"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_51_20 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "d50ad0c87832ada45ad4401bd40c0377daff3f300624fb0b5d79a78d3b5a1702",
+    "art_id": "pc2_165"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_51_38 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "56728e5909e045ca93088295d5236f0da71243011ce7733ecd482b18f040735a",
+    "art_id": "pc2_166"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_51_49 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "1b869ab00b935902571c6e5e0f3567dddeb3d13a1340e3d0c63d3e29d9a72cac",
+    "art_id": "pc2_167"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_52_03 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "c2995dc2bf6077c3791464232c6f41a0da00ad88f0e55ec651c220505013ad70",
+    "art_id": "pc2_168"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_52_13 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "d443f3507d35aa99a7f968fac9b2cc11018153a3330f56a64f6e98b1d7e3553d",
+    "art_id": "pc2_169"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_52_29 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "b36f8127f704c6c8c36e6768dd85036ec912c299160e78b1f71caa8ddd78d41e",
+    "art_id": "pc2_170"
+  },
+  "ChatGPT Image Aug 14, 2026, 10_52_41 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "6e4bc3f351064b6e5e2df0223ae055f700206ec1ab8f0a0cbde8de49467cc087",
+    "art_id": "pc2_171"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_06_33 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "2399cef27b497fbef039bcc487ae8fd7d8aca580714a65ac16c4c6e5393fc337",
+    "art_id": "pc2_172"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_06_41 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "d3229b8e1424081723316856abd71afbff115918ea8e52d783d5aed5d4f57af3"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_06_50 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "747afb605a69b20c89a2bf3e2c5c2d42e6ed453b3eedff8b4919fc41fe97098c",
+    "art_id": "pc2_174"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_07_01 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "7c16585e63c3cb9371d0c84f4f81676c1698f56e61228ad72dac4aed53e14e9a",
+    "art_id": "pc2_175"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_07_10 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "bd42e590667fcc1c2b134f6a944e7974dc9a20b35454fc892b6d58793deffd07",
+    "art_id": "pc2_176"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_07_19 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "f29d9572457927a6ab9d153f1e8a9824d70bd6ff9d19e0f0edd886e9778b7dde",
+    "art_id": "pc2_177"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_07_28 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "ba53b1eebc515ce16c2caa6df237d2448c0fb5d740f4ccf1be7420f2cb5e98d1"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_07_55 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "3d1b696746a948d589341946178044544e90e9f9c3ecdc4b6fe3bd6b1e21f070"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_08_07 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "dfdb234f971fbab07c1e6c9a264e2b4f9f30e1a8574ed7aaea5888ee58f6129b",
+    "art_id": "pc2_180"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_19_03 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "ffb6ee06297e9e36ee242de974c9c25a03e29bfdb588a5567ee42c37d4705799",
+    "art_id": "pc2_181"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_19_14 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "c595ea542ea595253e38b79b55e0b5ea4ff2a76f37b22c93a7fd51c36793a8fa",
+    "art_id": "pc2_182"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_19_23 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "4372cd1e1f7b2243066e12fed47094b4c65646bee2285a7314fd6492e4dc2446"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_19_31 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "0dcb1a657f8a937de6ee98eb9afd2cdda069cd1e9f4043c6b8ac93e9741314f5"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_19_40 PM.png": {
+    "decision": "discard",
+    "agent_verdict": "reject",
+    "sha256": "6c24fc4a87489576ce23313c440073cb6b61fe2351cdc562334ad9c8f4b2300f"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_19_50 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "2545b5370573bd42978953c81c92ce945c84efbcf0973eb41673b6721f22124a",
+    "art_id": "pc2_186"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_19_57 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "25f9b588a5b0b1a742d5f231dda263f54909ff68a83909a2b556a3d91145ceed"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_20_07 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "dabe65adac9e3331e5f6e0c65a5a663606e3394edab786b640439088d54f36cd"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_20_15 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "269f0484e8d53bdde7e8704443206013991081d8058577e3e3fbc105a28d0e4a",
+    "art_id": "pc2_189"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_20_32 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "63a54cd20eb58996869541744fefdf4ead410e9dbcb303079253839a53e06431",
+    "art_id": "pc2_190"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_29_39 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "c4f5bfe0d791b792a1f290ff099991cc5a7805a85eb7dbc7d76c06d9cdf137f4",
+    "art_id": "pc2_191"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_29_53 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "d4fbee72952fd5a0388c9c94f65dbc64dd24de09f8313703c1bf30ab012bb9f7",
+    "art_id": "pc2_192"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_30_02 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "cd461ece3f0321a7bd08f841bd27292117975ca0ab9cd42952e1c6975fd97303",
+    "art_id": "pc2_193"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_30_15 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "799219ef5e88f703c33888cd27b080c47a843483e84148a904c502c68965aecf",
+    "art_id": "pc2_194"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_30_24 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "214ca2271e6850496baaca6059d52de28936260211c0475354a830ba2fdf4d90",
+    "art_id": "pc2_195"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_30_37 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "32386f4e6e6670ef2860cb0dc067b285adfc5c6397b73f46ea19c6a0194ce4b9",
+    "art_id": "pc2_196"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_30_46 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "93e016c3056ad119acf993920501d62fc53c9196a32392d1bcf249ee59f2e551",
+    "art_id": "pc2_197"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_30_55 PM.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "ecd05db672f0bfbe90d6ddabfffae0f9a166ee88d85037d8a2a096f79849bf71",
+    "art_id": "pc2_198"
+  },
+  "ChatGPT Image Aug 14, 2026, 11_31_15 PM.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "f102ed78403a7d9b01d6b1e7b83fb6aa951fe2d1ffe62c77a3beda26fd75eaee"
+  },
+  "ad0d3b4a-757c-4fbe-b0a7-138004a7fe3c.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "44b6d5b21a5015624992922de8d22f10a63dddaf83cde6afd62847a5a0980bbe",
+    "art_id": "pc2_200"
+  },
+  "c23ab386-ab4f-49b4-ac58-680b1fb7ea77.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "10b5513e4c6e0961cf39464ce65f193fa661d4f20ebebd834924f95449452c7e"
+  },
+  "e11d61b3-771a-456d-8566-d967b12616bf.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "db3e6e84e3804ee10535960649f2023f26a0536498a6d3644afaedd42e24f8e3",
+    "art_id": "pc2_202"
+  },
+  "ee02fa08-b216-4b4e-92d6-adadcd360e08.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "a628b97056669027e8cf3f6d502d6c9b5a91e451db7b316b08aa5ff3025a4459"
+  },
+  "f738cd8b-2d50-46e8-820f-dd7b83281909.png": {
+    "decision": "approve",
+    "agent_verdict": "promote",
+    "sha256": "02eafdfa7dcef86578b35783de41f73c704f5efa04117ac223c59aa209092463",
+    "art_id": "pc2_204"
+  },
+  "fc8e59b3-cda2-47ea-8406-0e12f27009ee.png": {
+    "decision": "pending_review",
+    "agent_verdict": "review",
+    "sha256": "d2ecf428322ae8454592c5e75c4eaf32de64b98d01e2da05bca8f6505cb23d35"
+  }
+}

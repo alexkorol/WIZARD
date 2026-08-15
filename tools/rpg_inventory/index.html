@@ -17,6 +17,7 @@
   <script src="core/verdigris-pack.js"></script>
   <script src="core/verdigris-combat.js"></script>
   <script src="core/character-item-taxonomy.js"></script>
+  <script src="core/post-calib-wave2-taxonomy.js"></script>
 
   <style>
     :root {
@@ -898,12 +899,13 @@
       ...item,
       taxonomyId: picked.id,
       artOverride: picked.reviewImage,
-      displayName: titleCase(picked.subtype),
+      displayName: picked.displayName || titleCase(picked.subtype),
       taxonomySlot: picked.slot,
       taxonomyLane: picked.visualLane,
     };
   };
   const formForTaxonomy = (row) => {
+    if (row.runtimeFormId && pack.forms[row.runtimeFormId]) return row.runtimeFormId;
     const sub = row.subtype || '';
     if (row.slot === 'head') return /helm|helmet/.test(sub) ? 'helm' : 'crest';
     if (row.slot === 'body') return 'wrap';
@@ -950,6 +952,9 @@
   const materialForTaxonomy = (row, formId) => {
     const form = pack.forms[formId];
     const allowed = form.materials || Object.keys(pack.materials);
+    if (row.materialId && allowed.includes(row.materialId) && !isRetiredCombo(formId, row.materialId)) {
+      return row.materialId;
+    }
     return materialPrefsForTaxonomy(row).find(id => allowed.includes(id) && !isRetiredCombo(formId, id))
       || allowed.find(id => !isRetiredCombo(formId, id))
       || allowed[0];
@@ -1867,9 +1872,10 @@
       });
     };
 
-    const spawnTaxonomySet = () => {
+    const spawnTaxonomySet = (batch = null) => {
       setState(prev => {
-        const rows = [...TAXONOMY_ITEMS].sort(() => Math.random() - 0.5).slice(0, 18);
+        const pool = batch ? TAXONOMY_ITEMS.filter(row => row.batch === batch) : TAXONOMY_ITEMS;
+        const rows = [...pool].sort(() => Math.random() - 0.5).slice(0, 18);
         let nextInv = prev.inventory;
         let added = 0;
         for (const row of rows) {
@@ -1881,8 +1887,9 @@
           added += 1;
         }
         if (!added) { showToast('Backpack full'); return prev; }
-        showToast(`Added ${added} batch items`, 'ok');
-        return pushLog([{ kind: 'sys', text: `Added ${added} character-batch placeholder items.` }])({ ...prev, inventory: nextInv });
+        const label = batch === 'post-calib-wave2' ? 'approved Wave 2' : 'batch';
+        showToast(`Added ${added} ${label} items`, 'ok');
+        return pushLog([{ kind: 'sys', text: `Added ${added} ${label} items.` }])({ ...prev, inventory: nextInv });
       });
     };
 
@@ -2105,7 +2112,8 @@
             <button className="btn primary" onClick={ventureForth} disabled={fallen}>Venture Forth</button>
             <button className="btn" onClick={restUp} disabled={fallen || curHp >= maxLife || character.gold < restCost}>Rest · {restCost}g</button>
             <button className="btn" onClick={spawnLoot}>Spawn Loot</button>
-            <button className="btn" onClick={spawnTaxonomySet}>Spawn Set</button>
+            <button className="btn" onClick={() => spawnTaxonomySet()}>Spawn Set</button>
+            <button className="btn" onClick={() => spawnTaxonomySet('post-calib-wave2')}>Wave 2</button>
             <button className="btn" onClick={sortPack}>Sort Pack</button>
             <button className={`btn ${benchOpen ? 'primary' : ''}`} aria-expanded={benchOpen} onClick={() => setBenchOpen(o => !o)}>
               {benchOpen ? 'Close Atelier' : `Atelier · ${satchelTotal}`}
