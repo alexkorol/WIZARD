@@ -1,0 +1,110 @@
+[
+  {
+    "number": 1,
+    "batch_id": "faction_riverspill - DEX - tier 1",
+    "faction": "faction_riverspill",
+    "axis": "DEX",
+    "tier": 1,
+    "max_outputs": 10,
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\manual-web-wildcard-wave-02\\prompts\\01__faction_riverspill__DEX__T1__paperdoll-wildcard.txt",
+    "character_reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - DEX - tier 1\\015__p4__ba5c159b-854d-4f57-803c-1483febfe62e.png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - DEX - tier 1\\143__p4__ChatGPT Image Jul 11, 2026, 07_44_37 PM.png"
+    ],
+    "required_visual_faction_moodboard_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\faction_riverspill__visual-moodboard-v4.jpg"
+    ],
+    "existing_balanced_outputs": 1,
+    "generation_unit": "one coherent paperdoll/loadout set"
+  },
+  {
+    "number": 2,
+    "batch_id": "faction_riverspill - DEX - tier 2",
+    "faction": "faction_riverspill",
+    "axis": "DEX",
+    "tier": 2,
+    "max_outputs": 10,
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\manual-web-wildcard-wave-02\\prompts\\02__faction_riverspill__DEX__T2__paperdoll-wildcard.txt",
+    "character_reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - DEX - tier 2\\045__p4__bbf94843-6a5a-43f2-82e4-41eed56e93a7.png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - DEX - tier 2\\009__p4__5655b8c3-98e1-4e19-8496-c9e8b92bdb97.png"
+    ],
+    "required_visual_faction_moodboard_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\faction_riverspill__visual-moodboard-v4.jpg"
+    ],
+    "existing_balanced_outputs": 0,
+    "generation_unit": "one coherent paperdoll/loadout set"
+  },
+  {
+    "number": 3,
+    "batch_id": "faction_riverspill - DEX - tier 3",
+    "faction": "faction_riverspill",
+    "axis": "DEX",
+    "tier": 3,
+    "max_outputs": 10,
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\manual-web-wildcard-wave-02\\prompts\\03__faction_riverspill__DEX__T3__paperdoll-wildcard.txt",
+    "character_reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - DEX - tier 3\\ChatGPT Image Jul 12, 2026, 09_16_20 PM (4).png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - DEX - tier 3\\144__p4__ChatGPT Image Jul 11, 2026, 07_44_40 PM.png"
+    ],
+    "required_visual_faction_moodboard_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\faction_riverspill__visual-moodboard-v4.jpg"
+    ],
+    "existing_balanced_outputs": 0,
+    "generation_unit": "one coherent paperdoll/loadout set"
+  },
+  {
+    "number": 4,
+    "batch_id": "faction_riverspill - INT - tier 2",
+    "faction": "faction_riverspill",
+    "axis": "INT",
+    "tier": 2,
+    "max_outputs": 10,
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\manual-web-wildcard-wave-02\\prompts\\04__faction_riverspill__INT__T2__paperdoll-wildcard.txt",
+    "character_reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - INT - tier 2\\203__p4__ChatGPT Image Jul 13, 2026, 05_06_08 PM.png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - INT - tier 2\\210__p4__ChatGPT Image Jul 13, 2026, 05_06_49 PM.png"
+    ],
+    "required_visual_faction_moodboard_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\faction_riverspill__visual-moodboard-v4.jpg"
+    ],
+    "existing_balanced_outputs": 0,
+    "generation_unit": "one coherent paperdoll/loadout set"
+  },
+  {
+    "number": 5,
+    "batch_id": "faction_riverspill - INT - tier 3",
+    "faction": "faction_riverspill",
+    "axis": "INT",
+    "tier": 3,
+    "max_outputs": 10,
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\manual-web-wildcard-wave-02\\prompts\\05__faction_riverspill__INT__T3__paperdoll-wildcard.txt",
+    "character_reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - INT - tier 3\\ChatGPT Image Jul 12, 2026, 11_09_49 PM (4).png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - INT - tier 3\\167__p4__ChatGPT Image Jul 11, 2026, 07_45_41 PM.png"
+    ],
+    "required_visual_faction_moodboard_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\faction_riverspill__visual-moodboard-v4.jpg"
+    ],
+    "existing_balanced_outputs": 0,
+    "generation_unit": "one coherent paperdoll/loadout set"
+  },
+  {
+    "number": 6,
+    "batch_id": "faction_stonewood - INT - tier 2",
+    "faction": "faction_stonewood",
+    "axis": "INT",
+    "tier": 2,
+    "max_outputs": 10,
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\manual-web-wildcard-wave-02\\prompts\\06__faction_stonewood__INT__T2__paperdoll-wildcard.txt",
+    "character_reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_stonewood - INT - tier 2\\ChatGPT Image Jul 9, 2026, 09_38_35 PM (8).png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_stonewood - INT - tier 2\\ChatGPT Image Jul 13, 2026, 05_19_43 PM (2).png"
+    ],
+    "required_visual_faction_moodboard_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\faction_stonewood__visual-moodboard-v4.jpg"
+    ],
+    "existing_balanced_outputs": 0,
+    "generation_unit": "one coherent paperdoll/loadout set"
+  }
+]

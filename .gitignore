@@ -5,6 +5,8 @@
 __pycache__/
 *.py[cod]
 tools/rpg_inventory/assets_staging/*.png
+tools/rpg_inventory/assets_staging/**/*.png
+tools/rpg_inventory/assets_staging/faction-moodboards-v4/sources/
 tools/rpg_inventory/core/.gen-lock
 tools/rpg_inventory/assets_inbox/2026-07-07-poludnica-*-source/
 tools/rpg_inventory/assets_inbox/2026-07-07-poludnica-*-cleaned/

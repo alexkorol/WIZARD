@@ -5,6 +5,19 @@ before proposing new roast prompts or regenerating nearby concepts. These are
 not accepted finals yet; they are duplicate-avoidance notes until reviewed,
 staged, or discarded.
 
+## 2026-08-15 post-calib batch wave 2 (205 new files)
+
+The 205 files added to `Downloads\items_post_calib_batch` after the 2026-07
+audit were triaged by 14 parallel vision agents: **128 promote / 55 review /
+22 reject**, with tier, stat-axis, and faction guesses per file. Authoritative
+record: `core/expansion_drafts/post-calib-triage-wave2.tsv` (+ `.md` summary).
+Review sheet: `post-calib-wave2-review.html`. Chroma-keyed promote candidates:
+`assets_staging/post-calib-wave2-cleaned/`. Source files were not moved or
+renamed. Until Alex's review-sheet decisions come back, do NOT re-prompt these
+silhouettes; the batch is heavy on helmets, body armor, boots, outer layers,
+shields, and daggers, and starved on Riverspill, INT gear, rings, belts, and
+all rite/relic/auxiliary families.
+
 Review labels in `tools/rpg_inventory/intake-review.html`. The page shows the
 image, proposed label, proposed art id, slot, confidence, and an exportable
 correction JSON.

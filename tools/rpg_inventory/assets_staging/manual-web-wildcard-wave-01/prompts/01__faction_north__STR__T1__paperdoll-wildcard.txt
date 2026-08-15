@@ -1,0 +1,281 @@
+Generate up to 10 images. No commentary.
+
+BATCH IDENTITY
+This extraction batch is faction_north - STR - tier 1. The batch identity is metadata only.
+Do not print it, label it, or place text in any generated image.
+
+TWO-REFERENCE WILDCARD CONTRACT
+Use both attached character/loadout images as complementary authoritative
+references for one shared Northern Bronze Houses equipment culture at Strength
+Tier 1. Inspect both before choosing any paperdoll item.
+
+REFERENCE A: ChatGPT Image Jul 12, 2026, 05_24_54 PM (1).png
+REFERENCE B: ChatGPT Image Jul 12, 2026, 09_46_56 PM (1).png
+
+Do not treat the attachments as two commissions and do not design ten objects
+from prose. The references decide the item families, silhouettes, proportions,
+materials, joins, ornament density, palette placement, wear, and what actually
+belongs together. Agreement is strongest evidence. A clearer side-laid or
+isolated study may complete the same base. When references conflict, choose the
+simpler coherent interpretation instead of combining every detail into a richer
+hybrid. If a slot has no strong ARPG item and no credible same-kit completion,
+skip that slot. Never invent filler merely to reach ten outputs.
+
+REQUIRED VISUAL FACTION MOODBOARD CONTRACT
+One matching portrait visual moodboard is attached as Image C. Images A and B
+are the only authority for faction, axis, tier, material balance, item
+membership, construction, and coherent loadout design.
+
+Image C supplies visual energy only: overall faction mood, silhouette breadth,
+equipment-family variety, color separation, heroic ARPG readability, and the
+feeling of a complete ancient equipment culture. It is not a parts catalog,
+material recipe, or source of additional paperdoll items.
+
+Never average, hybridize, or literally copy objects from Image C. Never import
+a board-only material, item, motif, ornament, prestige level, or manufacturing
+detail. Do not use Image C to fill an unsupported slot. Skip weak slots instead
+of inventing filler.
+
+QUIVER FIREWALL
+Any quiver or bowcase generated as its own game item must be visibly open and
+empty, with no arrows or arrow shafts showing. Arrows are separate inventory
+items. Visible arrows in a character or moodboard reference are equipped
+context only and must not transfer into the quiver deliverable.
+
+OUTPUT FILE RULE - ABSOLUTE
+Generate up to 10 deliverables, with no more than one useful item per numbered
+paperdoll slot. Each deliverable must be its own separate independent image
+file. Never put multiple deliverables into a sheet, grid, contact sheet, lineup,
+inventory board, paperdoll, comparison image, or collage. Do not place inset
+details or multiple panels inside an image. If the interface cannot produce
+separate independent files, generate only deliverable 1 as one isolated image
+instead of combining deliverables.
+
+FACTION, AXIS, AND TIER CALIBRATION
+The character references are authoritative. Northern Bronze Houses are recognized by pale hemmed wool and linen, spatially separate madder, spruce, and ochre woven accents, active-service bronze, pale wood, horn, tailored shawls or rectangular mantles, and restrained amber when those features are actually visible. This is a consistency check, not a material shopping list. Never add bronze, amber, fur, a border, or any other feature to a slot merely because it appears in this paragraph. Do not turn the set into medieval Viking gear, mail-and-plate fantasy, dark bog survival gear, or generic fur barbarian equipment.
+
+Strength is an equipment-design pressure, not a named fantasy class. Favor leverage, stable load paths, robust protection, impact management, secure grips, and credible weight distribution when supported by the references. Do not turn every slot into heavy metal, oversize every object, or default to a barbarian, knight, gladiator, Viking, or fantasy tank.
+
+Tier 1 means few components, simple seams and joins, locally plausible low-cost materials, modest repairs, and incomplete matching. It does not mean dirty, shredded, colorless, or incompetent. Valuable copper alloy is used only where the references visibly support a functional metal part; it is never prestige trim on cheap organic equipment.
+
+These calibration words resolve ambiguous source evidence only. They never
+authorize adding a component, material, motif, or object absent from the shared
+craft system visible in the references.
+
+ANATOMY FIREWALL - FIRST PASS
+Every deliverable is an empty object study only. No character and no anatomy.
+No toes, feet, heels, ankles, legs, knees, thighs, hips, belly, tummy, abdomen,
+midriff, navel, waist flesh, torso flesh, shoulders, arms, hands, fingers, neck,
+head, face, ears, scalp, hair, braids, locs, or skin. Do not copy anatomy along
+with worn gear. Do not use an invisible mannequin, ghost body, flesh-colored
+filler, or hairstyle as an equipment stand. Openings show only the matte
+background or neutral charcoal interior shadow. If an item cannot be separated
+without anatomy, omit that source detail and reconstruct only the empty object.
+
+PAPERDOLL WILDCARD SLOTS - GENERATE UP TO 10 SEPARATE ITEM FILES
+
+1. MAIN HAND WEAPON
+Extract the best-supported main-hand weapon shared by or clearly represented
+across the references. Preserve the complete silhouette, scale, grip, edge,
+head-to-handle ratio, material construction, wrapping, and wear. Show exactly
+one weapon, except that an unmistakable paired-weapon base may be shown as its
+intentional pair. No hand, sheath, floating ammunition, or unrelated trophy.
+
+2. OFF HAND
+Extract one shield, secondary weapon, focus, ritual tool, or other true off-hand
+object actually supported by the references. If it is a shield, show its front
+fighting face only, with complete rim and silhouette. No backside view,
+clamshell opening, front straps, handle loops, or dangling utility hardware. If
+the references do not support a shield, do not invent one merely to fill the
+slot; use the clearest source-supported off-hand family.
+
+3. HEADGEAR
+Extract one complete helmet, cap, hood, brow guard, wrapped head covering, or
+other genuine removable headgear supported by the references. It must be an
+empty wearable shell with the full crown, dome, back, and side construction
+visible in a dynamic three-quarter view. Interior openings use deep neutral
+shadow. No head, face, ears, scalp, hair, braids, locs, ponytail, or bun. A
+hairstyle is not headgear. Preserve one coherent construction family. A woven,
+felted, or fiber cap remains entirely soft-material construction, reinforced by
+weave density, folding, corded seams, or additional layers; it receives no
+bronze/brass bands, plaques, crests, or decorative metal parts. A metal helmet
+remains metal-led and may show only a narrow functional lining or tie at an
+edge; never decorate valuable metal with reed, straw, bast, wicker, coarse
+fiber, or felt panels.
+
+4. AMULET
+Extract one compact pendant-first amulet on a complete simple cord, twine,
+leather string, or source-supported chain. The pendant is the primary readable
+object. Show the full wearable loop without turning it into a tiny cropped
+fragment. Do not render a gorget, collar, choker plate, throat armor, or neck
+guard. No neck or skin.
+
+5. BODY ARMOR ASSEMBLY
+Extract the torso armor as one empty equipment assembly. Render it ungirdled and
+beltless. Remove every separable belt, sash, waist cord, waist harness, amulet,
+necklace, gorget, collar, scarf, mantle, shawl, cloak, and outer layer even when
+the character wears those pieces over it.
+
+Include lower-body components only when clearly visible in at least one source:
+skirt, kilt, robe hem, coat tail, fauld, tasset, cuisse, greave, or actual
+trousers or leggings. Most body-armor studies should not contain pants or
+leggings. Never invent an undersuit, bodysuit, trousers, or leggings to connect
+separate pieces or fill empty space. Arrange observed parts as one small-gap
+exploded gear composition: torso above, any clearly observed lower component
+below, and clearly observed empty paired greaves below or beside it.
+
+The armor ends at the greaves or ankle. No boots, shoes, sandals, slippers,
+soles, toe boxes, feet, legs, belly, abdomen, chest flesh, or skin. Empty spaces
+show matte or neutral charcoal lining, never an invisible body.
+
+6. OUTER LAYER
+Extract one substantial removable cloak, travel cloak, shawl, scarf, mantle,
+veil, hooded layer, or shoulder wrap supported by the references. Preserve its
+complete length, cut, hem, drape, edging, and fastening logic without copying
+the body beneath it. Make it readable as a wearable inventory item, not a cloud
+of cloth. Avoid invented rag fringe, transparent gauze fog, floating strips,
+and costume clutter. If neither reference contains a meaningful removable
+outer layer, use the strongest second source-supported accessory instead of
+inventing one.
+
+7. BELT
+Extract one genuine narrow waist-worn belt, girdle, sash, cord, or low-profile
+waist harness. Compose it for a shallow 2:1 inventory slot: the visible item
+must be at least twice as wide as it is tall, laid straight or in one shallow
+arc, with the horizontal band dominant. Remove, tuck behind, or omit long
+tassels, fringe, sash tails, cords, straps, chains, pouches, apron panels,
+tassets, streamers, and other vertical rigging. Do not turn a skirt, robe hem,
+fauld, tasset, greave, or hanging costume panel into a belt. If the source waist
+piece cannot remain a clean horizontal band, use the simplest supported band
+construction rather than inventing a square pouch-like object.
+
+8. RING
+Extract one compact finger ring: plain band, signet, coil, socket ring, or other
+source-supported compact finger ornament. Show one ring only. It must remain a
+small practical Tier 1 object. No dangling charm, chain, tassel, bell, chime,
+pendant, oversized bracelet, or ceremonial hand jewelry. No finger or hand.
+
+9. HANDWEAR PAIR
+Extract the actual source handwear family as one empty pair: mitts,
+closed-finger gloves, half-gauntlets, gauntlets, short cuffs, wrist bands,
+flexible wraps, archer guards, bracers, or vambraces. Preserve the observed
+family instead of defaulting everything to forearm bracers. Short cuffs stop at
+the wrist; wraps remain visibly flexible; true bracers extend along the
+forearm; protection crossing the wrist onto the backhand, palm, knuckles, or
+fingers retains its complete empty hand cage. Do not trim a glove or
+half-gauntlet into a bracer. Use one coherent construction family. Soft woven,
+felted, quilted, or hide mitts are reinforced only with denser weave, quilting,
+doubled palms, corded seams, or hide wear patches; never paste isolated metal,
+horn, shell, stone, or obsidian plates onto them. True metal gauntlets instead
+use contiguous articulated metal backhand and knuckle construction over a
+subordinate hidden lining. No hands, fingers, arms, skin, or mannequin filler.
+
+10. FOOTWEAR PAIR
+Extract the source footwear as one complete empty pair. Preserve boots, shoes,
+moccasins, foot wraps, sandals, or other source-supported construction. Closed
+toe is the default when the source is ambiguous. Boots and shoes require a
+complete enclosed toe box. Use open-toe sandals only if unmistakably visible in
+the references. No feet, toes, toenails, heels, ankles, legs, skin, or
+flesh-colored filler. Greaves belong to the body-armor assembly, not footwear.
+
+REFERENCE RECONCILIATION RULES
+If an item appears laid beside a character, that side-laid study is the
+authoritative reference for its proportions and construction. Preserve its
+full silhouette. Do not thicken, shorten, or reinterpret it.
+
+If a weapon is a spear, staff, polearm, long axe, long hammer, standard, or any
+reach weapon, show the complete object tip-to-butt on a steep diagonal running
+corner-to-corner. Keep the shaft long and slender, at least five times the
+length of the head when that proportion fits the source. Never shorten a long
+weapon into a mace, wand, baton, or club. Never crop the tip or butt.
+
+Do not duplicate two slightly different source versions inside one icon. Select
+the clearest shared base. Preserve intentional source asymmetry only when it is
+structural and readable. Do not create extra alternate colors, exploded detail
+insets, or before-and-after versions.
+
+MATERIAL HIERARCHY - HARD RULE
+Every item has one dominant construction family. Lower-cost soft or plant
+materials may support a valuable hard material mechanically as hidden lining,
+padding, suspension, edge binding, or a separate garment, but may not decorate
+it. No reed, straw, bast, wicker, coarse fiber, or felt used as a prestige
+stripe, crest filler, ornamental panel, or exposed inlay on bronze, brass, or
+another high-value metal object. No comfortable soft mitten decorated with
+little hard plates. No carefully cut rectangular stone, obsidian, ceramic, or
+glass tiles woven into clothing or articulated joints. If two materials meet,
+show a credible functional overlap, backing, lacing, rivet, socket, wrap, or
+edge binding.
+
+ACTIVE-SERVICE CONDITION
+Historical and replica references teach silhouette, assembly, and healthy
+material response. Render equipment as recently made or actively maintained:
+clear material color, light handling polish, shallow scratches, small repairs,
+and mild localized tarnish only. No heavy verdigris, black corrosion crust,
+burial staining, deep pitting, encrustation, rotten fiber, missing material, or
+all-over archaeological distress.
+
+COORDINATED SET, NOT MOTIF-CLONED SET
+Make all generated items recognizable as one Northern Bronze Houses Strength Tier 1 family through
+shared craft logic, material quality, seams, wraps, edge treatment, shapes,
+weave, and restrained palette placement. Do not stamp one identical focal motif
+onto every object.
+
+At most one or two items may carry a strong focal ornament. Do not repeat the
+same central gem, blue stone, disk, circular boss, eye, sun, wheel, human face,
+medallion, emblem, or seal across the set. Do not invent faction logos or
+readable writing. Coordinate the remaining items through silhouette, plate
+layout, stitch rhythm, wrapped grip, woven border, carved rim, layered leather,
+hammered texture, bone edge, or material contrast. No spiral motifs.
+
+INVENTORY RENDERING STYLE
+Render every file as a dark low-fantasy action-RPG inventory item icon in the
+visual quality range of a premium modern ARPG. Each item is a complete solid
+three-dimensional object shown from a dynamic three-quarter hero angle with
+real depth and volume, never a flat orthographic front or side diagram. Use a
+crisp high-resolution product-render finish with sharp readable silhouette,
+hard edges, seams, bevels, stitching, cloth weave, leather grain, wood grain,
+bone or horn texture, stone fracture, hammered metal, scratches, and restrained
+wear appropriate to the source material.
+
+Light the object with a strong directional key from the upper left, deep
+neutral shadows on the object itself, and a crisp cool rim light that separates
+the silhouette. Use a neutral-to-cold white balance with deep neutral blacks,
+slate-gray shadows, and bone-white highlights. Warm hues appear only where the
+actual material is warm. Do not globally tint the item with the background
+color. Do not turn Tier 1 into muddy gray-brown desaturation.
+
+MATTE BACKGROUND - EXACT
+Do not generate transparency and do not generate a checkerboard. Put every item
+on one perfectly flat, uniform, unlit olive-slate matte background: #737A68.
+The entire canvas background must be exactly one solid color with no cast
+shadow, contact shadow, gradient, texture, paper grain, vignette, floor plane,
+horizon, reflection, scenery, smoke, particles, aura, or lighting variation.
+The matte is for later chroma-key removal.
+
+Do not use #737A68, olive-slate, green-gray, or a confusingly similar muted
+green tone anywhere in the item itself. Do not let the matte reflect onto the
+object, tint the rim light, contaminate metal, or create a green edge halo.
+Keep every item fully inside the frame with clean separation from the matte.
+
+No text, letters, numbers, labels, filenames, captions, watermarks, borders,
+frames, rarity glows, inventory squares, UI elements, character portraits,
+hands, mannequins, ground, or scenery.
+
+FINAL AUDIT BEFORE GENERATING
+Confirm every generated deliverable will be a separate independent image file and never a sheet.
+Confirm each file contains only its assigned empty item or intentional pair.
+Confirm all objects are complete and uncropped. Confirm the set remains
+Northern Bronze Houses, Strength-axis, Tier 1 and was derived from both references without
+being upgraded into a composite high-tier kit. Confirm no repeated centerpiece
+has spread across the set.
+
+Reject or reconstruct any item containing toes or feet; heels, ankles, legs,
+knees, thighs, or hips; belly, tummy, abdomen, midriff, navel, chest flesh, or
+skin; shoulders, arms, hands, or fingers; head, face, ears, scalp, hair, braids,
+locs, ponytail, or bun. Reject body armor containing footwear. Reject headgear
+containing hair or a head. Reject footwear containing toes or feet. Reject any
+paperdoll, grid, contact sheet, collage, inset panel, text, UI, cast shadow, or
+nonuniform background.
+
+Generate up to ten separate olive-slate-background inventory item images now,
+one independent file per supported numbered slot. Skip weak, redundant, incidental, or unsupported slots.

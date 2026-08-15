@@ -719,10 +719,17 @@ as specified by their own prompt blocks.
   commentary. ` and ASCII only (no em-dashes). Plain chat works (no project
   needed).
 - **Downloads must be a connected folder** for the sandbox to read gen output.
-- **Commit hygiene:** source generations in `assets_staging/*.png` are local
-  working files and ignored. Commit the composed finals in `assets/` plus the
-  reusable docs/scripts only. Do not commit `.DS_Store`, `__pycache__`,
-  `.gen-lock`, or one-off handoff/commit helper debris.
+- **Commit hygiene (revised 2026-08-15, per Alex: ship, don't wait):** source
+  and cleaned generation PNGs anywhere under `assets_staging/` are local
+  working files and gitignored (they are pre-approval intermediates and too
+  heavy for the pages repo). Everything else that makes work reproducible or
+  reviewable IS committed as it is produced: prompt packs, manifests, wave
+  READMEs, triage TSVs, review pages, review-derivative thumbnails in
+  `review_assets/`, and the final faction moodboard JPGs (their `sources/`
+  research folder stays local). Composed finals still land in `assets/`.
+  Do not commit `.DS_Store`, `__pycache__`, `.gen-lock`, or one-off
+  handoff/commit helper debris. Agents commit and push their session's
+  deliverables themselves; on this repo pushing gh-pages is the deploy.
 
 ## Base-item model (READ `core/BASE-DESIGN.md` — this is fundamental)
 

@@ -70,6 +70,18 @@ derives alpha mattes with `core/art_matte.py`, and composes cropped RGBA finals
 with `core/compose_assets.py`. Inline SVG fallbacks are still present if an
 asset fails to load.
 
+Review dashboards (open from a local static server at the repo root):
+
+- `review.html` — starter-pack asset review (flag / rework / discard).
+- `taxonomy-review.html` — 2026-07-08 character-item batch taxonomy labels.
+- `intake-review.html` — manual download intake corrections.
+- `post-calib-wave2-review.html` — 2026-08-15 wave-2 triage of the 205-image
+  post-calibration batch (approve / hold / discard, JSON export). Built by
+  `core/build_wave2_review.py`.
+
+Current generation queue and paste-ready prompts:
+`core/IMAGE-GEN-SHOPPING-LIST-2026-08-15.md`.
+
 ### Currencies (the Atelier)
 
 | Currency | Effect |

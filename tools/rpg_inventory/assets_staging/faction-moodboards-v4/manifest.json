@@ -1,0 +1,400 @@
+{
+  "version": 4,
+  "format": "2048x3072 portrait organic visual collage",
+  "visible_text": "faction name only",
+  "user_examples_policy": "User-pasted images define useful image types only and are not board sources.",
+  "source_policy": "Exactly two approved project ladder anchors plus six newly researched, visually reviewed sources locked to one faction-specific historical cluster.",
+  "factions": {
+    "faction_north": {
+      "title": "NORTHERN BRONZE HOUSES",
+      "allowed_clusters": [
+        "mycenaean_aegean",
+        "nordic_bronze"
+      ],
+      "board_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\faction_north__visual-moodboard-v4.jpg",
+      "sources": [
+        {
+          "key": "faction_north_str_t1_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_north - STR - tier 1\\ChatGPT Image Jul 9, 2026, 09_40_32 PM (1).png",
+          "role": "approved_project_ladder",
+          "faction_lock": "faction_north",
+          "historical_cluster": "approved_project_faction",
+          "transfer": "Faction silhouette, equipment culture, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every visible object or let the board override prompt Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\faction_north_str_t1_ladder.png"
+        },
+        {
+          "key": "faction_north_str_t3_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_north - STR - tier 3\\ChatGPT Image Jul 9, 2026, 09_40_32 PM (3).png",
+          "role": "approved_project_ladder",
+          "faction_lock": "faction_north",
+          "historical_cluster": "approved_project_faction",
+          "transfer": "Faction silhouette, equipment culture, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every visible object or let the board override prompt Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\faction_north_str_t3_ladder.png"
+        },
+        {
+          "key": "north_dendra_full_character",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\north\\n13_dendra_full.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_north",
+          "historical_cluster": "mycenaean_aegean",
+          "transfer": "Full equipped Bronze Age silhouette, heavy bronze tier, long spear scale, and handcrafted plate rhythm.",
+          "do_not_transfer": "Literal Dendra copy, face identity, all-over elite bronze, or mechanically perfect plate repetition.",
+          "source_url": "https://cdnb.artstation.com/p/assets/images/images/065/789/281/large/michael-merulla-mycenean2-upg.jpg?1691225615",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\north_dendra_full_character.jpg"
+        },
+        {
+          "key": "north_mycenaean_blue_character",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\north\\n14_mycenaean_blue.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_north",
+          "historical_cluster": "mycenaean_aegean",
+          "transfer": "Bright painted character reference, bronze/leather/blue-textile separation, spear and shield scale.",
+          "do_not_transfer": "Exact crest, face, circular bosses, heraldic marks, or later hoplite treatment.",
+          "source_url": "https://i.pinimg.com/736x/44/0c/c8/440cc8a97086126e615a88bc97919e57.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\north_mycenaean_blue_character.jpg"
+        },
+        {
+          "key": "north_mycenaean_horned_warrior",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\north\\n15_mycenaean_horned_warrior.png",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_north",
+          "historical_cluster": "mycenaean_aegean",
+          "transfer": "Painterly full-body Bronze Age character, warm bronze/linen palette, shield mass, and ARPG presence.",
+          "do_not_transfer": "Exact tusked helmet, circular bosses, character identity, or copying the complete costume.",
+          "source_url": "https://i.pinimg.com/originals/34/8b/fb/348bfb2b7f15d9d302029b15933a6306.png",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\north_mycenaean_horned_warrior.png"
+        },
+        {
+          "key": "north_stylized_mycenaean_character",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\north\\n16_stylized_mycenae.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_north",
+          "historical_cluster": "mycenaean_aegean",
+          "transfer": "Warm graphic palette, textile layering, and a strong ARPG-ready upper-body read.",
+          "do_not_transfer": "Exact character identity, facial markings, written labels, or bull-horn helmet copy.",
+          "source_url": "https://i.pinimg.com/originals/a8/be/9c/a8be9cf4b85c3f09156ca96d3d57be6e.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\north_stylized_mycenaean_character.jpg"
+        },
+        {
+          "key": "north_mycenaean_commander",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\north\\n17_mycenaean_commander.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_north",
+          "historical_cluster": "mycenaean_aegean",
+          "transfer": "Heroic heavy-tier bronze, shield proportion, layered skirt protection, and color confidence.",
+          "do_not_transfer": "Exact sunburst shield, face, plume, perfect rivet rows, or later Classical cues.",
+          "source_url": "https://i.pinimg.com/originals/fb/c8/5e/fbc85ed14a28bcf844bde99c3f854f13.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\north_mycenaean_commander.jpg"
+        },
+        {
+          "key": "north_mycenaean_pair",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\north\\n18_mycenaean_pair.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_north",
+          "historical_cluster": "mycenaean_aegean",
+          "transfer": "Two grounded Bronze Age loadouts, body-shield mass, long spear scale, and pale metal contrast.",
+          "do_not_transfer": "Literal pair, copied shield markings, later Greek gear, or page treatment.",
+          "source_url": "https://i.pinimg.com/originals/fe/b2/ea/feb2ea78fcb307ecf3115897437fcb50.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\north_mycenaean_pair.jpg"
+        }
+      ]
+    },
+    "faction_stonewood": {
+      "title": "CEDAR-OBSIDIAN CLANS",
+      "allowed_clusters": [
+        "mesoamerican",
+        "tlingit_haida_cedar"
+      ],
+      "board_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\faction_stonewood__visual-moodboard-v4.jpg",
+      "sources": [
+        {
+          "key": "faction_stonewood_str_t1_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_stonewood - STR - tier 1\\ChatGPT Image Jul 9, 2026, 09_38_33 PM (1).png",
+          "role": "approved_project_ladder",
+          "faction_lock": "faction_stonewood",
+          "historical_cluster": "approved_project_faction",
+          "transfer": "Faction silhouette, equipment culture, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every visible object or let the board override prompt Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\faction_stonewood_str_t1_ladder.png"
+        },
+        {
+          "key": "faction_stonewood_str_t3_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_stonewood - STR - tier 3\\ChatGPT Image Jul 9, 2026, 09_38_35 PM (6).png",
+          "role": "approved_project_ladder",
+          "faction_lock": "faction_stonewood",
+          "historical_cluster": "approved_project_faction",
+          "transfer": "Faction silhouette, equipment culture, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every visible object or let the board override prompt Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\faction_stonewood_str_t3_ladder.png"
+        },
+        {
+          "key": "stonewood_tlingit_equipped_character",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\stonewood\\s10_tlingit_illustration.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_stonewood",
+          "historical_cluster": "tlingit_haida_cedar",
+          "transfer": "Cedar-and-hide armor mass, worn construction, organic weapon grip, and bold warm color.",
+          "do_not_transfer": "Exact mask, crest, clan imagery, sacred identity, or post-contact equipment.",
+          "source_url": "https://i.pinimg.com/originals/ca/ea/45/caea45b008fdc0dc68d9cfdd31f8d21d.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\stonewood_tlingit_equipped_character.jpg"
+        },
+        {
+          "key": "stonewood_tlingit_action_scene",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\stonewood\\s11_tlingit_scene.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_stonewood",
+          "historical_cluster": "tlingit_haida_cedar",
+          "transfer": "Cedar weapon scale in motion, hide layers, bright painted surfaces, and lived cultural context.",
+          "do_not_transfer": "Literal scene, sacred figures, masks, clan designs, or any firearm-era detail.",
+          "source_url": "https://forums.ageofempires.com/uploads/default/original/3X/4/a/4a7139948958d3cc1639e3c6d435fb0f48a52aa2.jpeg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\stonewood_tlingit_action_scene.jpg"
+        },
+        {
+          "key": "stonewood_haida_coastal_character",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\stonewood\\s12_haida_coast.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_stonewood",
+          "historical_cluster": "tlingit_haida_cedar",
+          "transfer": "Coastal cedar-and-hide silhouette, restrained layers, spear/knife relationship, and environmental palette.",
+          "do_not_transfer": "Exact crest, face paint, clan art, post-contact clothing, or literal composition.",
+          "source_url": "https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/haida-warrior-joseph-feely.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\stonewood_haida_coastal_character.jpg"
+        },
+        {
+          "key": "stonewood_mesoamerican_bright_character",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\stonewood\\s13_aztec_warrior.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_stonewood",
+          "historical_cluster": "mesoamerican",
+          "transfer": "Bright equipped warrior silhouette, textile/feather color blocks, organic shield, and carried club scale.",
+          "do_not_transfer": "Exact regalia, huge feather fan, face identity, sacred emblem, or metal-heavy embellishment.",
+          "source_url": "https://i.pinimg.com/736x/10/a4/a4/10a4a4226ed4baa31e10a432f0a5498c.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\stonewood_mesoamerican_bright_character.jpg"
+        },
+        {
+          "key": "stonewood_mesoamerican_spearman",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\stonewood\\s14_mesoamerican_spearman.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_stonewood",
+          "historical_cluster": "mesoamerican",
+          "transfer": "Grounded cloth-and-hide layers, long spear silhouette, round hide shield, and low-metal hierarchy.",
+          "do_not_transfer": "Exact headdress, body paint, jewelry, sacred markings, or literal costume.",
+          "source_url": "https://i.pinimg.com/originals/66/8f/db/668fdb85359156ca8ac0244fe17b23ee.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\stonewood_mesoamerican_spearman.jpg"
+        },
+        {
+          "key": "stonewood_mayan_warrior_character",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\stonewood\\s15_mayan_warrior.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_stonewood",
+          "historical_cluster": "mesoamerican",
+          "transfer": "Painterly ARPG-ready character, obsidian club read, feathered head protection, and layered organic kit.",
+          "do_not_transfer": "Exact character, steel-like edges, copied ornament, ritual identity, or modern fantasy armor.",
+          "source_url": "https://cdna.artstation.com/p/assets/images/images/030/989/692/large/luis-diaz-mayan-warrior-2.jpg?1602248818",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\stonewood_mayan_warrior_character.jpg"
+        }
+      ]
+    },
+    "faction_dustwind": {
+      "title": "DUSTWIND STEPPE HOUSES",
+      "allowed_clusters": [
+        "scythian_saka_steppe"
+      ],
+      "board_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\faction_dustwind__visual-moodboard-v4.jpg",
+      "sources": [
+        {
+          "key": "faction_dustwind_str_t1_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - STR - tier 1\\ChatGPT Image Jul 9, 2026, 09_42_24 PM (1).png",
+          "role": "approved_project_ladder",
+          "faction_lock": "faction_dustwind",
+          "historical_cluster": "approved_project_faction",
+          "transfer": "Faction silhouette, equipment culture, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every visible object or let the board override prompt Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\faction_dustwind_str_t1_ladder.png"
+        },
+        {
+          "key": "faction_dustwind_dex_t3_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - DEX - tier 3\\ChatGPT Image Jul 9, 2026, 09_42_25 PM (6).png",
+          "role": "approved_project_ladder",
+          "faction_lock": "faction_dustwind",
+          "historical_cluster": "approved_project_faction",
+          "transfer": "Faction silhouette, equipment culture, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every visible object or let the board override prompt Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\faction_dustwind_dex_t3_ladder.png"
+        },
+        {
+          "key": "dustwind_scythian_camp_characters",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\dustwind\\d09_scythian_camp.png",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_dustwind",
+          "historical_cluster": "scythian_saka_steppe",
+          "transfer": "Bright steppe textile patterns, compact shields, axes, bows, and lived travel context.",
+          "do_not_transfer": "Literal pair, yurt, loaded quiver contents, copied trim, or modern reenactor detail.",
+          "source_url": "https://i.pinimg.com/originals/7a/48/76/7a48767d5f6f5a997bc749e34e09491a.png",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\dustwind_scythian_camp_characters.png"
+        },
+        {
+          "key": "dustwind_scythian_horseman",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\dustwind\\d10_scythian_horseman.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_dustwind",
+          "historical_cluster": "scythian_saka_steppe",
+          "transfer": "Mounted armor silhouette, sagaris scale, layered riding clothing, and ochre/blue textile palette.",
+          "do_not_transfer": "Horse as an item, exact rider, fur excess, copied ornament, or medieval cavalry details.",
+          "source_url": "https://i.pinimg.com/originals/5f/df/4c/5fdf4c7eec7e771387185bb81a3fa1c8.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\dustwind_scythian_horseman.jpg"
+        },
+        {
+          "key": "dustwind_saka_equipped_character",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\dustwind\\d11_saka_warrior.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_dustwind",
+          "historical_cluster": "scythian_saka_steppe",
+          "transfer": "Full Saka loadout, patterned trousers, soft cap, compound bow and compact case relationships.",
+          "do_not_transfer": "Exact costume, visible arrows as quiver contents, copied animal art, or later Persian armor.",
+          "source_url": "https://i.pinimg.com/originals/e6/a1/a2/e6a1a29fe21e94956866c849fb471f6c.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\dustwind_saka_equipped_character.jpg"
+        },
+        {
+          "key": "dustwind_steppe_horseman",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\dustwind\\d12_steppe_horseman.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_dustwind",
+          "historical_cluster": "scythian_saka_steppe",
+          "transfer": "Colorful mounted silhouette, pointed cap, scale protection, and compact mobile kit.",
+          "do_not_transfer": "Literal rider, horse gear, copied plume, late armor, or treating the mount as deliverable.",
+          "source_url": "https://i.pinimg.com/originals/97/d1/92/97d192baaadf6bf8a385dba35a746a7a.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\dustwind_steppe_horseman.jpg"
+        },
+        {
+          "key": "dustwind_steppe_infantry",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\dustwind\\d13_steppe_infantry.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_dustwind",
+          "historical_cluster": "scythian_saka_steppe",
+          "transfer": "Grounded infantry silhouette, compact axe and sword pairing, restrained scale armor, and travel layers.",
+          "do_not_transfer": "Exact face, copied weapons, later lamellar, metal abundance, or generic Viking cues.",
+          "source_url": "https://i.pinimg.com/originals/54/b9/ee/54b9ee4ee5611cd1be2d68fd6e5ae61f.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\dustwind_steppe_infantry.jpg"
+        },
+        {
+          "key": "dustwind_scythian_group",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\dustwind\\d14_scythian_group.png",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_dustwind",
+          "historical_cluster": "scythian_saka_steppe",
+          "transfer": "Coherent steppe rank variety, scale-and-textile contrast, long spear proportion, and banner color.",
+          "do_not_transfer": "Literal lineup, banner symbols, wolf imagery, visible arrow contents, or copied costumes.",
+          "source_url": "https://i.pinimg.com/originals/d3/c0/2a/d3c02adbf1efa0affe73e9c44c7a0478.png",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\dustwind_scythian_group.png"
+        }
+      ]
+    },
+    "faction_riverspill": {
+      "title": "RIVERSPILL NILE-ZIGGURAT KINGDOMS",
+      "allowed_clusters": [
+        "predynastic_egyptian",
+        "sumerian_akkadian"
+      ],
+      "board_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\faction_riverspill__visual-moodboard-v4.jpg",
+      "sources": [
+        {
+          "key": "faction_riverspill_str_t1_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - STR - tier 1\\ChatGPT Image Jul 9, 2026, 09_29_09 PM (1).png",
+          "role": "approved_project_ladder",
+          "faction_lock": "faction_riverspill",
+          "historical_cluster": "approved_project_faction",
+          "transfer": "Faction silhouette, equipment culture, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every visible object or let the board override prompt Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\faction_riverspill_str_t1_ladder.png"
+        },
+        {
+          "key": "faction_riverspill_int_t1_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - INT - tier 1\\ChatGPT Image Jul 9, 2026, 09_29_10 PM (7).png",
+          "role": "approved_project_ladder",
+          "faction_lock": "faction_riverspill",
+          "historical_cluster": "approved_project_faction",
+          "transfer": "Faction silhouette, equipment culture, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every visible object or let the board override prompt Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\faction_riverspill_int_t1_ladder.png"
+        },
+        {
+          "key": "riverspill_sumerian_light_pair",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\riverspill\\r12_sumerian_pair.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_riverspill",
+          "historical_cluster": "sumerian_akkadian",
+          "transfer": "Low-metal spear-and-torch silhouettes, rough hide clothing, and early rectangular shield construction.",
+          "do_not_transfer": "Literal pair, flame effect, copied shield face, exact costume, or polished elite metal.",
+          "source_url": "https://i.pinimg.com/originals/8d/bd/11/8dbd118d460c63c6388219698f341d14.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\riverspill_sumerian_light_pair.jpg"
+        },
+        {
+          "key": "riverspill_sumerian_company",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\riverspill\\r13_sumerian_company.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_riverspill",
+          "historical_cluster": "sumerian_akkadian",
+          "transfer": "Bright Mesopotamian role variety, woven textiles, shield scale, helmets, and ARPG palette.",
+          "do_not_transfer": "Monumental statues, exact outfits, copied standards, later Assyrian gear, or literal group.",
+          "source_url": "https://i.pinimg.com/originals/8b/8e/e2/8b8ee23480b67f3c1f38269087038343.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\riverspill_sumerian_company.jpg"
+        },
+        {
+          "key": "riverspill_akkadian_infantry",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\riverspill\\r14_akkadian_infantry.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_riverspill",
+          "historical_cluster": "sumerian_akkadian",
+          "transfer": "Studded cloak protection, socket axes, rectangular shields, and low-metal infantry tiers.",
+          "do_not_transfer": "Exact cloak studs, copied poses, captions, or treating every soldier as a combined kit.",
+          "source_url": "https://i.pinimg.com/originals/1c/d1/a1/1cd1a17738f789e5f32ee3b0dbdb5df0.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\riverspill_akkadian_infantry.jpg"
+        },
+        {
+          "key": "riverspill_sumerian_infantry_roles",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\riverspill\\r15_sumerian_infantry.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_riverspill",
+          "historical_cluster": "sumerian_akkadian",
+          "transfer": "Coherent spear, axe, rectangular shield, bronze cap, and textile relationships.",
+          "do_not_transfer": "Literal lineup, exact uniforms, page text, circular motifs, or later imperial equipment.",
+          "source_url": "https://i.pinimg.com/originals/5a/a0/a6/5aa0a6ab2991175d821437e3bd44369f.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\riverspill_sumerian_infantry_roles.jpg"
+        },
+        {
+          "key": "riverspill_egyptian_archer_roles",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\riverspill\\r16_egyptian_archers.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_riverspill",
+          "historical_cluster": "predynastic_egyptian",
+          "transfer": "Bright linen, hide, short-bow, axe, dagger, and light-infantry role separation.",
+          "do_not_transfer": "Horse gear, literal figures, page labels, visible quiver contents, or later chariot assumptions.",
+          "source_url": "https://live.staticflickr.com/4033/4449675379_343b8210d8_b.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\riverspill_egyptian_archer_roles.jpg"
+        },
+        {
+          "key": "riverspill_egyptian_melee_scene",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\review_assets\\faction-moodboard-references-v4\\riverspill\\r17_egyptian_melee.jpg",
+          "role": "curated_visual_direction",
+          "faction_lock": "faction_riverspill",
+          "historical_cluster": "predynastic_egyptian",
+          "transfer": "Dynamic low-metal melee kit, linen and hide contrast, simple shields, mace, and axe use.",
+          "do_not_transfer": "Literal battle, copied shield paint, exact figures, later crowns, or heroic metal excess.",
+          "source_url": "https://i.pinimg.com/originals/f6/63/da/f663dadc25b8f6e5fcff65ef55ac6a24.jpg",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v4\\sources\\riverspill_egyptian_melee_scene.jpg"
+        }
+      ]
+    }
+  }
+}
