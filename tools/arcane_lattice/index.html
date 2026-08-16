@@ -27,6 +27,8 @@
   #spelltitle { font-size: 19px; color: #ffd700; }
   #spellarch { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(170,180,220,0.6); margin-top: 3px; }
   #spellbody { font-size: 14px; line-height: 1.65; color: rgba(225,230,245,0.9); margin-top: 8px; }
+  #spellpath { font-size: 11px; line-height: 1.5; color: rgba(180,205,255,0.72); margin-top: 9px; }
+  #spellmeta { font-size: 11px; line-height: 1.5; color: rgba(225,215,170,0.78); margin-top: 8px; }
   #spellhybrid { display: none; font-size: 13px; color: #f0a05a; margin-top: 8px; }
   #spellstats { display: none; gap: 14px; margin-top: 10px; font-size: 13px; flex-wrap: wrap; }
   button { font-family: inherit; font-size: 14px; width: 100%; padding: 10px 12px; margin-bottom: 8px;
@@ -37,9 +39,51 @@
   #castbtn { font-size: 16px; letter-spacing: 0.15em; text-transform: uppercase; padding: 13px; }
   #castbtn:not(:disabled) { background: linear-gradient(90deg, #8a6508, #c9a227, #8a6508); color: #1a1205;
                             border-color: rgba(255,215,0,0.6); font-weight: 700; box-shadow: 0 0 22px rgba(255,215,0,0.25); }
+  #combatbox { border-color: rgba(90,190,170,0.22); }
+  .combat-heading { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .combat-heading span:first-child { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(180,230,215,0.78); }
+  .combat-heading span:last-child { font-size: 10px; color: rgba(170,180,220,0.5); }
+  .combat-row { display: flex; justify-content: space-between; gap: 10px; margin-top: 7px; font-size: 12px; color: rgba(220,230,245,0.82); }
+  .combat-row strong { font-weight: 500; color: rgba(220,240,235,0.9); }
+  .combat-bar { height: 6px; margin-top: 4px; border-radius: 5px; overflow: hidden; background: rgba(10,15,28,0.8); border: 1px solid rgba(120,140,180,0.18); }
+  .combat-fill { height: 100%; width: 100%; transition: width 0.25s ease, background 0.25s ease; }
+  #manafill { background: linear-gradient(90deg, #447be0, #8ab8ff); }
+  #casterfill { background: linear-gradient(90deg, #b65353, #ef9b8e); }
+  #targetfill { background: linear-gradient(90deg, #b86b42, #f0c060); }
+  #combatlog { min-height: 32px; margin-top: 10px; padding: 8px 9px; border-radius: 8px; background: rgba(10,15,28,0.5);
+               color: rgba(210,225,230,0.75); font-size: 11px; line-height: 1.45; }
+  .combat-actions { display: flex; gap: 8px; margin-top: 9px; }
+  .combat-actions button { width: auto; flex: 1; margin: 0; padding: 7px 8px; font-size: 11px; }
   #shiftbtn.active, #schismbtn.active { background: rgba(110,80,200,0.55); border-color: rgba(180,150,255,0.6); }
   #instruction { display: none; font-size: 13px; padding: 9px 12px; border-radius: 10px; margin-bottom: 10px;
                  border: 1px solid rgba(255,215,0,0.25); background: rgba(255,215,0,0.06); color: #e8d9a0; }
+  #legend { position: absolute; left: 14px; bottom: 34px; display: flex; gap: 10px; flex-wrap: wrap;
+            max-width: 330px; font-size: 10px; letter-spacing: 0.04em; color: rgba(205,215,245,0.68); }
+  .legend-item { display: inline-flex; align-items: center; gap: 4px; }
+  .legend-swatch { width: 18px; height: 2px; display: inline-block; background: #2a3550; }
+  .legend-swatch.wrap { background: #6a5acd; }
+  .legend-swatch.hyper { background: #9b6bff; }
+  #codex { margin-top: 14px; }
+  #codex h2 { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+              color: rgba(170,180,220,0.5); margin-bottom: 7px; }
+  .schoolgroup { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+                 color: rgba(170,180,220,0.38); margin: 8px 0 4px; }
+  .schoolrow { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 5px 8px;
+               margin-bottom: 4px; border: 1px solid rgba(120,140,255,0.12); border-radius: 7px;
+               background: rgba(20,24,48,0.35); }
+  .schoolrow.current { border-color: rgba(255,215,0,0.45); background: rgba(255,215,0,0.08); }
+  .schoolrow.locked { opacity: 0.48; }
+  .schoolname { color: rgba(225,230,245,0.9); }
+  .schooldetail { font-size: 10px; color: rgba(170,180,220,0.55); text-align: right; }
+  #nodepalette { margin: 0 0 14px; border: 1px solid rgba(120,140,255,0.14); border-radius: 10px; padding: 8px 10px; }
+  #nodepalette summary { cursor: pointer; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(190,200,235,0.72); }
+  .node-row { display: flex; align-items: center; gap: 5px; margin-top: 7px; }
+  .node-row-label { width: 72px; flex: 0 0 72px; font-size: 10px; color: rgba(170,180,220,0.48); }
+  .node-row button { width: auto; flex: 1; min-width: 0; margin: 0; padding: 5px 4px; font-size: 10px; line-height: 1.15; }
+  .node-row button[aria-pressed="true"] { border-color: rgba(255,215,0,0.6); color: #ffe7a3; background: rgba(255,215,0,0.12); }
+  #savebar { display: flex; gap: 8px; align-items: center; margin: 2px 0 14px; }
+  #savebar button { width: auto; flex: 1; margin: 0; padding: 7px 8px; font-size: 12px; }
+  #savestatus { min-width: 70px; font-size: 10px; color: rgba(170,220,190,0.7); text-align: right; }
   .histlabel { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(170,180,220,0.5); margin: 6px 0; }
   .histitem { display: flex; align-items: center; justify-content: space-between; font-size: 13px;
               padding: 6px 10px; margin-bottom: 6px; border: 1px solid rgba(120,140,255,0.15);
@@ -48,14 +92,36 @@
                      background: rgba(180,40,40,0.45); border-color: rgba(255,120,120,0.3); color: #ffd5d5; }
   #flash { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 0.8s;
            background: radial-gradient(circle, rgba(255,235,180,0.3), transparent 70%); }
+  .fatal { position: absolute; inset: 12%; display: grid; place-content: center; text-align: center; padding: 24px;
+           border: 1px solid rgba(255,170,150,0.32); border-radius: 14px; background: rgba(15,10,24,0.88);
+           color: rgba(255,220,210,0.9); line-height: 1.6; }
+  .fatal strong { display: block; margin-bottom: 7px; color: #ffd0c4; font-size: 18px; }
+  @media (max-width: 760px) {
+    html, body { overflow-x: hidden; overflow-y: auto; }
+    #app { flex-direction: column; height: auto; min-height: 100vh; }
+    #view { flex: 0 0 46vh; width: 100%; min-height: 360px; }
+    #panel { width: 100%; height: auto; overflow: visible; padding: 16px; border-left: 0; border-top: 1px solid rgba(120,140,255,0.2); }
+    #panel h1 { font-size: 22px; }
+    #panel .sub { margin-bottom: 12px; }
+    #hint-controls, #tierlabel { top: 8px; font-size: 9px; letter-spacing: 0.08em; }
+    #hint-controls { left: 10px; max-width: 58%; }
+    #tierlabel { right: 10px; max-width: 38%; text-align: right; }
+    #strata { left: 10px; bottom: 8px; font-size: 10px; }
+    #legend { left: 10px; bottom: 28px; max-width: calc(100% - 20px); gap: 7px; font-size: 9px; }
+  }
 </style>
 </head>
 <body>
 <div id="app">
   <div id="view">
-    <div class="hud" id="hint-controls">drag to orbit &middot; scroll to zoom &middot; click nodes to weave</div>
+    <div class="hud" id="hint-controls">drag / swipe to orbit &middot; scroll to zoom &middot; tap nodes to weave</div>
     <div class="hud" id="tierlabel">first veil &mdash; the plane</div>
     <div class="hud" id="strata">0/7 strata woven</div>
+    <div id="legend" aria-label="Lattice channel legend">
+      <span class="legend-item"><i class="legend-swatch"></i>base channel</span>
+      <span class="legend-item"><i class="legend-swatch wrap"></i>Vessel / WRAP</span>
+      <span class="legend-item"><i class="legend-swatch hyper"></i>Tesseract / hyperchannel</span>
+    </div>
     <div id="tip"></div>
     <div id="flash"></div>
   </div>
@@ -66,24 +132,54 @@
       <div id="spelltitle">The weave is incomplete</div>
       <div id="spellarch"></div>
       <div id="spellbody">Weave a connected path of one node per stratum, from Source down to Manifestation.</div>
+      <div id="spellpath"></div>
+      <div id="spellmeta"></div>
       <div id="spellhybrid"></div>
       <div id="spellstats">
         <span id="statpow" style="color:#ff8a8a"></span>
         <span id="statmana" style="color:#8ab8ff"></span>
+        <span id="statcost" style="color:#b9a7ff"></span>
         <span id="statinst" style="color:#f0c060"></span>
         <span id="statdim" style="color:#8fe6b0"></span>
         <span id="statstrain" style="color:#c98aff"></span>
       </div>
     </div>
     <button id="castbtn" disabled>&#10038; Cast Spell &#10038;</button>
+    <div class="box" id="combatbox">
+      <div class="combat-heading"><span>Training chamber</span><span>standalone runtime preview</span></div>
+      <div class="combat-row"><span>Mana</span><strong id="combatmana">100 / 100</strong></div>
+      <div class="combat-bar"><div class="combat-fill" id="manafill"></div></div>
+      <div class="combat-row"><span>Caster integrity</span><strong id="combatcasterhp">100 / 100</strong></div>
+      <div class="combat-bar"><div class="combat-fill" id="casterfill"></div></div>
+      <div class="combat-row"><span>Training target</span><strong id="combattargethp">100 / 100</strong></div>
+      <div class="combat-bar"><div class="combat-fill" id="targetfill"></div></div>
+      <div id="combatlog" role="status" aria-live="polite">Weave a spell to test its runtime effect.</div>
+      <div class="combat-actions">
+        <button id="recoverbtn">Recover</button>
+        <button id="resetcombatbtn">Reset Chamber</button>
+      </div>
+    </div>
     <button id="ascendbtn"><span id="ascendlabel">Ascend Initiation</span></button>
     <button id="shiftbtn"><span id="shiftlabel">Paradigm Shift &middot; 3 left</span></button>
     <button id="schismbtn"><span id="schismlabel">Schism &middot; 2 left</span></button>
     <button id="resetbtn">Reset Lattice</button>
+    <div id="savebar">
+      <button id="savebtn">Save Weave</button>
+      <button id="loadbtn">Load Saved</button>
+      <span id="savestatus" role="status" aria-live="polite"></span>
+    </div>
     <div id="instruction"></div>
+    <details id="nodepalette">
+      <summary>Keyboard weave controls</summary>
+      <div id="nodebuttons"></div>
+    </details>
     <div id="histwrap" style="display:none">
       <div class="histlabel">Active alterations</div>
       <div id="histlist"></div>
+    </div>
+    <div class="box" id="codex">
+      <h2>School codex</h2>
+      <div id="schoollist"></div>
     </div>
   </div>
 </div>
@@ -112,6 +208,8 @@
     ['Outer', 'Inner'],
     ['Manifestation']
   ];
+  var NODE_NAMES = Object.create(null);
+  INITIAL.forEach(function (row) { row.forEach(function (name) { NODE_NAMES[name] = true; }); });
   var COLORS = {
     Source: '#FFA500', Adversarial: '#FF4444', Natural: '#50C878',
     Destructive: '#DC143C', Sustaining: '#4682B4', Creative: '#9370DB',
@@ -143,6 +241,74 @@
   };
   var SPHERE_C = { Body: 'anchored to flesh and matter', Spirit: 'entwined with the soul', Mind: 'woven through thought itself' };
   var ALIGN_C = { Adversarial: 'It hungers as it works, corrupting whatever it touches.', Natural: 'It flows in harmony with the natural order.' };
+
+  // Spell grammar data. Keep these tables separate from presentation so the same
+  // tags can drive the preview, the Verdigris tree, equipment affixes, and VFX.
+  var TAGS = {
+    Source: ['source'], Adversarial: ['hostile'], Natural: ['benign'],
+    Destructive: ['damage'], Sustaining: ['overtime'], Creative: ['create'],
+    Fire: ['fire', 'burn'], Air: ['air', 'mobility'], Water: ['water', 'flow'], Earth: ['earth', 'ward'],
+    Body: ['physical'], Spirit: ['vital'], Mind: ['mental'],
+    Outer: ['projection'], Inner: ['internal'], Manifestation: ['manifestation']
+  };
+  var SHAPES = {
+    'Destructive|Outer': { id: 'strike', name: 'Strike', desc: 'a direct projection', cost: 'mana' },
+    'Destructive|Inner': { id: 'burst', name: 'Inner Burst', desc: 'a burst centered on the caster', cost: 'mana' },
+    'Sustaining|Outer': { id: 'field', name: 'Field', desc: 'a placed field or targeted effect', cost: 'mana' },
+    'Sustaining|Inner': { id: 'stance', name: 'Stance', desc: 'a self-buff, reservation, or channel', cost: 'reservation' },
+    'Creative|Outer': { id: 'summon', name: 'Summon', desc: 'a summoned entity, construct, or terrain piece', cost: 'cooldown' },
+    'Creative|Inner': { id: 'transform', name: 'Transformation', desc: 'a form-change or conjured self-implement', cost: 'channel' }
+  };
+  var SCHOOLS = {
+    'Adversarial|Destructive': 'Chaos', 'Adversarial|Sustaining': 'Death-drain',
+    'Adversarial|Creative': 'Necromancy', 'Natural|Destructive': 'Wrath of Nature',
+    'Natural|Sustaining': 'Life', 'Natural|Creative': 'Nature'
+  };
+  var WRAP_UNLOCKS = {
+    'Adversarial|Creative': 'Necromancy', 'Natural|Destructive': 'Wrath of Nature',
+    'Destructive|Earth': 'Ruin', 'Creative|Fire': 'Forgecraft',
+    'Fire|Mind': 'Mania', 'Earth|Body': 'Stoneflesh',
+    'Body|Inner': 'Inner Alchemy', 'Mind|Outer': 'Psionics'
+  };
+  var SCHOOL_CATALOG = [
+    { name: 'Chaos', edge: 'Adversarial → Destructive' },
+    { name: 'Death-drain', edge: 'Adversarial → Sustaining' },
+    { name: 'Life', edge: 'Natural → Sustaining' },
+    { name: 'Nature', edge: 'Natural → Creative' }
+  ];
+  var WRAP_CATALOG = [
+    { name: 'Necromancy', edge: 'Adversarial → Creative' },
+    { name: 'Wrath of Nature', edge: 'Natural → Destructive' },
+    { name: 'Ruin', edge: 'Destructive → Earth' },
+    { name: 'Forgecraft', edge: 'Creative → Fire' },
+    { name: 'Mania', edge: 'Fire → Mind' },
+    { name: 'Stoneflesh', edge: 'Earth → Body' },
+    { name: 'Inner Alchemy', edge: 'Body → Inner' },
+    { name: 'Psionics', edge: 'Mind → Outer' }
+  ];
+  var CANONICAL_NAMES = {};
+  [
+    ['Adversarial','Destructive','Fire','Body','Outer','Immolation'],
+    ['Adversarial','Destructive','Air','Body','Outer','Storm-lash'],
+    ['Adversarial','Destructive','Air','Spirit','Outer','Banshee Wind'],
+    ['Adversarial','Destructive','Air','Spirit','Inner','Self-scourge'],
+    ['Adversarial','Sustaining','Air','Body','Outer','Suffocation'],
+    ['Adversarial','Sustaining','Air','Spirit','Outer','Haunting'],
+    ['Adversarial','Sustaining','Air','Spirit','Inner','Dark Communion'],
+    ['Adversarial','Sustaining','Water','Spirit','Outer','Leeching Tide'],
+    ['Adversarial','Sustaining','Water','Spirit','Inner','Vampiric Draw'],
+    ['Adversarial','Sustaining','Water','Mind','Inner','Cold Clarity'],
+    ['Natural','Sustaining','Air','Body','Outer','Zephyr Grace'],
+    ['Natural','Sustaining','Air','Spirit','Outer','Blessing Wind'],
+    ['Natural','Sustaining','Air','Spirit','Inner','Breath Trance'],
+    ['Natural','Sustaining','Water','Spirit','Outer','Healing Spring'],
+    ['Natural','Sustaining','Water','Spirit','Inner','Still Pool'],
+    ['Natural','Sustaining','Water','Mind','Inner','Lucid Current'],
+    ['Natural','Creative','Water','Spirit','Outer','Mist-shaping'],
+    ['Natural','Creative','Water','Spirit','Inner','Dream-vessel'],
+    ['Natural','Creative','Water','Mind','Inner','Reverie'],
+    ['Natural','Creative','Earth','Mind','Inner','Rune-memory']
+  ].forEach(function (row) { CANONICAL_NAMES[row.slice(0, 5).join('|')] = row[5]; });
   var CENTERS = ['r2s1', 'r3s1', 'r3s2', 'r4s1'];
   var TIERS = ['first veil — the plane', 'second veil — the vessel', 'third veil — the tesseract'];
 
@@ -232,20 +398,91 @@
     history: [], shiftFirst: null, schismFirst: null,
     comet: null, hover: null, tier: 0, maxTier: 2
   };
+  var combatState = {
+    mana: 100, maxMana: 100, reserved: 0, reservations: 0, cooldowns: {},
+    casterHP: 100, maxCasterHP: 100, targetHP: 100, maxTargetHP: 100
+  };
   slots.forEach(function (s) { st.assign.set(s.id, INITIAL[s.row][s.idx]); });
+
+  function resetAssignment() {
+    st.assign = new Map();
+    slots.forEach(function (s) { st.assign.set(s.id, INITIAL[s.row][s.idx]); });
+  }
+  function restoreAssignment(dataAssign) {
+    var next = new Map(), used = Object.create(null);
+    slots.forEach(function (s) {
+      var candidate = dataAssign && typeof dataAssign[s.id] === 'string' ? dataAssign[s.id] : null;
+      if (candidate && NODE_NAMES[candidate] && !used[candidate]) {
+        next.set(s.id, candidate);
+        used[candidate] = true;
+      }
+    });
+    var remaining = [];
+    INITIAL.forEach(function (row) { row.forEach(function (name) { if (!used[name]) remaining.push(name); }); });
+    slots.forEach(function (s) {
+      if (next.has(s.id)) return;
+      var preferred = INITIAL[s.row][s.idx], idx = remaining.indexOf(preferred);
+      if (idx < 0) idx = 0;
+      next.set(s.id, remaining.splice(idx, 1)[0]);
+    });
+    st.assign = next;
+  }
+  function restoreSelection(dataSelected) {
+    st.selected = new Map();
+    var used = Object.create(null);
+    if (!dataSelected || typeof dataSelected !== 'object') return;
+    Object.keys(dataSelected).forEach(function (key) {
+      var row = +key, sid = dataSelected[key], slot = slotById[sid];
+      if (!Number.isInteger(row) || row < 0 || row >= ROWS.length || !slot || slot.row !== row || used[sid]) return;
+      st.selected.set(row, sid);
+      used[sid] = true;
+    });
+  }
+  function clampCounter(value, max) {
+    return Math.max(0, Math.min(max, Number.isFinite(+value) ? (+value | 0) : max));
+  }
+  function restoreHistory(raw) {
+    if (!Array.isArray(raw)) return [];
+    return raw.filter(function (entry) {
+      if (!entry || typeof entry !== 'object') return false;
+      if (entry.type === 'shift') return NODE_NAMES[entry.a] && NODE_NAMES[entry.b];
+      return entry.type === 'schism' && CENTERS.indexOf(entry.first) >= 0 && CENTERS.indexOf(entry.second) >= 0 && entry.first !== entry.second;
+    }).slice(-100).map(function (entry) {
+      var copy = { type: entry.type, label: typeof entry.label === 'string' ? entry.label : entry.type };
+      if (entry.type === 'shift') { copy.a = entry.a; copy.b = entry.b; }
+      else { copy.first = entry.first; copy.second = entry.second; }
+      return copy;
+    });
+  }
 
   // ================= SCENE =================
   var mount = document.getElementById('view');
+  function showFatal(message) {
+    mount.innerHTML = '<div class="fatal"><strong>The lattice cannot open</strong>' + message + '</div>';
+  }
+  if (typeof THREE === 'undefined') {
+    showFatal('The Three.js runtime failed to load. Check your connection and reload the page.');
+    return;
+  }
   var W = mount.clientWidth, H = mount.clientHeight;
   var scene = new THREE.Scene();
   scene.background = new THREE.Color(0x05060f);
   scene.fog = new THREE.FogExp2(0x05060f, 0.011);
   var camera = new THREE.PerspectiveCamera(55, W / H, 0.1, 300);
   var cam = { radius: 24, theta: 0, phi: 1.45 };
-  var renderer = new THREE.WebGLRenderer({ antialias: true });
+  var renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+  } catch (err) {
+    showFatal('WebGL is unavailable in this browser or device. Try enabling hardware acceleration or use a WebGL-capable browser.');
+    return;
+  }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(W, H);
   mount.appendChild(renderer.domElement);
+  renderer.domElement.tabIndex = 0;
+  renderer.domElement.setAttribute('role', 'img');
+  renderer.domElement.setAttribute('aria-label', 'Interactive arcane lattice. Use the keyboard weave controls in the side panel to select nodes.');
   renderer.domElement.style.cursor = 'grab';
 
   scene.add(new THREE.AmbientLight(0x404868, 1.2));
@@ -546,23 +783,163 @@
       st.assign.set(t.id, old.get(s.id));
     });
   }
+  function uniqueTags(parts) {
+    var seen = Object.create(null), out = [];
+    parts.forEach(function (part) {
+      (Array.isArray(part) ? part : [part]).forEach(function (tag) {
+        if (tag && !seen[tag]) { seen[tag] = true; out.push(tag); }
+      });
+    });
+    return out;
+  }
+  function riskBand(inst) {
+    if (inst < 20) return 'controlled';
+    if (inst < 40) return 'volatile';
+    if (inst < 60) return 'dangerous';
+    return 'catastrophic';
+  }
+  function finiteNumber(value, fallback) {
+    return Number.isFinite(+value) ? +value : fallback;
+  }
+  function resolveSpellCast(spell, resources, options) {
+    resources = resources && typeof resources === 'object' ? resources : {};
+    options = options && typeof options === 'object' ? options : {};
+    var empty = { mana: 0, maxMana: 0, reserved: 0, reservations: 0, cooldowns: {} };
+    if (!spell || typeof spell !== 'object') return { ok: false, reason: 'spell', message: 'No complete weave is ready to cast.', resources: empty };
+    var cost = spell.cost && typeof spell.cost === 'object' ? spell.cost : {};
+    var manaCost = Math.max(0, finiteNumber(cost.mana, 0));
+    var reservationCost = Math.max(0, finiteNumber(cost.reservation, 0));
+    var cooldownCost = Math.max(0, finiteNumber(cost.cooldown, 0));
+    var maxMana = Math.max(0, finiteNumber(resources.maxMana, finiteNumber(resources.mana, 0)));
+    var mana = Math.max(0, Math.min(maxMana, finiteNumber(resources.mana, maxMana)));
+    var reserved = Math.max(0, finiteNumber(resources.reserved, finiteNumber(resources.reservations, 0)));
+    var cooldowns = {};
+    var incomingCooldowns = resources.cooldowns && typeof resources.cooldowns === 'object' ? resources.cooldowns : {};
+    Object.keys(incomingCooldowns).forEach(function (key) { cooldowns[key] = Math.max(0, finiteNumber(incomingCooldowns[key], 0)); });
+    var key = String(options.key || spell.id || spell.title || 'spell');
+    var snapshot = function () { return { mana: mana, maxMana: maxMana, reserved: reserved, reservations: reserved, cooldowns: cooldowns }; };
+    var failure = function (reason, message) { return { ok: false, reason: reason, message: message, resources: snapshot(), resourceDelta: { mana: 0, reserved: 0, cooldown: 0 } }; };
+    if (cooldowns[key] > 0) return failure('cooldown', 'The weave is still recovering for ' + cooldowns[key] + 's.');
+    if (mana < manaCost) return failure('mana', 'Not enough mana: need ' + manaCost + ', have ' + mana + '.');
+    if (maxMana - reserved < reservationCost) return failure('reservation', 'Not enough unreserved mana: need ' + reservationCost + '.');
+
+    mana -= manaCost;
+    reserved += reservationCost;
+    if (cooldownCost) cooldowns[key] = cooldownCost;
+    var instability = Math.max(0, Math.min(99, finiteNumber(spell.inst, 0)));
+    var roll = Math.max(0, Math.min(99.999, finiteNumber(options.roll, Math.random() * 100)));
+    var outcome = 'stable', severity = 'none';
+    if (roll < instability) {
+      var pressure = instability ? roll / instability : 1;
+      if (pressure >= 0.75) { outcome = 'fizzle'; severity = 'minor'; }
+      else if (pressure >= 0.5) { outcome = 'backlash'; severity = 'moderate'; }
+      else if (pressure >= 0.25) { outcome = 'inversion'; severity = 'severe'; }
+      else { outcome = 'aberration'; severity = 'catastrophic'; }
+    }
+    var effect = { type: 'normal', payload: spell.payload || null, target: spell.targeting || 'unknown', power: Math.max(0, finiteNumber(spell.power, 0)) };
+    if (outcome === 'fizzle') effect = { type: 'fizzle', payload: spell.payload || null, target: 'none', power: 0 };
+    if (outcome === 'backlash') effect = { type: 'backlash', payload: spell.payload || null, target: 'self', power: Math.max(1, Math.round(finiteNumber(spell.power, 0) * 0.25)) };
+    if (outcome === 'inversion') effect = { type: 'inversion', payload: spell.payload || null, target: 'opposite', power: Math.max(0, finiteNumber(spell.power, 0)) };
+    if (outcome === 'aberration') effect = { type: 'aberration', payload: spell.payload || null, target: 'unstable', power: Math.max(0, finiteNumber(spell.power, 0)) };
+    var messages = {
+      stable: 'The weave resolves cleanly.', fizzle: 'The weave fizzles; its mana is spent.',
+      backlash: 'The weave recoils through the caster.', inversion: 'The weave inverts its target polarity.',
+      aberration: 'The weave births an aberrant outcome.'
+    };
+    return {
+      ok: true, resolved: outcome !== 'fizzle', outcome: outcome, severity: severity,
+      message: messages[outcome], spell: spell, roll: roll, instability: instability,
+      effect: effect, resources: snapshot(),
+      resourceDelta: { mana: -manaCost, reserved: reservationCost, cooldown: cooldownCost }
+    };
+  }
+  function clampCombat(value, max) { return Math.max(0, Math.min(max, value)); }
+  function combatHasTag(spell, tag) { return !!(spell && spell.tags && spell.tags.indexOf(tag) >= 0); }
+  function updateCombatPanel() {
+    var manaEl = document.getElementById('combatmana'), casterEl = document.getElementById('combatcasterhp'), targetEl = document.getElementById('combattargethp');
+    if (!manaEl || !casterEl || !targetEl) return;
+    manaEl.textContent = Math.round(combatState.mana) + ' / ' + Math.round(combatState.maxMana);
+    casterEl.textContent = Math.round(combatState.casterHP) + ' / ' + Math.round(combatState.maxCasterHP);
+    targetEl.textContent = Math.round(combatState.targetHP) + ' / ' + Math.round(combatState.maxTargetHP);
+    document.getElementById('manafill').style.width = (combatState.maxMana ? (combatState.mana / combatState.maxMana) * 100 : 0) + '%';
+    document.getElementById('casterfill').style.width = (combatState.maxCasterHP ? (combatState.casterHP / combatState.maxCasterHP) * 100 : 0) + '%';
+    document.getElementById('targetfill').style.width = (combatState.maxTargetHP ? (combatState.targetHP / combatState.maxTargetHP) * 100 : 0) + '%';
+  }
+  function setCombatLog(message) { document.getElementById('combatlog').textContent = message; }
+  function applyTrainingResult(result) {
+    if (!result.ok) { setCombatLog(result.message); updateCombatPanel(); return result; }
+    combatState.mana = result.resources.mana;
+    combatState.reserved = result.resources.reserved;
+    combatState.reservations = result.resources.reservations;
+    combatState.cooldowns = result.resources.cooldowns;
+    var amount = Math.max(0, Math.round(result.effect.power || 0));
+    if (result.outcome === 'stable') {
+      if (combatHasTag(result.spell, 'damage')) combatState.targetHP = clampCombat(combatState.targetHP - amount, combatState.maxTargetHP);
+      else if (result.spell.targeting === 'self' || combatHasTag(result.spell, 'vital')) combatState.casterHP = clampCombat(combatState.casterHP + amount, combatState.maxCasterHP);
+    } else if (result.outcome === 'backlash') {
+      combatState.casterHP = clampCombat(combatState.casterHP - amount, combatState.maxCasterHP);
+    } else if (result.outcome === 'inversion') {
+      if (combatHasTag(result.spell, 'damage')) combatState.targetHP = clampCombat(combatState.targetHP + amount, combatState.maxTargetHP);
+      else combatState.targetHP = clampCombat(combatState.targetHP - amount, combatState.maxTargetHP);
+    } else if (result.outcome === 'aberration') {
+      combatState.targetHP = clampCombat(combatState.targetHP - Math.round(amount * 0.5), combatState.maxTargetHP);
+      combatState.casterHP = clampCombat(combatState.casterHP - Math.round(amount * 0.15), combatState.maxCasterHP);
+    }
+    var suffix = combatState.targetHP <= 0 ? ' Training target defeated; reset the chamber to continue.' : '';
+    setCombatLog(result.message + (result.resourceDelta.reserved ? ' Reserved ' + result.resourceDelta.reserved + ' mana.' : '') + suffix);
+    updateCombatPanel();
+    return result;
+  }
+  function resolveTrainingCast(spell) { return applyTrainingResult(resolveSpellCast(spell, combatState, {})); }
+  function resetCombat() {
+    combatState.mana = combatState.maxMana; combatState.reserved = 0; combatState.reservations = 0;
+    combatState.cooldowns = {}; combatState.casterHP = combatState.maxCasterHP; combatState.targetHP = combatState.maxTargetHP;
+    setCombatLog('Training chamber restored.');
+    updateCombatPanel();
+  }
+  function recoverCombat() {
+    combatState.mana = clampCombat(combatState.mana + 25, combatState.maxMana);
+    combatState.casterHP = clampCombat(combatState.casterHP + 10, combatState.maxCasterHP);
+    Object.keys(combatState.cooldowns).forEach(function (key) {
+      combatState.cooldowns[key] = Math.max(0, combatState.cooldowns[key] - 1);
+      if (!combatState.cooldowns[key]) delete combatState.cooldowns[key];
+    });
+    setCombatLog('The chamber advances one recovery beat: +25 mana, +10 integrity, cooldowns tick down.');
+    updateCombatPanel();
+  }
   function genSpell(n) {
     var displaced = 0;
     n.forEach(function (name, r) { if (NATIVE[name] !== r) displaced++; });
-    var title = ((FLAVOR[n[1]] ? FLAVOR[n[1]].n : n[1]) + ' ' + (FLAVOR[n[3]] ? FLAVOR[n[3]].n : n[3]) + ' ' + (FLAVOR[n[5]] ? FLAVOR[n[5]].n : '')).replace(/\s+/g, ' ').trim();
+    var channels = [], wrapSchools = [];
+    for (var rr = 1; rr < ROWS.length; rr++) {
+      var upId = st.selected.get(rr - 1), downId = st.selected.get(rr);
+      var baseChannel = isAdj(upId, downId);
+      var wrapChannel = !baseChannel && isWrap(upId, downId);
+      var kind = baseChannel ? 'base' : (wrapChannel ? 'wrap' : 'hyper');
+      channels.push({ from: n[rr - 1], to: n[rr], kind: kind,
+        requiredTier: kind === 'base' ? 0 : (kind === 'wrap' ? 1 : 2), strained: kind !== 'base' });
+      if (wrapChannel) {
+        var unlock = WRAP_UNLOCKS[n[rr - 1] + '|' + n[rr]];
+        if (unlock && wrapSchools.indexOf(unlock) < 0) wrapSchools.push(unlock);
+      }
+    }
+    var shape = SHAPES[n[2] + '|' + n[5]] || SHAPES['Destructive|Outer'];
+    var school = wrapSchools[0] || SCHOOLS[n[1] + '|' + n[2]] || 'Fractured School';
+    var title = CANONICAL_NAMES[n.slice(1, 6).join('|')] ||
+      ((FLAVOR[n[1]] ? FLAVOR[n[1]].n : n[1]) + ' ' + (FLAVOR[n[3]] ? FLAVOR[n[3]].n : n[3]) + ' ' + (FLAVOR[n[5]] ? FLAVOR[n[5]].n : '')).replace(/\s+/g, ' ').trim();
     var ft = FORMS[n[2] + '|' + n[5]];
     var form = ft && ft[n[3]];
     var sc = SPHERE_C[n[4]] || ('channeled through the displaced essence of ' + n[4]);
     var ac = ALIGN_C[n[1]] || ('Its moral axis is fractured — ' + n[1] + ' burns where alignment should reside.');
     var arch, body;
     if (form) {
-      arch = n[2] + ' · ' + n[3] + ' · ' + n[4] + ' · ' + n[5];
+      arch = school + ' · ' + shape.name + ' · ' + n[3] + ' · ' + n[4] + ' · ' + n[5];
       body = n[0] + ' energy condenses into ' + form + ', ' + sc + '. ' + ac;
     } else {
-      arch = 'Aberrant hybrid weave';
+      arch = school + ' · aberrant ' + shape.name.toLowerCase();
       body = n[0] + ' energy is forced through a warped channel — an aberrant weave of ' + n[2].toLowerCase() + ' and ' + n[3].toLowerCase() + ' resonance, ' + sc + '. ' + ac;
     }
-    var hybrid = displaced > 0 ? ('⚠ ' + displaced + ' node' + (displaced > 1 ? 's' : '') + ' resonating outside ' + (displaced > 1 ? 'their' : 'its') + ' native stratum — the weave warps unpredictably, gaining power at the cost of control.') : null;
+    var hybrid = displaced > 0 ? ('⚠ ' + displaced + ' node' + (displaced > 1 ? 's' : '') + ' displaced; the weave gains power at the cost of control.') : null;
     var base = 0;
     n.forEach(function (name) { base += (FLAVOR[name] ? FLAVOR[name].p : 3); });
     // Hyperchannel strain: every hop not present in the base lattice taxes the cast.
@@ -574,13 +951,34 @@
     var power = base + displaced * 2 + st.shiftsUsed + st.tier * 4;
     var inst = Math.min(99, displaced * 17 + st.shiftsUsed * 4 + st.schismsUsed * 9 + st.tier * 6 + strain * 8);
     var mana = Math.round(power * 3 + inst / 2);
-    return { title: title, arch: arch, body: body, hybrid: hybrid, power: power, inst: inst, mana: mana, strain: strain };
+    var rarity = displaced > 0 ? 'aberrant' : (strain && st.tier >= 2 ? 'transcendent' : (strain ? 'school-gated' : 'common'));
+    var cost = { mana: mana };
+    if (shape.cost === 'reservation') cost.reservation = Math.max(1, Math.round(power * 0.45));
+    if (shape.cost === 'cooldown') cost.cooldown = Math.max(2, Math.round(4 + power / 5));
+    if (shape.cost === 'channel') cost.channel = Math.max(1, Math.round(power / 12));
+    var tags = [];
+    n.forEach(function (name) { tags.push(name.toLowerCase()); tags.push(TAGS[name] || name.toLowerCase()); });
+    tags.push(shape.id, n[3].toLowerCase(), n[4].toLowerCase(), school.toLowerCase().replace(/\s+/g, '-'));
+    if (strain) tags.push('hyperchannel');
+    if (displaced) tags.push('displaced');
+    return {
+      title: title, arch: arch, body: body, hybrid: hybrid,
+      path: n.slice(), channels: channels, tags: uniqueTags(tags),
+      shape: shape.id, shapeName: shape.name, shapeDescription: shape.desc, payload: n[3], domain: n[4],
+      targeting: n[5] === 'Inner' ? 'self' : (n[1] === 'Adversarial' ? 'enemies' : 'allies / world'),
+      school: school, rarity: rarity, risk: riskBand(inst),
+      power: power, inst: inst, mana: mana, cost: cost, strain: strain
+    };
   }
 
   // ================= UI =================
   var castbtn = document.getElementById('castbtn'), shiftbtn = document.getElementById('shiftbtn'),
       schismbtn = document.getElementById('schismbtn'), resetbtn = document.getElementById('resetbtn'),
-      ascendbtn = document.getElementById('ascendbtn'), instrEl = document.getElementById('instruction');
+      ascendbtn = document.getElementById('ascendbtn'), savebtn = document.getElementById('savebtn'),
+      loadbtn = document.getElementById('loadbtn'), recoverbtn = document.getElementById('recoverbtn'),
+      resetcombatbtn = document.getElementById('resetcombatbtn'), saveStatus = document.getElementById('savestatus'),
+      instrEl = document.getElementById('instruction');
+  var SAVE_KEY = 'wizard.arcane-lattice.state.v1';
   var hintTimer = null;
 
   function showHint(msg, sticky) {
@@ -594,38 +992,125 @@
     }
   }
 
+  function setSaveStatus(msg, ok) {
+    saveStatus.textContent = msg;
+    saveStatus.style.color = ok ? 'rgba(170,220,190,0.7)' : 'rgba(255,170,150,0.78)';
+  }
+  function saveWeave() {
+    try {
+      window.localStorage.setItem(SAVE_KEY, JSON.stringify(window.ArcaneLattice.getState()));
+      setSaveStatus('Saved', true);
+    } catch (err) {
+      setSaveStatus('Storage unavailable', false);
+    }
+  }
+  function loadWeave() {
+    try {
+      var raw = window.localStorage.getItem(SAVE_KEY);
+      if (!raw) { setSaveStatus('No saved weave', false); return; }
+      var data = JSON.parse(raw);
+      if (!data || typeof data !== 'object') throw new Error('saved state is not an object');
+      window.ArcaneLattice.setState(data);
+      setSaveStatus('Loaded', true);
+    } catch (err) {
+      setSaveStatus('Save invalid', false);
+    }
+  }
+
+  function updateNodePalette() {
+    var root = document.getElementById('nodebuttons');
+    if (!root) return;
+    root.innerHTML = '';
+    ROWS.forEach(function (row, rowIndex) {
+      var line = document.createElement('div');
+      line.className = 'node-row';
+      var label = document.createElement('span');
+      label.className = 'node-row-label';
+      label.textContent = row.id;
+      line.appendChild(label);
+      slots.filter(function (slot) { return slot.row === rowIndex; }).forEach(function (slot) {
+        var name = st.assign.get(slot.id), button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = name;
+        button.setAttribute('aria-label', row.id + ' node: ' + name);
+        button.setAttribute('aria-pressed', st.selected.get(rowIndex) === slot.id ? 'true' : 'false');
+        button.addEventListener('click', function () { nodeClick(name); });
+        line.appendChild(button);
+      });
+      root.appendChild(line);
+    });
+  }
+
+  function updateCodex(spell) {
+    var list = document.getElementById('schoollist');
+    if (!list) return;
+    var html = '<div class="schoolgroup">Plane schools</div>';
+    SCHOOL_CATALOG.forEach(function (entry) {
+      var current = spell && spell.school === entry.name;
+      html += '<div class="schoolrow' + (current ? ' current' : '') + '">' +
+        '<span class="schoolname">' + entry.name + '</span>' +
+        '<span class="schooldetail">' + entry.edge + (current ? ' · active' : ' · common') + '</span></div>';
+    });
+    html += '<div class="schoolgroup">Vessel schools</div>';
+    WRAP_CATALOG.forEach(function (entry) {
+      var current = spell && spell.school === entry.name;
+      var available = st.maxTier >= 1;
+      var unlocked = st.tier >= 1;
+      var status = current ? 'active' : (unlocked ? 'unlocked' : (available ? 'Vessel available' : 'sealed'));
+      html += '<div class="schoolrow' + (current ? ' current' : '') + (available ? '' : ' locked') + '">' +
+        '<span class="schoolname">' + entry.name + '</span>' +
+        '<span class="schooldetail">' + entry.edge + ' · ' + status + '</span></div>';
+    });
+    list.innerHTML = html;
+  }
+
   function updatePanel() {
+    updateNodePalette();
+    updateCombatPanel();
     document.getElementById('strata').textContent = chainLen() + '/7 strata woven';
     document.getElementById('tierlabel').textContent = TIERS[st.tier];
-    document.getElementById('ascendlabel').textContent = st.tier < st.maxTier ? 'Ascend Initiation' : 'Return to the Plane';
+    document.getElementById('ascendlabel').textContent = st.maxTier === 0 ? 'Ascension locked' : (st.tier < st.maxTier ? 'Ascend Initiation' : 'Return to the Plane');
     ascendbtn.disabled = st.maxTier === 0;
     var nodes = completeNodes();
     var box = document.getElementById('spellbox');
     if (nodes) {
       var s = genSpell(nodes);
+      updateCodex(s);
       document.getElementById('spelltitle').textContent = s.title;
       document.getElementById('spellarch').textContent = s.arch;
       document.getElementById('spellbody').textContent = s.body;
+      document.getElementById('spellpath').textContent = s.path.join('  →  ');
+      document.getElementById('spellmeta').textContent = 'Target: ' + s.targeting + ' · Tags: ' + s.tags.join(' · ');
       var h = document.getElementById('spellhybrid');
       if (s.hybrid) { h.style.display = 'block'; h.textContent = s.hybrid; } else h.style.display = 'none';
       var stats = document.getElementById('spellstats');
       stats.style.display = 'flex';
       document.getElementById('statpow').textContent = 'Power ' + Math.round(s.power);
       document.getElementById('statmana').textContent = 'Mana ' + Math.round(s.mana);
-      document.getElementById('statinst').textContent = 'Instability ' + Math.round(s.inst) + '%';
+      var costParts = [];
+      if (s.cost.reservation) costParts.push('Reserve ' + s.cost.reservation);
+      if (s.cost.cooldown) costParts.push('Cooldown ' + s.cost.cooldown + 's');
+      if (s.cost.channel) costParts.push('Channel ' + s.cost.channel + 's');
+      document.getElementById('statcost').textContent = costParts.join(' · ');
+      document.getElementById('statinst').textContent = 'Instability ' + Math.round(s.inst) + '% · ' + s.risk;
       document.getElementById('statdim').textContent = 'Dimension ' + (st.tier + 3) + 'D';
       var strainEl = document.getElementById('statstrain');
       strainEl.style.display = s.strain ? 'inline' : 'none';
       strainEl.textContent = 'Strain +' + (s.strain * 8) + '%';
       castbtn.disabled = false;
+      castbtn.title = 'Cast ' + s.title + ' · ' + s.risk + ' risk';
       box.classList.add('ready');
     } else {
+      updateCodex(null);
       document.getElementById('spelltitle').textContent = 'The weave is incomplete';
       document.getElementById('spellarch').textContent = '';
       document.getElementById('spellbody').textContent = 'Weave a connected path of one node per stratum, from Source down to Manifestation.';
+      document.getElementById('spellpath').textContent = '';
+      document.getElementById('spellmeta').textContent = '';
       document.getElementById('spellhybrid').style.display = 'none';
       document.getElementById('spellstats').style.display = 'none';
       castbtn.disabled = true;
+      castbtn.title = 'Complete the weave before casting';
       box.classList.remove('ready');
     }
     document.getElementById('shiftlabel').textContent = st.mode === 'shift' ? 'Cancel Paradigm Shift' : ('Paradigm Shift · ' + st.shiftsLeft + ' left');
@@ -737,7 +1222,9 @@
         return;
       }
       if (!adjAt(st.tier, up, sid)) {
-        showHint('Energy cannot leap across the lattice — ' + st.assign.get(up) + ' has no channel to ' + name + ' at this veil. Use a Paradigm Shift, a Schism, or ascend to a higher veil to bring it within reach.');
+        var edgeKey = st.assign.get(up) + '|' + name;
+        var gate = isWrap(up, sid) ? ('Vessel unlocks ' + (WRAP_UNLOCKS[edgeKey] || 'this forbidden school')) : 'Tesseract hyperchannel';
+        showHint('Energy cannot leap across the lattice — ' + st.assign.get(up) + ' → ' + name + ' needs the ' + gate + '.');
         return;
       }
       st.selected.set(row, sid);
@@ -746,9 +1233,11 @@
     updatePanel();
   }
 
-  // TODO(progression): gate ascension — Vessel unlocks after the player's first
-  // schism, Tesseract at a later initiation milestone. Wire via ArcaneLattice.setMaxTier.
   ascendbtn.addEventListener('click', function () {
+    if (st.maxTier === 0) {
+      showHint('Ascension is sealed. An initiation milestone must unlock the next veil.', true);
+      return;
+    }
     var prev = st.tier;
     st.tier = (st.tier + 1) % (st.maxTier + 1);
     if (st.tier < prev) validateDownstream(0); // descending can sever wrap/hyper hops
@@ -765,22 +1254,28 @@
     updatePanel();
   });
   resetbtn.addEventListener('click', function () {
-    st.assign = new Map();
-    slots.forEach(function (s) { st.assign.set(s.id, INITIAL[s.row][s.idx]); });
+    resetAssignment();
     st.selected.clear();
     st.mode = 'normal'; st.shiftsLeft = 3; st.schismsLeft = 2; st.shiftsUsed = 0; st.schismsUsed = 0;
     st.history = []; st.shiftFirst = null; st.schismFirst = null; st.tier = 0;
     updatePanel();
   });
+  savebtn.addEventListener('click', saveWeave);
+  loadbtn.addEventListener('click', loadWeave);
+  recoverbtn.addEventListener('click', recoverCombat);
+  resetcombatbtn.addEventListener('click', resetCombat);
   castbtn.addEventListener('click', function () {
     var nodes = completeNodes();
     if (!nodes) return;
+    var spell = genSpell(nodes);
     st.comet = { t: 0 };
     var fl = document.getElementById('flash');
     fl.style.opacity = '1';
     setTimeout(function () { fl.style.opacity = '0'; }, 250);
+    var runtime = resolveTrainingCast(spell);
     var cb = window.ArcaneLattice && window.ArcaneLattice.onCast;
-    if (typeof cb === 'function') cb(genSpell(nodes));
+    if (typeof cb === 'function') cb(spell);
+    showHint(runtime.ok ? ('Released ' + spell.title + ' · ' + runtime.outcome + '.') : runtime.message, false);
   });
 
   // ================= INPUT =================
@@ -797,8 +1292,12 @@
     return h.length ? h[0].object.userData.name : null;
   }
   var tip = document.getElementById('tip');
-  renderer.domElement.addEventListener('mousedown', function (e) { dragging = true; movedAmt = 0; dx0 = e.clientX; dy0 = e.clientY; });
-  renderer.domElement.addEventListener('mousemove', function (e) {
+  renderer.domElement.style.touchAction = 'none';
+  renderer.domElement.addEventListener('pointerdown', function (e) {
+    dragging = true; movedAmt = 0; dx0 = e.clientX; dy0 = e.clientY;
+    if (renderer.domElement.setPointerCapture) renderer.domElement.setPointerCapture(e.pointerId);
+  });
+  renderer.domElement.addEventListener('pointermove', function (e) {
     if (dragging) {
       var dx = e.clientX - dx0, dy = e.clientY - dy0;
       movedAmt += Math.abs(dx) + Math.abs(dy);
@@ -810,7 +1309,7 @@
     var n = pick();
     st.hover = n;
     renderer.domElement.style.cursor = n ? 'pointer' : 'grab';
-    if (n) {
+    if (n && e.pointerType !== 'touch') {
       var r = rev();
       var slot = slotById[r[n]];
       var native = NATIVE[n] === slot.row;
@@ -818,18 +1317,22 @@
       tip.style.display = 'block';
       tip.style.left = (e.clientX - rect.left + 14) + 'px';
       tip.style.top = (e.clientY - rect.top + 14) + 'px';
-      tip.innerHTML = '<b>' + n + '</b><br><span style="opacity:0.7">' + ROWS[slot.row].id + ' stratum' + (native ? '' : ' — ⚠ displaced') + '</span>';
+      var nodeTags = (TAGS[n] || []).join(' · ');
+      tip.innerHTML = '<b>' + n + '</b><br><span style="opacity:0.7">' + ROWS[slot.row].id + ' stratum' + (native ? '' : ' — ⚠ displaced') + '</span>' +
+        (nodeTags ? '<br><span style="opacity:0.58">' + nodeTags + '</span>' : '');
     } else tip.style.display = 'none';
   });
-  renderer.domElement.addEventListener('mouseup', function (e) {
+  renderer.domElement.addEventListener('pointerup', function (e) {
     dragging = false;
+    if (renderer.domElement.releasePointerCapture && renderer.domElement.hasPointerCapture && renderer.domElement.hasPointerCapture(e.pointerId)) renderer.domElement.releasePointerCapture(e.pointerId);
     if (movedAmt < 6) {
       setNDC(e);
       var n = pick();
       if (n) nodeClick(n);
     }
   });
-  renderer.domElement.addEventListener('mouseleave', function () { dragging = false; tip.style.display = 'none'; });
+  renderer.domElement.addEventListener('pointercancel', function () { dragging = false; tip.style.display = 'none'; });
+  renderer.domElement.addEventListener('pointerleave', function () { if (!dragging) tip.style.display = 'none'; });
   renderer.domElement.addEventListener('wheel', function (e) {
     e.preventDefault();
     cam.radius = Math.max(10, Math.min(55, cam.radius + e.deltaY * 0.02));
@@ -1122,6 +1625,7 @@
       st.assign.forEach(function (n, sid) { assign[sid] = n; });
       st.selected.forEach(function (sid, row) { selected[row] = sid; });
       return {
+        schemaVersion: 1,
         assign: assign, selected: selected, tier: st.tier, maxTier: st.maxTier,
         shiftsLeft: st.shiftsLeft, schismsLeft: st.schismsLeft,
         shiftsUsed: st.shiftsUsed, schismsUsed: st.schismsUsed,
@@ -1130,21 +1634,15 @@
     },
     setState: function (data) {
       if (!data) return;
-      if (data.assign) {
-        st.assign = new Map();
-        slots.forEach(function (s) { st.assign.set(s.id, data.assign[s.id] || INITIAL[s.row][s.idx]); });
-      }
-      st.selected = new Map();
-      if (data.selected) {
-        Object.keys(data.selected).forEach(function (row) { st.selected.set(+row, data.selected[row]); });
-      }
-      if (typeof data.maxTier === 'number') st.maxTier = Math.max(0, Math.min(2, data.maxTier));
-      if (typeof data.tier === 'number') st.tier = Math.max(0, Math.min(st.maxTier, data.tier));
-      if (typeof data.shiftsLeft === 'number') st.shiftsLeft = data.shiftsLeft;
-      if (typeof data.schismsLeft === 'number') st.schismsLeft = data.schismsLeft;
-      if (typeof data.shiftsUsed === 'number') st.shiftsUsed = data.shiftsUsed;
-      if (typeof data.schismsUsed === 'number') st.schismsUsed = data.schismsUsed;
-      if (data.history) st.history = data.history;
+      restoreAssignment(data.assign);
+      restoreSelection(data.selected);
+      if (Number.isFinite(+data.maxTier)) st.maxTier = Math.max(0, Math.min(2, (+data.maxTier | 0)));
+      if (Number.isFinite(+data.tier)) st.tier = Math.max(0, Math.min(st.maxTier, (+data.tier | 0)));
+      if (typeof data.shiftsLeft === 'number') st.shiftsLeft = clampCounter(data.shiftsLeft, 3);
+      if (typeof data.schismsLeft === 'number') st.schismsLeft = clampCounter(data.schismsLeft, 2);
+      if (typeof data.shiftsUsed === 'number') st.shiftsUsed = clampCounter(data.shiftsUsed, 3);
+      if (typeof data.schismsUsed === 'number') st.schismsUsed = clampCounter(data.schismsUsed, 2);
+      st.history = restoreHistory(data.history);
       st.mode = 'normal'; st.shiftFirst = null; st.schismFirst = null;
       validateDownstream(0);
       updatePanel();
@@ -1154,6 +1652,10 @@
       st.maxTier = Math.max(0, Math.min(2, n | 0));
       if (st.tier > st.maxTier) { st.tier = st.maxTier; validateDownstream(0); }
       updatePanel();
+    },
+    resolveCast: function (spell, resources, options) {
+      var current = completeNodes();
+      return resolveSpellCast(spell || (current ? genSpell(current) : null), resources, options);
     },
     getSpell: function () {
       var nodes = completeNodes();

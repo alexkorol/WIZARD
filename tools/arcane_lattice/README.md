@@ -67,18 +67,64 @@ Power-vs-control is the core loop.
 ## Public API (`window.ArcaneLattice`)
 
 ```js
-ArcaneLattice.onCast = function (spell) { /* {title, arch, body, hybrid, power, mana, inst, strain} */ };
+ArcaneLattice.onCast = function (spell) { /* semantic spell record; see fields below */ };
 ArcaneLattice.getState();        // serializable lattice state (assign, selected, tier, counters, history)
 ArcaneLattice.setState(data);    // restore — re-validates the path
 ArcaneLattice.setMaxTier(n);     // progression gate: 0 = Plane only, 1 = +Vessel, 2 = +Tesseract
+ArcaneLattice.resolveCast(spell, resources, options); // deterministic economy/risk resolution
 ArcaneLattice.getSpell();        // current spell data, or null if the weave is incomplete
 ```
 
-TODO(progression): ascension is currently free-cycling up to `maxTier` (default 2).
-Intended gating — Vessel unlocks after the player's first schism, Tesseract at a
-later initiation milestone. Wire `setMaxTier` to the game's progression system.
+`getSpell()` and `onCast` return the legacy display fields (`title`, `arch`, `body`,
+`power`, `mana`, `inst`, `strain`) plus the semantic spell record used by downstream
+systems: `path`, `channels`, `tags`, `shape`, `shapeName`, `shapeDescription`, `payload`, `domain`,
+`targeting`, `school`, `rarity`, `risk`, and `cost`. Tags are intentionally the
+integration contract for future skill-tree and equipment modifiers; consumers should
+not key off generated spell names.
 
-Known rough edges: no touch controls; labels are canvas-sprite textures
-(regenerate if nodes are renamed); schism undo after intervening mutations is
-approximate by design; `genSpell` is a placeholder for the real effect system —
-keep the displaced-node, tier, and hyperchannel-strain modifiers when replacing it.
+`getState()` includes `schemaVersion: 1`. `setState()` tolerates older or malformed
+payloads by restoring a valid node bijection, filtering invalid selections/history,
+and clamping tier/resource counters before re-validating the weave.
+
+The standalone panel also provides explicit `Save Weave` and `Load Saved` controls
+using browser storage. Storage errors are reported in-panel without blocking the
+interactive lattice or the host API.
+
+`resolveCast()` is the host combat-loop adapter. It checks mana, reservations, and
+cooldowns, then returns a deterministic result with `outcome` (`stable`, `fizzle`,
+`backlash`, `inversion`, or `aberration`), an effect payload, resource deltas, and
+the next resource snapshot. Pass `options.roll` for deterministic tests; omit it
+for a normal random instability roll.
+
+Progression remains host-controlled through `setMaxTier`: the UI starts with
+ascension sealed when the host grants Plane-only access, and the host can unlock
+Vessel or Tesseract at the appropriate schism/initiation milestones.
+
+Known rough edges: labels are canvas-sprite textures (regenerate if nodes are
+renamed); schism undo after intervening mutations is approximate by design. The
+canvas now supports pointer/touch orbiting and tapping, while the preview exposes
+the spell grammar, channel gates, and risk bands. The host game still owns
+progression milestones through `setMaxTier`.
+
+## 1.0.0 readiness
+
+Completed in the current release pass:
+
+- [x] Canonical lattice topology, tier gates, shifts, schisms, undo, and pruning
+- [x] Structured spell records with tags, schools, shapes, costs, and risk bands
+- [x] Plane/Vessel school codex and locked-channel explanations
+- [x] Pointer/touch orbiting and tapping
+- [x] Keyboard-selectable node palette and canvas accessibility labeling
+- [x] Sanitized state restore with schema versioning
+- [x] Standalone Save Weave / Load Saved controls
+- [x] Deterministic mana/reservation/cooldown/instability resolver via `resolveCast()`
+- [x] Standalone training chamber with visible resource bars, recovery, and combat log
+
+Still required before calling the game 1.0.0:
+
+- [ ] Full host combat presentation that consumes `onCast`/`resolveCast()` results
+  and applies damage, healing, buffs, and instability outcomes in a playable scene
+- [x] Small-screen responsive visual smoke test at 390px
+- [ ] Final accessibility audit across keyboard and screen-reader flows
+- [ ] Cross-browser smoke test (CDN/WebGL fallback messaging is now implemented)
+- [ ] Release verification for progression milestones and saved-state migration
