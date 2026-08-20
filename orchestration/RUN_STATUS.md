@@ -40,6 +40,6 @@ Deferred out of REVAMP-001 by agreement, not by omission:
 |---|---|---|
 | Owner + supervisor | `Z:\Code\WIZARD` (primary checkout) | — |
 | Fable supervisor | `Z:\Code\.worktrees\wizard-fable-supervisor` | 8120–8129 |
-| Cursor Grok 4.6 | `Z:\Code\.worktrees\wizard-cursor-revamp` (pending move; locked while its session runs — see INC-W003) | 8140–8159 |
+| Cursor Grok 4.6 | none currently — create as `Z:\Code\.worktrees\wizard-cursor-<task>` on next claim | 8140–8159 |
 
 Retire merged worktrees: `git worktree remove` then `git worktree prune`.
