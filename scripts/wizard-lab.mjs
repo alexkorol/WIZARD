@@ -201,15 +201,19 @@ function writeGenerated(registry) {
   fs.writeFileSync(REGISTRY_JS, renderRegistryJs(registry));
 }
 
+function normalizeNewlines(text) {
+  return String(text).replace(/\r\n/g, '\n');
+}
+
 function checkFreshness(registry, failures) {
   const expectedJson = registryPayload(registry);
   const expectedJs = renderRegistryJs(registry);
   if (!fs.existsSync(REGISTRY_JSON)) fail(failures, 'modules.json is missing; run node scripts/wizard-lab.mjs generate');
-  else if (fs.readFileSync(REGISTRY_JSON, 'utf8') !== expectedJson) {
+  else if (normalizeNewlines(fs.readFileSync(REGISTRY_JSON, 'utf8')) !== normalizeNewlines(expectedJson)) {
     fail(failures, 'modules.json is stale; run node scripts/wizard-lab.mjs generate');
   }
   if (!fs.existsSync(REGISTRY_JS)) fail(failures, 'modules.generated.js is missing; run node scripts/wizard-lab.mjs generate');
-  else if (fs.readFileSync(REGISTRY_JS, 'utf8') !== expectedJs) {
+  else if (normalizeNewlines(fs.readFileSync(REGISTRY_JS, 'utf8')) !== normalizeNewlines(expectedJs)) {
     fail(failures, 'modules.generated.js is stale; run node scripts/wizard-lab.mjs generate');
   }
 }
