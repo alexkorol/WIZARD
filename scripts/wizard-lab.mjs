@@ -24,7 +24,8 @@ const REQUIRED_DASHBOARD_IDS = [
   'wizard.cartographer',
   'wizard.mason',
   'wizard.verdigris-splash',
-  'wizard.chronicles'
+  'wizard.chronicles',
+  'wizard.systems-bench'
 ];
 
 const CAPABILITY_KEYS = [
@@ -260,6 +261,32 @@ function checkDashboard(registry, failures) {
   }
 }
 
+function checkRootCopy(failures) {
+  const readme = fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8');
+  const agents = fs.readFileSync(path.join(ROOT, 'AGENTS.md'), 'utf8');
+  const banned = ['Pixel Alchemy Sandbox', 'Interactive Word Cloud', 'WordSphere', 'Wireframe Space Shooter', 'Endless Descent', 'falling-sand sandboxes'];
+  for (const phrase of banned) {
+    if (readme.includes(phrase) || agents.includes(phrase)) {
+      fail(failures, `root docs still promote archived marketing copy: "${phrase}"`);
+    }
+  }
+}
+
+function smokeLaunchFiles(registry, failures) {
+  for (const mod of registry.dashboard) {
+    const html = fs.readFileSync(path.join(ROOT, mod.launch), 'utf8');
+    if (!/<html[\s>]/i.test(html)) fail(failures, `${mod.launch} does not look like an HTML document`);
+    if (mod.capabilities.adapter) {
+      const dir = path.join(ROOT, 'tools', mod.slug);
+      const adapter = path.join(dir, 'wizard-adapter.js');
+      const bench = path.join(dir, 'bench.js');
+      if (!fs.existsSync(adapter) && !fs.existsSync(bench)) {
+        fail(failures, `${mod.id} claims adapter but has no wizard-adapter.js`);
+      }
+    }
+  }
+}
+
 function checkActiveLinks(registry, failures) {
   for (const mod of registry.dashboard) {
     const launch = path.join(ROOT, mod.launch);
@@ -363,6 +390,8 @@ function verify() {
       checkDashboard(registry, failures);
     }
     checkActiveLinks(registry, failures);
+    smokeLaunchFiles(registry, failures);
+    checkRootCopy(failures);
     const full = process.argv.includes('--full') || process.env.WIZARD_VERIFY_FULL === '1';
     if (full) {
       checkModuleTests(failures, results);

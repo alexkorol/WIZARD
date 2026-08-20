@@ -161,21 +161,19 @@ window.WIZARD_REGISTRY = {
         "passive-tree"
       ],
       "capabilities": {
-        "adapter": false,
-        "scenarios": false,
-        "stateExport": false,
-        "stateImport": false,
-        "snapshots": false,
-        "annotations": false,
-        "proposals": false,
+        "adapter": true,
+        "scenarios": true,
+        "stateExport": true,
+        "stateImport": true,
+        "snapshots": true,
+        "annotations": true,
+        "proposals": true,
         "fixtures": false,
         "events": false,
         "pauseStep": false,
-        "agentFeedback": false
+        "agentFeedback": true
       },
       "unsupportedMethods": [
-        "listScenarios",
-        "loadScenario",
         "pause",
         "resume",
         "step"
@@ -303,21 +301,19 @@ window.WIZARD_REGISTRY = {
         "hud-resources"
       ],
       "capabilities": {
-        "adapter": false,
-        "scenarios": false,
-        "stateExport": false,
-        "stateImport": false,
-        "snapshots": false,
+        "adapter": true,
+        "scenarios": true,
+        "stateExport": true,
+        "stateImport": true,
+        "snapshots": true,
         "annotations": false,
         "proposals": false,
         "fixtures": false,
-        "events": false,
+        "events": true,
         "pauseStep": false,
-        "agentFeedback": false
+        "agentFeedback": true
       },
       "unsupportedMethods": [
-        "listScenarios",
-        "loadScenario",
         "getAnnotations",
         "setAnnotations",
         "pause",
@@ -636,6 +632,48 @@ window.WIZARD_REGISTRY = {
     },
     {
       "schemaVersion": 1,
+      "id": "wizard.systems-bench",
+      "slug": "systems_bench",
+      "title": "Verdigris Systems Bench",
+      "description": "Play versioned fixture events, inspect payloads, and drive a retained module through the shared adapter without embedding production netcode.",
+      "status": "prototype",
+      "visibility": "dashboard",
+      "category": "integration",
+      "group": "systems-integration",
+      "launch": "tools/systems_bench/index.html",
+      "readme": "tools/systems_bench/README.md",
+      "preview": null,
+      "moduleVersion": "0.1.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "systems-integration",
+        "hud-resources"
+      ],
+      "capabilities": {
+        "adapter": true,
+        "scenarios": true,
+        "stateExport": true,
+        "stateImport": true,
+        "snapshots": true,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": true,
+        "events": true,
+        "pauseStep": true,
+        "agentFeedback": true
+      },
+      "unsupportedMethods": [
+        "getAnnotations",
+        "setAnnotations"
+      ],
+      "tags": [
+        "integration",
+        "fixtures",
+        "events"
+      ]
+    },
+    {
+      "schemaVersion": 1,
       "id": "wizard.verdigris-splash",
       "slug": "verdigris_splash",
       "title": "Verdigris World Presentation",
@@ -943,21 +981,19 @@ window.WIZARD_REGISTRY = {
         "passive-tree"
       ],
       "capabilities": {
-        "adapter": false,
-        "scenarios": false,
-        "stateExport": false,
-        "stateImport": false,
-        "snapshots": false,
-        "annotations": false,
-        "proposals": false,
+        "adapter": true,
+        "scenarios": true,
+        "stateExport": true,
+        "stateImport": true,
+        "snapshots": true,
+        "annotations": true,
+        "proposals": true,
         "fixtures": false,
         "events": false,
         "pauseStep": false,
-        "agentFeedback": false
+        "agentFeedback": true
       },
       "unsupportedMethods": [
-        "listScenarios",
-        "loadScenario",
         "pause",
         "resume",
         "step"
@@ -1012,6 +1048,48 @@ window.WIZARD_REGISTRY = {
         "autotile",
         "terrain",
         "canvas"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.systems-bench",
+      "slug": "systems_bench",
+      "title": "Verdigris Systems Bench",
+      "description": "Play versioned fixture events, inspect payloads, and drive a retained module through the shared adapter without embedding production netcode.",
+      "status": "prototype",
+      "visibility": "dashboard",
+      "category": "integration",
+      "group": "systems-integration",
+      "launch": "tools/systems_bench/index.html",
+      "readme": "tools/systems_bench/README.md",
+      "preview": null,
+      "moduleVersion": "0.1.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "systems-integration",
+        "hud-resources"
+      ],
+      "capabilities": {
+        "adapter": true,
+        "scenarios": true,
+        "stateExport": true,
+        "stateImport": true,
+        "snapshots": true,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": true,
+        "events": true,
+        "pauseStep": true,
+        "agentFeedback": true
+      },
+      "unsupportedMethods": [
+        "getAnnotations",
+        "setAnnotations"
+      ],
+      "tags": [
+        "integration",
+        "fixtures",
+        "events"
       ]
     },
     {
@@ -1127,21 +1205,19 @@ window.WIZARD_REGISTRY = {
         "hud-resources"
       ],
       "capabilities": {
-        "adapter": false,
-        "scenarios": false,
-        "stateExport": false,
-        "stateImport": false,
-        "snapshots": false,
+        "adapter": true,
+        "scenarios": true,
+        "stateExport": true,
+        "stateImport": true,
+        "snapshots": true,
         "annotations": false,
         "proposals": false,
         "fixtures": false,
-        "events": false,
+        "events": true,
         "pauseStep": false,
-        "agentFeedback": false
+        "agentFeedback": true
       },
       "unsupportedMethods": [
-        "listScenarios",
-        "loadScenario",
         "getAnnotations",
         "setAnnotations",
         "pause",
