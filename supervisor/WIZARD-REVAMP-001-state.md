@@ -9,11 +9,13 @@ Comment marker: `<!-- wizard-orchestration:v1 -->`
 
 ## Current state
 
-- STATUS: revise (cycle 1 verdict posted 2026-08-19, awaiting new head from Cursor)
-- IMPLEMENTATION_PR: #31 (cursor/wizard-revamp-001)
-- LAST_REVIEWED_HEAD_SHA: e0da0e4e2793f296562f438b94e8c8ca66f6262c
-- REVIEW_CYCLE: 1 of 4 max
-- LAST_VERDICT: REVISE (P1 proposal toolbar not dev-gated; P1 narrow capture not narrow; P2 AGENTS.md reflow). Verified good: verify --full PASS, all module tests PASS, proposal non-mutation boundary, Systems Bench orb bridge (hp 0.345 at event 2), honest capabilities, 9-card dashboard, metadata clean, mobile single-column, archive candidates off surfaces, arcane_lattice untouched.
+- STATUS: COMPLETE (2026-08-20). PR #31 ACCEPTED at cycle 2 and merged into gh-pages via merge commit 2634320245095a7383f420829e0110a8ce0c5682. Issue #30 closed. Supervisor routine for this task ended.
+- IMPLEMENTATION_PR: #31 (cursor/wizard-revamp-001) — MERGED
+- LAST_REVIEWED_HEAD_SHA: eb155bd9d3ac662ce1f5bc69d3fa04525b91c93b (ACCEPTED)
+- REVIEW_CYCLE: 2 of 4 used
+- LAST_VERDICT: ACCEPTED. Cycle-1 REVISE findings (dev-gating, narrow capture, AGENTS.md reflow) all resolved at eb155bd; independently re-verified: verify --full PASS, proposals boundary + dev-gating PASS, performance PASS, rpg_inventory 41/41, CI green, delta scoped to findings only.
+- PROTOCOL AMENDMENT (2026-08-20, owner-directed): workers never idle-poll or stop while awaiting a verdict — they continue on a stacked follow-up branch with deferred-scope work, never pushing to the head under review. Continuous unsupervised operation; no human-in-the-loop restarts.
+- DEFERRED BACKLOG (candidates for WIZARD-REVAMP-002): adapters for remaining retained modules; physical archive relocation + redirects; more Systems Bench fixtures; proposal promotion tooling.
 
 ## Checkpoint record (Part A)
 
