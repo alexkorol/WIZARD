@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "wizard.orbs",
+  "slug": "wizard_orbs",
+  "title": "Vessels of Life & Mana",
+  "description": "WebGL2 life and mana orb engine for calibrating resource readouts, reservation, and status simulation against Verdigris HUD art.",
+  "status": "calibration",
+  "visibility": "dashboard",
+  "category": "calibration",
+  "group": "character-systems",
+  "launch": "tools/wizard_orbs/index.html",
+  "readme": "tools/wizard_orbs/README.md",
+  "preview": "tools/wizard_orbs/screenshots/shot_hero.png",
+  "moduleVersion": "1.0.0",
+  "stateVersion": 1,
+  "verdigrisTargets": ["hud-resources"],
+  "capabilities": {
+    "adapter": true,
+    "scenarios": true,
+    "stateExport": true,
+    "stateImport": true,
+    "snapshots": true,
+    "annotations": false,
+    "proposals": false,
+    "fixtures": false,
+    "events": true,
+    "pauseStep": false,
+    "agentFeedback": true
+  },
+  "unsupportedMethods": ["getAnnotations", "setAnnotations", "pause", "resume", "step"],
+  "tags": ["hud", "orbs", "webgl2", "status-fx"]
+}

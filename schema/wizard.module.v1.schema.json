@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alexkorol.github.io/WIZARD/schema/wizard.module.v1.schema.json",
+  "title": "WIZARD module manifest",
+  "description": "Versioned declaration for a Verdigris Systems Laboratory module. Capabilities must be honest.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "slug",
+    "title",
+    "description",
+    "status",
+    "visibility",
+    "category",
+    "group",
+    "launch",
+    "readme",
+    "moduleVersion",
+    "stateVersion",
+    "verdigrisTargets",
+    "capabilities",
+    "tags"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^wizard\\.[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "Stable module ID, unique across the repository."
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "description": "Directory name under tools/."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 400
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "prototype",
+        "calibration",
+        "authoring",
+        "presentation",
+        "stable",
+        "legacy",
+        "internal",
+        "archive"
+      ]
+    },
+    "visibility": {
+      "type": "string",
+      "enum": ["dashboard", "internal", "legacy", "archive"]
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "calibration",
+        "authoring",
+        "presentation",
+        "integration",
+        "reference",
+        "utility"
+      ]
+    },
+    "group": {
+      "type": "string",
+      "enum": [
+        "character-systems",
+        "world-terrain",
+        "systems-integration",
+        "chronicles",
+        "internal",
+        "legacy",
+        "archive"
+      ]
+    },
+    "launch": {
+      "type": "string",
+      "description": "Repo-relative HTML entry used as the public launch URL."
+    },
+    "readme": {
+      "type": "string",
+      "description": "Repo-relative README path."
+    },
+    "preview": {
+      "type": ["string", "null"],
+      "description": "Repo-relative preview image when one reliably exists."
+    },
+    "moduleVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "stateVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "verdigrisTargets": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "hud-resources",
+          "passive-tree",
+          "itemization",
+          "spellcraft",
+          "zone-generation",
+          "terrain-autotile",
+          "world-presentation",
+          "chronicle-meta",
+          "systems-integration",
+          "none"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adapter",
+        "scenarios",
+        "stateExport",
+        "stateImport",
+        "snapshots",
+        "annotations",
+        "proposals",
+        "fixtures",
+        "events",
+        "pauseStep",
+        "agentFeedback"
+      ],
+      "properties": {
+        "adapter": { "type": "boolean" },
+        "scenarios": { "type": "boolean" },
+        "stateExport": { "type": "boolean" },
+        "stateImport": { "type": "boolean" },
+        "snapshots": { "type": "boolean" },
+        "annotations": { "type": "boolean" },
+        "proposals": { "type": "boolean" },
+        "fixtures": { "type": "boolean" },
+        "events": { "type": "boolean" },
+        "pauseStep": { "type": "boolean" },
+        "agentFeedback": { "type": "boolean" }
+      }
+    },
+    "unsupportedMethods": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1
+    }
+  }
+}

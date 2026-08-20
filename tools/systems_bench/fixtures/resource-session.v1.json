@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "id": "resource-session.v1",
+  "name": "Low-life then recover",
+  "targetModuleId": "wizard.orbs",
+  "events": [
+    {
+      "schemaVersion": 1,
+      "sequence": 0,
+      "timeMs": 0,
+      "type": "resource.changed",
+      "source": "fixture:resource-session.v1",
+      "target": "actor:player",
+      "data": { "resource": "life", "current": 110, "maximum": 110 }
+    },
+    {
+      "schemaVersion": 1,
+      "sequence": 1,
+      "timeMs": 400,
+      "type": "resource.changed",
+      "source": "fixture:resource-session.v1",
+      "target": "actor:player",
+      "data": { "resource": "mana", "current": 80, "maximum": 80 }
+    },
+    {
+      "schemaVersion": 1,
+      "sequence": 2,
+      "timeMs": 1200,
+      "type": "resource.changed",
+      "source": "fixture:resource-session.v1",
+      "target": "actor:player",
+      "data": { "resource": "life", "current": 38, "maximum": 110 }
+    },
+    {
+      "schemaVersion": 1,
+      "sequence": 3,
+      "timeMs": 1600,
+      "type": "resource.changed",
+      "source": "fixture:resource-session.v1",
+      "target": "actor:player",
+      "data": { "resource": "mana", "current": 22, "maximum": 80 }
+    },
+    {
+      "schemaVersion": 1,
+      "sequence": 4,
+      "timeMs": 2400,
+      "type": "resource.changed",
+      "source": "fixture:resource-session.v1",
+      "target": "actor:player",
+      "data": { "resource": "life", "current": 96, "maximum": 110 }
+    },
+    {
+      "schemaVersion": 1,
+      "sequence": 5,
+      "timeMs": 2800,
+      "type": "resource.changed",
+      "source": "fixture:resource-session.v1",
+      "target": "actor:player",
+      "data": { "resource": "mana", "current": 70, "maximum": 80 }
+    }
+  ]
+}

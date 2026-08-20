@@ -1,0 +1,1234 @@
+{
+  "generatedBy": "scripts/wizard-lab.mjs",
+  "schemaVersion": 1,
+  "doNotEdit": true,
+  "modules": [
+    {
+      "schemaVersion": 1,
+      "id": "wizard.arcane-lattice",
+      "slug": "arcane_lattice",
+      "title": "Arcane Lattice",
+      "description": "Hyperdimensional spellcraft lattice for inspecting adjacency, paradigm shifts, schisms, and instability without changing canonical weave rules.",
+      "status": "calibration",
+      "visibility": "dashboard",
+      "category": "calibration",
+      "group": "systems-integration",
+      "launch": "tools/arcane_lattice/index.html",
+      "readme": "tools/arcane_lattice/README.md",
+      "preview": null,
+      "moduleVersion": "0.9.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "spellcraft"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "listScenarios",
+        "loadScenario",
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "spellcraft",
+        "threejs",
+        "lattice"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.cartographer",
+      "slug": "cartographer",
+      "title": "Cartographer",
+      "description": "Seeded Diablo-tradition zone generator for calibrating families, themes, connectivity, and engine-ready map JSON.",
+      "status": "authoring",
+      "visibility": "dashboard",
+      "category": "authoring",
+      "group": "world-terrain",
+      "launch": "tools/cartographer/index.html",
+      "readme": "tools/cartographer/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "zone-generation"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "listScenarios",
+        "loadScenario",
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "procgen",
+        "zones",
+        "canvas"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.chronicles",
+      "slug": "rp_account_creator",
+      "title": "Chronicles: Houses & Scions",
+      "description": "House founding and permadeath chronicle laboratory for scribe-judged names, inherited relics, and meta-progression language.",
+      "status": "authoring",
+      "visibility": "dashboard",
+      "category": "authoring",
+      "group": "chronicles",
+      "launch": "tools/rp_account_creator/index.html",
+      "readme": "tools/rp_account_creator/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "chronicle-meta"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "listScenarios",
+        "loadScenario",
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "chronicles",
+        "houses",
+        "permadeath"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.geometric-skilltree",
+      "slug": "geometric_skilltree",
+      "title": "Geometric Passive Tree",
+      "description": "Authored hexagonal passive tree for calibrating seats, conduits, pattern bonuses, and owner design proposals without silently rewriting canonical tree data.",
+      "status": "authoring",
+      "visibility": "dashboard",
+      "category": "authoring",
+      "group": "character-systems",
+      "launch": "tools/geometric_skilltree/index.html",
+      "readme": "tools/geometric_skilltree/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "passive-tree"
+      ],
+      "capabilities": {
+        "adapter": true,
+        "scenarios": true,
+        "stateExport": true,
+        "stateImport": true,
+        "snapshots": true,
+        "annotations": true,
+        "proposals": true,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": true
+      },
+      "unsupportedMethods": [
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "passive-tree",
+        "svg",
+        "authoring"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.health-globe",
+      "slug": "health_globe",
+      "title": "Health Globe v1",
+      "description": "Fully procedural canvas predecessor of Vessels of Life & Mana. Kept as a reference before/after, not a primary laboratory card.",
+      "status": "legacy",
+      "visibility": "legacy",
+      "category": "reference",
+      "group": "legacy",
+      "launch": "tools/health_globe/index.html",
+      "readme": "docs/ARCHIVE.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "hud-resources"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "reset",
+        "getState",
+        "setState",
+        "listScenarios",
+        "loadScenario",
+        "pause",
+        "resume",
+        "step",
+        "getMetrics",
+        "getAnnotations",
+        "setAnnotations",
+        "exportCalibration",
+        "importCalibration"
+      ],
+      "tags": [
+        "legacy",
+        "canvas",
+        "reference"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.mason",
+      "slug": "mason",
+      "title": "Mason Terrain Forge",
+      "description": "Border-tile forge for square blob and hex autotile sets, used to calibrate terrain transitions before engine export.",
+      "status": "authoring",
+      "visibility": "dashboard",
+      "category": "authoring",
+      "group": "world-terrain",
+      "launch": "tools/mason/index.html",
+      "readme": "tools/mason/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "terrain-autotile"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "listScenarios",
+        "loadScenario",
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "autotile",
+        "terrain",
+        "canvas"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.orbs",
+      "slug": "wizard_orbs",
+      "title": "Vessels of Life & Mana",
+      "description": "WebGL2 life and mana orb engine for calibrating resource readouts, reservation, and status simulation against Verdigris HUD art.",
+      "status": "calibration",
+      "visibility": "dashboard",
+      "category": "calibration",
+      "group": "character-systems",
+      "launch": "tools/wizard_orbs/index.html",
+      "readme": "tools/wizard_orbs/README.md",
+      "preview": "tools/wizard_orbs/screenshots/shot_hero.png",
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "hud-resources"
+      ],
+      "capabilities": {
+        "adapter": true,
+        "scenarios": true,
+        "stateExport": true,
+        "stateImport": true,
+        "snapshots": true,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": true,
+        "pauseStep": false,
+        "agentFeedback": true
+      },
+      "unsupportedMethods": [
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "hud",
+        "orbs",
+        "webgl2",
+        "status-fx"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.pixel-sandbox",
+      "slug": "pixel_sandbox",
+      "title": "Pixel Alchemy Sandbox",
+      "description": "Archive candidate. Files preserved; removed from the active Verdigris laboratory surface.",
+      "status": "archive",
+      "visibility": "archive",
+      "category": "utility",
+      "group": "archive",
+      "launch": "tools/pixel_sandbox/index.html",
+      "readme": "docs/ARCHIVE.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "none"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "reset",
+        "getState",
+        "setState",
+        "listScenarios",
+        "loadScenario",
+        "pause",
+        "resume",
+        "step",
+        "getMetrics",
+        "getAnnotations",
+        "setAnnotations",
+        "exportCalibration",
+        "importCalibration"
+      ],
+      "tags": [
+        "archive",
+        "sandbox"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.pixelart",
+      "slug": "pixelart",
+      "title": "Pixel Art Creator",
+      "description": "Grid pixel editor. No active Verdigris workflow depends on it; retained as an internal utility, not a public laboratory card.",
+      "status": "internal",
+      "visibility": "internal",
+      "category": "utility",
+      "group": "internal",
+      "launch": "tools/pixelart/index.html",
+      "readme": "tools/pixelart/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "none"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "reset",
+        "getState",
+        "setState",
+        "listScenarios",
+        "loadScenario",
+        "pause",
+        "resume",
+        "step",
+        "getMetrics",
+        "getAnnotations",
+        "setAnnotations",
+        "exportCalibration",
+        "importCalibration"
+      ],
+      "tags": [
+        "internal",
+        "pixel",
+        "editor"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.rpg-inventory",
+      "slug": "rpg_inventory",
+      "title": "Vesselforge & Inventory",
+      "description": "VesselForge itemization laboratory: brands, bonds, grid inventory, and equipment windows used to calibrate Verdigris loot language.",
+      "status": "calibration",
+      "visibility": "dashboard",
+      "category": "calibration",
+      "group": "character-systems",
+      "launch": "tools/rpg_inventory/index.html",
+      "readme": "tools/rpg_inventory/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "itemization"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "listScenarios",
+        "loadScenario",
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "inventory",
+        "vesselforge",
+        "itemization"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.slerp",
+      "slug": "slerp",
+      "title": "SLerp",
+      "description": "Palette interpolation utility. Unused by active Verdigris modules; retained internally, not as a public card.",
+      "status": "internal",
+      "visibility": "internal",
+      "category": "utility",
+      "group": "internal",
+      "launch": "tools/slerp/index.html",
+      "readme": "tools/slerp/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "none"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "reset",
+        "getState",
+        "setState",
+        "listScenarios",
+        "loadScenario",
+        "pause",
+        "resume",
+        "step",
+        "getMetrics",
+        "getAnnotations",
+        "setAnnotations",
+        "exportCalibration",
+        "importCalibration"
+      ],
+      "tags": [
+        "internal",
+        "color",
+        "palette"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.sokoban",
+      "slug": "sokoban",
+      "title": "The Endless Descent",
+      "description": "Archive candidate. Files preserved; removed from the active Verdigris laboratory surface.",
+      "status": "archive",
+      "visibility": "archive",
+      "category": "utility",
+      "group": "archive",
+      "launch": "tools/sokoban/index.html",
+      "readme": "tools/sokoban/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "none"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "reset",
+        "getState",
+        "setState",
+        "listScenarios",
+        "loadScenario",
+        "pause",
+        "resume",
+        "step",
+        "getMetrics",
+        "getAnnotations",
+        "setAnnotations",
+        "exportCalibration",
+        "importCalibration"
+      ],
+      "tags": [
+        "archive",
+        "puzzle"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.space-shooter",
+      "slug": "space_shooter",
+      "title": "Wireframe Space Shooter",
+      "description": "Archive candidate. Files preserved; removed from the active Verdigris laboratory surface.",
+      "status": "archive",
+      "visibility": "archive",
+      "category": "utility",
+      "group": "archive",
+      "launch": "tools/space_shooter/index.html",
+      "readme": "tools/space_shooter/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "none"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "reset",
+        "getState",
+        "setState",
+        "listScenarios",
+        "loadScenario",
+        "pause",
+        "resume",
+        "step",
+        "getMetrics",
+        "getAnnotations",
+        "setAnnotations",
+        "exportCalibration",
+        "importCalibration"
+      ],
+      "tags": [
+        "archive",
+        "game"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.systems-bench",
+      "slug": "systems_bench",
+      "title": "Verdigris Systems Bench",
+      "description": "Play versioned fixture events, inspect payloads, and drive a retained module through the shared adapter without embedding production netcode.",
+      "status": "prototype",
+      "visibility": "dashboard",
+      "category": "integration",
+      "group": "systems-integration",
+      "launch": "tools/systems_bench/index.html",
+      "readme": "tools/systems_bench/README.md",
+      "preview": null,
+      "moduleVersion": "0.1.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "systems-integration",
+        "hud-resources"
+      ],
+      "capabilities": {
+        "adapter": true,
+        "scenarios": true,
+        "stateExport": true,
+        "stateImport": true,
+        "snapshots": true,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": true,
+        "events": true,
+        "pauseStep": true,
+        "agentFeedback": true
+      },
+      "unsupportedMethods": [
+        "getAnnotations",
+        "setAnnotations"
+      ],
+      "tags": [
+        "integration",
+        "fixtures",
+        "events"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.verdigris-splash",
+      "slug": "verdigris_splash",
+      "title": "Verdigris World Presentation",
+      "description": "Real-time disc-world presentation laboratory for menu atmosphere, rim waterfalls, and continent-scale read of Verdigris.",
+      "status": "presentation",
+      "visibility": "dashboard",
+      "category": "presentation",
+      "group": "world-terrain",
+      "launch": "tools/verdigris_splash/index.html",
+      "readme": "tools/verdigris_splash/README.md",
+      "preview": null,
+      "moduleVersion": "2.6.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "world-presentation"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "listScenarios",
+        "loadScenario",
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step",
+        "getState",
+        "setState"
+      ],
+      "tags": [
+        "presentation",
+        "threejs",
+        "world"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.wordcloud",
+      "slug": "wordcloud",
+      "title": "Interactive Word Cloud",
+      "description": "Archive candidate. Files preserved; removed from the active Verdigris laboratory surface.",
+      "status": "archive",
+      "visibility": "archive",
+      "category": "utility",
+      "group": "archive",
+      "launch": "tools/wordcloud/dist/index.html",
+      "readme": "tools/wordcloud/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "none"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "reset",
+        "getState",
+        "setState",
+        "listScenarios",
+        "loadScenario",
+        "pause",
+        "resume",
+        "step",
+        "getMetrics",
+        "getAnnotations",
+        "setAnnotations",
+        "exportCalibration",
+        "importCalibration"
+      ],
+      "tags": [
+        "archive",
+        "visualization"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.wordsphere",
+      "slug": "wordsphere",
+      "title": "WordSphere",
+      "description": "Archive candidate. Files preserved; removed from the active Verdigris laboratory surface.",
+      "status": "archive",
+      "visibility": "archive",
+      "category": "utility",
+      "group": "archive",
+      "launch": "tools/wordsphere/index.html",
+      "readme": "tools/wordsphere/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "none"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "reset",
+        "getState",
+        "setState",
+        "listScenarios",
+        "loadScenario",
+        "pause",
+        "resume",
+        "step",
+        "getMetrics",
+        "getAnnotations",
+        "setAnnotations",
+        "exportCalibration",
+        "importCalibration"
+      ],
+      "tags": [
+        "archive",
+        "visualization"
+      ]
+    }
+  ],
+  "dashboard": [
+    {
+      "schemaVersion": 1,
+      "id": "wizard.arcane-lattice",
+      "slug": "arcane_lattice",
+      "title": "Arcane Lattice",
+      "description": "Hyperdimensional spellcraft lattice for inspecting adjacency, paradigm shifts, schisms, and instability without changing canonical weave rules.",
+      "status": "calibration",
+      "visibility": "dashboard",
+      "category": "calibration",
+      "group": "systems-integration",
+      "launch": "tools/arcane_lattice/index.html",
+      "readme": "tools/arcane_lattice/README.md",
+      "preview": null,
+      "moduleVersion": "0.9.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "spellcraft"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "listScenarios",
+        "loadScenario",
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "spellcraft",
+        "threejs",
+        "lattice"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.cartographer",
+      "slug": "cartographer",
+      "title": "Cartographer",
+      "description": "Seeded Diablo-tradition zone generator for calibrating families, themes, connectivity, and engine-ready map JSON.",
+      "status": "authoring",
+      "visibility": "dashboard",
+      "category": "authoring",
+      "group": "world-terrain",
+      "launch": "tools/cartographer/index.html",
+      "readme": "tools/cartographer/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "zone-generation"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "listScenarios",
+        "loadScenario",
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "procgen",
+        "zones",
+        "canvas"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.chronicles",
+      "slug": "rp_account_creator",
+      "title": "Chronicles: Houses & Scions",
+      "description": "House founding and permadeath chronicle laboratory for scribe-judged names, inherited relics, and meta-progression language.",
+      "status": "authoring",
+      "visibility": "dashboard",
+      "category": "authoring",
+      "group": "chronicles",
+      "launch": "tools/rp_account_creator/index.html",
+      "readme": "tools/rp_account_creator/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "chronicle-meta"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "listScenarios",
+        "loadScenario",
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "chronicles",
+        "houses",
+        "permadeath"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.geometric-skilltree",
+      "slug": "geometric_skilltree",
+      "title": "Geometric Passive Tree",
+      "description": "Authored hexagonal passive tree for calibrating seats, conduits, pattern bonuses, and owner design proposals without silently rewriting canonical tree data.",
+      "status": "authoring",
+      "visibility": "dashboard",
+      "category": "authoring",
+      "group": "character-systems",
+      "launch": "tools/geometric_skilltree/index.html",
+      "readme": "tools/geometric_skilltree/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "passive-tree"
+      ],
+      "capabilities": {
+        "adapter": true,
+        "scenarios": true,
+        "stateExport": true,
+        "stateImport": true,
+        "snapshots": true,
+        "annotations": true,
+        "proposals": true,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": true
+      },
+      "unsupportedMethods": [
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "passive-tree",
+        "svg",
+        "authoring"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.mason",
+      "slug": "mason",
+      "title": "Mason Terrain Forge",
+      "description": "Border-tile forge for square blob and hex autotile sets, used to calibrate terrain transitions before engine export.",
+      "status": "authoring",
+      "visibility": "dashboard",
+      "category": "authoring",
+      "group": "world-terrain",
+      "launch": "tools/mason/index.html",
+      "readme": "tools/mason/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "terrain-autotile"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "listScenarios",
+        "loadScenario",
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "autotile",
+        "terrain",
+        "canvas"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.systems-bench",
+      "slug": "systems_bench",
+      "title": "Verdigris Systems Bench",
+      "description": "Play versioned fixture events, inspect payloads, and drive a retained module through the shared adapter without embedding production netcode.",
+      "status": "prototype",
+      "visibility": "dashboard",
+      "category": "integration",
+      "group": "systems-integration",
+      "launch": "tools/systems_bench/index.html",
+      "readme": "tools/systems_bench/README.md",
+      "preview": null,
+      "moduleVersion": "0.1.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "systems-integration",
+        "hud-resources"
+      ],
+      "capabilities": {
+        "adapter": true,
+        "scenarios": true,
+        "stateExport": true,
+        "stateImport": true,
+        "snapshots": true,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": true,
+        "events": true,
+        "pauseStep": true,
+        "agentFeedback": true
+      },
+      "unsupportedMethods": [
+        "getAnnotations",
+        "setAnnotations"
+      ],
+      "tags": [
+        "integration",
+        "fixtures",
+        "events"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.verdigris-splash",
+      "slug": "verdigris_splash",
+      "title": "Verdigris World Presentation",
+      "description": "Real-time disc-world presentation laboratory for menu atmosphere, rim waterfalls, and continent-scale read of Verdigris.",
+      "status": "presentation",
+      "visibility": "dashboard",
+      "category": "presentation",
+      "group": "world-terrain",
+      "launch": "tools/verdigris_splash/index.html",
+      "readme": "tools/verdigris_splash/README.md",
+      "preview": null,
+      "moduleVersion": "2.6.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "world-presentation"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "listScenarios",
+        "loadScenario",
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step",
+        "getState",
+        "setState"
+      ],
+      "tags": [
+        "presentation",
+        "threejs",
+        "world"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.rpg-inventory",
+      "slug": "rpg_inventory",
+      "title": "Vesselforge & Inventory",
+      "description": "VesselForge itemization laboratory: brands, bonds, grid inventory, and equipment windows used to calibrate Verdigris loot language.",
+      "status": "calibration",
+      "visibility": "dashboard",
+      "category": "calibration",
+      "group": "character-systems",
+      "launch": "tools/rpg_inventory/index.html",
+      "readme": "tools/rpg_inventory/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "itemization"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "listScenarios",
+        "loadScenario",
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "inventory",
+        "vesselforge",
+        "itemization"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.orbs",
+      "slug": "wizard_orbs",
+      "title": "Vessels of Life & Mana",
+      "description": "WebGL2 life and mana orb engine for calibrating resource readouts, reservation, and status simulation against Verdigris HUD art.",
+      "status": "calibration",
+      "visibility": "dashboard",
+      "category": "calibration",
+      "group": "character-systems",
+      "launch": "tools/wizard_orbs/index.html",
+      "readme": "tools/wizard_orbs/README.md",
+      "preview": "tools/wizard_orbs/screenshots/shot_hero.png",
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "hud-resources"
+      ],
+      "capabilities": {
+        "adapter": true,
+        "scenarios": true,
+        "stateExport": true,
+        "stateImport": true,
+        "snapshots": true,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": true,
+        "pauseStep": false,
+        "agentFeedback": true
+      },
+      "unsupportedMethods": [
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "hud",
+        "orbs",
+        "webgl2",
+        "status-fx"
+      ]
+    }
+  ]
+}

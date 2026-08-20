@@ -1168,6 +1168,10 @@ Promise.all([loadImg(ART_B64, 'image/jpeg'), loadImg(MASK_B64, 'image/png'), loa
   sync(); syncReadouts(); resize();
   requestAnimationFrame(t => { last = t; frame(t); });
 });
+window.__WizardOrbs = { S, setHP, setMP, takeDamage, addBleed, HP_MAX, MP_MAX };
 </script>
+<script src="../../shared/wizard-lab.js"></script>
+<script src="../../shared/wizard-annotations.js"></script>
+<script src="wizard-adapter.js"></script>
 </body>
 </html>

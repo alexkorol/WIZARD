@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "wizard.wordcloud",
+  "slug": "wordcloud",
+  "title": "Interactive Word Cloud",
+  "description": "Archive candidate. Files preserved; removed from the active Verdigris laboratory surface.",
+  "status": "archive",
+  "visibility": "archive",
+  "category": "utility",
+  "group": "archive",
+  "launch": "tools/wordcloud/dist/index.html",
+  "readme": "tools/wordcloud/README.md",
+  "preview": null,
+  "moduleVersion": "1.0.0",
+  "stateVersion": 1,
+  "verdigrisTargets": ["none"],
+  "capabilities": {
+    "adapter": false,
+    "scenarios": false,
+    "stateExport": false,
+    "stateImport": false,
+    "snapshots": false,
+    "annotations": false,
+    "proposals": false,
+    "fixtures": false,
+    "events": false,
+    "pauseStep": false,
+    "agentFeedback": false
+  },
+  "unsupportedMethods": ["reset", "getState", "setState", "listScenarios", "loadScenario", "pause", "resume", "step", "getMetrics", "getAnnotations", "setAnnotations", "exportCalibration", "importCalibration"],
+  "tags": ["archive", "visualization"]
+}
