@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verdigris Systems Bench</title>
+<style>
+:root { color-scheme: dark; --bg:#0d0c0a; --ink:#e9e4d8; --dim:#9c9587; --gold:#c9a227; --line:rgba(233,228,216,.12); }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font: 15px/1.5 "Source Sans 3", Segoe UI, sans-serif; }
+header { padding: 1.25rem 1.5rem; border-bottom:1px solid var(--line); }
+h1 { font-family: Georgia, serif; font-weight:500; letter-spacing:.08em; margin:0 0 .35rem; }
+.sub { color:var(--dim); margin:0; }
+main { display:grid; grid-template-columns: minmax(280px, 360px) 1fr; min-height: calc(100vh - 88px); }
+.panel { padding:1rem 1.25rem; border-right:1px solid var(--line); }
+iframe { width:100%; height:100%; border:0; background:#000; min-height: 520px; }
+.row { display:flex; flex-wrap:wrap; gap:.5rem; margin: .75rem 0; }
+button {
+  background:transparent; color:var(--ink); border:1px solid var(--line); padding:.45rem .8rem; letter-spacing:.12em;
+  text-transform:uppercase; font-size:.7rem; cursor:pointer;
+}
+button:focus-visible { outline:2px solid var(--gold); }
+button.primary { border-color: var(--gold); color: var(--gold); }
+ol { padding-left: 1.1rem; margin:0; max-height: 220px; overflow:auto; }
+li { margin:.25rem 0; cursor:pointer; }
+li.active { color: var(--gold); }
+pre { background:#14110d; padding:.75rem; overflow:auto; max-height: 240px; font-size:.78rem; }
+.status { color:var(--gold); font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; }
+@media (max-width: 900px) { main { grid-template-columns: 1fr; } iframe { min-height: 420px; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Verdigris Systems Bench</h1>
+  <p class="sub">Versioned fixture playback driving Vessels of Life &amp; Mana through a generic event envelope.</p>
+</header>
+<main>
+  <section class="panel">
+    <p class="status" id="status">idle</p>
+    <div class="row">
+      <button class="primary" id="play" type="button">Play</button>
+      <button id="pause" type="button">Pause</button>
+      <button id="step" type="button">Step</button>
+      <button id="reset" type="button">Reset</button>
+    </div>
+    <div class="row">
+      <button id="export" type="button">Export session</button>
+      <button id="copy" type="button">Copy agent feedback</button>
+    </div>
+    <h2>Timeline</h2>
+    <ol id="timeline"></ol>
+    <h2>Raw payload</h2>
+    <pre id="payload">{}</pre>
+  </section>
+  <iframe id="module-frame" title="Vessels of Life and Mana" src="../wizard_orbs/index.html?dev=1"></iframe>
+</main>
+<script src="../../shared/wizard-lab.js"></script>
+<script src="bench.js"></script>
+<script>
+const fixturePromise = fetch('fixtures/resource-session.v1.json').then(r => r.json());
+const frame = document.getElementById('module-frame');
+const timeline = document.getElementById('timeline');
+const payload = document.getElementById('payload');
+const status = document.getElementById('status');
+let bench = null;
+let fixture = null;
+let raf = 0;
+let last = 0;
+
+function send(event) {
+  if (event && frame.contentWindow) {
+    frame.contentWindow.postMessage({ wizardEvent: event }, '*');
+  }
+}
+
+function render() {
+  if (!bench) return;
+  const snap = bench.snapshot();
+  status.textContent = snap.playing ? `playing ${snap.timeMs}ms` : `paused @ ${snap.timeMs}ms #${snap.index}`;
+  payload.textContent = JSON.stringify(snap.lastPayload || {}, null, 2);
+  [...timeline.children].forEach((li, i) => li.classList.toggle('active', i === snap.index));
+}
+
+function loop(t) {
+  if (!last) last = t;
+  const dt = t - last;
+  last = t;
+  if (bench) {
+    const event = bench.tick(dt);
+    if (event) send(event);
+    render();
+  }
+  raf = requestAnimationFrame(loop);
+}
+
+fixturePromise.then(data => {
+  fixture = data;
+  bench = window.WizardSystemsBench.createBench(data);
+  data.events.forEach(event => {
+    const li = document.createElement('li');
+    li.textContent = `${event.sequence} · ${event.timeMs}ms · ${event.type} · ${event.data.resource} ${event.data.current}/${event.data.maximum}`;
+    timeline.appendChild(li);
+  });
+  window.WizardLab.register({
+    id: 'wizard.systems-bench',
+    unsupportedMethods: ['getAnnotations', 'setAnnotations'],
+    reset() { const snap = bench.reset(); send(data.events[0]); render(); return snap; },
+    getState() { return bench.snapshot(); },
+    setState(state) {
+      bench.reset();
+      const count = (state && state.index != null) ? state.index + 1 : 0;
+      for (let i = 0; i < count; i += 1) send(bench.step());
+      render();
+    },
+    listScenarios() { return [data.id]; },
+    loadScenario() { return this.reset(); },
+    pause() { bench.pause(); render(); },
+    resume() { bench.play(); },
+    step() { const event = bench.step(); send(event); render(); return event; },
+    getMetrics() { return { index: bench.index, applied: bench.applied.length }; },
+    exportCalibration() {
+      return {
+        schemaVersion: 1,
+        moduleId: 'wizard.systems-bench',
+        exportedAt: new Date().toISOString(),
+        scenarioId: data.id,
+        state: bench.snapshot(),
+        events: data.events
+      };
+    }
+  });
+  render();
+  raf = requestAnimationFrame(loop);
+});
+
+document.getElementById('play').onclick = () => bench && bench.play();
+document.getElementById('pause').onclick = () => bench && bench.pause();
+document.getElementById('step').onclick = () => { if (!bench) return; send(bench.step()); render(); };
+document.getElementById('reset').onclick = () => { if (!bench) return; bench.reset(); send(fixture.events[0]); render(); };
+document.getElementById('export').onclick = () => {
+  const data = window.WizardModule.exportCalibration();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'systems-bench-session.json';
+  a.click();
+};
+document.getElementById('copy').onclick = async () => {
+  const text = window.WizardLab.toAgentMarkdown(window.WizardModule.exportCalibration());
+  try { await navigator.clipboard.writeText(text); } catch (_) { window.prompt('Agent feedback', text); }
+};
+</script>
+</body>
+</html>
