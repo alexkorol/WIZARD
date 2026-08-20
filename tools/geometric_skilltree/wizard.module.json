@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "wizard.geometric-skilltree",
+  "slug": "geometric_skilltree",
+  "title": "Geometric Passive Tree",
+  "description": "Authored hexagonal passive tree for calibrating seats, conduits, pattern bonuses, and owner design proposals without silently rewriting canonical tree data.",
+  "status": "authoring",
+  "visibility": "dashboard",
+  "category": "authoring",
+  "group": "character-systems",
+  "launch": "tools/geometric_skilltree/index.html",
+  "readme": "tools/geometric_skilltree/README.md",
+  "preview": null,
+  "moduleVersion": "1.0.0",
+  "stateVersion": 1,
+  "verdigrisTargets": ["passive-tree"],
+  "capabilities": {
+    "adapter": false,
+    "scenarios": false,
+    "stateExport": false,
+    "stateImport": false,
+    "snapshots": false,
+    "annotations": false,
+    "proposals": false,
+    "fixtures": false,
+    "events": false,
+    "pauseStep": false,
+    "agentFeedback": false
+  },
+  "unsupportedMethods": ["listScenarios", "loadScenario", "pause", "resume", "step"],
+  "tags": ["passive-tree", "svg", "authoring"]
+}

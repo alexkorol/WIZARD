@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "wizard.pixelart",
+  "slug": "pixelart",
+  "title": "Pixel Art Creator",
+  "description": "Grid pixel editor. No active Verdigris workflow depends on it; retained as an internal utility, not a public laboratory card.",
+  "status": "internal",
+  "visibility": "internal",
+  "category": "utility",
+  "group": "internal",
+  "launch": "tools/pixelart/index.html",
+  "readme": "tools/pixelart/README.md",
+  "preview": null,
+  "moduleVersion": "1.0.0",
+  "stateVersion": 1,
+  "verdigrisTargets": ["none"],
+  "capabilities": {
+    "adapter": false,
+    "scenarios": false,
+    "stateExport": false,
+    "stateImport": false,
+    "snapshots": false,
+    "annotations": false,
+    "proposals": false,
+    "fixtures": false,
+    "events": false,
+    "pauseStep": false,
+    "agentFeedback": false
+  },
+  "unsupportedMethods": ["reset", "getState", "setState", "listScenarios", "loadScenario", "pause", "resume", "step", "getMetrics", "getAnnotations", "setAnnotations", "exportCalibration", "importCalibration"],
+  "tags": ["internal", "pixel", "editor"]
+}

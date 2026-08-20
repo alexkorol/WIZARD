@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "wizard.verdigris-splash",
+  "slug": "verdigris_splash",
+  "title": "Verdigris World Presentation",
+  "description": "Real-time disc-world presentation laboratory for menu atmosphere, rim waterfalls, and continent-scale read of Verdigris.",
+  "status": "presentation",
+  "visibility": "dashboard",
+  "category": "presentation",
+  "group": "world-terrain",
+  "launch": "tools/verdigris_splash/index.html",
+  "readme": "tools/verdigris_splash/README.md",
+  "preview": null,
+  "moduleVersion": "2.6.0",
+  "stateVersion": 1,
+  "verdigrisTargets": ["world-presentation"],
+  "capabilities": {
+    "adapter": false,
+    "scenarios": false,
+    "stateExport": false,
+    "stateImport": false,
+    "snapshots": false,
+    "annotations": false,
+    "proposals": false,
+    "fixtures": false,
+    "events": false,
+    "pauseStep": false,
+    "agentFeedback": false
+  },
+  "unsupportedMethods": ["listScenarios", "loadScenario", "getAnnotations", "setAnnotations", "pause", "resume", "step", "getState", "setState"],
+  "tags": ["presentation", "threejs", "world"]
+}
