@@ -1,12 +1,20 @@
 WIZARD-REVAMP-001 verification transcript
 Date: 2026-08-19
 Branch: cursor/wizard-revamp-001
-Head: e8b89f10e4d5a8c9c7e485a4548db9b9bcfc1143 (pre-evidence)
+Head: e0da0e4e2793f296562f438b94e8c8ca66f6262c (cycle-1 review SHA; this commit is cycle 2)
 Command: node scripts/wizard-lab.mjs verify --full
+Also: node tools/geometric_skilltree/tests/proposals.test.mjs
 
 Result: PASS
 manifests: 17
 dashboard: 9
+
+Cycle 2 vs Fable REVISE on e0da0e4:
+- proposal toolbar/editor/layer gated to ?dev=1 (CSS + hidden + handler no-ops)
+- proposals.test.mjs asserts player vs ?dev=1
+- evidence/dashboard-narrow.png replaced: 375x900 single-column Character Systems cards
+- tools/rpg_inventory/AGENTS.md restored to origin/gh-pages wrap
+- taxonomy regex accepts the original wrapped "bracers are not the hands-slot default"
 
 Covered:
 - schema / unique IDs / status / visibility
@@ -18,12 +26,13 @@ Covered:
 - annotation fixtures
 - calibration import/export and snapshots
 - passive-tree canonical-data non-mutation
+- proposal UI hidden without ?dev=1
 - Systems Bench fixture playback
 - retained module-local tests (skill tree, VesselForge, cartographer, mason, splash, performance)
 
 Browser inspection (http://127.0.0.1:8765):
-- desktop ~1920x1080 dashboard: evidence/dashboard-desktop.png
-- narrow ~1366x768 card grid: evidence/dashboard-narrow.png
+- desktop dashboard: evidence/dashboard-desktop.png
+- narrow 375x900 single-column card stack: evidence/dashboard-narrow.png
 - keyboard skip link and focus-visible gold outline present in CSS
 - reduced-motion rules present
 - archive candidates absent from dashboard

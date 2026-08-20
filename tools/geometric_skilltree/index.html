@@ -1514,7 +1514,22 @@
       border: 1px solid rgba(201,162,39,.45);
       padding: 10px;
     }
-    body.wizard-dev #proposal-toolbar { outline: 1px dashed rgba(201,162,39,.35); }
+    #proposal-toolbar {
+      display: none;
+    }
+    body.wizard-dev #proposal-toolbar {
+      display: flex;
+      outline: 1px dashed rgba(201,162,39,.35);
+    }
+    body.wizard-dev #proposal-editor.is-open {
+      display: block;
+    }
+    #proposal-layer {
+      display: none;
+    }
+    body.wizard-dev #proposal-layer {
+      display: inline;
+    }
   </style>
 </head>
 <body class="theme-modern">
@@ -5569,22 +5584,33 @@
       const proposals = window.WizardProposals;
       if (!proposals) return;
       const editor = document.getElementById('proposal-editor');
+      const toolbar = document.getElementById('proposal-toolbar');
+      const dev = Boolean(window.WizardLab && window.WizardLab.isDevMode());
+      if (dev) document.body.classList.add('wizard-dev');
+      else proposals.setMode('off');
+      if (toolbar) toolbar.hidden = !dev;
+      if (editor) editor.hidden = !dev;
       function openEditor(id) {
+        if (!dev) return;
         const item = proposals.list().find(note => note.id === id);
         if (!item || !editor) return;
         proposals.selectedId = id;
         document.getElementById('proposal-kind').value = (item.proposal && item.proposal.kind) || 'small_passive';
         document.getElementById('proposal-name').value = (item.proposal && item.proposal.name) || '';
         document.getElementById('proposal-text').value = (item.proposal && item.proposal.mechanicalText) || '';
+        editor.classList.add('is-open');
         editor.style.display = 'block';
       }
       document.getElementById('proposal-place-btn')?.addEventListener('click', () => {
+        if (!dev) return;
         proposals.setMode(proposals.mode === 'place' ? 'off' : 'place');
       });
       document.getElementById('proposal-region-btn')?.addEventListener('click', () => {
+        if (!dev) return;
         proposals.setMode(proposals.mode === 'region' ? 'off' : 'region');
       });
       document.getElementById('proposal-export-btn')?.addEventListener('click', () => {
+        if (!dev) return;
         const blob = new Blob([JSON.stringify(proposals.exportBundle(), null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -5594,11 +5620,12 @@
         URL.revokeObjectURL(url);
       });
       document.getElementById('proposal-copy-btn')?.addEventListener('click', async () => {
+        if (!dev) return;
         const text = proposals.toMarkdown();
         try { await navigator.clipboard.writeText(text); } catch (_) { window.prompt('Agent feedback', text); }
       });
       document.getElementById('proposal-save-btn')?.addEventListener('click', () => {
-        if (!proposals.selectedId) return;
+        if (!dev || !proposals.selectedId) return;
         proposals.update(proposals.selectedId, {
           title: document.getElementById('proposal-name').value,
           proposal: {
@@ -5609,17 +5636,22 @@
         });
       });
       document.getElementById('proposal-resolve-btn')?.addEventListener('click', () => {
+        if (!dev) return;
         if (proposals.selectedId) proposals.resolve(proposals.selectedId);
       });
       document.getElementById('proposal-delete-btn')?.addEventListener('click', () => {
+        if (!dev) return;
         if (proposals.selectedId) proposals.remove(proposals.selectedId);
-        if (editor) editor.style.display = 'none';
+        if (editor) {
+          editor.classList.remove('is-open');
+          editor.style.display = 'none';
+        }
       });
       document.getElementById('proposal-layer')?.addEventListener('click', event => {
+        if (!dev) return;
         const mark = event.target.closest && event.target.closest('[data-proposal-id]');
         if (mark) openEditor(mark.dataset.proposalId);
       });
-      if (window.WizardLab && window.WizardLab.isDevMode()) document.body.classList.add('wizard-dev');
     })();
   </script>
 </body>

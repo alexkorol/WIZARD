@@ -467,7 +467,8 @@ especially bows/precision gear (DEX), heavy shield/impact kits (STR), and
 staffs, lanterns, scales, censers, ritual tools, or study bundles (INT). The
 final feedback-trained pass assigned the remaining 319 human characters and
 reduced the manual queue to zero without changing prior user decisions.
-**Hand-slot diversity** (2026-07-12, revised 2026-07-22): bracers are not the hands-slot default, and fingerless gloves read too modern for the pre-ancient
+**Hand-slot diversity** (2026-07-12, revised 2026-07-22): bracers are not the
+hands-slot default, and fingerless gloves read too modern for the pre-ancient
 equipment library. Character ladders rotate source-visible mitts, enclosed
 mitten-gauntlets, hand pouches, short wrist cuffs or bands, flexible wraps,
 archer guards, bracers, and vambraces; across a nine-image faction ladder, at

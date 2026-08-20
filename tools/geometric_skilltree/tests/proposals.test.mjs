@@ -76,4 +76,49 @@ function memoryStorage() {
   assert.match(markdown, /Agent feedback/);
 }
 
+function extractProposalBoot(html) {
+  const idx = html.lastIndexOf('<script>');
+  const end = html.lastIndexOf('</script>');
+  assert.ok(idx > 0 && end > idx, 'proposal boot script should exist');
+  const source = html.slice(html.indexOf('>', idx) + 1, end);
+  assert.match(source, /toolbar\.hidden = !dev/);
+  return source;
+}
+
+function bootProposals(search) {
+  const window = runStandaloneApp();
+  window.localStorage = memoryStorage();
+  window.location = { search };
+  window.Blob = class { constructor() {} };
+  window.URL = { createObjectURL() { return ''; }, revokeObjectURL() {} };
+  loadScript(window, 'shared/wizard-lab.js');
+  loadScript(window, 'shared/wizard-annotations.js');
+  loadScript(window, 'tools/geometric_skilltree/wizard-proposals.js');
+  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const source = extractProposalBoot(html);
+  const run = new Function('window', 'document', source);
+  run(window, window.document);
+  return window;
+}
+
+{
+  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  assert.match(html, /#proposal-toolbar\s*\{\s*display:\s*none;/);
+  assert.match(html, /body\.wizard-dev\s+#proposal-toolbar\s*\{[^}]*display:\s*flex;/);
+  assert.match(html, /#proposal-editor\s*\{[^}]*display:\s*none;/);
+
+  const player = bootProposals('');
+  assert.equal(player.WizardLab.isDevMode(), false);
+  assert.equal(player.document.body.classList.contains('wizard-dev'), false);
+  assert.equal(player.document.getElementById('proposal-toolbar').hidden, true);
+  assert.equal(player.document.getElementById('proposal-editor').hidden, true);
+
+  const developer = bootProposals('?dev=1');
+  assert.equal(developer.WizardLab.isDevMode(), true);
+  assert.equal(developer.document.body.classList.contains('wizard-dev'), true);
+  assert.equal(developer.document.getElementById('proposal-toolbar').hidden, false);
+  assert.equal(developer.document.getElementById('proposal-editor').hidden, false);
+}
+
 console.log('ok proposals do not mutate canonical tree data');
+console.log('ok proposal toolbar is gated behind ?dev=1');
