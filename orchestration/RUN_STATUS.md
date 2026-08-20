@@ -33,6 +33,10 @@ Deferred out of REVAMP-001 by agreement, not by omission:
 - Proposal promotion: owner design proposals → authored tree data
 - Enforcement backlog from `ORCHESTRATION.md` (branch protection,
   stale-base CI check, first-screen capture script)
+- Arcane Lattice → shared adapter: the 1.0 build (PR #29) already exposes
+  `getState`/`setState` with `schemaVersion: 1` plus `resolveCast`, so
+  registering it with `WizardLab` is cheap. Only after #29 merges, and
+  without touching adjacency, path legality, instability, or undo.
 
 ## Fleet and workspaces
 
