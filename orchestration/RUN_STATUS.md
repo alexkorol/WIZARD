@@ -45,5 +45,12 @@ Deferred out of REVAMP-001 by agreement, not by omission:
 | Owner + supervisor | `Z:\Code\WIZARD` (primary checkout) | — |
 | Fable supervisor | `Z:\Code\.worktrees\wizard-fable-supervisor` | 8120–8129 |
 | Cursor Grok 4.6 | none currently — create as `Z:\Code\.worktrees\wizard-cursor-<task>` on next claim | 8140–8159 |
+| Qwen 3.8 (MacBook, LM Studio via Tailscale) | EXPERIMENTAL — not dispatchable; see MODEL_SCORECARD | endpoint `http://alexs-macbook-pro.tail4e0d34.ts.net:1234/v1`, model id `qwen3.8` |
 
 Retire merged worktrees: `git worktree remove` then `git worktree prune`.
+
+Qwen 3.8 etiquette (owner rule): it holds ~27.5 GB of the Mac's RAM.
+When a work session with it ends, the owner stops it via Raycast
+("Stop Qwen 3.8") — agents cannot stop it remotely, so say so when done.
+Dispatch is gated on fixing the unterminated-thinking defect recorded in
+`MODEL_SCORECARD.md` (2026-08-20 probes).
