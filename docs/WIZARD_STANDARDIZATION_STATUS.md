@@ -112,11 +112,11 @@ Direct module URLs must keep working. Archive files must not be deleted in this 
 
 | Milestone | Status |
 |---|---|
-| M0 Audit / this matrix | in progress |
-| M1 Manifest schema + generated registry | pending |
-| M2 Manifest-driven dashboard | pending |
-| M3 Docs / metadata / operating standard | pending |
-| M4 Shared calibration adapter | pending |
-| M5 Annotation model + passive-tree proposals | pending |
-| M6 Systems Bench + orb event proof | pending |
-| M7 Root verify, CI, captures | pending |
+| M0 Audit / this matrix | done |
+| M1 Manifest schema + generated registry | done |
+| M2 Manifest-driven dashboard | done |
+| M3 Docs / metadata / operating standard | done |
+| M4 Shared calibration adapter | done (proof: Vessels of Life & Mana) |
+| M5 Annotation model + passive-tree proposals | done |
+| M6 Systems Bench + orb event proof | done |
+| M7 Root verify, CI, captures | in progress |
