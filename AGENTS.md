@@ -2,6 +2,13 @@
 
 Multi-subproject **Verdigris Systems Laboratory** served from `gh-pages`.
 
+> **Working here as part of a multi-agent run?** Read
+> `orchestration/ORCHESTRATION.md` (constitution, authority, workspace
+> and port rules) and `orchestration/STANDING-LOOP.md` (the worker
+> contract — never idle-poll, never stop) **before** claiming anything.
+> Gates live in `orchestration/ACCEPTANCE.md`; current truth in
+> `orchestration/RUN_STATUS.md`.
+
 ## Before you edit
 
 1. Read this file and `docs/MODULE_STANDARD.md`.
@@ -10,6 +17,8 @@ Multi-subproject **Verdigris Systems Laboratory** served from `gh-pages`.
 4. Do not delete archive candidates unless a task packet says so.
 5. Do not modify `codex/arcane-lattice-1-0` from unrelated workstreams.
 6. Do not rewrite VesselForge item rules, authored passive-tree data, or Arcane Lattice adjacency merely for standardization.
+7. Identity copy is owner-owned. Do not delete or replace the WIZARD name, backronym, or laboratory framing without an owner ruling, and do not push the module grid below the fold with new hero copy (INC-W006).
+8. Serve local previews on loopback only: `python -m http.server <your port> --bind 127.0.0.1` (INC-W008).
 
 ## Recurring module work
 
