@@ -9,11 +9,11 @@ Comment marker: `<!-- wizard-orchestration:v1 -->`
 
 ## Current state
 
-- STATUS: cursor-ready (dispatched 2026-08-19, awaiting Cursor claim)
-- IMPLEMENTATION_PR: none yet
-- LAST_REVIEWED_HEAD_SHA: none
-- REVIEW_CYCLE: 0 of 4 max
-- LAST_VERDICT: none
+- STATUS: revise (cycle 1 verdict posted 2026-08-19, awaiting new head from Cursor)
+- IMPLEMENTATION_PR: #31 (cursor/wizard-revamp-001)
+- LAST_REVIEWED_HEAD_SHA: e0da0e4e2793f296562f438b94e8c8ca66f6262c
+- REVIEW_CYCLE: 1 of 4 max
+- LAST_VERDICT: REVISE (P1 proposal toolbar not dev-gated; P1 narrow capture not narrow; P2 AGENTS.md reflow). Verified good: verify --full PASS, all module tests PASS, proposal non-mutation boundary, Systems Bench orb bridge (hp 0.345 at event 2), honest capabilities, 9-card dashboard, metadata clean, mobile single-column, archive candidates off surfaces, arcane_lattice untouched.
 
 ## Checkpoint record (Part A)
 
