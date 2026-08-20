@@ -1,0 +1,11 @@
+{
+  "name": "wizard",
+  "private": true,
+  "description": "WIZARD — Verdigris Systems Laboratory",
+  "scripts": {
+    "generate": "node scripts/wizard-lab.mjs generate",
+    "verify": "node scripts/wizard-lab.mjs verify --full",
+    "verify:quick": "node scripts/wizard-lab.mjs verify",
+    "test": "node scripts/wizard-lab.mjs verify --full"
+  }
+}

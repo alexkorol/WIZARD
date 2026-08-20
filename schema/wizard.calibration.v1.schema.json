@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alexkorol.github.io/WIZARD/schema/wizard.calibration.v1.schema.json",
+  "title": "WIZARD calibration export",
+  "type": "object",
+  "required": ["schemaVersion", "moduleId", "exportedAt", "scenarioId", "state"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "moduleId": { "type": "string" },
+    "exportedAt": { "type": "string" },
+    "scenarioId": { "type": "string" },
+    "state": { "type": "object" },
+    "snapshotA": { "type": ["object", "null"] },
+    "snapshotB": { "type": ["object", "null"] },
+    "annotations": { "type": "array" },
+    "metrics": { "type": "object" },
+    "events": { "type": "array" }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "wizard.cartographer",
+  "slug": "cartographer",
+  "title": "Cartographer",
+  "description": "Seeded Diablo-tradition zone generator for calibrating families, themes, connectivity, and engine-ready map JSON.",
+  "status": "authoring",
+  "visibility": "dashboard",
+  "category": "authoring",
+  "group": "world-terrain",
+  "launch": "tools/cartographer/index.html",
+  "readme": "tools/cartographer/README.md",
+  "preview": null,
+  "moduleVersion": "1.0.0",
+  "stateVersion": 1,
+  "verdigrisTargets": ["zone-generation"],
+  "capabilities": {
+    "adapter": false,
+    "scenarios": false,
+    "stateExport": false,
+    "stateImport": false,
+    "snapshots": false,
+    "annotations": false,
+    "proposals": false,
+    "fixtures": false,
+    "events": false,
+    "pauseStep": false,
+    "agentFeedback": false
+  },
+  "unsupportedMethods": ["listScenarios", "loadScenario", "getAnnotations", "setAnnotations", "pause", "resume", "step"],
+  "tags": ["procgen", "zones", "canvas"]
+}

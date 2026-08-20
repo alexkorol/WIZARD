@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alexkorol.github.io/WIZARD/schema/wizard.event.v1.schema.json",
+  "title": "WIZARD systems-bench event envelope",
+  "type": "object",
+  "required": ["schemaVersion", "sequence", "timeMs", "type", "source", "target", "data"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "sequence": { "type": "integer", "minimum": 0 },
+    "timeMs": { "type": "number", "minimum": 0 },
+    "type": { "type": "string", "minLength": 1 },
+    "source": { "type": "string" },
+    "target": { "type": "string" },
+    "data": { "type": "object" }
+  }
+}

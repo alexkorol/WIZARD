@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "wizard.rpg-inventory",
+  "slug": "rpg_inventory",
+  "title": "Vesselforge & Inventory",
+  "description": "VesselForge itemization laboratory: brands, bonds, grid inventory, and equipment windows used to calibrate Verdigris loot language.",
+  "status": "calibration",
+  "visibility": "dashboard",
+  "category": "calibration",
+  "group": "character-systems",
+  "launch": "tools/rpg_inventory/index.html",
+  "readme": "tools/rpg_inventory/README.md",
+  "preview": null,
+  "moduleVersion": "1.0.0",
+  "stateVersion": 1,
+  "verdigrisTargets": ["itemization"],
+  "capabilities": {
+    "adapter": false,
+    "scenarios": false,
+    "stateExport": false,
+    "stateImport": false,
+    "snapshots": false,
+    "annotations": false,
+    "proposals": false,
+    "fixtures": false,
+    "events": false,
+    "pauseStep": false,
+    "agentFeedback": false
+  },
+  "unsupportedMethods": ["listScenarios", "loadScenario", "getAnnotations", "setAnnotations", "pause", "resume", "step"],
+  "tags": ["inventory", "vesselforge", "itemization"]
+}

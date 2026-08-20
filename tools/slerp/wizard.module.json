@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "wizard.slerp",
+  "slug": "slerp",
+  "title": "SLerp",
+  "description": "Palette interpolation utility. Unused by active Verdigris modules; retained internally, not as a public card.",
+  "status": "internal",
+  "visibility": "internal",
+  "category": "utility",
+  "group": "internal",
+  "launch": "tools/slerp/index.html",
+  "readme": "tools/slerp/README.md",
+  "preview": null,
+  "moduleVersion": "1.0.0",
+  "stateVersion": 1,
+  "verdigrisTargets": ["none"],
+  "capabilities": {
+    "adapter": false,
+    "scenarios": false,
+    "stateExport": false,
+    "stateImport": false,
+    "snapshots": false,
+    "annotations": false,
+    "proposals": false,
+    "fixtures": false,
+    "events": false,
+    "pauseStep": false,
+    "agentFeedback": false
+  },
+  "unsupportedMethods": ["reset", "getState", "setState", "listScenarios", "loadScenario", "pause", "resume", "step", "getMetrics", "getAnnotations", "setAnnotations", "exportCalibration", "importCalibration"],
+  "tags": ["internal", "color", "palette"]
+}

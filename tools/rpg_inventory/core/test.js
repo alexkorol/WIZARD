@@ -386,7 +386,7 @@ t('ancient equipment taxonomy drives family-level prompt coverage', () => {
     'handwear extraction must preserve source protection crossing the wrist');
   assert(/Do not turn every hands-slot item into bracers/.test(loadout)
       && /Never amputate the hand body from mitts or\s+gloves/.test(loadout)
-      && /bracers are not the hands-slot default/.test(agents),
+      && /bracers are not the\s+hands-slot default/.test(agents),
     'extraction and agent guidance must preserve mitt, glove, cuff, and wrap families');
   assert(/polycandelon lamp wheel/.test(loadout)
       && /combined gorytos bowcase-quiver/.test(loadout)

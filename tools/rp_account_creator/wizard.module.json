@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "wizard.chronicles",
+  "slug": "rp_account_creator",
+  "title": "Chronicles: Houses & Scions",
+  "description": "House founding and permadeath chronicle laboratory for scribe-judged names, inherited relics, and meta-progression language.",
+  "status": "authoring",
+  "visibility": "dashboard",
+  "category": "authoring",
+  "group": "chronicles",
+  "launch": "tools/rp_account_creator/index.html",
+  "readme": "tools/rp_account_creator/README.md",
+  "preview": null,
+  "moduleVersion": "1.0.0",
+  "stateVersion": 1,
+  "verdigrisTargets": ["chronicle-meta"],
+  "capabilities": {
+    "adapter": false,
+    "scenarios": false,
+    "stateExport": false,
+    "stateImport": false,
+    "snapshots": false,
+    "annotations": false,
+    "proposals": false,
+    "fixtures": false,
+    "events": false,
+    "pauseStep": false,
+    "agentFeedback": false
+  },
+  "unsupportedMethods": ["listScenarios", "loadScenario", "getAnnotations", "setAnnotations", "pause", "resume", "step"],
+  "tags": ["chronicles", "houses", "permadeath"]
+}

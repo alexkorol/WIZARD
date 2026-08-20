@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "wizard.arcane-lattice",
+  "slug": "arcane_lattice",
+  "title": "Arcane Lattice",
+  "description": "Hyperdimensional spellcraft lattice for inspecting adjacency, paradigm shifts, schisms, and instability without changing canonical weave rules.",
+  "status": "calibration",
+  "visibility": "dashboard",
+  "category": "calibration",
+  "group": "systems-integration",
+  "launch": "tools/arcane_lattice/index.html",
+  "readme": "tools/arcane_lattice/README.md",
+  "preview": null,
+  "moduleVersion": "0.9.0",
+  "stateVersion": 1,
+  "verdigrisTargets": ["spellcraft"],
+  "capabilities": {
+    "adapter": false,
+    "scenarios": false,
+    "stateExport": false,
+    "stateImport": false,
+    "snapshots": false,
+    "annotations": false,
+    "proposals": false,
+    "fixtures": false,
+    "events": false,
+    "pauseStep": false,
+    "agentFeedback": false
+  },
+  "unsupportedMethods": ["listScenarios", "loadScenario", "getAnnotations", "setAnnotations", "pause", "resume", "step"],
+  "tags": ["spellcraft", "threejs", "lattice"]
+}
