@@ -15,18 +15,18 @@
   "stateVersion": 1,
   "verdigrisTargets": ["hud-resources"],
   "capabilities": {
-    "adapter": false,
-    "scenarios": false,
-    "stateExport": false,
-    "stateImport": false,
-    "snapshots": false,
+    "adapter": true,
+    "scenarios": true,
+    "stateExport": true,
+    "stateImport": true,
+    "snapshots": true,
     "annotations": false,
     "proposals": false,
     "fixtures": false,
-    "events": false,
+    "events": true,
     "pauseStep": false,
-    "agentFeedback": false
+    "agentFeedback": true
   },
-  "unsupportedMethods": ["listScenarios", "loadScenario", "getAnnotations", "setAnnotations", "pause", "resume", "step"],
+  "unsupportedMethods": ["getAnnotations", "setAnnotations", "pause", "resume", "step"],
   "tags": ["hud", "orbs", "webgl2", "status-fx"]
 }
