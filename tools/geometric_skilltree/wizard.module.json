@@ -15,18 +15,18 @@
   "stateVersion": 1,
   "verdigrisTargets": ["passive-tree"],
   "capabilities": {
-    "adapter": false,
-    "scenarios": false,
-    "stateExport": false,
-    "stateImport": false,
-    "snapshots": false,
-    "annotations": false,
-    "proposals": false,
+    "adapter": true,
+    "scenarios": true,
+    "stateExport": true,
+    "stateImport": true,
+    "snapshots": true,
+    "annotations": true,
+    "proposals": true,
     "fixtures": false,
     "events": false,
     "pauseStep": false,
-    "agentFeedback": false
+    "agentFeedback": true
   },
-  "unsupportedMethods": ["listScenarios", "loadScenario", "pause", "resume", "step"],
+  "unsupportedMethods": ["pause", "resume", "step"],
   "tags": ["passive-tree", "svg", "authoring"]
 }

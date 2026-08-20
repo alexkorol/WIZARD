@@ -1492,6 +1492,29 @@
       padding: 6px 7px;
     }
     .note-editor-actions { display: flex; gap: 6px; margin-top: 8px; }
+    #proposal-layer .proposal-pin {
+      fill: rgba(201,162,39,.9);
+      stroke: #0d0c0a;
+      stroke-width: 2;
+      pointer-events: all;
+      cursor: pointer;
+    }
+    #proposal-layer .proposal-region {
+      fill: rgba(201,162,39,.12);
+      stroke: #c9a227;
+      stroke-dasharray: 6 4;
+      pointer-events: all;
+    }
+    #proposal-editor {
+      display: none;
+      position: absolute;
+      z-index: 8;
+      width: min(320px, calc(100vw - 24px));
+      background: #14110d;
+      border: 1px solid rgba(201,162,39,.45);
+      padding: 10px;
+    }
+    body.wizard-dev #proposal-toolbar { outline: 1px dashed rgba(201,162,39,.35); }
   </style>
 </head>
 <body class="theme-modern">
@@ -1506,6 +1529,7 @@
           <g id="node-layer"></g>
           <g id="label-layer"></g>
           <g id="note-layer"></g>
+          <g id="proposal-layer"></g>
         </g>
       </svg>
     </div>
@@ -1701,6 +1725,12 @@
         <div class="toolbar-group" aria-label="Designer">
           <button class="icon-btn" id="designer-toggle-btn" aria-label="Toggle designer mode" aria-pressed="false" type="button">Design</button>
         </div>
+        <div class="toolbar-group" id="proposal-toolbar" aria-label="Owner proposals">
+          <button class="icon-btn" id="proposal-place-btn" type="button">Propose</button>
+          <button class="icon-btn" id="proposal-region-btn" type="button">Region</button>
+          <button class="icon-btn" id="proposal-export-btn" type="button">Export proposals</button>
+          <button class="icon-btn" id="proposal-copy-btn" type="button">Copy agent feedback</button>
+        </div>
         <div class="toolbar-group" aria-label="Theme">
           <button class="theme-btn active" data-theme="modern" type="button">Verdigris</button>
           <button class="theme-btn" data-theme="classic" type="button">90s</button>
@@ -1715,6 +1745,29 @@
       <div class="tooltip-body"></div>
     </div>
 
+    <div id="proposal-editor" role="dialog" aria-label="Owner proposal editor">
+      <div id="proposal-editor-title">Owner proposal</div>
+      <label class="sr-only" for="proposal-kind">Proposal class</label>
+      <select id="proposal-kind">
+        <option value="small_passive">small passive</option>
+        <option value="notable">notable</option>
+        <option value="mastery">mastery</option>
+        <option value="keystone">keystone</option>
+        <option value="gateway">gateway</option>
+        <option value="socket">socket</option>
+        <option value="pattern">pattern</option>
+        <option value="visual_feature">visual feature</option>
+      </select>
+      <label class="sr-only" for="proposal-name">Proposed name</label>
+      <input id="proposal-name" type="text" placeholder="Proposed name">
+      <label class="sr-only" for="proposal-text">Mechanical text</label>
+      <textarea id="proposal-text" rows="3" placeholder="Optional mechanical text"></textarea>
+      <div class="note-editor-actions">
+        <button class="icon-btn" id="proposal-save-btn" type="button">Save</button>
+        <button class="icon-btn" id="proposal-resolve-btn" type="button">Resolve</button>
+        <button class="icon-btn danger" id="proposal-delete-btn" type="button">Delete</button>
+      </div>
+    </div>
     <div id="note-editor" role="dialog" aria-label="Note editor">
       <div id="note-editor-title">Note</div>
       <textarea id="note-editor-text" rows="4" placeholder="Route intent, respec debts, pattern plans..."></textarea>
@@ -5506,6 +5559,68 @@
     window.designer = new DesignerController(window.skillTree, window.renderer, DESIGNER_BOOT_STATE);
     window.annotator = new AnnotationController(window.skillTree);
     window.skillTree.recalculate({ modelChanged: false });
+  </script>
+  <script src="../../shared/wizard-lab.js"></script>
+  <script src="../../shared/wizard-annotations.js"></script>
+  <script src="wizard-proposals.js"></script>
+  <script src="wizard-adapter.js"></script>
+  <script>
+    (function () {
+      const proposals = window.WizardProposals;
+      if (!proposals) return;
+      const editor = document.getElementById('proposal-editor');
+      function openEditor(id) {
+        const item = proposals.list().find(note => note.id === id);
+        if (!item || !editor) return;
+        proposals.selectedId = id;
+        document.getElementById('proposal-kind').value = (item.proposal && item.proposal.kind) || 'small_passive';
+        document.getElementById('proposal-name').value = (item.proposal && item.proposal.name) || '';
+        document.getElementById('proposal-text').value = (item.proposal && item.proposal.mechanicalText) || '';
+        editor.style.display = 'block';
+      }
+      document.getElementById('proposal-place-btn')?.addEventListener('click', () => {
+        proposals.setMode(proposals.mode === 'place' ? 'off' : 'place');
+      });
+      document.getElementById('proposal-region-btn')?.addEventListener('click', () => {
+        proposals.setMode(proposals.mode === 'region' ? 'off' : 'region');
+      });
+      document.getElementById('proposal-export-btn')?.addEventListener('click', () => {
+        const blob = new Blob([JSON.stringify(proposals.exportBundle(), null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'wizard-tree-proposals.json';
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+      document.getElementById('proposal-copy-btn')?.addEventListener('click', async () => {
+        const text = proposals.toMarkdown();
+        try { await navigator.clipboard.writeText(text); } catch (_) { window.prompt('Agent feedback', text); }
+      });
+      document.getElementById('proposal-save-btn')?.addEventListener('click', () => {
+        if (!proposals.selectedId) return;
+        proposals.update(proposals.selectedId, {
+          title: document.getElementById('proposal-name').value,
+          proposal: {
+            kind: document.getElementById('proposal-kind').value,
+            name: document.getElementById('proposal-name').value,
+            mechanicalText: document.getElementById('proposal-text').value
+          }
+        });
+      });
+      document.getElementById('proposal-resolve-btn')?.addEventListener('click', () => {
+        if (proposals.selectedId) proposals.resolve(proposals.selectedId);
+      });
+      document.getElementById('proposal-delete-btn')?.addEventListener('click', () => {
+        if (proposals.selectedId) proposals.remove(proposals.selectedId);
+        if (editor) editor.style.display = 'none';
+      });
+      document.getElementById('proposal-layer')?.addEventListener('click', event => {
+        const mark = event.target.closest && event.target.closest('[data-proposal-id]');
+        if (mark) openEditor(mark.dataset.proposalId);
+      });
+      if (window.WizardLab && window.WizardLab.isDevMode()) document.body.classList.add('wizard-dev');
+    })();
   </script>
 </body>
 </html>
