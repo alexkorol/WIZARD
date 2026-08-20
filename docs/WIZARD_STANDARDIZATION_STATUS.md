@@ -119,4 +119,4 @@ Direct module URLs must keep working. Archive files must not be deleted in this 
 | M4 Shared calibration adapter | done (proof: Vessels of Life & Mana) |
 | M5 Annotation model + passive-tree proposals | done |
 | M6 Systems Bench + orb event proof | done |
-| M7 Root verify, CI, captures | in progress |
+| M7 Root verify, CI, captures | done |

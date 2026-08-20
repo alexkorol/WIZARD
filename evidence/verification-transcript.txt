@@ -1,0 +1,37 @@
+WIZARD-REVAMP-001 verification transcript
+Date: 2026-08-19
+Branch: cursor/wizard-revamp-001
+Head: e8b89f10e4d5a8c9c7e485a4548db9b9bcfc1143 (pre-evidence)
+Command: node scripts/wizard-lab.mjs verify --full
+
+Result: PASS
+manifests: 17
+dashboard: 9
+
+Covered:
+- schema / unique IDs / status / visibility
+- missing launch entries and README paths
+- generated registry freshness
+- dashboard identity and archive-surface absence
+- active module HTML smoke
+- adapter handshake
+- annotation fixtures
+- calibration import/export and snapshots
+- passive-tree canonical-data non-mutation
+- Systems Bench fixture playback
+- retained module-local tests (skill tree, VesselForge, cartographer, mason, splash, performance)
+
+Browser inspection (http://127.0.0.1:8765):
+- desktop ~1920x1080 dashboard: evidence/dashboard-desktop.png
+- narrow ~1366x768 card grid: evidence/dashboard-narrow.png
+- keyboard skip link and focus-visible gold outline present in CSS
+- reduced-motion rules present
+- archive candidates absent from dashboard
+- passive-tree proposals (Propose/Region/export): evidence/passive-tree-proposals.png
+- Systems Bench driving orbs fixture: evidence/systems-bench.png
+
+Diff vs origin/gh-pages:
+- archive candidate directories still present
+- active module launch URLs unchanged
+- Arcane Lattice files unchanged except wizard.module.json
+- no secrets added
