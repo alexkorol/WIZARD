@@ -2,10 +2,12 @@
 
 - Supervisor identity: MacBook Codex app, independent WIZARD supervisor clone;
   it does not direct the PC Verdigris harness or standalone orchestration repo.
-- Live tip: `origin/gh-pages` @ `4c0e2c0` (`gh-pages` IS the deployed site)
-- Live status: Pages deployment `5996942263` built successfully; root verify run
-  `32338960668` succeeded for the exact live SHA.
-- Local preflight at the live SHA: `node scripts/wizard-lab.mjs verify --full`
+- Last accepted production increment: `WIZARD-SURGE-013`, issue #49 / PR
+  #67, inspected head `a648411`, merged as `b9f7f35`.
+- Reconciled live tip: `origin/gh-pages` @ `b9f7f35` (`gh-pages` IS the
+  deployed site). This snapshot itself may advance the orchestration-only tip.
+- Local post-merge verification at `b9f7f35`:
+  `node scripts/wizard-lab.mjs verify --full`
   → 17 manifests, 9 dashboard modules, PASS.
 - Open PR: draft #29, Arcane Lattice 1.0, head `049da81`; CI green and GitHub
   reports CLEAN, but it remains draft and its adapter successor is gated on
@@ -18,7 +20,6 @@
 | Task | Actor | Notes |
 |---|---|---|
 | `WIZARD-SURGE-001` [#37](https://github.com/alexkorol/WIZARD/issues/37) | `OX_WIZARD_VISUAL` | isolated branch `codex/ox-wizard-visual-surge-001`; framepack research |
-| `WIZARD-SURGE-013` [#49](https://github.com/alexkorol/WIZARD/issues/49) | `OX_WIZARD_SYSTEMS` | isolated branch `codex/ox-wizard-systems-surge-013`; manifest hardening |
 
 ## READY (unclaimed)
 
@@ -36,6 +37,8 @@
   archive redirects, and canonical CI consolidation.
 - `OWNER-INPUT-001` is #65. It blocks only final raster selection; placeholders
   and stable interfaces continue.
+- #49 manifest hardening is accepted and merged; all 13 successor bodies now
+  carry task-specific tests and exact capture requirements before release.
 - Proposal promotion into authored tree data remains deliberately outside this
   surge board because it requires an owner product decision and must not be
   inferred from the integration directive.

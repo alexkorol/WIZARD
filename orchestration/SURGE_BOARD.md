@@ -12,7 +12,12 @@ acceptance before review or merge.
 | Issue | Actor | Branch | Scope |
 |---|---|---|---|
 | [#37](https://github.com/alexkorol/WIZARD/issues/37) `WIZARD-SURGE-001` | `OX_WIZARD_VISUAL` | `codex/ox-wizard-visual-surge-001` | framepack research and correction packet |
-| [#49](https://github.com/alexkorol/WIZARD/issues/49) `WIZARD-SURGE-013` | `OX_WIZARD_SYSTEMS` | `codex/ox-wizard-systems-surge-013` | manifest and registry hardening |
+
+## Accepted and shipped
+
+| Issue | Inspected head | Production merge | Result |
+|---|---|---|---|
+| [#49](https://github.com/alexkorol/WIZARD/issues/49) `WIZARD-SURGE-013` | `a648411` | `b9f7f35` | recursive manifest validation, safe paths, deterministic registry, negative fixtures |
 
 ## Ready, unclaimed
 
