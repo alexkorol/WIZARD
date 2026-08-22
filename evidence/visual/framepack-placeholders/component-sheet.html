@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verdigris placeholder component sheet</title>
+<link rel="stylesheet" href="../../../shared/verdigris-frame.css">
+<style>
+:root { color-scheme: dark; --bg: #0b0c0a; --ink: #ece6d8; --muted: #9e998e; --gold: #c8a927; --line: #302f2a; }
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body { margin: 0; overflow-x: hidden; background: radial-gradient(900px 380px at 50% -220px, #35311e, transparent 72%), var(--bg); color: var(--ink); font: 14px/1.4 Inter, "Segoe UI", system-ui, sans-serif; }
+.sheet { width: min(1220px, 100%); margin: 0 auto; padding: 24px 26px 32px; }
+.sheet-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding-bottom: 15px; border-bottom: 1px solid var(--line); }
+.eyebrow { margin: 0 0 6px; color: var(--gold); font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+h1 { margin: 0; font: 500 35px/1.05 Georgia, serif; letter-spacing: .02em; }
+.lede { max-width: 690px; margin: 7px 0 0; color: var(--muted); font-size: 12px; }
+.proof { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+.proof span { padding: 5px 8px; border: 1px solid #55503b; color: #bcb49e; font: 700 9px ui-monospace, monospace; letter-spacing: .06em; text-transform: uppercase; }
+.matrix { margin-top: 14px; }
+.component-row { display: grid; grid-template-columns: 92px repeat(5, minmax(0, 1fr)); gap: 8px; align-items: stretch; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.component-label { align-self: center; }
+.component-label span, .state-label { color: #77736a; font: 700 8px ui-monospace, monospace; letter-spacing: .14em; text-transform: uppercase; }
+.component-label h2 { margin: 3px 0 0; font: 500 18px Georgia, serif; }
+.specimen { min-width: 0; }
+.specimen .state-label { display: block; margin: 0 0 4px 2px; }
+.specimen .wizard-frame { width: 100%; min-height: 68px; }
+.specimen .wizard-frame__content { display: grid; min-height: 66px; align-content: center; }
+.specimen .wizard-frame__content strong { font: 500 13px Georgia, serif; }
+.specimen .wizard-frame__content small { color: var(--wizard-frame-muted); font-size: 8px; letter-spacing: .08em; }
+.specimen .wizard-frame[data-wizard-frame-component="button"] { min-height: 0; }
+.specimen .wizard-frame[data-wizard-frame-component="button"] .wizard-frame__content { min-height: 43px; padding-top: 6px; padding-bottom: 6px; font-size: 10px; }
+.narrow-proof { display: none; }
+.sheet-footer { display: flex; justify-content: space-between; gap: 20px; padding-top: 11px; color: #77736a; font: 9px ui-monospace, monospace; }
+@media (max-width: 640px) {
+  .sheet { padding: 20px 12px 30px; }
+  .sheet-header { display: block; }
+  h1 { font-size: 28px; }
+  .proof { justify-content: flex-start; margin-top: 12px; }
+  .narrow-proof { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+  .narrow-proof > div > span { display: block; margin: 0 0 7px 2px; color: #888276; font: 700 8px ui-monospace, monospace; letter-spacing: .13em; text-transform: uppercase; }
+  .narrow-proof .wizard-frame { width: 100%; }
+  .component-row { grid-template-columns: 1fr 1fr; }
+  .component-label { grid-column: 1 / -1; }
+  .specimen:nth-child(n+4) { display: none; }
+  .sheet-footer { display: block; }
+  .sheet-footer span { display: block; margin-top: 4px; }
+}
+</style>
+</head>
+<body>
+<main class="sheet">
+  <header class="sheet-header">
+    <div>
+      <p class="eyebrow">Verdigris UI · Stable swap interface</p>
+      <h1>Neutral frame placeholders</h1>
+      <p class="lede">CSS is the complete product baseline. SVG and later raster packs occupy a pointer-free decoration layer without changing content geometry.</p>
+    </div>
+    <div class="proof" aria-label="Baseline properties"><span>no script required</span><span>image-failure safe</span><span>no baked text</span></div>
+  </header>
+
+  <section class="narrow-proof" aria-label="Narrow accessibility proof">
+    <div><span>Keyboard focus</span><button class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="button" data-wizard-frame-state="focus"><span class="wizard-frame__content">Focused action</span></button></div>
+    <div><span>Disabled · 8.9:1</span><button class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="button" data-wizard-frame-state="disabled" disabled><span class="wizard-frame__content">Unavailable</span></button></div>
+  </section>
+
+  <section class="matrix" aria-label="All placeholder components and states">
+    <div class="component-row" data-component-row="panel">
+      <div class="component-label"><span>Surface</span><h2>Panel</h2></div>
+      <div class="specimen"><span class="state-label">Default</span><section class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="panel" data-wizard-frame-state="default"><div class="wizard-frame__content"><strong>Baseline</strong><small>CSS surface</small></div></section></div>
+      <div class="specimen"><span class="state-label">Hover</span><section class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="panel" data-wizard-frame-state="hover"><div class="wizard-frame__content"><strong>Lifted</strong><small>Pointer cue</small></div></section></div>
+      <div class="specimen"><span class="state-label">Focus</span><section class="wizard-frame" tabindex="0" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="panel" data-wizard-frame-state="focus"><div class="wizard-frame__content"><strong>Focused</strong><small>Visible ring</small></div></section></div>
+      <div class="specimen"><span class="state-label">Active</span><section class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="panel" data-wizard-frame-state="active"><div class="wizard-frame__content"><strong>Pressed</strong><small>Inset cue</small></div></section></div>
+      <div class="specimen"><span class="state-label">Disabled</span><section class="wizard-frame" aria-disabled="true" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="panel" data-wizard-frame-state="disabled"><div class="wizard-frame__content"><strong>Unavailable</strong><small>Readable muted state</small></div></section></div>
+    </div>
+
+    <div class="component-row" data-component-row="card">
+      <div class="component-label"><span>Surface</span><h2>Card</h2></div>
+      <div class="specimen"><span class="state-label">Default</span><article class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="card" data-wizard-frame-state="default"><div class="wizard-frame__content"><strong>Baseline</strong><small>Compact surface</small></div></article></div>
+      <div class="specimen"><span class="state-label">Hover</span><article class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="card" data-wizard-frame-state="hover"><div class="wizard-frame__content"><strong>Lifted</strong><small>Pointer cue</small></div></article></div>
+      <div class="specimen"><span class="state-label">Focus</span><article class="wizard-frame" tabindex="0" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="card" data-wizard-frame-state="focus"><div class="wizard-frame__content"><strong>Focused</strong><small>Visible ring</small></div></article></div>
+      <div class="specimen"><span class="state-label">Active</span><article class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="card" data-wizard-frame-state="active"><div class="wizard-frame__content"><strong>Pressed</strong><small>Inset cue</small></div></article></div>
+      <div class="specimen"><span class="state-label">Disabled</span><article class="wizard-frame" aria-disabled="true" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="card" data-wizard-frame-state="disabled"><div class="wizard-frame__content"><strong>Unavailable</strong><small>Readable muted state</small></div></article></div>
+    </div>
+
+    <div class="component-row" data-component-row="button">
+      <div class="component-label"><span>Control</span><h2>Button</h2></div>
+      <div class="specimen"><span class="state-label">Default</span><button class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="button" data-wizard-frame-state="default"><span class="wizard-frame__content">Default</span></button></div>
+      <div class="specimen"><span class="state-label">Hover</span><button class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="button" data-wizard-frame-state="hover"><span class="wizard-frame__content">Hover</span></button></div>
+      <div class="specimen"><span class="state-label">Focus</span><button class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="button" data-wizard-frame-state="focus"><span class="wizard-frame__content">Focus</span></button></div>
+      <div class="specimen"><span class="state-label">Active</span><button class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="button" data-wizard-frame-state="active"><span class="wizard-frame__content">Active</span></button></div>
+      <div class="specimen"><span class="state-label">Disabled</span><button class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="button" data-wizard-frame-state="disabled" disabled><span class="wizard-frame__content">Disabled</span></button></div>
+    </div>
+
+    <div class="component-row" data-component-row="inset">
+      <div class="component-label"><span>Surface</span><h2>Inset</h2></div>
+      <div class="specimen"><span class="state-label">Default</span><aside class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="inset" data-wizard-frame-state="default"><div class="wizard-frame__content"><strong>Baseline</strong><small>Recessed region</small></div></aside></div>
+      <div class="specimen"><span class="state-label">Hover</span><aside class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="inset" data-wizard-frame-state="hover"><div class="wizard-frame__content"><strong>Lifted</strong><small>Pointer cue</small></div></aside></div>
+      <div class="specimen"><span class="state-label">Focus</span><aside class="wizard-frame" tabindex="0" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="inset" data-wizard-frame-state="focus"><div class="wizard-frame__content"><strong>Focused</strong><small>Visible ring</small></div></aside></div>
+      <div class="specimen"><span class="state-label">Active</span><aside class="wizard-frame" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="inset" data-wizard-frame-state="active"><div class="wizard-frame__content"><strong>Pressed</strong><small>Inset cue</small></div></aside></div>
+      <div class="specimen"><span class="state-label">Disabled</span><aside class="wizard-frame" aria-disabled="true" data-wizard-frame-pack="verdigris-placeholder" data-wizard-frame-component="inset" data-wizard-frame-state="disabled"><div class="wizard-frame__content"><strong>Unavailable</strong><small>Readable muted state</small></div></aside></div>
+    </div>
+  </section>
+
+  <footer class="sheet-footer"><span>Frozen v1 selectors + attributes</span><span>Raster substitution: decoration only</span><span>top / right / bottom / left</span></footer>
+</main>
+<script src="../../../shared/verdigris-frame.js"></script>
+</body>
+</html>

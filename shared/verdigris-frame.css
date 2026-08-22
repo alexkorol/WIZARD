@@ -1,0 +1,200 @@
+/* Verdigris frame v1: every selector is intentionally rooted at .wizard-frame. */
+.wizard-frame {
+  --wizard-frame-image: none;
+  --wizard-frame-slice-top: 18;
+  --wizard-frame-slice-right: 18;
+  --wizard-frame-slice-bottom: 18;
+  --wizard-frame-slice-left: 18;
+  --wizard-frame-content-top: 16;
+  --wizard-frame-content-right: 18;
+  --wizard-frame-content-bottom: 16;
+  --wizard-frame-content-left: 18;
+  --wizard-frame-edge-repeat: stretch;
+  --wizard-frame-fill: #171714;
+  --wizard-frame-ink: #e8e2d4;
+  --wizard-frame-muted: #aaa397;
+  --wizard-frame-line: #5f594c;
+  --wizard-frame-accent: #bda647;
+  --wizard-frame-focus: #75d7c1;
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  min-width: 0;
+  border: 1px solid var(--wizard-frame-line);
+  border-radius: 2px;
+  background: var(--wizard-frame-fill);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025), 0 6px 20px rgba(0, 0, 0, 0.22);
+  color: var(--wizard-frame-ink);
+  transition: border-color 140ms ease, box-shadow 140ms ease, filter 140ms ease;
+}
+
+.wizard-frame::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: -1px;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: transparent;
+  border-width:
+    calc(var(--wizard-frame-slice-top) * 1px)
+    calc(var(--wizard-frame-slice-right) * 1px)
+    calc(var(--wizard-frame-slice-bottom) * 1px)
+    calc(var(--wizard-frame-slice-left) * 1px);
+  border-image-source: var(--wizard-frame-image);
+  border-image-slice:
+    var(--wizard-frame-slice-top)
+    var(--wizard-frame-slice-right)
+    var(--wizard-frame-slice-bottom)
+    var(--wizard-frame-slice-left);
+  border-image-repeat: var(--wizard-frame-edge-repeat);
+  pointer-events: none;
+}
+
+.wizard-frame::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 5px;
+  border: 1px solid color-mix(in srgb, var(--wizard-frame-line) 58%, transparent);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--wizard-frame-accent) 20%, transparent), transparent 22%) top left / 18px 18px no-repeat,
+    linear-gradient(225deg, color-mix(in srgb, var(--wizard-frame-accent) 20%, transparent), transparent 22%) top right / 18px 18px no-repeat,
+    linear-gradient(45deg, color-mix(in srgb, var(--wizard-frame-accent) 16%, transparent), transparent 22%) bottom left / 18px 18px no-repeat,
+    linear-gradient(315deg, color-mix(in srgb, var(--wizard-frame-accent) 16%, transparent), transparent 22%) bottom right / 18px 18px no-repeat;
+  pointer-events: none;
+}
+
+.wizard-frame > .wizard-frame__content {
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  min-width: 0;
+  padding:
+    calc(var(--wizard-frame-content-top) * 1px)
+    calc(var(--wizard-frame-content-right) * 1px)
+    calc(var(--wizard-frame-content-bottom) * 1px)
+    calc(var(--wizard-frame-content-left) * 1px);
+}
+
+.wizard-frame[data-wizard-frame-component="panel"] {
+  --wizard-frame-image: url("../assets/verdigris-ui/placeholders/panel.svg");
+  --wizard-frame-fill: #171714;
+  --wizard-frame-line: #625c4e;
+}
+
+.wizard-frame[data-wizard-frame-component="card"] {
+  --wizard-frame-image: url("../assets/verdigris-ui/placeholders/card.svg");
+  --wizard-frame-content-top: 13;
+  --wizard-frame-content-right: 15;
+  --wizard-frame-content-bottom: 13;
+  --wizard-frame-content-left: 15;
+  --wizard-frame-fill: #141512;
+  --wizard-frame-line: #504f45;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035), 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.wizard-frame[data-wizard-frame-component="button"] {
+  --wizard-frame-image: url("../assets/verdigris-ui/placeholders/button.svg");
+  --wizard-frame-slice-top: 14;
+  --wizard-frame-slice-right: 20;
+  --wizard-frame-slice-bottom: 14;
+  --wizard-frame-slice-left: 20;
+  --wizard-frame-content-top: 10;
+  --wizard-frame-content-right: 20;
+  --wizard-frame-content-bottom: 10;
+  --wizard-frame-content-left: 20;
+  --wizard-frame-fill: #1a1915;
+  --wizard-frame-line: #766d52;
+  display: inline-block;
+  appearance: none;
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+.wizard-frame[data-wizard-frame-component="button"] > .wizard-frame__content {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  letter-spacing: 0.045em;
+}
+
+.wizard-frame[data-wizard-frame-component="inset"] {
+  --wizard-frame-image: url("../assets/verdigris-ui/placeholders/inset.svg");
+  --wizard-frame-content-top: 12;
+  --wizard-frame-content-right: 14;
+  --wizard-frame-content-bottom: 12;
+  --wizard-frame-content-left: 14;
+  --wizard-frame-fill: #0e100f;
+  --wizard-frame-line: #454a43;
+  box-shadow: inset 0 3px 12px rgba(0, 0, 0, 0.52), 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.wizard-frame[data-wizard-frame-state="hover"],
+.wizard-frame:hover:not(:disabled):not([aria-disabled="true"]) {
+  --wizard-frame-fill: #1c1c17;
+  --wizard-frame-line: #91815a;
+  filter: brightness(1.04);
+}
+
+.wizard-frame[data-wizard-frame-state="focus"],
+.wizard-frame:focus-visible,
+.wizard-frame:focus-within {
+  --wizard-frame-line: #75d7c1;
+  outline: 2px solid var(--wizard-frame-focus);
+  outline-offset: 3px;
+  box-shadow: inset 0 0 0 1px #0a0c0b, 0 0 0 2px rgba(117, 215, 193, 0.24), 0 7px 22px rgba(0, 0, 0, 0.28);
+}
+
+.wizard-frame[data-wizard-frame-state="active"],
+.wizard-frame:active:not(:disabled):not([aria-disabled="true"]) {
+  --wizard-frame-fill: #10120f;
+  --wizard-frame-line: #c7aa46;
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.025);
+  filter: brightness(0.94);
+}
+
+.wizard-frame[data-wizard-frame-state="disabled"],
+.wizard-frame:disabled,
+.wizard-frame[aria-disabled="true"] {
+  --wizard-frame-fill: #151514;
+  --wizard-frame-ink: #b9b5ab;
+  --wizard-frame-muted: #97938a;
+  --wizard-frame-line: #5b5953;
+  --wizard-frame-accent: #777268;
+  color: var(--wizard-frame-ink);
+  cursor: not-allowed;
+  filter: saturate(0.35);
+  opacity: 1;
+}
+
+.wizard-frame[data-wizard-frame-state="disabled"]::before,
+.wizard-frame:disabled::before,
+.wizard-frame[aria-disabled="true"]::before {
+  opacity: 0.42;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wizard-frame {
+    scroll-behavior: auto;
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .wizard-frame {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    forced-color-adjust: auto;
+  }
+
+  .wizard-frame[data-wizard-frame-state="focus"],
+  .wizard-frame:focus-visible,
+  .wizard-frame:focus-within {
+    outline-color: Highlight;
+  }
+}

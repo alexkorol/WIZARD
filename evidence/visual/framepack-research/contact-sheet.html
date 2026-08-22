@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verdigris framepack research directions</title>
+<style>
+  :root {
+    --bg: #0d0c0a;
+    --panel: #100f0c;
+    --ink: #e9e4d8;
+    --dim: #aaa294;
+    --faint: #777063;
+    --gold: #c9a227;
+    --line: rgba(233, 228, 216, .16);
+  }
+  * { box-sizing: border-box; }
+  html, body { width: 1536px; height: 1024px; margin: 0; overflow: hidden; }
+  body {
+    background:
+      radial-gradient(900px 520px at 50% -20%, rgba(201, 162, 39, .08), transparent 66%),
+      var(--bg);
+    color: var(--ink);
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+  }
+  header {
+    height: 112px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 22px 30px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  h1 {
+    margin: 0;
+    font: 500 29px/1.15 Georgia, serif;
+    letter-spacing: .08em;
+  }
+  header p { margin: 8px 0 0; color: var(--dim); font-size: 13px; }
+  .status {
+    border: 1px solid rgba(201, 162, 39, .38);
+    padding: 9px 13px;
+    color: var(--gold);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+  main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    height: 912px;
+    padding: 20px 28px 26px;
+  }
+  .direction {
+    min-width: 0;
+    display: grid;
+    grid-template-rows: 56px 344px 1fr 62px;
+    background: rgba(16, 15, 12, .88);
+    border: 1px solid var(--line);
+  }
+  .direction > h2 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--line);
+    font: 500 17px/1 Georgia, serif;
+    letter-spacing: .04em;
+  }
+  .direction > h2 b {
+    color: var(--gold);
+    font: 700 10px/1 Inter, sans-serif;
+    letter-spacing: .16em;
+  }
+  .tile {
+    position: relative;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .tile-label {
+    position: absolute;
+    z-index: 4;
+    top: 12px;
+    left: 12px;
+    max-width: calc(100% - 24px);
+    padding: 6px 8px;
+    background: rgba(6, 6, 5, .88);
+    border: 1px solid rgba(233, 228, 216, .22);
+    color: #f1eadc;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+  }
+  .source { border-bottom: 1px solid var(--line); background: #080807; }
+  .source img { width: 100%; height: 100%; display: block; object-fit: cover; }
+  .source::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0 -78px 70px rgba(0, 0, 0, .78);
+  }
+  .source-note {
+    position: absolute;
+    z-index: 3;
+    left: 14px;
+    right: 14px;
+    bottom: 13px;
+    color: #d8d0c2;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  .placeholder {
+    display: grid;
+    place-items: center;
+    background:
+      linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
+      radial-gradient(circle at 50% 40%, #181610, #090806 72%);
+    background-size: 24px 24px, 24px 24px, auto;
+  }
+  .specimens {
+    width: 88%;
+    height: 72%;
+    display: grid;
+    grid-template-columns: 1fr 154px;
+    grid-template-rows: 1fr 56px;
+    gap: 14px;
+    align-items: stretch;
+  }
+  .sample {
+    position: relative;
+    display: grid;
+    place-items: center;
+    color: rgba(233, 228, 216, .5);
+    background: #0b0a08;
+    font-size: 9px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    isolation: isolate;
+  }
+  .sample.panel { grid-column: 1 / -1; }
+  .sample.button { min-height: 0; }
+  .bronze .sample {
+    border: 15px solid transparent;
+    background:
+      linear-gradient(#0b0a08, #0b0a08) padding-box,
+      repeating-linear-gradient(103deg, #181814 0 7px, #52472b 8px, #29291f 11px, #486457 12px, #231e15 16px) border-box;
+    box-shadow: inset 0 0 0 1px rgba(232, 201, 112, .12), 0 7px 20px #000;
+  }
+  .bronze .sample::before,
+  .bronze .sample::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #72613b;
+    box-shadow: 0 0 0 2px #17130e, 0 0 8px rgba(110, 154, 131, .28);
+  }
+  .bronze .sample::before { top: -11px; left: -11px; }
+  .bronze .sample::after { right: -11px; bottom: -11px; }
+  .basalt .sample {
+    border: 20px solid #35342f;
+    clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+    background: #0a0a08;
+    box-shadow: inset 0 0 0 2px #111, inset 0 0 25px #000;
+  }
+  .basalt .sample::before,
+  .basalt .sample::after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #806d3e;
+    box-shadow: 0 0 0 2px #14120c;
+  }
+  .basalt .sample::before { top: -13px; left: -13px; }
+  .basalt .sample::after { right: -13px; bottom: -13px; }
+  .wood .sample {
+    border: 16px solid transparent;
+    background:
+      linear-gradient(#0b0a08, #0b0a08) padding-box,
+      repeating-linear-gradient(92deg, #17100a 0 5px, #392619 6px 8px, #21150d 9px 15px, #4b3320 16px) border-box;
+    box-shadow: 0 7px 20px #000, inset 0 0 0 1px #080604;
+  }
+  .wood .sample::before,
+  .wood .sample::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -17px;
+    bottom: -17px;
+    width: 14px;
+    background: linear-gradient(90deg, #221b11, #75623b 44%, #2b2519);
+    border: 1px solid #0e0b07;
+  }
+  .wood .sample::before { left: 10px; }
+  .wood .sample::after { right: 10px; }
+  .notes {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-top: 1px solid var(--line);
+    color: var(--dim);
+    font-size: 10px;
+    line-height: 1.35;
+  }
+  .notes strong { color: var(--ink); }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Verdigris UI framepack — grounded direction comparison</h1>
+    <p>Material evidence above; independent CSS placeholders below. Research only — no source is runtime art.</p>
+  </div>
+  <div class="status">Owner selects final direction</div>
+</header>
+<main>
+  <section class="direction bronze">
+    <h2><span>A · Field-cast bronze</span><b>Working recommendation</b></h2>
+    <div class="tile source">
+      <span class="tile-label">Source · The Met OA/CC0 · object 255365</span>
+      <img src="sources/met-255365-bronze-shield-boss.jpg" alt="">
+      <div class="source-note">Bronze shield boss · 7th century BCE<br>Evidence: patina, shallow working bands, sparse raised nodes.</div>
+    </div>
+    <div class="tile placeholder">
+      <span class="tile-label">Generated-placeholder · original CSS abstraction</span>
+      <div class="specimens">
+        <div class="sample panel" aria-label="Empty panel frame specimen"></div>
+        <div class="sample card" aria-label="Empty card frame specimen"></div>
+        <div class="sample button" aria-label="Empty button frame specimen"></div>
+      </div>
+    </div>
+    <div class="notes"><strong>Tradeoff:&nbsp;</strong> closest shell fit; must avoid bright oxidation noise and generic fantasy rivet clutter.</div>
+  </section>
+
+  <section class="direction basalt">
+    <h2><span>B · Monument-cut basalt</span><b>Architectural alternative</b></h2>
+    <div class="tile source">
+      <span class="tile-label">Source · The Met OA/CC0 · object 243937</span>
+      <img src="sources/met-243937-basalt-tripod-vessel.jpg" alt="">
+      <div class="source-note">Basalt tripod vessel · ca. 2500–1050 BCE<br>Evidence: planar mass, blunt transitions, porous matte surface.</div>
+    </div>
+    <div class="tile placeholder">
+      <span class="tile-label">Generated-placeholder · original CSS abstraction</span>
+      <div class="specimens">
+        <div class="sample panel" aria-label="Empty panel frame specimen"></div>
+        <div class="sample card" aria-label="Empty card frame specimen"></div>
+        <div class="sample button" aria-label="Empty button frame specimen"></div>
+      </div>
+    </div>
+    <div class="notes"><strong>Tradeoff:&nbsp;</strong> clearest structural read; wide rails risk consuming content area at compact sizes.</div>
+  </section>
+
+  <section class="direction wood">
+    <h2><span>C · Joined dark wood</span><b>Warm alternative</b></h2>
+    <div class="tile source">
+      <span class="tile-label">Source · The Met OA/CC0 · object 40272</span>
+      <img src="sources/met-40272-storage-case.jpg" alt="">
+      <div class="source-note">Storage Case (Karabitsu) · 1422<br>Evidence: legible joinery, metal at stress points, wear history.</div>
+    </div>
+    <div class="tile placeholder">
+      <span class="tile-label">Generated-placeholder · original CSS abstraction</span>
+      <div class="specimens">
+        <div class="sample panel" aria-label="Empty panel frame specimen"></div>
+        <div class="sample card" aria-label="Empty card frame specimen"></div>
+        <div class="sample button" aria-label="Empty button frame specimen"></div>
+      </div>
+    </div>
+    <div class="notes"><strong>Tradeoff:&nbsp;</strong> tactile and practical; grain noise and culture-specific fittings must not be copied.</div>
+  </section>
+</main>
+</body>
+</html>

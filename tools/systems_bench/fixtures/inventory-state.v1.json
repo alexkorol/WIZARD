@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "id": "inventory-state.v1",
+  "name": "Equip a training kit, return it, then restore the loadout",
+  "targetModuleId": "wizard.rpg-inventory",
+  "events": [
+    {
+      "schemaVersion": 1,
+      "sequence": 0,
+      "timeMs": 0,
+      "type": "inventory.state.changed",
+      "source": "fixture:inventory-state.v1",
+      "target": "module:wizard.rpg-inventory",
+      "data": {
+        "stateVersion": 1,
+        "gold": 120,
+        "inventory": [
+          { "id": "training-blade", "name": "Training Blade", "kind": "weapon" },
+          { "id": "copper-ward", "name": "Copper Ward", "kind": "charm" },
+          { "id": "travel-flask", "name": "Travel Flask", "kind": "consumable" }
+        ],
+        "equipment": { "mainHand": null, "charm": null },
+        "note": "Initial inert preview state."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "sequence": 1,
+      "timeMs": 700,
+      "type": "inventory.state.changed",
+      "source": "fixture:inventory-state.v1",
+      "target": "module:wizard.rpg-inventory",
+      "data": {
+        "stateVersion": 1,
+        "gold": 120,
+        "inventory": [
+          { "id": "copper-ward", "name": "Copper Ward", "kind": "charm" },
+          { "id": "travel-flask", "name": "Travel Flask", "kind": "consumable" }
+        ],
+        "equipment": {
+          "mainHand": { "id": "training-blade", "name": "Training Blade", "kind": "weapon" },
+          "charm": null
+        },
+        "note": "Training Blade equipped by explicit fixture state."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "sequence": 2,
+      "timeMs": 1400,
+      "type": "inventory.state.changed",
+      "source": "fixture:inventory-state.v1",
+      "target": "module:wizard.rpg-inventory",
+      "data": {
+        "stateVersion": 1,
+        "gold": 120,
+        "inventory": [
+          { "id": "travel-flask", "name": "Travel Flask", "kind": "consumable" }
+        ],
+        "equipment": {
+          "mainHand": { "id": "training-blade", "name": "Training Blade", "kind": "weapon" },
+          "charm": { "id": "copper-ward", "name": "Copper Ward", "kind": "charm" }
+        },
+        "note": "Two equipped slots at a nonzero playhead."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "sequence": 3,
+      "timeMs": 2100,
+      "type": "inventory.state.changed",
+      "source": "fixture:inventory-state.v1",
+      "target": "module:wizard.rpg-inventory",
+      "data": {
+        "stateVersion": 1,
+        "gold": 120,
+        "inventory": [
+          { "id": "travel-flask", "name": "Travel Flask", "kind": "consumable" },
+          { "id": "training-blade", "name": "Training Blade", "kind": "weapon" }
+        ],
+        "equipment": {
+          "mainHand": null,
+          "charm": { "id": "copper-ward", "name": "Copper Ward", "kind": "charm" }
+        },
+        "note": "Training Blade returned to inventory."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "sequence": 4,
+      "timeMs": 2800,
+      "type": "inventory.state.changed",
+      "source": "fixture:inventory-state.v1",
+      "target": "module:wizard.rpg-inventory",
+      "data": {
+        "stateVersion": 1,
+        "gold": 86,
+        "inventory": [
+          { "id": "travel-flask", "name": "Travel Flask", "kind": "consumable" }
+        ],
+        "equipment": {
+          "mainHand": { "id": "training-blade", "name": "Training Blade", "kind": "weapon" },
+          "charm": { "id": "copper-ward", "name": "Copper Ward", "kind": "charm" }
+        },
+        "note": "Final recorded state; no purchase or equipment rules are simulated."
+      }
+    }
+  ]
+}

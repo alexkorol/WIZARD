@@ -1,0 +1,51 @@
+{
+  "licensePolicy": {
+    "name": "The Metropolitan Museum of Art Open Access / CC0",
+    "url": "https://www.metmuseum.org/hubs/open-access"
+  },
+  "use": "Research evidence only; no source image is approved for a runtime framepack.",
+  "sources": [
+    {
+      "direction": "A — Field-cast bronze",
+      "objectId": 255365,
+      "title": "Bronze shield boss",
+      "date": "7th century BCE",
+      "medium": "Bronze",
+      "publicDomain": true,
+      "objectUrl": "https://www.metmuseum.org/art/collection/search/255365",
+      "apiUrl": "https://collectionapi.metmuseum.org/public/collection/v1/objects/255365",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/gr/web-large/DP248170.jpg",
+      "localFile": "sources/met-255365-bronze-shield-boss.jpg",
+      "sourceDimensions": [600, 450],
+      "sha256": "ca7b59f3699f00570bfa9163934f408b3fb1e023493a62e4acdbe478b5a0af87"
+    },
+    {
+      "direction": "B — Monument-cut basalt",
+      "objectId": 243937,
+      "title": "Basalt tripod vessel or mortar",
+      "date": "ca. 2500–1050 BCE",
+      "medium": "Basalt",
+      "publicDomain": true,
+      "objectUrl": "https://www.metmuseum.org/art/collection/search/243937",
+      "apiUrl": "https://collectionapi.metmuseum.org/public/collection/v1/objects/243937",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/gr/web-large/DP121296.jpg",
+      "localFile": "sources/met-243937-basalt-tripod-vessel.jpg",
+      "sourceDimensions": [600, 450],
+      "sha256": "75356241f5acad5e8f34b8f83ff362a1983dd322274d34bd097740a9c068dd4b"
+    },
+    {
+      "direction": "C — Joined dark wood",
+      "objectId": 40272,
+      "title": "Storage Case (Karabitsu)",
+      "date": "1422",
+      "medium": "Wood with black/red lacquer and gilt-bronze fittings",
+      "publicDomain": true,
+      "objectUrl": "https://www.metmuseum.org/art/collection/search/40272",
+      "apiUrl": "https://collectionapi.metmuseum.org/public/collection/v1/objects/40272",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/as/web-large/DP355740.jpg",
+      "localFile": "sources/met-40272-storage-case.jpg",
+      "sourceDimensions": [600, 450],
+      "sha256": "9c24c364a1c471c52802faaf684df261832ec85ed4ba82f6d5f8d9b5d87798c4"
+    }
+  ]
+}

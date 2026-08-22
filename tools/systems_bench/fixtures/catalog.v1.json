@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "fixtures": [
+    {
+      "id": "resource-session.v1",
+      "name": "HUD resources: low life then recover",
+      "path": "fixtures/resource-session.v1.json",
+      "targetModuleId": "wizard.orbs",
+      "view": "iframe",
+      "src": "../wizard_orbs/index.html?dev=1",
+      "targetTitle": "Vessels of Life and Mana"
+    },
+    {
+      "id": "inventory-state.v1",
+      "name": "Inventory state: equip and return",
+      "path": "fixtures/inventory-state.v1.json",
+      "targetModuleId": "wizard.rpg-inventory",
+      "view": "inventory-preview",
+      "targetTitle": "Inventory state preview"
+    }
+  ]
+}
