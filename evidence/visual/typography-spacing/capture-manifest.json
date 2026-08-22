@@ -1,0 +1,187 @@
+{
+  "captureMethod": {
+    "server": "python3 -m http.server 8164 --bind 127.0.0.1 --directory .",
+    "browser": "Brave via Codex Browser control",
+    "devicePixelRatio": 1,
+    "states": "default load; no controls activated",
+    "sourceEncodingNote": "Browser screenshot bytes are JFIF; exact clips were losslessly decoded and re-encoded as true PNG without resizing."
+  },
+  "captures": [
+    {
+      "path": "evidence/visual/typography-spacing/wide/arcane-lattice-wide-1280x800.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 1280,
+      "height": 800,
+      "sha256": "8dbaeaadf93d46b4a11c20746869b3e11ce71c692c46ae301222119cdcf6e707"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/wide/cartographer-wide-1280x800.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 1280,
+      "height": 800,
+      "sha256": "54e98963b6e2a0b916037c926c4d9392ba53855301b2bec9c4a644cf595f83ab"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/wide/chronicles-wide-1280x800.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 1280,
+      "height": 800,
+      "sha256": "b509999e011def2e05a300db50d7d86ab46311462bf37124402a15ac9a505e84"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/wide/dashboard-wide-1280x800.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 1280,
+      "height": 800,
+      "sha256": "91a8bc44984dffc1470e1a7fb2ecd5b1c9221df67ebf379814899ee57d9b7bd1"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/wide/geometric-skilltree-wide-1280x800.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 1280,
+      "height": 800,
+      "sha256": "9d388c0456ed8601517b6b35c87ffc257e579d4bdc4fb8555e1e541c6708f89a"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/wide/mason-wide-1280x800.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 1280,
+      "height": 800,
+      "sha256": "f72e44826fa6a31e11e9026a783e1488216e33591e44ba80b2b78345372a2a86"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/wide/orbs-wide-1280x800.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 1280,
+      "height": 800,
+      "sha256": "98c23a7ac7746c5410850b169a9bc30de7ffc758e647a62db42cebfa431a17f6"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/wide/rpg-inventory-wide-1280x800.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 1280,
+      "height": 800,
+      "sha256": "69030f21b3e8745fd37535657d1d734e93f46a40c2a36f1dd7c5d55ea63a8c55"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/wide/systems-bench-wide-1280x800.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 1280,
+      "height": 800,
+      "sha256": "a091020861b7f23af438f7ccb562bb09451753a5b2e2aa99c1b3ce6c5931fbe5"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/wide/verdigris-splash-wide-1280x800.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 1280,
+      "height": 800,
+      "sha256": "fa9c32a33fafa5ac853dc7de86bdfc0234882bb5a520e6fe5ea13c9d35870da0"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/narrow/arcane-lattice-narrow-375x900.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 375,
+      "height": 900,
+      "sha256": "a43d7b2e45512b9cb9b365fa987542258f108a0af8178a89a796a589feee02b3"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/narrow/cartographer-narrow-375x900.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 375,
+      "height": 900,
+      "sha256": "c16573f4963ebb01da12b916529491d3f835afd7b1d9ffe9d0e0fa8696e0af8d"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/narrow/chronicles-narrow-375x900.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 375,
+      "height": 900,
+      "sha256": "178a20c35bd5e3dad5efd4bf2cc85b31a861aae41891a2d1b79c19ab85fb3db5"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/narrow/dashboard-narrow-375x900.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 375,
+      "height": 900,
+      "sha256": "022fe7adb892d4315149315141634e90916ddb601f391bcf3f9aa9c9d0afb528"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/narrow/geometric-skilltree-narrow-375x900.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 375,
+      "height": 900,
+      "sha256": "fdbc8829747473a68e1689f4b726455446c283d9bf730527f1266a1d6e6d535f"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/narrow/mason-narrow-375x900.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 375,
+      "height": 900,
+      "sha256": "faab65282bde0e008ebc138960cf2a04b57cd3bda552ee2aa21253089d6cd580"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/narrow/orbs-narrow-375x900.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 375,
+      "height": 900,
+      "sha256": "b9afbbbe91748970beafea5f270ec72ec1af80ebde4b52acd384aa65808b488c"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/narrow/rpg-inventory-narrow-375x900.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 375,
+      "height": 900,
+      "sha256": "c2e3c8bda63495e473ad051e7182743935d630444d00fcb67d788c4073d7fdfd"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/narrow/systems-bench-narrow-375x900.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 375,
+      "height": 900,
+      "sha256": "0e49b5af8b45bef7b40e246585bfff3f42c9ac1bdb52302b36db1ff3aae8f57d"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/narrow/verdigris-splash-narrow-375x900.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 375,
+      "height": 900,
+      "sha256": "8d18c7c70d2468556177fc3b8b84516ab721f0b16862cb8a62e4cfc2812b1914"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/contact-sheet-wide-1440x2520.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 1440,
+      "height": 2520,
+      "sha256": "105057d32c233fdd619763a602d9cd5d8d120b071cb42b6acfdc699c38cc7d9c"
+    },
+    {
+      "path": "evidence/visual/typography-spacing/contact-sheet-narrow-1320x1340.png",
+      "format": "PNG",
+      "signatureHex": "89504e470d0a1a0a",
+      "width": 1320,
+      "height": 1340,
+      "sha256": "fb57f23af95c71daff2129a41f3b2331b63b152b6a8329f77edfdff766e270a2"
+    }
+  ]
+}
