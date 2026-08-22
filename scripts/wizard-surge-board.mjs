@@ -237,6 +237,102 @@ const successors = [
   stops: ['Any prerequisite is unaccepted, changed after acceptance, or conflicts with current gh-pages.']
 }));
 
+const successorDetails = {
+  'WIZARD-SURGE-016': {
+    visible: 'Dashboard and module shells gain one documented type and spacing vocabulary while every module keeps its authored visual identity.',
+    commands: ['node tests/token-contract.test.mjs', FULL],
+    captures: ['A 1280x800 semantic-token specimen and a 375x900 specimen showing every font, spacing, and focus role with computed values.'],
+    expected: ['No module adoption yet; tokens have system-font fallbacks, AA text contrast, and role-based names rather than material-specific names.'],
+    review: ['Compare every value with accepted #40 measurements; inspect both captures; reject aliases that silently change current module CSS.']
+  },
+  'WIZARD-SURGE-017': {
+    visible: 'The framepack validation gallery becomes discoverable in the laboratory registry without pretending it is a public gameplay module.',
+    commands: ['node tools/framepack_gallery/test.mjs', 'node scripts/wizard-lab.mjs generate', FULL],
+    captures: ['Direct gallery captures at 1280x800 and 375x900 plus registry JSON evidence showing internal visibility and honest capabilities.'],
+    expected: ['Registry generation is byte-stable; dashboard count and public cards do not change; gallery direct URL resolves.'],
+    review: ['Inspect registry diff, direct captures, launch/doc links, and unchanged first-screen dashboard.']
+  },
+  'WIZARD-SURGE-018': {
+    visible: 'The owner can reset a known map seed, compare options, export/import the exact generated map state, and produce agent feedback through the shared shell.',
+    commands: ['node tools/cartographer/core/test.js', 'node tools/cartographer/wizard-adapter.test.mjs', 'node scripts/wizard-lab.mjs generate', FULL],
+    captures: ['Cartographer `?dev=1` at 1280x800 after loading a named seed and at 375x900 after reimporting the same state; seed and checksum visible.'],
+    expected: ['MapGen rules and deterministic JSON remain unchanged; reset/export/import round-trip exactly; manifest claims only exercised methods.'],
+    review: ['Compare exported map checksum before/after import; inspect both captures and unsupported-method negative control.']
+  },
+  'WIZARD-SURGE-019': {
+    visible: 'The owner can capture, compare, and restore deterministic Mason terrain parameters and exported metadata through the laboratory adapter.',
+    commands: ['node tools/mason/core/test.js', 'node tools/mason/wizard-adapter.test.mjs', 'node scripts/wizard-lab.mjs generate', FULL],
+    captures: ['Mason `?dev=1` at 1280x800 with a non-default forge state and at 375x900 after exact export/import restoration.'],
+    expected: ['Autotile and terrain-generation algorithms are unchanged; state round-trip and reset are deterministic; unsupported methods stay explicit.'],
+    review: ['Inspect parameter equality, module-local regressions, manifest honesty, and both actual viewport captures.']
+  },
+  'WIZARD-SURGE-020': {
+    visible: 'The owner can load a known Vesselforge inventory state, compare snapshots, and export agent-ready calibration without changing item rules.',
+    commands: ['node tools/rpg_inventory/core/test.js', 'node tools/rpg_inventory/core/verdigris-stats.test.js', 'node tools/rpg_inventory/wizard-adapter.test.mjs', 'node scripts/wizard-lab.mjs generate', FULL],
+    captures: ['Vesselforge `?dev=1` at 1280x800 with a known inventory fixture and 375x900 after export/import; item counts and state version visible.'],
+    expected: ['Existing serialize/deserialize payload round-trips; item definitions, footprints, stats, passive bridge, and authored assets are byte-unchanged.'],
+    review: ['Review exact owned diff, known-state counts, inventory tests, manifest claims, and narrow/wide captures.']
+  },
+  'WIZARD-SURGE-021': {
+    visible: 'The owner can restore a named world-presentation view and moment, compare quality settings, and export the presentation state reproducibly.',
+    commands: ['node tools/verdigris_splash/validate.mjs', 'node tools/verdigris_splash/wizard-adapter.test.mjs', 'node scripts/wizard-lab.mjs generate', FULL],
+    captures: ['Splash `?dev=1` at 1280x800 for a named view/moment and at 375x900 after state reimport; active view, moment, and quality visible.'],
+    expected: ['World assets and authored presentation copy are unchanged; read-mostly adapter rejects unsupported canonical-data mutation.'],
+    review: ['Inspect asset diff is empty, validate output, state equality, and both viewport captures.']
+  },
+  'WIZARD-SURGE-022': {
+    visible: 'The owner can save, restore, and compare a versioned Houses and Scions setup without changing lore or identity copy.',
+    commands: ['node tools/rp_account_creator/wizard-adapter.test.mjs', 'node scripts/wizard-lab.mjs generate', FULL],
+    captures: ['Chronicles `?dev=1` at 1280x800 with a non-default house fixture and at 375x900 after import; house identity and state version visible.'],
+    expected: ['Existing localStorage data remains readable; adapter round-trip is deterministic; lore and owner-authored copy are byte-unchanged.'],
+    review: ['Inspect storage migration negative control, manifest honesty, no lore diff, and both viewport captures.']
+  },
+  'WIZARD-SURGE-023': {
+    visible: 'The owner can reset, load, export, and restore an Arcane Lattice weave and inspect deterministic cast resolution through the shared lab shell.',
+    commands: ['node tools/arcane_lattice/wizard-adapter.test.mjs', 'node scripts/wizard-lab.mjs generate', FULL],
+    captures: ['Arcane Lattice `?dev=1` at 1280x800 with a resolved cast and at 390x900 after state reimport; schema version and result visible.'],
+    expected: ['PR #29 is merged at an inspected SHA; adjacency, path legality, instability, undo, spell records, and resolver behavior are byte- or test-equivalent.'],
+    review: ['Compare mechanics files/functions against accepted #29, inspect state equality and malformed-state rejection, open both captures.']
+  },
+  'WIZARD-SURGE-024': {
+    visible: 'Systems Bench can replay a deterministic zone-generation session with anchored owner annotations in addition to resource and inventory fixtures.',
+    commands: ['node tests/systems-bench.test.mjs', 'node tests/systems-bench-inventory.test.mjs', 'node tests/systems-bench-zone.test.mjs', 'node tests/annotation-roundtrip.test.mjs', FULL],
+    captures: ['Systems Bench at 1280x800 on a nonzero zone event with raw payload and annotation visible, plus the same fixture at 375x900 without body overflow.'],
+    expected: ['All earlier fixtures remain byte-compatible; reset/play/step/catch-up are deterministic; zone events do not embed authoritative combat or generation logic.'],
+    review: ['Inspect exact event target state, annotation anchor, export, malformed fixture negative control, and both captures.']
+  },
+  'WIZARD-SURGE-025': {
+    visible: 'The dashboard, Systems Bench, and Cartographer share the placeholder frame language on first sight while their module content and identity remain distinct.',
+    commands: ['node tests/framepack-runtime.test.mjs', 'node tests/token-contract.test.mjs', 'node tests/first-screen.test.mjs', 'node tests/accessibility-layout.test.mjs', FULL],
+    captures: ['Dashboard, Systems Bench, and Cartographer at 1280x800 and 375x900 with images enabled, then one representative image-blocked fallback capture.'],
+    expected: ['Dashboard grid stays above the fold; no body overflow; keyboard focus and reduced motion pass; removing raster assets does not change markup or usability.'],
+    review: ['Open all seven captures, compare first-screen offset, identity copy, fallback, focus, and unchanged module logic.']
+  },
+  'WIZARD-SURGE-026': {
+    visible: 'The owner-selected frame material lands as a swappable, inspectable production pack with verified slices and support maps.',
+    commands: ['node tests/asset-ingestion.test.mjs', 'node tools/framepack_gallery/test.mjs', 'node tests/framepack-runtime.test.mjs', FULL],
+    captures: ['Gallery contact sheet at 1280x800 showing every component/state at three sizes, slice guides, alpha, edge, height/depth, roughness source, and normal-source previews; 375x900 pack view.'],
+    expected: ['Raw owner files and hashes are preserved; deterministic rerun is byte-identical; every slice and alpha gate passes; no baked text.'],
+    review: ['Compare owner-selected input hashes, derivative semantics, seams at extreme sizes, and both captures.']
+  },
+  'WIZARD-SURGE-027': {
+    visible: 'Every approved historical URL reaches its explicit archive, replacement, or tombstone destination without deleting the original history.',
+    commands: ['node tests/archive-redirects.test.mjs', FULL, 'python3 -m http.server 8177 --bind 127.0.0.1 --directory .'],
+    captures: ['One 1280x800 browser contact sheet showing the final destination and address bar for pixel_sandbox, wordcloud/dist, wordsphere, space_shooter, and sokoban; one representative 375x900 destination.'],
+    expected: ['All five decisions match the owner ruling; relative assets and back-links resolve; no active module URL changes; rollback map is documented.'],
+    review: ['Open every route, inspect network/console failures, compare redirect map to owner decision, verify no deletion.']
+  },
+  'WIZARD-SURGE-028': {
+    visible: 'One canonical PR and post-deploy gate reports first-screen, responsive, loopback, stale-base, manifest, and live-site safety with no optional silent skips.',
+    commands: ['npm test', 'node scripts/first-screen-check.mjs', 'node tests/accessibility-layout.test.mjs', 'node scripts/verify-loopback-launches.mjs', 'node tests/check-pr-base.test.mjs', 'node tests/deploy-smoke.test.mjs', FULL],
+    captures: ['Exact 1280x800 and 375x900 dashboard artifacts from the canonical CI run plus a screenshot of the PR check summary tied to the candidate head SHA.'],
+    expected: ['Missing required test fails; stale sensitive base fails; unsafe bind fails; live smoke uses bounded backoff; current clean candidate passes once.'],
+    review: ['Inspect workflow permissions/triggers, all negative controls, exact head binding, both visual artifacts, and no duplicated recursive CI.']
+  }
+};
+
+for (const task of successors) Object.assign(task, successorDetails[task.id]);
+
 function body(task, state) {
   const forbidden = [...COMMON_FORBIDDEN, ...(task.forbidden || [])];
   const lines = (label, values) => `## ${label}\n\n${values.map(v => `- ${v}`).join('\n')}`;
@@ -388,6 +484,16 @@ if (process.argv.includes('--create')) {
   }
   const ownerUrl = titles.get(ownerInput.title) || createIssue(ownerInput.title, ownerInput.body, ['owner-input', 'question']);
   console.log(`OWNER-INPUT-001\tOWNER\t${ownerUrl}`);
+} else if (process.argv.includes('--refresh-successors')) {
+  const existing = JSON.parse(gh(['issue', 'list', '--state', 'all', '--limit', '200', '--json', 'number,title,url']));
+  const issues = new Map(existing.map(issue => [issue.title, issue]));
+  for (const task of successors) {
+    const title = `${task.id}: ${task.title}`;
+    const issue = issues.get(title);
+    if (!issue) throw new Error(`missing successor issue ${title}`);
+    const url = gh(['issue', 'edit', String(issue.number), '--body-file', '-'], body(task, 'successor'));
+    console.log(`${task.id}\tREFRESHED\t${url}`);
+  }
 } else {
   console.log(`PASS: ${ready.length} READY packets, ${successors.length} successors, base ${BASE_SHA}`);
   console.log('Run with --create to create missing GitHub issues idempotently.');
