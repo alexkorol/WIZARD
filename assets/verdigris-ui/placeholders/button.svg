@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="64" viewBox="0 0 160 64" fill="none" aria-hidden="true" focusable="false">
+  <g stroke="#a48f52">
+    <path stroke-width="2" d="M11 3h138l8 8v42l-8 8H11l-8-8V11z"/>
+    <path stroke-width="1" opacity=".55" d="M16 8h128l8 8v32l-8 8H16l-8-8V16z"/>
+    <path stroke-width="2" opacity=".42" d="M3 21h7M150 21h7M3 43h7M150 43h7"/>
+  </g>
+</svg>
