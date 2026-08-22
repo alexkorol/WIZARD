@@ -1,8 +1,8 @@
 # WIZARD retained-module capability audit
 
-Audit base: `95a3105514ef190b4872195d7ba449fdc2f91ef1` (deployed `gh-pages`, inspected 2026-08-21).
+Audit base: `65b65558a38b39cd5948e80213a19b9983bc3fb9` (deployed `gh-pages`, inspected 2026-08-21).
 
-This document reconciles the nine dashboard modules and the retained legacy/internal modules against executable launch code, state stores, exports, and tests. It does not grant new capabilities or change a manifest. The five `archive` entries (`pixel_sandbox`, `sokoban`, `space_shooter`, `wordcloud`, and `wordsphere`) remain in `modules.json`, but capability work on them is intentionally outside this audit: issue #47 owns their retain/redirect decision and issue #63 owns approved redirects.
+This document reconciles all 13 retained modules—nine dashboard, one legacy, and three internal—against executable launch code, state stores, exports, and tests. It does not grant new capabilities or change a manifest. The other five entries in the 18-manifest generated registry are `archive` modules (`pixel_sandbox`, `sokoban`, `space_shooter`, `wordcloud`, and `wordsphere`); capability work on them is intentionally outside this retained-module audit because issue #47 owns their retain/redirect decision and issue #63 owns approved redirects.
 
 ## How to read the matrix
 
@@ -24,6 +24,7 @@ The capability columns are `Ad` adapter, `Sc` scenarios, `X` state export, `I` s
 | Verdigris World Presentation | dashboard | — | — | — | — | — | — | — | — | — | — | — | [A8](#a8-verdigris-world-presentation) |
 | Wizard Orbs | dashboard | C | C | C | C | C | — | — | — | T | — | C | [A9](#a9-wizard-orbs) |
 | Health Globe | legacy | — | — | — | — | — | — | — | — | — | — | — | [A10](#a10-health-globe) |
+| Framepack Validation Gallery | internal | — | — | — | — | — | — | — | T | — | — | — | [A13](#a13-framepack-validation-gallery) |
 | Pixel Art Creator | internal | — | — | — | — | — | — | — | — | — | — | — | [A11](#a11-pixel-art-creator) |
 | SLerp Palette Generator | internal | — | — | — | — | — | — | — | — | — | — | — | [A12](#a12-slerp-palette-generator) |
 
@@ -117,6 +118,13 @@ Negative grades were checked against each launch's actual script loads and regis
 - **Launch/test result:** there is no shared-lab load, adapter registration, calibration export/import, or executable module test. Clipboard and local-storage actions prove no standard capability.
 - **Honesty verdict:** the `internal` classification and all `—` cells are correct.
 
+### A13. Framepack Validation Gallery
+
+- **Classification/claim:** `internal`; only fixtures are true in [`wizard.module.json`](../tools/framepack_gallery/wizard.module.json). Every standard adapter method remains explicitly unsupported, and all adapter/state/scenario/snapshot/annotation/proposal/event/time-control/feedback claims are false.
+- **Executable fixture surface:** [`gallery.js`](../tools/framepack_gallery/gallery.js#L3) declares one valid and three invalid local fixtures. [`loadManifest`](../tools/framepack_gallery/gallery.js#L34) fetches the selected manifest and assets and passes their bytes to [`validateFramepack`](../tools/framepack_gallery/validator.mjs#L129), which checks schema shape, state assets, dimensions, alpha, slice/content bounds, path containment, and SHA-256 before the gallery renders a passing pack.
+- **Test result:** [`test.mjs`](../tools/framepack_gallery/test.mjs#L18) proves generated fixture bytes are current, validates five states in the valid fixture, asserts exact slice-overflow/checksum/missing-alpha negatives, and verifies the gallery consumes manifest paths rather than a hard-coded production image ([`test.mjs`](../tools/framepack_gallery/test.mjs#L52)).
+- **Honesty verdict:** fixtures are module-tested (`T`). The direct launch loads only `gallery.js` ([`index.html`](../tools/framepack_gallery/index.html#L41)) and does not load or register WizardLab, so its fixture selector is not a scenario adapter and every `—` cell remains correct.
+
 ## Gaps, dependencies, and adapter order
 
 The order below follows the executable successor packets already opened as issues #54–#60. Here, a **gap** means a missing contract with a concrete owner workflow; a false capability with no useful module semantics is an honest non-goal and stays unsupported. “Hold” means preserve the unsupported declaration; it is not a recommendation to manufacture a method with no useful semantics.
@@ -134,10 +142,11 @@ The order below follows the executable successor packets already opened as issue
 | 6 | **Arcane Lattice:** state/scenario adapter only after mechanics are frozen (#59). | Reset, load, export, and restore a weave and inspect resolved casts through the lab shell. | `setState` revalidates downstream structure; a wrapper can change adjacency, legality, instability, undo, or resolver outcomes. | PR #29 merged at an inspected SHA plus this audit and #50 accepted; adapter tests must prove malformed-state rejection and mechanics equivalence. |
 | 7 | **Pixel Art Creator (internal):** optional versioned pixel-state import/export; keep scenarios/events/time control unsupported. | Makes small authored pixel assets portable between sessions. | Current JSON is export-only and internal history is not a stable external schema. | Owner confirms the internal utility remains retained; add schema validation and import negative tests before any manifest change. |
 | 8 | **SLerp (internal):** optional palette-state adapter; keep snapshots/time control unsupported unless a comparison workflow is requested. | Reproduces palette inputs, interpolation mode, steps, and outputs instead of a color-list-only save. | Existing storage omits authoring inputs, so naïve import cannot reproduce provenance. | Define a versioned palette state and module tests; owner confirms cross-tool palette handoff value. |
+| Hold | **Framepack Validation Gallery (internal):** keep the tested fixture capability; no adapter/state/scenario expansion is recommended. | Gives the owner a direct, deterministic pass/reject bench for framepack states and multi-size nine-slice previews. | Treating fixture selection as scenarios or exposing partially validated state would overpromise integration and could render invalid assets as accepted. | No new dependency for the retained fixture surface; require a concrete Systems Bench or annotation workflow before any additional capability claim. |
 | Hold | **Health Globe (legacy):** no adapter recommended. | Keeping the compatibility launch avoids breaking old links while Wizard Orbs remains the retained resource calibration surface. | A second resource adapter would duplicate semantics and create conflicting fixture targets. | Owner retention/redirect decision; otherwise preserve all unsupported methods. |
 
 ## Decision summary
 
-No retained manifest currently overclaims an implementation. The meaningful distinction is proof depth: Systems Bench has the strongest module-specific coverage; Geometric Skilltree has strong state/proposal tests but incomplete adapter-composition coverage; Wizard Orbs directly tests its event mapper but relies on shared tests for state/scenario/snapshot composition. The remaining launches contain useful raw seams, but their false capability claims are honest and must stay false until the corresponding successor adds an adapter plus module-local positive and negative tests.
+No retained manifest currently overclaims an implementation. The meaningful distinction is proof depth: Systems Bench has the strongest adapter-oriented module coverage; Geometric Skilltree has strong state/proposal tests but incomplete adapter-composition coverage; Wizard Orbs directly tests its event mapper but relies on shared tests for state/scenario/snapshot composition; and Framepack Validation Gallery directly tests its sole true capability with positive and negative fixtures. The remaining launches contain useful raw seams, but their false capability claims are honest and must stay false until the corresponding successor adds an adapter plus module-local positive and negative tests.
 
-The recommended sequence is therefore: harden existing adapters without broadening claims, then #54 Cartographer, #55 Mason, #56 Vesselforge, #57 Verdigris Presentation, #58 Chronicles, #59 Arcane Lattice, and #60 Systems Bench zone/annotation fixtures. Internal utilities follow only on owner demand; Health Globe remains legacy. No unsupported method should be removed merely because a similarly named private function exists.
+The recommended sequence is therefore: harden existing adapters without broadening claims, then #54 Cartographer, #55 Mason, #56 Vesselforge, #57 Verdigris Presentation, #58 Chronicles, #59 Arcane Lattice, and #60 Systems Bench zone/annotation fixtures. Framepack Validation Gallery remains a fixture-only internal bench; additional internal-utility adapters follow only on owner demand; Health Globe remains legacy. No unsupported method should be removed merely because a similarly named private function exists.
