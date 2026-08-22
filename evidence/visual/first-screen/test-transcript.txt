@@ -1,0 +1,11 @@
+== first-screen: real dashboard at 1280x800 ==
+verdict=FAIL detail: groupsTop=933 innerHeight=800 identity=true,true browser=Chrome/150.0.7871.115
+== first-screen: real dashboard at 375x900 ==
+verdict=PASS detail: groupsTop=637 innerHeight=900 identity=true,true
+ok: narrow capture 375x900, bodyScrollWidth=375 (informational; responsive gate owned by SURGE-006)
+== first-screen: negative control - module groups pushed below the fold ==
+verdict=FAIL reasons=["GROUPS_BELOW_FOLD"]
+== first-screen: negative control - identity copy removed ==
+verdict=FAIL reasons=["IDENTITY_MISSING"]
+FAIL first-screen harness:
+  - wide check failed: GROUPS_BELOW_FOLD groupsTop=933 innerHeight=800 identity=true,true
