@@ -1,0 +1,36 @@
+name: stale-base safeguard
+
+on:
+  pull_request:
+    branches:
+      - gh-pages
+    types: [opened, reopened, synchronize, ready_for_review]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: stale-base-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  stale-base:
+    name: reject stale deployment-surface changes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the pull-request merge ref
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Fetch the current production tip
+        run: git fetch --no-tags origin '+refs/heads/gh-pages:refs/remotes/origin/gh-pages'
+      - name: Compare candidate ancestry and deployment surfaces
+        env:
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          GH_PAGES_REF: origin/gh-pages
+        run: node scripts/check-pr-base.mjs
