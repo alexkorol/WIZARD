@@ -5,37 +5,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Verdigris Systems Bench</title>
 <style>
-:root { color-scheme: dark; --bg:#0d0c0a; --ink:#e9e4d8; --dim:#9c9587; --gold:#c9a227; --line:rgba(233,228,216,.12); }
+:root { color-scheme: dark; --bg:#0d0c0a; --ink:#e9e4d8; --dim:#9c9587; --gold:#c9a227; --line:rgba(233,228,216,.12); --panel:#14110d; }
 * { box-sizing: border-box; }
-body { margin:0; background:var(--bg); color:var(--ink); font: 15px/1.5 "Source Sans 3", Segoe UI, sans-serif; }
-header { padding: 1.25rem 1.5rem; border-bottom:1px solid var(--line); }
-h1 { font-family: Georgia, serif; font-weight:500; letter-spacing:.08em; margin:0 0 .35rem; }
-.sub { color:var(--dim); margin:0; }
-main { display:grid; grid-template-columns: minmax(280px, 360px) 1fr; min-height: calc(100vh - 88px); }
-.panel { padding:1rem 1.25rem; border-right:1px solid var(--line); }
-iframe { width:100%; height:100%; border:0; background:#000; min-height: 520px; }
-.row { display:flex; flex-wrap:wrap; gap:.5rem; margin: .75rem 0; }
-button {
-  background:transparent; color:var(--ink); border:1px solid var(--line); padding:.45rem .8rem; letter-spacing:.12em;
-  text-transform:uppercase; font-size:.7rem; cursor:pointer;
-}
-button:focus-visible { outline:2px solid var(--gold); }
-button.primary { border-color: var(--gold); color: var(--gold); }
-ol { padding-left: 1.1rem; margin:0; max-height: 220px; overflow:auto; }
-li { margin:.25rem 0; cursor:pointer; }
-li.active { color: var(--gold); }
-pre { background:#14110d; padding:.75rem; overflow:auto; max-height: 240px; font-size:.78rem; }
+html, body { margin:0; min-width:0; overflow-x:hidden; background:var(--bg); color:var(--ink); font:15px/1.5 "Source Sans 3", Segoe UI, sans-serif; }
+header { padding:1.25rem 1.5rem; border-bottom:1px solid var(--line); }
+h1 { font-family:Georgia, serif; font-weight:500; letter-spacing:.08em; margin:0 0 .35rem; }
+h2 { font-size:.82rem; letter-spacing:.12em; text-transform:uppercase; margin:1rem 0 .55rem; }
+.sub, .fixture-meta, .preview-note { color:var(--dim); margin:0; }
+main { display:grid; grid-template-columns:minmax(300px, 380px) minmax(0, 1fr); min-height:calc(100vh - 88px); }
+.panel { min-width:0; padding:1rem 1.25rem; border-right:1px solid var(--line); }
+.catalog-label { display:grid; gap:.35rem; color:var(--dim); font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; }
+select { width:100%; min-width:0; border:1px solid var(--line); background:var(--panel); color:var(--ink); padding:.55rem .65rem; font:inherit; }
+.fixture-meta { margin-top:.45rem; font-size:.8rem; overflow-wrap:anywhere; }
+.target-shell { min-width:0; padding:1rem; background:#080706; }
+iframe { width:100%; height:100%; border:0; background:#000; min-height:520px; }
+.row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.75rem 0; }
+button { background:transparent; color:var(--ink); border:1px solid var(--line); padding:.45rem .8rem; letter-spacing:.12em; text-transform:uppercase; font-size:.7rem; cursor:pointer; }
+button:focus-visible, select:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+button.primary { border-color:var(--gold); color:var(--gold); }
+ol { padding-left:1.1rem; margin:0; max-height:220px; overflow:auto; }
+li { margin:.3rem 0; cursor:pointer; overflow-wrap:anywhere; }
+li.active { color:var(--gold); }
+pre { width:100%; max-width:100%; background:var(--panel); padding:.75rem; overflow:auto; max-height:250px; font-size:.76rem; white-space:pre-wrap; overflow-wrap:anywhere; }
 .status { color:var(--gold); font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; }
-@media (max-width: 900px) { main { grid-template-columns: 1fr; } iframe { min-height: 420px; } }
+.inventory-preview { min-height:520px; padding:clamp(1rem, 3vw, 2rem); border:1px solid var(--line); background:radial-gradient(circle at top right, rgba(201,162,39,.08), transparent 40%), var(--panel); }
+.preview-kicker { margin:0; color:var(--gold); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; }
+.preview-heading { margin:.3rem 0 1rem; font-family:Georgia, serif; font-size:clamp(1.5rem, 3vw, 2.4rem); font-weight:500; }
+.preview-metrics { display:flex; flex-wrap:wrap; gap:.75rem; margin-bottom:1.25rem; }
+.metric, .slot, .item { border:1px solid var(--line); background:rgba(0,0,0,.16); padding:.75rem; }
+.metric strong { display:block; color:var(--gold); font-size:1.35rem; }
+.equipment-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:.75rem; }
+.slot span, .item span { display:block; color:var(--dim); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; }
+.slot strong, .item strong { display:block; margin-top:.25rem; overflow-wrap:anywhere; }
+.inventory-list { display:grid; grid-template-columns:repeat(auto-fit, minmax(145px, 1fr)); gap:.75rem; }
+.empty { color:var(--dim); font-style:italic; }
+[hidden] { display:none !important; }
+@media (max-width:900px) {
+  main { grid-template-columns:1fr; }
+  .panel { border-right:0; border-bottom:1px solid var(--line); }
+  iframe, .inventory-preview { min-height:420px; }
+}
+@media (max-width:480px) {
+  header, .panel, .target-shell { padding:.85rem; }
+  .equipment-grid { grid-template-columns:1fr; }
+  .row button { flex:1 1 auto; }
+  ol { max-height:185px; }
+  pre { max-height:210px; }
+}
 </style>
 </head>
 <body>
 <header>
   <h1>Verdigris Systems Bench</h1>
-  <p class="sub">Versioned fixture playback driving Vessels of Life &amp; Mana through a generic event envelope.</p>
+  <p class="sub">Versioned fixture playback across retained laboratory seams. This bench is not production netcode.</p>
 </header>
 <main>
-  <section class="panel">
+  <section class="panel" aria-label="Fixture controls">
+    <label class="catalog-label" for="fixture-select">Fixture catalog
+      <select id="fixture-select"></select>
+    </label>
+    <p class="fixture-meta" id="fixture-meta">Loading catalog…</p>
     <p class="status" id="status">idle</p>
     <div class="row">
       <button class="primary" id="play" type="button">Play</button>
@@ -52,103 +81,227 @@ pre { background:#14110d; padding:.75rem; overflow:auto; max-height: 240px; font
     <h2>Raw payload</h2>
     <pre id="payload">{}</pre>
   </section>
-  <iframe id="module-frame" title="Vessels of Life and Mana" src="../wizard_orbs/index.html?dev=1"></iframe>
+  <section class="target-shell" aria-label="Fixture target">
+    <iframe id="module-frame" title="Fixture target" hidden></iframe>
+    <section class="inventory-preview" id="inventory-preview" aria-label="Inert inventory state preview" hidden>
+      <p class="preview-kicker">Inert target adapter · state only</p>
+      <h2 class="preview-heading">Inventory State Preview</h2>
+      <div class="preview-metrics"><div class="metric"><span>Recorded gold</span><strong id="inventory-gold">0</strong></div></div>
+      <h2>Equipment</h2>
+      <div class="equipment-grid" id="equipment-grid"></div>
+      <h2>Inventory</h2>
+      <div class="inventory-list" id="inventory-list"></div>
+      <p class="preview-note" id="inventory-note">No inventory event applied.</p>
+    </section>
+  </section>
 </main>
 <script src="../../shared/wizard-lab.js"></script>
 <script src="bench.js"></script>
 <script>
-const fixturePromise = fetch('fixtures/resource-session.v1.json').then(r => r.json());
 const frame = document.getElementById('module-frame');
+const inventoryPreview = document.getElementById('inventory-preview');
+const fixtureSelect = document.getElementById('fixture-select');
+const fixtureMeta = document.getElementById('fixture-meta');
 const timeline = document.getElementById('timeline');
 const payload = document.getElementById('payload');
 const status = document.getElementById('status');
-let bench = null;
+let catalog = null;
+let activeEntry = null;
 let fixture = null;
+let bench = null;
+let targetState = {};
 let raf = 0;
 let last = 0;
+let iframeReady = false;
+let pendingIframeEvents = [];
 
-function send(event) {
-  if (event && frame.contentWindow) {
-    frame.contentWindow.postMessage({ wizardEvent: event }, '*');
+function formatEvent(event) {
+  if (event.type === 'resource.changed') {
+    return `${event.sequence} · ${event.timeMs}ms · ${event.type} · ${event.data.resource} ${event.data.current}/${event.data.maximum}`;
   }
+  if (event.type === 'inventory.state.changed') {
+    const equipped = Object.values(event.data.equipment || {}).filter(Boolean).length;
+    return `${event.sequence} · ${event.timeMs}ms · ${event.type} · ${event.data.inventory.length} stored / ${equipped} equipped`;
+  }
+  return `${event.sequence} · ${event.timeMs}ms · ${event.type}`;
+}
+
+function renderInventory() {
+  if (activeEntry?.view !== 'inventory-preview') return;
+  document.getElementById('inventory-gold').textContent = String(targetState.gold || 0);
+  const equipment = targetState.equipment || {};
+  document.getElementById('equipment-grid').innerHTML = Object.keys(equipment).map(slot => {
+    const item = equipment[slot];
+    return `<div class="slot"><span>${slot}</span><strong>${item ? item.name : 'Empty'}</strong></div>`;
+  }).join('') || '<p class="empty">No equipment slots recorded.</p>';
+  const inventory = targetState.inventory || [];
+  document.getElementById('inventory-list').innerHTML = inventory.map(item => (
+    `<div class="item"><span>${item.kind || 'item'}</span><strong>${item.name}</strong></div>`
+  )).join('') || '<p class="empty">No stored items.</p>';
+  document.getElementById('inventory-note').textContent = targetState.note || '';
+  inventoryPreview.dataset.sequence = targetState.lastSequence == null ? '-1' : String(targetState.lastSequence);
+}
+
+function resetTarget() {
+  if (activeEntry?.view === 'iframe') {
+    targetState = { schemaVersion:1, mode:'iframe', lastSequence:null };
+    iframeReady = false;
+    pendingIframeEvents = [];
+    frame.onload = () => {
+      iframeReady = true;
+      const queued = pendingIframeEvents.slice();
+      pendingIframeEvents = [];
+      queued.forEach(sendIframeEvent);
+    };
+    frame.src = activeEntry.src;
+  } else {
+    targetState = window.WizardSystemsBench.createInventoryPreviewState();
+    renderInventory();
+  }
+}
+
+function sendIframeEvent(event) {
+  const targetOrigin = location.origin === 'null' ? '*' : location.origin;
+  if (frame.contentWindow) frame.contentWindow.postMessage({ wizardEvent:event }, targetOrigin);
+}
+
+function applyEvent(event) {
+  if (!event) return;
+  if (activeEntry.view === 'iframe') {
+    if (iframeReady) sendIframeEvent(event);
+    else pendingIframeEvents.push(event);
+    targetState = { schemaVersion:1, mode:'iframe', lastSequence:event.sequence };
+  } else {
+    targetState = window.WizardSystemsBench.applyInventoryStateEvent(targetState, event);
+    renderInventory();
+  }
+}
+
+function applyEvents(events) {
+  (Array.isArray(events) ? events : [events]).filter(Boolean).forEach(applyEvent);
 }
 
 function render() {
   if (!bench) return;
   const snap = bench.snapshot();
-  status.textContent = snap.playing ? `playing ${snap.timeMs}ms` : `paused @ ${snap.timeMs}ms #${snap.index}`;
+  status.textContent = snap.playing ? `playing ${Math.round(snap.timeMs)}ms` : `paused @ ${Math.round(snap.timeMs)}ms #${snap.index}`;
   payload.textContent = JSON.stringify(snap.lastPayload || {}, null, 2);
-  [...timeline.children].forEach((li, i) => li.classList.toggle('active', i === snap.index));
+  [...timeline.children].forEach((li, index) => li.classList.toggle('active', index === snap.index));
 }
 
-function loop(t) {
-  if (!last) last = t;
-  const dt = t - last;
-  last = t;
+function restoreTarget(state) {
+  resetTarget();
+  const restored = bench.restore(state);
+  applyEvents(restored.applied);
+  render();
+  return restored;
+}
+
+function loop(timestamp) {
+  if (!last) last = timestamp;
+  const dt = timestamp - last;
+  last = timestamp;
   if (bench) {
-    const event = bench.tick(dt);
-    if (event) send(event);
+    applyEvents(bench.tick(dt));
     render();
   }
   raf = requestAnimationFrame(loop);
 }
 
-fixturePromise.then(data => {
+async function fetchJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`Failed to load ${url}: ${response.status}`);
+  return response.json();
+}
+
+async function loadFixture(id) {
+  const entry = catalog.fixtures.find(item => item.id === id);
+  if (!entry) throw new Error(`Unknown fixture ${id}`);
+  const data = await fetchJson(entry.path);
+  window.WizardSystemsBench.validateFixture(data);
+  if (data.id !== entry.id || data.targetModuleId !== entry.targetModuleId) throw new Error('Catalog fixture identity mismatch');
+  activeEntry = entry;
   fixture = data;
   bench = window.WizardSystemsBench.createBench(data);
+  fixtureSelect.value = entry.id;
+  fixtureMeta.textContent = `${data.name} · ${data.targetModuleId} · ${data.events.length} events`;
+  frame.hidden = entry.view !== 'iframe';
+  inventoryPreview.hidden = entry.view !== 'inventory-preview';
+  frame.title = entry.targetTitle || 'Fixture target';
+  timeline.replaceChildren();
   data.events.forEach(event => {
-    const li = document.createElement('li');
-    li.textContent = `${event.sequence} · ${event.timeMs}ms · ${event.type} · ${event.data.resource} ${event.data.current}/${event.data.maximum}`;
-    timeline.appendChild(li);
+    const item = document.createElement('li');
+    item.textContent = formatEvent(event);
+    item.tabIndex = 0;
+    item.onclick = () => restoreTarget({ fixtureId:data.id, index:event.sequence, timeMs:event.timeMs, playing:false });
+    item.onkeydown = keyEvent => { if (keyEvent.key === 'Enter' || keyEvent.key === ' ') item.click(); };
+    timeline.appendChild(item);
   });
-  window.WizardLab.register({
-    id: 'wizard.systems-bench',
-    unsupportedMethods: ['getAnnotations', 'setAnnotations'],
-    reset() { const snap = bench.reset(); send(data.events[0]); render(); return snap; },
-    getState() { return bench.snapshot(); },
-    setState(state) {
-      bench.reset();
-      const count = (state && state.index != null) ? state.index + 1 : 0;
-      for (let i = 0; i < count; i += 1) send(bench.step());
-      render();
-    },
-    listScenarios() { return [data.id]; },
-    loadScenario() { return this.reset(); },
-    pause() { bench.pause(); render(); },
-    resume() { bench.play(); },
-    step() { const event = bench.step(); send(event); render(); return event; },
-    getMetrics() { return { index: bench.index, applied: bench.applied.length }; },
-    exportCalibration() {
-      return {
-        schemaVersion: 1,
-        moduleId: 'wizard.systems-bench',
-        exportedAt: new Date().toISOString(),
-        scenarioId: data.id,
-        state: bench.snapshot(),
-        events: data.events
-      };
-    }
-  });
+  resetTarget();
   render();
-  raf = requestAnimationFrame(loop);
+  const url = new URL(location.href);
+  url.searchParams.set('fixture', entry.id);
+  history.replaceState(null, '', url);
+  return bench.snapshot();
+}
+
+window.WizardLab.register({
+  id:'wizard.systems-bench',
+  unsupportedMethods:['getAnnotations', 'setAnnotations'],
+  reset() { const state = bench.reset(); resetTarget(); render(); return state; },
+  getState() { return bench.snapshot(); },
+  setState(state) { return restoreTarget(state); },
+  listScenarios() { return catalog ? catalog.fixtures.map(entry => entry.id) : []; },
+  loadScenario(id) { return loadFixture(id); },
+  pause() { const state = bench.pause(); render(); return state; },
+  resume() { const state = bench.play(); render(); return state; },
+  step() { const event = bench.step(); applyEvent(event); render(); return event; },
+  getMetrics() { return { index:bench.index, applied:bench.applied.length, fixtureId:fixture.id }; },
+  exportCalibration() { return window.WizardSystemsBench.createSessionExport(fixture, bench.snapshot(), targetState); }
 });
 
-document.getElementById('play').onclick = () => bench && bench.play();
-document.getElementById('pause').onclick = () => bench && bench.pause();
-document.getElementById('step').onclick = () => { if (!bench) return; send(bench.step()); render(); };
-document.getElementById('reset').onclick = () => { if (!bench) return; bench.reset(); send(fixture.events[0]); render(); };
+fixtureSelect.onchange = () => loadFixture(fixtureSelect.value).catch(showError);
+document.getElementById('play').onclick = () => { if (bench) bench.play(); };
+document.getElementById('pause').onclick = () => { if (bench) { bench.pause(); render(); } };
+document.getElementById('step').onclick = () => { if (!bench) return; applyEvent(bench.step()); render(); };
+document.getElementById('reset').onclick = () => { if (!bench) return; bench.reset(); resetTarget(); render(); };
 document.getElementById('export').onclick = () => {
+  if (!bench) return;
   const data = window.WizardModule.exportCalibration();
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'systems-bench-session.json';
-  a.click();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
+  const href = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = href;
+  anchor.download = `systems-bench-${fixture.id}.json`;
+  anchor.click();
+  URL.revokeObjectURL(href);
 };
 document.getElementById('copy').onclick = async () => {
+  if (!bench) return;
   const text = window.WizardLab.toAgentMarkdown(window.WizardModule.exportCalibration());
   try { await navigator.clipboard.writeText(text); } catch (_) { window.prompt('Agent feedback', text); }
 };
+
+function showError(error) {
+  status.textContent = 'fixture error';
+  payload.textContent = String(error?.stack || error);
+  console.error(error);
+}
+
+fetchJson('fixtures/catalog.v1.json').then(data => {
+  window.WizardSystemsBench.validateCatalog(data);
+  catalog = data;
+  data.fixtures.forEach(entry => {
+    const option = document.createElement('option');
+    option.value = entry.id;
+    option.textContent = entry.name;
+    fixtureSelect.appendChild(option);
+  });
+  const requested = new URLSearchParams(location.search).get('fixture');
+  return loadFixture(data.fixtures.some(entry => entry.id === requested) ? requested : data.fixtures[0].id);
+}).then(() => {
+  raf = requestAnimationFrame(loop);
+}).catch(showError);
 </script>
 </body>
 </html>

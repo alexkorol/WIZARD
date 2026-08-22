@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "inventory-state.invalid.v1",
+  "name": "Malformed inventory event negative control",
+  "targetModuleId": "wizard.rpg-inventory",
+  "events": [
+    {
+      "schemaVersion": 1,
+      "sequence": 0,
+      "timeMs": 0,
+      "type": "inventory.state.changed",
+      "source": "fixture:inventory-state.invalid.v1",
+      "target": "module:wizard.rpg-inventory",
+      "data": {
+        "stateVersion": 1,
+        "gold": 10,
+        "equipment": { "mainHand": null }
+      }
+    }
+  ]
+}
