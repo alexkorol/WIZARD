@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "wizard.sokoban",
+  "slug": "sokoban",
+  "title": "Archived Example",
+  "description": "An archive candidate that must not re-enter the dashboard.",
+  "status": "stable",
+  "visibility": "dashboard",
+  "category": "utility",
+  "group": "archive",
+  "launch": "tools/sokoban/index.html",
+  "readme": "tools/sokoban/README.md",
+  "preview": null,
+  "moduleVersion": "1.0.0",
+  "stateVersion": 1,
+  "verdigrisTargets": ["none"],
+  "capabilities": {
+    "adapter": false,
+    "scenarios": false,
+    "stateExport": false,
+    "stateImport": false,
+    "snapshots": false,
+    "annotations": false,
+    "proposals": false,
+    "fixtures": false,
+    "events": false,
+    "pauseStep": false,
+    "agentFeedback": false
+  },
+  "unsupportedMethods": ["reset"],
+  "tags": ["archive"]
+}

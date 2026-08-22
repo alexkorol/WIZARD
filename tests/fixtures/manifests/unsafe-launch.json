@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "wizard.example",
+  "slug": "example",
+  "title": "Example Module",
+  "description": "A deterministic manifest hardening fixture.",
+  "status": "prototype",
+  "visibility": "internal",
+  "category": "utility",
+  "group": "internal",
+  "launch": "../outside.html",
+  "readme": "tools/example/README.md",
+  "preview": null,
+  "moduleVersion": "1.0.0",
+  "stateVersion": 1,
+  "verdigrisTargets": ["none"],
+  "capabilities": {
+    "adapter": false,
+    "scenarios": false,
+    "stateExport": false,
+    "stateImport": false,
+    "snapshots": false,
+    "annotations": false,
+    "proposals": false,
+    "fixtures": false,
+    "events": false,
+    "pauseStep": false,
+    "agentFeedback": false
+  },
+  "unsupportedMethods": ["reset"],
+  "tags": ["fixture"]
+}

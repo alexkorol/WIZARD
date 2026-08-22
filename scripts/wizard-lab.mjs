@@ -28,11 +28,6 @@ const REQUIRED_DASHBOARD_IDS = [
   'wizard.systems-bench'
 ];
 
-const CAPABILITY_KEYS = [
-  'adapter', 'scenarios', 'stateExport', 'stateImport', 'snapshots',
-  'annotations', 'proposals', 'fixtures', 'events', 'pauseStep', 'agentFeedback'
-];
-
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
@@ -59,65 +54,236 @@ function fail(failures, message) {
 function typeOk(value, expected) {
   if (expected === 'integer') return Number.isInteger(value);
   if (expected === 'array') return Array.isArray(value);
+  if (expected === 'object') return value !== null && typeof value === 'object' && !Array.isArray(value);
+  if (expected === 'null') return value === null;
   if (Array.isArray(expected)) {
-    if (expected.includes('null') && value === null) return true;
-    return expected.filter(t => t !== 'null').some(t => typeOk(value, t));
+    return expected.some(type => typeOk(value, type));
   }
   return typeof value === expected;
 }
 
-function validateAgainstSchema(manifest, schema, failures, source) {
-  const props = schema.properties;
-  for (const key of schema.required) {
-    if (!(key in manifest)) fail(failures, `${source}: missing required field "${key}"`);
+function valueKey(value) {
+  return JSON.stringify(value);
+}
+
+function validateAgainstSchema(value, schema, failures, source, field = '') {
+  const label = field ? `${source}: ${field}` : source;
+  if (schema.type && !typeOk(value, schema.type)) {
+    const expected = Array.isArray(schema.type) ? schema.type.join(' or ') : schema.type;
+    fail(failures, `${label} has wrong type (expected ${expected})`);
+    return;
   }
-  for (const key of Object.keys(manifest)) {
-    if (!props[key]) fail(failures, `${source}: unknown field "${key}"`);
+
+  if (schema.const !== undefined && value !== schema.const) {
+    fail(failures, `${label} must be ${JSON.stringify(schema.const)}`);
   }
-  for (const [key, spec] of Object.entries(props)) {
-    if (!(key in manifest)) continue;
-    const value = manifest[key];
-    if (spec.const !== undefined && value !== spec.const) {
-      fail(failures, `${source}: ${key} must be ${JSON.stringify(spec.const)}`);
+  if (schema.enum && !schema.enum.includes(value)) {
+    fail(failures, `${label}=${JSON.stringify(value)} is not an allowed value`);
+  }
+  if (schema.pattern && typeof value === 'string' && !new RegExp(schema.pattern).test(value)) {
+    fail(failures, `${label}=${JSON.stringify(value)} fails pattern ${schema.pattern}`);
+  }
+  if (typeof schema.minLength === 'number' && typeof value === 'string' && value.length < schema.minLength) {
+    fail(failures, `${label} is too short`);
+  }
+  if (typeof schema.maxLength === 'number' && typeof value === 'string' && value.length > schema.maxLength) {
+    fail(failures, `${label} is too long`);
+  }
+  if (typeof schema.minimum === 'number' && typeof value === 'number' && value < schema.minimum) {
+    fail(failures, `${label} must be at least ${schema.minimum}`);
+  }
+
+  if (Array.isArray(value)) {
+    if (typeof schema.minItems === 'number' && value.length < schema.minItems) {
+      fail(failures, `${label} needs at least ${schema.minItems} items`);
     }
-    if (spec.type && !typeOk(value, spec.type)) {
-      fail(failures, `${source}: ${key} has wrong type`);
+    if (schema.uniqueItems) {
+      const keys = value.map(valueKey);
+      if (new Set(keys).size !== keys.length) fail(failures, `${label} contains duplicates`);
     }
-    if (spec.enum && !spec.enum.includes(value)) {
-      fail(failures, `${source}: ${key}="${value}" is not an allowed value`);
+    if (schema.items) {
+      value.forEach((item, index) => {
+        const itemField = field ? `${field}[${index}]` : `[${index}]`;
+        validateAgainstSchema(item, schema.items, failures, source, itemField);
+      });
     }
-    if (spec.pattern && typeof value === 'string' && !new RegExp(spec.pattern).test(value)) {
-      fail(failures, `${source}: ${key}="${value}" fails pattern ${spec.pattern}`);
-    }
-    if (typeof spec.minLength === 'number' && typeof value === 'string' && value.length < spec.minLength) {
-      fail(failures, `${source}: ${key} is too short`);
-    }
-    if (typeof spec.maxLength === 'number' && typeof value === 'string' && value.length > spec.maxLength) {
-      fail(failures, `${source}: ${key} is too long`);
-    }
-    if (spec.type === 'array') {
-      if (typeof spec.minItems === 'number' && value.length < spec.minItems) {
-        fail(failures, `${source}: ${key} needs at least ${spec.minItems} items`);
+  }
+
+  if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+    const properties = schema.properties || {};
+    for (const key of schema.required || []) {
+      if (!(key in value)) {
+        const missing = field ? `${field}.${key}` : key;
+        fail(failures, `${source}: missing required field "${missing}"`);
       }
-      if (spec.uniqueItems && new Set(value).size !== value.length) {
-        fail(failures, `${source}: ${key} contains duplicates`);
-      }
-      if (spec.items?.enum) {
-        for (const item of value) {
-          if (!spec.items.enum.includes(item)) fail(failures, `${source}: ${key} has invalid item "${item}"`);
+    }
+    if (schema.additionalProperties === false) {
+      for (const key of Object.keys(value)) {
+        if (!(key in properties)) {
+          const unknown = field ? `${field}.${key}` : key;
+          fail(failures, `${source}: unknown field "${unknown}"`);
         }
       }
     }
-    if (key === 'capabilities') {
-      if (!value || typeof value !== 'object') continue;
-      for (const cap of CAPABILITY_KEYS) {
-        if (typeof value[cap] !== 'boolean') fail(failures, `${source}: capabilities.${cap} must be boolean`);
-      }
-      for (const cap of Object.keys(value)) {
-        if (!CAPABILITY_KEYS.includes(cap)) fail(failures, `${source}: unknown capability "${cap}"`);
-      }
+    for (const [key, spec] of Object.entries(properties)) {
+      if (!(key in value)) continue;
+      const childField = field ? `${field}.${key}` : key;
+      validateAgainstSchema(value[key], spec, failures, source, childField);
     }
   }
+}
+
+function findDuplicateJsonKeys(text) {
+  let index = 0;
+  const duplicates = [];
+
+  function skipWhitespace() {
+    while (/\s/.test(text[index] || '')) index += 1;
+  }
+
+  function readString() {
+    const start = index;
+    index += 1;
+    while (index < text.length) {
+      if (text[index] === '\\') {
+        index += 2;
+        continue;
+      }
+      if (text[index] === '"') {
+        index += 1;
+        return JSON.parse(text.slice(start, index));
+      }
+      index += 1;
+    }
+    throw new Error('unterminated string');
+  }
+
+  function readValue(field) {
+    skipWhitespace();
+    if (text[index] === '{') return readObject(field);
+    if (text[index] === '[') return readArray(field);
+    if (text[index] === '"') {
+      readString();
+      return;
+    }
+    while (index < text.length && !/[\s,}\]]/.test(text[index])) index += 1;
+  }
+
+  function readObject(field) {
+    index += 1;
+    const keys = new Set();
+    skipWhitespace();
+    while (index < text.length && text[index] !== '}') {
+      const key = readString();
+      const childField = field ? `${field}.${key}` : key;
+      if (keys.has(key)) duplicates.push(childField);
+      keys.add(key);
+      skipWhitespace();
+      if (text[index] !== ':') throw new Error('expected colon');
+      index += 1;
+      readValue(childField);
+      skipWhitespace();
+      if (text[index] === ',') {
+        index += 1;
+        skipWhitespace();
+      } else if (text[index] !== '}') {
+        throw new Error('expected comma or closing brace');
+      }
+    }
+    if (text[index] !== '}') throw new Error('unterminated object');
+    index += 1;
+  }
+
+  function readArray(field) {
+    index += 1;
+    let itemIndex = 0;
+    skipWhitespace();
+    while (index < text.length && text[index] !== ']') {
+      readValue(`${field}[${itemIndex}]`);
+      itemIndex += 1;
+      skipWhitespace();
+      if (text[index] === ',') {
+        index += 1;
+        skipWhitespace();
+      } else if (text[index] !== ']') {
+        throw new Error('expected comma or closing bracket');
+      }
+    }
+    if (text[index] !== ']') throw new Error('unterminated array');
+    index += 1;
+  }
+
+  readValue('');
+  return duplicates;
+}
+
+function safeRepoPath(value, kind) {
+  if (typeof value !== 'string' || !value || value.includes('\\') || /[?#]/.test(value)) return false;
+  if (path.posix.isAbsolute(value)) return false;
+  const segments = value.split('/');
+  if (segments.some(segment => !segment || segment === '.' || segment === '..')) return false;
+  if (path.posix.normalize(value) !== value) return false;
+  if (kind === 'launch') return value.startsWith('tools/') && value.endsWith('.html');
+  if (kind === 'readme') return (value.startsWith('tools/') || value.startsWith('docs/')) && value.endsWith('.md');
+  if (kind === 'preview') return /\.(?:avif|gif|jpe?g|png|svg|webp)$/i.test(value);
+  return false;
+}
+
+function validateFileReference(manifest, field, root, failures, source) {
+  const value = manifest[field];
+  if (value == null && field === 'preview') return;
+  if (typeof value !== 'string') return;
+  if (!safeRepoPath(value, field)) {
+    fail(failures, `${source}: unsafe ${field} path "${value}"`);
+    return;
+  }
+  const target = path.resolve(root, value);
+  const relative = path.relative(root, target);
+  if (relative.startsWith('..') || path.isAbsolute(relative)) {
+    fail(failures, `${source}: unsafe ${field} path "${value}"`);
+    return;
+  }
+  if (!fs.existsSync(target) || !fs.statSync(target).isFile()) {
+    const label = field === 'readme' ? 'README' : `${field} entry`;
+    fail(failures, `${source}: ${label} missing at ${value}`);
+  }
+}
+
+export function validateManifestText(text, options = {}) {
+  const root = path.resolve(options.root || ROOT);
+  const source = options.source || 'wizard.module.json';
+  const schema = options.schema || readJson(options.schemaPath || SCHEMA_PATH);
+  const failures = [];
+  let manifest;
+  try {
+    manifest = JSON.parse(text);
+  } catch (error) {
+    fail(failures, `${source}: invalid JSON (${error.message})`);
+    return { manifest: null, failures };
+  }
+  try {
+    for (const key of findDuplicateJsonKeys(text)) {
+      fail(failures, `${source}: duplicate JSON key "${key}"`);
+    }
+  } catch (_) {
+    // JSON.parse above remains the canonical syntax error reporter.
+  }
+
+  validateAgainstSchema(manifest, schema, failures, source);
+  const parentSlug = path.posix.basename(path.posix.dirname(source));
+  if (manifest.slug && manifest.slug !== parentSlug) {
+    fail(failures, `${source}: slug "${manifest.slug}" does not match directory "${parentSlug}"`);
+  }
+  validateFileReference(manifest, 'launch', root, failures, source);
+  validateFileReference(manifest, 'readme', root, failures, source);
+  validateFileReference(manifest, 'preview', root, failures, source);
+  if (manifest.visibility === 'dashboard' && ['archive', 'legacy', 'internal'].includes(manifest.status)) {
+    fail(failures, `${source}: dashboard visibility is incompatible with status "${manifest.status}"`);
+  }
+  if (manifest.visibility === 'dashboard' && ARCHIVE_SLUGS.includes(manifest.slug)) {
+    fail(failures, `${source}: archive candidate cannot be dashboard-visible`);
+  }
+  return { manifest, failures };
 }
 
 function collectModules() {
@@ -132,17 +298,11 @@ function collectModules() {
 
   for (const file of manifests) {
     const source = rel(file);
-    let manifest;
-    try {
-      manifest = readJson(file);
-    } catch (error) {
-      fail(failures, `${source}: invalid JSON (${error.message})`);
+    const result = validateManifestText(fs.readFileSync(file, 'utf8'), { source, root: ROOT, schema });
+    failures.push(...result.failures);
+    const manifest = result.manifest;
+    if (!manifest) {
       continue;
-    }
-    validateAgainstSchema(manifest, schema, failures, source);
-    const parentSlug = path.basename(path.dirname(file));
-    if (manifest.slug && manifest.slug !== parentSlug) {
-      fail(failures, `${source}: slug "${manifest.slug}" does not match directory "${parentSlug}"`);
     }
     if (manifest.id) {
       if (ids.has(manifest.id)) fail(failures, `duplicate id "${manifest.id}" (${source} and ${ids.get(manifest.id)})`);
@@ -152,39 +312,25 @@ function collectModules() {
       if (slugs.has(manifest.slug)) fail(failures, `duplicate slug "${manifest.slug}"`);
       else slugs.set(manifest.slug, source);
     }
-    if (manifest.launch) {
-      const launchPath = path.join(ROOT, manifest.launch);
-      if (!fs.existsSync(launchPath)) fail(failures, `${source}: launch entry missing at ${manifest.launch}`);
-    }
-    if (manifest.readme) {
-      const readmePath = path.join(ROOT, manifest.readme);
-      if (!fs.existsSync(readmePath)) fail(failures, `${source}: README missing at ${manifest.readme}`);
-    }
-    if (manifest.preview) {
-      const previewPath = path.join(ROOT, manifest.preview);
-      if (!fs.existsSync(previewPath)) fail(failures, `${source}: preview missing at ${manifest.preview}`);
-    }
-    if (manifest.visibility === 'dashboard' && ['archive', 'legacy', 'internal'].includes(manifest.status)) {
-      fail(failures, `${source}: dashboard visibility is incompatible with status "${manifest.status}"`);
-    }
-    if (manifest.visibility === 'dashboard' && ARCHIVE_SLUGS.includes(manifest.slug)) {
-      fail(failures, `${source}: archive candidate cannot be dashboard-visible`);
-    }
     modules.push(manifest);
   }
 
   return { modules, failures };
 }
 
-function buildRegistry(modules) {
+function compareText(a, b) {
+  return a < b ? -1 : a > b ? 1 : 0;
+}
+
+export function buildRegistry(modules) {
   const dashboard = modules
     .filter(mod => mod.visibility === 'dashboard')
-    .sort((a, b) => a.title.localeCompare(b.title));
+    .sort((a, b) => compareText(a.title, b.title) || compareText(a.id, b.id));
   return {
     generatedBy: 'scripts/wizard-lab.mjs',
     schemaVersion: 1,
     doNotEdit: true,
-    modules: modules.slice().sort((a, b) => a.id.localeCompare(b.id)),
+    modules: modules.slice().sort((a, b) => compareText(a.id, b.id)),
     dashboard
   };
 }
@@ -193,7 +339,7 @@ function renderRegistryJs(registry) {
   return `/* generated by scripts/wizard-lab.mjs; do not edit */\nwindow.WIZARD_REGISTRY = ${JSON.stringify(registry, null, 2)};\n`;
 }
 
-function registryPayload(registry) {
+export function registryPayload(registry) {
   return `${JSON.stringify(registry, null, 2)}\n`;
 }
 
@@ -312,6 +458,7 @@ function runNode(script, extraEnv = {}) {
 
 function checkModuleTests(failures, results) {
   const scripts = [
+    'tests/manifest-hardening.test.mjs',
     'tools/performance.test.mjs',
     'tools/geometric_skilltree/tests/progression.test.mjs',
     'tools/geometric_skilltree/tests/patterns.test.js',
@@ -405,10 +552,13 @@ function verify() {
   return printReport('verify', failures, extras);
 }
 
-const command = process.argv[2] || 'verify';
-if (command === 'generate') generate();
-else if (command === 'verify') verify();
-else {
-  console.error(`unknown command ${command}`);
-  process.exitCode = 2;
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (isMain) {
+  const command = process.argv[2] || 'verify';
+  if (command === 'generate') generate();
+  else if (command === 'verify') verify();
+  else {
+    console.error(`unknown command ${command}`);
+    process.exitCode = 2;
+  }
 }
