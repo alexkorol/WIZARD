@@ -90,14 +90,17 @@
     },
     "launch": {
       "type": "string",
+      "minLength": 1,
       "description": "Repo-relative HTML entry used as the public launch URL."
     },
     "readme": {
       "type": "string",
+      "minLength": 1,
       "description": "Repo-relative README path."
     },
     "preview": {
       "type": ["string", "null"],
+      "minLength": 1,
       "description": "Repo-relative preview image when one reliably exists."
     },
     "moduleVersion": {
@@ -160,12 +163,31 @@
     },
     "unsupportedMethods": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": {
+        "type": "string",
+        "enum": [
+          "reset",
+          "getState",
+          "setState",
+          "listScenarios",
+          "loadScenario",
+          "pause",
+          "resume",
+          "step",
+          "getMetrics",
+          "getAnnotations",
+          "setAnnotations",
+          "exportCalibration",
+          "importCalibration"
+        ]
+      },
+      "uniqueItems": true
     },
     "tags": {
       "type": "array",
       "items": { "type": "string", "minLength": 1 },
-      "minItems": 1
+      "minItems": 1,
+      "uniqueItems": true
     }
   }
 }
