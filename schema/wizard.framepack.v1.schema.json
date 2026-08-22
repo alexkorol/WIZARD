@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alexkorol.github.io/WIZARD/schema/wizard.framepack.v1.schema.json",
+  "title": "WIZARD framepack manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "title", "assetRoot", "components"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "title": { "type": "string", "minLength": 1 },
+    "assetRoot": { "type": "string", "pattern": "^assets/verdigris-ui/framepacks/" },
+    "provenance": { "type": "string" },
+    "components": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/component" }
+    }
+  },
+  "$defs": {
+    "quad": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        { "type": "integer", "minimum": 0 },
+        { "type": "integer", "minimum": 0 },
+        { "type": "integer", "minimum": 0 },
+        { "type": "integer", "minimum": 0 }
+      ],
+      "items": false
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file", "width", "height", "sha256", "hasAlpha"],
+      "properties": {
+        "file": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._/-]*$" },
+        "width": { "type": "integer", "minimum": 3 },
+        "height": { "type": "integer", "minimum": 3 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "hasAlpha": { "type": "boolean" }
+      }
+    },
+    "derivative": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "file", "sha256"],
+      "properties": {
+        "role": {
+          "enum": ["alpha", "edge", "material", "height", "depth", "emissive", "roughness-source", "normal-source"]
+        },
+        "file": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._/-]*$" },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "slice", "contentInsets", "edgeMode", "states"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "slice": { "$ref": "#/$defs/quad" },
+        "contentInsets": { "$ref": "#/$defs/quad" },
+        "edgeMode": { "enum": ["stretch", "repeat", "round"] },
+        "states": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["default"],
+          "properties": {
+            "default": { "$ref": "#/$defs/asset" },
+            "hover": { "$ref": "#/$defs/asset" },
+            "focus": { "$ref": "#/$defs/asset" },
+            "active": { "$ref": "#/$defs/asset" },
+            "disabled": { "$ref": "#/$defs/asset" }
+          }
+        },
+        "derivatives": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/derivative" }
+        }
+      }
+    }
+  }
+}
