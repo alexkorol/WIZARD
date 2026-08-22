@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "id": "gallery-valid",
+  "title": "Gallery valid",
+  "assetRoot": "assets/verdigris-ui/framepacks/gallery-valid",
+  "provenance": "Deterministic local framepack-gallery fixture; no generated art.",
+  "components": [
+    {
+      "id": "panel",
+      "slice": [
+        24,
+        24,
+        24,
+        24
+      ],
+      "contentInsets": [
+        30,
+        30,
+        30,
+        30
+      ],
+      "edgeMode": "stretch",
+      "states": {
+        "default": {
+          "file": "panel-default.png",
+          "width": 128,
+          "height": 128,
+          "sha256": "04e63955f42f79fa1f99b30e15382ba4933214a0276014cf9c9324179870c199",
+          "hasAlpha": true
+        },
+        "hover": {
+          "file": "panel-hover.png",
+          "width": 128,
+          "height": 128,
+          "sha256": "db93692bb24e2095902379bba94d51b6ca2508ff61f694f51e6632e54dd5011a",
+          "hasAlpha": true
+        },
+        "focus": {
+          "file": "panel-focus.png",
+          "width": 128,
+          "height": 128,
+          "sha256": "4218d00921f12115ef3fa7a091eb23ee20997830dafa1a7e377fbc27b34b292e",
+          "hasAlpha": true
+        },
+        "active": {
+          "file": "panel-active.png",
+          "width": 128,
+          "height": 128,
+          "sha256": "33fa1625d07103bc53974901bb1d0c63c7e93c1697f5be7e580b1b4a8ec0a0ad",
+          "hasAlpha": true
+        },
+        "disabled": {
+          "file": "panel-disabled.png",
+          "width": 128,
+          "height": 128,
+          "sha256": "dd56e2f293f39d0d091548393144c1bc0e0546fa3dff876493f5dca0631e408b",
+          "hasAlpha": true
+        }
+      }
+    }
+  ]
+}
