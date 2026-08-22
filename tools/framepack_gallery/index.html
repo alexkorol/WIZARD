@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Framepack Gallery · WIZARD</title>
+<meta name="description" content="Internal deterministic nine-slice validation gallery for Verdigris UI framepacks.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#gallery">Skip to previews</a>
+<header class="masthead">
+  <div>
+    <p class="eyebrow">Verdigris Systems Laboratory · Internal bench</p>
+    <h1>Framepack Gallery</h1>
+    <p class="lede">Manifest-driven state, slice, alpha, dimension, and checksum inspection. Invalid packs are rejected before rendering.</p>
+  </div>
+  <span class="internal-badge">Direct URL only</span>
+</header>
+
+<main>
+  <section class="control-panel" aria-label="Gallery controls">
+    <label><span>Fixture</span><select id="fixture-select"></select></label>
+    <label class="check-control"><input id="guide-toggle" type="checkbox" checked><span>Show slice + content guides</span></label>
+    <div class="manifest-readout"><span>Manifest</span><code id="manifest-path">Loading…</code></div>
+  </section>
+
+  <section id="validation" class="validation-panel" aria-live="polite"></section>
+
+  <section class="legend" aria-label="Guide legend">
+    <span><i class="legend-line legend-line--slice"></i>slice boundary</span>
+    <span><i class="legend-line legend-line--content"></i>safe content inset</span>
+    <span>Order: top / right / bottom / left</span>
+  </section>
+
+  <div id="gallery"></div>
+</main>
+
+<footer>Neutral deterministic fixtures only · no production art · no network dependencies</footer>
+<script type="module" src="gallery.js"></script>
+</body>
+</html>

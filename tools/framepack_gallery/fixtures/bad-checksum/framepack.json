@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "gallery-bad-checksum",
+  "title": "Gallery bad checksum",
+  "assetRoot": "assets/verdigris-ui/framepacks/gallery-bad-checksum",
+  "provenance": "Deterministic local framepack-gallery fixture; no generated art.",
+  "components": [
+    {
+      "id": "panel",
+      "slice": [
+        24,
+        24,
+        24,
+        24
+      ],
+      "contentInsets": [
+        30,
+        30,
+        30,
+        30
+      ],
+      "edgeMode": "stretch",
+      "states": {
+        "default": {
+          "file": "panel-default.png",
+          "width": 128,
+          "height": 128,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "hasAlpha": true
+        }
+      }
+    }
+  ]
+}

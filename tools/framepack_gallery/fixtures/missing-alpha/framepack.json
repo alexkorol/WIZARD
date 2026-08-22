@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "gallery-missing-alpha",
+  "title": "Gallery missing alpha",
+  "assetRoot": "assets/verdigris-ui/framepacks/gallery-missing-alpha",
+  "provenance": "Deterministic local framepack-gallery fixture; no generated art.",
+  "components": [
+    {
+      "id": "panel",
+      "slice": [
+        24,
+        24,
+        24,
+        24
+      ],
+      "contentInsets": [
+        30,
+        30,
+        30,
+        30
+      ],
+      "edgeMode": "stretch",
+      "states": {
+        "default": {
+          "file": "panel-default.png",
+          "width": 128,
+          "height": 128,
+          "sha256": "04e63955f42f79fa1f99b30e15382ba4933214a0276014cf9c9324179870c199"
+        }
+      }
+    }
+  ]
+}
