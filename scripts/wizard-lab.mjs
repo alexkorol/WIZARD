@@ -22,7 +22,6 @@ const REQUIRED_DASHBOARD_IDS = [
   'wizard.rpg-inventory',
   'wizard.arcane-lattice',
   'wizard.cartographer',
-  'wizard.mason',
   'wizard.verdigris-splash',
   'wizard.chronicles',
   'wizard.systems-bench'
