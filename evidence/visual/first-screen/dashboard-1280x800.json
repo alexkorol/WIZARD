@@ -1,0 +1,43 @@
+{
+  "url": "http://127.0.0.1:54846/",
+  "requestedViewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "effectiveViewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "deviceScaleFactor": 1,
+  "thresholds": {
+    "maxTop": 800
+  },
+  "measured": {
+    "groupsTop": 933,
+    "groupsFound": true,
+    "bodyScrollWidth": 1280,
+    "identity": [
+      {
+        "token": "Verdigris Systems Laboratory",
+        "found": true
+      },
+      {
+        "token": "Workbench for Integration, Zones, Annotation & Resource Design",
+        "found": true
+      }
+    ]
+  },
+  "capture": {
+    "path": "/Users/alexkorol/Code/WIZARD/evidence/visual/first-screen/dashboard-1280x800.png",
+    "width": 1280,
+    "height": 800
+  },
+  "browser": {
+    "description": "Chrome/150.0.7871.115",
+    "revision": "@25f5b661e5b08141ec24b17d1ce96c5ceb5828da"
+  },
+  "verdict": "FAIL",
+  "reasons": [
+    "GROUPS_BELOW_FOLD"
+  ]
+}
