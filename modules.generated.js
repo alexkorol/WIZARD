@@ -296,7 +296,7 @@ window.WIZARD_REGISTRY = {
       "title": "Mason Terrain Forge",
       "description": "Border-tile forge for square blob and hex autotile sets, used to calibrate terrain transitions before engine export.",
       "status": "authoring",
-      "visibility": "dashboard",
+      "visibility": "internal",
       "category": "authoring",
       "group": "world-terrain",
       "launch": "tools/mason/index.html",
@@ -1055,52 +1055,6 @@ window.WIZARD_REGISTRY = {
         "passive-tree",
         "svg",
         "authoring"
-      ]
-    },
-    {
-      "schemaVersion": 1,
-      "id": "wizard.mason",
-      "slug": "mason",
-      "title": "Mason Terrain Forge",
-      "description": "Border-tile forge for square blob and hex autotile sets, used to calibrate terrain transitions before engine export.",
-      "status": "authoring",
-      "visibility": "dashboard",
-      "category": "authoring",
-      "group": "world-terrain",
-      "launch": "tools/mason/index.html",
-      "readme": "tools/mason/README.md",
-      "preview": null,
-      "moduleVersion": "1.0.0",
-      "stateVersion": 1,
-      "verdigrisTargets": [
-        "terrain-autotile"
-      ],
-      "capabilities": {
-        "adapter": false,
-        "scenarios": false,
-        "stateExport": false,
-        "stateImport": false,
-        "snapshots": false,
-        "annotations": false,
-        "proposals": false,
-        "fixtures": false,
-        "events": false,
-        "pauseStep": false,
-        "agentFeedback": false
-      },
-      "unsupportedMethods": [
-        "listScenarios",
-        "loadScenario",
-        "getAnnotations",
-        "setAnnotations",
-        "pause",
-        "resume",
-        "step"
-      ],
-      "tags": [
-        "autotile",
-        "terrain",
-        "canvas"
       ]
     },
     {

@@ -5,7 +5,7 @@
   "title": "Mason Terrain Forge",
   "description": "Border-tile forge for square blob and hex autotile sets, used to calibrate terrain transitions before engine export.",
   "status": "authoring",
-  "visibility": "dashboard",
+  "visibility": "internal",
   "category": "authoring",
   "group": "world-terrain",
   "launch": "tools/mason/index.html",
