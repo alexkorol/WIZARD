@@ -1,53 +1,57 @@
 # Run status (snapshot — rewritten each supervisor sweep)
 
-- Live tip: `origin/gh-pages` @ `feb9696` (gh-pages IS the deployed site)
-- Last shipped: WIZARD-REVAMP-001 (issue #30, PR #31, 9 worker commits)
-  and the hero copy correction (PR #32)
-- Owner-visible today: WIZARD relaunched as the Verdigris Systems
-  Laboratory — manifest-driven 9-module dashboard, shared calibration
-  adapter, passive-tree owner proposals, Systems Bench fixture playback,
-  root verification command and CI
-- Last supervisor review: PR #31 @ `eb155bd` ACCEPTED (cycle 2 of 4)
+- Supervisor identity: MacBook Codex app, independent WIZARD supervisor clone;
+  it does not direct the PC Verdigris harness or standalone orchestration repo.
+- Live tip: `origin/gh-pages` @ `4c0e2c0` (`gh-pages` IS the deployed site)
+- Live status: Pages deployment `5996942263` built successfully; root verify run
+  `32338960668` succeeded for the exact live SHA.
+- Local preflight at the live SHA: `node scripts/wizard-lab.mjs verify --full`
+  → 17 manifests, 9 dashboard modules, PASS.
+- Open PR: draft #29, Arcane Lattice 1.0, head `049da81`; CI green and GitHub
+  reports CLEAN, but it remains draft and its adapter successor is gated on
+  merge plus a current-base review.
+- Surge authority: owner directive received 2026-08-21. Issue #37 through #65
+  form the initial executable board; see `orchestration/SURGE_BOARD.md`.
 
 ## RUNNING
 
 | Task | Actor | Notes |
 |---|---|---|
-| — | — | board empty |
+| `WIZARD-SURGE-001` [#37](https://github.com/alexkorol/WIZARD/issues/37) | `OX_WIZARD_VISUAL` | isolated branch `codex/ox-wizard-visual-surge-001`; framepack research |
+| `WIZARD-SURGE-013` [#49](https://github.com/alexkorol/WIZARD/issues/49) | `OX_WIZARD_SYSTEMS` | isolated branch `codex/ox-wizard-systems-surge-013`; manifest hardening |
 
 ## READY (unclaimed)
 
 | Task | Packet | Notes |
 |---|---|---|
-| — | — | none dispatched |
+| `WIZARD-SURGE-002`–`006` [#38–#42](https://github.com/alexkorol/WIZARD/issues?q=is%3Aissue+is%3Aopen+label%3Acursor-ready+WIZARD-SURGE) | visual | gallery, placeholders, type/space audit, first-screen, accessibility |
+| `WIZARD-SURGE-007`–`012` [#43–#48](https://github.com/alexkorol/WIZARD/issues?q=is%3Aissue+is%3Aopen+label%3Acursor-ready+WIZARD-SURGE) | systems | fixtures, loopback, stale-base, deploy, archive, capabilities |
+| `WIZARD-SURGE-014`–`015` [#50–#51](https://github.com/alexkorol/WIZARD/issues?q=is%3Aissue+is%3Aopen+label%3Acursor-ready+WIZARD-SURGE) | systems | annotations/state bridge and asset ingestion |
 
-## Backlog (candidates for WIZARD-REVAMP-002)
+## Sequenced successors
 
-Deferred out of REVAMP-001 by agreement, not by omission:
-
-- Adapters for the remaining retained modules (cartographer, mason,
-  rpg_inventory, verdigris_splash, rp_account_creator, arcane_lattice)
-- Physical archive relocation plus redirect decisions for
-  `pixel_sandbox`, `wordcloud`, `wordsphere`, `space_shooter`, `sokoban`
-- Additional Systems Bench fixtures beyond `resource-session.v1`
-- Proposal promotion: owner design proposals → authored tree data
-- Enforcement backlog from `ORCHESTRATION.md` (branch protection,
-  stale-base CI check, first-screen capture script)
-- Arcane Lattice → shared adapter: the 1.0 build (PR #29) already exposes
-  `getState`/`setState` with `schemaVersion: 1` plus `resolveCast`, so
-  registering it with `WizardLab` is cheap. Only after #29 merges, and
-  without touching adjacency, path legality, instability, or undo.
+- 13 concrete PIPELINED packets are open as #52–#64.
+- They cover shared tokens, gallery registration, six retained-module
+  adapters, additional Bench fixtures, frame rollout, selected asset intake,
+  archive redirects, and canonical CI consolidation.
+- `OWNER-INPUT-001` is #65. It blocks only final raster selection; placeholders
+  and stable interfaces continue.
+- Proposal promotion into authored tree data remains deliberately outside this
+  surge board because it requires an owner product decision and must not be
+  inferred from the integration directive.
 
 ## Fleet and workspaces
 
 | Actor | Worktree | Ports |
 |---|---|---|
-| Owner + supervisor | `Z:\Code\WIZARD` (primary checkout) | — |
-| Fable supervisor | `Z:\Code\.worktrees\wizard-fable-supervisor` | 8120–8129 |
-| Cursor Grok 4.6 | none currently — create as `Z:\Code\.worktrees\wizard-cursor-<task>` on next claim | 8140–8159 |
+| MacBook supervisor | `/Users/alexkorol/Documents/ChatGPT/Wizard` | 8120–8129 |
+| `OX_WIZARD_VISUAL` | `/Users/alexkorol/Documents/ChatGPT/.worktrees/wizard-ox-visual` | 8160–8169 |
+| `OX_WIZARD_SYSTEMS` | `/Users/alexkorol/Documents/ChatGPT/.worktrees/wizard-ox-systems` | 8170–8179 |
 | Qwen 3.8 (MacBook, LM Studio via Tailscale) | EXPERIMENTAL — not dispatchable; see MODEL_SCORECARD | endpoint `http://alexs-macbook-pro.tail4e0d34.ts.net:1234/v1`, model id `qwen3.8` |
 
-Retire merged worktrees: `git worktree remove` then `git worktree prune`.
+The Windows topology documented in `ORCHESTRATION.md` is not active in this
+independent MacBook run. Retire merged Mac worktrees with `git worktree remove`, then
+`git worktree prune`; never mutate the separate PC checkout.
 
 Qwen 3.8 etiquette (owner rule): it holds ~27.5 GB of the Mac's RAM.
 When a work session with it ends, the owner stops it via Raycast
