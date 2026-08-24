@@ -20,9 +20,10 @@ Carve rules (learned the hard way — do NOT seed inside the disc):
   glass: "parts of the liquid not showing").
 - Deep pixels (rr < 0.985) are kept only where the flooded component is a
   dense blob (statue mass), never a thin arc tendril.
-- The rim band (rr >= 0.985) is always safe to carve: dynamic liquid
-  never rises past p.y ~ 0.94, and the aligned art plate shows the same
-  rim pixels underneath.
+- The glass rim/highlight band is NOT carved. The dome highlight must stay
+  dynamic: carving it shows the static plate's opaque highlight band over
+  the liquid ("the highlight obstructs the liquid"). Only statue blobs
+  (plus the frame pixels immediately adjacent to them) are carved.
 
 Writes the mask back at its original 836x470 resolution.
 """
@@ -40,7 +41,6 @@ LUMA_MIN = 0.25   # statue marble / metal rim are bright
 SAT_MAX = 0.30    # ...and unsaturated; liquid sits at sat ~0.99
 CAND_MAX_R = 1.25   # candidates may roam outside the disc (statue bodies)
 SEED_LO, SEED_HI = 1.01, 1.20   # flood starts OUTSIDE the glass edge
-RIM_MIN_R = 0.985   # frame band: always safe to carve (see docstring)
 DEEP_BLUR = 5       # half-res px; blob density radius
 DEEP_MIN_DENSITY = 0.30
 
@@ -78,17 +78,16 @@ for _ in range(600):
         break
     grown = new
 
-# Rim band: carve whatever the flood reached near/over the frame edge.
-carve = grown & (rr_h >= RIM_MIN_R) & (rr_h < 1.08)
-
-# Deep statue mass: density-filtered blobs only (kills thin glint tendrils).
-deep = grown & (rr_h < RIM_MIN_R)
+# Statue mass only: density-filtered blobs (kills thin glint tendrils).
+# The glass rim/highlight band is deliberately left dynamic (see docstring).
+deep = grown & (rr_h < 1.08)
 density = np.asarray(
     Image.fromarray(deep.astype(np.uint8) * 255).filter(ImageFilter.GaussianBlur(DEEP_BLUR))
 ).astype(np.float64) / 255.0
 blobs = density > DEEP_MIN_DENSITY
-carve |= blobs
-# Keep the rim/statue transition hugging each blob (frame near the head etc.)
+carve = blobs.copy()
+# Keep the frame pixels immediately adjacent to each statue blob (the mana
+# statue's head leans on the rim — the fill clipped there too).
 carve |= grown & np.asarray(
     Image.fromarray(blobs).filter(ImageFilter.MaxFilter(31))
 )

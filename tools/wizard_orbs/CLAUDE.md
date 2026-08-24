@@ -38,8 +38,12 @@ screenshots/        ← README images
   this frame (the originals were aligned by silhouette-IoU at scale 1.635).
 - The full-resolution `art.jpg` is the sharp static stage background. WebGL is a
   transparent, cropped `ORB_VIEW` overlay around the two dynamic spheres. Keep
-  the crop, `uViewOrigin`/`uViewSize`, alpha context, and shader early-discard in
-  sync; reverting to a full-stage default canvas breaks the 50× work budget.
+  the crop and `uViewOrigin`/`uViewSize` in sync. The shader must NOT discard
+  mask-black pixels inside the crop — they carry the light spill and statue
+  relighting (discarding them exposes the bare plate and kills the glow, the
+  Aug-2026 "silver band over the dome" regression). Instead the overlay blends
+  to the raw plate at the crop edges (`edgeFade` in `main()`), and the liquid
+  noise stays gated by `aL`/`aR`, which is where the work budget lives.
 - `levelFromFill()` in template.html must stay continuous and monotone — naive
   volume-true mapping makes the surface sprint at the top/bottom of the sphere
   (that's why it blends to linear near the poles). Any surface-attached glow must
