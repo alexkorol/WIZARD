@@ -465,11 +465,16 @@ void main(){
   float rR = length(pR);
   float aL = m * smoothstep(1.015, 0.995, rL);
   float aR = m * smoothstep(1.015, 0.995, rR);
-  // The JPEG underneath owns every static pixel. Reject the crop's empty
-  // corners and center gap before any procedural noise or relighting work.
-  if (max(aL, aR) <= 0.001) discard;
+  // No early discard: mask-black pixels inside the crop (rim ring, statue
+  // carves) still need the light spill + stone relighting, exactly as the
+  // pre-crop fullscreen build rendered them — discarding them exposes the
+  // bare static plate and kills the glow (the "flat silver band" over the
+  // dome). Liquid noise below stays gated by aL/aR; the edge fade at the
+  // bottom of main() dissolves the overlay into the CSS background, so the
+  // crop costs no seam. Far corners only run the cheap base path.
 
   vec3 art = texture(uArt, uv).rgb;
+  vec3 artRaw = art;   // untouched plate, matches the CSS background pixel
   vec3 empty = texture(uEmpty, uv).rgb;
   vec2 pack = texture(uPack, uv).rg;
   float thick = smoothstep(0.40, 0.98, pack.r);
@@ -541,6 +546,14 @@ void main(){
   // gentle tone + grain
   col = col / (1.0 + col * 0.10);
   col += (hash12(gl_FragCoord.xy + fract(uTime)) - 0.5) * 0.012;
+
+  // dissolve to the untouched plate at the crop boundary: the CSS background
+  // shows art.jpg outside the canvas, so blending to the raw pixel hides the
+  // overlay seam (spill/relight reach beyond the crop's left/right edges)
+  vec2 cropUV = gl_FragCoord.xy / uRes;
+  vec2 edgeD = min(cropUV, 1.0 - cropUV);
+  float edgeFade = smoothstep(0.0, 0.018, min(edgeD.x, edgeD.y));
+  col = mix(artRaw, col, edgeFade);
 
   outColor = vec4(col, 1.0);
 }
