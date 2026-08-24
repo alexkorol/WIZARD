@@ -1,0 +1,43 @@
+/*
+ * fk-buff-icon — FRAMEKIT-WAVE-1 / FK-104
+ * Square buff/debuff tile with optional stack count. Root class:
+ * .fk-buff-icon; data-kind="buff|debuff" (default buff), data-stacks for
+ * the numeric corner badge. Pure CSS.
+ */
+
+.fk-buff-icon {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--fk-space-6);
+  height: var(--fk-space-6);
+  background: var(--fk-bg-2);
+  border: var(--fk-border-w) solid var(--fk-accent);
+  border-radius: var(--fk-radius);
+  font-size: var(--fk-text-3);
+}
+
+.fk-buff-icon[data-kind='debuff'] {
+  border-color: var(--fk-danger);
+}
+
+.fk-buff-icon::after {
+  content: attr(data-stacks);
+  position: absolute;
+  right: calc(-1 * var(--fk-border-w));
+  bottom: calc(-1 * var(--fk-border-w));
+  padding: 0 var(--fk-space-1);
+  min-width: var(--fk-space-3);
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-1);
+  color: var(--fk-bg-0);
+  background: var(--fk-fg-0);
+  border-radius: calc(var(--fk-radius) / 2);
+}
+
+/* No stacks attribute → no badge */
+.fk-buff-icon:not([data-stacks])::after {
+  content: none;
+}

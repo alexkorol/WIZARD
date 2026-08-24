@@ -1,0 +1,35 @@
+/*
+ * fk-meter — FRAMEKIT-WAVE-1 / FK-104
+ * Numeric readout meter: label + mono value with optional delta indicator.
+ * Root class: .fk-meter. Pure CSS.
+ *
+ *   <div class="fk-meter">
+ *     <span class="fk-meter-label">DPS</span>
+ *     <span class="fk-meter-value" data-delta="up">142</span>
+ *   </div>
+ */
+
+.fk-meter {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--fk-space-2);
+  padding: var(--fk-space-1) var(--fk-space-3);
+  background: var(--fk-bg-1);
+  border: var(--fk-border-w) solid var(--fk-border);
+  border-radius: calc(var(--fk-radius) / 2);
+}
+
+.fk-meter-label {
+  font-size: var(--fk-text-1);
+  color: var(--fk-fg-1);
+}
+
+.fk-meter-value {
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-2);
+  color: var(--fk-fg-0);
+}
+
+.fk-meter-value[data-delta='up'] { color: var(--fk-ok); }
+.fk-meter-value[data-delta='down'] { color: var(--fk-danger); }
+.fk-meter-value[data-delta='flat'] { color: var(--fk-warn); }
