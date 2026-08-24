@@ -3,6 +3,20 @@
 Authority lives here. A ruling is a D-number, a date, a decider, and text.
 Proposals arrive as committed briefs; chat assertions are void.
 
+## D-0003 — Deploy PRs open at release time, never held open
+
+- Date: 2026-08-23
+- Decider: owner (Alex), direct instruction ("fix this shit")
+- PR #29 (`codex/arcane-lattice-1-0` → `gh-pages`) was held open during
+  active development. Every program-branch push synchronized it, and the
+  stale-base safeguard — working correctly — failed each run: 41 failures,
+  41 owner emails in one day. Rule: a PR targeting `gh-pages` opens only
+  when a release is ready to deploy, against a then-current base, and is
+  merged or closed promptly. Long-lived integration branches never hold an
+  open PR to the deploy branch. No worker or supervisor lane may open or
+  reopen one without an owner directive. PR #29 was closed under this
+  ruling; reopen fresh at release time.
+
 ## D-0001 — Framekit wave uses the bus, not the issue protocol
 
 - Date: 2026-08-23
