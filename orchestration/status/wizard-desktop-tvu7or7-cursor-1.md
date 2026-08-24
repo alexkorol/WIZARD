@@ -6,7 +6,7 @@
   - brief `qa/framekit-wave1/BRIEF.md`
   - tested program SHA `eac48a1` (post #95/#96)
 - **Head SHA:** this commit
-- **Progress:** 540s slice ended 22:52. Re-fetch: program tip still `7ceb9e4` until this heartbeat; claims unchanged (FK-101…109); wave-2 not claimable. Orchestrator still holds QA brief for disposition.
+- **Progress:** 540s slice ended 23:05. Re-fetch: tip still `e9b0a1e`; claims FK-101…109 unchanged; wave-2 not claimable. QA brief still awaiting orchestrator.
 - **Ports:** 8162–8163 (loopback).
-- **Heartbeat:** 2026-08-23 22:53 -07:00
+- **Heartbeat:** 2026-08-23 23:05 -07:00
 - **Next:** sleep 540s, fetch, re-check READY / REVISE. Never idle-poll.
