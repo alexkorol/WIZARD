@@ -65,3 +65,9 @@ states. FK-109 reads other submodules but writes only inside its owned path.
 Normalize existing submodules onto the frame kit, one packet per submodule;
 then the C++ port planning packet for Verdigris. Released by the orchestrator
 once wave-1 packets reach `accepted`.
+
+## Notes
+
+- Design reference images (dark arcane-lab UI kit, owner-supplied):
+  `orchestration/boards/framekit-ref/ref-01.png` … `ref-11.png` — FK-101 /
+  FK-102 / FK-107 lanes should match this aesthetic at claim time.
