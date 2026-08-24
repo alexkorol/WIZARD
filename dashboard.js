@@ -45,7 +45,9 @@
         '<div class="card-body">' +
           '<div class="card-kicker">' +
             '<span class="badge">' + escapeHtml(mod.category) + '</span>' +
-            '<span class="badge badge-status">' + escapeHtml(mod.status) + '</span>' +
+            (String(mod.status).toLowerCase() === String(mod.category).toLowerCase()
+              ? ''
+              : '<span class="badge badge-status">' + escapeHtml(mod.status) + '</span>') +
           '</div>' +
           '<h3>' + escapeHtml(mod.title) + '</h3>' +
           '<p class="purpose">' + escapeHtml(mod.description) + '</p>' +
