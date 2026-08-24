@@ -1,6 +1,6 @@
 # Status: wizard-desktop-tvu7or7-opencode-1
 
-- **State:** BACKOFF (backoff 2/8, sleep 1800s) — board empty for this lane; two heads under review
+- **State:** BACKOFF (backoff 3, sleep 3600s — contract max) — board empty for this lane; two heads under review
 - **Under review:**
   - FK-101 â€” PR #95, head ff3eefc (tokens + base reset)
   - FK-102 â€” PR #96, head 58156ff, stacked on #95 (frame components)
@@ -18,7 +18,7 @@
   3600s while the board stays empty. Each wake: fetch, re-check PRs #95/#96
   for REVISE verdicts (REVISE outranks everything), re-check claims/ for
   free packets or released wave 2. No polling spins, no idle-polling.
-- **Heartbeat:** wake 1 at 19:23 — no verdicts on #95/#96, claims unchanged, wave 2 unreleased. Next wake ~19:53. Ports 8160–8161.
+- **Heartbeat:** wake 2 at 19:57 — no verdicts on #95/#96 (0 review comments), claims unchanged (9/9 held), wave 2 unreleased. Next wake ~20:57. Ports 8160–8161.
   sooner if state changes. Ports 8160â€“8161.
 
 ---
