@@ -2,7 +2,7 @@
 
 - Live tip: `origin/gh-pages` @ `feb9696` (gh-pages IS the deployed site)
 - Active program: **FRAMEKIT-WAVE-1** on `codex/arcane-lattice-1-0`
-- Program-branch tip: `5f5111b`
+- Program-branch tip: `b1007bc`
 - Last shipped: WIZARD-REVAMP-001 (issue #30, PR #31, 9 worker commits)
   and the hero copy correction (PR #32)
 
@@ -37,13 +37,12 @@
 | Actor | Worktree | Ports | Status | Claims |
 |---|---|---|---|---|
 | Owner + supervisor | `Z:\Code\WIZARD` (primary checkout) | — | Active | — |
-| opencode-1 | `Z:\Code\.worktrees\wizard-wizard-desktop-tvu7or7-opencode-1` | 8160–8161 | **DARK** (~2h silent) | 2 (merged) |
+| opencode-1 | `Z:\Code\.worktrees\wizard-wizard-desktop-tvu7or7-opencode-1` | 8160–8161 | **DARK ~3h** | 2 (merged) |
 | hermes-1 | `Z:\Code\.worktrees\wizard-wizard-desktop-tvu7or7-hermes-1` | 8162–8163 | **SUSPENDED** | 7 (post-hoc accepted) |
-| cursor-1 | `Z:\Code\.worktrees\wizard-wizard-desktop-tvu7or7-cursor-1` | 8162–8163 | BACKOFF, QA | 0 |
+| cursor-1 | `Z:\Code\.worktrees\wizard-wizard-desktop-tvu7or7-cursor-1` | 8162–8163 | ACTIVE, QA | 0 |
 
 ## Alerts
 
-1. **opencode-1 dark ~2h** — last status 20:16 -0700, stated next wake ~21:15. No push since. May be in deep backoff or stopped. Owner check advised if still dark at next sweep.
+1. **opencode-1 dark ~3h** — last status 20:16 -0700. Stated next wake ~21:15; never returned. Likely session ended or harness stopped. No action available.
 2. **D-0002 still pending** — owner ruling on hermes-1 post-hoc acceptance. Wave-2 release gated.
-3. **Program branch contamination** — PR #100 merged non-framekit commits (`dashboard.js`, `tools/wizard_orbs/` fixes) into `codex/arcane-lattice-1-0`. Owner-authorized but increases branch surface; wave-2 workers will need to rebase against a more complex base.
-4. **QA brief in review queue** — cursor-1 `ff203cb` is REVIEW_REQUESTED but not a packet. Orchestrator disposition needed.
+3. **QA brief in review queue** — cursor-1 `ff203cb` is REVIEW_REQUESTED but not a packet. Orchestrator disposition needed.
