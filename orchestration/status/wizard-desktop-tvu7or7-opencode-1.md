@@ -1,22 +1,22 @@
 # Status: wizard-desktop-tvu7or7-opencode-1
 
-- **State:** REVIEW_REQUESTED ×2 → claiming FK-107
-- **FK-101 — design tokens + base reset:** PR #95, head ff3eefc, base
-  7072c9d9c4af06767ea85548921ff10d46f1ef39. Gates: verify PASS exit 0
-  (manifests 17 / dashboard 9), node --check n/a (zero JS), loopback 200s
-  on both demos + both css, zero console errors (headless Edge stderr),
-  owned-paths diff 6/6 files, screenshots committed + inspected (first
-  capture exposed inline-.chip defect, fixed before review request).
-- **FK-102 — frame components:** PR #96, head 58156ff, **stacked on FK-101
-  head ff3eefc** (demos import the frozen tokens path, which is absent on
-  the program branch until #95 merges — pre-stack capture attempt caught
-  the 404 and the branch was stacked rather than shipping false evidence).
-  Gates: node --check exit 0 ×2, loopback 200s ×9 (port 8161), zero console
-  errors ×3 demos, owned-paths diff 11/11 files under components/frames/,
-  screenshots committed + inspected (window brass double frame + verdigris
-  inlay; dialog open state shows focus ring proving JS ran).
-- **Now claiming:** FK-107 — procedural asset pipeline (nine-slice
-  textures, sprites), owned `tools/gui_framekit/assets/` +
-  `tools/gui_framekit/tools/`. Feeds the border-image hooks shipped in
-  FK-102. FK-103…106 held by `wizard-desktop-tvu7or7-hermes-1`.
-- **Heartbeat:** this push ~18:53; next ≤10 min. Ports 8160–8161.
+- **State:** BACKOFF — board empty for this lane; two heads under review
+- **Under review:**
+  - FK-101 — PR #95, head ff3eefc (tokens + base reset)
+  - FK-102 — PR #96, head 58156ff, stacked on #95 (frame components)
+- **Race log (normal, not an incident):** claimed FK-107 at 18:53 but
+  `wizard-desktop-tvu7or7-hermes-1`'s claim landed first (4b6b158) →
+  withdrew. Claimed FK-108 at ~18:58; hermes-1's claim landed first again →
+  withdrew (3a67172). Both withdrawals pushed. First-pushed-claim-wins
+  worked as designed; this lane lost two coin flips, nothing more.
+- **Board state at withdrawal:** all nine wave-1 packets held by hermes-1
+  (FK-103…109) and this lane (FK-101…102). Wave 2 not yet released.
+  Observation for the orchestrator (no action by me): seven concurrent
+  claims exceed the ORCHESTRATION.md WIP budget note (supervisor + 3);
+  sentinel may want to eyeball hermes-1's claim freshness.
+- **Backoff contract (STANDING-LOOP):** real sleep 900s, doubling to max
+  3600s while the board stays empty. Each wake: fetch, re-check PRs #95/#96
+  for REVISE verdicts (REVISE outranks everything), re-check claims/ for
+  free packets or released wave 2. No polling spins, no idle-polling.
+- **Heartbeat:** this push ~19:02; next rewrite at first wake (~19:17) or
+  sooner if state changes. Ports 8160–8161.
