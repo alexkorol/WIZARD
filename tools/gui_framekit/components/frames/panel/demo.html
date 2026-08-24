@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>gui_framekit · panel demo — FK-102</title>
+  <link rel="stylesheet" href="../../../tokens/tokens.css">
+  <link rel="stylesheet" href="./panel.css">
+  <style>
+    body {
+      padding: var(--fk-space-5);
+      background: var(--fk-bg-0);
+      color: var(--fk-fg-0);
+      font-family: var(--fk-font);
+      font-size: var(--fk-text-2);
+      display: grid;
+      gap: var(--fk-space-4);
+      max-inline-size: calc(var(--fk-space-6) * 26);
+      margin-inline: auto;
+    }
+
+    h1 {
+      font-size: var(--fk-text-3);
+      color: var(--fk-border-hi);
+    }
+
+    code {
+      color: var(--fk-accent-2);
+      font-family: var(--fk-font-mono);
+      font-size: var(--fk-text-1);
+    }
+  </style>
+</head>
+<body>
+  <h1>fk-panel</h1>
+
+  <section class="fk-panel">
+    <strong>Default</strong><br>
+    <code>.fk-panel</code> — raised surface on --fk-bg-1 with an engraved
+    hairline. The workbench default.
+  </section>
+
+  <section class="fk-panel fk-panel--brass">
+    <strong>Brass</strong><br>
+    <code>.fk-panel--brass</code> — highlight border with a double engraved
+    ring for surfaces that head a layout.
+  </section>
+
+  <section class="fk-panel fk-panel--sunken">
+    <strong>Sunken</strong><br>
+    <code>.fk-panel--sunken</code> — a recessed well in window-chrome colors
+    for readouts and logs.
+  </section>
+</body>
+</html>

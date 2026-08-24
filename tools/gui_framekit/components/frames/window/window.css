@@ -1,0 +1,68 @@
+/*
+ * fk-window — FK-102 (frame components)
+ *
+ * Application window chrome: titlebar + body, brass double frame,
+ * optional verdigris inlay. CSS renders the full fallback look;
+ * the border-image line activates the nine-slice texture once
+ * FK-107 lands assets/textures/window-frame.png (+ sidecar .json,
+ * slice values below must match the sidecar). Until then the failed
+ * image load is ignored and the engraved CSS border shows.
+ *
+ * Optional JS (window.js) adds titlebar dragging.
+ */
+
+.fk-window {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--fk-frame-bg);
+  border: calc(var(--fk-border-w) * 2) solid var(--fk-frame-edge);
+  border-radius: var(--fk-radius);
+  box-shadow: 0 0 0 var(--fk-border-w) var(--fk-border-hi),
+    inset 0 0 0 var(--fk-border-w) var(--fk-border);
+  border-image: url("../../assets/textures/window-frame.png") 24 24 24 24
+    / calc(var(--fk-border-w) * 2) round round;
+  min-inline-size: calc(var(--fk-space-6) * 8);
+}
+
+.fk-window--inlay::before {
+  content: "";
+  position: absolute;
+  inset-block: var(--fk-space-5);
+  inset-inline-start: var(--fk-space-2);
+  inline-size: calc(var(--fk-space-1) / 2);
+  background: var(--fk-accent-2);
+  border-radius: var(--fk-radius);
+  pointer-events: none;
+}
+
+.fk-window__titlebar {
+  display: flex;
+  align-items: center;
+  gap: var(--fk-space-2);
+  padding: var(--fk-space-2) var(--fk-space-4);
+  background: var(--fk-bg-2);
+  border-block-end: var(--fk-border-w) solid var(--fk-border);
+  border-start-start-radius: var(--fk-radius);
+  border-start-end-radius: var(--fk-radius);
+  touch-action: none;
+}
+
+.fk-window__title {
+  flex: 1;
+  font-size: var(--fk-text-2);
+  color: var(--fk-border-hi);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fk-window__controls {
+  display: flex;
+  gap: var(--fk-space-2);
+}
+
+.fk-window__body {
+  padding: var(--fk-space-4);
+  overflow: auto;
+}
