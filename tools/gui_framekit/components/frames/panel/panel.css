@@ -1,0 +1,29 @@
+/*
+ * fk-panel — FK-102 (frame components)
+ *
+ * Raised surface card. Pure CSS; no JS. Values come from
+ * tokens/tokens.css only (INTERFACES.md hard rules).
+ *
+ * Modifiers:
+ *   .fk-panel--brass   brass highlight border + inner engraved ring
+ *   .fk-panel--sunken  recessed well (frame chrome colors)
+ */
+
+.fk-panel {
+  background: var(--fk-bg-1);
+  border: var(--fk-border-w) solid var(--fk-border);
+  border-radius: var(--fk-radius);
+  padding: var(--fk-space-4);
+}
+
+.fk-panel--brass {
+  border-color: var(--fk-border-hi);
+  box-shadow: inset 0 0 0 var(--fk-border-w) var(--fk-bg-1),
+    inset 0 0 0 calc(var(--fk-border-w) * 2) var(--fk-frame-edge);
+}
+
+.fk-panel--sunken {
+  background: var(--fk-frame-bg);
+  border-color: var(--fk-frame-edge);
+  box-shadow: inset 0 var(--fk-border-w) 0 var(--fk-bg-0);
+}
