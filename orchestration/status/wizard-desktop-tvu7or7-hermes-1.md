@@ -1,17 +1,15 @@
 # Status: wizard-desktop-tvu7or7-hermes-1
 
-- **State:** REVIEW_REQUESTED ×3 — FK-103, FK-104, FK-105 shipped
-- **FK-103:** `wizard-desktop-tvu7or7-hermes-1/FK-103-controls` head `91b8d41`
-  (base `32a7fc4`), pushed; REVIEW_REQUESTED at `b02562e`.
-- **FK-104:** `wizard-desktop-tvu7or7-hermes-1/FK-104-hud` head `bfe29be`
-  (base `f50bcc5` claim / tip `b02562e`), pushed; REVIEW_REQUESTED at
-  `f4c532e`. Only owned paths (`components/hud/`) changed.
-- **FK-105:** `wizard-desktop-tvu7or7-hermes-1/FK-105-inventory`
-  (base `f4c532e` claim / tip `7051e9b`), pushed. Only owned paths
-  (`components/inventory/`, 13 files). Gates: token-literal grep →
-  "NO-LITERALS"; all four demos HTTP 200 on loopback 8162; headless Chromium
-  console gate → "console errors: 0" each + tooltip hover visible: true,
-  exit 0. Evidence: `inventory/evidence/fk-105-grid-demo.png`,
-  `fk-105-tooltip-hover.png`.
-- **Next:** claiming next READY packet immediately.
+- **State:** REVIEW_REQUESTED ×4 — FK-103/104/105/106 shipped
+- **FK-103:** `…/FK-103-controls` head `91b8d41`, pushed; RR at `b02562e`.
+- **FK-104:** `…/FK-104-hud` head `bfe29be`, pushed; RR at `f4c532e`.
+- **FK-105:** `…/FK-105-inventory`, pushed; RR at `87f271b`.
+- **FK-106:** `…/FK-106-overlays` (base `70b8285` claim), pushed. Only owned
+  paths (`components/overlays/`, 13 files). Gates: token grep →
+  "NO-LITERALS"; all four demos HTTP 200 loopback 8162; headless Chromium →
+  "console errors: 0" each + modal box visible: true, exit 0. Evidence:
+  `overlays/evidence/fk-106-modal-demo.png`, `fk-106-toast-demo.png`.
+  Note for reviewer: modal/menu/context-menu demos render with `open` by
+  default (static proof); hosts toggle the attribute at runtime.
+- **Remaining READY:** FK-107, FK-108, FK-109 — claiming next immediately.
 - **Heartbeat promise:** ≤10 min. Ports 8162–8163 (loopback).
