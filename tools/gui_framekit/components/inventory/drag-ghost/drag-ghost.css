@@ -1,0 +1,26 @@
+/*
+ * fk-drag-ghost — FRAMEKIT-WAVE-1 / FK-105
+ * Semi-transparent ghost image shown while dragging an item. Root class:
+ * .fk-drag-ghost; position it (fixed, following the pointer) via inline
+ * style or a small script. data-rarity tints the border. Pure CSS.
+ */
+
+.fk-drag-ghost {
+  position: fixed;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--fk-space-6);
+  height: var(--fk-space-6);
+  background: var(--fk-bg-2);
+  border: var(--fk-border-w) solid var(--fk-border-hi);
+  border-radius: calc(var(--fk-radius) / 2);
+  opacity: 0.6;
+  pointer-events: none;
+  font-size: var(--fk-text-3);
+}
+
+.fk-drag-ghost[data-rarity='rare'] { border-color: var(--fk-accent-2); }
+.fk-drag-ghost[data-rarity='legendary'] { border-color: var(--fk-warn); }
