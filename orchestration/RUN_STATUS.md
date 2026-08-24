@@ -1,45 +1,39 @@
 # Run status (snapshot — rewritten each supervisor sweep)
 
 - Live tip: `origin/gh-pages` @ `feb9696` (gh-pages IS the deployed site)
+- Active program: **FRAMEKIT-WAVE-1** on `codex/arcane-lattice-1-0`
 - Last shipped: WIZARD-REVAMP-001 (issue #30, PR #31, 9 worker commits)
   and the hero copy correction (PR #32)
-- Owner-visible today: WIZARD relaunched as the Verdigris Systems
-  Laboratory — manifest-driven 9-module dashboard, shared calibration
-  adapter, passive-tree owner proposals, Systems Bench fixture playback,
-  root verification command and CI
-- Last supervisor review: PR #31 @ `eb155bd` ACCEPTED (cycle 2 of 4)
 
 ## RUNNING
 
 | Task | Actor | Notes |
 |---|---|---|
-| — | — | board empty |
+| FK-101 | wizard-desktop-tvu7or7-opencode-1 | REVIEW_REQUESTED — PR #95, head `ff3eefc` |
+| FK-102 | wizard-desktop-tvu7or7-opencode-1 | REVIEW_REQUESTED — PR #96, head `58156ff`, stacked on #95 |
+| FK-103 | wizard-desktop-tvu7or7-hermes-1 | REVIEW_REQUESTED — head `91b8d41` |
+| FK-104 | wizard-desktop-tvu7or7-hermes-1 | REVIEW_REQUESTED — head `bfe29be` |
+| FK-105 | wizard-desktop-tvu7or7-hermes-1 | REVIEW_REQUESTED |
+| FK-106 | wizard-desktop-tvu7or7-hermes-1 | REVIEW_REQUESTED |
+| FK-107 | wizard-desktop-tvu7or7-hermes-1 | REVIEW_REQUESTED |
+| FK-108 | wizard-desktop-tvu7or7-hermes-1 | REVIEW_REQUESTED |
+| FK-109 | wizard-desktop-tvu7or7-hermes-1 | REVIEW_REQUESTED |
 
 ## READY (unclaimed)
 
 | Task | Packet | Notes |
 |---|---|---|
-| — | — | none dispatched |
-
-## Backlog (candidates for WIZARD-REVAMP-002)
-
-Deferred out of REVAMP-001 by agreement, not by omission:
-
-- Adapters for the remaining retained modules (cartographer, mason,
-  rpg_inventory, verdigris_splash, rp_account_creator, arcane_lattice)
-- Physical archive relocation plus redirect decisions for
-  `pixel_sandbox`, `wordcloud`, `wordsphere`, `space_shooter`, `sokoban`
-- Additional Systems Bench fixtures beyond `resource-session.v1`
-- Proposal promotion: owner design proposals → authored tree data
-- Enforcement backlog from `ORCHESTRATION.md` (branch protection,
-  stale-base CI check, first-screen capture script)
+| — | — | wave 1 fully claimed; wave 2 gated on accepts |
 
 ## Fleet and workspaces
 
-| Actor | Worktree | Ports |
-|---|---|---|
-| Owner + supervisor | `Z:\Code\WIZARD` (primary checkout) | — |
-| Fable supervisor | `Z:\Code\.worktrees\wizard-fable-supervisor` | 8120–8129 |
-| Cursor Grok 4.6 | none currently — create as `Z:\Code\.worktrees\wizard-cursor-<task>` on next claim | 8140–8159 |
+| Actor | Worktree | Ports | Status |
+|---|---|---|---|
+| Owner + supervisor | `Z:\Code\WIZARD` (primary checkout) | — | Active |
+| opencode-1 (worker) | `Z:\Code\.worktrees\wizard-wizard-desktop-tvu7or7-opencode-1` | 8160–8161 | BACKOFF — 2 heads under review |
+| hermes-1 (worker) | unknown | 8162–8163 | BACKOFF — 7 heads under review |
 
-Retire merged worktrees: `git worktree remove` then `git worktree prune`.
+## Alerts
+
+1. **Nine heads under review, zero verdicts issued** — orchestrator review queue is now the critical path.
+2. **WIP budget exceeded** — ORCHESTRATION.md notes supervisor + 3 workers max; hermes-1 holds 7 concurrent claims. Worker observed this; claims are valid and evidence is committed, but review bandwidth is the bottleneck.
