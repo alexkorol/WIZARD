@@ -1,0 +1,129 @@
+$ node --check tools\gui_framekit\components\controls\tabs\tabs.js
+exit=0
+stdout=''
+stderr=''
+HEAD /tools/gui_framekit/demo/showcase.html -> 200
+HEAD /tools/gui_framekit/assets/demo.html -> 200
+HEAD /tools/gui_framekit/index.html -> 404 File not found
+HEAD /tools/gui_framekit/components/controls/button/demo.html -> 200
+HEAD /tools/gui_framekit/components/controls/input/demo.html -> 200
+HEAD /tools/gui_framekit/components/controls/slider/demo.html -> 200
+HEAD /tools/gui_framekit/components/controls/toggle/demo.html -> 200
+HEAD /tools/gui_framekit/components/controls/tabs/demo.html -> 200
+HEAD /tools/gui_framekit/components/hud/bar/demo.html -> 200
+HEAD /tools/gui_framekit/components/hud/globe/demo.html -> 200
+HEAD /tools/gui_framekit/components/hud/orb/demo.html -> 200
+HEAD /tools/gui_framekit/components/hud/meter/demo.html -> 200
+HEAD /tools/gui_framekit/components/hud/buff-icon/demo.html -> 200
+HEAD /tools/gui_framekit/components/inventory/grid/demo.html -> 200
+HEAD /tools/gui_framekit/components/inventory/slot/demo.html -> 200
+HEAD /tools/gui_framekit/components/inventory/item-tooltip/demo.html -> 200
+HEAD /tools/gui_framekit/components/inventory/drag-ghost/demo.html -> 200
+HEAD /tools/gui_framekit/components/overlays/modal/demo.html -> 200
+HEAD /tools/gui_framekit/components/overlays/menu/demo.html -> 200
+HEAD /tools/gui_framekit/components/overlays/toast/demo.html -> 200
+HEAD /tools/gui_framekit/components/overlays/context-menu/demo.html -> 200
+HEAD /tools/gui_framekit/components/frames/window/demo.html -> 404 File not found
+HEAD /tools/gui_framekit/components/frames/panel/demo.html -> 404 File not found
+HEAD /tools/gui_framekit/components/frames/dialog/demo.html -> 404 File not found
+HEAD (linked) /tokens/tokens.css -> 404 File not found
+HEAD (linked) /tools/gui_framekit/assets/sprites/orb-essence.png -> 200
+HEAD (linked) /tools/gui_framekit/assets/sprites/orb-mana.png -> 200
+HEAD (linked) /tools/gui_framekit/assets/sprites/orb-vitality.png -> 200
+HEAD (linked) /tools/gui_framekit/components/controls/button/button.css -> 200
+HEAD (linked) /tools/gui_framekit/components/controls/input/input.css -> 200
+HEAD (linked) /tools/gui_framekit/components/controls/slider/slider.css -> 200
+HEAD (linked) /tools/gui_framekit/components/controls/tabs/tabs.css -> 200
+HEAD (linked) /tools/gui_framekit/components/controls/toggle/toggle.css -> 200
+HEAD (linked) /tools/gui_framekit/components/frames/dialog/dialog.css -> 404 File not found
+HEAD (linked) /tools/gui_framekit/components/frames/panel/panel.css -> 404 File not found
+HEAD (linked) /tools/gui_framekit/components/frames/window/window.css -> 404 File not found
+HEAD (linked) /tools/gui_framekit/components/hud/bar/bar.css -> 200
+HEAD (linked) /tools/gui_framekit/components/hud/buff-icon/buff-icon.css -> 200
+HEAD (linked) /tools/gui_framekit/components/hud/globe/globe.css -> 200
+HEAD (linked) /tools/gui_framekit/components/hud/meter/meter.css -> 200
+HEAD (linked) /tools/gui_framekit/components/hud/orb/orb.css -> 200
+HEAD (linked) /tools/gui_framekit/components/inventory/drag-ghost/drag-ghost.css -> 200
+HEAD (linked) /tools/gui_framekit/components/inventory/grid/grid.css -> 200
+HEAD (linked) /tools/gui_framekit/components/inventory/item-tooltip/item-tooltip.css -> 200
+HEAD (linked) /tools/gui_framekit/components/inventory/slot/slot.css -> 200
+HEAD (linked) /tools/gui_framekit/components/overlays/context-menu/context-menu.css -> 200
+HEAD (linked) /tools/gui_framekit/components/overlays/menu/menu.css -> 200
+HEAD (linked) /tools/gui_framekit/components/overlays/modal/modal.css -> 200
+HEAD (linked) /tools/gui_framekit/components/overlays/toast/toast.css -> 200
+HEAD (linked) /tools/gui_framekit/tokens/tokens.css -> 404 File not found
+LOAD /tools/gui_framekit/demo/showcase.html http=200 screenshot=tools__gui_framekit__demo__showcase.html.png console_lines=9
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/components/frames/window/window.css net::ERR_ABORTED
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/components/frames/dialog/dialog.css net::ERR_ABORTED
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/components/frames/panel/panel.css net::ERR_ABORTED
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+LOAD /tools/gui_framekit/assets/demo.html http=200 screenshot=tools__gui_framekit__assets__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/index.html http=404 screenshot=tools__gui_framekit__index.html.png console_lines=1
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+LOAD /tools/gui_framekit/components/controls/button/demo.html http=200 screenshot=tools__gui_framekit__components__controls__button__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/controls/input/demo.html http=200 screenshot=tools__gui_framekit__components__controls__input__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/controls/slider/demo.html http=200 screenshot=tools__gui_framekit__components__controls__slider__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/controls/toggle/demo.html http=200 screenshot=tools__gui_framekit__components__controls__toggle__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/controls/tabs/demo.html http=200 screenshot=tools__gui_framekit__components__controls__tabs__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/hud/bar/demo.html http=200 screenshot=tools__gui_framekit__components__hud__bar__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/hud/globe/demo.html http=200 screenshot=tools__gui_framekit__components__hud__globe__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/hud/orb/demo.html http=200 screenshot=tools__gui_framekit__components__hud__orb__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/hud/meter/demo.html http=200 screenshot=tools__gui_framekit__components__hud__meter__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/hud/buff-icon/demo.html http=200 screenshot=tools__gui_framekit__components__hud__buff-icon__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/inventory/grid/demo.html http=200 screenshot=tools__gui_framekit__components__inventory__grid__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/inventory/slot/demo.html http=200 screenshot=tools__gui_framekit__components__inventory__slot__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/inventory/item-tooltip/demo.html http=200 screenshot=tools__gui_framekit__components__inventory__item-tooltip__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/inventory/drag-ghost/demo.html http=200 screenshot=tools__gui_framekit__components__inventory__drag-ghost__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/overlays/modal/demo.html http=200 screenshot=tools__gui_framekit__components__overlays__modal__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/overlays/menu/demo.html http=200 screenshot=tools__gui_framekit__components__overlays__menu__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/overlays/toast/demo.html http=200 screenshot=tools__gui_framekit__components__overlays__toast__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/overlays/context-menu/demo.html http=200 screenshot=tools__gui_framekit__components__overlays__context-menu__demo.html.png console_lines=2
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+  requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED
+LOAD /tools/gui_framekit/components/frames/window/demo.html http=404 screenshot=tools__gui_framekit__components__frames__window__demo.html.png console_lines=1
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+LOAD /tools/gui_framekit/components/frames/panel/demo.html http=404 screenshot=tools__gui_framekit__components__frames__panel__demo.html.png console_lines=1
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+LOAD /tools/gui_framekit/components/frames/dialog/demo.html http=404 screenshot=tools__gui_framekit__components__frames__dialog__demo.html.png console_lines=1
+  console.error: Failed to load resource: the server responded with a status of 404 (File not found)
