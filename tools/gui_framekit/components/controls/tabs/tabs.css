@@ -1,0 +1,63 @@
+/*
+ * fk-tabs — FRAMEKIT-WAVE-1 / FK-103
+ * Root class: .fk-tabs. Markup:
+ *
+ *   <div class="fk-tabs">
+ *     <div class="fk-tabs-list" role="tablist">
+ *       <button class="fk-tab" role="tab" aria-selected="true">…</button>
+ *     </div>
+ *     <div class="fk-tab-panel" role="tabpanel">…</div>
+ *   </div>
+ *
+ * CSS-only rendering: [hidden] panels stay hidden, aria-selected styles the
+ * active tab. tabs.js is progressive enhancement (roving focus + arrow keys).
+ */
+
+.fk-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fk-space-3);
+}
+
+.fk-tabs-list {
+  display: flex;
+  gap: var(--fk-space-1);
+  border-bottom: var(--fk-border-w) solid var(--fk-border);
+}
+
+.fk-tab {
+  appearance: none;
+  margin: 0;
+  padding: var(--fk-space-2) var(--fk-space-4);
+  font-family: var(--fk-font);
+  font-size: var(--fk-text-2);
+  color: var(--fk-fg-1);
+  background: transparent;
+  border: none;
+  border-bottom: calc(2 * var(--fk-border-w)) solid transparent;
+  cursor: pointer;
+}
+
+.fk-tab:hover {
+  color: var(--fk-fg-0);
+}
+
+.fk-tab[aria-selected='true'] {
+  color: var(--fk-accent);
+  border-bottom-color: var(--fk-accent);
+}
+
+.fk-tab:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 var(--fk-border-w) var(--fk-accent-2);
+  border-radius: var(--fk-radius);
+}
+
+.fk-tab-panel {
+  padding: var(--fk-space-3);
+  background: var(--fk-bg-1);
+  border: var(--fk-border-w) solid var(--fk-border);
+  border-radius: var(--fk-radius);
+  color: var(--fk-fg-0);
+  font-size: var(--fk-text-2);
+}

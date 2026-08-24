@@ -1,0 +1,71 @@
+/*
+ * fk-slider — FRAMEKIT-WAVE-1 / FK-103
+ * Root class: .fk-slider on <input type="range">. Pure CSS; renders and is
+ * operable without JS. Track + thumb drawn from --fk-* tokens.
+ */
+
+.fk-slider {
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  height: var(--fk-space-4);
+  background: transparent;
+  cursor: pointer;
+}
+
+/* WebKit track */
+.fk-slider::-webkit-slider-runnable-track {
+  height: var(--fk-border-w);
+  background: var(--fk-border);
+}
+
+/* WebKit thumb */
+.fk-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: calc((var(--fk-border-w) - var(--fk-space-3)) / 2);
+  width: var(--fk-space-3);
+  height: var(--fk-space-3);
+  border-radius: 50%;
+  background: var(--fk-accent);
+  border: var(--fk-border-w) solid var(--fk-frame-edge);
+}
+
+.fk-slider:hover::-webkit-slider-thumb {
+  background: var(--fk-border-hi);
+}
+
+.fk-slider:focus-visible {
+  outline: none;
+}
+
+.fk-slider:focus-visible::-webkit-slider-thumb {
+  background: var(--fk-accent-2);
+}
+
+/* Firefox */
+.fk-slider::-moz-range-track {
+  height: var(--fk-border-w);
+  background: var(--fk-border);
+}
+
+.fk-slider::-moz-range-thumb {
+  width: var(--fk-space-3);
+  height: var(--fk-space-3);
+  border-radius: 50%;
+  background: var(--fk-accent);
+  border: var(--fk-border-w) solid var(--fk-frame-edge);
+}
+
+.fk-slider:focus-visible::-moz-range-thumb {
+  background: var(--fk-accent-2);
+}
+
+.fk-slider:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
