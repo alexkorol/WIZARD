@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>gui_framekit · tokens demo — FK-101</title>
+  <link rel="stylesheet" href="./tokens.css">
+  <link rel="stylesheet" href="../base/base.css">
+  <style>
+    .page {
+      max-width: calc(var(--fk-space-6) * 30);
+      margin-inline: auto;
+      padding: var(--fk-space-5) var(--fk-space-4);
+      display: grid;
+      gap: var(--fk-space-5);
+    }
+
+    .page-header {
+      border-block-end: var(--fk-border-w) solid var(--fk-border);
+      padding-block-end: var(--fk-space-4);
+    }
+
+    .page-header h1 {
+      color: var(--fk-accent);
+    }
+
+    .page-header p {
+      color: var(--fk-fg-1);
+      font-size: var(--fk-text-2);
+    }
+
+    section {
+      display: grid;
+      gap: var(--fk-space-3);
+    }
+
+    h2 {
+      color: var(--fk-fg-0);
+      border-inline-start: calc(var(--fk-space-1) / 2) solid var(--fk-accent-2);
+      padding-inline-start: var(--fk-space-2);
+    }
+
+    code {
+      color: var(--fk-accent-2);
+    }
+
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(calc(var(--fk-space-6) * 5), 1fr));
+      gap: var(--fk-space-3);
+    }
+
+    .swatch {
+      border: var(--fk-border-w) solid var(--fk-border);
+      border-radius: var(--fk-radius);
+      overflow: hidden;
+      background: var(--fk-bg-1);
+    }
+
+    .swatch .chip {
+      display: block;
+      height: calc(var(--fk-space-6) * 1.5);
+      border-block-end: var(--fk-border-w) solid var(--fk-border);
+    }
+
+    .swatch .name {
+      display: block;
+      padding: var(--fk-space-2) var(--fk-space-3);
+      font-family: var(--fk-font-mono);
+      font-size: var(--fk-text-1);
+      color: var(--fk-fg-1);
+    }
+
+    .bg0 { background: var(--fk-bg-0); }
+    .bg1 { background: var(--fk-bg-1); }
+    .bg2 { background: var(--fk-bg-2); }
+    .fg0 { background: var(--fk-fg-0); }
+    .fg1 { background: var(--fk-fg-1); }
+    .accent { background: var(--fk-accent); }
+    .accent2 { background: var(--fk-accent-2); }
+    .ok { background: var(--fk-ok); }
+    .warn { background: var(--fk-warn); }
+    .danger { background: var(--fk-danger); }
+    .border { background: var(--fk-border); }
+    .border-hi { background: var(--fk-border-hi); }
+    .frame-bg { background: var(--fk-frame-bg); }
+    .frame-edge { background: var(--fk-frame-edge); }
+
+    .scale-rows {
+      display: grid;
+      gap: var(--fk-space-2);
+      align-items: center;
+    }
+
+    .spacing-row {
+      display: grid;
+      grid-template-columns: calc(var(--fk-space-6) * 6) 1fr;
+      gap: var(--fk-space-3);
+      align-items: center;
+      font-family: var(--fk-font-mono);
+      font-size: var(--fk-text-1);
+      color: var(--fk-fg-1);
+    }
+
+    .spacing-row .bar {
+      height: var(--fk-space-4);
+      background: var(--fk-accent-2);
+    }
+
+    .s1 .bar { width: var(--fk-space-1); }
+    .s2 .bar { width: var(--fk-space-2); }
+    .s3 .bar { width: var(--fk-space-3); }
+    .s4 .bar { width: var(--fk-space-4); }
+    .s5 .bar { width: var(--fk-space-5); }
+    .s6 .bar { width: var(--fk-space-6); }
+
+    .type-row {
+      display: grid;
+      grid-template-columns: calc(var(--fk-space-6) * 6) 1fr;
+      gap: var(--fk-space-3);
+      align-items: baseline;
+      color: var(--fk-fg-0);
+    }
+
+    .t1 { font-size: var(--fk-text-1); }
+    .t2 { font-size: var(--fk-text-2); }
+    .t3 { font-size: var(--fk-text-3); }
+
+    .mono {
+      font-family: var(--fk-font-mono);
+      color: var(--fk-fg-1);
+    }
+
+    .shape-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(calc(var(--fk-space-6) * 8), 1fr));
+      gap: var(--fk-space-3);
+    }
+
+    .shape-card {
+      padding: var(--fk-space-4);
+      border-radius: var(--fk-radius);
+      font-size: var(--fk-text-1);
+      font-family: var(--fk-font-mono);
+      color: var(--fk-fg-1);
+    }
+
+    .engraved {
+      background: var(--fk-bg-1);
+      border: var(--fk-border-w) solid var(--fk-border);
+    }
+
+    .brass {
+      background: var(--fk-bg-2);
+      border: var(--fk-border-w) solid var(--fk-border-hi);
+      color: var(--fk-border-hi);
+    }
+
+    .window {
+      background: var(--fk-frame-bg);
+      border: var(--fk-border-w) solid var(--fk-frame-edge);
+      color: var(--fk-frame-edge);
+    }
+
+    footer {
+      color: var(--fk-fg-1);
+      font-size: var(--fk-text-1);
+      border-block-start: var(--fk-border-w) solid var(--fk-border);
+      padding-block-start: var(--fk-space-3);
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <h1>gui_framekit design tokens</h1>
+      <p>FK-101 · every value below resolves from
+        <code>tools/gui_framekit/tokens/tokens.css</code>. No literals.</p>
+    </header>
+
+    <section aria-labelledby="colors-h">
+      <h2 id="colors-h">Colors</h2>
+      <div class="swatches">
+        <figure class="swatch"><span class="chip bg0"></span><code class="name">--fk-bg-0</code></figure>
+        <figure class="swatch"><span class="chip bg1"></span><code class="name">--fk-bg-1</code></figure>
+        <figure class="swatch"><span class="chip bg2"></span><code class="name">--fk-bg-2</code></figure>
+        <figure class="swatch"><span class="chip fg0"></span><code class="name">--fk-fg-0</code></figure>
+        <figure class="swatch"><span class="chip fg1"></span><code class="name">--fk-fg-1</code></figure>
+        <figure class="swatch"><span class="chip accent"></span><code class="name">--fk-accent</code></figure>
+        <figure class="swatch"><span class="chip accent2"></span><code class="name">--fk-accent-2</code></figure>
+        <figure class="swatch"><span class="chip ok"></span><code class="name">--fk-ok</code></figure>
+        <figure class="swatch"><span class="chip warn"></span><code class="name">--fk-warn</code></figure>
+        <figure class="swatch"><span class="chip danger"></span><code class="name">--fk-danger</code></figure>
+        <figure class="swatch"><span class="chip border"></span><code class="name">--fk-border</code></figure>
+        <figure class="swatch"><span class="chip border-hi"></span><code class="name">--fk-border-hi</code></figure>
+        <figure class="swatch"><span class="chip frame-bg"></span><code class="name">--fk-frame-bg</code></figure>
+        <figure class="swatch"><span class="chip frame-edge"></span><code class="name">--fk-frame-edge</code></figure>
+      </div>
+    </section>
+
+    <section aria-labelledby="spacing-h">
+      <h2 id="spacing-h">Spacing — 4px base</h2>
+      <div class="scale-rows">
+        <div class="spacing-row s1"><span>--fk-space-1</span><span class="bar"></span></div>
+        <div class="spacing-row s2"><span>--fk-space-2</span><span class="bar"></span></div>
+        <div class="spacing-row s3"><span>--fk-space-3</span><span class="bar"></span></div>
+        <div class="spacing-row s4"><span>--fk-space-4</span><span class="bar"></span></div>
+        <div class="spacing-row s5"><span>--fk-space-5</span><span class="bar"></span></div>
+        <div class="spacing-row s6"><span>--fk-space-6</span><span class="bar"></span></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="type-h">
+      <h2 id="type-h">Type scale &amp; stacks</h2>
+      <p class="type-row t1"><span>--fk-text-1</span><span>The laboratory hums while the circle cools.</span></p>
+      <p class="type-row t2"><span>--fk-text-2</span><span>The laboratory hums while the circle cools.</span></p>
+      <p class="type-row t3"><span>--fk-text-3</span><span>The laboratory hums while the circle cools.</span></p>
+      <p class="type-row mono t2"><span>--fk-font-mono</span><span>VITAE 042 / MANA 87% / 1,204g</span></p>
+    </section>
+
+    <section aria-labelledby="shape-h">
+      <h2 id="shape-h">Shape &amp; lines</h2>
+      <div class="shape-grid">
+        <div class="shape-card engraved">engraved panel<br>--fk-border + --fk-radius</div>
+        <div class="shape-card brass">brass highlight<br>--fk-border-hi</div>
+        <div class="shape-card window">window chrome<br>--fk-frame-bg / --fk-frame-edge</div>
+      </div>
+    </section>
+
+    <footer>Served by any static file server over loopback. FK-101 owns
+      tools/gui_framekit/tokens/ and tools/gui_framekit/base/.</footer>
+  </main>
+</body>
+</html>
