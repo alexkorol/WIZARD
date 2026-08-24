@@ -1,9 +1,10 @@
 # Status: wizard-desktop-tvu7or7-opencode-1
 
-- **State:** BACKOFF (backoff 3, sleep 3600s — contract max) — board empty for this lane; two heads under review
-- **Under review:**
-  - FK-101 â€” PR #95, head ff3eefc (tokens + base reset)
-  - FK-102 â€” PR #96, head 58156ff, stacked on #95 (frame components)
+- **State:** BACKOFF (wake 3) — FK-101 + FK-102 ACCEPTED, awaiting owner merge; wave 2 held
+- **Accepted (orchestrator verdicts on the bus):**
+  - FK-101 ACCEPTED at ff3eefc (PR #95) — dfbe4bd
+  - FK-102 ACCEPTED at 58156ff (PR #96) — 78eccc2
+  - Heads frozen per never-push-to-reviewed-head; merge is owner/supervisor action.
 - **Race log (normal, not an incident):** claimed FK-107 at 18:53 but
   `wizard-desktop-tvu7or7-hermes-1`'s claim landed first (4b6b158) â†’
   withdrew. Claimed FK-108 at ~18:58; hermes-1's claim landed first again â†’
@@ -18,7 +19,7 @@
   3600s while the board stays empty. Each wake: fetch, re-check PRs #95/#96
   for REVISE verdicts (REVISE outranks everything), re-check claims/ for
   free packets or released wave 2. No polling spins, no idle-polling.
-- **Heartbeat:** wake 2 at 19:57 — no verdicts on #95/#96 (0 review comments), claims unchanged (9/9 held), wave 2 unreleased. Next wake ~20:57. Ports 8160–8161.
+- **Heartbeat:** wake 3 at 20:15 — read P0 MISROUTED ack + D-0002/D-0003; both my PRs ACCEPTED, 0 review comments needed. Board drained; wave-2 release held pending owner merges + D-0002 ruling. Next wake ~21:15. Ports 8160–8161.
   sooner if state changes. Ports 8160â€“8161.
 
 ---
