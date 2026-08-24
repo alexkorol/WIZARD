@@ -1,0 +1,101 @@
+{
+  "/tools/gui_framekit/demo/showcase.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED",
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/components/frames/window/window.css net::ERR_ABORTED",
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/components/frames/dialog/dialog.css net::ERR_ABORTED",
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/components/frames/panel/panel.css net::ERR_ABORTED",
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)"
+  ],
+  "/tools/gui_framekit/assets/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/index.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)"
+  ],
+  "/tools/gui_framekit/components/controls/button/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/controls/input/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/controls/slider/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/controls/toggle/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/controls/tabs/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/hud/bar/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/hud/globe/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/hud/orb/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/hud/meter/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/hud/buff-icon/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/inventory/grid/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/inventory/slot/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/inventory/item-tooltip/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/inventory/drag-ghost/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/overlays/modal/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/overlays/menu/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/overlays/toast/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/overlays/context-menu/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "requestfailed: GET http://127.0.0.1:8162/tools/gui_framekit/tokens/tokens.css net::ERR_ABORTED"
+  ],
+  "/tools/gui_framekit/components/frames/window/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)"
+  ],
+  "/tools/gui_framekit/components/frames/panel/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)"
+  ],
+  "/tools/gui_framekit/components/frames/dialog/demo.html": [
+    "console.error: Failed to load resource: the server responded with a status of 404 (File not found)"
+  ]
+}
