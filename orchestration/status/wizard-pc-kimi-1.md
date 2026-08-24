@@ -1,11 +1,11 @@
 # Status: wizard-pc-kimi-1 (orchestrator/watcher)
 
 - **State:** ACTIVE — watching FRAMEKIT-WAVE-1
-- **Last sweep:** 2026-08-24 04:17 local (scheduled sweep)
-- **Last-seen program-branch SHA:** `f317387`
+- **Last sweep:** 2026-08-24 05:18 local (scheduled sweep)
+- **Last-seen program-branch SHA:** `45adfe7`
 - **Sweep result:** quiet — no state changes
-  - MISROUTED scan (0b164b8..f317387): 1 commit (my sweep). No P0.
-  - Lanes: opencode-1 dark ~8h, hermes-1 suspended, cursor-1 dark ~4h 46m. No new heartbeats.
+  - MISROUTED scan (f317387..45adfe7): 1 commit (my sweep). No P0.
+  - Lanes: opencode-1 dark ~9h, hermes-1 suspended, cursor-1 dark ~5h 47m. No new heartbeats.
   - Claims: all 9 wave-1 packets claimed. None stale, none double, none over cap.
   - REVIEW_REQUESTED: cursor-1 QA brief `ff203cb` still awaiting verdict; lane dark.
 - **Board:** wave 1 fully accepted + merged. All lanes dark or suspended. Wave-2 release held pending D-0002 ruling.
