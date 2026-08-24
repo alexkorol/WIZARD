@@ -13,11 +13,11 @@ Carve rules (learned the hard way — do NOT seed inside the disc):
 - Candidate pixels are bright + unsaturated (marble / metal): liquid sits
   at saturation ~0.99 and empty glass is dark, so neither qualifies.
 - Seeds live OUTSIDE the glass edge (rr in [1.01, 1.20]); the flood only
-  follows candidate components that physically cross the frame. Glass
-  glint arcs at the top of the sphere never touch that ring, so the top
-  cap stays dynamic (an earlier version seeded from rr 0.72 and carved
-  the entire glint band — at full fill it showed the static art's dark
-  glass: "parts of the liquid not showing").
+  follows candidate components that physically cross the frame. NOTE: the
+  static plate's milky dome highlight over the LIFE orb is bright,
+  unsaturated, and touches the seed ring, so the flood can walk down it
+  into the interior — the top-cap guard below (no interior carving above
+  p.y 0.75) is what keeps the dome dynamic, not the seed ring alone.
 - Deep pixels (rr < 0.985) are kept only where the flooded component is a
   dense blob (statue mass), never a thin arc tendril.
 - The glass rim/highlight band is NOT carved. The dome highlight must stay
@@ -54,9 +54,12 @@ yy, xx = np.mgrid[0:ART_H, 0:ART_W].astype(np.float64)
 cand = np.zeros((ART_H, ART_W), dtype=bool)
 seeds = np.zeros((ART_H, ART_W), dtype=bool)
 rr_all = np.full((ART_H, ART_W), 99.0)
+py_all = np.full((ART_H, ART_W), -99.0)  # p.y of the NEAREST orb
 for cx, cy_up, r in ORBS:
     cy = ART_H - cy_up  # shader constants are y-up
     rr = np.hypot(xx - cx, yy - cy) / r
+    nearer = rr < rr_all
+    py_all[nearer] = ((ART_H - yy[nearer]) - cy_up) / r
     rr_all = np.minimum(rr_all, rr)
     here = (luma > LUMA_MIN) & (sat < SAT_MAX)
     cand |= here & (rr < CAND_MAX_R)
@@ -70,6 +73,9 @@ cand_h, grown = to_half(cand), to_half(seeds)
 rr_h = np.asarray(
     Image.fromarray((np.clip(rr_all / 1.5, 0, 1) * 255).astype(np.uint8)).resize(half, Image.BOX)
 ).astype(np.float64) / 255.0 * 1.5
+py_h = np.asarray(
+    Image.fromarray((np.clip((py_all + 1.5) / 3.0, 0, 1) * 255).astype(np.uint8)).resize(half, Image.BOX)
+).astype(np.float64) / 255.0 * 3.0 - 1.5
 
 # Flood the candidate mask from the outside ring (repeated 3x3 dilation).
 for _ in range(600):
@@ -93,12 +99,26 @@ carve |= grown & np.asarray(
 )
 carve &= rr_h < 1.08
 
+# Top-cap guard: no statue or frame overlaps the upper dome of either orb
+# (the life statue is bottom-left, the mana statue bottom/right — verified
+# against art.jpg). The static plate's milky dome highlight is bright +
+# unsaturated and touches the seed ring at rr 1.01-1.20, so the flood walks
+# straight down it; the band is wide enough to pass the blob density filter
+# and gets carved, showing the static plate's pale glass over the liquid
+# ("top of the orb still messed up"). Interior pixels (rr < 0.995) may only
+# be carved below p.y 0.75; the rim band itself stays carvable.
+top_cap = (rr_h < 0.995) & (py_h > 0.75)
+carve &= ~top_cap
+
 carve_img = Image.fromarray(carve.astype(np.uint8) * 255)
 carve_img = carve_img.filter(ImageFilter.MaxFilter(5))     # +2px safety
 carve_img = carve_img.filter(ImageFilter.GaussianBlur(1.1))  # feathered AA edge
 carve_f = np.asarray(carve_img).astype(np.float64) / 255.0
 
-mask = Image.open(ASSETS / "mask.png").convert("L")
+# Always start from the PRISTINE baseline (the June-era mask, checked in as
+# mask_baseline.png). Carving the already-carved mask.png would compound
+# carve-on-carve and make this script non-idempotent.
+mask = Image.open(ASSETS / "mask_baseline.png").convert("L")
 assert mask.size == half, mask.size
 m = np.asarray(mask).astype(np.float64) / 255.0
 m *= 1.0 - carve_f
