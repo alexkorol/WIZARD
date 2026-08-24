@@ -1,0 +1,44 @@
+/*
+ * fk-menu — FRAMEKIT-WAVE-1 / FK-106
+ * Vertical action menu. Root class: .fk-menu; children are .fk-menu-item
+ * buttons. Hidden by default; [open] shows. Pure CSS.
+ */
+
+.fk-menu {
+  display: none;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-width: calc(var(--fk-space-6) * 4);
+  padding: var(--fk-space-1);
+  background: var(--fk-bg-2);
+  border: var(--fk-border-w) solid var(--fk-border);
+  border-radius: calc(var(--fk-radius) / 2);
+}
+
+.fk-menu[open] {
+  display: flex;
+}
+
+.fk-menu-item {
+  appearance: none;
+  margin: 0;
+  padding: var(--fk-space-2) var(--fk-space-3);
+  font-family: var(--fk-font);
+  font-size: var(--fk-text-2);
+  text-align: left;
+  color: var(--fk-fg-0);
+  background: transparent;
+  border: none;
+  border-radius: calc(var(--fk-radius) / 4);
+  cursor: pointer;
+}
+
+.fk-menu-item:hover {
+  background: var(--fk-bg-1);
+  color: var(--fk-accent);
+}
+
+.fk-menu-item[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
