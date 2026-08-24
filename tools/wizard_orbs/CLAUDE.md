@@ -44,6 +44,13 @@ screenshots/        ← README images
   Aug-2026 "silver band over the dome" regression). Instead the overlay blends
   to the raw plate at the crop edges (`edgeFade` in `main()`), and the liquid
   noise stays gated by `aL`/`aR`, which is where the work budget lives.
+- Mask carving (`src/fix_mask.py`) may only blacken statue/frame blobs — never
+  the upper dome interior. The static plate's milky dome highlight is bright +
+  unsaturated and reaches the rr 1.01–1.20 seed ring, so an unguarded flood
+  walks down it and carves the whole cap (the Aug-2026 "pale band over the life
+  dome" regression: liquid vanished below the rim). Interior pixels (rr<0.995)
+  above p.y 0.75 are off-limits; the script always starts from the pristine
+  June-era `mask_baseline.png`, never by re-carving an already-carved mask.
 - `levelFromFill()` in template.html must stay continuous and monotone — naive
   volume-true mapping makes the surface sprint at the top/bottom of the sphere
   (that's why it blends to linear near the poles). Any surface-attached glow must
