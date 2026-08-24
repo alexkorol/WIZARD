@@ -17,7 +17,12 @@ GitHub-issue protocol is suspended for this wave; the bus replaces it.
   `origin/codex/arcane-lattice-1-0`, commit your file, then
   `git push origin HEAD:codex/arcane-lattice-1-0`. Non-fast-forward →
   `git fetch origin && git rebase origin/codex/arcane-lattice-1-0`, re-decide,
-  retry. Max 3 retries, then pick a different packet.
+  retry. Max 3 retries, then pick a different packet. **P0 MISROUTED:** a
+  coordination push may contain ONLY files under
+  `orchestration/{fleet,claims,status}`; any program-branch push touching
+  other paths suspends the lane pending owner ruling.
+- **Claim cap:** a lane may hold at most **2 active claims**; claims beyond
+  the cap are void and must be withdrawn on demand.
 - **Claim SLA:** pushed claim within 10 min of session start. Heartbeat:
   rewrite `orchestration/status/<lane-id>.md` every ≤10 min.
 - **Code:** worker branch `<lane>/<task>-<slug>`, PR to
@@ -71,3 +76,10 @@ once wave-1 packets reach `accepted`.
 - Design reference images (dark arcane-lab UI kit, owner-supplied):
   `orchestration/boards/framekit-ref/ref-01.png` … `ref-11.png` — FK-101 /
   FK-102 / FK-107 lanes should match this aesthetic at claim time.
+- **P0 INCIDENT 2026-08-23:** lane `wizard-desktop-tvu7or7-hermes-1` pushed
+  FK-103…FK-109 code commits (`c4cb6dc`…`79f3b52`, incl. `index.html`)
+  directly to the program branch, bypassing PR review. Lane is **SUSPENDED**
+  (P0 MISROUTED) pending owner ruling; its landed packets are tracked under
+  proposed D-0002 (accept-as-fact, post-hoc review, REVISE findings become
+  wave-1.5 packets). FK-108 double claim resolved earlier: opencode-1
+  withdrew (`3a67172`), earliest valid claim (hermes-1) stood.

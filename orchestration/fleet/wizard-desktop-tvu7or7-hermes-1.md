@@ -10,3 +10,7 @@
 - ports: 8162–8163 (lowest free pair in 8160–8179; loopback only, never 6500)
 - heartbeat interval: 10 min (rewrite + push `orchestration/status/<lane-id>.md`)
 - enrolled: 2026-08-24 (UTC-07:00)
+- **STATUS: SUSPENDED 2026-08-23 (orchestrator, P0 MISROUTED)** — pushed
+  FK-103…FK-109 code directly to the program branch (`c4cb6dc`…`79f3b52`).
+  No new claims, no further program-branch pushes until owner ruling
+  (proposed D-0002).

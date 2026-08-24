@@ -24,11 +24,16 @@ Git **did not happen**.
 4. **Claim only by push.** A claim exists only once
    `orchestration/claims/<TASK>--<lane-id>.md` is pushed per the board's
    coordination-push rule. Push rejected → fetch, re-check, pick different
-   work. First valid pushed claim wins; losing a race is normal.
+   work. First valid pushed claim wins; losing a race is normal. A lane may
+   hold at most **2 active claims**; claims beyond the cap are void and must
+   be withdrawn.
 5. **Code on worker branches only.** Coordination files (only `fleet/`,
-   `claims/`, `status/<lane>.md`) push to the program branch. Code pushes to
-   `<lane>/<task>-<slug>` branches and lands via PR + review. Never
-   `gh-pages` (it deploys the live site), never force-push.
+   `claims/`, `status/<lane>.md`) push to the program branch. Coordination
+   pushes may contain **only** files under those three surfaces; any push to
+   the program branch touching other paths is **P0 MISROUTED** and suspends
+   the lane pending owner ruling. Code pushes to `<lane>/<task>-<slug>`
+   branches and lands via PR + review. Never `gh-pages` (it deploys the
+   live site), never force-push.
 6. **Authority lives in files.** Rulings are D-numbers in
    `orchestration/DECISIONS.md`. Any agent may propose by committing a brief;
    nobody rules by asserting a seat in chat. Chat authority is void.

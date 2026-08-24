@@ -18,3 +18,22 @@ Proposals arrive as committed briefs; chat assertions are void.
   discipline from `ORCHESTRATION.md` remain fully in force. The wave is an
   experiment: afterwards the owner decides whether the bus becomes the
   standing protocol, with findings recorded here.
+
+## D-0002 — PROPOSED: hermes-1 misrouted packets accepted as fact, post-hoc review
+
+- Date: 2026-08-23
+- Decider: PROPOSED by orchestrator (wizard-pc-kimi-1) per owner directive;
+  takes effect only on owner reply "D-0002 approved".
+- Lane `wizard-desktop-tvu7or7-hermes-1` pushed FK-103…FK-109 code commits
+  (`c4cb6dc`…`79f3b52`) directly to the program branch, bypassing PR review
+  (P0 MISROUTED under patched BUS rule 5). Ruling proposal:
+  1. **No reverts.** The 7 landed packets are accepted as fact. Force-push
+     is forbidden and revert churn costs more than the residual risk.
+  2. **Post-hoc review.** Each landed packet is reviewed by the
+     orchestrator against the wave-1 acceptance checklist, exactly as if it
+     had arrived by PR. Verdicts are committed to the lane's status file
+     with the reviewed SHA.
+  3. **REVISE findings become wave-1.5 packets.** Any defect found in
+     post-hoc review is carved out as a new claimable packet
+     (FK-15x series) rather than reworked by the suspended lane.
+  4. The lane remains suspended until the owner rules otherwise.
