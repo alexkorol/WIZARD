@@ -36,7 +36,7 @@ Health Globe is a legacy predecessor and is not a primary dashboard card. Archiv
 ```bash
 git clone https://github.com/alexkorol/WIZARD.git
 cd WIZARD
-python -m http.server   # then open http://localhost:8000
+python -m http.server --bind 127.0.0.1   # then open http://localhost:8000
 ```
 
 Most tools are self-contained HTML. `tools/verdigris_splash` prefers HTTP because it uses ES modules.
