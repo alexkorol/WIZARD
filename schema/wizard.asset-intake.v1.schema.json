@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alexkorol.github.io/WIZARD/schema/wizard.asset-intake.v1.schema.json",
+  "title": "WIZARD asset intake v1",
+  "description": "Declares an owner-provided framepack intake: source rasters plus nine-slice intent. The ingestion tool measures dimensions, hashes bytes, verifies alpha expectations, and emits a wizard.framepack.v1 manifest. Source files are never overwritten.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "title", "provenance", "components"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "Kebab-case pack id; becomes the framepack id and output directory name."
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "provenance": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Free-form origin note carried verbatim into the emitted manifest."
+    },
+    "derivatives": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": ["alpha", "edge", "height", "depth", "roughness-source"]
+      },
+      "description": "Deterministic derivative maps to generate for every state raster. normal-source is deliberately unavailable here: this tool never claims to synthesize final normal maps."
+    },
+    "components": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "slice", "contentInsets", "edgeMode", "states"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "slice": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": { "type": "integer", "minimum": 0 }
+          },
+          "contentInsets": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": { "type": "integer", "minimum": 0 }
+          },
+          "edgeMode": { "enum": ["stretch", "repeat", "round"] },
+          "states": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["default"],
+            "properties": {
+              "default": { "$ref": "#/$defs/stateSource" },
+              "hover": { "$ref": "#/$defs/stateSource" },
+              "focus": { "$ref": "#/$defs/stateSource" },
+              "active": { "$ref": "#/$defs/stateSource" },
+              "disabled": { "$ref": "#/$defs/stateSource" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "stateSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file"],
+      "properties": {
+        "file": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._/-]*\\.png$",
+          "description": "PNG path relative to the intake directory."
+        },
+        "expectAlpha": {
+          "type": "boolean",
+          "description": "When true the source must contain at least one pixel with alpha below 255; when false it must be fully opaque."
+        }
+      }
+    }
+  }
+}
