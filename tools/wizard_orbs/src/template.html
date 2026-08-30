@@ -229,10 +229,14 @@ const PACK_B64 = '__PACK__';
 const STONE_B64 = '__STONE__';
 const HP_MAX = 1000, MP_MAX = 800;
 const ART_SIZE = { w: 1672, h: 941 };
-// Only this art-space rectangle contains pixels the shader may change. The
-// full-resolution JPEG remains the stage background, so statues and frame art
-// stay crisp while the procedural overlay does a fraction of the old work.
-const ORB_VIEW = { x0: 270, y0: 210, x1: 1400, y1: 755 };
+// Art-space rectangle the shader overlay covers. This must stay the FULL
+// frame: the orb light spill and normal-mapped statue relighting reach the
+// far edges of the plate (spill falloff exp(-(r-1)*2.6) is still visible
+// ~200px past the rims), and any tighter crop cuts the glow off in a hard
+// vertical seam across the statues (Aug-2026 regression). The CSS background
+// JPEG behind the canvas is only a fallback for the no-WebGL path; the perf
+// budget is handled by the quality presets (resScale/fpsCap), not the crop.
+const ORB_VIEW = { x0: 0, y0: 0, x1: 1672, y1: 941 };
 
 /* ============================ STATE =========================== */
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -36,14 +36,18 @@ screenshots/        ← README images
 - Orb geometry constants are baked in the shader: ORBL=(541,484.5,252),
   ORBR=(1128,483,252) in art pixels (1672×941, y-up). New plates must be aligned to
   this frame (the originals were aligned by silhouette-IoU at scale 1.635).
-- The full-resolution `art.jpg` is the sharp static stage background. WebGL is a
-  transparent, cropped `ORB_VIEW` overlay around the two dynamic spheres. Keep
-  the crop and `uViewOrigin`/`uViewSize` in sync. The shader must NOT discard
-  mask-black pixels inside the crop — they carry the light spill and statue
-  relighting (discarding them exposes the bare plate and kills the glow, the
-  Aug-2026 "silver band over the dome" regression). Instead the overlay blends
-  to the raw plate at the crop edges (`edgeFade` in `main()`), and the liquid
-  noise stays gated by `aL`/`aR`, which is where the work budget lives.
+- The WebGL `ORB_VIEW` overlay MUST cover the full art frame (0,0 → 1672,941).
+  The orb light spill and normal-mapped statue relighting reach the plate's far
+  edges (spill falloff exp(-(r-1)*2.6) is visible ~200px past the rims); any
+  tighter crop cuts the glow off in a hard vertical seam across the statues
+  (Aug-2026 regression — the crop started 19px left of the left orb's rim).
+  The CSS-background `art.jpg` behind the canvas is only a no-WebGL fallback.
+  Keep `ORB_VIEW` and `uViewOrigin`/`uViewSize` in sync. The shader must NOT
+  discard mask-black pixels — they carry the light spill and statue relighting
+  (discarding them exposes the bare plate and kills the glow, the Aug-2026
+  "silver band over the dome" regression). The liquid noise stays gated by
+  `aL`/`aR`, which is where the work budget lives; overall perf is governed by
+  the quality presets (resScale/fpsCap), never by shrinking the overlay.
 - `mask.png` MUST stay byte-identical to `mask_baseline.png` (the pristine
   June-era mask; verify with `cmp`). The June build shipped the baseline
   untouched — the statue-hand cutouts are already in it. Every attempt to
