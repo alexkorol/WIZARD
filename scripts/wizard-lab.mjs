@@ -469,7 +469,8 @@ function checkModuleTests(failures, results) {
     'tools/rpg_inventory/core/test.js',
     'tools/cartographer/core/test.js',
     'tools/mason/core/test.js',
-    'tools/verdigris_splash/validate.mjs'
+    'tools/verdigris_splash/validate.mjs',
+    'tests/wizard-orbs-invariants.test.mjs'
   ];
   const optional = [
     'tools/geometric_skilltree/tests/proposals.test.mjs',

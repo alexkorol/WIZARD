@@ -29,8 +29,12 @@ assert.ok(fullRendererUnits / Math.max(1, idleRendererUnits) >= 50,
   `Skill-tree renderer work reduction is below 50× (${fullRendererUnits}/${idleRendererUnits}).`);
 const skillTreeWallRatio = (fullMs / 100) / (fastMs / 1000);
 
-// Orbs: conservative fragment/noise work model. It intentionally ignores the
-// early-discard win and the DPR cap, so the asserted multiplier is a floor.
+// Orbs: conservative fragment/noise work model for the Performance quality
+// preset vs the ultra baseline (oct 5, scale 1.0, 60fps). The overlay crop is
+// NOT a permitted lever here: cropping ORB_VIEW cuts the orb light spill off
+// in a vertical seam across the statues (Aug-2026 regression), so the full
+// frame is asserted as a correctness floor instead of counted as savings —
+// see tests/wizard-orbs-invariants.test.mjs and tools/wizard_orbs/CLAUDE.md.
 const orb = read('wizard_orbs/src/template.html');
 const artMatch = orb.match(/const ART_SIZE = \{ w: ([\d.]+), h: ([\d.]+) \}/);
 const viewMatch = orb.match(/const ORB_VIEW = \{ x0: ([\d.]+), y0: ([\d.]+), x1: ([\d.]+), y1: ([\d.]+) \}/);
@@ -39,9 +43,10 @@ assert.ok(artMatch && viewMatch && perfMatch, 'Orb performance constants must re
 const [, artW, artH] = artMatch.map(Number);
 const [, x0, y0, x1, y1] = viewMatch.map(Number);
 const [, perfOctaves, perfScale, , perfFps] = perfMatch.map(Number);
-const cropFraction = ((x1 - x0) * (y1 - y0)) / (artW * artH);
-const orbReduction = (5 * 60) / (cropFraction * perfScale ** 2 * perfOctaves * perfFps);
-assert.ok(orbReduction >= 50, `Orb default shader work reduction is ${orbReduction.toFixed(1)}×, below 50×.`);
+assert.deepEqual([x0, y0, x1, y1], [0, 0, artW, artH],
+  'ORB_VIEW must cover the full art frame; the crop is a visual regression, not a perf lever.');
+const orbReduction = (5 * 60) / (perfScale ** 2 * perfOctaves * perfFps);
+assert.ok(orbReduction >= 20, `Orb performance-preset work reduction is ${orbReduction.toFixed(1)}×, below 20×.`);
 
 // Cartographer: only the transparent effects layer is animated. Static map art
 // stays full-resolution and is redrawn only as a display blit.
