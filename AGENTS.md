@@ -23,7 +23,7 @@ Multi-subproject **Verdigris Systems Laboratory** served from `gh-pages`.
 ## Recurring module work
 
 - **RPG inventory asset generation (Verdigris)** — read `tools/rpg_inventory/AGENTS.md`, then run `python3 tools/rpg_inventory/core/status.py`. Goal: `tools/rpg_inventory/core/GOAL.md`. Loop: `tools/rpg_inventory/core/RUNBOOK.md`.
-- `tools/wizard_orbs/` has `CLAUDE.md`. Rebuild `index.html` with `python3 build.py` after shader/template edits; keep adapter hooks in `src/template.html` **and** the built `index.html`.
+- `tools/wizard_orbs/` has binding invariants in `tools/wizard_orbs/AGENTS.md` + `CLAUDE.md` — read them **before** any edit there, including repo-wide passes. Never recarve `mask.png`, never crop the `ORB_VIEW` overlay, never hand-edit `index.html` (rebuild with `python3 build.py`). Enforced by `tests/wizard-orbs-invariants.test.mjs`; do not weaken that test to get a change through.
 
 ## Shared laboratory layer
 
