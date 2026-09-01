@@ -38,6 +38,25 @@ img { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
   width: 1920px; height: 1080px;
   transform-origin: center center;
   z-index: 2;
+  animation: stagein .7s ease-out;
+}
+@keyframes stagein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.floater {
+  position: absolute; left: 50%; top: -6px;
+  transform: translateX(-50%);
+  font-family: Cinzel, serif; font-weight: 700; font-size: 20px;
+  text-shadow: 0 1px 3px #000, 0 0 8px rgba(0,0,0,.6);
+  animation: floatup 1.05s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes floatup {
+  from { opacity: 0; transform: translate(-50%, 8px); }
+  20% { opacity: 1; }
+  to { opacity: 0; transform: translate(-50%, -30px); }
 }
 
 .engrave {
@@ -156,6 +175,11 @@ img { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
 }
 .slot:hover { box-shadow: inset 0 0 0 2px rgba(240,209,138,.75), inset 0 0 18px rgba(240,209,138,.25); }
 .slot.drop-ok { box-shadow: inset 0 0 0 2px rgba(140,220,140,.9), inset 0 0 18px rgba(140,220,140,.35); }
+.slot.can-take { animation: cantake 1.1s ease-in-out infinite; }
+@keyframes cantake {
+  0%, 100% { box-shadow: inset 0 0 0 2px rgba(240,209,138,.35), inset 0 0 10px rgba(240,209,138,.15); }
+  50% { box-shadow: inset 0 0 0 2px rgba(240,209,138,.8), inset 0 0 20px rgba(240,209,138,.35); }
+}
 .slot.drop-bad { box-shadow: inset 0 0 0 2px rgba(220,90,70,.9), inset 0 0 18px rgba(220,90,70,.35); }
 .slot.selected { box-shadow: inset 0 0 0 2px rgba(240,209,138,.95), inset 0 0 22px rgba(240,209,138,.4); }
 
@@ -233,6 +257,11 @@ img { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
 .node:hover::after { border-color: rgba(240,209,138,.85); box-shadow: 0 0 16px rgba(240,209,138,.45); }
 .node.on { background: radial-gradient(circle, rgba(240,200,110,.42) 0%, rgba(240,200,110,.12) 55%, transparent 72%); }
 .node.on::after { border-color: rgba(240,209,138,.9); box-shadow: 0 0 22px rgba(240,190,100,.6), inset 0 0 14px rgba(240,190,100,.35); }
+.node.keystone.on { animation: keypulse 3.4s ease-in-out infinite; }
+@keyframes keypulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.35); }
+}
 
 #skillPanel { position: absolute; left: 118px; top: 236px; width: 342px; }
 #skillPanel > img { width: 100%; height: auto;
@@ -311,10 +340,10 @@ img { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
 .abil.oom { animation: shake .3s; }
 .abil.oom img { filter: drop-shadow(0 0 8px rgba(220,80,60,.8)); }
 
-#buffs { position: absolute; right: 210px; bottom: 66px; display: flex; gap: 10px; }
-.buff { position: relative; width: 46px; height: 46px; }
+#buffs { position: absolute; right: 200px; bottom: 64px; display: flex; gap: 12px; }
+.buff { position: relative; width: 54px; height: 54px; }
 .buff .frame { position: absolute; inset: 0; width: 100%; height: 100%; }
-.buff .glyph { position: absolute; inset: 6px; width: 34px; height: 34px; object-fit: contain; }
+.buff .glyph { position: absolute; inset: 7px; width: 40px; height: 40px; object-fit: contain; }
 .buff .t {
   position: absolute; right: 1px; bottom: -3px;
   font-family: Cinzel, serif; font-size: 12px; font-weight: 700;
