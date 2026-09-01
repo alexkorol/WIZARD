@@ -176,7 +176,7 @@ ROWS.forEach((y, r) => COLS.forEach((x, c) => {
   if (it) fill(s, it);
 }));
 /* reagent row (bottom of right panel) */
-[1062, 1132, 1202, 1272, 1342].forEach((x, i) => {
+[1062, 1132, 1202, 1272].forEach((x, i) => {
   const s = makeSlot(x, 858, 50, 50, { label: "Reagent" });
   if (i === 0) fill(s, ITEMS.gemC);
   if (i === 1) fill(s, ITEMS.rosette);
@@ -282,6 +282,10 @@ overlay.addEventListener("pointerdown", ev => {
   ghost.style.display = "block";
   const pt = stagePoint(ev);
   ghost.style.left = px(pt.x - 29); ghost.style.top = px(pt.y - 29);
+  // light up the typed slots that can take this item
+  slots.forEach(t => {
+    if (t !== s && t.accepts && canDrop(t, s.item)) t.el.classList.add("can-take");
+  });
   hideTip();
   ev.preventDefault();
 });
@@ -297,9 +301,9 @@ addEventListener("pointermove", ev => {
     return;
   }
   const s = slotFromEvent(ev);
-  if (s && (s.item || s.label)) {
+  if (s && (s.item || s.accepts)) {
     showTip(s.item, s.label, stagePoint(ev));
-  } else if (!ev.target.closest || !ev.target.closest(".abil,.node,.buff")) {
+  } else if (!ev.target.closest || !ev.target.closest(".abil,.node,.buff,#xpbar")) {
     hideTip();
   }
 });
@@ -307,7 +311,7 @@ addEventListener("pointermove", ev => {
 addEventListener("pointerup", ev => {
   if (!drag) return;
   ghost.style.display = "none";
-  slots.forEach(s => s.el.classList.remove("drop-ok", "drop-bad"));
+  slots.forEach(s => s.el.classList.remove("drop-ok", "drop-bad", "can-take"));
   const to = slotFromEvent(ev);
   const { from, item } = drag;
   drag = null;
@@ -383,12 +387,17 @@ fetch("assets/layout.json").then(r => r.json()).then(L => {
     const name = isKey ? "The Verdant Seal" : NODE_NAMES[i % NODE_NAMES.length];
     const desc = isKey ? "Every path in the web begins and ends at the seal."
       : NODE_DESCS[i % NODE_DESCS.length];
-    el.addEventListener("pointerenter", () => {
+    if (isKey) el.classList.add("keystone");
+    el.addEventListener("pointerenter", ev => {
       skillName.textContent = name;
       skillDesc.textContent = desc;
       skillMeta.textContent = el.classList.contains("on")
         ? "Learned" : (isKey ? "Keystone" : "Cost · 1 point");
+      showTip({ name, rarity: el.classList.contains("on") ? "legendary" : "common",
+        type: isKey ? "Keystone" : "Passive · 1 point", stats: [desc], flavor: "", round: true },
+        name, stagePoint(ev));
     });
+    el.addEventListener("pointerleave", hideTip);
     el.addEventListener("click", () => {
       if (isKey) return;
       if (el.classList.contains("on")) {
@@ -477,6 +486,7 @@ function cast(a) {
   }
   vitals.mp.cur -= a.cost;
   drawVitals();
+  floatText(`−${a.cost}`, "#c9b3ef");
   a.until = now + a.cd * 1000;
   const tick = () => {
     const left = a.until - performance.now();
@@ -492,8 +502,18 @@ addEventListener("keydown", ev => {
   if (i >= 0 && abils[i]) cast(abils[i]);
   if (ev.key.toLowerCase() === "c") show("character");
   if (ev.key.toLowerCase() === "v") show("skills");
-  if (ev.key === "Escape") backdrop.classList.remove("open");
+  if (ev.key === "Escape") backdrop.classList.toggle("open");
 });
+
+/* floating combat-style text over the mana bar */
+function floatText(text, color) {
+  const f = document.createElement("span");
+  f.className = "floater";
+  f.textContent = text;
+  f.style.color = color;
+  $("#manaBar").appendChild(f);
+  setTimeout(() => f.remove(), 1100);
+}
 
 /* buffs */
 const BUFFS = [
@@ -514,6 +534,9 @@ BUFFS.forEach(([frame, glyph, name, t]) => {
 
 /* xp */
 $("#xpFill").style.width = px(Math.round((820 - 160) * 0.62));
+$("#xpbar").addEventListener("pointerenter", ev =>
+  showTip(null, "Level 47 · 4,180 / 6,700 XP", stagePoint(ev)));
+$("#xpbar").addEventListener("pointerleave", hideTip);
 
 /* ----------------------------------------------------------- settings */
 const settings = { music: true, motes: true, keybinds: true, quality: 2 };
