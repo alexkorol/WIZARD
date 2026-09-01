@@ -1,0 +1,43 @@
+/*
+ * fk-slot — FRAMEKIT-WAVE-1 / FK-105
+ * Inventory cell. Root class: .fk-slot; data-rarity="common|uncommon|rare|
+ * legendary" tints the border; :hover shows a highlight; [draggable] gets a
+ * grab cursor. Pure CSS.
+ */
+
+.fk-slot {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--fk-space-6);
+  height: var(--fk-space-6);
+  background: var(--fk-bg-2);
+  border: var(--fk-border-w) solid var(--fk-border);
+  border-radius: calc(var(--fk-radius) / 2);
+  font-size: var(--fk-text-3);
+}
+
+.fk-slot:hover {
+  border-color: var(--fk-border-hi);
+}
+
+.fk-slot[draggable='true'] {
+  cursor: grab;
+}
+
+.fk-slot[data-rarity='uncommon'] { border-color: var(--fk-ok); }
+.fk-slot[data-rarity='rare'] { border-color: var(--fk-accent-2); }
+.fk-slot[data-rarity='legendary'] { border-color: var(--fk-warn); }
+
+/* Stack count badge */
+.fk-slot[data-stacks]::after {
+  content: attr(data-stacks);
+  position: absolute;
+  right: var(--fk-space-1);
+  bottom: 0;
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-1);
+  color: var(--fk-fg-0);
+}

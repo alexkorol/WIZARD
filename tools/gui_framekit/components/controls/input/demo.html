@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>fk-input demo</title>
+<link rel="stylesheet" href="../../../tokens/tokens.css" />
+<link rel="stylesheet" href="./input.css" />
+<style>body { background: var(--fk-bg-0); color: var(--fk-fg-0); font-family: var(--fk-font); padding: var(--fk-space-5); max-width: 420px; }</style>
+</head>
+<body>
+  <h1>.fk-input</h1>
+  <div class="fk-input-wrap">
+    <label for="a">Incantation</label>
+    <input id="a" class="fk-input" type="text" placeholder="Speak, friend…" />
+  </div>
+  <p></p>
+  <div class="fk-input-wrap">
+    <label for="b">Reagent count</label>
+    <input id="b" class="fk-input" data-mono type="number" value="13" />
+  </div>
+  <p></p>
+  <div class="fk-input-wrap">
+    <label for="c">Sealed (disabled)</label>
+    <input id="c" class="fk-input" value="warded" disabled />
+  </div>
+</body>
+</html>

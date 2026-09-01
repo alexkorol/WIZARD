@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>fk-assets demo</title>
+<link rel="stylesheet" href="../../../tokens/tokens.css" />
+<style>
+  body { background: var(--fk-bg-0); color: var(--fk-fg-0); font-family: var(--fk-font); padding: var(--fk-space-5); display: flex; gap: var(--fk-space-4); align-items: center; }
+  .nine-slice {
+    box-sizing: border-box;
+    width: calc(var(--fk-space-6) * 6);
+    height: calc(var(--fk-space-6) * 3);
+    padding: var(--fk-space-3);
+    font-size: var(--fk-text-2);
+    background: var(--fk-bg-1); /* pure-CSS fallback */
+    border: var(--fk-border-w) solid var(--fk-frame-edge); /* fallback */
+    border-image-source: url('../assets/textures/panel.png');
+    border-image-slice: 12 fill;
+    border-image-width: 12px;
+    border-image-repeat: stretch;
+  }
+  .orb { image-rendering: pixelated; width: calc(var(--fk-space-4)); height: var(--fk-space-4); }
+</style>
+</head>
+<body>
+  <div class="nine-slice">Nine-slice panel (PNG border-image, CSS fallback beneath)</div>
+  <img class="orb" src="../assets/sprites/orb-vitality.png" alt="vitality orb sprite" />
+  <img class="orb" src="../assets/sprites/orb-mana.png" alt="mana orb sprite" />
+  <img class="orb" src="../assets/sprites/orb-essence.png" alt="essence orb sprite" />
+</body>
+</html>

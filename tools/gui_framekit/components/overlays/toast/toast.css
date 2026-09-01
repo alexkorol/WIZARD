@@ -1,0 +1,38 @@
+/*
+ * fk-toast — FRAMEKIT-WAVE-1 / FK-106
+ * Transient notification. Root class: .fk-toast; [open] shows it. Position
+ * within a host-defined toast stack (fixed corner) is the host's call;
+ * default stacks bottom-right via .fk-toast-stack. data-tone selects
+ * ok / warn / danger accenting.
+ */
+
+.fk-toast-stack {
+  position: fixed;
+  right: var(--fk-space-4);
+  bottom: var(--fk-space-4);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  gap: var(--fk-space-2);
+}
+
+.fk-toast {
+  display: none;
+  box-sizing: border-box;
+  padding: var(--fk-space-2) var(--fk-space-3);
+  font-family: var(--fk-font);
+  font-size: var(--fk-text-2);
+  color: var(--fk-fg-0);
+  background: var(--fk-bg-2);
+  border: var(--fk-border-w) solid var(--fk-border);
+  border-left: calc(2 * var(--fk-border-w)) solid var(--fk-accent);
+  border-radius: calc(var(--fk-radius) / 2);
+}
+
+.fk-toast[open] {
+  display: block;
+}
+
+.fk-toast[data-tone='ok'] { border-left-color: var(--fk-ok); }
+.fk-toast[data-tone='warn'] { border-left-color: var(--fk-warn); }
+.fk-toast[data-tone='danger'] { border-left-color: var(--fk-danger); }

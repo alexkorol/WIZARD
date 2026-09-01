@@ -1,0 +1,57 @@
+/*
+ * fk-toggle — FRAMEKIT-WAVE-1 / FK-103
+ * Root class: .fk-toggle on <input type="checkbox">. Pure CSS switch;
+ * renders and toggles without JS. Checked state uses --fk-ok.
+ */
+
+.fk-toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  margin: 0;
+  width: calc(var(--fk-space-6) + var(--fk-space-2));
+  height: var(--fk-space-4);
+  background: var(--fk-bg-1);
+  border: var(--fk-border-w) solid var(--fk-border);
+  border-radius: calc((var(--fk-space-4)) / 2);
+  cursor: pointer;
+  position: relative;
+}
+
+.fk-toggle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: var(--fk-space-1);
+  transform: translateY(-50%);
+  width: var(--fk-space-3);
+  height: var(--fk-space-3);
+  border-radius: 50%;
+  background: var(--fk-fg-1);
+  transition: left 120ms ease-out, background 120ms ease-out;
+}
+
+.fk-toggle:checked {
+  background: var(--fk-bg-2);
+  border-color: var(--fk-ok);
+}
+
+.fk-toggle:checked::after {
+  left: calc(100% - var(--fk-space-3) - var(--fk-space-1));
+  background: var(--fk-ok);
+}
+
+.fk-toggle:hover:not(:disabled):not(:checked) {
+  border-color: var(--fk-border-hi);
+}
+
+.fk-toggle:focus-visible {
+  outline: none;
+  border-color: var(--fk-accent-2);
+  box-shadow: 0 0 0 var(--fk-border-w) var(--fk-accent-2);
+}
+
+.fk-toggle:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

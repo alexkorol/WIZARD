@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>fk-item-tooltip demo</title>
+<link rel="stylesheet" href="../../../tokens/tokens.css" />
+<link rel="stylesheet" href="./item-tooltip.css" />
+<style>body { background: var(--fk-bg-0); color: var(--fk-fg-0); font-family: var(--fk-font); padding: calc(var(--fk-space-6) * 2) var(--fk-space-5); }
+.trigger { display: inline-flex; align-items: center; justify-content: center; width: var(--fk-space-6); height: var(--fk-space-6); background: var(--fk-bg-2); border: var(--fk-border-w) solid var(--fk-accent-2); border-radius: calc(var(--fk-radius) / 2); font-size: var(--fk-text-3); }</style>
+</head>
+<body>
+  <h1>.fk-item-tooltip</h1>
+  <p>Hover the quill:</p>
+  <div data-tip-host>
+    <div class="trigger">🪶</div>
+    <div class="fk-item-tooltip" data-rarity="rare">
+      <span class="fk-item-tooltip-name">Raven Quill</span>
+      <span class="fk-item-tooltip-stat">+3 Finesse</span>
+      <span class="fk-item-tooltip-stat">+1 Scribing</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+/*
+ * fk-bar — FRAMEKIT-WAVE-1 / FK-104
+ * Root class: .fk-bar on a container with an inner .fk-bar-fill.
+ * Fill width is set inline (style="--fk-bar-value: 62%" or width) by the
+ * host; data-tone selects ok / warn / danger coloring. CSS-only.
+ *
+ *   <div class="fk-bar" role="meter" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100">
+ *     <div class="fk-bar-fill" style="width: 62%"></div>
+ *   </div>
+ */
+
+.fk-bar {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  height: var(--fk-space-3);
+  background: var(--fk-bg-1);
+  border: var(--fk-border-w) solid var(--fk-border);
+  border-radius: calc(var(--fk-radius) / 2);
+  overflow: hidden;
+}
+
+.fk-bar-fill {
+  height: 100%;
+  background: var(--fk-accent);
+  transition: width 160ms ease-out;
+}
+
+.fk-bar[data-tone='ok'] .fk-bar-fill { background: var(--fk-ok); }
+.fk-bar[data-tone='warn'] .fk-bar-fill { background: var(--fk-warn); }
+.fk-bar[data-tone='danger'] .fk-bar-fill { background: var(--fk-danger); }
+
+/* Segmented variant: engraved notches every 25% */
+.fk-bar[data-segments]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    to right,
+    transparent calc(25% - var(--fk-border-w)),
+    var(--fk-bg-0) calc(25% - var(--fk-border-w)),
+    var(--fk-bg-0) 25%,
+    transparent 25%
+  );
+  background-size: 25% 100%;
+  pointer-events: none;
+}

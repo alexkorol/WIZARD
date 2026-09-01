@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>gui_framekit — component showcase</title>
+<link rel="stylesheet" href="../tokens/tokens.css" />
+<!-- frames (FK-102) -->
+<link rel="stylesheet" href="../components/frames/window/window.css" />
+<link rel="stylesheet" href="../components/frames/panel/panel.css" />
+<link rel="stylesheet" href="../components/frames/dialog/dialog.css" />
+<!-- controls (FK-103) -->
+<link rel="stylesheet" href="../components/controls/button/button.css" />
+<link rel="stylesheet" href="../components/controls/input/input.css" />
+<link rel="stylesheet" href="../components/controls/slider/slider.css" />
+<link rel="stylesheet" href="../components/controls/toggle/toggle.css" />
+<link rel="stylesheet" href="../components/controls/tabs/tabs.css" />
+<!-- hud (FK-104) -->
+<link rel="stylesheet" href="../components/hud/bar/bar.css" />
+<link rel="stylesheet" href="../components/hud/globe/globe.css" />
+<link rel="stylesheet" href="../components/hud/orb/orb.css" />
+<link rel="stylesheet" href="../components/hud/meter/meter.css" />
+<link rel="stylesheet" href="../components/hud/buff-icon/buff-icon.css" />
+<!-- inventory (FK-105) -->
+<link rel="stylesheet" href="../components/inventory/grid/grid.css" />
+<link rel="stylesheet" href="../components/inventory/slot/slot.css" />
+<link rel="stylesheet" href="../components/inventory/item-tooltip/item-tooltip.css" />
+<link rel="stylesheet" href="../components/inventory/drag-ghost/drag-ghost.css" />
+<!-- overlays (FK-106) -->
+<link rel="stylesheet" href="../components/overlays/modal/modal.css" />
+<link rel="stylesheet" href="../components/overlays/menu/menu.css" />
+<link rel="stylesheet" href="../components/overlays/toast/toast.css" />
+<link rel="stylesheet" href="../components/overlays/context-menu/context-menu.css" />
+<style>
+  body { background: var(--fk-bg-0); color: var(--fk-fg-0); font-family: var(--fk-font); margin: 0; padding: var(--fk-space-5); }
+  h1 { font-size: var(--fk-text-3); color: var(--fk-accent); }
+  h2 { font-size: var(--fk-text-2); color: var(--fk-fg-1); border-bottom: var(--fk-border-w) solid var(--fk-border); padding-bottom: var(--fk-space-1); }
+  section { display: flex; flex-direction: column; gap: var(--fk-space-3); margin-bottom: var(--fk-space-5); }
+  .row { display: flex; gap: var(--fk-space-3); align-items: center; flex-wrap: wrap; }
+  .stub { color: var(--fk-fg-1); font-size: var(--fk-text-1); }
+</style>
+</head>
+<body>
+  <h1>gui_framekit showcase</h1>
+
+  <section id="frames">
+    <h2>Frames — window / panel / dialog</h2>
+    <p class="stub">FK-102 lands here: <code>.fk-window</code>, <code>.fk-panel</code>, <code>.fk-dialog</code>.</p>
+    <div class="row">
+      <!-- lights up when FK-102 merges; markup per INTERFACES frozen paths -->
+      <div class="fk-window"><div class="fk-panel">Panel inside window</div></div>
+    </div>
+  </section>
+
+  <section id="controls">
+    <h2>Controls — button / input / slider / toggle / tabs</h2>
+    <div class="row">
+      <button class="fk-button">Default</button>
+      <button class="fk-button" data-variant="primary">Primary</button>
+      <button class="fk-button" data-size="sm">Small</button>
+    </div>
+    <div class="fk-input-wrap" style="max-width: 280px;">
+      <label for="sc">Search the grimoire</label>
+      <input id="sc" class="fk-input" type="text" placeholder="Type…" />
+    </div>
+    <div class="row" style="max-width: 320px;">
+      <label for="ss" class="stub">Attunement</label>
+      <input id="ss" class="fk-slider" type="range" value="42" style="flex:1" />
+      <label class="stub"><input class="fk-toggle" type="checkbox" checked /> ward</label>
+    </div>
+    <div class="fk-tabs" id="show-tabs">
+      <div class="fk-tabs-list" role="tablist">
+        <button class="fk-tab" role="tab" aria-selected="true" aria-controls="stp1">Spells</button>
+        <button class="fk-tab" role="tab" aria-selected="false" aria-controls="stp2">Lore</button>
+      </div>
+      <div class="fk-tab-panel" role="tabpanel" id="stp1">Fireball, Frost Ward, Blink.</div>
+      <div class="fk-tab-panel" role="tabpanel" id="stp2" hidden>The moon remembers.</div>
+    </div>
+  </section>
+
+  <section id="hud">
+    <h2>HUD — bar / globe / orb / meter / buff-icon</h2>
+    <div class="row">
+      <div class="fk-globe" data-tone="ok" role="meter" aria-label="Vitality" aria-valuenow="80"><div class="fk-globe-fill" style="--fk-globe-value:80%"></div><span class="fk-globe-text">80</span></div>
+      <div class="fk-bar" data-tone="ok" role="meter" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="max-width:240px"><div class="fk-bar-fill" style="width:70%"></div></div>
+      <span class="fk-orb" data-state="charged"></span>
+      <span class="fk-orb" data-state="active"></span>
+      <div class="fk-meter"><span class="fk-meter-label">DPS</span><span class="fk-meter-value" data-delta="up">142</span></div>
+      <span class="fk-buff-icon" data-stacks="3">✦</span>
+    </div>
+  </section>
+
+  <section id="inventory">
+    <h2>Inventory — grid / slot / tooltip / drag ghost</h2>
+    <div class="fk-grid" style="grid-template-columns: repeat(6, var(--fk-space-6));">
+      <div data-tip-host><div class="fk-slot" draggable="true" data-rarity="legendary">👑</div>
+        <div class="fk-item-tooltip" data-rarity="legendary"><span class="fk-item-tooltip-name">Crown of the Pale Court</span><span class="fk-item-tooltip-stat">+9 Presence</span></div>
+      </div>
+      <div class="fk-slot" data-rarity="rare" data-stacks="12">⚗</div>
+      <div class="fk-slot"></div><div class="fk-slot"></div><div class="fk-slot"></div><div class="fk-slot"></div>
+    </div>
+  </section>
+
+  <section id="overlays">
+    <h2>Overlays — modal / menu / toast / context menu</h2>
+    <div class="row">
+      <button class="fk-button" id="open-modal">Open modal</button>
+      <div class="fk-menu" open role="menu" style="position:relative">
+        <button class="fk-menu-item" role="menuitem">Inspect</button>
+        <button class="fk-menu-item" role="menuitem">Attune</button>
+      </div>
+    </div>
+    <div class="fk-toast-stack">
+      <div class="fk-toast" open data-tone="ok">Potion brewed.</div>
+      <div class="fk-toast" open data-tone="warn">Cauldron low.</div>
+    </div>
+    <div class="fk-modal" id="demo-modal" role="dialog" aria-modal="true" aria-label="Seal the pact?">
+      <div class="fk-modal-box">
+        <p>Seal the pact with the Pale Court?</p>
+        <button class="fk-button" id="close-modal" data-variant="primary">Seal it</button>
+      </div>
+    </div>
+  </section>
+
+  <script type="module">
+    import { init } from '../components/controls/tabs/tabs.js';
+    init(document.getElementById('show-tabs'));
+
+    const modal = document.getElementById('demo-modal');
+    document.getElementById('open-modal').addEventListener('click', () => modal.setAttribute('open', ''));
+    document.getElementById('close-modal').addEventListener('click', () => modal.removeAttribute('open'));
+  </script>
+</body>
+</html>

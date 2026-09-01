@@ -1,0 +1,58 @@
+/*
+ * fk-input — FRAMEKIT-WAVE-1 / FK-103
+ * Root class: .fk-input on <input> or <textarea>. Optional .fk-input-wrap
+ * container for label + field. All values from --fk-* tokens.
+ */
+
+.fk-input {
+  appearance: none;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: var(--fk-space-2) var(--fk-space-3);
+  font-family: var(--fk-font);
+  font-size: var(--fk-text-2);
+  color: var(--fk-fg-0);
+  background: var(--fk-bg-1);
+  border: var(--fk-border-w) solid var(--fk-border);
+  border-radius: var(--fk-radius);
+}
+
+.fk-input::placeholder {
+  color: var(--fk-fg-1);
+  opacity: 1;
+}
+
+.fk-input:hover:not(:disabled):not([readonly]) {
+  border-color: var(--fk-border-hi);
+}
+
+.fk-input:focus {
+  outline: none;
+  border-color: var(--fk-accent-2);
+  box-shadow: 0 0 0 var(--fk-border-w) var(--fk-accent-2);
+}
+
+.fk-input:disabled,
+.fk-input[readonly] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Mono variant for numeric/arcane inputs */
+.fk-input[data-mono] {
+  font-family: var(--fk-font-mono);
+}
+
+/* Wrapper with label */
+.fk-input-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fk-space-1);
+}
+
+.fk-input-wrap > label {
+  font-size: var(--fk-text-1);
+  color: var(--fk-fg-1);
+}

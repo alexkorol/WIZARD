@@ -1,0 +1,62 @@
+/*
+ * fk-dialog — FK-102 (frame components)
+ *
+ * Modal overlay + framed card. Hidden until .fk-dialog--open is set
+ * (by dialog.js helpers or your own code). CSS alone renders both
+ * states correctly. The card reuses the window frame language and
+ * carries the same nine-slice hook as fk-window (texture lands with
+ * FK-107; CSS fallback shows until then).
+ */
+
+.fk-dialog {
+  position: fixed;
+  inset: 0;
+  display: none;
+  place-items: center;
+  padding: var(--fk-space-4);
+}
+
+.fk-dialog::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--fk-frame-bg);
+  opacity: 0.78;
+}
+
+.fk-dialog--open {
+  display: grid;
+}
+
+.fk-dialog__card {
+  position: relative;
+  background: var(--fk-frame-bg);
+  border: calc(var(--fk-border-w) * 2) solid var(--fk-frame-edge);
+  border-radius: var(--fk-radius);
+  box-shadow: 0 0 0 var(--fk-border-w) var(--fk-border-hi),
+    inset 0 0 0 var(--fk-border-w) var(--fk-border);
+  border-image: url("../../assets/textures/window-frame.png") 24 24 24 24
+    / calc(var(--fk-border-w) * 2) round round;
+  padding: var(--fk-space-5);
+  max-block-size: 100%;
+  max-inline-size: calc(var(--fk-space-6) * 22);
+  overflow: auto;
+}
+
+.fk-dialog__title {
+  color: var(--fk-border-hi);
+  font-size: var(--fk-text-3);
+  margin-block-end: var(--fk-space-3);
+}
+
+.fk-dialog__body {
+  color: var(--fk-fg-0);
+  font-size: var(--fk-text-2);
+}
+
+.fk-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--fk-space-2);
+  margin-block-start: var(--fk-space-4);
+}

@@ -1,0 +1,76 @@
+/*
+ * fk-button — FRAMEKIT-WAVE-1 / FK-103
+ * Root class: .fk-button. Variants via data-variant="primary|secondary|danger".
+ * Sizes via data-size="sm|md|lg". All values sourced from --fk-* tokens.
+ */
+
+.fk-button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fk-space-2);
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--fk-space-2) var(--fk-space-4);
+  min-height: calc(var(--fk-text-2) + 2 * var(--fk-space-2));
+  font-family: var(--fk-font);
+  font-size: var(--fk-text-2);
+  line-height: 1;
+  color: var(--fk-fg-0);
+  background: var(--fk-bg-2);
+  border: var(--fk-border-w) solid var(--fk-border);
+  border-radius: var(--fk-radius);
+  cursor: pointer;
+  user-select: none;
+}
+
+.fk-button:hover:not(:disabled) {
+  border-color: var(--fk-border-hi);
+  color: var(--fk-accent);
+}
+
+.fk-button:focus-visible {
+  outline: none;
+  border-color: var(--fk-accent-2);
+  box-shadow: 0 0 0 var(--fk-border-w) var(--fk-accent-2);
+}
+
+.fk-button:active:not(:disabled) {
+  background: var(--fk-bg-1);
+}
+
+.fk-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Primary: brass accent fill */
+.fk-button[data-variant='primary'] {
+  background: var(--fk-accent);
+  border-color: var(--fk-accent);
+  color: var(--fk-bg-0);
+  font-weight: 600;
+}
+
+.fk-button[data-variant='primary']:hover:not(:disabled) {
+  border-color: var(--fk-border-hi);
+  color: var(--fk-bg-0);
+}
+
+/* Danger */
+.fk-button[data-variant='danger'] {
+  border-color: var(--fk-danger);
+  color: var(--fk-danger);
+}
+
+/* Small / large */
+.fk-button[data-size='sm'] {
+  padding: var(--fk-space-1) var(--fk-space-3);
+  font-size: var(--fk-text-1);
+}
+
+.fk-button[data-size='lg'] {
+  padding: var(--fk-space-3) var(--fk-space-5);
+  font-size: var(--fk-text-3);
+}

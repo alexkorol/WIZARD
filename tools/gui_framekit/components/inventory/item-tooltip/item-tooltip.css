@@ -1,0 +1,55 @@
+/*
+ * fk-item-tooltip — FRAMEKIT-WAVE-1 / FK-105
+ * Hover tooltip for inventory items. Root class: .fk-item-tooltip; shown by
+ * a parent [data-tip-host]:hover via CSS (no JS). Name line + optional stats.
+ *
+ *   <div data-tip-host>
+ *     …trigger…
+ *     <div class="fk-item-tooltip" data-rarity="rare">
+ *       <span class="fk-item-tooltip-name">Raven Quill</span>
+ *       <span class="fk-item-tooltip-stat">+3 Finesse</span>
+ *     </div>
+ *   </div>
+ */
+
+[data-tip-host] {
+  position: relative;
+}
+
+.fk-item-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + var(--fk-space-2));
+  transform: translateX(-50%);
+  z-index: 10;
+  display: none;
+  flex-direction: column;
+  gap: var(--fk-space-1);
+  box-sizing: border-box;
+  min-width: calc(var(--fk-space-6) * 3);
+  padding: var(--fk-space-2) var(--fk-space-3);
+  background: var(--fk-frame-bg);
+  border: var(--fk-border-w) solid var(--fk-border-hi);
+  border-radius: var(--fk-radius);
+}
+
+[data-tip-host]:hover > .fk-item-tooltip,
+[data-tip-host]:focus-within > .fk-item-tooltip {
+  display: flex;
+}
+
+.fk-item-tooltip-name {
+  font-size: var(--fk-text-2);
+  color: var(--fk-fg-0);
+}
+
+/* Rarity tints the name */
+.fk-item-tooltip[data-rarity='uncommon'] .fk-item-tooltip-name { color: var(--fk-ok); }
+.fk-item-tooltip[data-rarity='rare'] .fk-item-tooltip-name { color: var(--fk-accent-2); }
+.fk-item-tooltip[data-rarity='legendary'] .fk-item-tooltip-name { color: var(--fk-warn); }
+
+.fk-item-tooltip-stat {
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-1);
+  color: var(--fk-fg-1);
+}

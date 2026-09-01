@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>fk-tabs demo</title>
+<link rel="stylesheet" href="../../../tokens/tokens.css" />
+<link rel="stylesheet" href="./tabs.css" />
+<style>body { background: var(--fk-bg-0); color: var(--fk-fg-0); font-family: var(--fk-font); padding: var(--fk-space-5); max-width: 520px; }</style>
+</head>
+<body>
+  <h1>.fk-tabs</h1>
+  <div class="fk-tabs" id="demo-tabs">
+    <div class="fk-tabs-list" role="tablist">
+      <button class="fk-tab" role="tab" aria-selected="true" aria-controls="p1">Grimoire</button>
+      <button class="fk-tab" role="tab" aria-selected="false" aria-controls="p2">Reagents</button>
+      <button class="fk-tab" role="tab" aria-selected="false" aria-controls="p3">Familiars</button>
+    </div>
+    <div class="fk-tab-panel" role="tabpanel" id="p1">Spells and cantrips, alphabetized by school.</div>
+    <div class="fk-tab-panel" role="tabpanel" id="p2" hidden>Eye of newt, tongue of frog — stock is low.</div>
+    <div class="fk-tab-panel" role="tabpanel" id="p3" hidden>One (1) raven, unlicensed.</div>
+  </div>
+  <script type="module">
+    import { init } from './tabs.js';
+    init(document.getElementById('demo-tabs'));
+  </script>
+</body>
+</html>
