@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FrameKit — Hall of the Verdant Seal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+<canvas id="motes"></canvas>
+<div id="vignette"></div>
+<div id="stage">
+  <!-- top bar -->
+  <header id="topbar">
+    <div id="location" class="banner">
+      <img src="assets/banner_arch.png" alt="">
+      <span>The Sunken Archive</span>
+    </div>
+    <nav id="tabs">
+      <button class="tab" data-screen="character"><span>Character</span></button>
+      <button class="tab" data-screen="skills"><span>Skill Web</span></button>
+    </nav>
+    <div id="topright">
+      <div id="goldplate" class="banner">
+        <img src="assets/banner_plaque.png" alt="">
+        <span id="goldAmount">1,248</span>
+      </div>
+      <button id="settingsBtn" title="Settings">
+        <img class="frame" src="assets/panel_sq_small.png" alt="">
+        <img class="icon" src="assets/med_stargold.png" alt="Settings">
+      </button>
+    </div>
+  </header>
+
+  <!-- character + inventory spread -->
+  <section id="charScreen" class="screen">
+    <div id="spread">
+      <img id="spreadArt" src="assets/character_spread.jpg" alt="">
+      <div id="spreadOverlay"></div>
+    </div>
+  </section>
+
+  <!-- skill web -->
+  <section id="skillScreen" class="screen">
+    <aside id="skillPanel">
+      <img src="assets/modal_winged.png" alt="">
+      <div id="skillPanelBody">
+        <h3 id="skillName">The Verdant Seal</h3>
+        <p id="skillDesc">Every path in the web begins and ends at the seal.</p>
+        <div id="skillMeta"></div>
+      </div>
+    </aside>
+    <div id="pointsPlate" class="banner">
+      <img src="assets/banner_plaque.png" alt="">
+      <span id="pointsLeft">12</span>
+    </div>
+    <div id="web">
+      <img id="webArt" src="assets/skill_web.jpg" alt="">
+      <div id="webOverlay"></div>
+    </div>
+  </section>
+
+  <!-- HUD -->
+  <footer id="hud">
+    <div id="portrait">
+      <img class="ring" src="assets/gauge_empty.png" alt="">
+      <img class="face" src="assets/med_sun.png" alt="">
+      <div id="charLevel">47</div>
+    </div>
+    <div id="vitals">
+      <div class="vital" id="healthBar">
+        <img src="assets/bar_winged_red.png" alt="">
+        <div class="deplete"></div>
+        <span class="num" id="healthNum"></span>
+      </div>
+      <div class="vital" id="manaBar">
+        <img src="assets/bar_winged_purple.png" alt="">
+        <div class="deplete"></div>
+        <span class="num" id="manaNum"></span>
+      </div>
+    </div>
+    <div id="rack">
+      <img src="assets/rack_large.png" alt="">
+      <div id="rackSlots"></div>
+    </div>
+    <div id="buffs"></div>
+    <div id="xpbar">
+      <img src="assets/rack_thin.png" alt="">
+      <div id="xpFill"></div>
+    </div>
+  </footer>
+
+  <!-- tooltip -->
+  <div id="tooltip"></div>
+
+  <!-- settings modal -->
+  <div id="modalBackdrop">
+    <div id="modal">
+      <img src="assets/modal_large.png" alt="">
+      <div id="modalBody">
+        <h2>Settings</h2>
+        <div class="setrow"><label>Music</label>
+          <button class="toggle" data-set="music"><img src="assets/toggle_on.png" alt=""></button></div>
+        <div class="setrow"><label>Drifting motes</label>
+          <button class="toggle" data-set="motes"><img src="assets/toggle_on.png" alt=""></button></div>
+        <div class="setrow"><label>Quality</label>
+          <button id="quality" class="dd"><img src="assets/dropdown.png" alt=""><span>High</span></button></div>
+        <div class="setrow"><label>Show keybinds</label>
+          <button class="toggle" data-set="keybinds"><img src="assets/toggle_on.png" alt=""></button></div>
+        <div id="modalButtons">
+          <button class="btn" id="applyBtn"><img src="assets/btn_primary.png" alt=""><span>Apply</span></button>
+          <button class="btn" id="closeBtn"><img src="assets/btn_primary.png" alt=""><span>Close</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>

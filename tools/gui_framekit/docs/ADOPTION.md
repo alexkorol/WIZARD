@@ -17,7 +17,8 @@ shared values once, as `--fk-*` custom properties.
 | Module | Styling today | Observed surface literals | Kit fit |
 | --- | --- | --- | --- |
 | `tools/rpg_inventory` | inline `<style>` blocks in `index.html` (~51 style hits), hex backgrounds + gradient panels | `#0b0a08`, `#0d0c0a`, rgba(22,20,17,…)/rgba(9,8,7,…) | Direct: surfaces already match `--fk-bg-0/1/2`. Grid/slot/tooltip map 1:1 onto FK-105 components. |
-| `tools/health_globe` | small scoped CSS w/ local `--panel`/`--panel-dark` vars | `#0d0c12`, `#16121b` | Direct: is essentially an fk-globe; adopt `.fk-globe` and drop local globe CSS. |
+| `tools/health_globe` | small scoped CSS w/ local `--panel`/`--panel-dark` vars | `#0d0c12`, `#16121b` | Legacy reference only. Do not use it to replace the current authored life/mana orb presentation. |
+| `tools/wizard_orbs` | authored WebGL liquid + aligned statue/orb plates | full-frame authored raster and shader pipeline | Protected boundary: FrameKit may supply surrounding controls and chrome, but never replaces, crops, or restyles the life/mana orbs themselves. |
 | `tools/geometric_skilltree` | heavy inline styles (68 style hits), uses `color-mix` over its own vars | `#14110d` + node-active accents | Partial: adopt tokens for surfaces/borders; keep graph-specific vars, but source them from `--fk-*` where they are colors. |
 | `tools/arcane_lattice` | inline styles, purple-leaning palette | `#05060f`, `#2a3550`, `#6a5acd` | Partial: furthest from the kit palette; either accept `--fk-accent` brass or register a documented accent override — do not fork the token file. |
 | `tools/mason` | already var-driven (`--bg`, `--panel`) | `#171613` | Easiest win: alias its three locals to `--fk-bg-*`/`--fk-bg-1` and delete the hexes. |
@@ -39,7 +40,8 @@ adoption should extract component usage first, then dedupe literals.
    scene colors.
 3. **Swap components where they exist**: buttons → `.fk-button`, inputs →
    `.fk-input`, range inputs → `.fk-slider`, checkboxes → `.fk-toggle`,
-   resource bars/globes → `.fk-bar`/`.fk-globe`, inventory cells →
+generic compact resource bars/globes → `.fk-bar`/`.fk-globe` (never the
+authored `wizard_orbs` life/mana presentation), inventory cells →
    `.fk-slot` inside `.fk-grid`, notifications → `.fk-toast`. Component
    links live in `INTERFACES.md` (frozen paths); each ships a standalone
    `demo.html` to copy from.
@@ -60,6 +62,6 @@ adoption should extract component usage first, then dedupe literals.
 ## Wave 2 preview
 
 Per-submodule normalization packets will be cut from this audit's table;
-modules are ordered by fit (mason → health_globe → rpg_inventory →
+modules are ordered by fit (mason → rpg_inventory →
 geometric_skilltree → arcane_lattice → verdigris_splash). A C++ port
 planning packet for Verdigris follows once wave 1 is accepted.

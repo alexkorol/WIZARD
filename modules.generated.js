@@ -144,6 +144,61 @@ window.WIZARD_REGISTRY = {
     },
     {
       "schemaVersion": 1,
+      "id": "wizard.framekit",
+      "slug": "gui_framekit",
+      "title": "FrameKit",
+      "description": "Playable game-UI demo assembled from the generated marble-and-brass sheet art: character sheet, inventory with drag-and-drop, skill web, HUD, and settings, plus the component workbench.",
+      "status": "stable",
+      "visibility": "dashboard",
+      "category": "integration",
+      "group": "systems-integration",
+      "launch": "tools/gui_framekit/game/index.html",
+      "readme": "tools/gui_framekit/README.md",
+      "preview": "tools/gui_framekit/evidence/framekit-game-character.png",
+      "moduleVersion": "2.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "hud-resources",
+        "itemization",
+        "systems-integration"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "reset",
+        "getState",
+        "setState",
+        "listScenarios",
+        "loadScenario",
+        "pause",
+        "resume",
+        "step",
+        "getMetrics",
+        "getAnnotations",
+        "setAnnotations",
+        "exportCalibration",
+        "importCalibration"
+      ],
+      "tags": [
+        "ui-kit",
+        "hud",
+        "inventory",
+        "integration"
+      ]
+    },
+    {
+      "schemaVersion": 1,
       "id": "wizard.geometric-skilltree",
       "slug": "geometric_skilltree",
       "title": "Geometric Passive Tree",
@@ -960,6 +1015,61 @@ window.WIZARD_REGISTRY = {
         "chronicles",
         "houses",
         "permadeath"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.framekit",
+      "slug": "gui_framekit",
+      "title": "FrameKit",
+      "description": "Playable game-UI demo assembled from the generated marble-and-brass sheet art: character sheet, inventory with drag-and-drop, skill web, HUD, and settings, plus the component workbench.",
+      "status": "stable",
+      "visibility": "dashboard",
+      "category": "integration",
+      "group": "systems-integration",
+      "launch": "tools/gui_framekit/game/index.html",
+      "readme": "tools/gui_framekit/README.md",
+      "preview": "tools/gui_framekit/evidence/framekit-game-character.png",
+      "moduleVersion": "2.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "hud-resources",
+        "itemization",
+        "systems-integration"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "reset",
+        "getState",
+        "setState",
+        "listScenarios",
+        "loadScenario",
+        "pause",
+        "resume",
+        "step",
+        "getMetrics",
+        "getAnnotations",
+        "setAnnotations",
+        "exportCalibration",
+        "importCalibration"
+      ],
+      "tags": [
+        "ui-kit",
+        "hud",
+        "inventory",
+        "integration"
       ]
     },
     {

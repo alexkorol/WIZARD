@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="FrameKit — the reusable Verdigris game interface workbench." />
+  <title>FrameKit · WIZARD</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23090807'/%3E%3Cpath d='M16 4 28 16 16 28 4 16Z' fill='none' stroke='%23c9a227'/%3E%3Cpath d='m10 10 4 12 2-7 2 7 4-12' fill='none' stroke='%23e9e4d8'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="tokens/tokens.css" />
+  <link rel="stylesheet" href="base/base.css" />
+  <link rel="stylesheet" href="workbench.css" />
+</head>
+<body data-accent="verdigris" data-density="compact">
+  <a class="skip-link" href="#preview">Skip to preview</a>
+
+  <header class="topbar">
+    <a class="brand" href="../../index.html" aria-label="Back to WIZARD">
+      <span class="brand__mark">W</span>
+      <span><b>FrameKit</b><small>WIZARD / Interface Systems</small></span>
+    </a>
+    <nav class="topnav" aria-label="FrameKit views">
+      <button class="is-active" data-view="workbench">Workbench</button>
+      <button data-view="components">Components</button>
+      <button data-view="assets">Source atlas</button>
+    </nav>
+    <div class="topbar__actions">
+      <span class="build-status"><i></i>18 primitives</span>
+      <a href="README.md">Docs</a>
+    </div>
+  </header>
+
+  <div class="toolstrip" role="toolbar" aria-label="Preview controls">
+    <div class="crumb"><span>HUD &amp; INVENTORY</span><i>/</i><strong>LOADOUT PANEL</strong></div>
+    <div class="toolstrip__controls">
+      <label>Viewport
+        <select id="viewport-select">
+          <option value="desktop">Desktop · 1440</option>
+          <option value="tablet">Tablet · 900</option>
+          <option value="mobile">Mobile · 390</option>
+        </select>
+      </label>
+      <button class="icon-button" id="guides-button" aria-pressed="false" title="Toggle alignment grid">#</button>
+      <button class="icon-button" id="reset-button" title="Reset preview">↺</button>
+    </div>
+  </div>
+
+  <main class="workbench">
+    <aside class="library" aria-label="Component library">
+      <div class="panel-title">
+        <span>LIBRARY</span>
+        <button id="collapse-library" aria-label="Collapse library">‹</button>
+      </div>
+      <div class="library__search"><span>⌕</span><input id="component-search" type="search" placeholder="Filter components" aria-label="Filter components" /></div>
+      <div class="library__group">
+        <button class="group-heading" aria-expanded="true"><span>Frames</span><small>3</small></button>
+        <div class="component-list">
+          <button data-component="Window frame"><i class="component-icon component-icon--frame"></i><span>Window frame<small>Structural container</small></span></button>
+          <button data-component="Panel"><i class="component-icon component-icon--panel"></i><span>Panel<small>Inset content area</small></span></button>
+          <button data-component="Divider"><i class="component-icon component-icon--divider"></i><span>Divider<small>Ornamental rule</small></span></button>
+        </div>
+      </div>
+      <div class="library__group">
+        <button class="group-heading" aria-expanded="true"><span>HUD</span><small>5</small></button>
+        <div class="component-list">
+          <button class="is-selected" data-component="Resource bar"><i class="component-icon component-icon--bar"></i><span>Resource bar<small>Health, mana, ward</small></span></button>
+          <button data-component="Status badge"><i class="component-icon component-icon--status"></i><span>Status badge<small>Buff and condition</small></span></button>
+          <button data-component="Meter"><i class="component-icon component-icon--meter"></i><span>Meter<small>Progress and charge</small></span></button>
+        </div>
+      </div>
+      <div class="library__group">
+        <button class="group-heading" aria-expanded="true"><span>Inventory</span><small>4</small></button>
+        <div class="component-list">
+          <button data-component="Inventory slot"><i class="component-icon component-icon--slot"></i><span>Inventory slot<small>Stateful item cell</small></span></button>
+          <button data-component="Equipment socket"><i class="component-icon component-icon--socket"></i><span>Equipment socket<small>Gear attachment</small></span></button>
+        </div>
+      </div>
+      <div class="library__group">
+        <button class="group-heading" aria-expanded="true"><span>Controls</span><small>6</small></button>
+        <div class="component-list">
+          <button data-component="Button"><i class="component-icon component-icon--button"></i><span>Button<small>Primary and secondary</small></span></button>
+          <button data-component="Toggle"><i class="component-icon component-icon--toggle"></i><span>Toggle<small>Binary option</small></span></button>
+        </div>
+      </div>
+      <button class="atlas-link" data-open-atlas><span>▦</span> Browse source sheets</button>
+    </aside>
+
+    <section class="canvas" id="preview" aria-label="Live FrameKit preview">
+      <header class="canvas__head">
+        <div><span class="live-dot"></span>LIVE PREVIEW</div>
+        <div class="zoom-control"><button data-zoom="out" aria-label="Zoom out">−</button><output id="zoom-output">100%</output><button data-zoom="in" aria-label="Zoom in">+</button></div>
+      </header>
+
+      <div class="canvas__viewport" id="canvas-viewport">
+        <div class="grid-overlay" aria-hidden="true"></div>
+        <div class="game-ui" id="game-ui">
+          <div class="hud-ribbon">
+            <div class="area-name"><span>THE SUNKEN ARCHIVE</span><small>LOWER VAULTS · DEPTH III</small></div>
+            <div class="hud-ribbon__resources">
+              <div class="micro-resource health"><span>VIT</span><i><b style="width:78%"></b></i><output>784</output></div>
+              <div class="micro-resource mana"><span>MANA</span><i><b style="width:62%"></b></i><output>312</output></div>
+              <div class="micro-resource ward"><span>WARD</span><i><b style="width:91%"></b></i><output>91</output></div>
+            </div>
+            <div class="currency"><span>◇</span><b>1,248</b></div>
+          </div>
+
+          <section class="loadout-window" aria-labelledby="loadout-title">
+            <svg class="frame-raster" aria-hidden="true" viewBox="714 45 396 220" preserveAspectRatio="none"><image href="assets/concepts/frame-families.png" width="1448" height="1086" /></svg>
+            <header class="loadout-window__title">
+              <span class="title-wing">◆</span>
+              <div><small>FIELD LOADOUT</small><h1 id="loadout-title">Lattice Warden</h1></div>
+              <button aria-label="Close panel">×</button>
+            </header>
+            <div class="loadout-window__content">
+              <section class="equipment-pane" aria-label="Equipped gear">
+                <div class="section-label"><span>EQUIPPED</span><small>7 / 9</small></div>
+                <div class="paperdoll">
+                  <button class="equip-slot equip-slot--head" data-item="Sunken Crown"><span>♛</span><small>CROWN</small></button>
+                  <button class="equip-slot equip-slot--body" data-item="Verdigris Mantle"><span>⌁</span><small>MANTLE</small></button>
+                  <button class="equip-slot equip-slot--left" data-item="Aether Key"><span>⚿</span><small>KEY</small></button>
+                  <button class="equip-slot equip-slot--right" data-item="Lattice Codex"><span>◇</span><small>CODEX</small></button>
+                  <div class="socket-row" aria-label="Three sockets"><span class="socket socket--green"></span><span class="socket socket--blue"></span><span class="socket socket--empty"></span></div>
+                </div>
+              </section>
+
+              <section class="inventory-pane" aria-label="Field pack">
+                <div class="section-label"><span>FIELD PACK</span><small><b id="slot-count">8</b> / 20</small></div>
+                <div class="inventory-grid" id="inventory-grid">
+                  <button class="raster-slot is-selected" data-item="Oracle Lens" data-rarity="legendary"><svg viewBox="423 35 145 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg><span>◉</span><small>1</small></button>
+                  <button class="raster-slot" data-item="Aether Vial" data-rarity="rare"><svg viewBox="282 35 145 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg><span>⚗</span><small>4</small></button>
+                  <button class="raster-slot" data-item="Warden Key"><svg viewBox="145 35 140 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg><span>⚿</span></button>
+                  <button class="raster-slot" data-item="Moon Seal"><svg viewBox="145 35 140 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg><span>✦</span></button>
+                  <button class="raster-slot" data-item="Ashen Compass"><svg viewBox="145 35 140 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg><span>✥</span></button>
+                  <button class="raster-slot" data-item="Vault Sigil"><svg viewBox="145 35 140 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg><span>◈</span></button>
+                  <button class="raster-slot" data-item="Ember Flask"><svg viewBox="145 35 140 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg><span>♨</span><small>2</small></button>
+                  <button class="raster-slot" data-item="Chain Ward"><svg viewBox="145 35 140 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg><span>⛓</span></button>
+                  <button class="raster-slot" aria-label="Empty slot"><svg viewBox="12 35 140 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg></button>
+                  <button class="raster-slot" aria-label="Empty slot"><svg viewBox="12 35 140 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg></button>
+                  <button class="raster-slot" aria-label="Empty slot"><svg viewBox="12 35 140 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg></button>
+                  <button class="raster-slot" aria-label="Empty slot"><svg viewBox="12 35 140 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg></button>
+                  <button class="raster-slot" aria-label="Empty slot"><svg viewBox="12 35 140 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg></button>
+                  <button class="raster-slot" aria-label="Empty slot"><svg viewBox="12 35 140 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg></button>
+                  <button class="raster-slot" aria-label="Empty slot"><svg viewBox="12 35 140 125" preserveAspectRatio="none"><image href="assets/concepts/inventory-states.png" width="1672" height="941" /></svg></button>
+                </div>
+                <div class="inventory-pane__footer">
+                  <div class="capacity"><span>ENCUMBRANCE</span><i><b></b></i><output>38 / 60</output></div>
+                  <button class="raster-action" id="sort-button"><svg viewBox="10 32 140 62" preserveAspectRatio="none"><image href="assets/concepts/controls-and-panels.png" width="1672" height="941" /></svg><span>Sort</span></button>
+                  <button class="raster-action raster-action--primary" id="equip-button"><svg viewBox="423 32 140 62" preserveAspectRatio="none"><image href="assets/concepts/controls-and-panels.png" width="1672" height="941" /></svg><span>Equip</span></button>
+                </div>
+              </section>
+            </div>
+          </section>
+
+          <div class="selected-item" id="selected-item">
+            <span class="selected-item__icon">◉</span>
+            <div><small>SELECTED ITEM</small><strong id="selected-name">Oracle Lens</strong><span>Legendary focus · Item level 47</span></div>
+            <kbd>E</kbd><em>Equip</em>
+          </div>
+        </div>
+      </div>
+
+      <footer class="state-strip">
+        <span>STATE PRESETS</span>
+        <button class="is-active" data-state="default"><i></i>Default</button>
+        <button data-state="combat"><i></i>Combat</button>
+        <button data-state="damaged"><i></i>Low vitality</button>
+        <button data-state="locked"><i></i>Locked</button>
+      </footer>
+    </section>
+
+    <aside class="inspector" aria-label="Properties inspector">
+      <div class="panel-title"><span>PROPERTIES</span><small id="selected-component">Resource bar</small></div>
+      <section class="inspector-section">
+        <h2>Appearance</h2>
+        <label class="property-row"><span>Accent</span><select id="accent-select"><option value="verdigris">Verdigris</option><option value="brass">Brass</option></select></label>
+        <label class="property-row"><span>Density</span><select id="density-select"><option value="compact">Compact</option><option value="roomy">Roomy</option></select></label>
+        <label class="property-row property-row--range"><span>Scale</span><output id="scale-output">100%</output><input id="scale-input" type="range" min="88" max="112" value="100" /></label>
+        <label class="switch-row"><span><b>Ornament</b><small>Corner and seal layer</small></span><input id="ornament-toggle" type="checkbox" checked /><i></i></label>
+      </section>
+      <section class="inspector-section">
+        <h2>Selected state</h2>
+        <dl class="token-list">
+          <div><dt>frame.edge</dt><dd><i class="token-swatch token-swatch--gold"></i>#B88A36</dd></div>
+          <div><dt>surface.raised</dt><dd><i class="token-swatch token-swatch--black"></i>#171B19</dd></div>
+          <div><dt>accent.active</dt><dd><i class="token-swatch token-swatch--green"></i>#58B7A0</dd></div>
+          <div><dt>text.primary</dt><dd><i class="token-swatch token-swatch--ivory"></i>#E9E2D2</dd></div>
+        </dl>
+      </section>
+      <section class="inspector-section compatibility">
+        <div><h2>Orb compatibility</h2><span>Existing system</span></div>
+        <button class="orb-reference" data-open-orbs>
+          <img src="../wizard_orbs/screenshots/shot_hero.png" alt="Existing red health and blue mana orbs" />
+          <span>Preview reference ↗</span>
+        </button>
+        <p>Frame, spacing, and contrast are tuned around the current health and mana treatment.</p>
+      </section>
+      <footer class="inspector__footer"><code>framekit / v1.1</code><span>Static · no dependencies</span></footer>
+    </aside>
+  </main>
+
+  <dialog class="atlas-dialog" id="atlas-dialog">
+    <header><div><small>SOURCE RASTERS</small><h2>FrameKit atlas</h2></div><button id="close-atlas" aria-label="Close atlas">×</button></header>
+    <div class="atlas-grid">
+      <button data-concept="assets/concepts/controls-and-panels.png"><img src="assets/concepts/controls-and-panels.png" alt="Controls and panel source sheet" /><span>Controls &amp; panels</span></button>
+      <button data-concept="assets/concepts/frame-families.png"><img src="assets/concepts/frame-families.png" alt="Frame family source sheet" /><span>Frame families</span></button>
+      <button data-concept="assets/concepts/hud-resources.png"><img src="assets/concepts/hud-resources.png" alt="HUD resource source sheet" /><span>HUD resources</span></button>
+      <button data-concept="assets/concepts/inventory-states.png"><img src="assets/concepts/inventory-states.png" alt="Inventory state source sheet" /><span>Inventory states</span></button>
+      <button data-concept="assets/concepts/glyph-language.png"><img src="assets/concepts/glyph-language.png" alt="Glyph source sheet" /><span>Glyph language</span></button>
+    </div>
+    <figure class="atlas-detail" id="atlas-detail" hidden><button id="close-detail">← All sheets</button><img id="atlas-detail-image" alt="" /></figure>
+  </dialog>
+
+  <div class="toast-region" id="toast-region" aria-live="polite"></div>
+  <script src="workbench.js"></script>
+</body>
+</html>

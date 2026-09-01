@@ -57,7 +57,7 @@
   --fk-border-w: 1px;
 
   /* Typography */
-  --fk-font: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --fk-font: "Palatino Linotype", Palatino, Georgia, serif;
   --fk-font-mono: "JetBrains Mono", Consolas, monospace;
   --fk-text-1: 12px;
   --fk-text-2: 14px;
