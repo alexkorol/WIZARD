@@ -470,6 +470,7 @@ function checkModuleTests(failures, results) {
     'tools/cartographer/core/test.js',
     'tools/mason/core/test.js',
     'tools/verdigris_splash/validate.mjs',
+    'tests/gui-framekit-panes.test.mjs',
     'tests/wizard-orbs-invariants.test.mjs'
   ];
   const optional = [

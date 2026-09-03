@@ -28,6 +28,7 @@ SHEETS = {
     "buffs": "status-frames.png",
     "panels8": "panel-variants.png",
     "ornate9": "frame-ornate.png",
+    "party": "party-frames.png",
 }
 
 # ---------------------------------------------------------------- detection
@@ -134,11 +135,98 @@ MANIFEST = {
     # -- panel variants sheet
     "banner_arch":      ("panels8", (1195, 85)),
     "modal_large":      ("ornate9", (1050, 250)),
+    "panel_plain":      ("controls", (981, 155)),
+    "input_field":      ("controls", (91, 493)),
+    "card_gold":        ("controls", (1086, 741)),
+    "card_green":       ("controls", (1237, 741)),
+    "card_red":         ("controls", (1397, 741)),
+    "card_plain":       ("controls", (934, 741)),
+    # -- party sheet
+    "ally_housing":     ("party", (160, 690)),
+    "ally_housing2":    ("party", (430, 690)),
+    "portrait_full":    ("party", (90, 520)),
+    "downed_frame":     ("party", (660, 420)),
+    "dead_frame":       ("party", (660, 610)),
+    # The role icons sit close enough to their heading/neighbor that the
+    # connected-component crop merges the first three markers. Keep the
+    # sword marker on an explicit box so the generated asset stays atomic.
+    "role_sword":       ("party", [616, 39, 55, 58]),
+    "role_shield":      ("party", (700, 67)),
+    "leader_wings":     ("party", (668, 145)),
     "banner_plaque":    ("panels8", (215, 995)),
     "banner_winged":    ("panels8", (1160, 985)),
 }
 
 PAD = 2
+
+# decal crops that float over scene backgrounds: strip the sheet's charcoal
+# ground by flood-keying background-colored pixels connected to the border
+ALPHA_KEY = {
+    "plate_winged", "winged_large", "banner_arch", "banner_plaque",
+    "banner_winged", "leader_wings", "role_sword", "role_shield",
+}
+
+
+def key_background(img, tol=26):
+    rgba = img.convert("RGBA")
+    arr = np.array(rgba).astype(np.int16)
+    corners = np.concatenate([arr[:2, :, :3].reshape(-1, 3), arr[-2:, :, :3].reshape(-1, 3)])
+    bg = corners.mean(axis=0)
+    near = (np.abs(arr[:, :, :3] - bg).sum(axis=2) < tol * 3)
+    lbl, _ = ndimage.label(near)
+    border_ids = set(np.unique(np.concatenate([
+        lbl[0, :], lbl[-1, :], lbl[:, 0], lbl[:, -1]])))
+    border_ids.discard(0)
+    kill = np.isin(lbl, list(border_ids))
+    out = np.array(rgba)
+    out[:, :, 3] = np.where(kill, 0, out[:, :, 3])
+    return Image.fromarray(out)
+
+ORBS_SRC = os.path.join(os.path.dirname(ROOT), "wizard_orbs", "src", "assets")
+# orb geometry from wizard_orbs (art pixels, y-up -> y-down at H=941)
+ORB_L = (541, 941 - 484.5, 252)
+ORB_R = (1128, 941 - 483, 252)
+
+
+def build_orbs():
+    """HUD orb pieces from the wizard_orbs plates: per side, a circular empty
+    dome, a circular liquid/glass fill, and a statue 'chrome' layer with the
+    liquid interior punched out (via the orb mask) so a dynamic fill can sit
+    underneath it."""
+    art = Image.open(os.path.join(ORBS_SRC, "art.png")).convert("RGBA")
+    mask = Image.open(os.path.join(ORBS_SRC, "mask.png")).convert("L").resize(
+        (1672, 941), Image.BILINEAR)
+
+    art_np = np.array(art)
+    mask_np = np.array(mask)
+    chrome_np = art_np.copy()
+    chrome_np[:, :, 3] = np.where(mask_np > 100, 0, art_np[:, :, 3])
+    chrome = Image.fromarray(chrome_np)
+
+    H = art.height
+    yy, xx = np.mgrid[0:H, 0:art.width]
+
+    def circle_crop(img, cx, cy, r, name):
+        box = (int(cx - r), int(cy - r), int(cx + r), int(cy + r))
+        c = img.crop(box).convert("RGBA")
+        n = np.array(c)
+        h, w = n.shape[:2]
+        cyy, cxx = np.mgrid[0:h, 0:w]
+        d = np.hypot(cxx - w / 2, cyy - h / 2)
+        alpha = np.clip((r - d) * 96, 0, 255).astype(np.uint8)
+        n[:, :, 3] = np.minimum(n[:, :, 3], alpha)
+        Image.fromarray(n).save(os.path.join(OUT, name))
+
+    clusters = {
+        "l": {"orb": ORB_L, "box": (28, 130, 828, 941)},
+        "r": {"orb": ORB_R, "box": (846, 130, 1646, 941)},
+    }
+    for side, spec in clusters.items():
+        cx, cy, r = spec["orb"]
+        circle_crop(art, cx, cy, r, f"orb_full_{side}.png")
+        chrome.crop(spec["box"]).save(os.path.join(OUT, f"orb_chrome_{side}.png"))
+        x0, y0 = spec["box"][0], spec["box"][1]
+        print(f"orb {side}: center in cluster = ({cx - x0:.0f}, {cy - y0:.0f}) r={r}")
 
 
 def main():
@@ -170,6 +258,8 @@ def main():
         x0 = max(0, x - PAD); y0 = max(0, y - PAD)
         x1 = min(img.width, x + w + PAD); y1 = min(img.height, y + h + PAD)
         crop = img.crop((x0, y0, x1, y1))
+        if name in ALPHA_KEY:
+            crop = key_background(crop)
         crop.save(os.path.join(OUT, f"{name}.png"))
         crops[name] = crop
     if misses:
@@ -202,6 +292,22 @@ def main():
             out.append({"x": int(xx0), "y": int(yy0), "w": int(ww), "h": int(hh)})
         out.sort(key=lambda b: (round(b["y"] / 30), b["x"]))
         return out
+
+    # slim variant of the ability rack: drop the winged crest, keep slot band,
+    # and patch the crest stub with a clean stretch of the top rail
+    rack_slim = crops["rack_large"].crop((0, 50, crops["rack_large"].width,
+                                          crops["rack_large"].height))
+    rail = rack_slim.crop((100, 0, 200, 18))
+    for x in range(280, 410, 100):
+        rack_slim.paste(rail, (x, 0))
+    rack_slim.save(os.path.join(OUT, "rack_slim.png"))
+
+    # split the composed spread into standalone panels (vendor/stash windows)
+    spread_rgb = Image.open(os.path.join(CONCEPTS, "character-spread.png")).convert("RGB")
+    spread_rgb.crop((9, 6, 786, 977)).save(os.path.join(OUT, "panel_left.jpg"), quality=90)
+    spread_rgb.crop((805, 6, 1582, 977)).save(os.path.join(OUT, "panel_right.jpg"), quality=90)
+
+    build_orbs()
 
     rack_wells = inner_wells(crops["rack_large"])
     modal_wells = inner_wells(crops["modal_winged"], minsize=30)

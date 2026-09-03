@@ -7,27 +7,68 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="game.css">
+<link rel="preload" as="image" href="assets/orb_chrome_l.png">
+<link rel="preload" as="image" href="assets/orb_chrome_r.png">
+<link rel="stylesheet" href="game.css?v=7">
+<link rel="stylesheet" href="panes.css?v=3">
 </head>
 <body>
 <canvas id="motes"></canvas>
 <div id="vignette"></div>
 <div id="stage">
-  <!-- top bar -->
+
+  <!-- ============================ main menu ============================ -->
+  <section id="menuScreen">
+    <img id="menuCrest" src="assets/winged_large.png" alt="">
+    <h1>Verdigris</h1>
+    <div id="menuSub">The Sunken Archive</div>
+    <div id="menuButtons">
+      <button class="btn wide" data-menu="town"><img src="assets/btn_primary.png" alt=""><span>Enter the Archive</span></button>
+      <button class="btn wide" data-menu="combat"><img src="assets/btn_primary.png" alt=""><span>Descend to the Vaults</span></button>
+      <button class="btn wide" data-menu="settings"><img src="assets/btn_primary.png" alt=""><span>Settings</span></button>
+    </div>
+    <div id="menuFoot">FrameKit interface demo — every surface is generated sheet art</div>
+  </section>
+
+  <!-- =========================== world layer =========================== -->
+  <section id="worldScreen">
+    <div id="sceneTown" class="scene"></div>
+    <div id="sceneCombat" class="scene"></div>
+    <div id="bossBar">
+      <div id="bossName"></div>
+      <img src="assets/bar_winged_red.png" alt="">
+      <div class="deplete"></div>
+    </div>
+    <div id="party"></div>
+    <div id="chat">
+      <div id="chatTabs">
+        <button class="chatTab active" data-chan="local">Local</button>
+        <button class="chatTab" data-chan="party">Party</button>
+        <button class="chatTab" data-chan="log">Log</button>
+      </div>
+      <div id="chatLog" aria-live="polite"></div>
+      <div id="chatInput">
+        <img src="assets/input_field.png" alt="">
+        <input type="text" placeholder="Press Enter to chat" maxlength="80">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= topbar ============================= -->
   <header id="topbar">
     <div id="location" class="banner">
       <img src="assets/banner_arch.png" alt="">
-      <span>The Sunken Archive</span>
+      <span id="locationName">The Sunken Archive</span>
     </div>
-    <nav id="tabs">
-      <button class="tab" data-screen="character"><span>Character</span></button>
-      <button class="tab" data-screen="skills"><span>Skill Web</span></button>
-    </nav>
     <div id="topright">
       <div id="goldplate" class="banner">
         <img src="assets/banner_plaque.png" alt="">
         <span id="goldAmount">1,248</span>
       </div>
+      <button id="skillBtn" class="systemBtn" title="Skill Web" aria-label="Open Skill Web" aria-controls="skillScreen" aria-expanded="false" aria-keyshortcuts="V">
+        <img class="frame" src="assets/panel_sq_small.png" alt="">
+        <img class="icon" src="assets/laurel_sun.png" alt="">
+      </button>
       <button id="settingsBtn" title="Settings">
         <img class="frame" src="assets/panel_sq_small.png" alt="">
         <img class="icon" src="assets/med_stargold.png" alt="Settings">
@@ -35,16 +76,53 @@
     </div>
   </header>
 
-  <!-- character + inventory spread -->
-  <section id="charScreen" class="screen">
-    <div id="spread">
-      <img id="spreadArt" src="assets/character_spread.jpg" alt="">
-      <div id="spreadOverlay"></div>
-    </div>
+  <!-- ======================= independent pane system ======================= -->
+  <section id="paneLayer" aria-label="Game panes">
+    <nav class="pane-rail left" data-side="left" aria-label="Left pane launchers">
+      <button class="pane-launch" data-side="left" data-pane="stats" aria-controls="leftPane" aria-expanded="false" aria-keyshortcuts="C"><img src="assets/med_sun.png" alt=""><span>Stats</span></button>
+      <button class="pane-launch" data-side="left" data-pane="stash" aria-controls="leftPane" aria-expanded="false" aria-keyshortcuts="K"><img src="assets/med_key.png" alt=""><span>Stash</span></button>
+      <button class="pane-launch" data-side="left" data-pane="trade" aria-controls="leftPane" aria-expanded="false" aria-keyshortcuts="T"><img src="assets/med_scales.png" alt=""><span>Trade</span></button>
+      <button class="pane-launch" data-side="left" data-pane="codex" aria-controls="leftPane" aria-expanded="false" aria-keyshortcuts="L"><img src="assets/med_hourglass.png" alt=""><span>Codex</span></button>
+      <button class="pane-launch" data-side="left" data-pane="crafting" aria-controls="leftPane" aria-expanded="false" aria-keyshortcuts="F"><img src="assets/med_torch.png" alt=""><span>Craft</span></button>
+      <button class="pane-launch" data-side="left" data-pane="reliquary" aria-controls="leftPane" aria-expanded="false" aria-keyshortcuts="B"><img src="assets/laurel_sun.png" alt=""><span>Relics</span></button>
+    </nav>
+
+    <aside id="leftPane" class="pane-shell left closed" data-side="left" aria-hidden="true" aria-labelledby="leftPaneTitle">
+      <img class="pane-art" src="assets/panel_left.jpg" alt="">
+      <header class="pane-head">
+        <h2 id="leftPaneTitle" class="pane-title" tabindex="-1">Character</h2>
+        <button class="pane-close" data-side="left" aria-label="Close left pane">×</button>
+      </header>
+      <div class="pane-body">
+        <section class="pane-view" data-pane="stats"><div id="leftCharacterContent" class="character-side"></div></section>
+        <section class="pane-view" data-pane="stash"><p id="stashCount" class="pane-kicker">Account storage</p><div class="pane-toolbar"><span id="stashTarget">Select an inventory item to deposit it.</span><button id="stashDeposit" class="pane-action" type="button">Deposit</button></div><div id="stashGrid" class="pane-grid" aria-label="Stash items"></div></section>
+        <section class="pane-view" data-pane="trade"><p class="pane-kicker">Harl · Armourmaster</p><h3 class="pane-section-title">Harl's stock</h3><div id="vendorOverlay" class="pane-grid trade-grid" aria-label="Vendor stock"></div><section class="trade-offer" aria-labelledby="tradeOfferTitle"><h3 id="tradeOfferTitle">Your offer</h3><div id="tradeOfferItem" role="status" aria-live="polite">Select a pack item to sell.</div><div class="trade-actions"><button id="tradeAddOffer" class="pane-action" type="button">Offer selected</button><button id="tradeAccept" class="pane-action primary" type="button" disabled>Accept trade</button><button id="tradeCancel" class="pane-action" type="button" disabled>Cancel</button></div></section><p id="vendorHint" role="status" aria-live="polite">Buy from Harl, or select an item in Inventory to make an offer.</p></section>
+        <section class="pane-view codex-layout" data-pane="codex"><div id="codexList" class="codex-list" aria-label="Codex entries"></div><article id="codexEntry" class="codex-entry" role="region" aria-live="polite" aria-label="Selected codex entry"></article></section>
+        <section class="pane-view" data-pane="crafting"><p class="pane-kicker">The Brass Crucible · 3 recipes known</p><div id="craftTarget" class="pane-toolbar" role="status" aria-live="polite">Select equipment in Inventory.</div><div id="craftRecipes"></div></section>
+        <section class="pane-view" data-pane="reliquary"><div id="shardPlate">Shards <b id="shardAmount">1,200</b></div><div id="shopCards"></div></section>
+      </div>
+    </aside>
+
+    <nav class="pane-rail right" data-side="right" aria-label="Right pane launchers">
+      <button class="pane-launch" data-side="right" data-pane="inventory" aria-controls="rightPane" aria-expanded="false" aria-keyshortcuts="I"><img src="assets/med_shield.png" alt=""><span>Inventory</span></button>
+      <button class="pane-launch" data-side="right" data-pane="cosmetics" aria-controls="rightPane" aria-expanded="false" aria-keyshortcuts="O"><img src="assets/med_crown.png" alt=""><span>Cosmetics</span></button>
+    </nav>
+
+    <aside id="rightPane" class="pane-shell right closed" data-side="right" aria-hidden="true" aria-labelledby="rightPaneTitle">
+      <img class="pane-art" src="assets/panel_right.jpg" alt="">
+      <header class="pane-head">
+        <h2 id="rightPaneTitle" class="pane-title" tabindex="-1">Inventory</h2>
+        <button class="pane-close" data-side="right" aria-label="Close right pane">×</button>
+      </header>
+      <div class="pane-body">
+        <section class="pane-view" data-pane="inventory"><div id="rightCharacterContent" class="character-side"></div><div id="inventoryActions" class="inventory-actions" aria-live="polite"><span id="inventorySelection">Select an item to inspect it.</span><button id="inventoryPrimary" class="pane-action primary" type="button" disabled>Equip</button><button id="inventoryUse" class="pane-action" type="button" disabled>Use</button></div></section>
+        <section class="pane-view" data-pane="cosmetics"><p class="pane-kicker">Aurelius · ceremonial loadout</p><div id="cosmeticPreview"></div><div id="cosmeticGrid" class="cosmetic-grid" aria-label="Cosmetic collection"></div></section>
+      </div>
+    </aside>
   </section>
 
-  <!-- skill web -->
-  <section id="skillScreen" class="screen">
+  <!-- ========================= fullscreen workspaces ========================= -->
+  <section id="skillScreen" class="overlay-panel" role="dialog" aria-modal="true" aria-label="Skill Web" aria-hidden="true">
     <aside id="skillPanel">
       <img src="assets/modal_winged.png" alt="">
       <div id="skillPanelBody">
@@ -57,34 +135,39 @@
       <img src="assets/banner_plaque.png" alt="">
       <span id="pointsLeft">12</span>
     </div>
-    <div id="web">
-      <img id="webArt" src="assets/skill_web.jpg" alt="">
-      <div id="webOverlay"></div>
+    <img id="pointsSun" src="assets/laurel_sun.png" alt="">
+    <div id="tree">
+      <canvas id="treeCanvas" width="1100" height="1100"></canvas>
+      <div id="treeOverlay"></div>
     </div>
   </section>
 
-  <!-- HUD -->
+  <!-- =============================== HUD =============================== -->
   <footer id="hud">
-    <div id="portrait">
-      <img class="ring" src="assets/gauge_empty.png" alt="">
-      <img class="face" src="assets/med_sun.png" alt="">
+    <div class="orbCluster" id="orbHealth">
+      <div class="orbWell">
+        <img class="orbBase" src="assets/orb_full_l.png" alt="">
+        <img class="orbFill" src="assets/orb_full_l.png" alt="">
+      </div>
+      <img class="chrome" src="assets/orb_chrome_l.png" alt="">
+      <span class="orbNum" id="healthNum"></span>
       <div id="charLevel">47</div>
     </div>
-    <div id="vitals">
-      <div class="vital" id="healthBar">
-        <img src="assets/bar_winged_red.png" alt="">
-        <div class="deplete"></div>
-        <span class="num" id="healthNum"></span>
+    <div class="orbCluster" id="orbMana">
+      <div class="orbWell">
+        <img class="orbBase" src="assets/orb_full_r.png" alt="">
+        <img class="orbFill" src="assets/orb_full_r.png" alt="">
       </div>
-      <div class="vital" id="manaBar">
-        <img src="assets/bar_winged_purple.png" alt="">
-        <div class="deplete"></div>
-        <span class="num" id="manaNum"></span>
-      </div>
+      <img class="chrome" src="assets/orb_chrome_r.png" alt="">
+      <span class="orbNum" id="manaNum"></span>
     </div>
     <div id="rack">
-      <img src="assets/rack_large.png" alt="">
+      <img src="assets/rack_slim.png" alt="">
       <div id="rackSlots"></div>
+      <div id="setSwap">
+        <button class="setBtn active" data-set="I">I</button>
+        <button class="setBtn" data-set="II">II</button>
+      </div>
     </div>
     <div id="buffs"></div>
     <div id="xpbar">
@@ -93,23 +176,22 @@
     </div>
   </footer>
 
-  <!-- tooltip -->
   <div id="tooltip"></div>
+  <div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- settings modal -->
-  <div id="modalBackdrop">
-    <div id="modal">
+  <div id="modalBackdrop" aria-hidden="true">
+    <div id="modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" tabindex="-1">
       <img src="assets/modal_large.png" alt="">
       <div id="modalBody">
-        <h2>Settings</h2>
+        <h2 id="settingsTitle">Settings</h2>
         <div class="setrow"><label>Music</label>
-          <button class="toggle" data-set="music"><img src="assets/toggle_on.png" alt=""></button></div>
+          <button class="toggle" data-set="music" role="switch" aria-checked="true" aria-label="Music"><img src="assets/toggle_on.png" alt=""></button></div>
         <div class="setrow"><label>Drifting motes</label>
-          <button class="toggle" data-set="motes"><img src="assets/toggle_on.png" alt=""></button></div>
+          <button class="toggle" data-set="motes" role="switch" aria-checked="true" aria-label="Drifting motes"><img src="assets/toggle_on.png" alt=""></button></div>
         <div class="setrow"><label>Quality</label>
-          <button id="quality" class="dd"><img src="assets/dropdown.png" alt=""><span>High</span></button></div>
+          <button id="quality" class="dd" aria-label="Quality: High"><img src="assets/dropdown.png" alt=""><span>High</span></button></div>
         <div class="setrow"><label>Show keybinds</label>
-          <button class="toggle" data-set="keybinds"><img src="assets/toggle_on.png" alt=""></button></div>
+          <button class="toggle" data-set="keybinds" role="switch" aria-checked="true" aria-label="Show keybinds"><img src="assets/toggle_on.png" alt=""></button></div>
         <div id="modalButtons">
           <button class="btn" id="applyBtn"><img src="assets/btn_primary.png" alt=""><span>Apply</span></button>
           <button class="btn" id="closeBtn"><img src="assets/btn_primary.png" alt=""><span>Close</span></button>
@@ -118,6 +200,11 @@
     </div>
   </div>
 </div>
-<script src="game.js"></script>
+<script src="core.js?v=7"></script>
+<script src="character.js?v=7"></script>
+<script src="tree.js?v=6"></script>
+<script src="panes.js?v=3"></script>
+<script src="world.js?v=7"></script>
+<script src="pane-content.js?v=3"></script>
 </body>
 </html>
