@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>gui_framekit · base reset demo — FK-101</title>
+  <link rel="stylesheet" href="../tokens/tokens.css">
+  <link rel="stylesheet" href="./base.css">
+  <style>
+    .page {
+      max-width: calc(var(--fk-space-6) * 28);
+      margin-inline: auto;
+      padding: var(--fk-space-5) var(--fk-space-4);
+    }
+
+    .lede {
+      color: var(--fk-fg-1);
+      font-size: var(--fk-text-3);
+    }
+
+    article {
+      display: grid;
+      gap: var(--fk-space-3);
+      border-block-end: var(--fk-border-w) solid var(--fk-border);
+      padding-block-end: var(--fk-space-4);
+      margin-block-end: var(--fk-space-4);
+    }
+
+    .meta {
+      font-family: var(--fk-font-mono);
+      font-size: var(--fk-text-1);
+      color: var(--fk-fg-1);
+    }
+
+    pre {
+      background: var(--fk-bg-1);
+      border: var(--fk-border-w) solid var(--fk-border);
+      border-radius: var(--fk-radius);
+      padding: var(--fk-space-3);
+      font-size: var(--fk-text-1);
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(calc(var(--fk-space-6) * 7), 1fr));
+      gap: var(--fk-space-2);
+      align-items: center;
+    }
+
+    button {
+      padding: var(--fk-space-2) var(--fk-space-4);
+      background: var(--fk-bg-2);
+      border: var(--fk-border-w) solid var(--fk-border);
+      border-radius: var(--fk-radius);
+      cursor: pointer;
+    }
+
+    button:hover {
+      border-color: var(--fk-border-hi);
+    }
+
+    footer {
+      color: var(--fk-fg-1);
+      font-size: var(--fk-text-1);
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>Base reset demo</h1>
+      <p class="lede">Document defaults from <code>base/base.css</code> over
+        <code>tokens/tokens.css</code>. No component CSS is loaded — this is
+        the floor every gui_framekit component starts from.</p>
+    </header>
+
+    <article>
+      <h2>Headings inherit the scale</h2>
+      <h3>Third-level heading</h3>
+      <p>Body copy sits at <code>--fk-text-2</code> on <code>--fk-bg-0</code>.
+        Long words break instead of overflowing, and selection uses brass:
+        try selecting this paragraph.</p>
+      <p class="meta">2026-08-23 · FK-101 · verdigris-systems.lab</p>
+    </article>
+
+    <article>
+      <h2>Lists, code, rules</h2>
+      <ul role="list">
+        <li>role="list" items lose markers</li>
+        <li>inline code renders in the mono stack</li>
+      </ul>
+      <pre>mana := circle.charge * focus.attunement
+assert mana &lt;= vessel.capacity</pre>
+      <hr>
+      <p>Links: <a href="./demo.html">this page</a> (visited turns brass).</p>
+    </article>
+
+    <article>
+      <h2>Form controls are normalized only</h2>
+      <div class="actions">
+        <button type="button">Inherited font</button>
+        <label class="meta" for="probe">focus ring = --fk-accent</label>
+        <input id="probe" placeholder="tab here">
+      </div>
+    </article>
+
+    <footer>FK-101 owns tools/gui_framekit/tokens/ and
+      tools/gui_framekit/base/. Zero JavaScript on this page.</footer>
+  </main>
+</body>
+</html>

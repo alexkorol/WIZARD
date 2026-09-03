@@ -1,0 +1,45 @@
+/*
+ * fk-globe — FRAMEKIT-WAVE-1 / FK-104
+ * Diablo-style resource globe. Root class: .fk-globe; inner .fk-globe-fill
+ * rises from the bottom via --fk-globe-value (0–100%). CSS-only.
+ *
+ *   <div class="fk-globe" data-tone="ok" role="meter" aria-label="Mana" aria-valuenow="70">
+ *     <div class="fk-globe-fill"></div>
+ *     <span class="fk-globe-text">70</span>
+ *   </div>
+ */
+
+.fk-globe {
+  box-sizing: border-box;
+  position: relative;
+  width: calc(var(--fk-space-6) * 2);
+  height: calc(var(--fk-space-6) * 2);
+  border-radius: 50%;
+  background: var(--fk-bg-1);
+  border: var(--fk-border-w) solid var(--fk-frame-edge);
+  overflow: hidden;
+}
+
+.fk-globe-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: calc(100% - clamp(0%, var(--fk-globe-value, 50%), 100%));
+  background: var(--fk-accent-2);
+  opacity: 0.85;
+}
+
+.fk-globe[data-tone='ok'] .fk-globe-fill { background: var(--fk-ok); }
+.fk-globe[data-tone='danger'] .fk-globe-fill { background: var(--fk-danger); }
+
+.fk-globe-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-2);
+  color: var(--fk-fg-0);
+}

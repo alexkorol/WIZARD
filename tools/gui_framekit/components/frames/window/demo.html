@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>gui_framekit · window demo — FK-102</title>
+  <link rel="stylesheet" href="../../../tokens/tokens.css">
+  <link rel="stylesheet" href="./window.css">
+  <style>
+    body {
+      padding: var(--fk-space-5);
+      background: var(--fk-bg-0);
+      color: var(--fk-fg-0);
+      font-family: var(--fk-font);
+      font-size: var(--fk-text-2);
+      display: grid;
+      gap: var(--fk-space-4);
+      place-items: start center;
+    }
+
+    p {
+      color: var(--fk-fg-1);
+      font-size: var(--fk-text-1);
+      font-family: var(--fk-font-mono);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <p>drag either window by its titlebar (window.js enhancement)</p>
+
+  <section class="fk-window fk-window--inlay" style="inline-size: calc(var(--fk-space-6) * 22);">
+    <header class="fk-window__titlebar">
+      <span class="fk-window__title">Circle Calibration — Bench 03</span>
+      <span class="fk-window__controls"></span>
+    </header>
+    <div class="fk-window__body">
+      Verdigris inlay variant (<code>.fk-window--inlay</code>). The brass
+      double frame and engraved inner line are pure CSS; the nine-slice
+      texture hook activates automatically once FK-107 lands the asset.
+    </div>
+  </section>
+
+  <section class="fk-window" style="inline-size: calc(var(--fk-space-6) * 22);">
+    <header class="fk-window__titlebar">
+      <span class="fk-window__title">Reagent Ledger</span>
+      <span class="fk-window__controls"></span>
+    </header>
+    <div class="fk-window__body">
+      Default window. Titlebar drag is a progressive enhancement — without
+      window.js the window still renders and reads perfectly.
+    </div>
+  </section>
+
+  <script type="module">
+    import { init } from "./window.js";
+    document.querySelectorAll(".fk-window").forEach(init);
+  </script>
+</body>
+</html>

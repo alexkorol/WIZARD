@@ -1,0 +1,19 @@
+/*
+ * fk-grid — FRAMEKIT-WAVE-1 / FK-105
+ * Inventory grid container. Root class: .fk-grid; hosts .fk-slot children.
+ * data-cols sets the column count (default 6). Pure CSS.
+ */
+
+.fk-grid {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(6, var(--fk-space-6));
+  gap: var(--fk-space-1);
+  padding: var(--fk-space-2);
+  background: var(--fk-bg-1);
+  border: var(--fk-border-w) solid var(--fk-border);
+  border-radius: var(--fk-radius);
+}
+
+.fk-grid[data-cols='4'] { grid-template-columns: repeat(4, var(--fk-space-6)); }
+.fk-grid[data-cols='8'] { grid-template-columns: repeat(8, var(--fk-space-6)); }

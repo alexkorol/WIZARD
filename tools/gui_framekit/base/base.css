@@ -1,0 +1,127 @@
+/*
+ * gui_framekit base reset — FK-101
+ *
+ * Loads after tokens/tokens.css. Normalizes element defaults across
+ * browsers and sets laboratory document defaults from --fk-* tokens only.
+ * This is reset scope, not component scope: visual identities land in
+ * components/<group>/<name>/<name>.css per INTERFACES.md.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--fk-bg-0);
+  color: var(--fk-fg-0);
+  font-family: var(--fk-font);
+  font-size: var(--fk-text-2);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: calc(var(--fk-text-3) * 1.6);
+}
+
+h2 {
+  font-size: calc(var(--fk-text-3) * 1.25);
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--fk-text-3);
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  padding: 0;
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--fk-font-mono);
+  font-size: calc(var(--fk-text-2) * 0.93);
+}
+
+pre {
+  overflow: auto;
+}
+
+a {
+  color: var(--fk-accent-2);
+}
+
+a:visited {
+  color: var(--fk-accent);
+}
+
+hr {
+  border: 0;
+  border-top: var(--fk-border-w) solid var(--fk-border);
+}
+
+::selection {
+  background: var(--fk-accent);
+  color: var(--fk-bg-0);
+}
+
+:focus-visible {
+  outline: var(--fk-border-w) solid var(--fk-accent);
+  outline-offset: var(--fk-space-1);
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>gui_framekit · dialog demo — FK-102</title>
+  <link rel="stylesheet" href="../../../tokens/tokens.css">
+  <link rel="stylesheet" href="./dialog.css">
+  <style>
+    body {
+      padding: var(--fk-space-5);
+      background: var(--fk-bg-0);
+      color: var(--fk-fg-0);
+      font-family: var(--fk-font);
+      font-size: var(--fk-text-2);
+      display: grid;
+      gap: var(--fk-space-3);
+      place-items: start center;
+    }
+
+    button {
+      font: inherit;
+      color: var(--fk-fg-0);
+      background: var(--fk-bg-2);
+      border: var(--fk-border-w) solid var(--fk-border);
+      border-radius: var(--fk-radius);
+      padding: var(--fk-space-2) var(--fk-space-4);
+      cursor: pointer;
+    }
+
+    button:hover {
+      border-color: var(--fk-border-hi);
+    }
+
+    .actions button {
+      background: var(--fk-bg-2);
+    }
+
+    .actions .primary {
+      background: var(--fk-accent);
+      color: var(--fk-bg-0);
+      border-color: var(--fk-border-hi);
+    }
+
+    p {
+      color: var(--fk-fg-1);
+      font-size: var(--fk-text-1);
+      font-family: var(--fk-font-mono);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <p>open with the button · close with Escape, backdrop, or Cancel</p>
+
+  <button type="button" data-fk-dialog-open id="open-dialog">Seal the circle</button>
+
+  <div class="fk-dialog" id="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+    <div class="fk-dialog__card">
+      <h2 class="fk-dialog__title" id="dialog-title">Seal the circle?</h2>
+      <div class="fk-dialog__body">
+        The working will bind for one full lunar cycle. This cannot be
+        undone from the bench.
+      </div>
+      <div class="fk-dialog__actions">
+        <button type="button" data-fk-dialog-close>Cancel</button>
+        <button type="button" class="primary" data-fk-dialog-close autofocus>Seal it</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { init } from "./dialog.js";
+    const dialog = document.getElementById("confirm-dialog");
+    init(dialog);
+    if (location.hash === "#open") dialog.fkDialog.open();
+  </script>
+</body>
+</html>

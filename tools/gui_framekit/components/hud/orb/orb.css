@@ -1,0 +1,26 @@
+/*
+ * fk-orb — FRAMEKIT-WAVE-1 / FK-104
+ * Small round status indicator / charge pip. Root class: .fk-orb.
+ * data-state="idle|active|charged" (default idle). Pure CSS.
+ */
+
+.fk-orb {
+  box-sizing: border-box;
+  display: inline-block;
+  width: var(--fk-space-3);
+  height: var(--fk-space-3);
+  border-radius: 50%;
+  background: var(--fk-bg-2);
+  border: var(--fk-border-w) solid var(--fk-border);
+}
+
+.fk-orb[data-state='active'] {
+  background: var(--fk-accent-2);
+  border-color: var(--fk-accent-2);
+}
+
+.fk-orb[data-state='charged'] {
+  background: var(--fk-accent);
+  border-color: var(--fk-border-hi);
+  box-shadow: 0 0 calc(var(--fk-space-1) * 1.5) var(--fk-accent);
+}

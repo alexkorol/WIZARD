@@ -1,0 +1,65 @@
+/*
+ * gui_framekit design tokens — FRAMEKIT-WAVE-1 / FK-101
+ *
+ * Implements the frozen token names from tools/gui_framekit/INTERFACES.md
+ * exactly. Values are drawn from the existing WIZARD laboratory palette
+ * (dashboard + modules) so the kit does not invent a second visual
+ * language:
+ *
+ *   surfaces  #0d0c0a / #100f0c      (lab page + panel backgrounds)
+ *   ink       #e9e4d8 / #9c9587      (parchment text, dimmed text)
+ *   brass     #c9a227 / #c9a96a / #8a7146  (accent, soft highlight, edge)
+ *   verdigris #4ca99a                (secondary accent, lab namesake)
+ *   state     #7fbfa3 ok / #e0b84f warn / #c8323a danger (module HUD colors)
+ *
+ * This file is the only place component CSS may source color, spacing,
+ * radius, border width, and type-scale values from. Components must not
+ * hardcode literals (see INTERFACES.md hard rules).
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* Surfaces: page, raised panel, highest raised surface */
+  --fk-bg-0: #0d0c0a;
+  --fk-bg-1: #100f0c;
+  --fk-bg-2: #161310;
+
+  /* Ink: primary parchment text, dimmed text */
+  --fk-fg-0: #e9e4d8;
+  --fk-fg-1: #9c9587;
+
+  /* Accents: brass gold (primary), verdigris teal (secondary) */
+  --fk-accent: #c9a227;
+  --fk-accent-2: #4ca99a;
+
+  /* State */
+  --fk-ok: #7fbfa3;
+  --fk-warn: #e0b84f;
+  --fk-danger: #c8323a;
+
+  /* Lines: engraved hairline, brass highlight, window chrome, frame edge */
+  --fk-border: rgba(233, 228, 216, 0.14);
+  --fk-border-hi: #c9a96a;
+  --fk-frame-bg: #0a0908;
+  --fk-frame-edge: #8a7146;
+
+  /* Spacing scale, 4px base */
+  --fk-space-1: 4px;
+  --fk-space-2: 8px;
+  --fk-space-3: 12px;
+  --fk-space-4: 16px;
+  --fk-space-5: 24px;
+  --fk-space-6: 32px;
+
+  /* Shape */
+  --fk-radius: 8px;
+  --fk-border-w: 1px;
+
+  /* Typography */
+  --fk-font: "Palatino Linotype", Palatino, Georgia, serif;
+  --fk-font-mono: "JetBrains Mono", Consolas, monospace;
+  --fk-text-1: 12px;
+  --fk-text-2: 14px;
+  --fk-text-3: 18px;
+}

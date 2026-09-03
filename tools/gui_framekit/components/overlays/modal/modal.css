@@ -1,0 +1,48 @@
+/*
+ * fk-modal — FRAMEKIT-WAVE-1 / FK-105…106
+ * Root class: .fk-modal on a full-viewport overlay containing a
+ * .fk-modal-box. Hidden by default; [open] (attribute or property) shows it.
+ * CSS-only rendering; host JS toggles the attribute. Backdrop dims the page.
+ *
+ *   <div class="fk-modal" role="dialog" aria-modal="true" aria-label="Seal the pact?">
+ *     <div class="fk-modal-box"> … </div>
+ *   </div>
+ */
+
+.fk-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0);
+}
+
+.fk-modal[open] {
+  display: flex;
+}
+
+/* Backdrop dim via ::before so the box stays above */
+.fk-modal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--fk-frame-bg);
+  opacity: 0.75;
+}
+
+.fk-modal-box {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  min-width: calc(var(--fk-space-6) * 8);
+  max-width: min(90vw, calc(var(--fk-space-6) * 14));
+  padding: var(--fk-space-4);
+  color: var(--fk-fg-0);
+  font-family: var(--fk-font);
+  font-size: var(--fk-text-2);
+  background: var(--fk-bg-1);
+  border: var(--fk-border-w) solid var(--fk-border-hi);
+  border-radius: var(--fk-radius);
+}
