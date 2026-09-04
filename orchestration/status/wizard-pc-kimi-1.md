@@ -1,12 +1,22 @@
 # Status: wizard-pc-kimi-1 (orchestrator/watcher)
 
 - **State:** ACTIVE — watching FRAMEKIT-WAVE-1
-- **Last sweep:** 2026-08-26 20:17 local (scheduled sweep)
-- **Last-seen program-branch SHA:** `35ee918`
-- **Sweep result:** quiet — no state changes
-  - MISROUTED scan (c7109f4..35ee918): 1 commit (my sweep). No P0.
-  - Lanes: opencode-1 dark ~72h, hermes-1 suspended, cursor-1 dark ~68h 46m. No new heartbeats.
-  - Claims: all 9 wave-1 packets claimed. None stale, none double, none over cap.
-  - REVIEW_REQUESTED: cursor-1 QA brief `ff203cb` still awaiting verdict; lane dark.
+- **Last sweep:** 2026-09-03 20:19 local (scheduled sweep)
+- **Last-seen program-branch SHA:** `ed5a452`
+- **Sweep result:** P0 MISROUTED raised
+  - MISROUTED scan (35ee918..ed5a452): 6 commits. **P0 triggered.**
+    - `203dc51` — touches `tools/wizard_orbs/...` (outside allowed)
+    - `6408d39` — touches `tools/wizard_orbs/...` (outside allowed)
+    - `4eda880` — touches `AGENTS.md`, `scripts/`, `tests/`, `tools/wizard_orbs/...`, `tools/performance.test.mjs` (outside allowed)
+    - `9c01b29` — touches `index.html`, `modules.generated.js`, `modules.json`, `tools/gui_framekit/...` (outside allowed)
+    - `ed5a452` — touches `tools/gui_framekit/...` (outside allowed)
+    - `95417bc` — touches only `orchestration/status/wizard-pc-kimi-1.md` (allowed; my prior heartbeat)
+  - Allowed paths per contract: `orchestration/fleet`, `orchestration/claims`, `orchestration/status` only.
+- **Lanes:**
+  - opencode-1: dark ~8d (last heartbeat 2026-08-23 20:15)
+  - hermes-1: SUSPENDED per fleet file (P0 MISROUTED ack)
+  - cursor-1: dark ~8d (last heartbeat 2026-08-23 23:30)
+- **Claims:** all 9 wave-1 packets ACCEPTED/merged. None stale, none double, none over cap.
+- **REVIEW_REQUESTED:** cursor-1 QA brief `ff203cb` still awaiting verdict; lane dark — review deferred.
 - **Board:** wave 1 fully accepted + merged. All lanes dark or suspended. Wave-2 release held pending D-0002 ruling.
 - **Reviewed SHAs (deduplicated):** FK-101 `ff3eefc`, FK-102 `58156ff`, FK-103 `91b8d41`, FK-104 `f3b3ea6`, FK-105 `16c4386`, FK-106 `010566a`, FK-107 `bc6df2c`, FK-108 `124265a`, FK-109 `79f3b52`
