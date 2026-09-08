@@ -15,7 +15,7 @@
   };
   function random(seed) { let s=seed>>>0; return n=>{s=(Math.imul(s,1664525)+1013904223)>>>0;return n ? Math.floor(s/4294967296*n) : s/4294967296;}; }
   function number(v, fallback, min, max) {return Number.isFinite(Number(v))?Math.max(min,Math.min(max,Math.floor(Number(v)))):fallback;}
-  function seedOf(v) {return typeof v==='number'?v>>>0:MapGen.hashString(String(v===undefined?'verdigris':v));}
+  function seedOf(v) {return typeof v==='number'||(typeof v==='string'&&/^\d+$/.test(v))?Number(v)>>>0:MapGen.hashString(String(v===undefined?'verdigris':v));}
   function neighbors(map,x,y) {return DIRS.map(d=>({x:x+d[0],y:y+d[1]})).filter(p=>p.x>=0&&p.y>=0&&p.x<map.width&&p.y<map.height&&MapGen.WALKABLE.has(map.tiles[p.y*map.width+p.x]));}
   function distances(map, start) {
     const distance=new Int32Array(map.tiles.length).fill(-1),parent=new Int32Array(map.tiles.length).fill(-1);
@@ -102,7 +102,9 @@
     if(!Array.isArray(data.tiles)||data.tiles.length!==data.height||data.tiles.some(r=>typeof r!=='string'||r.length!==data.width||!/^[0-9a-e]+$/.test(r)))throw new Error('Invalid tile rows');
     const point=p=>p&&Number.isInteger(p.x)&&Number.isInteger(p.y)&&p.x>=0&&p.y>=0&&p.x<data.width&&p.y<data.height;
     if(![data.entrance,data.exit,data.boss].every(point)||!Array.isArray(data.spawns)||data.spawns.length>256||!data.spawns.every(point)||!Array.isArray(data.rooms)||data.rooms.length>100||!data.rooms.every(n=>Array.isArray(n.sockets)&&n.sockets.length<=4)||!data.expedition?.graph)throw new Error('Invalid expedition metadata');
-    const map=MapGen.fromJSON(data),result=validate(map);if(!result.valid)throw new Error(result.errors.join('; '));return map;
+    const id=n=>Number.isInteger(n)&&n>=0&&n<data.rooms.length;
+    if(!Object.hasOwn(RECIPES,data.expedition.recipe)||!Array.isArray(data.entities)||data.entities.length>2000||!data.entities.every(point)||!data.rooms.every((n,i)=>n.id===i&&point({x:n.cx,y:n.cy})&&typeof n.landmark==='string'&&n.landmark.length<100&&typeof n.prefab==='string'&&n.prefab.length<100&&['entry','boss','combat','optional','treasure'].includes(n.role)&&n.sockets.every(s=>id(s.to)&&Number.isInteger(s.direction)&&s.direction>=0&&s.direction<4&&point(s)))||!data.spawns.every(s=>id(s.room)&&Number.isInteger(s.count)&&s.count>=1&&s.count<=6)||!Array.isArray(data.expedition.graph.edges)||data.expedition.graph.edges.length>300||!data.expedition.graph.edges.every(e=>id(e.a)&&id(e.b))||!Array.isArray(data.expedition.graph.spine)||!data.expedition.graph.spine.every(id)||typeof data.expedition.reading?.rule!=='string')throw new Error('Invalid rooms, graph, entities or encounters');
+    const map=MapGen.fromJSON(data);map.expedition.graph.nodes=map.rooms;map.mainPath=path(map,map.entrance,map.boss);map.metrics=metrics(map);const result=validate(map);if(!result.valid)throw new Error(result.errors.join('; '));return map;
   }
   return {VERSION,RECIPES,DIRS,generate,validate,metrics,path,distances,toJSON,fromJSON,seedOf};
 });

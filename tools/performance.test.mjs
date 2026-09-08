@@ -50,7 +50,7 @@ assert.ok(orbReduction >= 20, `Orb performance-preset work reduction is ${orbRed
 
 // Cartographer: only the transparent effects layer is animated. Static map art
 // stays full-resolution and is redrawn only as a display blit.
-const cart = read('cartographer/index.html');
+const cart = read('cartographer/terrain-lab.html');
 const scaleMatch = cart.match(/var ANIM_SCALE = ([\d.]+)/);
 const fpsMatch = cart.match(/1000 \/ 8 : 1000 \/ ([\d.]+)/);
 assert.ok(scaleMatch && fpsMatch, 'Cartographer performance constants must remain machine-readable.');

@@ -1,4 +1,41 @@
-# The Cartographer
+# Cartographer — Expedition Atelier
+
+The main module now builds graph-directed Bronze Age expeditions: four original
+biomes, authored chamber recipes, cardinal sockets, optional offering vaults,
+loop budgets, paced encounters and a terminal guardian arena. A generated
+limestone material is baked into the terrain; art does not alter collision.
+
+- **World / Automap / Topology:** inspect the same map at three levels.
+- **Explore:** WASD or arrows reveal line-of-sight terrain. Click revealed floor
+  to pathfind, drag to pan, scroll to zoom. Route and landmark overlays are optional.
+- **Reproduce:** seed and generation controls persist in the URL fragment.
+- **Exchange:** export/import validated versioned JSON, or save terrain PNG.
+- **Terrain lab:** the original eight zone families and texture-pack editor live
+  at `terrain-lab.html` and remain linked from the atelier.
+
+`core/expedition.js` is pure, dependency-free apart from the existing `mapgen.js`
+tile/palette definitions. `Expedition.generate({recipe:'necropolis', seed:2718,
+columns:6, rows:4, branches:5, loops:2})` returns a map with tile collision,
+reciprocal three-tile sockets, graph edges, chamber roles, landmarks, encounter
+anchors, a shortest walking route, and measured coverage/population. Loop budget
+is a maximum: only compatible neighboring chambers can form a loop.
+
+Run `node tools/cartographer/core/expedition.test.js`: 1,200 seeds across all four
+recipes and three extents check full packet determinism, socket widths,
+connectivity, safe spawns, contiguous paths, JSON round trips and invalid imports.
+
+See [RESEARCH.md](RESEARCH.md) for sources and implementation decisions and
+[asset provenance](assets/PROVENANCE.md) for the built-in imagegen prompt.
+The native Verdigris port is verified against the same generator by seed-batch
+fingerprints of tiles, graph connections, room variants and encounters.
+
+The laboratory adapter capabilities remain undeclared: raw expedition JSON is
+not a WIZARD calibration envelope.
+
+---
+
+## Original terrain generator reference
+
 
 Procedural 2D zone generator in the spirit of Diablo 2 and Path of Exile area generation:
 eight zone families, twenty-six themes, seeded and deterministic. Built as a WIZARD module â€”
