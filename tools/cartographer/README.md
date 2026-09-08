@@ -1,4 +1,4 @@
-# Cartographer � Expedition Atelier
+# Cartographer — Expedition Atelier
 
 The main module now builds graph-directed Bronze Age expeditions: four original
 biomes, authored chamber recipes, cardinal sockets, optional offering vaults,
@@ -38,20 +38,20 @@ not a WIZARD calibration envelope.
 
 
 Procedural 2D zone generator in the spirit of Diablo 2 and Path of Exile area generation:
-eight zone families, twenty-six themes, seeded and deterministic. Built as a WIZARD module —
+eight zone families, twenty-six themes, seeded and deterministic. Built as a WIZARD module â€”
 the engine is one dependency-free file you can drop into any game project.
 
-**[Live demo](https://alexkorol.github.io/WIZARD/tools/cartographer/)** — drag to pan,
+**[Live demo](https://alexkorol.github.io/WIZARD/tools/cartographer/)** â€” drag to pan,
 scroll to zoom, Space for a new map.
 
 ## Layout
 
-- [`core/mapgen.js`](core/mapgen.js) — the generator. No dependencies, no DOM. Loads as a
+- [`core/mapgen.js`](core/mapgen.js) â€” the generator. No dependencies, no DOM. Loads as a
   browser global (`window.MapGen`) or CommonJS module (`require('./mapgen.js')`).
-- [`core/test.js`](core/test.js) — invariant tests (`node core/test.js`): determinism,
+- [`core/test.js`](core/test.js) â€” invariant tests (`node core/test.js`): determinism,
   entrance-to-exit connectivity, entity placement, JSON round trips, across every
-  zone × theme × size.
-- [`index.html`](index.html) — the demo. Canvas renderer with baked terrain, animated
+  zone Ã— theme Ã— size.
+- [`index.html`](index.html) â€” the demo. Canvas renderer with baked terrain, animated
   liquids, dynamic torchlight, and a fog-of-war reveal. The renderer is demo-only;
   the engine knows nothing about it.
 
@@ -69,7 +69,7 @@ const map = MapGen.generate({
 });
 ```
 
-Same seed and options always produce the same map — generate on a server and client
+Same seed and options always produce the same map â€” generate on a server and client
 and they agree, or store nothing but the seed.
 
 ### Output
@@ -77,14 +77,14 @@ and they agree, or store nothing but the seed.
 | Field | Contents |
 |---|---|
 | `tiles` | `Uint8Array` of `width * height` logical tile ids (`MapGen.TILE`) |
-| `entities` | `[{type, x, y}]` — gates, torches, chests, shrines, scatter decor |
-| `entrance`, `exit` | `{x, y}` — always mutually reachable over walkable tiles |
+| `entities` | `[{type, x, y}]` â€” gates, torches, chests, shrines, scatter decor |
+| `entrance`, `exit` | `{x, y}` â€” always mutually reachable over walkable tiles |
 | `rooms` | `[{x, y, w, h, cx, cy}]` for room-based zones |
-| `palette` | suggested colors for the theme — use them or ignore them |
+| `palette` | suggested colors for the theme â€” use them or ignore them |
 | `seed`, `zone`, `theme` | what was actually used (echoed back) |
 
 Tiles are logical terrain (`FLOOR`, `WALL`, `DOOR`, `WATER`, `LAVA`, `GRASS`, `TREE`,
-`PATH`, `BRIDGE`, …) — map them onto your own tileset. `MapGen.WALKABLE` is the
+`PATH`, `BRIDGE`, â€¦) â€” map them onto your own tileset. `MapGen.WALKABLE` is the
 suggested walkability set; redefine it in your game if your rules differ.
 
 ### Zones and themes
@@ -101,7 +101,7 @@ suggested walkability set; redefine it in your game if your rules differ.
 | Wilds | fBm terrain + river + road | Forest, Swamp, Ash, Tundra, Moor |
 
 The zone/theme roster is drawn from the Diablo 2 and Path of Exile tileset
-catalogues — arcane sanctuaries, desert tombs, spider lairs, harbor docks,
+catalogues â€” arcane sanctuaries, desert tombs, spider lairs, harbor docks,
 street markets, frozen tundra, moors with stone circles.
 
 Every generator ends with the same guarantees: all walkable regions are stitched
@@ -110,36 +110,36 @@ decoration never blocks the gates.
 
 Layouts follow the Diablo 2 / Path of Exile 1 school of map pacing: compact
 zones, short connections, loops instead of backtracking, and dead ends kept
-small and rewarding. The test suite enforces a clear-speed bound — the
-entrance-to-exit walk may never exceed 2.2× the map perimeter.
+small and rewarding. The test suite enforces a clear-speed bound â€” the
+entrance-to-exit walk may never exceed 2.2Ã— the map perimeter.
 
 ### Directional flow
 
 Every map has a **flow axis**: the portal spawns in the starting band, a
 carved **boss arena** holds the far band, and the exit portal sits just
 past the boss. The engine computes the **main path** (portal to boss) and
-places **spawns**: monster packs pacing the spine every 7–12 tiles, extra
+places **spawns**: monster packs pacing the spine every 7â€“12 tiles, extra
 packs and elites in side pockets off it, and the boss with guards in the
 arena. `map.boss`, `map.axis`, `map.mainPath`, and `map.spawns` all ship
 in the output and the JSON export. Tests enforce that the boss sits at
-least halfway along the axis and that the main path is contiguous — the
+least halfway along the axis and that the main path is contiguous â€” the
 "push forward, clear packs, reach the boss" loop is a build guarantee,
 not a hope.
 
 ### Real tilesets: the texture pack
 
 The demo renders from a **texture pack** when one is loaded, falling back
-to the procedural painter for anything missing — partial packs work. Pick
+to the procedural painter for anything missing â€” partial packs work. Pick
 a terrain (grass, water, floor, path, sand, lava, murk) and import any
 image: it gets the Mason treatment (center-square crop, size cap, forced
 wrap-seamlessness), then ground tiles pattern-fill from the world-anchored
 texture. Land tiles that touch a liquid are painted as [Mason](../mason/)
-transition tiles inline — wobbled shorelines cut through the real art,
+transition tiles inline â€” wobbled shorelines cut through the real art,
 with the liquid texture as the outer terrain. Packs save and load as a
 single JSON file, so a theme's art travels as one artifact.
 
 This is the AI-art pipeline end to end: generate or crop a texture per
-terrain with an image model (no structural constraints — the model only
+terrain with an image model (no structural constraints â€” the model only
 paints flat art), import, and the whole zone renders with it. Walls,
 entities, and lighting stay procedural on top.
 
@@ -162,4 +162,4 @@ The engine is ES5, one IIFE, ~1100 lines. To use it in a game:
 3. Map tile ids to your tileset and entity types to your prefabs.
 4. Treat `entrance`/`exit` as player spawn and level exit.
 
-Nothing else is required — no assets, no build step, no globals beyond `MapGen`.
+Nothing else is required â€” no assets, no build step, no globals beyond `MapGen`.

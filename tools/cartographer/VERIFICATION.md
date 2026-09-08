@@ -18,6 +18,7 @@
 - Responsive inspection: desktop workspace keeps its controls scrollable and
   map visible; 390 × 844 viewport stacks controls and map with no horizontal
   overflow. Temporary viewport override reset after checking.
+- Export map and Save image were clicked in the real browser without errors.
 - Browser console: no errors in the tested flow.
 - Native parity: Verdigris's `native/tools/check_cartography_parity.cjs`
   compares 1,200 generated C++/JS fingerprints, including every terrain tile,
@@ -27,3 +28,9 @@
 
 Generated asset and exact prompt: `assets/PROVENANCE.md`. Research source
 limitations and application: `RESEARCH.md`.
+
+Native integration shipped in Verdigris checkpoint
+[`e2f814340`](https://github.com/alexkorol/verdigris/commit/e2f81434053a463a3cb07db35d894ffa08f4e0d2):
+authoritative generated collision/population/loot, normal-protocol map publication,
+textured native terrain and a discovery atlas. All 62 client scenarios passed;
+full native evidence lives in that repository's `docs/rebuild/cartography/`.
