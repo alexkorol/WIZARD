@@ -9,7 +9,9 @@ for(const recipe of Object.keys(E.RECIPES))for(const shape of [{columns:4,rows:3
   assert.deepEqual(E.toJSON(m),E.toJSON(E.generate(options)),'full packet determinism');
   assert.deepEqual(E.toJSON(E.fromJSON(E.toJSON(m))),E.toJSON(m),'lossless runtime packet');
   assert.equal(m.spawns.filter(p=>p.type==='boss').length,1);
-  assert(m.metrics.routeLength>=45&&m.metrics.routeLength<400);
+  assert(m.metrics.routeLength>=Math.abs(m.entrance.x-m.boss.x)+Math.abs(m.entrance.y-m.boss.y)+1&&m.metrics.routeLength<400,'continuous bounded walking route');
+  assert(new Set(m.rooms.map(n=>n.cx%18)).size>1,'landmarks must not form a repeated column grid');
+  assert(new Set(m.rooms.map(n=>n.w+","+n.h)).size>1,'district scales must vary');
   assert(m.metrics.loops>=0&&m.metrics.loops<=shape.loops,'loop budget is an upper bound on compatible connections');
   for(const n of m.rooms)for(const s of n.sockets){const d=E.DIRS[s.direction];for(let q=-1;q<=1;q++)assert(M.WALKABLE.has(m.tiles[(s.y+(d[0]?q:0))*m.width+s.x+(d[1]?q:0)]),'full socket width');}
   const route=E.path(m,m.entrance,m.exit);for(let i=1;i<route.length;i++)assert.equal(Math.abs(route[i].x-route[i-1].x)+Math.abs(route[i].y-route[i-1].y),1);

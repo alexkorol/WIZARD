@@ -1,33 +1,34 @@
 # Cartographer — Expedition Atelier
 
-The main module now builds graph-directed Bronze Age expeditions: four original
-biomes, authored chamber recipes, cardinal sockets, optional offering vaults,
-loop budgets, paced encounters and a terminal guardian arena. A generated
-limestone material is baked into the terrain; art does not alter collision.
+Five biomes now use continuous terrain: woodland, wetland, volcanic badlands,
+eroded burial vaults and sanctuary courts. Off-grid landmarks influence a shared
+terrain field; curved passages and trails connect them without stamping room boxes.
+Grass, damp earth, basalt and limestone each have their own material.
 
-- **World / Automap / Topology:** inspect the same map at three levels.
-- **Explore:** WASD or arrows reveal line-of-sight terrain. Click revealed floor
-  to pathfind, drag to pan, scroll to zoom. Route and landmark overlays are optional.
-- **Reproduce:** seed and generation controls persist in the URL fragment.
-- **Exchange:** export/import validated versioned JSON, or save terrain PNG.
-- **Terrain lab:** the original eight zone families and texture-pack editor live
-  at `terrain-lab.html` and remain linked from the atelier.
+- **Forge:** rolls a fresh random seed by default. Typing a seed or checking
+  **Keep this seed for comparisons** enables deliberate reproduction. Shared URLs
+  restore their recorded map; the next unlocked Forge rolls a new one.
+- **Compact exploration:** the default is 4 × 3 landmark planning districts,
+  three side destinations and one planned loop. Districts are pacing anchors,
+  not visible chunks. There are no repeated internal waystone destinations.
+- **World / Automap / Topology:** inspect terrain, discovery and planning separately.
+- **Explore:** WASD/arrows reveal line-of-sight terrain; click discovered floor to walk.
+- **Exchange:** validated versioned JSON and terrain PNG export.
+- **Terrain lab:** the original generator remains at `terrain-lab.html`.
 
-`core/expedition.js` is pure, dependency-free apart from the existing `mapgen.js`
-tile/palette definitions. `Expedition.generate({recipe:'necropolis', seed:2718,
-columns:6, rows:4, branches:5, loops:2})` returns a map with tile collision,
-reciprocal three-tile sockets, graph edges, chamber roles, landmarks, encounter
-anchors, a shortest walking route, and measured coverage/population. Loop budget
-is a maximum: only compatible neighboring chambers can form a loop.
+`core/expedition.js` uses `landscape.js` for continuous geometry and `mapgen.js`
+for tile definitions. Explicitly seeded generation remains deterministic across
+JavaScript and the native C++ port. Graph loop budgets describe planned routes;
+continuous terrain can naturally merge neighboring routes.
 
-Run `node tools/cartographer/core/expedition.test.js`: 1,200 seeds across all four
-recipes and three extents check full packet determinism, socket widths,
-connectivity, safe spawns, contiguous paths, JSON round trips and invalid imports.
+`node tools/cartographer/core/expedition.test.js` checks 1,500 biome/seed/extent
+combinations for connectivity, safe spawns, varied landmark footprints, deterministic
+replay, contiguous routes and JSON round trips. `landscape-review.html` shows five
+biomes across three seeds using the actual collision terrain.
 
-See [RESEARCH.md](RESEARCH.md) for sources and implementation decisions and
-[asset provenance](assets/PROVENANCE.md) for the built-in imagegen prompt.
-The native Verdigris port is verified against the same generator by seed-batch
-fingerprints of tiles, graph connections, room variants and encounters.
+See [research](RESEARCH.md), [outdoor asset prompts](assets/OUTDOOR-PROVENANCE.md)
+and [limestone asset prompt](assets/PROVENANCE.md). Materials were generated using
+built-in imagegen and do not alter authoritative collision.
 
 The laboratory adapter capabilities remain undeclared: raw expedition JSON is
 not a WIZARD calibration envelope.

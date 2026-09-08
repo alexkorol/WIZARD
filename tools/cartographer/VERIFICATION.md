@@ -1,3 +1,22 @@
+# Continuous-terrain correction — 2026-09-08
+
+Supersedes the room-grid presentation described in the historical checkpoint below.
+
+- Five biome materials visually inspected in the real browser: woodland grass,
+  wetland grass/soil, volcanic scree, necropolis stone and sanctuary stone.
+- Three seeds per biome inspected in `landscape-review.html`: actual collision
+  contours, off-grid landmarks, merged clearings and curved routes.
+- Normal browser load rolled seed 3593716629; unlocked Forge rolled 176627825,
+  changing the route from 83 to 62 tiles. Locked Forge preserved 176627825 and
+  its metrics. Subsequent biome switches rolled fresh seeds.
+- New default: 96 × 78 cells, compact extent, three side destinations, one loop.
+  No repeated internal waystone markers. Browser error log empty.
+- Full laboratory verification passed after manifest/renderer changes.
+- Outdoor material sources and exact built-in imagegen prompts are recorded in
+  `assets/OUTDOOR-PROVENANCE.md`; each texture was viewed before integration.
+
+## Historical checkpoint (superseded geometry)
+
 # Cartographer checkpoint evidence
 
 2026-09-08, branch `codex/cartographer-expeditions`.

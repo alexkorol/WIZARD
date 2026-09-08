@@ -55,7 +55,7 @@ window.WIZARD_REGISTRY = {
       "id": "wizard.cartographer",
       "slug": "cartographer",
       "title": "Cartographer",
-      "description": "Author seeded ARPG expeditions with socket-connected chambers, readable landmarks, encounter pacing, textured terrain and native-validated map packets.",
+      "description": "Shape continuous outdoor landscapes and eroded ruins with terrain-led routes, varied clearings, readable landmarks and native-validated map packets.",
       "status": "authoring",
       "visibility": "dashboard",
       "category": "authoring",
@@ -63,7 +63,7 @@ window.WIZARD_REGISTRY = {
       "launch": "tools/cartographer/index.html",
       "readme": "tools/cartographer/README.md",
       "preview": null,
-      "moduleVersion": "2.0.0",
+      "moduleVersion": "3.0.0",
       "stateVersion": 1,
       "verdigrisTargets": [
         "zone-generation"
@@ -985,7 +985,7 @@ window.WIZARD_REGISTRY = {
       "id": "wizard.cartographer",
       "slug": "cartographer",
       "title": "Cartographer",
-      "description": "Author seeded ARPG expeditions with socket-connected chambers, readable landmarks, encounter pacing, textured terrain and native-validated map packets.",
+      "description": "Shape continuous outdoor landscapes and eroded ruins with terrain-led routes, varied clearings, readable landmarks and native-validated map packets.",
       "status": "authoring",
       "visibility": "dashboard",
       "category": "authoring",
@@ -993,7 +993,7 @@ window.WIZARD_REGISTRY = {
       "launch": "tools/cartographer/index.html",
       "readme": "tools/cartographer/README.md",
       "preview": null,
-      "moduleVersion": "2.0.0",
+      "moduleVersion": "3.0.0",
       "stateVersion": 1,
       "verdigrisTargets": [
         "zone-generation"
