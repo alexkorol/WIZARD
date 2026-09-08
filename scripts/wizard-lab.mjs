@@ -468,6 +468,7 @@ function checkModuleTests(failures, results) {
     'tools/rpg_inventory/core/verdigris-stats.test.js',
     'tools/rpg_inventory/core/test.js',
     'tools/cartographer/core/test.js',
+    'tools/cartographer/core/expedition.test.js',
     'tools/mason/core/test.js',
     'tools/verdigris_splash/validate.mjs',
     'tests/gui-framekit-panes.test.mjs',

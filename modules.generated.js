@@ -55,7 +55,7 @@ window.WIZARD_REGISTRY = {
       "id": "wizard.cartographer",
       "slug": "cartographer",
       "title": "Cartographer",
-      "description": "Seeded Diablo-tradition zone generator for calibrating families, themes, connectivity, and engine-ready map JSON.",
+      "description": "Shape continuous outdoor landscapes and eroded ruins with terrain-led routes, varied clearings, readable landmarks and native-validated map packets.",
       "status": "authoring",
       "visibility": "dashboard",
       "category": "authoring",
@@ -63,7 +63,7 @@ window.WIZARD_REGISTRY = {
       "launch": "tools/cartographer/index.html",
       "readme": "tools/cartographer/README.md",
       "preview": null,
-      "moduleVersion": "1.0.0",
+      "moduleVersion": "3.0.0",
       "stateVersion": 1,
       "verdigrisTargets": [
         "zone-generation"
@@ -93,7 +93,9 @@ window.WIZARD_REGISTRY = {
       "tags": [
         "procgen",
         "zones",
-        "canvas"
+        "canvas",
+        "expeditions",
+        "map-reading"
       ]
     },
     {
@@ -983,7 +985,7 @@ window.WIZARD_REGISTRY = {
       "id": "wizard.cartographer",
       "slug": "cartographer",
       "title": "Cartographer",
-      "description": "Seeded Diablo-tradition zone generator for calibrating families, themes, connectivity, and engine-ready map JSON.",
+      "description": "Shape continuous outdoor landscapes and eroded ruins with terrain-led routes, varied clearings, readable landmarks and native-validated map packets.",
       "status": "authoring",
       "visibility": "dashboard",
       "category": "authoring",
@@ -991,7 +993,7 @@ window.WIZARD_REGISTRY = {
       "launch": "tools/cartographer/index.html",
       "readme": "tools/cartographer/README.md",
       "preview": null,
-      "moduleVersion": "1.0.0",
+      "moduleVersion": "3.0.0",
       "stateVersion": 1,
       "verdigrisTargets": [
         "zone-generation"
@@ -1021,7 +1023,9 @@ window.WIZARD_REGISTRY = {
       "tags": [
         "procgen",
         "zones",
-        "canvas"
+        "canvas",
+        "expeditions",
+        "map-reading"
       ]
     },
     {

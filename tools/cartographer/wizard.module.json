@@ -3,7 +3,7 @@
   "id": "wizard.cartographer",
   "slug": "cartographer",
   "title": "Cartographer",
-  "description": "Seeded Diablo-tradition zone generator for calibrating families, themes, connectivity, and engine-ready map JSON.",
+  "description": "Shape continuous outdoor landscapes and eroded ruins with terrain-led routes, varied clearings, readable landmarks and native-validated map packets.",
   "status": "authoring",
   "visibility": "dashboard",
   "category": "authoring",
@@ -11,9 +11,11 @@
   "launch": "tools/cartographer/index.html",
   "readme": "tools/cartographer/README.md",
   "preview": null,
-  "moduleVersion": "1.0.0",
+  "moduleVersion": "3.0.0",
   "stateVersion": 1,
-  "verdigrisTargets": ["zone-generation"],
+  "verdigrisTargets": [
+    "zone-generation"
+  ],
   "capabilities": {
     "adapter": false,
     "scenarios": false,
@@ -27,6 +29,20 @@
     "pauseStep": false,
     "agentFeedback": false
   },
-  "unsupportedMethods": ["listScenarios", "loadScenario", "getAnnotations", "setAnnotations", "pause", "resume", "step"],
-  "tags": ["procgen", "zones", "canvas"]
+  "unsupportedMethods": [
+    "listScenarios",
+    "loadScenario",
+    "getAnnotations",
+    "setAnnotations",
+    "pause",
+    "resume",
+    "step"
+  ],
+  "tags": [
+    "procgen",
+    "zones",
+    "canvas",
+    "expeditions",
+    "map-reading"
+  ]
 }
