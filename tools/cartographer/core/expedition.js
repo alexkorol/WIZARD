@@ -1,10 +1,10 @@
 /* Original WIZARD expedition grammar. Pure JS; no renderer or platform dependency. */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory(require('./mapgen.js'),require('./landscape.js'),require('./layouts.js'));
-  else root.Expedition = factory(root.MapGen,root.Landscape,root.CartographerLayouts);
-})(typeof self !== 'undefined' ? self : this, function (MapGen,Landscape,Layouts) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./mapgen.js'),require('./landscape.js'),require('./layouts.js'),require('./map-types.js'));
+  else root.Expedition = factory(root.MapGen,root.Landscape,root.CartographerLayouts,root.CartographerTypes);
+})(typeof self !== 'undefined' ? self : this, function (MapGen,Landscape,Layouts,MapTypes) {
   'use strict';
-  const VERSION = '4.0.0';
+  const VERSION = '5.0.0';
   const T = MapGen.TILE;
   const DIRS = [[0,-1,'north'],[1,0,'east'],[0,1,'south'],[-1,0,'west']];
   const RECIPES = {
@@ -14,18 +14,22 @@
     quarry: { name:'The Ember Quarry', zone:'caves', theme:'lava', room:'badlands', outdoor:true, floor:T.RUBBLE, void:T.LAVA, landmark:'Kiln circle', description:'Weathered open badlands, basalt ridgelines and branching volcanic gullies.' },
     sanctuary: { name:'The Star Sanctuary', zone:'sanctum', theme:'arcane', room:'court', floor:T.FLOOR, void:T.VOID, landmark:'Celestial dial', description:'Suspended stone courts and narrow bridges around an open astral void.' }
   };
+  Object.assign(RECIPES,MapTypes.TYPES);
   function random(seed) { let s=seed>>>0; return n=>{s=(Math.imul(s,1664525)+1013904223)>>>0;return n ? Math.floor(s/4294967296*n) : s/4294967296;}; }
   function number(v, fallback, min, max) {return Number.isFinite(Number(v))?Math.max(min,Math.min(max,Math.floor(Number(v)))):fallback;}
   function seedOf(v) {return typeof v==='number'||(typeof v==='string'&&/^\d+$/.test(v))?Number(v)>>>0:MapGen.hashString(String(v===undefined?'verdigris':v));}
-  function neighbors(map,x,y) {return DIRS.map(d=>({x:x+d[0],y:y+d[1]})).filter(p=>p.x>=0&&p.y>=0&&p.x<map.width&&p.y<map.height&&MapGen.WALKABLE.has(map.tiles[p.y*map.width+p.x]));}
   function distances(map, start) {
-    const distance=new Int32Array(map.tiles.length).fill(-1),parent=new Int32Array(map.tiles.length).fill(-1);
-    const begin=start.y*map.width+start.x, queue=[begin];distance[begin]=0;
-    for(let i=0;i<queue.length;i++){const a=queue[i];for(const p of neighbors(map,a%map.width,Math.floor(a/map.width))){const b=p.y*map.width+p.x;if(distance[b]<0){distance[b]=distance[a]+1;parent[b]=a;queue.push(b);}}}
-    return {distance,parent,count:queue.length};
+    const w=map.width,h=map.height,distance=new Int32Array(w*h).fill(-1),parent=new Int32Array(w*h).fill(-1),queue=new Int32Array(w*h);
+    const begin=start.y*w+start.x;let head=0,tail=1;queue[0]=begin;distance[begin]=0;
+    while(head<tail){const a=queue[head++],x=a%w,y=Math.floor(a/w);
+      for(const [dx,dy] of DIRS){const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=w||ny>=h)continue;const b=ny*w+nx;
+        if(distance[b]<0&&MapGen.WALKABLE.has(map.tiles[b])){distance[b]=distance[a]+1;parent[b]=a;queue[tail++]=b;}
+      }
+    }return {distance,parent,count:tail};
   }
   function path(map,from,to) {const {distance,parent}=distances(map,from);let i=to.y*map.width+to.x;if(distance[i]<0)return [];const out=[];while(i>=0){out.push({x:i%map.width,y:Math.floor(i/map.width)});i=parent[i];}return out.reverse();}
   function generate(options={}) {
+    if(Object.hasOwn(MapTypes.TYPES,options.recipe))return generateArea(options);
     const recipe=Object.hasOwn(RECIPES,options.recipe)?options.recipe:'wildwood', biome=RECIPES[recipe];
     const seed=seedOf(options.seed), cols=number(options.columns,4,4,10),rows=number(options.rows,3,3,7),size=18;
     const topology=random(seed^0xa511e9b3), roomsRng=random(seed^0x63d83595),encounters=random(seed^0xb5297a4d),decor=random(seed^0x1b56c4e9);
@@ -57,7 +61,7 @@
     }
     const entry=nodes[0],entrance=shape?shape.entrance:{x:entry.cx-3,y:entry.cy},boss={x:bossNode.cx,y:bossNode.cy},exit=shape?shape.exit:{x:bossNode.cx+3,y:bossNode.cy};
     const reading=shape?shape.reading:{entryFacing:'east',exitFacing:'east',rule:Layouts.TYPES.terrain.rule+' Follow trails and terrain boundaries; the guardian lies broadly east. Nearby clearings may merge.'};
-    const map={version:layout==='terrain'?'3.0.0':VERSION,seed,zone:biome.zone,theme:biome.theme,width,height,tiles,rooms:nodes,entrance,exit,boss,axis:shape?shape.axis:[1,0],palette:MapGen.THEMES[biome.theme].palette,outdoor:!!biome.outdoor,entities:[],spawns:[],expedition:{recipe,layout,columns:cols,rows,branches:branching,loops:loopBudget,intrinsicLoops:shape?shape.intrinsicLoops:0,graph:{nodes,edges,spine},reading}};
+    const map={version:layout==='terrain'?'3.0.0':'4.0.0',seed,zone:biome.zone,theme:biome.theme,width,height,tiles,rooms:nodes,entrance,exit,boss,axis:shape?shape.axis:[1,0],palette:MapGen.THEMES[biome.theme].palette,outdoor:!!biome.outdoor,entities:[],spawns:[],expedition:{recipe,layout,columns:cols,rows,branches:branching,loops:loopBudget,intrinsicLoops:shape?shape.intrinsicLoops:0,graph:{nodes,edges,spine},reading}};
     map.mainPath=path(map,entrance,boss);
     const distance=distances(map,entrance).distance,maxDist=distance[boss.y*width+boss.x];
     for(const n of nodes){
@@ -73,27 +77,58 @@
     }
     map.metrics=metrics(map);return map;
   }
+  function generateArea(options){
+    const recipe=options.recipe,seed=seedOf(options.seed),columns=number(options.columns,6,4,10),rows=number(options.rows,4,3,7);
+    const a=MapTypes.build({type:recipe,seed,columns,rows}),spec=RECIPES[recipe],rng=random(seed^0xb5297a4d);
+    const map={version:VERSION,seed,zone:spec.zone,theme:spec.theme,width:a.width,height:a.height,tiles:a.tiles,elevation:a.elevation,rooms:[],entrance:a.entrance,boss:a.boss,exit:a.exit,axis:[0,-1],palette:MapGen.THEMES[spec.theme].palette,outdoor:!!spec.outdoor,entities:[],spawns:[],area:{type:recipe,features:a.features},expedition:{recipe,layout:'identity',columns,rows,branches:0,loops:0,intrinsicLoops:0,reading:{entryFacing:'terrain approach',exitFacing:'landmark destination',rule:spec.rule},graph:{nodes:[],edges:[],spine:[]}}};
+    const all=[{...a.entrance,label:'Arrival',role:'entry'},...a.anchors,{...a.boss,label:recipe==='mesa'?'Plateau guardian':recipe==='summit'?'Summit guardian':recipe==='cages'?'Warden':recipe==='temple'?'Inner sanctuary':'Guardian',role:'boss'}];
+    const d=distances(map,map.entrance),max=d.distance[map.boss.y*map.width+map.boss.x];map.mainPath=path(map,map.entrance,map.boss);
+    const routeSet=new Set(map.mainPath.map(p=>p.y*map.width+p.x));
+    map.rooms=all.map((p,id)=>({id,c:0,r:0,cx:p.x,cy:p.y,x:p.x-3,y:p.y-3,w:7,h:7,rx:3,ry:3,role:p.role||'combat',sockets:[],variant:0,rotation:0,prefab:'landscape-feature',landmark:p.label,depth:d.distance[p.y*map.width+p.x],tier:p.role==='entry'?0:p.role==='boss'?4:Math.min(3,1+Math.floor(d.distance[p.y*map.width+p.x]/Math.max(1,max)*3))}));
+    const graph=map.expedition.graph,last=map.rooms.length-1;graph.nodes=map.rooms;graph.spine=[0,last];graph.edges.push({a:0,b:last,kind:'main',path:map.mainPath});
+    for(let i=1;i<last;i++){
+      const n=map.rooms[i];let nearest=0,best=Infinity;
+      for(let j=0;j<i;j++){const m=map.rooms[j],dd=(m.cx-n.cx)**2+(m.cy-n.cy)**2;if(dd<best){best=dd;nearest=j;}}
+      const m=map.rooms[nearest];graph.edges.push({a:nearest,b:i,kind:'branch',path:path(map,{x:m.cx,y:m.cy},{x:n.cx,y:n.cy})});
+    }
+    for(const n of map.rooms){map.entities.push({type:'landmark',x:n.cx,y:n.cy,room:n.id,label:n.landmark});if(n.role==='treasure')map.entities.push({type:'chest',x:n.cx,y:n.cy,room:n.id});}
+    const target=Math.min(180,Math.floor(d.count/150)),spots=[];
+    for(let i=0;i<map.tiles.length;i++)if(d.distance[i]>16&&MapGen.WALKABLE.has(map.tiles[i]))spots.push(i);
+    for(let k=spots.length-1;k>0;k--){const j=rng(k+1);[spots[k],spots[j]]=[spots[j],spots[k]];}
+    for(const i of spots){if(map.spawns.length>=target)break;const x=i%map.width,y=Math.floor(i/map.width);
+      if(Math.hypot(x-map.boss.x,y-map.boss.y)<10||map.spawns.some(p=>(p.x-x)**2+(p.y-y)**2<64))continue;
+      if(!DIRS.every(([dx,dy])=>MapGen.WALKABLE.has(map.tiles[(y+dy*2)*map.width+x+dx*2])))continue;
+      let room=0,best=Infinity;for(const n of map.rooms){const dd=(n.cx-x)**2+(n.cy-y)**2;if(dd<best){best=dd;room=n.id;}}
+      map.spawns.push({type:rng(8)?'pack':'elite',x,y,room,tier:Math.min(3,1+Math.floor(d.distance[i]/Math.max(1,max)*3)),count:3+rng(4),onRoute:routeSet.has(i)});
+    }
+    map.spawns.push({type:'boss',...map.boss,room:last,tier:4,count:1,onRoute:true});
+    map.metrics=metrics(map);return map;
+  }
   function metrics(map){const d=distances(map,map.entrance);const walkable=Array.from(map.tiles).filter(t=>MapGen.WALKABLE.has(t)).length;return {walkable,reachable:d.count,coverage:Math.round(100*walkable/map.tiles.length),routeLength:map.mainPath.length,rooms:map.rooms.length,loops:map.expedition.graph.edges.length-map.rooms.length+1,optionalRooms:map.rooms.filter(n=>map.expedition.layout&&map.expedition.layout!=='terrain'?['optional','treasure'].includes(n.role):!map.expedition.graph.spine.includes(n.id)).length,packs:map.spawns.length,monsters:map.spawns.reduce((s,p)=>s+p.count,0)};}
   function validate(map){
     const errors=[],d=distances(map,map.entrance),walk=Array.from(map.tiles).filter(t=>MapGen.WALKABLE.has(t)).length;
     if(d.count!==walk)errors.push('Disconnected walkable region');
     for(const [name,p] of [['entry',map.entrance],['exit',map.exit],['boss',map.boss]])if(!p||d.distance[p.y*map.width+p.x]<0)errors.push('Unreachable '+name);
     const occupied=new Set();for(const p of map.spawns){const i=p.y*map.width+p.x;if(d.distance[i]<0)errors.push('Unreachable spawn');if(d.distance[i]<9)errors.push('Unsafe entry');if(occupied.has(i))errors.push('Overlapping spawn');occupied.add(i);}
+    for(const n of map.rooms)if(d.distance[n.cy*map.width+n.cx]<0)errors.push('Unreachable landmark');
     for(const n of map.rooms)for(const s of n.sockets){const other=map.rooms[s.to];if(!other||!other.sockets.some(t=>t.to===n.id&&t.direction===(s.direction+2)%4))errors.push('Socket mismatch');if(!MapGen.WALKABLE.has(map.tiles[s.y*map.width+s.x]))errors.push('Blocked socket');}
     if(!path(map,map.entrance,map.exit).length)errors.push('No extraction route');
     return {valid:!errors.length,errors};
   }
-  function toJSON(map){return {...MapGen.toJSON(map),format:'wizard-expedition',version:map.version,rooms:map.rooms,expedition:map.expedition,metrics:map.metrics,outdoor:map.outdoor};}
+  function toJSON(map){return {...MapGen.toJSON(map),format:'wizard-expedition',version:map.version,rooms:map.rooms,expedition:map.expedition,metrics:map.metrics,outdoor:map.outdoor,...(map.area?{area:map.area,elevation:Array.from({length:map.height},(_,y)=>Array.from(map.elevation.slice(y*map.width,(y+1)*map.width),v=>v.toString(16)).join(''))}:{})};}
   function fromJSON(data){
-    if(!data||data.format!=='wizard-expedition'||![VERSION,'3.0.0','2.0.0'].includes(data.version))throw new Error('Unsupported expedition format or version');
+    if(!data||data.format!=='wizard-expedition'||![VERSION,'4.0.0','3.0.0','2.0.0'].includes(data.version))throw new Error('Unsupported expedition format or version');
     if(!Number.isInteger(data.width)||!Number.isInteger(data.height)||data.width<1||data.height<1||data.width>256||data.height>256)throw new Error('Invalid map dimensions');
     if(!Array.isArray(data.tiles)||data.tiles.length!==data.height||data.tiles.some(r=>typeof r!=='string'||r.length!==data.width||!/^[0-9a-e]+$/.test(r)))throw new Error('Invalid tile rows');
     const point=p=>p&&Number.isInteger(p.x)&&Number.isInteger(p.y)&&p.x>=0&&p.y>=0&&p.x<data.width&&p.y<data.height;
     if(![data.entrance,data.exit,data.boss].every(point)||!Array.isArray(data.spawns)||data.spawns.length>256||!data.spawns.every(point)||!Array.isArray(data.rooms)||data.rooms.length>100||!data.rooms.every(n=>Array.isArray(n.sockets)&&n.sockets.length<=4)||!data.expedition?.graph)throw new Error('Invalid expedition metadata');
     const id=n=>Number.isInteger(n)&&n>=0&&n<data.rooms.length;
     if(!Object.hasOwn(RECIPES,data.expedition.recipe)||!Array.isArray(data.entities)||data.entities.length>2000||!data.entities.every(point)||!data.rooms.every((n,i)=>n.id===i&&point({x:n.cx,y:n.cy})&&typeof n.landmark==='string'&&n.landmark.length<100&&typeof n.prefab==='string'&&n.prefab.length<100&&['entry','boss','combat','optional','treasure'].includes(n.role)&&n.sockets.every(s=>id(s.to)&&Number.isInteger(s.direction)&&s.direction>=0&&s.direction<4&&point(s)))||!data.spawns.every(s=>id(s.room)&&Number.isInteger(s.count)&&s.count>=1&&s.count<=6)||!Array.isArray(data.expedition.graph.edges)||data.expedition.graph.edges.length>300||!data.expedition.graph.edges.every(e=>id(e.a)&&id(e.b))||!Array.isArray(data.expedition.graph.spine)||!data.expedition.graph.spine.every(id)||typeof data.expedition.reading?.rule!=='string')throw new Error('Invalid rooms, graph, entities or encounters');
-    if(data.expedition.layout!==undefined&&!Object.hasOwn(Layouts.TYPES,data.expedition.layout))throw new Error('Unknown layout');
-    const map=MapGen.fromJSON(data);map.expedition.graph.nodes=map.rooms;map.mainPath=path(map,map.entrance,map.boss);map.metrics=metrics(map);const result=validate(map);if(!result.valid)throw new Error(result.errors.join('; '));return map;
+    if(data.expedition.layout!==undefined&&data.expedition.layout!=='identity'&&!Object.hasOwn(Layouts.TYPES,data.expedition.layout))throw new Error('Unknown layout');
+    if(data.version===VERSION&&(!Number.isInteger(data.expedition.columns)||data.expedition.columns<4||data.expedition.columns>10||!Number.isInteger(data.expedition.rows)||data.expedition.rows<3||data.expedition.rows>7))throw new Error('Invalid map extent');
+    if(data.version===VERSION&&(!data.area||!Object.hasOwn(MapTypes.TYPES,data.area.type)||data.area.type!==data.expedition.recipe||data.expedition.layout!=='identity'||!Array.isArray(data.area.features)||data.area.features.length>500||!data.area.features.every(f=>point(f)&&typeof f.kind==='string'&&f.kind.length<40&&typeof f.label==='string'&&f.label.length<100)||!Array.isArray(data.elevation)||data.elevation.length!==data.height||!data.elevation.every(row=>typeof row==='string'&&row.length===data.width&&/^[0-4]+$/.test(row))))throw new Error('Invalid landscape features or elevation');
+    if(data.version!==VERSION&&(data.area!==undefined||data.elevation!==undefined||data.expedition.layout==='identity'||RECIPES[data.expedition.recipe].area))throw new Error('Map type requires version 5');
+    const map=MapGen.fromJSON(data);if(data.version===VERSION){map.elevation=Uint8Array.from(data.elevation.join(''),c=>parseInt(c,16));for(const e of map.expedition.graph.edges){const a=map.rooms[e.a],b=map.rooms[e.b];e.path=path(map,{x:a.cx,y:a.cy},{x:b.cx,y:b.cy});}}map.expedition.graph.nodes=map.rooms;map.mainPath=path(map,map.entrance,map.boss);map.metrics=metrics(map);const result=validate(map);if(!result.valid)throw new Error(result.errors.join('; '));return map;
   }
   return {VERSION,RECIPES,LAYOUTS:Layouts.TYPES,DIRS,generate,validate,metrics,path,distances,toJSON,fromJSON,seedOf};
 });

@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const E=require('./expedition.js');
 const M=require('./mapgen.js');
 let count=0;
-for(const recipe of Object.keys(E.RECIPES))for(const shape of [{columns:4,rows:3,branches:0,loops:0},{columns:6,rows:4,branches:5,loops:2},{columns:10,rows:7,branches:18,loops:8}])for(let seed=0;seed<100;seed++){
+for(const recipe of Object.keys(E.RECIPES).filter(id=>!E.RECIPES[id].area))for(const shape of [{columns:4,rows:3,branches:0,loops:0},{columns:6,rows:4,branches:5,loops:2},{columns:10,rows:7,branches:18,loops:8}])for(let seed=0;seed<100;seed++){
   const options={recipe,seed,...shape},m=E.generate(options);
   assert.deepEqual(E.validate(m),{valid:true,errors:[]},JSON.stringify(options));
   assert.deepEqual(E.toJSON(m),E.toJSON(E.generate(options)),'full packet determinism');
@@ -23,3 +23,5 @@ console.log(`${count} expedition seeds: deterministic packets, connected collisi
 
 // Included here so the laboratory verifier also exercises new layout grammars.
 require('./layouts.test.js');
+
+require('./map-types.test.js');

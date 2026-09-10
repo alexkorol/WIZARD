@@ -55,7 +55,7 @@ window.WIZARD_REGISTRY = {
       "id": "wizard.cartographer",
       "slug": "cartographer",
       "title": "Cartographer",
-      "description": "Compose natural terrain, cathedral spines, oriented crypts and island circuits with readable doorways, exploration frontiers and validated map exports.",
+      "description": "Generate temples, mesas, glacial rivers, canyons, prison cell blocks and mountain summits with distinct landscape features, readable routes and distributed encounters.",
       "status": "authoring",
       "visibility": "dashboard",
       "category": "authoring",
@@ -63,7 +63,7 @@ window.WIZARD_REGISTRY = {
       "launch": "tools/cartographer/index.html",
       "readme": "tools/cartographer/README.md",
       "preview": null,
-      "moduleVersion": "4.0.0",
+      "moduleVersion": "5.0.0",
       "stateVersion": 1,
       "verdigrisTargets": [
         "zone-generation"
@@ -95,7 +95,8 @@ window.WIZARD_REGISTRY = {
         "zones",
         "canvas",
         "expeditions",
-        "map-reading"
+        "map-reading",
+        "map-types"
       ]
     },
     {
@@ -985,7 +986,7 @@ window.WIZARD_REGISTRY = {
       "id": "wizard.cartographer",
       "slug": "cartographer",
       "title": "Cartographer",
-      "description": "Compose natural terrain, cathedral spines, oriented crypts and island circuits with readable doorways, exploration frontiers and validated map exports.",
+      "description": "Generate temples, mesas, glacial rivers, canyons, prison cell blocks and mountain summits with distinct landscape features, readable routes and distributed encounters.",
       "status": "authoring",
       "visibility": "dashboard",
       "category": "authoring",
@@ -993,7 +994,7 @@ window.WIZARD_REGISTRY = {
       "launch": "tools/cartographer/index.html",
       "readme": "tools/cartographer/README.md",
       "preview": null,
-      "moduleVersion": "4.0.0",
+      "moduleVersion": "5.0.0",
       "stateVersion": 1,
       "verdigrisTargets": [
         "zone-generation"
@@ -1025,7 +1026,8 @@ window.WIZARD_REGISTRY = {
         "zones",
         "canvas",
         "expeditions",
-        "map-reading"
+        "map-reading",
+        "map-types"
       ]
     },
     {

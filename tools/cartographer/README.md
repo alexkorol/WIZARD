@@ -1,37 +1,59 @@
 # Cartographer — Expedition Atelier
 
-Five biomes now use continuous terrain: woodland, wetland, volcanic badlands,
-eroded burial vaults and sanctuary courts. Off-grid landmarks influence a shared
-terrain field; curved passages and trails connect them without stamping room boxes.
-Grass, damp earth, basalt and limestone each have their own material.
+Six map types generate different kinds of places, each with its own architecture
+or geographic structure. The default opens a Mesa at extended extent.
 
-- **Forge:** rolls a fresh random seed by default. Typing a seed or checking
-  **Keep this seed for comparisons** enables deliberate reproduction. Shared URLs
-  restore their recorded map; the next unlocked Forge rolls a new one.
-- **Compact exploration:** the default is 4 × 3 landmark planning districts,
-  three side destinations and one planned loop. Districts are pacing anchors,
-  not visible chunks. There are no repeated internal waystone destinations.
-- **World / Automap / Topology:** inspect terrain, discovery and planning separately.
+| Map type | Structure and navigation |
+|---|---|
+| Sunken Temple | Nine precincts with stepped pools, colonnades, side shrines and offset galleries |
+| Saffron Mesa | Central high plateau, broken outer terraces, gullies and two escarpment ramps |
+| Cold River | Two glacial banks, a winding channel, tributaries, islands and three bridge crossings |
+| Copper Canyon | Variable-width gorge, branching ravines, sheltered basins and dividing rock fins |
+| Iron Cages | Four cell blocks, barred doors, guard galleries and a connecting exercise yard |
+| White Summit | Successive snowfields, contour ridges, alternating saddles and a high destination |
+
+These are original place grammars informed by ARPG map studies. Materials,
+obstacles, elevation, route constraints and encounter distribution follow the
+selected map type. Earlier five-biome terrain studies and v4 layout grammars
+remain available in the expandable **Earlier terrain studies** section.
+
+- **Forge:** rolls a fresh seed. Typing a seed or enabling **Keep this seed for
+  comparisons** makes regeneration repeatable. Shared URLs restore the map.
+- **World / Automap / Topology:** view materials, collision boundaries or actual
+  walking routes between landmarks. New map types distribute dozens of encounter
+  groups over reachable ground; landmarks are points of interest, not monster quotas.
+- **Expand map:** fills the window with the map. Escape returns to the editor.
 - **Explore:** WASD/arrows reveal line-of-sight terrain; click discovered floor to walk.
-- **Exchange:** validated versioned JSON and terrain PNG export.
-- **Terrain lab:** the original generator remains at `terrain-lab.html`.
+- **Exchange:** validated versioned JSON includes features and elevation; PNG
+  exports the world terrain. The original texture tool remains at `terrain-lab.html`.
 
-`core/expedition.js` uses `landscape.js` for continuous geometry and `mapgen.js`
-for tile definitions. The natural-terrain generator retains its earlier native parity contract.
-New layout grammars are JavaScript-only until separately ported (see below). Graph loop budgets describe planned routes;
-continuous terrain can naturally merge neighboring routes.
+```js
+const Expedition = require('./core/expedition.js');
+const map = Expedition.generate({recipe:'cold_river',seed:2718,columns:6,rows:4});
+const packet = Expedition.toJSON(map);
+```
 
-`node tools/cartographer/core/expedition.test.js` checks 1,500 biome/seed/extent
-combinations for connectivity, safe spawns, varied landmark footprints, deterministic
-replay, contiguous routes and JSON round trips. `landscape-review.html` shows five
-biomes across three seeds using the actual collision terrain.
+`core/map-types.js` builds v5 geometry independently of the earlier room graph.
+The packet adds `area: {type, features}` and a `Uint8Array` elevation field (0–4,
+serialized as hexadecimal rows). Elevation informs presentation; traversability
+remains authoritative in `tiles`. The landmark graph traces sampled walking
+routes and is **not** a complete inventory of every possible terrain connection.
 
-See [research](RESEARCH.md), [outdoor asset prompts](assets/OUTDOOR-PROVENANCE.md)
-and [limestone asset prompt](assets/PROVENANCE.md). Materials were generated using
-built-in imagegen and do not alter authoritative collision.
+Run `node tools/cartographer/core/expedition.test.js` for 1,500 natural-terrain,
+1,350 layout-grammar and 360 map-type cases. The new suite verifies reproducible
+collision and packets, substantial playable ground, encounters, landmark routes,
+JSON round trips and essential crossings. Sealing bridges or passes must disconnect
+the destination. `node scripts/wizard-lab.mjs verify --full` also runs these suites.
 
-The laboratory adapter capabilities remain undeclared: raw expedition JSON is
-not a WIZARD calibration envelope.
+Browser scripts load `mapgen.js`, `landscape.js`, `layouts.js`, `map-types.js`,
+then `expedition.js` from `core/`. No build step or new bitmap assets are required.
+
+See [research and visual observations](RESEARCH.md), [outdoor asset provenance](assets/OUTDOOR-PROVENANCE.md)
+and [limestone provenance](assets/PROVENANCE.md). New v4/v5 generators are currently
+JavaScript-only; native Verdigris parity has not been implemented for them.
+Earlier v3 seed output remains unchanged. Imports accept packet versions 2–5.
+The laboratory adapter capabilities remain undeclared: expedition JSON is not
+a WIZARD calibration envelope.
 
 ---
 
@@ -180,7 +202,7 @@ const map = Expedition.generate({
 });
 ```
 
-Browser scripts load `core/mapgen.js`, `core/landscape.js`, `core/layouts.js`, then
+Browser scripts load `core/mapgen.js`, `core/landscape.js`, `core/layouts.js`, `core/map-types.js`, then
 `core/expedition.js`. CommonJS resolves these dependencies automatically.
 
 Automap shows physical doorways and, during exploration, a gold frontier where

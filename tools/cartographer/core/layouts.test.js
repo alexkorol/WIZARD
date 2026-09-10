@@ -8,7 +8,7 @@ function closePort(map,port){
   for(let k=-1;k<=1;k++)copy.tiles[(port.y+(dx?k:0))*map.width+port.x+(dy?k:0)]=M.TILE.WALL;
   return copy;
 }
-for(const layout of ['cathedral','crypt','circuit'])for(const recipe of Object.keys(E.RECIPES))for(const shape of [{columns:4,rows:3,branches:0,loops:0},{columns:6,rows:4,branches:6,loops:3},{columns:10,rows:7,branches:18,loops:8}])for(let seed=0;seed<30;seed++){
+for(const layout of ['cathedral','crypt','circuit'])for(const recipe of Object.keys(E.RECIPES).filter(id=>!E.RECIPES[id].area))for(const shape of [{columns:4,rows:3,branches:0,loops:0},{columns:6,rows:4,branches:6,loops:3},{columns:10,rows:7,branches:18,loops:8}])for(let seed=0;seed<30;seed++){
   const m=E.generate({layout,recipe,seed,...shape}),label=JSON.stringify({layout,recipe,seed,...shape});
   assert.deepEqual(E.validate(m),{valid:true,errors:[]},label);
   assert.deepEqual(E.toJSON(m),E.toJSON(E.generate({layout,recipe,seed,...shape})),label+' deterministic');

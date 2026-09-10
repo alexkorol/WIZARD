@@ -107,3 +107,76 @@ seed-only consumer to recreate a v4 layout.
 
 No new bitmap assets were needed. Existing terrain textures remain in use;
 new layout shapes, collision, doorways and automap lines are generated in code.
+
+
+## Endgame place identities — 2026-09-09 follow-up
+
+The first map-reading pass was too small in scope: a graph of several rooms with
+a terrain skin does not express the difference between a temple complex, an
+escarpment and a glacial river. The next stage chooses the kind of place first,
+then makes its large features control traversal. A shared seed randomizer is not
+a substitute for these separate spatial rules.
+
+### Additional reference observations
+
+The [Maps of Exile author's original survey](https://www.reddit.com/r/pathofexile/comments/13c37gj/so_i_went_through_every_map_on_atlas/)
+and [maintained map data](https://github.com/deathbeam/maps-of-exile/blob/main/site/src/data/maps.json)
+provide a practical contrast: Canyon is classified as linear outdoor terrain with
+few obstacles; Mesa's boss access is described as a rush toward the center;
+Temple is classified as nonlinear indoor terrain. These are player observations
+of the cited dataset, not documentation of GGG's generation code.
+
+Two additional firsthand screenshots were opened and inspected in the browser:
+
+- [Mesa automap screenshot](https://i.imgur.com/q4lIOId_d.webp?maxwidth=760&fidelity=grand),
+  from a [player's 2018 Mesa report](https://ru.pathofexile.com/forum/view-thread/2234987).
+  The visible overlay follows layered, irregular cliff edges and folds around an
+  interior formation. The underlying scene has rock faces and changes of level.
+  This particular partial overlay supports nested terrain boundaries; it does
+  not establish all possible Mesa layouts. Our interpretation adds a central
+  plateau, broken outer terraces and explicit ramps.
+- [Cold River crossing screenshot](https://i.imgur.com/OPA6pFy.png), from a
+  [player's crossing report](https://www.pathofexile.com/forum/view-thread/3327010).
+  The inspected portion shows a constructed, narrow bridge between stone banks,
+  with pillars, snow and water beneath. It supports treating a crossing as an
+  authored landmark with a protected collision span, rather than arbitrary
+  walkable pixels across blue terrain. It is not a full-map automap study.
+
+The wiki's Mesa image endpoint was blocked by a site challenge during this pass;
+it is not counted as an inspected reference. No game screenshots are shipped as
+assets. The six implemented types are independent interpretations, not replicas
+of the six named PoE maps or a claim to have reconstructed their proprietary code.
+
+### Implemented place construction
+
+1. **Reserve large features.** Build temple precincts, mesa escarpments, river
+   banks, canyon ribbons, cell blocks or mountain ridges on a larger collision
+   field (default 208 × 156 tiles).
+2. **Resolve human-scale structure.** Add pool arcades, stepped corners, shrines,
+   terraces, gullies, tributaries, ravines, cell partitions and guard galleries.
+   Seed variation affects boundaries, dimensions, passages or internal divisions
+   according to the map type.
+3. **Protect crossings.** Ramps and bridges are traversable spans. River islands
+   and tributaries are placed before bridges; rock scatter cannot overwrite the
+   crossings or their clearance. Mountain saddles interrupt entire contour ridges.
+4. **Check actual geometry.** The guardian must already be reachable; no emergency
+   straight tunnel is carved through the defining cliff, river or building.
+   Unreachable incidental ground is pruned, and landmarks snap to reachable cells.
+5. **Populate the whole ground.** Measure walking distances, reserve safe entry
+   space and guardian clearance, then distribute encounter groups with spacing
+   and local walkable clearance. Optional landmarks are separate from pack count.
+6. **Expose the evidence.** The automap shows collision boundaries, the route is
+   measured on collision, and topology edges follow real walking paths. Full map
+   view allows inspection at useful scale; labels avoid overlapping one another.
+
+The automated identity suite covers six types × three extents × twenty seeds.
+It closes all bridges or passes in Mesa, Cold River and Summit and requires the
+boss route to disappear. It also checks cell/pool/column structure, continuous
+landmark paths, encounter placement and complete deterministic JSON round trips.
+Browser inspection covered all six types, both material and automap presentation,
+and the mountain's alternating-pass route. A comparison of 60 earlier biome,
+layout and seed combinations also reproduced the published v4 packets exactly.
+
+Version 5 packets add landscape features and elevation, and retain versioned
+imports for earlier maps. The separate native repository has not been modified
+or claimed to reproduce these new generators.
