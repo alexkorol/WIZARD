@@ -287,9 +287,9 @@
 <body>
   <div class="page">
     <header>
-      <div class="badge">Arcane Systems · Vitality Globe</div>
+      <div class="badge">Health globe preview</div>
       <h1>Health Globe Module</h1>
-      <p class="lede">A Path of Exile inspired vitality orb with fluid simulation, rim lighting, noise-driven plasma layers, and button/slider controls for quick tuning.</p>
+      <p class="lede">A Path of Exile inspired health orb with fluid simulation, rim lighting, noise-driven plasma layers, and button/slider controls for quick tuning.</p>
     </header>
 
     <div class="layout">
@@ -329,8 +329,7 @@
         <h2>Implementation Notes</h2>
         <p>
           This canvas-driven globe renders a layered fluid with domain-warped noise, additive aura, rim lighting,
-          caustics, and metallic frame etching. Health values lerp toward a target to give the orb weight, while
-          particles drift upward and wrap to keep the motion alive.
+          caustics, and metallic frame etching. Health values interpolate toward a target while particles drift upward and wrap.
         </p>
       </div>
     </div>

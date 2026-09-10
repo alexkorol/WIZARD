@@ -20,6 +20,21 @@ Multi-subproject **Verdigris Systems Laboratory** served from `gh-pages`.
 7. Identity copy is owner-owned. Do not delete or replace the WIZARD name, backronym, or laboratory framing without an owner ruling, and do not push the module grid below the fold with new hero copy (INC-W006).
 8. Serve local previews on loopback only: `python -m http.server <your port> --bind 127.0.0.1` (INC-W008).
 
+## Copy and presentation
+
+The owner rejects unrequested flourish across this repository. Use functional
+names, direct labels, and concise descriptions of what a tool does.
+
+- Do not invent decorative adjectives, fantasy epithets, slogans, lore, fake
+  archive/chapter numbers, or branded synonyms for ordinary actions.
+- Use the owner's terminology. Preserve established project identity and authored
+  game concepts; a UI cleanup does not authorize rewriting game rules or content.
+- Do not interpret "polish" as a request for a new visual style, extra ornament,
+  animations, or marketing copy. Add presentation only when it serves the task.
+- Prefer removing redundant copy to replacing it with another flourish. Make
+  unavailable features and prototype limits explicit instead of disguising them
+  with fictional explanations.
+
 ## Recurring module work
 
 - **RPG inventory asset generation (Verdigris)** — read `tools/rpg_inventory/AGENTS.md`, then run `python3 tools/rpg_inventory/core/status.py`. Goal: `tools/rpg_inventory/core/GOAL.md`. Loop: `tools/rpg_inventory/core/RUNBOOK.md`.

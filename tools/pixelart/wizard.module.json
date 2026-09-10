@@ -3,7 +3,7 @@
   "id": "wizard.pixelart",
   "slug": "pixelart",
   "title": "Pixel Art Creator",
-  "description": "Grid pixel editor. No active Verdigris workflow depends on it; retained as an internal utility, not a public laboratory card.",
+  "description": "Draw pixel art on a grid and export images or pixel data.",
   "status": "internal",
   "visibility": "internal",
   "category": "utility",

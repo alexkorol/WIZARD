@@ -1,10 +1,10 @@
 /* Verdigris Systems Laboratory dashboard — vanilla, static-site compatible. */
 (function () {
   var GROUP_ORDER = [
-    { id: 'character-systems', title: 'Character Systems', blurb: 'Load a scenario, tune values, and compare HUD, tree, and itemization readouts.' },
-    { id: 'world-terrain', title: 'World & Terrain', blurb: 'Author zones and autotiles, then inspect the continent-scale presentation.' },
-    { id: 'systems-integration', title: 'Systems Integration', blurb: 'Inspect spellcraft constraints and replay versioned fixtures against retained modules.' },
-    { id: 'chronicles', title: 'Chronicles', blurb: 'House, scion, and relic language for permadeath meta-progression.' }
+    { id: 'character-systems', title: 'Character Systems', blurb: 'Adjust HUD resources, edit passive trees, and inspect inventory systems.' },
+    { id: 'world-terrain', title: 'World & Terrain', blurb: 'Generate maps and preview terrain and the world.' },
+    { id: 'systems-integration', title: 'Systems Integration', blurb: 'Test spell paths, UI components, and recorded system events.' },
+    { id: 'chronicles', title: 'Chronicles', blurb: 'Create houses and characters, and track inherited relics.' }
   ];
 
   var TARGET_LABELS = {

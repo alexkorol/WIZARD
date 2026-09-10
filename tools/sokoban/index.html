@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>The Verdigris Vault — A Forged Sokoban Campaign</title>
+  <title>Sokoban — WIZARD</title>
   <meta name="description" content="A finite campaign of 24 offline-forged Sokoban chambers for Verdigris, ordered by solver resistance and logical interdependence.">
   <meta name="theme-color" content="#0b100f">
-  <meta property="og:title" content="The Verdigris Vault — A Forged Sokoban Campaign">
+  <meta property="og:title" content="Sokoban — WIZARD">
   <meta property="og:description" content="Twenty-four pre-forged chambers measured by solver resistance, misdirection, and interdependence.">
   <meta property="og:image" content="assets/theorem-vault.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,9 +32,9 @@
 
   <main>
     <section class="intro" aria-labelledby="game-title">
-      <p class="eyebrow">A forged puzzle vault for Verdigris</p>
-      <h1 id="game-title">The Verdigris Vault</h1>
-      <p class="lede">Twenty-four chambers. Forged offline, solver-tested, and ordered into a deliberate Sokoban campaign.</p>
+      <p class="eyebrow">Sokoban campaign</p>
+      <h1 id="game-title">Sokoban</h1>
+      <p class="lede">Twenty-four solver-tested levels.</p>
     </section>
 
     <section class="game-shell" aria-label="Sokoban game">
@@ -55,7 +55,7 @@
           </div>
         </form>
         <button class="debug-descend" id="descend-debug" type="button">Next stage <span aria-hidden="true">↓</span></button>
-        <p class="lesson" id="lesson">The first law of the deep: a reliquary may be pushed, but never pulled.</p>
+        <p class="lesson" id="lesson">Push crates onto targets. Crates cannot be pulled.</p>
         <dl class="measurements">
           <div class="spoiler"><dt id="solution-label">Proof length</dt><dd><span id="optimal-pushes">sealed</span></dd></div>
           <div><dt>Relics</dt><dd id="box-count">—</dd></div>
@@ -75,7 +75,7 @@
           <div class="victory" id="victory" hidden>
             <div class="victory-sigil" aria-hidden="true">✦</div>
             <p>Thesis revealed · <span id="victory-motif">Packing Order</span></p>
-            <h2 id="victory-thesis">The next theorem waits deeper in the vault.</h2>
+            <h2 id="victory-thesis">Continue to the next level.</h2>
             <div class="analysis-grid" aria-label="Solution analysis">
               <div><strong id="analysis-grade">A</strong><span>proof grade</span></div>
               <div><strong id="analysis-lines">0</strong><span>route moves</span></div>
@@ -126,8 +126,8 @@
     </section>
 
     <section class="method-note" aria-labelledby="method-title">
-      <p class="eyebrow">The intelligence beneath the stone</p>
-      <h2 id="method-title">Not longer. More entangled.</h2>
+      <p class="eyebrow">Campaign generation</p>
+      <h2 id="method-title">Level selection</h2>
       <p>The vault was forged ahead of release, so candidate generation and solver search could spend far more time than an interactive page allows. The final 24 were frozen, validated, and ordered by solver resistance, shared lanes, counterintuitive pushes, box barriers, and storage dependencies. The browser now contains only the campaign, its proof routes, and the rules of play.</p>
       <div class="method-marks" aria-label="Difficulty signals">
         <span>Solver resistance</span><span>Countermarches</span><span>Box barriers</span><span>Storage straits</span>
@@ -137,7 +137,7 @@
 
   <footer>
     <p>24 frozen stages · offline solver tested · locally saved</p>
-    <p>Crates can be pushed, never pulled. The old laws remain.</p>
+    <p>Crates can be pushed, never pulled.</p>
   </footer>
 
   <script src="levels.js"></script>

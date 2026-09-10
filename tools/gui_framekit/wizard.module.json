@@ -3,7 +3,7 @@
   "id": "wizard.framekit",
   "slug": "gui_framekit",
   "title": "FrameKit",
-  "description": "Playable game-UI demo assembled from the generated marble-and-brass sheet art: character sheet, inventory with drag-and-drop, skill web, HUD, and settings, plus the component workbench.",
+  "description": "Try character, inventory, skill tree, HUD, and settings components in a playable UI demo.",
   "status": "stable",
   "visibility": "dashboard",
   "category": "integration",

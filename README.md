@@ -20,14 +20,14 @@ Cards on the dashboard come from the generated registry (`modules.json` / `modul
 
 | Module | Path | Role |
 |---|---|---|
-| Vessels of Life & Mana | `tools/wizard_orbs` | HUD resource calibration |
+| Life & Mana Orbs | `tools/wizard_orbs` | HUD resource calibration |
 | Geometric Passive Tree | `tools/geometric_skilltree` | Passive-tree authoring |
 | Vesselforge & Inventory | `tools/rpg_inventory` | Itemization calibration |
 | Arcane Lattice | `tools/arcane_lattice` | Spellcraft constraints |
 | Cartographer | `tools/cartographer` | Zone generation |
-| Mason Terrain Forge | `tools/mason` | Terrain autotile |
+| Mason — Terrain Tiles | `tools/mason` | Terrain autotile |
 | Verdigris World Presentation | `tools/verdigris_splash` | World presentation |
-| Chronicles: Houses & Scions | `tools/rp_account_creator` | Chronicle meta |
+| Chronicles | `tools/rp_account_creator` | Chronicle meta |
 
 Health Globe is a legacy predecessor and is not a primary dashboard card. Archive experiments remain on disk and off the public surface; see [docs/ARCHIVE.md](docs/ARCHIVE.md).
 

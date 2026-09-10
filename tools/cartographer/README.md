@@ -1,4 +1,4 @@
-# Cartographer — Expedition Atelier
+# Cartographer — Map Generator
 
 Six map types generate different kinds of places, each with its own architecture
 or geographic structure. The default opens a Mesa at extended extent.
@@ -17,7 +17,7 @@ obstacles, elevation, route constraints and encounter distribution follow the
 selected map type. Earlier five-biome terrain studies and v4 layout grammars
 remain available in the expandable **Earlier terrain studies** section.
 
-- **Forge:** rolls a fresh seed. Typing a seed or enabling **Keep this seed for
+- **Generate map:** rolls a fresh seed. Typing a seed or enabling **Keep this seed for
   comparisons** makes regeneration repeatable. Shared URLs restore the map.
 - **World / Automap / Topology:** view materials, collision boundaries or actual
   walking routes between landmarks. New map types distribute dozens of encounter

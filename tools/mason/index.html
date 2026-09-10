@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Mason — terrain border tile forge</title>
+<title>Mason — Terrain Tiles</title>
 <meta name="description" content="Generates complete autotile border sets for terrain transitions — square blob (47 tiles) and hex (64 combinations) — deterministic per seed, with PNG/JSON export and AI paint-over templates.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,8 +70,8 @@ canvas#board{image-rendering:pixelated;max-width:100%;max-height:100%;border:1px
 <div class="app">
   <aside class="side">
     <div>
-      <h1>THE MASON</h1>
-      <p class="sub">Border tile forge: complete autotile transition sets for where two terrains meet. Square blob and hex, carved from a seed.</p>
+      <h1>Mason</h1>
+      <p class="sub">Generate seeded square or hex transition tiles between two terrains.</p>
     </div>
     <hr class="rule">
     <div class="row">
@@ -153,7 +153,7 @@ canvas#board{image-rendering:pixelated;max-width:100%;max-height:100%;border:1px
         <button id="promptSheet">Sheet prompt</button>
       </div>
     </div>
-    <p class="hint">Paint with the mouse — left adds the inner terrain, Shift or right-drag erases. Two AI routes: import seamless textures (from gpt-image-2 or any model) and the Mason cuts the transitions; or export the template sheet, paint over it, and import the painted sheet back — the playground then autotiles with your art.</p>
+    <p class="hint">Paint with the mouse — left adds the inner terrain, Shift or right-drag erases. Two AI routes: import seamless textures (from gpt-image-2 or any model) and the tool generates the transitions; or export the template sheet, paint over it, and import the painted sheet back — the playground then autotiles with your art.</p>
     <div class="foot">
       Part of <a href="../../index.html">WIZARD</a> · <a href="https://github.com/alexkorol/WIZARD/tree/gh-pages/tools/mason">source &amp; docs</a>
     </div>

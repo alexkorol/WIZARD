@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Arcane Lattice — Hyperdimensional Spellcrafter</title>
+<title>Arcane Lattice — Spell Editor</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; background: #05060f; color: #e6eaff; font-family: Georgia, serif; overflow: hidden; }
@@ -54,16 +54,16 @@
 <div id="app">
   <div id="view">
     <div class="hud" id="hint-controls">drag to orbit &middot; scroll to zoom &middot; click nodes to weave</div>
-    <div class="hud" id="tierlabel">first veil &mdash; the plane</div>
+    <div class="hud" id="tierlabel">Plane</div>
     <div class="hud" id="strata">0/7 strata woven</div>
     <div id="tip"></div>
     <div id="flash"></div>
   </div>
   <div id="panel">
     <h1>The Arcane Lattice</h1>
-    <p class="sub">Energy descends only through adjacent channels. Bend the lattice itself to reach the impossible.</p>
+    <p class="sub">Connect adjacent nodes from Source to Manifestation. Switch dimensions to change available connections.</p>
     <div class="box" id="spellbox">
-      <div id="spelltitle">The weave is incomplete</div>
+      <div id="spelltitle">Incomplete spell</div>
       <div id="spellarch"></div>
       <div id="spellbody">Weave a connected path of one node per stratum, from Source down to Manifestation.</div>
       <div id="spellhybrid"></div>
@@ -75,8 +75,8 @@
         <span id="statstrain" style="color:#c98aff"></span>
       </div>
     </div>
-    <button id="castbtn" disabled>&#10038; Cast Spell &#10038;</button>
-    <button id="ascendbtn"><span id="ascendlabel">Ascend Initiation</span></button>
+    <button id="castbtn" disabled>Cast Spell</button>
+    <button id="ascendbtn"><span id="ascendlabel">Next dimension</span></button>
     <button id="shiftbtn"><span id="shiftlabel">Paradigm Shift &middot; 3 left</span></button>
     <button id="schismbtn"><span id="schismlabel">Schism &middot; 2 left</span></button>
     <button id="resetbtn">Reset Lattice</button>
@@ -144,7 +144,7 @@
   var SPHERE_C = { Body: 'anchored to flesh and matter', Spirit: 'entwined with the soul', Mind: 'woven through thought itself' };
   var ALIGN_C = { Adversarial: 'It hungers as it works, corrupting whatever it touches.', Natural: 'It flows in harmony with the natural order.' };
   var CENTERS = ['r2s1', 'r3s1', 'r3s2', 'r4s1'];
-  var TIERS = ['first veil — the plane', 'second veil — the vessel', 'third veil — the tesseract'];
+  var TIERS = ['Plane', 'Vessel', 'Tesseract'];
 
   // Per-node VFX personality: behavior, particle count, secondary color, vortex speed, spin direction
   var PROFILES = {
@@ -597,7 +597,7 @@
   function updatePanel() {
     document.getElementById('strata').textContent = chainLen() + '/7 strata woven';
     document.getElementById('tierlabel').textContent = TIERS[st.tier];
-    document.getElementById('ascendlabel').textContent = st.tier < st.maxTier ? 'Ascend Initiation' : 'Return to the Plane';
+    document.getElementById('ascendlabel').textContent = st.tier < st.maxTier ? 'Next dimension' : 'Return to Plane';
     ascendbtn.disabled = st.maxTier === 0;
     var nodes = completeNodes();
     var box = document.getElementById('spellbox');
@@ -620,7 +620,7 @@
       castbtn.disabled = false;
       box.classList.add('ready');
     } else {
-      document.getElementById('spelltitle').textContent = 'The weave is incomplete';
+      document.getElementById('spelltitle').textContent = 'Incomplete spell';
       document.getElementById('spellarch').textContent = '';
       document.getElementById('spellbody').textContent = 'Weave a connected path of one node per stratum, from Source down to Manifestation.';
       document.getElementById('spellhybrid').style.display = 'none';
@@ -737,7 +737,7 @@
         return;
       }
       if (!adjAt(st.tier, up, sid)) {
-        showHint('Energy cannot leap across the lattice — ' + st.assign.get(up) + ' has no channel to ' + name + ' at this veil. Use a Paradigm Shift, a Schism, or ascend to a higher veil to bring it within reach.');
+        showHint('Energy cannot leap across the lattice — ' + st.assign.get(up) + ' has no channel to ' + name + ' in this dimension. Use a Paradigm Shift, a Schism, or switch dimensions to connect these nodes.');
         return;
       }
       st.selected.set(row, sid);

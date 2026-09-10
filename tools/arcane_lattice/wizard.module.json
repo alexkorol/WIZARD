@@ -3,7 +3,7 @@
   "id": "wizard.arcane-lattice",
   "slug": "arcane_lattice",
   "title": "Arcane Lattice",
-  "description": "Hyperdimensional spellcraft lattice for inspecting adjacency, paradigm shifts, schisms, and instability without changing canonical weave rules.",
+  "description": "Inspect spell paths, adjacency, paradigm shifts, schisms, and instability.",
   "status": "calibration",
   "visibility": "dashboard",
   "category": "calibration",

@@ -1,4 +1,4 @@
-# Vessels of Life & Mana — ARPG Orb Engine
+# Life & Mana Orbs
 
 A real-time WebGL2 health/mana globe system for action-RPG interfaces. One fullscreen
 fragment shader composites live procedural liquids, dynamic relighting, and a full

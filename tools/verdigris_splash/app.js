@@ -3576,11 +3576,11 @@ function boot() {
       button.setAttribute("aria-pressed", String(button.dataset.view === activeVariant));
     });
     taglineEl.textContent = epicActive
-      ? "Continents adrift. Oceans without a shore below."
-      : "Above an endless fall, the old craft stirs.";
+      ? "Continents, oceans, and waterfalls."
+      : "Crownlands island and observatory.";
     worldStateText.textContent = epicActive
-      ? "THE WORLD TURNS ABOVE THE ABYSS"
-      : "THE CROWN IS WAKING";
+      ? "WORLD VIEW"
+      : "CROWNLANDS VIEW";
     canvas.setAttribute("aria-label", epicActive
       ? "The whole floating world of Verdigris. Drag to orbit; scroll or pinch to zoom"
       : "The Crownlands island and the ancient Crown of Tides citadel. Drag to orbit; scroll or pinch to zoom");
@@ -3698,9 +3698,9 @@ function boot() {
   document.querySelectorAll("[data-menu-action]").forEach((button) => {
     button.addEventListener("click", () => {
       const messages = {
-        continue: "The gate opens beyond this visual prototype.",
-        hero: "The wanderer forge belongs to the next chapter.",
-        chronicle: "The chronicle is still being translated from the old copper plates.",
+        continue: "Gameplay is not available in this preview.",
+        hero: "Character creation is not available in this preview.",
+        chronicle: "The chronicle is not available in this preview.",
       };
       menuStatus.textContent = messages[button.dataset.menuAction];
       menuStatus.classList.add("is-visible");

@@ -3,7 +3,7 @@
   "id": "wizard.verdigris-splash",
   "slug": "verdigris_splash",
   "title": "Verdigris World Presentation",
-  "description": "Real-time disc-world presentation laboratory for menu atmosphere, rim waterfalls, and continent-scale read of Verdigris.",
+  "description": "Preview the Verdigris disc world, switch views, and adjust rendering quality.",
   "status": "presentation",
   "visibility": "dashboard",
   "category": "presentation",

@@ -1,6 +1,6 @@
-# The Mason
+# Mason — Terrain Tiles
 
-Border tile forge: generates the directional transition art for where two
+Generates directional transition tiles for where two
 terrains meet — grass lipping over water, snow drifting onto stone, lava
 crusting against basalt. Complete autotile sets for **square tiles**
 (the 47-tile blob set) and **hex tiles** (all 64 edge combinations),

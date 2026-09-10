@@ -3,7 +3,7 @@
   "id": "wizard.rpg-inventory",
   "slug": "rpg_inventory",
   "title": "Vesselforge & Inventory",
-  "description": "VesselForge itemization laboratory: brands, bonds, grid inventory, and equipment windows used to calibrate Verdigris loot language.",
+  "description": "Inspect grid inventory, equipment windows, item brands, and bonds.",
   "status": "calibration",
   "visibility": "dashboard",
   "category": "calibration",

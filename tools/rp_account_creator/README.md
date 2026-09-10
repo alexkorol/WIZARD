@@ -1,4 +1,4 @@
-# Chronicles: Houses & Scions
+# Chronicles
 
 Roleplay-enforced house founding and permadeath chronicle for Verdigris. Found a House, send scions into the world, inherit relics, and keep a scribe-judged record of names.
 

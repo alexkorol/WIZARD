@@ -3,7 +3,7 @@
   "id": "wizard.cartographer",
   "slug": "cartographer",
   "title": "Cartographer",
-  "description": "Generate temples, mesas, glacial rivers, canyons, prison cell blocks and mountain summits with distinct landscape features, readable routes and distributed encounters.",
+  "description": "Generate maps with distinct terrain and architecture. Inspect routes, encounters, and collision boundaries.",
   "status": "authoring",
   "visibility": "dashboard",
   "category": "authoring",

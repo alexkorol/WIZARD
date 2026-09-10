@@ -3,7 +3,7 @@
   "id": "wizard.geometric-skilltree",
   "slug": "geometric_skilltree",
   "title": "Geometric Passive Tree",
-  "description": "Authored hexagonal passive tree for calibrating seats, conduits, pattern bonuses, and owner design proposals without silently rewriting canonical tree data.",
+  "description": "Edit passive nodes and conduits, inspect pattern bonuses, and export builds and design notes.",
   "status": "authoring",
   "visibility": "dashboard",
   "category": "authoring",

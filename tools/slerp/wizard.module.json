@@ -3,7 +3,7 @@
   "id": "wizard.slerp",
   "slug": "slerp",
   "title": "SLerp",
-  "description": "Palette interpolation utility. Unused by active Verdigris modules; retained internally, not as a public card.",
+  "description": "Interpolate colors and preview, save, and export palettes.",
   "status": "internal",
   "visibility": "internal",
   "category": "utility",

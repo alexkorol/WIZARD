@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FrameKit — Hall of the Verdant Seal</title>
+<title>FrameKit — UI Demo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
@@ -21,10 +21,10 @@
   <section id="menuScreen">
     <img id="menuCrest" src="assets/winged_large.png" alt="">
     <h1>Verdigris</h1>
-    <div id="menuSub">The Sunken Archive</div>
+    <div id="menuSub">UI demo</div>
     <div id="menuButtons">
-      <button class="btn wide" data-menu="town"><img src="assets/btn_primary.png" alt=""><span>Enter the Archive</span></button>
-      <button class="btn wide" data-menu="combat"><img src="assets/btn_primary.png" alt=""><span>Descend to the Vaults</span></button>
+      <button class="btn wide" data-menu="town"><img src="assets/btn_primary.png" alt=""><span>Town demo</span></button>
+      <button class="btn wide" data-menu="combat"><img src="assets/btn_primary.png" alt=""><span>Combat demo</span></button>
       <button class="btn wide" data-menu="settings"><img src="assets/btn_primary.png" alt=""><span>Settings</span></button>
     </div>
     <div id="menuFoot">FrameKit interface demo — every surface is generated sheet art</div>
@@ -98,7 +98,7 @@
         <section class="pane-view" data-pane="stash"><p id="stashCount" class="pane-kicker">Account storage</p><div class="pane-toolbar"><span id="stashTarget">Select an inventory item to deposit it.</span><button id="stashDeposit" class="pane-action" type="button">Deposit</button></div><div id="stashGrid" class="pane-grid" aria-label="Stash items"></div></section>
         <section class="pane-view" data-pane="trade"><p class="pane-kicker">Harl · Armourmaster</p><h3 class="pane-section-title">Harl's stock</h3><div id="vendorOverlay" class="pane-grid trade-grid" aria-label="Vendor stock"></div><section class="trade-offer" aria-labelledby="tradeOfferTitle"><h3 id="tradeOfferTitle">Your offer</h3><div id="tradeOfferItem" role="status" aria-live="polite">Select a pack item to sell.</div><div class="trade-actions"><button id="tradeAddOffer" class="pane-action" type="button">Offer selected</button><button id="tradeAccept" class="pane-action primary" type="button" disabled>Accept trade</button><button id="tradeCancel" class="pane-action" type="button" disabled>Cancel</button></div></section><p id="vendorHint" role="status" aria-live="polite">Buy from Harl, or select an item in Inventory to make an offer.</p></section>
         <section class="pane-view codex-layout" data-pane="codex"><div id="codexList" class="codex-list" aria-label="Codex entries"></div><article id="codexEntry" class="codex-entry" role="region" aria-live="polite" aria-label="Selected codex entry"></article></section>
-        <section class="pane-view" data-pane="crafting"><p class="pane-kicker">The Brass Crucible · 3 recipes known</p><div id="craftTarget" class="pane-toolbar" role="status" aria-live="polite">Select equipment in Inventory.</div><div id="craftRecipes"></div></section>
+        <section class="pane-view" data-pane="crafting"><p class="pane-kicker">Crafting · 3 recipes</p><div id="craftTarget" class="pane-toolbar" role="status" aria-live="polite">Select equipment in Inventory.</div><div id="craftRecipes"></div></section>
         <section class="pane-view" data-pane="reliquary"><div id="shardPlate">Shards <b id="shardAmount">1,200</b></div><div id="shopCards"></div></section>
       </div>
     </aside>
@@ -116,7 +116,7 @@
       </header>
       <div class="pane-body">
         <section class="pane-view" data-pane="inventory"><div id="rightCharacterContent" class="character-side"></div><div id="inventoryActions" class="inventory-actions" aria-live="polite"><span id="inventorySelection">Select an item to inspect it.</span><button id="inventoryPrimary" class="pane-action primary" type="button" disabled>Equip</button><button id="inventoryUse" class="pane-action" type="button" disabled>Use</button></div></section>
-        <section class="pane-view" data-pane="cosmetics"><p class="pane-kicker">Aurelius · ceremonial loadout</p><div id="cosmeticPreview"></div><div id="cosmeticGrid" class="cosmetic-grid" aria-label="Cosmetic collection"></div></section>
+        <section class="pane-view" data-pane="cosmetics"><p class="pane-kicker">Cosmetics preview</p><div id="cosmeticPreview"></div><div id="cosmeticGrid" class="cosmetic-grid" aria-label="Cosmetic collection"></div></section>
       </div>
     </aside>
   </section>

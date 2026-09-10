@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chronicles — Houses &amp; Scions | WIZARD</title>
-  <meta name="description" content="Found a noble House, recruit scions, and let permadeath forge a legacy: fallen characters seed the world's drop tables as circulating relics. Part of the WIZARD tool collection.">
+  <title>Chronicles | WIZARD</title>
+  <meta name="description" content="Create houses and characters, simulate permadeath, and track inherited relics.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -613,7 +613,7 @@
             <div className="text-center mt-10 mb-10">
               <Icon name="crown" size={48} className="mx-auto text-amber-500 mb-3" />
               <h1 className="text-4xl font-serif tracking-[0.18em] text-amber-400">CHRONICLES</h1>
-              <p className="text-stone-500 italic mt-2">"Blood is temporary. The House is eternal."</p>
+              <p className="text-stone-500 italic mt-2">Manage houses, characters, and inherited relics.</p>
             </div>
 
             {list.length === 0 ? (
@@ -622,17 +622,17 @@
                   <div className="glass rounded-lg p-5 text-center">
                     <Icon name="skull" size={28} className="mx-auto text-red-400 mb-2" />
                     <h3 className="font-serif text-stone-200 mb-1">Permadeath</h3>
-                    <p className="text-stone-500">Every scion dies once, and for good. Choose how far to push them.</p>
+                    <p className="text-stone-500">Character death is permanent.</p>
                   </div>
                   <div className="glass rounded-lg p-5 text-center">
                     <Icon name="book" size={28} className="mx-auto text-amber-400 mb-2" />
                     <h3 className="font-serif text-stone-200 mb-1">Legacy</h3>
-                    <p className="text-stone-500">The fallen earn renown. The House endures, and each generation starts stronger.</p>
+                    <p className="text-stone-500">Earn house renown to unlock bonuses for new characters.</p>
                   </div>
                   <div className="glass rounded-lg p-5 text-center">
                     <Icon name="gem" size={28} className="mx-auto text-purple-300 mb-2" />
                     <h3 className="font-serif text-stone-200 mb-1">Relics</h3>
-                    <p className="text-stone-500">What the dead carried seeds the world's treasure — found again, reforged stronger.</p>
+                    <p className="text-stone-500">Items from fallen characters can appear as relic drops.</p>
                   </div>
                 </div>
                 <button onClick={onFound} className="w-full bg-amber-900/20 hover:bg-amber-900/40 text-amber-400 border border-amber-900/40 hover:border-amber-700 py-4 tracking-[0.2em] uppercase font-serif transition rounded-lg">
@@ -661,7 +661,7 @@
                         <span className={`flex items-center gap-1 ${isCorrupt ? 'text-purple-300' : 'text-amber-400'}`}><Icon name="crown" size={13} /> {h.renown}</span>
                       </div>
                       <div className={`mt-4 text-xs uppercase tracking-[0.2em] ${isCorrupt ? 'text-purple-300' : 'text-amber-400'} opacity-0 group-hover:opacity-100 transition flex items-center gap-1`}>
-                        Enter the Hall <Icon name="chevron" size={14} />
+                        Open house <Icon name="chevron" size={14} />
                       </div>
                     </button>
                   );
@@ -669,13 +669,13 @@
                 <button onClick={onFound} className="border border-dashed border-stone-800 hover:border-amber-800 rounded-xl p-6 flex flex-col items-center justify-center gap-2 text-stone-600 hover:text-amber-400 transition min-h-[170px]">
                   <Icon name="plus" size={28} />
                   <span className="font-serif tracking-widest uppercase text-sm">Found a New House</span>
-                  <span className="text-xs text-stone-600">A separate lineage, a separate legacy</span>
+                  <span className="text-xs text-stone-600">Separate characters, relics, and renown</span>
                 </button>
               </div>
             )}
 
             <p className="text-center text-xs text-stone-700 mt-10">
-              One realm, many Houses. Each lineage keeps its own crypt, reliquary, and renown.
+              Each house keeps its own characters, relics, and renown.
             </p>
           </div>
         </div>
