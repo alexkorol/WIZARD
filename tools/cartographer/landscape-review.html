@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cartographer - terrain silhouette review</title>
 <style>body{margin:24px;background:#101b16;color:#d6dbbd;font:14px system-ui}h1{font:32px Georgia}p{max-width:850px;line-height:1.5;color:#a8b6a0}main{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}article{background:#19271e;padding:16px;border:1px solid #354437}canvas{width:100%;image-rendering:auto}a{color:#d4c18b}h2{font:20px Georgia;margin:0 0 8px}small{color:#a1b5a0}</style>
 <h1>Read the silhouette.</h1><p>Same options, three different seeds per biome. These views show the actual collision and terrain IDs without textures or decorative props. Trails, water and ridges must work at this scale; art cannot hide a room grid.</p><main id="samples"></main>
-<script src="core/mapgen.js"></script><script src="core/landscape.js"></script><script src="core/expedition.js"></script><script>
+<script src="core/mapgen.js"></script><script src="core/landscape.js"></script><script src="core/layouts.js"></script><script src="core/expedition.js"></script><script>
 const colors={0:'#101b16',1:'#97957e',2:'#545d4b',3:'#97957e',4:'#3b685c',5:'#264e49',6:'#603828',7:'#6a8255',8:'#294d33',9:'#555e4b',10:'#b4a879',11:'#c2b087',12:'#b7b18b',13:'#8b8265',14:'#687b50'};
 for(const recipe of Object.keys(Expedition.RECIPES))for(const seed of ['verdigris-2718',87312,502901]){
  const opts={recipe,seed,columns:4,rows:3,branches:3,loops:1},map=Expedition.generate(opts),article=document.createElement('article'),h=document.createElement('h2'),link=document.createElement('a'),meta=document.createElement('small'),canvas=document.createElement('canvas');

@@ -53,3 +53,38 @@ Native integration shipped in Verdigris checkpoint
 authoritative generated collision/population/loot, normal-protocol map publication,
 textured native terrain and a discovery atlas. All 62 client scenarios passed;
 full native evidence lives in that repository's `docs/rebuild/cartography/`.
+
+## Map-reading grammars — 2026-09-09
+
+Based on synced `gh-pages` commit `dceb692`; working branch
+`codex/cartographer-map-reading`. Only Cartographer and its generated registry
+entries changed.
+
+- `node tools/cartographer/core/expedition.test.js`: existing 1,500 natural maps
+  pass; this entry point now also loads the 1,350-map layout suite.
+- `node tools/cartographer/core/layouts.test.js`: three new grammars × five
+  biomes × three extents × 30 seeds. Checks deterministic full packets, JSON
+  round trips, safe reachable encounters, physical three-wide socket clearance,
+  reserved circuit void and extra loop budgets. Includes all four orientations.
+- The crypt test seals exactly the three-cell terminal door and proves the
+  guardian becomes unreachable. The circuit test seals each entrance arm
+  separately and proves the other remains usable. A widened port was found
+  during development and fixed by reserving more bend clearance.
+- Direct comparison against `git show dceb692:tools/cartographer/core/expedition.js`:
+  100 natural maps (five biomes × 20 seeds) match tiles, rooms, gates, boss,
+  axis, main path, encounters and entities exactly. Natural packets remain v3.
+- `node scripts/wizard-lab.mjs verify --full`: PASS (19 manifests, 9 dashboard
+  modules). Registry regenerated from the module manifest.
+- Real browser, loopback port 6523, seed 2718: inspected Cathedral and Crypt
+  automaps, door tint and rotated bearings. Crypt entry faces west and terminal
+  approach faces south, correctly preserving a relative left turn.
+- Circuit inspected in Automap and World: distinct arms enclose a void and
+  converge before the guardian. Exploration hides the rest of the map and shows
+  gold frontier segments. Two left-arrow inputs moved from (77,37) to (75,37).
+- Locked seed survived layout switches. Layout and seed survive a browser reload
+  via the URL fragment. Canvas fit follows walkable bounds. Browser error log empty.
+- Existing v2 fixture still imports. New grammars export v4; separate native
+  generator parity has not been implemented or claimed for these layouts.
+
+The actual game reference images inspected, source links, and the boundary
+between evidence and our design synthesis are recorded in `RESEARCH.md`.

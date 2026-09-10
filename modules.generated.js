@@ -55,7 +55,7 @@ window.WIZARD_REGISTRY = {
       "id": "wizard.cartographer",
       "slug": "cartographer",
       "title": "Cartographer",
-      "description": "Shape continuous outdoor landscapes and eroded ruins with terrain-led routes, varied clearings, readable landmarks and native-validated map packets.",
+      "description": "Compose natural terrain, cathedral spines, oriented crypts and island circuits with readable doorways, exploration frontiers and validated map exports.",
       "status": "authoring",
       "visibility": "dashboard",
       "category": "authoring",
@@ -63,7 +63,7 @@ window.WIZARD_REGISTRY = {
       "launch": "tools/cartographer/index.html",
       "readme": "tools/cartographer/README.md",
       "preview": null,
-      "moduleVersion": "3.0.0",
+      "moduleVersion": "4.0.0",
       "stateVersion": 1,
       "verdigrisTargets": [
         "zone-generation"
@@ -985,7 +985,7 @@ window.WIZARD_REGISTRY = {
       "id": "wizard.cartographer",
       "slug": "cartographer",
       "title": "Cartographer",
-      "description": "Shape continuous outdoor landscapes and eroded ruins with terrain-led routes, varied clearings, readable landmarks and native-validated map packets.",
+      "description": "Compose natural terrain, cathedral spines, oriented crypts and island circuits with readable doorways, exploration frontiers and validated map exports.",
       "status": "authoring",
       "visibility": "dashboard",
       "category": "authoring",
@@ -993,7 +993,7 @@ window.WIZARD_REGISTRY = {
       "launch": "tools/cartographer/index.html",
       "readme": "tools/cartographer/README.md",
       "preview": null,
-      "moduleVersion": "3.0.0",
+      "moduleVersion": "4.0.0",
       "stateVersion": 1,
       "verdigrisTargets": [
         "zone-generation"

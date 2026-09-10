@@ -17,8 +17,8 @@ Grass, damp earth, basalt and limestone each have their own material.
 - **Terrain lab:** the original generator remains at `terrain-lab.html`.
 
 `core/expedition.js` uses `landscape.js` for continuous geometry and `mapgen.js`
-for tile definitions. Explicitly seeded generation remains deterministic across
-JavaScript and the native C++ port. Graph loop budgets describe planned routes;
+for tile definitions. The natural-terrain generator retains its earlier native parity contract.
+New layout grammars are JavaScript-only until separately ported (see below). Graph loop budgets describe planned routes;
 continuous terrain can naturally merge neighboring routes.
 
 `node tools/cartographer/core/expedition.test.js` checks 1,500 biome/seed/extent
@@ -164,3 +164,34 @@ The engine is ES5, one IIFE, ~1100 lines. To use it in a game:
 4. Treat `entrance`/`exit` as player spawn and level exit.
 
 Nothing else is required â€” no assets, no build step, no globals beyond `MapGen`.
+
+## Map-reading layout grammars
+
+The atelier now separates **Layout grammar** from biome. Natural terrain retains
+its continuous landscape and v3 seed geometry. Cathedral spine, Oriented crypt,
+and Island circuit add v4 layouts with actual cardinal doorways, reserved negative
+space and seeded rotations. The circuit contains one base loop; **Extra loops**
+is a budget above it. Side destinations are bounded by available space.
+
+```js
+const map = Expedition.generate({
+  recipe: 'necropolis', layout: 'crypt', seed: 2718,
+  columns: 4, rows: 3, branches: 3, loops: 1
+});
+```
+
+Browser scripts load `core/mapgen.js`, `core/landscape.js`, `core/layouts.js`, then
+`core/expedition.js`. CommonJS resolves these dependencies automatically.
+
+Automap shows physical doorways and, during exploration, a gold frontier where
+known floor meets unexplored floor. Layout notes explain the relative entry/exit
+bearing. Fit frames the walkable footprint. Natural terrain's topology remains a
+pacing scaffold rather than an exclusive navigation graph.
+
+Research, visually inspected references, design limits and native compatibility
+are documented in [RESEARCH.md](RESEARCH.md). New v4 layout generation is browser
+and JavaScript engine work; native v4 generation parity is not yet implemented.
+
+Validation: `node tools/cartographer/core/layouts.test.js` tests physical terminal
+orientation, circuit alternatives, protected voids and complete packet round trips
+across 1,350 maps, in addition to the existing expedition and terrain suites.

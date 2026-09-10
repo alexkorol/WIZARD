@@ -20,3 +20,6 @@ for(const recipe of Object.keys(E.RECIPES))for(const shape of [{columns:4,rows:3
 const packet=E.toJSON(E.generate({seed:99}));
 for(const mutate of [p=>p.width=999999,p=>p.tiles[0]='?',p=>p.version='99',p=>p.entrance.x=-1,p=>p.spawns[0].x=999,p=>p.tiles.fill('0'.repeat(p.width))]){const p=structuredClone(packet);mutate(p);assert.throws(()=>E.fromJSON(p));}
 console.log(`${count} expedition seeds: deterministic packets, connected collision, 3-wide sockets, safe encounters, route continuity and JSON round trips passed. Malformed imports rejected.`);
+
+// Included here so the laboratory verifier also exercises new layout grammars.
+require('./layouts.test.js');

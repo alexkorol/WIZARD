@@ -1,10 +1,10 @@
 /* Original WIZARD expedition grammar. Pure JS; no renderer or platform dependency. */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory(require('./mapgen.js'),require('./landscape.js'));
-  else root.Expedition = factory(root.MapGen,root.Landscape);
-})(typeof self !== 'undefined' ? self : this, function (MapGen,Landscape) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./mapgen.js'),require('./landscape.js'),require('./layouts.js'));
+  else root.Expedition = factory(root.MapGen,root.Landscape,root.CartographerLayouts);
+})(typeof self !== 'undefined' ? self : this, function (MapGen,Landscape,Layouts) {
   'use strict';
-  const VERSION = '3.0.0';
+  const VERSION = '4.0.0';
   const T = MapGen.TILE;
   const DIRS = [[0,-1,'north'],[1,0,'east'],[0,1,'south'],[-1,0,'west']];
   const RECIPES = {
@@ -30,16 +30,16 @@
     const seed=seedOf(options.seed), cols=number(options.columns,4,4,10),rows=number(options.rows,3,3,7),size=18;
     const topology=random(seed^0xa511e9b3), roomsRng=random(seed^0x63d83595),encounters=random(seed^0xb5297a4d),decor=random(seed^0x1b56c4e9);
     const branching=number(options.branches,3,0,18),loopBudget=number(options.loops,1,0,8);
-    const width=cols*size+24,height=rows*size+24,tiles=new Uint8Array(width*height).fill(biome.void);
-    const nodes=[],edges=[],used=new Map();
+    let width=cols*size+24,height=rows*size+24,tiles=new Uint8Array(width*height).fill(biome.void);
+    let nodes=[],edges=[];const used=new Map();
     function node(c,r,role='combat') {const key=c+','+r;if(used.has(key))return used.get(key);const n={id:nodes.length,c,r,x:1+c*size,y:1+r*size,cx:8+c*size,cy:8+r*size,role,sockets:[],variant:roomsRng(4),rotation:roomsRng(4)};nodes.push(n);used.set(key,n);return n;}
     function link(a,b,kind) {if(edges.some(e=>(e.a===a.id&&e.b===b.id)||(e.a===b.id&&e.b===a.id)))return false;edges.push({a:a.id,b:b.id,kind});return true;}
-    let row=1+topology(rows-2),current=node(0,row,'entry');const spine=[current.id];
+    let row=1+topology(rows-2),current=node(0,row,'entry');let spine=[current.id];
     for(let col=1;col<cols;col++) {
       if(col>1&&col<cols-1&&topology(3)===0){const nr=Math.max(0,Math.min(rows-1,row+(topology(2)?1:-1)));if(nr!==row){const n=node(col-1,nr);link(current,n,'main');current=n;row=nr;spine.push(n.id);}}
       const n=node(col,row,col===cols-1?'boss':'combat');link(current,n,'main');current=n;spine.push(n.id);
     }
-    const bossNode=current;
+    let bossNode=current;
     // Add optional pockets from a bounded frontier; no disconnected repair tunnels.
     for(let k=0;k<branching;k++) {
       const frontier=[];for(const n of nodes){if(n.role==='boss')continue;for(const d of DIRS){const c=n.c+d[0],r=n.r+d[1];if(c>=0&&c<cols&&r>=0&&r<rows&&!used.has(c+','+r))frontier.push({n,c,r});}}
@@ -48,9 +48,16 @@
     let loops=0;const candidates=[];for(const a of nodes)for(const b of nodes)if(a.id<b.id&&a.role!=='boss'&&b.role!=='boss'&&Math.abs(a.c-b.c)+Math.abs(a.r-b.r)===1)candidates.push([a,b]);
     while(candidates.length&&loops<loopBudget){const [a,b]=candidates.splice(topology(candidates.length),1)[0];if(link(a,b,'loop'))loops++;}
     for(const n of nodes)if(n.role==='optional'&&edges.filter(e=>e.a===n.id||e.b===n.id).length===1)n.role='treasure';
-    tiles.set(Landscape.realize({seed,recipe,width,height,rooms:nodes,edges,floor:biome.floor,space:biome.void,outdoor:!!biome.outdoor}));
-    const entry=nodes[0],entrance={x:entry.cx-3,y:entry.cy},boss={x:bossNode.cx,y:bossNode.cy},exit={x:bossNode.cx+3,y:bossNode.cy};
-    const map={version:VERSION,seed,zone:biome.zone,theme:biome.theme,width,height,tiles,rooms:nodes,entrance,exit,boss,axis:[1,0],palette:MapGen.THEMES[biome.theme].palette,outdoor:!!biome.outdoor,entities:[],spawns:[],expedition:{recipe,columns:cols,rows,branches:branching,loops:loopBudget,graph:{nodes,edges,spine},reading:{entryFacing:'east',exitFacing:'east',rule:biome.outdoor?'Read the terrain: trails bend around ridges and water, clearings open at landmarks, and side routes lead to offerings. The eastern guardian is a broad direction, not a straight corridor.':'Follow the connected courts and eroded passages. Side vaults hold offerings; the eastern guardian is a broad direction, not a straight corridor.'}}};
+    const layout=Object.hasOwn(Layouts.TYPES,options.layout)?options.layout:'terrain';
+    let shape;
+    if(layout==='terrain')tiles.set(Landscape.realize({seed,recipe,width,height,rooms:nodes,edges,floor:biome.floor,space:biome.void,outdoor:!!biome.outdoor}));
+    else {
+      shape=Layouts.generate({layout,seed,columns:cols,rows,branches:branching,loops:loopBudget,floor:biome.floor,space:biome.void,outdoor:!!biome.outdoor});
+      nodes=shape.nodes;edges=shape.edges;spine=shape.spine;bossNode=nodes.find(n=>n.role==='boss');width=shape.width;height=shape.height;tiles=shape.tiles;
+    }
+    const entry=nodes[0],entrance=shape?shape.entrance:{x:entry.cx-3,y:entry.cy},boss={x:bossNode.cx,y:bossNode.cy},exit=shape?shape.exit:{x:bossNode.cx+3,y:bossNode.cy};
+    const reading=shape?shape.reading:{entryFacing:'east',exitFacing:'east',rule:Layouts.TYPES.terrain.rule+' Follow trails and terrain boundaries; the guardian lies broadly east. Nearby clearings may merge.'};
+    const map={version:layout==='terrain'?'3.0.0':VERSION,seed,zone:biome.zone,theme:biome.theme,width,height,tiles,rooms:nodes,entrance,exit,boss,axis:shape?shape.axis:[1,0],palette:MapGen.THEMES[biome.theme].palette,outdoor:!!biome.outdoor,entities:[],spawns:[],expedition:{recipe,layout,columns:cols,rows,branches:branching,loops:loopBudget,intrinsicLoops:shape?shape.intrinsicLoops:0,graph:{nodes,edges,spine},reading}};
     map.mainPath=path(map,entrance,boss);
     const distance=distances(map,entrance).distance,maxDist=distance[boss.y*width+boss.x];
     for(const n of nodes){
@@ -66,7 +73,7 @@
     }
     map.metrics=metrics(map);return map;
   }
-  function metrics(map){const d=distances(map,map.entrance);const walkable=Array.from(map.tiles).filter(t=>MapGen.WALKABLE.has(t)).length;return {walkable,reachable:d.count,coverage:Math.round(100*walkable/map.tiles.length),routeLength:map.mainPath.length,rooms:map.rooms.length,loops:map.expedition.graph.edges.length-map.rooms.length+1,optionalRooms:map.rooms.filter(n=>!map.expedition.graph.spine.includes(n.id)).length,packs:map.spawns.length,monsters:map.spawns.reduce((s,p)=>s+p.count,0)};}
+  function metrics(map){const d=distances(map,map.entrance);const walkable=Array.from(map.tiles).filter(t=>MapGen.WALKABLE.has(t)).length;return {walkable,reachable:d.count,coverage:Math.round(100*walkable/map.tiles.length),routeLength:map.mainPath.length,rooms:map.rooms.length,loops:map.expedition.graph.edges.length-map.rooms.length+1,optionalRooms:map.rooms.filter(n=>map.expedition.layout&&map.expedition.layout!=='terrain'?['optional','treasure'].includes(n.role):!map.expedition.graph.spine.includes(n.id)).length,packs:map.spawns.length,monsters:map.spawns.reduce((s,p)=>s+p.count,0)};}
   function validate(map){
     const errors=[],d=distances(map,map.entrance),walk=Array.from(map.tiles).filter(t=>MapGen.WALKABLE.has(t)).length;
     if(d.count!==walk)errors.push('Disconnected walkable region');
@@ -78,14 +85,15 @@
   }
   function toJSON(map){return {...MapGen.toJSON(map),format:'wizard-expedition',version:map.version,rooms:map.rooms,expedition:map.expedition,metrics:map.metrics,outdoor:map.outdoor};}
   function fromJSON(data){
-    if(!data||data.format!=='wizard-expedition'||![VERSION,'2.0.0'].includes(data.version))throw new Error('Unsupported expedition format or version');
+    if(!data||data.format!=='wizard-expedition'||![VERSION,'3.0.0','2.0.0'].includes(data.version))throw new Error('Unsupported expedition format or version');
     if(!Number.isInteger(data.width)||!Number.isInteger(data.height)||data.width<1||data.height<1||data.width>256||data.height>256)throw new Error('Invalid map dimensions');
     if(!Array.isArray(data.tiles)||data.tiles.length!==data.height||data.tiles.some(r=>typeof r!=='string'||r.length!==data.width||!/^[0-9a-e]+$/.test(r)))throw new Error('Invalid tile rows');
     const point=p=>p&&Number.isInteger(p.x)&&Number.isInteger(p.y)&&p.x>=0&&p.y>=0&&p.x<data.width&&p.y<data.height;
     if(![data.entrance,data.exit,data.boss].every(point)||!Array.isArray(data.spawns)||data.spawns.length>256||!data.spawns.every(point)||!Array.isArray(data.rooms)||data.rooms.length>100||!data.rooms.every(n=>Array.isArray(n.sockets)&&n.sockets.length<=4)||!data.expedition?.graph)throw new Error('Invalid expedition metadata');
     const id=n=>Number.isInteger(n)&&n>=0&&n<data.rooms.length;
     if(!Object.hasOwn(RECIPES,data.expedition.recipe)||!Array.isArray(data.entities)||data.entities.length>2000||!data.entities.every(point)||!data.rooms.every((n,i)=>n.id===i&&point({x:n.cx,y:n.cy})&&typeof n.landmark==='string'&&n.landmark.length<100&&typeof n.prefab==='string'&&n.prefab.length<100&&['entry','boss','combat','optional','treasure'].includes(n.role)&&n.sockets.every(s=>id(s.to)&&Number.isInteger(s.direction)&&s.direction>=0&&s.direction<4&&point(s)))||!data.spawns.every(s=>id(s.room)&&Number.isInteger(s.count)&&s.count>=1&&s.count<=6)||!Array.isArray(data.expedition.graph.edges)||data.expedition.graph.edges.length>300||!data.expedition.graph.edges.every(e=>id(e.a)&&id(e.b))||!Array.isArray(data.expedition.graph.spine)||!data.expedition.graph.spine.every(id)||typeof data.expedition.reading?.rule!=='string')throw new Error('Invalid rooms, graph, entities or encounters');
+    if(data.expedition.layout!==undefined&&!Object.hasOwn(Layouts.TYPES,data.expedition.layout))throw new Error('Unknown layout');
     const map=MapGen.fromJSON(data);map.expedition.graph.nodes=map.rooms;map.mainPath=path(map,map.entrance,map.boss);map.metrics=metrics(map);const result=validate(map);if(!result.valid)throw new Error(result.errors.join('; '));return map;
   }
-  return {VERSION,RECIPES,DIRS,generate,validate,metrics,path,distances,toJSON,fromJSON,seedOf};
+  return {VERSION,RECIPES,LAYOUTS:Layouts.TYPES,DIRS,generate,validate,metrics,path,distances,toJSON,fromJSON,seedOf};
 });
