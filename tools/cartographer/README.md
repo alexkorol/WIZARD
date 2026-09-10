@@ -5,12 +5,12 @@ or geographic structure. The default opens a Mesa at extended extent.
 
 | Map type | Structure and navigation |
 |---|---|
-| Sunken Temple | Nine precincts with stepped pools, colonnades, side shrines and offset galleries |
-| Saffron Mesa | Central high plateau, broken outer terraces, gullies and two escarpment ramps |
+| Temple | Nine precincts with stepped pools, colonnades, side shrines and offset galleries |
+| Mesa | Central high plateau, broken outer terraces, gullies and two escarpment ramps |
 | Cold River | Two glacial banks, a winding channel, tributaries, islands and three bridge crossings |
-| Copper Canyon | Variable-width gorge, branching ravines, sheltered basins and dividing rock fins |
-| Iron Cages | Four cell blocks, barred doors, guard galleries and a connecting exercise yard |
-| White Summit | Successive snowfields, contour ridges, alternating saddles and a high destination |
+| Canyon | Variable-width gorge, branching ravines, sheltered basins and dividing rock fins |
+| Cages | Four cell blocks, barred doors, guard galleries and a connecting exercise yard |
+| Summit | Successive snowfields, contour ridges, alternating saddles and a high destination |
 
 These are original place grammars informed by ARPG map studies. Materials,
 obstacles, elevation, route constraints and encounter distribution follow the

@@ -8,11 +8,11 @@
   const T = MapGen.TILE;
   const DIRS = [[0,-1,'north'],[1,0,'east'],[0,1,'south'],[-1,0,'west']];
   const RECIPES = {
-    wildwood: { name:'The Verdant March', zone:'wilds', theme:'forest', room:'woodland', floor:T.GRASS, void:T.VOID, outdoor:true, landmark:'Forest clearing', description:'Continuous woodland, worn trails, uneven ridgelines and sheltered clearings.' },
-    necropolis: { name:'The Copper Necropolis', zone:'dungeon', theme:'crypt', room:'ossuary', floor:T.FLOOR, void:T.VOID, landmark:'Ancestor court', description:'Limestone chambers, ancestor courts and copper-sealed burial vaults.' },
-    causeway: { name:'The Drowned Causeway', zone:'wilds', theme:'swamp', room:'wetland', outdoor:true, floor:T.GRASS, void:T.DEEP, landmark:'Flood marker', description:'Broad tidal wetlands, winding dry ground, branching inlets and short crossings.' },
-    quarry: { name:'The Ember Quarry', zone:'caves', theme:'lava', room:'badlands', outdoor:true, floor:T.RUBBLE, void:T.LAVA, landmark:'Kiln circle', description:'Weathered open badlands, basalt ridgelines and branching volcanic gullies.' },
-    sanctuary: { name:'The Star Sanctuary', zone:'sanctum', theme:'arcane', room:'court', floor:T.FLOOR, void:T.VOID, landmark:'Celestial dial', description:'Suspended stone courts and narrow bridges around an open astral void.' }
+    wildwood: { name:'Woodland', zone:'wilds', theme:'forest', room:'woodland', floor:T.GRASS, void:T.VOID, outdoor:true, landmark:'Forest clearing', description:'Continuous woodland, worn trails, uneven ridgelines and sheltered clearings.' },
+    necropolis: { name:'Necropolis', zone:'dungeon', theme:'crypt', room:'ossuary', floor:T.FLOOR, void:T.VOID, landmark:'Ancestor court', description:'Limestone chambers, ancestor courts and copper-sealed burial vaults.' },
+    causeway: { name:'Wetland', zone:'wilds', theme:'swamp', room:'wetland', outdoor:true, floor:T.GRASS, void:T.DEEP, landmark:'Flood marker', description:'Broad tidal wetlands, winding dry ground, branching inlets and short crossings.' },
+    quarry: { name:'Quarry', zone:'caves', theme:'lava', room:'badlands', outdoor:true, floor:T.RUBBLE, void:T.LAVA, landmark:'Kiln circle', description:'Weathered open badlands, basalt ridgelines and branching volcanic gullies.' },
+    sanctuary: { name:'Sanctuary', zone:'sanctum', theme:'arcane', room:'court', floor:T.FLOOR, void:T.VOID, landmark:'Celestial dial', description:'Suspended stone courts and narrow bridges around an open astral void.' }
   };
   Object.assign(RECIPES,MapTypes.TYPES);
   function random(seed) { let s=seed>>>0; return n=>{s=(Math.imul(s,1664525)+1013904223)>>>0;return n ? Math.floor(s/4294967296*n) : s/4294967296;}; }
