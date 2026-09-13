@@ -1,0 +1,35 @@
+name: markdown-evidence
+
+on:
+  push:
+    paths:
+      - 'scripts/verify-markdown-evidence.mjs'
+      - 'tests/verify-markdown-evidence.test.mjs'
+      - 'tests/fixtures/markdown-evidence/**'
+      - '.github/workflows/markdown-evidence.yml'
+      - 'docs/**'
+      - 'evidence/**'
+  pull_request:
+    paths:
+      - 'scripts/verify-markdown-evidence.mjs'
+      - 'tests/verify-markdown-evidence.test.mjs'
+      - 'tests/fixtures/markdown-evidence/**'
+      - '.github/workflows/markdown-evidence.yml'
+      - 'docs/**'
+      - 'evidence/**'
+
+permissions:
+  contents: read
+
+jobs:
+  markdown-evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Audit local Markdown evidence targets and line anchors
+        run: node scripts/verify-markdown-evidence.mjs
+      - name: Auditor negative controls
+        run: node tests/verify-markdown-evidence.test.mjs
