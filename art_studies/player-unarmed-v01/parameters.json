@@ -1,0 +1,14 @@
+{
+  "status": "unapproved structural study",
+  "logical_canvas": [64, 96],
+  "enlargement": 8,
+  "anchor": [32, 89],
+  "scale_status": "PROVISIONAL: current intended native player sprite and accepted normal-camera calibration not established. 80px male body is a study choice, not verified pixel parity.",
+  "camera_elevation_degrees": 35,
+  "body_yaw_degrees": -18,
+  "seed": 0,
+  "male": {"height": 1.78, "shoulder_width": 0.43, "hip_width": 0.32, "waist_width": 0.29, "head_height": 0.235},
+  "female": {"height": 1.70, "shoulder_width": 0.38, "hip_width": 0.35, "waist_width": 0.275, "head_height": 0.225},
+  "garment": "Same coverage: short linen tunic, simple hide vest, narrow belt, wrist guards and ankle-high hide shoes. Bare head and empty hands.",
+  "later_variants": ["darts", "knapped flint hand axe held directly; no haft or bindings", "small ritual bowl"]
+}

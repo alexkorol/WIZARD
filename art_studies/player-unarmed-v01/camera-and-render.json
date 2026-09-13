@@ -1,0 +1,31 @@
+{
+  "camera_location": [
+    0.0,
+    -6.553216457366943,
+    5.458611488342285
+  ],
+  "camera_rotation_euler": [
+    0.9599311947822571,
+    -0.0,
+    0.0
+  ],
+  "lens_mm": 125.76773071289062,
+  "sensor_height_mm": 32,
+  "sensor_fit": "VERTICAL",
+  "shift_x": 0.0,
+  "shift_y": 0.027522757649421692,
+  "anchor": [
+    32,
+    89
+  ],
+  "logical_canvas": [
+    64,
+    96
+  ],
+  "elevation_degrees": 35,
+  "projection": "perspective; camera aligned to straight world grid",
+  "seed": 0,
+  "samples": 32,
+  "scale_status": "PROVISIONAL: current intended native player sprite and accepted normal-camera calibration not established. 80px male body is a study choice, not verified pixel parity.",
+  "padding_correction": "shift_y decreased 0.070 to keep full feet and transparent bottom padding"
+}

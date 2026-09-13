@@ -1,0 +1,84 @@
+{
+  "status": "UNAPPROVED structure; no imagegen calls yet",
+  "logical_canvas": [
+    64,
+    96
+  ],
+  "enlargement": 8,
+  "method": "Render directly at 64x96 in Blender; preserve RGB, threshold alpha at 128; translate both guides by the same integer Y offset to register the male foreground sole at y=89; enlarge 8x NEAREST. No palette reduction, stretch, or smooth-render input.",
+  "scale_status": "PROVISIONAL: current intended native player sprite and accepted normal-camera calibration not established. 80px male body is a study choice, not verified pixel parity.",
+  "outputs": {
+    "male": {
+      "raw_render": "renders\\male-logical-render.png",
+      "raw_sha256": "6f02a92d16926b106edb14d59f870fdcff7d7b2700b330c618534b96006da60b",
+      "logical": "guides\\male-logical-guide.png",
+      "logical_sha256": "6dc1ba285ff10a2e564759c55a5d4152be8c1928fd478cba4b8802be6229e818",
+      "enlarged_input": "guides\\male-input-8x.png",
+      "input_sha256": "b6e250c56f0c2601c3b1df535861875a588504174da347290b913e7de77d6e41",
+      "bbox_xyxy": [
+        16,
+        14,
+        48,
+        90
+      ],
+      "visible_body_height_px": 76,
+      "translation_xy": [
+        0,
+        2
+      ],
+      "anchor_xy": [
+        32,
+        89
+      ],
+      "logical_dimensions": [
+        64,
+        96
+      ],
+      "enlarged_dimensions": [
+        512,
+        768
+      ],
+      "alpha_values": [
+        0,
+        255
+      ],
+      "integer_blocks_verified": true
+    },
+    "female": {
+      "raw_render": "renders\\female-logical-render.png",
+      "raw_sha256": "e363dc793ca00aac859677c8604469212438ebc259dfd0c627054de89597f1b3",
+      "logical": "guides\\female-logical-guide.png",
+      "logical_sha256": "1b1ef856bed4e5c808ee5525ee85fdf984f34d96957a52dd1d71b95ec0deb499",
+      "enlarged_input": "guides\\female-input-8x.png",
+      "input_sha256": "83d1d411c3b60f431189c4c1ae45c6a97ef04df5c9c6c8c27ff04a35c7053e4e",
+      "bbox_xyxy": [
+        17,
+        17,
+        46,
+        90
+      ],
+      "visible_body_height_px": 73,
+      "translation_xy": [
+        0,
+        2
+      ],
+      "anchor_xy": [
+        32,
+        89
+      ],
+      "logical_dimensions": [
+        64,
+        96
+      ],
+      "enlarged_dimensions": [
+        512,
+        768
+      ],
+      "alpha_values": [
+        0,
+        255
+      ],
+      "integer_blocks_verified": true
+    }
+  }
+}

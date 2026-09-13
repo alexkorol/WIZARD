@@ -1,0 +1,22 @@
+{
+  "status": "unapproved",
+  "scene": "VG_Player_Unarmed_v01",
+  "original_scene_objects": [
+    "Cube",
+    "Light",
+    "Camera"
+  ],
+  "study_mesh_count": 71,
+  "camera": "VG_fixed_camera",
+  "projection": "PERSP",
+  "male_objects": 42,
+  "female_objects": 43,
+  "logical_render_resolution": [
+    64,
+    96
+  ],
+  "dof": false,
+  "motion_blur": false,
+  "transparent": true,
+  "active_preview": "male; toggle the female collection visibility for the other figure"
+}
