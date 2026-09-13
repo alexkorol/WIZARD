@@ -1,0 +1,53 @@
+{
+  "status": "unapproved design study; 32x64 selected",
+  "logical_canvas": [
+    32,
+    64
+  ],
+  "enlargement": 8,
+  "anchor": [
+    16,
+    60
+  ],
+  "scale_status": "Owner-selected logical grid: 32x32 inventory cell / small monster, 32x64 typical humanoid. Runtime displayed pixel size and final camera remain unverified.",
+  "camera_elevation_degrees": 35,
+  "body_yaw_degrees": -18,
+  "seed": 0,
+  "male": {
+    "height": 1.78,
+    "shoulder_width": 0.43,
+    "hip_width": 0.32,
+    "waist_width": 0.29,
+    "head_height": 0.235
+  },
+  "female": {
+    "height": 1.7,
+    "shoulder_width": 0.319,
+    "hip_width": 0.374,
+    "waist_width": 0.214,
+    "head_height": 0.225,
+    "limb_radius_factor": 0.8,
+    "head_width_factor": 0.9,
+    "chest_shape": "continuous fitted hide vest over shaped ribcage and chest",
+    "revision": "v07 compact staggered idle; photo is general inspiration, not a locked costume or pose"
+  },
+  "garment": "Same coverage: short linen tunic, simple hide vest, narrow belt, wrist guards and ankle-high hide shoes. Bare head and empty hands.",
+  "later_variants": [
+    "darts",
+    "knapped flint hand axe held directly; no haft or bindings",
+    "small ritual bowl"
+  ],
+  "pose": "female relaxed narrow idle with mild stagger; low hands; male unchanged",
+  "grid_cell": [
+    32,
+    32
+  ],
+  "humanoid_footprint_cells": [
+    1,
+    2
+  ],
+  "small_monster_footprint_cells": [
+    1,
+    1
+  ]
+}

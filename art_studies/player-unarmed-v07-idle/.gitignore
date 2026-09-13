@@ -1,0 +1,4 @@
+references-local/
+*.blend1
+__pycache__/
+logs/
