@@ -1,0 +1,40 @@
+{
+  "status": "unapproved v03: owner-directed female silhouette and relaxed idle",
+  "logical_canvas": [
+    64,
+    96
+  ],
+  "enlargement": 8,
+  "anchor": [
+    32,
+    89
+  ],
+  "scale_status": "PROVISIONAL: current intended native player sprite and accepted normal-camera calibration not established. 80px male body is a study choice, not verified pixel parity.",
+  "camera_elevation_degrees": 35,
+  "body_yaw_degrees": -18,
+  "seed": 0,
+  "male": {
+    "height": 1.78,
+    "shoulder_width": 0.43,
+    "hip_width": 0.32,
+    "waist_width": 0.29,
+    "head_height": 0.235
+  },
+  "female": {
+    "height": 1.7,
+    "shoulder_width": 0.35,
+    "hip_width": 0.365,
+    "waist_width": 0.235,
+    "head_height": 0.225,
+    "limb_radius_factor": 0.8,
+    "head_width_factor": 0.9,
+    "chest_shape": "single shaped hide vest, equal coverage; no separate breast plates"
+  },
+  "garment": "Same coverage: short linen tunic, simple hide vest, narrow belt, wrist guards and ankle-high hide shoes. Bare head and empty hands.",
+  "later_variants": [
+    "darts",
+    "knapped flint hand axe held directly; no haft or bindings",
+    "small ritual bowl"
+  ],
+  "pose": "relaxed alert idle; arms lowered, soft elbow bends, mild stagger, weight on one leg"
+}
