@@ -1,0 +1,17 @@
+{
+  "file": "art_studies/player-unarmed-v14-sandals-alpha/generated/2x4-original.png",
+  "dimensions": [
+    1254,
+    1254
+  ],
+  "mode": "RGB",
+  "bands": [
+    "R",
+    "G",
+    "B"
+  ],
+  "has_alpha": false,
+  "alpha_extrema": null,
+  "png_color_type": 2,
+  "verdict": "No transparent alpha in raw output"
+}

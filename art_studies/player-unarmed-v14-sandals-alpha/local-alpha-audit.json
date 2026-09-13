@@ -1,0 +1,15 @@
+{
+  "source": "generated/2x4-original.png",
+  "source_mode": "RGB",
+  "source_sha256": "91dbc73d9272d0c22e1a524d5a1e9d537307a48699b549379c40487b26767de7",
+  "output": "locally-derived/2x4-local-cutout.png",
+  "output_sha256": "68eceb4e3e93f5ec6797147af2593eb169b1c52941e607dd07c0caa06d4c63c5",
+  "alpha_origin": "Locally computed mask, NOT generated true alpha",
+  "method": "Boundary-connected neutral pixels with RGB channel spread<=20 and minimum channel>=100 become transparent; visible source RGB unchanged",
+  "transparent_pixels": 1179931,
+  "opaque_pixels": 392585,
+  "alpha_values": [
+    0,
+    255
+  ]
+}

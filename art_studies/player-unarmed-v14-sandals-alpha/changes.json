@@ -1,0 +1,80 @@
+{
+  "changes": [
+    "Closed shoes replaced with thin hide soles and two narrow open straps; toes and most foot exposed",
+    "Female shoulder cloth hidden; other outfit, camera and poses retained"
+  ],
+  "characters": {
+    "male": [
+      {
+        "foot": -1,
+        "foot_bounds_local": [
+          [
+            -0.1856837123632431,
+            -0.14256884157657623,
+            -0.009486833587288857
+          ],
+          [
+            -0.09004426002502441,
+            0.1148872822523117,
+            0.10394535958766937
+          ]
+        ],
+        "sole_thickness_m": 0.007,
+        "strap_width_m": 0.014
+      },
+      {
+        "foot": 1,
+        "foot_bounds_local": [
+          [
+            0.08941991627216339,
+            -0.20096799731254578,
+            -0.008249688893556595
+          ],
+          [
+            0.18521921336650848,
+            0.05635588616132736,
+            0.10493641346693039
+          ]
+        ],
+        "sole_thickness_m": 0.007,
+        "strap_width_m": 0.014
+      }
+    ],
+    "female": [
+      {
+        "foot": -1,
+        "foot_bounds_local": [
+          [
+            -0.1544422060251236,
+            -0.1572578400373459,
+            0.0
+          ],
+          [
+            -0.060102835297584534,
+            0.06673288345336914,
+            0.10474040359258652
+          ]
+        ],
+        "sole_thickness_m": 0.007,
+        "strap_width_m": 0.014
+      },
+      {
+        "foot": 1,
+        "foot_bounds_local": [
+          [
+            0.10923406481742859,
+            -0.21260029077529907,
+            0.0011918400414288044
+          ],
+          [
+            0.20366927981376648,
+            0.011126138269901276,
+            0.10441841185092926
+          ]
+        ],
+        "sole_thickness_m": 0.007,
+        "strap_width_m": 0.014
+      }
+    ]
+  }
+}

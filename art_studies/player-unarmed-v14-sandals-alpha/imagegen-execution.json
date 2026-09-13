@@ -1,0 +1,10 @@
+{
+  "date": "2026-09-13",
+  "tool": "built-in image_gen.imagegen",
+  "call_count": 1,
+  "original_file": "C:/Users/Alex/.codex/generated_images/01a09918-529d-7150-91a6-6c624530795b/exec-61c7777a-92dd-4ec8-8885-541b2b049960.png",
+  "alpha_request_placement": ["opening", "layout section", "pixel-style section", "kit section", "final output section"],
+  "raw_alpha_result": "FAIL: RGB PNG, color type2, no alpha channel; visible checkerboard is painted into RGB",
+  "model_version": "Not independently verified; no model-version claim inferred from the user or output appearance",
+  "records": ["imagegen-prompt.json", "raw-alpha-audit.json", "local-alpha-audit.json", "final-verification.json"]
+}

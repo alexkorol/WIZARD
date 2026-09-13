@@ -1,0 +1,180 @@
+{
+  "alpha_origin": "Local neutral-background extraction after the raw RGB imagegen output failed true-alpha requirement",
+  "recovered_sheet_dimensions": [
+    217,
+    221
+  ],
+  "final_sheet_dimensions": [
+    192,
+    192
+  ],
+  "frame_dimensions": [
+    48,
+    96
+  ],
+  "shared_integer_translation": [
+    -4,
+    -14
+  ],
+  "source_sha256": "6690aac7fdf6cbc0079e96a3347389dacada8af009971775593b11722936e4df",
+  "frames": [
+    {
+      "sex": "male",
+      "direction": "front",
+      "row": 0,
+      "column": 0,
+      "source_box": [
+        0,
+        0,
+        54,
+        110
+      ],
+      "final_bbox": [
+        6,
+        3,
+        40,
+        92
+      ],
+      "all_foreground_pixels_preserved": true
+    },
+    {
+      "sex": "male",
+      "direction": "right",
+      "row": 0,
+      "column": 1,
+      "source_box": [
+        54,
+        0,
+        108,
+        110
+      ],
+      "final_bbox": [
+        13,
+        1,
+        35,
+        91
+      ],
+      "all_foreground_pixels_preserved": true
+    },
+    {
+      "sex": "male",
+      "direction": "back",
+      "row": 0,
+      "column": 2,
+      "source_box": [
+        108,
+        0,
+        163,
+        110
+      ],
+      "final_bbox": [
+        6,
+        1,
+        42,
+        89
+      ],
+      "all_foreground_pixels_preserved": true
+    },
+    {
+      "sex": "male",
+      "direction": "left",
+      "row": 0,
+      "column": 3,
+      "source_box": [
+        163,
+        0,
+        217,
+        110
+      ],
+      "final_bbox": [
+        13,
+        2,
+        34,
+        91
+      ],
+      "all_foreground_pixels_preserved": true
+    },
+    {
+      "sex": "female",
+      "direction": "front",
+      "row": 1,
+      "column": 0,
+      "source_box": [
+        0,
+        110,
+        54,
+        221
+      ],
+      "final_bbox": [
+        9,
+        2,
+        39,
+        89
+      ],
+      "all_foreground_pixels_preserved": true
+    },
+    {
+      "sex": "female",
+      "direction": "right",
+      "row": 1,
+      "column": 1,
+      "source_box": [
+        54,
+        110,
+        108,
+        221
+      ],
+      "final_bbox": [
+        14,
+        1,
+        37,
+        86
+      ],
+      "all_foreground_pixels_preserved": true
+    },
+    {
+      "sex": "female",
+      "direction": "back",
+      "row": 1,
+      "column": 2,
+      "source_box": [
+        108,
+        110,
+        163,
+        221
+      ],
+      "final_bbox": [
+        10,
+        0,
+        40,
+        86
+      ],
+      "all_foreground_pixels_preserved": true
+    },
+    {
+      "sex": "female",
+      "direction": "left",
+      "row": 1,
+      "column": 3,
+      "source_box": [
+        163,
+        110,
+        217,
+        221
+      ],
+      "final_bbox": [
+        12,
+        3,
+        32,
+        86
+      ],
+      "all_foreground_pixels_preserved": true
+    }
+  ],
+  "final_sha256": "5d8e5bebd98ef0b15656103cb44fea94a9a0a51dc9921585117cf244af78efe4",
+  "alpha_values": [
+    0,
+    255
+  ],
+  "exact3x_verified": true
+}

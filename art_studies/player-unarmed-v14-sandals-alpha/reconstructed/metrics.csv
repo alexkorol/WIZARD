@@ -1,0 +1,2 @@
+image,cell_size,offset_x,offset_y,percent_diff,percent_diff_core,percent_diff_halo,percent_diff_outside,grid_ratio,warnings,mode,regions,ml_used,output_path,overlay_path
+2x4-local-cutout.png,6,0,0,25.3187,25.4733,25.1949,0.0,0.0048,Core mismatch 8.1% - inspect alignment.,global,1,no,Z:\Code\.worktrees\wizard-art-player-guides\art_studies\player-unarmed-v14-sandals-alpha\reconstructed\2x4-local-cutout_reconstructed.png,

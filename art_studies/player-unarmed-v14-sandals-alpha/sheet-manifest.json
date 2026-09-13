@@ -1,0 +1,157 @@
+{
+  "layout_notation": "rows x columns",
+  "frame_dimensions": [
+    48,
+    96
+  ],
+  "shared_frame_translation": [
+    0,
+    2
+  ],
+  "layouts": {
+    "1x4": {
+      "rows": 1,
+      "columns": 4,
+      "logical_dimensions": [
+        192,
+        96
+      ],
+      "input_dimensions": [
+        1536,
+        768
+      ],
+      "frames": [
+        {
+          "sex": "female",
+          "direction": "front",
+          "row": 0,
+          "column": 0
+        },
+        {
+          "sex": "female",
+          "direction": "right",
+          "row": 0,
+          "column": 1
+        },
+        {
+          "sex": "female",
+          "direction": "back",
+          "row": 0,
+          "column": 2
+        },
+        {
+          "sex": "female",
+          "direction": "left",
+          "row": 0,
+          "column": 3
+        }
+      ],
+      "input_sha256": "e1e641aebe86b1f156fe390978bbe2572873556ecf6d602824acfbf7e1e86cce",
+      "exact8x_verified": true
+    },
+    "2x2": {
+      "rows": 2,
+      "columns": 2,
+      "logical_dimensions": [
+        96,
+        192
+      ],
+      "input_dimensions": [
+        768,
+        1536
+      ],
+      "frames": [
+        {
+          "sex": "female",
+          "direction": "front",
+          "row": 0,
+          "column": 0
+        },
+        {
+          "sex": "female",
+          "direction": "right",
+          "row": 0,
+          "column": 1
+        },
+        {
+          "sex": "female",
+          "direction": "back",
+          "row": 1,
+          "column": 0
+        },
+        {
+          "sex": "female",
+          "direction": "left",
+          "row": 1,
+          "column": 1
+        }
+      ],
+      "input_sha256": "6db5333cb56ed872e0c16f3792b49cbe159e4201e64a1d8646a119d92bc16019",
+      "exact8x_verified": true
+    },
+    "2x4": {
+      "rows": 2,
+      "columns": 4,
+      "logical_dimensions": [
+        192,
+        192
+      ],
+      "input_dimensions": [
+        1536,
+        1536
+      ],
+      "frames": [
+        {
+          "sex": "male",
+          "direction": "front",
+          "row": 0,
+          "column": 0
+        },
+        {
+          "sex": "male",
+          "direction": "right",
+          "row": 0,
+          "column": 1
+        },
+        {
+          "sex": "male",
+          "direction": "back",
+          "row": 0,
+          "column": 2
+        },
+        {
+          "sex": "male",
+          "direction": "left",
+          "row": 0,
+          "column": 3
+        },
+        {
+          "sex": "female",
+          "direction": "front",
+          "row": 1,
+          "column": 0
+        },
+        {
+          "sex": "female",
+          "direction": "right",
+          "row": 1,
+          "column": 1
+        },
+        {
+          "sex": "female",
+          "direction": "back",
+          "row": 1,
+          "column": 2
+        },
+        {
+          "sex": "female",
+          "direction": "left",
+          "row": 1,
+          "column": 3
+        }
+      ],
+      "input_sha256": "fb352dfd55a5f4127b94e420c9d35b19e2e521f04a9afd9c4378d62d994d313f",
+      "exact8x_verified": true
+    }
+  }
+}
