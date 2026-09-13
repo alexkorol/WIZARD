@@ -1,0 +1,4 @@
+image,cell_size,offset_x,offset_y,percent_diff,percent_diff_core,percent_diff_halo,percent_diff_outside,grid_ratio,warnings,mode,regions,ml_used,output_path,overlay_path
+1x4.png,3,2,2,99.9865,99.9816,99.9871,100.0,0.0034,Grid size is very small (may indicate noise).,global,1,no,Z:\Code\.worktrees\wizard-art-player-guides\art_studies\player-unarmed-v13-sheets\reconstructed\1x4_reconstructed.png,
+2x2.png,8,6,0,99.9937,99.9934,99.994,100.0,0.009,Core mismatch 8.0% - inspect alignment.,global,1,no,Z:\Code\.worktrees\wizard-art-player-guides\art_studies\player-unarmed-v13-sheets\reconstructed\2x2_reconstructed.png,
+2x4.png,6,0,0,99.9919,99.9933,99.9907,0.0,0.0048,Core mismatch 8.6% - inspect alignment.,global,1,no,Z:\Code\.worktrees\wizard-art-player-guides\art_studies\player-unarmed-v13-sheets\reconstructed\2x4_reconstructed.png,

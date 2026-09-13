@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-13",
+  "tool": "built-in image_gen.imagegen",
+  "call_count": 3,
+  "layout_notation": "rows x columns",
+  "original_files": {
+    "1x4": "C:/Users/Alex/.codex/generated_images/01a09918-529d-7150-91a6-6c624530795b/exec-3572410b-3625-4d91-8349-82e8cf7ca2a2.png",
+    "2x2": "C:/Users/Alex/.codex/generated_images/01a09918-529d-7150-91a6-6c624530795b/exec-43edc14b-e57f-420a-9ddf-2855ab716162.png",
+    "2x4": "C:/Users/Alex/.codex/generated_images/01a09918-529d-7150-91a6-6c624530795b/exec-d26b991a-561f-4963-8f91-232f7db78cff.png"
+  },
+  "source_dimensions": {"1x4": [1774,887], "2x2": [887,1774], "2x4": [1254,1254]},
+  "source_background": "RGB olive-slate matte with some variation; no painted checkerboard",
+  "hash_and_grid_records": ["sheet-manifest.json", "reconstruction.json", "grid-diagnostics.json"]
+}

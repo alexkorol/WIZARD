@@ -12,3 +12,5 @@ Current male/female unarmed studies using this convention: `player-unarmed-v10-m
 Owner-requested experiment, 2026-09-13: `player-unarmed-v11-48x96/` tests 48x96 humanoid canvases and a grittier, realistic Diablo II pre-rendered finish. It preserves the same models, poses and camera at 1.5x logical pixel density. The 32x64 baseline above remains preserved; no runtime inventory/cell migration is implied by this art trial.
 
 Owner workflow correction: `player-unarmed-v12-simulated-pixels/` supersedes v11's imagegen/processing approach. Imagegen must produce simulated pixel art at the same implied48x96 frame scale before Pixel Respecter reconstructs the grid. Full-detail generation followed by BOX downsampling is not the assignment. See `AGENTS.md` and the v12 source/reconstruction comparisons.
+
+Owner-requested sheet experiment: `player-unarmed-v13-sheets/` tests1x4,2x2,2x4 layouts (rows x columns), with four Blender-derived idle facings. Each whole generated sheet passes through Pixel Respecter before splitting into48x96 frames. This is an explicit sheet request; the earlier one-character-per-generated-image convention does not apply to these tests.
