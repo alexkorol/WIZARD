@@ -20,7 +20,50 @@ LITERAL = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|`(?:\\.|[^`\\])*`'
 SKIP = {'node_modules', '.git', '.venv', 'venv', 'site-packages', '__pycache__', 'vendor'}
 
 
-def import_chatgpt(data, source, add):
+def import_attachments(attachments, source, add, meta, resolve=None, unresolved=None):
+    """Keep attachment text separate from the accompanying message, with evidence."""
+    for index, attachment in enumerate(attachments):
+        if not isinstance(attachment, dict):
+            continue
+        name = attachment.get('name', attachment.get('filename', ''))
+        mime = attachment.get('mime_type', attachment.get('mimeType', ''))
+        if not (str(name).lower().endswith(('.txt', '.md')) or str(mime).startswith('text/')):
+            continue
+        evidence = {**meta, 'prompt_component': 'attachment', 'attachment_index': index,
+                    'attachment_name': name, 'attachment_id': attachment.get('id')}
+        text = attachment.get('text')
+        details = {'extraction_method': attachment.get('extraction_method', 'inline_attachment_text'),
+                   'byte_exact': attachment.get('byte_exact', False)}
+        if not isinstance(text, str) and resolve:
+            text, details = resolve(attachment)
+        if isinstance(text, str) and text.strip():
+            add(text, source, 'chatgpt_user_prompt', **evidence, **details)
+        elif unresolved is not None:
+            unresolved.append({'source': str(source), **evidence, **details,
+                               'reason': 'Attachment text unavailable; filename is not a prompt'})
+
+
+def attachment_resolver(names, read):
+    """Resolve only unambiguous text members inside the supplied export."""
+    def resolve(attachment):
+        filename = str(attachment.get('name', attachment.get('filename', '')))
+        ident = attachment.get('id')
+        candidates = [n for n in names if pathlib.PurePosixPath(n).name in
+                      ({filename, str(ident)+'-'+filename, str(ident)+'_'+filename} if ident else {filename})]
+        if len(candidates) != 1:
+            return None, {'candidate_count': len(candidates)}
+        member = candidates[0]
+        try:
+            raw = read(member)
+            return raw.decode('utf-8-sig'), {'attachment_member': member,
+                'attachment_sha256': hashlib.sha256(raw).hexdigest(),
+                'extraction_method': 'utf8_attachment_file', 'byte_exact': not raw.startswith(b'\xef\xbb\xbf')}
+        except (OSError, UnicodeError, ValueError) as e:
+            return None, {'attachment_member': member, 'error': str(e)}
+    return resolve
+
+
+def import_chatgpt(data, source, add, resolve_attachment=None, unresolved=None):
     """Follow exported parent links so alternate branches keep their own prompts."""
     count = 0
     for chat in data:
@@ -60,7 +103,10 @@ def import_chatgpt(data, source, add):
             msg=mapping[node_id]['message']
             content=msg.get('content') or {}
             text=strings(content.get('parts',[]))
-            add(text,source,'chatgpt_user_prompt',url=url,title=chat.get('title'),message_id=msg.get('id'),timestamp=msg.get('create_time'),requires_reference_images=any(isinstance(x,dict) for x in content.get('parts',[])))
+            meta = dict(url=url,title=chat.get('title'),message_id=msg.get('id',node_id),timestamp=msg.get('create_time'),requires_reference_images=any(isinstance(x,dict) and 'image' in str(x.get('content_type','')) for x in content.get('parts',[])))
+            add(text,source,'chatgpt_user_prompt',**meta)
+            attachments = (msg.get('metadata') or {}).get('attachments', [])
+            import_attachments(attachments, source, add, {**meta, 'accompanying_message': text}, resolve_attachment, unresolved)
         count += bool(selected)
     return count
 
@@ -100,6 +146,7 @@ def collect(args):
     records = {}
     counts = collections.Counter()
     errors = []
+    unresolved_attachments = []
     if args.merge and (out/'prompts.jsonl').exists():
         for line in (out/'prompts.jsonl').read_text(encoding='utf-8').splitlines():
             row=json.loads(line)
@@ -247,9 +294,11 @@ def collect(args):
             with zipfile.ZipFile(p) as z:
                 member=next(n for n in z.namelist() if n.rsplit('/',1)[-1]=='conversations.json')
                 data=json.loads(z.read(member))
+                counts['chatgpt_export_image_conversations'] += import_chatgpt(data,p,add,attachment_resolver(z.namelist(),z.read),unresolved_attachments)
         else:
             data=json.loads(p.read_text(encoding='utf-8-sig'))
-        counts['chatgpt_export_image_conversations'] += import_chatgpt(data,p,add)
+            members={str(x.relative_to(p.parent).as_posix()):x for x in p.parent.rglob('*') if x.is_file() and x.suffix.lower() in ('.txt','.md') and x.resolve().is_relative_to(p.parent.resolve())}
+            counts['chatgpt_export_image_conversations'] += import_chatgpt(data,p,add,attachment_resolver(members,lambda n:members[n].read_bytes()),unresolved_attachments)
     # Browser captures contain only visible DOM-backed message text.
     web = out/'web-captures'
     for p in sorted(web.glob('*.json')) if web.exists() else []:
@@ -258,6 +307,10 @@ def collect(args):
             if m.get('role') == 'user':
                 kind='chatgpt_user_prompt' if len(m['text'])>80 and IMAGE.search(m['text']) else 'chatgpt_user_context'
                 add(m['text'],data['url'],kind,title=data.get('title'),message_index=i, message_id=m.get('id'),capture=str(p), image_evidence=data.get('images',[]))
+                import_attachments(m.get('attachments',[]),data['url'],add,
+                    dict(url=data['url'],title=data.get('title'),message_index=i,message_id=m.get('id'),capture=str(p),
+                         accompanying_message=m['text'],reference_images=m.get('reference_images',[]),captured_at=data.get('captured_at'),
+                         image_evidence=m.get('images',data.get('images',[]))),unresolved=unresolved_attachments)
         counts['chatgpt_conversations_captured'] += 1
     rows=list(records.values())
     task_titles={}
@@ -271,7 +324,7 @@ def collect(args):
         for source in row['sources']:
             if source.get('session_id') in task_titles:
                 source['task_title']=task_titles[source['session_id']]
-            key=tuple(source.get(k) for k in ('source','kind','line','pointer','call_id','message_id','message_index'))
+            key=tuple(source.get(k) for k in ('source','kind','line','pointer','call_id','message_id','message_index','attachment_index'))
             unique.setdefault(key,{}).update(source)
         row['sources']=list(unique.values())
     # Recount evidence, avoiding inflated counts when a source is imported again.
@@ -280,6 +333,15 @@ def collect(args):
         if key.startswith(('codex_','saved_','chatgpt_user_','chatgpt_generation_','archived_revised_')):
             del counts[key]
     counts.update(evidence_counts)
+    counts['chatgpt_attachment_prompts']=sum(s.get('prompt_component')=='attachment' for r in rows for s in r['sources'])
+    # Merge gaps from exports not supplied on this run; rechecked sources replace their old gaps.
+    gaps_path=out/'unresolved-attachments.jsonl'
+    if args.merge and gaps_path.exists():
+        rechecked={str(pathlib.Path(n)) for n in args.chatgpt_export}
+        unresolved_attachments += [r for r in map(json.loads,gaps_path.read_text(encoding='utf-8').splitlines()) if r['source'] not in rechecked and not r.get('capture')]
+    unresolved_attachments=list({json.dumps(r,sort_keys=True):r for r in unresolved_attachments}.values())
+    gaps_path.write_text(''.join(json.dumps(r,ensure_ascii=False)+'\n' for r in unresolved_attachments),encoding='utf-8')
+    counts['unresolved_text_attachments']=len(unresolved_attachments)
     counts['chatgpt_conversations_captured']=len([p for p in web.glob('*.json') if 'messages' in json.loads(p.read_text(encoding='utf-8'))]) if web.exists() else 0
     with (out/'prompts.jsonl').open('w',encoding='utf-8') as f:
         for row in rows: f.write(json.dumps(row,ensure_ascii=False)+'\n')

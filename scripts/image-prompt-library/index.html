@@ -19,7 +19,7 @@ const data=window.PROMPT_LIBRARY, byId=new Map(data.prompts.map(r=>[r.id,r]));
 const $=id=>document.getElementById(id), make=(tag,text,cls)=>{const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(cls)el.className=cls;return el;};
 const kinds=r=>r.sources.map(s=>s.kind), has=(r,...types)=>kinds(r).some(k=>types.includes(k));
 const context=r=>!has(r,'codex_generation_prompt','chatgpt_generation_prompt','saved_prompt_file','saved_prompt_field','chatgpt_user_prompt','archived_revised_prompt');
-const label=r=>has(r,'archived_revised_prompt')?'Archived revised prompt':has(r,'chatgpt_user_prompt')?'ChatGPT request':has(r,'codex_generation_prompt','chatgpt_generation_prompt')?'Generation prompt':has(r,'saved_prompt_file','saved_prompt_field')?'Saved prompt':'Context / candidate';
+const label=r=>r.sources.some(s=>s.prompt_component==='attachment')?'ChatGPT attachment':has(r,'archived_revised_prompt')?'Archived revised prompt':has(r,'chatgpt_user_prompt')?'ChatGPT request':has(r,'codex_generation_prompt','chatgpt_generation_prompt')?'Generation prompt':has(r,'saved_prompt_file','saved_prompt_field')?'Saved prompt':'Context / candidate';
 const title=r=>(r.sources.find(s=>s.title)?.title||(r.prompt.match(/(?:Asset type|Subject|Primary request):\s*([^\n]+)/i)?.[1])||r.prompt.replace(/\s+/g,' ')).slice(0,140);
 const localUrl=path=>/^[a-zA-Z]:[\\/]/.test(path)?'file:///'+path.replace(/\\/g,'/').split('/').map((p,i)=>i===0?p:encodeURIComponent(p)).join('/'):path;
 let filtered=[],page=0,selected=null;

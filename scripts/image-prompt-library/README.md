@@ -89,6 +89,26 @@ revisions remain separate; only byte-identical prompt text is deduplicated.
 No automatic schedule is created. Rerun collection, result linking, and rendering
 to update the archive. Import additional exports with `--merge`.
 
+## Attached prompts (including “Pasted text”)
+
+Text attachments are separate prompt records linked to their originating chat and
+message. Export imports read `message.metadata.attachments` and resolve UTF-8 text
+files within the export ZIP or beside `conversations.json`. Filenames must match
+uniquely (plain filename or attachment-ID-prefixed filename); ambiguous and missing
+files are recorded in `unresolved-attachments.jsonl`, never guessed from titles.
+
+Browser captures can store `attachments` on each user message, with `name`, `text`,
+`extraction_method`, and `byte_exact`. Open the attachment preview before capturing
+its full body; the collapsed file card is not the prompt. Mark rendered preview
+text as `extraction_method: "attachment_preview_innerText"` and `byte_exact: false`
+because display formatting may differ from original file bytes. Keep reference
+images and generated results separate. The browser shelf labels these records
+“ChatGPT attachment”; provenance retains the accompanying request and filename.
+
+Do not treat text attachments as image references, or claim recovered wording is
+byte-exact unless the source bytes were actually available. If an attachment was
+omitted from the export, its contents still need to be recovered from the chat.
+
 ## Verify the tools
 
 ```powershell

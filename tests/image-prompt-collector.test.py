@@ -5,6 +5,7 @@ import pathlib
 import sqlite3
 import tempfile
 import unittest
+import zipfile
 from contextlib import closing
 from argparse import Namespace
 
@@ -14,6 +15,53 @@ spec.loader.exec_module(collector)
 
 
 class PromptCollectorTest(unittest.TestCase):
+    def test_export_attachment_keeps_bytes_and_reports_missing_files(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=pathlib.Path(temp)
+            prompt='Equipment prompt\r\nBronze shield, transparent background.\r\n'
+            data=[{'id':'equipment','title':'Equipment','mapping':{
+                'user':{'message':{'id':'user','author':{'role':'user'},'content':{'parts':['Use the attachment']},'metadata':{'attachments':[
+                    {'id':'file-a','name':'Pasted text.txt'},
+                    {'id':'file-b','name':'missing.txt'}]}}},
+                'image':{'parent':'user','message':{'author':{'role':'assistant'},'content':{'parts':[{'content_type':'image_asset_pointer','asset_pointer':'output'}]}}}
+            }}]
+            archive=root/'export.zip'
+            with zipfile.ZipFile(archive,'w') as z:
+                z.writestr('conversations.json',json.dumps(data))
+                z.writestr('files/file-a-Pasted text.txt',prompt.encode('utf-8'))
+            args=Namespace(output=str(root/'out'),sessions=[],files=[],exclude_session='',merge=False,chatgpt_export=[str(archive)],session_index=[])
+            collector.collect(args)
+            rows=[json.loads(x) for x in (root/'out/prompts.jsonl').read_text().splitlines()]
+            row=next(r for r in rows if r['prompt']==prompt)
+            source=row['sources'][0]
+            self.assertEqual(source['attachment_id'],'file-a')
+            self.assertEqual(source['message_id'],'user')
+            self.assertEqual(source['url'],'https://chatgpt.com/c/equipment')
+            self.assertTrue(source['byte_exact'])
+            self.assertEqual((root/'out/prompts'/(row['id']+'.txt')).read_bytes(),prompt.encode('utf-8'))
+            gaps=[json.loads(x) for x in (root/'out/unresolved-attachments.jsonl').read_text().splitlines()]
+            self.assertEqual([r['attachment_name'] for r in gaps],['missing.txt'])
+
+    def test_attachment_resolver_rejects_ambiguous_names(self):
+        resolve=collector.attachment_resolver(['a/Pasted text.txt','b/Pasted text.txt'],lambda n:self.fail('Ambiguous file read'))
+        self.assertIsNone(resolve({'name':'Pasted text.txt'})[0])
+
+    def test_browser_attachments_survive_reimport_and_keep_message_context(self):
+        with tempfile.TemporaryDirectory() as temp:
+            out=pathlib.Path(temp);web=out/'web-captures';web.mkdir()
+            data={'url':'https://chatgpt.com/c/equipment','title':'Equipment','messages':[{
+                'role':'user','id':'u','text':'Generate the equipment icons',
+                'attachments':[{'name':'Pasted text.txt','text':'Full bronze shield prompt','extraction_method':'attachment_preview_innerText','byte_exact':False},
+                               {'name':'Pasted text 2.txt','text':'Full bronze shield prompt','byte_exact':False}]}]}
+            (web/'chat.json').write_text(json.dumps(data),encoding='utf-8')
+            args=Namespace(output=str(out),sessions=[],files=[],exclude_session='',merge=False,chatgpt_export=[],session_index=[])
+            collector.collect(args);args.merge=True;collector.collect(args)
+            rows=[json.loads(x) for x in (out/'prompts.jsonl').read_text().splitlines()]
+            row=next(r for r in rows if r['prompt']=='Full bronze shield prompt')
+            self.assertEqual(len(row['sources']),2)
+            self.assertEqual(row['sources'][0]['accompanying_message'],'Generate the equipment icons')
+            self.assertFalse(row['sources'][0]['byte_exact'])
+
     def test_export_follows_branch_parent_and_ignores_unrelated_chat(self):
         def node(role, parts, parent=None, **extra):
             return {'parent':parent,'message':{'author':{'role':role},'content':{'parts':parts},**extra}}
