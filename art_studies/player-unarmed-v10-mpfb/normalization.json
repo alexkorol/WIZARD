@@ -1,0 +1,74 @@
+{
+  "male": {
+    "source_file": "generated\\male-original.png",
+    "source_sha256": "ff260119b6e474d85614a9b2daeeb043b7a7e68f6b5084bebe2e58ec1e2eed04",
+    "source_mode": "RGB",
+    "source_dimensions": [
+      887,
+      1774
+    ],
+    "background": "baked neutral checkerboard; removed by boundary-connected neutral mask (max-min<=20,min>=120), keeping largest foreground component",
+    "cutout_bbox": [
+      197,
+      253,
+      701,
+      1647
+    ],
+    "normalization": "alpha cutout cropped, aspect-preserving BOX resize to structural-guide body height, binary alpha at128; bottom y60 and centered x16; no palette limit",
+    "resized_body_dimensions": [
+      18,
+      50
+    ],
+    "placement_xy": [
+      7,
+      11
+    ],
+    "logical_file": "normalized\\male-32x64.png",
+    "logical_sha256": "2682351c4f29daa7864978dae6ded6fdfc4050191417b4d68afb8149a9e929b1",
+    "logical_dimensions": [
+      32,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "enlargement_exact_8x_verified": true
+  },
+  "female": {
+    "source_file": "generated\\female-original.png",
+    "source_sha256": "8a79667b4672430dd9ad2d161e3e0df1e7bc8ad1b7a3cb775ca609c87827f1f4",
+    "source_mode": "RGB",
+    "source_dimensions": [
+      887,
+      1774
+    ],
+    "background": "baked neutral checkerboard; removed by boundary-connected neutral mask (max-min<=20,min>=120), keeping largest foreground component",
+    "cutout_bbox": [
+      239,
+      302,
+      675,
+      1653
+    ],
+    "normalization": "alpha cutout cropped, aspect-preserving BOX resize to structural-guide body height, binary alpha at128; bottom y60 and centered x16; no palette limit",
+    "resized_body_dimensions": [
+      15,
+      48
+    ],
+    "placement_xy": [
+      9,
+      13
+    ],
+    "logical_file": "normalized\\female-32x64.png",
+    "logical_sha256": "e4cfdca0d4551b5404a28126414ae05bbdad02586136e20c3bb31702c7279fb9",
+    "logical_dimensions": [
+      32,
+      64
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "enlargement_exact_8x_verified": true
+  }
+}
