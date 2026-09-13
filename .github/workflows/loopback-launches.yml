@@ -1,0 +1,21 @@
+name: loopback-launches
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  loopback-launches:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Loopback-only launch enforcement
+        run: node scripts/verify-loopback-launches.mjs
+      - name: Scanner negative controls
+        run: node tests/loopback-launches.test.mjs
