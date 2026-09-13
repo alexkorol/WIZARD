@@ -1,0 +1,16 @@
+{
+  "raw_source": "C:\\Users\\Alex\\.codex\\generated_images\\01a09918-529d-7150-91a6-6c624530795b\\exec-b4441d2d-931e-4446-a369-0013fe2fe747.png",
+  "raw_sha256": "16706922e1521752d5dda7d63cffa1adb4df0650448e09928ff68d06d90d6a53",
+  "raw_mode": "RGB",
+  "raw_size": [
+    1254,
+    1254
+  ],
+  "png_color_type": 2,
+  "native_generated_alpha": false,
+  "generation": "Built-in image_gen; one call per sheet",
+  "prompt": "prompts/villagers.txt",
+  "alpha_origin": "LOCALLY DERIVED boundary-connected neutral background; raw generation failed true-alpha request",
+  "local_mask_rule": "RGB channel spread <=20 and minimum >=160, flood from image edges; remaining visible RGB unchanged",
+  "processing_source_sha256": "58eb7ebd6c8ebd52434f0389ea7f42877628e0e74fd633b4dbeb40bc033afbc4"
+}

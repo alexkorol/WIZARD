@@ -1,0 +1,16 @@
+{
+  "raw_source": "C:\\Users\\Alex\\.codex\\generated_images\\01a09918-529d-7150-91a6-6c624530795b\\exec-737837e4-c67c-42bb-a27d-45ba60a67272.png",
+  "raw_sha256": "62f14afcec49e543977d13908aac480239fe0a36a985dd4d72e87b193bff9553",
+  "raw_mode": "RGB",
+  "raw_size": [
+    1774,
+    887
+  ],
+  "png_color_type": 2,
+  "native_generated_alpha": false,
+  "generation": "Built-in image_gen; one call per sheet",
+  "prompt": "prompts/beasts.txt",
+  "alpha_origin": "LOCALLY DERIVED boundary-connected neutral background; raw generation failed true-alpha request",
+  "local_mask_rule": "RGB channel spread <=20 and minimum >=160, flood from image edges; remaining visible RGB unchanged",
+  "processing_source_sha256": "5ee38fb3e0b81049ecfa1b71161a7ca3daece58b2332fcd602dcd6c09daf664a"
+}
