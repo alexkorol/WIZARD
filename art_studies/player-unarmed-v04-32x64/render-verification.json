@@ -1,0 +1,28 @@
+{
+  "camera_preserved": true,
+  "camera": {
+    "location": [
+      0.0,
+      -6.553216457366943,
+      5.458611488342285
+    ],
+    "rotation": [
+      0.9599311947822571,
+      -0.0,
+      0.0
+    ],
+    "lens": 125.76773071289062,
+    "sensor_fit": "VERTICAL",
+    "shift_x": 0.0,
+    "shift_y": 0.027522757649421692
+  },
+  "resolution": [
+    32,
+    64
+  ],
+  "aspect_ratio_change": "vertical sensor fit retained; narrower horizontal crop, no anisotropic scaling",
+  "geometry_pose_lighting_materials": "unchanged from v03",
+  "transparent": true,
+  "dof": false,
+  "motion_blur": false
+}
