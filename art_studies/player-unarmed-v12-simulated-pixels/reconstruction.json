@@ -1,0 +1,146 @@
+{
+  "engine_path": "Z:/Code/Python/pixel-perfecter",
+  "engine_base_commit": "cf7786cb438ad51be5dfc08d963c2a6edcfd72f7",
+  "engine_has_preexisting_uncommitted_changes": true,
+  "engine_modified_by_this_study": false,
+  "processing": "Existing Pixel Respecter CLI auto grid reconstruction; existing adaptive border-connected matte removal; integer translation and empty-margin adjustment only. NO BOX, bilinear, Lanczos or sprite resizing. No requested palette reduction.",
+  "engine_source_sha256": {
+    "pixel_perfecter/reconstructor.py": "8952e655f70adbd3d3d58feb0fa852fe101b3aefd1c3301c7672deab88736cfa",
+    "pixel_perfecter/colors.py": "61e49d1b751ebf4239ab98d371f6c5cd58c6760c0dbe98f668e593ab86a3bf4b",
+    "pixel_perfecter/grid.py": "3be014d64db5ef125526d3efe8cc7b8de1998e3919b87062ce6565964fe1222d",
+    "pixel_perfecter/mesh.py": "875af209037e240a0ac68b7895ffe4dcceb0b311bb39f39bd4078495cbe6825f",
+    "pixel_perfecter/cli.py": "e5f86a3ce0f5f7f66b39aeabe9409acb7e577169f4dd9f8b0f3657c08a347c97"
+  },
+  "outputs": {
+    "male": {
+      "source_sha256": "4f3469bc1a025f22afb113409e84edc2f0d7c0aa963fc110ecb6f2c57179ca06",
+      "cli_output_sha256": "4ff62ede443525f0de16aa95434561ece967c4115b30dd59e18148cd207f4615",
+      "detected_grid": {
+        "image": "male-original.png",
+        "cell_size": "18",
+        "offset_x": "7",
+        "offset_y": "0",
+        "percent_diff": "99.9849",
+        "percent_diff_core": "99.985",
+        "percent_diff_halo": "99.9845",
+        "percent_diff_outside": "100.0",
+        "grid_ratio": "0.0203",
+        "warnings": "Core mismatch 7.9% - inspect alignment.",
+        "mode": "global",
+        "regions": "1",
+        "ml_used": "no",
+        "output_path": "Z:\\Code\\.worktrees\\wizard-art-player-guides\\art_studies\\player-unarmed-v12-simulated-pixels\\reconstructed\\male-original_reconstructed.png",
+        "overlay_path": ""
+      },
+      "recovered_canvas": [
+        48,
+        98
+      ],
+      "recovered_bbox": [
+        11,
+        12,
+        39,
+        91
+      ],
+      "border_color": [
+        114,
+        114,
+        100
+      ],
+      "speckle_cleanup": {
+        "removed_cells": 0,
+        "removed_components": 0,
+        "tolerance": 24.0,
+        "max_component_size": 0
+      },
+      "integer_translation_xy": [
+        -1,
+        0
+      ],
+      "final_canvas": [
+        48,
+        96
+      ],
+      "final_bbox": [
+        10,
+        12,
+        38,
+        91
+      ],
+      "all_foreground_pixels_preserved_exactly": true,
+      "source_alpha_mode": "RGB",
+      "final_alpha_values": [
+        0,
+        255
+      ],
+      "final_file": "final/male-48x96.png",
+      "final_sha256": "ef263d2ad6a03de4550309e772c848e01c5b4920a9cd0562a9ba3190722e8301",
+      "exact8x_verified": true
+    },
+    "female": {
+      "source_sha256": "3223697cb537dc85865540ed1f2646f37b1ed246b8b0da26e8889df578be5a33",
+      "cli_output_sha256": "c612db4c375e798edfb76b936cfef49179e53f16ce0c125d4c6468c0b59d449e",
+      "detected_grid": {
+        "image": "female-original.png",
+        "cell_size": "18",
+        "offset_x": "1",
+        "offset_y": "7",
+        "percent_diff": "99.9687",
+        "percent_diff_core": "99.9586",
+        "percent_diff_halo": "99.9766",
+        "percent_diff_outside": "99.9875",
+        "grid_ratio": "0.0203",
+        "warnings": "",
+        "mode": "global",
+        "regions": "1",
+        "ml_used": "no",
+        "output_path": "Z:\\Code\\.worktrees\\wizard-art-player-guides\\art_studies\\player-unarmed-v12-simulated-pixels\\reconstructed\\female-original_reconstructed.png",
+        "overlay_path": ""
+      },
+      "recovered_canvas": [
+        49,
+        98
+      ],
+      "recovered_bbox": [
+        12,
+        11,
+        38,
+        92
+      ],
+      "border_color": [
+        110,
+        117,
+        96
+      ],
+      "speckle_cleanup": {
+        "removed_cells": 0,
+        "removed_components": 0,
+        "tolerance": 24.0,
+        "max_component_size": 0
+      },
+      "integer_translation_xy": [
+        -1,
+        -1
+      ],
+      "final_canvas": [
+        48,
+        96
+      ],
+      "final_bbox": [
+        11,
+        10,
+        37,
+        91
+      ],
+      "all_foreground_pixels_preserved_exactly": true,
+      "source_alpha_mode": "RGB",
+      "final_alpha_values": [
+        0,
+        255
+      ],
+      "final_file": "final/female-48x96.png",
+      "final_sha256": "82c3be03f8496333c42174b58a545348ea52fe1c7dfc7dc685e4c8b25bfa968c",
+      "exact8x_verified": true
+    }
+  }
+}

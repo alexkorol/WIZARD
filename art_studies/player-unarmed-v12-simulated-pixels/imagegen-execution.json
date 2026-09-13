@@ -1,0 +1,13 @@
+{
+  "date": "2026-09-13",
+  "tool": "built-in image_gen.imagegen",
+  "call_count": 2,
+  "status": "completed",
+  "male_original": "C:/Users/Alex/.codex/generated_images/01a09918-529d-7150-91a6-6c624530795b/exec-9dd26979-0aed-4d9c-b75e-e42dfef526cf.png",
+  "female_original": "C:/Users/Alex/.codex/generated_images/01a09918-529d-7150-91a6-6c624530795b/exec-d7032eab-b506-4437-a44e-3c727770e548.png",
+  "male_structural_input_sha256": "ead7daf0b32c070a3c8b1487ea140330e9f36f454abda49a9b608eccc359e5b1",
+  "female_structural_input_sha256": "a3ff2bfadb322bf77ec6ab80483d23777f53d125a365f55aa7c7acec66c7c922",
+  "source_inspection": "Both originals already show coarse simulated pixel clusters. Slightly variable olive-slate matte, no painted checkerboard.",
+  "final_border_key_rgb_distance_tolerance": 24,
+  "processing_records": ["reconstruction.json", "reconstructed/metrics.csv", "finish_respected.py"]
+}
