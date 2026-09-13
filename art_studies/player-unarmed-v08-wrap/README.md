@@ -1,0 +1,11 @@
+# Female v08 — original wrap light kit
+
+Owner clarified that the photograph illustrated youthful confidence and was not a costume specification. This candidate replaces that copied costume with a sleeveless muted-green wrap tunic, diagonal binding, short asymmetric tails, dark fitted leggings, a compact hide shoulder layer, forearm bindings and a knotted side fastening. Hair is swept away from the face into a high tail. The existing head is lifted 6 degrees. The compact v07 stance and low hands remain.
+
+The photo-derived cord skirt, disc, necklace, cropped blouse and long hair objects are hidden in the editable milestone. They are not part of the new rendered candidate. The design is a proposed VERDIGRIS kit, not approved canon. Previously inspected Diablo II and Guerrilla references inform readable silhouette and layered construction in general; no reference image is copied into this candidate or packaged in git.
+
+`sources/player-female-v08.blend` is the result; `sources/before-v08.blend` preserves the preceding live scene. `design_wrap_kit.py` and `finish_neckline.py` run sequentially through the actual Blender MCP connection using `../player-unarmed-v01/mcp_run.py`. Each tool invocation begins with a scene query. Both recipes are embedded in the saved source. Multi-angle inspection revealed missing chest backing at the neckline; the second recipe adds it and refines the shoulder-layer edge.
+
+Camera, lighting, 32x64 logical canvas and shared anchor (16,60) remain fixed. Actual Blender renders are preserved. `pixelize_and_review.py` explicitly thresholds alpha and applies shared integer registration, then enlarges exactly 8x with nearest-neighbour. `validation.json` records successful dimension, alpha, bounds and every-pixel enlargement checks. `compare.py` assembles review-only images. Native-size, 4x, side, opposite and top outputs were visually inspected. The colour blocks, exposed arms, narrow waist and hair silhouette read at 32x64; fine diagonal binding loses definition. Face, hands and fabric remain structural guides requiring appearance work.
+
+This is the requested pre-generation intervention point. No imagegen call or production integration has occurred. A future approved generation must use `guides/female-input-8x.png` as its structural input, not the smooth render or comparison board.

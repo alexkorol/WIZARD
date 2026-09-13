@@ -1,0 +1,84 @@
+{
+  "canvas_selected_by_owner": true,
+  "logical_canvas": [
+    32,
+    64
+  ],
+  "grid_cell": [
+    32,
+    32
+  ],
+  "humanoid_footprint_cells": [
+    1,
+    2
+  ],
+  "anchor": [
+    16,
+    60
+  ],
+  "method": "Actual 32x64 Blender render -> RGB preserved, alpha threshold 128 -> shared integer Y registration -> exact 8x NEAREST. No resizing of v03 guides, no stretching, no palette reduction.",
+  "outputs": {
+    "male": {
+      "logical_file": "guides\\male-logical-guide.png",
+      "logical_sha256": "848491a3b28ddf2310b5e06ad1603d46c1b8156bf9224540a76716bad3a6a2d9",
+      "input_file": "guides\\male-input-8x.png",
+      "input_sha256": "0d329628747a66b3332e74298b17e0e8f55d2f8135b11c911915c51dff510f31",
+      "raw_sha256": "02d5618cf6e4d5a042749884ea627fa43d585892ccfbfa2d50388422c961d187",
+      "visible_bbox_xyxy": [
+        6,
+        12,
+        26,
+        61
+      ],
+      "visible_body_height_px": 49,
+      "translation_xy": [
+        0,
+        2
+      ],
+      "logical_dimensions": [
+        32,
+        64
+      ],
+      "input_dimensions": [
+        256,
+        512
+      ],
+      "alpha_values": [
+        0,
+        255
+      ],
+      "all_integer_blocks_verified": true
+    },
+    "female": {
+      "logical_file": "guides\\female-logical-guide.png",
+      "logical_sha256": "2646ffef7bda03344cdc190fe3f08b5db15c6d39b8aaf7ad86422fd3ae80fa58",
+      "input_file": "guides\\female-input-8x.png",
+      "input_sha256": "268af741fb57adf6ca3dcd72a6d8e49a870da4fe77c4856564ac12df0667a3f5",
+      "raw_sha256": "770bf49a949752cbe66894e616d07abeb4e71af453e6ce8a1b96a25cb275a9de",
+      "visible_bbox_xyxy": [
+        9,
+        13,
+        25,
+        61
+      ],
+      "visible_body_height_px": 48,
+      "translation_xy": [
+        0,
+        2
+      ],
+      "logical_dimensions": [
+        32,
+        64
+      ],
+      "input_dimensions": [
+        256,
+        512
+      ],
+      "alpha_values": [
+        0,
+        255
+      ],
+      "all_integer_blocks_verified": true
+    }
+  }
+}

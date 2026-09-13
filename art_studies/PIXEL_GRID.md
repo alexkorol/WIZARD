@@ -7,4 +7,4 @@ Owner direction, 2026-09-12:
 
 These are logical canvas conventions, not a requirement to fill every pixel with the visible body, stretch images, or flatten runtime perspective. Keep transparent padding, a consistent foot anchor, and the selected camera. Other larger assets need their own appropriate cell extents.
 
-Current male/female unarmed studies using this convention: `player-unarmed-v07-idle/` (compact female idle; broader character references inspected). The owner's photograph is general inspiration, not a locked pose or costume. Figures, poses and final style remain under owner review. The logical dimensions are selected; runtime displayed size at the player plane and final camera calibration have not yet been verified.
+Current male/female unarmed studies using this convention: `player-unarmed-v08-wrap/` (original female wrap light kit and compact idle). The owner's photograph conveys youthful confidence; its costume is not the design specification. Figures, poses and final style remain under owner review. The logical dimensions are selected; runtime displayed size at the player plane and final camera calibration have not yet been verified.
