@@ -1,0 +1,45 @@
+{
+  "logical_canvas": [
+    48,
+    96
+  ],
+  "anchor": [
+    24,
+    90
+  ],
+  "method": "Actual 48x96 Blender render; alpha threshold128; common integer Y registration; exact8x NEAREST. No palette reduction.",
+  "outputs": {
+    "male": {
+      "visible_body_height_px": 76,
+      "bbox": [
+        11,
+        15,
+        37,
+        91
+      ],
+      "translation_xy": [
+        0,
+        2
+      ],
+      "logical_sha256": "b10229a3d73b13fa45c132eb74865afce58db87a39443c4a4f02a7b77497708e",
+      "input_sha256": "ead7daf0b32c070a3c8b1487ea140330e9f36f454abda49a9b608eccc359e5b1",
+      "exact_integer_enlargement_verified": true
+    },
+    "female": {
+      "visible_body_height_px": 72,
+      "bbox": [
+        12,
+        19,
+        36,
+        91
+      ],
+      "translation_xy": [
+        0,
+        2
+      ],
+      "logical_sha256": "d4d980ee0d323497a444400e7313cd5c3e854c680cdeada1eb3b4a10749332b2",
+      "input_sha256": "a3ff2bfadb322bf77ec6ab80483d23777f53d125a365f55aa7c7acec66c7c922",
+      "exact_integer_enlargement_verified": true
+    }
+  }
+}

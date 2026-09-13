@@ -1,0 +1,72 @@
+{
+  "male": {
+    "source_mode": "RGB",
+    "source_dimensions": [
+      887,
+      1774
+    ],
+    "source_sha256": "0dadaf69a11ac3619200b9730cb29d28190cc47e0304024f43921f5fb8e0f3bd",
+    "alpha_processing": "RGB painted checkerboard removed: boundary-connected neutral pixels (channel range<=22, minimum>=75); retain largest foreground component",
+    "cutout_bbox": [
+      204,
+      269,
+      695,
+      1659
+    ],
+    "normalization": "Aspect-preserving BOX resize to guide body height; alpha threshold128; common anchor; no palette reduction",
+    "body_dimensions": [
+      27,
+      76
+    ],
+    "placement_xy": [
+      11,
+      15
+    ],
+    "logical_file": "normalized\\male-48x96.png",
+    "logical_dimensions": [
+      48,
+      96
+    ],
+    "logical_sha256": "546dfe55aea1e550c8a6e720cc94c26149bdb73be68546f5ddfdad26c82e8a97",
+    "alpha_values": [
+      0,
+      255
+    ],
+    "integer8x_verified": true
+  },
+  "female": {
+    "source_mode": "RGB",
+    "source_dimensions": [
+      887,
+      1774
+    ],
+    "source_sha256": "d34785e6a49bf7a647a2570a2512c7bb73b5067def61f67517d81f1846a77749",
+    "alpha_processing": "RGB painted checkerboard removed: boundary-connected neutral pixels (channel range<=22, minimum>=75); retain largest foreground component",
+    "cutout_bbox": [
+      212,
+      328,
+      666,
+      1670
+    ],
+    "normalization": "Aspect-preserving BOX resize to guide body height; alpha threshold128; common anchor; no palette reduction",
+    "body_dimensions": [
+      24,
+      72
+    ],
+    "placement_xy": [
+      12,
+      19
+    ],
+    "logical_file": "normalized\\female-48x96.png",
+    "logical_dimensions": [
+      48,
+      96
+    ],
+    "logical_sha256": "14047778e1876af161be32f76127b08238dc32038e16c3923772e878236726d1",
+    "alpha_values": [
+      0,
+      255
+    ],
+    "integer8x_verified": true
+  }
+}

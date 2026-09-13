@@ -1,0 +1,43 @@
+{
+  "logical_canvas": [
+    48,
+    96
+  ],
+  "enlargement": 8,
+  "anchor": [
+    24,
+    90
+  ],
+  "status": "Experimental 1.5x resolution; established 32x64 baseline preserved",
+  "source_scene": "../player-unarmed-v10-mpfb/sources/players-mpfb-v10.blend",
+  "geometry_pose_clothing_unchanged": true,
+  "camera_matrix": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.5735760927200317,
+      -0.8191521763801575,
+      -6.553216457366943
+    ],
+    [
+      0.0,
+      0.8191521763801575,
+      0.5735760927200317,
+      5.458611488342285
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "camera_lens": 125.76773071289062,
+  "camera_shift_y": 0.027522757649421692,
+  "camera_unchanged_verified": true
+}
