@@ -1,0 +1,1 @@
+Preserve this existing sprite sheet: the same eight sprites, four views per row, pixel scale, colors, silhouettes and poses. Keep the scout's flint spear and the defender's club in their right-hand grips. Preserve its transparent background. Return the sprite sheet as a transparent PNG with a real alpha channel, with alpha 0 around and between the figures.

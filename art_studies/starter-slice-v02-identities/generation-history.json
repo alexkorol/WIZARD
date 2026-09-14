@@ -1,0 +1,62 @@
+[
+  {
+    "file": "generated\\defense-original.png",
+    "sha256": "4c5a3b65223a18a64f826925450cd6941d257f08f3ba83d831bedb88f11a3f1f",
+    "mode": "RGB",
+    "size": [
+      1254,
+      1254
+    ],
+    "png_color_type": 2,
+    "has_alpha_channel": false,
+    "selected": true
+  },
+  {
+    "file": "generated\\players-braid-repair.png",
+    "sha256": "c320fb954ad1b735a3924a7c4cceaf5608efebab45819dc707e1ae5afad878bf",
+    "mode": "RGB",
+    "size": [
+      1254,
+      1254
+    ],
+    "png_color_type": 2,
+    "has_alpha_channel": false,
+    "selected": true
+  },
+  {
+    "file": "generated\\players-grip-repair.png",
+    "sha256": "89e78e6a1ff1c488080731cad2ed0a99f76d596243d0a3dc21c80488b9168929",
+    "mode": "RGB",
+    "size": [
+      1254,
+      1254
+    ],
+    "png_color_type": 2,
+    "has_alpha_channel": false,
+    "selected": false
+  },
+  {
+    "file": "generated\\players-original.png",
+    "sha256": "a1d1f9cd31358cb021e022b239827dee36120a2aa3d04b2712ed859b5520be77",
+    "mode": "RGB",
+    "size": [
+      1254,
+      1254
+    ],
+    "png_color_type": 2,
+    "has_alpha_channel": false,
+    "selected": false
+  },
+  {
+    "file": "generated\\villagers-original.png",
+    "sha256": "d81d0dcfd1a6a47a0f69165d2112e1357d4e67f2792540978289e06f55d18cee",
+    "mode": "RGB",
+    "size": [
+      1254,
+      1254
+    ],
+    "png_color_type": 2,
+    "has_alpha_channel": false,
+    "selected": true
+  }
+]

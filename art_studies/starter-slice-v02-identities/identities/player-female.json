@@ -1,0 +1,112 @@
+{
+  "name": "player-female",
+  "grip": {
+    "center_world": [
+      -0.3240528106689453,
+      -0.15941962599754333,
+      0.9425773620605469
+    ],
+    "axis_world": [
+      5.819588864142133e-07,
+      -0.07974553853273392,
+      0.9968152642250061
+    ],
+    "shaft_radius_m": 0.0115,
+    "finger_loop_centers_world": {
+      "index": [
+        -0.32709139585494995,
+        -0.15967616438865662,
+        0.9714850187301636
+      ],
+      "middle": [
+        -0.32273975014686584,
+        -0.16038691997528076,
+        0.9505026340484619
+      ],
+      "ring": [
+        -0.3253658413887024,
+        -0.1584523469209671,
+        0.9346520900726318
+      ],
+      "pinky": [
+        -0.32709142565727234,
+        -0.15559236705303192,
+        0.920437753200531
+      ]
+    },
+    "thumb_tip_target_error_m": 1.228781230931777e-07,
+    "kind": "club",
+    "axis_interval_m": [
+      -0.065,
+      0.43
+    ],
+    "bone_parent": "hand_r"
+  },
+  "source": "Z:\\Code\\.worktrees\\wizard-art-player-guides\\art_studies\\player-unarmed-v14-sandals-alpha\\sources\\players-open-sandals.blend",
+  "spec": {
+    "sex": "female",
+    "hair": "long-braid",
+    "hair_color": [
+      0.11,
+      0.063,
+      0.028
+    ],
+    "height": 1.0,
+    "width": 1.0,
+    "face": {
+      "head/head-oval": 0.32,
+      "chin/chin-width-decr": 0.18,
+      "nose/nose-scale-depth-incr": 0.13
+    },
+    "linen": [
+      0.66,
+      0.59,
+      0.45
+    ],
+    "hide": [
+      0.31,
+      0.19,
+      0.09
+    ],
+    "kit": "Owner starter reference: single linen tunic, cord belt, small pendant, open sandals, rough wood club",
+    "facial_reference_direction": "European, explicitly requested by owner; individual shape targets retained"
+  },
+  "retired_meshes": [
+    "female_belt",
+    "female_belt_disc",
+    "female_belt_disc_boss",
+    "female_belt_end",
+    "female_belt_knot",
+    "female_belt_tail_0",
+    "female_belt_tail_1",
+    "female_fitted_open_vest",
+    "female_hair",
+    "female_hair_back",
+    "female_hair_high_tail",
+    "female_hair_other_side",
+    "female_hair_sweep",
+    "female_hair_swept_front",
+    "female_hair_temple_lock",
+    "female_hide_vest",
+    "female_linen_tunic",
+    "female_tied_hair",
+    "female_vest_waist_tie",
+    "female_wrist_guard_-1",
+    "female_wrist_guard_1",
+    "MH_female_Scalp"
+  ],
+  "garment_layers": [
+    "player-female_linen_single_shell",
+    "player-female_hide_fitted_overlay"
+  ],
+  "layer_offset_m": [
+    0.014,
+    0.029
+  ],
+  "outer_vertex_min_signed_clearance_m": null,
+  "logical_frame": [
+    48,
+    96
+  ],
+  "model_variant": "Independent mesh datablock, unique facial shape keys, hair geometry and dressed assembly proportions"
+}

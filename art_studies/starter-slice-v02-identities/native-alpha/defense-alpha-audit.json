@@ -1,0 +1,13 @@
+{
+  "raw_mode": "RGBA",
+  "raw_size": [
+    1254,
+    1254
+  ],
+  "png_color_type": 6,
+  "sha256": "1a1a587b1847077cde7d9450c9edc37e84f8ef39f29f8754830a577615512c87",
+  "alpha_zero_pixels": 990073,
+  "native_returned_alpha": true,
+  "input_history": "Final preservation edit used the prior cleaned RGBA appearance sheet; fresh clean-guide generation separately proved native alpha without local masking.",
+  "pixel_alpha_policy": "Threshold the returned alpha at128 for binary sprites; no RGB/background-color mask"
+}

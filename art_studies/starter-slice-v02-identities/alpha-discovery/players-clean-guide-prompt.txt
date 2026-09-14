@@ -1,0 +1,5 @@
+Create a transparent PNG sprite sheet from this pixelized Blender guide.
+Keep its elevated camera, proportions, positions, right-hand club grips and two rows of four views: front, right, back, left.
+Render coarse simulated pixel art with realistic gritty Diablo II-style shading, one consistent implied48x96 grid per character. Preserve visible square pixel clusters; faces have small natural shaded planes.
+Top row: young adult European man, long dark-blond hair and a short jaw beard below his exposed nose. Bottom row: young adult European woman, brown hair in one braid over her left shoulder. Both wear a single worn ivory sleeveless linen tunic, russet trim and cord belt, simple open sandals, and hold a crude club in the right hand. Keep clothing seams and weapon grips clear.
+All empty space around and between the eight figures is transparent. Deliver PNG with a real alpha channel, alpha0 outside the sprites.

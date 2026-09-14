@@ -1,0 +1,423 @@
+{
+  "cell_size": 3,
+  "offset": [
+    2,
+    2
+  ],
+  "metrics": {
+    "cell_size": 3,
+    "offset": [
+      2,
+      2
+    ],
+    "percent_diff_total": 12.953611542905223,
+    "percent_diff_core": 12.85382431386045,
+    "percent_diff_halo": 13.015514303649898,
+    "percent_diff_outside": 0.0,
+    "percent_diff": 12.953611542905223,
+    "grid_ratio": 0.0033821871476888386,
+    "warnings": [
+      "Grid size is very small (may indicate noise)."
+    ],
+    "percent_diff_core_tolerant": 2.186469356735209,
+    "percent_diff_total_tolerant": 3.1176876567327896,
+    "intra_cell_variance": 45.177223205566406,
+    "mode": "global",
+    "grid_kind": "rigid",
+    "regions": 1
+  },
+  "debug": {
+    "candidates": [
+      {
+        "size": 19,
+        "source": "autocorr",
+        "offset": [
+          17,
+          4
+        ],
+        "score": 1.1010699312340455,
+        "variance": 345.0231628417969,
+        "gated_out": false
+      },
+      {
+        "size": 13,
+        "source": "autocorr",
+        "offset": [
+          12,
+          12
+        ],
+        "score": 1.0869469475412865,
+        "variance": 268.9158630371094,
+        "gated_out": false
+      },
+      {
+        "size": 16,
+        "source": "autocorr",
+        "offset": [
+          10,
+          12
+        ],
+        "score": 1.0819140842593624,
+        "variance": 321.72210693359375,
+        "gated_out": false
+      },
+      {
+        "size": 25,
+        "source": "autocorr",
+        "offset": [
+          3,
+          17
+        ],
+        "score": 1.0530582860129927,
+        "variance": 426.80230712890625,
+        "gated_out": false
+      },
+      {
+        "size": 22,
+        "source": "autocorr",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 1.052406330422948,
+        "variance": 344.56689453125,
+        "gated_out": false
+      },
+      {
+        "size": 10,
+        "source": "autocorr",
+        "offset": [
+          3,
+          4
+        ],
+        "score": 1.0523636229327278,
+        "variance": 193.98580932617188,
+        "gated_out": false
+      },
+      {
+        "size": 8,
+        "source": "fine",
+        "offset": [
+          1,
+          4
+        ],
+        "score": 1.030370383868937,
+        "variance": 169.04397583007812,
+        "gated_out": false
+      },
+      {
+        "size": 7,
+        "source": "fine",
+        "offset": [
+          4,
+          5
+        ],
+        "score": 1.0273495760925404,
+        "variance": 145.55337524414062,
+        "gated_out": false
+      },
+      {
+        "size": 6,
+        "source": "autocorr",
+        "offset": [
+          4,
+          3
+        ],
+        "score": 1.0204004841557879,
+        "variance": 127.91568756103516,
+        "gated_out": false
+      },
+      {
+        "size": 5,
+        "source": "fine",
+        "offset": [
+          3,
+          4
+        ],
+        "score": 1.010805286473192,
+        "variance": 104.18736267089844,
+        "gated_out": false
+      },
+      {
+        "size": 4,
+        "source": "fine",
+        "offset": [
+          2,
+          2
+        ],
+        "score": 0.9979947108278668,
+        "variance": 83.07527923583984,
+        "gated_out": false
+      },
+      {
+        "size": 3,
+        "source": "autocorr",
+        "offset": [
+          2,
+          2
+        ],
+        "score": 0.995662947288853,
+        "variance": 58.92094802856445,
+        "gated_out": false
+      },
+      {
+        "size": 185,
+        "source": "fold",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 0.43583756393344636,
+        "variance": 1274.9091796875,
+        "gated_out": true
+      },
+      {
+        "size": 179,
+        "source": "fold",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 0.4319792837736606,
+        "variance": 1203.5838623046875,
+        "gated_out": true
+      },
+      {
+        "size": 187,
+        "source": "fold",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 0.43072098855610713,
+        "variance": 1301.731201171875,
+        "gated_out": true
+      },
+      {
+        "size": 176,
+        "source": "fold",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 0.4240125976286768,
+        "variance": 1132.0362548828125,
+        "gated_out": true
+      },
+      {
+        "size": 174,
+        "source": "fold",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 0.415786357384944,
+        "variance": 1084.37744140625,
+        "gated_out": true
+      },
+      {
+        "size": 173,
+        "source": "fold",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 0.4111738006399409,
+        "variance": 1060.9849853515625,
+        "gated_out": true
+      },
+      {
+        "size": 192,
+        "source": "fold",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 0.4060047015223051,
+        "variance": 1375.3446044921875,
+        "gated_out": true
+      },
+      {
+        "size": 171,
+        "source": "fold",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 0.40026959632312115,
+        "variance": 1015.1580200195312,
+        "gated_out": true
+      }
+    ],
+    "mesh_candidates": [
+      {
+        "kind": "projection",
+        "pitch": 19.562162623572934,
+        "score": 1.1018501838831656,
+        "lines": [
+          [
+            0,
+            12,
+            31,
+            50,
+            70,
+            89,
+            108,
+            128,
+            148,
+            167,
+            185,
+            204,
+            225,
+            243,
+            263,
+            281,
+            300,
+            321,
+            340,
+            359,
+            379,
+            398,
+            417,
+            437,
+            456,
+            475,
+            495,
+            514,
+            533,
+            551,
+            573,
+            591,
+            610,
+            630,
+            650,
+            669,
+            688,
+            708,
+            725,
+            745,
+            764,
+            785,
+            803,
+            822,
+            842,
+            860,
+            881,
+            900,
+            919,
+            939,
+            958,
+            977,
+            997,
+            1016,
+            1036,
+            1054,
+            1075,
+            1094,
+            1113,
+            1132,
+            1151,
+            1169,
+            1190,
+            1209,
+            1228,
+            1248,
+            1267,
+            1286,
+            1306,
+            1325,
+            1344,
+            1363,
+            1384,
+            1402,
+            1421,
+            1440,
+            1459,
+            1480,
+            1499,
+            1518,
+            1537,
+            1557,
+            1575,
+            1594,
+            1615,
+            1635,
+            1652,
+            1674,
+            1691,
+            1710,
+            1732,
+            1751,
+            1769,
+            1773
+          ],
+          [
+            0,
+            12,
+            32,
+            52,
+            72,
+            92,
+            111,
+            131,
+            151,
+            171,
+            192,
+            209,
+            230,
+            250,
+            270,
+            291,
+            309,
+            330,
+            348,
+            369,
+            390,
+            408,
+            428,
+            448,
+            468,
+            488,
+            508,
+            526,
+            548,
+            568,
+            588,
+            607,
+            625,
+            645,
+            666,
+            687,
+            705,
+            725,
+            744,
+            766,
+            785,
+            806,
+            825,
+            845,
+            864,
+            884,
+            886
+          ]
+        ]
+      }
+    ],
+    "median_score": 1.0413670034008324,
+    "peaked": false,
+    "rigid_pick": {
+      "size": 3,
+      "score": 0.995662947288853
+    },
+    "final_pick": {
+      "size": 3,
+      "score": 0.995662947288853,
+      "use_mesh": false,
+      "no_grid": false
+    }
+  },
+  "dimensions": [
+    590,
+    295
+  ]
+}

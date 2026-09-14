@@ -1,0 +1,16 @@
+{
+  "raw_source": "Z:\\Code\\.worktrees\\wizard-art-player-guides\\art_studies\\starter-slice-v02-identities\\generated\\defense-original.png",
+  "raw_sha256": "4c5a3b65223a18a64f826925450cd6941d257f08f3ba83d831bedb88f11a3f1f",
+  "raw_mode": "RGB",
+  "raw_size": [
+    1254,
+    1254
+  ],
+  "png_color_type": 2,
+  "native_generated_alpha": false,
+  "generation": "Built-in image_gen; first pass per human sheet, targeted player grip repair",
+  "prompt": "prompts/defense.txt",
+  "alpha_origin": "LOCALLY DERIVED boundary-connected neutral background; raw generation failed true-alpha request",
+  "local_mask_rule": "Neutral RGB spread<=20,min>=160 boundary flood; enclosed neutral components >=12 pixels with tone range>=20 identify checkerboard; disconnected residual components <=100 pixels removed only where RGB spread<=24. Remaining visible RGB unchanged.",
+  "processing_source_sha256": "bca66b0ef9a50a4904434eb4173fcb6e40427500d14f1a94c3b96de7a754de39"
+}

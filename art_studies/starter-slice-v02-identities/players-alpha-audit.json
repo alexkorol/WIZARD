@@ -1,0 +1,16 @@
+{
+  "raw_source": "Z:\\Code\\.worktrees\\wizard-art-player-guides\\art_studies\\starter-slice-v02-identities\\generated\\players-braid-repair.png",
+  "raw_sha256": "c320fb954ad1b735a3924a7c4cceaf5608efebab45819dc707e1ae5afad878bf",
+  "raw_mode": "RGB",
+  "raw_size": [
+    1254,
+    1254
+  ],
+  "png_color_type": 2,
+  "native_generated_alpha": false,
+  "generation": "Built-in image_gen; first pass per human sheet, targeted player grip and rear-braid repairs",
+  "prompt": "prompts/players.txt",
+  "alpha_origin": "LOCALLY DERIVED boundary-connected neutral background; raw generation failed true-alpha request",
+  "local_mask_rule": "Neutral RGB spread<=20,min>=160 boundary flood; enclosed neutral components >=12 pixels with tone range>=20 identify checkerboard; disconnected residual components <=100 pixels removed only where RGB spread<=24. Remaining visible RGB unchanged.",
+  "processing_source_sha256": "42e2337ef7648fa153663dd2a41f69e87d06a7f4686374e6c165c54a4b660307"
+}

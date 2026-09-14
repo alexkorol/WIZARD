@@ -1,0 +1,85 @@
+{
+  "native_alpha_successes": 6,
+  "tested_outputs": [
+    {
+      "path": "alpha-discovery\\minimal-club-original.png",
+      "sha256": "2cc272b8fb0fa3562b6fbed2b88d55376781ace67aa65478efc32292aad977fa",
+      "mode": "RGBA",
+      "png_color_type": 6,
+      "size": [
+        1145,
+        1374
+      ],
+      "alpha0": 1382749,
+      "alpha_min": 0,
+      "alpha_max": 255
+    },
+    {
+      "path": "alpha-discovery\\players-clean-guide-original.png",
+      "sha256": "f361ab53312898e1470c69eff3f9d8fc3f93172696b5c30511a67abcc13a543e",
+      "mode": "RGBA",
+      "png_color_type": 6,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha0": 998457,
+      "alpha_min": 0,
+      "alpha_max": 255
+    },
+    {
+      "path": "native-alpha\\generated\\beasts-original.png",
+      "sha256": "53d0eb57a30070862b10ecb65eb4b8412289396d883a7f90578c281e392c4063",
+      "mode": "RGBA",
+      "png_color_type": 6,
+      "size": [
+        1774,
+        887
+      ],
+      "alpha0": 1318608,
+      "alpha_min": 0,
+      "alpha_max": 255
+    },
+    {
+      "path": "native-alpha\\generated\\defense-original.png",
+      "sha256": "1a1a587b1847077cde7d9450c9edc37e84f8ef39f29f8754830a577615512c87",
+      "mode": "RGBA",
+      "png_color_type": 6,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha0": 990073,
+      "alpha_min": 0,
+      "alpha_max": 255
+    },
+    {
+      "path": "native-alpha\\generated\\players-original.png",
+      "sha256": "4dd61e3c3ce8cf980431fe5b60d8b6ee2e0f96e401d06384c5d18ec6e4e6cd51",
+      "mode": "RGBA",
+      "png_color_type": 6,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha0": 1060439,
+      "alpha_min": 0,
+      "alpha_max": 255
+    },
+    {
+      "path": "native-alpha\\generated\\villagers-original.png",
+      "sha256": "84fd73c6ee471384e9e9a04361ceeb13e6235667d394334c1fb63c1033b146ab",
+      "mode": "RGBA",
+      "png_color_type": 6,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha0": 918473,
+      "alpha_min": 0,
+      "alpha_max": 255
+    }
+  ],
+  "tool_model_metadata": "Not exposed; no model identity inferred",
+  "conclusion": "Short positive prompts with no references or clean transparent inputs returned native RGBA in all six tested calls. This does not isolate which changed factor caused success or prove universal reliability."
+}

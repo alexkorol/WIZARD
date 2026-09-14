@@ -1,0 +1,1218 @@
+{
+  "scope": "Village-defense prologue ONLY",
+  "status": "Revised individual human idle studies; not production animation or approved canon",
+  "alpha_origin": "Native RGBA returned by all four final imagegen edits; returned alpha thresholded128 for binary sprite pixels. Earlier clean edit inputs used native returned alpha.",
+  "layouts": {
+    "players": {
+      "recovered_dimensions": [
+        208,
+        208
+      ],
+      "frame_size": [
+        48,
+        96
+      ],
+      "registration": "Per-frame integer translation only, centered horizontally and bottom margin2 where possible",
+      "chosen_detector_candidate": {
+        "size": 6,
+        "source": "fine",
+        "offset": [
+          5,
+          1
+        ],
+        "score": 1.4142659294716509,
+        "variance": 455.9383850097656,
+        "gated_out": false
+      },
+      "automatic_result_retained": "reconstructed/players-auto.png",
+      "entries": [
+        {
+          "actor": "player-male",
+          "direction": "front",
+          "row": 0,
+          "column": 0,
+          "render_sha256": "6b3f592d0c3158109f0408663b561e2b5bedfad16d0e1ca75caf1503fd2d7f45",
+          "bbox": [
+            6,
+            16,
+            42,
+            91
+          ],
+          "final_bbox": [
+            3,
+            7,
+            45,
+            94
+          ],
+          "source_crop": [
+            0,
+            0,
+            52,
+            104
+          ],
+          "integer_translation": [
+            -1,
+            -8
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "8e66e1469a17eb11f4679d615a097d7e9cec3383232f09fc1448952c57590126"
+        },
+        {
+          "actor": "player-male",
+          "direction": "right",
+          "row": 0,
+          "column": 1,
+          "render_sha256": "8d1f40b4c8e10f1141eaad0f3f6beccdd7d739cfc06b192594e31ff26b21eecb",
+          "bbox": [
+            18,
+            15,
+            42,
+            90
+          ],
+          "final_bbox": [
+            10,
+            9,
+            37,
+            94
+          ],
+          "source_crop": [
+            52,
+            0,
+            104,
+            104
+          ],
+          "integer_translation": [
+            -8,
+            -5
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "701822aab4e8e838e6d9e1df4ef6c306d03215161d24a4b55dc5582cbffe44f8"
+        },
+        {
+          "actor": "player-male",
+          "direction": "back",
+          "row": 0,
+          "column": 2,
+          "render_sha256": "617b89891eba8b1e5a8448a4eee05ec64947602956e07912b1b8984b0f03ab38",
+          "bbox": [
+            7,
+            14,
+            41,
+            88
+          ],
+          "final_bbox": [
+            4,
+            10,
+            43,
+            94
+          ],
+          "source_crop": [
+            104,
+            0,
+            156,
+            104
+          ],
+          "integer_translation": [
+            -3,
+            -5
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "99b583fc0b7447795045d20a8a0273443969a821fadab483c32a4cabcbe27193"
+        },
+        {
+          "actor": "player-male",
+          "direction": "left",
+          "row": 0,
+          "column": 3,
+          "render_sha256": "a0de1dfffa02622fb4055d1bfbf363bd250cf78a3990539f5ed80b8a679d24df",
+          "bbox": [
+            7,
+            15,
+            30,
+            90
+          ],
+          "final_bbox": [
+            10,
+            9,
+            38,
+            94
+          ],
+          "source_crop": [
+            156,
+            0,
+            208,
+            104
+          ],
+          "integer_translation": [
+            -1,
+            -5
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "2add517a4c30855ee065c399e8d9d89e688c76ced2771c56bcd5b55f155a0bc0"
+        },
+        {
+          "actor": "player-female",
+          "direction": "front",
+          "row": 1,
+          "column": 0,
+          "render_sha256": "5b33476ddfaf598a0a775ed7fc0060f0aba760cad77db5076083fa2dabf6baf4",
+          "bbox": [
+            6,
+            18,
+            38,
+            92
+          ],
+          "final_bbox": [
+            4,
+            11,
+            45,
+            94
+          ],
+          "source_crop": [
+            0,
+            104,
+            52,
+            208
+          ],
+          "integer_translation": [
+            1,
+            -6
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "c035d1d2f7a8b692e86134c12fb7fd5cc8ade312f97cb5e551e1e4a962ebc63c"
+        },
+        {
+          "actor": "player-female",
+          "direction": "right",
+          "row": 1,
+          "column": 1,
+          "render_sha256": "3446220ec6150d9d5fad55d875b94a6ed239c9415299d878b1f17e77f0d82ed1",
+          "bbox": [
+            18,
+            16,
+            42,
+            90
+          ],
+          "final_bbox": [
+            10,
+            13,
+            39,
+            94
+          ],
+          "source_crop": [
+            52,
+            104,
+            104,
+            208
+          ],
+          "integer_translation": [
+            -8,
+            -4
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "e1a22545587cfa12758f6fa4e358b61bff65d183220cb02f013537f2b0efc5e1"
+        },
+        {
+          "actor": "player-female",
+          "direction": "back",
+          "row": 1,
+          "column": 2,
+          "render_sha256": "7e29884d36474503c9368b33621ad969b894a96ee783070bbf84a0a3006ed58b",
+          "bbox": [
+            10,
+            15,
+            41,
+            87
+          ],
+          "final_bbox": [
+            7,
+            13,
+            41,
+            94
+          ],
+          "source_crop": [
+            104,
+            104,
+            156,
+            208
+          ],
+          "integer_translation": [
+            -5,
+            -3
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "8010de48808984add3747d45f52270e1aaed275d0aac243327b23f512d3dac32"
+        },
+        {
+          "actor": "player-female",
+          "direction": "left",
+          "row": 1,
+          "column": 3,
+          "render_sha256": "61af264f3a9907225a79680b91f5bd8859f300d779c2b7bd3637f21c1fc1fb52",
+          "bbox": [
+            5,
+            17,
+            30,
+            90
+          ],
+          "final_bbox": [
+            10,
+            13,
+            39,
+            94
+          ],
+          "source_crop": [
+            156,
+            104,
+            208,
+            208
+          ],
+          "integer_translation": [
+            0,
+            -4
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "19d341fedf34289ab7268fa300b928b7f36495d50ea69f2d12b6bb60add37586"
+        }
+      ]
+    },
+    "villagers": {
+      "recovered_dimensions": [
+        208,
+        208
+      ],
+      "frame_size": [
+        48,
+        96
+      ],
+      "registration": "Per-frame integer translation only, centered horizontally and bottom margin2 where possible",
+      "chosen_detector_candidate": {
+        "size": 6,
+        "source": "autocorr",
+        "offset": [
+          4,
+          3
+        ],
+        "score": 1.3788917439797717,
+        "variance": 526.2654418945312,
+        "gated_out": false
+      },
+      "automatic_result_retained": "reconstructed/villagers-auto.png",
+      "entries": [
+        {
+          "actor": "field-hand",
+          "direction": "front",
+          "row": 0,
+          "column": 0,
+          "render_sha256": "d1f4e0466e6b45218deb17e1ef0aa54b19fe0e2f4cdc219a4ffe083680413738",
+          "bbox": [
+            5,
+            19,
+            39,
+            91
+          ],
+          "final_bbox": [
+            3,
+            4,
+            45,
+            94
+          ],
+          "source_crop": [
+            0,
+            0,
+            52,
+            104
+          ],
+          "integer_translation": [
+            1,
+            -5
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "5a43dd129b26c412df9cc8e4fd63749fcc6e5a7a1d6fd559ce9b4f96c73d3fc6"
+        },
+        {
+          "actor": "field-hand",
+          "direction": "right",
+          "row": 0,
+          "column": 1,
+          "render_sha256": "a4c3a617a857cbe1a8db2d3de284b6f1349caf66fb8bf68396a122abafb0fa34",
+          "bbox": [
+            17,
+            18,
+            41,
+            94
+          ],
+          "final_bbox": [
+            8,
+            4,
+            40,
+            94
+          ],
+          "source_crop": [
+            52,
+            0,
+            104,
+            104
+          ],
+          "integer_translation": [
+            -6,
+            -5
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "34f369e7f7271d92b0f918a415e84dde05b9a48700dc345118d80f3b07d7b44b"
+        },
+        {
+          "actor": "field-hand",
+          "direction": "back",
+          "row": 0,
+          "column": 2,
+          "render_sha256": "7ac0ba961e9a8d9fa23e5789bf63fd623510ca4a4f1b1c7ad933996635139352",
+          "bbox": [
+            9,
+            16,
+            42,
+            88
+          ],
+          "final_bbox": [
+            4,
+            5,
+            45,
+            94
+          ],
+          "source_crop": [
+            104,
+            0,
+            156,
+            104
+          ],
+          "integer_translation": [
+            -5,
+            -4
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "8d2ce9e2963dbe067590bc2562a14e1b89508a32a69254adeaa32d7c71938b2c"
+        },
+        {
+          "actor": "field-hand",
+          "direction": "left",
+          "row": 0,
+          "column": 3,
+          "render_sha256": "b49a5432e5661152037659ad02f7f0e86f217ad1666355ce078a3a414a3dea59",
+          "bbox": [
+            9,
+            18,
+            31,
+            91
+          ],
+          "final_bbox": [
+            10,
+            4,
+            38,
+            94
+          ],
+          "source_crop": [
+            156,
+            0,
+            208,
+            104
+          ],
+          "integer_translation": [
+            -5,
+            -5
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "b49a1dba35c6f6df02f55f54791f838ae6946120867e0ca78af71c20c04fa674"
+        },
+        {
+          "actor": "scribe",
+          "direction": "front",
+          "row": 1,
+          "column": 0,
+          "render_sha256": "ee21740eb409a804611d9b16d08f93db4469107b175fc820a25e1cee43d53ed5",
+          "bbox": [
+            6,
+            21,
+            37,
+            92
+          ],
+          "final_bbox": [
+            5,
+            3,
+            43,
+            94
+          ],
+          "source_crop": [
+            0,
+            104,
+            52,
+            208
+          ],
+          "integer_translation": [
+            0,
+            -4
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "cae5f12311742a9b72b65cbfb0ce4c3c1b8e559ec0dd394063e819eb197e3dfa"
+        },
+        {
+          "actor": "scribe",
+          "direction": "right",
+          "row": 1,
+          "column": 1,
+          "render_sha256": "53e925bbcfc27809bf8c1fcb41f968d98ac8f659e2c8f220b28e6807003d2a4d",
+          "bbox": [
+            18,
+            19,
+            37,
+            90
+          ],
+          "final_bbox": [
+            12,
+            4,
+            36,
+            94
+          ],
+          "source_crop": [
+            52,
+            104,
+            104,
+            208
+          ],
+          "integer_translation": [
+            -3,
+            -2
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "79effa54b6d287382a7744f16e7c952c6c9007e8d9a56a517f720f590b458c30"
+        },
+        {
+          "actor": "scribe",
+          "direction": "back",
+          "row": 1,
+          "column": 2,
+          "render_sha256": "ebe8c1d149a39480a2164d6e6b6092f3ca8017d7c156fdc7d0f0c4953dc16864",
+          "bbox": [
+            12,
+            18,
+            42,
+            87
+          ],
+          "final_bbox": [
+            5,
+            5,
+            43,
+            94
+          ],
+          "source_crop": [
+            104,
+            104,
+            156,
+            208
+          ],
+          "integer_translation": [
+            -7,
+            -2
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "5b753b73fb02670b5fd0c93547377334b545a2573b651de17289d856477fd155"
+        },
+        {
+          "actor": "scribe",
+          "direction": "left",
+          "row": 1,
+          "column": 3,
+          "render_sha256": "9056dd77b55bcbb17235d59be0c6ad5c2fe76b6f2e59c55ac428c2e046c8a616",
+          "bbox": [
+            12,
+            20,
+            30,
+            90
+          ],
+          "final_bbox": [
+            12,
+            5,
+            37,
+            94
+          ],
+          "source_crop": [
+            156,
+            104,
+            208,
+            208
+          ],
+          "integer_translation": [
+            -3,
+            -2
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "cfecf1d6b02cce5f4df117d2d1731bb85561be75300724524ed63e887485ea11"
+        }
+      ]
+    },
+    "defense": {
+      "recovered_dimensions": [
+        208,
+        208
+      ],
+      "frame_size": [
+        48,
+        96
+      ],
+      "registration": "Per-frame integer translation only, centered horizontally and bottom margin2 where possible",
+      "chosen_detector_candidate": {
+        "size": 6,
+        "source": "fine",
+        "offset": [
+          1,
+          5
+        ],
+        "score": 1.397755480944847,
+        "variance": 492.6078796386719,
+        "gated_out": false
+      },
+      "automatic_result_retained": "reconstructed/defense-auto.png",
+      "entries": [
+        {
+          "actor": "scout",
+          "direction": "front",
+          "row": 0,
+          "column": 0,
+          "render_sha256": "6937e3494d5193593d465840d69920e5f9edfe1d1af72b611dad3ef953035b16",
+          "bbox": [
+            8,
+            17,
+            35,
+            92
+          ],
+          "final_bbox": [
+            7,
+            5,
+            41,
+            94
+          ],
+          "source_crop": [
+            0,
+            0,
+            52,
+            104
+          ],
+          "integer_translation": [
+            0,
+            -9
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "539ddc0e01bba84e4f2b4e80aa90b9d554e836541fc56802810529e2ebb836ea"
+        },
+        {
+          "actor": "scout",
+          "direction": "right",
+          "row": 0,
+          "column": 1,
+          "render_sha256": "a1c05a57e672433e9a2f69d7f276a85a17794723f62fb5040620e56e76c0ba5a",
+          "bbox": [
+            19,
+            15,
+            34,
+            93
+          ],
+          "final_bbox": [
+            13,
+            5,
+            35,
+            94
+          ],
+          "source_crop": [
+            52,
+            0,
+            104,
+            104
+          ],
+          "integer_translation": [
+            -6,
+            -8
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "f73b70cf82472490bd2ffe1fa5d12f8951617ce8a401f799a7709d2b34303da6"
+        },
+        {
+          "actor": "scout",
+          "direction": "back",
+          "row": 0,
+          "column": 2,
+          "render_sha256": "d02ab575404da95ee5e76776945ad1d6081c7e15cabb967cc69bdd5c3a248569",
+          "bbox": [
+            13,
+            13,
+            40,
+            87
+          ],
+          "final_bbox": [
+            6,
+            3,
+            41,
+            94
+          ],
+          "source_crop": [
+            104,
+            0,
+            156,
+            104
+          ],
+          "integer_translation": [
+            -7,
+            -7
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "3bec3fcd269f6d80f6fe07b2f1e12d404c03c578a6af07ae5d97d6d365119a6a"
+        },
+        {
+          "actor": "scout",
+          "direction": "left",
+          "row": 0,
+          "column": 3,
+          "render_sha256": "8f7ff2bdd754b39a2aec4c5eeaad7b33ded3bd529f70522edb3d8f56dc7becf5",
+          "bbox": [
+            13,
+            12,
+            29,
+            89
+          ],
+          "final_bbox": [
+            13,
+            2,
+            35,
+            94
+          ],
+          "source_crop": [
+            156,
+            0,
+            208,
+            104
+          ],
+          "integer_translation": [
+            -8,
+            -7
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "07dd60846068fb280ba6232775aea23ac607f48573e06fdd6bc556807be8c03b"
+        },
+        {
+          "actor": "defender",
+          "direction": "front",
+          "row": 1,
+          "column": 0,
+          "render_sha256": "881b6848d48d480585cb358c7c1f7334a02ae6a2cee044295ebfc7d7a491fa5e",
+          "bbox": [
+            4,
+            16,
+            39,
+            91
+          ],
+          "final_bbox": [
+            3,
+            6,
+            45,
+            94
+          ],
+          "source_crop": [
+            0,
+            104,
+            52,
+            208
+          ],
+          "integer_translation": [
+            -2,
+            -3
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "311abf64e97e091559156d08174ebd203c2ef43852567ecbac019679a22b3b8e"
+        },
+        {
+          "actor": "defender",
+          "direction": "right",
+          "row": 1,
+          "column": 1,
+          "render_sha256": "254283190232fb0e5f5752014a37a05d355b705d6ef6dd13e334f8b26d9ba631",
+          "bbox": [
+            17,
+            15,
+            43,
+            91
+          ],
+          "final_bbox": [
+            6,
+            5,
+            41,
+            94
+          ],
+          "source_crop": [
+            52,
+            104,
+            104,
+            208
+          ],
+          "integer_translation": [
+            -9,
+            -3
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "dacdef0b4d6db12fa91da6eb9d0474d26dbe9cefe54a05d374ab1f3fd857b87d"
+        },
+        {
+          "actor": "defender",
+          "direction": "back",
+          "row": 1,
+          "column": 2,
+          "render_sha256": "88b10347ef806b5379ea515d9e1693624e14697588c238e0f0776e6abf72bc2b",
+          "bbox": [
+            9,
+            13,
+            43,
+            88
+          ],
+          "final_bbox": [
+            3,
+            7,
+            45,
+            94
+          ],
+          "source_crop": [
+            104,
+            104,
+            156,
+            208
+          ],
+          "integer_translation": [
+            -5,
+            -1
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "334ad95b2e29cf040104a246bb67909cdc9d15efa54977094f87bcc561281d21"
+        },
+        {
+          "actor": "defender",
+          "direction": "left",
+          "row": 1,
+          "column": 3,
+          "render_sha256": "bb321db7c9823cea4a7d72dee75717945fab213d9baac6e7502af8d5cae80e77",
+          "bbox": [
+            6,
+            15,
+            31,
+            91
+          ],
+          "final_bbox": [
+            9,
+            6,
+            39,
+            94
+          ],
+          "source_crop": [
+            156,
+            104,
+            208,
+            208
+          ],
+          "integer_translation": [
+            -5,
+            -3
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "4e93615ef8129b2f2e9290a6baed098b295b5c53640de80949241d50806dd363"
+        }
+      ]
+    },
+    "beasts": {
+      "recovered_dimensions": [
+        354,
+        176
+      ],
+      "frame_size": [
+        96,
+        96
+      ],
+      "registration": "Per-frame integer translation only, centered horizontally and bottom margin2 where possible",
+      "chosen_detector_candidate": {
+        "size": 5,
+        "source": "fine",
+        "offset": [
+          3,
+          4
+        ],
+        "score": 1.010805286473192,
+        "variance": 104.18736267089844,
+        "gated_out": false
+      },
+      "automatic_result_retained": "reconstructed/beasts-auto.png",
+      "entries": [
+        {
+          "actor": "pack-wolf",
+          "direction": "front",
+          "row": 0,
+          "column": 0,
+          "render_sha256": "18e1febf12a8a9be997c58259fe6b990850d441358e124c170ab90f53d22078b",
+          "bbox": [
+            37,
+            52,
+            58,
+            85
+          ],
+          "final_bbox": [
+            38,
+            60,
+            57,
+            94
+          ],
+          "source_crop": [
+            0,
+            0,
+            88,
+            88
+          ],
+          "integer_translation": [
+            5,
+            14
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "cfd190e3b9ff6b500c3806988f411ea62a59e722c12e7944213bd0b77ac37302"
+        },
+        {
+          "actor": "pack-wolf",
+          "direction": "right",
+          "row": 0,
+          "column": 1,
+          "render_sha256": "ccf7b1dc93a622834a020cf49422efba2a285a363469ae6574b510b29a6db686",
+          "bbox": [
+            23,
+            54,
+            76,
+            82
+          ],
+          "final_bbox": [
+            22,
+            64,
+            75,
+            94
+          ],
+          "source_crop": [
+            88,
+            0,
+            177,
+            88
+          ],
+          "integer_translation": [
+            5,
+            18
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "a6bf57aa3fdd818f04c323a7670b9ac1a68f5c5455b61979c6236a9cd26536dc"
+        },
+        {
+          "actor": "pack-wolf",
+          "direction": "back",
+          "row": 0,
+          "column": 2,
+          "render_sha256": "f47ae4826a8852cd41b71a7f84bf5864e1c5cbb235a21357a5f055c317c81f85",
+          "bbox": [
+            38,
+            39,
+            58,
+            86
+          ],
+          "final_bbox": [
+            39,
+            50,
+            57,
+            94
+          ],
+          "source_crop": [
+            177,
+            0,
+            266,
+            88
+          ],
+          "integer_translation": [
+            4,
+            14
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "919fc0101d1fe19995b02ff8f07df9662549dd905076f91d77f68d707ea2a377"
+        },
+        {
+          "actor": "pack-wolf",
+          "direction": "left",
+          "row": 0,
+          "column": 3,
+          "render_sha256": "32ddb1a36c322ddae10f6710fb364618d6b49b1be8c2579604d68ba3c420b734",
+          "bbox": [
+            21,
+            46,
+            74,
+            81
+          ],
+          "final_bbox": [
+            21,
+            59,
+            75,
+            94
+          ],
+          "source_crop": [
+            266,
+            0,
+            354,
+            88
+          ],
+          "integer_translation": [
+            5,
+            18
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "abbdd69696e67caae51f542ae68a9639185e9138cc0caa4c99bc78fc4598648d"
+        },
+        {
+          "actor": "well-alpha",
+          "direction": "front",
+          "row": 1,
+          "column": 0,
+          "render_sha256": "47cafc11dadb3f083421c2745719926dfc632c1075729c31aa7090337e42dc30",
+          "bbox": [
+            31,
+            41,
+            63,
+            89
+          ],
+          "final_bbox": [
+            32,
+            39,
+            65,
+            94
+          ],
+          "source_crop": [
+            0,
+            88,
+            88,
+            176
+          ],
+          "integer_translation": [
+            5,
+            13
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "48b21e35ad9176bbf502558dc5e9f887d78bf9834c4de919d59363a40e5218fd"
+        },
+        {
+          "actor": "well-alpha",
+          "direction": "right",
+          "row": 1,
+          "column": 1,
+          "render_sha256": "eb5cfd44c7672f0666c85660c961d955c6d7efcd5cb5fd2de85f2157265b5845",
+          "bbox": [
+            10,
+            43,
+            90,
+            85
+          ],
+          "final_bbox": [
+            7,
+            47,
+            89,
+            94
+          ],
+          "source_crop": [
+            88,
+            88,
+            177,
+            176
+          ],
+          "integer_translation": [
+            4,
+            18
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "d40682ac71b372ac31d21668bd454bb427d80949191b61ef7c636097578f05d1"
+        },
+        {
+          "actor": "well-alpha",
+          "direction": "back",
+          "row": 1,
+          "column": 2,
+          "render_sha256": "f81cd75c1d3f49177dfbc73a671b5b46ea3da9a321c9b752f97907de71c4e8ff",
+          "bbox": [
+            32,
+            22,
+            63,
+            92
+          ],
+          "final_bbox": [
+            32,
+            29,
+            63,
+            94
+          ],
+          "source_crop": [
+            177,
+            88,
+            266,
+            176
+          ],
+          "integer_translation": [
+            4,
+            13
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "e7576fbbea21edf7b460fa49761418125079b5c6a7ec2186b0d53626e57fdc7d"
+        },
+        {
+          "actor": "well-alpha",
+          "direction": "left",
+          "row": 1,
+          "column": 3,
+          "render_sha256": "c504e408366e134ee839c6164f3d8274e6215fdf2b882161592521ac65246e9b",
+          "bbox": [
+            8,
+            31,
+            88,
+            84
+          ],
+          "final_bbox": [
+            8,
+            43,
+            89,
+            94
+          ],
+          "source_crop": [
+            266,
+            88,
+            354,
+            176
+          ],
+          "integer_translation": [
+            6,
+            17
+          ],
+          "foreground_pixels_preserved": true,
+          "final_sha256": "c68afd59e692fac27699c75b9ee2d308e38a3a54f405acca65c5284dec047150"
+        }
+      ]
+    }
+  },
+  "actors": {
+    "player-male": {
+      "frame_size": [
+        48,
+        96
+      ],
+      "directions": [
+        "front",
+        "right",
+        "back",
+        "left"
+      ],
+      "source_blend": "../sources/player-male.blend",
+      "kind": "starter player candidate"
+    },
+    "player-female": {
+      "frame_size": [
+        48,
+        96
+      ],
+      "directions": [
+        "front",
+        "right",
+        "back",
+        "left"
+      ],
+      "source_blend": "../sources/player-female.blend",
+      "kind": "starter player candidate"
+    },
+    "field-hand": {
+      "frame_size": [
+        48,
+        96
+      ],
+      "directions": [
+        "front",
+        "right",
+        "back",
+        "left"
+      ],
+      "source_blend": "../sources/field-hand.blend",
+      "kind": "villager candidate"
+    },
+    "scribe": {
+      "frame_size": [
+        48,
+        96
+      ],
+      "directions": [
+        "front",
+        "right",
+        "back",
+        "left"
+      ],
+      "source_blend": "../sources/scribe.blend",
+      "kind": "villager candidate"
+    },
+    "scout": {
+      "frame_size": [
+        48,
+        96
+      ],
+      "directions": [
+        "front",
+        "right",
+        "back",
+        "left"
+      ],
+      "source_blend": "../sources/scout.blend",
+      "kind": "villager candidate"
+    },
+    "defender": {
+      "frame_size": [
+        48,
+        96
+      ],
+      "directions": [
+        "front",
+        "right",
+        "back",
+        "left"
+      ],
+      "source_blend": "../sources/defender.blend",
+      "kind": "villager candidate"
+    },
+    "pack-wolf": {
+      "frame_size": [
+        96,
+        96
+      ],
+      "directions": [
+        "front",
+        "right",
+        "back",
+        "left"
+      ],
+      "source_blend": "../../starter-slice-v01/sources/pack-wolf.blend",
+      "kind": "monster candidate"
+    },
+    "well-alpha": {
+      "frame_size": [
+        96,
+        96
+      ],
+      "directions": [
+        "front",
+        "right",
+        "back",
+        "left"
+      ],
+      "source_blend": "../../starter-slice-v01/sources/well-alpha.blend",
+      "kind": "monster candidate"
+    }
+  },
+  "frame_count": 32,
+  "final_alpha_values": [
+    0,
+    255
+  ]
+}

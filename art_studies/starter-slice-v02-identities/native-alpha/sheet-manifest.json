@@ -1,0 +1,482 @@
+{
+  "villagers": {
+    "frame_size": [
+      48,
+      96
+    ],
+    "rows": 2,
+    "columns": 4,
+    "integer_enlargement": 8,
+    "alpha_threshold": 128,
+    "shared_guide_translation": [
+      0,
+      2
+    ],
+    "entries": [
+      {
+        "actor": "field-hand",
+        "direction": "front",
+        "row": 0,
+        "column": 0,
+        "render_sha256": "d1f4e0466e6b45218deb17e1ef0aa54b19fe0e2f4cdc219a4ffe083680413738",
+        "bbox": [
+          5,
+          19,
+          39,
+          91
+        ]
+      },
+      {
+        "actor": "field-hand",
+        "direction": "right",
+        "row": 0,
+        "column": 1,
+        "render_sha256": "a4c3a617a857cbe1a8db2d3de284b6f1349caf66fb8bf68396a122abafb0fa34",
+        "bbox": [
+          17,
+          18,
+          41,
+          94
+        ]
+      },
+      {
+        "actor": "field-hand",
+        "direction": "back",
+        "row": 0,
+        "column": 2,
+        "render_sha256": "7ac0ba961e9a8d9fa23e5789bf63fd623510ca4a4f1b1c7ad933996635139352",
+        "bbox": [
+          9,
+          16,
+          42,
+          88
+        ]
+      },
+      {
+        "actor": "field-hand",
+        "direction": "left",
+        "row": 0,
+        "column": 3,
+        "render_sha256": "b49a5432e5661152037659ad02f7f0e86f217ad1666355ce078a3a414a3dea59",
+        "bbox": [
+          9,
+          18,
+          31,
+          91
+        ]
+      },
+      {
+        "actor": "scribe",
+        "direction": "front",
+        "row": 1,
+        "column": 0,
+        "render_sha256": "ee21740eb409a804611d9b16d08f93db4469107b175fc820a25e1cee43d53ed5",
+        "bbox": [
+          6,
+          21,
+          37,
+          92
+        ]
+      },
+      {
+        "actor": "scribe",
+        "direction": "right",
+        "row": 1,
+        "column": 1,
+        "render_sha256": "53e925bbcfc27809bf8c1fcb41f968d98ac8f659e2c8f220b28e6807003d2a4d",
+        "bbox": [
+          18,
+          19,
+          37,
+          90
+        ]
+      },
+      {
+        "actor": "scribe",
+        "direction": "back",
+        "row": 1,
+        "column": 2,
+        "render_sha256": "ebe8c1d149a39480a2164d6e6b6092f3ca8017d7c156fdc7d0f0c4953dc16864",
+        "bbox": [
+          12,
+          18,
+          42,
+          87
+        ]
+      },
+      {
+        "actor": "scribe",
+        "direction": "left",
+        "row": 1,
+        "column": 3,
+        "render_sha256": "9056dd77b55bcbb17235d59be0c6ad5c2fe76b6f2e59c55ac428c2e046c8a616",
+        "bbox": [
+          12,
+          20,
+          30,
+          90
+        ]
+      }
+    ]
+  },
+  "defense": {
+    "frame_size": [
+      48,
+      96
+    ],
+    "rows": 2,
+    "columns": 4,
+    "integer_enlargement": 8,
+    "alpha_threshold": 128,
+    "shared_guide_translation": [
+      0,
+      2
+    ],
+    "entries": [
+      {
+        "actor": "scout",
+        "direction": "front",
+        "row": 0,
+        "column": 0,
+        "render_sha256": "6937e3494d5193593d465840d69920e5f9edfe1d1af72b611dad3ef953035b16",
+        "bbox": [
+          8,
+          17,
+          35,
+          92
+        ]
+      },
+      {
+        "actor": "scout",
+        "direction": "right",
+        "row": 0,
+        "column": 1,
+        "render_sha256": "a1c05a57e672433e9a2f69d7f276a85a17794723f62fb5040620e56e76c0ba5a",
+        "bbox": [
+          19,
+          15,
+          34,
+          93
+        ]
+      },
+      {
+        "actor": "scout",
+        "direction": "back",
+        "row": 0,
+        "column": 2,
+        "render_sha256": "d02ab575404da95ee5e76776945ad1d6081c7e15cabb967cc69bdd5c3a248569",
+        "bbox": [
+          13,
+          13,
+          40,
+          87
+        ]
+      },
+      {
+        "actor": "scout",
+        "direction": "left",
+        "row": 0,
+        "column": 3,
+        "render_sha256": "8f7ff2bdd754b39a2aec4c5eeaad7b33ded3bd529f70522edb3d8f56dc7becf5",
+        "bbox": [
+          13,
+          12,
+          29,
+          89
+        ]
+      },
+      {
+        "actor": "defender",
+        "direction": "front",
+        "row": 1,
+        "column": 0,
+        "render_sha256": "881b6848d48d480585cb358c7c1f7334a02ae6a2cee044295ebfc7d7a491fa5e",
+        "bbox": [
+          4,
+          16,
+          39,
+          91
+        ]
+      },
+      {
+        "actor": "defender",
+        "direction": "right",
+        "row": 1,
+        "column": 1,
+        "render_sha256": "254283190232fb0e5f5752014a37a05d355b705d6ef6dd13e334f8b26d9ba631",
+        "bbox": [
+          17,
+          15,
+          43,
+          91
+        ]
+      },
+      {
+        "actor": "defender",
+        "direction": "back",
+        "row": 1,
+        "column": 2,
+        "render_sha256": "88b10347ef806b5379ea515d9e1693624e14697588c238e0f0776e6abf72bc2b",
+        "bbox": [
+          9,
+          13,
+          43,
+          88
+        ]
+      },
+      {
+        "actor": "defender",
+        "direction": "left",
+        "row": 1,
+        "column": 3,
+        "render_sha256": "bb321db7c9823cea4a7d72dee75717945fab213d9baac6e7502af8d5cae80e77",
+        "bbox": [
+          6,
+          15,
+          31,
+          91
+        ]
+      }
+    ]
+  },
+  "players": {
+    "frame_size": [
+      48,
+      96
+    ],
+    "rows": 2,
+    "columns": 4,
+    "integer_enlargement": 8,
+    "alpha_threshold": 128,
+    "shared_guide_translation": [
+      0,
+      2
+    ],
+    "entries": [
+      {
+        "actor": "player-male",
+        "direction": "front",
+        "row": 0,
+        "column": 0,
+        "render_sha256": "6b3f592d0c3158109f0408663b561e2b5bedfad16d0e1ca75caf1503fd2d7f45",
+        "bbox": [
+          6,
+          16,
+          42,
+          91
+        ]
+      },
+      {
+        "actor": "player-male",
+        "direction": "right",
+        "row": 0,
+        "column": 1,
+        "render_sha256": "8d1f40b4c8e10f1141eaad0f3f6beccdd7d739cfc06b192594e31ff26b21eecb",
+        "bbox": [
+          18,
+          15,
+          42,
+          90
+        ]
+      },
+      {
+        "actor": "player-male",
+        "direction": "back",
+        "row": 0,
+        "column": 2,
+        "render_sha256": "617b89891eba8b1e5a8448a4eee05ec64947602956e07912b1b8984b0f03ab38",
+        "bbox": [
+          7,
+          14,
+          41,
+          88
+        ]
+      },
+      {
+        "actor": "player-male",
+        "direction": "left",
+        "row": 0,
+        "column": 3,
+        "render_sha256": "a0de1dfffa02622fb4055d1bfbf363bd250cf78a3990539f5ed80b8a679d24df",
+        "bbox": [
+          7,
+          15,
+          30,
+          90
+        ]
+      },
+      {
+        "actor": "player-female",
+        "direction": "front",
+        "row": 1,
+        "column": 0,
+        "render_sha256": "5b33476ddfaf598a0a775ed7fc0060f0aba760cad77db5076083fa2dabf6baf4",
+        "bbox": [
+          6,
+          18,
+          38,
+          92
+        ]
+      },
+      {
+        "actor": "player-female",
+        "direction": "right",
+        "row": 1,
+        "column": 1,
+        "render_sha256": "3446220ec6150d9d5fad55d875b94a6ed239c9415299d878b1f17e77f0d82ed1",
+        "bbox": [
+          18,
+          16,
+          42,
+          90
+        ]
+      },
+      {
+        "actor": "player-female",
+        "direction": "back",
+        "row": 1,
+        "column": 2,
+        "render_sha256": "7e29884d36474503c9368b33621ad969b894a96ee783070bbf84a0a3006ed58b",
+        "bbox": [
+          10,
+          15,
+          41,
+          87
+        ]
+      },
+      {
+        "actor": "player-female",
+        "direction": "left",
+        "row": 1,
+        "column": 3,
+        "render_sha256": "61af264f3a9907225a79680b91f5bd8859f300d779c2b7bd3637f21c1fc1fb52",
+        "bbox": [
+          5,
+          17,
+          30,
+          90
+        ]
+      }
+    ]
+  },
+  "beasts": {
+    "frame_size": [
+      96,
+      96
+    ],
+    "rows": 2,
+    "columns": 4,
+    "integer_enlargement": 4,
+    "alpha_threshold": 128,
+    "shared_guide_translation": [
+      0,
+      2
+    ],
+    "entries": [
+      {
+        "actor": "pack-wolf",
+        "direction": "front",
+        "row": 0,
+        "column": 0,
+        "render_sha256": "18e1febf12a8a9be997c58259fe6b990850d441358e124c170ab90f53d22078b",
+        "bbox": [
+          37,
+          52,
+          58,
+          85
+        ]
+      },
+      {
+        "actor": "pack-wolf",
+        "direction": "right",
+        "row": 0,
+        "column": 1,
+        "render_sha256": "ccf7b1dc93a622834a020cf49422efba2a285a363469ae6574b510b29a6db686",
+        "bbox": [
+          23,
+          54,
+          76,
+          82
+        ]
+      },
+      {
+        "actor": "pack-wolf",
+        "direction": "back",
+        "row": 0,
+        "column": 2,
+        "render_sha256": "f47ae4826a8852cd41b71a7f84bf5864e1c5cbb235a21357a5f055c317c81f85",
+        "bbox": [
+          38,
+          39,
+          58,
+          86
+        ]
+      },
+      {
+        "actor": "pack-wolf",
+        "direction": "left",
+        "row": 0,
+        "column": 3,
+        "render_sha256": "32ddb1a36c322ddae10f6710fb364618d6b49b1be8c2579604d68ba3c420b734",
+        "bbox": [
+          21,
+          46,
+          74,
+          81
+        ]
+      },
+      {
+        "actor": "well-alpha",
+        "direction": "front",
+        "row": 1,
+        "column": 0,
+        "render_sha256": "47cafc11dadb3f083421c2745719926dfc632c1075729c31aa7090337e42dc30",
+        "bbox": [
+          31,
+          41,
+          63,
+          89
+        ]
+      },
+      {
+        "actor": "well-alpha",
+        "direction": "right",
+        "row": 1,
+        "column": 1,
+        "render_sha256": "eb5cfd44c7672f0666c85660c961d955c6d7efcd5cb5fd2de85f2157265b5845",
+        "bbox": [
+          10,
+          43,
+          90,
+          85
+        ]
+      },
+      {
+        "actor": "well-alpha",
+        "direction": "back",
+        "row": 1,
+        "column": 2,
+        "render_sha256": "f81cd75c1d3f49177dfbc73a671b5b46ea3da9a321c9b752f97907de71c4e8ff",
+        "bbox": [
+          32,
+          22,
+          63,
+          92
+        ]
+      },
+      {
+        "actor": "well-alpha",
+        "direction": "left",
+        "row": 1,
+        "column": 3,
+        "render_sha256": "c504e408366e134ee839c6164f3d8274e6215fdf2b882161592521ac65246e9b",
+        "bbox": [
+          8,
+          31,
+          88,
+          84
+        ]
+      }
+    ]
+  }
+}

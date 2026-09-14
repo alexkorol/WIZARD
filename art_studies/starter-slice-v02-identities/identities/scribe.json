@@ -1,0 +1,108 @@
+{
+  "name": "scribe",
+  "grip": {
+    "center_world": [
+      -0.3238109350204468,
+      -0.13167855143547058,
+      0.8748584389686584
+    ],
+    "axis_world": [
+      -0.008573418483138084,
+      -0.8354002237319946,
+      0.5495752096176147
+    ],
+    "shaft_radius_m": 0.0115,
+    "finger_loop_centers_world": {
+      "index": [
+        -0.32710522413253784,
+        -0.15462692081928253,
+        0.8923931121826172
+      ],
+      "middle": [
+        -0.322564959526062,
+        -0.1385316550731659,
+        0.8789757490158081
+      ],
+      "ring": [
+        -0.32505694031715393,
+        -0.12482543289661407,
+        0.8707411289215088
+      ],
+      "pinky": [
+        -0.3266661763191223,
+        -0.11184577643871307,
+        0.8642491698265076
+      ]
+    },
+    "thumb_tip_target_error_m": 1.228781230931777e-07,
+    "kind": "clay tablet",
+    "bone_parent": "hand_r",
+    "attachment": "Curled fingers support the top edge; slab extends away from wrist"
+  },
+  "source": "Z:\\Code\\.worktrees\\wizard-art-player-guides\\art_studies\\starter-slice-v01\\sources\\scribe.blend",
+  "spec": {
+    "sex": "female",
+    "hair": "centered-coil",
+    "hair_color": [
+      0.025,
+      0.018,
+      0.012
+    ],
+    "height": 0.96,
+    "width": 1.04,
+    "face": {
+      "head/head-round": 0.28,
+      "nose/nose-scale-horiz-incr": 0.18,
+      "chin/chin-prominent-decr": 0.16
+    },
+    "linen": [
+      0.58,
+      0.48,
+      0.3
+    ],
+    "hide": [
+      0.2,
+      0.24,
+      0.22
+    ],
+    "facial_reference_direction": "European, explicitly requested by owner; individual shape targets retained"
+  },
+  "retired_meshes": [
+    "female_belt",
+    "female_belt_disc",
+    "female_belt_disc_boss",
+    "female_belt_end",
+    "female_belt_knot",
+    "female_belt_tail_0",
+    "female_belt_tail_1",
+    "female_fitted_open_vest",
+    "female_hair",
+    "female_hair_back",
+    "female_hair_high_tail",
+    "female_hair_other_side",
+    "female_hair_sweep",
+    "female_hair_swept_front",
+    "female_hair_temple_lock",
+    "female_hide_vest",
+    "female_linen_tunic",
+    "female_tied_hair",
+    "female_vest_waist_tie",
+    "female_wrist_guard_-1",
+    "female_wrist_guard_1",
+    "MH_female_Scalp"
+  ],
+  "garment_layers": [
+    "scribe_linen_single_shell",
+    "scribe_hide_fitted_overlay"
+  ],
+  "layer_offset_m": [
+    0.014,
+    0.029
+  ],
+  "outer_vertex_min_signed_clearance_m": null,
+  "logical_frame": [
+    48,
+    96
+  ],
+  "model_variant": "Independent mesh datablock, unique facial shape keys, hair geometry and dressed assembly proportions"
+}

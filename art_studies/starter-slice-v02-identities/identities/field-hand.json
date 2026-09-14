@@ -1,0 +1,98 @@
+{
+  "name": "field-hand",
+  "grip": {
+    "center_world": [
+      -0.3169396221637726,
+      -0.2821580767631531,
+      0.9368972778320312
+    ],
+    "axis_world": [
+      0.014989039860665798,
+      -0.03497510403394699,
+      0.9992757439613342
+    ],
+    "shaft_radius_m": 0.0115,
+    "finger_loop_centers_world": {
+      "index": [
+        -0.3198891282081604,
+        -0.2815617024898529,
+        0.9702498316764832
+      ],
+      "middle": [
+        -0.31534117460250854,
+        -0.28270426392555237,
+        0.9461590051651001
+      ],
+      "ring": [
+        -0.3185380697250366,
+        -0.28161191940307617,
+        0.9276355504989624
+      ],
+      "pinky": [
+        -0.3207688629627228,
+        -0.27950894832611084,
+        0.9116004705429077
+      ]
+    },
+    "thumb_tip_target_error_m": 7.300048299977713e-08,
+    "kind": "staff",
+    "axis_interval_m": [
+      -0.9095560292787412,
+      0.55
+    ],
+    "bone_parent": "hand_r"
+  },
+  "source": "Z:\\Code\\.worktrees\\wizard-art-player-guides\\art_studies\\starter-slice-v01\\sources\\field-hand.blend",
+  "spec": {
+    "sex": "male",
+    "hair": "back-crop-beard",
+    "hair_color": [
+      0.14,
+      0.12,
+      0.09
+    ],
+    "height": 0.97,
+    "width": 1.07,
+    "face": {
+      "head/head-age-incr": 0.3,
+      "nose/nose-curve-convex": 0.3,
+      "chin/chin-width-incr": 0.3
+    },
+    "linen": [
+      0.36,
+      0.25,
+      0.12
+    ],
+    "hide": [
+      0.17,
+      0.1,
+      0.05
+    ],
+    "facial_reference_direction": "European, explicitly requested by owner; individual shape targets retained"
+  },
+  "retired_meshes": [
+    "male_belt",
+    "male_belt_end",
+    "male_belt_knot",
+    "male_hair",
+    "male_hide_vest",
+    "male_linen_tunic",
+    "male_wrist_guard_-1",
+    "male_wrist_guard_1",
+    "MH_male_Scalp"
+  ],
+  "garment_layers": [
+    "field-hand_linen_single_shell",
+    "field-hand_hide_fitted_overlay"
+  ],
+  "layer_offset_m": [
+    0.014,
+    0.029
+  ],
+  "outer_vertex_min_signed_clearance_m": null,
+  "logical_frame": [
+    48,
+    96
+  ],
+  "model_variant": "Independent mesh datablock, unique facial shape keys, hair geometry and dressed assembly proportions"
+}
