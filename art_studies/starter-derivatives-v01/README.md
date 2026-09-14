@@ -127,3 +127,14 @@ loaded by the demo. See [Blender recovery notes](blender/README.md) for geometry
 The default frame source is the new eight-phase Blender reference set; the older
 generated sets remain explicitly separate comparison options. This update does
 not promote those failed generated sheets or change the production game.
+
+## Recorded locomotion correction
+
+The default Blender motion now retargets CMU 07_01 (walk) and 09_01 (run),
+replacing the crouched procedural gait. Source BVHs, attribution, sampled
+source frames and per-character movement speeds are saved under `blender/mocap/`.
+All 128 motion frames use a 64×96 padded canvas with unchanged character pixel
+density and village calibration. The extra width preserves the actual stride.
+No imagegen calls were made for this correction. Demo playback uses capture
+timing; the comparison preview reserves space above and below the root anchor.
+The cloth and anatomical references remain unfinished art studies.

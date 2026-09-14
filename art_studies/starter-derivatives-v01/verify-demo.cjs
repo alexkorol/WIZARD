@@ -16,11 +16,13 @@ const url = process.env.DEMO_URL || 'http://127.0.0.1:8789/art_studies/starter-d
   const state = () => page.evaluate(() => window.demoDebug.getState());
   assert.equal((await state()).study, 'motion');
   assert.equal((await state()).gait, 'sprint');
+  assert(Math.abs(Number(await page.inputValue('#fps'))-120*8/88)<.01,'Use recorded run timing');
   const initialFrame=(await state()).frame;
   await page.waitForFunction(f=>window.demoDebug.getState().frame!==f,initialFrame);
   await page.selectOption('#study','club');
   await page.getByRole('button',{name:'Play walk',exact:false}).click();
   assert.equal((await state()).study,'motion'); assert.equal((await state()).gait,'walk'); assert.equal((await state()).paused,false);
+  assert(Math.abs(Number(await page.inputValue('#fps'))-120*8/130)<.01,'Use recorded walk timing');
   await page.click('#next');
   await page.getByRole('button',{name:'Play sprint',exact:false}).click();
   assert.equal((await state()).paused,false); assert.equal((await state()).gait,'sprint');

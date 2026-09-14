@@ -1,0 +1,42 @@
+{
+  "walk": {
+    "source": "07_01.bvh",
+    "start": 101,
+    "period_source_frames": 130,
+    "source_fps": 120,
+    "duration": 1.0833333333333333,
+    "retarget_scale": 2.0706373971890493,
+    "metres_per_second": 1.2950064378373065,
+    "ground_translation": 0.002856978774070741,
+    "frames": [
+      101.0,
+      117.25,
+      133.5,
+      149.75,
+      166.0,
+      182.25,
+      198.5,
+      214.75
+    ]
+  },
+  "sprint": {
+    "source": "09_01.bvh",
+    "start": 32,
+    "period_source_frames": 88,
+    "source_fps": 120,
+    "duration": 0.7333333333333333,
+    "retarget_scale": 1.9442098316765561,
+    "metres_per_second": 3.1585935744664018,
+    "ground_translation": 0.010501110553741456,
+    "frames": [
+      32.0,
+      43.0,
+      54.0,
+      65.0,
+      76.0,
+      87.0,
+      98.0,
+      109.0
+    ]
+  }
+}

@@ -1,1 +1,6 @@
 *.blend1
+
+# Reproducible CMU solver caches; portable shape-key bakes are saved in .blend.
+blendcache_*/*_cmu_v1_*.bphys
+mocap/*-joints.json
+mocap/preview/

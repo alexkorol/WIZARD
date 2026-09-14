@@ -31,7 +31,7 @@ for frame in range(72,101):
     key.value=1
     if mesh!=snap.data:bpy.data.meshes.remove(mesh)
     cloth.hide_render=True;snap.hide_render=False
-    for direction,angle in [('front',0),('right',90),('back',180),('left',270)]:
+    for direction,angle in globals().get('RENDER_DIRECTIONS',[('front',0),('right',90),('back',180),('left',270)]):
         rot=Matrix.Rotation(math.radians(-angle),4,'Z')
         for ob,matrix in transforms:ob.matrix_world=rot@matrix
         s.render.resolution_x=48;s.render.resolution_y=96

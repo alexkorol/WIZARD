@@ -51,8 +51,8 @@
   "cycle_frames": 32,
   "cloth_loop_seam": {
     "comparison": "same skeletal phase: frame 72 vs frame 104",
-    "rms_logical_pixels": 0.830410418133429,
-    "maximum_logical_pixels": 5.57361283616669,
+    "rms_logical_pixels": 0.5605157268754294,
+    "maximum_logical_pixels": 4.59018532067472,
     "status": "measured; visual acceptance separate"
   }
 }

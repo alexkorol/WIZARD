@@ -38,9 +38,9 @@ sim.settings.vertex_group_mass=pin.name
 sim.collision_settings.use_collision=True;sim.collision_settings.distance_min=.008
 sim.collision_settings.collision_quality=8
 sim.collision_settings.use_self_collision=True;sim.collision_settings.self_distance_min=.006
-s.render.fps=32;s.frame_start=1;s.frame_end=104
+s.render.fps=44 if GAIT=='sprint' else 30;s.frame_start=1;s.frame_end=104
 sim.point_cache.frame_start=1;sim.point_cache.frame_end=104
-sim.point_cache.name=f'{SEX}_{GAIT}_compact_v2'
+sim.point_cache.name=f'{SEX}_{GAIT}_cmu_v1'
 for frame in [1,20]:
     for b in rig.pose.bones:
         b.matrix_basis=Matrix.Identity(4)

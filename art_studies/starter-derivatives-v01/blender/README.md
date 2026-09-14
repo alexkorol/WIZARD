@@ -24,18 +24,27 @@ The demo has no collision or combat and is not a production renderer change.
 
 ## Anatomy, binding and cloth
 
-`bind_and_pose.py` reuses the existing separate male/female MakeHuman models.
-It bakes their fitted stance into the rig's rest pose without replacing anatomy,
-binds the tunic, attaches sandals to foot bones and hair/braid to the head, and
-authors eight alternating leg phases with a fixed root. The camera is 48×96
-throughout. Idle framing clipped the longest stride/hand reach; the sprint arm
-swing and step were compacted, and transparent margins were set once per
-facing. Ground anchors are `(24,76)` front/back, `(20,76)` right, `(28,76)` left,
-shared by both sexes and gaits. These are principal-point shifts only: world
-scale and perspective do not change. The demo applies each anchor so the root
-does not move when facing changes. Native exports reject occupied edge pixels.
-Early skin-weight and per-pose collision-correction trials still
-showed visible thigh intersections; they are not the final exported reference.
+The existing separate MakeHuman models and bindings are preserved. The rejected
+procedural gait is archived in `{sex}-bound-motion.blend`; do not use those
+old gait actions for new renders. `retarget_mocap.py` imports recorded CMU motion
+through Blender's BVH importer, maps joint directions onto the anatomical bones,
+removes horizontal travel for in-place playback, and retains captured vertical
+motion. `mocap/READMEFIRST.txt` includes the source/conversion usage terms.
+
+- Walk: CMU 07_01, frames 101–230, 130 source frames per cycle at 120 fps.
+- Run: CMU 09_01, frames 32–119, 88 source frames per cycle at 120 fps.
+- Eight evenly sampled phases per cycle. Original captures and calibrated
+  per-character timing/speed metadata are in `mocap/`.
+- Hands retain a relaxed local finger pose; CMU did not capture finger motion.
+- Imported source armatures and editable retargeted actions are saved in
+  `{sex}-mocap-motion.blend`. Final baked files include head calibration.
+
+The real stride exceeds the old 48-pixel crop. All new motion frames use a
+**64×96 transparent canvas at the same character pixel density**. This adds
+horizontal field of view; it does not shrink characters or change world scale.
+Ground anchors are `(32,76)` front/back, `(34,76)` right, `(30,76)` left,
+shared by both sexes and gaits. These are fixed principal-point translations.
+Occupied border pixels fail export. The village still uses 44.39376 pixels/metre.
 
 `cloth_trial.py` sets up actual Blender Cloth physics with a full anatomical
 collider. The existing skin visibility mask is not used as the collision body.
@@ -68,15 +77,17 @@ Use the installed Blender MCP connection. Open a source `.blend` in its own
 call, then execute the script in the next call so Blender's UI context updates.
 Set `__file__` to the script's absolute path when executing its source.
 
-1. Open `../../starter-slice-v02-identities/sources/player-{sex}.blend`.
-2. Execute `bind_and_pose.py`, with `SEX`, `GAITS=['walk','sprint']` and
-   `DIRECTIONS=[('front',0),('right',90),('back',180),('left',270)]`.
-3. Open `{sex}-bound-motion.blend`; execute `cloth_trial.py` with `SEX`/`GAIT`.
+1. Open the preserved `{sex}-bound-motion.blend` binding milestone.
+2. Execute `retarget_mocap.py` with `SEX`. It saves `{sex}-mocap-motion.blend`.
+3. Open that new source; execute `cloth_trial.py` with `SEX`/`GAIT`.
 4. Advance frames 1–72 sequentially, evaluating the cloth mesh each frame.
-5. Execute `sample_cloth.py` with the same `SEX`/`GAIT`.
-6. Execute `finish_cloth_loop.py` to measure successive-cycle differences, then
-   `render_baked_frames.py` to render with the fixed margins. Loop differences
-   are recorded in `*-simulation.json`; these clips are not certified seamless.
+5. Execute `sample_cloth.py` with `SEX`/`GAIT`, `RENDER_DIRECTIONS=[]` to avoid
+   redundant renders before final framing. Saved cloth shape keys are the
+   portable baked result; disk caches can be regenerated.
+6. Execute `finish_cloth_loop.py`, then `render_baked_frames.py`. The new cache
+   namespace is `cmu_v1`; old procedural caches must not be reused. Walk physics
+   runs at 30 fps, run at 44 fps, giving 32-frame cycles close to capture timing.
+   Successive-cycle cloth differences remain measured, not certified seamless.
 7. Run `python package_references.py` outside Blender. It retains native RGB,
    thresholds alpha, and creates integer-nearest guide sheets. It does not
    resize detailed images into sprites.

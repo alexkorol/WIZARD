@@ -1,7 +1,7 @@
 {
   "front": {
     "anchor": [
-      24,
+      32,
       76
     ],
     "logical_translation": [
@@ -12,18 +12,18 @@
   },
   "right": {
     "anchor": [
-      20,
+      34,
       76
     ],
     "logical_translation": [
-      -4,
+      2,
       -6
     ],
     "pixel_focal_length": 377.3031921386719
   },
   "back": {
     "anchor": [
-      24,
+      32,
       76
     ],
     "logical_translation": [
@@ -34,11 +34,11 @@
   },
   "left": {
     "anchor": [
-      28,
+      30,
       76
     ],
     "logical_translation": [
-      4,
+      -2,
       -6
     ],
     "pixel_focal_length": 377.3031921386719
