@@ -1,0 +1,9 @@
+{
+  "python": "3.12.6",
+  "pixel_respecter_files": {
+    "reconstructor.py": "8952e655f70adbd3d3d58feb0fa852fe101b3aefd1c3301c7672deab88736cfa",
+    "colors.py": "61e49d1b751ebf4239ab98d371f6c5cd58c6760c0dbe98f668e593ab86a3bf4b",
+    "grid.py": "3be014d64db5ef125526d3efe8cc7b8de1998e3919b87062ce6565964fe1222d",
+    "mesh.py": "875af209037e240a0ac68b7895ffe4dcceb0b311bb39f39bd4078495cbe6825f"
+  }
+}

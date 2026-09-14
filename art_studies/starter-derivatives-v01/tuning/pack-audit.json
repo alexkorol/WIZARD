@@ -1,0 +1,748 @@
+{
+  "frame_count": 96,
+  "file_and_registration_passed": true,
+  "game_ready": false,
+  "integrity_errors": [],
+  "production_review_failures": [
+    "female-sprint-front/1: 60x123, exceeds the 48x96 game contract",
+    "female-sprint-front/2: 60x123, exceeds the 48x96 game contract",
+    "female-sprint-front/3: 60x123, exceeds the 48x96 game contract",
+    "female-sprint-front/4: 60x123, exceeds the 48x96 game contract",
+    "female-sprint-front: authored source fails motion review",
+    "female-sprint-right/1: 76x124, exceeds the 48x96 game contract",
+    "female-sprint-right/2: 76x124, exceeds the 48x96 game contract",
+    "female-sprint-right/3: 76x124, exceeds the 48x96 game contract",
+    "female-sprint-right/4: 76x124, exceeds the 48x96 game contract",
+    "female-sprint-right: authored source fails motion review",
+    "female-sprint-back/1: 2 disconnected foreground components; inspect for stray fragments",
+    "female-sprint-back/1: 64x135, exceeds the 48x96 game contract",
+    "female-sprint-back/2: 2 disconnected foreground components; inspect for stray fragments",
+    "female-sprint-back/2: 64x135, exceeds the 48x96 game contract",
+    "female-sprint-back/3: 64x135, exceeds the 48x96 game contract",
+    "female-sprint-back/4: 64x135, exceeds the 48x96 game contract",
+    "female-sprint-back: authored source fails motion review",
+    "female-sprint-left/1: 74x122, exceeds the 48x96 game contract",
+    "female-sprint-left/2: 74x122, exceeds the 48x96 game contract",
+    "female-sprint-left/3: 74x122, exceeds the 48x96 game contract",
+    "female-sprint-left/4: 74x122, exceeds the 48x96 game contract",
+    "female-sprint-left: authored source fails motion review",
+    "female-walk-front/1: 60x116, exceeds the 48x96 game contract",
+    "female-walk-front/2: 60x116, exceeds the 48x96 game contract",
+    "female-walk-front/3: 60x116, exceeds the 48x96 game contract",
+    "female-walk-front/4: 60x116, exceeds the 48x96 game contract",
+    "female-walk-front: authored source fails motion review",
+    "female-walk-right/1: 72x115, exceeds the 48x96 game contract",
+    "female-walk-right/2: 72x115, exceeds the 48x96 game contract",
+    "female-walk-right/3: 72x115, exceeds the 48x96 game contract",
+    "female-walk-right/4: 72x115, exceeds the 48x96 game contract",
+    "female-walk-right: authored source fails motion review",
+    "female-walk-back/1: 62x117, exceeds the 48x96 game contract",
+    "female-walk-back/2: 62x117, exceeds the 48x96 game contract",
+    "female-walk-back/3: 62x117, exceeds the 48x96 game contract",
+    "female-walk-back/4: 62x117, exceeds the 48x96 game contract",
+    "female-walk-back: authored source fails motion review",
+    "female-walk-left/1: 72x115, exceeds the 48x96 game contract",
+    "female-walk-left/2: 72x115, exceeds the 48x96 game contract",
+    "female-walk-left/3: 72x115, exceeds the 48x96 game contract",
+    "female-walk-left/4: 72x115, exceeds the 48x96 game contract",
+    "female-walk-left: authored source fails motion review",
+    "male-focused-walk-right/1: 126x169, exceeds the 48x96 game contract",
+    "male-focused-walk-right/2: 126x169, exceeds the 48x96 game contract",
+    "male-focused-walk-right/3: 126x169, exceeds the 48x96 game contract",
+    "male-focused-walk-right/4: 126x169, exceeds the 48x96 game contract",
+    "male-focused-walk-right: authored source fails motion review",
+    "female-focused-walk-right/1: 120x158, exceeds the 48x96 game contract",
+    "female-focused-walk-right/2: 120x158, exceeds the 48x96 game contract",
+    "female-focused-walk-right/3: 120x158, exceeds the 48x96 game contract",
+    "female-focused-walk-right/4: 120x158, exceeds the 48x96 game contract",
+    "female-focused-walk-right: authored source fails motion review",
+    "male-sprint-front/1: 60x116, exceeds the 48x96 game contract",
+    "male-sprint-front/2: 60x116, exceeds the 48x96 game contract",
+    "male-sprint-front/3: 60x116, exceeds the 48x96 game contract",
+    "male-sprint-front/4: 60x116, exceeds the 48x96 game contract",
+    "male-sprint-front: authored source fails motion review",
+    "male-sprint-right/1: 96x115, exceeds the 48x96 game contract",
+    "male-sprint-right/2: 96x115, exceeds the 48x96 game contract",
+    "male-sprint-right/3: 96x115, exceeds the 48x96 game contract",
+    "male-sprint-right/4: 96x115, exceeds the 48x96 game contract",
+    "male-sprint-right: authored source fails motion review",
+    "male-sprint-back/1: 56x122, exceeds the 48x96 game contract",
+    "male-sprint-back/2: 56x122, exceeds the 48x96 game contract",
+    "male-sprint-back/3: 56x122, exceeds the 48x96 game contract",
+    "male-sprint-back/4: 56x122, exceeds the 48x96 game contract",
+    "male-sprint-back: authored source fails motion review",
+    "male-sprint-left/1: 86x114, exceeds the 48x96 game contract",
+    "male-sprint-left/2: 86x114, exceeds the 48x96 game contract",
+    "male-sprint-left/3: 86x114, exceeds the 48x96 game contract",
+    "male-sprint-left/4: 86x114, exceeds the 48x96 game contract",
+    "male-sprint-left: authored source fails motion review",
+    "male-walk-front/1: 62x126, exceeds the 48x96 game contract",
+    "male-walk-front/2: 62x126, exceeds the 48x96 game contract",
+    "male-walk-front/3: 62x126, exceeds the 48x96 game contract",
+    "male-walk-front/4: 62x126, exceeds the 48x96 game contract",
+    "male-walk-front: authored source fails motion review",
+    "male-walk-right/1: 82x120, exceeds the 48x96 game contract",
+    "male-walk-right/2: 82x120, exceeds the 48x96 game contract",
+    "male-walk-right/3: 82x120, exceeds the 48x96 game contract",
+    "male-walk-right/4: 82x120, exceeds the 48x96 game contract",
+    "male-walk-right: authored source fails motion review",
+    "male-walk-back/1: 62x123, exceeds the 48x96 game contract",
+    "male-walk-back/2: 62x123, exceeds the 48x96 game contract",
+    "male-walk-back/3: 62x123, exceeds the 48x96 game contract",
+    "male-walk-back/4: 62x123, exceeds the 48x96 game contract",
+    "male-walk-back: authored source fails motion review",
+    "male-walk-left/1: 80x120, exceeds the 48x96 game contract",
+    "male-walk-left/2: 80x120, exceeds the 48x96 game contract",
+    "male-walk-left/3: 80x120, exceeds the 48x96 game contract",
+    "male-walk-left/4: 80x120, exceeds the 48x96 game contract",
+    "male-walk-left: authored source fails motion review",
+    "male-equipment-empty-front/1: 59x136, exceeds the 48x96 game contract",
+    "male-darts-front/1: 58x136, exceeds the 48x96 game contract",
+    "male-flint-front/1: 58x136, exceeds the 48x96 game contract",
+    "male-bowl-front/1: 56x136, exceeds the 48x96 game contract",
+    "female-equipment-empty-front/1: 57x134, exceeds the 48x96 game contract",
+    "female-darts-front/1: 54x134, exceeds the 48x96 game contract",
+    "female-flint-front/1: 55x134, exceeds the 48x96 game contract",
+    "female-bowl-front/1: 53x134, exceeds the 48x96 game contract",
+    "male/front: cross-action body scale changes by over 20%",
+    "male/right: cross-action body scale changes by over 20%",
+    "male/back: cross-action body scale changes by over 20%",
+    "male/left: cross-action body scale changes by over 20%",
+    "female/front: cross-action body scale changes by over 20%",
+    "female/right: cross-action body scale changes by over 20%",
+    "female/back: cross-action body scale changes by over 20%",
+    "female/left: cross-action body scale changes by over 20%"
+  ],
+  "clips": [
+    {
+      "clip": "male-diagonals-se",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        84,
+        84
+      ]
+    },
+    {
+      "clip": "male-diagonals-ne",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        86,
+        86
+      ]
+    },
+    {
+      "clip": "male-diagonals-nw",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        86,
+        86
+      ]
+    },
+    {
+      "clip": "male-diagonals-sw",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        87,
+        87
+      ]
+    },
+    {
+      "clip": "female-diagonals-se",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        85,
+        85
+      ]
+    },
+    {
+      "clip": "female-diagonals-ne",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        84,
+        84
+      ]
+    },
+    {
+      "clip": "female-diagonals-nw",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        86,
+        86
+      ]
+    },
+    {
+      "clip": "female-diagonals-sw",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        86,
+        86
+      ]
+    },
+    {
+      "clip": "female-sprint-front",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          60,
+          123
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        117,
+        119
+      ]
+    },
+    {
+      "clip": "female-sprint-right",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          76,
+          124
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        116,
+        119
+      ]
+    },
+    {
+      "clip": "female-sprint-back",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          64,
+          135
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        127,
+        130
+      ]
+    },
+    {
+      "clip": "female-sprint-left",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          74,
+          122
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        115,
+        118
+      ]
+    },
+    {
+      "clip": "female-walk-front",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          60,
+          116
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        109,
+        112
+      ]
+    },
+    {
+      "clip": "female-walk-right",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          72,
+          115
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        109,
+        111
+      ]
+    },
+    {
+      "clip": "female-walk-back",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          62,
+          117
+        ]
+      ],
+      "torso_drift_px": 1,
+      "occupied_height_range": [
+        111,
+        112
+      ]
+    },
+    {
+      "clip": "female-walk-left",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          72,
+          115
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        111,
+        111
+      ]
+    },
+    {
+      "clip": "male-focused-walk-right",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          126,
+          169
+        ]
+      ],
+      "torso_drift_px": 1,
+      "occupied_height_range": [
+        164,
+        165
+      ]
+    },
+    {
+      "clip": "female-focused-walk-right",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          120,
+          158
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        154,
+        154
+      ]
+    },
+    {
+      "clip": "male-sprint-front",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          60,
+          116
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        108,
+        111
+      ]
+    },
+    {
+      "clip": "male-sprint-right",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          96,
+          115
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        111,
+        111
+      ]
+    },
+    {
+      "clip": "male-sprint-back",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          56,
+          122
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        115,
+        118
+      ]
+    },
+    {
+      "clip": "male-sprint-left",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          86,
+          114
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        108,
+        110
+      ]
+    },
+    {
+      "clip": "male-walk-front",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          62,
+          126
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        120,
+        121
+      ]
+    },
+    {
+      "clip": "male-walk-right",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          82,
+          120
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        111,
+        115
+      ]
+    },
+    {
+      "clip": "male-walk-back",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          62,
+          123
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        118,
+        119
+      ]
+    },
+    {
+      "clip": "male-walk-left",
+      "frame_count": 4,
+      "dimensions": [
+        [
+          80,
+          120
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        111,
+        115
+      ]
+    },
+    {
+      "clip": "male-unarmed-front",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        84,
+        84
+      ]
+    },
+    {
+      "clip": "male-unarmed-right",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        83,
+        83
+      ]
+    },
+    {
+      "clip": "male-unarmed-back",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        81,
+        81
+      ]
+    },
+    {
+      "clip": "male-unarmed-left",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        82,
+        82
+      ]
+    },
+    {
+      "clip": "female-unarmed-front",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        80,
+        80
+      ]
+    },
+    {
+      "clip": "female-unarmed-right",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        79,
+        79
+      ]
+    },
+    {
+      "clip": "female-unarmed-back",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        79,
+        79
+      ]
+    },
+    {
+      "clip": "female-unarmed-left",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          48,
+          96
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        78,
+        78
+      ]
+    },
+    {
+      "clip": "male-equipment-empty-front",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          59,
+          136
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        132,
+        132
+      ]
+    },
+    {
+      "clip": "male-darts-front",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          58,
+          136
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        132,
+        132
+      ]
+    },
+    {
+      "clip": "male-flint-front",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          58,
+          136
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        132,
+        132
+      ]
+    },
+    {
+      "clip": "male-bowl-front",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          56,
+          136
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        132,
+        132
+      ]
+    },
+    {
+      "clip": "female-equipment-empty-front",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          57,
+          134
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        130,
+        130
+      ]
+    },
+    {
+      "clip": "female-darts-front",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          54,
+          134
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        130,
+        130
+      ]
+    },
+    {
+      "clip": "female-flint-front",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          55,
+          134
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        130,
+        130
+      ]
+    },
+    {
+      "clip": "female-bowl-front",
+      "frame_count": 1,
+      "dimensions": [
+        [
+          53,
+          134
+        ]
+      ],
+      "torso_drift_px": 0,
+      "occupied_height_range": [
+        130,
+        130
+      ]
+    }
+  ]
+}

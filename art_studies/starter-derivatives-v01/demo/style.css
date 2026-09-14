@@ -3,3 +3,7 @@
 .compare{overflow:auto;align-items:flex-end;min-height:150px;padding-top:12px}.compare>div{flex:1;overflow:visible;min-width:0}.compare canvas{image-rendering:pixelated}#strip{overflow-x:auto;justify-content:flex-start}#strip button{flex-shrink:0;width:auto;min-width:58px}#strip img{max-width:none}.compare span{white-space:nowrap;font-size:9px}
 
 #notice{background:#19211bd9;padding:6px 10px;width:fit-content;max-width:calc(100% - 44px)}
+
+.primary-actions button{font-size:15px;font-weight:700;padding:12px 8px}.primary-actions{margin-top:8px}#playback-status{font-size:11px;letter-spacing:.03em;color:#cddca2;background:#303c2e;padding:8px;margin:8px 0 18px}aside{width:360px}
+
+#dimension-status{font-size:11px;color:#deb68d;margin:8px 0 16px}.check{justify-content:flex-start}.pair.primary-actions{margin-bottom:8px}

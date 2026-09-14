@@ -1,0 +1,1893 @@
+{
+  "logical_target": [
+    48,
+    96
+  ],
+  "production_ready": false,
+  "clips": {
+    "male-diagonals-se": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-diagonals-se-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "diagonals",
+          "source_cell": [
+            0,
+            0
+          ]
+        }
+      ],
+      "note": "Direction trial: NW reads almost straight back; NE is too close to a side view. Do not treat this as an accepted eight-direction set.",
+      "status": "trial"
+    },
+    "male-diagonals-ne": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-diagonals-ne-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "diagonals",
+          "source_cell": [
+            0,
+            1
+          ]
+        }
+      ],
+      "note": "Direction trial: NW reads almost straight back; NE is too close to a side view. Do not treat this as an accepted eight-direction set.",
+      "status": "trial"
+    },
+    "male-diagonals-nw": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-diagonals-nw-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "diagonals",
+          "source_cell": [
+            0,
+            2
+          ]
+        }
+      ],
+      "note": "Direction trial: NW reads almost straight back; NE is too close to a side view. Do not treat this as an accepted eight-direction set.",
+      "status": "trial"
+    },
+    "male-diagonals-sw": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-diagonals-sw-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "diagonals",
+          "source_cell": [
+            0,
+            3
+          ]
+        }
+      ],
+      "note": "Direction trial: NW reads almost straight back; NE is too close to a side view. Do not treat this as an accepted eight-direction set.",
+      "status": "trial"
+    },
+    "female-diagonals-se": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-diagonals-se-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "diagonals",
+          "source_cell": [
+            1,
+            0
+          ]
+        }
+      ],
+      "note": "Direction trial: NW reads almost straight back; NE is too close to a side view. Do not treat this as an accepted eight-direction set.",
+      "status": "trial"
+    },
+    "female-diagonals-ne": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-diagonals-ne-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "diagonals",
+          "source_cell": [
+            1,
+            1
+          ]
+        }
+      ],
+      "note": "Direction trial: NW reads almost straight back; NE is too close to a side view. Do not treat this as an accepted eight-direction set.",
+      "status": "trial"
+    },
+    "female-diagonals-nw": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-diagonals-nw-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "diagonals",
+          "source_cell": [
+            1,
+            2
+          ]
+        }
+      ],
+      "note": "Direction trial: NW reads almost straight back; NE is too close to a side view. Do not treat this as an accepted eight-direction set.",
+      "status": "trial"
+    },
+    "female-diagonals-sw": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-diagonals-sw-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "diagonals",
+          "source_cell": [
+            1,
+            3
+          ]
+        }
+      ],
+      "note": "Direction trial: NW reads almost straight back; NE is too close to a side view. Do not treat this as an accepted eight-direction set.",
+      "status": "trial"
+    },
+    "female-sprint-front": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-sprint-front-0.png",
+          "width": 60,
+          "height": 123,
+          "anchor": [
+            30,
+            121
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            0,
+            0
+          ],
+          "torso_root": [
+            30,
+            50
+          ]
+        },
+        {
+          "src": "frames-tuned/female-sprint-front-1.png",
+          "width": 60,
+          "height": 123,
+          "anchor": [
+            30,
+            121
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            0,
+            1
+          ],
+          "torso_root": [
+            30,
+            50
+          ]
+        },
+        {
+          "src": "frames-tuned/female-sprint-front-2.png",
+          "width": 60,
+          "height": 123,
+          "anchor": [
+            30,
+            121
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            0,
+            2
+          ],
+          "torso_root": [
+            30,
+            51
+          ]
+        },
+        {
+          "src": "frames-tuned/female-sprint-front-3.png",
+          "width": 60,
+          "height": 123,
+          "anchor": [
+            30,
+            121
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            0,
+            3
+          ],
+          "torso_root": [
+            30,
+            51
+          ]
+        }
+      ],
+      "note": "Sprint trial: repeated leg phases and braid drift (front frames lose the braid). Not a finished cycle. Recovered frame requires 58\u00d7123; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "female-sprint-right": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-sprint-right-0.png",
+          "width": 76,
+          "height": 124,
+          "anchor": [
+            38,
+            122
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            1,
+            0
+          ],
+          "torso_root": [
+            38,
+            49
+          ]
+        },
+        {
+          "src": "frames-tuned/female-sprint-right-1.png",
+          "width": 76,
+          "height": 124,
+          "anchor": [
+            38,
+            122
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            1,
+            1
+          ],
+          "torso_root": [
+            38,
+            49
+          ]
+        },
+        {
+          "src": "frames-tuned/female-sprint-right-2.png",
+          "width": 76,
+          "height": 124,
+          "anchor": [
+            38,
+            122
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            1,
+            2
+          ],
+          "torso_root": [
+            38,
+            51
+          ]
+        },
+        {
+          "src": "frames-tuned/female-sprint-right-3.png",
+          "width": 76,
+          "height": 124,
+          "anchor": [
+            38,
+            122
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            1,
+            3
+          ],
+          "torso_root": [
+            38,
+            50
+          ]
+        }
+      ],
+      "note": "Sprint trial: repeated leg phases and braid drift (front frames lose the braid). Not a finished cycle. Recovered frame requires 69\u00d7124; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "female-sprint-back": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-sprint-back-0.png",
+          "width": 64,
+          "height": 135,
+          "anchor": [
+            32,
+            133
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            2,
+            0
+          ],
+          "torso_root": [
+            32,
+            53
+          ]
+        },
+        {
+          "src": "frames-tuned/female-sprint-back-1.png",
+          "width": 64,
+          "height": 135,
+          "anchor": [
+            32,
+            133
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            2,
+            1
+          ],
+          "torso_root": [
+            32,
+            56
+          ]
+        },
+        {
+          "src": "frames-tuned/female-sprint-back-2.png",
+          "width": 64,
+          "height": 135,
+          "anchor": [
+            32,
+            133
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            2,
+            2
+          ],
+          "torso_root": [
+            32,
+            54
+          ]
+        },
+        {
+          "src": "frames-tuned/female-sprint-back-3.png",
+          "width": 64,
+          "height": 135,
+          "anchor": [
+            32,
+            133
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            2,
+            3
+          ],
+          "torso_root": [
+            32,
+            55
+          ]
+        }
+      ],
+      "note": "Sprint trial: repeated leg phases and braid drift (front frames lose the braid). Not a finished cycle. Recovered frame requires 62\u00d7135; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "female-sprint-left": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-sprint-left-0.png",
+          "width": 74,
+          "height": 122,
+          "anchor": [
+            37,
+            120
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            3,
+            0
+          ],
+          "torso_root": [
+            37,
+            49
+          ]
+        },
+        {
+          "src": "frames-tuned/female-sprint-left-1.png",
+          "width": 74,
+          "height": 122,
+          "anchor": [
+            37,
+            120
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            3,
+            1
+          ],
+          "torso_root": [
+            37,
+            48
+          ]
+        },
+        {
+          "src": "frames-tuned/female-sprint-left-2.png",
+          "width": 74,
+          "height": 122,
+          "anchor": [
+            37,
+            120
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            3,
+            2
+          ],
+          "torso_root": [
+            37,
+            49
+          ]
+        },
+        {
+          "src": "frames-tuned/female-sprint-left-3.png",
+          "width": 74,
+          "height": 122,
+          "anchor": [
+            37,
+            120
+          ],
+          "source_sheet": "female-sprint",
+          "source_cell": [
+            3,
+            3
+          ],
+          "torso_root": [
+            37,
+            49
+          ]
+        }
+      ],
+      "note": "Sprint trial: repeated leg phases and braid drift (front frames lose the braid). Not a finished cycle. Recovered frame requires 69\u00d7122; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "female-walk-front": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-walk-front-0.png",
+          "width": 60,
+          "height": 116,
+          "anchor": [
+            30,
+            114
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            0,
+            0
+          ],
+          "torso_root": [
+            30,
+            46
+          ]
+        },
+        {
+          "src": "frames-tuned/female-walk-front-1.png",
+          "width": 60,
+          "height": 116,
+          "anchor": [
+            30,
+            114
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            0,
+            1
+          ],
+          "torso_root": [
+            30,
+            46
+          ]
+        },
+        {
+          "src": "frames-tuned/female-walk-front-2.png",
+          "width": 60,
+          "height": 116,
+          "anchor": [
+            30,
+            114
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            0,
+            2
+          ],
+          "torso_root": [
+            30,
+            47
+          ]
+        },
+        {
+          "src": "frames-tuned/female-walk-front-3.png",
+          "width": 60,
+          "height": 116,
+          "anchor": [
+            30,
+            114
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            0,
+            3
+          ],
+          "torso_root": [
+            30,
+            46
+          ]
+        }
+      ],
+      "note": "REVIEW FAILURE: legs largely repeat the same stride instead of alternating. Inspect braid and body-scale drift beside the original. Recovered frame requires 58\u00d7116; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "female-walk-right": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-walk-right-0.png",
+          "width": 72,
+          "height": 115,
+          "anchor": [
+            36,
+            113
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            1,
+            0
+          ],
+          "torso_root": [
+            36,
+            46
+          ]
+        },
+        {
+          "src": "frames-tuned/female-walk-right-1.png",
+          "width": 72,
+          "height": 115,
+          "anchor": [
+            36,
+            113
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            1,
+            1
+          ],
+          "torso_root": [
+            36,
+            47
+          ]
+        },
+        {
+          "src": "frames-tuned/female-walk-right-2.png",
+          "width": 72,
+          "height": 115,
+          "anchor": [
+            36,
+            113
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            1,
+            2
+          ],
+          "torso_root": [
+            36,
+            46
+          ]
+        },
+        {
+          "src": "frames-tuned/female-walk-right-3.png",
+          "width": 72,
+          "height": 115,
+          "anchor": [
+            36,
+            113
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            1,
+            3
+          ],
+          "torso_root": [
+            36,
+            47
+          ]
+        }
+      ],
+      "note": "REVIEW FAILURE: legs largely repeat the same stride instead of alternating. Inspect braid and body-scale drift beside the original. Recovered frame requires 62\u00d7115; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "female-walk-back": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-walk-back-0.png",
+          "width": 62,
+          "height": 117,
+          "anchor": [
+            31,
+            115
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            2,
+            0
+          ],
+          "torso_root": [
+            31,
+            48
+          ]
+        },
+        {
+          "src": "frames-tuned/female-walk-back-1.png",
+          "width": 62,
+          "height": 117,
+          "anchor": [
+            31,
+            115
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            2,
+            1
+          ],
+          "torso_root": [
+            31,
+            47
+          ]
+        },
+        {
+          "src": "frames-tuned/female-walk-back-2.png",
+          "width": 62,
+          "height": 117,
+          "anchor": [
+            31,
+            115
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            2,
+            2
+          ],
+          "torso_root": [
+            31,
+            47
+          ]
+        },
+        {
+          "src": "frames-tuned/female-walk-back-3.png",
+          "width": 62,
+          "height": 117,
+          "anchor": [
+            31,
+            115
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            2,
+            3
+          ],
+          "torso_root": [
+            31,
+            48
+          ]
+        }
+      ],
+      "note": "REVIEW FAILURE: legs largely repeat the same stride instead of alternating. Inspect braid and body-scale drift beside the original. Recovered frame requires 59\u00d7117; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "female-walk-left": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-walk-left-0.png",
+          "width": 72,
+          "height": 115,
+          "anchor": [
+            36,
+            113
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            3,
+            0
+          ],
+          "torso_root": [
+            36,
+            46
+          ]
+        },
+        {
+          "src": "frames-tuned/female-walk-left-1.png",
+          "width": 72,
+          "height": 115,
+          "anchor": [
+            36,
+            113
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            3,
+            1
+          ],
+          "torso_root": [
+            36,
+            46
+          ]
+        },
+        {
+          "src": "frames-tuned/female-walk-left-2.png",
+          "width": 72,
+          "height": 115,
+          "anchor": [
+            36,
+            113
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            3,
+            2
+          ],
+          "torso_root": [
+            36,
+            46
+          ]
+        },
+        {
+          "src": "frames-tuned/female-walk-left-3.png",
+          "width": 72,
+          "height": 115,
+          "anchor": [
+            36,
+            113
+          ],
+          "source_sheet": "female-walk",
+          "source_cell": [
+            3,
+            3
+          ],
+          "torso_root": [
+            36,
+            46
+          ]
+        }
+      ],
+      "note": "REVIEW FAILURE: legs largely repeat the same stride instead of alternating. Inspect braid and body-scale drift beside the original. Recovered frame requires 66\u00d7115; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "male-focused-walk-right": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-focused-walk-right-0.png",
+          "width": 126,
+          "height": 169,
+          "anchor": [
+            63,
+            167
+          ],
+          "source_sheet": "focused-walk",
+          "source_cell": [
+            0,
+            0
+          ],
+          "torso_root": [
+            63,
+            68
+          ]
+        },
+        {
+          "src": "frames-tuned/male-focused-walk-right-1.png",
+          "width": 126,
+          "height": 169,
+          "anchor": [
+            63,
+            167
+          ],
+          "source_sheet": "focused-walk",
+          "source_cell": [
+            0,
+            1
+          ],
+          "torso_root": [
+            63,
+            68
+          ]
+        },
+        {
+          "src": "frames-tuned/male-focused-walk-right-2.png",
+          "width": 126,
+          "height": 169,
+          "anchor": [
+            63,
+            167
+          ],
+          "source_sheet": "focused-walk",
+          "source_cell": [
+            0,
+            2
+          ],
+          "torso_root": [
+            63,
+            68
+          ]
+        },
+        {
+          "src": "frames-tuned/male-focused-walk-right-3.png",
+          "width": 126,
+          "height": 169,
+          "anchor": [
+            63,
+            167
+          ],
+          "source_sheet": "focused-walk",
+          "source_cell": [
+            0,
+            3
+          ],
+          "torso_root": [
+            63,
+            68
+          ]
+        }
+      ],
+      "note": "Focused east walk retry: facing stays east, but opposing limb phases still repeat and the female develops two braids. This is a failed cycle, retained for comparison. Recovered frame requires 107\u00d7169; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "female-focused-walk-right": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-focused-walk-right-0.png",
+          "width": 120,
+          "height": 158,
+          "anchor": [
+            60,
+            156
+          ],
+          "source_sheet": "focused-walk",
+          "source_cell": [
+            1,
+            0
+          ],
+          "torso_root": [
+            60,
+            64
+          ]
+        },
+        {
+          "src": "frames-tuned/female-focused-walk-right-1.png",
+          "width": 120,
+          "height": 158,
+          "anchor": [
+            60,
+            156
+          ],
+          "source_sheet": "focused-walk",
+          "source_cell": [
+            1,
+            1
+          ],
+          "torso_root": [
+            60,
+            64
+          ]
+        },
+        {
+          "src": "frames-tuned/female-focused-walk-right-2.png",
+          "width": 120,
+          "height": 158,
+          "anchor": [
+            60,
+            156
+          ],
+          "source_sheet": "focused-walk",
+          "source_cell": [
+            1,
+            2
+          ],
+          "torso_root": [
+            60,
+            64
+          ]
+        },
+        {
+          "src": "frames-tuned/female-focused-walk-right-3.png",
+          "width": 120,
+          "height": 158,
+          "anchor": [
+            60,
+            156
+          ],
+          "source_sheet": "focused-walk",
+          "source_cell": [
+            1,
+            3
+          ],
+          "torso_root": [
+            60,
+            64
+          ]
+        }
+      ],
+      "note": "Focused east walk retry: facing stays east, but opposing limb phases still repeat and the female develops two braids. This is a failed cycle, retained for comparison. Recovered frame requires 107\u00d7158; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "male-sprint-front": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-sprint-front-0.png",
+          "width": 60,
+          "height": 116,
+          "anchor": [
+            30,
+            114
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            0,
+            0
+          ],
+          "torso_root": [
+            30,
+            47
+          ]
+        },
+        {
+          "src": "frames-tuned/male-sprint-front-1.png",
+          "width": 60,
+          "height": 116,
+          "anchor": [
+            30,
+            114
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            0,
+            1
+          ],
+          "torso_root": [
+            30,
+            48
+          ]
+        },
+        {
+          "src": "frames-tuned/male-sprint-front-2.png",
+          "width": 60,
+          "height": 116,
+          "anchor": [
+            30,
+            114
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            0,
+            2
+          ],
+          "torso_root": [
+            30,
+            48
+          ]
+        },
+        {
+          "src": "frames-tuned/male-sprint-front-3.png",
+          "width": 60,
+          "height": 116,
+          "anchor": [
+            30,
+            114
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            0,
+            3
+          ],
+          "torso_root": [
+            30,
+            46
+          ]
+        }
+      ],
+      "note": "Sprint trial: side views distinguish contact and flight, but front/back phases repeat and shoulder orientation drifts. Not a finished cycle. Recovered frame requires 68\u00d7116; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "male-sprint-right": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-sprint-right-0.png",
+          "width": 96,
+          "height": 115,
+          "anchor": [
+            48,
+            113
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            1,
+            0
+          ],
+          "torso_root": [
+            48,
+            46
+          ]
+        },
+        {
+          "src": "frames-tuned/male-sprint-right-1.png",
+          "width": 96,
+          "height": 115,
+          "anchor": [
+            48,
+            113
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            1,
+            1
+          ],
+          "torso_root": [
+            48,
+            46
+          ]
+        },
+        {
+          "src": "frames-tuned/male-sprint-right-2.png",
+          "width": 96,
+          "height": 115,
+          "anchor": [
+            48,
+            113
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            1,
+            2
+          ],
+          "torso_root": [
+            48,
+            46
+          ]
+        },
+        {
+          "src": "frames-tuned/male-sprint-right-3.png",
+          "width": 96,
+          "height": 115,
+          "anchor": [
+            48,
+            113
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            1,
+            3
+          ],
+          "torso_root": [
+            48,
+            46
+          ]
+        }
+      ],
+      "note": "Sprint trial: side views distinguish contact and flight, but front/back phases repeat and shoulder orientation drifts. Not a finished cycle. Recovered frame requires 93\u00d7115; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "male-sprint-back": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-sprint-back-0.png",
+          "width": 56,
+          "height": 122,
+          "anchor": [
+            28,
+            120
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            2,
+            0
+          ],
+          "torso_root": [
+            28,
+            49
+          ]
+        },
+        {
+          "src": "frames-tuned/male-sprint-back-1.png",
+          "width": 56,
+          "height": 122,
+          "anchor": [
+            28,
+            120
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            2,
+            1
+          ],
+          "torso_root": [
+            28,
+            50
+          ]
+        },
+        {
+          "src": "frames-tuned/male-sprint-back-2.png",
+          "width": 56,
+          "height": 122,
+          "anchor": [
+            28,
+            120
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            2,
+            2
+          ],
+          "torso_root": [
+            28,
+            50
+          ]
+        },
+        {
+          "src": "frames-tuned/male-sprint-back-3.png",
+          "width": 56,
+          "height": 122,
+          "anchor": [
+            28,
+            120
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            2,
+            3
+          ],
+          "torso_root": [
+            28,
+            49
+          ]
+        }
+      ],
+      "note": "Sprint trial: side views distinguish contact and flight, but front/back phases repeat and shoulder orientation drifts. Not a finished cycle. Recovered frame requires 66\u00d7122; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "male-sprint-left": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-sprint-left-0.png",
+          "width": 86,
+          "height": 114,
+          "anchor": [
+            43,
+            112
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            3,
+            0
+          ],
+          "torso_root": [
+            43,
+            46
+          ]
+        },
+        {
+          "src": "frames-tuned/male-sprint-left-1.png",
+          "width": 86,
+          "height": 114,
+          "anchor": [
+            43,
+            112
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            3,
+            1
+          ],
+          "torso_root": [
+            43,
+            47
+          ]
+        },
+        {
+          "src": "frames-tuned/male-sprint-left-2.png",
+          "width": 86,
+          "height": 114,
+          "anchor": [
+            43,
+            112
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            3,
+            2
+          ],
+          "torso_root": [
+            43,
+            46
+          ]
+        },
+        {
+          "src": "frames-tuned/male-sprint-left-3.png",
+          "width": 86,
+          "height": 114,
+          "anchor": [
+            43,
+            112
+          ],
+          "source_sheet": "male-sprint",
+          "source_cell": [
+            3,
+            3
+          ],
+          "torso_root": [
+            43,
+            46
+          ]
+        }
+      ],
+      "note": "Sprint trial: side views distinguish contact and flight, but front/back phases repeat and shoulder orientation drifts. Not a finished cycle. Recovered frame requires 90\u00d7114; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "male-walk-front": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-walk-front-0.png",
+          "width": 62,
+          "height": 126,
+          "anchor": [
+            31,
+            124
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            0,
+            0
+          ],
+          "torso_root": [
+            31,
+            51
+          ]
+        },
+        {
+          "src": "frames-tuned/male-walk-front-1.png",
+          "width": 62,
+          "height": 126,
+          "anchor": [
+            31,
+            124
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            0,
+            1
+          ],
+          "torso_root": [
+            31,
+            51
+          ]
+        },
+        {
+          "src": "frames-tuned/male-walk-front-2.png",
+          "width": 62,
+          "height": 126,
+          "anchor": [
+            31,
+            124
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            0,
+            2
+          ],
+          "torso_root": [
+            31,
+            50
+          ]
+        },
+        {
+          "src": "frames-tuned/male-walk-front-3.png",
+          "width": 62,
+          "height": 126,
+          "anchor": [
+            31,
+            124
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            0,
+            3
+          ],
+          "torso_root": [
+            31,
+            51
+          ]
+        }
+      ],
+      "note": "REVIEW FAILURE: repeated stride phases. East frame 4 faces west; east frame 3 turns away. Kept visible for diagnosis, not approved for game use. Recovered frame requires 80\u00d7126; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "male-walk-right": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-walk-right-0.png",
+          "width": 82,
+          "height": 120,
+          "anchor": [
+            41,
+            118
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            1,
+            0
+          ],
+          "torso_root": [
+            41,
+            48
+          ]
+        },
+        {
+          "src": "frames-tuned/male-walk-right-1.png",
+          "width": 82,
+          "height": 120,
+          "anchor": [
+            41,
+            118
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            1,
+            1
+          ],
+          "torso_root": [
+            41,
+            48
+          ]
+        },
+        {
+          "src": "frames-tuned/male-walk-right-2.png",
+          "width": 82,
+          "height": 120,
+          "anchor": [
+            41,
+            118
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            1,
+            2
+          ],
+          "torso_root": [
+            41,
+            50
+          ]
+        },
+        {
+          "src": "frames-tuned/male-walk-right-3.png",
+          "width": 82,
+          "height": 120,
+          "anchor": [
+            41,
+            118
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            1,
+            3
+          ],
+          "torso_root": [
+            41,
+            47
+          ]
+        }
+      ],
+      "note": "REVIEW FAILURE: repeated stride phases. East frame 4 faces west; east frame 3 turns away. Kept visible for diagnosis, not approved for game use. Recovered frame requires 83\u00d7120; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "male-walk-back": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-walk-back-0.png",
+          "width": 62,
+          "height": 123,
+          "anchor": [
+            31,
+            121
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            2,
+            0
+          ],
+          "torso_root": [
+            31,
+            49
+          ]
+        },
+        {
+          "src": "frames-tuned/male-walk-back-1.png",
+          "width": 62,
+          "height": 123,
+          "anchor": [
+            31,
+            121
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            2,
+            1
+          ],
+          "torso_root": [
+            31,
+            49
+          ]
+        },
+        {
+          "src": "frames-tuned/male-walk-back-2.png",
+          "width": 62,
+          "height": 123,
+          "anchor": [
+            31,
+            121
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            2,
+            2
+          ],
+          "torso_root": [
+            31,
+            49
+          ]
+        },
+        {
+          "src": "frames-tuned/male-walk-back-3.png",
+          "width": 62,
+          "height": 123,
+          "anchor": [
+            31,
+            121
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            2,
+            3
+          ],
+          "torso_root": [
+            31,
+            50
+          ]
+        }
+      ],
+      "note": "REVIEW FAILURE: repeated stride phases. East frame 4 faces west; east frame 3 turns away. Kept visible for diagnosis, not approved for game use. Recovered frame requires 78\u00d7123; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "male-walk-left": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-walk-left-0.png",
+          "width": 80,
+          "height": 120,
+          "anchor": [
+            40,
+            118
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            3,
+            0
+          ],
+          "torso_root": [
+            40,
+            46
+          ]
+        },
+        {
+          "src": "frames-tuned/male-walk-left-1.png",
+          "width": 80,
+          "height": 120,
+          "anchor": [
+            40,
+            118
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            3,
+            1
+          ],
+          "torso_root": [
+            40,
+            48
+          ]
+        },
+        {
+          "src": "frames-tuned/male-walk-left-2.png",
+          "width": 80,
+          "height": 120,
+          "anchor": [
+            40,
+            118
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            3,
+            2
+          ],
+          "torso_root": [
+            40,
+            49
+          ]
+        },
+        {
+          "src": "frames-tuned/male-walk-left-3.png",
+          "width": 80,
+          "height": 120,
+          "anchor": [
+            40,
+            118
+          ],
+          "source_sheet": "male-walk",
+          "source_cell": [
+            3,
+            3
+          ],
+          "torso_root": [
+            40,
+            48
+          ]
+        }
+      ],
+      "note": "REVIEW FAILURE: repeated stride phases. East frame 4 faces west; east frame 3 turns away. Kept visible for diagnosis, not approved for game use. Recovered frame requires 84\u00d7120; failed the 48\u00d796 scale target. No forced resizing. Torso registration is applied; all four frame canvases and ground anchors match.",
+      "status": "trial"
+    },
+    "male-unarmed-front": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-unarmed-front-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "unarmed",
+          "source_cell": [
+            0,
+            0
+          ]
+        }
+      ],
+      "note": "Unarmed derivative: compare identity beside the original club reference. Native returned alpha; recovered pixels only.",
+      "status": "trial"
+    },
+    "male-unarmed-right": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-unarmed-right-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "unarmed",
+          "source_cell": [
+            0,
+            1
+          ]
+        }
+      ],
+      "note": "Unarmed derivative: compare identity beside the original club reference. Native returned alpha; recovered pixels only.",
+      "status": "trial"
+    },
+    "male-unarmed-back": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-unarmed-back-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "unarmed",
+          "source_cell": [
+            0,
+            2
+          ]
+        }
+      ],
+      "note": "Unarmed derivative: compare identity beside the original club reference. Native returned alpha; recovered pixels only.",
+      "status": "trial"
+    },
+    "male-unarmed-left": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-unarmed-left-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "unarmed",
+          "source_cell": [
+            0,
+            3
+          ]
+        }
+      ],
+      "note": "Unarmed derivative: compare identity beside the original club reference. Native returned alpha; recovered pixels only.",
+      "status": "trial"
+    },
+    "female-unarmed-front": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-unarmed-front-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "unarmed",
+          "source_cell": [
+            1,
+            0
+          ]
+        }
+      ],
+      "note": "Unarmed derivative: compare identity beside the original club reference. Native returned alpha; recovered pixels only.",
+      "status": "trial"
+    },
+    "female-unarmed-right": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-unarmed-right-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "unarmed",
+          "source_cell": [
+            1,
+            1
+          ]
+        }
+      ],
+      "note": "Unarmed derivative: compare identity beside the original club reference. Native returned alpha; recovered pixels only.",
+      "status": "trial"
+    },
+    "female-unarmed-back": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-unarmed-back-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "unarmed",
+          "source_cell": [
+            1,
+            2
+          ]
+        }
+      ],
+      "note": "Unarmed derivative: compare identity beside the original club reference. Native returned alpha; recovered pixels only.",
+      "status": "trial"
+    },
+    "female-unarmed-left": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-unarmed-left-0.png",
+          "width": 48,
+          "height": 96,
+          "anchor": [
+            24,
+            94
+          ],
+          "source_sheet": "unarmed",
+          "source_cell": [
+            1,
+            3
+          ]
+        }
+      ],
+      "note": "Unarmed derivative: compare identity beside the original club reference. Native returned alpha; recovered pixels only.",
+      "status": "trial"
+    },
+    "male-equipment-empty-front": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-equipment-empty-front-0.png",
+          "width": 59,
+          "height": 136,
+          "anchor": [
+            29,
+            134
+          ],
+          "source_sheet": "weapons",
+          "source_cell": [
+            0,
+            0
+          ]
+        }
+      ],
+      "note": "Front-only equipment study. Darts, unhafted flint biface, or supported bowl. Other directions are absent; no unrelated frame is substituted. Recovered frame requires 59\u00d7136; failed the 48\u00d796 scale target. No forced resizing.",
+      "status": "trial"
+    },
+    "male-darts-front": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-darts-front-0.png",
+          "width": 58,
+          "height": 136,
+          "anchor": [
+            29,
+            134
+          ],
+          "source_sheet": "weapons",
+          "source_cell": [
+            0,
+            1
+          ]
+        }
+      ],
+      "note": "Front-only equipment study. Darts, unhafted flint biface, or supported bowl. Other directions are absent; no unrelated frame is substituted. Recovered frame requires 58\u00d7136; failed the 48\u00d796 scale target. No forced resizing.",
+      "status": "trial"
+    },
+    "male-flint-front": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-flint-front-0.png",
+          "width": 58,
+          "height": 136,
+          "anchor": [
+            29,
+            134
+          ],
+          "source_sheet": "weapons",
+          "source_cell": [
+            0,
+            2
+          ]
+        }
+      ],
+      "note": "Front-only equipment study. Darts, unhafted flint biface, or supported bowl. Other directions are absent; no unrelated frame is substituted. Recovered frame requires 58\u00d7136; failed the 48\u00d796 scale target. No forced resizing.",
+      "status": "trial"
+    },
+    "male-bowl-front": {
+      "frames": [
+        {
+          "src": "frames-tuned/male-bowl-front-0.png",
+          "width": 56,
+          "height": 136,
+          "anchor": [
+            28,
+            134
+          ],
+          "source_sheet": "weapons",
+          "source_cell": [
+            0,
+            3
+          ]
+        }
+      ],
+      "note": "Front-only equipment study. Darts, unhafted flint biface, or supported bowl. Other directions are absent; no unrelated frame is substituted. Recovered frame requires 56\u00d7136; failed the 48\u00d796 scale target. No forced resizing.",
+      "status": "trial"
+    },
+    "female-equipment-empty-front": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-equipment-empty-front-0.png",
+          "width": 57,
+          "height": 134,
+          "anchor": [
+            28,
+            132
+          ],
+          "source_sheet": "weapons",
+          "source_cell": [
+            1,
+            0
+          ]
+        }
+      ],
+      "note": "Front-only equipment study. Darts, unhafted flint biface, or supported bowl. Other directions are absent; no unrelated frame is substituted. Recovered frame requires 57\u00d7134; failed the 48\u00d796 scale target. No forced resizing.",
+      "status": "trial"
+    },
+    "female-darts-front": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-darts-front-0.png",
+          "width": 54,
+          "height": 134,
+          "anchor": [
+            27,
+            132
+          ],
+          "source_sheet": "weapons",
+          "source_cell": [
+            1,
+            1
+          ]
+        }
+      ],
+      "note": "Front-only equipment study. Darts, unhafted flint biface, or supported bowl. Other directions are absent; no unrelated frame is substituted. Recovered frame requires 54\u00d7134; failed the 48\u00d796 scale target. No forced resizing.",
+      "status": "trial"
+    },
+    "female-flint-front": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-flint-front-0.png",
+          "width": 55,
+          "height": 134,
+          "anchor": [
+            27,
+            132
+          ],
+          "source_sheet": "weapons",
+          "source_cell": [
+            1,
+            2
+          ]
+        }
+      ],
+      "note": "Front-only equipment study. Darts, unhafted flint biface, or supported bowl. Other directions are absent; no unrelated frame is substituted. Recovered frame requires 55\u00d7134; failed the 48\u00d796 scale target. No forced resizing.",
+      "status": "trial"
+    },
+    "female-bowl-front": {
+      "frames": [
+        {
+          "src": "frames-tuned/female-bowl-front-0.png",
+          "width": 53,
+          "height": 134,
+          "anchor": [
+            26,
+            132
+          ],
+          "source_sheet": "weapons",
+          "source_cell": [
+            1,
+            3
+          ]
+        }
+      ],
+      "note": "Front-only equipment study. Darts, unhafted flint biface, or supported bowl. Other directions are absent; no unrelated frame is substituted. Recovered frame requires 53\u00d7134; failed the 48\u00d796 scale target. No forced resizing.",
+      "status": "trial"
+    }
+  }
+}

@@ -12,7 +12,7 @@ village art demo, not a change to the production game or its animation system.
 
 ## What is available
 
-The demo begins with the new unarmed pair in the village. WASD moves, Shift
+The demo begins with an east-facing sprint loop. Use the prominent Play walk / Play sprint buttons to start either animation directly. See [the transfer and registration correction](tuning/README.md) for the revised default and comparisons. WASD moves, Shift
 selects sprint while using the motion study, 1/2 changes the selected player.
 The companion displays the other sex from the same requested study.
 Select a study and facing, pause or step individual frames, and compare with
@@ -104,6 +104,11 @@ frames receive larger canvases rather than losing pixels to a forced 48x96 crop.
 ```powershell
 python process.py --respecter Z:/Code/Python/pixel-perfecter
 python assemble.py
+python tune_transfer.py
+python assemble.py --tuned
+python register_frames.py
+python test_transfer.py
+python audit_pack.py
 node verify-demo.cjs
 ```
 

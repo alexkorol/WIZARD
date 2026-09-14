@@ -1,11 +1,16 @@
 """Register recovered pixels without rescaling; preserve every foreground pixel."""
 from pathlib import Path
-import json, hashlib
+import json, hashlib, sys
 import numpy as np
 from PIL import Image, ImageDraw
+from component_split import split_components
 
 R = Path(__file__).resolve().parent
 clips, audit = {}, []
+variant = 'tuned' if '--tuned' in sys.argv else 'auto'
+frame_dir = 'frames-tuned' if variant == 'tuned' else 'frames'
+(R/frame_dir).mkdir(exist_ok=True)
+manifest_name = 'manifest-tuned.json' if variant == 'tuned' else 'manifest.json'
 directions = ['front', 'right', 'back', 'left']
 notes = {
     'unarmed': 'Unarmed derivative: compare identity beside the original club reference. Native returned alpha; recovered pixels only.',
@@ -18,11 +23,12 @@ notes = {
     'focused-walk': 'Focused east walk retry: facing stays east, but opposing limb phases still repeat and the female develops two braids. This is a failed cycle, retained for comparison.'
 }
 
-for path in sorted((R / 'reconstructed').glob('*-auto.png')):
-    name = path.stem.removesuffix('-auto')
+for path in sorted((R / 'reconstructed').glob(f'*-{variant}.png')):
+    name = path.stem.removesuffix(f'-{variant}')
     if name not in notes: continue
     sheet = Image.open(path).convert('RGBA')
     rows = 4 if name in ['male-walk', 'female-walk', 'male-sprint', 'female-sprint'] else 2
+    whole_figures = split_components(sheet, rows) if variant == 'tuned' else None
     # Follow transparent row gutters. An equal half-cut in the focused retry
     # bisects the male's low sandal and leaks its tip into the female row.
     projection = (np.array(sheet)[:, :, 3] >= 128).sum(axis=1)
@@ -54,6 +60,8 @@ for path in sorted((R / 'reconstructed').glob('*-auto.png')):
             bbox = cell.getbbox()
             if bbox is None: raise ValueError(f'{name} row {row} col {col}: empty frame')
             cells.append((cell, bbox, xcuts[col]-round(col*sheet.width/4)))
+        if whole_figures is not None:
+            cells = whole_figures[row]
         # For a motion row, use ONE floor across all four poses. Per-frame
         # bottom alignment would erase the generated flight/vertical movement.
         motion = rows == 4 or name == 'focused-walk'
@@ -83,7 +91,7 @@ for path in sorted((R / 'reconstructed').glob('*-auto.png')):
             before = np.array(cell); after = np.array(out)
             assert np.count_nonzero(before[:, :, 3]) == np.count_nonzero(after[:, :, 3]), 'Foreground clipped'
             assert sorted(map(tuple, before[before[:, :, 3]>0])) == sorted(map(tuple, after[after[:, :, 3]>0])), 'Foreground colors changed'
-            dst = R / 'frames' / f'{key}-{index}.png'
+            dst = R / frame_dir / f'{key}-{index}.png'
             out.save(dst)
             frame = {'src': dst.relative_to(R).as_posix(), 'width': width, 'height': height, 'anchor': [width//2, height-2], 'source_sheet': name, 'source_cell': [row, col]}
             clip = clips.setdefault(key, {'frames': [], 'note': notes[name], 'status': 'trial'})
@@ -92,10 +100,10 @@ for path in sorted((R / 'reconstructed').glob('*-auto.png')):
                 clip['note'] += f' Recovered frame requires {width}×{height}; failed the 48×96 scale target. No forced resizing.'
             audit.append({'id': dst.stem, 'size': out.size, 'occupied': piece.size, 'translation': [dx, dy], 'foreground_preserved': True, 'sha256': hashlib.sha256(dst.read_bytes()).hexdigest()})
 
-(R / 'manifest.json').write_text(json.dumps({'logical_target': [48, 96], 'production_ready': False, 'clips': clips}, indent=2))
-(R / 'review' / 'frame-audit.json').write_text(json.dumps(audit, indent=2))
+(R / manifest_name).write_text(json.dumps({'logical_target': [48, 96], 'production_ready': False, 'clips': clips}, indent=2))
+(R / 'review' / f'frame-audit-{variant}.json').write_text(json.dumps(audit, indent=2))
 # A native-size plus exact 3x review, with flat dark and light backgrounds.
-frames = [(a, Image.open(R/'frames'/f"{a['id']}.png")) for a in audit]
+frames = [(a, Image.open(R/frame_dir/f"{a['id']}.png")) for a in audit]
 row_heights = [max(im.height for _,im in frames[i:i+8])+32 for i in range(0,len(frames),8)]
 col_width = max(107, max(im.width for _,im in frames)+8)
 board = Image.new('RGB', (col_width*8, sum(row_heights)), '#283137')
@@ -108,5 +116,5 @@ for i, (a, im) in enumerate(frames):
     short = a['id'].replace('female','F').replace('male','M').replace('focused-walk','retry').replace('diagonals','diag')
     draw.text((x+2,y+rh-25), short[:17], fill='#b28753')
     draw.text((x+2,y+rh-13), short[17:], fill='#b28753')
-board.save(R/'review'/'all-frames-native.png')
+board.save(R/'review'/f'all-frames-{variant}-native.png')
 print(f'{len(audit)} frames; {len(clips)} explicit clips. No resizing, mirroring or generated intermediate poses.')

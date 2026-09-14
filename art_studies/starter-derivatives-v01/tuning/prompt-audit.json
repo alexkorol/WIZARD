@@ -1,0 +1,24 @@
+[
+  {
+    "name": "pixel-contract",
+    "mode": "RGB",
+    "size": [
+      1774,
+      887
+    ],
+    "alpha_extrema": null,
+    "sha256": "aa5ed0ad5537cd5756f771e48dd95d103b5e3d504016c14ef982392144fec832",
+    "accepted": false
+  },
+  {
+    "name": "pixel-contract-short",
+    "mode": "RGB",
+    "size": [
+      1774,
+      887
+    ],
+    "alpha_extrema": null,
+    "sha256": "eaeacab11f8a774945ebfe179fe8817e64c77a7ed7dcb82193120b082235b8fa",
+    "accepted": false
+  }
+]

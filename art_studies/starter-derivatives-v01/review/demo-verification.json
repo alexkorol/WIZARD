@@ -2,6 +2,11 @@
   "passed": true,
   "frameCount": 96,
   "checks": [
+    "sprint animates on initial load",
+    "Play walk switches out of idle",
+    "Play sprint resumes from paused frame",
+    "before/tuned comparison switches assets",
+    "source-transfer inspector loads",
     "all sprite assets decode",
     "keyboard movement",
     "shift sprint selection",
