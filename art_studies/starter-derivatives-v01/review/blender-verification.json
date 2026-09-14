@@ -1,0 +1,27 @@
+{
+  "structural_export_passed": true,
+  "native_frames": 128,
+  "canvas": [
+    48,
+    96
+  ],
+  "shared_player_plane_px_per_m": 44.393760681152344,
+  "game_ready": false,
+  "unfinished": [
+    "Cloth loop seams exceed one logical pixel in places.",
+    "Hair is bone-bound; dynamics and torso collision are not implemented.",
+    "Gait and material finish are structural studies, not art-approved animation.",
+    "Older imagegen sheets still have pose/scale/facing failures and are comparison-only."
+  ],
+  "new_imagegen_calls": 0,
+  "checks": [
+    "128 nonempty native RGBA frames, no occupied border pixels",
+    "8 unique frames in each of 16 clips",
+    "Native RGB preserved and alpha thresholded explicitly",
+    "Fixed anchors shared across sex/action for each facing",
+    "Same pixel focal length for player and village",
+    "Browser projection agrees with Blender ground samples",
+    "Integer-nearest 8x structural guide enlargement",
+    "Browser controls and old comparisons passed"
+  ]
+}

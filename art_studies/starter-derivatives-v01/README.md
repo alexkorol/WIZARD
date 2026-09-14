@@ -1,3 +1,7 @@
+The demo now defaults to **Blender structure with simulated cloth**, using a
+calibrated village reference. The imagegen findings below describe the earlier
+direct-generation experiments. [Current source and parity notes](blender/README.md).
+
 # Starter derivatives — reproducibility trial
 
 Open `demo/index.html` through a local HTTP server. From this directory:
@@ -116,12 +120,10 @@ For the browser check, set `PLAYWRIGHT_PATH` to an installed Playwright package
 if the bundled Codex runtime is elsewhere. Set `DEMO_URL` for a different port.
 The check uses headless Edge. See `review/demo-verification.json` and screenshots.
 
-Scenery copies come from the existing game checkout, unchanged on disk:
-
-- `prototypes/founding-slice/assets/{dwelling,tree,shrine}.png`
-- `docs/reference/25d-overhaul/assets/tile_grass.png`
-
-Only these legacy scenery props decode their existing magenta matte at runtime.
-Player sprites retain their PNG alpha. NPCs and wolves reuse the prior native
-alpha prologue pack through relative paths. Ground texture and movement are
-demo context; this experiment adds no combat, collision, or attack animations.
+The village backdrop now uses the player's measured Blender perspective camera.
+The old fractional-scale scenery is retained on disk for provenance but is not
+loaded by the demo. See [Blender recovery notes](blender/README.md) for geometry,
+44.4 logical pixels/metre at the player plane, cloth simulation and limitations.
+The default frame source is the new eight-phase Blender reference set; the older
+generated sets remain explicitly separate comparison options. This update does
+not promote those failed generated sheets or change the production game.

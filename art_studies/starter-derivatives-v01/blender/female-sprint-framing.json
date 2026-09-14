@@ -1,0 +1,46 @@
+{
+  "front": {
+    "anchor": [
+      24,
+      76
+    ],
+    "logical_translation": [
+      0,
+      -6
+    ],
+    "pixel_focal_length": 377.3031921386719
+  },
+  "right": {
+    "anchor": [
+      20,
+      76
+    ],
+    "logical_translation": [
+      -4,
+      -6
+    ],
+    "pixel_focal_length": 377.3031921386719
+  },
+  "back": {
+    "anchor": [
+      24,
+      76
+    ],
+    "logical_translation": [
+      0,
+      -6
+    ],
+    "pixel_focal_length": 377.3031921386719
+  },
+  "left": {
+    "anchor": [
+      28,
+      76
+    ],
+    "logical_translation": [
+      4,
+      -6
+    ],
+    "pixel_focal_length": 377.3031921386719
+  }
+}

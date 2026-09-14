@@ -1,7 +1,11 @@
 {
   "passed": true,
-  "frameCount": 96,
+  "frameCount": 128,
   "checks": [
+    "Blender ground projection agrees with browser",
+    "unit scale at player plane and perspective depth scaling",
+    "retired mixed-density scenery does not load",
+    "native and integer-enlarged scene inspected",
     "sprint animates on initial load",
     "Play walk switches out of idle",
     "Play sprint resumes from paused frame",

@@ -1,0 +1,147 @@
+{
+  "status": "Blender structural calibration; generated character scales still under review",
+  "canvas": [
+    576,
+    384
+  ],
+  "player_frame": [
+    48,
+    96
+  ],
+  "player_source": "VG_Individual_player-male",
+  "source_camera": {
+    "lens_mm": 125.76773071289062,
+    "sensor_height_mm": 32.0,
+    "render_height": 96
+  },
+  "camera": {
+    "lens_mm": 31.441932678222656,
+    "sensor_height_mm": 32.0,
+    "location": [
+      0.0,
+      -6.553216457366943,
+      5.458611488342285
+    ],
+    "rotation": [
+      0.9599314332008362,
+      -0.0,
+      0.0
+    ],
+    "shift_y": 0.16760963201522827
+  },
+  "player_origin": [
+    288.0,
+    288.0,
+    8.499011039733887
+  ],
+  "metre_x": [
+    332.39376068115234,
+    288.0,
+    8.499011039733887
+  ],
+  "metre_y": [
+    288.0,
+    261.9939880371094,
+    9.31816291809082
+  ],
+  "metre_z": [
+    288.0,
+    251.29261779785156,
+    7.9254350662231445
+  ],
+  "dimensions_m": {
+    "dwelling": [
+      3.7,
+      3.7,
+      3.135
+    ],
+    "fence_height": 1,
+    "well_rim_height": 0.615,
+    "trees_approx_height": 4
+  },
+  "layers": [
+    {
+      "name": "ground",
+      "file": "ground.png",
+      "world_y": 100
+    },
+    {
+      "name": "dwelling_west",
+      "file": "dwelling_west.png",
+      "world_y": 3.3
+    },
+    {
+      "name": "dwelling_east",
+      "file": "dwelling_east.png",
+      "world_y": 5.5
+    },
+    {
+      "name": "fence",
+      "file": "fence.png",
+      "world_y": 4.25
+    },
+    {
+      "name": "well",
+      "file": "well.png",
+      "world_y": 1.6
+    },
+    {
+      "name": "tree_west",
+      "file": "tree_west.png",
+      "world_y": 0.6
+    },
+    {
+      "name": "tree_east",
+      "file": "tree_east.png",
+      "world_y": 1.6
+    }
+  ],
+  "ground_samples": [
+    {
+      "world": [
+        0,
+        0
+      ],
+      "pixel": [
+        288.0,
+        288.0,
+        8.499011039733887
+      ]
+    },
+    {
+      "world": [
+        1,
+        0
+      ],
+      "pixel": [
+        332.39376068115234,
+        288.0,
+        8.499011039733887
+      ]
+    },
+    {
+      "world": [
+        0,
+        1
+      ],
+      "pixel": [
+        288.0,
+        261.9939880371094,
+        9.31816291809082
+      ]
+    },
+    {
+      "world": [
+        1,
+        1
+      ],
+      "pixel": [
+        328.4911422729492,
+        261.9939880371094,
+        9.31816291809082
+      ]
+    }
+  ],
+  "pixel_focal_length": 377.3031921386719,
+  "player_plane_px_per_m": 44.393760681152344
+}

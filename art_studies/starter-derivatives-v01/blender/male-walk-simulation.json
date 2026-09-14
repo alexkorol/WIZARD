@@ -1,0 +1,58 @@
+{
+  "source": "Blender cloth solver, body and self collisions, pinned neckline and waist",
+  "phases": [
+    {
+      "phase": 1,
+      "simulation_frame": 72,
+      "cloth_vertices": 2578
+    },
+    {
+      "phase": 2,
+      "simulation_frame": 76,
+      "cloth_vertices": 2578
+    },
+    {
+      "phase": 3,
+      "simulation_frame": 80,
+      "cloth_vertices": 2578
+    },
+    {
+      "phase": 4,
+      "simulation_frame": 84,
+      "cloth_vertices": 2578
+    },
+    {
+      "phase": 5,
+      "simulation_frame": 88,
+      "cloth_vertices": 2578
+    },
+    {
+      "phase": 6,
+      "simulation_frame": 92,
+      "cloth_vertices": 2578
+    },
+    {
+      "phase": 7,
+      "simulation_frame": 96,
+      "cloth_vertices": 2578
+    },
+    {
+      "phase": 8,
+      "simulation_frame": 100,
+      "cloth_vertices": 2578
+    }
+  ],
+  "quality_steps": 12,
+  "collision_quality": 8,
+  "distance_m": 0.008,
+  "self_distance_m": 0.006,
+  "warmup_frames": 20,
+  "transition_frames": 20,
+  "cycle_frames": 32,
+  "cloth_loop_seam": {
+    "comparison": "same skeletal phase: frame 72 vs frame 104",
+    "rms_logical_pixels": 0.830410418133429,
+    "maximum_logical_pixels": 5.57361283616669,
+    "status": "measured; visual acceptance separate"
+  }
+}

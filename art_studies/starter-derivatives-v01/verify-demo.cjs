@@ -7,7 +7,8 @@ const url = process.env.DEMO_URL || 'http://127.0.0.1:8789/art_studies/starter-d
 (async () => {
   const browser = await playwright.chromium.launch({channel:'msedge', headless:true});
   const page = await browser.newPage({viewport:{width:1440,height:1000}, deviceScaleFactor:1});
-  const errors = [], badResponses = [];
+  const errors = [], badResponses = [], requests = [];
+  page.on('request', r => requests.push(r.url()));
   page.on('pageerror', e => errors.push(e.message));
   page.on('response', r => { if (r.status() >= 400) badResponses.push([r.status(), r.url()]); });
   await page.goto(url);
@@ -24,8 +25,22 @@ const url = process.env.DEMO_URL || 'http://127.0.0.1:8789/art_studies/starter-d
   await page.getByRole('button',{name:'Play sprint',exact:false}).click();
   assert.equal((await state()).paused,false); assert.equal((await state()).gait,'sprint');
   const count = await page.evaluate(() => Object.values(window.demoDebug.getManifest().clips).reduce((n,c) => n+c.frames.length,0));
-  assert.equal(count, 96);
+  assert.equal(count, 128);
+  assert.equal((await state()).processing,'blender');
+  const calibration=await page.evaluate(()=>{
+    const c=window.demoDebug.getCalibration();
+    return {ppu:c.player_plane_px_per_m,samples:c.ground_samples.map(s=>({expected:s.pixel,actual:window.demoDebug.project(...s.world)})),plane:window.demoDebug.project(0,0),far:window.demoDebug.project(0,4)};
+  });
+  assert(Math.abs(calibration.ppu-44.39376)<.001);
+  assert.equal(calibration.plane[2],1);
+  assert(calibration.far[2]<1,'Keep perspective in the distance');
+  for(const s of calibration.samples)for(let i=0;i<2;i++)assert(Math.abs(s.expected[i]-s.actual[i])<.001,'JS projection must match Blender');
   await page.screenshot({path:path.join(__dirname,'review/demo-village.png')});
+  await page.selectOption('#zoom','1');
+  await page.screenshot({path:path.join(__dirname,'review/demo-parity-native.png')});
+  await page.selectOption('#zoom','2');
+  assert(!requests.some(url=>url.includes('/demo/assets/')),'Retired mixed-density scenery must not load');
+  await page.selectOption('#processing','tuned');
   await page.locator('#scene').focus();
   const x = (await state()).x;
   await page.keyboard.down('KeyD');
@@ -81,7 +96,7 @@ const url = process.env.DEMO_URL || 'http://127.0.0.1:8789/art_studies/starter-d
   await page.waitForFunction(()=>document.body.dataset.rendered==='male-sprint/2/1');
   await page.screenshot({path:path.join(__dirname,'review/demo-pixel-transfer.png')});
   assert.deepEqual(errors,[]); assert.deepEqual(badResponses,[]);
-  const result = {passed:true,frameCount:count,checks:['sprint animates on initial load','Play walk switches out of idle','Play sprint resumes from paused frame','before/tuned comparison switches assets','source-transfer inspector loads','all sprite assets decode','keyboard movement','shift sprint selection','explicit facing mapping','sex change','pause and frame stepping','missing combinations remain empty','all four diagonal references','focused walk strip','nearest-neighbor canvas','compact layout'],pageErrors:errors,badResponses};
+  const result = {passed:true,frameCount:count,checks:['Blender ground projection agrees with browser','unit scale at player plane and perspective depth scaling','retired mixed-density scenery does not load','native and integer-enlarged scene inspected','sprint animates on initial load','Play walk switches out of idle','Play sprint resumes from paused frame','before/tuned comparison switches assets','source-transfer inspector loads','all sprite assets decode','keyboard movement','shift sprint selection','explicit facing mapping','sex change','pause and frame stepping','missing combinations remain empty','all four diagonal references','focused walk strip','nearest-neighbor canvas','compact layout'],pageErrors:errors,badResponses};
   fs.writeFileSync(path.join(__dirname,'review/demo-verification.json'),JSON.stringify(result,null,2));
   console.log(JSON.stringify(result)); await browser.close();
 })().catch(e=>{console.error(e);process.exit(1);});
