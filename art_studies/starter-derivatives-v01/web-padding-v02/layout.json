@@ -1,0 +1,83 @@
+{
+  "sheet_native": [
+    256,
+    256
+  ],
+  "columns": 2,
+  "rows": 2,
+  "outer_cell": [
+    128,
+    128
+  ],
+  "inner_frame": [
+    96,
+    96
+  ],
+  "padding": 16,
+  "upscale": 4,
+  "base_cell": 48,
+  "exemplar_source": "web-v01/single-frame96.png",
+  "exemplar_sha256": "3d4202f2a23e0dfc06967b6e0809c32ec7e123936aabba9311b134d5b21e4d12",
+  "frames": [
+    {
+      "frame": 1,
+      "inner_rect": [
+        16,
+        16,
+        96,
+        96
+      ],
+      "anchor": [
+        64,
+        96
+      ],
+      "source": "blender/frames/female-sprint-right-1.png",
+      "sha256": "5c2d944af3f78bdc3bdaa6eee444451f11d34eace7cb585df91a5cdd83e36236"
+    },
+    {
+      "frame": 2,
+      "inner_rect": [
+        144,
+        16,
+        96,
+        96
+      ],
+      "anchor": [
+        192,
+        96
+      ],
+      "source": "blender/frames/female-sprint-right-2.png",
+      "sha256": "32bf7e6ace4e4bd305f7568e88ba1a0b46a5aac09f76ac29fe32bd5813630d6e"
+    },
+    {
+      "frame": 3,
+      "inner_rect": [
+        16,
+        144,
+        96,
+        96
+      ],
+      "anchor": [
+        64,
+        224
+      ],
+      "source": "blender/frames/female-sprint-right-3.png",
+      "sha256": "036546f50066aedb4bdbcfdef81a5984b6e80f981329bfda3ae4549463b4d3d2"
+    },
+    {
+      "frame": 4,
+      "inner_rect": [
+        144,
+        144,
+        96,
+        96
+      ],
+      "anchor": [
+        192,
+        224
+      ],
+      "source": "blender/frames/female-sprint-right-4.png",
+      "sha256": "fb82f045ce8d0c0d6235a7208f10b8fc8fe131b02be86d29a5ae158b9e86bfbf"
+    }
+  ]
+}

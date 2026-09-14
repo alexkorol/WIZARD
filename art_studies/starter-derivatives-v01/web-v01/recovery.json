@@ -13074,5 +13074,121 @@
         ]
       }
     ]
+  },
+  {
+    "name": "female-sprint-right-padded-v02",
+    "key": "female-sprint-right",
+    "raw": "../web-padding-v02/generated.png",
+    "recovered": "../web-padding-v02/frames96.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "recovered_size": [
+      192,
+      192
+    ],
+    "grid_size": 6,
+    "game_ready": false,
+    "frames": [
+      {
+        "src": "../web-padding-v02/frame-1.png",
+        "size": [
+          96,
+          96
+        ],
+        "bbox": [
+          23,
+          19,
+          69,
+          92
+        ],
+        "crop_origin": [
+          4,
+          -2
+        ],
+        "anchor": [
+          48,
+          80
+        ],
+        "foreground_pixels": 1033,
+        "discarded_foreground_pixels": 0,
+        "rgba_sha256": "6c5735d355fea53fa7c9c29947b921312396e26c18d97f08ea1097155f291857"
+      },
+      {
+        "src": "../web-padding-v02/frame-2.png",
+        "size": [
+          96,
+          96
+        ],
+        "bbox": [
+          25,
+          20,
+          65,
+          92
+        ],
+        "crop_origin": [
+          108,
+          -2
+        ],
+        "anchor": [
+          48,
+          80
+        ],
+        "foreground_pixels": 986,
+        "discarded_foreground_pixels": 0,
+        "rgba_sha256": "f7ed0aaac290822531aa0e8b2da447c69b482c6c7c8deeed8f97d934681ac1e8"
+      },
+      {
+        "src": "../web-padding-v02/frame-3.png",
+        "size": [
+          96,
+          96
+        ],
+        "bbox": [
+          33,
+          19,
+          64,
+          89
+        ],
+        "crop_origin": [
+          4,
+          102
+        ],
+        "anchor": [
+          48,
+          80
+        ],
+        "foreground_pixels": 909,
+        "discarded_foreground_pixels": 0,
+        "rgba_sha256": "e8a9ab9b725629ee599d4dd41d165a4c3f2aead1a43ef10b1c9be9c1a472d2d0"
+      },
+      {
+        "src": "../web-padding-v02/frame-4.png",
+        "size": [
+          96,
+          96
+        ],
+        "bbox": [
+          29,
+          18,
+          67,
+          86
+        ],
+        "crop_origin": [
+          108,
+          102
+        ],
+        "anchor": [
+          48,
+          80
+        ],
+        "foreground_pixels": 975,
+        "discarded_foreground_pixels": 0,
+        "rgba_sha256": "bcd2e2d4106300151834c137314bc0ad557bf2b37d54266d6d5fc32af8b32370"
+      }
+    ],
+    "note": "Padded-sheet experiment. rigid grid, 6 source pixels per recovered pixel. Automatic grid evidence is unpeaked. Non-square mesh rejected when present. Fixed guide origins, no resizing; zero recovered foreground discarded. Scale and poses remain unapproved.",
+    "review_status": "Padding test: 4 of 8 phases, 96\u00d796 frames with no cropped foreground. Grid confidence is LOW; physical scale and poses still differ from Blender. This is an incomplete motion sample, not an approved loop."
   }
 ]
