@@ -14,7 +14,8 @@ OUT.mkdir(exist_ok=True)
 source = bpy.context.scene
 base_camera = source.camera
 base_height = source.render.resolution_y
-base_lens = base_camera.data.lens
+depth=-(base_camera.matrix_world.inverted()@Vector((0,0,0))).z
+base_lens=48*depth*base_camera.data.sensor_height/base_height
 s = bpy.data.scenes.new('Village_player_plane_calibration')
 bpy.context.window.scene = s
 s.render.engine = 'CYCLES'
@@ -133,7 +134,7 @@ def project(p):
     v=world_to_camera_view(s,camera,Vector(p))
     return [v.x*s.render.resolution_x,(1-v.y)*s.render.resolution_y,v.z]
 data={'status':'Blender structural calibration; generated character scales still under review',
-      'canvas':[576,384], 'player_frame':[48,96], 'player_source':str(source.name),
+      'canvas':[576,384], 'player_frame':[96,96], 'base_cell_px':48, 'base_cell_metres':1, 'player_source':str(source.name),
       'source_camera':{'lens_mm':base_lens,'sensor_height_mm':base_camera.data.sensor_height,'render_height':base_height},
       'camera':{'lens_mm':camera.data.lens,'sensor_height_mm':camera.data.sensor_height,'location':list(camera.location),'rotation':list(camera.rotation_euler),'shift_y':camera.data.shift_y},
       'player_origin':project((0,0,0)), 'metre_x':project((1,0,0)), 'metre_y':project((0,1,0)), 'metre_z':project((0,0,1)),

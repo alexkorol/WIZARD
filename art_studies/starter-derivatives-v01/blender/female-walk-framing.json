@@ -1,46 +1,54 @@
 {
   "front": {
     "anchor": [
-      32,
-      76
+      48,
+      80
     ],
     "logical_translation": [
       0,
-      -6
+      0
     ],
-    "pixel_focal_length": 377.3031921386719
+    "pixel_focal_length": 407.95252990722656,
+    "base_cell_px": 48,
+    "pixels_per_metre_at_player_plane": 48
   },
   "right": {
     "anchor": [
-      34,
-      76
-    ],
-    "logical_translation": [
-      2,
-      -6
-    ],
-    "pixel_focal_length": 377.3031921386719
-  },
-  "back": {
-    "anchor": [
-      32,
-      76
+      48,
+      80
     ],
     "logical_translation": [
       0,
-      -6
+      0
     ],
-    "pixel_focal_length": 377.3031921386719
+    "pixel_focal_length": 407.95252990722656,
+    "base_cell_px": 48,
+    "pixels_per_metre_at_player_plane": 48
+  },
+  "back": {
+    "anchor": [
+      48,
+      80
+    ],
+    "logical_translation": [
+      0,
+      0
+    ],
+    "pixel_focal_length": 407.95252990722656,
+    "base_cell_px": 48,
+    "pixels_per_metre_at_player_plane": 48
   },
   "left": {
     "anchor": [
-      30,
-      76
+      48,
+      80
     ],
     "logical_translation": [
-      -2,
-      -6
+      0,
+      0
     ],
-    "pixel_focal_length": 377.3031921386719
+    "pixel_focal_length": 407.95252990722656,
+    "base_cell_px": 48,
+    "pixels_per_metre_at_player_plane": 48
   }
 }

@@ -16,33 +16,47 @@ recorded=[]
 for f in meta['frames']:
     s.frame_set(int(f),subframe=f%1)
     recorded.append(src.pose.bones['Head'].matrix.to_3x3()@reference.inverted()@head_rest)
+# CMU's synthetic calibration pose leaves a backwards pitch offset. Remove
+# that clip-wide offset while retaining at most three degrees of captured nod.
+pitches=[math.atan2(v.y,v.z) for v in recorded]
+mean_pitch=sum(pitches)/len(pitches)
+neutral_pitch=math.atan2(head_rest.y,head_rest.z)
+recorded=[Vector((v.x,math.sin(neutral_pitch+max(-math.radians(3),min(math.radians(3),pitch-mean_pitch)))*head_rest.length,math.cos(neutral_pitch+max(-math.radians(3),min(math.radians(3),pitch-mean_pitch)))*head_rest.length)) for v,pitch in zip(recorded,pitches)]
 for i,frame in enumerate(range(72,105,4)):
     s.frame_set(frame);b=rig.pose.bones['head'];h=b.head.copy()
     q=(b.tail-b.head).rotation_difference(recorded[i%8])
     b.matrix=Matrix.Translation(h)@q.to_matrix().to_4x4()@Matrix.Translation(-h)@b.matrix
     b.keyframe_insert('rotation_quaternion' if b.rotation_mode=='QUATERNION' else 'rotation_euler',frame=frame)
 transforms=[(o,o.matrix_world.copy()) for o in s.objects if o.type in ('CAMERA','LIGHT')]
-base_x=c.get('original_shift_x',c.data.shift_x);base_y=c.get('original_shift_y',c.data.shift_y)
-c['original_shift_x']=base_x;c['original_shift_y']=base_y
+# One world metre is the demo's base cell: exactly 48 logical pixels at
+# the player plane. Calibrate the camera, never resize rendered art.
+s.render.resolution_x=96;s.render.resolution_y=96
+c.data.sensor_fit='VERTICAL'
+depth=-(c.matrix_world.inverted()@Vector((0,0,0))).z
+c.data.lens=48*depth*c.data.sensor_height/96
+c.data.shift_x=0;c.data.shift_y=0
+bpy.context.view_layer.update()
+origin=world_to_camera_view(s,c,Vector((0,0,0)))
+base_x=0;base_y=origin.y-(1-80/96)
 records={}
-for direction,angle,dx in [('front',0,0),('right',90,2),('back',180,0),('left',270,-2)]:
-    c.data.shift_x=base_x-dx/96;c.data.shift_y=base_y-6/96
+for direction,angle,dx in [('front',0,0),('right',90,0),('back',180,0),('left',270,0)]:
+    c.data.shift_x=base_x-dx/96;c.data.shift_y=base_y
     rot=Matrix.Rotation(math.radians(-angle),4,'Z')
     for o,m in transforms:o.matrix_world=rot@m
-    s.render.resolution_x=64;s.render.resolution_y=96;s.render.resolution_percentage=100
+    s.render.resolution_x=96;s.render.resolution_y=96;s.render.resolution_percentage=100
     bpy.context.view_layer.update();p=world_to_camera_view(s,c,Vector((0,0,0)))
-    anchor=[round(p.x*64),round((1-p.y)*96)]
-    records[direction]={'anchor':anchor,'logical_translation':[dx,-6],'pixel_focal_length':c.data.lens/c.data.sensor_height*96}
+    anchor=[round(p.x*96),round((1-p.y)*96)]
+    records[direction]={'anchor':anchor,'logical_translation':[dx,0],'pixel_focal_length':c.data.lens/c.data.sensor_height*96,'base_cell_px':48,'pixels_per_metre_at_player_plane':48}
     for i,frame in enumerate(range(72,101,4),1):
         s.frame_set(frame)
-        s.render.resolution_x=64;s.render.resolution_y=96
+        s.render.resolution_x=96;s.render.resolution_y=96
         s.render.filepath=str(R/'motion'/f'{SEX}-{GAIT}-{direction}-{i}.png');bpy.ops.render.render(write_still=True)
         if i in [1,3] and direction in ['front','right']:
-            s.render.resolution_x=512;s.render.resolution_y=768
+            s.render.resolution_x=768;s.render.resolution_y=768
             s.render.filepath=str(R/'motion'/f'{SEX}-{GAIT}-{direction}-{i}-cloth-inspection.png');bpy.ops.render.render(write_still=True)
 for o,m in transforms:o.matrix_world=m
-c.data.shift_x=base_x;c.data.shift_y=base_y-6/96
-s.render.resolution_x=64;s.render.resolution_y=96;s.frame_start=72;s.frame_end=103;s.frame_set(72)
+c.data.shift_x=base_x;c.data.shift_y=base_y
+s.render.resolution_x=96;s.render.resolution_y=96;s.frame_start=72;s.frame_end=103;s.frame_set(72)
 bpy.data.objects[f'player-{SEX}_linen_single_shell'].hide_set(True)
 bpy.data.objects['Full_anatomical_cloth_collider'].hide_set(True)
 (R/f'{SEX}-{GAIT}-framing.json').write_text(json.dumps(records,indent=2))

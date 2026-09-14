@@ -138,3 +138,15 @@ density and village calibration. The extra width preserves the actual stride.
 No imagegen calls were made for this correction. Demo playback uses capture
 timing; the comparison preview reserves space above and below the root anchor.
 The cloth and anatomical references remain unfinished art studies.
+
+## Current pixel contract and paint status
+
+The owner clarified the contract: 48-pixel base cell and 96×96 actual character
+canvases. The camera is now calibrated to 48 logical pixels per one-metre base
+cell in the demo, with shared (48,80) anchors and 128 native 96×96 frames.
+Backward head pitch was corrected before rendering. This supersedes earlier
+64×96 padding and 44.4 pixels/metre notes above.
+
+`paint-v1/` preserves four rejected/diagnostic imagegen calls. These are excluded
+from the demo. Further painting requires an interface exposing the actual
+background=transparent parameter; the built-in tool in this session lacks it.

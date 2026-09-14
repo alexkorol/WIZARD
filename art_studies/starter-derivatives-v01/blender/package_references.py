@@ -12,7 +12,7 @@ for sex in ['male','female']:
             framing=json.loads((R/f'{sex}-{gait}-framing.json').read_text())
             for i in range(1,9):
                 src=R/'motion'/f'{key}-{i}.png'
-                im=Image.open(src).convert('RGBA');assert im.size==(64,96)
+                im=Image.open(src).convert('RGBA');assert im.size==(96,96)
                 # Explicit alpha pixelization only. RGB at each covered native
                 # render pixel is retained byte-for-byte.
                 alpha=im.getchannel('A').point(lambda a:255 if a>=128 else 0)
@@ -20,8 +20,8 @@ for sex in ['male','female']:
                 dest=out/src.name;rgba.save(dest)
                 digest=hashlib.sha256(rgba.tobytes()).hexdigest();hashes.append(digest)
                 bbox=rgba.getbbox()
-                assert bbox[0]>0 and bbox[1]>0 and bbox[2]<64 and bbox[3]<96,f'Clipped render: {src.name} {bbox}'
-                frames.append({'src':'blender/frames/'+dest.name,'width':64,'height':96,'anchor':framing[direction]['anchor']})
+                assert bbox[0]>0 and bbox[1]>0 and bbox[2]<96 and bbox[3]<96,f'Clipped render: {src.name} {bbox}'
+                frames.append({'src':'blender/frames/'+dest.name,'width':96,'height':96,'anchor':framing[direction]['anchor']})
                 audit.append({'file':dest.name,'bbox':rgba.getbbox(),'sha256':digest})
             assert len(set(hashes))==8,f'Repeated Blender poses: {key}'
             simulation=R/f'{sex}-{gait}-simulation.json'
@@ -36,10 +36,10 @@ manifest={'name':'Blender camera and motion references','game_ready':False,'clip
 # Structural imagegen inputs are whole native sheets enlarged by exact integers.
 for sex in ['male','female']:
     for gait in ['walk','sprint']:
-        sheet=Image.new('RGBA',(256,192))
+        sheet=Image.new('RGBA',(384,192))
         for i in range(8):
             im=Image.open(out/f'{sex}-{gait}-right-{i+1}.png')
-            sheet.paste(im,((i%4)*64,(i//4)*96))
+            sheet.paste(im,((i%4)*96,(i//4)*96))
         sheet.save(R/f'{sex}-{gait}-right-native.png')
-        sheet.resize((2048,1536),Image.Resampling.NEAREST).save(R/f'{sex}-{gait}-right-guide-8x.png')
+        sheet.resize((3072,1536),Image.Resampling.NEAREST).save(R/f'{sex}-{gait}-right-guide-8x.png')
 print('Packaged',len(audit),'native Blender frames; generated art approval remains false')

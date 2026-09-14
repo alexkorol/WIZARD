@@ -1,0 +1,9 @@
+Paint the FIRST transparent sprite sheet using the gritty Diablo II pre-rendered pixel-art appearance of the woman in the bottom row of the SECOND image. Return a transparent PNG.
+
+FIRST image is the exact pose/layout edit target: eight running phases, two rows of four, read left to right then next row. All face screen-right. Keep every head, shoulder, elbow, wrist, hip, knee and foot in the same place and preserve the eight distinct poses, camera, figure heights, proportions, blank margins and frame order. Keep the head level, with eyes looking forward. Paint the existing pixels; do not invent poses or make a new composition.
+
+Use the SECOND image only for the female character's identity, palette and material shading: young adult European woman, brown hair in a single braid, worn ivory sleeveless short linen tunic, muted russet neckline and hem, narrow cord belt, primitive open sandals. Unarmed; both hands empty. Consistent anatomy, clothes and hair across all eight frames. Naturally shaded faces, realistic gritty low-resolution rendering.
+
+Preserve the FIRST sheet's coarse square pixel grid: 256 by 192 logical pixels, displayed exactly 6x as 1536 by 1152. Each cell is 64 by 96 logical pixels including transparent stride padding; the humanoid detail budget and pixel density remain the 48 by 96 standard. Paint with flat square pixel clusters of the same six-display-pixel pitch as the guide, including skin, facial shading, hair and edges. No fine-resolution painted detail, soft gradients or subpixel features. Keep the exact original silhouette coverage wherever possible.
+
+Preserve real transparency around and between all figures and inside limb gaps. Output only the edited two-row, four-column sheet, with the same dimensions and spacing as the FIRST image. Deliver PNG with true RGBA alpha, alpha 0 in empty space.

@@ -33,7 +33,7 @@ const url = process.env.DEMO_URL || 'http://127.0.0.1:8789/art_studies/starter-d
     const c=window.demoDebug.getCalibration();
     return {ppu:c.player_plane_px_per_m,samples:c.ground_samples.map(s=>({expected:s.pixel,actual:window.demoDebug.project(...s.world)})),plane:window.demoDebug.project(0,0),far:window.demoDebug.project(0,4)};
   });
-  assert(Math.abs(calibration.ppu-44.39376)<.001);
+  assert(Math.abs(calibration.ppu-48)<.001);
   assert.equal(calibration.plane[2],1);
   assert(calibration.far[2]<1,'Keep perspective in the distance');
   for(const s of calibration.samples)for(let i=0;i<2;i++)assert(Math.abs(s.expected[i]-s.actual[i])<.001,'JS projection must match Blender');

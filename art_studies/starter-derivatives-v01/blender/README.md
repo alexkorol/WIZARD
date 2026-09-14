@@ -9,7 +9,7 @@ provenance but are no longer loaded as village scenery.
 The replacement **structural review scene** retains the existing male player's
 perspective camera transform, elevation and pixel focal length. Its larger
 576×384 canvas expands the field of view without changing scale at the player
-plane. One metre across that plane projects to **44.39376 logical pixels**.
+plane. One metre across that plane projects to **48 logical pixels**.
 The metre grid, metre-sized geometry and camera parameters are saved in
 `parity/camera.json`. This verifies the shared Blender reference scale; it is
 not a claim that the older generated sheets meet it. Generated scale drift
@@ -39,12 +39,19 @@ motion. `mocap/READMEFIRST.txt` includes the source/conversion usage terms.
 - Imported source armatures and editable retargeted actions are saved in
   `{sex}-mocap-motion.blend`. Final baked files include head calibration.
 
-The real stride exceeds the old 48-pixel crop. All new motion frames use a
-**64×96 transparent canvas at the same character pixel density**. This adds
-horizontal field of view; it does not shrink characters or change world scale.
-Ground anchors are `(32,76)` front/back, `(34,76)` right, `(30,76)` left,
-shared by both sexes and gaits. These are fixed principal-point translations.
-Occupied border pixels fail export. The village still uses 44.39376 pixels/metre.
+Current owner contract: **48-pixel base cell; 96×96 character canvases**.
+The demo maps one world metre to a base cell. The actual camera lens is
+calibrated from its depth to the player origin so one metre projects to 48
+logical pixels. Scenery uses the identical pixel focal length. This replaces
+the earlier 44.39376 px/m calibration and 64×96 padded motion exports.
+All 128 native renders have a shared `(48,80)` root anchor and 96×96 canvas.
+The final four pixels of vertical margin correction preserve head/foot coverage;
+there is no per-frame scale change or image resizing.
+
+The captured head rotation had a backwards offset inherited from the synthetic
+BVH calibration pose. `render_baked_frames.py` removes the mean pitch offset,
+keeps the fitted anatomical neutral head direction and retains at most three
+degrees of captured nod. Body/leg capture and sampled cloth geometry are reused.
 
 `cloth_trial.py` sets up actual Blender Cloth physics with a full anatomical
 collider. The existing skin visibility mask is not used as the collision body.

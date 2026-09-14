@@ -2,10 +2,10 @@
   "structural_export_passed": true,
   "native_frames": 128,
   "canvas": [
-    64,
+    96,
     96
   ],
-  "shared_player_plane_px_per_m": 44.393760681152344,
+  "shared_player_plane_px_per_m": 48,
   "game_ready": false,
   "unfinished": [
     "Cloth loop seams exceed one logical pixel in places.",
@@ -13,7 +13,7 @@
     "Gait and material finish are structural studies, not art-approved animation.",
     "Older imagegen sheets still have pose/scale/facing failures and are comparison-only."
   ],
-  "new_imagegen_calls": 0,
+  "new_imagegen_calls": 4,
   "checks": [
     "128 nonempty native RGBA frames, no occupied border pixels",
     "8 unique frames in each of 16 clips",
@@ -26,9 +26,12 @@
     "Recorded cycle duration drives default playback and movement speed",
     "Preview canvas reserves full space on every side of fixed anchor"
   ],
-  "nominal_character_density": "Unchanged from 48x96 study; only transparent horizontal field of view expanded",
+  "nominal_character_density": "48 logical pixels per one-metre demo base cell; camera calibrated before rendering",
   "motion_sources": [
     "CMU 07_01 walk",
     "CMU 09_01 run"
-  ]
+  ],
+  "base_cell_px": 48,
+  "paint_status": "Rejected diagnostics excluded; explicit background parameter unavailable",
+  "head_pitch": "Mean backward calibration offset removed; nod limited to +/-3 degrees"
 }

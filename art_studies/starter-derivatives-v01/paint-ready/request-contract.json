@@ -1,0 +1,22 @@
+{
+  "status": "Waiting for a callable explicit transparency parameter",
+  "required_settings": {
+    "background": "transparent",
+    "output_format": "png"
+  },
+  "base_cell_px": 48,
+  "native_frame": [
+    96,
+    96
+  ],
+  "layout": {
+    "columns": 4,
+    "rows": 2
+  },
+  "guide_integer_scale": 4,
+  "forbidden_processing": [
+    "Resizing detailed art into sprites",
+    "RGB color-keyed transparency",
+    "Per-frame scaling to hide parity drift"
+  ]
+}

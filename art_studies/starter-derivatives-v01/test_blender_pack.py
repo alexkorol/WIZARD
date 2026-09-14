@@ -23,7 +23,7 @@ class BlenderReferenceChecks(unittest.TestCase):
             shared[direction]=anchor;hashes=[]
             for f in clip['frames']:
                 with Image.open(R/f['src']) as im:
-                    self.assertEqual(im.size,(64,96));self.assertEqual(im.mode,'RGBA')
+                    self.assertEqual(im.size,(96,96));self.assertEqual(im.mode,'RGBA')
                     a=np.asarray(im);self.assertEqual(set(np.unique(a[:,:,3])),{0,255})
                     self.assertFalse(a[a[:,:,3]==0,:3].any())
                     self.assertFalse(a[0,:,3].any() or a[-1,:,3].any() or a[:,0,3].any() or a[:,-1,3].any(),f['src'])
@@ -36,6 +36,8 @@ class BlenderReferenceChecks(unittest.TestCase):
         c=json.loads((R/'blender/parity/camera.json').read_text())
         expected=c['pixel_focal_length']
         self.assertAlmostEqual(c['camera']['lens_mm']/c['camera']['sensor_height_mm']*384,expected,places=4)
+        self.assertEqual(c['base_cell_px'],48)
+        self.assertAlmostEqual(c['player_plane_px_per_m'],48,places=4)
         self.assertAlmostEqual(c['metre_x'][0]-c['player_origin'][0],c['player_plane_px_per_m'])
         for p in [R/'blender'/f'{sex}-{gait}-framing.json' for sex in ['male','female'] for gait in ['walk','sprint']]:
             for f in json.loads(p.read_text()).values():self.assertAlmostEqual(f['pixel_focal_length'],expected,places=4)

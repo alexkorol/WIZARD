@@ -6,74 +6,74 @@
       "frames": [
         {
           "src": "blender/frames/male-walk-front-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-front-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-front-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-front-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-front-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-front-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-front-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-front-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -105,74 +105,74 @@
       "frames": [
         {
           "src": "blender/frames/male-walk-right-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-right-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-right-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-right-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-right-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-right-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-right-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-right-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -204,74 +204,74 @@
       "frames": [
         {
           "src": "blender/frames/male-walk-back-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-back-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-back-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-back-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-back-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-back-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-back-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-back-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -303,74 +303,74 @@
       "frames": [
         {
           "src": "blender/frames/male-walk-left-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-left-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-left-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-left-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-left-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-left-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-left-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-walk-left-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -402,74 +402,74 @@
       "frames": [
         {
           "src": "blender/frames/male-sprint-front-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-front-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-front-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-front-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-front-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-front-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-front-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-front-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -501,74 +501,74 @@
       "frames": [
         {
           "src": "blender/frames/male-sprint-right-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-right-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-right-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-right-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-right-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-right-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-right-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-right-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -600,74 +600,74 @@
       "frames": [
         {
           "src": "blender/frames/male-sprint-back-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-back-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-back-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-back-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-back-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-back-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-back-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-back-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -699,74 +699,74 @@
       "frames": [
         {
           "src": "blender/frames/male-sprint-left-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-left-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-left-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-left-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-left-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-left-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-left-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/male-sprint-left-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -798,74 +798,74 @@
       "frames": [
         {
           "src": "blender/frames/female-walk-front-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-front-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-front-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-front-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-front-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-front-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-front-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-front-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -897,74 +897,74 @@
       "frames": [
         {
           "src": "blender/frames/female-walk-right-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-right-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-right-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-right-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-right-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-right-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-right-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-right-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -996,74 +996,74 @@
       "frames": [
         {
           "src": "blender/frames/female-walk-back-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-back-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-back-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-back-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-back-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-back-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-back-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-back-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -1095,74 +1095,74 @@
       "frames": [
         {
           "src": "blender/frames/female-walk-left-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-left-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-left-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-left-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-left-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-left-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-left-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-walk-left-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -1194,74 +1194,74 @@
       "frames": [
         {
           "src": "blender/frames/female-sprint-front-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-front-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-front-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-front-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-front-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-front-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-front-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-front-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -1293,74 +1293,74 @@
       "frames": [
         {
           "src": "blender/frames/female-sprint-right-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-right-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-right-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-right-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-right-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-right-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-right-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-right-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            34,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -1392,74 +1392,74 @@
       "frames": [
         {
           "src": "blender/frames/female-sprint-back-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-back-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-back-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-back-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-back-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-back-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-back-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-back-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            32,
-            76
+            48,
+            80
           ]
         }
       ],
@@ -1491,74 +1491,74 @@
       "frames": [
         {
           "src": "blender/frames/female-sprint-left-1.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-left-2.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-left-3.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-left-4.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-left-5.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-left-6.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-left-7.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         },
         {
           "src": "blender/frames/female-sprint-left-8.png",
-          "width": 64,
+          "width": 96,
           "height": 96,
           "anchor": [
-            30,
-            76
+            48,
+            80
           ]
         }
       ],

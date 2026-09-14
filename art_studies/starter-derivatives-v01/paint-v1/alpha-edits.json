@@ -1,0 +1,23 @@
+{
+  "male-walk": {
+    "path": "C:\\Users\\Alex\\.codex\\generated_images\\01a09918-529d-7150-91a6-6c624530795b\\exec-c6d51056-cd4b-45ae-976b-167a8c728d3e.png",
+    "mode": "RGB",
+    "size": [
+      1448,
+      1086
+    ],
+    "alpha_extrema": null
+  },
+  "female-sprint": {
+    "path": "C:\\Users\\Alex\\.codex\\generated_images\\01a09918-529d-7150-91a6-6c624530795b\\exec-3be599ff-3d05-482b-9f4f-12f39f343c1c.png",
+    "mode": "RGBA",
+    "size": [
+      1448,
+      1086
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ]
+  }
+}

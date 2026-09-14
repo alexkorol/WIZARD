@@ -2,1281 +2,1281 @@
   {
     "file": "male-walk-front-1.png",
     "bbox": [
-      20,
-      8,
-      46,
-      79
+      35,
+      6,
+      63,
+      83
     ],
-    "sha256": "ca2978ac02b20bb199d37108f0124cd57ebe7a76a5646a20002d065407e7420f"
+    "sha256": "f48301edc062b798f647048ed5ec4796ddf79933bdf0a89637090f04e8b68b90"
   },
   {
     "file": "male-walk-front-2.png",
     "bbox": [
-      20,
-      9,
-      47,
-      85
+      35,
+      7,
+      64,
+      90
     ],
-    "sha256": "a8d2617b3f76e85e631b6530527f4dfc8b0ec6d6d5d879d24f80ababef954f84"
+    "sha256": "5edb7eeafd2806b0a1fdd751e7ff06fc380fe27f2532f6a0b4c0c3067577aa72"
   },
   {
     "file": "male-walk-front-3.png",
     "bbox": [
-      20,
-      9,
-      46,
-      87
+      35,
+      7,
+      63,
+      92
     ],
-    "sha256": "3fc74f715be2b899f7c73584e78a4111cb23a3f8a60488f134ded6462457e499"
+    "sha256": "5463ed6ef40d6418bf847eacafb44a602e85117a78860898a229ca9269f2b01f"
   },
   {
     "file": "male-walk-front-4.png",
     "bbox": [
-      19,
-      7,
-      46,
-      82
+      34,
+      6,
+      63,
+      86
     ],
-    "sha256": "6f348da5cf27bd3eb915cee2d5ca72ea97133344c2ec2d3fba3495f24c175f77"
+    "sha256": "6828316c24678e5649540db01702023c2e28f9aec838a3cf4903935e664413c2"
   },
   {
     "file": "male-walk-front-5.png",
     "bbox": [
-      20,
-      7,
-      46,
-      77
+      35,
+      5,
+      63,
+      81
     ],
-    "sha256": "508688f6f82efc02706c9d61a0450ffdea9f6fb2b9013a3f960bf09dc1e810d1"
+    "sha256": "60d3f83c5138e1289849f7390ba72fa9ec8daa2532da50b4e1e34e1805cb0008"
   },
   {
     "file": "male-walk-front-6.png",
     "bbox": [
-      19,
-      8,
-      47,
-      86
+      34,
+      6,
+      64,
+      90
     ],
-    "sha256": "67813d5833f66e9c620c1f39b83ee1624cdb00ad17d88f9e5911ee2ffa2def6a"
+    "sha256": "7d6395830696f0b5a90793d980f1c8e53021e372a29b5130a8d0f2e5a13c00d6"
   },
   {
     "file": "male-walk-front-7.png",
     "bbox": [
-      19,
-      8,
-      46,
-      87
+      34,
+      6,
+      63,
+      92
     ],
-    "sha256": "985dda673d22f76849406b9a5f29e9e9bc10d4f2f33e08ef90ec6045102cfed0"
+    "sha256": "dde86afe7ebd1756548758be9193e85445dc97e63dbf8cce9b36c73b40fd5b4f"
   },
   {
     "file": "male-walk-front-8.png",
     "bbox": [
-      20,
-      6,
-      46,
-      83
+      35,
+      5,
+      63,
+      87
     ],
-    "sha256": "318c4fb1d0ae14d46b93a7058777403260b7ad739d5f9763296770723bc6cf75"
+    "sha256": "1d7e2a9a25fd7ef213b7716d9865e29dfb0e125a495fa8421f209ecb4ef3e244"
   },
   {
     "file": "male-walk-right-1.png",
     "bbox": [
-      27,
-      7,
-      47,
-      78
+      40,
+      6,
+      61,
+      82
     ],
-    "sha256": "b0fedd243547db1965bc46f071ebbfdb994fe2990c2d736faf139489b5336bd7"
+    "sha256": "61fa6af1f41e0166ce7174a3c9ebe8d43f22412347aabd481d4e5475dcb46ada"
   },
   {
     "file": "male-walk-right-2.png",
     "bbox": [
-      20,
-      8,
-      56,
-      79
+      33,
+      7,
+      71,
+      83
     ],
-    "sha256": "c1e46b9c62c94d5607a800b14fc8cff12d10724c5b38a9b9c6289f47231c9c87"
+    "sha256": "69e6559d1badf50a6b837f13a63cb9043177fa8118cb0c0c433588e1e1ddfee9"
   },
   {
     "file": "male-walk-right-3.png",
     "bbox": [
-      11,
-      9,
-      56,
-      79
+      23,
+      7,
+      72,
+      83
     ],
-    "sha256": "fb710711c7613467f435974d98c5fef212930b90b58eb23175fc696b2f1df2e6"
+    "sha256": "2f0b5d3fe48511ebbed48306659ba89d077f8157fc288eb9a14219e464d3978e"
   },
   {
     "file": "male-walk-right-4.png",
     "bbox": [
-      13,
-      8,
-      51,
-      78
+      25,
+      6,
+      66,
+      82
     ],
-    "sha256": "6a91c21270644e48f990ccb0f8604888b90f34adf724d7a92ec3a370126aad3d"
+    "sha256": "086f4f48ee30cd7cb645d3a6511b4e115047dfd6df8758026a0925d8512e952f"
   },
   {
     "file": "male-walk-right-5.png",
     "bbox": [
-      26,
-      7,
-      45,
-      78
+      39,
+      5,
+      59,
+      81
     ],
-    "sha256": "5f2f70202e63fcc3b6aa5b5889d6441ee1eb252dcddd3a8e8104d2f8dde10fb1"
+    "sha256": "96d03600b3c403438e410e4c964b70b1a32115de4e997556b64f24f734c589fb"
   },
   {
     "file": "male-walk-right-6.png",
     "bbox": [
-      18,
-      7,
-      57,
-      78
+      31,
+      6,
+      73,
+      81
     ],
-    "sha256": "cbe2318e031dea8f1d1b102fb333ee110bd942f17d72880057003c81ddaad5a5"
+    "sha256": "50ea079d9c069b6a2de796431da251ccb19da5c6747734fe5eeb3a3b49b86921"
   },
   {
     "file": "male-walk-right-7.png",
     "bbox": [
-      9,
-      8,
-      55,
-      79
+      21,
+      6,
+      71,
+      83
     ],
-    "sha256": "fdbc402e7f4cef51f3b1a0afc65cf8eeb49048c3f7699fd60ee16f025046f1b5"
+    "sha256": "2239dbb1e4b930e913f1983c66805be0092c469effc6452f7527bac12fea8e9e"
   },
   {
     "file": "male-walk-right-8.png",
     "bbox": [
-      13,
-      6,
-      48,
-      77
+      25,
+      4,
+      63,
+      80
     ],
-    "sha256": "8758bb85f00c5d301b7ecedcf92694f77c6879e9e540224f5a2d902fbd21b757"
+    "sha256": "cb4344415bee530c5d49b0b5f49333ebf2ec5d1caa7c5e0f5d98487c1f2c0a14"
   },
   {
     "file": "male-walk-back-1.png",
     "bbox": [
-      18,
-      8,
-      44,
-      81
+      33,
+      6,
+      61,
+      85
     ],
-    "sha256": "7d676c0e67a7192a789007da28d46d8bde41b0c71c0588d219e4f6b29c665419"
+    "sha256": "b1517f1b7a3fa6d89e065f00b929b788555d03a6deed825da06e29bd4596e9ed"
   },
   {
     "file": "male-walk-back-2.png",
     "bbox": [
-      18,
-      8,
-      44,
-      86
+      33,
+      7,
+      61,
+      91
     ],
-    "sha256": "9e0b93ac3f1f8a1bc4cc42e8e53c7d20643dbd31bee7c27d6b2b5635e655b815"
+    "sha256": "00ff8c2ab00e6120941c25283c4340f8987c3d370afcafe26b994a388b850f90"
   },
   {
     "file": "male-walk-back-3.png",
     "bbox": [
-      18,
-      10,
-      44,
-      90
+      33,
+      8,
+      61,
+      94
     ],
-    "sha256": "10fea1198d443ae5b393ce708706368ea545e6971f53d18965dd3d90309519de"
+    "sha256": "3bad3e1248a6a2a93afd10b069d11e72a4adce426143e6f90a566e813bf647af"
   },
   {
     "file": "male-walk-back-4.png",
     "bbox": [
-      18,
-      8,
-      45,
-      83
+      33,
+      6,
+      62,
+      87
     ],
-    "sha256": "8f9580e842c482f1393b23fa398264ac603fb390b9b91a153cbfba45d1bb1f79"
+    "sha256": "b4ba5fb44051fdd6e0b6d2afceb605142095c98d838786614ad9258fe2a1d995"
   },
   {
     "file": "male-walk-back-5.png",
     "bbox": [
-      18,
-      8,
-      44,
-      82
+      33,
+      6,
+      61,
+      86
     ],
-    "sha256": "c0e0e69f0b3a1eff59473d5ddb56e9a87069fb75a9c32de2758d595fda8f0f9d"
+    "sha256": "d4157674148411d2a60107627acd14629f38b145ae5068ff4c8034214909f73b"
   },
   {
     "file": "male-walk-back-6.png",
     "bbox": [
-      17,
-      8,
-      45,
-      86
+      31,
+      6,
+      62,
+      91
     ],
-    "sha256": "b536461520bfad599a143b37632678b31269a0de4b8b946bebb3096092e1b9c0"
+    "sha256": "fcb15eda1cebca87a7a135364082b842a2f51c638ac80dc7612d7d0d94ad13fb"
   },
   {
     "file": "male-walk-back-7.png",
     "bbox": [
-      18,
-      9,
-      44,
-      88
+      33,
+      7,
+      61,
+      93
     ],
-    "sha256": "ce9234444c3dc7c78e1eb74ccce023e5bffc3f43cb9bbd9596bbcff10c14d83a"
+    "sha256": "7c49dc1a8e6b9a4e9815ce446738c0612d027fca5d6dea714b788b061b364f9b"
   },
   {
     "file": "male-walk-back-8.png",
     "bbox": [
-      17,
-      7,
-      44,
-      83
+      32,
+      5,
+      61,
+      88
     ],
-    "sha256": "6b2855cac3b27b7e73a6b5d881cd8f0c2a667c9b04b04634ef67d6c9450de2b3"
+    "sha256": "c9007890c66ecd8d16c3c1704456e3d83c8f40670499692f8387f7fb2ece873b"
   },
   {
     "file": "male-walk-left-1.png",
     "bbox": [
-      17,
-      9,
-      37,
-      79
+      34,
+      7,
+      56,
+      83
     ],
-    "sha256": "49cef9f35432f377ad1f240df245ab5cd9c2092ddb13d8cd5b9c7c736e6a0b05"
+    "sha256": "702234b65039a9b99607f43b7e818e6ac09c2ff856bbc2c752afbc6f652d67ed"
   },
   {
     "file": "male-walk-left-2.png",
     "bbox": [
+      24,
       8,
-      10,
-      44,
-      79
+      63,
+      83
     ],
-    "sha256": "8d73c9f9d1449b5c7ddd151c806e99ca6d28ab1c40210fc6264d621ca95d7063"
+    "sha256": "feef8cd4a351779f6ca3ebbe171c65f08db702178d984c0fba142584db885501"
   },
   {
     "file": "male-walk-left-3.png",
     "bbox": [
-      7,
-      10,
-      53,
-      79
+      23,
+      8,
+      73,
+      83
     ],
-    "sha256": "e700878f2c9223542226ab18b64da489c23a07e0273bd8b970c31dfeffe0ce8b"
+    "sha256": "22221429d5a47d5b234157d9e20acf1e379638a20b25768209c2d0f474d35391"
   },
   {
     "file": "male-walk-left-4.png",
     "bbox": [
-      13,
-      9,
-      51,
-      78
+      29,
+      7,
+      71,
+      82
     ],
-    "sha256": "7277ec2c0d22980779c87e3ab117fff73b7a4bb70bbcde50d642d272c3bf3bbf"
+    "sha256": "984343649648016f3a2f17745fa5a024a32dfab33197c42c6f8e50d3d1b48918"
   },
   {
     "file": "male-walk-left-5.png",
     "bbox": [
-      19,
-      8,
-      39,
-      79
+      36,
+      7,
+      57,
+      83
     ],
-    "sha256": "5f6156f85d858aff29388359402112b5a3202b9ac4b2293b1266f49305bb7fcf"
+    "sha256": "237a7c5bb6440b7a398914abf57bcf988cfc14b4f3cfdf46041a502ba68c26e9"
   },
   {
     "file": "male-walk-left-6.png",
     "bbox": [
-      6,
-      9,
-      46,
-      79
+      22,
+      7,
+      65,
+      83
     ],
-    "sha256": "64512467d9d8f6d254ae2bea664d1def62784e1cf69692e46470d75bc82cff7d"
+    "sha256": "6b97d9c815cffb48515701cf99a960e5ca5e4f0114045566e74ad6d16dc02c0f"
   },
   {
     "file": "male-walk-left-7.png",
     "bbox": [
-      9,
-      10,
-      54,
-      79
+      25,
+      8,
+      74,
+      83
     ],
-    "sha256": "e295906a78a55b7f1218852af356fd8e972af8c47a86e4f03625608e9745baea"
+    "sha256": "639a25c009e443233e9d1cc353241a5e4953a408ec2bb62d060d84c033bdb562"
   },
   {
     "file": "male-walk-left-8.png",
     "bbox": [
-      16,
-      8,
-      51,
-      78
+      33,
+      7,
+      70,
+      82
     ],
-    "sha256": "401eac5abc4060e78936c27a6cb9cef909ad4c375126f6bbb4483dab85c3af65"
+    "sha256": "933f196dd952726b7b67718f3e895ac29602948fd2c87db4a67cd1f6df3f25c8"
   },
   {
     "file": "male-sprint-front-1.png",
     "bbox": [
-      17,
-      11,
-      46,
-      85
+      31,
+      10,
+      64,
+      89
     ],
-    "sha256": "f2374a2973a31220a4ea6a4644fb59dc4e9d0aadc0a8769e214683fed24d2fcf"
+    "sha256": "a70eaf5b8b6b74981b5bdf2ad950074dcfd63c36498e4d662d8955eaf4053de5"
   },
   {
     "file": "male-sprint-front-2.png",
     "bbox": [
-      16,
-      12,
-      46,
-      85
+      31,
+      11,
+      63,
+      89
     ],
-    "sha256": "10c030dfc152bd1f28a91c126061213f7c8ac981fa0df6895650cc901c18b107"
+    "sha256": "df6c4d6e099bde83819be088695215a540d17b4440724363e47949d50dc5d1c3"
   },
   {
     "file": "male-sprint-front-3.png",
     "bbox": [
-      18,
-      16,
-      45,
-      78
+      32,
+      15,
+      62,
+      81
     ],
-    "sha256": "cdd1cbef9470959f5fdcd7cc905b78e265a7acef1241ac48fa652885ca1d38fe"
+    "sha256": "812a7e6488f294cda27587e6ec4ff89d977322fa8bd870213595233afa8dc334"
   },
   {
     "file": "male-sprint-front-4.png",
     "bbox": [
-      18,
-      13,
-      45,
-      71
+      33,
+      12,
+      62,
+      74
     ],
-    "sha256": "5288583551eec1c57355464afa1edcdca73ab69112c03c7eef0d9408b953e393"
+    "sha256": "5497d40311f643cfeff015fd003c52f26090538341037fab58162c2f1f36bab9"
   },
   {
     "file": "male-sprint-front-5.png",
     "bbox": [
-      18,
-      10,
-      45,
-      85
+      32,
+      9,
+      62,
+      89
     ],
-    "sha256": "ae02c390efd1bc97e03ca8ef2f275455ddee936cac773228648590b9cda77ae5"
+    "sha256": "713e76b373afed05429a4a3cd39631789a09e97d01fc15f08298ede275623bd9"
   },
   {
     "file": "male-sprint-front-6.png",
     "bbox": [
-      18,
-      12,
-      46,
-      85
+      33,
+      11,
+      63,
+      90
     ],
-    "sha256": "7c6cc09e97eaa431f37f726df94eccbb52502fb805aa40bed48126719c25475d"
+    "sha256": "acdf7ff56c0e3a72ccb41026c7eb5f51fd7c4ce399fdf91197556169893eed21"
   },
   {
     "file": "male-sprint-front-7.png",
     "bbox": [
-      20,
-      14,
-      46,
-      77
+      35,
+      13,
+      63,
+      81
     ],
-    "sha256": "465a52e61e2aab31e7eb307f727e7854603f4fc46db1f73f656dae295434c9f7"
+    "sha256": "b691cfc07cea7d4057926b18d836604856e707c48b84bcf225e0d14f64cec03d"
   },
   {
     "file": "male-sprint-front-8.png",
     "bbox": [
-      19,
-      11,
-      46,
-      74
+      34,
+      10,
+      63,
+      77
     ],
-    "sha256": "372be54136941d1cd489f5e1212661d7c0d13b93568c3c4f2d53c9cc2a1f855b"
+    "sha256": "7bb36422f307e158418d3cee36b08267295b58dac96d6e19f11ae14d282cb479"
   },
   {
     "file": "male-sprint-right-1.png",
     "bbox": [
-      4,
-      8,
-      54,
-      78
+      16,
+      6,
+      70,
+      82
     ],
-    "sha256": "514473137cbe2460dfa305c02b282f89666fe80d9f42e2b7cfafca093976fe35"
+    "sha256": "a69b2918480120050162ce3c964b3deb9e9d93b0a1772ad931f61d395c477fb6"
   },
   {
     "file": "male-sprint-right-2.png",
     "bbox": [
-      4,
-      9,
-      54,
-      78
+      15,
+      8,
+      70,
+      82
     ],
-    "sha256": "fac1fdb5e59e0526cb395563459f86f784b681b9f8687004dbc060f72ba6ac44"
+    "sha256": "b0175b940b52316acfb3951d374d7c6b05f959cfb9c2b97a8e824b6cac5e3080"
   },
   {
     "file": "male-sprint-right-3.png",
     "bbox": [
-      16,
-      12,
-      57,
-      78
+      28,
+      11,
+      73,
+      82
     ],
-    "sha256": "ebc8fea633f7e25d911ba49bfe0ebeeb6c53f5656ba455fd3a1e22561bb2a952"
+    "sha256": "1d72d96d3150594e2e1085b72476fb2ea20438e23734a6db7f8a3708689070c3"
   },
   {
     "file": "male-sprint-right-4.png",
     "bbox": [
-      11,
-      9,
-      57,
-      77
+      24,
+      8,
+      73,
+      81
     ],
-    "sha256": "09ebdaaeb6dee296bf400663db40a2c5d031bd336cafc7732db95bb5e5cecf61"
+    "sha256": "bb30eaeeac7f3c88d3a71036aa17bb91faaadc1f0a9026bad77fd826d219a5eb"
   },
   {
     "file": "male-sprint-right-5.png",
     "bbox": [
-      3,
-      7,
-      55,
-      75
+      15,
+      5,
+      71,
+      78
     ],
-    "sha256": "741f446b92b614aa073df273376b8e104b50f99d27edf43cc3e9a8c3020313ef"
+    "sha256": "d4ea83601e35233bf87251c4d5b1e93ed75b05792cd95cd6201c9a0b7d22504c"
   },
   {
     "file": "male-sprint-right-6.png",
     "bbox": [
-      4,
-      8,
-      54,
-      75
+      16,
+      6,
+      69,
+      79
     ],
-    "sha256": "2f0787cc8daf1626bac95e50bdbce724d352d0ca0aa6647c955d1e8a1dd8cdaa"
+    "sha256": "e2a4639fbb9ca9f2c9e1b2aa4970287113964ad65c309e183f969e1a2c65014d"
   },
   {
     "file": "male-sprint-right-7.png",
     "bbox": [
-      16,
-      9,
-      57,
-      76
+      28,
+      8,
+      73,
+      80
     ],
-    "sha256": "2a7e86da2b186c81b40aa950058925584b0babe02b8181321bd9cb4d16f06cf7"
+    "sha256": "8cb84680ad8faedde32758e5868b6b1f285dcb948ca0f0604f378cf94a18d75b"
   },
   {
     "file": "male-sprint-right-8.png",
     "bbox": [
-      13,
-      7,
-      56,
-      76
+      25,
+      5,
+      72,
+      80
     ],
-    "sha256": "b0d465568ce3890603c294d4b6ef2ddd45cbc6c983add7d0e4b828f31f5ee320"
+    "sha256": "df3c63b8fc18d1d123dae0138e3570540d8723ac0522faf8be8459af03e3e9c4"
   },
   {
     "file": "male-sprint-back-1.png",
     "bbox": [
-      18,
-      4,
-      47,
-      89
+      33,
+      1,
+      64,
+      94
     ],
-    "sha256": "667d2d1de29c143160c891a614b088333d72b09cf07e87a87346393fc99501fc"
+    "sha256": "b0681ee869c71cca9d653329e99ba01fa5ab8b7eaf82a14474ae279b2474317d"
   },
   {
     "file": "male-sprint-back-2.png",
     "bbox": [
-      18,
-      5,
-      47,
-      85
+      33,
+      2,
+      64,
+      89
     ],
-    "sha256": "376c7033bf824e0d011ec4d0a10583ae9654cb36b5296ccff8480d548ba189b5"
+    "sha256": "6856a0a9b077970d5c8c902db478af7069633338d978e96999d57e04686eb265"
   },
   {
     "file": "male-sprint-back-3.png",
     "bbox": [
-      19,
-      7,
-      46,
-      82
+      34,
+      4,
+      63,
+      86
     ],
-    "sha256": "c6199fd2cab95062173052991a239072fd8c481c417e67385bb4a7d8e4bbd7a1"
+    "sha256": "312a7598a603fdeec3eacb360ed431e68158cf71ac5fa52237b4f6dc85f9bc22"
   },
   {
     "file": "male-sprint-back-4.png",
     "bbox": [
-      19,
-      5,
-      46,
-      87
+      34,
+      3,
+      63,
+      91
     ],
-    "sha256": "092911fd2cd4d6a7be7ff699cc34777b2f858df0b2970cff37624a0885a532c7"
+    "sha256": "73b1310ec7b29a9223041426e748209e497c8b9623055c9aaaf96f0b4ce21f81"
   },
   {
     "file": "male-sprint-back-5.png",
     "bbox": [
-      19,
-      4,
-      46,
-      90
+      34,
+      2,
+      63,
+      95
     ],
-    "sha256": "068f7af5ee4b9bb90e49508deed1a7a275b60975309d6e0bf6db7c9ba00d676a"
+    "sha256": "554b7d5af80f7c9e4ef5c371423a80d2791f77c2f66ef3fc9a67c2e792e298ba"
   },
   {
     "file": "male-sprint-back-6.png",
     "bbox": [
-      19,
-      6,
-      46,
-      86
+      34,
+      3,
+      63,
+      91
     ],
-    "sha256": "f56dfc9ac08d36a2ea82112f1a2292e1745354efd378cf36ed25ab7bdf3b2c77"
+    "sha256": "c58b45c5429e9d3919657fe4c036b5966bce1662ae44b1864a4b822c793b613d"
   },
   {
     "file": "male-sprint-back-7.png",
     "bbox": [
-      18,
-      7,
-      44,
-      82
+      33,
+      4,
+      61,
+      86
     ],
-    "sha256": "b376ccbde06dc9d70011a787b4a6e62983ceeee0d6d43e0c4e6572b5e419c1b1"
+    "sha256": "e099b9b67aa1960c5ac595239c2113b1356e17b4634dd923a072b80738a696bf"
   },
   {
     "file": "male-sprint-back-8.png",
     "bbox": [
-      19,
-      4,
-      45,
-      85
+      34,
+      2,
+      62,
+      90
     ],
-    "sha256": "39c35ec2540c86681a38bf9a89c2b6928f32910ece27b0cfad3996e37b1556e6"
+    "sha256": "a30b438baf2273b559847a3dcfef06172a026f81d9b24f2e734b7ffda9972492"
   },
   {
     "file": "male-sprint-left-1.png",
     "bbox": [
-      10,
-      7,
-      60,
-      75
+      26,
+      5,
+      80,
+      79
     ],
-    "sha256": "bf6c427c802f79c3e4d0bc0d96833b2e31a0dd1d36054ae3214a69f4ad113332"
+    "sha256": "f43ef62e346b5a9e6bf1340d24e7c773449a1a019256c378bcab6ddf3cce1b44"
   },
   {
     "file": "male-sprint-left-2.png",
     "bbox": [
-      10,
-      8,
-      61,
-      76
+      26,
+      7,
+      81,
+      80
     ],
-    "sha256": "6ccccbf89054d6c65652fa71422046a712f14dea3b0cebbce10023371ac7f9d7"
+    "sha256": "753c2c95f8f46e2bca2da7f5911aad2b9ecf9399820d24a223094d89972651fc"
   },
   {
     "file": "male-sprint-left-3.png",
     "bbox": [
-      8,
-      11,
-      49,
-      77
+      24,
+      9,
+      68,
+      81
     ],
-    "sha256": "0409f11c9623875d4a93290c28fac5131fefd61a8f1f1bc569ede0d6ef9c52b4"
+    "sha256": "22d55c349464649940cdccd058a1cc1b57b97ca316de233321ae795e755408a0"
   },
   {
     "file": "male-sprint-left-4.png",
     "bbox": [
+      24,
       7,
-      9,
-      52,
-      76
+      72,
+      80
     ],
-    "sha256": "4ed1afb0a986928f0de6036be88f20b50a0021b0680644dcc1f865e1fbfeb508"
+    "sha256": "2ba77ce89c877e2425ea60deef79425eecaecbe91b1d0ca2e21d3df01401f186"
   },
   {
     "file": "male-sprint-left-5.png",
     "bbox": [
-      9,
-      8,
-      60,
-      78
+      26,
+      6,
+      80,
+      82
     ],
-    "sha256": "cde2a9b8da4924d8e79b9f81714dad9a2706c8df3e663febfda5f5e959789a72"
+    "sha256": "c707f4bea5548bb8b683c5aa603a7ab78e5ca6008ff9553f30f98ab13aa9083e"
   },
   {
     "file": "male-sprint-left-6.png",
     "bbox": [
-      11,
-      10,
-      59,
-      79
+      27,
+      9,
+      79,
+      83
     ],
-    "sha256": "7e5545ec40a264b136db80656407958bbfc3bb5d63c6c470f7498b00c1e40e96"
+    "sha256": "78d453afadd275e16b4082ae060b7afe88291a5dd6cf195e3b6e175f0628cd5c"
   },
   {
     "file": "male-sprint-left-7.png",
     "bbox": [
-      6,
-      12,
-      48,
-      79
+      22,
+      10,
+      67,
+      83
     ],
-    "sha256": "3ddcb2d02006aa787948d6ec923370c7fcd4e082ef1da510f31bb613c1675a74"
+    "sha256": "17b7990e6b62c153e76d7f48d5109c23cb96a3adec325100d934b4a9b991c435"
   },
   {
     "file": "male-sprint-left-8.png",
     "bbox": [
-      8,
-      9,
-      51,
-      78
+      24,
+      7,
+      71,
+      82
     ],
-    "sha256": "f434e6daa0b9f271b6d30b7afa419bf7036e26e784558448ec09bad8f86f960d"
+    "sha256": "cf918b8e515a5ce80dd85441874985ddc883d7ef03e3859a8a3662e0a4aac531"
   },
   {
     "file": "female-walk-front-1.png",
     "bbox": [
-      22,
-      7,
-      46,
-      80
+      37,
+      5,
+      63,
+      84
     ],
-    "sha256": "5ec03cb033c9f557e664d3db55385db9771da500158655840b624a9aee81f07b"
+    "sha256": "e37d54d85e1bd782947a74a97f3727c774edec3c0d39831102fcc125211e64c6"
   },
   {
     "file": "female-walk-front-2.png",
     "bbox": [
-      22,
-      8,
-      46,
-      84
+      37,
+      6,
+      63,
+      89
     ],
-    "sha256": "ae8ddd8451c9a86a24e40009b13a3b58fe26dfac452e8fb2daff25f13fe07401"
+    "sha256": "bf705364ca68290ca5edd0b8906e69ac6554ade2974c67472a952d25ba31ff1b"
   },
   {
     "file": "female-walk-front-3.png",
     "bbox": [
-      23,
-      8,
-      46,
-      87
+      38,
+      7,
+      63,
+      91
     ],
-    "sha256": "826dff9ba84e6c71e6ae2619913c0f3fe2c99da9bec75244d33bc639480d2890"
+    "sha256": "35746e41c55ac45f7ca8afea57f962ff407ea5cf6eccb94c3c425786c8c957be"
   },
   {
     "file": "female-walk-front-4.png",
     "bbox": [
-      23,
-      7,
-      46,
-      82
+      38,
+      5,
+      63,
+      86
     ],
-    "sha256": "0ca0a6f21ccc849cb36bff41f402baf6c4240d3e28466baa0baa72c55a7297da"
+    "sha256": "55e17d7d0d1dccbdf4db9997ad0401b7a0ab129493bc8e2d912dc710c6c691ad"
   },
   {
     "file": "female-walk-front-5.png",
     "bbox": [
-      22,
-      7,
-      46,
-      79
+      37,
+      5,
+      63,
+      83
     ],
-    "sha256": "2a07929309ae9b68fe9f0e18ae534fec2a463af889a4f6f1212ac511445e45df"
+    "sha256": "01923405db5bd49e7722151bd921e10418c6731e2d0d55e9aa90e7d5b5441adf"
   },
   {
     "file": "female-walk-front-6.png",
     "bbox": [
-      21,
-      7,
-      49,
-      86
+      36,
+      5,
+      66,
+      91
     ],
-    "sha256": "00e9a69264ceb7c30331254a5fa7d3d766ad7faddba281de8cbf4540e5316f47"
+    "sha256": "57f7090a716c98227e13d11e29f4982b5f7374bccadefbfcc91e422bc88682b9"
   },
   {
     "file": "female-walk-front-7.png",
     "bbox": [
-      22,
-      8,
-      49,
-      88
+      37,
+      6,
+      66,
+      92
     ],
-    "sha256": "533fbea75b16ae52489112a07b61746da5848f6164fe64ad4582f8a8cce1ffd5"
+    "sha256": "aa08852adb4036161c39ac01425b8169b8624e614c7f95a5e465ad55f139fe93"
   },
   {
     "file": "female-walk-front-8.png",
     "bbox": [
-      23,
-      6,
-      47,
-      83
+      38,
+      4,
+      65,
+      87
     ],
-    "sha256": "2022d9556b1ab31e261dba2e4a61f0d74732856ef17df014fddfd1b690e91d42"
+    "sha256": "7ff7992b69828dbdbc20633b570a192fe6e3f4d9241c1449c0242fcd4001081b"
   },
   {
     "file": "female-walk-right-1.png",
     "bbox": [
-      23,
-      7,
-      44,
-      78
+      36,
+      5,
+      59,
+      82
     ],
-    "sha256": "b93f684a00cf150706454222b2ff9259a9d4b2cb4f5eed21602217993e452ed6"
+    "sha256": "319c52322d33ad0e8056f52bcb9a6cf620b76b17e7130e0e43c0900b87c93efb"
   },
   {
     "file": "female-walk-right-2.png",
     "bbox": [
-      23,
-      8,
-      54,
-      81
+      37,
+      6,
+      70,
+      85
     ],
-    "sha256": "11bbb6cff75c6de696ce4a1a26d07bc1b994662a761ac306cee9e24184012aa9"
+    "sha256": "b25eb53c881b925022fdc8fec1e8a18594dd4d515bf542aee5b0cac6fc589339"
   },
   {
     "file": "female-walk-right-3.png",
     "bbox": [
-      16,
-      9,
-      52,
-      81
+      29,
+      7,
+      68,
+      85
     ],
-    "sha256": "567aed986c6192136efc2b421157327c11f66e5f7df43b5ba00a4fb3cf112d00"
+    "sha256": "e4b36dcc036c8baf2b21b7afbfbbd07faaf124edc9ea3f2d957cca4c4aa4150e"
   },
   {
     "file": "female-walk-right-4.png",
     "bbox": [
-      18,
-      8,
-      47,
-      78
+      30,
+      6,
+      62,
+      82
     ],
-    "sha256": "df8bc5c827c0766c74eac0ae70598aebf4ad7b8207340d582198bd7109fb90cd"
+    "sha256": "b796c92ffa8cdca1eff615040acac75d4ae72429b0c9ef8822c5da6a59df19bd"
   },
   {
     "file": "female-walk-right-5.png",
     "bbox": [
-      22,
-      7,
-      47,
-      76
+      36,
+      5,
+      62,
+      80
     ],
-    "sha256": "72308e5e3fa650398790144e769e3001971a691f698fea3c4de487585e4c2197"
+    "sha256": "ebe24420a630458ae7f4c768b03faa6c3d9adf3669b42c7abc37bcbf71553493"
   },
   {
     "file": "female-walk-right-6.png",
     "bbox": [
-      22,
-      7,
-      58,
-      75
+      35,
+      5,
+      74,
+      79
     ],
-    "sha256": "f53aae1cf7bd850afd0ddc7ea4d1a8c650bd05629511da57ef62e4b81c7159ca"
+    "sha256": "231660317d13445af52e28cb0477782abf6be617d51690dc4ca810415999f9c8"
   },
   {
     "file": "female-walk-right-7.png",
     "bbox": [
-      14,
-      8,
-      56,
-      76
+      26,
+      6,
+      71,
+      80
     ],
-    "sha256": "0545bd07167ab9f2372785631e650ad4648933ed6c52954e459b039dd34abffd"
+    "sha256": "53ffe64fcd07d2618a39e610b6b2812d59b919d5dfcc9024cdbb93edf242511b"
   },
   {
     "file": "female-walk-right-8.png",
     "bbox": [
-      16,
-      6,
-      47,
-      76
+      29,
+      4,
+      62,
+      80
     ],
-    "sha256": "883145ea96f213c32df159818e67340903bdeceabbb521a3fede68e6d6848311"
+    "sha256": "ec9f26903b4e73a41404ed99415d74852b7234be31c6c66ed5eec5756453e6a5"
   },
   {
     "file": "female-walk-back-1.png",
     "bbox": [
-      18,
-      11,
-      42,
-      79
+      33,
+      10,
+      59,
+      83
     ],
-    "sha256": "7cdcde2fbdc7d009021335cac4206e5b73696dc01424dc2560e691f4e1b07083"
+    "sha256": "49cacb7f6dc45369d8b7765e8484a849e6f52db66ac9377976a60e4c4cdf2f44"
   },
   {
     "file": "female-walk-back-2.png",
     "bbox": [
-      18,
-      12,
-      42,
-      83
+      33,
+      10,
+      58,
+      88
     ],
-    "sha256": "66642fced39d401a15b8b0b079c577263b3d1897e8b45fb4990edc0e8dbdc703"
+    "sha256": "3f806c250dbc3fd3a4b9eaa5fed67394438f2bc1b8a9cc4cda7f66c44f0e0912"
   },
   {
     "file": "female-walk-back-3.png",
     "bbox": [
-      18,
-      13,
-      41,
-      86
+      33,
+      12,
+      58,
+      91
     ],
-    "sha256": "93b81351437fe6e1b8503da4d791a9bce22fffe51875db1df016d515615b3ca5"
+    "sha256": "57e5337714134d18b7c315befff5be63d168e56afa3abc1d108fa605327b54bd"
   },
   {
     "file": "female-walk-back-4.png",
     "bbox": [
-      18,
-      12,
-      41,
-      80
+      33,
+      10,
+      58,
+      84
     ],
-    "sha256": "d5b141765a0f24b8cc162461ff2c35a2e82a3c7a3bb0e3b49577d6f0677d8d04"
+    "sha256": "f30a61401f98ca4981283e764fb5cab59b0e5e944f6c4b41828b1ba80e1db4f9"
   },
   {
     "file": "female-walk-back-5.png",
     "bbox": [
-      18,
-      11,
-      42,
-      80
+      33,
+      10,
+      59,
+      84
     ],
-    "sha256": "0864cf40b75cb2f092142c367c5be40f54fad90620c0f4c8874b0037308f1330"
+    "sha256": "2d328c060b3bde1720bd98fbb40aaf72805d8fee456fb45b037105224ee6db50"
   },
   {
     "file": "female-walk-back-6.png",
     "bbox": [
-      15,
-      12,
-      43,
-      84
+      30,
+      10,
+      60,
+      88
     ],
-    "sha256": "6181d93a5ae068b7bf1d6b2cb7882e900b3668ff877929922d3171384f9615c3"
+    "sha256": "3017f7af538010d7b103798ed0680cf05f61be6c830ba41fe46af7d222408ab5"
   },
   {
     "file": "female-walk-back-7.png",
     "bbox": [
-      15,
-      12,
-      42,
-      86
+      29,
+      11,
+      58,
+      91
     ],
-    "sha256": "096d78929ff4f72127b0ba01d5265e86e554052684dd7a9e16abb9e584f513a8"
+    "sha256": "098feb0c9b481d4428037d209cc94eab5ea635bceaeca07282577836558ec70d"
   },
   {
     "file": "female-walk-back-8.png",
     "bbox": [
-      16,
-      11,
-      41,
-      82
+      31,
+      9,
+      58,
+      86
     ],
-    "sha256": "5eac7f352109763d39c649045ea8af37f572f77671ff8007674eafa09eb2957d"
+    "sha256": "5f293025d4b514f65526da7846f29bf662c9a4b392879cb23ce76591329a1ecf"
   },
   {
     "file": "female-walk-left-1.png",
     "bbox": [
-      19,
-      12,
-      41,
-      80
+      37,
+      10,
+      60,
+      84
     ],
-    "sha256": "c634e3e7c5fa987096d4b925127761334a4a2f9d030eb0bb61c61bde82fa4e28"
+    "sha256": "7542b3982e1dfedf7e2a1e044263449904bdd10935eb078779b1a1f1dd3dc8d2"
   },
   {
     "file": "female-walk-left-2.png",
     "bbox": [
+      27,
       11,
-      12,
-      41,
-      81
+      60,
+      85
     ],
-    "sha256": "5e4571effc7ef3507de7941d40ecc38d539ed67bb03a92ab88d598d89aa1b012"
+    "sha256": "0a2ccd5a1299caee9350900e5a28730cbef604d085bda92040b2d4f049775025"
   },
   {
     "file": "female-walk-left-3.png",
     "bbox": [
-      12,
-      13,
-      49,
-      82
+      29,
+      11,
+      68,
+      86
     ],
-    "sha256": "14445da54771265f2586339e7ddac168145b82d87352df83603e49df747af2cb"
+    "sha256": "4cf17f9e112b77904679a6f8dfdb4311ef022839597216d6e31a810552b45960"
   },
   {
     "file": "female-walk-left-4.png",
     "bbox": [
-      17,
-      11,
-      47,
-      80
+      34,
+      10,
+      66,
+      85
     ],
-    "sha256": "020533dff36649fe5e4e125535602afc8488caaa7615490e55ab04856f23930b"
+    "sha256": "c22daa9b2da8d393b2275dd7539cad87fc4b0bafa48075dd2ddf66f5819c7b48"
   },
   {
     "file": "female-walk-left-5.png",
     "bbox": [
-      17,
-      11,
-      42,
-      79
+      34,
+      10,
+      61,
+      83
     ],
-    "sha256": "ba3b7dde4dc4e608f684d3bf2f14b59aec5c109496778044b9eb24e74cc86cb6"
+    "sha256": "b3ba495b5db32ab4a156dc682cb1c2d91f8e64d348113eda10086ebd143d02fd"
   },
   {
     "file": "female-walk-left-6.png",
     "bbox": [
-      6,
-      12,
-      42,
-      79
+      22,
+      10,
+      61,
+      83
     ],
-    "sha256": "39482a9a68d2877fa983f05d59e4387116a2f414bf8950365a3a6845b6ae5a62"
+    "sha256": "35d1d652ab266ef494a6e7ff4842e9875d7d5fcd63d4552d653da74b1d89cfad"
   },
   {
     "file": "female-walk-left-7.png",
     "bbox": [
-      9,
-      13,
-      51,
-      80
+      25,
+      11,
+      71,
+      84
     ],
-    "sha256": "1d65dad38f135b7fcec3c890f7a67497fac41b1081f058ec36db38578f1fd627"
+    "sha256": "a75b3a9e890e9b03013f5d59836f15d6398cb6feedf0a41f6504a999661421a3"
   },
   {
     "file": "female-walk-left-8.png",
     "bbox": [
-      17,
-      11,
-      48,
-      78
+      34,
+      10,
+      67,
+      81
     ],
-    "sha256": "fc3d4729ca76e5b3916189640bd647e32a3b32c6feff88cfd91d20eda6946983"
+    "sha256": "261cde2919c378a9baddd7acb673ebea1649fe56cfb35eaa35c40d94bfd3a4de"
   },
   {
     "file": "female-sprint-front-1.png",
     "bbox": [
-      20,
-      8,
-      45,
-      84
+      35,
+      7,
+      62,
+      88
     ],
-    "sha256": "d58bebca7342d486d6309cb7d03c900ab55c755e0a874fa1c1eb35a4af4da6b1"
+    "sha256": "d96ba0fc07b5600fa3f770ddcfda2e8b1a4b151b240fd5f3728330ab9eccb51d"
   },
   {
     "file": "female-sprint-front-2.png",
     "bbox": [
-      18,
-      10,
-      46,
-      84
+      33,
+      9,
+      63,
+      89
     ],
-    "sha256": "1cf22a0ed8b6f7cb07b752aaeb02f95a9d1a65db6e32fb6731de334ab6206d13"
+    "sha256": "1c1fadd04e1ca721149fc03415b5a5cc304047f925dfaefdee031e3b77beb8cc"
   },
   {
     "file": "female-sprint-front-3.png",
     "bbox": [
-      17,
-      13,
-      44,
-      78
+      31,
+      12,
+      61,
+      82
     ],
-    "sha256": "ee874de97a0bf3b96fc08dbb5d12d3d86f6bd81f6c5594bda0bd895d64a376e5"
+    "sha256": "de3e47a177dec132348c865615c6eb97d0eedbd37c745d382c933dc9a67d66b5"
   },
   {
     "file": "female-sprint-front-4.png",
     "bbox": [
-      20,
-      10,
-      45,
-      73
+      35,
+      9,
+      62,
+      76
     ],
-    "sha256": "71ebffb615e8864ba4f3f09d257beee12f27ce4ccf577f6631e530a8ff5f7d6d"
+    "sha256": "1a50aa557efb3293da2f0e65909fc10dcbdc91e7d865a1f5f6cbd3b5000a3ea7"
   },
   {
     "file": "female-sprint-front-5.png",
     "bbox": [
-      21,
-      8,
-      45,
-      85
+      36,
+      7,
+      62,
+      90
     ],
-    "sha256": "967af90fcf1e694f0cc21d1c345c946424418e7660a6657add5453e003bbdd28"
+    "sha256": "42ecd721a3b812ebcadc2e0ec7c59d7789f8b7617319da0b6bd350bd06228151"
   },
   {
     "file": "female-sprint-front-6.png",
     "bbox": [
-      22,
-      10,
-      45,
-      86
+      37,
+      9,
+      62,
+      90
     ],
-    "sha256": "082ee8cb5108b712ddf6c191bd06fe82889aa32e55526659c366a1bdc0371f5c"
+    "sha256": "7a679c89ccf72906f6407915b20c25346cc5e87af86e9eed0bac2734172855d2"
   },
   {
     "file": "female-sprint-front-7.png",
     "bbox": [
-      21,
-      12,
-      45,
-      78
+      36,
+      11,
+      62,
+      82
     ],
-    "sha256": "6e31a344f028b906663402105c9330ee71044fe8c6b0754979a71f022c0322fb"
+    "sha256": "e4e2fadbd6b4dc4af38bec073f8a05f4d156952b1c2c2ca0437ec3ceac236d81"
   },
   {
     "file": "female-sprint-front-8.png",
     "bbox": [
-      21,
-      9,
-      44,
-      74
+      36,
+      8,
+      61,
+      77
     ],
-    "sha256": "c36e5fbccf234001bb28760d2c3be2d91f14bd901edbc538bba13ef4c57118ef"
+    "sha256": "14b1acda167f928ccf9369a7136fb27efc4e18e07b08b100c90879e1892e512c"
   },
   {
     "file": "female-sprint-right-1.png",
     "bbox": [
-      10,
-      7,
-      51,
-      79
+      22,
+      5,
+      67,
+      83
     ],
-    "sha256": "32ec8b079f0ba47051e347da47858dd4b37ed0be1d508d9702c5679c1f851595"
+    "sha256": "79d70735b167b37ea2af51ffcc25ebcdeb758bc0e5c73bf8600a670b9a06ee51"
   },
   {
     "file": "female-sprint-right-2.png",
     "bbox": [
-      10,
-      9,
-      51,
-      79
+      22,
+      7,
+      64,
+      83
     ],
-    "sha256": "561d2e9e90e2569b1ef91c51bff3fd3642639e8276b6eb59c16c5173260efca4"
+    "sha256": "42579a6e4cb51d5b9458112e34e6d5ff138b70d2cf37cfdb3a79bfba37be1a2d"
   },
   {
     "file": "female-sprint-right-3.png",
     "bbox": [
-      21,
-      12,
-      52,
-      77
+      33,
+      10,
+      63,
+      81
     ],
-    "sha256": "b209285fbaf0be6ff6414f13c0ea36649c0e69cf62296f6f6ec36fabd1bf8847"
+    "sha256": "6151e1ca497c2a4e931895b87126e203c3fc71c09de84a200caf60109a566c10"
   },
   {
     "file": "female-sprint-right-4.png",
     "bbox": [
-      16,
-      9,
-      50,
-      74
+      28,
+      7,
+      65,
+      78
     ],
-    "sha256": "4fe58f4edc6b942e2938ce88b0d7db8f2b3cfdd779b5e6811b3a5b6cd803ef95"
+    "sha256": "37418bdeb4256c59e7fa77e943dab85663a9234f37d4751fdc4c18b253829614"
   },
   {
     "file": "female-sprint-right-5.png",
     "bbox": [
-      7,
-      7,
-      52,
-      75
+      19,
+      5,
+      68,
+      78
     ],
-    "sha256": "83cd40f0fe2b0a491726373843c19aa1a61a0c6f911cc508c827cd9706eb0e97"
+    "sha256": "6ff3ef959c7255fb39d980fb26e976260901c891fda2e9ac868f1b6bd5fd92a2"
   },
   {
     "file": "female-sprint-right-6.png",
     "bbox": [
-      8,
-      8,
-      50,
-      77
+      19,
+      6,
+      66,
+      81
     ],
-    "sha256": "118957e9631fa57c3d8cf121038b36cfdaa58d9b7b1f710f1d24803953212e38"
+    "sha256": "839ddf6024161d358a80a0d55a06f5b6c299dfac02a06d283ffa29f740c9f7cd"
   },
   {
     "file": "female-sprint-right-7.png",
     "bbox": [
-      17,
-      9,
-      53,
-      75
+      30,
+      7,
+      69,
+      79
     ],
-    "sha256": "52e8a90bb85df9116d42e8ef9ea14d3253658069452a6940c9c72379fd925c57"
+    "sha256": "fddb6c9dbb04d437a5bde4c620d9f831335666e693b7ebb6d0f4b6341cce1b11"
   },
   {
     "file": "female-sprint-right-8.png",
     "bbox": [
-      18,
-      7,
-      51,
-      76
+      31,
+      5,
+      67,
+      79
     ],
-    "sha256": "183a8da63755534ed2ea8aedea7695a3341a6ab87c4fb81af21b7d9c44b70ec6"
+    "sha256": "29304096292fa5b874230158fe74a5878205fda02d3f919dcb4fd61a6aca3ab6"
   },
   {
     "file": "female-sprint-back-1.png",
     "bbox": [
-      18,
-      6,
-      44,
-      86
+      33,
+      3,
+      61,
+      91
     ],
-    "sha256": "26efaf26f9bd353b338fa087ae310342cba433548279010b006cda32149d45f9"
+    "sha256": "ee7421903e245a4f7fe54273be42d4c2d53069a72ef93e42a6fe8ccbcddc9488"
   },
   {
     "file": "female-sprint-back-2.png",
     "bbox": [
-      17,
-      7,
-      45,
-      81
+      31,
+      5,
+      62,
+      86
     ],
-    "sha256": "6a9d5a32d3144f95e57fede803fa5ae12036b2c8d2c2c36036d6f4ba749862cb"
+    "sha256": "b4f647bc6e98f4e7b28986ef33dccfed1c29864bd778873a81408e2425eacefa"
   },
   {
     "file": "female-sprint-back-3.png",
     "bbox": [
-      20,
-      9,
-      47,
-      80
+      35,
+      6,
+      64,
+      84
     ],
-    "sha256": "a0c98f2fed31337fad4654ded115fcf1d12bb46caf821be582c736fa94100cb4"
+    "sha256": "174612848d0133579cccbb1243946f67bf3398fa05ddbd3516000dea896f57c7"
   },
   {
     "file": "female-sprint-back-4.png",
     "bbox": [
-      19,
-      7,
-      44,
-      85
+      34,
+      5,
+      61,
+      89
     ],
-    "sha256": "83c530875a768a599a4be0315c53070e5b1b7364a587dd3e139cf9e00797e5ae"
+    "sha256": "e3f91f6c247a559589029819e756aa7ece604d8de4cf4a9ba1ca05c000c0799d"
   },
   {
     "file": "female-sprint-back-5.png",
     "bbox": [
-      19,
-      7,
-      43,
-      88
+      34,
+      4,
+      60,
+      92
     ],
-    "sha256": "abc0b2693dae352d8aef04cfd4c1b5c30bac518f4f305c174b8613e3036c909b"
+    "sha256": "34f24b99d5929a4ed8dc837cbd4346f12dc19479cc94effb3733c0e9fc404f72"
   },
   {
     "file": "female-sprint-back-6.png",
     "bbox": [
-      19,
-      8,
-      42,
-      84
+      34,
+      5,
+      59,
+      89
     ],
-    "sha256": "02bbf4d39737201143c2c4822636a18bc9d96bb5cf974b554620aa8520200cad"
+    "sha256": "09b21fcb2e43e8b3bb9c785b4ab78a53f67fa18f4977fb270ab532415daa990d"
   },
   {
     "file": "female-sprint-back-7.png",
     "bbox": [
-      20,
-      8,
-      42,
-      79
+      35,
+      6,
+      59,
+      83
     ],
-    "sha256": "24010662a41b2c098bac0d57048bbbff007bc8a14380c41bd129bbf853bd9875"
+    "sha256": "1951adc4a5fd754abed5536cf30602476f08789ac51446443a25cb40fd79fbdd"
   },
   {
     "file": "female-sprint-back-8.png",
     "bbox": [
-      20,
-      6,
-      43,
-      82
+      35,
+      4,
+      60,
+      87
     ],
-    "sha256": "642cf1478717cc63fc4acb073d8e2844fd181ddd801ce7fae44bbe3126a352ab"
+    "sha256": "7165bb9d2600dff0af08dfdca7e6c992b4f4da753dbf610af69b0e5970e6ff54"
   },
   {
     "file": "female-sprint-left-1.png",
     "bbox": [
-      13,
-      7,
-      55,
-      79
+      30,
+      5,
+      75,
+      83
     ],
-    "sha256": "f41803cf587fe838e182a9e0182e19cd40c509dd4b7bdceac7fc53bb722ea528"
+    "sha256": "5ea6f0b76d599e58a3eac98028f44102cd49617477a5955c98167db292bf15d9"
   },
   {
     "file": "female-sprint-left-2.png",
     "bbox": [
-      13,
-      8,
-      56,
-      75
+      32,
+      6,
+      76,
+      79
     ],
-    "sha256": "666fabc1a83d548f8cfa26cee0ac2da3775dbba395ab4079d796d249546e1b60"
+    "sha256": "a67b501dc63d35f2963928d1cf4f61b5921d7fb5aac09abfbc9d770f14826794"
   },
   {
     "file": "female-sprint-left-3.png",
     "bbox": [
-      11,
-      10,
-      44,
-      78
+      34,
+      8,
+      63,
+      82
     ],
-    "sha256": "19a13f334984dacdba7c479bde026998eba58e0f1a62b817e5c807d07ab8d22f"
+    "sha256": "5b89194ddcb28a91813b37dc9470b7e9b8816ecf9d3dbbbb12c7afaf5845bb99"
   },
   {
     "file": "female-sprint-left-4.png",
     "bbox": [
-      14,
-      9,
-      49,
-      79
+      31,
+      7,
+      68,
+      83
     ],
-    "sha256": "643bab82afdef9670273ae8a864c0837507587eaf414f58ce2a74a733f541046"
+    "sha256": "0d35ff6323c540fb9978679f6c87282dac5c6ddbf896af51bb93c775aaf2f092"
   },
   {
     "file": "female-sprint-left-5.png",
     "bbox": [
-      12,
-      8,
-      57,
-      77
+      29,
+      6,
+      77,
+      81
     ],
-    "sha256": "8ccf70033833761abad480716d1ba94893e923439131739dda8889e191290c00"
+    "sha256": "a5db01b2a25437ad0c26ce5ebc5687a97c053c8a665cb4c9fb871b95a2927770"
   },
   {
     "file": "female-sprint-left-6.png",
     "bbox": [
-      13,
-      10,
-      57,
-      78
+      30,
+      9,
+      77,
+      82
     ],
-    "sha256": "6b1fdedd37c072bb99c3da1a2e1819ee60fe324a4c8466f14872662a63e1ed3a"
+    "sha256": "a1366dee5702310f4e04d416fe17837e826d1e66af99030205ca222f3c3dbb7e"
   },
   {
     "file": "female-sprint-left-7.png",
     "bbox": [
-      11,
-      12,
-      47,
-      80
+      27,
+      10,
+      66,
+      84
     ],
-    "sha256": "7ba061580e08043873b263bd455931b6a2bc0a6373112985d13d6941d81949b3"
+    "sha256": "75976d0c09b3401fe12189d4d607b2c25b308cb6eb0c5dd52c56596c5a0f97ad"
   },
   {
     "file": "female-sprint-left-8.png",
     "bbox": [
-      13,
-      9,
-      46,
-      80
+      29,
+      7,
+      66,
+      84
     ],
-    "sha256": "ccde8927a033b4e61f49f0160737f0241a19caddf3c8f801ab3f23885f81e353"
+    "sha256": "b5df1be06065d916b430108763643618d0774f7747d3abd22a01cb44d7300302"
   }
 ]
