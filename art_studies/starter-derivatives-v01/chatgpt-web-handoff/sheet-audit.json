@@ -1,0 +1,306 @@
+[
+  {
+    "name": "male-walk-front",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "7e305c071f9de5a318d350a799b25fdb812a62684af5beabbdecccdc49626e35"
+  },
+  {
+    "name": "male-walk-right",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "8f645efd3dd59a1cf0b51f007130036aeb56f9e6e4f0a951e3680ac34bc6a478"
+  },
+  {
+    "name": "male-walk-back",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "31c1137edfd91cd77289b45e886d4aa4aba186f8c85b02ed560a8fe4029939bf"
+  },
+  {
+    "name": "male-walk-left",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "0e2ed248977872f2ec64292db8a5e7cff82877783400b5ab390b0c19a878d69f"
+  },
+  {
+    "name": "male-sprint-front",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "6f81870f33681e30077657397cee39f86c1b98be0e5976c74b4b18f165f96967"
+  },
+  {
+    "name": "male-sprint-right",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "36738345a59ca8fdf6b8c3c919bbf82794e7a5d0649349db61dab1570a33a842"
+  },
+  {
+    "name": "male-sprint-back",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "9816756c3b6b42acf4bd3af5cabd71d63de2cb2e2c69fd39b19f087ca4533250"
+  },
+  {
+    "name": "male-sprint-left",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "ffeda22c3e0f39fabb56bbfe22b19f027f57e89a67fae3867ae26681db0b1505"
+  },
+  {
+    "name": "female-walk-front",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "912fb5504d59871f96fa3e86b0245ad5d7c1c3322fb892839301056f6ec3bc0e"
+  },
+  {
+    "name": "female-walk-right",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "7bd9547d1db86b25dea6bee2c3e57d25367ab3e6ff32c97fc0afb1b51ebf5f58"
+  },
+  {
+    "name": "female-walk-back",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "679478e536bf2667585501f8cf70e2552655e5caf09830d524b82449afd09f70"
+  },
+  {
+    "name": "female-walk-left",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "026d7eef770f061d532354d236dd1433755a05204c8f17b8559caa80a89e39e9"
+  },
+  {
+    "name": "female-sprint-front",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "71e806ca25b83d5905c76542b09a5c9f1f00c50aa19062df77662022a87d156f"
+  },
+  {
+    "name": "female-sprint-right",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "1a313324103c01ad38b39fef88821329d554a00ef8774774bfc62215007e6369"
+  },
+  {
+    "name": "female-sprint-back",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "89398e7f76fac80608607f7a36f3cf127b4361298eb0af6efb39656caef4dc72"
+  },
+  {
+    "name": "female-sprint-left",
+    "native_size": [
+      384,
+      192
+    ],
+    "upload_size": [
+      1536,
+      768
+    ],
+    "frame_size": [
+      96,
+      96
+    ],
+    "base_cell_px": 48,
+    "frames": 8,
+    "integer_enlargement": 4,
+    "guide_sha256": "e21c35d1866465e2dc1920726119143482f6c2e7e0741e28f9eb96cea71c6a46"
+  }
+]

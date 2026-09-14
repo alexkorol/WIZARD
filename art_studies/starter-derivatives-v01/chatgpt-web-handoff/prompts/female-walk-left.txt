@@ -1,0 +1,9 @@
+Paint Image 1 using the female character in Image 2 as the appearance reference. Use the image-generation tool's transparent-background setting (background="transparent") and output PNG with real alpha.
+
+Image 1 controls the structure: eight walk animation frames, four columns by two rows, read left to right then the next row. Every frame faces screen-left (west). Preserve its exact poses, camera, proportions, figure sizes, frame positions, foot placement and empty margins. Keep the head level and preserve all eight distinct phases. Both hands are empty.
+
+Image 2 controls appearance only: young adult European woman with brown hair in one braid; worn ivory sleeveless short linen tunic with muted russet trim, narrow cord belt and simple open sandals. Match its gritty, realistic Diablo II pre-rendered pixel shading. Keep the same character, outfit and palette throughout. Do not copy its idle poses or clubs.
+
+Pixel contract: Image 1 is a 384×192 native sheet enlarged exactly 4× to 1536×768. Each frame occupies 96×96 native pixels; the game base cell is 48 pixels. Preserve this pixel density: visible square clusters at the guide's four-display-pixel pitch, including faces, hair and edges. Paint simulated low-resolution pixel art directly, without fine-resolution illustration detail or smooth subpixel shading.
+
+Keep the 1536×768 canvas and the original spacing. All empty space, including limb gaps, must be alpha 0. Return only the painted sprite sheet as a genuinely transparent RGBA PNG, with no background, grid, labels or shadows outside the sprites.
