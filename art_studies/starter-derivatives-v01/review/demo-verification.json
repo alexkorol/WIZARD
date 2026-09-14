@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "frameCount": 96,
+  "checks": [
+    "all sprite assets decode",
+    "keyboard movement",
+    "shift sprint selection",
+    "explicit facing mapping",
+    "sex change",
+    "pause and frame stepping",
+    "missing combinations remain empty",
+    "all four diagonal references",
+    "focused walk strip",
+    "nearest-neighbor canvas",
+    "compact layout"
+  ],
+  "pageErrors": [],
+  "badResponses": []
+}

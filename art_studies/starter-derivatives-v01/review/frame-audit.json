@@ -1,0 +1,1634 @@
+[
+  {
+    "id": "male-diagonals-se-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      39,
+      83
+    ],
+    "translation": [
+      -6,
+      -4
+    ],
+    "foreground_preserved": true,
+    "sha256": "44332489804ad3ede3373b22f66827d7bf26fb1749ca119d32ebeda129ebde66"
+  },
+  {
+    "id": "male-diagonals-ne-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      37,
+      86
+    ],
+    "translation": [
+      -12,
+      -6
+    ],
+    "foreground_preserved": true,
+    "sha256": "fc0e95a7db52a7c46bd89bbbcad9aa1dc7f1b3678ffe31f3e5595ffc3f5764e0"
+  },
+  {
+    "id": "male-diagonals-nw-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      42,
+      85
+    ],
+    "translation": [
+      -3,
+      -6
+    ],
+    "foreground_preserved": true,
+    "sha256": "879d8818398a6d18e5c464419c7cb610cb0e30f29c123ceb604a789c8c4f6264"
+  },
+  {
+    "id": "male-diagonals-sw-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      37,
+      86
+    ],
+    "translation": [
+      -2,
+      -7
+    ],
+    "foreground_preserved": true,
+    "sha256": "1b3eb8ce782866adada1307156bf09672841eb930c37e685602d6e720cbe5136"
+  },
+  {
+    "id": "female-diagonals-se-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      40,
+      85
+    ],
+    "translation": [
+      -8,
+      -4
+    ],
+    "foreground_preserved": true,
+    "sha256": "2aede0b714b1044a0756d2266c124469dca5f9b498f8bf1323ede2c01bb5aabd"
+  },
+  {
+    "id": "female-diagonals-ne-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      35,
+      84
+    ],
+    "translation": [
+      -14,
+      -3
+    ],
+    "foreground_preserved": true,
+    "sha256": "368a9f151243eade8d633560c30542ffafb49b30b1df8c04554ef3593fa163ef"
+  },
+  {
+    "id": "female-diagonals-nw-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      39,
+      86
+    ],
+    "translation": [
+      -7,
+      -4
+    ],
+    "foreground_preserved": true,
+    "sha256": "8bf2512023c1f9de656cb4ccd9a6aae9a444fe88c20029fcb3c40005cad8ced8"
+  },
+  {
+    "id": "female-diagonals-sw-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      37,
+      86
+    ],
+    "translation": [
+      -3,
+      -4
+    ],
+    "foreground_preserved": true,
+    "sha256": "1cfe367e770958d4e4d23fd5de3808733783a16cf1f8e600f17e9a6d1e310fbb"
+  },
+  {
+    "id": "female-sprint-front-0",
+    "size": [
+      58,
+      123
+    ],
+    "occupied": [
+      51,
+      119
+    ],
+    "translation": [
+      -10,
+      -23
+    ],
+    "foreground_preserved": true,
+    "sha256": "6eb64a6dad9282a935f17be3f79666ba9ecdf49cbb2fcebf79ad822d0f103fe0"
+  },
+  {
+    "id": "female-sprint-front-1",
+    "size": [
+      58,
+      123
+    ],
+    "occupied": [
+      52,
+      118
+    ],
+    "translation": [
+      -10,
+      -23
+    ],
+    "foreground_preserved": true,
+    "sha256": "30f2c78944f03d7dd549844ab9e6b5b4d93246abce6f2909da97052191f4036a"
+  },
+  {
+    "id": "female-sprint-front-2",
+    "size": [
+      58,
+      123
+    ],
+    "occupied": [
+      51,
+      117
+    ],
+    "translation": [
+      -11,
+      -23
+    ],
+    "foreground_preserved": true,
+    "sha256": "131124e615ec9698bcdaa582ee564fd007f96de7c28a3efcb345821677128990"
+  },
+  {
+    "id": "female-sprint-front-3",
+    "size": [
+      58,
+      123
+    ],
+    "occupied": [
+      49,
+      117
+    ],
+    "translation": [
+      -10,
+      -23
+    ],
+    "foreground_preserved": true,
+    "sha256": "7ce3bb3e0d19a7353b9d97bb9d54f483d8b0ac108b350fdb12e251f3d32b091e"
+  },
+  {
+    "id": "female-sprint-right-0",
+    "size": [
+      69,
+      124
+    ],
+    "occupied": [
+      65,
+      116
+    ],
+    "translation": [
+      -4,
+      -16
+    ],
+    "foreground_preserved": true,
+    "sha256": "665ed8863dfc4b4aa798a6018ae434ab1e6cdeee9eb0649636c3398bbae54c26"
+  },
+  {
+    "id": "female-sprint-right-1",
+    "size": [
+      69,
+      124
+    ],
+    "occupied": [
+      58,
+      117
+    ],
+    "translation": [
+      -4,
+      -16
+    ],
+    "foreground_preserved": true,
+    "sha256": "22194bd3d347e54909021593030f4e529e4e4e59e8fa284fa542937efd26f8e7"
+  },
+  {
+    "id": "female-sprint-right-2",
+    "size": [
+      69,
+      124
+    ],
+    "occupied": [
+      64,
+      119
+    ],
+    "translation": [
+      -5,
+      -16
+    ],
+    "foreground_preserved": true,
+    "sha256": "d0d7b86e00c0f8546d19f01044ad6c2f84ed7c680157c3457b081a70739075f4"
+  },
+  {
+    "id": "female-sprint-right-3",
+    "size": [
+      69,
+      124
+    ],
+    "occupied": [
+      60,
+      117
+    ],
+    "translation": [
+      -4,
+      -16
+    ],
+    "foreground_preserved": true,
+    "sha256": "0bbb057f37d68401dc8819f07dad035f0a49b21372b2d0385a341cbb346e30c7"
+  },
+  {
+    "id": "female-sprint-back-0",
+    "size": [
+      62,
+      135
+    ],
+    "occupied": [
+      53,
+      127
+    ],
+    "translation": [
+      -6,
+      -14
+    ],
+    "foreground_preserved": true,
+    "sha256": "9751f0488089d527404448851679de299e7eb9df71e3d03734c534eb009b9cec"
+  },
+  {
+    "id": "female-sprint-back-1",
+    "size": [
+      62,
+      135
+    ],
+    "occupied": [
+      52,
+      129
+    ],
+    "translation": [
+      -6,
+      -14
+    ],
+    "foreground_preserved": true,
+    "sha256": "9c86c714f0de54c4b587019d5928c2e41f9f2fa6d6ff3250593eff6c1e15cfdb"
+  },
+  {
+    "id": "female-sprint-back-2",
+    "size": [
+      62,
+      135
+    ],
+    "occupied": [
+      54,
+      130
+    ],
+    "translation": [
+      -7,
+      -14
+    ],
+    "foreground_preserved": true,
+    "sha256": "ca71c71e8d10be6060e2b058958676021806daebc7daefd63306ee5df9ab9a4a"
+  },
+  {
+    "id": "female-sprint-back-3",
+    "size": [
+      62,
+      135
+    ],
+    "occupied": [
+      48,
+      127
+    ],
+    "translation": [
+      -6,
+      -14
+    ],
+    "foreground_preserved": true,
+    "sha256": "421e0c259ea90aaf427c7b78649e68956b057207e0797ba28e257f213f5d0693"
+  },
+  {
+    "id": "female-sprint-left-0",
+    "size": [
+      69,
+      122
+    ],
+    "occupied": [
+      62,
+      118
+    ],
+    "translation": [
+      -1,
+      -17
+    ],
+    "foreground_preserved": true,
+    "sha256": "05bb325cb463efb97a73d1b68b273507c93261448344a0198b56a93fa3709a77"
+  },
+  {
+    "id": "female-sprint-left-1",
+    "size": [
+      69,
+      122
+    ],
+    "occupied": [
+      59,
+      115
+    ],
+    "translation": [
+      -1,
+      -17
+    ],
+    "foreground_preserved": true,
+    "sha256": "b7245ca710602568e6078143f9f8e1832c3ed18fcba507acb271b8615ef021c0"
+  },
+  {
+    "id": "female-sprint-left-2",
+    "size": [
+      69,
+      122
+    ],
+    "occupied": [
+      63,
+      118
+    ],
+    "translation": [
+      -2,
+      -17
+    ],
+    "foreground_preserved": true,
+    "sha256": "82d700a9b2dcea61145b314ae214b3fd766963454b6bc73f7fd9e644fab9a301"
+  },
+  {
+    "id": "female-sprint-left-3",
+    "size": [
+      69,
+      122
+    ],
+    "occupied": [
+      58,
+      115
+    ],
+    "translation": [
+      -1,
+      -17
+    ],
+    "foreground_preserved": true,
+    "sha256": "f380e4777e9fa34d08205fa070bd110b410c6b6363ba158489b854b7901c771f"
+  },
+  {
+    "id": "female-walk-front-0",
+    "size": [
+      58,
+      116
+    ],
+    "occupied": [
+      51,
+      109
+    ],
+    "translation": [
+      -14,
+      -9
+    ],
+    "foreground_preserved": true,
+    "sha256": "9e900dfeb3044514998d4d0dbe3f464646bac229934646a521560193e6c49c95"
+  },
+  {
+    "id": "female-walk-front-1",
+    "size": [
+      58,
+      116
+    ],
+    "occupied": [
+      51,
+      111
+    ],
+    "translation": [
+      -14,
+      -9
+    ],
+    "foreground_preserved": true,
+    "sha256": "5270086a2bd30b9d732a8939bb2768220215ba5ce2e9c84983f792bc510b3123"
+  },
+  {
+    "id": "female-walk-front-2",
+    "size": [
+      58,
+      116
+    ],
+    "occupied": [
+      51,
+      112
+    ],
+    "translation": [
+      -14,
+      -9
+    ],
+    "foreground_preserved": true,
+    "sha256": "a2c1e8ffbc36f02376987ed38dcc4a90705e664043810f1ac252201bb7328350"
+  },
+  {
+    "id": "female-walk-front-3",
+    "size": [
+      58,
+      116
+    ],
+    "occupied": [
+      52,
+      111
+    ],
+    "translation": [
+      -14,
+      -9
+    ],
+    "foreground_preserved": true,
+    "sha256": "30e6de61dc57945093e3877959eaf9ac75268654900f0fc1425d1c46e850f897"
+  },
+  {
+    "id": "female-walk-right-0",
+    "size": [
+      62,
+      115
+    ],
+    "occupied": [
+      54,
+      110
+    ],
+    "translation": [
+      -14,
+      -4
+    ],
+    "foreground_preserved": true,
+    "sha256": "84190e36042b92275b4fe951d18722c894a75685a3529016d486a75731624005"
+  },
+  {
+    "id": "female-walk-right-1",
+    "size": [
+      62,
+      115
+    ],
+    "occupied": [
+      56,
+      110
+    ],
+    "translation": [
+      -14,
+      -4
+    ],
+    "foreground_preserved": true,
+    "sha256": "9655ca975dcc5182d1e24592caf46a370332151aa72721819c06a7a6a96d9206"
+  },
+  {
+    "id": "female-walk-right-2",
+    "size": [
+      62,
+      115
+    ],
+    "occupied": [
+      53,
+      111
+    ],
+    "translation": [
+      -14,
+      -4
+    ],
+    "foreground_preserved": true,
+    "sha256": "ff38184d4deddef86a6afb0aaa8d616a9f779c1620a09754dbfd1cc024f4602a"
+  },
+  {
+    "id": "female-walk-right-3",
+    "size": [
+      62,
+      115
+    ],
+    "occupied": [
+      58,
+      109
+    ],
+    "translation": [
+      -14,
+      -4
+    ],
+    "foreground_preserved": true,
+    "sha256": "e51e0e1b723d05c1d16ae937ad45d2c0ca4390aadcad58c7da39a7b251ca59cb"
+  },
+  {
+    "id": "female-walk-back-0",
+    "size": [
+      59,
+      117
+    ],
+    "occupied": [
+      50,
+      112
+    ],
+    "translation": [
+      -14,
+      -3
+    ],
+    "foreground_preserved": true,
+    "sha256": "5eec5c13416d1c3e30a14dbcbca2e23dfc185995deb13143921bf3a4b48492ef"
+  },
+  {
+    "id": "female-walk-back-1",
+    "size": [
+      59,
+      117
+    ],
+    "occupied": [
+      51,
+      111
+    ],
+    "translation": [
+      -14,
+      -3
+    ],
+    "foreground_preserved": true,
+    "sha256": "4695d908d5a8778be75b4215b868c93b966a88863981eba3e5051bc2bfe0ec5a"
+  },
+  {
+    "id": "female-walk-back-2",
+    "size": [
+      59,
+      117
+    ],
+    "occupied": [
+      53,
+      112
+    ],
+    "translation": [
+      -14,
+      -3
+    ],
+    "foreground_preserved": true,
+    "sha256": "dbc63c15935cc2295fdaf49c22e5ffe69698bd2d3fdd568e3183235b0efa93f3"
+  },
+  {
+    "id": "female-walk-back-3",
+    "size": [
+      59,
+      117
+    ],
+    "occupied": [
+      51,
+      112
+    ],
+    "translation": [
+      -14,
+      -3
+    ],
+    "foreground_preserved": true,
+    "sha256": "f048e3de8f57cbe6db7197579e0e2e00818df8fca77467e2d2b5b1fa4935d4c5"
+  },
+  {
+    "id": "female-walk-left-0",
+    "size": [
+      66,
+      115
+    ],
+    "occupied": [
+      55,
+      111
+    ],
+    "translation": [
+      -10,
+      -1
+    ],
+    "foreground_preserved": true,
+    "sha256": "5bdef18f776052f8dba87500d0fe77437f44e86fe8e00861926119af669a30ac"
+  },
+  {
+    "id": "female-walk-left-1",
+    "size": [
+      66,
+      115
+    ],
+    "occupied": [
+      58,
+      111
+    ],
+    "translation": [
+      -10,
+      -1
+    ],
+    "foreground_preserved": true,
+    "sha256": "2ea8bae4704b71eb63c03c824592bdf6616e01c0b53f0d21339e03fc4d51d935"
+  },
+  {
+    "id": "female-walk-left-2",
+    "size": [
+      66,
+      115
+    ],
+    "occupied": [
+      55,
+      111
+    ],
+    "translation": [
+      -10,
+      -1
+    ],
+    "foreground_preserved": true,
+    "sha256": "fc1670705644c71a0142d0c60b5b566a04ae23a98b6c11f15f8cd101241683cc"
+  },
+  {
+    "id": "female-walk-left-3",
+    "size": [
+      66,
+      115
+    ],
+    "occupied": [
+      59,
+      111
+    ],
+    "translation": [
+      -10,
+      -1
+    ],
+    "foreground_preserved": true,
+    "sha256": "9386dc4f81d8788092fb9fc6089b8756b2988837f3562ca45c334bd7e446486a"
+  },
+  {
+    "id": "male-focused-walk-right-0",
+    "size": [
+      107,
+      169
+    ],
+    "occupied": [
+      101,
+      164
+    ],
+    "translation": [
+      -18,
+      -7
+    ],
+    "foreground_preserved": true,
+    "sha256": "f128e5b45da88fd215a0744e27b69e1a9fd42bba2a15f42a706b2d8bd1cb11a5"
+  },
+  {
+    "id": "male-focused-walk-right-1",
+    "size": [
+      107,
+      169
+    ],
+    "occupied": [
+      73,
+      165
+    ],
+    "translation": [
+      -18,
+      -7
+    ],
+    "foreground_preserved": true,
+    "sha256": "185598b84ade11970598128e36eadf3ee724e1a14ab32de809f9c53e9cf13e39"
+  },
+  {
+    "id": "male-focused-walk-right-2",
+    "size": [
+      107,
+      169
+    ],
+    "occupied": [
+      101,
+      165
+    ],
+    "translation": [
+      -18,
+      -7
+    ],
+    "foreground_preserved": true,
+    "sha256": "f76c8069e4aa34c4a4e315f915bc970254389d28cc035b3deff2c1aaffd50984"
+  },
+  {
+    "id": "male-focused-walk-right-3",
+    "size": [
+      107,
+      169
+    ],
+    "occupied": [
+      79,
+      164
+    ],
+    "translation": [
+      -18,
+      -7
+    ],
+    "foreground_preserved": true,
+    "sha256": "358e1134ca7b61ebfee7237089e28e41558ad0e49a90cd0724dcb6f87b59a9a1"
+  },
+  {
+    "id": "female-focused-walk-right-0",
+    "size": [
+      107,
+      158
+    ],
+    "occupied": [
+      100,
+      154
+    ],
+    "translation": [
+      -18,
+      -5
+    ],
+    "foreground_preserved": true,
+    "sha256": "608ce907d188f33a76d0508e47d2f62398789494d832555f5dfbc6e0cd49090e"
+  },
+  {
+    "id": "female-focused-walk-right-1",
+    "size": [
+      107,
+      158
+    ],
+    "occupied": [
+      72,
+      154
+    ],
+    "translation": [
+      -18,
+      -5
+    ],
+    "foreground_preserved": true,
+    "sha256": "cb6c26636945d05c27f0b6009c241f55c57bfd7957d15f6b553ebd2b1a72caac"
+  },
+  {
+    "id": "female-focused-walk-right-2",
+    "size": [
+      107,
+      158
+    ],
+    "occupied": [
+      101,
+      154
+    ],
+    "translation": [
+      -18,
+      -5
+    ],
+    "foreground_preserved": true,
+    "sha256": "db807e2698efd629c4ea4dc3f2abb9f52be340747aa09ab8198df78e4ef68951"
+  },
+  {
+    "id": "female-focused-walk-right-3",
+    "size": [
+      107,
+      158
+    ],
+    "occupied": [
+      74,
+      154
+    ],
+    "translation": [
+      -18,
+      -5
+    ],
+    "foreground_preserved": true,
+    "sha256": "092486a47ffc944dc96c946fd3bfeb19bfb0f39c1aeb54842776bb2f176fface"
+  },
+  {
+    "id": "male-sprint-front-0",
+    "size": [
+      68,
+      116
+    ],
+    "occupied": [
+      52,
+      111
+    ],
+    "translation": [
+      -12,
+      -14
+    ],
+    "foreground_preserved": true,
+    "sha256": "e750e92f7a30ddb2fe8de148c29c5d0a0e8f597386c8f217accacaf36c69bf4f"
+  },
+  {
+    "id": "male-sprint-front-1",
+    "size": [
+      68,
+      116
+    ],
+    "occupied": [
+      52,
+      108
+    ],
+    "translation": [
+      -12,
+      -14
+    ],
+    "foreground_preserved": true,
+    "sha256": "eeb966bc37224161c101ab75f93d6c97bd2c6e5b3183f78cfc13ba9904468b53"
+  },
+  {
+    "id": "male-sprint-front-2",
+    "size": [
+      68,
+      116
+    ],
+    "occupied": [
+      48,
+      110
+    ],
+    "translation": [
+      -12,
+      -14
+    ],
+    "foreground_preserved": true,
+    "sha256": "d903807fc8cc390ab95af2ff2c6fb10bc1963e7b7ffc7b8f648efb31892579c2"
+  },
+  {
+    "id": "male-sprint-front-3",
+    "size": [
+      68,
+      116
+    ],
+    "occupied": [
+      49,
+      111
+    ],
+    "translation": [
+      -12,
+      -14
+    ],
+    "foreground_preserved": true,
+    "sha256": "d6c9171df83fd46b6acadd246bcd78e8a2508150f81a42295cd2b58a3df5b4e0"
+  },
+  {
+    "id": "male-sprint-right-0",
+    "size": [
+      94,
+      115
+    ],
+    "occupied": [
+      78,
+      111
+    ],
+    "translation": [
+      6,
+      -10
+    ],
+    "foreground_preserved": true,
+    "sha256": "2d01cd69df3062b8d1c34700de8f26385bd1e28497183b2763a86a1377c89044"
+  },
+  {
+    "id": "male-sprint-right-1",
+    "size": [
+      94,
+      115
+    ],
+    "occupied": [
+      71,
+      111
+    ],
+    "translation": [
+      7,
+      -10
+    ],
+    "foreground_preserved": true,
+    "sha256": "f0a0f01e8b1ecffb50ad0261879eb24e135953c0c0d91e76a4ebdda92c8509f7"
+  },
+  {
+    "id": "male-sprint-right-2",
+    "size": [
+      94,
+      115
+    ],
+    "occupied": [
+      83,
+      111
+    ],
+    "translation": [
+      2,
+      -10
+    ],
+    "foreground_preserved": true,
+    "sha256": "0436353e3dc914efd410a29be5450e90a87c03ed74ee4a3a4ceeee4bfa2cdd8a"
+  },
+  {
+    "id": "male-sprint-right-3",
+    "size": [
+      94,
+      115
+    ],
+    "occupied": [
+      74,
+      111
+    ],
+    "translation": [
+      6,
+      -10
+    ],
+    "foreground_preserved": true,
+    "sha256": "268463dc07a9237201eeeab03d1a3300f20ca96e170ea41d78fbc81f5bf19022"
+  },
+  {
+    "id": "male-sprint-back-0",
+    "size": [
+      66,
+      122
+    ],
+    "occupied": [
+      51,
+      116
+    ],
+    "translation": [
+      -10,
+      -8
+    ],
+    "foreground_preserved": true,
+    "sha256": "efb4733c9d39413cf133a42dc7b18cf3a8394b39bd508aba13225873a3a58e6e"
+  },
+  {
+    "id": "male-sprint-back-1",
+    "size": [
+      66,
+      122
+    ],
+    "occupied": [
+      50,
+      115
+    ],
+    "translation": [
+      -10,
+      -8
+    ],
+    "foreground_preserved": true,
+    "sha256": "99b347b9ec7745cc1179bedaedd7d8455d74894d67bcb96c4b394741e31f435e"
+  },
+  {
+    "id": "male-sprint-back-2",
+    "size": [
+      66,
+      122
+    ],
+    "occupied": [
+      51,
+      117
+    ],
+    "translation": [
+      -10,
+      -8
+    ],
+    "foreground_preserved": true,
+    "sha256": "86be2dea22dcf5745ece7b162e351e21ba6afe71d185f56c386681538fe1ed33"
+  },
+  {
+    "id": "male-sprint-back-3",
+    "size": [
+      66,
+      122
+    ],
+    "occupied": [
+      49,
+      118
+    ],
+    "translation": [
+      -10,
+      -8
+    ],
+    "foreground_preserved": true,
+    "sha256": "beff5acbd538216f2677ee79b1f19173cff97840693634ee8ab4f634b532e808"
+  },
+  {
+    "id": "male-sprint-left-0",
+    "size": [
+      90,
+      114
+    ],
+    "occupied": [
+      78,
+      108
+    ],
+    "translation": [
+      -1,
+      -5
+    ],
+    "foreground_preserved": true,
+    "sha256": "578938d629c82c3f976ba17e5f226cfb77d57d5dc99fe5705528fa00de74a6c5"
+  },
+  {
+    "id": "male-sprint-left-1",
+    "size": [
+      90,
+      114
+    ],
+    "occupied": [
+      70,
+      109
+    ],
+    "translation": [
+      3,
+      -5
+    ],
+    "foreground_preserved": true,
+    "sha256": "3b1ab1a4ce2a3d6224d80699c302d01589184e577a1c62a9734848d8941fd7a0"
+  },
+  {
+    "id": "male-sprint-left-2",
+    "size": [
+      90,
+      114
+    ],
+    "occupied": [
+      78,
+      108
+    ],
+    "translation": [
+      -1,
+      -5
+    ],
+    "foreground_preserved": true,
+    "sha256": "665d7b155bfdbe078ea68a2c52b010d415ff559d47714cbae3d2fd5cd9e688ed"
+  },
+  {
+    "id": "male-sprint-left-3",
+    "size": [
+      90,
+      114
+    ],
+    "occupied": [
+      73,
+      110
+    ],
+    "translation": [
+      -1,
+      -5
+    ],
+    "foreground_preserved": true,
+    "sha256": "ea47497cf5a4085eec1048a3566b06e916aa53836fdec2f4411f4277c39bc676"
+  },
+  {
+    "id": "male-walk-front-0",
+    "size": [
+      80,
+      126
+    ],
+    "occupied": [
+      57,
+      121
+    ],
+    "translation": [
+      -3,
+      -8
+    ],
+    "foreground_preserved": true,
+    "sha256": "c6ad43ca2a9207aee82d33262b0b05a1be3c6e5f32a7586368e1c4e8856250ef"
+  },
+  {
+    "id": "male-walk-front-1",
+    "size": [
+      80,
+      126
+    ],
+    "occupied": [
+      53,
+      120
+    ],
+    "translation": [
+      -3,
+      -8
+    ],
+    "foreground_preserved": true,
+    "sha256": "c97b3f29c0a744d8271d9ec3213ef11cb6663ee9e4fa92708e2907ddcc3ea457"
+  },
+  {
+    "id": "male-walk-front-2",
+    "size": [
+      80,
+      126
+    ],
+    "occupied": [
+      53,
+      121
+    ],
+    "translation": [
+      -3,
+      -8
+    ],
+    "foreground_preserved": true,
+    "sha256": "fd0178ae6544285374aaf7b88c1be1e6dafb4ad02c1c495675cc8d77cc92c42f"
+  },
+  {
+    "id": "male-walk-front-3",
+    "size": [
+      80,
+      126
+    ],
+    "occupied": [
+      55,
+      120
+    ],
+    "translation": [
+      -3,
+      -8
+    ],
+    "foreground_preserved": true,
+    "sha256": "ae31b052362e722f7cfc862b4a15db6df5a416ebe5257d42ca7f21bf1ff8da4c"
+  },
+  {
+    "id": "male-walk-right-0",
+    "size": [
+      83,
+      120
+    ],
+    "occupied": [
+      63,
+      113
+    ],
+    "translation": [
+      -3,
+      -2
+    ],
+    "foreground_preserved": true,
+    "sha256": "0875689fe86ea4bbdbd808857992ed5c65d5dec230a122b69b4cdd84b9e84690"
+  },
+  {
+    "id": "male-walk-right-1",
+    "size": [
+      83,
+      120
+    ],
+    "occupied": [
+      61,
+      115
+    ],
+    "translation": [
+      -3,
+      -2
+    ],
+    "foreground_preserved": true,
+    "sha256": "d74691001af47663cedee6a591f1ebfff506b88f61603a9c5c7bf64537075934"
+  },
+  {
+    "id": "male-walk-right-2",
+    "size": [
+      83,
+      120
+    ],
+    "occupied": [
+      63,
+      114
+    ],
+    "translation": [
+      -3,
+      -2
+    ],
+    "foreground_preserved": true,
+    "sha256": "99a2775832532f0f2c1f5c8ed8c0c88380309050a874ba3a3850435c02449d0f"
+  },
+  {
+    "id": "male-walk-right-3",
+    "size": [
+      83,
+      120
+    ],
+    "occupied": [
+      60,
+      111
+    ],
+    "translation": [
+      -3,
+      -2
+    ],
+    "foreground_preserved": true,
+    "sha256": "a817d623572cd0596d4973bfe80c2950eb25430d51fd2b24e41cab1ba1cf1027"
+  },
+  {
+    "id": "male-walk-back-0",
+    "size": [
+      78,
+      123
+    ],
+    "occupied": [
+      53,
+      118
+    ],
+    "translation": [
+      -2,
+      -1
+    ],
+    "foreground_preserved": true,
+    "sha256": "6e5524b9cefeae9d32a6d881e7b12a3d7bc2b97ca46e91e09196386399acde9c"
+  },
+  {
+    "id": "male-walk-back-1",
+    "size": [
+      78,
+      123
+    ],
+    "occupied": [
+      54,
+      118
+    ],
+    "translation": [
+      -2,
+      -1
+    ],
+    "foreground_preserved": true,
+    "sha256": "45c0f35c04d63b13c5f7a198a5c26138598f20d413267ae0318470318f200e72"
+  },
+  {
+    "id": "male-walk-back-2",
+    "size": [
+      78,
+      123
+    ],
+    "occupied": [
+      51,
+      118
+    ],
+    "translation": [
+      -2,
+      -1
+    ],
+    "foreground_preserved": true,
+    "sha256": "f52f8134aa4311e9b39a684edd25a14b26daf0341597d8d3e22bdf9e794f2081"
+  },
+  {
+    "id": "male-walk-back-3",
+    "size": [
+      78,
+      123
+    ],
+    "occupied": [
+      56,
+      119
+    ],
+    "translation": [
+      -2,
+      -1
+    ],
+    "foreground_preserved": true,
+    "sha256": "e7f146154a09ae8623e8e3f2fd8ea4743755f92b20df003d94bcee9553ea5430"
+  },
+  {
+    "id": "male-walk-left-0",
+    "size": [
+      84,
+      120
+    ],
+    "occupied": [
+      64,
+      111
+    ],
+    "translation": [
+      0,
+      1
+    ],
+    "foreground_preserved": true,
+    "sha256": "6026a686da138d3eb042b674bad28315d8b6a9a81de6380c1d50b81ab0e9fe09"
+  },
+  {
+    "id": "male-walk-left-1",
+    "size": [
+      84,
+      120
+    ],
+    "occupied": [
+      63,
+      115
+    ],
+    "translation": [
+      0,
+      1
+    ],
+    "foreground_preserved": true,
+    "sha256": "5ed32384212ed20a7eb2d9bea2c41c1328653f11b9ee3516ec56227cd9d50684"
+  },
+  {
+    "id": "male-walk-left-2",
+    "size": [
+      84,
+      120
+    ],
+    "occupied": [
+      58,
+      115
+    ],
+    "translation": [
+      0,
+      1
+    ],
+    "foreground_preserved": true,
+    "sha256": "fcb7bd5e9ba19b3112d01a91ba3a95eddc7a3a507b77f943e85f6cc27e467255"
+  },
+  {
+    "id": "male-walk-left-3",
+    "size": [
+      84,
+      120
+    ],
+    "occupied": [
+      64,
+      113
+    ],
+    "translation": [
+      0,
+      1
+    ],
+    "foreground_preserved": true,
+    "sha256": "fb7778f95788bea6cf8aab60c5f195ad2143f7d15a62d9a6dbcb1ce884616cf1"
+  },
+  {
+    "id": "male-unarmed-front-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      40,
+      84
+    ],
+    "translation": [
+      -3,
+      -4
+    ],
+    "foreground_preserved": true,
+    "sha256": "f359ffbc0ace9dcde4310eeac1678ce748d73569eeeed1fef137ceee5a29eef3"
+  },
+  {
+    "id": "male-unarmed-right-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      24,
+      82
+    ],
+    "translation": [
+      -6,
+      -1
+    ],
+    "foreground_preserved": true,
+    "sha256": "66ba7ae64c94196ae0a5f3534c08e800f74ed4b82caa15087cf0b36ea44e8e5f"
+  },
+  {
+    "id": "male-unarmed-back-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      40,
+      81
+    ],
+    "translation": [
+      -3,
+      -1
+    ],
+    "foreground_preserved": true,
+    "sha256": "dd2c28f808cafacacc0032bcb11c2ca1fa20fe96090a7075c3b9cd58249bb7ee"
+  },
+  {
+    "id": "male-unarmed-left-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      24,
+      81
+    ],
+    "translation": [
+      -3,
+      -1
+    ],
+    "foreground_preserved": true,
+    "sha256": "21c679cc79d66480cedee60b41730961d72edbf9e7483d2ca71c49a0b6b25380"
+  },
+  {
+    "id": "female-unarmed-front-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      40,
+      80
+    ],
+    "translation": [
+      -3,
+      -1
+    ],
+    "foreground_preserved": true,
+    "sha256": "bb6cd75352c19b065ecc8c07f2f174da30f762cd78fee1543d6c71a364f17db7"
+  },
+  {
+    "id": "female-unarmed-right-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      25,
+      79
+    ],
+    "translation": [
+      -8,
+      0
+    ],
+    "foreground_preserved": true,
+    "sha256": "a6aedebccb2d777df53140eaf8c29df8e1597a8b03e2e64c52f52912bd58b0d8"
+  },
+  {
+    "id": "female-unarmed-back-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      37,
+      79
+    ],
+    "translation": [
+      -5,
+      1
+    ],
+    "foreground_preserved": true,
+    "sha256": "c138f484b25657318736c57ced95bbc990457cd51530e91df5e760ec4aca287b"
+  },
+  {
+    "id": "female-unarmed-left-0",
+    "size": [
+      48,
+      96
+    ],
+    "occupied": [
+      26,
+      78
+    ],
+    "translation": [
+      -2,
+      1
+    ],
+    "foreground_preserved": true,
+    "sha256": "713bd0455056ea9fc1fde00b303690da7bb90f371fbdfa2ad8ab5a4ebe14f38f"
+  },
+  {
+    "id": "male-equipment-empty-front-0",
+    "size": [
+      59,
+      136
+    ],
+    "occupied": [
+      55,
+      132
+    ],
+    "translation": [
+      -6,
+      -20
+    ],
+    "foreground_preserved": true,
+    "sha256": "840a06477f59b6416b1bca6a17c3be079c53d16b6e8755e28b98e6ce93b2fde2"
+  },
+  {
+    "id": "male-darts-front-0",
+    "size": [
+      57,
+      136
+    ],
+    "occupied": [
+      53,
+      132
+    ],
+    "translation": [
+      -11,
+      -20
+    ],
+    "foreground_preserved": true,
+    "sha256": "53683cf77944122a0b007d9fa41184a398739491765b85901efd82c0b78cc800"
+  },
+  {
+    "id": "male-flint-front-0",
+    "size": [
+      58,
+      136
+    ],
+    "occupied": [
+      54,
+      132
+    ],
+    "translation": [
+      -7,
+      -20
+    ],
+    "foreground_preserved": true,
+    "sha256": "5e1f664216c1928d94c9ca90b6f792e37a71cc940ade4e90b79dbaca2d0abd5a"
+  },
+  {
+    "id": "male-bowl-front-0",
+    "size": [
+      56,
+      136
+    ],
+    "occupied": [
+      52,
+      132
+    ],
+    "translation": [
+      -5,
+      -20
+    ],
+    "foreground_preserved": true,
+    "sha256": "decfa990acd039b7070c11f1ac6c8a421aeee5ae74eabe706af97c724ddcb627"
+  },
+  {
+    "id": "female-equipment-empty-front-0",
+    "size": [
+      57,
+      134
+    ],
+    "occupied": [
+      53,
+      130
+    ],
+    "translation": [
+      -8,
+      -16
+    ],
+    "foreground_preserved": true,
+    "sha256": "3b0a3d8342f33dae7984dfec3c7ec39046f50e404df059b130d004224a86b58d"
+  },
+  {
+    "id": "female-darts-front-0",
+    "size": [
+      53,
+      134
+    ],
+    "occupied": [
+      49,
+      130
+    ],
+    "translation": [
+      -14,
+      -16
+    ],
+    "foreground_preserved": true,
+    "sha256": "b4d60cd1768023fddf9c2c3abf408a45bda8394c3b3bbf36ddc7be5f46620698"
+  },
+  {
+    "id": "female-flint-front-0",
+    "size": [
+      55,
+      134
+    ],
+    "occupied": [
+      51,
+      130
+    ],
+    "translation": [
+      -10,
+      -16
+    ],
+    "foreground_preserved": true,
+    "sha256": "2024393b9744ec2268f3a3c88f0a0b34df9c73eaa574e8ffbbab23aba33b0b25"
+  },
+  {
+    "id": "female-bowl-front-0",
+    "size": [
+      53,
+      134
+    ],
+    "occupied": [
+      49,
+      130
+    ],
+    "translation": [
+      -7,
+      -16
+    ],
+    "foreground_preserved": true,
+    "sha256": "69e1c06d609b4dae354f4e2016ed6ca052a119defaae3a4c4c7154a33f755290"
+  }
+]

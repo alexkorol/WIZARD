@@ -1,0 +1,12 @@
+{
+  "mode": "RGBA",
+  "size": [
+    1024,
+    1536
+  ],
+  "png_color_type": 6,
+  "sha256": "f5aaccc3b669e8d8e31fdb378b611543be55213e810baf3004796592c3e60a67",
+  "first_pass_mode": "RGB",
+  "background_extraction_edit": true,
+  "native_alpha": true
+}

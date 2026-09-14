@@ -1,0 +1,1 @@
+Edit target: Image 1. Return these same sprites as a transparent PNG with true alpha. Remove the entire checkerboard background to alpha zero, including the spaces between limbs. Preserve every character, pose, cell position and coarse pixel detail. The output background must be truly transparent. Export RGBA with native transparency.

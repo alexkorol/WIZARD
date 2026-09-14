@@ -1,0 +1,216 @@
+{
+  "cell_size": 3,
+  "offset": [
+    1,
+    1
+  ],
+  "metrics": {
+    "cell_size": 3,
+    "offset": [
+      1,
+      1
+    ],
+    "percent_diff_total": 30.157216389973957,
+    "percent_diff_core": 29.906868585043988,
+    "percent_diff_halo": 30.243825199020144,
+    "percent_diff_outside": 0.0,
+    "percent_diff": 30.157216389973957,
+    "grid_ratio": 0.0029296875,
+    "warnings": [
+      "Core mismatch 7.7% - inspect alignment.",
+      "Grid size is very small (may indicate noise)."
+    ],
+    "percent_diff_core_tolerant": 7.723721590909091,
+    "percent_diff_total_tolerant": 9.400177001953125,
+    "intra_cell_variance": 180.73019409179688,
+    "mode": "global",
+    "grid_kind": "rigid",
+    "regions": 1
+  },
+  "debug": {
+    "candidates": [
+      {
+        "size": 8,
+        "source": "fine",
+        "offset": [
+          7,
+          1
+        ],
+        "score": 1.7095954289099002,
+        "variance": 987.0376586914062,
+        "gated_out": true
+      },
+      {
+        "size": 7,
+        "source": "fine",
+        "offset": [
+          5,
+          4
+        ],
+        "score": 1.693469704805033,
+        "variance": 894.3331298828125,
+        "gated_out": true
+      },
+      {
+        "size": 6,
+        "source": "fine",
+        "offset": [
+          4,
+          4
+        ],
+        "score": 1.6683636104977952,
+        "variance": 767.5259399414062,
+        "gated_out": true
+      },
+      {
+        "size": 2,
+        "source": "autocorr",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 1.659752570318812,
+        "variance": 204.66110229492188,
+        "gated_out": false
+      },
+      {
+        "size": 5,
+        "source": "fine",
+        "offset": [
+          4,
+          1
+        ],
+        "score": 1.6566446039148233,
+        "variance": 646.0479736328125,
+        "gated_out": true
+      },
+      {
+        "size": 4,
+        "source": "fine",
+        "offset": [
+          3,
+          2
+        ],
+        "score": 1.6216897507402983,
+        "variance": 513.6483154296875,
+        "gated_out": false
+      },
+      {
+        "size": 3,
+        "source": "fine",
+        "offset": [
+          1,
+          1
+        ],
+        "score": 1.6049833648014937,
+        "variance": 367.7738342285156,
+        "gated_out": false
+      },
+      {
+        "size": 118,
+        "source": "fold",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 0.7934889193698966,
+        "variance": 5123.775390625,
+        "gated_out": true
+      },
+      {
+        "size": 120,
+        "source": "fold",
+        "offset": [
+          76,
+          95
+        ],
+        "score": 0.7459912299793299,
+        "variance": 5158.10009765625,
+        "gated_out": true
+      },
+      {
+        "size": 149,
+        "source": "fold",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 0.36337491833033314,
+        "variance": 6228.32275390625,
+        "gated_out": true
+      },
+      {
+        "size": 153,
+        "source": "fold",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 0.31152493594810826,
+        "variance": 6205.55615234375,
+        "gated_out": true
+      },
+      {
+        "size": 159,
+        "source": "fold",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 0.24487966522655846,
+        "variance": 6225.921875,
+        "gated_out": true
+      },
+      {
+        "size": 160,
+        "source": "fold",
+        "offset": [
+          112,
+          102
+        ],
+        "score": 0.24437065026325736,
+        "variance": 6855.3515625,
+        "gated_out": true
+      },
+      {
+        "size": 161,
+        "source": "fold",
+        "offset": [
+          0,
+          0
+        ],
+        "score": 0.22788669620811158,
+        "variance": 6366.125,
+        "gated_out": true
+      },
+      {
+        "size": 186,
+        "source": "fold",
+        "offset": [
+          114,
+          184
+        ],
+        "score": 0.11954118733689131,
+        "variance": 6943.39697265625,
+        "gated_out": true
+      }
+    ],
+    "mesh_candidates": [],
+    "median_score": 1.6216897507402983,
+    "peaked": false,
+    "rigid_pick": {
+      "size": 3,
+      "score": 1.6049833648014937
+    },
+    "final_pick": {
+      "size": 3,
+      "score": 1.6049833648014937,
+      "use_mesh": false,
+      "no_grid": false
+    }
+  },
+  "dimensions": [
+    341,
+    511
+  ]
+}

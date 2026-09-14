@@ -1,0 +1,13 @@
+{
+  "packaging_passed": true,
+  "unique_frames": 96,
+  "within_48x96": 16,
+  "checks": [
+    "PNG dimensions match manifest",
+    "binary returned-alpha processing",
+    "zero hidden RGB",
+    "transparent two-pixel margins",
+    "unique frame paths"
+  ],
+  "artistic_acceptance": false
+}
