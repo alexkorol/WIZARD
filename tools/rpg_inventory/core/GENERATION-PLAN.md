@@ -232,11 +232,14 @@ awakened relics, shrine loot, or faction prestige sets.
 
 ## Auxiliary slot and specialty-pack system
 
-The inventory implements six independent skill-tree windows:
+The inventory design has six independent skill-tree windows. The equipment
+seat dimensions below incorporate the latest owner correction; runtime sizing
+still needs migration. At the 48x48 px base cell, each 2x3 seat is 96x144 px
+and accepts current 2x2 or 2x3 auxiliary items:
 
-- Pure STR: 2x2 War-call seat.
-- Pure DEX: 2x2 Quick Rig seat.
-- Pure INT: 2x2 Attendant focus seat.
+- Pure STR: 2x3 War-call seat.
+- Pure DEX: 2x3 Quick Rig seat.
+- Pure INT: 2x3 Attendant focus seat.
 - STR+DEX: 4x4 Spoils Roll.
 - DEX+INT: 4x4 Preparation Case.
 - INT+STR: 4x4 Reliquary.

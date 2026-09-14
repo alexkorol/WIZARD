@@ -10,6 +10,41 @@ deliberate 2x2 tiling exception: pendants and larger protective neckwear share
 that footprint. These design rules must be applied during runtime migration;
 changing this document alone does not change existing forms.
 
+## Base cell and pixel dimensions
+
+Verdigris uses a **48x48 px logical base cell** at native display scale.
+The baseline human character sprite frame is **48x96 px** (one cell wide,
+two tall). This is an art/layout baseline, not a collision-box definition or
+a requirement that every animation, weapon or effect fit inside that frame.
+
+| Cells (width x height) | Native pixel rectangle | Examples |
+|---|---|---|
+| 1x1 | 48x48 | Ring, compact storage content |
+| 1x2 | 48x96 | Short knife; baseline human sprite frame |
+| 1x3 | 48x144 | Narrow one-hand weapon |
+| 1x4 | 48x192 | Narrow reach weapon |
+| 2x1 | 96x48 | Belt |
+| 2x2 | 96x96 | Amulet, Ember Cup, compact auxiliary item |
+| 2x3 | 96x144 | Body armour, substantial one-hand weapon, auxiliary seat |
+| 2x4 | 96x192 | Broad two-hand weapon, long robe |
+
+These are complete logical rectangles: draw grid lines within the 48 px pitch;
+do not add gutters to the footprint calculation. UI zoom scales the grid and
+its contents together. High-resolution source art may be retained, but native
+readability is judged at these dimensions. Existing adaptive runtime cell sizes
+have not been migrated by this design update.
+
+## Unlockable equipment seats
+
+Every unlockable auxiliary equipment seat is **2x3 (96x144 px)**. Items for
+Warcall, Quiver/Quickrig and Attendant/Apparatus use **2x2 or 2x3** in the
+current catalogue. A 2x2 item keeps its square art inside the 2x3 seat; do not
+stretch it or change its backpack footprint to fill the seat. No new seat,
+subclass mechanic or tiny/oversized auxiliary exception is introduced here.
+
+Preparation, Trophy and Relic expansions remain backpack storage areas, not
+2x3 equipment items. Their contents retain their own inventory footprints.
+
 ## Canonical footprints
 
 | Item family | Default | Allowed variants | Art canvas |
@@ -32,9 +67,9 @@ changing this document alone does not change existing forms.
 | Ring, loose compact seal | 1x1 | a seal worn as an amulet uses 2x2 | square |
 | Substantial curio, coffer, vessel, relic | 1x1 | 2x2 when the object is visibly bulky | square |
 | Standalone quiver, gorytos, arrow case | 2x3 | 2x2 only for a compact flank case | portrait |
-| War-call instrument | 2x2 | 1x3 for a straight trumpet; 2x3 for a large drum | square or portrait |
-| Warbanner or weapon-length standard | 2x4 | 1x4 for a narrow pole with a compact finial | tall portrait |
-| Quick Rig, mobility kit, trap rig, Attendant focus | 2x2 | - | square |
+| War-call instrument | 2x2 | 2x3 for a taller assembly | square or portrait |
+| Auxiliary warbanner or standard | 2x3 | 2x2 for a compact assembly | portrait or square; complete object |
+| Quick Rig, mobility kit, trap rig, Attendant / Apparatus | 2x2 | 2x3 | square or portrait |
 | Spoil, prepared reagent, reliquary-pack content | 1x1 | 2x1 for a long bundle or roll | square or landscape |
 
 ## Ladder rules

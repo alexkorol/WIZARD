@@ -8,7 +8,8 @@ Confirmed by the current request:
 
 - STR, DEX and INT are the three requirement attributes.
 - Preparation, Trophy and Relic packs are backpack-area expansions, not equippable carriers. Their contents remain physical items.
-- Warcall, Quiver/Quickrig and Attendant/Apparatus refer to actual equipment. Their exact simultaneous-slot arrangement remains unresolved.
+- Warcall, Quiver/Quickrig and Attendant/Apparatus refer to actual equipment. Every unlockable equipment seat is 2x3; its items use 2x2 or 2x3 in this draft.
+- The logical base cell is 48x48 px. The baseline human character sprite frame is 48x96 px.
 - Most body armour occupies 2x3; short knives and daggers can occupy 1x2.
 - Amulets occupy 2x2 to accommodate equipment-seat tiling. This slot includes pendants, gorgets and armoured neck pieces, with STR requirements for protective bases.
 - Clay Ember Cup occupies 2x2. No weapon or offhand item may occupy 1x1.
@@ -49,20 +50,18 @@ Do not impose a seven-way art matrix on every noun. Every slot needs viable pure
 | Warcall | STR | Actual horn, whistle, drum, banner or standard |
 | Quiver | DEX | Actual arrow case; moves out of the literal offhand |
 | Quickrig | DEX | Actual worn mobility or proxy-combat apparatus |
-| Attendant / Apparatus | INT | Actual hands-free magical equipment; naming and simultaneous seats unresolved |
+| Attendant / Apparatus | INT | Actual hands-free magical equipment |
 | Trophy expansion | STR/DEX | Additional storage cells for raw monster materials; no carrier item |
 | Preparation expansion | DEX/INT | Additional storage cells for preparations and reagents; no carrier item |
 | Relic expansion | STR/INT | Additional storage cells for passive relics; no carrier item |
 
-Existing repo design has three pure auxiliary seats and three hybrid 4x4 windows. The latest wording could mean additional simultaneous Quiver + Quickrig and Attendant + Apparatus seats. Keep these as separate item families in the catalogue and do not encode the unresolved seat count.
+All unlockable auxiliary equipment seats use the same 2x3 rectangle: 96x144 px at the 48 px base cell. Their items use 2x2 (96x96 px) or 2x3 (96x144 px). A square item stays square inside the taller seat. Bone Whistle is now 2x2; War Standard is 2x3, with the complete pole still visible and proportionate.
 
-Proposed functional boundary if INT gets two seats: an Attendant is an autonomous floating/following focus; an Apparatus is an installed or carried ritual device. Neither consumes the offhand. If they share one seat, these become mutually exclusive subclasses instead.
-
-Equipped-seat display size is independent of backpack footprint. A long War Standard may occupy a small UI equipment seat but still consumes 2x4 backpack cells when unequipped. A whistle need not physically fill a 2x2 backpack rectangle just because its seat does.
+The earlier proposed extra seat splits, Attendant/Apparatus subclass behavior and special auxiliary footprint exceptions are withdrawn. Equipment-family labels do not establish additional seats or mechanics. Preparation, Trophy and Relic remain storage expansions; this correction does not resize those storage areas or their contents.
 
 The old S06-S10, S16-S20 and S26-S30 carrier rows are removed from the equipment pool. Their source IDs are preserved as tombstones. Do not reuse an old carrier ID for a fang or herb bundle. New contents receive new IDs. A genuine jar containing reagent or a box containing a relic can be an item without becoming a capacity-granting pack.
 
-Suggested relic rule: passive effects apply only in the unlocked active Relic area, never the ordinary backpack, stash or trade window. Trophy and Preparation contents do not grant passive power merely by being stored. The existing hybrid-area unlock supplies access; carrying a herb or fang should not itself require hybrid stats.
+No additional relic activation, stacking or storage-effect rules are established by this item-base draft.
 
 ## Parallel wearable ladders
 
@@ -140,15 +139,15 @@ Do not make all these drop immediately. A small opening-area pool could offer Cu
 
 ## Footprint decisions
 
-All sizes are width x height in cells; one pair of footwear/handwear is one item.
+All sizes are width x height in 48x48 px cells; one pair of footwear/handwear is one item. The human sprite baseline is 48x96 px; this is a frame-size convention, not a collision-box rule. See INVENTORY-FOOTPRINTS.md for the complete pixel table.
 
 - Existing defaults retained: body 2x3, head/hands/feet 2x2, belt 2x1, rings 1x1, amulets/neckwear 2x2, one-hand weapon usually 1x3 or 2x3 for broad substantial bases, compact blade 1x2, two-hand weapon 2x4 or genuinely narrow 1x4.
 - Long robe or heavy cloak: 2x4 only when the complete garment justifies it.
-- Quiver 2x3; compact dart case 2x2; Quickrig 2x2; compact INT auxiliary 2x2.
+- All auxiliary seats are 2x3. Quiver 2x3; compact dart case 2x2; Quickrig and INT auxiliary items 2x2 or 2x3; Warcall items 2x2 or 2x3.
 - Full shield 2x3, small hand shield 2x2, body-length shield 2x4.
 - Owner-confirmed: all Amulet-slot items and Clay Ember Cup are 2x2. No 1x1 weapon or offhand bases, including held concepts.
 - A broad Leaf Sword, Sickle Sword or Bronze Sceptre may be 2x3 and one-handed. Handedness is an explicit equipment property, never inferred from grid width.
-- Remaining proposed exceptions needing a future standard/runtime update: Bone Whistle 1x1 and coiled Bola 2x2. Warcall is a separate auxiliary family, not a weapon or offhand.
+- Bone Whistle uses 2x2 and War Standard uses 2x3 under the shared auxiliary rule. Coiled Bola remains a proposed 2x2 weapon; it does not establish an auxiliary exception.
 - The authoritative footprint document records the confirmed corrections; runtime forms have not yet been migrated.
 - Scarves and veils currently remain 2x3 under the overlayer standard. A smaller rolled-scarf branch is a possible later grid-economy choice, not already implemented.
 - Intrinsic size does not change with rarity or rolled modifiers. Faction variants sharing a base keep its size; a materially different silhouette deserves another base.
@@ -179,7 +178,7 @@ The source ledger preserves all 167 original IDs: 143 candidates, six held conce
 
 The original eight-per-wearable-slot budget was insufficient for shared starters, three full pure-attribute ladders and hybrids. Expand deliberately around missing branches rather than maintaining that arbitrary quota.
 
-Unresolved design choices are visible rather than silently decided: exact auxiliary seat topology; numeric stat/level progression; whether bare Hands is an early slot restriction or a palm-coverage rule; cup fuel behavior; active relic stacking/duplicates; and which held legacy items deserve redesign. None prevents reviewing the present named-base/footprint catalogue.
+Unresolved design choices are visible rather than silently decided: numeric stat/level progression; whether bare Hands is an early slot restriction or a palm-coverage rule; cup fuel behavior; and which held legacy items deserve redesign. None prevents reviewing the present named-base/footprint catalogue.
 
 Companion files:
 - ITEM-BASES-ATTRIBUTE-DRAFT-2026-09-13.json: structured source mapping plus new proposals.

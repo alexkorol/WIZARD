@@ -1,6 +1,6 @@
 # Item-base catalogue — 2026-09-13
 
-Design proposals, not a live loot table. U = no attribute requirement; hybrid groups require both stats. Sizes are width x height. Source IDs trace the recovered conversation; new N IDs are draft identifiers. Read [the design rationale](ITEM-BASES-ATTRIBUTE-DRAFT-2026-09-13.md) before promotion.
+Design proposals, not a live loot table. U = no attribute requirement; hybrid groups require both stats. Sizes are width x height in 48 px cells. All auxiliary equipment seats are 2x3 (96x144 px); their items are 2x2 or 2x3. The Size column is the item footprint, not the seat size. Source IDs trace the recovered conversation; new N IDs are draft identifiers. Read [the design rationale](ITEM-BASES-ATTRIBUTE-DRAFT-2026-09-13.md) before promotion.
 
 ## Original catalogue, reconciled
 
@@ -79,8 +79,8 @@ Design proposals, not a live loot table. U = no attribute requirement; hybrid gr
 | O16 | Sheet-Bronze Shield | STR | offhand | 2x3 | candidate | Shield formed predominantly from continuous beaten bronze sheet with a turned rim. |
 | O17 | Torch | U | offhand | 1x3 | candidate | One complete short resin torch with a bound combustible head and plain handle. |
 | O18 | Hunting Net | DEX | offhand | 2x2 | candidate | One compact gathered weighted net, hand-held in use; no wearable storage harness. |
-| O19 | Quiver | DEX | quiver | 2x3 | candidate | One complete long wearable arrow case with a closed bottom and open top; no hand grip. Move from offhand to Quiver equipment family; simultaneous seats remain an open topology decision. |
-| O20 | Dart Case | DEX | projectile-case | 2x2 | candidate | One compact wearable dart case with secured narrow channels and visible closure. Move from offhand to projectile-case auxiliary family; do not duplicate Dart Rig. |
+| O19 | Quiver | DEX | quiver | 2x3 | candidate | One complete long wearable arrow case with a closed bottom and open top; no hand grip. Move from offhand to the Quiver equipment family; no additional seat is introduced. |
+| O20 | Dart Case | DEX | quickrig | 2x2 | candidate | One compact wearable dart case with secured narrow channels and visible closure. Wearable dart case in the DEX auxiliary family; no separate projectile-case seat. Do not duplicate Dart Rig. |
 | O21 | Offering Bowl | INT | offhand | 2x2 | candidate | One broad shallow offering bowl with a solid base, thick rim and substantial volume. Broad substantial offering bowl, distinct from the starter cup. |
 | O22 | Hand Idol | STR/INT | offhand | 2x2 | hold | One proposed substantial solid handled effigy; hold pending stronger equipment read. Hold: current production rules reject tiny hand-idol props; needs substantial revised silhouette. |
 | O23 | Ritual Tablet | INT | offhand | 2x2 | hold | One proposed thick held inscribed tablet; hold pending resolution of flat-prop rejection. Hold: flat tablet offhand conflicts with current production taste; not a generation target. |
@@ -135,10 +135,10 @@ Design proposals, not a live loot table. U = no attribute requirement; hybrid gr
 | A46 | Feather Mantle | DEX/INT | overlayer | 2x3 | hold | Proposed mantle with source-supported genuine feather construction; hold pending visual review. Hold for source review; do not generate repeated feather-like textile shingles. |
 | A47 | Dust Scarf | DEX/INT | overlayer | 2x3 | candidate | One continuous long dust scarf arranged as an overlayer with broad folds, not torn strips. 2x3 follows existing overlayer standard; a future smaller scarf footprint would be an explicit rule change. |
 | A48 | Ritual Shawl | INT | overlayer | 2x3 | candidate | One broad ritual shawl with a bounded woven border and predominantly plain cloth. |
-| S01 | Conduit Rod | INT | int-auxiliary | 2x2 | candidate | One compact hands-free conduit assembly with a clear central rod and self-supporting magical suspension. Hands-free conduit assembly, visibly distinct from a held staff. Attendant/Apparatus allocation pending. |
+| S01 | Conduit Rod | INT | int-auxiliary | 2x2 | candidate | One compact hands-free conduit assembly with a clear central rod and self-supporting magical suspension. Hands-free conduit assembly, visibly distinct from a held staff. |
 | S02 | Ritual Orb | INT | int-auxiliary | 2x2 | candidate | One hands-free spherical focus with a readable outer shell and restrained orbital motion. Hands-free orbiting vessel; do not make all INT auxiliary bases into spheres. |
 | S03 | Attendant Effigy | INT | int-auxiliary | 2x2 | candidate | One compact hands-free effigy with a substantial body and coherent magical suspension. Hands-free magical effigy; no generic toy idol. |
-| S04 | Ritual Brazier | INT | int-auxiliary | 2x2 | candidate | One compact hands-free brazier vessel with a contained ember bed and clear bowl walls. Compact magically suspended fire vessel; ground tripod version would need its own base and footprint. |
+| S04 | Ritual Brazier | INT | int-auxiliary | 2x2 | candidate | One compact hands-free brazier vessel with a contained ember bed and clear bowl walls. Compact magically suspended fire vessel. |
 | S05 | Resonator | INT | int-auxiliary | 2x2 | candidate | One compact hands-free hollow sounding vessel with a readable acoustic opening. Hands-free acoustic vessel; speculative magical apparatus, not historical terminology. |
 | S06 | Charm Cord | — | none | — | removed-pack-carrier | Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses. |
 | S07 | Relic Wrap | — | none | — | removed-pack-carrier | Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses. |
@@ -147,9 +147,9 @@ Design proposals, not a live loot table. U = no attribute requirement; hybrid gr
 | S10 | Votive Box | — | none | — | removed-pack-carrier | Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses. |
 | S11 | War Horn | STR | warcall | 2x2 | candidate | One complete curved animal-horn signaling instrument with a hollow bell and worked mouth end. |
 | S12 | Shell Trumpet | STR | warcall | 2x2 | candidate | One complete conch-shell trumpet with a worked mouth opening; no knife edge. |
-| S13 | Bone Whistle | STR | warcall | 1x1 | candidate | One compact bone signaling whistle with a clear mouth opening and plain body. 1x1 proposed exception for a genuinely small whistle, distinct from 2x2 equipment seat UI. |
+| S13 | Bone Whistle | STR | warcall | 2x2 | candidate | One compact bone signaling whistle with a clear mouth opening and plain body. Shared auxiliary item footprint; preserve the plain compact instrument without inventing bulk or decoration. |
 | S14 | Frame Drum | STR | warcall | 2x2 | candidate | One complete frame drum with a continuous stretched hide face and substantial wooden rim. |
-| S15 | War Standard | STR | warcall | 2x4 | candidate | One full-length standard pole with one compact supported emblem or cloth field. |
+| S15 | War Standard | STR | warcall | 2x3 | candidate | One full-length standard pole with one compact supported emblem or cloth field. Shared auxiliary item footprint; show the complete pole without cropping, shortening or stretching it. |
 | S16 | Fang Cord | — | none | — | removed-pack-carrier | Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses. |
 | S17 | Horn Rack | — | none | — | removed-pack-carrier | Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses. |
 | S18 | Shell Net | — | none | — | removed-pack-carrier | Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses. |

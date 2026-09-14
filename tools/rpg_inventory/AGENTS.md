@@ -127,9 +127,13 @@ is ready; do not burn Codex weekly quota on recursive multi-agent audit trees.
 
 - Preparation, Trophy and Relic packs are backpack-area expansions, not
   equippable carrier items. Their physical contents have their own bases.
+- The logical base cell is 48x48 px; the baseline human sprite frame is
+  48x96 px. Judge item art at native footprint size; UI zoom scales uniformly.
 - Warcall, Quiver/Quickrig and Attendant/Apparatus are actual equipment
-  families. The latest wording has not yet resolved whether each slash pair
-  shares a seat or has simultaneous seats; do not infer a runtime seat change.
+  families. Every unlockable equipment seat is 2x3 (96x144 px); current items
+  for those seats are 2x2 or 2x3. Do not invent additional seats, subclass
+  mechanics or special auxiliary size exceptions. Storage expansions remain
+  separate. These design corrections do not themselves migrate runtime UI.
 - Amulets are 2x2 for equipment-seat tiling, including pendants, gorgets and
   armoured neck pieces. Protective neck bases may require STR; the older
   pendant-only restriction is superseded.
@@ -163,7 +167,7 @@ is ready; do not burn Codex weekly quota on recursive multi-agent audit trees.
   beside the main-hand/hands edge; unavailable tabs stay absent because their
   skill-tree unlock has not been allocated.
 - The three hybrid axes each unlock one 4x4 specialty pack: STR+DEX, DEX+INT,
-  and INT+STR. The three pure axes each unlock one 2x2 auxiliary equipment seat.
+  and INT+STR. The three pure axes each unlock one 2x3 auxiliary equipment seat.
 - Canonical mapping: Champion/STR = War-call; Acrobat/DEX = Quick Rig;
   Archmage/INT = Attendant focus; Reaver/STR+DEX = Spoils Roll;
   Nightblade/DEX+INT = Preparation Case; Ritualist/INT+STR = Reliquary.

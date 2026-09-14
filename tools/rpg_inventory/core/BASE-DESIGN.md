@@ -84,7 +84,11 @@ Not every class needs all five rungs; 3–5 each is fine (like D2's three).
   loose charms. Finished socketable trophy settings in this curio lane are
   distinct from raw Spoils Roll crafting materials.
 
-### Auxiliary equipment (2x2 unlock seats)
+### Auxiliary equipment (2x3 unlock seats)
+
+Every auxiliary seat is 96x144 px at the 48x48 px base cell. Its items use
+2x2 or 2x3 (96x96 or 96x144 px). No additional equipment seats or special
+auxiliary size exceptions are introduced. See INVENTORY-FOOTPRINTS.md.
 
 - **War-call** (pure STR): Aurochs War Horn · Copper Signal Drum · Bronze
   Command Horn · Jade Command Rattle · Iron Thunder Horn. Complete rallying

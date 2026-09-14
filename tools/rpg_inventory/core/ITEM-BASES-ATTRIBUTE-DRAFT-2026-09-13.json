@@ -3,7 +3,6 @@
   "status": "design-draft-not-runtime",
   "sourceConversation": "https://chatgpt.com/c/6a4ebe53-1a10-83ea-986a-cba67f7b1b7b",
   "numericRequirementsStatus": "Unresolved; null is not zero",
-  "auxiliarySeatTopology": "unresolved",
   "excludedConcepts": [
     "Shell Knife",
     "Shell-Edge Knife",
@@ -1192,9 +1191,10 @@
       "slot": "quiver",
       "footprint": "2x3",
       "status": "candidate",
-      "note": "Move from offhand to Quiver equipment family; simultaneous seats remain an open topology decision.",
+      "note": "Move from offhand to the Quiver equipment family; no additional seat is introduced.",
       "numericRequirements": null,
-      "constructionBrief": "One complete long wearable arrow case with a closed bottom and open top; no hand grip."
+      "constructionBrief": "One complete long wearable arrow case with a closed bottom and open top; no hand grip.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "O20",
@@ -1205,12 +1205,13 @@
       ],
       "name": "Dart Case",
       "attributeGroup": "DEX",
-      "slot": "projectile-case",
+      "slot": "quickrig",
       "footprint": "2x2",
       "status": "candidate",
-      "note": "Move from offhand to projectile-case auxiliary family; do not duplicate Dart Rig.",
+      "note": "Wearable dart case in the DEX auxiliary family; no separate projectile-case seat. Do not duplicate Dart Rig.",
       "numericRequirements": null,
-      "constructionBrief": "One compact wearable dart case with secured narrow channels and visible closure."
+      "constructionBrief": "One compact wearable dart case with secured narrow channels and visible closure.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "O21",
@@ -2088,9 +2089,10 @@
       "slot": "int-auxiliary",
       "footprint": "2x2",
       "status": "candidate",
-      "note": "Hands-free conduit assembly, visibly distinct from a held staff. Attendant/Apparatus allocation pending.",
+      "note": "Hands-free conduit assembly, visibly distinct from a held staff.",
       "numericRequirements": null,
-      "constructionBrief": "One compact hands-free conduit assembly with a clear central rod and self-supporting magical suspension."
+      "constructionBrief": "One compact hands-free conduit assembly with a clear central rod and self-supporting magical suspension.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S02",
@@ -2106,7 +2108,8 @@
       "status": "candidate",
       "note": "Hands-free orbiting vessel; do not make all INT auxiliary bases into spheres.",
       "numericRequirements": null,
-      "constructionBrief": "One hands-free spherical focus with a readable outer shell and restrained orbital motion."
+      "constructionBrief": "One hands-free spherical focus with a readable outer shell and restrained orbital motion.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S03",
@@ -2122,7 +2125,8 @@
       "status": "candidate",
       "note": "Hands-free magical effigy; no generic toy idol.",
       "numericRequirements": null,
-      "constructionBrief": "One compact hands-free effigy with a substantial body and coherent magical suspension."
+      "constructionBrief": "One compact hands-free effigy with a substantial body and coherent magical suspension.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S04",
@@ -2136,9 +2140,10 @@
       "slot": "int-auxiliary",
       "footprint": "2x2",
       "status": "candidate",
-      "note": "Compact magically suspended fire vessel; ground tripod version would need its own base and footprint.",
+      "note": "Compact magically suspended fire vessel.",
       "numericRequirements": null,
-      "constructionBrief": "One compact hands-free brazier vessel with a contained ember bed and clear bowl walls."
+      "constructionBrief": "One compact hands-free brazier vessel with a contained ember bed and clear bowl walls.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S05",
@@ -2154,7 +2159,8 @@
       "status": "candidate",
       "note": "Hands-free acoustic vessel; speculative magical apparatus, not historical terminology.",
       "numericRequirements": null,
-      "constructionBrief": "One compact hands-free hollow sounding vessel with a readable acoustic opening."
+      "constructionBrief": "One compact hands-free hollow sounding vessel with a readable acoustic opening.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S06",
@@ -2250,7 +2256,8 @@
       "status": "candidate",
       "note": "",
       "numericRequirements": null,
-      "constructionBrief": "One complete curved animal-horn signaling instrument with a hollow bell and worked mouth end."
+      "constructionBrief": "One complete curved animal-horn signaling instrument with a hollow bell and worked mouth end.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S12",
@@ -2266,7 +2273,8 @@
       "status": "candidate",
       "note": "",
       "numericRequirements": null,
-      "constructionBrief": "One complete conch-shell trumpet with a worked mouth opening; no knife edge."
+      "constructionBrief": "One complete conch-shell trumpet with a worked mouth opening; no knife edge.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S13",
@@ -2278,11 +2286,12 @@
       "name": "Bone Whistle",
       "attributeGroup": "STR",
       "slot": "warcall",
-      "footprint": "1x1",
+      "footprint": "2x2",
       "status": "candidate",
-      "note": "1x1 proposed exception for a genuinely small whistle, distinct from 2x2 equipment seat UI.",
+      "note": "Shared auxiliary item footprint; preserve the plain compact instrument without inventing bulk or decoration.",
       "numericRequirements": null,
-      "constructionBrief": "One compact bone signaling whistle with a clear mouth opening and plain body."
+      "constructionBrief": "One compact bone signaling whistle with a clear mouth opening and plain body.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S14",
@@ -2298,7 +2307,8 @@
       "status": "candidate",
       "note": "",
       "numericRequirements": null,
-      "constructionBrief": "One complete frame drum with a continuous stretched hide face and substantial wooden rim."
+      "constructionBrief": "One complete frame drum with a continuous stretched hide face and substantial wooden rim.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S15",
@@ -2310,11 +2320,12 @@
       "name": "War Standard",
       "attributeGroup": "STR",
       "slot": "warcall",
-      "footprint": "2x4",
+      "footprint": "2x3",
       "status": "candidate",
-      "note": "",
+      "note": "Shared auxiliary item footprint; show the complete pole without cropping, shortening or stretching it.",
       "numericRequirements": null,
-      "constructionBrief": "One full-length standard pole with one compact supported emblem or cloth field."
+      "constructionBrief": "One full-length standard pole with one compact supported emblem or cloth field.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S16",
@@ -2410,7 +2421,8 @@
       "status": "candidate",
       "note": "Complete wearable low-snag line carrier; no industrial carabiners, climbing harness or handheld handbag.",
       "numericRequirements": null,
-      "constructionBrief": "One complete wearable carrier securing a coiled line and a simple functional hook."
+      "constructionBrief": "One complete wearable carrier securing a coiled line and a simple functional hook.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S22",
@@ -2426,7 +2438,8 @@
       "status": "candidate",
       "note": "Wearable complete snare assembly with secured components; not a loose spare reagent.",
       "numericRequirements": null,
-      "constructionBrief": "One complete wearable carrier securing a bounded set of snare loops and triggers."
+      "constructionBrief": "One complete wearable carrier securing a bounded set of snare loops and triggers.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S23",
@@ -2442,7 +2455,8 @@
       "status": "candidate",
       "note": "Wearable readied net assembly; do not duplicate the hand-held Hunting Net.",
       "numericRequirements": null,
-      "constructionBrief": "One complete wearable rig securing a readied net; retain the load-bearing harness."
+      "constructionBrief": "One complete wearable rig securing a readied net; retain the load-bearing harness.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S24",
@@ -2458,7 +2472,8 @@
       "status": "candidate",
       "note": "Wearable compact trigger kit; never an entire tree-sized deadfall in a 2x2 icon.",
       "numericRequirements": null,
-      "constructionBrief": "One complete wearable compact carrier for deadfall triggers and stakes, not the fallen weight."
+      "constructionBrief": "One complete wearable compact carrier for deadfall triggers and stakes, not the fallen weight.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S25",
@@ -2474,7 +2489,8 @@
       "status": "candidate",
       "note": "Wearable readied dart rig, distinguished from the simple O20 dart case.",
       "numericRequirements": null,
-      "constructionBrief": "One complete wearable dart rack with a coherent backing and shoulder/flank attachment."
+      "constructionBrief": "One complete wearable dart rack with a coherent backing and shoulder/flank attachment.",
+      "seatFootprint": "2x3"
     },
     {
       "sourceId": "S26",
@@ -3427,6 +3443,19 @@
       "weapon",
       "offhand"
     ],
-    "substantialOneHandedWeapon": "2x3; handedness is independent of footprint"
-  }
+    "substantialOneHandedWeapon": "2x3; handedness is independent of footprint",
+    "auxiliaryEquipmentSeat": "2x3",
+    "auxiliaryEquipmentItems": [
+      "2x2",
+      "2x3"
+    ]
+  },
+  "baseCellPixels": [
+    48,
+    48
+  ],
+  "humanCharacterSpritePixels": [
+    48,
+    96
+  ]
 }

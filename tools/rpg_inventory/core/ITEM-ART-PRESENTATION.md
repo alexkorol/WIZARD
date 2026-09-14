@@ -83,7 +83,8 @@ The shared arrangement is a continuity choice, not proof every photographed refe
 - For pairs, start with roughly 10–20% silhouette overlap or a small gap, enough stagger to distinguish both pieces. Do not hide a whole mate. Soft straps sag or rest against the item; do not retain an invisible limb.
 - Use one consistent upper-left key and restrained opposing edge separation, neutral material color, local form shadow and no baked ground/drop shadow. These continue the game's chosen lighting direction; the sampled legacy assets do not prove a single universal lighting rig.
 - Transparent background or the existing controlled matte path. No ground plane, caption, grid or composition guide inside final art.
-- Review in actual footprint cells, not only enlarged portraits. Current UI uses backpack cells 54–72 px and paperdoll cells 36 px compact / 78–104 px desktop. Check at the smallest relevant size first. A ring at 1x1 and a gorget at 2x2 must not be compared at identical enlarged image size.
+- Review at the native **48x48 px base cell**: a 1x2 knife is 48x96 px, a 2x2 amulet or Ember Cup is 96x96 px, and 2x3 armour is 96x144 px. All auxiliary equipment seats are 96x144 px; their current items are 96x96 or 96x144 px. Keep square items square inside the taller seat. Existing adaptive runtime sizes and the earlier 54/36 px research sheet describe the prior UI, not this new target; runtime migration is still pending.
+- The baseline human sprite frame is 48x96 px. This common unit does not make an inventory icon a literal world-scale depiction or define character collision bounds. Retain high-resolution masters and judge the downscaled art at native size. A ring at 1x1 and a gorget at 2x2 must not be compared at identical enlarged image size.
 - Judge object identity, orientation, whole-object readability and pair completeness at game scale; inspect joins, holes and anatomy mistakes enlarged. Neither check replaces the other.
 
 ## Prompt construction
