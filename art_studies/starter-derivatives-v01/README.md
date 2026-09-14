@@ -1,3 +1,5 @@
+Current state: **clean restart**. All generated trials are excluded from active previews. Only the 128 native 96×96 Blender references are loaded. [Restart baseline](restart/README.md). The experiment history below is retired.
+
 The demo now defaults to **Blender structure with simulated cloth**, using a
 calibrated village reference. The imagegen findings below describe the earlier
 direct-generation experiments. [Current source and parity notes](blender/README.md).

@@ -1,9 +1,0 @@
-Generate ONE new image: the female unarmed sprint, facing RIGHT, eight frames in four columns and two rows. Use the image-generation tool with background="transparent" and return a PNG with real alpha.
-
-Image 1 is the calibrated Blender pose sheet: preserve its exact eight poses, frame order, framing, silhouette placement, natural proportions, camera, and character size. Image 2 is an actual native pixel-art frame enlarged exactly 4× with nearest neighbor: use its visible square pixel size and restrained pixel shading as the rendering example, not its idle pose or club. Keep the woman unarmed, with the ivory sleeveless tunic, russet edging and cord belt, open sandals, and brown braid.
-
-The previous outputs reconstructed to about 147×147 pixels per cell; their implied pixels were too small. This pass must be substantially COARSER, with pixel clusters about 1.5× larger while the figure stays the same size on the sheet. Author the artwork on a logical 384×192 pixel canvas, divided into eight 96×96 cells. Each character is about 72–78 logical pixels tall in these sprint poses. Show it enlarged to 1536×768, with every logical pixel a solid 4×4 square. If your output canvas is 1774×887 instead, preserve the SAME 384×192 implied grid, so each logical pixel spans about 4.62 output pixels—not 3.
-
-Use large readable pixel clusters: a few flat shaded planes per limb, single-pixel facial accents, compact hands, chunky hair and cloth shading. Keep gritty realistic Diablo-II-like pre-rendered anatomy and lighting. No finer texture, smooth airbrushing, tiny subpixel highlights, or cartoon facial features. Paint directly in this coarse pixel language; do not merely enlarge or sharpen the previous detailed generation.
-
-Preserve native transparent alpha around and between every limb. No backdrop, checkerboard drawing, ground, labels, grid lines, or extra frames. Return one transparent RGBA PNG sprite sheet.

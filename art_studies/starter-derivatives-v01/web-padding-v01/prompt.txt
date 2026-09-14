@@ -1,9 +1,0 @@
-Generate one transparent PNG sprite sheet using the image tool with background="transparent".
-
-Paint the eight Blender poses in Image 1 using the successful chunky pixel rendering in Image 2. Image 1 is FOUR COLUMNS by TWO ROWS, read left to right, then next row: eight consecutive female sprint-right animation frames. Preserve each pose, facing, proportions, camera, scale and position.
-
-The transparent padding is deliberate and essential: each slot is 144 by 144 logical pixels, with a centered 96 by 96 inner sprite frame and 24 EMPTY pixels on every side. The entire sheet is 576 by 288 logical pixels, supplied at exact 3x nearest-neighbor enlargement. Image 2 shows ONE such padded slot at the SAME pixel magnification. Match its square pixel size, NOT its canvas size or pose. Every character should occupy only about 75–78 logical pixels vertically, roughly HALF the height of its padded slot. Keep all the large empty gaps. Do not zoom in, fill the slots, crop the sheet, enlarge the figures, or add frames.
-
-Use a single consistent coarse pixel grid across the entire sheet: solid square color blocks, stepped contours and compact clustered shading, no finer subpixel lines, smooth painting, tiny texture or extra high-resolution detail. Gritty realistic Diablo-II-like pre-rendered pixel sprites. Same young adult woman in every frame: brown braided hair, ivory sleeveless short tunic with russet trim, cord belt and open sandals. No weapons. Follow the Blender limb positions exactly and keep cloth and hands distinct.
-
-Preserve true transparent alpha throughout the gutters and around every silhouette; no floor, shadows outside the sprites, checkerboard pattern, colored background, drawn grid, labels or borders. Output only the transparent PNG sheet with the original generous padding. Use the transparent background setting; empty space must be real alpha.
