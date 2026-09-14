@@ -123,6 +123,29 @@ is ready; do not burn Codex weekly quota on recursive multi-agent audit trees.
 
 ## Inventory UI direction (2026-07-12)
 
+### Item-base clarification (2026-09-13)
+
+- Preparation, Trophy and Relic packs are backpack-area expansions, not
+  equippable carrier items. Their physical contents have their own bases.
+- Warcall, Quiver/Quickrig and Attendant/Apparatus are actual equipment
+  families. The latest wording has not yet resolved whether each slash pair
+  shares a seat or has simultaneous seats; do not infer a runtime seat change.
+- The starter INT focus is a plain clay cup holding an amadou ember, equipped
+  offhand for Burning Hand with an empty main hand and no gloves at the start.
+  Later wrist/forearm gear compatibility is a proposal, not a locked rule.
+- Exclude the Shell Knife concept and its aliases Shell-Edge Knife and Shell
+  Shank. Do not reintroduce it under another name. This does not exclude shell
+  from unrelated item families.
+- A tusk helmet uses small tusk plates forming the protective surface over a
+  backing, not whole tusks protruding from a conventional metal helmet. Name
+  and describe the construction explicitly; horn, bone and tusk are distinct.
+- The reconciled source catalogue, attribute proposals, per-base footprints
+  and tool-weapon expansion are in
+  `core/ITEM-BASES-ATTRIBUTE-DRAFT-2026-09-13.md` and its companion catalogue
+  and JSON. It distinguishes owner decisions from proposals and is not a live
+  loot table or a generation-approved queue. Earlier source-chat carrier
+  ladders do not override these corrections.
+
 - New base ladders follow `core/INVENTORY-FOOTPRINTS.md`. This is a true
   Diablo 2 / Path of Exile style grid economy: belts are 2x1, body armour is
   normally 2x3, and heavy two-hand weapons are 2x4. Larger/heavier silhouettes

@@ -1,0 +1,3384 @@
+{
+  "schemaVersion": 1,
+  "status": "design-draft-not-runtime",
+  "sourceConversation": "https://chatgpt.com/c/6a4ebe53-1a10-83ea-986a-cba67f7b1b7b",
+  "numericRequirementsStatus": "Unresolved; null is not zero",
+  "auxiliarySeatTopology": "unresolved",
+  "excludedConcepts": [
+    "Shell Knife",
+    "Shell-Edge Knife",
+    "Shell Shank"
+  ],
+  "sourceRows": [
+    {
+      "sourceId": "W01",
+      "sourceName": "Flint Knife",
+      "aliases": [
+        "Knapped Knife",
+        "Chipped Knife"
+      ],
+      "name": "Flint Knife",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Compact knapped flint blade, short plain grip, one cutting edge and credible haft binding."
+    },
+    {
+      "sourceId": "W02",
+      "sourceName": "Obsidian Knife",
+      "aliases": [
+        "Glassstone Knife",
+        "Blackglass Knife"
+      ],
+      "name": "Obsidian Knife",
+      "attributeGroup": "DEX/INT",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "status": "candidate",
+      "note": "DEX/INT only if this base has a ritual-cutting implicit; obsidian alone does not justify INT.",
+      "numericRequirements": null,
+      "constructionBrief": "Compact dark volcanic-glass cutting blade in a plain grip; natural flake scars, no glowing crystal."
+    },
+    {
+      "sourceId": "W03",
+      "sourceName": "Bone Knife",
+      "aliases": [
+        "Split-Bone Knife",
+        "Bone Shank"
+      ],
+      "name": "Bone Knife",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Sharpened bone blade with integral grip; no assembled jaw or shell components."
+    },
+    {
+      "sourceId": "W04",
+      "sourceName": "Shell Knife",
+      "aliases": [
+        "Shell-Edge Knife",
+        "Shell Shank"
+      ],
+      "name": "Shell Knife",
+      "attributeGroup": null,
+      "slot": "weapon",
+      "footprint": null,
+      "status": "excluded",
+      "note": "Excluded by owner, including both aliases. No successor or cosmetic rename.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "W05",
+      "sourceName": "Copper Knife",
+      "aliases": [
+        "Hammered Copper Knife",
+        "Copper Blade"
+      ],
+      "name": "Copper Knife",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Short hammered copper cutting blade with a fitted plain grip."
+    },
+    {
+      "sourceId": "W06",
+      "sourceName": "Tanged Dagger",
+      "aliases": [
+        "Bound-Tang Dagger",
+        "Fitted-Grip Dagger"
+      ],
+      "name": "Tanged Dagger",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Short dagger blade with tang seated inside a separate fitted grip; grip remains visible."
+    },
+    {
+      "sourceId": "W07",
+      "sourceName": "Riveted Dagger",
+      "aliases": [
+        "Grip-Plate Dagger",
+        "Rivet-Hilt Dagger"
+      ],
+      "name": "Riveted Dagger",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Short dagger with two grip slabs visibly secured by a few structural rivets."
+    },
+    {
+      "sourceId": "W08",
+      "sourceName": "Leaf Dagger",
+      "aliases": [
+        "Leafblade Dagger",
+        "Broadleaf Dagger"
+      ],
+      "name": "Leaf Dagger",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Short broad leaf-shaped blade; edge expands below the point, simple fitted grip."
+    },
+    {
+      "sourceId": "W09",
+      "sourceName": "Midrib Dagger",
+      "aliases": [
+        "Ribbed Dagger",
+        "Ridgeblade Dagger"
+      ],
+      "name": "Midrib Dagger",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Long narrow dagger with one structural raised midrib running along the blade."
+    },
+    {
+      "sourceId": "W10",
+      "sourceName": "Bronze Shortsword",
+      "aliases": [
+        "Short Bronze Blade",
+        "Broad Short Sword"
+      ],
+      "name": "Bronze Shortsword",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Short broad bronze sword with a plain usable grip and modest guard shoulders."
+    },
+    {
+      "sourceId": "W11",
+      "sourceName": "Leaf Sword",
+      "aliases": [
+        "Leafblade Sword",
+        "Lanceleaf Sword"
+      ],
+      "name": "Leaf Sword",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One-hand bronze sword with broad leaf-shaped blade and a readable narrowing near the grip."
+    },
+    {
+      "sourceId": "W12",
+      "sourceName": "Narrow Bronze Sword",
+      "aliases": [
+        "Tapered Bronze Sword",
+        "Thrusting Bronze Sword"
+      ],
+      "name": "Narrow Bronze Sword",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "Long narrow bronze thrusting blade with simple grip; no cup guard or swept hilt.",
+      "numericRequirements": null,
+      "constructionBrief": "Long narrow bronze thrusting blade with a simple grip and no developed crossguard."
+    },
+    {
+      "sourceId": "W13",
+      "sourceName": "Flange-Hilt Sword",
+      "aliases": [
+        "Grip-Flange Sword",
+        "Flanged-Grip Sword"
+      ],
+      "name": "Flange-Hilt Sword",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "Flanges enclose the grip edges; no spikes projecting from the blade.",
+      "numericRequirements": null,
+      "constructionBrief": "Bronze sword whose grip has raised side flanges retaining organic grip inserts."
+    },
+    {
+      "sourceId": "W14",
+      "sourceName": "Grip-Tongue Sword",
+      "aliases": [
+        "Slab-Grip Sword",
+        "Plate-Grip Sword"
+      ],
+      "name": "Grip-Tongue Sword",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "Broad tang supports grip slabs; no literal tongue ornament.",
+      "numericRequirements": null,
+      "constructionBrief": "Bronze sword with a broad grip tongue carrying fitted grip slabs."
+    },
+    {
+      "sourceId": "W15",
+      "sourceName": "Sickle Sword",
+      "aliases": [
+        "Khopesh",
+        "Hooked Bronze Sword"
+      ],
+      "name": "Sickle Sword",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One-hand forward-curved bronze sickle-sword with a clear inner curve and usable grip."
+    },
+    {
+      "sourceId": "W16",
+      "sourceName": "Stone Axe",
+      "aliases": [
+        "Groundstone Axe",
+        "Polished Axe"
+      ],
+      "name": "Stone Axe",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Ground stone axe head lashed to a medium wooden haft; blade edge aligned with the haft."
+    },
+    {
+      "sourceId": "W17",
+      "sourceName": "Grooved Axe",
+      "aliases": [
+        "Grooved Stone Axe",
+        "Groove-Haft Axe"
+      ],
+      "name": "Grooved Axe",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Stone axe head with a carved securing groove and functional haft lashing."
+    },
+    {
+      "sourceId": "W18",
+      "sourceName": "Flat Axe",
+      "aliases": [
+        "Flathead Axe",
+        "Copper Hatchet"
+      ],
+      "name": "Flat Axe",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Compact flat copper axe head seated and bound onto a short wooden haft."
+    },
+    {
+      "sourceId": "W19",
+      "sourceName": "Flanged Axe",
+      "aliases": [
+        "Raised-Flange Axe",
+        "Side-Flanged Axe"
+      ],
+      "name": "Flanged Axe",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Copper-alloy axe head with side flanges securing its wooden haft."
+    },
+    {
+      "sourceId": "W20",
+      "sourceName": "Stop-Ridge Axe",
+      "aliases": [
+        "Palstave",
+        "Stop-Bar Axe"
+      ],
+      "name": "Stop-Ridge Axe",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "Stop-ridge controls head seating on the haft; not a protruding axe spike.",
+      "numericRequirements": null,
+      "constructionBrief": "Axe head with side flanges and a transverse seating stop at the haft junction."
+    },
+    {
+      "sourceId": "W21",
+      "sourceName": "Socketed Axe",
+      "aliases": [
+        "Socket Axe",
+        "Socket-Head Axe"
+      ],
+      "name": "Socketed Axe",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Hollow-socket axe head receiving the bent end of a wooden haft."
+    },
+    {
+      "sourceId": "W22",
+      "sourceName": "War Adze",
+      "aliases": [
+        "Battle Adze",
+        "Long-Haft Adze"
+      ],
+      "name": "War Adze",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "Short one-hand working geometry here; cutting edge across the haft. A long war-adze is a separate 2x4 base.",
+      "numericRequirements": null,
+      "constructionBrief": "Short hafted adze with the working cutting edge transverse to the handle."
+    },
+    {
+      "sourceId": "W23",
+      "sourceName": "Crescent Axe",
+      "aliases": [
+        "Crescent-Blade Axe",
+        "Half-Moon Axe"
+      ],
+      "name": "Crescent Axe",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One-hand axe with one broad crescent blade; no double crescent or moon ornament."
+    },
+    {
+      "sourceId": "W24",
+      "sourceName": "Cudgel",
+      "aliases": [
+        "Hardwood Club",
+        "Bludgeon"
+      ],
+      "name": "Cudgel",
+      "attributeGroup": "U",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "Shared starter: no attribute requirement.",
+      "numericRequirements": null,
+      "constructionBrief": "One solid short hardwood cudgel with a thick impact end and a narrower natural grip."
+    },
+    {
+      "sourceId": "W25",
+      "sourceName": "Root Club",
+      "aliases": [
+        "Knotted Club",
+        "Root-Head Club"
+      ],
+      "name": "Root Club",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One solid wood club retaining a broad root-derived impact head; no antler cluster."
+    },
+    {
+      "sourceId": "W26",
+      "sourceName": "Stone-Head Club",
+      "aliases": [
+        "Boundstone Club",
+        "Lashed Club"
+      ],
+      "name": "Stone-Head Club",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Compact stone striking head securely lashed to a wooden handle."
+    },
+    {
+      "sourceId": "W27",
+      "sourceName": "Disc Mace",
+      "aliases": [
+        "Disk Mace",
+        "Wheel-Head Mace"
+      ],
+      "name": "Disc Mace",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Thick disc-shaped stone mace head pierced for a fitted shaft; no wheel spokes."
+    },
+    {
+      "sourceId": "W28",
+      "sourceName": "Pear-Head Mace",
+      "aliases": [
+        "Piriform Mace",
+        "Pearstone Mace"
+      ],
+      "name": "Pear-Head Mace",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Smooth pear-shaped stone mace head on a fitted wooden shaft."
+    },
+    {
+      "sourceId": "W29",
+      "sourceName": "Stone Maul",
+      "aliases": [
+        "Heavy Stone Hammer",
+        "Two-Handed Maul"
+      ],
+      "name": "Stone Maul",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "2x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Heavy broad stone hammer head on a visibly long two-hand wooden handle."
+    },
+    {
+      "sourceId": "W30",
+      "sourceName": "Bronze Mace",
+      "aliases": [
+        "Cast Mace",
+        "Cast-Head Mace"
+      ],
+      "name": "Bronze Mace",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Compact cast bronze striking head firmly seated on a plain wooden handle."
+    },
+    {
+      "sourceId": "W31",
+      "sourceName": "Hunting Spear",
+      "aliases": [
+        "Wooden Spear",
+        "Pointed Hunting Shaft"
+      ],
+      "name": "Hunting Spear",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Exceptionally narrow full-length wooden hunting spear with a sharpened point."
+    },
+    {
+      "sourceId": "W32",
+      "sourceName": "Flint Spear",
+      "aliases": [
+        "Stone-Tipped Spear",
+        "Knapped-Point Spear"
+      ],
+      "name": "Flint Spear",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "2x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Long wooden spear with a distinct knapped flint point and credible binding."
+    },
+    {
+      "sourceId": "W33",
+      "sourceName": "Bone Spear",
+      "aliases": [
+        "Bone-Point Spear",
+        "Splinter-Tipped Spear"
+      ],
+      "name": "Bone Spear",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Slender long wooden spear with a narrow fitted bone point."
+    },
+    {
+      "sourceId": "W34",
+      "sourceName": "Tanged Spear",
+      "aliases": [
+        "Bound-Tang Spear",
+        "Fitted-Point Spear"
+      ],
+      "name": "Tanged Spear",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "2x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Long spear with metal tang inserted and secured into the shaft end."
+    },
+    {
+      "sourceId": "W35",
+      "sourceName": "Socketed Spear",
+      "aliases": [
+        "Socket Spear",
+        "Socket-Head Spear"
+      ],
+      "name": "Socketed Spear",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "2x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Long spear whose metal head has a closed socket receiving the wooden shaft."
+    },
+    {
+      "sourceId": "W36",
+      "sourceName": "Leaf Spear",
+      "aliases": [
+        "Leaf-Head Spear",
+        "Broadleaf Spear"
+      ],
+      "name": "Leaf Spear",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "2x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Broad leaf-shaped spearhead with simple socket and a long complete shaft."
+    },
+    {
+      "sourceId": "W37",
+      "sourceName": "Dagger-Axe",
+      "aliases": [
+        "Side-Bladed Polearm",
+        "Ge"
+      ],
+      "name": "Dagger-Axe",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "2x4",
+      "status": "candidate",
+      "note": "One transverse dagger-like blade near the top of a long shaft; no medieval halberd axe-hook-spike head.",
+      "numericRequirements": null,
+      "constructionBrief": "Long wooden shaft with one bronze dagger blade projecting sideways near its top."
+    },
+    {
+      "sourceId": "W38",
+      "sourceName": "Self Bow",
+      "aliases": [
+        "Single-Stave Bow",
+        "Wooden Stave Bow"
+      ],
+      "name": "Self Bow",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "2x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Medium-length bow made from one continuous wooden stave, complete string and both tips."
+    },
+    {
+      "sourceId": "W39",
+      "sourceName": "Short Bow",
+      "aliases": [
+        "Compact Bow",
+        "Brush Bow"
+      ],
+      "name": "Short Bow",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Compact bow with short limbs, a clear central grip and complete string."
+    },
+    {
+      "sourceId": "W40",
+      "sourceName": "Long Self Bow",
+      "aliases": [
+        "Tall Stave Bow",
+        "Longwood Bow"
+      ],
+      "name": "Long Self Bow",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "2x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Tall shaft-dominant self bow with long simple limbs and complete string."
+    },
+    {
+      "sourceId": "W41",
+      "sourceName": "Backed Bow",
+      "aliases": [
+        "Sinew-Backed Bow",
+        "Reinforced-Back Bow"
+      ],
+      "name": "Backed Bow",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "2x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Wooden bow with a structurally continuous sinew backing and complete string."
+    },
+    {
+      "sourceId": "W42",
+      "sourceName": "Composite Bow",
+      "aliases": [
+        "Horn-and-Sinew Bow",
+        "Horn Bow"
+      ],
+      "name": "Composite Bow",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Compact composite bow with distinct recurved limbs, complete string and coherent horn/wood/sinew construction."
+    },
+    {
+      "sourceId": "W43",
+      "sourceName": "Sling",
+      "aliases": [
+        "Pouch Sling",
+        "Woven Sling"
+      ],
+      "name": "Sling",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "status": "candidate",
+      "note": "Empty sling only: one cradle and two cords; no ammunition or pouch accessory.",
+      "numericRequirements": null,
+      "constructionBrief": "One empty hand-sling cradle and two cords; one finger loop, one release knot."
+    },
+    {
+      "sourceId": "W44",
+      "sourceName": "Javelin",
+      "aliases": [
+        "Casting Spear",
+        "Light Throwing Spear"
+      ],
+      "name": "Javelin",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One narrow full-length light throwing spear with compact head and simple shaft."
+    },
+    {
+      "sourceId": "W45",
+      "sourceName": "War Dart",
+      "aliases": [
+        "Throwing Dart",
+        "Heavy Dart"
+      ],
+      "name": "War Dart",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One substantial throwing dart with a short shaft and compact weighted point."
+    },
+    {
+      "sourceId": "W46",
+      "sourceName": "Spear-Thrower",
+      "aliases": [
+        "Dart-Thrower",
+        "Atlatl"
+      ],
+      "name": "Spear-Thrower",
+      "attributeGroup": null,
+      "slot": "weapon",
+      "footprint": null,
+      "status": "retired",
+      "note": "Retired by current repo instructions; original conversation does not reopen it.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "W47",
+      "sourceName": "Harpoon",
+      "aliases": [
+        "Barbed Harpoon",
+        "Line Harpoon"
+      ],
+      "name": "Harpoon",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "2x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Long barbed harpoon with one working head and a complete two-hand shaft."
+    },
+    {
+      "sourceId": "W48",
+      "sourceName": "Throwing Stick",
+      "aliases": [
+        "Casting Stick",
+        "Hunting Stick"
+      ],
+      "name": "Throwing Stick",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One flattened or gently curved solid wooden throwing stick; no second weapon."
+    },
+    {
+      "sourceId": "W49",
+      "sourceName": "Bola",
+      "aliases": [
+        "Corded Weights",
+        "Hunting Bolas"
+      ],
+      "name": "Bola",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Proposed 2x2 coiled footprint; define launcher/return behavior before runtime.",
+      "numericRequirements": null,
+      "constructionBrief": "One complete bola with secured weights joined by cord, gathered within a square silhouette."
+    },
+    {
+      "sourceId": "W50",
+      "sourceName": "Throwing Club",
+      "aliases": [
+        "Casting Club",
+        "Weighted Throwing Club"
+      ],
+      "name": "Throwing Club",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One short solid throwing club with a compact weighted impact end."
+    },
+    {
+      "sourceId": "W51",
+      "sourceName": "Short Staff",
+      "aliases": [
+        "Handstaff",
+        "Fighting Stick"
+      ],
+      "name": "Short Staff",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One straight short wooden striking staff with both ends visible."
+    },
+    {
+      "sourceId": "W52",
+      "sourceName": "Long Staff",
+      "aliases": [
+        "Tall Staff",
+        "Fighting Staff"
+      ],
+      "name": "Long Staff",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "1x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One full-length slender two-hand wooden staff with simple grip zone."
+    },
+    {
+      "sourceId": "W53",
+      "sourceName": "Forked Staff",
+      "aliases": [
+        "Branch Staff",
+        "Split-Crown Staff"
+      ],
+      "name": "Forked Staff",
+      "attributeGroup": "INT",
+      "slot": "weapon",
+      "footprint": "1x4",
+      "status": "candidate",
+      "note": "INT only for a channeling forked staff; ordinary branch shape alone grants no magic.",
+      "numericRequirements": null,
+      "constructionBrief": "One complete slender fork-headed channeling staff; one deliberate fork, no branch clutter."
+    },
+    {
+      "sourceId": "W54",
+      "sourceName": "Sickle",
+      "aliases": [
+        "Harvest Blade",
+        "Hooked Sickle"
+      ],
+      "name": "Sickle",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One compact harvest sickle with curved working blade and short usable grip."
+    },
+    {
+      "sourceId": "W55",
+      "sourceName": "Stone Pick",
+      "aliases": [
+        "Pointed Stone Pick",
+        "Hafted Pick"
+      ],
+      "name": "Stone Pick",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One compact one-hand stone pick with firmly hafted tapered point and readable grip."
+    },
+    {
+      "sourceId": "O01",
+      "sourceName": "Hide Shield",
+      "aliases": [
+        "Skin Shield",
+        "Leather-Faced Shield"
+      ],
+      "name": "Hide Shield",
+      "attributeGroup": "STR",
+      "slot": "offhand",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Broad flexible hide shield stretched over a credible supporting frame."
+    },
+    {
+      "sourceId": "O02",
+      "sourceName": "Rawhide Shield",
+      "aliases": [
+        "Stiffhide Shield",
+        "Hardened-Hide Shield"
+      ],
+      "name": "Rawhide Shield",
+      "attributeGroup": "STR",
+      "slot": "offhand",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Broad stiff rawhide shield with a continuous defensive face and bound edge."
+    },
+    {
+      "sourceId": "O03",
+      "sourceName": "Wicker Shield",
+      "aliases": [
+        "Woven Shield",
+        "Basket Shield"
+      ],
+      "name": "Wicker Shield",
+      "attributeGroup": null,
+      "slot": "offhand",
+      "footprint": null,
+      "status": "retired",
+      "note": "Retired by current repo instructions; do not revive as a higher ladder rung.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "O04",
+      "sourceName": "Reed Shield",
+      "aliases": [
+        "Reedwork Shield",
+        "Bundled-Reed Shield"
+      ],
+      "name": "Reed Shield",
+      "attributeGroup": "STR/DEX",
+      "slot": "offhand",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "Candidate needs a convincing complete defensive construction and distinct silhouette.",
+      "numericRequirements": null,
+      "constructionBrief": "Broad dense reed shield with credible load-bearing binding; no open basket silhouette."
+    },
+    {
+      "sourceId": "O05",
+      "sourceName": "Bark Shield",
+      "aliases": [
+        "Barkwood Shield",
+        "Bark Slab Shield"
+      ],
+      "name": "Bark Shield",
+      "attributeGroup": "STR/DEX",
+      "slot": "offhand",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Broad continuous bark shield slab with reinforced structural edges."
+    },
+    {
+      "sourceId": "O06",
+      "sourceName": "Plank Shield",
+      "aliases": [
+        "Board Shield",
+        "Timber Shield"
+      ],
+      "name": "Plank Shield",
+      "attributeGroup": "STR",
+      "slot": "offhand",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Broad shield made from joined wooden boards with a continuous defensive face."
+    },
+    {
+      "sourceId": "O07",
+      "sourceName": "Hand Shield",
+      "aliases": [
+        "Small Round Shield",
+        "Fist Shield"
+      ],
+      "name": "Hand Shield",
+      "attributeGroup": "DEX",
+      "slot": "offhand",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Compact hand shield with a small round defensive face."
+    },
+    {
+      "sourceId": "O08",
+      "sourceName": "Round Shield",
+      "aliases": [
+        "Circle Shield",
+        "Disc Shield"
+      ],
+      "name": "Round Shield",
+      "attributeGroup": "STR/DEX",
+      "slot": "offhand",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Medium round shield with plain face and bound rim."
+    },
+    {
+      "sourceId": "O09",
+      "sourceName": "Oval Shield",
+      "aliases": [
+        "Long-Oval Shield",
+        "Elongated Shield"
+      ],
+      "name": "Oval Shield",
+      "attributeGroup": "STR",
+      "slot": "offhand",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Elongated oval shield with a continuous defensive face and plain rim."
+    },
+    {
+      "sourceId": "O10",
+      "sourceName": "Tall Shield",
+      "aliases": [
+        "Standing Shield",
+        "Body Shield"
+      ],
+      "name": "Tall Shield",
+      "attributeGroup": "STR",
+      "slot": "offhand",
+      "footprint": "2x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Tall body-length shield with broad continuous defensive coverage."
+    },
+    {
+      "sourceId": "O11",
+      "sourceName": "Notched Shield",
+      "aliases": [
+        "Cutaway Shield",
+        "Waist-Notched Shield"
+      ],
+      "name": "Notched Shield",
+      "attributeGroup": "STR/DEX",
+      "slot": "offhand",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Medium shield with deliberate waist cutaways and substantial remaining edge structure."
+    },
+    {
+      "sourceId": "O12",
+      "sourceName": "Figure-Eight Shield",
+      "aliases": [
+        "Double-Lobed Shield",
+        "Waist-Curved Shield"
+      ],
+      "name": "Figure-Eight Shield",
+      "attributeGroup": "STR",
+      "slot": "offhand",
+      "footprint": "2x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Large shield with two joined broad rounded lobes and a narrow central waist."
+    },
+    {
+      "sourceId": "O13",
+      "sourceName": "Bossed Shield",
+      "aliases": [
+        "Boss Shield",
+        "Center-Boss Shield"
+      ],
+      "name": "Bossed Shield",
+      "attributeGroup": "STR",
+      "slot": "offhand",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "Single structural boss; no sunburst, spokes or radiating emblem.",
+      "numericRequirements": null,
+      "constructionBrief": "Broad shield with one structural center boss protecting the gripping hand behind it."
+    },
+    {
+      "sourceId": "O14",
+      "sourceName": "Ribbed Shield",
+      "aliases": [
+        "Concentric Shield",
+        "Ridge-Ring Shield"
+      ],
+      "name": "Ribbed Shield",
+      "attributeGroup": "STR",
+      "slot": "offhand",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "Historical rib vocabulary requires motif review; avoid sun-like concentric decoration.",
+      "numericRequirements": null,
+      "constructionBrief": "Broad shield with sparse structural raised ribs, subject to the no-solar-motif rule."
+    },
+    {
+      "sourceId": "O15",
+      "sourceName": "Bronze-Faced Shield",
+      "aliases": [
+        "Bronze-Clad Shield",
+        "Metal-Faced Shield"
+      ],
+      "name": "Bronze-Faced Shield",
+      "attributeGroup": "STR",
+      "slot": "offhand",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Shield with a thin bronze facing visibly supported by a thicker organic body."
+    },
+    {
+      "sourceId": "O16",
+      "sourceName": "Sheet-Bronze Shield",
+      "aliases": [
+        "Hammered Shield",
+        "Beaten Bronze Shield"
+      ],
+      "name": "Sheet-Bronze Shield",
+      "attributeGroup": "STR",
+      "slot": "offhand",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "Shield formed predominantly from continuous beaten bronze sheet with a turned rim."
+    },
+    {
+      "sourceId": "O17",
+      "sourceName": "Torch",
+      "aliases": [
+        "Pitch Torch",
+        "Resin Torch"
+      ],
+      "name": "Torch",
+      "attributeGroup": "U",
+      "slot": "offhand",
+      "footprint": "1x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One complete short resin torch with a bound combustible head and plain handle."
+    },
+    {
+      "sourceId": "O18",
+      "sourceName": "Hunting Net",
+      "aliases": [
+        "Casting Net",
+        "Hand Net"
+      ],
+      "name": "Hunting Net",
+      "attributeGroup": "DEX",
+      "slot": "offhand",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One compact gathered weighted net, hand-held in use; no wearable storage harness."
+    },
+    {
+      "sourceId": "O19",
+      "sourceName": "Quiver",
+      "aliases": [
+        "Arrow Case",
+        "Bow Quiver"
+      ],
+      "name": "Quiver",
+      "attributeGroup": "DEX",
+      "slot": "quiver",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "Move from offhand to Quiver equipment family; simultaneous seats remain an open topology decision.",
+      "numericRequirements": null,
+      "constructionBrief": "One complete long wearable arrow case with a closed bottom and open top; no hand grip."
+    },
+    {
+      "sourceId": "O20",
+      "sourceName": "Dart Case",
+      "aliases": [
+        "Dart Sheath",
+        "Throwing-Dart Case"
+      ],
+      "name": "Dart Case",
+      "attributeGroup": "DEX",
+      "slot": "projectile-case",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Move from offhand to projectile-case auxiliary family; do not duplicate Dart Rig.",
+      "numericRequirements": null,
+      "constructionBrief": "One compact wearable dart case with secured narrow channels and visible closure."
+    },
+    {
+      "sourceId": "O21",
+      "sourceName": "Offering Bowl",
+      "aliases": [
+        "Libation Bowl",
+        "Ritual Cup"
+      ],
+      "name": "Offering Bowl",
+      "attributeGroup": "INT",
+      "slot": "offhand",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Broad substantial offering bowl, distinct from the starter cup.",
+      "numericRequirements": null,
+      "constructionBrief": "One broad shallow offering bowl with a solid base, thick rim and substantial volume."
+    },
+    {
+      "sourceId": "O22",
+      "sourceName": "Hand Idol",
+      "aliases": [
+        "Palm Idol",
+        "Hand Effigy"
+      ],
+      "name": "Hand Idol",
+      "attributeGroup": "STR/INT",
+      "slot": "offhand",
+      "footprint": "2x2",
+      "status": "hold",
+      "note": "Hold: current production rules reject tiny hand-idol props; needs substantial revised silhouette.",
+      "numericRequirements": null,
+      "constructionBrief": "One proposed substantial solid handled effigy; hold pending stronger equipment read."
+    },
+    {
+      "sourceId": "O23",
+      "sourceName": "Ritual Tablet",
+      "aliases": [
+        "Inscribed Tablet",
+        "Omen Tablet"
+      ],
+      "name": "Ritual Tablet",
+      "attributeGroup": "INT",
+      "slot": "offhand",
+      "footprint": "2x2",
+      "status": "hold",
+      "note": "Hold: flat tablet offhand conflicts with current production taste; not a generation target.",
+      "numericRequirements": null,
+      "constructionBrief": "One proposed thick held inscribed tablet; hold pending resolution of flat-prop rejection."
+    },
+    {
+      "sourceId": "O24",
+      "sourceName": "Scrying Mirror",
+      "aliases": [
+        "Spirit Mirror",
+        "Divining Mirror"
+      ],
+      "name": "Scrying Mirror",
+      "attributeGroup": "INT",
+      "slot": "offhand",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One backed round mirror with a short integral handle and clear reflecting face."
+    },
+    {
+      "sourceId": "O25",
+      "sourceName": "Focus Stone",
+      "aliases": [
+        "Palmstone",
+        "Channeling Stone"
+      ],
+      "name": "Focus Stone",
+      "attributeGroup": "INT",
+      "slot": "offhand",
+      "footprint": "1x1",
+      "status": "hold",
+      "note": "Hold: tiny generic focus stones conflict with current production rules.",
+      "numericRequirements": null,
+      "constructionBrief": "One proposed small focus stone; hold rather than prompting generic glowing pebble loot."
+    },
+    {
+      "sourceId": "O26",
+      "sourceName": "Ember Pot",
+      "aliases": [
+        "Coal Vessel",
+        "Fire Cup"
+      ],
+      "name": "Clay Ember Cup",
+      "attributeGroup": "INT",
+      "slot": "offhand",
+      "footprint": "1x1",
+      "status": "candidate",
+      "note": "Rename Clay Ember Cup: simple fired-clay cup with one smouldering amadou ember; offhand. Bare main hand required for Burning Hand, not automatically for every skill.",
+      "numericRequirements": null,
+      "constructionBrief": "One small open fired-clay cup with thick walls, modest base and a single dark amadou ember glowing faintly at its edge."
+    },
+    {
+      "sourceId": "A01",
+      "sourceName": "Headwrap",
+      "aliases": [
+        "Bound Headcloth",
+        "Wrapped Headcloth"
+      ],
+      "name": "Headwrap",
+      "attributeGroup": "U",
+      "slot": "head",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One simply wound cloth headwrap with a complete crown and restrained folds."
+    },
+    {
+      "sourceId": "A02",
+      "sourceName": "Woven Cap",
+      "aliases": [
+        "Fiber Cap",
+        "Plaited Cap"
+      ],
+      "name": "Woven Cap",
+      "attributeGroup": "U",
+      "slot": "head",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One plain woven-fiber cap with continuous crown, edge binding and no metal decoration."
+    },
+    {
+      "sourceId": "A03",
+      "sourceName": "Hide Cap",
+      "aliases": [
+        "Leather Cap",
+        "Soft-Hide Cap"
+      ],
+      "name": "Hide Cap",
+      "attributeGroup": "DEX",
+      "slot": "head",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One fitted soft-hide cap with simple stitched seams and a complete back."
+    },
+    {
+      "sourceId": "A04",
+      "sourceName": "Fur Cap",
+      "aliases": [
+        "Pelt Cap",
+        "Furred Cap"
+      ],
+      "name": "Fur Cap",
+      "attributeGroup": "STR",
+      "slot": "head",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One compact fur cap with complete crown and a narrow visible lining edge."
+    },
+    {
+      "sourceId": "A05",
+      "sourceName": "Rawhide Helm",
+      "aliases": [
+        "Stiffhide Helm",
+        "Hide Shell Helm"
+      ],
+      "name": "Rawhide Helm",
+      "attributeGroup": "STR",
+      "slot": "head",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One stiff rawhide helmet shell with functional seams and full rear coverage."
+    },
+    {
+      "sourceId": "A06",
+      "sourceName": "Tusk Helmet",
+      "aliases": [
+        "Tusked Helm",
+        "Tusk-Plate Helmet"
+      ],
+      "name": "Tusk-Plate Helmet",
+      "attributeGroup": "STR/DEX",
+      "slot": "head",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Rename Tusk-Plate Helmet: close-fitting cap with many small curved tusk plates sewn in rows; no whole tusks sticking out.",
+      "numericRequirements": null,
+      "constructionBrief": "One close-fitting leather-backed cap covered by rows of small curved tusk plates, sewn through drilled holes; both cheek guards structurally present."
+    },
+    {
+      "sourceId": "A07",
+      "sourceName": "Bronze Cap",
+      "aliases": [
+        "Bronze Skullcap",
+        "Domed Bronze Cap"
+      ],
+      "name": "Bronze Cap",
+      "attributeGroup": "STR",
+      "slot": "head",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One low domed bronze skullcap with a complete rear dome and a restrained lining edge."
+    },
+    {
+      "sourceId": "A08",
+      "sourceName": "Crested Bronze Helmet",
+      "aliases": [
+        "Ridge-Crest Helm",
+        "Crest-Bearing Helm"
+      ],
+      "name": "Crested Bronze Helmet",
+      "attributeGroup": "STR",
+      "slot": "head",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One bronze helmet with a single lengthwise structural crest and complete dome."
+    },
+    {
+      "sourceId": "A09",
+      "sourceName": "Linen Tunic",
+      "aliases": [
+        "Woven Tunic",
+        "Plainweave Tunic"
+      ],
+      "name": "Linen Tunic",
+      "attributeGroup": "INT",
+      "slot": "body",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One short linen tunic with distinct neck and arm openings, simple seams and hem."
+    },
+    {
+      "sourceId": "A10",
+      "sourceName": "Wool Tunic",
+      "aliases": [
+        "Woolen Tunic",
+        "Fleece-Woven Tunic"
+      ],
+      "name": "Wool Tunic",
+      "attributeGroup": "STR/INT",
+      "slot": "body",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One thick wool tunic with broad continuous cloth surfaces and a clear short hem."
+    },
+    {
+      "sourceId": "A11",
+      "sourceName": "Hide Vest",
+      "aliases": [
+        "Skin Vest",
+        "Leather Vest"
+      ],
+      "name": "Hide Vest",
+      "attributeGroup": "DEX",
+      "slot": "body",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One fitted soft-hide sleeveless vest with neck/arm openings and functional seams."
+    },
+    {
+      "sourceId": "A12",
+      "sourceName": "Layered-Hide Corselet",
+      "aliases": [
+        "Overlapping-Hide Corselet",
+        "Hide-Layer Vest"
+      ],
+      "name": "Layered-Hide Corselet",
+      "attributeGroup": "STR/DEX",
+      "slot": "body",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One flexible torso corselet assembled from broad overlapping hide sections."
+    },
+    {
+      "sourceId": "A13",
+      "sourceName": "Rawhide Corselet",
+      "aliases": [
+        "Stiffhide Corselet",
+        "Rawhide Body Vest"
+      ],
+      "name": "Rawhide Corselet",
+      "attributeGroup": "STR",
+      "slot": "body",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One stiff rawhide torso shell with coherent side joins, neck opening and arm openings."
+    },
+    {
+      "sourceId": "A14",
+      "sourceName": "Leather Scale Vest",
+      "aliases": [
+        "Hide-Scale Vest",
+        "Leather Scale Corselet"
+      ],
+      "name": "Leather Scale Vest",
+      "attributeGroup": "STR/DEX",
+      "slot": "body",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One flexible vest of small leather scales attached to a continuous backing."
+    },
+    {
+      "sourceId": "A15",
+      "sourceName": "Bronze Scale Corselet",
+      "aliases": [
+        "Bronze Scale Vest",
+        "Sewn-Scale Corselet"
+      ],
+      "name": "Bronze Scale Corselet",
+      "attributeGroup": "STR",
+      "slot": "body",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One torso corselet of bronze scales sewn in overlapping courses to a concealed backing."
+    },
+    {
+      "sourceId": "A16",
+      "sourceName": "Bronze Plate Corselet",
+      "aliases": [
+        "Laced-Plate Corselet",
+        "Bronze Body Plates"
+      ],
+      "name": "Bronze Plate Corselet",
+      "attributeGroup": "STR",
+      "slot": "body",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One torso-only bronze plate corselet with broad shaped front/back panels and credible side joins."
+    },
+    {
+      "sourceId": "A17",
+      "sourceName": "Hand Wraps",
+      "aliases": [
+        "Palm Wraps",
+        "Grip Wraps"
+      ],
+      "name": "Hand Wraps",
+      "attributeGroup": "U",
+      "slot": "hands",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Covers palms: blocks the proposed starter Burning Hand condition.",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of simple cloth hand wraps covering palms; loose ends lie naturally without invisible hands."
+    },
+    {
+      "sourceId": "A18",
+      "sourceName": "Hide Gloves",
+      "aliases": [
+        "Soft-Hide Gloves",
+        "Stitched Hide Gloves"
+      ],
+      "name": "Hide Gloves",
+      "attributeGroup": "DEX",
+      "slot": "hands",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of fitted soft-hide gloves with five finger sleeves per glove and plain cuffs."
+    },
+    {
+      "sourceId": "A19",
+      "sourceName": "Fur Mitts",
+      "aliases": [
+        "Pelt Mitts",
+        "Furred Handwraps"
+      ],
+      "name": "Fur Mitts",
+      "attributeGroup": "STR",
+      "slot": "hands",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of continuous soft fur mitts with one thumb each and reinforced hide palms; no hard plaques."
+    },
+    {
+      "sourceId": "A20",
+      "sourceName": "Wrist Wraps",
+      "aliases": [
+        "Bound Wristcloths",
+        "Woven Wristbands"
+      ],
+      "name": "Wrist Wraps",
+      "attributeGroup": "INT",
+      "slot": "hands",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Wrist-only pair; no fabric crossing palms, thumb webs or fingers.",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of narrow wristcloth wraps that stop before the palm, thumb web and fingers."
+    },
+    {
+      "sourceId": "A21",
+      "sourceName": "Archer’s Bracer",
+      "aliases": [
+        "Bow Bracer",
+        "Bowstring Guard"
+      ],
+      "name": "Archer's Bracers",
+      "attributeGroup": "DEX",
+      "slot": "hands",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Display Archer's Bracers: paired equipment for this game; bow-side string guard and a simpler matching opposite cuff.",
+      "numericRequirements": null,
+      "constructionBrief": "A paired game set: one forearm string guard and one simpler corresponding cuff; both leave hands bare."
+    },
+    {
+      "sourceId": "A22",
+      "sourceName": "Rawhide Bracers",
+      "aliases": [
+        "Stiffhide Wristguards",
+        "Hide Forearm Guards"
+      ],
+      "name": "Rawhide Bracers",
+      "attributeGroup": "DEX",
+      "slot": "hands",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of shaped rawhide forearm guards with broad ties and no hand coverage."
+    },
+    {
+      "sourceId": "A23",
+      "sourceName": "Bone-Splint Bracers",
+      "aliases": [
+        "Bone Forearm Guards",
+        "Bone-Laced Bracers"
+      ],
+      "name": "Bone-Splint Bracers",
+      "attributeGroup": "STR/DEX",
+      "slot": "hands",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Game construction proposal; requires credible backing and joins, not decorative bone spikes.",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of forearm guards with short bone splints lashed to credible flexible backing."
+    },
+    {
+      "sourceId": "A24",
+      "sourceName": "Bronze Armguards",
+      "aliases": [
+        "Bronze Bracers",
+        "Bronze Forearm Guards"
+      ],
+      "name": "Bronze Armguards",
+      "attributeGroup": "STR",
+      "slot": "hands",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Forearm-only bronze shells, palms exposed; protection is STR even though the object is a bracer.",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of bronze forearm shells with a corresponding opposite side and narrow functional lining."
+    },
+    {
+      "sourceId": "A25",
+      "sourceName": "Footwraps",
+      "aliases": [
+        "Bound Footcloths",
+        "Woven Footwraps"
+      ],
+      "name": "Footwraps",
+      "attributeGroup": "U",
+      "slot": "feet",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of cloth footwraps gathered naturally without rigid invisible-foot supports."
+    },
+    {
+      "sourceId": "A26",
+      "sourceName": "Fiber Sandals",
+      "aliases": [
+        "Plaited Sandals",
+        "Grass Sandals"
+      ],
+      "name": "Fiber Sandals",
+      "attributeGroup": "U",
+      "slot": "feet",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of woven fiber sandals with soles and relaxed functional straps."
+    },
+    {
+      "sourceId": "A27",
+      "sourceName": "Leather Sandals",
+      "aliases": [
+        "Hide Sandals",
+        "Strap Sandals"
+      ],
+      "name": "Leather Sandals",
+      "attributeGroup": "DEX",
+      "slot": "feet",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of leather sandals with continuous soles and simple relaxed straps."
+    },
+    {
+      "sourceId": "A28",
+      "sourceName": "Rawhide Shoes",
+      "aliases": [
+        "Hide-Laced Shoes",
+        "Rawhide Footwear"
+      ],
+      "name": "Rawhide Shoes",
+      "attributeGroup": "STR/DEX",
+      "slot": "feet",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of rawhide shoes folded around the foot shape and joined with plain lacing."
+    },
+    {
+      "sourceId": "A29",
+      "sourceName": "Soft Boots",
+      "aliases": [
+        "Soft-Hide Boots",
+        "Stitched Boots"
+      ],
+      "name": "Soft Boots",
+      "attributeGroup": "INT",
+      "slot": "feet",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Proposed INT fitted soft boot with restrained tapered toe; not every boot is INT.",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of fitted soft boots with short shafts and modest tapered toes."
+    },
+    {
+      "sourceId": "A30",
+      "sourceName": "Fur Boots",
+      "aliases": [
+        "Pelt Boots",
+        "Fur-Lined Boots"
+      ],
+      "name": "Fur Boots",
+      "attributeGroup": "STR/INT",
+      "slot": "feet",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of fur-lined boots with sturdy soft soles and broad continuous shafts."
+    },
+    {
+      "sourceId": "A31",
+      "sourceName": "Hide Gaiters",
+      "aliases": [
+        "Hide Legwraps",
+        "Laced Calfguards"
+      ],
+      "name": "Hide Gaiters",
+      "attributeGroup": "STR/DEX",
+      "slot": "feet",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Complete footwear item with paired gaiters and plain underlying shoes; no invisible legs.",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of hide calf gaiters accompanied by plain fitted shoes as one footwear set."
+    },
+    {
+      "sourceId": "A32",
+      "sourceName": "Bronze Greaves",
+      "aliases": [
+        "Bronze Shinguards",
+        "Bronze Legguards"
+      ],
+      "name": "Bronze Greaves",
+      "attributeGroup": "STR",
+      "slot": "feet",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Paired greaves with plain underlying sandals; no sabatons or medieval articulated knee armor.",
+      "numericRequirements": null,
+      "constructionBrief": "A pair of shaped bronze shin shells accompanied by plain sandals as one footwear set."
+    },
+    {
+      "sourceId": "A33",
+      "sourceName": "Cord Belt",
+      "aliases": [
+        "Knot Belt",
+        "Twined Belt"
+      ],
+      "name": "Jute Cord",
+      "attributeGroup": "U",
+      "slot": "belt",
+      "footprint": "2x1",
+      "status": "candidate",
+      "note": "Rename Jute Cord; one simple waist-length cord and a credible tie.",
+      "numericRequirements": null,
+      "constructionBrief": "One shallow horizontal length of jute cord with two real ends and one simple tie."
+    },
+    {
+      "sourceId": "A34",
+      "sourceName": "Woven Sash",
+      "aliases": [
+        "Waist Sash",
+        "Plaited Girdle"
+      ],
+      "name": "Woven Sash",
+      "attributeGroup": "INT",
+      "slot": "belt",
+      "footprint": "2x1",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One broad woven sash laid in a shallow horizontal arc with a cloth tie and no dangling tails."
+    },
+    {
+      "sourceId": "A35",
+      "sourceName": "Hide Belt",
+      "aliases": [
+        "Leather Girdle",
+        "Hide Waistband"
+      ],
+      "name": "Hide Belt",
+      "attributeGroup": "DEX",
+      "slot": "belt",
+      "footprint": "2x1",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One plain hide waist band with a credible opening and simple fastening."
+    },
+    {
+      "sourceId": "A36",
+      "sourceName": "Beaded Belt",
+      "aliases": [
+        "Beadwork Girdle",
+        "Seed-Bead Belt"
+      ],
+      "name": "Beaded Belt",
+      "attributeGroup": "DEX/INT",
+      "slot": "belt",
+      "footprint": "2x1",
+      "status": "candidate",
+      "note": "Small bounded integrated beadwork; no dangling strand curtain.",
+      "numericRequirements": null,
+      "constructionBrief": "One flexible waist band with a small bounded integrated bead field."
+    },
+    {
+      "sourceId": "A37",
+      "sourceName": "Shell Belt",
+      "aliases": [
+        "Shellwork Girdle",
+        "Shell-Set Belt"
+      ],
+      "name": "Shell Belt",
+      "attributeGroup": "DEX/INT",
+      "slot": "belt",
+      "footprint": "2x1",
+      "status": "candidate",
+      "note": "Shell knife exclusion does not ban shell in other legitimate constructions; review ornament budget.",
+      "numericRequirements": null,
+      "constructionBrief": "One flexible waist band with sparse functional shell attachments; no strand curtain."
+    },
+    {
+      "sourceId": "A38",
+      "sourceName": "Plaque Belt",
+      "aliases": [
+        "Belt of Plaques",
+        "Bronze Plaque Belt"
+      ],
+      "name": "Plaque Belt",
+      "attributeGroup": "STR",
+      "slot": "belt",
+      "footprint": "2x1",
+      "status": "candidate",
+      "note": "Broad belt supported by a flexible backing with functional plates, no hanging tassets.",
+      "numericRequirements": null,
+      "constructionBrief": "One broad flexible waist band bearing functional close-set protective plaques."
+    },
+    {
+      "sourceId": "A39",
+      "sourceName": "Ring-Fastened Belt",
+      "aliases": [
+        "Loop-Fastened Girdle",
+        "Ring-Clasp Belt"
+      ],
+      "name": "Ring-Fastened Belt",
+      "attributeGroup": "STR/DEX",
+      "slot": "belt",
+      "footprint": "2x1",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One shallow waist band secured by one simple structural ring closure."
+    },
+    {
+      "sourceId": "A40",
+      "sourceName": "Pouch Belt",
+      "aliases": [
+        "Pocketed Girdle",
+        "Belt Pouch Harness"
+      ],
+      "name": "Pouch Belt",
+      "attributeGroup": "DEX",
+      "slot": "belt",
+      "footprint": "2x1",
+      "status": "hold",
+      "note": "Hold or redesign: dangling pouch harness conflicts with the shallow belt silhouette; Quickrig owns equipment storage.",
+      "numericRequirements": null,
+      "constructionBrief": "Proposed belt with shallow integrated compartments; hold if it becomes a hanging pouch harness."
+    },
+    {
+      "sourceId": "A41",
+      "sourceName": "Shoulder Hide",
+      "aliases": [
+        "Shoulder Pelt",
+        "Hide Drape"
+      ],
+      "name": "Shoulder Hide",
+      "attributeGroup": "STR",
+      "slot": "overlayer",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One broad shoulder hide draped as a continuous overlayer, no head or paws."
+    },
+    {
+      "sourceId": "A42",
+      "sourceName": "Fur Mantle",
+      "aliases": [
+        "Pelt Mantle",
+        "Furred Shoulder Wrap"
+      ],
+      "name": "Fur Mantle",
+      "attributeGroup": "STR",
+      "slot": "overlayer",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One thick continuous fur mantle with a broad shoulder silhouette and simple closure."
+    },
+    {
+      "sourceId": "A43",
+      "sourceName": "Wool Cloak",
+      "aliases": [
+        "Woolen Mantle",
+        "Woven Wool Cape"
+      ],
+      "name": "Wool Cloak",
+      "attributeGroup": "STR/INT",
+      "slot": "overlayer",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One broad wool cloak with clear continuous fabric fields and restrained folds."
+    },
+    {
+      "sourceId": "A44",
+      "sourceName": "Linen Mantle",
+      "aliases": [
+        "Linen Shoulder Wrap",
+        "Linen Cape"
+      ],
+      "name": "Linen Mantle",
+      "attributeGroup": "INT",
+      "slot": "overlayer",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One broad light linen shoulder mantle with continuous cloth and a plain hem."
+    },
+    {
+      "sourceId": "A45",
+      "sourceName": "Grass Cape",
+      "aliases": [
+        "Plaited Rain Cape",
+        "Fiber Raincloak"
+      ],
+      "name": "Grass Cape",
+      "attributeGroup": "DEX",
+      "slot": "overlayer",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "Broad rain-shedding panels; no shingled shoulder tabs.",
+      "numericRequirements": null,
+      "constructionBrief": "One broad rain cape of coherent plant-fiber panels; no rows of tiny shingled tabs."
+    },
+    {
+      "sourceId": "A46",
+      "sourceName": "Feather Mantle",
+      "aliases": [
+        "Feathered Cape",
+        "Plumed Shoulder Wrap"
+      ],
+      "name": "Feather Mantle",
+      "attributeGroup": "DEX/INT",
+      "slot": "overlayer",
+      "footprint": "2x3",
+      "status": "hold",
+      "note": "Hold for source review; do not generate repeated feather-like textile shingles.",
+      "numericRequirements": null,
+      "constructionBrief": "Proposed mantle with source-supported genuine feather construction; hold pending visual review."
+    },
+    {
+      "sourceId": "A47",
+      "sourceName": "Dust Scarf",
+      "aliases": [
+        "Dust Wrap",
+        "Face Veil"
+      ],
+      "name": "Dust Scarf",
+      "attributeGroup": "DEX/INT",
+      "slot": "overlayer",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "2x3 follows existing overlayer standard; a future smaller scarf footprint would be an explicit rule change.",
+      "numericRequirements": null,
+      "constructionBrief": "One continuous long dust scarf arranged as an overlayer with broad folds, not torn strips."
+    },
+    {
+      "sourceId": "A48",
+      "sourceName": "Ritual Shawl",
+      "aliases": [
+        "Offering Shawl",
+        "Fringed Ritual Wrap"
+      ],
+      "name": "Ritual Shawl",
+      "attributeGroup": "INT",
+      "slot": "overlayer",
+      "footprint": "2x3",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One broad ritual shawl with a bounded woven border and predominantly plain cloth."
+    },
+    {
+      "sourceId": "S01",
+      "sourceName": "Conduit Rod",
+      "aliases": [
+        "Channeling Rod",
+        "Focus Conduit"
+      ],
+      "name": "Conduit Rod",
+      "attributeGroup": "INT",
+      "slot": "int-auxiliary",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Hands-free conduit assembly, visibly distinct from a held staff. Attendant/Apparatus allocation pending.",
+      "numericRequirements": null,
+      "constructionBrief": "One compact hands-free conduit assembly with a clear central rod and self-supporting magical suspension."
+    },
+    {
+      "sourceId": "S02",
+      "sourceName": "Ritual Orb",
+      "aliases": [
+        "Spirit Sphere",
+        "Focus Orb"
+      ],
+      "name": "Ritual Orb",
+      "attributeGroup": "INT",
+      "slot": "int-auxiliary",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Hands-free orbiting vessel; do not make all INT auxiliary bases into spheres.",
+      "numericRequirements": null,
+      "constructionBrief": "One hands-free spherical focus with a readable outer shell and restrained orbital motion."
+    },
+    {
+      "sourceId": "S03",
+      "sourceName": "Attendant Effigy",
+      "aliases": [
+        "Bound Effigy",
+        "Spirit Attendant"
+      ],
+      "name": "Attendant Effigy",
+      "attributeGroup": "INT",
+      "slot": "int-auxiliary",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Hands-free magical effigy; no generic toy idol.",
+      "numericRequirements": null,
+      "constructionBrief": "One compact hands-free effigy with a substantial body and coherent magical suspension."
+    },
+    {
+      "sourceId": "S04",
+      "sourceName": "Ritual Brazier",
+      "aliases": [
+        "Incense Brazier",
+        "Fuming Brazier"
+      ],
+      "name": "Ritual Brazier",
+      "attributeGroup": "INT",
+      "slot": "int-auxiliary",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Compact magically suspended fire vessel; ground tripod version would need its own base and footprint.",
+      "numericRequirements": null,
+      "constructionBrief": "One compact hands-free brazier vessel with a contained ember bed and clear bowl walls."
+    },
+    {
+      "sourceId": "S05",
+      "sourceName": "Resonator",
+      "aliases": [
+        "Echo Vessel",
+        "Breath Resonator"
+      ],
+      "name": "Resonator",
+      "attributeGroup": "INT",
+      "slot": "int-auxiliary",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Hands-free acoustic vessel; speculative magical apparatus, not historical terminology.",
+      "numericRequirements": null,
+      "constructionBrief": "One compact hands-free hollow sounding vessel with a readable acoustic opening."
+    },
+    {
+      "sourceId": "S06",
+      "sourceName": "Charm Cord",
+      "aliases": [
+        "Talisman Strand",
+        "Relic String"
+      ],
+      "name": "Charm Cord",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "S07",
+      "sourceName": "Relic Wrap",
+      "aliases": [
+        "Sacred Bundle",
+        "Votive Bundle"
+      ],
+      "name": "Relic Wrap",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "S08",
+      "sourceName": "Seal Case",
+      "aliases": [
+        "Seal Casket",
+        "Stone-Seal Case"
+      ],
+      "name": "Seal Case",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "S09",
+      "sourceName": "Tablet Sleeve",
+      "aliases": [
+        "Tablet Wrap",
+        "Inscription Case"
+      ],
+      "name": "Tablet Sleeve",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "S10",
+      "sourceName": "Votive Box",
+      "aliases": [
+        "Relic Casket",
+        "Offering Casket"
+      ],
+      "name": "Votive Box",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "S11",
+      "sourceName": "War Horn",
+      "aliases": [
+        "Rally Horn",
+        "Signal Horn"
+      ],
+      "name": "War Horn",
+      "attributeGroup": "STR",
+      "slot": "warcall",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One complete curved animal-horn signaling instrument with a hollow bell and worked mouth end."
+    },
+    {
+      "sourceId": "S12",
+      "sourceName": "Shell Trumpet",
+      "aliases": [
+        "Conch Horn",
+        "Shell Horn"
+      ],
+      "name": "Shell Trumpet",
+      "attributeGroup": "STR",
+      "slot": "warcall",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One complete conch-shell trumpet with a worked mouth opening; no knife edge."
+    },
+    {
+      "sourceId": "S13",
+      "sourceName": "Bone Whistle",
+      "aliases": [
+        "Command Whistle",
+        "Pierced-Bone Whistle"
+      ],
+      "name": "Bone Whistle",
+      "attributeGroup": "STR",
+      "slot": "warcall",
+      "footprint": "1x1",
+      "status": "candidate",
+      "note": "1x1 proposed exception for a genuinely small whistle, distinct from 2x2 equipment seat UI.",
+      "numericRequirements": null,
+      "constructionBrief": "One compact bone signaling whistle with a clear mouth opening and plain body."
+    },
+    {
+      "sourceId": "S14",
+      "sourceName": "Frame Drum",
+      "aliases": [
+        "Rally Drum",
+        "Hand Drum"
+      ],
+      "name": "Frame Drum",
+      "attributeGroup": "STR",
+      "slot": "warcall",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One complete frame drum with a continuous stretched hide face and substantial wooden rim."
+    },
+    {
+      "sourceId": "S15",
+      "sourceName": "War Standard",
+      "aliases": [
+        "Rally Standard",
+        "Emblem Pole"
+      ],
+      "name": "War Standard",
+      "attributeGroup": "STR",
+      "slot": "warcall",
+      "footprint": "2x4",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One full-length standard pole with one compact supported emblem or cloth field."
+    },
+    {
+      "sourceId": "S16",
+      "sourceName": "Fang Cord",
+      "aliases": [
+        "Tooth Strand",
+        "Fang String"
+      ],
+      "name": "Fang Cord",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "S17",
+      "sourceName": "Horn Rack",
+      "aliases": [
+        "Tusk Rack",
+        "Antler Rack"
+      ],
+      "name": "Horn Rack",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "S18",
+      "sourceName": "Shell Net",
+      "aliases": [
+        "Shell Sling",
+        "Shellwork Pouch"
+      ],
+      "name": "Shell Net",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "S19",
+      "sourceName": "Hide Roll",
+      "aliases": [
+        "Pelt Bundle",
+        "Hide Bale"
+      ],
+      "name": "Hide Roll",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "S20",
+      "sourceName": "Bone Frame",
+      "aliases": [
+        "Trophy Frame",
+        "Bone Packframe"
+      ],
+      "name": "Bone Frame",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "S21",
+      "sourceName": "Hooked Line",
+      "aliases": [
+        "Tether Hook",
+        "Climbing Line"
+      ],
+      "name": "Hooked Line",
+      "attributeGroup": "DEX",
+      "slot": "quickrig",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Complete wearable low-snag line carrier; no industrial carabiners, climbing harness or handheld handbag.",
+      "numericRequirements": null,
+      "constructionBrief": "One complete wearable carrier securing a coiled line and a simple functional hook."
+    },
+    {
+      "sourceId": "S22",
+      "sourceName": "Snare Kit",
+      "aliases": [
+        "Snare Rig",
+        "Cord-Trap Kit"
+      ],
+      "name": "Snare Kit",
+      "attributeGroup": "DEX",
+      "slot": "quickrig",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Wearable complete snare assembly with secured components; not a loose spare reagent.",
+      "numericRequirements": null,
+      "constructionBrief": "One complete wearable carrier securing a bounded set of snare loops and triggers."
+    },
+    {
+      "sourceId": "S23",
+      "sourceName": "Net Rig",
+      "aliases": [
+        "Casting-Net Rig",
+        "Weighted-Net Rig"
+      ],
+      "name": "Net Rig",
+      "attributeGroup": "DEX",
+      "slot": "quickrig",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Wearable readied net assembly; do not duplicate the hand-held Hunting Net.",
+      "numericRequirements": null,
+      "constructionBrief": "One complete wearable rig securing a readied net; retain the load-bearing harness."
+    },
+    {
+      "sourceId": "S24",
+      "sourceName": "Deadfall Kit",
+      "aliases": [
+        "Drop-Trap Kit",
+        "Trigger-Stake Kit"
+      ],
+      "name": "Deadfall Kit",
+      "attributeGroup": "DEX",
+      "slot": "quickrig",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Wearable compact trigger kit; never an entire tree-sized deadfall in a 2x2 icon.",
+      "numericRequirements": null,
+      "constructionBrief": "One complete wearable compact carrier for deadfall triggers and stakes, not the fallen weight."
+    },
+    {
+      "sourceId": "S25",
+      "sourceName": "Dart Rig",
+      "aliases": [
+        "Dart Harness",
+        "Quickdraw Dart Rack"
+      ],
+      "name": "Dart Rig",
+      "attributeGroup": "DEX",
+      "slot": "quickrig",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Wearable readied dart rig, distinguished from the simple O20 dart case.",
+      "numericRequirements": null,
+      "constructionBrief": "One complete wearable dart rack with a coherent backing and shoulder/flank attachment."
+    },
+    {
+      "sourceId": "S26",
+      "sourceName": "Herb Satchel",
+      "aliases": [
+        "Herb Pouch",
+        "Gathering Satchel"
+      ],
+      "name": "Herb Satchel",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "S27",
+      "sourceName": "Gourd Rack",
+      "aliases": [
+        "Reagent Gourds",
+        "Gourd Harness"
+      ],
+      "name": "Gourd Rack",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "S28",
+      "sourceName": "Jar Rack",
+      "aliases": [
+        "Clay-Jar Harness",
+        "Preparation Rack"
+      ],
+      "name": "Jar Rack",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "S29",
+      "sourceName": "Powder Case",
+      "aliases": [
+        "Powder Pouch",
+        "Pigment Case"
+      ],
+      "name": "Powder Case",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "S30",
+      "sourceName": "Mortar Kit",
+      "aliases": [
+        "Grinding Kit",
+        "Mortar-and-Pestle Kit"
+      ],
+      "name": "Mortar Kit",
+      "attributeGroup": null,
+      "slot": "none",
+      "footprint": null,
+      "status": "removed-pack-carrier",
+      "note": "Remove the equippable capacity carrier. Physical contents may be designed separately; do not inherit capacity bonuses.",
+      "numericRequirements": null,
+      "constructionBrief": ""
+    },
+    {
+      "sourceId": "J01",
+      "sourceName": "Bone Ring",
+      "aliases": [
+        "Carved Bone Ring",
+        "Bone Band"
+      ],
+      "name": "Bone Ring",
+      "attributeGroup": "U",
+      "slot": "ring",
+      "footprint": "1x1",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One plain closed bone finger ring with a visible circular opening."
+    },
+    {
+      "sourceId": "J02",
+      "sourceName": "Shell Ring",
+      "aliases": [
+        "Carved Shell Ring",
+        "Shell Band"
+      ],
+      "name": "Shell Ring",
+      "attributeGroup": "U",
+      "slot": "ring",
+      "footprint": "1x1",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One plain carved shell finger ring with a visible opening and no dangling ornament."
+    },
+    {
+      "sourceId": "J03",
+      "sourceName": "Bronze Coil Ring",
+      "aliases": [
+        "Spiral Ring",
+        "Coiled Bronze Band"
+      ],
+      "name": "Bronze Coil Ring",
+      "attributeGroup": "U",
+      "slot": "ring",
+      "footprint": "1x1",
+      "status": "hold",
+      "note": "Hold/rename as Plain Bronze Band if spiral construction is unacceptable under the no-spiral art rule.",
+      "numericRequirements": null,
+      "constructionBrief": "One bronze finger ring; coiled form held for the existing no-spiral art decision."
+    },
+    {
+      "sourceId": "J04",
+      "sourceName": "Seal Ring",
+      "aliases": [
+        "Signet Ring",
+        "Engraved Seal Ring"
+      ],
+      "name": "Seal Ring",
+      "attributeGroup": "U",
+      "slot": "ring",
+      "footprint": "1x1",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One compact finger ring with an integrated flat seal bezel, no dangling pendant."
+    },
+    {
+      "sourceId": "J05",
+      "sourceName": "Tooth Pendant",
+      "aliases": [
+        "Fang Pendant",
+        "Tooth Amulet"
+      ],
+      "name": "Tooth Pendant",
+      "attributeGroup": "U",
+      "slot": "amulet",
+      "footprint": "1x1",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One dry tooth suspended from a complete simple neck cord; no metal trophy mounting."
+    },
+    {
+      "sourceId": "J06",
+      "sourceName": "Stone Pendant",
+      "aliases": [
+        "Pierced-Stone Pendant",
+        "Stone Amulet"
+      ],
+      "name": "Stone Pendant",
+      "attributeGroup": "U",
+      "slot": "amulet",
+      "footprint": "1x1",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One compact pierced stone pendant on a complete simple neck cord."
+    },
+    {
+      "sourceId": "J07",
+      "sourceName": "Seal Amulet",
+      "aliases": [
+        "Pendant Seal",
+        "Sealstone Pendant"
+      ],
+      "name": "Seal Amulet",
+      "attributeGroup": "U",
+      "slot": "amulet",
+      "footprint": "1x1",
+      "status": "candidate",
+      "note": "",
+      "numericRequirements": null,
+      "constructionBrief": "One compact seal pendant on a complete simple neck cord, restrained face detail."
+    },
+    {
+      "sourceId": "J08",
+      "sourceName": "Pectoral",
+      "aliases": [
+        "Broad Pendant",
+        "Chest Ornament"
+      ],
+      "name": "Pectoral",
+      "attributeGroup": "U",
+      "slot": "amulet",
+      "footprint": "1x1",
+      "status": "hold",
+      "note": "Hold: broad collar-like pectoral conflicts with pendant-first amulet rules; define a compact pendant or another slot.",
+      "numericRequirements": null,
+      "constructionBrief": "Proposed compact broad pendant; hold if it reads as a rigid collar or torso armor."
+    }
+  ],
+  "additionalProposals": [
+    {
+      "id": "N01",
+      "name": "Skinning Knife",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "tier": "T1",
+      "constructionBrief": "Short narrow flint blade with a modest belly, rounded back and a fitted grip; no shell.",
+      "note": "Fast precise knife",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N02",
+      "name": "Flint Scraper",
+      "attributeGroup": "U",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "tier": "T1",
+      "constructionBrief": "Broad compact knapped scraping blade seated in a substantial wrapped grip; no detached flake scatter.",
+      "note": "Broad cutting tool",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N03",
+      "name": "Harvest Sickle",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "tier": "T1",
+      "constructionBrief": "Curved wooden handle carrying a short continuous row of flint teeth along the inside working edge.",
+      "note": "Hooking cutter; T1 branch of Sickle",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N04",
+      "name": "Carving Adze",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "tier": "T1",
+      "constructionBrief": "Small polished stone cutting head bound across a short wooden haft, edge transverse to the handle.",
+      "note": "Compact cleaving tool",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N05",
+      "name": "Hafted Stone Hammer",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "tier": "T1",
+      "constructionBrief": "Squat stone striking head securely bound to a medium wooden handle, no spike or medieval hammer beak.",
+      "note": "Stagger tool",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N06",
+      "name": "Digging Stick",
+      "attributeGroup": "U",
+      "slot": "weapon",
+      "footprint": "1x4",
+      "tier": "T1",
+      "constructionBrief": "One long stout wooden shaft with a shaped digging point and plain two-hand grip area.",
+      "note": "Shared reach starter",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N07",
+      "name": "Antler Pick",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "tier": "T1",
+      "constructionBrief": "A robust antler section retains one working tine and a broad graspable beam; remaining tines removed.",
+      "note": "One-hand puncturing tool",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N08",
+      "name": "Field Mattock",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "2x4",
+      "tier": "T1",
+      "constructionBrief": "One broad groundstone digging head firmly attached across a long two-hand haft.",
+      "note": "Heavy sweeping tool",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N09",
+      "name": "Woodcutter's Axe",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "2x4",
+      "tier": "T1",
+      "constructionBrief": "One heavy groundstone cutting head on a long two-hand wooden haft; clear edge and full butt.",
+      "note": "Heavy cutting tool",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N10",
+      "name": "Fishing Spear",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x4",
+      "tier": "T1",
+      "constructionBrief": "One slender full-length wooden shaft ending in a compact two-prong fish-catching head.",
+      "note": "Precise reach tool",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N11",
+      "name": "Butchering Blade",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "tier": "T1",
+      "constructionBrief": "Broad short knapped flint blade with a sturdy plain grip and a single continuous working edge.",
+      "note": "Heavier short cutter",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N12",
+      "name": "Copper Chisel",
+      "attributeGroup": "DEX",
+      "slot": "weapon",
+      "footprint": "1x2",
+      "tier": "T2",
+      "constructionBrief": "One short thick copper chisel with a sharpened flat working end and a substantial wrapped grip zone.",
+      "note": "Close thrusting tool; assess animation before launch",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N13",
+      "name": "Copper Pick",
+      "attributeGroup": "STR",
+      "slot": "weapon",
+      "footprint": "1x3",
+      "tier": "T2",
+      "constructionBrief": "One compact solid copper pick head securely seated on a wooden handle, one stout working point.",
+      "note": "Successor to Stone Pick",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N14",
+      "name": "Gardener's Hoe",
+      "attributeGroup": "STR/DEX",
+      "slot": "weapon",
+      "footprint": "2x4",
+      "tier": "T1",
+      "constructionBrief": "Broad stone hoe blade bound transversely to a long angled wooden haft.",
+      "note": "Optional reach/sweep sidegrade; overlaps Mattock",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N15",
+      "name": "Bast Shoes",
+      "attributeGroup": "U",
+      "slot": "feet",
+      "footprint": "2x2",
+      "tier": "T1",
+      "constructionBrief": "A pair of low woven bast-fiber shoes with rounded toes, closed uppers and relaxed simple ties; no straw tufts.",
+      "note": "Lapti is a faction-specific display name",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N16",
+      "name": "Work Mitts",
+      "attributeGroup": "STR",
+      "slot": "hands",
+      "footprint": "2x2",
+      "tier": "T1",
+      "constructionBrief": "A pair of soft continuous hide mitts with one thumb each, doubled palms and plain seams; no armor plates.",
+      "note": "Starter closed-hand protection",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N17",
+      "name": "Quilted War Mitts",
+      "attributeGroup": "STR",
+      "slot": "hands",
+      "footprint": "2x2",
+      "tier": "T2",
+      "constructionBrief": "A pair of thick quilted cloth mitts with dense seams and continuous padded palms; no hard patches.",
+      "note": "Developed soft mitigation branch",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N18",
+      "name": "Bronze Handguards",
+      "attributeGroup": "STR",
+      "slot": "hands",
+      "footprint": "2x2",
+      "tier": "T3",
+      "constructionBrief": "A pair of metal-led protective hand shells with coherent thumb shells, a mitten-shaped finger shell and hidden lining; shell describes structure, not seashell material.",
+      "note": "Heavy hand-protection fork; proposed pre-medieval fantasy construction, subject to source review.",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N19",
+      "name": "Fitted Gloves",
+      "attributeGroup": "DEX",
+      "slot": "hands",
+      "footprint": "2x2",
+      "tier": "T2",
+      "constructionBrief": "A pair of close-fitting leather gloves with separate fingers, shaped palm seams and minimal cuffs.",
+      "note": "Parallel DEX glove line",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N20",
+      "name": "Archer's Guards",
+      "attributeGroup": "DEX",
+      "slot": "hands",
+      "footprint": "2x2",
+      "tier": "T3",
+      "constructionBrief": "Paired shaped leather forearm guards with compact stiffened bow-side coverage and simpler matching opposite cuff; fingers and palms bare.",
+      "note": "Developed DEX bracer line",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N21",
+      "name": "Woven Cuffs",
+      "attributeGroup": "INT",
+      "slot": "hands",
+      "footprint": "2x2",
+      "tier": "T2",
+      "constructionBrief": "A pair of short broad woven wrist cuffs with distinct open ends; fabric stops before thumb webs and palms.",
+      "note": "Bare-hand caster progression",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N22",
+      "name": "Inscribed Cuffs",
+      "attributeGroup": "INT",
+      "slot": "hands",
+      "footprint": "2x2",
+      "tier": "T3",
+      "constructionBrief": "A pair of structured cloth wrist cuffs with one small woven linear notation band, open hands and no dangling charms.",
+      "note": "Magical game construction, bounded ornament",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N23",
+      "name": "Soft Leather Shoes",
+      "attributeGroup": "DEX",
+      "slot": "feet",
+      "footprint": "2x2",
+      "tier": "T2",
+      "constructionBrief": "A pair of low close-fitting leather shoes with continuous soft soles and rounded flexible toes.",
+      "note": "Quiet flexible footwear",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N24",
+      "name": "Seamed Leather Shoes",
+      "attributeGroup": "DEX",
+      "slot": "feet",
+      "footprint": "2x2",
+      "tier": "T3",
+      "constructionBrief": "A pair of fitted leather shoes with a modest tapered toe, separately shaped heel panels and clean seams; no long curling toe.",
+      "note": "Quality DEX shoe successor",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N25",
+      "name": "Cloth Boots",
+      "attributeGroup": "INT",
+      "slot": "feet",
+      "footprint": "2x2",
+      "tier": "T1",
+      "constructionBrief": "A pair of simple soft cloth ankle boots with hide soles and short straight shafts.",
+      "note": "INT early footwear",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N26",
+      "name": "Pointed Buskins",
+      "attributeGroup": "INT",
+      "slot": "feet",
+      "footprint": "2x2",
+      "tier": "T3",
+      "constructionBrief": "A pair of soft calf-high fitted boots with restrained pointed toes and broad continuous uppers; no metal greaves or curled extensions.",
+      "note": "INT developed boot",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N27",
+      "name": "Padded Legguards",
+      "attributeGroup": "STR",
+      "slot": "feet",
+      "footprint": "2x2",
+      "tier": "T2",
+      "constructionBrief": "Paired thick felt calf guards with plain hide footwear and credible broad ties; no metal plaques.",
+      "note": "Bridge toward heavy greaves",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N28",
+      "name": "Rawhide Girdle",
+      "attributeGroup": "STR",
+      "slot": "belt",
+      "footprint": "2x1",
+      "tier": "T1",
+      "constructionBrief": "One broad stiff-hide waist band with visible opening and simple fastening; no dangling skirt panels.",
+      "note": "STR first belt branch",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N29",
+      "name": "Layered Warbelt",
+      "attributeGroup": "STR",
+      "slot": "belt",
+      "footprint": "2x1",
+      "tier": "T2",
+      "constructionBrief": "One broad waist band of overlapping thick hide courses with load-bearing joins; shallow horizontal silhouette.",
+      "note": "STR developed belt",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N30",
+      "name": "Fitted Leather Belt",
+      "attributeGroup": "DEX",
+      "slot": "belt",
+      "footprint": "2x1",
+      "tier": "T2",
+      "constructionBrief": "One narrow supple leather waist band with clean edge finishing and a simple credible fastening.",
+      "note": "DEX developed belt",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N31",
+      "name": "Braided Leather Belt",
+      "attributeGroup": "DEX",
+      "slot": "belt",
+      "footprint": "2x1",
+      "tier": "T3",
+      "constructionBrief": "One shallow horizontal flexible belt made from broad tight leather braids and a plain fastening.",
+      "note": "DEX refined construction",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N32",
+      "name": "Linen Sash",
+      "attributeGroup": "INT",
+      "slot": "belt",
+      "footprint": "2x1",
+      "tier": "T1",
+      "constructionBrief": "One plain linen waist sash with two real ends and a low cloth tie; ends tucked into the band.",
+      "note": "INT first belt branch",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N33",
+      "name": "Patterned Sash",
+      "attributeGroup": "INT",
+      "slot": "belt",
+      "footprint": "2x1",
+      "tier": "T3",
+      "constructionBrief": "One broad woven waist sash with a bounded edge pattern and mostly plain cloth; no long tails or ornaments.",
+      "note": "INT refined construction",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N34",
+      "name": "Hide-Backed Mantle",
+      "attributeGroup": "STR",
+      "slot": "overlayer",
+      "footprint": "2x3",
+      "tier": "T2",
+      "constructionBrief": "One continuous fur mantle reinforced with a broad hide backing and a clear shoulder closure.",
+      "note": "STR stronger outer layer",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N35",
+      "name": "Armoured Mantle",
+      "attributeGroup": "STR",
+      "slot": "overlayer",
+      "footprint": "2x4",
+      "tier": "T3",
+      "constructionBrief": "One long heavy continuous cloak supporting a bounded fitted shoulder defense on credible backing; no shingled textile tabs or whole cloak made from plates.",
+      "note": "STR heavy fork; fantasy construction pending source review",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N36",
+      "name": "Short Hide Cape",
+      "attributeGroup": "DEX",
+      "slot": "overlayer",
+      "footprint": "2x3",
+      "tier": "T1",
+      "constructionBrief": "One short supple hide cape with a clean shoulder outline and little loose fabric.",
+      "note": "DEX starter overlayer",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N37",
+      "name": "Close-Cut Cloak",
+      "attributeGroup": "DEX",
+      "slot": "overlayer",
+      "footprint": "2x3",
+      "tier": "T2",
+      "constructionBrief": "One fitted cloth cloak with reduced loose volume, broad unbroken panels and a simple closure.",
+      "note": "DEX developed stealth silhouette",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N38",
+      "name": "Scout's Cloak",
+      "attributeGroup": "DEX",
+      "slot": "overlayer",
+      "footprint": "2x3",
+      "tier": "T3",
+      "constructionBrief": "One close-cut hooded cloak with a shaped shoulder yoke and continuous broad cloth panels.",
+      "note": "DEX high-quality overlayer",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N39",
+      "name": "Woven Veil",
+      "attributeGroup": "INT",
+      "slot": "overlayer",
+      "footprint": "2x3",
+      "tier": "T1",
+      "constructionBrief": "One broad light shoulder veil with a clear continuous cloth field and sparse folds.",
+      "note": "INT starter overlayer",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N40",
+      "name": "Ritual Veil",
+      "attributeGroup": "INT",
+      "slot": "overlayer",
+      "footprint": "2x3",
+      "tier": "T3",
+      "constructionBrief": "One broad draped shoulder veil with a bounded woven border and predominantly plain material.",
+      "note": "INT developed overlayer",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N41",
+      "name": "Linen Hood",
+      "attributeGroup": "INT",
+      "slot": "head",
+      "footprint": "2x2",
+      "tier": "T1",
+      "constructionBrief": "One complete simple linen hood with face opening and softly structured crown, no mask or helmet underneath.",
+      "note": "INT head branch",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N42",
+      "name": "Bound Hood",
+      "attributeGroup": "INT",
+      "slot": "head",
+      "footprint": "2x2",
+      "tier": "T2",
+      "constructionBrief": "One close-fitting layered cloth hood with broad overlapping folds and a clearly open face.",
+      "note": "INT developed head branch",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N43",
+      "name": "Woven Headdress",
+      "attributeGroup": "INT",
+      "slot": "head",
+      "footprint": "2x2",
+      "tier": "T3",
+      "constructionBrief": "One structured woven head covering with a full crown and one restrained horizontal border; no horns or halo.",
+      "note": "INT refined head branch",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N44",
+      "name": "Fitted Hide Cap",
+      "attributeGroup": "DEX",
+      "slot": "head",
+      "footprint": "2x2",
+      "tier": "T2",
+      "constructionBrief": "One close-fitting hide cap with shaped panels, compact brow and full rear coverage.",
+      "note": "DEX developed head branch",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N45",
+      "name": "Leather Scout Hood",
+      "attributeGroup": "DEX",
+      "slot": "head",
+      "footprint": "2x2",
+      "tier": "T3",
+      "constructionBrief": "One close-fitting leather hood with full crown and narrow face opening; no metal reinforcement.",
+      "note": "DEX refined head branch",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N46",
+      "name": "Fitted Hide Jerkin",
+      "attributeGroup": "DEX",
+      "slot": "body",
+      "footprint": "2x3",
+      "tier": "T2",
+      "constructionBrief": "One sleeveless fitted soft-hide torso garment with distinct shaped seams and clear openings.",
+      "note": "DEX developed body",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N47",
+      "name": "Laced Leather Coat",
+      "attributeGroup": "DEX",
+      "slot": "body",
+      "footprint": "2x3",
+      "tier": "T3",
+      "constructionBrief": "One short fitted flexible leather coat with a modest skirt, broad panels and functional side lacing.",
+      "note": "DEX refined body",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N48",
+      "name": "Pleated Tunic",
+      "attributeGroup": "INT",
+      "slot": "body",
+      "footprint": "2x3",
+      "tier": "T2",
+      "constructionBrief": "One fitted linen tunic with sparse broad pleats and short complete hem, no belt included.",
+      "note": "INT developed body",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N49",
+      "name": "Ritual Robe",
+      "attributeGroup": "INT",
+      "slot": "body",
+      "footprint": "2x4",
+      "tier": "T3",
+      "constructionBrief": "One long continuous cloth robe with broad shoulder folds, simple sleeves and a bounded woven hem field.",
+      "note": "INT long body branch",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N50",
+      "name": "Herb Bundle",
+      "attributeGroup": "U",
+      "slot": "preparation-content",
+      "footprint": "1x1",
+      "tier": "content",
+      "constructionBrief": "One compact tied bundle of identifiable dried medicinal leaves, no carrying harness.",
+      "note": "Consumed preparation ingredient",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N51",
+      "name": "Resin Cake",
+      "attributeGroup": "U",
+      "slot": "preparation-content",
+      "footprint": "1x1",
+      "tier": "content",
+      "constructionBrief": "One compact solid cake of resin wrapped at its base in a small plain leaf.",
+      "note": "Consumed preparation ingredient",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N52",
+      "name": "Pigment Packet",
+      "attributeGroup": "U",
+      "slot": "preparation-content",
+      "footprint": "1x1",
+      "tier": "content",
+      "constructionBrief": "One compact tied packet showing a small controlled amount of ochre powder.",
+      "note": "Consumed preparation ingredient",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N53",
+      "name": "Dried Fang",
+      "attributeGroup": "U",
+      "slot": "trophy-content",
+      "footprint": "1x1",
+      "tier": "content",
+      "constructionBrief": "One dry species-specific fang retaining natural shape, no metal cap or mount.",
+      "note": "Crafting/trade material",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N54",
+      "name": "Sinew Roll",
+      "attributeGroup": "U",
+      "slot": "trophy-content",
+      "footprint": "2x1",
+      "tier": "content",
+      "constructionBrief": "One compact horizontal roll of dried sinew secured with a plain tie.",
+      "note": "Crafting/trade material",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N55",
+      "name": "Scale Patch",
+      "attributeGroup": "U",
+      "slot": "trophy-content",
+      "footprint": "1x1",
+      "tier": "content",
+      "constructionBrief": "One small dry irregular monster-hide patch with naturally attached scales.",
+      "note": "Crafting/trade material",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N56",
+      "name": "Wrapped Relic",
+      "attributeGroup": "U",
+      "slot": "relic-content",
+      "footprint": "1x1",
+      "tier": "content",
+      "constructionBrief": "One small thick relic fragment partly wrapped in plain cloth, with one identifiable solid edge visible.",
+      "note": "Proposed passive object in active relic area",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N57",
+      "name": "Seal Stone",
+      "attributeGroup": "U",
+      "slot": "relic-content",
+      "footprint": "1x1",
+      "tier": "content",
+      "constructionBrief": "One compact pierced stone seal with a restrained flat worked face, no pendant cord.",
+      "note": "Proposed passive object in active relic area",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N58",
+      "name": "Votive Vessel",
+      "attributeGroup": "U",
+      "slot": "relic-content",
+      "footprint": "2x2",
+      "tier": "content",
+      "constructionBrief": "One substantial compact deep votive vessel with a closed base and clear rim, no carrying rack.",
+      "note": "Proposed bulky passive relic",
+      "status": "proposal",
+      "numericRequirements": null
+    }
+  ]
+}
