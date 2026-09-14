@@ -16,11 +16,11 @@ Design proposals, not a live loot table. U = no attribute requirement; hybrid gr
 | W08 | Leaf Dagger | STR/DEX | weapon | 1x2 | candidate | Short broad leaf-shaped blade; edge expands below the point, simple fitted grip. |
 | W09 | Midrib Dagger | DEX | weapon | 1x3 | candidate | Long narrow dagger with one structural raised midrib running along the blade. |
 | W10 | Bronze Shortsword | STR/DEX | weapon | 1x3 | candidate | Short broad bronze sword with a plain usable grip and modest guard shoulders. |
-| W11 | Leaf Sword | STR/DEX | weapon | 1x3 | candidate | One-hand bronze sword with broad leaf-shaped blade and a readable narrowing near the grip. |
+| W11 | Leaf Sword | STR/DEX | weapon | 2x3 | candidate | One-hand bronze sword with broad leaf-shaped blade and a readable narrowing near the grip.  Broad substantial one-handed base, 2x3; footprint does not make it two-handed. |
 | W12 | Narrow Bronze Sword | DEX | weapon | 1x3 | candidate | Long narrow bronze thrusting blade with a simple grip and no developed crossguard. Long narrow bronze thrusting blade with simple grip; no cup guard or swept hilt. |
 | W13 | Flange-Hilt Sword | STR/DEX | weapon | 1x3 | candidate | Bronze sword whose grip has raised side flanges retaining organic grip inserts. Flanges enclose the grip edges; no spikes projecting from the blade. |
 | W14 | Grip-Tongue Sword | STR/DEX | weapon | 1x3 | candidate | Bronze sword with a broad grip tongue carrying fitted grip slabs. Broad tang supports grip slabs; no literal tongue ornament. |
-| W15 | Sickle Sword | STR/DEX | weapon | 1x3 | candidate | One-hand forward-curved bronze sickle-sword with a clear inner curve and usable grip. |
+| W15 | Sickle Sword | STR/DEX | weapon | 2x3 | candidate | One-hand forward-curved bronze sickle-sword with a clear inner curve and usable grip.  Broad substantial one-handed base, 2x3; footprint does not make it two-handed. |
 | W16 | Stone Axe | STR | weapon | 1x3 | candidate | Ground stone axe head lashed to a medium wooden haft; blade edge aligned with the haft. |
 | W17 | Grooved Axe | STR | weapon | 1x3 | candidate | Stone axe head with a carved securing groove and functional haft lashing. |
 | W18 | Flat Axe | STR | weapon | 1x2 | candidate | Compact flat copper axe head seated and bound onto a short wooden haft. |
@@ -85,8 +85,8 @@ Design proposals, not a live loot table. U = no attribute requirement; hybrid gr
 | O22 | Hand Idol | STR/INT | offhand | 2x2 | hold | One proposed substantial solid handled effigy; hold pending stronger equipment read. Hold: current production rules reject tiny hand-idol props; needs substantial revised silhouette. |
 | O23 | Ritual Tablet | INT | offhand | 2x2 | hold | One proposed thick held inscribed tablet; hold pending resolution of flat-prop rejection. Hold: flat tablet offhand conflicts with current production taste; not a generation target. |
 | O24 | Scrying Mirror | INT | offhand | 2x2 | candidate | One backed round mirror with a short integral handle and clear reflecting face. |
-| O25 | Focus Stone | INT | offhand | 1x1 | hold | One proposed small focus stone; hold rather than prompting generic glowing pebble loot. Hold: tiny generic focus stones conflict with current production rules. |
-| O26 | Clay Ember Cup | INT | offhand | 1x1 | candidate | One small open fired-clay cup with thick walls, modest base and a single dark amadou ember glowing faintly at its edge. Rename Clay Ember Cup: simple fired-clay cup with one smouldering amadou ember; offhand. Bare main hand required for Burning Hand, not automatically for every skill. |
+| O25 | Focus Stone | INT | offhand | 2x2 | hold | One proposed held focus stone sized and framed for a 2x2 offhand footprint; held pending a stronger equipment silhouette. Hold: generic focus-stone equipment still needs a convincing silhouette; its former 1x1 footprint is disallowed. |
+| O26 | Clay Ember Cup | INT | offhand | 2x2 | candidate | One small open fired-clay cup with thick walls, modest base and a single dark amadou ember glowing faintly at its edge. Rename Clay Ember Cup: simple fired-clay cup with one smouldering amadou ember; offhand. Bare main hand required for Burning Hand, not automatically for every skill. Owner-confirmed 2x2 footprint; no 1x1 weapon or offhand bases. |
 | A01 | Headwrap | U | head | 2x2 | candidate | One simply wound cloth headwrap with a complete crown and restrained folds. |
 | A02 | Woven Cap | U | head | 2x2 | candidate | One plain woven-fiber cap with continuous crown, edge binding and no metal decoration. |
 | A03 | Hide Cap | DEX | head | 2x2 | candidate | One fitted soft-hide cap with simple stitched seams and a complete back. |
@@ -169,10 +169,10 @@ Design proposals, not a live loot table. U = no attribute requirement; hybrid gr
 | J02 | Shell Ring | U | ring | 1x1 | candidate | One plain carved shell finger ring with a visible opening and no dangling ornament. |
 | J03 | Bronze Coil Ring | U | ring | 1x1 | hold | One bronze finger ring; coiled form held for the existing no-spiral art decision. Hold/rename as Plain Bronze Band if spiral construction is unacceptable under the no-spiral art rule. |
 | J04 | Seal Ring | U | ring | 1x1 | candidate | One compact finger ring with an integrated flat seal bezel, no dangling pendant. |
-| J05 | Tooth Pendant | U | amulet | 1x1 | candidate | One dry tooth suspended from a complete simple neck cord; no metal trophy mounting. |
-| J06 | Stone Pendant | U | amulet | 1x1 | candidate | One compact pierced stone pendant on a complete simple neck cord. |
-| J07 | Seal Amulet | U | amulet | 1x1 | candidate | One compact seal pendant on a complete simple neck cord, restrained face detail. |
-| J08 | Pectoral | U | amulet | 1x1 | hold | Proposed compact broad pendant; hold if it reads as a rigid collar or torso armor. Hold: broad collar-like pectoral conflicts with pendant-first amulet rules; define a compact pendant or another slot. |
+| J05 | Tooth Pendant | U | amulet | 2x2 | candidate | One dry tooth suspended from a complete simple neck cord; no metal trophy mounting. |
+| J06 | Stone Pendant | U | amulet | 2x2 | candidate | One compact pierced stone pendant on a complete simple neck cord. |
+| J07 | Seal Amulet | U | amulet | 2x2 | candidate | One compact seal pendant on a complete simple neck cord, restrained face detail. |
+| J08 | Pectoral | U | amulet | 2x2 | candidate | One broad neck-suspended pectoral with a complete wearable neck attachment and a clear chest-facing plate; separate from torso armour. Amulet slot accepts broad neck pieces at 2x2. This decorative pectoral remains U; protective neck armour uses STR bases. |
 
 ## Additional proposed bases and contents
 
@@ -238,3 +238,6 @@ T1/T2/T3 locate these proposals within the existing early construction arc. They
 | N56 | Wrapped Relic | U | relic-content | 1x1 | content | One small thick relic fragment partly wrapped in plain cloth, with one identifiable solid edge visible. Proposed passive object in active relic area |
 | N57 | Seal Stone | U | relic-content | 1x1 | content | One compact pierced stone seal with a restrained flat worked face, no pendant cord. Proposed passive object in active relic area |
 | N58 | Votive Vessel | U | relic-content | 2x2 | content | One substantial compact deep votive vessel with a closed base and clear rim, no carrying rack. Proposed bulky passive relic |
+| N59 | Rawhide Neckguard | STR | amulet | 2x2 | T1 | One broad stiff-hide collar protecting the neck base, with a complete rear section, an opening and simple fastening; no attached torso vest. Starter protective neckwear; occupies the Amulet slot. |
+| N60 | Bronze Gorget | STR | amulet | 2x2 | T3 | One formed bronze neck defense with broad front coverage, a corresponding rear section and credible side opening; no attached cuirass or medieval layered neck lames. Advanced protective neckwear; proposed ancient-fantasy construction requiring source review. |
+| N61 | Bronze Sceptre | STR/INT | weapon | 2x3 | T3 | One substantial bronze-headed ritual striking implement with a broad compact pronged head and a short single-hand grip; show the complete head and handle, no long staff shaft. Heavy one-handed ritual weapon; 2x3 bulk does not occupy both hands. |

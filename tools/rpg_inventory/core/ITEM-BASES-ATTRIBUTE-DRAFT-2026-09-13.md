@@ -10,6 +10,9 @@ Confirmed by the current request:
 - Preparation, Trophy and Relic packs are backpack-area expansions, not equippable carriers. Their contents remain physical items.
 - Warcall, Quiver/Quickrig and Attendant/Apparatus refer to actual equipment. Their exact simultaneous-slot arrangement remains unresolved.
 - Most body armour occupies 2x3; short knives and daggers can occupy 1x2.
+- Amulets occupy 2x2 to accommodate equipment-seat tiling. This slot includes pendants, gorgets and armoured neck pieces, with STR requirements for protective bases.
+- Clay Ember Cup occupies 2x2. No weapon or offhand item may occupy 1x1.
+- Substantial one-handed weapons, including heavier swords and sceptres, may occupy 2x3 while remaining one-handed.
 - Expand tool-derived weapons, particularly at the start.
 - The starter INT focus is a simple clay cup containing an amadou ember, held offhand while the main hand is empty for Burning Hand. The opening build uses no gloves.
 - Exclude Shell Knife, Shell-Edge Knife and Shell Shank as the same unwanted concept.
@@ -37,7 +40,7 @@ Keep one requirements record per base: STR, DEX, INT and required level. A hybri
 
 For eventual tuning, define a single-attribute budget R(level, slot). A pure base might require R in its axis; an initial hybrid tuning hypothesis is 0.65R in each of two axes. That is a starting test parameter, not a balance claim. Shared starters use zero; low-tier aligned starters must remain equippable by their intended starting characters. Numeric values remain null in the accompanying catalogue until starting stats and advancement are known.
 
-Do not impose a seven-way art matrix on every noun. Every slot needs viable pure branches; add hybrids where a real construction and mechanical identity exist. Jewellery can remain U while its implicit bonuses favor an axis. Belts are intentionally being proposed as branching wearables here, rather than copying PoE jewellery behavior exactly.
+Do not impose a seven-way art matrix on every noun. Every slot needs viable pure branches; add hybrids where a real construction and mechanical identity exist. Rings and ordinary pendant bases can remain U while their implicit bonuses favor an axis. The Amulet slot also supports STR neck armour: Rawhide Neckguard and Bronze Gorget are explicit 2x2 branch proposals. Pectoral is restored as a broad decorative neck item; it is not automatically STR unless it provides physical protection. Belts are intentionally being proposed as branching wearables here, rather than copying PoE jewellery behavior exactly.
 
 ## Equipment and backpack model
 
@@ -94,7 +97,7 @@ These future-base placeholders are coverage directions, not named production ite
 
 ## Clay Ember Cup and the hand slot
 
-O26 becomes **Clay Ember Cup**, 1x1, offhand, INT-aligned, starter tier. Do not invent a separate weapon named “Burning Hand” to fill the empty main-hand slot.
+O26 becomes **Clay Ember Cup**, 2x2, offhand, INT-aligned, starter tier. Do not invent a separate weapon named “Burning Hand” to fill the empty main-hand slot.
 
 Proposed starter activation conditions:
 
@@ -139,14 +142,17 @@ Do not make all these drop immediately. A small opening-area pool could offer Cu
 
 All sizes are width x height in cells; one pair of footwear/handwear is one item.
 
-- Existing defaults retained: body 2x3, head/hands/feet 2x2, belt 2x1, ring/amulet 1x1, one-hand weapon usually 1x3, compact blade 1x2, two-hand weapon 2x4 or genuinely narrow 1x4.
+- Existing defaults retained: body 2x3, head/hands/feet 2x2, belt 2x1, rings 1x1, amulets/neckwear 2x2, one-hand weapon usually 1x3 or 2x3 for broad substantial bases, compact blade 1x2, two-hand weapon 2x4 or genuinely narrow 1x4.
 - Long robe or heavy cloak: 2x4 only when the complete garment justifies it.
 - Quiver 2x3; compact dart case 2x2; Quickrig 2x2; compact INT auxiliary 2x2.
 - Full shield 2x3, small hand shield 2x2, body-length shield 2x4.
-- Explicit proposed exceptions needing a future standard/runtime update: Clay Ember Cup 1x1, Bone Whistle 1x1, coiled Bola 2x2. These do not silently amend INVENTORY-FOOTPRINTS.md.
+- Owner-confirmed: all Amulet-slot items and Clay Ember Cup are 2x2. No 1x1 weapon or offhand bases, including held concepts.
+- A broad Leaf Sword, Sickle Sword or Bronze Sceptre may be 2x3 and one-handed. Handedness is an explicit equipment property, never inferred from grid width.
+- Remaining proposed exceptions needing a future standard/runtime update: Bone Whistle 1x1 and coiled Bola 2x2. Warcall is a separate auxiliary family, not a weapon or offhand.
+- The authoritative footprint document records the confirmed corrections; runtime forms have not yet been migrated.
 - Scarves and veils currently remain 2x3 under the overlayer standard. A smaller rolled-scarf branch is a possible later grid-economy choice, not already implemented.
 - Intrinsic size does not change with rarity or rolled modifiers. Faction variants sharing a base keep its size; a materially different silhouette deserves another base.
-- Do not crop a long object, display one shoe instead of a pair, or resize a bulky item to fit a UI seat.
+- Do not crop a long object or display one shoe instead of a pair. Amulet 2x2 is a deliberate slot-tiling rule, including for physically small pendants; show the complete neck item without inventing bulk or ornament to fill the square.
 - Numeric stat magnitude is not a reason to enlarge the footprint.
 
 ## Descriptions that prevent model drift
@@ -169,7 +175,7 @@ The Appendix gives each retained source entry a construction brief and flags the
 
 ## Review status
 
-The source ledger preserves all 167 original IDs: 142 candidates, seven held concepts, 15 removed pack carriers, two previously retired concepts and one owner-excluded concept. The draft also adds 58 proposals, including 14 tool weapons, wearable branch coverage and nine actual pack contents. These counts are not a final approved drop pool. Both a candidate and a proposal still need balance/art review before runtime promotion.
+The source ledger preserves all 167 original IDs: 143 candidates, six held concepts, 15 removed pack carriers, two previously retired concepts and one owner-excluded concept. The draft also adds 61 proposals, including 14 tool weapons, wearable branch coverage, nine actual pack contents, two protective neckwear bases and one substantial one-handed sceptre. These counts are not a final approved drop pool. Both a candidate and a proposal still need balance/art review before runtime promotion.
 
 The original eight-per-wearable-slot budget was insufficient for shared starters, three full pure-attribute ladders and hybrids. Expand deliberately around missing branches rather than maintaining that arbitrary quota.
 

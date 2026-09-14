@@ -180,11 +180,12 @@
       "name": "Leaf Sword",
       "attributeGroup": "STR/DEX",
       "slot": "weapon",
-      "footprint": "1x3",
+      "footprint": "2x3",
       "status": "candidate",
-      "note": "",
+      "note": " Broad substantial one-handed base, 2x3; footprint does not make it two-handed.",
       "numericRequirements": null,
-      "constructionBrief": "One-hand bronze sword with broad leaf-shaped blade and a readable narrowing near the grip."
+      "constructionBrief": "One-hand bronze sword with broad leaf-shaped blade and a readable narrowing near the grip.",
+      "handedness": "one-handed"
     },
     {
       "sourceId": "W12",
@@ -244,11 +245,12 @@
       "name": "Sickle Sword",
       "attributeGroup": "STR/DEX",
       "slot": "weapon",
-      "footprint": "1x3",
+      "footprint": "2x3",
       "status": "candidate",
-      "note": "",
+      "note": " Broad substantial one-handed base, 2x3; footprint does not make it two-handed.",
       "numericRequirements": null,
-      "constructionBrief": "One-hand forward-curved bronze sickle-sword with a clear inner curve and usable grip."
+      "constructionBrief": "One-hand forward-curved bronze sickle-sword with a clear inner curve and usable grip.",
+      "handedness": "one-handed"
     },
     {
       "sourceId": "W16",
@@ -1284,11 +1286,11 @@
       "name": "Focus Stone",
       "attributeGroup": "INT",
       "slot": "offhand",
-      "footprint": "1x1",
+      "footprint": "2x2",
       "status": "hold",
-      "note": "Hold: tiny generic focus stones conflict with current production rules.",
+      "note": "Hold: generic focus-stone equipment still needs a convincing silhouette; its former 1x1 footprint is disallowed.",
       "numericRequirements": null,
-      "constructionBrief": "One proposed small focus stone; hold rather than prompting generic glowing pebble loot."
+      "constructionBrief": "One proposed held focus stone sized and framed for a 2x2 offhand footprint; held pending a stronger equipment silhouette."
     },
     {
       "sourceId": "O26",
@@ -1300,9 +1302,9 @@
       "name": "Clay Ember Cup",
       "attributeGroup": "INT",
       "slot": "offhand",
-      "footprint": "1x1",
+      "footprint": "2x2",
       "status": "candidate",
-      "note": "Rename Clay Ember Cup: simple fired-clay cup with one smouldering amadou ember; offhand. Bare main hand required for Burning Hand, not automatically for every skill.",
+      "note": "Rename Clay Ember Cup: simple fired-clay cup with one smouldering amadou ember; offhand. Bare main hand required for Burning Hand, not automatically for every skill. Owner-confirmed 2x2 footprint; no 1x1 weapon or offhand bases.",
       "numericRequirements": null,
       "constructionBrief": "One small open fired-clay cup with thick walls, modest base and a single dark amadou ember glowing faintly at its edge."
     },
@@ -2628,7 +2630,7 @@
       "name": "Tooth Pendant",
       "attributeGroup": "U",
       "slot": "amulet",
-      "footprint": "1x1",
+      "footprint": "2x2",
       "status": "candidate",
       "note": "",
       "numericRequirements": null,
@@ -2644,7 +2646,7 @@
       "name": "Stone Pendant",
       "attributeGroup": "U",
       "slot": "amulet",
-      "footprint": "1x1",
+      "footprint": "2x2",
       "status": "candidate",
       "note": "",
       "numericRequirements": null,
@@ -2660,7 +2662,7 @@
       "name": "Seal Amulet",
       "attributeGroup": "U",
       "slot": "amulet",
-      "footprint": "1x1",
+      "footprint": "2x2",
       "status": "candidate",
       "note": "",
       "numericRequirements": null,
@@ -2676,11 +2678,11 @@
       "name": "Pectoral",
       "attributeGroup": "U",
       "slot": "amulet",
-      "footprint": "1x1",
-      "status": "hold",
-      "note": "Hold: broad collar-like pectoral conflicts with pendant-first amulet rules; define a compact pendant or another slot.",
+      "footprint": "2x2",
+      "status": "candidate",
+      "note": "Amulet slot accepts broad neck pieces at 2x2. This decorative pectoral remains U; protective neck armour uses STR bases.",
       "numericRequirements": null,
-      "constructionBrief": "Proposed compact broad pendant; hold if it reads as a rigid collar or torso armor."
+      "constructionBrief": "One broad neck-suspended pectoral with a complete wearable neck attachment and a clear chest-facing plate; separate from torso armour."
     }
   ],
   "additionalProposals": [
@@ -3379,6 +3381,52 @@
       "note": "Proposed bulky passive relic",
       "status": "proposal",
       "numericRequirements": null
+    },
+    {
+      "id": "N59",
+      "name": "Rawhide Neckguard",
+      "attributeGroup": "STR",
+      "slot": "amulet",
+      "footprint": "2x2",
+      "tier": "T1",
+      "constructionBrief": "One broad stiff-hide collar protecting the neck base, with a complete rear section, an opening and simple fastening; no attached torso vest.",
+      "note": "Starter protective neckwear; occupies the Amulet slot.",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N60",
+      "name": "Bronze Gorget",
+      "attributeGroup": "STR",
+      "slot": "amulet",
+      "footprint": "2x2",
+      "tier": "T3",
+      "constructionBrief": "One formed bronze neck defense with broad front coverage, a corresponding rear section and credible side opening; no attached cuirass or medieval layered neck lames.",
+      "note": "Advanced protective neckwear; proposed ancient-fantasy construction requiring source review.",
+      "status": "proposal",
+      "numericRequirements": null
+    },
+    {
+      "id": "N61",
+      "name": "Bronze Sceptre",
+      "attributeGroup": "STR/INT",
+      "slot": "weapon",
+      "footprint": "2x3",
+      "tier": "T3",
+      "constructionBrief": "One substantial bronze-headed ritual striking implement with a broad compact pronged head and a short single-hand grip; show the complete head and handle, no long staff shaft.",
+      "note": "Heavy one-handed ritual weapon; 2x3 bulk does not occupy both hands.",
+      "status": "proposal",
+      "numericRequirements": null,
+      "handedness": "one-handed"
     }
-  ]
+  ],
+  "footprintRules": {
+    "amulet": "2x2 including pendants, gorgets and protective neck pieces",
+    "emberCup": "2x2",
+    "forbidOneCellSlots": [
+      "weapon",
+      "offhand"
+    ],
+    "substantialOneHandedWeapon": "2x3; handedness is independent of footprint"
+  }
 }

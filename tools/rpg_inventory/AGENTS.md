@@ -130,6 +130,12 @@ is ready; do not burn Codex weekly quota on recursive multi-agent audit trees.
 - Warcall, Quiver/Quickrig and Attendant/Apparatus are actual equipment
   families. The latest wording has not yet resolved whether each slash pair
   shares a seat or has simultaneous seats; do not infer a runtime seat change.
+- Amulets are 2x2 for equipment-seat tiling, including pendants, gorgets and
+  armoured neck pieces. Protective neck bases may require STR; the older
+  pendant-only restriction is superseded.
+- Clay Ember Cup is 2x2. No weapon or offhand base may use 1x1. Substantial
+  one-handed swords, sceptres and other heavy one-hand bases may use 2x3;
+  footprint does not determine handedness.
 - The starter INT focus is a plain clay cup holding an amadou ember, equipped
   offhand for Burning Hand with an empty main hand and no gloves at the start.
   Later wrist/forearm gear compatibility is a proposal, not a locked rule.
@@ -324,8 +330,9 @@ when pasted into a fresh image model session with no prior context.
 **Do not save Alexei's proprietary legacy character prompts in the public repo.**
 Only save distilled, generic process rules and non-proprietary prompt structure.
 **Slot hygiene / anti-costume clutter** (2026-07-08): rings are compact finger
-objects, not dangling charm jewelry. Amulets are pendant-first objects on
-cord/twine/leather/simple chain, not gorgets or collars. In source-image
+objects, not dangling charm jewelry. The 2x2 Amulet slot
+accepts pendants on cord/twine/leather/simple chain as well as gorgets,
+collars and armoured neck pieces; protective bases may require STR. In source-image
 separation and extraction, body armor excludes detachable collars, gorgets,
 neckwear, belts, sashes, and outer layers but includes the complete lower-body
 assembly only to the extent it is clearly visible in the source: skirts, kilts,
