@@ -57,6 +57,16 @@ Do not copy icons, names, or exact item lists. Extract the production logic.
   names/stats. Verdigris can reuse or alias some art, but should not rely on
   that for the main 500-600-image target.
 
+## Direct presentation research (2026-09-13)
+
+Read `ITEM-ART-REFERENCE-ANALYSIS-2026-09-13.md` for the 98-file visual
+comparison (62 PoE, 36 classic Diablo II), exact image-source manifest and
+local contact sheets. The resulting `ITEM-ART-PRESENTATION.md` replaces
+generic pose assumptions: the sampled PoE weapon lean is generally
+lower-left to upper-right, while Diablo II often uses the opposite direction.
+Wearables, pairs, vessels and accessories each need their own pose. Numeric
+tilt/padding targets are project proposals, not measured studio standards.
+
 ## Visual notes from PoE item icons
 
 - Inventory icons are not material swatches. A good base is a distinct object:

@@ -226,9 +226,24 @@ is ready; do not burn Codex weekly quota on recursive multi-agent audit trees.
 
 ## Art direction
 
+**Inventory presentation research (2026-09-13):** read
+`core/ITEM-ART-PRESENTATION.md` before writing isolated-item briefs. It covers
+all item families and supersedes generic dynamic-3/4, edge-to-edge and
+corner-to-corner pose directives in older notes. PoE and Diablo II do not use
+the same weapon lean; the project convention is grip/butt lower-left and
+working head/tip upper-right with a small footprint-dependent lean. Specify
+screen direction, visible face, camera turn, pair arrangement and padding
+separately. Body armour stays upright/front-readable; glove fingers point
+lower-left, footwear toes point lower-right, belts stay horizontal, and
+vessels stay level. Slots, construction and source authenticity still
+control the object. Do not mirror finished art without checking light and
+left/right anatomy. `core/PROMPT.txt` remains owner-tuned and unchanged; the
+legacy assembler has not automatically adopted these new profiles.
+
 The authoritative prompt spec lives in `core/ASSET-BRIEF.md` under
 **"⚑ AUTHORITATIVE STYLE (v2)"**. Key rules, in one breath: dynamic 3/4 hero
-angle (never flat front/side — this also gives helmets a visible back/dome);
+angle only where the family profile calls for it; shallow front-readable
+views are valid, and helmets still need a complete back/dome;
 complete solid object seen in the round; fill the frame with the right canvas
 aspect (portrait for weapons/tall armour, landscape for belts — GPT defaults to
 square and squishes long/wide items); pairs rendered as a pair; dramatic
@@ -284,7 +299,8 @@ is ungrounded detail pasted onto an item prompt in a vacuum. Use
 `core/LOADOUT-EXTRACTION.md` for that workflow. For current ChatGPT batches,
 use the slate matte prompt and `core/chroma_key.py`; magenta backgrounds leave
 unacceptable halos. Long weapons in this mode need explicit full-length
-framing: tip-to-butt, shaft-dominant, steep diagonal corner-to-corner. Reject
+framing: tip-to-butt, shaft-dominant, slight controlled right lean appropriate
+to the footprint, with all extremities padded. Reject
 polearms shortened into clubs, wands, or mace-length props.
 **Visual-source gate for expansion bases** (2026-07-24, Alexei): choose and
 inspect the actual object image before writing the item brief. A generation
@@ -528,8 +544,9 @@ random danglies, charms, tassels, chimes, and loose cords unless the source item
 visibly requires them.
 Multi-reference item extraction canvas correction (2026-07-22): weapons should
 be tall portrait inventory images, usually 2:3 and sometimes closer to 2:4 for
-long weapons, with the full object on a steep controlled diagonal or vertical
-three-quarter angle so handles, grips, shafts, bow cases, and cords are not
+long weapons, with the full object on a slight controlled right lean or near
+vertical, broad identifying face visible and little foreshortening, so
+handles, grips, shafts, bow cases, and cords are not
 distorted. Never use horizontal/landscape weapon images. Only compact claw,
 knuckle, or chakrum-style weapons may be square. Swords, daggers, axes, maces,
 clubs, bows, slings, spears, ritual weapons, vajra/dorje-like forms, and

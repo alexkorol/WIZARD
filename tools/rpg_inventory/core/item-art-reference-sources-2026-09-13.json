@@ -1,0 +1,1472 @@
+[
+  {
+    "game": "PoE",
+    "name": "Glass Shank",
+    "family": "dagger",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9EYWdnZXJzL0RhZ2dlcjEiLCJ3IjoxLCJoIjozLCJzY2FsZSI6MX1d/aeb581e270/Dagger1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_dagger_glass_shank.png",
+    "sourceSize": [
+      47,
+      141
+    ],
+    "sha256": "f53077be684b64c2c92d51c90ce4216cd453247b7c8886a085195639a59184c6",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Skinning Knife",
+    "family": "dagger",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9EYWdnZXJzL0RhZ2dlcjIiLCJ3IjoxLCJoIjozLCJzY2FsZSI6MX1d/c2c0a06eec/Dagger2.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_dagger_skinning_knife.png",
+    "sourceSize": [
+      47,
+      141
+    ],
+    "sha256": "9cae368172d1992ee1fceeada98dd798eb333923d21b91968aa14d87b940f233",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Stiletto",
+    "family": "dagger",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9EYWdnZXJzL0RhZ2dlcjQiLCJ3IjoxLCJoIjozLCJzY2FsZSI6MX1d/954af836f7/Dagger4.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_dagger_stiletto.png",
+    "sourceSize": [
+      47,
+      141
+    ],
+    "sha256": "fa79297c84cd9aed5ccac4666d039498947fed50e9b09c248c3442db502c8a90",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Rusted Sword",
+    "family": "sword",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9PbmVIYW5kU3dvcmRzL09uZUhhbmRTd29yZDEiLCJ3IjoxLCJoIjozLCJzY2FsZSI6MX1d/ae6e9dda13/OneHandSword1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_sword_rusted_sword.png",
+    "sourceSize": [
+      47,
+      141
+    ],
+    "sha256": "cb4139e3443b5322f267e7979b077e433f6d7ba10af982aa9d7c058f88cc614c",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Copper Sword",
+    "family": "sword",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9PbmVIYW5kU3dvcmRzL09uZUhhbmRTd29yZDIiLCJ3IjoxLCJoIjozLCJzY2FsZSI6MX1d/606dae9ce9/OneHandSword2.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_sword_copper_sword.png",
+    "sourceSize": [
+      47,
+      141
+    ],
+    "sha256": "6bf14512daec00775c161a1fc27df510b081230ffa1fcbf03d5de7c5656870b0",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Sabre",
+    "family": "sword",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9PbmVIYW5kU3dvcmRzL09uZUhhbmRTd29yZDMiLCJ3IjoxLCJoIjozLCJzY2FsZSI6MX1d/0aa55ff7a1/OneHandSword3.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_sword_sabre.png",
+    "sourceSize": [
+      47,
+      141
+    ],
+    "sha256": "aeb351dedf5b08cced59b2c981516b3f6023fe44c8e1af2e7a7ebfa927fc90dd",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Broad Sword",
+    "family": "sword",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9PbmVIYW5kU3dvcmRzL09uZUhhbmRTd29yZDQiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MX1d/936e00e3e6/OneHandSword4.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_sword_broad_sword.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "d61e0ee58719e6340a46a7141a910ad43e6e9d790f0950a516a91e35d79cad71",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "War Sword",
+    "family": "sword",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9PbmVIYW5kU3dvcmRzL09uZUhhbmRTd29yZDUiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MX1d/38536bcafb/OneHandSword5.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_sword_war_sword.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "c8a61550a60b78fd033208441c6d4de052574c6a817ba92737755783f02a565c",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Pernach",
+    "family": "mace",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9PbmVIYW5kTWFjZXMvT25lSGFuZE1hY2U2IiwidyI6MiwiaCI6Mywic2NhbGUiOjF9XQ/a2a18837d4/OneHandMace6.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_mace_pernach.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "657917d60561f9b4ba2a6c6991c90878bb833f6804332fcd9ce63cbd6e6cba11",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Nightmare Mace",
+    "family": "mace",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9PbmVIYW5kTWFjZXMvT25lSGFuZE1hY2U4IiwidyI6MiwiaCI6Mywic2NhbGUiOjF9XQ/57786131bb/OneHandMace8.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_mace_nightmare_mace.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "8c801b26efa4c7bcaeeb913b609ea4097d61391883d641a3f3d1cd5fc3d6cd10",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Driftwood Sceptre",
+    "family": "sceptre",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9TY2VwdGVycy9zY2VwdGVyMSIsInciOjEsImgiOjMsInNjYWxlIjoxfV0/4b2438446d/scepter1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_sceptre_driftwood_sceptre.png",
+    "sourceSize": [
+      47,
+      141
+    ],
+    "sha256": "4e64ea7d23e3493506630cd3da5257e88b034868b6018a507992e50cf614bc89",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Bronze Sceptre",
+    "family": "sceptre",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9TY2VwdGVycy9zY2VwdGVyMyIsInciOjIsImgiOjMsInNjYWxlIjoxfV0/366212755a/scepter3.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_sceptre_bronze_sceptre.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "2684bc28643c6c360912984a97b9de20ab864c70cc96f00fb2818a5103421c0b",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Ritual Sceptre",
+    "family": "sceptre",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9TY2VwdGVycy9zY2VwdGVyNyIsInciOjIsImgiOjMsInNjYWxlIjoxfV0/6b9c62e4c3/scepter7.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_sceptre_ritual_sceptre.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "2647f3be7745372a58e5e210a0a33b91de1624a94068281f616866e4dc15da75",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Stone Axe",
+    "family": "two-hand axe",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9Ud29IYW5kV2VhcG9ucy9Ud29IYW5kQXhlcy9Ud29IYW5kQXhlMSIsInciOjIsImgiOjQsInNjYWxlIjoxfV0/fd3d66a367/TwoHandAxe1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_two-hand_axe_stone_axe.png",
+    "sourceSize": [
+      94,
+      188
+    ],
+    "sha256": "f50006174c90126a90dbd168e8f2f5bd56ffce6b440def464c8612773fe16ce4",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Poleaxe",
+    "family": "two-hand axe",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9Ud29IYW5kV2VhcG9ucy9Ud29IYW5kQXhlcy9Ud29IYW5kQXhlNCIsInciOjIsImgiOjQsInNjYWxlIjoxfV0/24ac93d9cd/TwoHandAxe4.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_two-hand_axe_poleaxe.png",
+    "sourceSize": [
+      94,
+      188
+    ],
+    "sha256": "2ca747609b9b1a21ac35b3410f5a947be9b19816cd1ec24c255ef08591af4f76",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Double Axe",
+    "family": "two-hand axe",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9Ud29IYW5kV2VhcG9ucy9Ud29IYW5kQXhlcy9Ud29IYW5kQXhlNSIsInciOjIsImgiOjQsInNjYWxlIjoxfV0/4b3fbfcd65/TwoHandAxe5.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_two-hand_axe_double_axe.png",
+    "sourceSize": [
+      94,
+      188
+    ],
+    "sha256": "68ad75db0741c2c806f5c403f101ac888488eaf658d5a2b7de374c3face5e4ac",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Crude Bow",
+    "family": "bow",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9Ud29IYW5kV2VhcG9ucy9Cb3dzL0JvdzEiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MX1d/50dd0fd6ac/Bow1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_bow_crude_bow.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "b3490160ec640da116ad0f93fe4e1467e87ed31fa79449728b06ed2b0c746c4f",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Short Bow",
+    "family": "bow",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9Ud29IYW5kV2VhcG9ucy9Cb3dzL0JvdzIiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MX1d/0fcc51afcd/Bow2.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_bow_short_bow.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "5313851ecee0a4b5e4392f1bc4c11ac17bab78878d8d113e566462aae88c45d8",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Composite Bow",
+    "family": "bow",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9Ud29IYW5kV2VhcG9ucy9Cb3dzL0JvdzQiLCJ3IjoyLCJoIjo0LCJzY2FsZSI6MX1d/d7cd8910cc/Bow4.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_bow_composite_bow.png",
+    "sourceSize": [
+      94,
+      188
+    ],
+    "sha256": "4746c83dd5e2fccf4614269f373e1fcde36ed035dd41e1ba78de7989f98f9c60",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Plate Vest",
+    "family": "body",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9Cb2R5U3RyMUEiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MX1d/027d388361/BodyStr1A.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_body_plate_vest.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "6f201ee8534cc508c178e1cebd0002a897337d288d94d0c90dd7dabb15bfedec",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Shabby Jerkin",
+    "family": "body",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9Cb2R5RGV4MUEiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MX1d/693fc9456c/BodyDex1A.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_body_shabby_jerkin.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "d70969dd889679bc09c2662ac29db00510cf62a1cd0b20e6eaa5c3199e2f1ab5",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Simple Robe",
+    "family": "body",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9Cb2R5SW50MUEiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MX1d/7c925b445f/BodyInt1A.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_body_simple_robe.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "149d62cf8a6a4cc56ff39fcbe02d514ad173e2c1c0f11b39e5920a35c74d8abc",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Scholar's Robe",
+    "family": "body",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9Cb2R5SW50MUIiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MX1d/906a100c16/BodyInt1B.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_body_scholars_robe.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "80261cf082c14551ceda6713fc1af4bde7ee44a0c4988826b12a758e1938d59e",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Full Plate",
+    "family": "body",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9Cb2R5U3RyMUMiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MX1d/94a3d5d98e/BodyStr1C.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_body_full_plate.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "56d2902e0f5aac4a74e3abd31bdeb8e2422275d02a92ff42c43094e73c16f6cb",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Iron Greaves",
+    "family": "feet",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb290cy9Cb290c1N0cjEiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MX1d/10332346d1/BootsStr1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_feet_iron_greaves.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "e8b2fb7067bac828d432aae1db1abbc28652973482d9a885b1e697c9436c1290",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Rawhide Boots",
+    "family": "feet",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb290cy9Cb290c0RleDEiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MX1d/d9494fc647/BootsDex1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_feet_rawhide_boots.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "3d9d88f6ae421f4bcffda945293ad4be21387ed64393e51560e2829600c99ca3",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Wool Shoes",
+    "family": "feet",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb290cy9Cb290c0ludDEiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MX1d/68affe41bc/BootsInt1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_feet_wool_shoes.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "5dba41106a31416ab86f88e9ca28010c6f59bb8233a200e64787a994f3b6122c",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Velvet Slippers",
+    "family": "feet",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb290cy9Cb290c0ludDIiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MX1d/efece2ca68/BootsInt2.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_feet_velvet_slippers.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "e7cc5105edc9888bb6ba2e99c837eab168583d4dd7bb78c9672465530a2ce745",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Iron Gauntlets",
+    "family": "hands",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9HbG92ZXMvR2xvdmVzU3RyMSIsInciOjIsImgiOjIsInNjYWxlIjoxfV0/413116fb67/GlovesStr1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_hands_iron_gauntlets.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "5207ac80285404082ba7177a9544e410ca43a46642654885f766fd01d0ab3cd9",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Rawhide Gloves",
+    "family": "hands",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9HbG92ZXMvR2xvdmVzRGV4MSIsInciOjIsImgiOjIsInNjYWxlIjoxfV0/9d9390ed4a/GlovesDex1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_hands_rawhide_gloves.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "976de5d9080adb5881030f917758cda0b82af2a842b8a038c9bcaf6630aafe03",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Wool Gloves",
+    "family": "hands",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9HbG92ZXMvR2xvdmVzSW50MSIsInciOjIsImgiOjIsInNjYWxlIjoxfV0/f279ba86df/GlovesInt1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_hands_wool_gloves.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "d6fb2777c58e8c473e406a069a1c011b8aa9c72b17734493afcef7789ebd2ee1",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Wrapped Mitts",
+    "family": "hands",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9HbG92ZXMvR2xvdmVzRGV4SW50MSIsInciOjIsImgiOjIsInNjYWxlIjoxfV0/983aa9c9fc/GlovesDexInt1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_hands_wrapped_mitts.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "49843e33418ae7e4d78e4f44bf2f050a058c9529db26a1ab9b4fca2dbc520acf",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Iron Hat",
+    "family": "head",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9IZWxtZXRzL0hlbG1ldFN0cjEiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MX1d/a114c1308e/HelmetStr1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_head_iron_hat.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "434b4f099730ad872af729b585033995bf81e30c6e5d087acb6f1caacc24d19e",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Leather Cap",
+    "family": "head",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9IZWxtZXRzL0hlbG1ldERleDEiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MX1d/765e9b75f1/HelmetDex1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_head_leather_cap.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "29425d07f576fb44e9c0d5183a29ca918b6be50aded571ba16dbd221374ade22",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Scare Mask",
+    "family": "head",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9IZWxtZXRzL0hlbG1ldERleEludDEiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MX1d/f1a4b7abd8/HelmetDexInt1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_head_scare_mask.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "80d03a1f88699c61dae1992f0aaea76f55282cf246ac9218352e56feec31645d",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Cone Helmet",
+    "family": "head",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9IZWxtZXRzL0hlbG1ldFN0cjIiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MX1d/fdb5370ecb/HelmetStr2.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_head_cone_helmet.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "fedd02826d673942b5c2a248dafc14fa0ddc93b49d1ca4efafe7436188e8f4f9",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Close Helmet",
+    "family": "head",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9IZWxtZXRzL0hlbG1ldFN0cjQiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MX1d/0a862ec4b2/HelmetStr4.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_head_close_helmet.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "da6b2d9da049a24253bf2e29248d8475264b4fed24a01bdf7c3a8932f91062ed",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Painted Buckler",
+    "family": "shield",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9TaGllbGRzL1NoaWVsZERleDMiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MX1d/10a005f978/ShieldDex3.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_shield_painted_buckler.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "54186de30effb8758d2df1193518df2820665f3ba24d8c8f644f2c49af838891",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Cedar Tower Shield",
+    "family": "shield",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9TaGllbGRzL1NoaWVsZFN0cjQiLCJ3IjoyLCJoIjo0LCJzY2FsZSI6MX1d/d95a5bfcf0/ShieldStr4.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_shield_cedar_tower_shield.png",
+    "sourceSize": [
+      94,
+      188
+    ],
+    "sha256": "3a42a2f4b1ad7f9c7f63635d7bd98e4b4d7380222e7f0ad1eb710cce624f268e",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Reinforced Kite Shield",
+    "family": "shield",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9TaGllbGRzL1NoaWVsZFN0ckludDQiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MX1d/8d673b3a1f/ShieldStrInt4.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_shield_reinforced_kite_shield.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "adedef7945c784dabd34af840d3b234ef2471b0af142accbace754dd1db7f0ba",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Brass Spirit Shield",
+    "family": "shield",
+    "page": "https://www.pathofexile.com/item-data/armour",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9TaGllbGRzL1NoaWVsZEludDYiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MX1d/404ef29c87/ShieldInt6.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_shield_brass_spirit_shield.png",
+    "sourceSize": [
+      94,
+      94
+    ],
+    "sha256": "261208277937713c2a6120eb9efda5bab38769807b8e3e830e7700f967e92802",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Rusted Hatchet",
+    "family": "axe",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9PbmVIYW5kQXhlcy9PbmVIYW5kQXhlMSIsInciOjEsImgiOjMsInNjYWxlIjoxfV0/0e8f6203f2/OneHandAxe1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_axe_rusted_hatchet.png",
+    "sourceSize": [
+      47,
+      141
+    ],
+    "sha256": "bf2ff72eba377504c393a4d76c6603eeb8d5fa17070df27458252d4010d0a41d",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Boarding Axe",
+    "family": "axe",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9PbmVIYW5kQXhlcy9PbmVIYW5kQXhlMyIsInciOjIsImgiOjMsInNjYWxlIjoxfV0/126bb32028/OneHandAxe3.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_axe_boarding_axe.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "2bab940aeca3ac07d3fe47807fd4c2a098eb61fe070b5bdeb1e3b43df87cc310",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Cleaver",
+    "family": "axe",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9PbmVIYW5kQXhlcy9PbmVIYW5kQXhlNCIsInciOjIsImgiOjMsInNjYWxlIjoxfV0/451ba2cadb/OneHandAxe4.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_axe_cleaver.png",
+    "sourceSize": [
+      94,
+      141
+    ],
+    "sha256": "ed3bc3fc1a9c5b927dba3da4eea16b8616513d66a5cb3e5b57d2276e80629c4e",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Broad Axe",
+    "family": "axe",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9PbmVIYW5kQXhlcy9PbmVIYW5kQXhlNSIsInciOjIsImgiOjMsInNjYWxlIjoxfV0/9cdefe9de4/OneHandAxe5.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_axe_broad_axe.png",
+    "sourceSize": [
+      94,
+      140
+    ],
+    "sha256": "7f28b9ae2beacfb38eda4c9c6d77c5206b41d0d671f96fe5bacb746eb023bf23",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Gnarled Branch",
+    "family": "staff",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9Ud29IYW5kV2VhcG9ucy9TdGF2ZXMvU3RhZmYxIiwidyI6MSwiaCI6NCwic2NhbGUiOjF9XQ/c4f884eb64/Staff1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_staff_gnarled_branch.png",
+    "sourceSize": [
+      47,
+      188
+    ],
+    "sha256": "6a0080d5a50c01a98b2fedab11c7fba88c942e6ed6dfcf8adf472bc3c7c0566a",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Long Staff",
+    "family": "staff",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9Ud29IYW5kV2VhcG9ucy9TdGF2ZXMvU3RhZmYzIiwidyI6MiwiaCI6NCwic2NhbGUiOjF9XQ/9bc79ef01c/Staff3.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_staff_long_staff.png",
+    "sourceSize": [
+      94,
+      188
+    ],
+    "sha256": "6e42d72a2a990c662cd591d8562434027e9cc126266a5f38dc8c940a1e471e53",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Corroded Blade",
+    "family": "two-hand sword",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9Ud29IYW5kV2VhcG9ucy9Ud29IYW5kU3dvcmRzL1R3b0hhbmRTd29yZDEiLCJ3IjoxLCJoIjo0LCJzY2FsZSI6MX1d/1ba03c111f/TwoHandSword1.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_two-hand_sword_corroded_blade.png",
+    "sourceSize": [
+      47,
+      188
+    ],
+    "sha256": "601f5a76d8767a6fccbf94f987ca0f1fef7eab68b435b3641b0308242f97d418",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Two-Handed Sword",
+    "family": "two-hand sword",
+    "page": "https://www.pathofexile.com/item-data/weapon",
+    "url": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9Ud29IYW5kV2VhcG9ucy9Ud29IYW5kU3dvcmRzL1R3b0hhbmRTd29yZDQiLCJ3IjoyLCJoIjo0LCJzY2FsZSI6MX1d/294bd80312/TwoHandSword4.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_two-hand_sword_two-handed_sword.png",
+    "sourceSize": [
+      94,
+      188
+    ],
+    "sha256": "a17f1519c8f4d77db3d36220ef51f7689c478dfd08caf73707ba0df03996d20b",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "sword",
+    "name": "shortsword",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/swords.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/shortsword.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_sword_shortsword.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "86a91fd65ef10a4291ef60eaf5ece8b8a2779e09c3d49309dd8d3b223749f6b0",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "sword",
+    "name": "warsword",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/swords.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/warsword.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_sword_warsword.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "a48a4151f3a83a8a7395a58eeebc47f401fdf763200572a15174c711504cf2d5",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "sword",
+    "name": "greatsword",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/swords.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/greatsword.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_sword_greatsword.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "c9951d9c699d567965bdf9f5c502e9523a06289707244c4404f2f21b6ad5408f",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "axe",
+    "name": "handaxe",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/axes.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/handaxe.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_axe_handaxe.gif",
+    "sourceSize": [
+      62,
+      119
+    ],
+    "sha256": "85526f297c558ea5a97170c96bf78bd1e66269752f59803fd594b4073be4ff10",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "axe",
+    "name": "largeaxe",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/axes.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/largeaxe.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_axe_largeaxe.gif",
+    "sourceSize": [
+      62,
+      119
+    ],
+    "sha256": "d19290831cfff25083a088a0523d4702961e0e1ab02a038ca23c6797d0804689",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "axe",
+    "name": "giantaxe",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/axes.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/giantaxe.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_axe_giantaxe.gif",
+    "sourceSize": [
+      62,
+      119
+    ],
+    "sha256": "4fe34a9d1bce8bf2a322e51f0efdb4839b7a4e558e4e5a66529c6b796474208b",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "mace",
+    "name": "club",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/maces.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/club.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_mace_club.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "042d8c1c0ab06e4c233e9739c27bf602ab5657cbf95c1fea27356ce9429bcdea",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "mace",
+    "name": "flail",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/maces.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/flail.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_mace_flail.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "963e14b25a8899c52e2649198708b60fa7984a7ec3c9a3bd2e1f4e17726bc299",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "mace",
+    "name": "greatmaul",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/maces.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/greatmaul.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_mace_greatmaul.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "1d17ef6828cd45c303a88e553ba4949298108a2a897d50ada04a0a9212340e0a",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "sceptre",
+    "name": "scepter",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/scepters.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/scepter.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_sceptre_scepter.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "89c03e4d86f86b1bac1bd56acec795e9cc802d9009c1c555232b43c5b9c2f4af",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "sceptre",
+    "name": "grandscepter",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/scepters.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/grandscepter.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_sceptre_grandscepter.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "4d7a386bc437e37347c0649409ebdd78946da17bdfa37f42950e6538f426369c",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "sceptre",
+    "name": "warscepter",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/scepters.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/warscepter.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_sceptre_warscepter.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "9b7a7c0b2227191ae2d3671f166c7768dd143cb8209933782571a1c49ed20883",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "spear",
+    "name": "spear",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/spears.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/spear.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_spear_spear.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "0a5a63c5f68df36f4ab95bad008aefb01f31739b5cbd84094f04129de17ddb19",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "spear",
+    "name": "trident",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/spears.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/trident.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_spear_trident.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "eda5562be6acee9e04962240d6d8c9597a67acb991555c0fd1f67f127f1ecc5c",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "spear",
+    "name": "brandistock",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/spears.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/brandistock.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_spear_brandistock.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "41b793b13f6603e009c549563982c160c6e75618ff2f4067a17679548cc42b15",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "bow",
+    "name": "shortbow",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/bows.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/shortbow.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_bow_shortbow.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "cb7000a2c5ee9d10268738f1f38a18e2c9721a1f732a2024915620b71ad43a61",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "bow",
+    "name": "shortbattlebow",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/bows.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/shortbattlebow.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_bow_shortbattlebow.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "c0707f3e37680481f445a0b6faba307693ce927f918d75cd13d74e7b63c6ea77",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "bow",
+    "name": "longwarbow",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/bows.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/weapons/longwarbow.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_bow_longwarbow.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "419291fdf3ad5bd41cbfb6fe29fb54ee71c28ce87a88d3c137ebb73d9315d64f",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "body",
+    "name": "quilted",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/armor.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/quilted.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_body_quilted.gif",
+    "sourceSize": [
+      62,
+      91
+    ],
+    "sha256": "f2ba2e1162ae856862bed20f8a563117142cdd606ae728ab52c8650e701085d4",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "body",
+    "name": "chainmail",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/armor.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/chainmail.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_body_chainmail.gif",
+    "sourceSize": [
+      62,
+      91
+    ],
+    "sha256": "cc0417ba74ba6c7c22934d3c9ad7424f37a73db37c4687ab860622b81b90cc40",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "body",
+    "name": "ancientarmor",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/armor.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/ancientarmor.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_body_ancientarmor.gif",
+    "sourceSize": [
+      62,
+      91
+    ],
+    "sha256": "edcefa3bfbc38d653f8984c8e8a443a095c90bdc124bd0cf98239ba059f5845f",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "head",
+    "name": "cap",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/helms.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/cap.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_head_cap.gif",
+    "sourceSize": [
+      62,
+      62
+    ],
+    "sha256": "d439989f8356b04d423e8865f137ea4c291d6bf466070e3f440d27d17a72107a",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "head",
+    "name": "greathelm",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/helms.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/greathelm.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_head_greathelm.gif",
+    "sourceSize": [
+      62,
+      62
+    ],
+    "sha256": "6b78d5cfb41be1414f99cba6ddd25c3ccf8a5f42b78128c263873eac9570b831",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "head",
+    "name": "bonehelm",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/helms.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/bonehelm.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_head_bonehelm.gif",
+    "sourceSize": [
+      62,
+      62
+    ],
+    "sha256": "b06a7d068c9f9aed86a3b57f6d5e005cfc40e47ae9b0aec53efad19657d354fc",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "hands",
+    "name": "leathergloves",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/gloves.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/leathergloves.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_hands_leathergloves.gif",
+    "sourceSize": [
+      62,
+      63
+    ],
+    "sha256": "e4e3aab49db0f422c5a2283ddd31fcafa531a30a5f86e45daf58372617dfbe75",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "hands",
+    "name": "heavygloves",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/gloves.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/heavygloves.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_hands_heavygloves.gif",
+    "sourceSize": [
+      62,
+      63
+    ],
+    "sha256": "9b06e96b7edd3f55bb9c78c43a4668056eb9f66dcc7e9e13805a2aedcf64272a",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "hands",
+    "name": "chaingloves",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/gloves.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/chaingloves.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_hands_chaingloves.gif",
+    "sourceSize": [
+      62,
+      63
+    ],
+    "sha256": "c6490dae0795aa871dc05d229ccc2fc215f0bf2b9e1141ba2e117167d2edfbe4",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "feet",
+    "name": "leatherboots",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/boots.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/leatherboots.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_feet_leatherboots.gif",
+    "sourceSize": [
+      62,
+      63
+    ],
+    "sha256": "db92c7d52be15c4566837d5e6dca545e2a16e75087db552832926fb8f7d9b664",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "feet",
+    "name": "heavyboots",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/boots.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/heavyboots.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_feet_heavyboots.gif",
+    "sourceSize": [
+      62,
+      63
+    ],
+    "sha256": "f2671034688fe6974c3df13e4fc898e01033de19d5fad7fcffcccaf0be791c05",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "feet",
+    "name": "chainboots",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/boots.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/chainboots.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_feet_chainboots.gif",
+    "sourceSize": [
+      62,
+      63
+    ],
+    "sha256": "2014a55ece209854d380f6df240c3dc920c233442f567ad4b530ca0184b30821",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "belt",
+    "name": "sash",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/belts.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/sash.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_belt_sash.gif",
+    "sourceSize": [
+      62,
+      33
+    ],
+    "sha256": "a79425ef25ed1f7e49ef828a27947e8da6ec38c55e7cec4dea6249e7ecbf88e7",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "belt",
+    "name": "lightbelt",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/belts.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/lightbelt.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_belt_lightbelt.gif",
+    "sourceSize": [
+      62,
+      33
+    ],
+    "sha256": "18b6cde867945eeba8ee6a82c8b9b70731b86b9a27c1b718cfc0e0a5df74bbbc",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "belt",
+    "name": "belt",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/belts.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/belt.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_belt_belt.gif",
+    "sourceSize": [
+      62,
+      33
+    ],
+    "sha256": "e39b3a37e649645135ac29d70678415d065fc0f36f18b48f7912157580ab2d02",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "shield",
+    "name": "buckler",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/shields.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/buckler.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_shield_buckler.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "de3c4e6b5ee269fac7b6979a47b07f52b834e554867af9125046aa88f33a283f",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "shield",
+    "name": "spikedshield",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/shields.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/spikedshield.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_shield_spikedshield.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "2a42d62f43341c10edc95eecf2142aaf91f01ea6abfd79eaf623b6ed9a10e336",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "Diablo II",
+    "family": "shield",
+    "name": "gothicshield",
+    "page": "https://classic.battle.net/diablo2exp/items/normal/shields.shtml",
+    "url": "https://classic.battle.net/images/battle/diablo2exp/images/items/armor/gothicshield.gif",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/d2_shield_gothicshield.gif",
+    "sourceSize": [
+      62,
+      118
+    ],
+    "sha256": "4fb63716f2cddd9615c0ea049add46bdcaaadced26d694673905128d351d6fa3",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Rustic Sash",
+    "family": "belt",
+    "page": "https://www.poewiki.net/wiki/Belt",
+    "url": "https://www.poewiki.net/images/0/08/Rustic_Sash_inventory_icon.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_rustic_sash_inventory_icon.png",
+    "sourceSize": [
+      156,
+      78
+    ],
+    "sha256": "821720e9e553d0be04ea9019066791dd90857ee630d1001de9b56d31c0856706",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Heavy Belt",
+    "family": "belt",
+    "page": "https://www.poewiki.net/wiki/Belt",
+    "url": "https://www.poewiki.net/images/8/83/Heavy_Belt_inventory_icon.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_heavy_belt_inventory_icon.png",
+    "sourceSize": [
+      156,
+      78
+    ],
+    "sha256": "7d5b1ebf638491e01c4707b719fac553a3b4bd932c591eccba9785a1fea73687",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Leather Belt",
+    "family": "belt",
+    "page": "https://www.poewiki.net/wiki/Belt",
+    "url": "https://www.poewiki.net/images/f/fa/Leather_Belt_inventory_icon.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_leather_belt_inventory_icon.png",
+    "sourceSize": [
+      156,
+      78
+    ],
+    "sha256": "513781f31f2c6f01b89cfa28d66959257806b9054b259d9a91a5a57e550b8cfc",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Coral Amulet",
+    "family": "amulet",
+    "page": "https://www.poewiki.net/wiki/Amulet",
+    "url": "https://www.poewiki.net/images/2/24/Coral_Amulet_inventory_icon.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_coral_amulet_inventory_icon.png",
+    "sourceSize": [
+      78,
+      78
+    ],
+    "sha256": "1b0f90f45396da6ea2e47df9b472eb7076259bcfe63113bd60d0a1fca2350d87",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Amber Amulet",
+    "family": "amulet",
+    "page": "https://www.poewiki.net/wiki/Amulet",
+    "url": "https://www.poewiki.net/images/9/93/Amber_Amulet_inventory_icon.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_amber_amulet_inventory_icon.png",
+    "sourceSize": [
+      78,
+      78
+    ],
+    "sha256": "de2817bb393dd0e70f07a0df411a023e932f1bf5cfea2625fccbe4ceff2c4551",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Jade Amulet",
+    "family": "amulet",
+    "page": "https://www.poewiki.net/wiki/Amulet",
+    "url": "https://www.poewiki.net/images/a/a1/Jade_Amulet_inventory_icon.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_jade_amulet_inventory_icon.png",
+    "sourceSize": [
+      78,
+      78
+    ],
+    "sha256": "1aeefa0378772176170c149e4b76a2653df13d1fe9cbe77ef46bd1663092bb52",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Onyx Amulet",
+    "family": "amulet",
+    "page": "https://www.poewiki.net/wiki/Amulet",
+    "url": "https://www.poewiki.net/images/b/b2/Onyx_Amulet_inventory_icon.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_onyx_amulet_inventory_icon.png",
+    "sourceSize": [
+      78,
+      78
+    ],
+    "sha256": "5571a09e87fcb2995fe2495b614b73de19efdd94c3ce0ca637b1c6d089d306fa",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Iron Ring",
+    "family": "ring",
+    "page": "https://www.poewiki.net/wiki/Ring",
+    "url": "https://www.poewiki.net/images/3/3e/Iron_Ring_inventory_icon.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_iron_ring_inventory_icon.png",
+    "sourceSize": [
+      78,
+      78
+    ],
+    "sha256": "a24dc63034348ba8e2978029190b80b09b9119f399e31fc8e1709fcfb899be63",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Sapphire Ring",
+    "family": "ring",
+    "page": "https://www.poewiki.net/wiki/Ring",
+    "url": "https://www.poewiki.net/images/3/30/Sapphire_Ring_inventory_icon.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_sapphire_ring_inventory_icon.png",
+    "sourceSize": [
+      78,
+      78
+    ],
+    "sha256": "3b86fef753245d9a84a602e42f209e75c6704d41154205284233f7db49cdf6e5",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Gold Ring",
+    "family": "ring",
+    "page": "https://www.poewiki.net/wiki/Ring",
+    "url": "https://www.poewiki.net/images/1/13/Gold_Ring_inventory_icon.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_gold_ring_inventory_icon.png",
+    "sourceSize": [
+      78,
+      78
+    ],
+    "sha256": "bea670c10fa8d58df1039612eb7eafa0d0fd7ec14d0ae3fac9908cc7c9a59190",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Ornate Quiver",
+    "family": "quiver",
+    "page": "https://www.poewiki.net/wiki/Quiver",
+    "url": "https://www.poewiki.net/images/e/e8/Ornate_Quiver_inventory_icon.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_ornate_quiver_inventory_icon.png",
+    "sourceSize": [
+      156,
+      234
+    ],
+    "sha256": "f6606cd759add81c6c4ba352705bfa0de0887d314900bc26e670c62840e218ea",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Serrated Arrow Quiver",
+    "family": "quiver",
+    "page": "https://www.poewiki.net/wiki/Quiver",
+    "url": "https://www.poewiki.net/images/b/ba/Serrated_Arrow_Quiver_inventory_icon.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_serrated_arrow_quiver_inventory_icon.png",
+    "sourceSize": [
+      156,
+      234
+    ],
+    "sha256": "a60119f8cf1247ced9cad2ba80047b7c27f9f012ac881fa42579f519b61a3b49",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  },
+  {
+    "game": "PoE",
+    "name": "Fire Arrow Quiver",
+    "family": "quiver",
+    "page": "https://www.poewiki.net/wiki/Quiver",
+    "url": "https://www.poewiki.net/images/7/7a/Fire_Arrow_Quiver_inventory_icon.png",
+    "localPath": "tools/rpg_inventory/assets_staging/item-orientation-research-2026-09-13/poe_fire_arrow_quiver_inventory_icon.png",
+    "sourceSize": [
+      156,
+      234
+    ],
+    "sha256": "99e1c9b25b7e8e553342bcf8a5dffcd2bbb38b8a9a348b8fd92bcf650ea5bf4e",
+    "retrievedDate": "2026-09-13",
+    "inspection": "Visually inspected in family contact sheet; qualitative orientation, no angle measurement."
+  }
+]

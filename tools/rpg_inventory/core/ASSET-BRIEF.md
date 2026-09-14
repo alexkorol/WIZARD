@@ -7,24 +7,33 @@ art on pure black → alpha matte → composite → autocrop (script pattern:
 
 ## ⚑ AUTHORITATIVE STYLE (v2, 2026-07-04 pm) — USE THIS, supersedes the v1 blockquote below
 
+Isolated-item pose and framing now follow `ITEM-ART-PRESENTATION.md`
+(2026-09-13), researched against 98 PoE/Diablo II reference images. Its
+family-specific rules supersede older generic dynamic-angle/diagonal wording
+throughout this brief. Historical examples below are not new pose directives.
+`PROMPT.txt` remains owner-tuned and unchanged; its legacy pose language is not
+yet migrated in status.py. Use the new standard for standalone manual prompts.
+
 Hard lessons from review (do NOT relitigate these — they cost real quota):
 
-1. **Dynamic 3/4 hero angle, never flat.** ARPG icons (Path of Exile, Diablo 2,
-   Last Epoch) show the item tilted in a three-quarter view — partly from the
-   side and slightly above — so it reads as a solid object with volume. Dead-on
-   front or pure side views look like stiff museum archival photos. This also
-   fixes "backless" reads: a helmet at 3/4 shows its full domed shell and the
-   back of the head, not just a face-plate.
+1. **Stable family pose with restrained depth.** Separate screen tilt from
+   camera turn. Weapons normally rise lower-left to upper-right with their
+   broad face readable and little axial foreshortening. Body armour remains
+   upright/front-readable; cups remain level; other families have their own
+   profiles in `ITEM-ART-PRESENTATION.md`. Near-frontal views are valid when
+   they preserve identity. Helmets still need full crown and rear continuity.
 2. **Complete, solid, wearable object seen in the round.** It must look like a
    real thing that fully does its job (a helm protects the whole head; a vest
    wraps the torso). Never a fragment or facade.
 3. **Fill the frame + right aspect ratio.** GPT-image defaults to square and
    SQUISHES anything long or wide. Always set the canvas (portrait for
    weapons/tall armour, landscape for belts) AND say the item fills the frame
-   edge-to-edge; long weapons sit on a bold diagonal spanning corner to corner.
+   with clear padding at every extremity. Long weapons use the footprint-
+   appropriate slight right lean; never force a corner-to-corner diagonal.
 4. **Pairs render as a pair.** Boots, sandals, greaves, bracers, gloves, grips
-   → show BOTH pieces together, overlapping at a dynamic angle (our slots draw
-   one icon, so the pair must be in that one image).
+   → show BOTH complementary pieces together in a restrained stagger, with
+   both openings and distal ends readable. Gloves point fingers lower-left;
+   footwear points toes lower-right. Keep the complete pair in one icon.
 5. **Dramatic game lighting.** Strong directional key light (upper-left), deep
    shadow, a crisp cool rim light on the silhouette. High contrast, moody, not
    flatly lit.
@@ -32,8 +41,8 @@ Hard lessons from review (do NOT relitigate these — they cost real quota):
    NO cast shadow / ground plane** — one solid colour the adaptive local matte
    keys out (2026-07-05 pivot; older art on #000000 still mattes fine). Cold
    neutral grading, no yellow/sepia wash.
-7. **QA every render before accepting.** Look at it: complete object? 3/4 and
-   dynamic? fills frame, not squished/tiny? pair if applicable? deadly/cool for
+7. **QA every render before accepting.** Look at it: complete object? Correct
+   family pose? fills frame with padding, not squished/tiny? pair if applicable? clear for
    a game, not a diagram? If any "no", re-roll — do not stage a dud.
 
 ### The prompt text lives in ONE place: `core/PROMPT.txt` (hand-tuned by Alexei)
@@ -508,9 +517,13 @@ column:
 - **L** → `Horizontal landscape canvas (3:2 aspect ratio).`
 - **S** → (nothing — square default is correct)
 
-Rule of thumb: weapons/armor/shields portrait, belt landscape, small wearables
-(rings, amulets, helms, gloves, boots), trophies and tools square. The matte
-must be requested at the same canvas ("same canvas size and framing").
+These P/L/S prefixes are legacy generator formats, not substitutes for actual
+inventory proportions. Follow `INVENTORY-FOOTPRINTS.md` and
+`ITEM-ART-PRESENTATION.md`: compact tool weapons may be 1x2, substantial
+one-hand weapons 2x3, belts 2x1, amulets and Ember Cup 2x2. Preserve the target
+composition inside a supported generation canvas and remove only empty
+background during composition. Never stretch the object. A matte must use
+the same canvas size and framing.
 
 ## Mattes: local scripts, never generative
 
