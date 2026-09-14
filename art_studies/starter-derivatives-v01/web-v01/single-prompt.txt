@@ -1,0 +1,7 @@
+Create one transparent PNG game sprite. Use the image-generation tool with background="transparent".
+
+Paint Image 1 in the chunky low-resolution pixel-art rendering of Image 2. Both references are native 96×96 canvases enlarged exactly 8× by nearest neighbor. Preserve that same implied pixel size: only 96 logical pixel columns and 96 rows in the entire square, with the character about 78 painted pixels tall. Every visible mark belongs to this ONE coarse grid. Large solid square pixels, crisp staircase silhouettes, clustered highlights and shadows; no finer texture or smooth subpixel detail.
+
+Image 1 controls the exact unarmed sprint pose, rightward facing, body proportions, camera and position. Image 2 controls the finished pixel shading, colors and character identity; do not copy its club or idle pose. Young adult woman, brown braided hair, ivory sleeveless tunic with russet edging, cord belt and open sandals. Realistic gritty pre-rendered ARPG lighting and anatomy, like late-1990s Diablo II sprites.
+
+One full-body character only, same empty margins as Image 1. This is an enlarged low-resolution sprite, not a detailed illustration. Keep true transparent alpha around the figure and between limbs. No floor, background, checkerboard, text or border. Return the generated PNG directly.
