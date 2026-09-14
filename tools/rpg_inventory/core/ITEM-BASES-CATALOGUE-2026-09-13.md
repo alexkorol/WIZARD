@@ -1,5 +1,7 @@
 # Item-base catalogue — 2026-09-13
 
+For image generation, attach [the unified generation guide](ITEM-GENERATION-GUIDE.md). It includes this catalogue's current selectable entries plus construction, orientation, dimensions, lighting, output instructions and a separate inactive-item appendix. This bare catalogue is a design ledger and does not contain the full rendering instructions.
+
 Design proposals, not a live loot table. U = no attribute requirement; hybrid groups require both stats. Sizes are width x height in 48 px cells. All auxiliary equipment seats are 2x3 (96x144 px); their items are 2x2 or 2x3. The Size column is the item footprint, not the seat size. Smallest weapons are 1x3; magical main-hand wands/rods/staves use 1x3/2x3/2x4. Bows use 2x3 or 2x4, and tower/standing shields can reach 2x4. Source IDs trace the recovered conversation; new N IDs are draft identifiers. Read [the design rationale](ITEM-BASES-ATTRIBUTE-DRAFT-2026-09-13.md) before promotion.
 
 ## Original catalogue, reconciled

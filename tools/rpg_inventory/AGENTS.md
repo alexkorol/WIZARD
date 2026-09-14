@@ -125,6 +125,19 @@ is ready; do not burn Codex weekly quota on recursive multi-agent audit trees.
 
 ### Item-base clarification (2026-09-13)
 
+- For a portable ChatGPT image-generation attachment, use
+  `core/ITEM-GENERATION-GUIDE.md`, not the bare catalogue. It combines current
+  construction, attributes, dimensions, family poses and output instructions;
+  each selectable row repeats its pose and native pixel size. The owner-provided
+  five-blade example demonstrated downward blades when the catalogue travelled
+  without the orientation rules. Keep tips/working heads up-right and grips
+  down-left in each rigid-weapon request. A comparison sheet is an explicit
+  output choice, not a substitute for requested separate assets.
+  After changing the structured catalogue, footprint/presentation standards or
+  attribute draft, run `python core/build_item_generation_guide.py` from this
+  module and verify with `--check`. Update its session instructions when the
+  owner's rules change. The package does not approve held/excluded rows or
+  replace the inspected source-image gate.
 - Preparation, Trophy and Relic packs are backpack-area expansions, not
   equippable carrier items. Their physical contents have their own bases.
 - The logical base cell is 48x48 px; the baseline human sprite frame is
