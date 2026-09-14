@@ -26,8 +26,7 @@ For a sword, “head region” is the tip and upper blade. For an axe or pick it
 
 | Footprint | Default target | Practical range | Reason |
 |---|---:|---:|---|
-| 1x2 compact knife/tool | 12 degrees | 8–18 degrees | Enough movement without losing blade width |
-| 1x3 narrow weapon | 8 degrees | 5–12 degrees | Narrow cell column constrains rotation |
+| 1x3 knife, tool, wand or other narrow weapon | 8 degrees | 5–12 degrees | Narrow cell column constrains rotation |
 | 1x4 narrow reach weapon | 5 degrees | 3–8 degrees | Preserve full shaft and usable head size |
 | 2x3 broad one-hand weapon | 20 degrees | 15–25 degrees | Room for a broad blade/head and one-hand grip |
 | 2x4 two-hand weapon | 12 degrees | 8–18 degrees | Keep a long full silhouette without shrinking the shaft |
@@ -35,6 +34,8 @@ For a sword, “head region” is the tip and upper blade. For an axe or pick it
 These are working ranges, not automatic rejection thresholds. A wide axe head may need less tilt. Solve fit by reducing tilt or uniformly scaling the complete object; never compress its geometry or shorten its handle. Footprint does not determine handedness: a 2x3 sceptre remains one-handed.
 
 For a straight line in a W-by-H rectangle, the corner diagonal is atan(W/H) from vertical: about 18 degrees for 1x3 and 34 degrees for 2x3. Actual weapons need head width and padding, so their usable lean is lower. “45-degree diagonal” is therefore a poor global instruction.
+
+The smallest weapon canvas is now 1x3; the former 1x2 pose profile is removed. Magical main-hand rods use 2x3 and staves 2x4. Bows use 2x3 for short bases or 2x4 for larger bases; tower and standing shields may use 2x4. Preserve the complete silhouette and use the profile for its assigned footprint.
 
 ### Weapon-specific exceptions
 
@@ -83,7 +84,7 @@ The shared arrangement is a continuity choice, not proof every photographed refe
 - For pairs, start with roughly 10–20% silhouette overlap or a small gap, enough stagger to distinguish both pieces. Do not hide a whole mate. Soft straps sag or rest against the item; do not retain an invisible limb.
 - Use one consistent upper-left key and restrained opposing edge separation, neutral material color, local form shadow and no baked ground/drop shadow. These continue the game's chosen lighting direction; the sampled legacy assets do not prove a single universal lighting rig.
 - Transparent background or the existing controlled matte path. No ground plane, caption, grid or composition guide inside final art.
-- Review at the native **48x48 px base cell**: a 1x2 knife is 48x96 px, a 2x2 amulet or Ember Cup is 96x96 px, and 2x3 armour is 96x144 px. All auxiliary equipment seats are 96x144 px; their current items are 96x96 or 96x144 px. Keep square items square inside the taller seat. Existing adaptive runtime sizes and the earlier 54/36 px research sheet describe the prior UI, not this new target; runtime migration is still pending.
+- Review at the native **48x48 px base cell**: a 1x3 knife or wand is 48x144 px, a 2x2 amulet or Ember Cup is 96x96 px, and 2x3 armour is 96x144 px. All auxiliary equipment seats are 96x144 px; their current items are 96x96 or 96x144 px. Keep square items square inside the taller seat. Existing adaptive runtime sizes and the earlier 54/36 px research sheet describe the prior UI, not this new target; runtime migration is still pending.
 - The baseline human sprite frame is 48x96 px. This common unit does not make an inventory icon a literal world-scale depiction or define character collision bounds. Retain high-resolution masters and judge the downscaled art at native size. A ring at 1x1 and a gorget at 2x2 must not be compared at identical enlarged image size.
 - Judge object identity, orientation, whole-object readability and pair completeness at game scale; inspect joins, holes and anatomy mistakes enlarged. Neither check replaces the other.
 

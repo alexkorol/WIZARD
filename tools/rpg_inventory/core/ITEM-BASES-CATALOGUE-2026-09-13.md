@@ -1,19 +1,19 @@
 # Item-base catalogue — 2026-09-13
 
-Design proposals, not a live loot table. U = no attribute requirement; hybrid groups require both stats. Sizes are width x height in 48 px cells. All auxiliary equipment seats are 2x3 (96x144 px); their items are 2x2 or 2x3. The Size column is the item footprint, not the seat size. Source IDs trace the recovered conversation; new N IDs are draft identifiers. Read [the design rationale](ITEM-BASES-ATTRIBUTE-DRAFT-2026-09-13.md) before promotion.
+Design proposals, not a live loot table. U = no attribute requirement; hybrid groups require both stats. Sizes are width x height in 48 px cells. All auxiliary equipment seats are 2x3 (96x144 px); their items are 2x2 or 2x3. The Size column is the item footprint, not the seat size. Smallest weapons are 1x3; magical main-hand wands/rods/staves use 1x3/2x3/2x4. Bows use 2x3 or 2x4, and tower/standing shields can reach 2x4. Source IDs trace the recovered conversation; new N IDs are draft identifiers. Read [the design rationale](ITEM-BASES-ATTRIBUTE-DRAFT-2026-09-13.md) before promotion.
 
 ## Original catalogue, reconciled
 
 | Source ID | Proposed name | Attribute | Slot | Size | Status | Construction and clarification |
 |---|---|---|---|---|---|---|
-| W01 | Flint Knife | DEX | weapon | 1x2 | candidate | Compact knapped flint blade, short plain grip, one cutting edge and credible haft binding. |
-| W02 | Obsidian Knife | DEX/INT | weapon | 1x2 | candidate | Compact dark volcanic-glass cutting blade in a plain grip; natural flake scars, no glowing crystal. DEX/INT only if this base has a ritual-cutting implicit; obsidian alone does not justify INT. |
-| W03 | Bone Knife | DEX | weapon | 1x2 | candidate | Sharpened bone blade with integral grip; no assembled jaw or shell components. |
+| W01 | Flint Knife | DEX | weapon | 1x3 | candidate | Compact knapped flint blade, short plain grip, one cutting edge and credible haft binding. |
+| W02 | Obsidian Knife | DEX/INT | weapon | 1x3 | candidate | Compact dark volcanic-glass cutting blade in a plain grip; natural flake scars, no glowing crystal. DEX/INT only if this base has a ritual-cutting implicit; obsidian alone does not justify INT. |
+| W03 | Bone Knife | DEX | weapon | 1x3 | candidate | Sharpened bone blade with integral grip; no assembled jaw or shell components. |
 | W04 | Shell Knife | — | weapon | — | excluded | Excluded by owner, including both aliases. No successor or cosmetic rename. |
-| W05 | Copper Knife | DEX | weapon | 1x2 | candidate | Short hammered copper cutting blade with a fitted plain grip. |
-| W06 | Tanged Dagger | DEX | weapon | 1x2 | candidate | Short dagger blade with tang seated inside a separate fitted grip; grip remains visible. |
-| W07 | Riveted Dagger | STR/DEX | weapon | 1x2 | candidate | Short dagger with two grip slabs visibly secured by a few structural rivets. |
-| W08 | Leaf Dagger | STR/DEX | weapon | 1x2 | candidate | Short broad leaf-shaped blade; edge expands below the point, simple fitted grip. |
+| W05 | Copper Knife | DEX | weapon | 1x3 | candidate | Short hammered copper cutting blade with a fitted plain grip. |
+| W06 | Tanged Dagger | DEX | weapon | 1x3 | candidate | Short dagger blade with tang seated inside a separate fitted grip; grip remains visible. |
+| W07 | Riveted Dagger | STR/DEX | weapon | 1x3 | candidate | Short dagger with two grip slabs visibly secured by a few structural rivets. |
+| W08 | Leaf Dagger | STR/DEX | weapon | 1x3 | candidate | Short broad leaf-shaped blade; edge expands below the point, simple fitted grip. |
 | W09 | Midrib Dagger | DEX | weapon | 1x3 | candidate | Long narrow dagger with one structural raised midrib running along the blade. |
 | W10 | Bronze Shortsword | STR/DEX | weapon | 1x3 | candidate | Short broad bronze sword with a plain usable grip and modest guard shoulders. |
 | W11 | Leaf Sword | STR/DEX | weapon | 2x3 | candidate | One-hand bronze sword with broad leaf-shaped blade and a readable narrowing near the grip.  Broad substantial one-handed base, 2x3; footprint does not make it two-handed. |
@@ -23,7 +23,7 @@ Design proposals, not a live loot table. U = no attribute requirement; hybrid gr
 | W15 | Sickle Sword | STR/DEX | weapon | 2x3 | candidate | One-hand forward-curved bronze sickle-sword with a clear inner curve and usable grip.  Broad substantial one-handed base, 2x3; footprint does not make it two-handed. |
 | W16 | Stone Axe | STR | weapon | 1x3 | candidate | Ground stone axe head lashed to a medium wooden haft; blade edge aligned with the haft. |
 | W17 | Grooved Axe | STR | weapon | 1x3 | candidate | Stone axe head with a carved securing groove and functional haft lashing. |
-| W18 | Flat Axe | STR | weapon | 1x2 | candidate | Compact flat copper axe head seated and bound onto a short wooden haft. |
+| W18 | Flat Axe | STR | weapon | 1x3 | candidate | Compact flat copper axe head seated and bound onto a short wooden haft. |
 | W19 | Flanged Axe | STR | weapon | 1x3 | candidate | Copper-alloy axe head with side flanges securing its wooden haft. |
 | W20 | Stop-Ridge Axe | STR | weapon | 1x3 | candidate | Axe head with side flanges and a transverse seating stop at the haft junction. Stop-ridge controls head seating on the haft; not a protruding axe spike. |
 | W21 | Socketed Axe | STR | weapon | 1x3 | candidate | Hollow-socket axe head receiving the bent end of a wooden haft. |
@@ -48,18 +48,18 @@ Design proposals, not a live loot table. U = no attribute requirement; hybrid gr
 | W40 | Long Self Bow | STR/DEX | weapon | 2x4 | candidate | Tall shaft-dominant self bow with long simple limbs and complete string. |
 | W41 | Backed Bow | DEX | weapon | 2x4 | candidate | Wooden bow with a structurally continuous sinew backing and complete string. |
 | W42 | Composite Bow | DEX | weapon | 2x3 | candidate | Compact composite bow with distinct recurved limbs, complete string and coherent horn/wood/sinew construction. |
-| W43 | Sling | DEX | weapon | 1x2 | candidate | One empty hand-sling cradle and two cords; one finger loop, one release knot. Empty sling only: one cradle and two cords; no ammunition or pouch accessory. |
+| W43 | Sling | DEX | weapon | 1x3 | candidate | One empty hand-sling cradle and two cords; one finger loop, one release knot. Empty sling only: one cradle and two cords; no ammunition or pouch accessory. |
 | W44 | Javelin | DEX | weapon | 1x4 | candidate | One narrow full-length light throwing spear with compact head and simple shaft. |
 | W45 | War Dart | DEX | weapon | 1x3 | candidate | One substantial throwing dart with a short shaft and compact weighted point. |
 | W46 | Spear-Thrower | — | weapon | — | retired | Retired by current repo instructions; original conversation does not reopen it. |
 | W47 | Harpoon | STR/DEX | weapon | 2x4 | candidate | Long barbed harpoon with one working head and a complete two-hand shaft. |
-| W48 | Throwing Stick | DEX | weapon | 1x2 | candidate | One flattened or gently curved solid wooden throwing stick; no second weapon. |
+| W48 | Throwing Stick | DEX | weapon | 1x3 | candidate | One flattened or gently curved solid wooden throwing stick; no second weapon. |
 | W49 | Bola | DEX | weapon | 2x2 | candidate | One complete bola with secured weights joined by cord, gathered within a square silhouette. Proposed 2x2 coiled footprint; define launcher/return behavior before runtime. |
-| W50 | Throwing Club | STR/DEX | weapon | 1x2 | candidate | One short solid throwing club with a compact weighted impact end. |
+| W50 | Throwing Club | STR/DEX | weapon | 1x3 | candidate | One short solid throwing club with a compact weighted impact end. |
 | W51 | Short Staff | DEX | weapon | 1x3 | candidate | One straight short wooden striking staff with both ends visible. |
 | W52 | Long Staff | STR/DEX | weapon | 1x4 | candidate | One full-length slender two-hand wooden staff with simple grip zone. |
-| W53 | Forked Staff | INT | weapon | 1x4 | candidate | One complete slender fork-headed channeling staff; one deliberate fork, no branch clutter. INT only for a channeling forked staff; ordinary branch shape alone grants no magic. |
-| W54 | Sickle | DEX | weapon | 1x2 | candidate | One compact harvest sickle with curved working blade and short usable grip. |
+| W53 | Forked Staff | INT | weapon | 2x4 | candidate | One complete slender fork-headed channeling staff; one deliberate fork, no branch clutter. INT only for a channeling forked staff; ordinary branch shape alone grants no magic. |
+| W54 | Sickle | DEX | weapon | 1x3 | candidate | One compact harvest sickle with curved working blade and short usable grip. |
 | W55 | Stone Pick | STR | weapon | 1x3 | candidate | One compact one-hand stone pick with firmly hafted tapered point and readable grip. |
 | O01 | Hide Shield | STR | offhand | 2x3 | candidate | Broad flexible hide shield stretched over a credible supporting frame. |
 | O02 | Rawhide Shield | STR | offhand | 2x3 | candidate | Broad stiff rawhide shield with a continuous defensive face and bound edge. |
@@ -180,18 +180,18 @@ T1/T2/T3 locate these proposals within the existing early construction arc. They
 
 | ID | Name | Attribute | Slot | Size | Tier | Construction and purpose |
 |---|---|---|---|---|---|---|
-| N01 | Skinning Knife | DEX | weapon | 1x2 | T1 | Short narrow flint blade with a modest belly, rounded back and a fitted grip; no shell. Fast precise knife |
-| N02 | Flint Scraper | U | weapon | 1x2 | T1 | Broad compact knapped scraping blade seated in a substantial wrapped grip; no detached flake scatter. Broad cutting tool |
-| N03 | Harvest Sickle | DEX | weapon | 1x2 | T1 | Curved wooden handle carrying a short continuous row of flint teeth along the inside working edge. Hooking cutter; T1 branch of Sickle |
-| N04 | Carving Adze | STR | weapon | 1x2 | T1 | Small polished stone cutting head bound across a short wooden haft, edge transverse to the handle. Compact cleaving tool |
+| N01 | Skinning Knife | DEX | weapon | 1x3 | T1 | Short narrow flint blade with a modest belly, rounded back and a fitted grip; no shell. Fast precise knife |
+| N02 | Flint Scraper | U | weapon | 1x3 | T1 | Broad compact knapped scraping blade seated in a substantial wrapped grip; no detached flake scatter. Broad cutting tool |
+| N03 | Harvest Sickle | DEX | weapon | 1x3 | T1 | Curved wooden handle carrying a short continuous row of flint teeth along the inside working edge. Hooking cutter; T1 branch of Sickle |
+| N04 | Carving Adze | STR | weapon | 1x3 | T1 | Small polished stone cutting head bound across a short wooden haft, edge transverse to the handle. Compact cleaving tool |
 | N05 | Hafted Stone Hammer | STR | weapon | 1x3 | T1 | Squat stone striking head securely bound to a medium wooden handle, no spike or medieval hammer beak. Stagger tool |
 | N06 | Digging Stick | U | weapon | 1x4 | T1 | One long stout wooden shaft with a shaped digging point and plain two-hand grip area. Shared reach starter |
 | N07 | Antler Pick | STR | weapon | 1x3 | T1 | A robust antler section retains one working tine and a broad graspable beam; remaining tines removed. One-hand puncturing tool |
 | N08 | Field Mattock | STR | weapon | 2x4 | T1 | One broad groundstone digging head firmly attached across a long two-hand haft. Heavy sweeping tool |
 | N09 | Woodcutter's Axe | STR | weapon | 2x4 | T1 | One heavy groundstone cutting head on a long two-hand wooden haft; clear edge and full butt. Heavy cutting tool |
 | N10 | Fishing Spear | DEX | weapon | 1x4 | T1 | One slender full-length wooden shaft ending in a compact two-prong fish-catching head. Precise reach tool |
-| N11 | Butchering Blade | STR/DEX | weapon | 1x2 | T1 | Broad short knapped flint blade with a sturdy plain grip and a single continuous working edge. Heavier short cutter |
-| N12 | Copper Chisel | DEX | weapon | 1x2 | T2 | One short thick copper chisel with a sharpened flat working end and a substantial wrapped grip zone. Close thrusting tool; assess animation before launch |
+| N11 | Butchering Blade | STR/DEX | weapon | 1x3 | T1 | Broad short knapped flint blade with a sturdy plain grip and a single continuous working edge. Heavier short cutter |
+| N12 | Copper Chisel | DEX | weapon | 1x3 | T2 | One short thick copper chisel with a sharpened flat working end and a substantial wrapped grip zone. Close thrusting tool; assess animation before launch |
 | N13 | Copper Pick | STR | weapon | 1x3 | T2 | One compact solid copper pick head securely seated on a wooden handle, one stout working point. Successor to Stone Pick |
 | N14 | Gardener's Hoe | STR/DEX | weapon | 2x4 | T1 | Broad stone hoe blade bound transversely to a long angled wooden haft. Optional reach/sweep sidegrade; overlaps Mattock |
 | N15 | Bast Shoes | U | feet | 2x2 | T1 | A pair of low woven bast-fiber shoes with rounded toes, closed uppers and relaxed simple ties; no straw tufts. Lapti is a faction-specific display name |

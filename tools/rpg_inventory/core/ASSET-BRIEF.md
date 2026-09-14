@@ -519,8 +519,10 @@ column:
 
 These P/L/S prefixes are legacy generator formats, not substitutes for actual
 inventory proportions. Follow `INVENTORY-FOOTPRINTS.md` and
-`ITEM-ART-PRESENTATION.md`: compact tool weapons may be 1x2, substantial
-one-hand weapons 2x3, belts 2x1, amulets and Ember Cup 2x2. Preserve the target
+`ITEM-ART-PRESENTATION.md`: the smallest weapons, including compact tools,
+use 1x3; substantial one-hand weapons use 2x3. Magical main-hand wands use
+1x3, rods 2x3 and staves 2x4. Bows use 2x3 or 2x4; tower and standing shields
+can use 2x4. Belts use 2x1; amulets and Ember Cup use 2x2. Preserve the target
 composition inside a supported generation canvas and remove only empty
 background during composition. Never stretch the object. A matte must use
 the same canvas size and framing.

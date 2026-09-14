@@ -20,8 +20,8 @@ a requirement that every animation, weapon or effect fit inside that frame.
 | Cells (width x height) | Native pixel rectangle | Examples |
 |---|---|---|
 | 1x1 | 48x48 | Ring, compact storage content |
-| 1x2 | 48x96 | Short knife; baseline human sprite frame |
-| 1x3 | 48x144 | Narrow one-hand weapon |
+| 1x2 | 48x96 | Baseline human sprite frame (not a weapon footprint) |
+| 1x3 | 48x144 | Smallest weapon size; knives, daggers, wands |
 | 1x4 | 48x192 | Narrow reach weapon |
 | 2x1 | 96x48 | Belt |
 | 2x2 | 96x96 | Amulet, Ember Cup, compact auxiliary item |
@@ -49,12 +49,14 @@ Preparation, Trophy and Relic expansions remain backpack storage areas, not
 
 | Item family | Default | Allowed variants | Art canvas |
 |---|---:|---:|---|
-| Compact dagger, hand axe, throwing sidearm | 1x2 | 1x3 for long/heavy one-hand bases | portrait |
-| One-hand sword, axe, mace, club, caster rod or sceptre | 1x3 | 1x2 for genuinely compact bases; 2x3 for broad/heavy one-hand bases | portrait |
+| One-hand knife, dagger, sword, axe, mace, club, throwing sidearm or sceptre | 1x3 | 2x3 for broad/heavy one-hand bases | portrait |
+| Magical main-hand wand | 1x3 | - | portrait |
+| Magical main-hand rod | 2x3 | - | portrait |
+| Magical main-hand staff | 2x4 | - | tall portrait |
 | Spear, polearm, greatclub, greataxe, other two-hand weapon | 2x4 | 1x4 for exceptionally narrow light reach weapons | tall portrait |
 | Bow | 2x4 | 2x3 for a genuinely compact short or composite bow | tall portrait |
 | Buckler, hand guard, compact defensive off-hand | 2x2 | 1x2 for a very narrow guard | square or portrait |
-| Full shield | 2x3 | 2x4 for tower or body-length shields | portrait |
+| Full shield | 2x3 | 2x4 for tower, standing or body-length shields | portrait |
 | Held rite focus or substantial ritual implement | 1x3 | 2x2 for cups, bowls, drums or handled vessels; 2x3 for heavy one-hand sceptres or implements | portrait or square |
 | Clay Ember Cup (offhand) | 2x2 | - | square |
 | Body armour | 2x3 | 2x4 only for a visibly long integrated coat or robe assembly | portrait |
@@ -75,7 +77,12 @@ Preparation, Trophy and Relic expansions remain backpack storage areas, not
 ## Ladder rules
 
 - Footprint is a property of the named base, not its material.
-- No weapon or offhand base may occupy 1x1. Clay Ember Cup is 2x2.
+- The smallest weapon footprint is 1x3. No weapon base may occupy 1x1 or
+  1x2; compact knives, daggers and tool weapons use 1x3. No offhand base may
+  occupy 1x1. Clay Ember Cup remains a 2x2 offhand.
+- Magical main-hand families have explicit sizes: wands 1x3, rods 2x3,
+  staves 2x4. Auxiliary items with similar names retain auxiliary sizing.
+  Ordinary martial fighting sticks are not automatically magical staves.
 - Handedness is independent of footprint: a heavy sword or sceptre may occupy
   2x3 while using one hand. Never infer two-handed use from grid width.
 - The Amulet slot includes gorgets and protective neck pieces with STR

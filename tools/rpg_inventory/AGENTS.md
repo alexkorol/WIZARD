@@ -137,6 +137,11 @@ is ready; do not burn Codex weekly quota on recursive multi-agent audit trees.
 - Amulets are 2x2 for equipment-seat tiling, including pendants, gorgets and
   armoured neck pieces. Protective neck bases may require STR; the older
   pendant-only restriction is superseded.
+- The smallest weapon is 1x3; remove the old 1x2 weapon category. Knives,
+  daggers and compact tool weapons also use 1x3. Bows use 2x4, or 2x3 for
+  shorter bases; tower and standing shields can reach 2x4. Magical main-hand
+  wands are 1x3, rods 2x3 and staves 2x4. These family rules do not reclassify
+  auxiliary Conduit Rod or the offhand Ember Cup as main-hand weapons.
 - Clay Ember Cup is 2x2. No weapon or offhand base may use 1x1. Substantial
   one-handed swords, sceptres and other heavy one-hand bases may use 2x3;
   footprint does not determine handedness.

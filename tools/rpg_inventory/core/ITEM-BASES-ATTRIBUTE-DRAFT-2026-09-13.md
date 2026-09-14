@@ -10,7 +10,9 @@ Confirmed by the current request:
 - Preparation, Trophy and Relic packs are backpack-area expansions, not equippable carriers. Their contents remain physical items.
 - Warcall, Quiver/Quickrig and Attendant/Apparatus refer to actual equipment. Every unlockable equipment seat is 2x3; its items use 2x2 or 2x3 in this draft.
 - The logical base cell is 48x48 px. The baseline human character sprite frame is 48x96 px.
-- Most body armour occupies 2x3; short knives and daggers can occupy 1x2.
+- Most body armour occupies 2x3. The smallest weapon footprint is 1x3, including short knives, daggers and tool weapons; the old 1x2 weapon category is removed.
+- Bows use 2x4 or 2x3 for shorter bases. Tower and standing shields can occupy 2x4.
+- Magical main-hand wands use 1x3, rods 2x3 and staves 2x4.
 - Amulets occupy 2x2 to accommodate equipment-seat tiling. This slot includes pendants, gorgets and armoured neck pieces, with STR requirements for protective bases.
 - Clay Ember Cup occupies 2x2. No weapon or offhand item may occupy 1x1.
 - Substantial one-handed weapons, including heavier swords and sceptres, may occupy 2x3 while remaining one-handed.
@@ -121,13 +123,13 @@ Prioritize these opening options:
 
 | Base | Requirement family | Grip | Footprint | Mechanical purpose proposed |
 |---|---|---|---|---|
-| Skinning Knife | DEX | One hand | 1x2 | Fast precise cuts |
-| Flint Scraper | Shared | One hand | 1x2 | Broad short cutting tool |
-| Harvest Sickle | DEX | One hand | 1x2 | Hooking cuts |
-| Carving Adze | STR | One hand | 1x2 | Compact chopping |
+| Skinning Knife | DEX | One hand | 1x3 | Fast precise cuts |
+| Flint Scraper | Shared | One hand | 1x3 | Broad short cutting tool |
+| Harvest Sickle | DEX | One hand | 1x3 | Hooking cuts |
+| Carving Adze | STR | One hand | 1x3 | Compact chopping |
 | Hafted Stone Hammer | STR | One hand | 1x3 | Staggering impacts |
 | Antler Pick | STR | One hand | 1x3 | Puncturing impact |
-| Butchering Blade | STR/DEX | One hand | 1x2 | Slower broad cuts |
+| Butchering Blade | STR/DEX | One hand | 1x3 | Slower broad cuts |
 | Digging Stick | Shared | Two hands | 1x4 | Basic reach |
 | Fishing Spear | DEX | Two hands | 1x4 | Precise reach |
 | Field Mattock | STR | Two hands | 2x4 | Heavy sweeps |
@@ -141,10 +143,11 @@ Do not make all these drop immediately. A small opening-area pool could offer Cu
 
 All sizes are width x height in 48x48 px cells; one pair of footwear/handwear is one item. The human sprite baseline is 48x96 px; this is a frame-size convention, not a collision-box rule. See INVENTORY-FOOTPRINTS.md for the complete pixel table.
 
-- Existing defaults retained: body 2x3, head/hands/feet 2x2, belt 2x1, rings 1x1, amulets/neckwear 2x2, one-hand weapon usually 1x3 or 2x3 for broad substantial bases, compact blade 1x2, two-hand weapon 2x4 or genuinely narrow 1x4.
+- Existing defaults retained: body 2x3, head/hands/feet 2x2, belt 2x1, rings 1x1, amulets/neckwear 2x2, one-hand weapon usually 1x3 or 2x3 for broad substantial bases, compact blade 1x3, two-hand weapon 2x4 or genuinely narrow 1x4.
 - Long robe or heavy cloak: 2x4 only when the complete garment justifies it.
 - All auxiliary seats are 2x3. Quiver 2x3; compact dart case 2x2; Quickrig and INT auxiliary items 2x2 or 2x3; Warcall items 2x2 or 2x3.
-- Full shield 2x3, small hand shield 2x2, body-length shield 2x4.
+- Full shield 2x3, small hand shield 2x2, tower/standing/body-length shield 2x4. Bows are 2x4 or 2x3 for shorter bases.
+- Magical main-hand wand 1x3 (48x144 px), rod 2x3 (96x144 px), staff 2x4 (96x192 px). Forked Staff follows the magical staff rule; ordinary Short Staff and Long Staff remain martial fighting-stick bases. Auxiliary Conduit Rod retains its auxiliary footprint. These family definitions do not add new named catalogue entries.
 - Owner-confirmed: all Amulet-slot items and Clay Ember Cup are 2x2. No 1x1 weapon or offhand bases, including held concepts.
 - A broad Leaf Sword, Sickle Sword or Bronze Sceptre may be 2x3 and one-handed. Handedness is an explicit equipment property, never inferred from grid width.
 - Bone Whistle uses 2x2 and War Standard uses 2x3 under the shared auxiliary rule. Coiled Bola remains a proposed 2x2 weapon; it does not establish an auxiliary exception.
