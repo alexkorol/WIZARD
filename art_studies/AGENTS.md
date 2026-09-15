@@ -1,21 +1,38 @@
-# VERDIGRIS art studies: owner workflow
+# VERDIGRIS art studies: current owner contract
 
-The owner correction on 2026-09-13 defines the required steps:
+## Current dimensions and workflow
 
-1. Editable Blender source, using the established anatomy, camera, pose and kit.
-2. Actual render at the selected logical frame dimensions (current trial48x96), pixelized explicitly, then enlarged by an exact integer with NEAREST for imagegen input.
-3. Imagegen generates **simulated pixel art already aiming for the same implied48x96 pixel size per frame**. The coarse pixel clusters must be visible in the generated source. Preserve the gritty realistic pre-rendered Diablo II style through pixel shading and natural proportions.
-4. Use the existing Pixel Respecter scripts at `Z:/Code/Python/pixel-perfecter` to reconstruct that implied grid. Inspect generated source and reconstructed result, including native size and alpha on light/dark backgrounds.
+- Starter scope: village-defense prologue. One base cell is 48 logical pixels; current humanoid motion frames are 96×96 with a shared [48,80] ground anchor. Preserve 48 px/metre at the player plane across actors and scenery. Earlier 32×64 and 48×96 studies are historical experiments, not current export dimensions.
+- Editable Blender source → actual native-resolution render → exact integer NEAREST enlargement → imagegen simulated pixel art at the same implied pixel density → the existing Pixel Respecter reconstruction scripts at `Z:/Code/Python/pixel-perfecter`.
+- The generated source must already contain coarse pixel clusters with gritty, realistic pre-rendered shading and natural proportions. Do not generate full-detail illustrations and downsample them into sprites.
+- Do not force reconstructed art into the target by resizing or imposing an arbitrary grid. Empty padding and whole-pixel registration are allowed only after verifying that foreground pixels are preserved. Report scale, pose or camera drift as a failed candidate.
 
-Do not generate full-detail art and then downsample it into a sprite. BOX/Lanczos reduction of a detailed generation is not this pipeline. Do not force detected art into a target by resizing or imposing an arbitrary coarse grid. Empty-margin adjustments and whole-pixel registration can fit recovered pixels to a frame while preserving them; verify that no foreground pixels are lost or changed. Report generated scale/camera drift honestly.
+## Diagnose and verify the delivered result
 
-V11 is preserved as the prior, incorrect high-detail-generation approach. V12 records the corrected simulated-pixel generation and actual Pixel Respecter execution. Keep the32x64 baseline preserved beside the48x96 experiment. No production grid migration is implied.
+1. Start with the exact page and frame the user sees. If Blender and the page disagree, compare source → native render → packaged PNG → manifest URL → browser-loaded image before editing the model. Compare decoded RGBA pixels when available; a refreshed label or a file on disk is insufficient.
+2. Keep candidate exports separate from active assets. Inspect all changed frames and their animation sequence, every affected facing, native display size, and light/dark backgrounds. Check pose, identity, hair, grip, intersections, missing frames, loop transitions, dimensions and fixed origin.
+3. Require technical validity, correct delivery and visual review separately. Never present a generated review JSON or passing dimension check as artistic acceptance. A user-rejected candidate remains rejected until the reported problem is resolved and rechecked.
+4. Version image URLs by file content, including thumbnails, downloads and scenery. Load fresh manifests. Verify the actual browser assets against the current exports after promotion. If the browser cannot expose its loaded pixels, report that limit and verify through supported screenshots and asset inspection; do not claim a byte comparison.
+5. For `starter-derivatives-v01`, use its Blender pose audit, `test_blender_pack.py`, and the actual demo. Export a fresh browser `pageAssets` bundle and run `verify_browser_assets.py <bundle-manifest.json>`. Follow `blender/pose-review/README.md` within that study; retain exact input/output hashes and review evidence. A new hash invalidates the old review. Add regression checks for proven failure modes instead of repeating failed generation batches.
 
-The existing reconstructor checkout may have unrelated local changes: read its guide and use it without altering/staging those changes. Preserve exact generation prompts, input/output paths and hashes, reconstruction settings and inspected previews. Do not infer that a request to improve art authorizes repeated imagegen batches.
+## Character and transparency constraints
 
-Owner kit/alpha correction: novice human footwear should expose the foot (simple open sandals), not full-foot clog-like shoes. Remove the female's awkward shoulder cloth; retain the remaining outfit unless asked otherwise. For true-alpha generation requests, repeat the requirement across the prompt, including its end, as the owner explicitly requested. Inspect the untouched output's actual PNG color type, mode and alpha channel before processing. Native generated alpha and a locally computed cutout are different outcomes; never claim that a local cutout proves imagegen supplied real alpha. V14 preserves a five-section repeated-alpha attempt whose raw output still had no alpha, alongside explicitly labelled local-alpha exports.
+- Use existing anatomical models and dependable motion references. Inspect supplied successful examples and reuse their concrete features. Do not improvise anatomy from blobs or let imagegen repair structural Blender defects.
+- Keep characters individually identifiable. The player female's recurring side braid is rejected; do not restore it through inherited meshes or a recipe override. Starter footwear exposes the foot through simple open sandals; no clog-like shoes. No awkward female shoulder cloth.
+- The owner requested European facial-reference direction with individual faces. Keep beard geometry off the nose. Inspect weapon grips and garment/hair intersections in the actual final-facing frames.
+- The owner requires the image-generation request's transparent-background setting. Inspect the callable schema at execution time and use a workflow that exposes the setting; never claim to have set an unavailable parameter. Repeat the true-alpha requirement through the prompt as requested.
+- Inspect the untouched returned PNG's mode and alpha before processing. A painted checkerboard or a locally computed cutout does not establish native alpha. Keep failed alpha candidates out of the demo.
 
+## Reuse and provenance
 
-Native-alpha discovery (2026-09-13): use concise positive transparent-PNG requests with clean RGBA guides or edit targets, and explicitly preserve alpha during edits. The v02 alpha-discovery pass returned native RGBA in six consecutive calls, including a fresh generation from the pixelized Blender guide. Do not feed an RGB painted transparency preview back as the next edit target. Audit the untouched returned PNG before processing. For the preferred native-alpha workflow, a missing native alpha channel is a failed generation to diagnose, not a reason to silently substitute color-key cleanup. Preserve the raw native output and let sprite processing threshold its returned alpha; keep all origins explicit. Exact prompts and observations live in starter-slice-v02-identities/native-alpha/README.md and alpha-discovery/results.json. This empirical recipe does not establish backend model identity or guarantee all future calls.
+Preserve editable sources, exact prompts, input/output paths and hashes,
+reconstruction settings and inspected previews. Do not alter unrelated local
+changes in the Pixel Respecter checkout. Improving an art result does not
+authorize uncontrolled repeated imagegen batches.
 
-Latest owner clarification: the base cell is 48 pixels; an actual humanoid motion sprite is about 96×96. Current starter-derivatives Blender exports are native 96×96, camera-calibrated to 48 pixels per one-metre demo cell at the player plane. Preserve that density across scenery and actors. The user requires setting background=transparent on the image-generation request, not further prompt-only retries. The current built-in schema lacks that field; do not claim to have set it. Keep unverified painted outputs out of the demo.
+Historical alpha experiments are documented in
+`starter-slice-v02-identities/native-alpha/README.md` and
+`starter-slice-v02-identities/alpha-discovery/results.json`. Their successful
+prompt examples are reference material, not proof of a current tool setting,
+backend model identity, or guaranteed alpha support. Preserve historical
+studies without loading rejected assets into active previews.
