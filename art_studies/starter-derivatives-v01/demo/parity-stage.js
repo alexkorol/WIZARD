@@ -7,9 +7,9 @@ export class ParityStage {
   }
   async load(load) {
     const root='../blender/parity/';
-    const response=await fetch(root+'camera.json');if(!response.ok)throw Error('Missing Blender camera calibration');
+    const response=await fetch(root+'camera.json',{cache:'no-store'});if(!response.ok)throw Error('Missing Blender camera calibration');
     this.camera=await response.json();
-    await Promise.all(this.camera.layers.map(async layer=>this.images.set(layer.name,await load(root+layer.file))));
+    await Promise.all(this.camera.layers.map(async layer=>{if(!layer.sha256)throw Error('Unversioned scenery');this.images.set(layer.name,await load(root+layer.file+'?v='+layer.sha256));}));
     this.depths={dwelling_west:3.3,dwelling_east:5.5,fence:4.25,well:1.6,tree_west:.6,tree_east:1.6};
   }
   project(x,y) {

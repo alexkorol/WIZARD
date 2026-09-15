@@ -65,37 +65,44 @@
     {
       "name": "ground",
       "file": "ground.png",
-      "world_y": 100
+      "world_y": 100,
+      "sha256": "3eec578809fdacd82707f194b270dd92bfaf66296591240bfea3b15c5ce32979"
     },
     {
       "name": "dwelling_west",
       "file": "dwelling_west.png",
-      "world_y": 3.3
+      "world_y": 3.3,
+      "sha256": "448d03345143e77b34f5715dc913b840680966a880b5cebee1df428447e4772a"
     },
     {
       "name": "dwelling_east",
       "file": "dwelling_east.png",
-      "world_y": 5.5
+      "world_y": 5.5,
+      "sha256": "4524177a1ebff5f30a73658cf1cd070f1dabe594f8259b91f5e8e3ac14c5668c"
     },
     {
       "name": "fence",
       "file": "fence.png",
-      "world_y": 4.25
+      "world_y": 4.25,
+      "sha256": "481ae6efcd89d1b2b0167a61953908eb0338a5da679659b738da0869948433bc"
     },
     {
       "name": "well",
       "file": "well.png",
-      "world_y": 1.6
+      "world_y": 1.6,
+      "sha256": "e6c800d980e31c67f90f962d4c63e0aea104832fc7e8e8b2c9c30b49f2c3568d"
     },
     {
       "name": "tree_west",
       "file": "tree_west.png",
-      "world_y": 0.6
+      "world_y": 0.6,
+      "sha256": "146afd924c1ca1576931752b829ebeb646c595967440dc34c3f75b69518973ba"
     },
     {
       "name": "tree_east",
       "file": "tree_east.png",
-      "world_y": 1.6
+      "world_y": 1.6,
+      "sha256": "c669ce231dc5c1b03ec062ea9d82375470e9c9384af77960baca0c8db20e396f"
     }
   ],
   "ground_samples": [

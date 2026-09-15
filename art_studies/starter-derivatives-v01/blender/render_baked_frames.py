@@ -8,6 +8,8 @@ s=bpy.context.scene;c=s.camera
 out=Path(globals().get('OUTPUT_DIR',str(R/'motion')));out.mkdir(parents=True,exist_ok=True)
 # Fail closed: the former head-only patch left the anatomical neck backwards.
 rig=bpy.data.objects[f'MH_{SEX}_Rig']
+if SEX=='female':
+    assert not any(o.name.startswith('player-female_braid_strand_') and not o.hide_render for o in s.objects), 'Rejected side braid is still visible'
 assert rig.get('anatomical_pose_basis_v2'), 'Run rebake_pose_correction.py before exporting this rig'
 assert abs(rig.matrix_world.to_euler().z)<1e-5, 'Actor contains a presentation yaw offset'
 assert bpy.data.objects[f'{SEX}_{GAIT}_baked_cloth_samples'].get('relaxed_solver_creases'), 'Finish the cloth candidate first'

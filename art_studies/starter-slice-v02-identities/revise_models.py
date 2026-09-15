@@ -31,7 +31,9 @@ def build(name):
  spec=SPECS[name];sex=spec['sex'];src=PLAYER if name.startswith('player') else OLD/'sources'/f'{name}.blend'
  starter=name.startswith('player')
  if starter:
-  spec['hair']='long-braid' if sex=='female' else 'long-wave-beard';spec['hair_color']=(.11,.063,.028) if sex=='female' else (.14,.085,.036);spec['linen']=(.66,.59,.45)
+  # The owner rejected the recurring female side braid. Do not reintroduce it
+  # through this starter override when rebuilding the individual character.
+  spec['hair']='short-crop' if sex=='female' else 'long-wave-beard';spec['hair_color']=(.11,.063,.028) if sex=='female' else (.14,.085,.036);spec['linen']=(.66,.59,.45)
   spec['kit']='Owner starter reference: single linen tunic, cord belt, small pendant, open sandals, rough wood club'
  bpy.ops.wm.open_mainfile(filepath=str(src));s=bpy.context.scene;s.name='VG_Individual_'+name
  pivot=bpy.data.objects['Sheet_Direction_'+sex];pivot.rotation_euler.z=0

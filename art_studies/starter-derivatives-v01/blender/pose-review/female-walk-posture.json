@@ -233,7 +233,7 @@
       "max_mesh_correction_m": 0.06412818488069487
     }
   ],
-  "saved_blend_sha256": "47a8be56d735a14d66e8d86207d2fb678230730cdf31d84e8ee4b786e2136b50",
+  "saved_blend_sha256": "2c7781f4f3310932f02be6055a3e1bf3a15487adb949011cd14928d4e5d76d00",
   "saved_pose_checks": [
     {
       "phase": 1,
@@ -275,5 +275,6 @@
       "neck_pitch_from_rest_deg": 0.09931837264070481,
       "head_forward_of_pelvis_m": 0.0019042100757360458
     }
-  ]
+  ],
+  "rejected_side_braid_objects": 0
 }

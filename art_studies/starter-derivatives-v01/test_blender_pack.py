@@ -40,6 +40,7 @@ class BlenderReferenceChecks(unittest.TestCase):
             if direction in shared:self.assertEqual(shared[direction],anchor)
             shared[direction]=anchor;hashes=[]
             for f in clip['frames']:
+                self.assertEqual(f['sha256'],hashlib.sha256((R/f['src']).read_bytes()).hexdigest())
                 with Image.open(R/f['src']) as im:
                     self.assertEqual(im.size,(96,96));self.assertEqual(im.mode,'RGBA')
                     a=np.asarray(im);self.assertEqual(set(np.unique(a[:,:,3])),{0,255})
@@ -57,6 +58,8 @@ class BlenderReferenceChecks(unittest.TestCase):
         self.assertEqual(c['base_cell_px'],48)
         self.assertAlmostEqual(c['player_plane_px_per_m'],48,places=4)
         self.assertAlmostEqual(c['metre_x'][0]-c['player_origin'][0],c['player_plane_px_per_m'])
+        for layer in c['layers']:
+            self.assertEqual(layer['sha256'],hashlib.sha256((R/'blender/parity'/layer['file']).read_bytes()).hexdigest())
         for p in [R/'blender'/f'{sex}-{gait}-framing.json' for sex in ['male','female'] for gait in ['walk','sprint']]:
             for f in json.loads(p.read_text()).values():self.assertAlmostEqual(f['pixel_focal_length'],expected,places=4)
 

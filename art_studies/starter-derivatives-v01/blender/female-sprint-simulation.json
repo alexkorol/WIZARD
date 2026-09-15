@@ -51,8 +51,8 @@
   "cycle_frames": 32,
   "cloth_loop_seam": {
     "comparison": "final mesh: phase 1 vs next-cycle phase 1",
-    "rms_logical_pixels": 0.5260648808267069,
-    "maximum_logical_pixels": 3.1144452247071075,
+    "rms_logical_pixels": 0.5260648414412762,
+    "maximum_logical_pixels": 3.1144470057485845,
     "canvas": [
       96,
       96

@@ -1,0 +1,12 @@
+{
+  "before": {
+    "male-walk-front-3": "Matched 972436d; 1276 pixels differed from active 3ba94ba",
+    "female-walk-front-3": "Matched 972436d; 1363 pixels differed from active 3ba94ba"
+  },
+  "after": {
+    "browser_images_checked": 128,
+    "exact_rgba_matches": 128,
+    "version_hashes_match_png_files": true
+  },
+  "fix": "SHA256 in every frame URL; fresh manifests; versioned scenery and viewer modules"
+}

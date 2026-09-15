@@ -45,7 +45,7 @@
   "source": "Z:\\Code\\.worktrees\\wizard-art-player-guides\\art_studies\\player-unarmed-v14-sandals-alpha\\sources\\players-open-sandals.blend",
   "spec": {
     "sex": "female",
-    "hair": "long-braid",
+    "hair": "short-crop",
     "hair_color": [
       0.11,
       0.063,
@@ -108,5 +108,6 @@
     48,
     96
   ],
-  "model_variant": "Independent mesh datablock, unique facial shape keys, hair geometry and dressed assembly proportions"
+  "model_variant": "Independent mesh datablock, unique facial shape keys, hair geometry and dressed assembly proportions",
+  "hair_revision": "Rejected side braid removed from current source; original scalp retained"
 }

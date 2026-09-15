@@ -9,6 +9,8 @@ for sex in ['male','female']:
         bpy.ops.wm.open_mainfile(filepath=str(source))
         s=bpy.context.scene;rig=bpy.data.objects[f'MH_{sex}_Rig']
         assert rig.get('anatomical_pose_basis_v2')
+        if sex=='female':
+            assert not any(o.name.startswith('player-female_braid_strand_') for o in s.objects), 'Rejected female braid remains in source'
         assert abs(rig.matrix_world.to_euler().z)<1e-5
         records=[]
         for phase in range(1,9):
@@ -37,5 +39,6 @@ for sex in ['male','female']:
         p.write_text(json.dumps(sim,indent=2))
         p=R/'pose-review'/f'{sex}-{gait}-posture.json';audit=json.loads(p.read_text())
         audit['saved_blend_sha256']=hashlib.sha256(source.read_bytes()).hexdigest()
+        if sex=='female':audit['rejected_side_braid_objects']=0
         audit['saved_pose_checks']=records;p.write_text(json.dumps(audit,indent=2))
         print('VERIFIED_SAVED_POSE',sex,gait,flush=True)

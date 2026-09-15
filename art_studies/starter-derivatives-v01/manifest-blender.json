@@ -1,12 +1,13 @@
 {
   "name": "Blender camera and motion references",
   "game_ready": false,
-  "review_revision": "anatomical-posture-v2",
+  "review_revision": "content-versions-hair-removal-v3",
   "clips": {
     "male-walk-front": {
       "frames": [
         {
           "src": "blender/frames/male-walk-front-1.png",
+          "sha256": "93f97b1ddad9eb4c582207f2ec48fe71727b5171b021fae88ccaecc4d7aa0e18",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -16,6 +17,7 @@
         },
         {
           "src": "blender/frames/male-walk-front-2.png",
+          "sha256": "4ae602e2c4d40c322db6e731191fd6a8d32ce2afc4b21a634571d4bfe7aa1cec",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -25,6 +27,7 @@
         },
         {
           "src": "blender/frames/male-walk-front-3.png",
+          "sha256": "8124ae7875e11cf3300e794d70419404ec50703974a44fdd56889d72e1718514",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -34,6 +37,7 @@
         },
         {
           "src": "blender/frames/male-walk-front-4.png",
+          "sha256": "a214b4fbf13463ca6ab878e23ef207f1729673479e3c6907b7666fd4eb70b50c",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -43,6 +47,7 @@
         },
         {
           "src": "blender/frames/male-walk-front-5.png",
+          "sha256": "75aa108e9e6153e4df54c2eba9cb7f654137ef818408ea845b74e6bec849d3ec",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -52,6 +57,7 @@
         },
         {
           "src": "blender/frames/male-walk-front-6.png",
+          "sha256": "fcae67acc7be75b8e3140994bddb64f35521eceff91872b2b7217b85ae99b9a7",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -61,6 +67,7 @@
         },
         {
           "src": "blender/frames/male-walk-front-7.png",
+          "sha256": "bb4933a37cceac8d0d43dd6748b3f0f5058001194031fcc43288d2a22832c526",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -70,6 +77,7 @@
         },
         {
           "src": "blender/frames/male-walk-front-8.png",
+          "sha256": "fae2ad08796896ce4110fb8c874f904e5ed20539a217e06c78bff65c55881ea5",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -106,6 +114,7 @@
       "frames": [
         {
           "src": "blender/frames/male-walk-right-1.png",
+          "sha256": "d2c82f616e1d6a5872cdb919106e958c1082c0a42d630111da29a370d15e32b2",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -115,6 +124,7 @@
         },
         {
           "src": "blender/frames/male-walk-right-2.png",
+          "sha256": "bc2aad1cdf00ed9ed28b15a39a1e33801455bdad735864665758dace8c1067e4",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -124,6 +134,7 @@
         },
         {
           "src": "blender/frames/male-walk-right-3.png",
+          "sha256": "563e0be98200283caeeba720d003da57b0733d8c21c28c4deaa32f64331495b8",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -133,6 +144,7 @@
         },
         {
           "src": "blender/frames/male-walk-right-4.png",
+          "sha256": "79e24e65d6b9f8b1009d1c82798f3c02375f5417b50db7d10db323ce45915721",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -142,6 +154,7 @@
         },
         {
           "src": "blender/frames/male-walk-right-5.png",
+          "sha256": "2999a1df71344be9bd423a44837bb5c466c1daeba9508288b6abcfa47a27c811",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -151,6 +164,7 @@
         },
         {
           "src": "blender/frames/male-walk-right-6.png",
+          "sha256": "b091637cf3b19445f95009ff2ee6f72ea2979a236df34e06aef67b0f2ca64be4",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -160,6 +174,7 @@
         },
         {
           "src": "blender/frames/male-walk-right-7.png",
+          "sha256": "d386a74c4bc821cb9ab93a2e2622de8a8542247941a9d106dabea7082db8d66d",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -169,6 +184,7 @@
         },
         {
           "src": "blender/frames/male-walk-right-8.png",
+          "sha256": "afd387b308608702e9a24d630f869075120a870c32fb99cf3f51fff83eab9278",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -205,6 +221,7 @@
       "frames": [
         {
           "src": "blender/frames/male-walk-back-1.png",
+          "sha256": "a0e8426002b161c49ebbd0afbf233ffce90c6d247040aed8cce9615e0190fe03",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -214,6 +231,7 @@
         },
         {
           "src": "blender/frames/male-walk-back-2.png",
+          "sha256": "493e2109df8768d6ea8bfa94860209abfdaa3cc31a4a2906154ebb12d6393901",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -223,6 +241,7 @@
         },
         {
           "src": "blender/frames/male-walk-back-3.png",
+          "sha256": "3ceef212bebbb316a1414e7b1d50f7150b258f0181b2adbff6aeebdb208f19a0",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -232,6 +251,7 @@
         },
         {
           "src": "blender/frames/male-walk-back-4.png",
+          "sha256": "95787a155eaee47b536ee3533f580151b8b6c80d35cb5588acaf61a8cbb009c5",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -241,6 +261,7 @@
         },
         {
           "src": "blender/frames/male-walk-back-5.png",
+          "sha256": "814ba2ef782b3599f1f9ed95a715974f278ca1c3cfd1972e64fc991ef9a41142",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -250,6 +271,7 @@
         },
         {
           "src": "blender/frames/male-walk-back-6.png",
+          "sha256": "d2fbc8488458f702c4dc821f7b3c1de0200e8b168f250bfba211ab60656af1fe",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -259,6 +281,7 @@
         },
         {
           "src": "blender/frames/male-walk-back-7.png",
+          "sha256": "daf3e85ad324eaa04fd8ff5391b93d503533383a5a3e9f10b455dcfd9d64bc51",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -268,6 +291,7 @@
         },
         {
           "src": "blender/frames/male-walk-back-8.png",
+          "sha256": "c81ec235f4ff1826b55df2952848f217db36ddf811924ce36adbaa4262b6fdb8",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -304,6 +328,7 @@
       "frames": [
         {
           "src": "blender/frames/male-walk-left-1.png",
+          "sha256": "5f1becef246ac5b4e3b0ca26a8f62ec6a4889873774834f354edccc68c3a8b85",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -313,6 +338,7 @@
         },
         {
           "src": "blender/frames/male-walk-left-2.png",
+          "sha256": "086f676955e6868eddbeabd34c6a7f82f6ea78eb5daf9663c094504526ece84e",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -322,6 +348,7 @@
         },
         {
           "src": "blender/frames/male-walk-left-3.png",
+          "sha256": "46a6ed66b27f80ec729aa4b43dda04b486fb73e8fe904584f711ed312bb4e4f7",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -331,6 +358,7 @@
         },
         {
           "src": "blender/frames/male-walk-left-4.png",
+          "sha256": "50dc3291336f9327882618dc968f4645b7461e0d33277f8c68d583b60f2d196b",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -340,6 +368,7 @@
         },
         {
           "src": "blender/frames/male-walk-left-5.png",
+          "sha256": "1efd6de06c85c305480e629a185b0cd079ed15f649a0a17294bf301d779344a3",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -349,6 +378,7 @@
         },
         {
           "src": "blender/frames/male-walk-left-6.png",
+          "sha256": "842137220f516a7fbf827c0669d2b6f5189ae320322f2f51316d920c9dbbf950",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -358,6 +388,7 @@
         },
         {
           "src": "blender/frames/male-walk-left-7.png",
+          "sha256": "1dc83d31defcaff94f2a576b740f60e413c9199e6badb161c9b01906c0a970bb",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -367,6 +398,7 @@
         },
         {
           "src": "blender/frames/male-walk-left-8.png",
+          "sha256": "7ed8754a1810e086c0bd60505f7152bdc0caa9c484b8ccf11d043dad2a123823",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -403,6 +435,7 @@
       "frames": [
         {
           "src": "blender/frames/male-sprint-front-1.png",
+          "sha256": "bdcdeaabb0b4c6898216c84f97db373c2ce8bd7f8ff60672fdba469bb238378e",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -412,6 +445,7 @@
         },
         {
           "src": "blender/frames/male-sprint-front-2.png",
+          "sha256": "abb3c1f6959fc121d6e290a7f5318800d353cb5393c562754ff05a111795b790",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -421,6 +455,7 @@
         },
         {
           "src": "blender/frames/male-sprint-front-3.png",
+          "sha256": "4c138e40d7a4cd21075b481a0c4a657936f7d12848bc365f741601e8a858621c",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -430,6 +465,7 @@
         },
         {
           "src": "blender/frames/male-sprint-front-4.png",
+          "sha256": "da76a6f9c9369590f9c8965987ff7f42e21a199ba0655627063f3453697b2e9c",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -439,6 +475,7 @@
         },
         {
           "src": "blender/frames/male-sprint-front-5.png",
+          "sha256": "e3d3ef3b679ce3a0d6bae242ba0d465de71ff2cae9a6db2dc29eaaf9ce0d13af",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -448,6 +485,7 @@
         },
         {
           "src": "blender/frames/male-sprint-front-6.png",
+          "sha256": "e7d12907812cc5b0fcb56172a6f25dfd0653116986a8d884a64cdb40b79fe1d1",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -457,6 +495,7 @@
         },
         {
           "src": "blender/frames/male-sprint-front-7.png",
+          "sha256": "40932ca069c3b63de6a4ce55106d8b0355d085d94a498ec42352dbea4fc902d0",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -466,6 +505,7 @@
         },
         {
           "src": "blender/frames/male-sprint-front-8.png",
+          "sha256": "17efa829220e75ed5d31a02219f6973eacd92e5e1b56cba10014219bdab3d0cc",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -502,6 +542,7 @@
       "frames": [
         {
           "src": "blender/frames/male-sprint-right-1.png",
+          "sha256": "2d71cc285209816fe9e9cbc021d6480acf308f1de1cd763969ca20b05ec60d0f",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -511,6 +552,7 @@
         },
         {
           "src": "blender/frames/male-sprint-right-2.png",
+          "sha256": "b588fcb659b8209915dedc9762b74c76243bc4f5b0ac866452a780a6aa8d4444",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -520,6 +562,7 @@
         },
         {
           "src": "blender/frames/male-sprint-right-3.png",
+          "sha256": "77f746c3b70b6e08ef0ae42fd8084ef55446f562a7b7a85579a91a75aba9f52b",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -529,6 +572,7 @@
         },
         {
           "src": "blender/frames/male-sprint-right-4.png",
+          "sha256": "27fe8507dd949901b270f3d7b1913fedace25671a9c1617a697920e4e422de85",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -538,6 +582,7 @@
         },
         {
           "src": "blender/frames/male-sprint-right-5.png",
+          "sha256": "2d5f015d6d17ea62c107db4a5378641ed976c10ee452e322d68080639a51fee2",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -547,6 +592,7 @@
         },
         {
           "src": "blender/frames/male-sprint-right-6.png",
+          "sha256": "7c6eb6de247fccd456a01d708cb3909450339e201fc06780a6df56b53c9d9bd8",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -556,6 +602,7 @@
         },
         {
           "src": "blender/frames/male-sprint-right-7.png",
+          "sha256": "5ba3a6715695c67e5cb86ebe01c8f2661157add19f0bfda0379fe8eaab31d453",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -565,6 +612,7 @@
         },
         {
           "src": "blender/frames/male-sprint-right-8.png",
+          "sha256": "946615e4dc67258d590d249bcd219893b660c5cf10b9a74b06889ba715f00b68",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -601,6 +649,7 @@
       "frames": [
         {
           "src": "blender/frames/male-sprint-back-1.png",
+          "sha256": "6283d731de5749e624e7461c76dcc300ed1c6b1e4f0621c0c6bf6f00941b570b",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -610,6 +659,7 @@
         },
         {
           "src": "blender/frames/male-sprint-back-2.png",
+          "sha256": "3d9da89bc270f59fcbca05d3f6df07bf00c3d9d2ceb161ba676f95953e855338",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -619,6 +669,7 @@
         },
         {
           "src": "blender/frames/male-sprint-back-3.png",
+          "sha256": "a7fc6776362b6d2389aeee8f21b7185d05603ffe2a7d2dd301d832649355b078",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -628,6 +679,7 @@
         },
         {
           "src": "blender/frames/male-sprint-back-4.png",
+          "sha256": "a4f57b26e39373247f4cb408ceefd811ad4a9405ad8c83c91c3ef01f668f37ee",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -637,6 +689,7 @@
         },
         {
           "src": "blender/frames/male-sprint-back-5.png",
+          "sha256": "cbef6c03d7e7166ae5533e669a32f4edf17a59393ca67645d4041adddf311172",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -646,6 +699,7 @@
         },
         {
           "src": "blender/frames/male-sprint-back-6.png",
+          "sha256": "d282485598f4db30a1c424e1af57ab9fe4f63607a3ce1c3d1c589ab8ab0aa554",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -655,6 +709,7 @@
         },
         {
           "src": "blender/frames/male-sprint-back-7.png",
+          "sha256": "b7a8bd26c9abc8c04e2be4b4b3134342d633e10b0c7e940504036506260ec9fa",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -664,6 +719,7 @@
         },
         {
           "src": "blender/frames/male-sprint-back-8.png",
+          "sha256": "49408084a0508c36d610ba1e394c35419674194ac6de8fd9d4b400dbca1a9522",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -700,6 +756,7 @@
       "frames": [
         {
           "src": "blender/frames/male-sprint-left-1.png",
+          "sha256": "fa483076d936d8e8256595fde1ff08b05d3fe4eff977935eca19151b0eb02fa9",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -709,6 +766,7 @@
         },
         {
           "src": "blender/frames/male-sprint-left-2.png",
+          "sha256": "83bded1e4b128b61be51b359ec0440de42dc7440d5cceb2a07317b542ccc666d",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -718,6 +776,7 @@
         },
         {
           "src": "blender/frames/male-sprint-left-3.png",
+          "sha256": "d3e01fd6d308eff6aff7431dc534230e65dde401ef357553ef148000c335c7ea",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -727,6 +786,7 @@
         },
         {
           "src": "blender/frames/male-sprint-left-4.png",
+          "sha256": "33a9a66ac7019c5b9fb43f57ceec89fcd7958780abb3415346917c3573dff220",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -736,6 +796,7 @@
         },
         {
           "src": "blender/frames/male-sprint-left-5.png",
+          "sha256": "7b9245e52d07b79d5257a539936c3cb308321d40f5a4d24388dc485c7719e601",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -745,6 +806,7 @@
         },
         {
           "src": "blender/frames/male-sprint-left-6.png",
+          "sha256": "2c81012e3f50c8a554236dc5e349376920719a10e1001c67f02c5a665471a037",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -754,6 +816,7 @@
         },
         {
           "src": "blender/frames/male-sprint-left-7.png",
+          "sha256": "71087f8d5bd1b2f6f02ca8e36e64e9b4d7f01d0fd74b3af8d3e9127aebf0ebda",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -763,6 +826,7 @@
         },
         {
           "src": "blender/frames/male-sprint-left-8.png",
+          "sha256": "505efb491d0db3cb5974c5f557cb16f1bd683e28af4b741e5a4f0c0b3e47eeb6",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -799,6 +863,7 @@
       "frames": [
         {
           "src": "blender/frames/female-walk-front-1.png",
+          "sha256": "e315f108e632180b5f9f19a5bc0117184dcf322031f61e765d0cf06b391eeee3",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -808,6 +873,7 @@
         },
         {
           "src": "blender/frames/female-walk-front-2.png",
+          "sha256": "947b903612f33e45354a7681edebda92ce698b731fb4b0b4c385055ad8865f3f",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -817,6 +883,7 @@
         },
         {
           "src": "blender/frames/female-walk-front-3.png",
+          "sha256": "ba3ed4faae4e8c4f202568718dfd4ddf9148eb0442ed18b2778f1a305ce92b1c",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -826,6 +893,7 @@
         },
         {
           "src": "blender/frames/female-walk-front-4.png",
+          "sha256": "222890bf79a72fbb279b42cf9ddcdc3d7af2994f601e5fe9dabf85341afdd7c6",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -835,6 +903,7 @@
         },
         {
           "src": "blender/frames/female-walk-front-5.png",
+          "sha256": "4d8042a6cd90c8705d9e8ca1f700cae302ba3b3599904b5823db16024ff7b4ee",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -844,6 +913,7 @@
         },
         {
           "src": "blender/frames/female-walk-front-6.png",
+          "sha256": "2c37083e61e09b969913bc2ce1e45c012b7b2923cb2800fd0512384c75285228",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -853,6 +923,7 @@
         },
         {
           "src": "blender/frames/female-walk-front-7.png",
+          "sha256": "f34a425fb823e24416c129a868367f0357e34a4c58011755db6ca505f6a06ce3",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -862,6 +933,7 @@
         },
         {
           "src": "blender/frames/female-walk-front-8.png",
+          "sha256": "a8f6136975fd14765920f61b972eb4be0a2ca990fbe31315dad110ddfa02f4d6",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -891,13 +963,14 @@
         ]
       },
       "cloth_simulation": true,
-      "cloth_loop_max_delta_px": 1.6996968030641617,
+      "cloth_loop_max_delta_px": 1.699691142144284,
       "note": "Blender structure / eight phases from one cloth simulation. Fixed camera scale; unclipped native frames. LOOP REVIEW: up to 1.7 px cloth displacement between successive cycles. Hair is bone-bound, not simulated. Not finished game art."
     },
     "female-walk-right": {
       "frames": [
         {
           "src": "blender/frames/female-walk-right-1.png",
+          "sha256": "c4788b3a9d19410cab26a7af9feed696048e44ac74a7c1e9875c15facb0228a5",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -907,6 +980,7 @@
         },
         {
           "src": "blender/frames/female-walk-right-2.png",
+          "sha256": "e4de0e7b0fc34a21f362ce86d5f4d6c2edb7ee92e485f5f21cae1ca43ef0465d",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -916,6 +990,7 @@
         },
         {
           "src": "blender/frames/female-walk-right-3.png",
+          "sha256": "5028e65e1842cc747c8f71b07abc61ef0be0deb53c87b5636771ae297d2e36e4",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -925,6 +1000,7 @@
         },
         {
           "src": "blender/frames/female-walk-right-4.png",
+          "sha256": "6882f8b673af554f9252c32e8e4ec2fd3386aedba2a582b48bef70e69f1f1762",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -934,6 +1010,7 @@
         },
         {
           "src": "blender/frames/female-walk-right-5.png",
+          "sha256": "03b9fb5f500ae42b024c38a744e3a531e31121d687f0cc93d4bcc38df6a6d23d",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -943,6 +1020,7 @@
         },
         {
           "src": "blender/frames/female-walk-right-6.png",
+          "sha256": "e018681757a658dcd0a3034d70b55803da9ce8a977e635137a7c58651e75cf0a",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -952,6 +1030,7 @@
         },
         {
           "src": "blender/frames/female-walk-right-7.png",
+          "sha256": "0f897e94aa54aaa7d622d2c42a79480de961fdcc3e8c32f44339220517be3beb",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -961,6 +1040,7 @@
         },
         {
           "src": "blender/frames/female-walk-right-8.png",
+          "sha256": "7514102eb36dd2995ee221c8021ba54f2166fa349550d08a3d3ec79ce3f1dfa5",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -990,13 +1070,14 @@
         ]
       },
       "cloth_simulation": true,
-      "cloth_loop_max_delta_px": 1.6996968030641617,
+      "cloth_loop_max_delta_px": 1.699691142144284,
       "note": "Blender structure / eight phases from one cloth simulation. Fixed camera scale; unclipped native frames. LOOP REVIEW: up to 1.7 px cloth displacement between successive cycles. Hair is bone-bound, not simulated. Not finished game art."
     },
     "female-walk-back": {
       "frames": [
         {
           "src": "blender/frames/female-walk-back-1.png",
+          "sha256": "bc4cc17935d8936f5f2f2881b89089d3fd8b333357b7cde3647635d4f275072d",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1006,6 +1087,7 @@
         },
         {
           "src": "blender/frames/female-walk-back-2.png",
+          "sha256": "4a01c4b0eed4f9df91576e51b93da83c1a4bdeffd3c50d552488828d5dc42f99",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1015,6 +1097,7 @@
         },
         {
           "src": "blender/frames/female-walk-back-3.png",
+          "sha256": "8446f85d796444c473f6b1fa40e613cd427bd9ddc8405e549df99dffd509f7d2",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1024,6 +1107,7 @@
         },
         {
           "src": "blender/frames/female-walk-back-4.png",
+          "sha256": "482ba7ce14bf057744dff1d113f05f48ea4d3fbefe49aa615bf83ec7a108e94d",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1033,6 +1117,7 @@
         },
         {
           "src": "blender/frames/female-walk-back-5.png",
+          "sha256": "52d4eb01d842194ad39d1453f9ad0057eb0be538afcd7dd39f5722c71b4de58f",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1042,6 +1127,7 @@
         },
         {
           "src": "blender/frames/female-walk-back-6.png",
+          "sha256": "da988f63ec47131ca66b2392389db4be9b51708e7d48d347285b2b40510dd87d",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1051,6 +1137,7 @@
         },
         {
           "src": "blender/frames/female-walk-back-7.png",
+          "sha256": "db6464669ae3f5f92ced0a785fd492e3720db65752abb2c384820bc45526eea2",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1060,6 +1147,7 @@
         },
         {
           "src": "blender/frames/female-walk-back-8.png",
+          "sha256": "c9f286538d8a01da93e2cea25b0195f13997b7ebefa7af6263fae148118c23e9",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1089,13 +1177,14 @@
         ]
       },
       "cloth_simulation": true,
-      "cloth_loop_max_delta_px": 1.6996968030641617,
+      "cloth_loop_max_delta_px": 1.699691142144284,
       "note": "Blender structure / eight phases from one cloth simulation. Fixed camera scale; unclipped native frames. LOOP REVIEW: up to 1.7 px cloth displacement between successive cycles. Hair is bone-bound, not simulated. Not finished game art."
     },
     "female-walk-left": {
       "frames": [
         {
           "src": "blender/frames/female-walk-left-1.png",
+          "sha256": "638073426dbef75d3459862f511c9f8dc907f36c2786d506556824ee07c2dedd",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1105,6 +1194,7 @@
         },
         {
           "src": "blender/frames/female-walk-left-2.png",
+          "sha256": "56b5a5fe25c7ad21be1d1adf8494da5b88fc5b042b33ad2eb7e8d81d5f1a79d7",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1114,6 +1204,7 @@
         },
         {
           "src": "blender/frames/female-walk-left-3.png",
+          "sha256": "e4ad174635b82261ee333948763519c11e37b48c684eecd510ebbc3044ee053c",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1123,6 +1214,7 @@
         },
         {
           "src": "blender/frames/female-walk-left-4.png",
+          "sha256": "d6c89265da336b266aaba35f5f93678527bceb273de3ca6c0fa84af417a7cc2f",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1132,6 +1224,7 @@
         },
         {
           "src": "blender/frames/female-walk-left-5.png",
+          "sha256": "c6c02e19fb19029812e21170bec93642f997790d4e64b8b6ee486e45aa3a010e",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1141,6 +1234,7 @@
         },
         {
           "src": "blender/frames/female-walk-left-6.png",
+          "sha256": "5be785f7df995a9005d4da133d93b2e591f2937f0efab6df4ef3af0756253644",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1150,6 +1244,7 @@
         },
         {
           "src": "blender/frames/female-walk-left-7.png",
+          "sha256": "e461f07a27b9a87d48a20357eb19b93e559a06dd81bbd6fae25d0e84275c142c",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1159,6 +1254,7 @@
         },
         {
           "src": "blender/frames/female-walk-left-8.png",
+          "sha256": "be527530a3a96bd12fffe4a4cac134f509643b961e92a9530492cf0a322cb758",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1188,13 +1284,14 @@
         ]
       },
       "cloth_simulation": true,
-      "cloth_loop_max_delta_px": 1.6996968030641617,
+      "cloth_loop_max_delta_px": 1.699691142144284,
       "note": "Blender structure / eight phases from one cloth simulation. Fixed camera scale; unclipped native frames. LOOP REVIEW: up to 1.7 px cloth displacement between successive cycles. Hair is bone-bound, not simulated. Not finished game art."
     },
     "female-sprint-front": {
       "frames": [
         {
           "src": "blender/frames/female-sprint-front-1.png",
+          "sha256": "e310ea5fcbf3243c69fa6b5e0eb47d5b1819c8091f4d074fd2b035e279bde5d8",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1204,6 +1301,7 @@
         },
         {
           "src": "blender/frames/female-sprint-front-2.png",
+          "sha256": "4dcc2a0f008587ecf140b2dbf6e6b0f458970d4ecf875b31a0089547a297576b",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1213,6 +1311,7 @@
         },
         {
           "src": "blender/frames/female-sprint-front-3.png",
+          "sha256": "2e93ef51d2e650864bb434543614d891a42a7cefea65c4f0184d3f3d52036704",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1222,6 +1321,7 @@
         },
         {
           "src": "blender/frames/female-sprint-front-4.png",
+          "sha256": "cb6bf553c54a0da70445f258011addd431d6b4b0b7512cb0a691c351f6002e0e",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1231,6 +1331,7 @@
         },
         {
           "src": "blender/frames/female-sprint-front-5.png",
+          "sha256": "296e6fcf2266d7b9d8c0f8df359145f2d115d9d88f637e69d7cedaf4cf7ace99",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1240,6 +1341,7 @@
         },
         {
           "src": "blender/frames/female-sprint-front-6.png",
+          "sha256": "03de2aafd5e3c3487a96f8a071c69a9e7f715a1fffb59bd104d04cd109d9aad1",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1249,6 +1351,7 @@
         },
         {
           "src": "blender/frames/female-sprint-front-7.png",
+          "sha256": "b88bed891a14661e8b39cf294a5bbc941436f11d80c20618d2631fd0aed0e15a",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1258,6 +1361,7 @@
         },
         {
           "src": "blender/frames/female-sprint-front-8.png",
+          "sha256": "48b5f14688c39fa8083fb8a94d9979f146f2037986e230828829a25f5a941fff",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1287,13 +1391,14 @@
         ]
       },
       "cloth_simulation": true,
-      "cloth_loop_max_delta_px": 3.1144452247071075,
+      "cloth_loop_max_delta_px": 3.1144470057485845,
       "note": "Blender structure / eight phases from one cloth simulation. Fixed camera scale; unclipped native frames. LOOP REVIEW: up to 3.1 px cloth displacement between successive cycles. Hair is bone-bound, not simulated. Not finished game art."
     },
     "female-sprint-right": {
       "frames": [
         {
           "src": "blender/frames/female-sprint-right-1.png",
+          "sha256": "9df8ae2a0a80bee63cef6fb399fb166fd9967f474d10aaab0212f9ffb0e4ec64",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1303,6 +1408,7 @@
         },
         {
           "src": "blender/frames/female-sprint-right-2.png",
+          "sha256": "34e3b34eba2728c518b31cce0a68dcbe2b3ac3182f4e055b79bc9fb9b50f3164",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1312,6 +1418,7 @@
         },
         {
           "src": "blender/frames/female-sprint-right-3.png",
+          "sha256": "b3b2c2c55cba7c7be7ef28dc85f5a0cc15cff678f37331286a060326c3dfc76f",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1321,6 +1428,7 @@
         },
         {
           "src": "blender/frames/female-sprint-right-4.png",
+          "sha256": "66562be2500ffab9629894ee526d92722e0b5af68b53efca9b807899d0e27436",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1330,6 +1438,7 @@
         },
         {
           "src": "blender/frames/female-sprint-right-5.png",
+          "sha256": "512264a1d8604fe5f893862e058f3b08c2cd51c86dcb66eb39c304b118d8ebfc",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1339,6 +1448,7 @@
         },
         {
           "src": "blender/frames/female-sprint-right-6.png",
+          "sha256": "c8170e355059f1654404bb0294827490feb679ece099ce2c4833065c3ed0d06c",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1348,6 +1458,7 @@
         },
         {
           "src": "blender/frames/female-sprint-right-7.png",
+          "sha256": "8100ed74a886a75f1944e5b801e531bc82bd044df76f12674299baef795ced32",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1357,6 +1468,7 @@
         },
         {
           "src": "blender/frames/female-sprint-right-8.png",
+          "sha256": "e5abf8bd3894cda5833822331ea467ce3a22230ea3b132f328522bf4ff62a604",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1386,13 +1498,14 @@
         ]
       },
       "cloth_simulation": true,
-      "cloth_loop_max_delta_px": 3.1144452247071075,
+      "cloth_loop_max_delta_px": 3.1144470057485845,
       "note": "Blender structure / eight phases from one cloth simulation. Fixed camera scale; unclipped native frames. LOOP REVIEW: up to 3.1 px cloth displacement between successive cycles. Hair is bone-bound, not simulated. Not finished game art."
     },
     "female-sprint-back": {
       "frames": [
         {
           "src": "blender/frames/female-sprint-back-1.png",
+          "sha256": "3754baa312379c53c441cbec1edb500632648460d10d910e032cde1e73974bfe",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1402,6 +1515,7 @@
         },
         {
           "src": "blender/frames/female-sprint-back-2.png",
+          "sha256": "8489afc1396b9c361000bcb389e29b0c3570ed303abb949b3430c3379dbd8857",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1411,6 +1525,7 @@
         },
         {
           "src": "blender/frames/female-sprint-back-3.png",
+          "sha256": "8e9f2279d512fd5b29534fc432533c538a1cc7c78fb39c5c3c659bc72480483f",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1420,6 +1535,7 @@
         },
         {
           "src": "blender/frames/female-sprint-back-4.png",
+          "sha256": "ba5af1f79ce4ddd61d3de2b480738c728b6bdd337d200f1482c007d548802d60",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1429,6 +1545,7 @@
         },
         {
           "src": "blender/frames/female-sprint-back-5.png",
+          "sha256": "f6dfad14a9764e62405219af374d9e79a22e4f952d30abf585c301b623b896ba",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1438,6 +1555,7 @@
         },
         {
           "src": "blender/frames/female-sprint-back-6.png",
+          "sha256": "7e93745d3e5d5948a54ff602b73d0145dd142fe3189140447b286c007110c99b",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1447,6 +1565,7 @@
         },
         {
           "src": "blender/frames/female-sprint-back-7.png",
+          "sha256": "8747e07f922c13565cd0387f064e59c0c29606d6dccb16a044d2a2840cdebbc8",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1456,6 +1575,7 @@
         },
         {
           "src": "blender/frames/female-sprint-back-8.png",
+          "sha256": "3025c214cab3fdea267e93a12009438e2f365020a6ae88e00e0d3d6c22ce0cee",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1485,13 +1605,14 @@
         ]
       },
       "cloth_simulation": true,
-      "cloth_loop_max_delta_px": 3.1144452247071075,
+      "cloth_loop_max_delta_px": 3.1144470057485845,
       "note": "Blender structure / eight phases from one cloth simulation. Fixed camera scale; unclipped native frames. LOOP REVIEW: up to 3.1 px cloth displacement between successive cycles. Hair is bone-bound, not simulated. Not finished game art."
     },
     "female-sprint-left": {
       "frames": [
         {
           "src": "blender/frames/female-sprint-left-1.png",
+          "sha256": "bf38b5947b07d3882634a6c8d384bffe3b15f936f9a1442e87f421d783d53352",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1501,6 +1622,7 @@
         },
         {
           "src": "blender/frames/female-sprint-left-2.png",
+          "sha256": "9e4feb365e141b9ae2ed9c553ccbe5eb6b3f662df54f9bfa7f8bf1dc1cdc0671",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1510,6 +1632,7 @@
         },
         {
           "src": "blender/frames/female-sprint-left-3.png",
+          "sha256": "02b84d004dcd203cbcbe8f43c666d5bacff52649dbd5739b30a551804279a6e3",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1519,6 +1642,7 @@
         },
         {
           "src": "blender/frames/female-sprint-left-4.png",
+          "sha256": "172eba36ae5d08d21402b8a11ce9513236b195b14647b8ec2a45abeaac6fa39c",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1528,6 +1652,7 @@
         },
         {
           "src": "blender/frames/female-sprint-left-5.png",
+          "sha256": "0e330be30c750981193c65c4ccba5ce938ad812e1769505a82654e420a8e7e69",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1537,6 +1662,7 @@
         },
         {
           "src": "blender/frames/female-sprint-left-6.png",
+          "sha256": "3ccf6b5cd8ca083cb21857e3c77bf189ab534b58c1bf0c01befe7abbbd609cee",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1546,6 +1672,7 @@
         },
         {
           "src": "blender/frames/female-sprint-left-7.png",
+          "sha256": "1e4bbdbe3d1bd6a97db29b983375a61a2302f5be95372d6d7717f3e097896650",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1555,6 +1682,7 @@
         },
         {
           "src": "blender/frames/female-sprint-left-8.png",
+          "sha256": "89de6b653935774e850e618aa94cd1447c9725048b50676dc0aaddaf327f7214",
           "width": 96,
           "height": 96,
           "anchor": [
@@ -1584,7 +1712,7 @@
         ]
       },
       "cloth_simulation": true,
-      "cloth_loop_max_delta_px": 3.1144452247071075,
+      "cloth_loop_max_delta_px": 3.1144470057485845,
       "note": "Blender structure / eight phases from one cloth simulation. Fixed camera scale; unclipped native frames. LOOP REVIEW: up to 3.1 px cloth displacement between successive cycles. Hair is bone-bound, not simulated. Not finished game art."
     }
   }

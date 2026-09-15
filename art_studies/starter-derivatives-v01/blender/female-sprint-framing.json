@@ -8,7 +8,7 @@
       0,
       0
     ],
-    "pixel_focal_length": 612.0000457763672,
+    "pixel_focal_length": 612.0,
     "base_cell_px": 48,
     "pixels_per_metre_at_player_plane": 48
   },
@@ -21,7 +21,7 @@
       0,
       0
     ],
-    "pixel_focal_length": 612.0000457763672,
+    "pixel_focal_length": 612.0,
     "base_cell_px": 48,
     "pixels_per_metre_at_player_plane": 48
   },
@@ -34,7 +34,7 @@
       0,
       0
     ],
-    "pixel_focal_length": 612.0000457763672,
+    "pixel_focal_length": 612.0,
     "base_cell_px": 48,
     "pixels_per_metre_at_player_plane": 48
   },
@@ -47,7 +47,7 @@
       0,
       0
     ],
-    "pixel_focal_length": 612.0000457763672,
+    "pixel_focal_length": 612.0,
     "base_cell_px": 48,
     "pixels_per_metre_at_player_plane": 48
   }

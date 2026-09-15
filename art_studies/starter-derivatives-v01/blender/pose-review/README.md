@@ -60,3 +60,21 @@ next-cycle cloth seam is retained in each simulation report.
 
 Failed interim renders and original `.blend` backups stay local; they are
 not referenced by the demo or offered as new imagegen inputs.
+
+## Browser delivery defect
+
+After the posture correction, the in-app review page still served the old
+image pixels under unchanged filenames. The sampled male and female walk
+frames matched commit `972436d` exactly, not the active `3ba94ba` exports.
+Checking the page's text and local files had not established what image
+content the user was seeing.
+
+Every sprite and scenery layer now includes its PNG SHA256 in its request
+URL. Manifests load with `cache: no-store`; thumbnails and downloads use the
+same versioned URLs as playback. The browser's full set of 128 loaded image
+assets was exported and compared against the current files: all RGBA pixels
+matched. Results are in `browser-delivery-check.json`.
+
+The separately requested side-braid removal also updates the current female
+source, motion milestones and starter recipe. It retains the existing scalp;
+it does not constitute a finished hairstyle or a new character-art approval.

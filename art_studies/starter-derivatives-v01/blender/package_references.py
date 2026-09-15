@@ -38,7 +38,7 @@ for sex in ['male','female']:
                 digest=hashlib.sha256(rgba.tobytes()).hexdigest();hashes.append(digest)
                 bbox=rgba.getbbox()
                 assert bbox[0]>0 and bbox[1]>0 and bbox[2]<96 and bbox[3]<96,f'Clipped render: {src.name} {bbox}'
-                frames.append({'src':'blender/frames/'+dest.name,'width':96,'height':96,'anchor':framing[direction]['anchor']})
+                frames.append({'src':'blender/frames/'+dest.name,'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'width':96,'height':96,'anchor':framing[direction]['anchor']})
                 audit.append({'file':dest.name,'bbox':rgba.getbbox(),'sha256':digest})
             assert len(set(hashes))==8,f'Repeated Blender poses: {key}'
             simulation=R/f'{sex}-{gait}-simulation.json'
@@ -50,6 +50,12 @@ for sex in ['male','female']:
 manifest={'name':'Blender camera and motion references','game_ready':False,'review_revision':review['revision'],'clips':clips}
 (R.parent/'manifest-blender.json').write_text(json.dumps(manifest,indent=2))
 (R/'frame-audit.json').write_text(json.dumps(audit,indent=2))
+# Scenery uses the same content-addressed loading contract as characters.
+calibration=R/'parity/camera.json'
+data=json.loads(calibration.read_text())
+for layer in data['layers']:
+    layer['sha256']=hashlib.sha256((R/'parity'/layer['file']).read_bytes()).hexdigest()
+calibration.write_text(json.dumps(data,indent=2))
 # Structural imagegen inputs are whole native sheets enlarged by exact integers.
 for sex in ['male','female']:
     for gait in ['walk','sprint']:

@@ -233,7 +233,7 @@
       "attachment": "fixed rest-triangle barycentric coordinates"
     }
   ],
-  "saved_blend_sha256": "7b542367bda8997988510e8139acf0be7a975d675726400a650b87e2d1bebccd",
+  "saved_blend_sha256": "59e6923eb0e67c2c1be8d929533128dd8efaceb81797461db1bd54c229ef3526",
   "saved_pose_checks": [
     {
       "phase": 1,
@@ -275,5 +275,6 @@
       "neck_pitch_from_rest_deg": 0.4503301083386408,
       "head_forward_of_pelvis_m": 0.12071865797042847
     }
-  ]
+  ],
+  "rejected_side_braid_objects": 0
 }
