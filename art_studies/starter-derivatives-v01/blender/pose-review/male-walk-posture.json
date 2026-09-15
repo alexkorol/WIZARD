@@ -1,0 +1,279 @@
+{
+  "version": 2,
+  "sex": "male",
+  "gait": "walk",
+  "removed_presentation_yaw_deg": 0.0,
+  "final_rig_yaw_deg": 0.0,
+  "phases": [
+    {
+      "phase": 1,
+      "capture_forward_trunk_deg": -2.374003770058052,
+      "old_head_base": [
+        0.04099230468273163,
+        0.012649981305003166,
+        1.5648976564407349
+      ],
+      "new_head_base": [
+        0.018231721594929695,
+        -0.029307859018445015,
+        1.5595675706863403
+      ],
+      "leg_delta_m": 3.0719530773294423e-08,
+      "neck_direction": [
+        -1.8051640182648043e-08,
+        -0.3625485599040985,
+        0.9319648742675781
+      ]
+    },
+    {
+      "phase": 2,
+      "capture_forward_trunk_deg": -3.215421543747788,
+      "old_head_base": [
+        0.042062629014253616,
+        0.005995580926537514,
+        1.545074462890625
+      ],
+      "new_head_base": [
+        0.022709520533680916,
+        -0.023606061935424805,
+        1.5400636196136475
+      ],
+      "leg_delta_m": 6.365778852490731e-08,
+      "neck_direction": [
+        0.0,
+        -0.37445297837257385,
+        0.9272457957267761
+      ]
+    },
+    {
+      "phase": 3,
+      "capture_forward_trunk_deg": -3.9890426455241927,
+      "old_head_base": [
+        0.03408199921250343,
+        0.02528448775410652,
+        1.532666802406311
+      ],
+      "new_head_base": [
+        0.02241799794137478,
+        -0.014692212454974651,
+        1.5271891355514526
+      ],
+      "leg_delta_m": 3.725290298461914e-09,
+      "neck_direction": [
+        1.8051643735361722e-08,
+        -0.3499210774898529,
+        0.9367792010307312
+      ]
+    },
+    {
+      "phase": 4,
+      "capture_forward_trunk_deg": -3.919406724609925,
+      "old_head_base": [
+        0.03302714601159096,
+        0.024027887731790543,
+        1.5630295276641846
+      ],
+      "new_head_base": [
+        0.023678114637732506,
+        -0.014069458469748497,
+        1.5582650899887085
+      ],
+      "leg_delta_m": 2.9802322387695312e-08,
+      "neck_direction": [
+        -1.8051640182648043e-08,
+        -0.33828291296958923,
+        0.9410444498062134
+      ]
+    },
+    {
+      "phase": 5,
+      "capture_forward_trunk_deg": -2.656429601120351,
+      "old_head_base": [
+        0.04197929427027702,
+        0.02362312749028206,
+        1.5725669860839844
+      ],
+      "new_head_base": [
+        0.0178519356995821,
+        -0.024410929530858994,
+        1.5681935548782349
+      ],
+      "leg_delta_m": 6.664001874625056e-08,
+      "neck_direction": [
+        0.0,
+        -0.33767297863960266,
+        0.9412635564804077
+      ]
+    },
+    {
+      "phase": 6,
+      "capture_forward_trunk_deg": -1.6472415713766078,
+      "old_head_base": [
+        0.04646535962820053,
+        0.014588430523872375,
+        1.56131112575531
+      ],
+      "new_head_base": [
+        0.009892959147691727,
+        -0.03191956505179405,
+        1.5582730770111084
+      ],
+      "leg_delta_m": 6.664001874625056e-08,
+      "neck_direction": [
+        -9.025821867680861e-09,
+        -0.32986006140708923,
+        0.9440299272537231
+      ]
+    },
+    {
+      "phase": 7,
+      "capture_forward_trunk_deg": -2.351888255497718,
+      "old_head_base": [
+        0.05553751811385155,
+        0.025483321398496628,
+        1.5498243570327759
+      ],
+      "new_head_base": [
+        0.02241978608071804,
+        -0.025067513808608055,
+        1.5472497940063477
+      ],
+      "leg_delta_m": 1.0803341865539551e-07,
+      "neck_direction": [
+        0.0,
+        -0.319620817899704,
+        0.9475455284118652
+      ]
+    },
+    {
+      "phase": 8,
+      "capture_forward_trunk_deg": -1.9994269113743914,
+      "old_head_base": [
+        0.05192800611257553,
+        0.02624790370464325,
+        1.5845751762390137
+      ],
+      "new_head_base": [
+        0.016396434977650642,
+        -0.03035874478518963,
+        1.5802900791168213
+      ],
+      "leg_delta_m": 2.9095447346220367e-08,
+      "neck_direction": [
+        0.0,
+        -0.34282374382019043,
+        0.9393997192382812
+      ]
+    }
+  ],
+  "cloth": "Fresh Blender cloth simulation on corrected action; 72-frame warmup, body/self collisions, eight sampled phases",
+  "camera_changed": false,
+  "leg_pose_changed": false,
+  "cloth_relaxation": [
+    {
+      "phase": 1,
+      "max_mesh_correction_m": 0.05112233660130751
+    },
+    {
+      "phase": 2,
+      "max_mesh_correction_m": 0.06140066377756356
+    },
+    {
+      "phase": 3,
+      "max_mesh_correction_m": 0.08818812658653834
+    },
+    {
+      "phase": 4,
+      "max_mesh_correction_m": 0.09204095068437274
+    },
+    {
+      "phase": 5,
+      "max_mesh_correction_m": 0.06469640837038751
+    },
+    {
+      "phase": 6,
+      "max_mesh_correction_m": 0.04819661376114667
+    },
+    {
+      "phase": 7,
+      "max_mesh_correction_m": 0.06604048372707749
+    },
+    {
+      "phase": 8,
+      "max_mesh_correction_m": 0.07266433984267694
+    },
+    {
+      "phase": 9,
+      "max_mesh_correction_m": 0.04217827335445746
+    }
+  ],
+  "cloth_trim": [
+    {
+      "name": "player-male_waist_cord_cloth_bound",
+      "points": 122,
+      "radius_m": 0.008999999612569809,
+      "attachment": "fixed rest-triangle barycentric coordinates"
+    },
+    {
+      "name": "player-male_belt_ends_cloth_bound",
+      "points": 21,
+      "radius_m": 0.007000000216066837,
+      "attachment": "fixed rest-triangle barycentric coordinates"
+    },
+    {
+      "name": "player-male_neck_binding_-1_cloth_bound",
+      "points": 33,
+      "radius_m": 0.007000000216066837,
+      "attachment": "fixed rest-triangle barycentric coordinates"
+    },
+    {
+      "name": "player-male_neck_binding_1_cloth_bound",
+      "points": 33,
+      "radius_m": 0.007000000216066837,
+      "attachment": "fixed rest-triangle barycentric coordinates"
+    }
+  ],
+  "saved_blend_sha256": "6c1435f08db140586bbe97af0e08c9bea6be404c05f91a542e547f52f70eb501",
+  "saved_pose_checks": [
+    {
+      "phase": 1,
+      "neck_pitch_from_rest_deg": -1.1084790449454978,
+      "head_forward_of_pelvis_m": 0.02597080171108246
+    },
+    {
+      "phase": 2,
+      "neck_pitch_from_rest_deg": -1.8421952313437762,
+      "head_forward_of_pelvis_m": 0.020269015803933144
+    },
+    {
+      "phase": 3,
+      "neck_pitch_from_rest_deg": -0.3341772533822833,
+      "head_forward_of_pelvis_m": 0.011355219408869743
+    },
+    {
+      "phase": 4,
+      "neck_pitch_from_rest_deg": 0.3760136840343575,
+      "head_forward_of_pelvis_m": 0.010732430964708328
+    },
+    {
+      "phase": 5,
+      "neck_pitch_from_rest_deg": 0.4131280329151999,
+      "head_forward_of_pelvis_m": 0.02107390947639942
+    },
+    {
+      "phase": 6,
+      "neck_pitch_from_rest_deg": 0.8880249943781829,
+      "head_forward_of_pelvis_m": 0.028582559898495674
+    },
+    {
+      "phase": 7,
+      "neck_pitch_from_rest_deg": 1.5083203784128318,
+      "head_forward_of_pelvis_m": 0.0217304490506649
+    },
+    {
+      "phase": 8,
+      "neck_pitch_from_rest_deg": 0.09931010511344002,
+      "head_forward_of_pelvis_m": 0.027021706104278564
+    }
+  ]
+}

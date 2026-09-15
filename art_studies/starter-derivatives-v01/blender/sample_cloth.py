@@ -34,15 +34,15 @@ for frame in range(72,101):
     for direction,angle in globals().get('RENDER_DIRECTIONS',[('front',0),('right',90),('back',180),('left',270)]):
         rot=Matrix.Rotation(math.radians(-angle),4,'Z')
         for ob,matrix in transforms:ob.matrix_world=rot@matrix
-        s.render.resolution_x=48;s.render.resolution_y=96
+        s.render.resolution_x=96;s.render.resolution_y=96
         s.render.filepath=str(out/f'{SEX}-{GAIT}-{direction}-{phase}.png');bpy.ops.render.render(write_still=True)
         if phase in [1,3] and direction in ['front','right']:
-            s.render.resolution_x=384;s.render.resolution_y=768
+            s.render.resolution_x=768;s.render.resolution_y=768
             s.render.filepath=str(out/f'{SEX}-{GAIT}-{direction}-{phase}-cloth-inspection.png');bpy.ops.render.render(write_still=True)
     for ob,matrix in transforms:ob.matrix_world=matrix
     snap.hide_render=True;cloth.hide_render=False
     report.append({'phase':phase,'simulation_frame':frame,'cloth_vertices':len(snap.data.vertices)})
-s.render.resolution_x=48;s.render.resolution_y=96
+s.render.resolution_x=96;s.render.resolution_y=96
 cloth.hide_render=True;snap.hide_render=False
 (R/f'{SEX}-{GAIT}-simulation.json').write_text(json.dumps({'source':'Blender cloth solver, body and self collisions, pinned neckline and waist','phases':report,'quality_steps':12,'collision_quality':8,'distance_m':.008,'self_distance_m':.006,'warmup_frames':20,'transition_frames':20,'cycle_frames':32},indent=2))
 bpy.ops.wm.save_as_mainfile(filepath=str(R/f'{SEX}-{GAIT}-cloth-trial.blend'),compress=True)

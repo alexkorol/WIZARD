@@ -16,7 +16,7 @@ for a,b,p in zip(key.data,snap.data.vertices,points):
     a.co=p
     u=world_to_camera_view(s,s.camera,snap.matrix_world@b.co)
     v=world_to_camera_view(s,s.camera,snap.matrix_world@p)
-    distances.append(math.hypot((u.x-v.x)*48,(u.y-v.y)*96))
+    distances.append(math.hypot((u.x-v.x)*s.render.resolution_x,(u.y-v.y)*s.render.resolution_y))
 for frame in range(72,105,4):key.value=1 if frame==104 else 0;key.keyframe_insert('value',frame=frame)
 for k in list(snap.data.shape_keys.key_blocks)[1:]:
     if k!=key:k.value=0;k.keyframe_insert('value',frame=104)

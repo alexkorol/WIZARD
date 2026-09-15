@@ -6,6 +6,24 @@ from PIL import Image
 R=Path(__file__).parent
 
 class BlenderReferenceChecks(unittest.TestCase):
+    def test_review_matches_saved_pose_and_render_content(self):
+        root=R/'blender';review=json.loads((root/'pose-review/visual-review.json').read_text())
+        self.assertTrue(review['structural_reference_accepted'])
+        self.assertFalse(review['painted_art_accepted'])
+        self.assertEqual(len(review['render_sha256']),128)
+        for name,digest in review['render_sha256'].items():
+            self.assertEqual(hashlib.sha256((root/'motion'/name).read_bytes()).hexdigest(),digest,name)
+        for sex in ['male','female']:
+            for gait in ['walk','sprint']:
+                pose=json.loads((root/'pose-review'/f'{sex}-{gait}-posture.json').read_text())
+                self.assertAlmostEqual(pose['final_rig_yaw_deg'],0,places=3)
+                self.assertEqual(hashlib.sha256((root/f'{sex}-{gait}-cloth-trial.blend').read_bytes()).hexdigest(),pose['saved_blend_sha256'])
+                self.assertEqual(len(pose['saved_pose_checks']),8)
+                for p in pose['saved_pose_checks']:
+                    self.assertLessEqual(abs(p['neck_pitch_from_rest_deg']),3.01)
+                    if gait=='sprint':self.assertGreater(p['head_forward_of_pelvis_m'],0)
+                self.assertEqual(len(pose['cloth_trim']),4)
+
     def test_complete_native_frames_and_fixed_anchors(self):
         data=json.loads((R/'manifest-blender.json').read_text())
         self.assertFalse(data['game_ready'])

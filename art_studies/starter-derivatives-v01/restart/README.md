@@ -22,3 +22,7 @@ Do not revive old candidates or count merely fitting a 96×96 canvas as parity.
 
 Older local study notes and source experiments outside the removed web trials
 are historical material. The active village preview uses only Blender assets.
+
+## Anatomical posture correction
+
+The active references now use the reviewed pose and garment correction described in [the pose review](../blender/pose-review/README.md). Female presentation yaw is removed, anatomical neck/spine curvature is retained, and cloth-bound trim replaces independent bone attachments. All 128 reviewed native frames retain 96×96 canvases and a [48,80] origin. The village and actors share the updated camera at 48 px/metre on the player plane. Painted slots remain empty.

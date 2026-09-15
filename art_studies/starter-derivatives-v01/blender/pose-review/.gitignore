@@ -1,0 +1,10 @@
+before-*.blend
+before-*.png
+*.blend1
+*.log
+candidate-motion/
+*-test-*.png
+female-walk-side-after.png
+all-*-review.png
+index.html
+border-probe.png

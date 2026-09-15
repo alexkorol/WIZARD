@@ -1,32 +1,24 @@
-"""Fixed per-facing margins; identical density, 64x96 padded canvas and root per cycle."""
+"""Fixed per-facing margins; 96x96 native canvas and shared root anchor."""
 import bpy,math,json
 from pathlib import Path
 from mathutils import Matrix,Vector
 from bpy_extras.object_utils import world_to_camera_view
 R=Path(__file__).parent;SEX=globals().get('SEX','male');GAIT=globals().get('GAIT','walk')
 s=bpy.context.scene;c=s.camera
-# Transfer recorded head rotation relative to its calibration pose. The fitted
-# character's neutral head orientation must not inherit the CMU neck offset.
+out=Path(globals().get('OUTPUT_DIR',str(R/'motion')));out.mkdir(parents=True,exist_ok=True)
+# Fail closed: the former head-only patch left the anatomical neck backwards.
 rig=bpy.data.objects[f'MH_{SEX}_Rig']
-src=bpy.data.objects['CMU_'+('run' if GAIT=='sprint' else 'walk')+'_source']
-meta=json.loads((R/'mocap'/f'{SEX}-retarget.json').read_text())[GAIT]
-s.frame_set(1);reference=src.pose.bones['Head'].matrix.to_3x3().copy()
-head_rest=rig.data.bones['head'].tail_local-rig.data.bones['head'].head_local
-recorded=[]
-for f in meta['frames']:
-    s.frame_set(int(f),subframe=f%1)
-    recorded.append(src.pose.bones['Head'].matrix.to_3x3()@reference.inverted()@head_rest)
-# CMU's synthetic calibration pose leaves a backwards pitch offset. Remove
-# that clip-wide offset while retaining at most three degrees of captured nod.
-pitches=[math.atan2(v.y,v.z) for v in recorded]
-mean_pitch=sum(pitches)/len(pitches)
-neutral_pitch=math.atan2(head_rest.y,head_rest.z)
-recorded=[Vector((v.x,math.sin(neutral_pitch+max(-math.radians(3),min(math.radians(3),pitch-mean_pitch)))*head_rest.length,math.cos(neutral_pitch+max(-math.radians(3),min(math.radians(3),pitch-mean_pitch)))*head_rest.length)) for v,pitch in zip(recorded,pitches)]
-for i,frame in enumerate(range(72,105,4)):
-    s.frame_set(frame);b=rig.pose.bones['head'];h=b.head.copy()
-    q=(b.tail-b.head).rotation_difference(recorded[i%8])
-    b.matrix=Matrix.Translation(h)@q.to_matrix().to_4x4()@Matrix.Translation(-h)@b.matrix
-    b.keyframe_insert('rotation_quaternion' if b.rotation_mode=='QUATERNION' else 'rotation_euler',frame=frame)
+assert rig.get('anatomical_pose_basis_v2'), 'Run rebake_pose_correction.py before exporting this rig'
+assert abs(rig.matrix_world.to_euler().z)<1e-5, 'Actor contains a presentation yaw offset'
+assert bpy.data.objects[f'{SEX}_{GAIT}_baked_cloth_samples'].get('relaxed_solver_creases'), 'Finish the cloth candidate first'
+assert all(bpy.data.objects.get(f'player-{SEX}_{n}_cloth_bound') for n in ['waist_cord','belt_ends','neck_binding_-1','neck_binding_1']), 'Trim must follow cloth topology'
+# Keep the same 48 px/metre player plane with a longer camera distance.
+# The old near perspective clipped the away-running head in the 96px frame.
+# A shared depth, rather than per-frame fitting, keeps all poses registered.
+bpy.context.view_layer.update()
+depth=-(c.matrix_world.inverted()@Vector((0,0,0))).z
+c.location+=c.matrix_world.to_3x3()@Vector((0,0,12.75-depth))
+bpy.context.view_layer.update()
 transforms=[(o,o.matrix_world.copy()) for o in s.objects if o.type in ('CAMERA','LIGHT')]
 # One world metre is the demo's base cell: exactly 48 logical pixels at
 # the player plane. Calibrate the camera, never resize rendered art.
@@ -50,10 +42,10 @@ for direction,angle,dx in [('front',0,0),('right',90,0),('back',180,0),('left',2
     for i,frame in enumerate(range(72,101,4),1):
         s.frame_set(frame)
         s.render.resolution_x=96;s.render.resolution_y=96
-        s.render.filepath=str(R/'motion'/f'{SEX}-{GAIT}-{direction}-{i}.png');bpy.ops.render.render(write_still=True)
+        s.render.filepath=str(out/f'{SEX}-{GAIT}-{direction}-{i}.png');bpy.ops.render.render(write_still=True)
         if i in [1,3] and direction in ['front','right']:
             s.render.resolution_x=768;s.render.resolution_y=768
-            s.render.filepath=str(R/'motion'/f'{SEX}-{GAIT}-{direction}-{i}-cloth-inspection.png');bpy.ops.render.render(write_still=True)
+            s.render.filepath=str(out/f'{SEX}-{GAIT}-{direction}-{i}-cloth-inspection.png');bpy.ops.render.render(write_still=True)
 for o,m in transforms:o.matrix_world=m
 c.data.shift_x=base_x;c.data.shift_y=base_y
 s.render.resolution_x=96;s.render.resolution_y=96;s.frame_start=72;s.frame_end=103;s.frame_set(72)

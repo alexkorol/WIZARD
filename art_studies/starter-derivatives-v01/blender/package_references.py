@@ -1,8 +1,25 @@
-"""Package Blender's actual 64x96 canvases at the unchanged 48x96 character pixel density, never resize a generated image."""
+"""Package reviewed native 96x96 Blender frames at 48 pixels per base cell."""
 from pathlib import Path
 from PIL import Image
 import json,hashlib
 R=Path(__file__).parent
+# Validate the entire batch before replacing any active reference. A render
+# change invalidates the review; dimensions alone never grant acceptance.
+review=json.loads((R/'pose-review/visual-review.json').read_text())
+assert review['structural_reference_accepted'] is True
+assert len(review['render_sha256'])==128
+for name,digest in review['render_sha256'].items():
+    assert hashlib.sha256((R/'motion'/name).read_bytes()).hexdigest()==digest,f'Unreviewed render: {name}'
+    with Image.open(R/'motion'/name) as im:
+        assert im.mode=='RGBA' and im.size==(96,96),f'Wrong native frame: {name}'
+        box=im.getchannel('A').point(lambda a:255 if a>=128 else 0).getbbox()
+        assert box and 0<box[0]<box[2]<96 and 0<box[1]<box[3]<96,f'Clipped candidate: {name} {box}'
+for sex in ['male','female']:
+    for gait in ['walk','sprint']:
+        pose=json.loads((R/'pose-review'/f'{sex}-{gait}-posture.json').read_text())
+        assert abs(pose['final_rig_yaw_deg'])<.001
+        assert len(pose['saved_pose_checks'])==8
+        assert hashlib.sha256((R/f'{sex}-{gait}-cloth-trial.blend').read_bytes()).hexdigest()==pose['saved_blend_sha256'], 'Source changed after pose verification'
 out=R/'frames';out.mkdir(exist_ok=True)
 clips={};audit=[]
 for sex in ['male','female']:
@@ -30,7 +47,7 @@ for sex in ['male','female']:
             clips[key]={'frames':frames,'mocap':json.loads((R/'mocap'/f'{sex}-retarget.json').read_text())[gait],'cloth_simulation':simulation.exists(),'cloth_loop_max_delta_px':seam,'note':
                 ('Blender structure / eight phases from one cloth simulation. Fixed camera scale; unclipped native frames. '+(f'LOOP REVIEW: up to {seam:.1f} px cloth displacement between successive cycles. ' if seam is not None else 'Loop continuity is unverified. ')+'Hair is bone-bound, not simulated. Not finished game art.') if simulation.exists() else
                 'UNFINISHED Blender binding trial. Cloth simulation has not been sampled for this clip; do not promote it to imagegen or game use.'}
-manifest={'name':'Blender camera and motion references','game_ready':False,'clips':clips}
+manifest={'name':'Blender camera and motion references','game_ready':False,'review_revision':review['revision'],'clips':clips}
 (R.parent/'manifest-blender.json').write_text(json.dumps(manifest,indent=2))
 (R/'frame-audit.json').write_text(json.dumps(audit,indent=2))
 # Structural imagegen inputs are whole native sheets enlarged by exact integers.

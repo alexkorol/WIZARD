@@ -50,9 +50,19 @@
   "transition_frames": 20,
   "cycle_frames": 32,
   "cloth_loop_seam": {
+    "comparison": "final mesh: phase 1 vs next-cycle phase 1",
+    "rms_logical_pixels": 0.5260648808267069,
+    "maximum_logical_pixels": 3.1144452247071075,
+    "canvas": [
+      96,
+      96
+    ],
+    "status": "measured; playback visually reviewed separately"
+  },
+  "raw_solver_seam_before_relaxation": {
     "comparison": "same skeletal phase: frame 72 vs frame 104",
-    "rms_logical_pixels": 0.8644151892398594,
-    "maximum_logical_pixels": 6.385599442911456,
+    "rms_logical_pixels": 0.6954387697902947,
+    "maximum_logical_pixels": 5.129457925739467,
     "status": "measured; visual acceptance separate"
   }
 }

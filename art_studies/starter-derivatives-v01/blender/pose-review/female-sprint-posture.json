@@ -1,0 +1,279 @@
+{
+  "version": 2,
+  "sex": "female",
+  "gait": "sprint",
+  "removed_presentation_yaw_deg": -17.999995378253757,
+  "final_rig_yaw_deg": 0.0,
+  "phases": [
+    {
+      "phase": 1,
+      "capture_forward_trunk_deg": 13.793412380334669,
+      "old_head_base": [
+        -0.010778585448861122,
+        -0.05901075154542923,
+        1.4796216487884521
+      ],
+      "new_head_base": [
+        0.004095922689884901,
+        -0.14547410607337952,
+        1.4580585956573486
+      ],
+      "leg_delta_m": 7.450580596923828e-09,
+      "neck_direction": [
+        -4.103059669802178e-09,
+        -0.3584412634372711,
+        0.9335522651672363
+      ]
+    },
+    {
+      "phase": 2,
+      "capture_forward_trunk_deg": 13.770797701980243,
+      "old_head_base": [
+        -0.02160920575261116,
+        -0.06268046051263809,
+        1.4519679546356201
+      ],
+      "new_head_base": [
+        -0.017830032855272293,
+        -0.14577704668045044,
+        1.4305771589279175
+      ],
+      "leg_delta_m": 4.470348358154297e-08,
+      "neck_direction": [
+        3.282446314756271e-08,
+        -0.3633119761943817,
+        0.9316675066947937
+      ]
+    },
+    {
+      "phase": 3,
+      "capture_forward_trunk_deg": 16.401868971279878,
+      "old_head_base": [
+        -0.03338535130023956,
+        -0.09063512831926346,
+        1.4016746282577515
+      ],
+      "new_head_base": [
+        -0.021423526108264923,
+        -0.16667135059833527,
+        1.3798210620880127
+      ],
+      "leg_delta_m": 2.1073424255447017e-08,
+      "neck_direction": [
+        3.2824480911131104e-08,
+        -0.3755722641944885,
+        0.9267931580543518
+      ]
+    },
+    {
+      "phase": 4,
+      "capture_forward_trunk_deg": 14.040585135576656,
+      "old_head_base": [
+        -0.009062372148036957,
+        -0.057098302990198135,
+        1.442405343055725
+      ],
+      "new_head_base": [
+        -0.02246140129864216,
+        -0.15131790935993195,
+        1.4172598123550415
+      ],
+      "leg_delta_m": 7.450580596923828e-09,
+      "neck_direction": [
+        0.0,
+        -0.39480721950531006,
+        0.918764054775238
+      ]
+    },
+    {
+      "phase": 5,
+      "capture_forward_trunk_deg": 11.517656902886467,
+      "old_head_base": [
+        0.016724873334169388,
+        -0.02838718332350254,
+        1.473885416984558
+      ],
+      "new_head_base": [
+        -0.011730565689504147,
+        -0.1296864151954651,
+        1.4524989128112793
+      ],
+      "leg_delta_m": 3.332000937312528e-08,
+      "neck_direction": [
+        0.0,
+        -0.37056511640548706,
+        0.9288064241409302
+      ]
+    },
+    {
+      "phase": 6,
+      "capture_forward_trunk_deg": 11.111500412323227,
+      "old_head_base": [
+        0.03585975989699364,
+        -0.03942907601594925,
+        1.4392271041870117
+      ],
+      "new_head_base": [
+        0.01119274739176035,
+        -0.12551550567150116,
+        1.420608401298523
+      ],
+      "leg_delta_m": 6.143906154658885e-08,
+      "neck_direction": [
+        1.6412240455565552e-08,
+        -0.3608960509300232,
+        0.9326059818267822
+      ]
+    },
+    {
+      "phase": 7,
+      "capture_forward_trunk_deg": 14.049917826016737,
+      "old_head_base": [
+        0.046900417655706406,
+        -0.06371738016605377,
+        1.414589285850525
+      ],
+      "new_head_base": [
+        0.01839040406048298,
+        -0.1464627981185913,
+        1.3951374292373657
+      ],
+      "leg_delta_m": 3.592539862168191e-08,
+      "neck_direction": [
+        0.0,
+        -0.35101398825645447,
+        0.9363702535629272
+      ]
+    },
+    {
+      "phase": 8,
+      "capture_forward_trunk_deg": 13.527017255247973,
+      "old_head_base": [
+        0.027156539261341095,
+        -0.04925185814499855,
+        1.4671719074249268
+      ],
+      "new_head_base": [
+        0.019316961988806725,
+        -0.14350104331970215,
+        1.4445873498916626
+      ],
+      "leg_delta_m": 2.9802322387695312e-08,
+      "neck_direction": [
+        -1.641224933734975e-08,
+        -0.35947197675704956,
+        0.9331558346748352
+      ]
+    }
+  ],
+  "cloth": "Fresh Blender cloth simulation on corrected action; 72-frame warmup, body/self collisions, eight sampled phases",
+  "camera_changed": false,
+  "leg_pose_changed": false,
+  "cloth_relaxation": [
+    {
+      "phase": 1,
+      "max_mesh_correction_m": 0.035872635453661976
+    },
+    {
+      "phase": 2,
+      "max_mesh_correction_m": 0.09087590469652168
+    },
+    {
+      "phase": 3,
+      "max_mesh_correction_m": 0.0536800913667844
+    },
+    {
+      "phase": 4,
+      "max_mesh_correction_m": 0.044698152931279114
+    },
+    {
+      "phase": 5,
+      "max_mesh_correction_m": 0.07249338620412588
+    },
+    {
+      "phase": 6,
+      "max_mesh_correction_m": 0.06992361000537556
+    },
+    {
+      "phase": 7,
+      "max_mesh_correction_m": 0.03774578581613529
+    },
+    {
+      "phase": 8,
+      "max_mesh_correction_m": 0.051664361958311485
+    },
+    {
+      "phase": 9,
+      "max_mesh_correction_m": 0.07890042661786967
+    }
+  ],
+  "cloth_trim": [
+    {
+      "name": "player-female_waist_cord_cloth_bound",
+      "points": 104,
+      "radius_m": 0.008999999612569809,
+      "attachment": "fixed rest-triangle barycentric coordinates"
+    },
+    {
+      "name": "player-female_belt_ends_cloth_bound",
+      "points": 21,
+      "radius_m": 0.007000000216066837,
+      "attachment": "fixed rest-triangle barycentric coordinates"
+    },
+    {
+      "name": "player-female_neck_binding_-1_cloth_bound",
+      "points": 33,
+      "radius_m": 0.007000000216066837,
+      "attachment": "fixed rest-triangle barycentric coordinates"
+    },
+    {
+      "name": "player-female_neck_binding_1_cloth_bound",
+      "points": 33,
+      "radius_m": 0.007000000216066837,
+      "attachment": "fixed rest-triangle barycentric coordinates"
+    }
+  ],
+  "saved_blend_sha256": "7b542367bda8997988510e8139acf0be7a975d675726400a650b87e2d1bebccd",
+  "saved_pose_checks": [
+    {
+      "phase": 1,
+      "neck_pitch_from_rest_deg": 0.5135927994834688,
+      "head_forward_of_pelvis_m": 0.12269169092178345
+    },
+    {
+      "phase": 2,
+      "neck_pitch_from_rest_deg": 0.21435446233347752,
+      "head_forward_of_pelvis_m": 0.12299461662769318
+    },
+    {
+      "phase": 3,
+      "neck_pitch_from_rest_deg": -0.541593431517055,
+      "head_forward_of_pelvis_m": 0.143888920545578
+    },
+    {
+      "phase": 4,
+      "neck_pitch_from_rest_deg": -1.7358612374953655,
+      "head_forward_of_pelvis_m": 0.12853549420833588
+    },
+    {
+      "phase": 5,
+      "neck_pitch_from_rest_deg": -0.23237445330859036,
+      "head_forward_of_pelvis_m": 0.1069040447473526
+    },
+    {
+      "phase": 6,
+      "neck_pitch_from_rest_deg": 0.3628553933808953,
+      "head_forward_of_pelvis_m": 0.10273310542106628
+    },
+    {
+      "phase": 7,
+      "neck_pitch_from_rest_deg": 0.9687345875653897,
+      "head_forward_of_pelvis_m": 0.12368039786815643
+    },
+    {
+      "phase": 8,
+      "neck_pitch_from_rest_deg": 0.4503301083386408,
+      "head_forward_of_pelvis_m": 0.12071865797042847
+    }
+  ]
+}
