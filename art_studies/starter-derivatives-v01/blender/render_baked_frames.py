@@ -53,6 +53,6 @@ c.data.shift_x=base_x;c.data.shift_y=base_y
 s.render.resolution_x=96;s.render.resolution_y=96;s.frame_start=72;s.frame_end=103;s.frame_set(72)
 bpy.data.objects[f'player-{SEX}_linen_single_shell'].hide_set(True)
 bpy.data.objects['Full_anatomical_cloth_collider'].hide_set(True)
-(R/f'{SEX}-{GAIT}-framing.json').write_text(json.dumps(records,indent=2))
-bpy.ops.wm.save_as_mainfile(filepath=str(R/f'{SEX}-{GAIT}-cloth-trial.blend'),compress=True)
+Path(globals().get('FRAMING_PATH',str(R/f'{SEX}-{GAIT}-framing.json'))).write_text(json.dumps(records,indent=2))
+bpy.ops.wm.save_as_mainfile(filepath=globals().get('SAVE_PATH',str(R/f'{SEX}-{GAIT}-cloth-trial.blend')),compress=True)
 print('NATIVE_CAMERA_FRAMING',SEX,GAIT,records)

@@ -1,0 +1,15 @@
+*.blend1
+*.log
+# Failed paint candidates remain local and never enter playback.
+raw/
+candidate-frames/
+review/*
+!review/*-linen-contact.png
+!review/linen-review.json
+!review/browser-delivery.json
+!review/generation-trials.json
+!review/linen-wardrobe-preview.png
+inputs/*
+!inputs/linen-v1/
+blender/female-walk-linen.blend
+blender/female-sprint-linen.blend

@@ -1,0 +1,10 @@
+{
+  "review_revision": "linen-sport-v1",
+  "manifest": "manifest-linen.json",
+  "browser_url": "http://127.0.0.1:8789/art_studies/starter-derivatives-v01/demo/web-sheets.html",
+  "frame_count": 128,
+  "decoded_rgba_matches": 128,
+  "content_version_urls_match": 128,
+  "visual_review": "All four native contact sheets inspected. Village walk and sprint checked on pale/dark backgrounds at 2x and 1x; comparison desk uses matching phase.",
+  "painted_art_accepted": false
+}

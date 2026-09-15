@@ -20,6 +20,7 @@
 - Use existing anatomical models and dependable motion references. Inspect supplied successful examples and reuse their concrete features. Do not improvise anatomy from blobs or let imagegen repair structural Blender defects.
 - Keep characters individually identifiable. The player female's recurring side braid is rejected; do not restore it through inherited meshes or a recipe override. Starter footwear exposes the foot through simple open sandals; no clog-like shoes. No awkward female shoulder cloth.
 - The owner requested European facial-reference direction with individual faces. Keep beard geometry off the nose. Inspect weapon grips and garment/hair intersections in the actual final-facing frames.
+- Current starter clothing: natural undyed flax/oatmeal/taupe crude fabric, without contrasting or red trim. The female cut should be sporty and practical, with a closer waist, freer armholes and a short split hem; earlier white/red costumes are appearance history.
 - The owner requires the image-generation request's transparent-background setting. Inspect the callable schema at execution time and use a workflow that exposes the setting; never claim to have set an unavailable parameter. Repeat the true-alpha requirement through the prompt as requested.
 - Inspect the untouched returned PNG's mode and alpha before processing. A painted checkerboard or a locally computed cutout does not establish native alpha. Keep failed alpha candidates out of the demo.
 

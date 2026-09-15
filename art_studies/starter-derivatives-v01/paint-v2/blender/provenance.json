@@ -1,0 +1,50 @@
+[
+  {
+    "source": "blender\\female-walk-cloth-trial.blend",
+    "source_sha256": "2c7781f4f3310932f02be6055a3e1bf3a15487adb949011cd14928d4e5d76d00",
+    "output": "blender\\female-walk-linen.blend",
+    "output_sha256": "4a5343a1d398ebe2b8674364f57a8bad44c53ff7b4eb12d3d4b574934859ff92",
+    "changes": [
+      "linen material",
+      "natural cord material",
+      "hide decorative neck binding"
+    ],
+    "pose_mesh_camera_unchanged": true
+  },
+  {
+    "source": "blender\\female-sprint-cloth-trial.blend",
+    "source_sha256": "59e6923eb0e67c2c1be8d929533128dd8efaceb81797461db1bd54c229ef3526",
+    "output": "blender\\female-sprint-linen.blend",
+    "output_sha256": "dac84f2b595be5874a511404cedc7d11d53a65a49cc4406905355bfaf3fbdaac",
+    "changes": [
+      "linen material",
+      "natural cord material",
+      "hide decorative neck binding"
+    ],
+    "pose_mesh_camera_unchanged": true
+  },
+  {
+    "source": "blender\\male-walk-cloth-trial.blend",
+    "source_sha256": "6c1435f08db140586bbe97af0e08c9bea6be404c05f91a542e547f52f70eb501",
+    "output": "blender\\male-walk-linen.blend",
+    "output_sha256": "c1c0b7304f10f4481d82dc20c29b2d6b29ec1f910e02b70e866b4dbab98c155c",
+    "changes": [
+      "linen material",
+      "natural cord material",
+      "hide decorative neck binding"
+    ],
+    "pose_mesh_camera_unchanged": true
+  },
+  {
+    "source": "blender\\male-sprint-cloth-trial.blend",
+    "source_sha256": "7734015481c048def5e479056ba26fc5ec3f49ddc90dcf9285af9c989e6fde23",
+    "output": "blender\\male-sprint-linen.blend",
+    "output_sha256": "313d07649f699c2dfb666deb742a7031df004650d56f3e3a3a01359caaddc693",
+    "changes": [
+      "linen material",
+      "natural cord material",
+      "hide decorative neck binding"
+    ],
+    "pose_mesh_camera_unchanged": true
+  }
+]

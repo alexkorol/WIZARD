@@ -1,0 +1,180 @@
+{
+  "game_ready": false,
+  "conversations": {
+    "female_walk": "https://chatgpt.com/c/6aa8b4c0-2594-83e9-8333-91d6189a1234",
+    "male_sprint": "https://chatgpt.com/c/6aa8b4c3-3430-83ea-bc37-2dfa3818d582",
+    "female_sprint": "https://chatgpt.com/c/6aa8aea4-03c0-83ea-9849-30873c71a01c",
+    "male_walk": "https://chatgpt.com/c/6aa8af40-48f0-83ea-aa95-d0bb7d7ab36a"
+  },
+  "reason": "No painted cycle is approved. Across trials: finer than requested pixels, inconsistent appearance, pose contamination or row registration. Latest trial sources precede final linen Blender changes.",
+  "files": [
+    {
+      "file": "raw/female-sprint-right-1-linen.png",
+      "sha256": "821936f401295398599460b2b57df41a8ee45f13b981e921ad58cc828e52e933",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "accepted": false
+    },
+    {
+      "file": "raw/female-sprint-right-1-matched.png",
+      "sha256": "eec65a8bbae2cbd464a245a71bdbf3f8dc2310f17ddff982473d7566bd1fd014",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "accepted": false
+    },
+    {
+      "file": "raw/female-sprint-right-1-old-costume.png",
+      "sha256": "f72ce730dce6e3f5acb928f399bb3d8d08114c3dcaccafe97b5b6033ec857544",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "accepted": false
+    },
+    {
+      "file": "raw/female-sprint-right-2-linen.png",
+      "sha256": "819bd26d3bcb8f761c5e6aec91510ee14acdcd473677fa8580cc78ee1856e5c4",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "accepted": false
+    },
+    {
+      "file": "raw/female-sprint-right-full-alpha.png",
+      "sha256": "8e643e4a21f99f3f4f3ebe7eaf795e7cd071116ea7a4ae964ecb8f4882dfb03c",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "accepted": false
+    },
+    {
+      "file": "raw/female-sprint-right-full.png",
+      "sha256": "8e2b62a8c581d7ce7ab534d28235b9e2746d156e16782bba89f29b9adf910305",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "accepted": false
+    },
+    {
+      "file": "raw/female-walk-right-5x.png",
+      "sha256": "2cacf843755c295c80d22f7bef39a89ce609150beec73621e738eeb63612333c",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "accepted": false
+    },
+    {
+      "file": "raw/female-walk-right-coarse.png",
+      "sha256": "2e6759d33ec1a02a0763fb9d7049d12a954478d1a02d168f19829bf3a2bed0d9",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "accepted": false
+    },
+    {
+      "file": "raw/male-sprint-right-5x.png",
+      "sha256": "042d36db110b2a4d4760550b2a2f919073cb564e3c3eef1c3413fdf9dbae5407",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "accepted": false
+    },
+    {
+      "file": "raw/male-sprint-right-coarse.png",
+      "sha256": "1c89333b6f7f7422e75418e26b73a1bb25acf7ccb4016ae5c35511384244723b",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "accepted": false
+    },
+    {
+      "file": "raw/male-walk-right-full-alpha.png",
+      "sha256": "7b5a2d0a7fab5caf801430e6552c1f823d61e574fd713161f9dee025f8388dc3",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "accepted": false
+    },
+    {
+      "file": "raw/male-walk-right-full.png",
+      "sha256": "9f6517bec59e484b7e1db9d27570ad0b0e609028691f0426aa3df45ead89efab",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "accepted": false
+    }
+  ]
+}
