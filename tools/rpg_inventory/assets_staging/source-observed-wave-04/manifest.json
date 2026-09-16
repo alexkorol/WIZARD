@@ -1,0 +1,77 @@
+[
+  {
+    "number": 1,
+    "art_id": "wpn_axe_abydos_adze",
+    "name": "Abydos Adze",
+    "canvas": "P",
+    "grid": "1x2",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\prompts\\01__wpn_axe_abydos_adze.txt",
+    "reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\references\\british_museum_EA30079_asset_1211612001.jpg",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\met_568261_adze_egyptian_complete.jpg",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\pinterest_promoted\\pinterest_16408d0f75a5.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\raw\\wpn_axe_abydos_adze.png"
+  },
+  {
+    "number": 2,
+    "art_id": "wpn_bow_holmegaard_flat",
+    "name": "Holmegaard Flatbow",
+    "canvas": "P",
+    "grid": "2x4",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\prompts\\02__wpn_bow_holmegaard_flat.txt",
+    "reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\references\\national_museum_denmark_holmegaard_iv_elm_bow.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\references\\musee_archerie_valois_holmegaard_reproduction.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\raw\\wpn_bow_holmegaard_flat.png"
+  },
+  {
+    "number": 3,
+    "art_id": "focus_copper_ladle",
+    "name": "Copper Dipper Ladle",
+    "canvas": "S",
+    "grid": "2x2",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\prompts\\03__focus_copper_ladle.txt",
+    "reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\references\\british_museum_N120_neo_assyrian_side_spouted_ladle.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\raw\\focus_copper_ladle.png"
+  },
+  {
+    "number": 4,
+    "art_id": "relic_stone_pyxis",
+    "name": "Cycladic Stone Pyxis",
+    "canvas": "S",
+    "grid": "1x1",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\prompts\\04__relic_stone_pyxis.txt",
+    "reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\references\\getty_88.AA.83_Early_Cycladic_cylindrical_pyxis.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\raw\\relic_stone_pyxis.png"
+  },
+  {
+    "number": 5,
+    "art_id": "amulet_calcite_drop",
+    "name": "Calcite Drop Amulet",
+    "canvas": "S",
+    "grid": "1x1",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\prompts\\05__amulet_calcite_drop.txt",
+    "reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\references\\british_museum_EA32123_calcite_vase_amulet.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\raw\\amulet_calcite_drop.png"
+  },
+  {
+    "number": 6,
+    "art_id": "shield_bronze_yetholm",
+    "name": "Ribbed Bronze Shield",
+    "canvas": "P",
+    "grid": "2x3",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\prompts\\06__shield_bronze_yetholm.txt",
+    "reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\references\\british_museum_1873_0210_2_rhyd_y_gorse_yetholm_front.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-04\\raw\\shield_bronze_yetholm.png"
+  }
+]

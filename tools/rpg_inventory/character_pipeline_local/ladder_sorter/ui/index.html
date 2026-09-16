@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verdigris Assignment Review</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">VERDIGRIS / CHARACTER INTAKE</p>
+      <h1>Review assistant sorting</h1>
+      <p class="subtitle">Inspect one character crop at a time. Confirm the current guess or change any part of its destination.</p>
+    </div>
+    <div class="header-actions">
+      <button id="undoButton" class="button ghost">Undo last review</button>
+      <a class="button ghost" href="/api/export" target="_blank">Export state</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="stats" class="stats"></section>
+
+    <section class="workspace">
+      <aside class="queue-panel panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">REVIEW QUEUE</p>
+            <h2 id="queueTitle">Loading...</h2>
+          </div>
+          <label class="toggle"><input id="showReviewed" type="checkbox"> Show reviewed / ignored</label>
+        </div>
+        <div class="single-mode"><strong>One image at a time</strong><span>Every crop has its own independently judged faction, axis, and tier.</span></div>
+        <div id="queueList" class="queue-list"></div>
+      </aside>
+
+      <section class="review-panel panel">
+        <div id="emptyState" class="empty-state hidden">
+          <div class="seal">&#10003;</div>
+          <h2>Review queue clear</h2>
+          <p>Turn on “Show reviewed” to revisit earlier decisions.</p>
+        </div>
+
+        <div id="manualReview" class="hidden">
+          <div class="review-heading">
+            <div>
+              <p id="reviewEyebrow" class="eyebrow">ASSISTANT ASSIGNMENT</p>
+              <h2 id="manualName">Selected image</h2>
+              <p id="manualReason"></p>
+            </div>
+            <span id="confidenceBadge" class="confidence caution">UNREVIEWED</span>
+          </div>
+          <div class="review-layout">
+            <div class="image-column">
+              <div class="step-heading"><span>1</span><div><strong>Inspect the character crop</strong><small>The complete crop stays visible. Click it for full-screen detail.</small></div></div>
+              <div id="manualImageWrap" class="manual-image-wrap" tabindex="0" role="button" aria-label="Open selected image full screen"><img id="manualImage" alt="Character crop under review"><span class="manual-zoom-hint">Click for full-screen detail</span></div>
+            </div>
+
+            <div class="decision-column">
+              <div id="instructionCallout" class="instruction-callout"><strong>Only the highlighted image is being reviewed.</strong> Its current guess is preselected below.</div>
+              <div class="step-heading"><span>2</span><div><strong>Check the destination</strong><small>Keep the guess or change any selector.</small></div></div>
+              <div id="currentGuess" class="current-guess"></div>
+              <div class="manual-controls">
+                <label>Faction<select id="factionSelect"></select></label>
+                <label>Attribute axis<select id="manualAxisSelect">
+                  <option value="">Choose...</option>
+                  <option value="STR">STR — power, weight, protection</option>
+                  <option value="DEX">DEX — speed, balance, precision</option>
+                  <option value="INT">INT — focus, ritual, magic</option>
+                  <option value="MISC">Misc / cannot classify</option>
+                </select></label>
+                <label id="manualTierLabel">Power tier<select id="manualTierSelect">
+                  <option value="">Choose...</option>
+                  <option value="1">Tier 1 — cheap and simple</option>
+                  <option value="2">Tier 2 — trained and specialized</option>
+                  <option value="3">Tier 3 — rare and highly developed</option>
+                </select></label>
+              </div>
+              <div id="manualReference" class="reference-card"></div>
+              <label class="note-field">Feedback note (optional)
+                <textarea id="manualNote" rows="2" placeholder="What cue made the assistant guess right or wrong?"></textarea>
+              </label>
+
+              <div class="step-heading action-step"><span>3</span><div><strong id="actionHeading">Confirm or correct</strong><small>The old and final labels are saved.</small></div></div>
+              <div class="primary-actions review-actions">
+                <button id="moveOneButton" class="button primary assignment-button" disabled>Choose a destination first</button>
+                <button id="ignoreButton" class="button ignore">Ignore — not a character</button>
+                <button id="nextButton" class="button ghost">Leave unreviewed and show next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="learning panel">
+      <div>
+        <p class="eyebrow">PERSISTENT FEEDBACK</p>
+        <h2>Every confirmation and correction is saved</h2>
+      </div>
+      <p>The log keeps the image hash, assistant guess, confidence, your final destination, note, move, and undo history.</p>
+      <code id="feedbackPath"></code>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+  <div id="imageLightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Expanded character crop">
+    <button id="closeLightbox" class="lightbox-close" aria-label="Close expanded image">Close ×</button>
+    <img id="lightboxImage" alt="Expanded character crop">
+    <div id="lightboxCaption" class="lightbox-caption"></div>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>

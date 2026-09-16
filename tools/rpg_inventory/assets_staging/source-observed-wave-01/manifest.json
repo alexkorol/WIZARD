@@ -1,0 +1,102 @@
+[
+  {
+    "number": 1,
+    "art_id": "source_plateau_recurve_bow",
+    "name": "Plateau Recurve Bow",
+    "canvas": "P",
+    "grid": "2x3",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-01\\prompts\\01__source_plateau_recurve_bow.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - DEX - tier 2\\ChatGPT Image Jul 12, 2026, 09_25_56 PM (3).png",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\pinterest_promoted\\pinterest_64a5b627f42b.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-01\\raw\\source_plateau_recurve_bow.png"
+  },
+  {
+    "number": 2,
+    "art_id": "source_plateau_woven_quiver",
+    "name": "Plateau Woven Quiver",
+    "canvas": "P",
+    "grid": "2x3",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-01\\prompts\\02__source_plateau_woven_quiver.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - DEX - tier 2\\ChatGPT Image Jul 12, 2026, 09_25_56 PM (3).png"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-01\\raw\\source_plateau_woven_quiver.png"
+  },
+  {
+    "number": 3,
+    "art_id": "source_plateau_felt_helm",
+    "name": "Plateau Felt Riding Helm",
+    "action": "reuse_existing_do_not_generate",
+    "reuse_art_id": "helmet_ridged_hide_point",
+    "reuse_path": "C:\\Users\\Alex\\Downloads\\items_post_calib_batch\\ChatGPT Image Jul 14, 2026, 01_03_23 AM (3).png",
+    "prompt_path": null,
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\items_post_calib_batch\\ChatGPT Image Jul 14, 2026, 01_03_23 AM (3).png"
+    ],
+    "output_path": "C:\\Users\\Alex\\Downloads\\items_post_calib_batch\\ChatGPT Image Jul 14, 2026, 01_03_23 AM (3).png"
+  },
+  {
+    "number": 4,
+    "art_id": "source_plateau_riding_coat",
+    "name": "Plateau Riding Coat",
+    "canvas": "P",
+    "grid": "2x3",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-01\\prompts\\04__source_plateau_riding_coat.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - DEX - tier 2\\ChatGPT Image Jul 12, 2026, 09_25_56 PM (3).png"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-01\\raw\\source_plateau_riding_coat.png"
+  },
+  {
+    "number": 5,
+    "art_id": "source_north_leaf_sword",
+    "name": "Northern Leaf Sword",
+    "canvas": "P",
+    "grid": "1x3",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-01\\prompts\\05__source_north_leaf_sword.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_north - STR - tier 3\\ChatGPT Image Jul 9, 2026, 09_40_32 PM (3).png",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\met_27513_sword_middle_bronze_age.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-01\\raw\\source_north_leaf_sword.png"
+  },
+  {
+    "number": 6,
+    "art_id": "source_north_oval_shield",
+    "name": "Northern Oval Shield",
+    "canvas": "P",
+    "grid": "2x3",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-01\\prompts\\06__source_north_oval_shield.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_north - STR - tier 3\\ChatGPT Image Jul 9, 2026, 09_40_32 PM (3).png"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-01\\raw\\source_north_oval_shield.png"
+  },
+  {
+    "number": 7,
+    "art_id": "source_north_banded_corselet",
+    "name": "Northern Banded Corselet",
+    "canvas": "P",
+    "grid": "2x3",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-01\\prompts\\07__source_north_banded_corselet.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_north - STR - tier 3\\ChatGPT Image Jul 9, 2026, 09_40_32 PM (3).png",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\met_326389_armor_scales_achaemenid.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-01\\raw\\source_north_banded_corselet.png"
+  },
+  {
+    "number": 8,
+    "art_id": "source_north_bronze_cap",
+    "name": "Northern Bronze Cap",
+    "canvas": "S",
+    "grid": "2x2",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-01\\prompts\\08__source_north_bronze_cap.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_north - STR - tier 3\\ChatGPT Image Jul 9, 2026, 09_40_32 PM (3).png"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-01\\raw\\source_north_bronze_cap.png"
+  }
+]

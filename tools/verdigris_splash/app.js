@@ -26,9 +26,13 @@ const EPIC_CONTINENTS = [
 ];
 
 const EPIC_WATERFALLS = [
-  { angle: 0.14, width: 0.46, length: 4.05, seed: 0.4 },
-  { angle: 2.62, width: 0.27, length: 3.15, seed: 3.7 },
-  { angle: 4.55, width: 0.25, length: 3.3, seed: 5.6 },
+  { angle: 0.14, width: 0.52, length: 4.35, seed: 0.4 },
+  { angle: 1.12, width: 0.24, length: 3.05, seed: 1.9 },
+  { angle: 2.62, width: 0.34, length: 3.45, seed: 3.7 },
+  { angle: 3.58, width: 0.22, length: 2.95, seed: 6.1 },
+  { angle: 4.55, width: 0.31, length: 3.5, seed: 5.6 },
+  { angle: 5.38, width: 0.26, length: 3.25, seed: 8.3 },
+  { angle: 6.02, width: 0.42, length: 4.15, seed: 7.2 },
 ];
 
 const EPIC_UNDERSIDE_PROFILES = [1, 0.985, 0.955, 0.92, 0.86, 0.78, 0.69, 0.6, 0.51, 0.42, 0.34, 0.27, 0.2, 0.14, 0.09, 0.05];

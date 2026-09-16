@@ -1,0 +1,108 @@
+[
+  {
+    "number": 1,
+    "art_id": "wpn_short_cypriot_rivet",
+    "display_name": "Cypriot Rivet Knife",
+    "class": "short_blade",
+    "prompt_class": "short_blade",
+    "tier": 2,
+    "canvas": "P",
+    "grid": "1x2",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\pilot-02\\prompts\\01__wpn_short_cypriot_rivet.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_stonewood - DEX - tier 2\\ChatGPT Image Jul 12, 2026, 05_44_32 PM (2).png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_stonewood - DEX - tier 2\\ChatGPT Image Jul 12, 2026, 09_43_11 PM (2).png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_stonewood - DEX - tier 2\\ChatGPT Image Jul 12, 2026, 09_52_57 PM (2).png",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\met_251786_mycenaean_copper_dagger.jpg",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\pinterest_promoted\\pinterest_16408d0f75a5.jpg"
+    ]
+  },
+  {
+    "number": 2,
+    "art_id": "shield_bronze_yetholm",
+    "display_name": "Ribbed Bronze Shield",
+    "class": "shield",
+    "prompt_class": "shield",
+    "tier": 3,
+    "canvas": "P",
+    "grid": "2x3",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\pilot-02\\prompts\\02__shield_bronze_yetholm.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - STR - tier 3\\ChatGPT Image Jul 12, 2026, 09_16_20 PM (3).png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - STR - tier 3\\ChatGPT Image Jul 12, 2026, 10_06_53 PM (3).png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - STR - tier 3\\251__p3__ChatGPT Image Jul 13, 2026, 05_11_00 PM.png",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\replica_reconstruction\\bronze_age_replica_weapon_shield_experiment.jpg",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\met_244565_shield_boss_plain.jpg"
+    ]
+  },
+  {
+    "number": 3,
+    "art_id": "helmet_light_bronze_pilos",
+    "display_name": "Bronze Pilos Helm",
+    "class": "helmet_light",
+    "prompt_class": "headgear",
+    "tier": 3,
+    "canvas": "S",
+    "grid": "2x2",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\pilot-02\\prompts\\03__helmet_light_bronze_pilos.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - STR - tier 3\\ChatGPT Image Jul 12, 2026, 09_16_20 PM (3).png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - STR - tier 3\\ChatGPT Image Jul 12, 2026, 10_06_53 PM (3).png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - STR - tier 3\\251__p3__ChatGPT Image Jul 13, 2026, 05_11_00 PM.png",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\pilot-02\\references\\pinterest_discovery_unverified\\pinterest_pilos_dodona.jpg"
+    ]
+  },
+  {
+    "number": 4,
+    "art_id": "belt_woven_linen_girdle",
+    "display_name": "Woven Linen Girdle",
+    "class": "belt",
+    "prompt_class": "belt",
+    "tier": 2,
+    "canvas": "L",
+    "grid": "2x1",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\pilot-02\\prompts\\04__belt_woven_linen_girdle.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - DEX - tier 2\\ChatGPT Image Jul 12, 2026, 09_25_56 PM (3).png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - DEX - tier 2\\ChatGPT Image Jul 12, 2026, 09_57_48 PM (3).png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - DEX - tier 2\\ChatGPT Image Jul 13, 2026, 05_35_17 PM (3).png",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\met_443650_textile_egyptian_linen.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\pilot-02\\references\\calibrated_icon\\post_calib_belt_silhouette.png"
+    ]
+  },
+  {
+    "number": 5,
+    "art_id": "relic_bronze_bell",
+    "display_name": "Bronze Hand Bell",
+    "class": "relic",
+    "prompt_class": "ritual",
+    "tier": 3,
+    "canvas": "S",
+    "grid": "1x1",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\pilot-02\\prompts\\05__relic_bronze_bell.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - INT - tier 3\\ChatGPT Image Jul 13, 2026, 12_11_03 AM (3).png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - INT - tier 3\\166__p3__ChatGPT Image Jul 11, 2026, 07_45_38 PM.png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - INT - tier 3\\196__p3__ChatGPT Image Jul 11, 2026, 07_48_41 PM.png",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\met_326604_bell_iran_iron_age.jpg"
+    ]
+  },
+  {
+    "number": 6,
+    "art_id": "quiver_lacquered_reed",
+    "display_name": "Lacquered Reed Quiver",
+    "class": "quiver",
+    "prompt_class": "bow_gorytos",
+    "tier": 4,
+    "canvas": "P",
+    "grid": "2x3",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\pilot-02\\prompts\\06__quiver_lacquered_reed.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - DEX - tier 3\\ChatGPT Image Jul 12, 2026, 09_42_53 PM (3).png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - DEX - tier 3\\ChatGPT Image Jul 12, 2026, 09_46_37 PM (3).png",
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - DEX - tier 3\\ChatGPT Image Jul 12, 2026, 10_11_04 PM (3).png",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\pinterest_promoted\\pinterest_64a5b627f42b.jpg",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\met_324433_persian_guard_relief.jpg"
+    ]
+  }
+]

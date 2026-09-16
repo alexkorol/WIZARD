@@ -1,0 +1,142 @@
+[
+  {
+    "number": 1,
+    "art_id": "helmet_light_riverhide",
+    "name": "River-Hide War Hood",
+    "canvas": "S",
+    "grid": "2x2",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\manual-web-wave-01\\prompts\\01__helmet_light_riverhide.txt",
+    "ladder_reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - DEX - tier 3\\144__p4__ChatGPT Image Jul 11, 2026, 07_44_40 PM.png"
+    ],
+    "historical_reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\british_museum_EA5473_00020721001_preview.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\british_museum_EA5473_00020722001_rear.jpg"
+    ],
+    "attachment_order": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - DEX - tier 3\\144__p4__ChatGPT Image Jul 11, 2026, 07_44_40 PM.png",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\british_museum_EA5473_00020721001_preview.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\british_museum_EA5473_00020722001_rear.jpg"
+    ],
+    "coverage_reason": "Source-audited distinct light-helmet rung; construction is not duplicated by the accepted bronze pilos.",
+    "construction_authority": "historical references; ladder reference controls faction finish only",
+    "output_filename": "helmet_light_riverhide.png"
+  },
+  {
+    "number": 2,
+    "art_id": "body_cuirass_heroic",
+    "name": "Heroic Bronze Cuirass",
+    "canvas": "P",
+    "grid": "2x3",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\manual-web-wave-01\\prompts\\02__body_cuirass_heroic.txt",
+    "ladder_reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_north - STR - tier 3\\075__p1__ChatGPT Image Jul 11, 2026, 07_40_19 PM.png"
+    ],
+    "historical_reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\met_256134_DP102285_apulian_muscle_cuirass_primary.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\met_256134_DP-44280-001_apulian_muscle_cuirass_reverse.jpg"
+    ],
+    "attachment_order": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_north - STR - tier 3\\075__p1__ChatGPT Image Jul 11, 2026, 07_40_19 PM.png",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\met_256134_DP102285_apulian_muscle_cuirass_primary.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\met_256134_DP-44280-001_apulian_muscle_cuirass_reverse.jpg"
+    ],
+    "coverage_reason": "Body cuirass is thinly supplied and this complete front/rear source passed the evidence gate.",
+    "construction_authority": "historical references; ladder reference controls faction finish only",
+    "output_filename": "body_cuirass_heroic.png"
+  },
+  {
+    "number": 3,
+    "art_id": "amulet_copper_cowrie",
+    "name": "Bronze Cowrie Amulet",
+    "canvas": "S",
+    "grid": "1x1",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\manual-web-wave-01\\prompts\\03__amulet_copper_cowrie.txt",
+    "ladder_reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - INT - tier 2\\ChatGPT Image Jul 12, 2026, 11_59_20 PM (3).png"
+    ],
+    "historical_reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\british_museum_WITT-434_cowrie_view_1.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\british_museum_WITT-434_cowrie_view_2.jpg"
+    ],
+    "attachment_order": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - INT - tier 2\\ChatGPT Image Jul 12, 2026, 11_59_20 PM (3).png",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\british_museum_WITT-434_cowrie_view_1.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\british_museum_WITT-434_cowrie_view_2.jpg"
+    ],
+    "coverage_reason": "Amulets remain a ten-item gap even after all current salvage and this source supports the full pendant body.",
+    "construction_authority": "historical references; ladder reference controls faction finish only",
+    "output_filename": "amulet_copper_cowrie.png"
+  },
+  {
+    "number": 4,
+    "art_id": "wpn_axe_canaan_window",
+    "name": "Canaan Window-Axe",
+    "canvas": "P",
+    "grid": "1x3",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\manual-web-wave-01\\prompts\\04__wpn_axe_canaan_window.txt",
+    "ladder_reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - STR - tier 3\\ChatGPT Image Jul 12, 2026, 10_06_53 PM (3).png"
+    ],
+    "historical_reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\met_325093_HB61_29_fenestrated_axe_original.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\christies_19876_lot143_levantine_fenestrated_axe_view_1.jpg"
+    ],
+    "attachment_order": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - STR - tier 3\\ChatGPT Image Jul 12, 2026, 10_06_53 PM (3).png",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\met_325093_HB61_29_fenestrated_axe_original.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\christies_19876_lot143_levantine_fenestrated_axe_view_1.jpg"
+    ],
+    "coverage_reason": "Axe/adze has no accepted or salvage-assigned addition; the paired-window head and haft seating are source-locked.",
+    "construction_authority": "historical references; ladder reference controls faction finish only",
+    "output_filename": "wpn_axe_canaan_window.png"
+  },
+  {
+    "number": 5,
+    "art_id": "helmet_open_bronze_chalcidian",
+    "name": "Bronze Chalcidian Helm",
+    "canvas": "S",
+    "grid": "2x2",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\manual-web-wave-01\\prompts\\05__helmet_open_bronze_chalcidian.txt",
+    "ladder_reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_north - DEX - tier 3\\068__p1__ChatGPT Image Jul 11, 2026, 07_40_03 PM.png"
+    ],
+    "historical_reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\met_257636_2003.407.2_hinged_chalcidian_helmet.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\bm_1873-0820-225_chalcidian_front.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\bm_1873-0820-225_chalcidian_rear.jpg"
+    ],
+    "attachment_order": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_north - DEX - tier 3\\068__p1__ChatGPT Image Jul 11, 2026, 07_40_03 PM.png",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\met_257636_2003.407.2_hinged_chalcidian_helmet.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\bm_1873-0820-225_chalcidian_front.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\bm_1873-0820-225_chalcidian_rear.jpg"
+    ],
+    "coverage_reason": "Open helmets remain thinly supplied; this is not the rejected ornate balanced-folder helmet reuse.",
+    "construction_authority": "historical references; ladder reference controls faction finish only",
+    "output_filename": "helmet_open_bronze_chalcidian.png"
+  },
+  {
+    "number": 6,
+    "art_id": "amulet_shell_oval",
+    "name": "Oval Shell Pendant",
+    "canvas": "S",
+    "grid": "1x1",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\manual-web-wave-01\\prompts\\06__amulet_shell_oval.txt",
+    "ladder_reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - DEX - tier 1\\ChatGPT Image Jul 12, 2026, 05_27_55 PM (4).png"
+    ],
+    "historical_reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\met_571030_shell_pendant_view_1.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\met_571030_shell_pendant_view_2.jpg"
+    ],
+    "attachment_order": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - DEX - tier 1\\ChatGPT Image Jul 12, 2026, 05_27_55 PM (4).png",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\met_571030_shell_pendant_view_1.jpg",
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-05\\references\\met_571030_shell_pendant_view_2.jpg"
+    ],
+    "coverage_reason": "Amulets remain a ten-item gap and this complete natural-shell source supports a simple low-tier rung without invented cord or metal.",
+    "construction_authority": "historical references; ladder reference controls faction finish only",
+    "output_filename": "amulet_shell_oval.png"
+  }
+]

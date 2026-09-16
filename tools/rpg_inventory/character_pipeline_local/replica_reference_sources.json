@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "file": "replica_reconstruction/dendra_replica_artistic_ccby.jpg",
+      "subject": "functional Dendra armor replica",
+      "source": "https://phys.org/news/2024-05-ancient-mycenaean-armor-marines-pronounced.html",
+      "credit": "Andreas Flouris and Marija Markovic; Flouris et al. 2024",
+      "license": "CC BY 4.0",
+      "roles": ["body_armor", "headgear", "active_service_bronze", "articulation"]
+    },
+    {
+      "file": "replica_reconstruction/dendra_replica_action_ccby.jpg",
+      "subject": "Dendra armor replica in experimental use",
+      "source": "https://phys.org/news/2024-05-ancient-mycenaean-armor-marines-pronounced.html",
+      "credit": "Andreas Flouris and Marija Markovic; Flouris et al. 2024",
+      "license": "CC BY 4.0",
+      "roles": ["body_armor", "shield", "coverage", "movement"]
+    },
+    {
+      "file": "replica_reconstruction/bronze_age_replica_weapon_shield_experiment.jpg",
+      "subject": "Late Bronze Age replica weapons and shields after controlled experiments",
+      "source": "https://scarf.scot/national/scarf-bronze-age-panel-report/bronze-age-case-studies/case-study-experimental-archaeology-bronze-age-weaponry/",
+      "credit": "Kate Anderson / Scottish Archaeological Research Framework",
+      "license": "source credit retained; internal visual reference",
+      "roles": ["shield", "sword", "spear", "active_service_bronze", "functional_wear"]
+    },
+    {
+      "file": "replica_reconstruction/akrotiri_textile_reconstruction.jpg",
+      "subject": "experimental reconstruction of ancient textile techniques",
+      "source": "https://artextiles.org/en/content/experimental-archaeology-0",
+      "credit": "ARTEX Hellenic Centre for Research and Conservation of Archaeological Textiles",
+      "license": "source credit retained; verification-only unless a clearer image is sourced",
+      "roles": ["textile_technique", "verification"]
+    }
+  ]
+}

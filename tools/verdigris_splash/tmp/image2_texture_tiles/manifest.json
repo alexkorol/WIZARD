@@ -1,0 +1,92 @@
+{
+  "grid": 4,
+  "sourceOriginal": [
+    1254,
+    1254
+  ],
+  "sourceNormalized": 1536,
+  "sourceTile": 480,
+  "detailTile": 1024,
+  "tiles": [
+    {
+      "row": 0,
+      "column": 0,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r0_c0.png"
+    },
+    {
+      "row": 0,
+      "column": 1,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r0_c1.png"
+    },
+    {
+      "row": 0,
+      "column": 2,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r0_c2.png"
+    },
+    {
+      "row": 0,
+      "column": 3,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r0_c3.png"
+    },
+    {
+      "row": 1,
+      "column": 0,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r1_c0.png"
+    },
+    {
+      "row": 1,
+      "column": 1,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r1_c1.png"
+    },
+    {
+      "row": 1,
+      "column": 2,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r1_c2.png"
+    },
+    {
+      "row": 1,
+      "column": 3,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r1_c3.png"
+    },
+    {
+      "row": 2,
+      "column": 0,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r2_c0.png"
+    },
+    {
+      "row": 2,
+      "column": 1,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r2_c1.png"
+    },
+    {
+      "row": 2,
+      "column": 2,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r2_c2.png"
+    },
+    {
+      "row": 2,
+      "column": 3,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r2_c3.png"
+    },
+    {
+      "row": 3,
+      "column": 0,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r3_c0.png"
+    },
+    {
+      "row": 3,
+      "column": 1,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r3_c1.png"
+    },
+    {
+      "row": 3,
+      "column": 2,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r3_c2.png"
+    },
+    {
+      "row": 3,
+      "column": 3,
+      "path": "Z:/Code/WIZARD/tools/verdigris_splash/tmp/image2_texture_tiles/source_r3_c3.png"
+    }
+  ]
+}

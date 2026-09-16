@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "visual_inspiration": {
+    "preferred_directories": [
+      "pinterest_discovery_unverified",
+      "pinterest_promoted"
+    ],
+    "positive_traits": [
+      "complete readable object or coherent full equipment kit",
+      "strong silhouette and useful three-dimensional assembly clues",
+      "clear material placement and load-bearing relationships",
+      "period-relevant typology with several comparable forms",
+      "active-service or reconstruction finish rather than excavation decay"
+    ]
+  },
+  "replica_reconstruction": {
+    "priority": "preferred when well researched and visually clear",
+    "use_for": [
+      "complete assembly and missing-part reconstruction",
+      "functional joins, hinges, lacing, overlap, backing, and load paths",
+      "active-service surface condition and healthy material color",
+      "fit, coverage, articulation, and scale on a complete object"
+    ],
+    "screen_out": [
+      "theatrical fantasy costume with no archaeological basis",
+      "modern hardware hidden under an ancient-looking surface",
+      "replica whose maker or evidence basis cannot be identified",
+      "over-polished ceremonial reinterpretation presented as ordinary field gear"
+    ]
+  },
+  "historical_verification": {
+    "default_attachment": false,
+    "use_for": [
+      "dated object-family verification",
+      "proportions, sockets, tangs, hafting, overlap, coverage, and closure evidence",
+      "resolving a specific construction question"
+    ],
+    "do_not_transfer": [
+      "corrosion, patina, pitting, encrustation, burial staining, fading, cracks, or missing material",
+      "museum lighting, catalog composition, support mounts, labels, or background"
+    ]
+  },
+  "automatic_reject_as_visual_driver": [
+    "isolated fragment with no complete silhouette",
+    "shield boss without shield construction context",
+    "single armor-scale clump without wearable layout",
+    "tiny low-resolution crop",
+    "duplicate crop of the same artifact",
+    "textile scrap without garment cut or assembly information",
+    "surface dominated by archaeological decay"
+  ],
+  "mandatory_exception": {
+    "sling_throwing": "A documented complete real sling remains required because sling silhouette is a severe model failure mode."
+  }
+}

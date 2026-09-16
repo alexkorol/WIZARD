@@ -1,0 +1,1 @@
+{"title": "Back-sync: orb dome top-cap mask guard (gh-pages 9b511c3)", "head": "sync/orbs-dome-cap", "base": "codex/arcane-lattice-1-0", "body": "Cherry-pick of 55ccd1f from gh-pages PR #103. Restores liquid to the orb domes: mask flood guard + pristine baseline + regenerated mask."}

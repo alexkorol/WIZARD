@@ -1,0 +1,326 @@
+# Nine-Image Faction Ladder Prompt Blocks
+
+Status: local-only, gitignored.
+Blocks version: 8, 2026-07-13
+
+These blocks build the four production-calibration prompts in which one faction
+receives a complete 3-attribute-axis x 3-tier ladder. The builder imports the
+current faction block from `PROMPT-BLOCKS-STARTER-FOUR-FACTION.md` and the
+specific loadout families from `BASE-FAMILIES.md`. Legacy loadout-family keys
+remain internal compatibility labels and must never appear in built prompts.
+
+Do not shorten these blocks when assembling a final prompt. Each generated
+request must work in a fresh image session with no Verdigris lore context.
+
+## Output Contract Block
+
+Create exactly nine separate independent full-body character-reference images for {FACTION}. Every output must be its own image file, never a collage, contact sheet, grid, split panel, lineup sheet, or multi-image canvas. If nine independent image files cannot be produced, generate only image 1 rather than combining the nine assignments into one sheet.
+
+The nine files must follow this exact assignment order:
+1. Tier 1 Scion Strength-axis male/female pair.
+2. Tier 2 Adventurer Strength-axis male/female pair.
+3. Tier 3 Champion Strength-axis male/female pair.
+4. Tier 1 Scion Dexterity-axis male/female pair.
+5. Tier 2 Adventurer Dexterity-axis male/female pair.
+6. Tier 3 Champion Dexterity-axis male/female pair.
+7. Tier 1 Scion Intelligence-axis male/female pair.
+8. Tier 2 Adventurer Intelligence-axis male/female pair.
+9. Tier 3 Champion Intelligence-axis male/female pair.
+
+Do not omit an assignment, merge tiers, swap the order, add a tenth image, or place more than one attribute-axis and tier pair in any output.
+
+## Canvas And Background Block
+
+Use a horizontal landscape 3:2 canvas for every output so two full-body characters and one clearly separated equipment reference object can fit without crowding. Each image contains exactly two adult characters, one female-presenting and one male-presenting, standing in the same studio space with generous clear separation and no overlap or occlusion. Show both complete bodies from the top of the head to the soles of the feet. Keep all carried weapons, shields, foci, mantles, belts, handwear, and footwear inside the frame.
+
+Use one flat pure neutral-white studio background with no colored tint and no gradient, scenery, architecture, foliage, smoke, floor texture, decorative pattern, vignette, text, labels, captions, borders, UI, frames, watermark, or visible written symbols. The background must read as clean spectrally neutral white in every output and must not cast colored light onto the figures. A minimal neutral grounding contact is acceptable, but do not embed weapons in the floor or hide their lower ends behind a foreground plane.
+
+## Identity Continuity Block
+
+Images 1, 2, and 3 show the same recognizable Strength-axis woman and man progressing through three tiers. Images 4, 5, and 6 show a second recognizable pair progressing along the Dexterity axis. Images 7, 8, and 9 show a third recognizable pair progressing along the Intelligence axis. Preserve the recurring pair's general facial identity, complexion, hair family, height relationship, and body archetype across its three images, while changing pose, expression, equipment, and stance. Exact facial cloning is less important than keeping the same believable people and body silhouettes through the ladder.
+
+The Strength, Dexterity, and Intelligence pairs must be different people. Adapt the faction body archetype to the attribute logic: Strength-axis bodies and stances look the most load-bearing and physically planted; Dexterity-axis bodies and stances look the most balanced, responsive, and tightly controlled; Intelligence-axis bodies and stances look the most deliberate, precise, and compositionally ordered. Do not make all six people share the same face, height, body mass, or pose.
+
+## Attribute Axis Interpretation Block
+
+Strength, Dexterity, and Intelligence are equipment-design axes, not named professions, fixed combat jobs, social castes, or familiar fantasy character templates. Do not use a stock genre role to decide the character before interpreting the faction and equipment. Let each faction produce its own possible vocation from the same attribute pressure.
+
+Strength-axis equipment solves force, leverage, load bearing, stability, impact, and resistance through structure, mass distribution, secure coverage, substantial grips, and grounded silhouettes. It does not automatically imply a brutish body, giant axe, medieval plate, oversized fur, or one stock combat silhouette.
+
+Dexterity-axis equipment solves balance, articulation, reach control, rapid recovery, quiet movement, and precise handling through flexible layering, asymmetry, compact tools, fitted protection, clear joints, and low visual drag. It does not automatically imply a stock stealth profession, hooded skulker, or paired-dagger costume.
+
+Intelligence-axis equipment solves preparation, precision, memory, measurement, warding, and complex tool use through ordered layers, readable systems, focus integration, deliberate material contrasts, and carefully placed small components. It does not automatically imply generic robes, ceremonial office, a spell effect, a giant staff, or an occult costume.
+
+## Shared Render Block
+
+Render every image as cinematic ultrafine-detail photorealistic high-end 3D game character art with crisp AAA asset clarity. Use sharply modeled hard edges, precise surface detail, believable seams and backing, readable texture for every assigned textile, hide, wood, horn, shell, stone, and metal, and physically convincing material response. Use clean skin, sharp eyes, controlled subtle use-wear, and no dirt layer that obscures material identity.
+
+Use the same colorless lighting in all nine outputs: a strong neutral-white directional studio key light from the upper left, deep neutral shadows, and a crisp neutral-white rim light catching heads, shoulders, armor edges, weapons, shields, foci, cloth edges, and full silhouettes. Keep a strictly neutral daylight/studio white balance. Lighting may reveal the assigned colors but must not introduce any environmental color cast. Warm tones appear only where the named material is warm. No overall sepia, yellow cast, global warm haze, global color wash, muddy wash, bloom fog, vignette, painterly softness, watercolor, loose brush texture, anime, cartoon, toy-plastic finish, or AI-smudged construction.
+
+## Color Accuracy And Chroma Block
+
+Render materials at clear, confident, locally accurate color rather than through a subdued cinematic grade. Every named pale material reads as luminous neutral or warm white, every named dark material reads as deep neutral black or its actual dark local color, and every assigned metal, wood, hide, stone, and dyed textile retains the exact hue specified by its faction and image assignment. Saturated dyes remain visibly saturated, polished surfaces remain bright, and pale materials remain clean. Do not average unrelated materials toward one muted midtone or global cast, and do not introduce any color that is absent from the faction and image assignment.
+
+Color intensity is part of tier progression. Tier 1 may use fewer and cheaper colors, but those colors remain clean and legible rather than faded. Tier 2 introduces larger clear dyed fields and stronger value contrast. Tier 3 uses the most vivid bounded textile colors, brightest polished highlights, and clearest pale-versus-dark separation. Never make all three tiers equally subdued, and never use a global desaturation filter to communicate age, poverty, seriousness, or low fantasy.
+
+## Unisex Pair Block
+
+All equipment bases are unisex. Within each image, the woman and man wear the same canonical item-base family for every slot: the same armor coverage and protection level, same weapon family, same offhand family, same headgear family, same body-armor construction, same outer-layer construction, same horizontal belt construction, same pendant family, same handwear family, same footwear family, and the same faction material system.
+
+Choose one dominant construction family for each item. A woven, felted,
+bark-fiber, quilted, or hide helmet remains materially continuous soft
+construction with no bronze/brass ornament or reinforcing plates. A metal
+helmet is metal-led and may show only narrow functional lining, ties, or
+suspension at its edges; never decorate it with reed, straw, bast, wicker,
+coarse fiber, or felt panels. Soft mitts are reinforced by weave, quilting,
+doubled palms, corded seams, or hide wear patches, never isolated hard plaques.
+True metal gauntlets use contiguous articulated metal backhand and knuckle
+construction over a subordinate lining, not decorative plates pasted onto a
+comfortable mitten. Lower-cost organic materials may support expensive metal
+mechanically but never serve as prestige decoration on it.
+
+Adapt those shared bases naturally to two bodies. The female version may be more waist-shaped, fitted, or feminine in tailoring; the male version may be broader or more angular in fit. Do not remove armor from the woman to expose her hips, midriff, thighs, shoulders, or chest, and do not add extra armor categories to the man merely because he is male. Neither character is the skimpy version or the covered version. Both must look equally intentional, practical, protective, and useful as references for the same equippable objects.
+
+## Faction Cohesion Without Uniformity Block
+
+All nine loadouts belong unmistakably to {FACTION}, but they are not uniforms and must not look like one costume copied nine times. Preserve the faction's body language, craft methods, material hierarchy, palette range, and social pressure while varying armor cut, headgear outline, mantle shape, belt layout, footwear mass, weapon silhouette, and stance between attribute axes and tiers.
+
+Coordinate through construction rather than exact repetition. Do not repeat one literal crest, gem color, medallion, face, wheel, sun, animal, border pattern, shield boss, or centerpiece across all nine images. A material can recur without occupying the same location or becoming the focal point on every character. Strength, Dexterity, and Intelligence equipment logic must remain distinguishable from silhouette before color is considered, without turning any axis into one predetermined profession.
+
+## Tier Ladder Block
+
+The three tiers are different item bases in one faction-and-attribute lineage, not the same costume with extra gems pasted on.
+
+Tier 1 Scion gear is lowly, incomplete, scavenged, repaired, and under-equipped but still maintained, functional, desirable enough to loot, and physically usable. Use simple shapes, fewer components, inexpensive faction materials, modest coverage appropriate to the attribute logic, and visible but believable improvisation. Do not make Tier 1 filthy, decomposed, comic, helpless, or dressed only in shredded rags.
+
+Tier 2 Adventurer gear is the production baseline: coherent, well-fitted, professionally assembled, materially readable, and ready for repeated action. Every equipment slot should now be a deliberate real base rather than an improvised fragment. The pair should look experienced and aspirational without appearing royal, supernatural, unique, or boss-like.
+
+Tier 3 Champion gear is the highest starter tier: complete, commanding, refined, dazzling, and near Gigachad or Gigastacy authority, but still mundane equipment rather than a legendary unique or supernatural boss set. Upgrade construction complexity, material quality, finish, coverage appropriate to the attribute logic, and silhouette authority. Use controlled status detail rather than charm clutter, all-over jewels, magical glow, or a repeated faction logo.
+
+Progress every slot across the ladder, not only the torso and weapon. Headgear, pendant amulet, body armor, outer layer, horizontal belt, ring, handwear, footwear or greaves, main hand, and offhand or focus must all visibly move from Scion to Adventurer to Champion quality. Handwear progression must change construction families rather than making the same bracer longer and more ornate at every tier.
+
+## Tier Contrast Enforcement Block
+
+Make the tier difference obvious at thumbnail size before inspecting fine detail. Do not preserve one outfit silhouette and merely clean it up, recolor it, or add jewelry. Each tier is a new base construction in the same lineage.
+
+Between Tier 1 and Tier 2, visibly change at least five major design decisions: torso construction, headgear outline, main-hand silhouette, offhand construction, mantle or shawl cut, horizontal belt width and structure, hand protection, and footwear or greave construction. Tier 2 should introduce coherent layering, better-fitted backing, matched components, clearer material contrast, and a broader but still controlled color range.
+
+Between Tier 2 and Tier 3, visibly change at least five major design decisions again. Tier 3 needs a more authoritative outer silhouette, more sophisticated segmentation and layering, finer edge treatment, richer textile construction, more intricate but physically integrated surface detail, and a visibly more valuable material hierarchy. Use chased or hammered edges, layered plaques, articulated sections, inlaid strips, patterned woven borders, complex seams, shaped backing, and precise joins where faction materials support them. Fine detail must explain construction or workmanship; it must not become loose trinkets or pasted-on symbols.
+
+Escalate color deliberately. Tier 1 uses a limited but clear low-cost palette: roughly two dominant natural material colors plus one small, plainly visible dyed accent. Tier 2 adds a larger saturated textile field and clearer light-dark material separation. Tier 3 uses the faction's richest deliberately distributed palette: approximately three strong local colors, one pale or dark contrast, and bright highlights from the polished materials assigned to that image. Tier 3 should look substantially more saturated, luminous, and visually expensive than Tier 2 without becoming rainbow-colored, globally tinted, or covered in gems.
+
+Keep identical studio lighting and neutral grading across tiers so the progression comes from the actual equipment colors, materials, complexity, and silhouette rather than a different filter.
+
+## Color Distribution And Anti-Match Block
+
+Treat the faction palette as a set of local material colors, not a uniform dye, team livery, monochrome costume, or global color filter. Every assigned metal, stone, shell, textile, wood, leather, and other material retains its own named local color. Do not tint every material toward the same faction hue and do not import a color or material from another faction's palette.
+
+Clear color is allowed at every tier. Communicate low cost through material choice, sparse component count, plain weave, simple seams, rough casting, repairs, and incomplete matching, not by fading every surface toward gray. Communicate high tier through richer dyes, broader color separation, cleaner finishing, brighter polish, and more sophisticated construction, not by tinting every slot the same expensive-looking hue.
+
+Excluding skin and background, no single dyed hue should occupy more than roughly one-third of the visible equipment surface. Build every loadout from at least four clearly separated color-material zones: a pale or neutral textile field, a dark or warm structural field, a natural hard-material field, and one or two smaller dyed textile accents. Large adjacent zones should not all share the same hue.
+
+Do not repeat one color simultaneously across helmet, torso, mantle, belt, gloves, boots, shield, and weapon. Weapons and shields retain believable material colors rather than being recolored to match the clothing. Use saturated color in deliberately bounded panels, woven borders, sashes, linings, or selected plates, with neutral material breaks between them.
+
+The male/female pair shares the same canonical material and colorway family, but that family must already contain varied local colors rather than one dominant dye. Across the nine images, each attribute axis uses a different color hierarchy within the faction palette so the faction reads as a culture with several workshops and traditions, not one matching uniform.
+
+## Dynamic Pose Block
+
+Use dynamic but extraction-readable paired poses. Give each character a strong weight shift, angled shoulders, bent knee, advancing step, braced guard, drawn weapon, presented focus, or controlled turn. The two figures should complement rather than mirror one another. Change the pose between tiers so the ladder does not become three mannequin duplicates, but preserve the recurring attribute pair's identity and body archetype.
+
+Do not use crouches, leaps, crossed limbs, crossed weapons, extreme foreshortening, floor-level camera distortion, or billowing cloth that hides equipment. Keep faces, torso construction, waist, hands, footwear, weapon silhouettes, and offhand silhouettes readable. Dynamic means alive and forceful, not tangled.
+
+## Slot Readability Block
+
+Every image must visibly support later extraction of these ten inventory slots: main hand; offhand shield, focus, ritual tool, or secondary weapon; headgear; pendant amulet; body armor; cloak, shawl, scarf, mantle, or other outer layer; horizontal belt; one compact finger ring; handwear such as mitts, closed-finger gloves, half-gauntlets, gauntlets, short cuffs, wrist bands, wraps, archer guards, bracers, or vambraces; and footwear, boots, sandals, greaves, anklets, or leg armor.
+
+Amulets are pendant-first objects on a cord, twine, leather thong, or simple substantial chain. Do not turn the amulet into a gorget, collar, choker plate, turtleneck, or neck armor. Body armor begins with the torso defense and includes only lower-body components visibly assigned in that image: an integral skirt, kilt, robe hem, coat tail, fauld, tasset, cuisse, or greave. Most body armors do not include pants; never invent trousers or leggings to fill bare space or connect armor pieces. Keep boots, shoes, sandals, slippers, moccasins, soles, and toe boxes completely separate from body armor. Do not fuse a detachable belt, cloak, collar, gorget, necklace, or pendant into the body-armor base. Belts are clearly horizontal waist items, not skirts or armored aprons. Rings are compact finger objects without chains or tassels. All handwear families occupy the single hands slot and are not extra slots. Mitts cover the hand with a compact mitten-like silhouette; gloves cover it with fitted closed fingers; half-gauntlets and gauntlets visibly cross the wrist with a complete hand cage and backhand/knuckle protection; cuffs stop near the wrist; wraps remain flexible; only true bracers and vambraces end at the wrist after covering the forearm. Held foci and ritual tools occupy the offhand slot. Hands-free semi-floating or orbiting magical foci occupy the separate Attendant seat and may use overt levitation, glow, orbiting parts, or impossible suspension.
+
+HANDWEAR DIVERSITY IS MANDATORY ACROSS THE NINE IMAGES. No more than two images may use a true forearm bracer or vambrace family. The set must include at least one mitt, one closed-finger glove, one half-gauntlet or gauntlet, one short cuff or wrist-band, and one flexible wrap family. Follow each image's exact assignment. Never cut the hand cage off a gauntlet or the hand body off mitts/gloves, lengthen cuffs into forearm armor, or add generic bracers over wraps.
+
+Make the pure-axis auxiliary category readable for later extraction: Strength images include one complete War-call instrument; Dexterity images wear one complete Quick Rig on the back or flank with a visible frame/harness; Intelligence images include one hands-free hovering Attendant. A Quick Rig is never handheld/offhand, purse-like, satchel-like, briefcase-like, or luggage-like. These auxiliaries progress across tiers and never replace or hide core slots. The later six-item pass infers Spoils, Preparations, and Reliquary contents from the same craft language.
+
+Shields show a clear front fighting face with no straps, rings, handles, or utility hardware hanging across the visible front. Cloaks and mantles use opaque, cleanly bounded material more often than gauze and do not dissolve into excessive shredded fringe.
+
+## Six Auxiliary Lane Seeding Block
+
+Treat the six unlockable auxiliary lanes as first-class item identities, never as generic curios. Pure Strength uses one 2x2 War-call seat. Pure Dexterity uses one 2x2 Quick Rig seat. Pure Intelligence uses one 2x2 Attendant-focus seat. Strength plus Dexterity uses the 4x4 Spoils Roll. Dexterity plus Intelligence uses the 4x4 Preparation Case. Intelligence plus Strength uses the 4x4 Reliquary.
+
+Every Strength image visibly carries its assigned War-call: horn, ancient trumpet, drum, rattle, sistrum, bell, clapper, or compact standard. Every Dexterity image visibly wears its assigned complete 2x2 Quick Rig on back or flank: framed quiver/gorytos, dart rack, sling-bullet side carrier, or back/side-mounted knife, archer, fletching, medicine, pigment, trap, or fire rig with complete harness. Every Intelligence image has its assigned hands-free Attendant: orbiting ring, caged light, backed mirror, bound stone, spindle, vessel, bell-and-yoke, lamp wheel, censer, suspended lamp, pyxis, seal-cylinder spindle, or scale cage.
+
+Also include exactly one compact carried or secured hybrid-lane seed named in the image assignment. Spoils are raw or minimally field-processed nonhuman crafting materials: unpolished horn, bone, shell, hide, scale, sinew, feather, tooth, carapace, stinger, hoof, or talon stock, only washed, scraped, dried, salted, trimmed, tied, or roughly wrapped. They are sold or consumed in crafting and are never polished, jeweled, metal-capped, display-mounted prestige trophies. Preparations are identifiable gathered plants, resins, pigments, ointment tools, medicine rolls, fletching kits, poison pots, fire kits, or trap parts, never currency. Reliquaries are deep boxes, coffers, pyxides, ampullae, vessels, lamps, censers, codices, scroll cases, diptychs, wrapped relics, bells, seal sets, or handled ritual objects, never generic glowing crystals or flat plaques.
+
+The pure-axis auxiliary and hybrid seed must be complete and visually readable, but they must not replace or cover any core equipment slot, must not hang as clutter from the belt, and must not become extra detached reference objects. Secure the hybrid seed compactly to a pack, baldric, case, hand, or reserved clear area of the silhouette. Use one category family exactly as assigned; do not combine a horn, drum, bell, standard, quiver, trophy, herb kit, and reliquary into one fantasy utility bundle.
+
+## Taxonomy Coverage And Anti-Convergence Block
+
+Treat the exact item-base family named for each image as mandatory, not as a loose mood. Preserve every named archaeological construction cue and silhouette. A specialist family name must also be visible through its plain-language shape: blade outline, hilt terminal, socket or haft, shield outline, helmet bowl and cheek or neck construction, armor assembly, carrying case, or ritual-tool grip.
+
+Across this nine-image set, maximize family-level coverage rather than making small cosmetic variants of one model-favored object. The set must contain at least four clearly different main-hand silhouettes, at least three clearly different offhand or focus structures, at least four shield outlines when shields are assigned, at least five headgear constructions, at least four body-armor construction systems, at least three outer-layer constructions, and at least three auxiliary-object families. Do not count a color, jewel, trim, or motif change as a new family.
+
+Actively favor underrepresented ancient forms when assigned: hand axes and stone celts; flanged, socketed, or fenestrated axes; disc, pear, knobbed, animal-head, or mace-adze heads; antenna, flange-hilt, ring-pommel, fork-pommel, leaf, or straight long-blade constructions; javelins, darts, throwing sticks, slings, staff slings, and bows with quivers or gorytoi; figure-eight, tower, tall oval, crescent, pelta, hide-frame, wicker, and bossed shields; pointed caps, simple bowls, cheekpiece helmets, neck-guard helmets, crested forms, and cross-band composite helmets; woven, hide, scale, splint, textile, disc, and laminated body defenses; and horns, drums, rattles, standards, bells, scepters, bowls, censers, cases, quivers, and reliquaries.
+
+Suppress convergence on generic curved swords, paired daggers, round shields, circlets, jeweled bodices, ornamental waist chains, open-toe footwear, staff-and-orb foci, repeated forearm bracers, and identical pendant/handwear/boot sets. No more than two images in the nine-image set may use the same main-hand family or the same shield outline. Do not invent an unassigned rare object merely to satisfy a quota; the exact families below already distribute coverage.
+
+## Construction And Wearability Block
+
+All worn and carried gear must be physically plausible. Torso pieces need believable front, side, and back structure. Plates require backing. Mitts and gloves cover the hands; cuffs close around the wrist without growing up the forearm; wraps visibly wind and overlap; true bracers wrap around the forearm. Greaves and shin protection visibly conform to and attach around legs. Footwear has soles and coherent uppers. Shields have believable thickness and edge construction. Weapons have functional grips, tang or socket logic, and usable proportions. Foci have a substantial hand grip, cradle, frame, handle, or case.
+
+When bone armor is assigned, assemble it from naturally shaped smaller pieces on backing rather than one impossible perfect body-shaped bone shell. Every material named by the faction and image assignment must behave like its actual material. No floating plates, impossible seamless one-piece cuirasses, hollow front-only helmets, eye holes opening into empty transparency, backless headgear, ornamental parts ignoring gravity, or fragile costume construction masquerading as battle equipment.
+
+## Motif Budget Block
+
+Apply a strict motif budget independently to every loadout and across the nine-image faction set. Strong focal motifs belong on at most one or two slots in one loadout. The remaining slots coordinate through edge profiles, plate layout, woven borders, seam placement, hammered texture, grip wrapping, carved rims, scale rhythm, material contrast, and silhouette.
+
+Do not put the same central round colored stone, jewel, gem, boss, medallion, eye, sun, eight-spoked wheel, human face, animal face, emblem, or disc on every item. Do not place one matching centerpiece on the helmet, chest, belt, shield, handwear, boots, amulet, and weapon. Avoid invasive charms, dangling coins, tiny hanging rings, chimes, bells, tassel curtains, delicate costume chains, and loose harness rings. Details are welcome when they construct the item; repeated decorative stickers are not.
+
+## Authoritative Reference Object Block
+
+Place exactly one major equipment reference object beside each pair in a reserved clear side margin. Use the main weapon, shield, buckler, or Intelligence-axis focus named in that image's item-base family. It is the same canonical object used by the pair, shown separately so later itemization can copy its true shape. Keep it complete, uncropped, fully visible, and spatially separate from bodies, cloth, and other gear. Do not make a pile of detached equipment and do not add a second reference object.
+
+A side-laid shield faces the viewer with its clean fighting face and full outline visible. A side-laid weapon shows the complete silhouette, correct blade-to-grip or head-to-shaft ratio, and both ends. The object must rest beside the pair without being embedded in the floor, partly concealed, transformed into scenery, or shortened to fit.
+
+## Long Weapon Block
+
+If any assigned object is a spear, pike, staff, polearm, standard, long axe, long hammer, long club, or other reach weapon, preserve its full real length from tip to butt. The shaft remains slender and at least five times the length of the head or striking element. Put it on a steep diagonal in the reserved reference margin if necessary. Never crop it, thicken it into a club, enlarge its head until the shaft disappears, or shorten it into a mace, baton, or wand. Do not introduce a long weapon when the image assignment names a compact weapon family.
+
+## Period And Content Guard Block
+
+Keep the material culture within deep prehistory through the end of the 6th century AD, with explicitly archaic Stone, Bone, Neolithic, Chalcolithic, and Bronze Age survivals allowed for remote Verdigris cultures. Keep each individual loadout internally coherent in material, construction, and implied era; do not treat the full time range as permission to pile unrelated museum objects onto one person. Mail is historically in range but remains production-locked for Verdigris until explicitly reopened. No post-6th-century medieval knight plate, brigandine, late-medieval gorgets, modern tailoring, zippers, plastic, rubber, tactical gear, firearms, steampunk machinery, sci-fi technology, high heels, stilettos, or modern footwear. No readable real-world script, copied sacred iconography, faction logos, text, tattoos used as costume labels, magical aura, spell effects, glowing runes, floating crystals, portals, summoned creatures, or environmental storytelling.
+
+Do not default to spears, axes, or long handles. Use only the weapon and offhand families assigned to each image. Do not replace a distinctive compact focus, club, curved blade, short sword, buckler, or shield with a generic polearm.
+
+## Strength Tier 1 Completion Block
+
+Complete the Tier 1 Strength-axis loadout with a simple faction-material torso defense that visibly covers front, sides, and back; basic but real head protection; one compact plain ring; and incomplete but usable limb protection. The body piece may be padded, layered, hide-backed, woven, or lightly plated according to faction craft, but it must read as the first rung of load-bearing protection rather than ordinary clothing or a fantasy bikini.
+
+## Strength Tier 2 Completion Block
+
+Complete the Tier 2 Strength-axis loadout with a coherent constructed cuirass or armor vest in faction materials, proper helmet or substantial war cap, one restrained compact ring, matched arm protection, and purposeful leg and foot protection. The silhouette is stable, protective, and professionally equipped without becoming full medieval plate or defaulting to one stock profession.
+
+## Strength Tier 3 Completion Block
+
+Complete the Tier 3 Strength-axis loadout with the faction's finest mundane structured cuirass, substantial head protection, refined compact ring, the finished handwear family assigned to this image, finished greaves or equivalent leg armor, and a commanding outer layer that does not hide the armor. Make the construction and finish dazzling through workmanship and material hierarchy, not supernatural effects or excessive jewels.
+
+## Dexterity Tier 1 Completion Block
+
+Complete the Tier 1 Dexterity-axis loadout with a fitted but plainly constructed torso vest or wrap armor, close practical head covering or brow guard, one plain compact ring, light hand protection, and quiet simple footwear. Keep the silhouette balanced, articulated, and under-equipped without making the gear shredded, theatrical, implausibly exposed, or coded as one fixed occupation.
+
+## Dexterity Tier 2 Completion Block
+
+Complete the Tier 2 Dexterity-axis loadout with fitted flexible torso armor, compact protective headgear or structured hood, one restrained compact ring, deliberate light handwear from the assigned family, quiet period footwear, and a short outer layer that preserves mobility. Construction must look professionally articulated around joints and movement rather than like a lighter recoloring of the Strength-axis cuirass.
+
+## Dexterity Tier 3 Completion Block
+
+Complete the Tier 3 Dexterity-axis loadout with the faction's finest mundane flexible armor, close-profile elite headgear, refined compact ring, matched hand protection, reinforced quiet footwear, and a sharply cut short mantle or cloak. Make it responsive, precise, and authoritative without adding fragile jewelry curtains, giant shoulder armor, or supernatural effects.
+
+## Intelligence Tier 1 Completion Block
+
+Complete the Tier 1 Intelligence-axis loadout with a simple structured vest or layered torso garment in faction materials, modest practical headpiece or wrapped cap, one plain compact ring, light hand wraps, and simple footwear. The offhand focus remains the clearest attribute signal, while the rest of the outfit stays grounded in faction craft and practical construction.
+
+## Intelligence Tier 2 Completion Block
+
+Complete the Tier 2 Intelligence-axis loadout with coherent structured layered armor or a light reinforced over-vest, distinct practical headgear, one restrained compact ring, deliberate hand protection, real period footwear, horizontal belt, pendant amulet, and readable mantle construction. The offhand focus must remain complete, hand-held, substantial, and visibly usable.
+
+## Intelligence Tier 3 Completion Block
+
+Complete the Tier 3 Intelligence-axis loadout with the faction's finest mundane structured layered armor, authoritative but wearable headpiece, refined compact ring, finished hand protection, structured footwear, and a formal mantle that preserves the silhouette. Make the focus and textile-metal construction visually dazzling through precision and material organization without spell effects, floating components, all-over gems, giant staffs, or institutional costume drift.
+
+## Northern Bronze Houses Strength Colorway Block
+
+Let pale natural wool, bone-white linen, bright bronze, and warm russet leather form the largest separate material zones. Put vivid madder crimson on one bounded mantle panel and deep spruce green on different woven borders or waist elements, never on every cloth surface together. Keep shields pale-hide and bronze, weapons natural bronze, boots russet, and amber confined to one small focal object.
+
+## Northern Bronze Houses Dexterity Colorway Block
+
+Use russet leather and pale linen as alternating structural fields, with compact bronze pieces retaining their metallic color. Give the short mantle or shoulder wrap a bounded madder-red field, place golden ochre on a separate sash, lining, or narrow woven band, and use horn cream or pale wood as another break. Do not turn the entire fitted outfit red, yellow, brown, or bronze.
+
+## Northern Bronze Houses Intelligence Colorway Block
+
+Balance pale linen and patterned wool against discrete deep spruce-green mantle sections, bright bronze focus hardware, horn-cream details, and warm russet backing. Use vivid madder red only in narrow separated bands. Amber belongs to the focus or one pendant and must not tint the rest of the equipment gold-orange.
+
+## Cedar-Obsidian Clans Strength Colorway Block
+
+Use cedar brown, shell white, natural rawhide, and polished copper as the major separated material fields. Restrict mineral red textile to selected torso or mantle panels and greenstone to small hard accents. Obsidian remains black only on cutting edges. Do not recolor wood, shell, shield, weapon, and armor into one red or green matching set.
+
+## Cedar-Obsidian Clans Dexterity Colorway Block
+
+Build the fitted loadout from black obsidian edges, warm hide, undyed woven fiber, shell-white breaks, and compact copper pieces. Put greenstone on one small selected hard area and saturated mineral-red textile on a different sash, lining, or short mantle. Keep every accent spatially separated so neither greenstone nor red becomes a full-body costume color.
+
+## Cedar-Obsidian Clans Intelligence Colorway Block
+
+Use natural cedar and fiber, shell white, copper, black obsidian, and one bounded greenstone or jade focus area as distinct material zones. Add vivid mineral red only as a modest textile panel or border. The focus may be colorful, but the robe armor, belt, footwear, and headpiece must not all copy its hue.
+
+## Silkroad Plateau Nomads Strength Colorway Block
+
+Let luminous off-white felt, warm leather, natural bronze or brass, and clean sand-colored textile carry most of the equipment. Use saturated crimson on one mantle or shield zone, saffron on a separate border or sash, and black lacquer as a smaller hard contrast. Keep metal natural and do not dye every textile red, yellow, or black.
+
+## Silkroad Plateau Nomads Dexterity Colorway Block
+
+Use black lacquer, russet leather, luminous off-white textile, and natural brass as the main separated fields. Place saffron on a bounded scarf or lining, deep mulberry on a different sash or short cloak panel, and crimson only in narrow cords or edge bands. Carnelian stays a tiny hard accent rather than becoming the outfit color.
+
+## Silkroad Plateau Nomads Intelligence Colorway Block
+
+Balance luminous off-white cloth and warm sand textile against one discrete deep-mulberry panel, natural brass focus hardware, black lacquer details, and russet leather backing. Put saturated crimson and saffron in different narrow textile zones, and reserve carnelian or dark stone for the focus or one pendant. Do not let any red, yellow, purple, or black field spread across robe armor, mantle, belt, headgear, and footwear simultaneously.
+
+## Nile-Ziggurat Kingdoms Strength Colorway Block
+
+Use crisp white linen, natural bronze, bitumen-black leather, and clean clay or reed neutrals as the broad separated fields. Put saturated carnelian red on one shoulder, shield, or mantle zone and warm gold on a different small Tier 3 edge or focal detail. This Strength colorway uses only the listed textile and hardstone accents; metal and leather retain their actual colors.
+
+## Nile-Ziggurat Kingdoms Dexterity Colorway Block
+
+Balance black leather and crisp white linen with natural bronze plates and warm copper. Use carnelian red on one compact sash, lining, or belt zone and saturated malachite or green faience on one separate small hard accent. Keep footwear, hand protection, blades, and headgear in their actual material colors rather than repeating either accent.
+
+## Nile-Ziggurat Kingdoms Intelligence Colorway Block
+
+Use brilliant white linen and bitumen-black structure as contrasting large fields, with natural bronze or brass focus hardware and clean clay-tan or reed neutrals. Saturated true-lapis ultramarine occupies exactly one controlled mantle, headpiece, or torso panel; carnelian occupies a different small pendant or border. Gold remains a sharp selected highlight. Every other material retains its listed local color, and lapis with gold must not become an all-over uniform.
+
+## Northern Bronze Houses Tier 1 Escalation Block
+
+Keep the Tier 1 palette limited and inexpensive but clean: natural flax, undyed pale wool, warm russet hide, horn cream, and simply finished copper or bronze. Use one small but clearly colored madder-red edge as the dyed accent. Construction is plain, partially matched, and low in segmentation, with a short simple shoulder strip rather than a grand mantle. The pair remains clean, chromatically legible, and maintained, never muddy, faded, or monochrome charcoal.
+
+## Northern Bronze Houses Tier 2 Escalation Block
+
+Expand Tier 2 into a crisp northern house palette: bone-white wool and linen, clear madder red, deep spruce-green woven borders, warm russet leather, golden-ochre details, bright bronze, and one restrained amber jewelry accent. Introduce fitted backing, coherent bronze edging, matched limb pieces, cleaner geometric textile bands, and a deliberately shaped half-mantle. The silhouette, chroma, and color separation must be unmistakably richer than Tier 1.
+
+## Northern Bronze Houses Tier 3 Escalation Block
+
+Make Tier 3 visibly sumptuous and intricate through balanced local materials: one bounded deep spruce-green panel, separate vivid madder-crimson and golden-ochre bands, clean bone-white textile fields, mirror-bright polished bronze, warm russet backing, pale carved wood or horn detail, and golden amber confined to one focal jewelry or focus object. No dyed hue may take over the complete outfit. Use broad patterned rectangular mantles, multiple woven border bands, layered bronze plaques, chased edges, articulated limb protection, and precise textile-to-metal joins. It should read as wealthy northern Bronze Age workmanship at thumbnail size, not the Tier 2 outfit with extra amber.
+
+## Cedar-Obsidian Clans Tier 1 Escalation Block
+
+Keep Tier 1 grounded in low-cost but clearly separated natural material colors: cedar brown, warm rawhide, undyed woven fiber, shell white, one small red-ochre textile field, simply finished copper, and small glossy black obsidian cutting edges. Construction is simple and visibly hand-made, with few plates and compact silhouettes. Do not introduce large greenstone or imperial color fields yet.
+
+## Cedar-Obsidian Clans Tier 2 Escalation Block
+
+Expand Tier 2 with bold red-ochre or brick-red cotton, deep neutral-black obsidian, luminous shell-white edges, polished copper, and one restrained greenstone accent. Add stronger carved profiles, fitted quilted layers, matched copper limb pieces, shell inlay used on selected edges, and a more intentional short mantle or shoulder structure. Preserve compact athletic silhouettes and avoid carnival feather clutter.
+
+## Cedar-Obsidian Clans Tier 3 Escalation Block
+
+Make Tier 3 richly colored and construction-dense through separated material zones: one bounded saturated scarlet or mineral-red textile field, natural cedar brown, glossy neutral-black obsidian, bright shell white, mirror-polished copper, and one deep green jade or greenstone hard area. Neither red nor green may dominate the complete outfit. Use layered carved hardwood, sophisticated obsidian edge settings, stepped or terraced geometric construction without copied symbols, precise shell-and-copper inlay, articulated assigned handwear and greaves, and a bold but clean outer silhouette. It must feel imperial and master-crafted rather than Tier 2 with a larger headdress.
+
+## Silkroad Plateau Nomads Tier 1 Escalation Block
+
+Keep Tier 1 travel gear limited in color and construction but clearly separated: clean warm-sand felt, luminous off-white wool, natural linen, russet leather, neutral-black lacquer scraps, and simply finished bronze. Use one small clearly red cord or dark-stone accent. Layers are practical and sparse, with a simple wrapped scarf or shoulder strip and no rich court textiles yet; inexpensive does not mean gray, faded, or colorless.
+
+## Silkroad Plateau Nomads Tier 2 Escalation Block
+
+Expand Tier 2 with saturated saffron, clear crimson, luminous off-white felt, deep mulberry textile, warm leather, neutral-black lacquer, bright brass or bronze, and one restrained carnelian or dark-stone accent. Add coherent robe, sash, scarf, and travel-cloak layering; fitted lacquered protection; stronger woven belt structure; and clearly finished edges. Keep Arabian, Persian, Caucasus, highland, and trade-road clothing influence balanced so the silhouette does not collapse into only steppe lamellar.
+
+## Silkroad Plateau Nomads Tier 3 Escalation Block
+
+Make Tier 3 opulent, mobile, and intensely colored through separate zones: one bounded saturated deep-mulberry panel, a different vivid saffron lining or sash, narrow rich-crimson borders, neutral-black lacquer, luminous off-white textile, warm russet leather, mirror-bright brass, and carnelian used selectively. No purple, yellow, or red hue may cover the complete outfit. Use richly woven robe and shawl borders, multiple controlled sash layers, articulated lacquered plaques, fine brass edging, complex but practical wrapped footwear, and an authoritative travel mantle with a distinctive cut. It should look like portable high-status wealth, not Tier 2 with more dangling jewelry or a generic palace costume.
+
+## Nile-Ziggurat Kingdoms Tier 1 Escalation Block
+
+Keep Tier 1 austere and low-cost but cleanly colored: unbleached linen, warm clay tan, neutral bitumen-black leather, clean natural reed, simply finished copper, and one small saturated carnelian accent. Construction is simple, rectilinear, and lightly reinforced, with no gold, no large hardstone fields, and no dense status ornament.
+
+## Nile-Ziggurat Kingdoms Tier 2 Escalation Block
+
+Expand Tier 2 with crisp white linen, neutral-black leather, polished bronze, bright brass highlights, and exactly the saturated accent and hardstone colors named by this image's axis-specific colorway. Do not borrow an accent from either of the other two axes. Add structured linen backing, coherent bronze plate geometry, clearer belt and assigned-handwear construction, a shaped shoulder mantle, and selected hardstone or faience detail. The pair should look issued by a prosperous city armory rather than merely cleaner than Tier 1.
+
+## Nile-Ziggurat Kingdoms Tier 3 Escalation Block
+
+Make Tier 3 monumental, richly colored, and materially intricate through balanced zones: brilliant white linen fields, deep neutral bitumen-black structure, clean clay or reed neutrals, mirror-bright bronze and brass, a few sharp gold highlights on selected edges or one focal object, and exactly the saturated accent and hardstone field named by this image's axis-specific colorway. Do not borrow an accent from either of the other two axes. Use layered hammered plates, fine geometric inlay without readable writing, articulated bronze sections, complex linen borders, precise hardstone settings, and a weighty formal mantle. It should visibly embody civic wealth shading into earthly excess, not repeat the Tier 2 silhouette with more medallions or collapse into one all-over matching uniform.
+
+## Final Target Block
+
+The final result is nine separate {FACTION} source-character images forming one controlled ARPG equipment ladder: three recurring male/female attribute-axis pairs, three materially and structurally distinct tiers per axis, unisex canonical item bases, dynamic readable posing, complete side-reference objects, strong faction identity without copied motifs, and enough slot clarity to support later ten-item extraction.

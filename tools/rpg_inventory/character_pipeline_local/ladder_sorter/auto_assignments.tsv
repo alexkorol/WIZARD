@@ -1,0 +1,163 @@
+index	faction	axis	tier	confidence	note
+1	faction_north	STR	1	high	Northern wool, round hide shield, heavy club
+2	faction_stonewood	STR	1	high	Forest leather, club, compact shield
+3	faction_dustwind	INT	1	high	Plateau travel robe and paired hooked ritual implements
+4	faction_riverspill	STR	1	high	White river textile, spear and reed shield
+5	faction_north	DEX	1	medium	Light northern skirmisher kit
+6	faction_stonewood	STR	1	high	Warm leather, stone club, decorated small shield
+7	faction_dustwind	DEX	1	high	Mobile plateau archer kit
+8	faction_riverspill	DEX	1	high	White linen archer-skirmisher kit
+9	faction_stonewood	DEX	1	medium	Flexible hide-and-scale sling kit
+10	faction_dustwind	STR	2	high	Blue plateau lamellar and spear-shield loadout
+11	faction_riverspill	STR	2	high	Dark river soldier with tall standardized shield
+12	faction_north	STR	2	high	Heavy northern spear-and-round-shield kit
+13	faction_north	STR	2	high	Armored northern mounted shock unit
+14	faction_stonewood	DEX	2	high	Forest rider with bow, spear and light armor
+15	faction_stonewood	DEX	2	high	Forest rider variant with bow and light armor
+16	faction_riverspill	DEX	2	high	White-clad river rider with long reach weapon
+17	faction_dustwind	STR	2	high	Plateau yak rider with shield and armor
+18	faction_riverspill	DEX	2	high	River rider variant on armored reptile
+19	faction_north	STR	3	high	Elite fur-armored northern poleaxe fighter
+20	faction_stonewood	STR	3	high	Elite feather-and-hide forest reach fighter
+21	faction_dustwind	STR	3	high	Masterworked blue-gold plateau polearm kit
+22	faction_riverspill	STR	3	high	Elite white river spear kit
+23	faction_north	STR	3	high	Massive dark northern armor and shield
+24	faction_stonewood	INT	3	high	Elevated forest spirit and ritual regalia
+25	faction_dustwind	INT	3	medium	Monumental mobile plateau shrine-elephant system
+26	faction_riverspill	INT	3	medium	Monumental river workshop shrine-elephant system
+27	faction_north	STR	1	high	Simple northern spear and shield
+28	faction_stonewood	STR	1	medium	Simple warm-leather spear and club kit
+29	faction_dustwind	STR	1	high	Plain ochre plateau coat and shield
+30	faction_riverspill	STR	1	high	Minimal white river spear and reed shield
+31	faction_north	STR	1	high	Low-cost northern axe and round shield
+32	faction_stonewood	DEX	1	high	Low-cost forest archer
+33	faction_dustwind	DEX	2	high	Specialized mounted plateau archer
+34	faction_riverspill	STR	2	high	Trained river mace and tall-shield soldier
+35	faction_north	STR	2	high	Mounted northern spear unit
+36	faction_stonewood	DEX	2	high	Feathered forest rider and reach weapon
+37	faction_dustwind	DEX	2	high	Lamellar plateau archer
+38	faction_riverspill	DEX	2	high	River archer with bounded jewelry
+39	faction_north	STR	3	high	Elite armored northern rider
+40	faction_stonewood	INT	3	medium	High-investment feathered forest authority rig
+41	faction_dustwind	INT	3	medium	High-investment mobile plateau command shrine
+42	faction_riverspill	INT	3	medium	High-investment river ritual vehicle and focus
+43	faction_north	DEX	3	low	Ambiguous armored claw equipment bundle
+44	faction_stonewood	DEX	3	medium	Forest predator claw unit
+45	faction_dustwind	DEX	3	high	Elite plateau archer with complex carrier
+46	faction_riverspill	DEX	3	low	Ambiguous river engineering and ammunition rig
+47	faction_north	DEX	2	high	Northern bow carrier and weather cloak
+48	faction_stonewood	DEX	2	high	Forest sling specialist
+49	faction_dustwind	INT	3	low	Ambiguous plateau mechanical-attendant creature
+50	faction_riverspill	INT	3	low	Ambiguous river tablet and frame apparatus
+51	faction_north	STR	3	low	Ambiguous armored northern beast equipment
+52	faction_stonewood	DEX	3	medium	Elite feathered forest dual-blade unit
+53	faction_dustwind	INT	3	high	Plateau ritual fighter with suspended lantern
+54	faction_riverspill	INT	3	low	River engineering crane and suspended load system
+55	faction_north	STR	1	high	Simple northern crook, shield and fur layer
+56	faction_stonewood	DEX	2	low	Forest beast harness and extraction gear
+57	faction_dustwind	DEX	1	high	Light plateau spear and knife traveler
+58	faction_riverspill	STR	1	high	Plain river spear and tall shield
+59	faction_north	STR	1	high	Hooded northern spear and round shield
+60	faction_stonewood	STR	1	high	Forest cleaver and tall woven shield
+61	faction_dustwind	DEX	2	low	Ambiguous plateau beast saddle and harness
+62	faction_riverspill	DEX	1	high	Light river club-and-dart fighter
+63	faction_north	DEX	2	low	Ambiguous northern lizard harness and belt kit
+64	faction_stonewood	DEX	2	high	Feathered forest archer
+65	faction_dustwind	STR	2	high	Blue plateau lamellar spear-and-shield soldier
+66	faction_riverspill	STR	2	high	White river spear and oval shield soldier
+67	faction_north	STR	2	high	Complete northern spear-and-shield loadout
+68	faction_stonewood	STR	2	high	Complete forest reach-weapon and tall-shield loadout
+69	faction_dustwind	DEX	2	high	Gold-blue plateau archer
+70	faction_riverspill	DEX	2	low	Ambiguous river creature armor and footwear bundle
+71	faction_north	STR	2	high	Northern double-axe fighter
+72	faction_north	STR	2	high	Northern double-axe duplicate variant
+73	faction_stonewood	DEX	2	low	Forest insect harness and cutting limbs
+74	faction_riverspill	STR	2	high	River curved blade and tall shield
+75	faction_dustwind	STR	2	high	Plateau trident, flail and travel coat
+76	faction_riverspill	STR	2	high	River curved-blade tall-shield duplicate
+77	faction_north	STR	2	high	Northern spear, tall shield and weather cloak
+78	faction_north	STR	2	high	Northern spear-and-shield duplicate
+79	faction_stonewood	STR	2	high	Forest mace, shield and feather collar
+80	faction_dustwind	STR	2	high	Plateau spear fighter in blue travel cloak
+81	faction_dustwind	STR	2	high	Plateau spear fighter duplicate
+82	faction_riverspill	DEX	2	low	Ambiguous armored river beast and harness
+83	faction_north	INT	3	medium	Elevated northern wraith with prestige belt system
+84	faction_stonewood	STR	3	high	Elite feathered forest spear fighter
+85	faction_dustwind	STR	3	high	Elite plateau lamellar spear-and-shield unit
+86	faction_riverspill	STR	3	high	Elite white river spear-and-shield unit
+87	faction_north	STR	1	high	Simple northern axe and round shield
+88	faction_stonewood	DEX	1	low	Forest bird-beast harness board
+89	faction_dustwind	INT	1	high	Plain plateau hooked-focus traveler
+90	faction_riverspill	STR	1	high	Simple river club and radial shield
+91	faction_north	STR	2	high	Trained northern sword and shield unit
+92	faction_stonewood	INT	2	high	Forest plant-attendant figure
+93	faction_dustwind	DEX	2	high	Plateau composite-bow fighter
+94	faction_riverspill	INT	2	high	River fan-focus and curved-blade authority kit
+95	faction_north	STR	2	high	Northern curved blade and round shield
+96	faction_north	STR	2	medium	Dark northern axe-shield and fur kit
+97	faction_north	INT	3	high	Northern wraith, staff and lantern
+98	faction_stonewood	INT	3	high	Elite jewel-scale forest ritual fighter
+99	faction_dustwind	INT	3	high	Plateau staff and hovering blue attendant
+100	faction_riverspill	INT	3	high	White river balance-scale ritualist
+101	faction_north	INT	3	high	Elite northern torch-staff authority unit
+102	faction_stonewood	INT	3	high	Elite feathered forest ritualist
+103	faction_dustwind	INT	3	high	Elevated plateau spirit and pendant rig
+104	faction_riverspill	INT	3	high	Elite white river staff ritualist
+105	faction_north	INT	3	high	Elite dark northern staff and focus armor
+106	faction_stonewood	INT	3	high	Elite forest crown, heavy staves and ritual focus
+107	faction_dustwind	STR	3	high	Elite plateau dual-hammer armor
+108	faction_north	INT	3	high	Northern winter-cloak lantern-staff fighter
+109	faction_stonewood	INT	3	high	Elevated forest spirit with clawed growths
+110	faction_dustwind	INT	3	high	Plateau lantern and claw ritual fighter
+111	faction_riverspill	INT	3	high	White river twin-lantern staff authority unit
+112	faction_north	DEX	2	medium	Mobile dual-axe fighter with bounded blue textile
+113	faction_stonewood	STR	2	high	Forest giant-club fighter and red woven armor
+114	faction_dustwind	INT	2	high	Plateau bell-and-balance ritual fighter
+115	faction_riverspill	INT	3	high	Elevated blue river spirit with measured jewelry
+116	faction_north	INT	3	medium	Gray northern lantern wraith
+117	faction_north	MISC	0	low	Composite board containing several unrelated characters
+118	faction_north	INT	2	high	Older northern lantern-staff traveler
+119	faction_stonewood	INT	3	high	Forest spirit with mask and feathered growths
+120	faction_dustwind	INT	3	high	Prestige plateau lantern and layered robe authority
+121	faction_riverspill	INT	3	high	White river staff ritualist with suspended frame
+122	faction_north	DEX	2	medium	Feather-claw skirmisher in ochre travel clothing
+123	faction_stonewood	DEX	2	high	Hooded forest claw fighter
+124	faction_riverspill	DEX	2	medium	Dark river claw fighter with pale waist textile
+125	faction_stonewood	DEX	3	medium	Elevated forest beast and claw equipment
+126	faction_north	INT	2	high	Northern lantern traveler
+127	faction_stonewood	DEX	2	low	Winged forest beast harness and pack
+128	faction_dustwind	INT	2	high	Blue-clad plateau lantern and preparation carrier
+129	faction_riverspill	DEX	2	high	White river claw fighter
+130	faction_north	STR	2	high	Northern paired heavy-club armor
+131	faction_stonewood	STR	2	high	Feathered forest heavy-club fighter
+132	faction_stonewood	INT	3	medium	Elevated forest spirit with metallic growths
+133	faction_riverspill	STR	2	high	White river heavy-club fighter
+134	faction_stonewood	INT	3	high	Feathered forest lantern ritualist
+135	faction_north	DEX	3	low	Ambiguous armored northern beast carrier
+136	faction_stonewood	INT	3	high	Forest lantern ritualist with feather construction
+137	faction_dustwind	DEX	2	high	Plateau claw fighter in blue-red armor
+138	faction_riverspill	INT	2	high	White river lantern and framed carrier
+139	faction_north	INT	2	high	Fur-clad northern horn and staff traveler
+140	faction_stonewood	INT	2	high	Feathered forest cage-focus carrier
+141	faction_dustwind	INT	2	high	Plateau hooded cage-focus traveler
+142	faction_riverspill	INT	2	high	River scroll, staff and portable ritual kit
+143	faction_north	STR	2	high	Northern axe, tall shield and dark weather armor
+144	faction_stonewood	STR	2	medium	Warm lamellar curved-sword and hide-shield fighter
+145	faction_dustwind	STR	2	high	Plateau broad-axe and tall-shield fighter
+146	faction_riverspill	STR	2	high	River mace, patterned shield and standardized armor
+147	faction_north	STR	2	high	Northern axe-and-shield duplicate
+148	faction_stonewood	STR	2	medium	Warm lamellar sword-and-shield duplicate
+149	faction_dustwind	STR	2	high	Plateau axe-and-shield duplicate
+150	faction_riverspill	STR	2	high	River mace-and-shield duplicate
+151	faction_north	STR	2	high	Heavy northern hammer, shield and fur armor
+152	faction_stonewood	STR	2	high	Feathered forest sickle and octagonal shield
+153	faction_dustwind	STR	2	high	Purple plateau axe and slotted shield
+154	faction_riverspill	STR	2	high	River sickle and polychrome shield
+155	faction_north	STR	2	high	Northern antler-hood axe and tall shield
+156	faction_stonewood	STR	2	medium	Forest sword, tall shield and framed carrier
+157	faction_dustwind	STR	2	high	Plateau axe, slotted shield and pack
+158	faction_riverspill	STR	2	high	White river sickle, tall shield and censer
+159	faction_north	STR	2	high	Dark northern axe, tall shield and backpack
+160	faction_riverspill	INT	2	high	White river shield-bearer with measured hand focus
+161	faction_dustwind	STR	2	high	Purple plateau axe and hide shield
+162	faction_riverspill	INT	2	high	River curved blade and balance focus

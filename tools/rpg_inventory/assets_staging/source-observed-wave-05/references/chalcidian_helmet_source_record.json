@@ -1,0 +1,87 @@
+{
+  "candidate": "helmet_open_bronze_chalcidian",
+  "primary_source": {
+    "institution": "The Metropolitan Museum of Art",
+    "object_id": 257636,
+    "object_number": "2003.407.2",
+    "title": "Bronze helmet of Chalcidian type",
+    "culture": "Greek",
+    "period": "Classical",
+    "date": "5th–4th century BCE",
+    "medium": "bronze",
+    "dimensions": {
+      "height_cm": 24.1,
+      "width_cm": 19.7,
+      "depth_cm": 24.8
+    },
+    "museum_note": "This example represents a variant in which the cheek pieces are hinged rather than in one continuous piece.",
+    "object_record": "https://www.metmuseum.org/art/collection/search/257636",
+    "open_access_image": "https://images.metmuseum.org/CRDImages/gr/original/DP105636.jpg",
+    "local_reference": "met_257636_2003.407.2_hinged_chalcidian_helmet.jpg",
+    "sha256": "0b4f1851bc147a98621bd7d3092e819120953ed638792ed7c7e1df291b5befb0",
+    "source_role": "Primary complete-depth and hinged-cheek construction lock."
+  },
+  "front_structure_counterpart": {
+    "institution": "The Metropolitan Museum of Art",
+    "object_id": 247113,
+    "object_number": "04.27.3",
+    "title": "Bronze helmet of Chalcidian type",
+    "culture": "Greek",
+    "period": "Archaic",
+    "date": "2nd half of the 6th century BCE",
+    "medium": "Bronze",
+    "dimensions": {
+      "height_cm": 20
+    },
+    "object_record": "https://www.metmuseum.org/art/collection/search/247113",
+    "open_access_image": "https://images.metmuseum.org/CRDImages/gr/original/2248.jpg",
+    "local_reference": "met_247113_04.27.3_chalcidian_helmet.jpg",
+    "sha256": "b6e594edd0ebd0e62685e64c939e0d2876b256b523974d828b25b7df512c3883",
+    "source_role": "Corroborating brow, eye-opening, nasal, and paired fixed-cheek geometry; its incised brow treatment is not an ornament reference."
+  },
+  "multi_view_counterpart": {
+    "institution": "The British Museum",
+    "museum_number": "1873,0820.225",
+    "title": "Bronze helmet of the so-called Chalcidian type",
+    "culture": "Western Greek",
+    "date": "circa 510 BCE",
+    "production_place": "Puglia",
+    "medium": "bronze",
+    "dimensions_as_published": [
+      "Height: 22.86 cm",
+      "Height: 29.20 cm",
+      "Length: 27 cm",
+      "Weight: 1.15 kg"
+    ],
+    "object_record": "https://www.britishmuseum.org/collection/object/G_1873-0820-225",
+    "local_references": [
+      {
+        "file": "bm_1873-0820-225_chalcidian_front.jpg",
+        "sha256": "87fb2856ff7ba87f9c81c76b2ff40715ccbb90813a2cc111c8c6a03c0765fe10"
+      },
+      {
+        "file": "bm_1873-0820-225_chalcidian_profile.jpg",
+        "sha256": "1be01f4d3d3d7557739a9346c9a23eabfb85522fa56ea48034408e8b6ccd66f4"
+      },
+      {
+        "file": "bm_1873-0820-225_chalcidian_rear.jpg",
+        "sha256": "8f116d6e3aea412816b10ece723beb2974fbdb9ef5db55cb8da480ee57b17150"
+      }
+    ],
+    "source_role": "Corroborating multi-view evidence for the complete bowl/back, fixed cheek counterparts, ear cutouts, facial opening, and neck edge. Archaeological breaks and corrosion are explicitly excluded."
+  },
+  "additional_complete_object_consulted": {
+    "institution": "The Walters Art Museum",
+    "accession_number": "54.2468",
+    "title": "Chalcidian-Type Helmet",
+    "culture": "Greek",
+    "period": "Late Archaic",
+    "date": "circa 500 BCE",
+    "medium": "bronze",
+    "dimensions_cm": "30.1 x 18.5 x 23.5",
+    "museum_note": "Curved cheekpieces attached by pins terminating in snake heads.",
+    "object_record": "https://art.thewalters.org/object/54.2468/",
+    "source_role": "Complete museum corroboration for curved attached cheekpieces. The snake-head pin terminals are object-specific ornament and are not authorized for the plain roster target.",
+    "local_image_status": "Official downloads were blocked by the museum site's browser challenge; no Walters image was saved."
+  }
+}

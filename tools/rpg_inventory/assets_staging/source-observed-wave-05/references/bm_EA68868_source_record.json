@@ -1,0 +1,60 @@
+{
+  "source_role": "Official British Museum catalogue and image metadata for exact-source audit.",
+  "object_record": "https://www.britishmuseum.org/collection/object/Y_EA68868",
+  "api_endpoint": "https://www.britishmuseum.org/api/_object?id=Y_EA68868",
+  "object_type": "signet-ring",
+  "museum_number": "EA68868",
+  "registration_number": "1976,1030.1",
+  "prn": "YCA69230",
+  "title": "Gold signet-ring of Sheshonq",
+  "culture_or_period": "26th Dynasty",
+  "production_date": "circa 575 BCE",
+  "findspot": "Thebes, Upper Egypt (?)",
+  "material": "gold",
+  "techniques": [
+    "mould-made",
+    "incised"
+  ],
+  "dimensions": {
+    "diameter_cm": 3,
+    "height_cm": 3.5,
+    "length_cm": 2.4,
+    "weight_g": 82
+  },
+  "construction": {
+    "bezel_shape": "lozenge",
+    "bezel_back": "The bezel is so thick that its back was cut away to accommodate the wearer's finger.",
+    "assembly": "The shank and bezel were made in separate moulds and joined together."
+  },
+  "inscription": {
+    "position": "bezel",
+    "script": "hieroglyphic",
+    "technique": "incised",
+    "identity": "Name of Sheshonq and title 'Chief Steward of the divine adoratrice'.",
+    "function": "The bezel could be pressed into mud to seal documents and objects."
+  },
+  "condition": "good",
+  "official_views": [
+    {
+      "file": "bm_EA68868_gold_signet_view_01.jpg",
+      "source": "https://media.britishmuseum.org/media/Repository/Documents/2014_10/6_11/f42a8235_74bb_483d_a4a4_a3bc00ba9384/max_00409277_001.jpg",
+      "dimensions_px": "2500x1930",
+      "sha256": "1320a5ec818b87444d5e470cc22921bda3f15fbd26f159ad0830540a34087f33",
+      "role": "Primary full-object three-quarter face view: complete hoop, shoulders, thick lozenge bezel, and defining inscription."
+    },
+    {
+      "file": "bm_EA68868_gold_signet_view_02.jpg",
+      "source": "https://media.britishmuseum.org/media/Repository/Documents/2014_10/1_6/650bf122_4779_4f14_8368_a3b70072e0e8/max_00034193_001.jpg",
+      "dimensions_px": "2500x1933",
+      "sha256": "4cbbf3760fa087fa9984282be17adc6152743aa5f37ae35b35218eac14dcba83",
+      "role": "Alternate full-object face view on dark ground; corroborates silhouette and proportions."
+    },
+    {
+      "file": "bm_EA68868_gold_signet_view_03.jpg",
+      "source": "https://media.britishmuseum.org/media/Repository/Documents/2014_10/2_18/4e9cc0af_9d72_40c1_8d83_a3b8012dba0e/max_00321599_001.jpg",
+      "dimensions_px": "2381x2500",
+      "sha256": "81161f9d04776a2adda40c0ec4182ce5225adc07eb7e25d55c1a34362f1d1379",
+      "role": "Oblique side/underside view: hoop opening, thick bezel depth, shoulders, and finger-accommodation cutaway."
+    }
+  ]
+}

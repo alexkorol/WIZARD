@@ -1,0 +1,79 @@
+[
+  {
+    "number": 1,
+    "art_id": "source_dustwind_clipped_body_shield",
+    "name": "Clipped-Corner Body Shield",
+    "canvas": "P",
+    "grid": "2x3",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-02\\prompts\\01__source_dustwind_clipped_body_shield.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - STR - tier 2\\201__p3__ChatGPT Image Jul 13, 2026, 05_05_53 PM.png",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\met_244565_shield_boss_plain.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-02\\raw\\source_dustwind_clipped_body_shield.png"
+  },
+  {
+    "number": 2,
+    "art_id": "source_river_calf_wrap_sandals",
+    "name": "River Calf-Wrap Sandals",
+    "canvas": "S",
+    "grid": "2x2",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-02\\prompts\\02__source_river_calf_wrap_sandals.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - DEX - tier 1\\091__p4__ChatGPT Image Jul 11, 2026, 07_41_05 PM.png",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\user_reference_footwear_history_sheet.png"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-02\\raw\\source_river_calf_wrap_sandals.png"
+  },
+  {
+    "number": 3,
+    "art_id": "source_dustwind_woven_lobed_buckler",
+    "name": "Woven Lobed Buckler",
+    "canvas": "S",
+    "grid": "2x2",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-02\\prompts\\03__source_dustwind_woven_lobed_buckler.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - INT - tier 2\\215__p3__ChatGPT Image Jul 13, 2026, 05_07_09 PM.png",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\met_544843_basket_egyptian_palm.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-02\\raw\\source_dustwind_woven_lobed_buckler.png"
+  },
+  {
+    "number": 4,
+    "art_id": "source_dustwind_bronze_lozenge_amulet",
+    "name": "Faceted Bronze Lozenge",
+    "canvas": "S",
+    "grid": "1x1",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-02\\prompts\\04__source_dustwind_bronze_lozenge_amulet.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - DEX - tier 3\\165__p3__ChatGPT Image Jul 11, 2026, 07_45_36 PM.png"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-02\\raw\\source_dustwind_bronze_lozenge_amulet.png"
+  },
+  {
+    "number": 5,
+    "art_id": "source_stonewood_bound_longbow",
+    "name": "Bound Long Self Bow",
+    "canvas": "P",
+    "grid": "2x4",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-02\\prompts\\05__source_stonewood_bound_longbow.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_stonewood - DEX - tier 1\\ChatGPT Image Jul 12, 2026, 09_25_56 PM (2).png",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\pinterest_promoted\\pinterest_64a5b627f42b.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-02\\raw\\source_stonewood_bound_longbow.png"
+  },
+  {
+    "number": 6,
+    "art_id": "source_north_socketed_hook_sickle",
+    "name": "Socketed Hook Sickle",
+    "canvas": "P",
+    "grid": "1x3",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-02\\prompts\\06__source_north_socketed_hook_sickle.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_north - INT - tier 2\\014__p1__8c5cdf25-b299-42ae-8754-208ea02ea9b6.png",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\met_244233_sickle_cypriot_bronze.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-02\\raw\\source_north_socketed_hook_sickle.png"
+  }
+]

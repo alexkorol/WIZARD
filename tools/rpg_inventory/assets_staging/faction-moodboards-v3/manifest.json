@@ -1,0 +1,320 @@
+{
+  "version": 3,
+  "format": "2048x3072 portrait organic visual collage",
+  "visible_text": "faction name only",
+  "source_policy": "Only approved ladder art, user-supplied visual-direction examples, and curated Pinterest/reconstruction sources. Ordinary staged item studies are rejected by the builder.",
+  "factions": {
+    "faction_north": {
+      "title": "NORTHERN BRONZE HOUSES",
+      "board_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\faction_north__visual-moodboard-v3.jpg",
+      "sources": [
+        {
+          "key": "faction_north_str_t1_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_north - STR - tier 1\\ChatGPT Image Jul 9, 2026, 09_40_32 PM (1).png",
+          "role": "approved_project_ladder",
+          "transfer": "Faction equipment culture, silhouette, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every object or let this board override prompt-specific Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\faction_north_str_t1_ladder.png"
+        },
+        {
+          "key": "faction_north_str_t3_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_north - STR - tier 3\\ChatGPT Image Jul 9, 2026, 09_40_32 PM (3).png",
+          "role": "approved_project_ladder",
+          "transfer": "Faction equipment culture, silhouette, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every object or let this board override prompt-specific Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\faction_north_str_t3_ladder.png"
+        },
+        {
+          "key": "north_bright_bronze_warrior",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\example_03.png",
+          "role": "user_visual_direction_equip",
+          "transfer": "Heroic bronze mass, shield scale, and bright ancient-fantasy energy.",
+          "do_not_transfer": "Horn/spiral crest, exact costume, all-over elite metal, or late manufacture.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\north_bright_bronze_warrior.png"
+        },
+        {
+          "key": "north_bright_archer",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\example_04.png",
+          "role": "user_visual_direction_equip",
+          "transfer": "Complete archer silhouette, bow-to-body scale, and bright material separation.",
+          "do_not_transfer": "Costume piping, tassels, emblems, exact armor, or modern tailoring.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\north_bright_archer.png"
+        },
+        {
+          "key": "north_armor_plate",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\example_01.png",
+          "role": "user_visual_direction_layout",
+          "transfer": "Laid-out armor-system presentation and readable component families.",
+          "do_not_transfer": "Masks/faces, mail, exact regalia, text, or culture-specific ornament.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\north_armor_plate.png"
+        },
+        {
+          "key": "north_scale_armor_pinterest",
+          "path": "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\pinterest_promoted\\pinterest_299f87f23afe.jpg",
+          "role": "curated_pinterest_visual_direction",
+          "transfer": "Bright scale-armor silhouettes and coverage variety.",
+          "do_not_transfer": "Exact illustrations, captions, late details, or automatic metal use.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\north_scale_armor_pinterest.jpg"
+        },
+        {
+          "key": "north_tool_family_pinterest",
+          "path": "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\pinterest_promoted\\pinterest_16408d0f75a5.jpg",
+          "role": "curated_pinterest_visual_direction",
+          "transfer": "Whole-tool family rhythm, haft variety, and warm active-service bronze.",
+          "do_not_transfer": "Hybridizing tools, exact decoration, or modern finish.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\north_tool_family_pinterest.jpg"
+        },
+        {
+          "key": "north_replica_shields",
+          "path": "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\replica_reconstruction\\bronze_age_replica_weapon_shield_experiment.jpg",
+          "role": "complete_replica_visual_direction",
+          "transfer": "Healthy complete shields/weapons, believable scale, and active-use color.",
+          "do_not_transfer": "Exact painted pattern, modern workshop context, or bronze on cheap cloth.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\north_replica_shields.jpg"
+        }
+      ]
+    },
+    "faction_stonewood": {
+      "title": "CEDAR–OBSIDIAN CLANS",
+      "board_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\faction_stonewood__visual-moodboard-v3.jpg",
+      "sources": [
+        {
+          "key": "faction_stonewood_str_t1_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_stonewood - STR - tier 1\\ChatGPT Image Jul 9, 2026, 09_38_33 PM (1).png",
+          "role": "approved_project_ladder",
+          "transfer": "Faction equipment culture, silhouette, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every object or let this board override prompt-specific Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\faction_stonewood_str_t1_ladder.png"
+        },
+        {
+          "key": "faction_stonewood_str_t3_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_stonewood - STR - tier 3\\ChatGPT Image Jul 9, 2026, 09_38_35 PM (6).png",
+          "role": "approved_project_ladder",
+          "transfer": "Faction equipment culture, silhouette, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every object or let this board override prompt-specific Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\faction_stonewood_str_t3_ladder.png"
+        },
+        {
+          "key": "stonewood_equipped_warrior",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\example_02.png",
+          "role": "user_visual_direction_equip",
+          "transfer": "Complete organic-heavy warrior silhouette, coverage, and carried-item scale.",
+          "do_not_transfer": "Mask, faces, coins, exact regalia, motifs, or metal abundance.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\stonewood_equipped_warrior.png"
+        },
+        {
+          "key": "stonewood_tooth_club",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\example_05.png",
+          "role": "user_visual_direction_object",
+          "transfer": "Aggressive handmade edge rhythm and readable long-weapon silhouette.",
+          "do_not_transfer": "Animal-tooth substitution, metal repair, or exact culture identity.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\stonewood_tooth_club.png"
+        },
+        {
+          "key": "stonewood_club_typology",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\example_06.png",
+          "role": "user_visual_direction_family",
+          "transfer": "Broad handmade club-family variety and strong macro silhouettes.",
+          "do_not_transfer": "Combining forms, teeth/spikes as defaults, or provenance claims.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\stonewood_club_typology.png"
+        },
+        {
+          "key": "stonewood_fantastic_obsidian_axe",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\example_09.png",
+          "role": "user_visual_direction_arpg",
+          "transfer": "Bold black-stone ARPG silhouette, drama, and high-tier visual ambition.",
+          "do_not_transfer": "Glossy modern haft, impossible seamless join, exact form, or machined polish.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\stonewood_fantastic_obsidian_axe.png"
+        },
+        {
+          "key": "stonewood_obsidian_weapon_group",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\type_example_01.png",
+          "role": "user_visual_direction_family",
+          "transfer": "Multiple wood/black-stone weapon scales and bright handmade presentation.",
+          "do_not_transfer": "Spiral/carved motifs, exact objects, or multiplying obsidian teeth by default.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\stonewood_obsidian_weapon_group.png"
+        },
+        {
+          "key": "stonewood_macana_group",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\type_example_02.png",
+          "role": "user_visual_direction_family",
+          "transfer": "A family of large readable paddle/edge silhouettes.",
+          "do_not_transfer": "Modern materials, molded grips, exact decoration, or machine precision.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\stonewood_macana_group.png"
+        }
+      ]
+    },
+    "faction_dustwind": {
+      "title": "DUSTWIND STEPPE HOUSES",
+      "board_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\faction_dustwind__visual-moodboard-v3.jpg",
+      "sources": [
+        {
+          "key": "faction_dustwind_str_t1_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - STR - tier 1\\ChatGPT Image Jul 9, 2026, 09_42_24 PM (1).png",
+          "role": "approved_project_ladder",
+          "transfer": "Faction equipment culture, silhouette, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every object or let this board override prompt-specific Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\faction_dustwind_str_t1_ladder.png"
+        },
+        {
+          "key": "faction_dustwind_dex_t3_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_dustwind - DEX - tier 3\\ChatGPT Image Jul 9, 2026, 09_42_25 PM (6).png",
+          "role": "approved_project_ladder",
+          "transfer": "Faction equipment culture, silhouette, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every object or let this board override prompt-specific Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\faction_dustwind_dex_t3_ladder.png"
+        },
+        {
+          "key": "dustwind_steppe_archer_callout",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\type_example_04.png",
+          "role": "user_visual_direction_equip",
+          "transfer": "Full steppe archer kit, garment layering, bow scale, and object callouts.",
+          "do_not_transfer": "Loaded quiver/arrows, exact motifs, labels, or jewelry.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\dustwind_steppe_archer_callout.png"
+        },
+        {
+          "key": "dustwind_bright_archer",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\example_04.png",
+          "role": "user_visual_direction_equip",
+          "transfer": "Bright heroic archer silhouette and clear slot separation.",
+          "do_not_transfer": "All-over metal, tassels, emblems, exact armor, or modern costume finish.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\dustwind_bright_archer.png"
+        },
+        {
+          "key": "dustwind_scale_armor_pinterest",
+          "path": "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\pinterest_promoted\\pinterest_299f87f23afe.jpg",
+          "role": "curated_pinterest_visual_direction",
+          "transfer": "Bright ancient armor variety and layered coverage.",
+          "do_not_transfer": "Captions, exact costume, or pushing metal into low tiers.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\dustwind_scale_armor_pinterest.jpg"
+        },
+        {
+          "key": "dustwind_archery_pinterest",
+          "path": "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\pinterest_promoted\\pinterest_64a5b627f42b.jpg",
+          "role": "curated_pinterest_visual_direction",
+          "transfer": "Bow family, archer equipment relationships, and energetic reconstruction art.",
+          "do_not_transfer": "Loaded quiver/arrows, text, exact costume, or later bow technology.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\dustwind_archery_pinterest.jpg"
+        },
+        {
+          "key": "dustwind_scythian_plate",
+          "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Scythian_warriors_%28reconstruction%29.jpg",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Scythian_warriors_(reconstruction).jpg",
+          "role": "complete_reconstruction_visual_direction",
+          "transfer": "Complete steppe silhouettes, layered color, and coherent carried kits.",
+          "do_not_transfer": "19th-century assumptions, exact patterns, or loaded quivers.",
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\dustwind_scythian_plate.jpg"
+        },
+        {
+          "key": "dustwind_ancient_role_group",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\type_example_07.png",
+          "role": "user_visual_direction_equip",
+          "transfer": "Dynamic ancient role variety, light/heavy contrast, and mobile silhouettes.",
+          "do_not_transfer": "Exact motifs, loaded quivers, culture blending, or copied costume.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\dustwind_ancient_role_group.png"
+        }
+      ]
+    },
+    "faction_riverspill": {
+      "title": "RIVERSPILL NILE–ZIGGURAT KINGDOMS",
+      "board_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\faction_riverspill__visual-moodboard-v3.jpg",
+      "sources": [
+        {
+          "key": "faction_riverspill_str_t1_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - STR - tier 1\\ChatGPT Image Jul 9, 2026, 09_29_09 PM (1).png",
+          "role": "approved_project_ladder",
+          "transfer": "Faction equipment culture, silhouette, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every object or let this board override prompt-specific Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\faction_riverspill_str_t1_ladder.png"
+        },
+        {
+          "key": "faction_riverspill_int_t1_ladder",
+          "path": "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - INT - tier 1\\ChatGPT Image Jul 9, 2026, 09_29_10 PM (7).png",
+          "role": "approved_project_ladder",
+          "transfer": "Faction equipment culture, silhouette, material placement, and coherent loadout.",
+          "do_not_transfer": "Do not extract every object or let this board override prompt-specific Images A/B.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\faction_riverspill_int_t1_ladder.png"
+        },
+        {
+          "key": "riverspill_predynastic_warriors",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\type_example_05.png",
+          "role": "user_visual_direction_family",
+          "transfer": "Bright low-metal warrior range, organic shields, clubs, bows, and role variety.",
+          "do_not_transfer": "Loaded quivers/arrows, labels, exact costumes, or unverified armor claims.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\riverspill_predynastic_warriors.png"
+        },
+        {
+          "key": "riverspill_ancient_roles",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\type_example_06.png",
+          "role": "user_visual_direction_equip",
+          "transfer": "Clean ancient archer/spearman silhouettes, drape, sandals, and weapon scale.",
+          "do_not_transfer": "Exact patterns, arrows, jewelry, or treating the illustration as artifact evidence.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\riverspill_ancient_roles.png"
+        },
+        {
+          "key": "riverspill_dynamic_warriors",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\type_example_07.png",
+          "role": "user_visual_direction_equip",
+          "transfer": "Dynamic role silhouettes, light/heavy kit contrast, and bright ancient energy.",
+          "do_not_transfer": "Loaded quivers, exact motifs, or blending every culture shown.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\riverspill_dynamic_warriors.png"
+        },
+        {
+          "key": "riverspill_bronze_hero",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\example_03.png",
+          "role": "user_visual_direction_arpg",
+          "transfer": "Elite bronze drama, shield mass, and high-tier ARPG heroism.",
+          "do_not_transfer": "Spiral horn crest, exact costume, or all-over bronze below elite tiers.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\riverspill_bronze_hero.png"
+        },
+        {
+          "key": "riverspill_fantastic_trident",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\example_11.png",
+          "role": "user_visual_direction_arpg",
+          "transfer": "Fantastic high-tier implement silhouette and bold negative space.",
+          "do_not_transfer": "Exact form, faces, sacred meaning, iron/steel finish, or modern replica construction.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\riverspill_fantastic_trident.png"
+        },
+        {
+          "key": "riverspill_fantastic_axe",
+          "path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v2\\user-supplied\\example_12.png",
+          "role": "user_visual_direction_arpg",
+          "transfer": "Large readable crescent silhouette and ornate high-tier visual ambition.",
+          "do_not_transfer": "Exact object, spiral engraving, cast fantasy fittings, or later manufacture.",
+          "source_url": null,
+          "prepared_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\faction-moodboards-v3\\sources\\riverspill_fantastic_axe.png"
+        }
+      ]
+    }
+  }
+}

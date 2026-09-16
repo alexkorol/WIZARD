@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "purpose": "Structured labels for the item-generation QA and archive UI.",
+  "failure_codes": [
+    {
+      "id": "material_incompatible_assembly",
+      "label": "Incompatible material assembly",
+      "description": "Individually plausible materials are combined in a mechanically implausible role or interface.",
+      "examples": [
+        "woven plant-stem stripe spliced through a bronze helmet shell",
+        "rectangular stone or obsidian tiles woven into a flexible mitt or cuff",
+        "brittle mineral plate placed across an articulated joint"
+      ]
+    },
+    {
+      "id": "material_missing_join_logic",
+      "label": "Missing join logic",
+      "description": "Dissimilar parts touch without credible backing, overlap, holes, lacing, rivets, socketing, wrapping, or edge binding."
+    },
+    {
+      "id": "material_hierarchy_inversion",
+      "label": "Material hierarchy inversion",
+      "description": "A low-cost soft or plant material is used as exposed prestige decoration on a higher-value hard-material object instead of serving a functional supporting role.",
+      "examples": [
+        "reed or straw crest filler framed as ornament on a bronze helmet",
+        "woven bast stripe decorating a brass shell",
+        "felt panel used as an exposed inlay on a metal gauntlet"
+      ]
+    },
+    {
+      "id": "construction_family_hybrid",
+      "label": "Incoherent construction-family hybrid",
+      "description": "The object combines two incompatible base families instead of committing to one mechanically legible construction system.",
+      "examples": [
+        "comfortable quilted mitten with isolated bronze rectangles pasted onto the backhand",
+        "woven helmet with decorative brass bands or plates",
+        "metal helmet whose main dome is broken into ornamental reed panels"
+      ]
+    },
+    {
+      "id": "structure_missing_counterpart",
+      "label": "Missing structural counterpart",
+      "description": "A normally paired or continuous component exists on only one visible side and the hidden counterpart is not mechanically implied.",
+      "examples": [
+        "one-sided helmet neck guard",
+        "single cheek plate with no opposite hinge",
+        "one shoulder defense missing from an otherwise symmetric armor"
+      ]
+    },
+    {
+      "id": "structure_incomplete_continuity",
+      "label": "Broken structural continuity",
+      "description": "A rim, neck guard, band, backing, strap path, or load-bearing part stops or changes arbitrarily across the object."
+    },
+    {
+      "id": "tier_material_overbuild",
+      "label": "Material density exceeds tier",
+      "description": "The amount, rarity, precision, or coverage of reinforcement exceeds the assigned power tier."
+    },
+    {
+      "id": "outerwear_shingled",
+      "label": "Shingled cloak pattern",
+      "description": "A cloak or mantle is incorrectly converted into rows of scale-like tabs, feathers, or lamellar imitation."
+    },
+    {
+      "id": "surface_archaeological_decay",
+      "label": "Archaeological decay finish",
+      "description": "Usable equipment incorrectly copies an excavated artifact's corrosion, heavy patina, pitting, encrustation, burial staining, fading, cracks, or missing material."
+    },
+    {
+      "id": "surface_overdistressed",
+      "label": "Over-distressed surface",
+      "description": "Wear and damage cover most of the item instead of remaining light, localized, and compatible with active service."
+    }
+  ]
+}

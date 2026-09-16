@@ -1,0 +1,32 @@
+{
+  "source_role": "Official British Museum catalogue metadata snapshot; not an image reference.",
+  "object_record": "https://www.britishmuseum.org/collection/object/Y_EA36304",
+  "api_endpoint": "https://www.britishmuseum.org/api/_object?id=Y_EA36304",
+  "museum_number": "EA36304",
+  "prn": "YCA43592",
+  "registration_number": "1902,0412.4",
+  "object_type": "ewer",
+  "description": "Bronze ewer with a flat base decorated with incised concentrics and three low feet, a bulbous body, an everted rim and a decorated handle with a lotiform terminal.",
+  "materials": [
+    "bronze",
+    "copper alloy",
+    "tin alloy"
+  ],
+  "technique": [
+    "incised"
+  ],
+  "dimensions": {
+    "height_cm": 25,
+    "diameter_cm": 16.8
+  },
+  "findspot_or_acquisition_place": "Egypt",
+  "condition": "Fair; some corrosion.",
+  "acquisition": "Purchased in 1902 through Rev Chauncey Murch from Mohammed Mohassib.",
+  "department": "Egypt and Sudan",
+  "display_status": "Not on display",
+  "production_date_in_record": null,
+  "culture_or_period_in_record": null,
+  "reconstruction_or_conservation_statement_in_record": null,
+  "multimedia_attached_in_api_response": false,
+  "audit_note": "The official record supplied catalogue metadata but no downloadable official photograph or alternate view. Acquisition date and findspot do not establish a production date or cultural attribution."
+}

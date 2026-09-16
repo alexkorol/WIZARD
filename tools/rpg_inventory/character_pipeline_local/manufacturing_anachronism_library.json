@@ -1,0 +1,277 @@
+{
+  "version": 1,
+  "purpose": "Prevent image models from completing pre-ancient equipment with modern manufactured details.",
+  "universal": {
+    "avoid": [
+      "machine-perfect bilateral symmetry",
+      "identical repeated parts with factory tolerances",
+      "laser-straight edges and uniform perforations",
+      "dense perfectly regular machine stitching",
+      "chrome-like plating or flawless automotive polish",
+      "seamless molded compound curves",
+      "standardized modern screws, nuts, bolts, washers, snaps, or rivets",
+      "zippers, hook-and-loop tape, plastic, elastic, rubber, or synthetic webbing",
+      "modern logos, serial numbers, readable labels, or maker marks"
+      ,"narrow woven reed, plant-stem, basketry, or cloth stripe spliced through the middle of a continuous metal shell"
+      ,"carefully cut rectangular stone, obsidian, ceramic, or glass tiles woven into flexible clothing, mitts, cuffs, or articulated joints"
+      ,"dissimilar materials touching with no credible backing, overlap, holes, lacing, rivets, socket, wrapping, or edge binding"
+      ,"heavy archaeological patina, green verdigris coverage, black corrosion crust, powdery oxidation, burial staining, deep pitting, encrustation, flaking metal, rotten fiber, or all-over distressed texture"
+      ,"reed, straw, bast, wicker, coarse fiber, or felt used as exposed prestige decoration, crest filler, ornamental stripe, or inlay on a bronze, brass, or other high-value metal object"
+      ,"soft comfortable-looking mitt or cap with isolated hard plaques pasted onto it"
+    ],
+    "prefer": [
+      "small hand-made variation",
+      "hand-cut and hand-punched edges",
+      "sparse functional stitching, lacing, wrapping, pegs, thongs, or hammered rivets",
+      "tool marks, irregular hammering, abrasion, repairs, and material-specific wear",
+      "parts sized and joined by practical pre-ancient workshop methods"
+      ,"active-service condition with healthy material color, light handling polish, shallow scratches, small repairs, and mild localized tarnish only"
+    ]
+  },
+  "by_class": {
+    "legs_footwear": {
+      "avoid": [
+        "welted shoe construction",
+        "molded or reinforced modern toe box",
+        "sneaker-like quarter, vamp, and overlay panel seams",
+        "thick stacked, lugged, cushioned, or rubber-like sole",
+        "modern metal eyelets and evenly spaced factory laces",
+        "raised sole sidewall or separate modern heel",
+        "highly standardized left and right shoe lasts"
+      ],
+      "prefer": [
+        "one-piece wrapped rawhide shoe",
+        "woven bast or fiber shoe",
+        "simple felt foot bag",
+        "thong-fastened sandal",
+        "thin flat hand-cut hide, fiber, or wood sole",
+        "raw pierced lacing holes with no metal eyelets",
+        "sparse hand lacing or turned seam",
+        "single thin sole silhouette with no raised sidewall or heel"
+      ]
+    },
+    "body_armor": {
+      "avoid": [
+        "modern tailored vest pattern",
+        "motorcycle or tactical armor paneling",
+        "vacuum-formed breastplate curves",
+        "uniform industrial grommets",
+        "modern quick-release buckle",
+        "separate suspender-like shoulder straps, D-rings, or buckled harness hardware",
+        "precisely identical stamped scales"
+      ],
+      "prefer": [
+        "hammered sheet plates",
+        "hand-cut scales with slight variation",
+        "visible overlap and load-bearing lacing",
+        "woven or felt backing",
+        "continuous textile shoulder body with no separate suspender straps",
+        "simple thongs, pins, toggles, or hammered rivets"
+      ]
+    },
+    "headgear": {
+      "avoid": [
+        "modern sports helmet padding",
+        "injection-molded shell",
+        "machine-cut ventilation slots",
+        "modern chin-strap buckle",
+        "welded fantasy cage",
+        "woven plant-fiber stripe inserted through a bronze helmet shell",
+        "reed, straw, bast, wicker, coarse fiber, or felt used as decorative crest filler, stripe, or panel on a bronze or brass helmet",
+        "woven or felt helmet cosmetically decorated with metal plates or bands",
+        "neck guard, cheek guard, ear flap, hinge, or attachment present on only one side without an explicit asymmetric design",
+        "rear neck protection that does not continue across the back of the helmet"
+      ],
+      "prefer": [
+        "hammered or segmented metal-led shell with organic material limited to narrow functional lining, ties, or suspension",
+        "materially continuous sewn textile, felt, bark-fiber, or woven cap with no metal ornament",
+        "rawhide thong tie",
+        "simple cheek plates and hand-rolled rim"
+      ]
+    },
+    "shield": {
+      "avoid": [
+        "plywood-perfect laminations",
+        "modern bolts and washers",
+        "front-facing arm straps",
+        "machine-cut identical edging",
+        "perfectly circular factory geometry"
+      ],
+      "prefer": [
+        "wicker, plank, hide, or hammered sheet construction",
+        "rear grip logic",
+        "hand-lashed rim",
+        "pegs, rawhide, fiber binding, or hammered fasteners"
+      ]
+    },
+    "hands_arms": {
+      "avoid": [
+        "modern five-finger glove pattern",
+        "fingerless glove",
+        "sports glove padding",
+        "elastic cuff",
+        "hook-and-loop wrist closure",
+        "factory-sewn articulated finger stalls",
+        "rectangular stone, obsidian, ceramic, or glass armor tiles",
+        "brittle mineral plates laced across a flexible cuff or hand joint",
+        "isolated bronze, brass, horn, shell, stone, or obsidian plaques pasted onto a soft woven, felted, or quilted mitten",
+        "metal wrist edging used as decoration on soft mitts"
+      ],
+      "prefer": [
+        "materially continuous enclosed mitten pouch",
+        "separate thumb volume",
+        "quilted, woven, felted, or hide hand body reinforced by denser weave, doubled palm, corded seam, or hide wear patch",
+        "short soft wrist cuff",
+        "for a metal gauntlet, contiguous articulated metal backhand and knuckle construction over a subordinate hidden lining"
+      ]
+    },
+    "outer_layer": {
+      "avoid": [
+        "modern tailored coat panels",
+        "set-in sleeves",
+        "zipper, snaps, or machine buttonholes",
+        "synthetic piping",
+        "perfectly factory-serged hem",
+        "repeated star, sunburst, asterisk, flower, or emblem stitching on separate tabs or panels",
+        "circular disk brooch, radial clasp, spoked fastener, or solar-like pin head",
+        "shingled cloak shoulders, scale-like textile tabs, feather rows, lamellar imitation, or many repeated dangling panels"
+      ],
+      "prefer": [
+        "rectangular or simply shaped woven cloth",
+        "selvedge and hand-finished hem",
+        "pin, toggle, cord, or wrapped fastening",
+        "visible weave and exactly one bounded woven border or hem field",
+        "broad continuous cloth fields, simple folds, sparse pleats, or two large overlapping panels"
+      ]
+    },
+    "short_blade": {
+      "avoid": [
+        "modern knife scales with precision screws",
+        "fuller and bevels ground to machine uniformity",
+        "polymer grip",
+        "modern tactical choil, jimping, or serration"
+      ],
+      "prefer": [
+        "cast or hand-forged blade variation",
+        "riveted organic grip plates",
+        "simple tang, shoulder, midrib, and hand-finished edge"
+      ]
+    },
+    "long_sword": {
+      "avoid": [
+        "modern knife screws",
+        "machined guard and pommel",
+        "laser-straight bevel",
+        "rubberized grip",
+        "fantasy modular hilt"
+      ],
+      "prefer": [
+        "cast bronze or hand-forged blade variation",
+        "riveted organic grip plates",
+        "integral or simply joined hilt",
+        "hand-finished edge and restrained midrib"
+      ]
+    },
+    "axe_adze": {
+      "avoid": [
+        "hardware-store wedge",
+        "steel pipe haft",
+        "machine knurling",
+        "modern welded head",
+        "factory-perfect socket"
+      ],
+      "prefer": [
+        "cast socket or eye",
+        "wood haft with wedge, peg, rawhide, or fiber binding",
+        "hand-shaped transition and tool marks"
+      ]
+    },
+    "impact": {
+      "avoid": [
+        "machined steel flanges",
+        "threaded head",
+        "rubber grip",
+        "perfect industrial spikes"
+      ],
+      "prefer": [
+        "perforated stone, antler, wood, or cast copper-alloy head",
+        "short hand-shaped haft",
+        "peg, wedge, resin, or binding at the join"
+      ]
+    },
+    "bow_gorytos": {
+      "avoid": [
+        "arrows or ammunition",
+        "bow, bow limb, bowstring, or grip",
+        "modern zipper or snap closure",
+        "plastic tube",
+        "factory webbing and quick-release buckle"
+      ],
+      "prefer": [
+        "empty standalone storage container",
+        "capped mouth or empty dark opening",
+        "wood slat, bark, woven fiber, felt, or bronze-sheet body with hide only as sparse binding or backing",
+        "ancient thong, loop, toggle, or suspension tab"
+      ]
+    },
+    "sling_throwing": {
+      "avoid": [
+        "stone, clay bullet, lead bullet, or any projectile",
+        "ammunition pouch, bag, case, or bundled sling kit",
+        "hand, figure, anatomy, or demonstration pose",
+        "slingshot fork, elastic band, staff sling, or modern cordage",
+        "extra loops, charms, beads, tassels, or dangling ornaments"
+      ],
+      "prefer": [
+        "exactly one empty historical hand sling",
+        "one broad woven or braided cradle and exactly two long cords",
+        "simple finger loop on the retention cord",
+        "plain release knot or short release tab on the free cord",
+        "documented real-object silhouette with practical fiber construction"
+      ]
+    },
+    "carry": {
+      "avoid": [
+        "modern backpack harness",
+        "zipper",
+        "plastic clip",
+        "quick-release buckle",
+        "synthetic webbing",
+        "machine-sewn tactical pouch grid",
+        "D-ring, swivel ring, snap hook, carabiner-like hook, or metal suspension ring"
+      ],
+      "prefer": [
+        "basketry, wood, bark, textile, ceramic, bone, or sheet-metal body",
+        "lid, toggle, pin, thong, fiber loop, or wrapped closure without metal suspension hardware",
+        "simple load-bearing suspension"
+      ]
+    },
+    "ritual": {
+      "avoid": [
+        "precision-machined symmetry",
+        "electric glow",
+        "modern hinge or threaded cap",
+        "factory chain",
+        "generic fantasy crystal setting"
+      ],
+      "prefer": [
+        "cast, hammered, carved, turned, woven, or hand-shaped construction",
+        "simple socket, lid, handle, pivot, cord, or pin",
+        "restrained wear and bounded detail"
+      ]
+    },
+    "signal": {
+      "avoid": [
+        "modern valve mechanism",
+        "soldered plumbing fittings",
+        "precision bell flare",
+        "modern mouthpiece threading",
+        "factory chain"
+      ],
+      "prefer": [
+        "hammered sheet, cast bell, carved horn, wood, reed, or fiber construction",
+        "simple clapper, mouthpiece, socket, loop, or hand grip"
+      ]
+    }
+  }
+}

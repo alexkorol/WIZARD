@@ -65,8 +65,8 @@ select { -webkit-tap-highlight-color: transparent; }
 .grade {
   background:
     radial-gradient(ellipse at 67% 42%, transparent 12%, rgba(2, 8, 11, .05) 44%, rgba(1, 5, 8, .7) 100%),
-    linear-gradient(90deg, rgba(2, 7, 10, .93) 0%, rgba(3, 9, 12, .66) 23%, transparent 48%),
-    linear-gradient(0deg, rgba(1, 5, 8, .76), transparent 26%);
+    linear-gradient(90deg, rgba(2, 7, 10, .82) 0%, rgba(3, 9, 12, .52) 23%, transparent 48%),
+    linear-gradient(0deg, rgba(1, 5, 8, .58), transparent 26%);
   box-shadow: inset 0 0 16vw rgba(0, 0, 0, .72);
 }
 
@@ -533,7 +533,7 @@ select:focus-visible { border-color: var(--focus); box-shadow: 0 0 0 2px rgba(76
   .parallax-hint { display: none; }
   .grade {
     background:
-      linear-gradient(0deg, rgba(1, 5, 8, .97) 0%, rgba(2, 7, 10, .78) 29%, transparent 58%),
+      linear-gradient(0deg, rgba(1, 5, 8, .90) 0%, rgba(2, 7, 10, .68) 29%, transparent 58%),
       radial-gradient(ellipse at 52% 30%, transparent 16%, rgba(1, 5, 8, .25) 64%, rgba(1, 5, 8, .75) 100%);
     box-shadow: inset 0 0 20vw rgba(0, 0, 0, .65);
   }

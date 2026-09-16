@@ -1,0 +1,94 @@
+[
+  {
+    "number": 1,
+    "art_id": "source_river_bast_rib_corselet",
+    "name": "Bast-Rib Corselet",
+    "canvas": "P",
+    "grid": "2x3",
+    "source_kind": "character",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\prompts\\01__source_river_bast_rib_corselet.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - DEX - tier 2\\206__p4__ChatGPT Image Jul 13, 2026, 05_06_31 PM.png"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\raw\\source_river_bast_rib_corselet.png"
+  },
+  {
+    "number": 2,
+    "art_id": "source_river_faience_barrel_pendant",
+    "name": "River Faience Barrel Pendant",
+    "canvas": "S",
+    "grid": "1x1",
+    "source_kind": "character",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\prompts\\02__source_river_faience_barrel_pendant.txt",
+    "reference_paths": [
+      "C:\\Users\\Alex\\Downloads\\ladders\\faction_riverspill - INT - tier 1\\ChatGPT Image Jul 9, 2026, 09_29_10 PM (7).png"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\raw\\source_river_faience_barrel_pendant.png"
+  },
+  {
+    "number": 3,
+    "art_id": "wpn_dag_flint_lancet",
+    "name": "Flint Lancet",
+    "canvas": "P",
+    "grid": "1x2",
+    "source_kind": "museum",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\prompts\\03__wpn_dag_flint_lancet.txt",
+    "reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\references\\british_museum_1869-0724-95_asset_1072083001.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\raw\\wpn_dag_flint_lancet.png"
+  },
+  {
+    "number": 4,
+    "art_id": "wpn_throw_badarian_stick",
+    "name": "Badarian Throwstick",
+    "canvas": "P",
+    "grid": "1x2",
+    "source_kind": "museum",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\prompts\\04__wpn_throw_badarian_stick.txt",
+    "reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\references\\british_museum_EA59703_throwing_stick.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\raw\\wpn_throw_badarian_stick.png"
+  },
+  {
+    "number": 5,
+    "art_id": "feet_woven_fibre_sandals",
+    "name": "Woven-Fibre Sandals",
+    "canvas": "S",
+    "grid": "2x2",
+    "source_kind": "museum",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\prompts\\05__feet_woven_fibre_sandals.txt",
+    "reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\references\\british_museum_EA4418_EA4419_woven_cord_pair.jpg",
+      "C:\\Users\\Alex\\Downloads\\items_multi_context_balanced_v1\\external_references\\user_reference_footwear_history_sheet.png"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\raw\\feet_woven_fibre_sandals.png"
+  },
+  {
+    "number": 6,
+    "art_id": "wpn_short_loop_knife",
+    "name": "Loop-Ended Iron Knife",
+    "canvas": "P",
+    "grid": "1x2",
+    "source_kind": "museum",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\prompts\\06__wpn_short_loop_knife.txt",
+    "reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\references\\british_museum_1919_1119_47_iron_loop_handle_knife.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\raw\\wpn_short_loop_knife.png"
+  },
+  {
+    "number": 7,
+    "art_id": "focus_copper_sistrum",
+    "name": "Copper Bar Sistrum",
+    "canvas": "P",
+    "grid": "1x3",
+    "source_kind": "museum",
+    "prompt_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\prompts\\07__focus_copper_sistrum.txt",
+    "reference_paths": [
+      "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\references\\walters_54.1207_bronze_bar_sistrum.jpg"
+    ],
+    "output_path": "Z:\\Code\\WIZARD\\tools\\rpg_inventory\\assets_staging\\source-observed-wave-03\\raw\\focus_copper_sistrum.png"
+  }
+]
