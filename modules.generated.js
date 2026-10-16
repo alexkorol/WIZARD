@@ -743,6 +743,63 @@ window.WIZARD_REGISTRY = {
     },
     {
       "schemaVersion": 1,
+      "id": "wizard.spellforge",
+      "slug": "spellforge",
+      "title": "Spellforge VFX Lab",
+      "description": "WebGL2 spell and effect library: 189 layered effects with tunable parameters, a shared GLSL library, per-effect breakdowns and porting notes, and a ratings export for shortlisting effects for the ARPG.",
+      "status": "authoring",
+      "visibility": "dashboard",
+      "category": "authoring",
+      "group": "systems-integration",
+      "launch": "tools/spellforge/index.html",
+      "readme": "tools/spellforge/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "spellcraft",
+        "world-presentation",
+        "hud-resources"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "reset",
+        "getState",
+        "setState",
+        "listScenarios",
+        "loadScenario",
+        "pause",
+        "resume",
+        "step",
+        "getMetrics",
+        "getAnnotations",
+        "setAnnotations",
+        "exportCalibration",
+        "importCalibration"
+      ],
+      "tags": [
+        "vfx",
+        "spells",
+        "webgl2",
+        "glsl",
+        "shaders",
+        "spellcraft"
+      ]
+    },
+    {
+      "schemaVersion": 1,
       "id": "wizard.systems-bench",
       "slug": "systems_bench",
       "title": "Verdigris Systems Bench",
@@ -1216,6 +1273,63 @@ window.WIZARD_REGISTRY = {
         "orbs",
         "webgl2",
         "status-fx"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.spellforge",
+      "slug": "spellforge",
+      "title": "Spellforge VFX Lab",
+      "description": "WebGL2 spell and effect library: 189 layered effects with tunable parameters, a shared GLSL library, per-effect breakdowns and porting notes, and a ratings export for shortlisting effects for the ARPG.",
+      "status": "authoring",
+      "visibility": "dashboard",
+      "category": "authoring",
+      "group": "systems-integration",
+      "launch": "tools/spellforge/index.html",
+      "readme": "tools/spellforge/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "spellcraft",
+        "world-presentation",
+        "hud-resources"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "reset",
+        "getState",
+        "setState",
+        "listScenarios",
+        "loadScenario",
+        "pause",
+        "resume",
+        "step",
+        "getMetrics",
+        "getAnnotations",
+        "setAnnotations",
+        "exportCalibration",
+        "importCalibration"
+      ],
+      "tags": [
+        "vfx",
+        "spells",
+        "webgl2",
+        "glsl",
+        "shaders",
+        "spellcraft"
       ]
     },
     {
