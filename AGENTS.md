@@ -22,6 +22,11 @@ Multi-subproject **Verdigris Systems Laboratory** served from `gh-pages`.
 
 ## Copy and presentation
 
+- Owner correction, 2026-10-16: no pentagrams, hexagrams, heptagrams or rune glyphs as
+  decoration in effect, HUD or item art across WIZARD tools; they read as medieval fantasy.
+  Rings, ticks, dots, light and material instead. Spellforge (`tools/spellforge`) keeps its
+  rune and star layers as reference only; do not port them into Verdigris art.
+
 The owner rejects unrequested flourish across this repository. Use functional
 names, direct labels, and concise descriptions of what a tool does.
 
