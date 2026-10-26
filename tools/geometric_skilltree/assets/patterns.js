@@ -741,7 +741,7 @@
     });
     const exclusive = selectExclusivePaths(ctx, tuning, sharedClaimIds);
 
-    // Wave-length: pattern-stones (radius) and Blue-Milestone-style hooks
+    // Wave-length: pattern-stones (radius) and Blue-Waystone-style hooks
     // (exact seat) count touching waves longer for payoff purposes.
     const waveStones = stonesFor(input, 'wave-length')
       .concat(hooksFor(input, 'wave-length').map(hook => ({ ...hook, radius: 0 })));
@@ -757,7 +757,7 @@
       wave.amplitude = Math.round(waveAmplitude(ctx, wave) * 10) / 10;
     });
 
-    // Flow-length: Unlit-Milestone-style hooks count flows through them longer.
+    // Flow-length: Unlit-Waystone-style hooks count flows through them longer.
     const flowHooks = hooksFor(input, 'flow-length');
     exclusive.flows.forEach(flow => {
       const bonus = flowHooks.reduce((sum, hook) =>
@@ -767,7 +767,7 @@
 
     const loopData = detectLoops(ctx, tuning, stonesFor(input, 'loop-gap'));
 
-    // Enclosure-boost: Votive-Milestone-style hooks strengthen warding circles
+    // Enclosure-boost: Votive-Waystone-style hooks strengthen warding circles
     // whose perimeter carries the Waystone.
     const enclosureHooks = hooksFor(input, 'enclosure-boost');
     loopData.enclosures.forEach(enclosure => {

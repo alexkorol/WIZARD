@@ -1530,6 +1530,78 @@
     body.wizard-dev #proposal-layer {
       display: inline;
     }
+  
+    /* ===== Painted passive art (shared with the Unity ARPG) =====================
+       Verdigris and Stone themes show painted emblems in cast-metal frames on a
+       stone field; the 90s and ASCII themes keep the original vector look. */
+    body.theme-classic .node-art, body.theme-terminal .node-art,
+    body.theme-classic .art-field, body.theme-terminal .art-field,
+    body.theme-classic .conduit-glow, body.theme-terminal .conduit-glow,
+    body.theme-classic .conduit-core, body.theme-terminal .conduit-core,
+    body.theme-classic #points-plaque, body.theme-terminal #points-plaque { display: none; }
+    body.theme-modern .node-group.has-art > .node-shell, body.theme-modern .node-group.has-art > .node-core,
+    body.theme-modern .node-group.has-art > .node-icon, body.theme-modern .node-group.has-art > .node-ring,
+    body.theme-stone .node-group.has-art > .node-shell, body.theme-stone .node-group.has-art > .node-core,
+    body.theme-stone .node-group.has-art > .node-icon, body.theme-stone .node-group.has-art > .node-ring { display: none; }
+    .art-field { pointer-events: none; opacity: 0.55; }
+    .art-field-fade { opacity: 1; }
+    .node-art { pointer-events: none; }
+    .art-well { fill: #0d0b09; }
+    .art-icon-cell { filter: grayscale(0.7) brightness(0.55); transition: filter 220ms ease; }
+    .node-group.available .art-icon-cell { filter: grayscale(0.25) brightness(0.88); }
+    .node-group.path-preview .art-icon-cell { filter: grayscale(0.1) brightness(0.95); }
+    .node-group.active .art-icon-cell, .node-group:hover .art-icon-cell { filter: none; }
+    .art-frame { transition: opacity 420ms ease, filter 220ms ease; }
+    .art-frame-stone { filter: brightness(0.72); }
+    .node-group.available .art-frame-stone { filter: brightness(1.12) sepia(0.35); }
+    .node-group:hover .art-frame-stone { filter: brightness(1.25) sepia(0.2); }
+    .art-frame-gold { opacity: 0; }
+    .node-group.active .art-frame-gold { opacity: 1; }
+    .art-halo { opacity: 0; transition: opacity 220ms ease; }
+    .node-group.active .art-halo { opacity: 0.3; }
+    .node-group.available .art-halo { animation: art-breathe 2.8s ease-in-out infinite; }
+    .node-group.path-preview .art-halo, .node-group.selected .art-halo, .node-group:hover .art-halo { opacity: 0.6; animation: none; }
+    .node-group.search-match .art-halo { animation: art-search 1.4s ease-in-out infinite; }
+    @keyframes art-breathe { 0%, 100% { opacity: 0.08; } 50% { opacity: 0.28; } }
+    @keyframes art-search { 0%, 100% { opacity: 0.55; } 50% { opacity: 0.95; } }
+    .art-dot { display: none; fill: #3a332a; stroke: #0c0b09; stroke-width: 1; }
+    .node-group.available .art-dot { fill: #b9a074; }
+    .node-group.active .art-dot { fill: #f1cd78; }
+    .node-group.path-preview .art-dot, .node-group.search-match .art-dot { fill: #fff0c4; }
+    #main-svg.lod-far .node-group.type-small .node-art > :not(.art-dot) { display: none; }
+    #main-svg.lod-far .node-group.type-small .art-dot { display: block; }
+    /* Connectors: allocated straps carry a gold core with travelling pulses. */
+    .conduit-glow, .conduit-core { fill: none; stroke-linecap: round; pointer-events: none; opacity: 0; transition: opacity 200ms ease; }
+    .conduit-glow { stroke: var(--path-color, #c9a96a); stroke-width: 11; }
+    .conduit-core { stroke: #ffe7a8; stroke-width: 1.3; stroke-dasharray: 10 46; animation: art-flow 2.4s linear infinite; }
+    @keyframes art-flow { to { stroke-dashoffset: -56; } }
+    body.theme-modern .is-allocated > .conduit-glow, body.theme-stone .is-allocated > .conduit-glow { opacity: 0.16; }
+    body.theme-modern .is-allocated > .conduit-core, body.theme-stone .is-allocated > .conduit-core { opacity: 0.85; }
+    body.theme-modern .is-allocated > .conduit-path.allocated, body.theme-stone .is-allocated > .conduit-path.allocated {
+      stroke: color-mix(in srgb, var(--path-color, #c9a96a) 62%, #e8c27a); stroke-width: 4.6px;
+    }
+    body.theme-modern .is-preview > .conduit-path, body.theme-stone .is-preview > .conduit-path {
+      stroke: #f3dfa9; stroke-width: 3.4px; stroke-dasharray: none; opacity: 0.95;
+    }
+    body.theme-modern .is-preview > .conduit-glow, body.theme-stone .is-preview > .conduit-glow { opacity: 0.22; stroke: #f3dfa9; }
+    /* Points plaque, centred over the tree. */
+    #points-plaque {
+      position: fixed; top: 14px; left: 50%; transform: translateX(-50%); z-index: 30; pointer-events: none;
+      padding: 7px 26px; font-family: var(--display); font-size: 17px; letter-spacing: 0.06em; color: #e7c77a;
+      background: linear-gradient(#17130d, #0d0b08); border: 1px solid #9e8047; outline: 1px solid rgba(158, 128, 71, 0.35); outline-offset: 3px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+    }
+    #points-plaque.empty { color: #8c826f; }
+    #search-count { margin-left: 8px; font-size: 12px; color: var(--faint, #8c826f); white-space: nowrap; }
+    /* Path of Exile tooltip layout. */
+    #tooltip.art { padding: 0; min-width: 260px; max-width: 360px; background: #0b0a08; border: 1px solid #9e8047; outline: 1px solid rgba(158, 128, 71, 0.35); outline-offset: -4px; }
+    #tooltip.art .tooltip-title { margin: 0; padding: 9px 14px 2px; text-align: center; color: #e7c77a; background: #1a140c; font-family: var(--display); font-size: 16px; }
+    #tooltip.art .tooltip-body { padding: 0 14px 10px; }
+    #tooltip.art .tooltip-type { margin: 0 -14px 8px; padding: 0 14px 8px; text-align: center; font-size: 12px; color: #9d927d; background: #1a140c; border-bottom: 1px solid rgba(158, 128, 71, 0.45); }
+    #tooltip.art .tooltip-mod { color: #8f9eff; font-size: 13.5px; line-height: 1.35; }
+    #tooltip.art .tooltip-flavour { margin-top: 6px; color: #a7865a; font-style: italic; font-size: 12.5px; }
+    #tooltip.art .tooltip-action { margin-top: 9px; padding-top: 7px; border-top: 1px solid rgba(158, 128, 71, 0.35); font-size: 12.5px; color: #8c826f; }
+    #tooltip.art .tooltip-action.ready { color: #e7c77a; }
   </style>
 </head>
 <body class="theme-modern">
@@ -1548,6 +1620,8 @@
         </g>
       </svg>
     </div>
+
+    <div id="points-plaque" aria-live="polite"><span id="points-plaque-value">0</span> Points Left</div>
 
     <div id="ui-layer">
       <button class="mobile-panel-toggle" id="mobile-stats-toggle" type="button" aria-controls="left-panel" aria-expanded="false">Stats</button>
@@ -1733,6 +1807,7 @@
         <div class="toolbar-group" aria-label="Search">
           <label class="sr-only" for="search-input">Search passives</label>
           <input class="search-input" id="search-input" type="search" placeholder="Search nodes or tags">
+          <span id="search-count" aria-live="polite"></span>
         </div>
         <div class="toolbar-group" aria-label="Notes">
           <button class="icon-btn" id="annotate-toggle-btn" aria-label="Toggle note mode: click any node or path to annotate it" aria-pressed="false" title="Note mode (N): click any node or path to write a note on it. Alt+click works anytime." type="button">Notes</button>
@@ -1801,6 +1876,8 @@
   <script src="assets/tree-data.js?v=13"></script>
   <script src="assets/patterns.js?v=13"></script>
   <script src="assets/jewels.js?v=13"></script>
+  <!-- Painted passive art shared with the Unity ARPG (icons, frames, stone field). -->
+  <script src="assets/art/tree-art.js?v=16"></script>
   <script>
     const SVG_NS = "http://www.w3.org/2000/svg";
     const AUTHORED_TREE_DATA = window.TREE_DATA || {};
@@ -1857,7 +1934,7 @@
     // Muted Verdigris palette: rust, patina, and slate ink instead of the
     // saturated marker colors — matches rpg_inventory and wizard_orbs.
     const AXIS_META = {
-      str: { label: "Strength", short: "STR", color: "#b0674c", path: "Iron Route" },
+      str: { label: "Strength", short: "STR", color: "#b0674c", path: "Bronze Route" },
       dex: { label: "Dexterity", short: "DEX", color: "#6f9a7c", path: "Quickstep Trace" },
       int: { label: "Intelligence", short: "INT", color: "#7286a8", path: "Memory Thread" },
       hybrid: { label: "Hybrid", short: "HYB", color: "#c9a96a", path: "Braided Span" }
@@ -1876,6 +1953,14 @@
       str: { q: -1, r: 1 }
     };
     const SEARCH_DIM_OPACITY = 0.18;
+    // Painted art (Path of Exile reading, shared with the Unity ARPG): every node is a
+    // painted emblem inside a cast-metal frame. Geometry matches the Unity tree shader:
+    // emblem disc radius 0.92 r, frame half-size 1.22 r / 0.78.
+    const TREE_ART = window.TREE_ART || null;
+    const ART_RADIUS = { small: 10, notable: 17, keystone: 23, mastery: 17, socket: 13, gateway: 14, class: 19, sign: 19, origin: 24, waystone: 17 };
+    const ART_FRAME_CELL = { small: 0, notable: 2, keystone: 4, mastery: 6, socket: 8, waystone: 10, gateway: 12, class: 14, sign: 14, origin: 14 };
+    const ART_SEARCH_DIM_OPACITY = 0.5;
+    const ART_LOD_SCALE = 0.62;
 
     // Ascendancy circles: one behind each rim unlock corner, 13 gateway-themed
     // passives each (entry notable, eight smalls, two notables, one mastery,
@@ -1912,15 +1997,15 @@
         axis: "int",
         nodes: [
           { id: "attendant-core", name: "Second Pair of Hands", type: "notable", stat: "castSpeed", amount: 8, effects: ["+8% Rite Speed", "Your attendant hands you what you reach for: draughts pour without pausing your rite"], tag: "spell" },
-          { id: "attendant-candle", name: "Candle Duty", type: "small", stat: "spirit", amount: 45, effects: ["+45 maximum Spirit"], tag: "mana" },
-          { id: "attendant-inkwell", name: "Inkwell", type: "small", stat: "ward", amount: 60, effects: ["+60 Ward"], tag: "energy-shield" },
+          { id: "attendant-candle", name: "Lamp Duty", type: "small", stat: "spirit", amount: 45, effects: ["+45 maximum Spirit"], tag: "mana" },
+          { id: "attendant-inkwell", name: "Ink Palette", type: "small", stat: "ward", amount: 60, effects: ["+60 Ward"], tag: "energy-shield" },
           { id: "attendant-order", name: "Standing Order", type: "notable", stat: "castSpeed", amount: 6, effects: ["+6% Rite Speed", "Rites repeated within four seconds cost 10% less Spirit"], tag: "spell" },
           { id: "attendant-pour", name: "Measured Pour", type: "notable", stat: "ward", amount: 70, effects: ["+70 Ward", "Ward recharge begins 20% sooner"], tag: "energy-shield" },
           { id: "attendant-service", name: "Quiet Service", type: "small", stat: "cooldownRecovery", amount: 6, effects: ["+6% Cooldown Recovery Rate"], tag: "utility" },
           { id: "attendant-floor", name: "Swept Floor", type: "small", stat: "gloam_res", amount: 8, effects: ["+8% Gloam Resistance"], tag: "resistance" },
           { id: "attendant-watch", name: "Night Watch", type: "mastery", stat: "cooldownRecovery", amount: 10, effects: ["+10% Cooldown Recovery Rate", "While your Ward is full, your rites reach 15% further"], tag: "utility" },
           { id: "attendant-flame", name: "Kept Flame", type: "small", stat: "spellDamage", amount: 8, effects: ["+8% Rite Damage"], tag: "spell" },
-          { id: "attendant-lens", name: "Polished Lens", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
+          { id: "attendant-lens", name: "Polished Mirror", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
           { id: "attendant-errand", name: "Errand Run", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
           { id: "attendant-lamp", name: "Warm Lamplight", type: "small", stat: "spirit", amount: 40, effects: ["+40 maximum Spirit"], tag: "mana" },
           { id: "attendant-servant", name: "The Good Servant", type: "keystone", stat: null, amount: 0, effects: ["Your attendant focus grants its bonuses to your companions as well", "Your attendant window holds nothing but a focus"], tag: "spell" }
@@ -1936,7 +2021,7 @@
         nodes: [
           { id: "quickrig-core", name: "Fast Hands", type: "notable", stat: "attackSpeed", amount: 8, effects: ["+8% Attack Speed", "Swapping to your quick rig tool takes no time"], tag: "weapon" },
           { id: "quickrig-straps", name: "Oiled Straps", type: "small", stat: "evasion", amount: 85, effects: ["+85 Evasion Rating"], tag: "evasion" },
-          { id: "quickrig-buckle", name: "Spare Buckle", type: "small", stat: "blockChance", amount: 2, effects: ["+2% Block Chance"], tag: "block" },
+          { id: "quickrig-buckle", name: "Spare Toggle", type: "small", stat: "blockChance", amount: 2, effects: ["+2% Block Chance"], tag: "block" },
           { id: "quickrig-fit", name: "Snap Fit", type: "notable", stat: "attackSpeed", amount: 6, effects: ["+6% Attack Speed", "Your quick rig tool counts as equipped even while stowed"], tag: "weapon" },
           { id: "quickrig-sleeves", name: "Loose Sleeves", type: "notable", stat: "evasion", amount: 110, effects: ["+110 Evasion Rating", "Evasion counts 10% higher while you are moving"], tag: "evasion" },
           { id: "quickrig-pocket", name: "Third Pocket", type: "small", stat: "goods_find", amount: 8, effects: ["+8% Goods Found"], tag: "utility" },
@@ -1958,12 +2043,12 @@
         axis: "str",
         nodes: [
           { id: "warcall-core", name: "Deep Breath", type: "notable", stat: "life", amount: 60, effects: ["+60 maximum Life", "Your war-horn's call carries 25% further"], tag: "life" },
-          { id: "warcall-lip", name: "Brass Lip", type: "small", stat: "attackDamage", amount: 8, effects: ["+8% Attack Damage"], tag: "weapon" },
+          { id: "warcall-lip", name: "Bronze Lip", type: "small", stat: "attackDamage", amount: 8, effects: ["+8% Attack Damage"], tag: "weapon" },
           { id: "warcall-note", name: "Long Note", type: "small", stat: "guard", amount: 120, effects: ["+120 Guard"], tag: "armour" },
           { id: "warcall-rally", name: "Rally Point", type: "notable", stat: "guard", amount: 180, effects: ["+180 Guard", "Allies who hear your horn gain +60 Guard"], tag: "armour" },
           { id: "warcall-second", name: "Second Wind", type: "notable", stat: "life", amount: 80, effects: ["+80 maximum Life", "Sounding your horn restores 8% Life, once per fight"], tag: "life" },
           { id: "warcall-pace", name: "Drummer's Pace", type: "small", stat: "attackSpeed", amount: 4, effects: ["+4% Attack Speed"], tag: "weapon" },
-          { id: "warcall-lungs", name: "Iron Lungs", type: "small", stat: "life", amount: 60, effects: ["+60 maximum Life"], tag: "life" },
+          { id: "warcall-lungs", name: "Bellows Lungs", type: "small", stat: "life", amount: 60, effects: ["+60 maximum Life"], tag: "life" },
           { id: "warcall-line", name: "Held Line", type: "mastery", stat: "blockChance", amount: 4, effects: ["+4% Block Chance", "While your horn still echoes, you cannot be pushed back"], tag: "block" },
           { id: "warcall-wind", name: "Carrying Wind", type: "small", stat: "allResistances", amount: 3, effects: ["+3% to all Resistances"], tag: "resistance" },
           { id: "warcall-pole", name: "Standard Pole", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
@@ -1989,7 +2074,7 @@
           { id: "preparations-start", name: "Early Start", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
           { id: "preparations-wasted", name: "Nothing Wasted", type: "mastery", stat: "goods_find", amount: 12, effects: ["+12% Goods Found", "Using a prepared item refunds it one time in five"], tag: "utility" },
           { id: "preparations-hands", name: "Steady Hands", type: "small", stat: "castSpeed", amount: 4, effects: ["+4% Rite Speed"], tag: "spell" },
-          { id: "preparations-map", name: "Folded Map", type: "small", stat: "int", amount: 8, effects: ["+8 Intelligence"], tag: "attribute" },
+          { id: "preparations-map", name: "Clay Map", type: "small", stat: "int", amount: 8, effects: ["+8 Intelligence"], tag: "attribute" },
           { id: "preparations-shoes", name: "Quiet Shoes", type: "small", stat: "evasion", amount: 70, effects: ["+70 Evasion Rating"], tag: "evasion" },
           { id: "preparations-kit", name: "Packed Kit", type: "small", stat: "dex", amount: 8, effects: ["+8 Dexterity"], tag: "attribute" },
           { id: "preparations-plan", name: "The Plan Holds", type: "keystone", stat: null, amount: 0, effects: ["Once per fight, a preparation cancels the hit that would have killed you", "Each item in your preparation case works once per fight"], tag: "hybrid" }
@@ -2029,11 +2114,11 @@
           { id: "relics-core", name: "Dusted Shelf", type: "notable", stat: "ward", amount: 65, effects: ["+65 Ward", "Relics in your reliquary keep their blessings between fights"], tag: "energy-shield" },
           { id: "relics-smoke", name: "Censer Smoke", type: "small", stat: "gloam_res", amount: 8, effects: ["+8% Gloam Resistance"], tag: "resistance" },
           { id: "relics-names", name: "Old Names", type: "small", stat: "spirit", amount: 40, effects: ["+40 maximum Spirit"], tag: "mana" },
-          { id: "relics-glass", name: "Warded Glass", type: "notable", stat: "ward", amount: 75, effects: ["+75 Ward", "Ward recharge cannot be interrupted while you carry a relic"], tag: "energy-shield" },
+          { id: "relics-glass", name: "Warded Faience", type: "notable", stat: "ward", amount: 75, effects: ["+75 Ward", "Ward recharge cannot be interrupted while you carry a relic"], tag: "energy-shield" },
           { id: "relics-faith", name: "Patient Faith", type: "notable", stat: "allResistances", amount: 4, effects: ["+4% to all Resistances", "Each relic in your reliquary grants +2% Gloam Resistance"], tag: "resistance" },
           { id: "relics-case", name: "Gilt Case", type: "small", stat: "guard", amount: 110, effects: ["+110 Guard"], tag: "armour" },
-          { id: "relics-candles", name: "Candle Row", type: "small", stat: "ember_res", amount: 8, effects: ["+8% Ember Resistance"], tag: "resistance" },
-          { id: "relics-weight", name: "Saint's Weight", type: "mastery", stat: "spellDamage", amount: 12, effects: ["+12% Rite Damage", "Your heaviest relic is carried for you by a companion"], tag: "spell" },
+          { id: "relics-candles", name: "Lamp Row", type: "small", stat: "ember_res", amount: 8, effects: ["+8% Ember Resistance"], tag: "resistance" },
+          { id: "relics-weight", name: "Ancestor's Weight", type: "mastery", stat: "spellDamage", amount: 12, effects: ["+12% Rite Damage", "Your heaviest relic is carried for you by a companion"], tag: "spell" },
           { id: "relics-bone", name: "Bone and Gold", type: "small", stat: "minionDamage", amount: 8, effects: ["+8% Companion Damage"], tag: "minion" },
           { id: "relics-steps", name: "Worn Steps", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
           { id: "relics-litany", name: "Litany", type: "small", stat: "castSpeed", amount: 4, effects: ["+4% Rite Speed"], tag: "spell" },
@@ -2983,6 +3068,68 @@
         return { conduitId, optionId };
       }
 
+      // Path preview (Path of Exile): the shortest walk of unallocated passives from the
+      // build to a target, through visible conduits. Each step is {nodeId, conduitId}.
+      routeTo(targetId) {
+        const target = this.nodes.get(targetId);
+        if (!target || target.active || !this.isNodeVisible(target)) return [];
+        const cameFrom = new Map();
+        const queue = [];
+        this.nodes.forEach(node => { if (node.active) { queue.push(node.id); cameFrom.set(node.id, null); } });
+        while (queue.length) {
+          const at = queue.shift();
+          if (at === targetId) break;
+          const node = this.nodes.get(at);
+          for (const nextId of node.connections || []) {
+            if (cameFrom.has(nextId)) continue;
+            const next = this.nodes.get(nextId);
+            const conduit = this.conduits.get(edgeKey(at, nextId));
+            if (!next || !conduit || conduit.allocated || !this.isNodeVisible(next) || !this.isConduitVisible(conduit)) continue;
+            cameFrom.set(nextId, { from: at, conduitId: conduit.id });
+            queue.push(nextId);
+          }
+        }
+        if (!cameFrom.has(targetId)) return [];
+        const route = [];
+        for (let at = targetId; cameFrom.get(at); at = cameFrom.get(at).from) route.unshift({ nodeId: at, conduitId: cameFrom.get(at).conduitId });
+        return route;
+      }
+
+      routeCost(route) {
+        return route.reduce((sum, step) => sum + (this.nodes.get(step.nodeId)?.cost || 0) + 1, 0);
+      }
+
+      // The best arc for one step of a route, scored the way automatic allocation scores it.
+      routeChoice(step) {
+        const node = this.nodes.get(step.nodeId);
+        const choices = this.getActiveNeighborConduitChoices(node).filter(choice => choice.conduit.id === step.conduitId);
+        return this.chooseAutomaticAllocation(node, choices);
+      }
+
+      allocateRoute(targetId) {
+        const route = this.routeTo(targetId);
+        if (route.length < 2) return false;
+        const cost = this.routeCost(route);
+        const target = this.nodes.get(targetId);
+        if (this.points.skill < cost) {
+          this.commit(`Not enough skill points for the path to ${target.name} (needs ${cost}, you have ${this.points.skill}).`);
+          this.recalculate({ modelChanged: false });
+          return true;
+        }
+        const born = Array.from(this.nodes.values()).find(other => other.type === "sign" && other.active);
+        if (born && route.some(step => this.nodes.get(step.nodeId).type === "sign")) {
+          this.commit(`You were born under ${born.name}. Only one Sign may mark a life — refund it first.`);
+          this.recalculate({ modelChanged: false });
+          return true;
+        }
+        for (const step of route) {
+          const choice = this.routeChoice(step);
+          if (!choice) break;
+          this.allocateNodeWithConduit(this.nodes.get(step.nodeId), choice.conduit, choice.option.id);
+        }
+        return true;
+      }
+
       handleNodeClick(id, opts = {}) {
         const node = this.nodes.get(id);
         if (!node) return;
@@ -3010,6 +3157,7 @@
           return;
         }
 
+        if (TREE_ART && !this.isAvailableNode(node) && this.allocateRoute(id)) return;
         this.tryAllocateNode(id);
       }
 
@@ -3497,7 +3645,7 @@
             + Math.max(0, detail.maxRadius - 1) * largeLoopStep
             + Math.max(0, detail.loops.length - 1) * extraLoopStep;
         }
-        // The Iron Milestone: loops carrying it empower their center further.
+        // The Bronze Waystone: loops carrying it empower their center further.
         (this.loopBoostHooks || []).forEach(hook => {
           if (detail.loops.some(loop => loop.nodeIds?.includes(hook.id))) {
             increase *= 1 + (hook.value || 0.25);
@@ -3816,6 +3964,7 @@
       }
 
       drawBackground() {
+        if (TREE_ART) this.drawArtDefs();
         Object.entries(AXIS_VECTORS).forEach(([axis, vector]) => {
           const length = MAIN_RING_DEPTH * NODE_SPACING * 1.28;
           const color = AXIS_META[axis].color;
@@ -4083,6 +4232,67 @@
         }
       }
 
+      // Shared SVG definitions for the painted art: the unit disc that clips emblems, the
+      // inner-shadow and glow gradients, and the tiled stone field behind the tree.
+      drawArtDefs() {
+        const defs = this.layers.defs;
+        const clip = makeSvgEl("clipPath", { id: "art-unit-disc" });
+        clip.appendChild(makeSvgEl("circle", { r: 1 }));
+        defs.appendChild(clip);
+        const radial = (id, stops) => {
+          const g = makeSvgEl("radialGradient", { id });
+          stops.forEach(([offset, color, opacity]) => g.appendChild(makeSvgEl("stop", { offset, "stop-color": color, "stop-opacity": opacity })));
+          defs.appendChild(g);
+        };
+        radial("art-inner-shadow", [["0.72", "#000", 0], ["1", "#000", 0.6]]);
+        radial("art-glow", [["0.3", "#ffe2a0", 0.9], ["0.6", "#e8a94a", 0.35], ["1", "#e8a94a", 0]]);
+        const fadeRadius = MAIN_RING_DEPTH * NODE_SPACING * 1.5;
+        const fade = makeSvgEl("radialGradient", { id: "art-field-fade", gradientUnits: "userSpaceOnUse", cx: 0, cy: 0, r: fadeRadius });
+        [["0", 0], ["0.6", 0.2], ["0.85", 0.75], ["1", 1]].forEach(([offset, opacity]) => fade.appendChild(makeSvgEl("stop", { offset, "stop-color": "#050403", "stop-opacity": opacity })));
+        defs.appendChild(fade);
+        const pattern = makeSvgEl("pattern", { id: "art-field", patternUnits: "userSpaceOnUse", width: 900, height: 900 });
+        pattern.appendChild(makeSvgEl("image", { href: TREE_ART.field, width: 900, height: 900 }));
+        defs.appendChild(pattern);
+        const extent = MAIN_RING_DEPTH * NODE_SPACING * 2.6;
+        this.layers.background.appendChild(makeSvgEl("rect", { className: "art-field", x: -extent, y: -extent, width: extent * 2, height: extent * 2, fill: "url(#art-field)" }));
+        this.layers.background.appendChild(makeSvgEl("rect", { className: "art-field art-field-fade", x: -extent, y: -extent, width: extent * 2, height: extent * 2, fill: "url(#art-field-fade)" }));
+      }
+
+      // An atlas cell drawn into a box: a nested svg whose viewBox selects the cell.
+      artCell(href, atlasSize, grid, cell, x, y, size, className) {
+        const step = atlasSize / grid;
+        const view = makeSvgEl("svg", {
+          x, y, width: size, height: size, className,
+          viewBox: `${(cell % grid) * step} ${Math.floor(cell / grid) * step} ${step} ${step}`,
+          preserveAspectRatio: "none"
+        });
+        view.appendChild(makeSvgEl("image", { href, width: atlasSize, height: atlasSize }));
+        return view;
+      }
+
+      drawNodeArt(node, group) {
+        const r = ART_RADIUS[node.type] || 10;
+        const inner = r * 0.92;
+        const frameHalf = r * 1.22 / 0.78;
+        const art = makeSvgEl("g", { className: "node-art" });
+        art.appendChild(makeSvgEl("circle", { className: "art-halo", r: r * 2.1, fill: "url(#art-glow)" }));
+        art.appendChild(makeSvgEl("circle", { className: "art-well", r: inner }));
+        const raw = TREE_ART.icons[node.id];
+        if (raw !== undefined) {
+          const emblem = makeSvgEl("g", { className: "art-icon", transform: `scale(${round(inner)})`, "clip-path": "url(#art-unit-disc)" });
+          emblem.appendChild(this.artCell(TREE_ART.iconAtlas, TREE_ART.iconAtlasSize, 16, raw & 255, -1, -1, 2, "art-icon-cell"));
+          art.appendChild(emblem);
+        }
+        art.appendChild(makeSvgEl("circle", { className: "art-inner-shadow", r: inner, fill: "url(#art-inner-shadow)" }));
+        const frameCell = ART_FRAME_CELL[node.type] ?? 0;
+        art.appendChild(this.artCell(TREE_ART.frameAtlas, TREE_ART.frameAtlasSize, 4, frameCell, -frameHalf, -frameHalf, frameHalf * 2, "art-frame art-frame-stone"));
+        art.appendChild(this.artCell(TREE_ART.frameAtlas, TREE_ART.frameAtlasSize, 4, frameCell + 1, -frameHalf, -frameHalf, frameHalf * 2, "art-frame art-frame-gold"));
+        art.appendChild(makeSvgEl("circle", { className: "art-dot", r: Math.max(3.2, r * 0.42) }));
+        group.classList.add("has-art");
+        group.style.setProperty("--art-radius", `${r}`);
+        return art;
+      }
+
       drawConduit(conduit) {
         const from = this.tree.nodes.get(conduit.fromId);
         const to = this.tree.nodes.get(conduit.toId);
@@ -4095,6 +4305,9 @@
           const variantGroup = makeSvgEl("g");
           const hit = makeSvgEl("path", { d, className: "conduit-hit" });
           const line = makeSvgEl("path", { d, className: "conduit-path" });
+          // Art mode: a warm glow under allocated straps and a gold core carrying pulses.
+          const glow = TREE_ART ? makeSvgEl("path", { d, className: "conduit-glow" }) : null;
+          const core = TREE_ART ? makeSvgEl("path", { d, className: "conduit-core" }) : null;
           hit.dataset.conduitId = conduit.id;
           hit.dataset.variantId = option.id;
           line.dataset.conduitId = conduit.id;
@@ -4133,7 +4346,13 @@
           hit.addEventListener("mouseenter", event => this.showConduitTooltip(event, conduit, option));
           hit.addEventListener("mouseleave", () => this.hideTooltip());
           variantGroup.appendChild(hit);
+          if (glow) variantGroup.appendChild(glow);
           variantGroup.appendChild(line);
+          if (core) {
+            core.style.setProperty("--path-color", activeColor);
+            glow.style.setProperty("--path-color", activeColor);
+            variantGroup.appendChild(core);
+          }
           group.appendChild(variantGroup);
           variants.set(option.id, { group: variantGroup, line, hit });
         });
@@ -4183,11 +4402,12 @@
         const core = makeSvgEl("circle", { className: "node-core", r: Math.max(3, radiusForType(node.type) - 4) });
         const icon = makeSvgEl("text", { className: "node-icon", y: "0.5" });
         icon.textContent = this.iconText(node);
-        const hit = makeSvgEl("circle", { className: "node-hit", r: Math.max(22, radiusForType(node.type) + 9) });
+        const hit = makeSvgEl("circle", { className: "node-hit", r: Math.max(22, (TREE_ART ? ART_RADIUS[node.type] || 10 : radiusForType(node.type)) + 9) });
         group.appendChild(ring);
         group.appendChild(shell);
         group.appendChild(core);
         group.appendChild(icon);
+        if (TREE_ART) group.appendChild(this.drawNodeArt(node, group));
         group.appendChild(hit);
         group.addEventListener("click", event => {
           event.stopPropagation();
@@ -4205,10 +4425,27 @@
           this.hideTooltip();
           this.tree.refundNode(node.id);
         });
-        group.addEventListener("mouseenter", event => this.showNodeTooltip(event, node));
-        group.addEventListener("mouseleave", () => this.hideTooltip());
+        group.addEventListener("mouseenter", event => { this.setPreview(node.id); this.showNodeTooltip(event, node); });
+        group.addEventListener("mouseleave", () => { this.setPreview(null); this.hideTooltip(); });
         this.layers.nodes.appendChild(group);
         this.nodeEls.set(node.id, { group, shell, core, ring, icon });
+      }
+
+      setPreview(targetId) {
+        if (!TREE_ART) return;
+        const route = targetId && !window.viewController?.dragging ? this.tree.routeTo(targetId) : [];
+        const steps = route.length > 1 ? route : [];
+        this.previewRoute = steps;
+        (this.previewEls || []).forEach(el => el.classList.remove("path-preview", "is-preview"));
+        this.previewEls = [];
+        steps.forEach(step => {
+          const nodeEl = this.nodeEls.get(step.nodeId);
+          if (nodeEl) { nodeEl.group.classList.add("path-preview"); this.previewEls.push(nodeEl.group); }
+          const choice = this.tree.routeChoice(step);
+          const conduitEl = this.conduitEls.get(step.conduitId);
+          const variant = conduitEl?.variants.get(choice?.option.id || "inner");
+          if (variant) { variant.group.classList.add("is-preview"); this.previewEls.push(variant.group); }
+        });
       }
 
       iconText(node) {
@@ -4299,6 +4536,8 @@
               if (swap) variantEl.line.classList.add("swap-option");
               if (extra) variantEl.line.classList.add("extra");
               if (ghostLoop) variantEl.line.classList.add("ghost-loop");
+              variantEl.group.classList.toggle("is-allocated", allocated);
+              variantEl.group.classList.toggle("is-available", available);
             }
           });
         });
@@ -4336,13 +4575,21 @@
           if (term) {
             const note = this.tree.getAnnotation("node", node.id);
             const haystack = `${node.name} ${node.tags.join(" ")} ${node.effects.join(" ")} ${note}`.toLowerCase();
-            setStyleIfChanged(group, "opacity", haystack.includes(term) ? "1" : SEARCH_DIM_OPACITY);
+            const match = haystack.includes(term);
+            setStyleIfChanged(group, "opacity", match ? "1" : (TREE_ART ? ART_SEARCH_DIM_OPACITY : SEARCH_DIM_OPACITY));
+            group.classList.toggle("search-match", match);
           } else {
             setStyleIfChanged(group, "opacity", "1");
+            group.classList.remove("search-match");
           }
         });
 
         this.syncNotePins();
+        const count = document.getElementById("search-count");
+        if (count) {
+          const matches = term ? Array.from(this.nodeEls.values()).filter(el => el.group.classList.contains("search-match")).length : 0;
+          count.textContent = term ? (matches ? `${matches} match${matches === 1 ? "" : "es"}` : "No matches") : "";
+        }
       }
 
       // Gold pins mark annotated nodes and conduits. The layer is rebuilt on
@@ -4400,6 +4647,7 @@
       showNodeTooltip(event, node) {
         if (window.viewController?.dragging) return;
         if (!this.shouldShowHoverTooltip(event)) return;
+        if (TREE_ART) { this.showArtTooltip(event, node); return; }
         const tooltip = document.getElementById("tooltip");
         const title = tooltip.querySelector(".tooltip-title");
         const body = tooltip.querySelector(".tooltip-body");
@@ -4422,6 +4670,44 @@
           ${boostHtml}
           ${noteHtml}
           <div style="margin-top:6px;color:var(--faint);">Cost: ${node.cost} point + 1 for the connecting path. Click or right-click allocated nodes to refund.</div>
+        `;
+        this.placeTooltip(event);
+      }
+
+      // Path of Exile tooltip layout: a header band with the centred name and type, the
+      // modifier lines in blue, flavour in italics, and the allocation hint below a rule.
+      showArtTooltip(event, node) {
+        const tooltip = document.getElementById("tooltip");
+        tooltip.classList.add("art");
+        tooltip.querySelector(".tooltip-title").textContent = node.name;
+        const typeName = { small: "Passive", notable: "Notable", keystone: "Keystone", mastery: "Mastery", waystone: "Waystone", socket: "Empty socket", gateway: "Gateway", class: "Calling", sign: "Sign", origin: "Origin" }[node.type] || node.type;
+        const available = this.tree.isAvailableNode(node);
+        const route = node.active || available ? [] : this.tree.routeTo(node.id);
+        const status = node.id === "0,0" ? "Your starting point" : node.active ? "Allocated" : available ? "Available" : route.length > 1 ? `${route.length} passives away` : "Not yet reachable";
+        const flavour = line => !/\d/.test(line) && line.trim().endsWith(".") && !/Unlocks/.test(line);
+        const clean = line => escapeHtml(line.replace(/\s*\(design text\)$/, ""));
+        const mods = node.effects.filter(line => !flavour(line)).map(line => `<div class="tooltip-mod">${clean(line)}</div>`).join("");
+        const lore = node.effects.filter(flavour).map(line => `<div class="tooltip-flavour">${clean(line)}</div>`).join("");
+        const boostLines = this.tree.formatNodeBoostLines(node);
+        const boostHtml = boostLines.length ? `<div class="tooltip-boost"><strong>Empowered node</strong>${boostLines.map(line => `<div>${line}</div>`).join("")}</div>` : "";
+        const note = this.tree.getAnnotation("node", node.id);
+        const noteHtml = note ? `<div class="tooltip-note">Note: ${escapeHtml(note)}</div>` : "";
+        const points = this.tree.points.skill;
+        let action = "";
+        let ready = false;
+        if (node.id === "0,0") action = "";
+        else if (node.active) action = node.type === "socket" ? "Click to manage the carved stone · right-click to refund" : "Click or right-click to refund";
+        else if (available) { ready = true; action = `Click to allocate · ${node.cost + 1} points`; }
+        else if (route.length > 1) {
+          const cost = this.tree.routeCost(route);
+          ready = points >= cost;
+          action = `Click to allocate the lit path · ${cost} points${ready ? "" : ` (you have ${points})`}`;
+        } else action = "Reach it from an allocated neighbour";
+        tooltip.querySelector(".tooltip-body").innerHTML = `
+          <div class="tooltip-type">${typeName} · ${status}</div>
+          <div class="tooltip-mods">${mods}</div>
+          ${lore}${boostHtml}${noteHtml}
+          ${action ? `<div class="tooltip-action${ready ? " ready" : ""}">${action}</div>` : ""}
         `;
         this.placeTooltip(event);
       }
@@ -4470,14 +4756,18 @@
       placeTooltip(event) {
         const tooltip = document.getElementById("tooltip");
         tooltip.style.display = "block";
-        const x = clamp(event.clientX + 16, 12, window.innerWidth - 270);
-        const y = clamp(event.clientY + 16, 12, window.innerHeight - 180);
+        const width = tooltip.offsetWidth || 270;
+        const height = tooltip.offsetHeight || 180;
+        const x = clamp(event.clientX + 16, 12, window.innerWidth - width - 12);
+        const y = clamp(event.clientY + 16, 12, window.innerHeight - height - 12);
         tooltip.style.left = `${x}px`;
         tooltip.style.top = `${y}px`;
       }
 
       hideTooltip() {
-        document.getElementById("tooltip").style.display = "none";
+        const tooltip = document.getElementById("tooltip");
+        tooltip.style.display = "none";
+        tooltip.classList.remove("art");
       }
     }
 
@@ -4605,6 +4895,11 @@
 
       update() {
         document.getElementById("node-points-display").textContent = this.tree.points.skill;
+        const plaque = document.getElementById("points-plaque-value");
+        if (plaque) {
+          plaque.textContent = this.tree.points.skill;
+          document.getElementById("points-plaque").classList.toggle("empty", this.tree.points.skill <= 0);
+        }
         this.updateAttributes();
         this.updateDerived();
         this.updateSelection();
@@ -4986,6 +5281,8 @@
 
       transform() {
         this.group.setAttribute("transform", `translate(${round(this.x)},${round(this.y)}) scale(${round(this.scale)})`);
+        // Level of detail: when zoomed out, small passives draw as plain dots.
+        this.svg.classList.toggle("lod-far", this.scale < ART_LOD_SCALE);
       }
     }
 

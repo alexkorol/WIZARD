@@ -8,7 +8,7 @@
   },
   "metadata": {
     "generatedFrom": "tools/geometric_skilltree/scripts/author-tree.mjs (hand-authored tables)",
-    "generatedAt": "2026-07-12",
+    "generatedAt": "2026-10-26",
     "intent": "Phase 4 authored tree: every seat is deliberate data. Zero hash-generated content."
   },
   "patternTuning": {
@@ -241,7 +241,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "Votive Candle"
+      "name": "Votive Lamp"
     },
     "1,1": {
       "id": "1,1",
@@ -279,7 +279,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Copied Notes"
+      "name": "Copied Tablets"
     },
     "2,-1": {
       "id": "2,-1",
@@ -317,7 +317,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "Dark Lantern"
+      "name": "Covered Lamp"
     },
     "1,-2": {
       "id": "1,-2",
@@ -434,7 +434,7 @@
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "Iron Doctrine"
+      "name": "Bronze Doctrine"
     },
     "-2,3": {
       "id": "-2,3",
@@ -568,7 +568,7 @@
       "clusterId": "drowned-approach",
       "status": "review",
       "notes": "",
-      "name": "Wet Ink"
+      "name": "Wet Clay"
     },
     "3,-2": {
       "id": "3,-2",
@@ -1039,7 +1039,7 @@
       "clusterId": "unlit-road-named",
       "status": "review",
       "notes": "",
-      "name": "Venom Ledger"
+      "name": "Venom Tally"
     },
     "1,-4": {
       "id": "1,-4",
@@ -1226,7 +1226,7 @@
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Iron Milestone",
+      "name": "The Bronze Waystone",
       "patternHook": {
         "effect": "loop-boost",
         "value": 0.25
@@ -1327,7 +1327,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Votive Milestone",
+      "name": "The Votive Waystone",
       "patternHook": {
         "effect": "enclosure-boost",
         "value": 0.5
@@ -1428,7 +1428,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Blue Milestone",
+      "name": "The Blue Waystone",
       "patternHook": {
         "effect": "wave-length",
         "value": 1
@@ -1529,7 +1529,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Unlit Milestone",
+      "name": "The Unlit Waystone",
       "patternHook": {
         "effect": "flow-length",
         "value": 1
@@ -1630,7 +1630,7 @@
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Swift Milestone",
+      "name": "The Swift Waystone",
       "patternHook": {
         "effect": "rod-double"
       }
@@ -1730,7 +1730,7 @@
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Thrown Milestone",
+      "name": "The Thrown Waystone",
       "patternHook": {
         "effect": "shared-claim"
       }
@@ -1809,7 +1809,7 @@
       "clusterId": "red-waist",
       "status": "review",
       "notes": "",
-      "name": "Taste of Iron"
+      "name": "Taste of Copper"
     },
     "-6,6": {
       "id": "-6,6",
@@ -1979,7 +1979,7 @@
       "clusterId": "procession-oath",
       "status": "review",
       "notes": "",
-      "name": "Litany Page"
+      "name": "Litany Tablet"
     },
     "3,3": {
       "id": "3,3",
@@ -2149,7 +2149,7 @@
       "clusterId": "drowned-oath",
       "status": "review",
       "notes": "",
-      "name": "Reed Pen"
+      "name": "Reed Stylus"
     },
     "6,-6": {
       "id": "6,-6",
@@ -2262,7 +2262,7 @@
       "clusterId": "unlit-oath",
       "status": "review",
       "notes": "",
-      "name": "Shrouded Lantern"
+      "name": "Shrouded Lamp"
     },
     "0,-6": {
       "id": "0,-6",
@@ -2850,7 +2850,7 @@
       "clusterId": "drowned-high",
       "status": "review",
       "notes": "",
-      "name": "Ice Lens"
+      "name": "Ice Mirror"
     },
     "7,-5": {
       "id": "7,-5",
@@ -3512,7 +3512,7 @@
       "clusterId": "procession-sign",
       "status": "review",
       "notes": "",
-      "name": "Lantern Oil"
+      "name": "Lamp Oil"
     },
     "4,4": {
       "id": "4,4",
@@ -3522,7 +3522,7 @@
       "type": "sign",
       "axis": "int",
       "effects": [
-        "Born under the Lantern: your Ward recharges even while you take damage",
+        "Born under the Lamp: your Ward recharges even while you take damage",
         "Your Ward is 30% smaller",
         "Only one Sign may mark a life."
       ],
@@ -3532,7 +3532,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "Sign of the Lantern"
+      "name": "Sign of the Lamp"
     },
     "5,3": {
       "id": "5,3",
@@ -3607,7 +3607,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Unwritten Chapter"
+      "name": "Unwritten Tablet"
     },
     "8,-1": {
       "id": "8,-1",
@@ -3625,7 +3625,7 @@
       "clusterId": "drowned-sign",
       "status": "review",
       "notes": "",
-      "name": "Silt Ledger"
+      "name": "Silt Tally"
     },
     "8,-2": {
       "id": "8,-2",
@@ -3738,7 +3738,7 @@
       "clusterId": "drowned-sign",
       "status": "review",
       "notes": "",
-      "name": "Winter Ledgers"
+      "name": "Winter Tallies"
     },
     "8,-8": {
       "id": "8,-8",
@@ -3758,7 +3758,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "Ledger of Grudges"
+      "name": "Tally of Grudges"
     },
     "7,-8": {
       "id": "7,-8",
@@ -3814,7 +3814,7 @@
       "clusterId": "unlit-sign",
       "status": "review",
       "notes": "",
-      "name": "False Papers"
+      "name": "False Seals"
     },
     "4,-8": {
       "id": "4,-8",
@@ -3966,7 +3966,7 @@
       "clusterId": "high-sign",
       "status": "review",
       "notes": "",
-      "name": "Lightning Bottle"
+      "name": "Lightning Jar"
     },
     "-4,-4": {
       "id": "-4,-4",
@@ -4701,7 +4701,7 @@
       "clusterId": "drowned-deep",
       "status": "review",
       "notes": "",
-      "name": "Drowned Notes"
+      "name": "Drowned Tablets"
     },
     "9,-9": {
       "id": "9,-9",
@@ -4777,7 +4777,7 @@
       "clusterId": "unlit-deep",
       "status": "review",
       "notes": "",
-      "name": "Old Poisoner Notes"
+      "name": "Old Venom Tablets"
     },
     "5,-9": {
       "id": "5,-9",
@@ -4835,7 +4835,7 @@
       "clusterId": "unlit-deep",
       "status": "review",
       "notes": "",
-      "name": "Last Candle"
+      "name": "Last Lamp"
     },
     "2,-9": {
       "id": "2,-9",
@@ -4871,7 +4871,7 @@
       "clusterId": "unlit-deep",
       "status": "review",
       "notes": "",
-      "name": "Night Ledger"
+      "name": "Night Tally"
     },
     "0,-9": {
       "id": "0,-9",
@@ -5023,7 +5023,7 @@
       "clusterId": "high-deep",
       "status": "review",
       "notes": "",
-      "name": "Summit Ledger"
+      "name": "Summit Tally"
     },
     "-8,-1": {
       "id": "-8,-1",
@@ -5306,7 +5306,7 @@
       "clusterId": "kiln-frontier",
       "status": "review",
       "notes": "",
-      "name": "Cartload of Coal"
+      "name": "Cartload of Charcoal"
     },
     "-5,10": {
       "id": "-5,10",
@@ -5477,7 +5477,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "The Empty Reliquary"
+      "name": "The Empty Shrine"
     },
     "4,6": {
       "id": "4,6",
@@ -5551,7 +5551,7 @@
       "clusterId": "procession-frontier",
       "status": "review",
       "notes": "",
-      "name": "Stone Lantern Row"
+      "name": "Stone Lamp Row"
     },
     "8,2": {
       "id": "8,2",

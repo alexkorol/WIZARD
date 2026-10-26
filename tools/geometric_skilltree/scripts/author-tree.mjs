@@ -97,14 +97,14 @@ const SPOKES = {
   int: {
     title: 'Archmage Road', cluster: 'int-spoke',
     doorway: { n: 'First Lesson', s: 'spellDamage', a: 10, x: ['A clean opening: rites hit harder from the first day.'] },
-    r2small: { n: 'Copied Notes', s: 'spirit', a: 12 },
+    r2small: { n: 'Copied Tablets', s: 'spirit', a: 12 },
     mastery: {
       n: 'Blue Arithmetic', s: 'spellDamage', a: 14,
       fx: ['+20 to Ward', 'Your Ward recharge begins 20% sooner', 'The school of counting what cannot be touched.']
     },
     r4small: { n: 'Steady Hand of the Scribe', s: 'castSpeed', a: 5 },
     waystone: {
-      n: 'The Blue Milestone', s: 'ward', a: 30,
+      n: 'The Blue Waystone', s: 'ward', a: 30,
       hook: { effect: 'wave-length', value: 1 },
       fx: ['Waves passing through this Waystone count +1 length', 'Ward recharge is 10% slower', 'Half the journey up the blue road, marked in lapis.']
     },
@@ -113,21 +113,21 @@ const SPOKES = {
       n: 'Archmage', s: 'spellDamage', a: 15,
       fx: ['Unlocks: a second curio slot', 'Unlocks: rite-foci gain +1 socket', 'Unlocks: 2x2 Attendant focus seat', 'The first calling marks your class; every calling milestone grants its armoury unlock.']
     },
-    r8notable: { n: 'Unwritten Chapter', s: 'ward_pct', a: 18, fx: ['+12% increased Rite Damage', 'You keep 10% of Ward when a hit would empty it (design text)'] },
+    r8notable: { n: 'Unwritten Tablet', s: 'ward_pct', a: 18, fx: ['+12% increased Rite Damage', 'You keep 10% of Ward when a hit would empty it (design text)'] },
     r9notable: { n: 'Deep Shelf', s: 'spellDamage', a: 30, fx: ['+30 to Ward', 'Rites cost 5% less Spirit (design text)'] },
     gateway: { n: 'Genius Circle Gate', title: 'Genius Circle' }
   },
   nightwork: {
     title: 'Nightwork Road', cluster: 'nightwork-spoke',
     doorway: { n: 'First Cut', s: 'ailmentEffect', a: 10, x: ['Small wounds, patiently kept open.'] },
-    r2small: { n: 'Dark Lantern', s: 'gloam_res', a: 8 },
+    r2small: { n: 'Covered Lamp', s: 'gloam_res', a: 8 },
     mastery: {
       n: 'Second Shadow', s: 'ailmentEffect', a: 16,
       fx: ['+1% to Critical Chance', 'Your marks last 20% longer (design text)', 'The trade taught after dark, to those who already know a trade.']
     },
     r4small: { n: 'Soft Boots', s: 'evasion', a: 25 },
     waystone: {
-      n: 'The Unlit Milestone', s: 'ailmentEffect', a: 12,
+      n: 'The Unlit Waystone', s: 'ailmentEffect', a: 12,
       hook: { effect: 'flow-length', value: 1 },
       fx: ['Flows passing through this Waystone count +1 length', 'You show your position when you strike: +5% damage taken for two seconds (design text)', 'A marker stone with the lamp long stolen.']
     },
@@ -136,7 +136,7 @@ const SPOKES = {
       n: 'Nightblade', s: 'ailmentEffect', a: 12,
       fx: ['Unlocks: trap and mark tools become equippable', 'Unlocks: venom vial slot', 'Unlocks: 4x4 Preparation Case', 'The first calling marks your class; every calling milestone grants its armoury unlock.']
     },
-    r8notable: { n: 'Ledger of Grudges', s: 'ailmentEffect', a: 20, fx: ['+1.5% to Critical Chance', 'Poisons you inflict on marked enemies deal 15% more (design text)'] },
+    r8notable: { n: 'Tally of Grudges', s: 'ailmentEffect', a: 20, fx: ['+1.5% to Critical Chance', 'Poisons you inflict on marked enemies deal 15% more (design text)'] },
     r9notable: { n: 'The Long Memory', s: 'gloam_res', a: 15, fx: ['+22% increased Ailment Effect', 'Enemies that kill your allies are marked for you (design text)'] },
     gateway: { n: 'Spellblade Annex Gate', title: 'Spellblade Annex' }
   },
@@ -150,7 +150,7 @@ const SPOKES = {
     },
     r4small: { n: 'Quick Breath', s: 'attackSpeed', a: 5 },
     waystone: {
-      n: 'The Swift Milestone', s: 'evasion', a: 45,
+      n: 'The Swift Waystone', s: 'evasion', a: 45,
       hook: { effect: 'rod-double' },
       fx: ['Rods ending on this Waystone empower both endpoints twice', 'You cannot Block while you keep this pace (design text)', 'Runners touch the stone and do not stop.']
     },
@@ -173,7 +173,7 @@ const SPOKES = {
     },
     r4small: { n: 'Loose Shoulders', s: 'attackSpeed', a: 5 },
     waystone: {
-      n: 'The Thrown Milestone', s: 'projectileDamage', a: 16,
+      n: 'The Thrown Waystone', s: 'projectileDamage', a: 16,
       hook: { effect: 'shared-claim' },
       fx: ['Waves and flows may both claim conduits touching this Waystone', '-10% increased Reach', 'Soldiers bet knives against the stone. The stone keeps them.']
     },
@@ -191,12 +191,12 @@ const SPOKES = {
     doorway: { n: 'Firm Grip', s: 'attackDamage', a: 9, x: ['Hold the haft like it owes you money.'] },
     r2small: { n: 'Broad Back', s: 'life', a: 18 },
     mastery: {
-      n: 'Iron Doctrine', s: 'attackDamage', a: 14,
+      n: 'Bronze Doctrine', s: 'attackDamage', a: 14,
       fx: ['+25 to Guard', 'You cannot be pushed back while attacking (design text)', 'The doctrine is short: advance.']
     },
     r4small: { n: 'Scarred Knuckles', s: 'physical_increased', a: 8 },
     waystone: {
-      n: 'The Iron Milestone', s: 'guard', a: 30,
+      n: 'The Bronze Waystone', s: 'guard', a: 30,
       hook: { effect: 'loop-boost', value: 0.25 },
       fx: ['Loops closed around this Waystone empower their center +25% further', 'Your Evasion is 10% lower while you hold the line (design text)', 'Half the column rests here; half never needed to.']
     },
@@ -212,14 +212,14 @@ const SPOKES = {
   ritualist: {
     title: 'Ritualist Road', cluster: 'ritualist-spoke',
     doorway: { n: 'First Rite', s: 'spirit', a: 12, x: ['Every service starts with a lit taper and a steady voice.'] },
-    r2small: { n: 'Votive Candle', s: 'spellDamage', a: 8 },
+    r2small: { n: 'Votive Lamp', s: 'spellDamage', a: 8 },
     mastery: {
       n: 'Order of Service', s: 'minionDamage', a: 14,
       fx: ['+15 to Spirit', 'Your banners and standing rites reach 15% further (design text)', 'The order is old; the war is older.']
     },
     r4small: { n: 'Ash Blessing', s: 'ember_res', a: 10 },
     waystone: {
-      n: 'The Votive Milestone', s: 'spirit', a: 20,
+      n: 'The Votive Waystone', s: 'spirit', a: 20,
       hook: { effect: 'enclosure-boost', value: 0.5 },
       fx: ['Enclosures you close around this Waystone guard 50% more', 'Your rites cost 5% more Spirit (design text)', 'Offerings pile at its foot. Take nothing.']
     },
@@ -306,7 +306,7 @@ const WEDGES = [
       10: [
         { n: 'Kiln Road East', s: 'str', a: 5, c: 'kiln-frontier' },
         { n: 'Kiln Road West', s: 'int', a: 5, c: 'kiln-frontier' },
-        { n: 'Cartload of Coal', s: 'str', a: 5, c: 'kiln-frontier' },
+        { n: 'Cartload of Charcoal', s: 'str', a: 5, c: 'kiln-frontier' },
         { n: 'Warm Hearthstone', s: 'life', a: 22, c: 'kiln-frontier', x: ['Rest here: Second Breath is 10% faster (design text)'] },
         { n: 'Potter Marks', s: 'int', a: 5, c: 'kiln-frontier' },
         { n: 'Cracked Amphora', s: 'attrs', a: 3, c: 'kiln-frontier' },
@@ -325,12 +325,12 @@ const WEDGES = [
     r7notable: { n: 'Processional Guard', s: 'minionDamage', a: 22, fx: ['+20 to Ward', 'Companions within your banner cannot be Withered (design text)'] },
     r8notable: { n: 'Vigil Unbroken', s: 'ward_pct', a: 20, fx: ['+10 to Spirit', 'Your Ward does not break from Gloam while a rite is maintained (design text)'] },
     sign: {
-      n: 'Sign of the Lantern',
-      fx: ['Born under the Lantern: your Ward recharges even while you take damage', 'Your Ward is 30% smaller', 'Only one Sign may mark a life.']
+      n: 'Sign of the Lamp',
+      fx: ['Born under the Lamp: your Ward recharges even while you take damage', 'Your Ward is 30% smaller', 'Only one Sign may mark a life.']
     },
     r9notable: { n: 'Second Congregation', s: 'minionDamage', a: 28, fx: ['You may keep one additional companion-of-war (design text)', 'The line behind you is also the line beside you.'] },
     rimNotables: [
-      { n: 'The Empty Reliquary', s: 'ward', a: 50, fx: ['Ward gained from this passive counts as a rite for your keystones (design text)'] },
+      { n: 'The Empty Shrine', s: 'ward', a: 50, fx: ['Ward gained from this passive counts as a rite for your keystones (design text)'] },
       { n: 'Feast After Service', s: 'spirit', a: 30, fx: ['+12% increased Companion Damage', 'Kills during your rites feed 5 Spirit back (design text)'] }
     ],
     smallsByRing: {
@@ -349,7 +349,7 @@ const WEDGES = [
       ],
       6: [
         { n: 'Oath Beads', s: 'ward', a: 22, c: 'procession-oath' },
-        { n: 'Litany Page', s: 'spellDamage', a: 9, c: 'procession-oath' },
+        { n: 'Litany Tablet', s: 'spellDamage', a: 9, c: 'procession-oath' },
         { n: 'Bearer Training', s: 'minionDamage', a: 9, c: 'procession-oath' },
         { n: 'Salt Circle', s: 'gloam_res', a: 10, c: 'procession-oath', x: ['Wither cannot cross the circle while you stand still (design text)'] }
       ],
@@ -362,7 +362,7 @@ const WEDGES = [
       ],
       8: [
         { n: 'Night Office', s: 'spellDamage', a: 10, c: 'procession-sign' },
-        { n: 'Lantern Oil', s: 'ward', a: 25, c: 'procession-sign' },
+        { n: 'Lamp Oil', s: 'ward', a: 25, c: 'procession-sign' },
         { n: 'Keeper Keys', s: 'spirit', a: 12, c: 'procession-sign' },
         { n: 'Vested Authority', s: 'minionDamage', a: 10, c: 'procession-sign', x: ['Your companion taunts when you raise a banner (design text)'] },
         { n: 'Incense Coils', s: 'gloam_res', a: 10, c: 'procession-sign' }
@@ -380,7 +380,7 @@ const WEDGES = [
         { n: 'Roadside Shrine', s: 'attrs', a: 3, c: 'procession-frontier', x: ['Pause here: your next rite costs nothing (design text)'] },
         { n: 'Prayer Flags', s: 'int', a: 5, c: 'procession-frontier' },
         { n: 'Alms Bowl', s: 'spirit', a: 12, c: 'procession-frontier' },
-        { n: 'Stone Lantern Row', s: 'str', a: 5, c: 'procession-frontier' },
+        { n: 'Stone Lamp Row', s: 'str', a: 5, c: 'procession-frontier' },
         { n: 'Vigil Bench', s: 'ward', a: 20, c: 'procession-frontier' },
         { n: 'The Quiet Mile', s: 'int', a: 5, c: 'procession-frontier' }
       ]
@@ -407,7 +407,7 @@ const WEDGES = [
     ],
     smallsByRing: {
       3: [
-        { n: 'Wet Ink', s: 'spellDamage', a: 8, c: 'drowned-approach' },
+        { n: 'Wet Clay', s: 'spellDamage', a: 8, c: 'drowned-approach' },
         { n: 'River Stone', s: 'river_resistance', a: 8, c: 'drowned-approach', x: ['+6 to Ward while near water in spirit (design text)'] }
       ],
       4: [
@@ -423,21 +423,21 @@ const WEDGES = [
         { n: 'Sounding Line', s: 'accuracy_flat', a: 40, c: 'drowned-oath' },
         { n: 'Undercurrent', s: 'spellDamage', a: 10, c: 'drowned-oath' },
         { n: 'Blue Lips', s: 'river_resistance', a: 10, c: 'drowned-oath' },
-        { n: 'Reed Pen', s: 'ailmentEffect', a: 10, c: 'drowned-oath', x: ['Marks you write cost no Spirit (design text)'] }
+        { n: 'Reed Stylus', s: 'ailmentEffect', a: 10, c: 'drowned-oath', x: ['Marks you write cost no Spirit (design text)'] }
       ],
       7: [
         { n: 'Flooded Stacks', s: 'ward', a: 24, c: 'drowned-high' },
         { n: 'Cold Catalogue', s: 'spellDamage', a: 10, c: 'drowned-high' },
-        { n: 'Ice Lens', s: 'critChance', a: 1, c: 'drowned-high', x: ['Advantage against Numbed enemies is doubled (design text)'] },
+        { n: 'Ice Mirror', s: 'critChance', a: 1, c: 'drowned-high', x: ['Advantage against Numbed enemies is doubled (design text)'] },
         { n: 'Slow Water', s: 'ailmentEffect', a: 10, c: 'drowned-high' },
         { n: 'Depth Marks', s: 'river_resistance', a: 12, c: 'drowned-high' }
       ],
       8: [
-        { n: 'Silt Ledger', s: 'spellDamage', a: 11, c: 'drowned-sign' },
+        { n: 'Silt Tally', s: 'spellDamage', a: 11, c: 'drowned-sign' },
         { n: 'Frozen Margin', s: 'ailmentEffect', a: 11, c: 'drowned-sign' },
         { n: 'The Weir', s: 'ward', a: 26, c: 'drowned-sign', x: ['Enemies that cross toward you are slowed (design text)'] },
         { n: 'Pale Reflection', s: 'castSpeed', a: 5, c: 'drowned-sign' },
-        { n: 'Winter Ledgers', s: 'river_resistance', a: 12, c: 'drowned-sign' }
+        { n: 'Winter Tallies', s: 'river_resistance', a: 12, c: 'drowned-sign' }
       ],
       9: [
         { n: 'Deep Shelf Reading', s: 'spellDamage', a: 12, c: 'drowned-deep' },
@@ -445,7 +445,7 @@ const WEDGES = [
         { n: 'The Undertaker Current', s: 'ailmentEffect', a: 12, c: 'drowned-deep', x: ['Enemies Frozen by you thaw 50% slower (design text)'] },
         { n: 'Silver Silt', s: 'ward', a: 30, c: 'drowned-deep' },
         { n: 'Cold Authority', s: 'castSpeed', a: 5, c: 'drowned-deep' },
-        { n: 'Drowned Notes', s: 'spirit', a: 14, c: 'drowned-deep' }
+        { n: 'Drowned Tablets', s: 'spirit', a: 14, c: 'drowned-deep' }
       ],
       10: [
         { n: 'River Road North', s: 'int', a: 5, c: 'drowned-frontier' },
@@ -461,7 +461,7 @@ const WEDGES = [
   { /* 3: Nightwork -> DEX — The Unlit Road (Gloam, venom, traps, unseen work) */
     id: 'unlit-road', title: 'The Unlit Road',
     firstNotable: { n: 'Dirty Fighting', s: 'ailmentEffect', a: 14, fx: ['+30 to Evasion', 'Your poisons ignore half of Gloam resistance (design text)'] },
-    beltNotable: { n: 'Venom Ledger', s: 'ailmentEffect', a: 18, fx: ['+1% to Critical Chance', 'Poison you inflict stacks one deeper (design text)'] },
+    beltNotable: { n: 'Venom Tally', s: 'ailmentEffect', a: 18, fx: ['+1% to Critical Chance', 'Poison you inflict stacks one deeper (design text)'] },
     keystone: {
       n: 'Quiet Work',
       fx: ['You deal 40% more damage to enemies that have not hurt you recently', 'Enemies that have hurt you recently take 15% less from you', 'The best work is never witnessed twice.']
@@ -495,7 +495,7 @@ const WEDGES = [
         { n: 'Cellar Route', s: 'evasion', a: 28, c: 'unlit-oath' },
         { n: 'Rasp and File', s: 'attackSpeed', a: 4, c: 'unlit-oath' },
         { n: 'Black Dose', s: 'ailmentEffect', a: 10, c: 'unlit-oath', x: ['Poison from this dose slows (design text)'] },
-        { n: 'Shrouded Lantern', s: 'gloam_res', a: 10, c: 'unlit-oath' }
+        { n: 'Shrouded Lamp', s: 'gloam_res', a: 10, c: 'unlit-oath' }
       ],
       7: [
         { n: 'Rooftop Line', s: 'evasion_increased', a: 9, c: 'unlit-high' },
@@ -506,18 +506,18 @@ const WEDGES = [
       ],
       8: [
         { n: 'Adder Pit', s: 'ailmentEffect', a: 11, c: 'unlit-sign' },
-        { n: 'False Papers', s: 'evasion', a: 32, c: 'unlit-sign' },
+        { n: 'False Seals', s: 'evasion', a: 32, c: 'unlit-sign' },
         { n: 'Cold Trail', s: 'gloam_res', a: 12, c: 'unlit-sign' },
         { n: 'The Fence', s: 'attrs', a: 4, c: 'unlit-sign', x: ['Goods you find are worth 10% more (design text)'] },
         { n: 'Knife Oath', s: 'critChance', a: 1, c: 'unlit-sign' }
       ],
       9: [
         { n: 'Deep Cellars', s: 'evasion_increased', a: 10, c: 'unlit-deep' },
-        { n: 'Old Poisoner Notes', s: 'ailmentEffect', a: 12, c: 'unlit-deep' },
+        { n: 'Old Venom Tablets', s: 'ailmentEffect', a: 12, c: 'unlit-deep' },
         { n: 'Wither Root', s: 'gloam_res', a: 14, c: 'unlit-deep', x: ['Wither you suffer drains 30% slower (design text)'] },
-        { n: 'Last Candle', s: 'critChance', a: 1, c: 'unlit-deep' },
+        { n: 'Last Lamp', s: 'critChance', a: 1, c: 'unlit-deep' },
         { n: 'Smuggler Hollow', s: 'evasion', a: 35, c: 'unlit-deep' },
-        { n: 'Night Ledger', s: 'dex', a: 6, c: 'unlit-deep' }
+        { n: 'Night Tally', s: 'dex', a: 6, c: 'unlit-deep' }
       ],
       10: [
         { n: 'Unlit Mile One', s: 'dex', a: 5, c: 'unlit-frontier' },
@@ -578,7 +578,7 @@ const WEDGES = [
       ],
       8: [
         { n: 'Storm Shelf', s: 'projectileDamage', a: 11, c: 'high-sign' },
-        { n: 'Lightning Bottle', s: 'ailmentEffect', a: 11, c: 'high-sign', x: ['Once per fight, your Jolt becomes a strike (design text)'] },
+        { n: 'Lightning Jar', s: 'ailmentEffect', a: 11, c: 'high-sign', x: ['Once per fight, your Jolt becomes a strike (design text)'] },
         { n: 'Anemometer Habit', s: 'accuracy_flat', a: 50, c: 'high-sign' },
         { n: 'High Camp', s: 'evasion', a: 32, c: 'high-sign' },
         { n: 'Peak Silence', s: 'storm_res', a: 12, c: 'high-sign' }
@@ -588,7 +588,7 @@ const WEDGES = [
         { n: 'Thin Air Lungs', s: 'move', a: 5, c: 'high-deep' },
         { n: 'Thunder Bones', s: 'storm_res', a: 14, c: 'high-deep', x: ['You cannot be Jolted while moving (design text)'] },
         { n: 'Eagle Feathers', s: 'evasion_increased', a: 10, c: 'high-deep' },
-        { n: 'Summit Ledger', s: 'dex', a: 6, c: 'high-deep' },
+        { n: 'Summit Tally', s: 'dex', a: 6, c: 'high-deep' },
         { n: 'Anchor Cairn', s: 'accuracy_flat', a: 50, c: 'high-deep' }
       ],
       10: [
@@ -633,7 +633,7 @@ const WEDGES = [
       5: [
         { n: 'Whetstone Habit', s: 'physical_increased', a: 8, c: 'red-waist' },
         { n: 'Corded Forearms', s: 'attackSpeed', a: 4, c: 'red-waist' },
-        { n: 'Taste of Iron', s: 'life', a: 20, c: 'red-waist', x: ['Bleeding enemies feed your Second Breath (design text)'] }
+        { n: 'Taste of Copper', s: 'life', a: 20, c: 'red-waist', x: ['Bleeding enemies feed your Second Breath (design text)'] }
       ],
       6: [
         { n: 'Broken Teeth', s: 'attackDamage', a: 9, c: 'red-oath' },
