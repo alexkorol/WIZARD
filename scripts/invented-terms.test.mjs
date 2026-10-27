@@ -83,7 +83,7 @@ function* walk(dir) {
 }
 const SKIP = /(?:^|\/)(?:test\.js|download-intake\.js)$|\.test\.m?js$|\.min\.js$|vendor|three/;
 function files() {
-  const list = [join(ROOT, 'index.html')];
+  const list = [join(ROOT, 'index.html'), join(ROOT, 'dashboard.js')];
   for (const path of walk(join(ROOT, 'tools'))) {
     if (SKIP.test(path) || statSync(path).size > 8_000_000) continue;
     if (/\.(?:html|js|mjs)$/.test(path) || path.endsWith('wizard.module.json')) list.push(path);

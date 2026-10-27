@@ -28,5 +28,5 @@
     "agentFeedback": false
   },
   "unsupportedMethods": ["listScenarios", "loadScenario", "getAnnotations", "setAnnotations", "pause", "resume", "step"],
-  "tags": ["chronicles", "houses", "permadeath"]
+  "tags": ["houses", "characters", "permadeath"]
 }

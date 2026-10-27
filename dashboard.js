@@ -4,7 +4,7 @@
     { id: 'character-systems', title: 'Character Systems', blurb: 'Adjust HUD resources, edit passive trees, and inspect inventory systems.' },
     { id: 'world-terrain', title: 'World & Terrain', blurb: 'Generate maps and preview terrain and the world.' },
     { id: 'systems-integration', title: 'Systems Integration', blurb: 'Test spell paths, UI components, and recorded system events.' },
-    { id: 'chronicles', title: 'Chronicles', blurb: 'Create houses and characters, and track inherited relics.' }
+    { id: 'chronicles', title: 'Houses and Characters', blurb: 'Create houses and characters, and track inherited relics.' }
   ];
 
   var TARGET_LABELS = {

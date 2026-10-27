@@ -140,8 +140,8 @@ window.WIZARD_REGISTRY = {
         "step"
       ],
       "tags": [
-        "chronicles",
         "houses",
+        "characters",
         "permadeath"
       ]
     },
@@ -1225,8 +1225,8 @@ window.WIZARD_REGISTRY = {
         "step"
       ],
       "tags": [
-        "chronicles",
         "houses",
+        "characters",
         "permadeath"
       ]
     },
