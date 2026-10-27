@@ -465,6 +465,7 @@ function checkModuleTests(failures, results) {
     'tools/geometric_skilltree/tests/tree-data.test.mjs',
     'tools/geometric_skilltree/tests/channel-terminology.test.mjs',
     'tools/geometric_skilltree/tests/invented-terms.test.mjs',
+    'scripts/invented-terms.test.mjs',
     'tools/geometric_skilltree/tests/runtime-smoke.test.mjs',
     'tools/geometric_skilltree/tests/balance.test.mjs',
     'tools/rpg_inventory/core/verdigris-stats.test.js',

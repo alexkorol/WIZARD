@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "wizard.spellforge",
   "slug": "spellforge",
-  "title": "Spellforge VFX Lab",
+  "title": "Spell Effects Lab",
   "description": "WebGL2 spell and effect library: 189 layered effects with tunable parameters, a shared GLSL library, per-effect breakdowns and porting notes, and a ratings export for shortlisting effects for the ARPG.",
   "status": "authoring",
   "visibility": "dashboard",

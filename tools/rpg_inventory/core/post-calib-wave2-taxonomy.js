@@ -25,7 +25,7 @@
     "materialId": "hide",
     "tier": 1,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "e76507e4ebd114ec077137c41e9d36c40682e0af6a96efe23ed6783210bdfb75",
     "sourceFilename": "01817d6c-cbed-4ce6-aad5-2fdf9ab7e6c5.png"
   },
@@ -69,7 +69,7 @@
     "materialId": "bone",
     "tier": 1,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "4bce26cd9c997ad96b7510616df8e542bb998b88e80e99c43e874459d620a111",
     "sourceFilename": "6e3de3da-df7b-495a-9728-c0ab0cd9020e.png"
   },
@@ -91,7 +91,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "07d737f178e2ce78ac18432fce1316e755a1a21afb3254e2a7630d721b51be65",
     "sourceFilename": "7e6a9c77-64fb-4736-ad90-4652ae7f03cb.png"
   },
@@ -113,7 +113,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "4606de3eddb207fe63fd1e92470a47dd06343160e390a909fbd9e061e3b82974",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 06_55_07 PM.png"
   },
@@ -135,7 +135,7 @@
     "materialId": "bronze",
     "tier": 3,
     "statAxis": "STR+DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "3948a149dacdd991ba5336fb9f819cf11efbc45ee01f3e7f3bafef1ecd21039b",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 06_55_18 PM.png"
   },
@@ -179,7 +179,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "STR",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "28b177bec56f274f55a9868fd465727e46d2eaf601f58a8e99b59decfab4637d",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 06_55_41 PM.png"
   },
@@ -223,7 +223,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "76626ced3a0de15a4f5e908bdbf1348a0d9dadd92d5a4a971bd5632ed3c87c11",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 06_56_08 PM.png"
   },
@@ -267,7 +267,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "ca5dc320a3dddf885329b78daa96fd77854b66e23f0f8334c98078c2fa7aa90a",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 06_56_32 PM.png"
   },
@@ -289,7 +289,7 @@
     "materialId": "bronze",
     "tier": 3,
     "statAxis": "STR+DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "40dbb64c2ca5cd590ccdbff6c231063823f6a38166de9ea3a3ee6c296aaf24f5",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 07_10_34 PM.png"
   },
@@ -333,7 +333,7 @@
     "materialId": "bronze",
     "tier": 3,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "f462c9bdc18ed8c5ccea6645ca1a447744ad3dc2ade6f28ecdb7bf9263a5da1e",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 07_11_37 PM.png"
   },
@@ -355,7 +355,7 @@
     "materialId": "bronze",
     "tier": 3,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "ffda14e8664ccab851c504917fb48c9754e1c1e734bf05ede1bf42fbab59026d",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 07_16_15 PM.png"
   },
@@ -399,7 +399,7 @@
     "materialId": "bronze",
     "tier": 3,
     "statAxis": "STR",
-    "faction": "Riverspill",
+    "faction": "River",
     "sourceSha256": "7a4395fc5099736b1dff9e94e5fc8d351ac63931b2a677821ccdd671cad481a7",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 07_31_21 PM.png"
   },
@@ -443,7 +443,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "ae17e661a89b0b6f999e3448d71d884b4d2304b979f73c7d75466416e0a6e668",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 07_38_40 PM.png"
   },
@@ -487,7 +487,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "83404e64a83729450cc29481f658f4de47d8aa2bd616850f8f6bc552e29a6cda",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 07_57_52 PM.png"
   },
@@ -509,7 +509,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "334969077d5878bdd9aaf51a3f83ae2eada928fe8839e610e673f27b5ee1f16e",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 09_08_11 PM.png"
   },
@@ -531,7 +531,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "5bd3dc6dfb392a312627fc0afeefc7b90a237ca94c8b79f4df84891b819c7525",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 09_08_25 PM.png"
   },
@@ -553,7 +553,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "2be59413e62f7527b9da11eaf03558c72705500703e3e41bff97fb37541baf2a",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 09_27_41 PM.png"
   },
@@ -597,7 +597,7 @@
     "materialId": "hide",
     "tier": 1,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "fd34937377889b7cf20d6a040f212836c22ca9267da3ab2f4687843d0780dc0f",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 09_27_56 PM.png"
   },
@@ -619,7 +619,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Riverspill",
+    "faction": "River",
     "sourceSha256": "d8be2ec49774918abd3c733a84b355d7682bc9107fd6254baf9e9327033dea6e",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 09_28_13 PM.png"
   },
@@ -641,7 +641,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "3e2708e0b0f9911a34196960d66e12da41baa1061961c3d10aa5dccd5b2c4775",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 09_28_19 PM.png"
   },
@@ -685,7 +685,7 @@
     "materialId": "flint",
     "tier": 1,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "4119ab079133559a69c275c606f8e74f907b796debdafd6cae2a8053324c44a7",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 09_28_35 PM.png"
   },
@@ -729,7 +729,7 @@
     "materialId": "jade",
     "tier": 4,
     "statAxis": "STR+DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "e6467feeb6a80aa42a4559189bba3dd603c32216723c790761c37b0d7c7c5061",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 10_09_46 PM.png"
   },
@@ -751,7 +751,7 @@
     "materialId": "jade",
     "tier": 4,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "3e49cb737a147f6263e231dfbfaa93f891321d4c75084495cc9daeee709e91ce",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 10_09_54 PM.png"
   },
@@ -773,7 +773,7 @@
     "materialId": "bronze",
     "tier": 3,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "8879f7299132593c6992e698f3a8ad60fb4eb9ef54594f87c6d513e8e78ed88e",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 10_10_15 PM.png"
   },
@@ -795,7 +795,7 @@
     "materialId": "jade",
     "tier": 4,
     "statAxis": "INT",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "1eb423bc0bd098c6a70642907cee633be4ef26dcc3c06e5bc17e7d55baaba19d",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 10_13_11 PM.png"
   },
@@ -817,7 +817,7 @@
     "materialId": "bronze",
     "tier": 3,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "65c592169d71fc6fd32c072523b79a9b3fdba706c8cd3eb299a11530b05a0976",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 10_18_09 PM.png"
   },
@@ -839,7 +839,7 @@
     "materialId": "bronze",
     "tier": 3,
     "statAxis": "DEX+INT",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "9760ff3ee8b443585066325c33e6b0970ebba2c69b62af4baecc4c6f8a3341ba",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 10_21_06 PM.png"
   },
@@ -861,7 +861,7 @@
     "materialId": "jade",
     "tier": 4,
     "statAxis": "STR+DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "7f54cbada2f193e97ea1ed9c68bcfa82a65699a5a93651551bf68afcf0c87aac",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 10_21_33 PM.png"
   },
@@ -883,7 +883,7 @@
     "materialId": "jade",
     "tier": 4,
     "statAxis": "INT",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "b49beb1a5de55a00e746a8928a15ced23da8073098b6d2170d1843be2b4084d8",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 10_37_19 PM.png"
   },
@@ -927,7 +927,7 @@
     "materialId": "jade",
     "tier": 4,
     "statAxis": "STR",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "d4b2595a144fa355c0779bd06b6e82d1a64fa3b1acab1053b733fb9cc53aedb1",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 10_37_34 PM.png"
   },
@@ -971,7 +971,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "077c04b79150d98594e60c3c7a9d7eb591e64cf185fb331a5df79f3ac7b1a3bb",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 10_37_51 PM.png"
   },
@@ -993,7 +993,7 @@
     "materialId": "jade",
     "tier": 4,
     "statAxis": "INT+STR",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "040bf18c366bc21ae94dc84cd3059cade307bda25efec5f532bd4a1efaa7470e",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 10_50_51 PM.png"
   },
@@ -1015,7 +1015,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "b471346ccd5ddbbbe92eaec97b7e5ea0d723f4cf95e2ef28daf89b96771d86b9",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 10_51_04 PM.png"
   },
@@ -1037,7 +1037,7 @@
     "materialId": "bronze",
     "tier": 3,
     "statAxis": "STR",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "921d0fe137072d0d4ff8967bfb0a8e5607c8a54742e62c30e5ea420af7e4ea83",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 10_51_32 PM.png"
   },
@@ -1059,7 +1059,7 @@
     "materialId": "hide",
     "tier": 1,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "1f0b93ea9d32f954af796ff2f34850a4ed2f3e35b9bdb73f1f20becc2ebf9951",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 11_06_20 PM.png"
   },
@@ -1103,7 +1103,7 @@
     "materialId": "hide",
     "tier": 1,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "3105aff642baddc32a7201ec6ae463cc63aa0810a20f7cdd9f77d401e6727d1b",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 11_06_35 PM.png"
   },
@@ -1125,7 +1125,7 @@
     "materialId": "bone",
     "tier": 1,
     "statAxis": "STR",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "062a400e874bc624ecbc673e7021a0e680a12606d5801bf9b179cff37920648b",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 11_06_41 PM.png"
   },
@@ -1169,7 +1169,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "9d2d48d3a0263d2a3eb336cf259cf4fb367e8274a1d2a35930c6032fdd8d7b6a",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 11_07_01 PM.png"
   },
@@ -1213,7 +1213,7 @@
     "materialId": "jade",
     "tier": 4,
     "statAxis": "STR",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "9118bd8ce9ab237f4337072ddef6f630f48db16d125c49f435a79baa0071367d",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 11_16_56 PM.png"
   },
@@ -1235,7 +1235,7 @@
     "materialId": "jade",
     "tier": 4,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "d003d2ace05a854d9672b3d176e701139acf6652472cdc850071171cc1893fec",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 11_17_04 PM.png"
   },
@@ -1257,7 +1257,7 @@
     "materialId": "jade",
     "tier": 4,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "dc5718c92564db2a8d3b32e5cc71eb785c1e6a2d5723d69750e8d7bc070e842f",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 11_25_55 PM.png"
   },
@@ -1279,7 +1279,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "ad3943556afcc76a19feb7b68ee69ae9f7819e163dafa7706db87d6250d3493d",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 11_26_14 PM.png"
   },
@@ -1301,7 +1301,7 @@
     "materialId": "jade",
     "tier": 4,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "bf1122f4818f1eca9af7dbb728d6acc05934149993bc427343054a9738f32251",
     "sourceFilename": "ChatGPT Image Aug 13, 2026, 11_26_26 PM.png"
   },
@@ -1455,7 +1455,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "0cf01f50e2a92b7b173a5bf65df7f519e0213df2c8805f4c0ccf8d097722c0aa",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 08_45_57 PM.png"
   },
@@ -1521,7 +1521,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "c858f69368d2afc593e24a5557464f43a8ff02785875fa92d379d19c41df1b76",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 08_51_44 PM.png"
   },
@@ -1609,7 +1609,7 @@
     "materialId": "hide",
     "tier": 1,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "68fdfb7ddac8202867a0f10d7f96ffb6f6f535d35ece29627bbc5bd4be3afeac",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 09_05_44 PM.png"
   },
@@ -1675,7 +1675,7 @@
     "materialId": "hide",
     "tier": 1,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "bf5c8e1c06d468c04c2f84317e82d79571f33b582e05509f0d300ae2083a3b23",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 09_06_19 PM.png"
   },
@@ -1719,7 +1719,7 @@
     "materialId": "bone",
     "tier": 1,
     "statAxis": "STR",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "28fe934488f8600a3d7b9620460cdfd0c36545e8045674c893f250c120f0beb9",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 09_06_36 PM.png"
   },
@@ -1741,7 +1741,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "a27808a3dc0c201494213e6bd2e2a81e6bb5582cb76c91142b55f05002177e5a",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 09_06_45 PM.png"
   },
@@ -1763,7 +1763,7 @@
     "materialId": "bone",
     "tier": 1,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "d4344038756d9f5f9b13365031f766ddc952ad751a772d3f5268963a906c2248",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 09_06_59 PM.png"
   },
@@ -1785,7 +1785,7 @@
     "materialId": "bone",
     "tier": 1,
     "statAxis": "INT",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "aa6c2860965c8edc6544d2d2f993d5b62af291dad6fe241b6e6d709097f6bf83",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 09_13_50 PM.png"
   },
@@ -1829,7 +1829,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Riverspill",
+    "faction": "River",
     "sourceSha256": "19b7e2bc614ec19726d17336c2f2842166119d1d099295b888a0b796e04ae8b4",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 09_30_42 PM.png"
   },
@@ -1851,7 +1851,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "b0b9a3f03db6b81f2e014de7be506e1986fce544d568cd22690be44c8c17cda8",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 09_30_51 PM.png"
   },
@@ -1873,7 +1873,7 @@
     "materialId": "bronze",
     "tier": 3,
     "statAxis": "STR",
-    "faction": "Riverspill",
+    "faction": "River",
     "sourceSha256": "8b4afc9df08b387f4228eab85178b138b68358e3743f0a94d26118cfe709a4b5",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 09_30_59 PM.png"
   },
@@ -2071,7 +2071,7 @@
     "materialId": "quilted",
     "tier": 2,
     "statAxis": "STR+DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "e119de95c96030202d6daff7dbbe7504a306e77f0aa88a2be440d4353caf379a",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 10_21_11 PM.png"
   },
@@ -2093,7 +2093,7 @@
     "materialId": "bronze",
     "tier": 3,
     "statAxis": "STR+DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "9beed2c6e5c4acd94d9095e00b717f2af89f4a0be762936973ba8b1cf907ce89",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 10_21_26 PM.png"
   },
@@ -2225,7 +2225,7 @@
     "materialId": "hide",
     "tier": 1,
     "statAxis": "DEX",
-    "faction": "Dustwind",
+    "faction": "Steppe",
     "sourceSha256": "c2995dc2bf6077c3791464232c6f41a0da00ad88f0e55ec651c220505013ad70",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 10_52_03 PM.png"
   },
@@ -2687,7 +2687,7 @@
     "materialId": "bone",
     "tier": 1,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "93e016c3056ad119acf993920501d62fc53c9196a32392d1bcf249ee59f2e551",
     "sourceFilename": "ChatGPT Image Aug 14, 2026, 11_30_46 PM.png"
   },
@@ -2731,7 +2731,7 @@
     "materialId": "flint",
     "tier": 1,
     "statAxis": "STR",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "44b6d5b21a5015624992922de8d22f10a63dddaf83cde6afd62847a5a0980bbe",
     "sourceFilename": "ad0d3b4a-757c-4fbe-b0a7-138004a7fe3c.png"
   },
@@ -2753,7 +2753,7 @@
     "materialId": "copper",
     "tier": 2,
     "statAxis": "DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "db3e6e84e3804ee10535960649f2023f26a0536498a6d3644afaedd42e24f8e3",
     "sourceFilename": "e11d61b3-771a-456d-8566-d967b12616bf.png"
   },
@@ -2775,7 +2775,7 @@
     "materialId": "hide",
     "tier": 1,
     "statAxis": "STR+DEX",
-    "faction": "Stonewood",
+    "faction": "Woodland",
     "sourceSha256": "02eafdfa7dcef86578b35783de41f73c704f5efa04117ac223c59aa209092463",
     "sourceFilename": "f738cd8b-2d50-46e8-820f-dd7b83281909.png"
   }

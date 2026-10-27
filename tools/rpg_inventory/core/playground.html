@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vesselforge Playground — WIZARD</title>
+  <title>Item Crafting Playground — WIZARD</title>
   <meta name="description" content="Console-style harness for the Vesselforge modular ARPG item engine with the Verdigris bronze-age content pack.">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
@@ -52,7 +52,7 @@
 <body>
   <div class="bar">
     <a href="../../../index.html">&larr; WIZARD</a>
-    <h1>VESSELFORGE <b>PLAYGROUND</b></h1>
+    <h1>ITEM CRAFTING <b>PLAYGROUND</b></h1>
     <span style="color:var(--dim)">engine + verdigris pack, no framework — view source</span>
   </div>
 
@@ -112,8 +112,9 @@
     </div>
   </div>
 
-  <script src="vesselforge.js"></script>
-  <script src="verdigris-pack.js"></script>
+  <script src="vesselforge.js?v=20261026"></script>
+  <script src="verdigris-stats.js?v=20261026"></script>
+  <script src="verdigris-pack.js?v=20261026"></script>
   <script>
     const forge = VesselForge.createForge(VerdigrisPack);
     const $ = (id) => document.getElementById(id);

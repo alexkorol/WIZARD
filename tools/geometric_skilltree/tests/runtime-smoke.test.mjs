@@ -278,7 +278,7 @@ function testRimUnlockSeats() {
   const expected = [
     ['10,0', 'Attendant', 'attendant_focus_slot'],
     ['0,-10', 'Quick Rig', 'quick_rig_slot'],
-    ['-10,10', 'Warcall', 'war_call_slot'],
+    ['-10,10', 'War Horn', 'war_call_slot'],
     ['10,-10', 'Preparations', 'preparations_pack'],
     ['-10,0', 'Trophies', 'spoils_pack'],
     ['0,10', 'Relics', 'reliquary_pack']

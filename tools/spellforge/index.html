@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Spellforge Grimoire</title>
+<title>Spell Effects Lab</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
 /* layout: three-pane DCC workbench (library | viewport | inspector). The viewport is the only loud surface; chrome stays quiet. */
@@ -171,7 +171,7 @@ code{font:12px var(--f-mono);color:var(--fg)}
 
 <div id="app">
   <header id="bar">
-    <div class="brand"><b>Spellforge</b><span>VFX Lab</span></div>
+    <div class="brand"><b>Spell Effects</b><span>Lab</span></div>
     <input id="q" type="search" placeholder="Search effects or techniques" aria-label="Search effects">
     <div class="tools">
       <label for="backdrop">Backdrop
@@ -3540,9 +3540,9 @@ LAB.add({
     {id:'haze',label:'Heat haze',min:0,max:2,value:1}
   ],
   variants:[
-    {name:'Hellfire',set:{tint:'#ff2a14',smoke:1.4}},
+    {name:'Deep red',set:{tint:'#ff2a14',smoke:1.4}},
     {name:'Wide blast',set:{size:1.5,smoke:1.2}},
-    {name:'Witchfire',set:{tint:'#5fe0a0',smoke:.7}}
+    {name:'Green',set:{tint:'#5fe0a0',smoke:.7}}
   ],
   glsl:FL+`
 #define FB_TL ${TL.toFixed(2)}
@@ -10627,7 +10627,7 @@ LAB.add({
   ],
   variants:[
     {name:'Ram',set:{curl:1,len:1.15}},
-    {name:'Blood-born',set:{tint:'#ff2a1a',bone:'#8a6a58'}},
+    {name:'Red',set:{tint:'#ff2a1a',bone:'#8a6a58'}},
     {name:'Black horn',set:{bone:'#3a3430',len:1.3}}
   ],
   glsl:rtGL(BA_K,p225ba_DUR)+`
@@ -11456,7 +11456,7 @@ LAB.add({
   variants:[
     {name:'White marble altar',set:{stone:'#c8c4bc'}},
     {name:'Dawn fire',set:{tint:'#ffdc9a',fire:1.2}},
-    {name:'Ember wrath',set:{tint:'#ff8c2a'}}
+    {name:'Orange',set:{tint:'#ff8c2a'}}
   ],
   glsl:p300_TSO+`
 #define P300B_IG ${p300b_IG.toFixed(3)}
@@ -12263,7 +12263,7 @@ LAB.add({
   cam:{yaw:.2,pitch:.06,dist:7.6,target:[0,1.6,0]},
   shadows:(t,age)=>[[0,0,.7,.6*P303_cl((age-HIT)*3)+.3]],
   params:[
-    {id:'hell',label:'Hellfire',type:'color',value:'#ff2a12'},
+    {id:'hell',label:'Fire colour',type:'color',value:'#ff2a12'},
     {id:'hide',label:'Hide',type:'color',value:'#141012'},
     {id:'ring',label:'Ring reach',min:.6,max:1.4,value:1},
     {id:'aura',label:'Blood aura',min:0,max:1.5,value:1}
@@ -14214,7 +14214,7 @@ LAB.add({
   ],
   variants:[
     {name:'Bonfire',set:{size:1.5,smoke:.9}},
-    {name:'Witchfire',set:{tint:'#35ff7a',smoke:.35}},
+    {name:'Green',set:{tint:'#35ff7a',smoke:.35}},
     {name:'Spirit fire',set:{tint:'#3a8cff',smoke:.2,size:1.15}},
     {name:'Dying embers',set:{size:.6,smoke:1}}
   ],
@@ -14317,7 +14317,7 @@ LAB.add({
     'The flame heat field is quantised into four soft bands. That gives the hand painted look of a stylised ARPG flame while the motion stays procedural.',
     'A narrow inner card with its own seed slides against the outer card, which reads as depth even though both are flat.',
     'The rune band on the bowl is lit by the same tint and breathes slowly, tying the prop to the element of the fire.',
-    'Variants only change the tint and proportions. Every colour comes from one ramp, so soulfire and fel need no retuning.'
+    'Variants only change the tint and proportions. Every colour comes from one ramp, so blue and green need no retuning.'
   ],
   port:'Unreal: static mesh for the bowl with an emissive mask for runes and coals. The flame is two cards with a banded curve atlas lookup driven by the heat value, plus a small Niagara emitter for licks and embers.',
   cam:{yaw:.5,pitch:.12,dist:6.2,target:[0,1.48,0]},
@@ -14328,8 +14328,8 @@ LAB.add({
     {id:'bands',label:'Stylisation',min:0,max:1,value:.75}
   ],
   variants:[
-    {name:'Hellfire',set:{tint:'#ff4812',height:1.15,speed:1.3}},
-    {name:'Soulfire',set:{tint:'#2f8cff',speed:.75}},
+    {name:'Deep red',set:{tint:'#ff4812',height:1.15,speed:1.3}},
+    {name:'Blue',set:{tint:'#2f8cff',speed:.75}},
     {name:'Fel',set:{tint:'#58ff2a',speed:1.2}},
     {name:'Holy',set:{tint:'#ffd070',height:.9,speed:.6,bands:.4}}
   ],
@@ -14410,8 +14410,8 @@ LAB.add({
     {id:'heat',label:'Heat haze',min:0,max:2,value:1}
   ],
   variants:[
-    {name:'Hellfire',set:{tint:'#ff4812',height:1.3}},
-    {name:'Soulfire',set:{tint:'#2f8cff'}},
+    {name:'Deep red',set:{tint:'#ff4812',height:1.3}},
+    {name:'Blue',set:{tint:'#2f8cff'}},
     {name:'Fel barrier',set:{tint:'#58ff2a',height:1.2,len:4}},
     {name:'Low burn',set:{height:.65,len:7}}
   ],
@@ -14635,7 +14635,7 @@ LAB.add({
   ],
   variants:[
     {name:'Inferno',set:{height:1.35,speed:1.6}},
-    {name:'Soulfire',set:{tint:'#2f8cff',smoke:.15}},
+    {name:'Blue',set:{tint:'#2f8cff',smoke:.15}},
     {name:'Fel',set:{tint:'#58ff2a',speed:1.3}},
     {name:'Smoulder',set:{height:.7,speed:.6,smoke:1}}
   ],
@@ -14818,7 +14818,7 @@ LAB.add({
     {name:'Wide gout',set:{spread:1.55,power:.85,turb:1.4}},
     {name:'Lance',set:{spread:.55,power:1.15,turb:.5}},
     {name:'Fel breath',set:{tint:'#5cff2a'}},
-    {name:'Frostfire',set:{tint:'#49a8ff',turb:1.3}}
+    {name:'Blue flame',set:{tint:'#49a8ff',turb:1.3}}
   ],
   glsl:FIRE_LIB+`
 #define DB_S vec3(${S[0].toFixed(3)},${S[1].toFixed(3)},0.)
@@ -14969,7 +14969,7 @@ LAB.add({
   ],
   variants:[
     {name:'Heavy chains',set:{force:.65,dust:1.3}},
-    {name:'Bloodbound',set:{tint:'#e0584a'}},
+    {name:'Red',set:{tint:'#e0584a'}},
     {name:'Pale scrying',set:{tint:'#a9c8ff',force:1.35}}
   ],
   glsl:P310_ASH+`
@@ -16584,7 +16584,7 @@ LAB.add({
   port:'Unreal: a lightning beam system (core ribbon plus branch ribbons) with a short-lived cylinder flash, a floor decal whose engraving mask is revealed by a radial-angle parameter, and a material parameter on the wand for the permanent etch. Pebbles and dust are Niagara mesh and lit sprite emitters.',
   cam:{yaw:.42,pitch:.1,dist:5.5,target:[0,1.6,.3]},
   params:[{id:'tint',label:'Arc colour',type:'color',value:'#8cc8ff'},{id:'brass',label:'Brass',type:'color',value:'#b88a48'},{id:'power',label:'Strike',min:.5,max:1.5,value:1}],
-  variants:[{name:'Copper relic',set:{brass:'#b8623a'}},{name:'Storm violet',set:{tint:'#b48cff',power:1.3}},{name:'Sunforge',set:{tint:'#ffd890',brass:'#d8b060'}}],
+  variants:[{name:'Copper relic',set:{brass:'#b8623a'}},{name:'Storm violet',set:{tint:'#b48cff',power:1.3}},{name:'Gold',set:{tint:'#ffd890',brass:'#d8b060'}}],
   glsl:p314_PG+`
 #define p314i_S 2.3
 float p314i_ts(){return u_age-p314i_S;}
@@ -17420,7 +17420,7 @@ LAB.add({
     {id:'heat',label:'Fire volume',min:.5,max:1.5,value:1},
     {id:'smoke',label:'Smoke',min:0,max:1.5,value:1}
   ],
-  variants:[{name:'Greek fire',set:{tint:'#ffc070',heat:1.25}},{name:'Witchfire',set:{tint:'#7aff6a',brass:'#4a5a3a'}},{name:'Cold flame',set:{tint:'#6aa0ff',smoke:.4}}],
+  variants:[{name:'Greek fire',set:{tint:'#ffc070',heat:1.25}},{name:'Green',set:{tint:'#7aff6a',brass:'#4a5a3a'}},{name:'Cold flame',set:{tint:'#6aa0ff',smoke:.4}}],
   glsl:p404_G+`
 #define p404b_T0 ${T0.toFixed(3)}
 #define p404b_T1 ${T1.toFixed(3)}
@@ -18068,7 +18068,7 @@ LAB.add({
   port:'One masked translucent quad with the rift SDF baked to a texture and a width parameter driven by a timeline curve. Interior parallax is a BumpOffset node. Embers are a Niagara emitter that samples the same spine curve.',
   cam:{yaw:.36,pitch:.11,dist:6.,target:[0,1.7,0]},
   params:[
-    {id:'tint',label:'Hellfire',type:'color',value:'#ff7018'},
+    {id:'tint',label:'Fire colour',type:'color',value:'#ff7018'},
     {id:'width',label:'Tear width',min:.5,max:1.6,value:1},
     {id:'flow',label:'Fire speed',min:.2,max:2.5,value:1},
     {id:'embers',label:'Embers',min:0,max:1,value:1},
@@ -19039,7 +19039,7 @@ LAB.add({
   variants:[
     {name:'Grey keep',set:{brick:'#7c7a76'}},
     {name:'Sulphur mine',set:{tint:'#ffb040',brick:'#a08a5a',smoke:1.4}},
-    {name:'Hellforge',set:{tint:'#ff3a10',brick:'#4a3a36',force:1.3}}
+    {name:'Dark red',set:{tint:'#ff3a10',brick:'#4a3a36',force:1.3}}
   ],
   glsl:`
 #define P501S_TI ${p501_f(TI)}
@@ -19699,7 +19699,7 @@ vec3 p502vRock(vec3 p,vec3 n){float k=tri(p*.6,n).r,k2=tri(p*2.3,n).b;return P_r
 {
 const IGN=2.05,DUR=5.6,BT=[.3,1.,1.65];
 LAB.add({
-  id:'rw-bloodflame', name:'Bloodflame', set:'Rift Wizard', cat:'Fire', sub:'Blood/Fire/Enchantment', level:5, legacy:false, duration:DUR, stage:'full',
+  id:'rw-bloodflame', name:'Blood Flame', set:'Rift Wizard', cat:'Fire', sub:'Blood/Fire/Enchantment', level:5, legacy:false, duration:DUR, stage:'full',
   src:'For one turn, your fire spells cast instantly but each spell cast burns you and you lose fire resistance.',
   tags:['body emitter','heartbeat envelope','blood droplets','dark fire','wet decal'],
   blurb:'Blood beads through the joints of the armour on three heartbeats, then catches: the caster burns in dark crimson fire that streams from both hands and drips onto the floor.',
@@ -22809,7 +22809,7 @@ LAB.add({
   variants:[
     {name:'Pale ward',set:{tint:'#d8e6ff'}},
     {name:'Bone ash',set:{dust:'#c0b8a8',tint:'#ffe0b0',double:.7}},
-    {name:'Sun-dark',set:{tint:'#ff9a4a',dust:'#5a5048',grains:1.4}}
+    {name:'Dark orange',set:{tint:'#ff9a4a',dust:'#5a5048',grains:1.4}}
   ],
   glsl:p513_G+`
 #define P513SM_TI ${TI.toFixed(3)}
@@ -23891,7 +23891,7 @@ LAB.add({
   ],
   variants:[
     {name:'White steel',set:{tint:'#e8f0ff',glass:'#b8c4d8',clarity:.4}},
-    {name:'Sunforged',set:{tint:'#ff9a40',glass:'#c06020',drips:1.4}},
+    {name:'Orange',set:{tint:'#ff9a40',glass:'#c06020',drips:1.4}},
     {name:'Pale ward',set:{clarity:.9,tint:'#fff0c0'}}
   ],
   glsl:`
@@ -24022,7 +24022,7 @@ LAB.add({
     {id:'smoke',label:'Smoke',min:0,max:1.5,value:1}
   ],
   variants:[
-    {name:'Bloodfire',set:{tint:'#ff2a1a',bolt:'#ffd0a0'}},
+    {name:'Red',set:{tint:'#ff2a1a',bolt:'#ffd0a0'}},
     {name:'Gilded',set:{tint:'#ffb43c',force:1.3}},
     {name:'Void word',set:{tint:'#b34cff',bolt:'#d8b0ff',smoke:1.3}}
   ],
@@ -26594,7 +26594,7 @@ function seqStonewarden() {
   const st = { build: 1.25, skin: BASE.skin, cloth: "#55503f", cloth2: "#6e5a3c", arms: BASE.arms, legs: "#463e33", hair: "#2a2018", beard: true, accent: EMBER, trail: "#ffb878", skirt: .7, belt: "#3a2c1c",
     ribbons: [{ on: "waist", color: "#6a5232", n: 5, seg: 7, w: 5 }] };
   const h = new Actor("hero", st, "maul", { hero: true });
-  const S = newSeq({ id: "stonewarden3", name: "Stonewarden", stats: ["STR", "CON"], stage: STAGES.court, seed: 41, hero: h,
+  const S = newSeq({ id: "stonewarden3", name: "Strength and Constitution fighter", stats: ["STR", "CON"], stage: STAGES.court, seed: 41, hero: h,
     skills: [["LMB", "Maul"], ["RMB", "Barrelling Boulder"], ["Q", "Guardian Golem"], ["E", "Stoneskin"], ["R", "Tomb of Doroklohe"]],
     scenery: [{ kind: "pillar", x: -620, y: 160, h: 180 }, { kind: "pillar", x: 640, y: 420, h: 180 }, { kind: "pillar", x: -640, y: -640, h: 180 }, { kind: "stone", x: 760, y: -520, h: 100, r: 24 },
       { kind: "stone", x: -860, y: -160, h: 80, r: 20 }, { kind: "brazier", x: -320, y: 600 }, { kind: "brazier", x: 330, y: 600 }, { kind: "bones", x: 240, y: 60 }, { kind: "bones", x: -300, y: -300 }] });
@@ -26608,7 +26608,7 @@ function seqStonewarden() {
   const READY = { grip: 2, w: [12, 10, -18, .3, 1.0], lean: .14, pz: 77, fl: [-12, -13, 0], fr: [14, 13, 0] };   // maul held up across the body
   const A = CS.anim(S, h, { x: 0, y: 420, yaw: NORTH, ready: READY, grip: 2 });
   A.ready0(0);
-  S.at(.3, w => label(w, "Stonewarden", "Lattice · Earth: stoneskin, boulder, guardian golem, tomb"));
+  S.at(.3, w => label(w, "Strength and Constitution fighter", "Lattice · Earth: stoneskin, boulder, guardian golem, tomb"));
   A.wait(.5);
 
   // ---- 1. a heavy walk in; Stoneskin: the maul is planted and the stone climbs him while the husks come ----
@@ -26775,7 +26775,7 @@ function seqStonewarden() {
   LAB._p628S = S;
   return S.finish();
 }
-LAB.add(LAB.Combat.make({ id: "cb3-stonewarden", name: "Stonewarden", seq: seqStonewarden, cat: "Builds", sub: "Lattice · Earth",
+LAB.add(LAB.Combat.make({ id: "cb3-stonewarden", name: "Strength and Constitution fighter", seq: seqStonewarden, cat: "Builds", sub: "Lattice · Earth",
   blurb: "A maul warden at a slow, heavy pace: Stoneskin climbs him while the husks come, the Barrelling Boulder flattens a column, a Guardian Golem fights at his side until it bursts, and the Tomb of Doroklohe walls the brute in.",
   tags: ["earth", "grimoire spells", "maul", "summoned ally", "long gathers"],
   notes: ["Grimoire spells start through A.cast so each effect's release marker lands on his release frame; the boulder kills on its own rolling front, the tomb on each slab's eruption time.",
@@ -26878,7 +26878,7 @@ function seqGravelord() {
   const st = { build: .95, skin: "#c9c0ae", cloth: "#77786a", cloth2: "#a39d86", arms: "#5d6056", legs: "#3e4139", head: "hood", accent: "#8fdc9a", trail: "#c4f0b0", skirt: 1.6, belt: "#3a2c20",
     hair: "#121410", ribbons: [{ on: "neck", color: "#c8c2a8", n: 8, seg: 7, w: 6 }, { on: "waist", color: "#5a1e2a", n: 5, seg: 7, w: 3 }] };
   const h = new Actor("hero", st, "staff", { hero: true });
-  const S = newSeq({ id: "gravelord3", name: "Gravelord", stats: ["INT", "WIL"], stage: STAGES.marsh, seed: 29, hero: h,
+  const S = newSeq({ id: "gravelord3", name: "Intelligence and Willpower caster", stats: ["INT", "WIL"], stage: STAGES.marsh, seed: 29, hero: h,
     skills: [["LMB", "Grave Staff"], ["RMB", "Grave Claw"], ["Q", "Twisted Resurrection"], ["W", "Drain Life"], ["E", "Grave Pulse"], ["R", "Soul Wind"]],
     scenery: [{ kind: "deadtree", x: -560, y: 300, r: 110 }, { kind: "deadtree", x: 620, y: 260, r: 100 }, { kind: "deadtree", x: 760, y: -520, r: 120 }, { kind: "deadtree", x: -820, y: -620, r: 100 },
       { kind: "stone", x: -380, y: 520, h: 120, r: 22 }, { kind: "stone", x: 480, y: -760, h: 110, r: 20 }, { kind: "pillar", x: -900, y: -120, h: 150 },
@@ -26894,7 +26894,7 @@ function seqGravelord() {
   const H0 = p629S(0, -170);
   const A = CS.anim(S, h, { x: H0.x, y: H0.y, yaw: p629UP, ready: READY, staff: true });
   A.ready0(0);
-  S.at(.3, w => label(w, "Gravelord", "Lattice · Spirit: grave claw, twisted resurrection, drain life, soul wind"));
+  S.at(.3, w => label(w, "Intelligence and Willpower caster", "Lattice · Spirit: grave claw, twisted resurrection, drain life, soul wind"));
   A.wait(.6);
 
   // ---- 1. a slow walk into the marsh; the revenant comes out to meet him ----
@@ -27067,7 +27067,7 @@ function seqGravelord() {
   S.p629 = { gc: gc.start, gcImp, k1: k1.contact, k3: k3.contact, trStart: tr.start, trRel: tr.release, trImp, tW1, tW2, pulse: pulse.contact, dlStart: dl.start, dlRel: dl.release, dlImp, swStart: sw.start, swRel: sw.release, swImp, dur: S.dur };
   return S.finish();
 }
-LAB.add(LAB.Combat.make({ id: "cb3-gravelord", name: "Gravelord", seq: seqGravelord, cat: "Builds", sub: "Lattice · Spirit",
+LAB.add(LAB.Combat.make({ id: "cb3-gravelord", name: "Intelligence and Willpower caster", seq: seqGravelord, cat: "Builds", sub: "Lattice · Spirit",
   blurb: "A necromancer at a heavy, deliberate pace: Grave Claw holds a revenant up on bone, the staff drops the husks, Twisted Resurrection is channelled until the dead stand up on his side, Drain Life refills him from three cultists, and Soul Wind tears the spirits out of the line.",
   tags: ["necromancy", "grimoire spells", "staff", "channelled casts", "turned dead"],
   notes: ["Grimoire spells start through A.cast so each effect's release marker lands on the hero's release frame; damage hangs on the effect's impact marker, and Soul Wind's kills follow its moving front.",
@@ -27181,7 +27181,7 @@ function seqHex3() {
   const st = { build: .94, skin: "#b89a86", cloth: "#2a2036", cloth2: "#4a3866", arms: "#2a2036", legs: "#1a1622", head: "hood", accent: VIO, trail: PALE, skirt: 1.2, belt: "#120e18",
     hair: "#0e0a10", ribbons: [{ on: "waist", color: "#5a3c8a", n: 6, seg: 7, w: 4 }, { on: "neck", color: "#3a2a58", n: 5, seg: 6, w: 4 }] };
   const h = new Actor("hero", st, "khopesh", { hero: true });
-  const S = newSeq({ id: "hex3", name: "Hexweaver", stats: ["INT", "DEX"], stage: STAGES.crypt, seed: 31, hero: h,
+  const S = newSeq({ id: "hex3", name: "Intelligence and Dexterity caster", stats: ["INT", "DEX"], stage: STAGES.crypt, seed: 31, hero: h,
     skills: [["LMB", "Khopesh"], ["RMB", "Rift Step"], ["Q", "Cause Fear"], ["W", "Gloom"], ["E", "Dimensional Bullseye"], ["R", "Singularity"]],
     scenery: [{ kind: "pillar", x: -640, y: 240, h: 190 }, { kind: "pillar", x: 700, y: 300, h: 190 }, { kind: "pillar", x: -700, y: -820, h: 190 }, { kind: "pillar", x: 860, y: -860, h: 190 },
       { kind: "brazier", x: -520, y: 640 }, { kind: "brazier", x: 330, y: 520 }, { kind: "brazier", x: 420, y: -560 }, { kind: "brazier", x: -60, y: -520 }, { kind: "bones", x: 300, y: 120 }, { kind: "bones", x: -420, y: -380 }, { kind: "bones", x: 560, y: -300 },
@@ -27193,7 +27193,7 @@ function seqHex3() {
   const A = CS.anim(S, h, { x: 130, y: 230, yaw: cfDir, ready: READY });
   A.ready0(0);
   A.wait(.5);
-  S.at(.3, w => label(w, "Hexweaver", "Lattice · Mind: fear, gloom, the marked one, the singularity"));
+  S.at(.3, w => label(w, "Intelligence and Dexterity caster", "Lattice · Mind: fear, gloom, the marked one, the singularity"));
 
   // ---------------------------------------------------------------- 1. Cause Fear
   A.wait(.25);
@@ -27394,7 +27394,7 @@ function p630Collapse(w, O) {
   hitstop(w, HS.finale); shake(w, 24); flash(w, .25, "#ffe6c8");
 }
 
-LAB.add(LAB.Combat.make({ id: "cb3-hexweaver", name: "Hexweaver", seq: seqHex3, cat: "Builds", sub: "Lattice · Mind",
+LAB.add(LAB.Combat.make({ id: "cb3-hexweaver", name: "Intelligence and Dexterity caster", seq: seqHex3, cat: "Builds", sub: "Lattice · Mind",
   blurb: "Mind magic that reads through the enemies: Cause Fear drops two to their knees and sends the imps running, Gloom blinds a pack into killing each other, Dimensional Bullseye echoes every bolt into a marked brute, and Singularity drags everything that is left in and crushes it. The khopesh takes each opening.",
   tags: ["mind", "grimoire spells", "khopesh", "enemy behaviour", "anticipation", "planted gait"],
   notes: ["Fear and confusion are authored as enemy behaviour: kneel and tremble, flee goals pointing away from him, and blinded foes that walk to a neighbour, face it and strike it (w.hurt between foes).",
@@ -29051,7 +29051,7 @@ LAB.add({
     {id:'glow',label:'Engraving glow',min:.3,max:2,value:1}
   ],
   variants:[
-    {name:'Sunforged',set:{tint:'#ffc66e',glow:1.2}},
+    {name:'Gold',set:{tint:'#ffc66e',glow:1.2}},
     {name:'Void hammer',set:{tint:'#b08cff',trail:1.4}},
     {name:'Heavy maul',set:{size:1.4,spin:.6,trail:.7}}
   ],
@@ -29419,9 +29419,9 @@ LAB.add({
     {id:'smoke',label:'Smoke',min:0,max:1.5,value:1}
   ],
   variants:[
-    {name:'Hellfire',set:{tint:'#ff2e14',smoke:1.4,size:1.15}},
+    {name:'Deep red',set:{tint:'#ff2e14',smoke:1.4,size:1.15}},
     {name:'Tight salvo',set:{stagger:0,size:.85}},
-    {name:'Ghostfire',set:{tint:'#5fd0ff',smoke:.6}}
+    {name:'Pale blue',set:{tint:'#5fd0ff',smoke:.6}}
   ],
   glsl:p705FL+`
 #define V5_TL ${p705f(TL)}
@@ -29561,7 +29561,7 @@ LAB.add({
     {id:'smoke',label:'Smoke',min:0,max:1.5,value:1}
   ],
   variants:[
-    {name:'Hellstone',set:{tint:'#ff2f16',smoke:1.4,burn:1.3}},
+    {name:'Red',set:{tint:'#ff2f16',smoke:1.4,burn:1.3}},
     {name:'Comet',set:{tint:'#7fc8ff',burn:.5,smoke:.7}},
     {name:'Cinder rain',set:{size:1.35,burn:1.6}}
   ],
@@ -30011,7 +30011,7 @@ LAB.add({
   variants:[
     {name:'Sandstorm',set:{dust:'#b08a58',dens:1.35,debris:.7}},
     {name:'Ash devil',set:{dust:'#3e3a38',tint:'#ffa070',dens:1.2}},
-    {name:'Thornwind',set:{dust:'#6e7258',tint:'#c8e0a0',debris:1.5,spin:1.25}}
+    {name:'Green dust',set:{dust:'#6e7258',tint:'#c8e0a0',debris:1.5,spin:1.25}}
   ],
   glsl:P706_LIB+`
 #define T_H 4.6

@@ -205,7 +205,7 @@ const MONSTERS = [
   { name: "Gilded Adder", icon: "med_snake", rarity: "magic", max: 420, x: 900, y: 470, size: 84,
     affix: "Quick · Venomous" },
   { name: "Warden of Chains", icon: "med_chain", rarity: "rare", max: 900, x: 1180, y: 560, size: 100,
-    affix: "Chains the Living · Stonebound" },
+    affix: "Chains the Living · Cannot Be Moved" },
 ];
 const BOSS = { name: "Custodian of the Ninth Circle", icon: "med_lion", rarity: "unique",
   max: 4200, x: 1500, y: 420, size: 136 };
@@ -441,7 +441,7 @@ syncTradeOffer();
 const MTX = FK.COSMETICS = [
   { id: "gleam", slot: "weapon", card: "card_gold", icon: "laurel_sun", name: "Gilded Weapon Gleam", price: 950, flavor: "Your weapons remember the sun.", owned: false },
   { id: "footprints", slot: "trail", card: "card_green", icon: "med_flower", name: "Verdant Footprints", price: 420, flavor: "Moss follows where you walk.", owned: true },
-  { id: "portal", slot: "portal", card: "card_red", icon: "tri_fire", name: "Ember Portal", price: 780, flavor: "Arrive like a warning.", owned: false },
+  { id: "portal", slot: "portal", card: "card_red", icon: "tri_fire", name: "Fire Portal", price: 780, flavor: "Arrive like a warning.", owned: false },
 ];
 const cardsEl = $("#shopCards");
 MTX.forEach(cosmetic => {

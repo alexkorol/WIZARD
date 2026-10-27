@@ -13,11 +13,12 @@ back into the project … stop inventing ai-trope lore"). Rules, mirrored in the
   things (no "carved stone" for jewel, "calling" for class, "Advantage" for critical damage).
 - Old identifiers (`ember_res`, `river_resistance`, `saga`, `whorl`, cluster ids such as
   `kiln-line`) stay only as hidden compatibility keys.
+- Invented compounds count too (Nightblade, Warcall, Emberkiss); see the root `NAMING.md`.
 - `tests/invented-terms.test.mjs` (run by `scripts/wizard-lab.mjs verify`) fails on banned
   terms in tree, jewel, stat and page text. Extend its list when a new invented term is
   caught; never allowlist prose.
 
-Renamed in that pass, compared with the tree on gh-pages before October 26 (324
+Renamed on October 26, compared with the tree on gh-pages before that day (325
 seats; ids, stats and mechanics unchanged; 49 of these also went through an earlier era
 rename the same day, which this table supersedes):
 
@@ -29,6 +30,7 @@ rename the same day, which this table supersedes):
 | -6,3 | keystone | No Flourish | Hits Cannot Be Evaded |
 | 3,3 | keystone | The Tithe | Rites Cost Life |
 | 3,-6 | keystone | Quiet Work | Strike the Unhurt |
+| 7,-7 | class | Nightblade | Assassin |
 | -6,6 | notable | Oath of the Front Line | Ally Protection |
 | 0,6 | notable | Battle Liturgy | Banner Attack Speed |
 | -10,3 | notable | The Red Standard | Banner Bleed |
@@ -103,14 +105,14 @@ rename the same day, which this table supersedes):
 | 4,4 | sign | Sign of the Lantern | Sign: Ward Under Fire |
 | 0,-5 | waystone | The Swift Milestone | Acrobat Waystone |
 | 5,0 | waystone | The Blue Milestone | Archmage Waystone |
+| 5,-5 | waystone | The Unlit Milestone | Assassin Waystone |
 | -5,5 | waystone | The Iron Milestone | Champion Waystone |
-| 5,-5 | waystone | The Unlit Milestone | Nightblade Waystone |
 | -5,0 | waystone | The Thrown Milestone | Reaver Waystone |
 | 0,5 | waystone | The Votive Milestone | Ritualist Waystone |
 | 0,-10 | gateway | Ranger's Writ Gate | Acrobat Gate |
 | 10,0 | gateway | Genius Circle Gate | Archmage Gate |
+| 10,-10 | gateway | Spellblade Annex Gate | Assassin Gate |
 | -10,10 | gateway | Vanguard Oath Gate | Champion Gate |
-| 10,-10 | gateway | Spellblade Annex Gate | Nightblade Gate |
 | -10,0 | gateway | Skirmish Annex Gate | Reaver Gate |
 | 0,10 | gateway | Seer's Annex Gate | Ritualist Gate |
 | 5,-2 | socket | The Drowned Study Socket | Cold Jewel Socket |

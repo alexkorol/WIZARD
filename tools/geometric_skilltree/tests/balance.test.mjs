@@ -22,7 +22,7 @@ const MEASURE = process.env.BALANCE_MEASURE === '1';
 
 const SPOKES = {
   int: { corner: [1, 0], class: 'Archmage' },
-  nightwork: { corner: [1, -1], class: 'Nightblade' },
+  nightwork: { corner: [1, -1], class: 'Assassin' },
   dex: { corner: [0, -1], class: 'Acrobat' },
   skirmisher: { corner: [-1, 0], class: 'Reaver' },
   str: { corner: [-1, 1], class: 'Champion' },

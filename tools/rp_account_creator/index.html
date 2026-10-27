@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chronicles | WIZARD</title>
+  <title>House Creator | WIZARD</title>
   <meta name="description" content="Create houses and characters, simulate permadeath, and track inherited relics.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -167,7 +167,7 @@
       quilted: { name: 'Quilted', tier: 2 }, copper: { name: 'Copper', tier: 2 },
       bronze: { name: 'Bronze', tier: 3 }, obsidian: { name: 'Obsidian', tier: 3 },
       jade: { name: 'Jade', tier: 4 }, amber: { name: 'Amber', tier: 4 }, bronzescale: { name: 'Bronze-scale', tier: 4 },
-      skymetal: { name: 'Skymetal', tier: 5 },
+      skymetal: { name: 'Hammered Iron', tier: 5 },
       rivetmail: { name: 'Riveted Mail', tier: 6 },
     };
     const FORMS = {
@@ -233,7 +233,7 @@
     // Lore: offline pools + optional LLM
     // ============================================================
     const OFFLINE_LORE = {
-      houseName: ['Vaelmont', 'Druskane', 'Morvayne', 'Ashford', 'Thornholt', 'Caldrest', 'Veyrane', 'Oakhart', 'Greyford', 'Stillbrook', 'Blackwell', 'Marlowe'],
+      houseName: ['Ashford', 'Thornton', 'Calder', 'Oakley', 'Grayson', 'Stillman', 'Blackwell', 'Marlowe', 'Fletcher', 'Mason', 'Weaver', 'Cooper'],
       voidName: ['The Unhallowed', 'The Hollow House', 'The Broken House', 'The Nameless', 'The Last House'],
       motto: ['Ash remembers', 'Iron before honey', 'We endure the long dark', 'No crown without thorns', 'The river forgets nothing', 'Silence keeps the keep', 'Debt is a kind of love', 'The last light is ours'],
       charName: ['Kaelen Dray', 'Mirelle of the Fen', 'Tobias Crane', 'Sera Voss', 'Aldric Thane', 'Wren Calloway', 'Edmun Hale', 'Isolde Marr', 'Petra Quill', 'Rooke Damaris', 'Fenn Oswic', 'Lysa Corveaux'],
@@ -612,7 +612,7 @@
           <div className="w-full max-w-5xl rise-in">
             <div className="text-center mt-10 mb-10">
               <Icon name="crown" size={48} className="mx-auto text-amber-500 mb-3" />
-              <h1 className="text-4xl font-serif tracking-[0.18em] text-amber-400">CHRONICLES</h1>
+              <h1 className="text-4xl font-serif tracking-[0.18em] text-amber-400">HOUSE CREATOR</h1>
               <p className="text-stone-500 italic mt-2">Manage houses, characters, and inherited relics.</p>
             </div>
 

@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Relic Card — Brands &amp; Bonds — WIZARD</title>
-  <meta name="description" content="A shared relic from Brands & Bonds: items remember their bearer. Sear Brands, grow Bonds — carry a vessel long enough and it awakens.">
+  <title>Item Card — Inventory and Item Crafting — WIZARD</title>
+  <meta name="description" content="A shared item card from the inventory and item crafting prototype.">>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <script src="core/vesselforge.js"></script>
-  <script src="core/verdigris-pack.js"></script>
-  <script src="core/post-calib-wave2-taxonomy.js"></script>
+  <script src="core/vesselforge.js?v=20261026"></script>
+  <script src="core/verdigris-pack.js?v=20261026"></script>
+  <script src="core/post-calib-wave2-taxonomy.js?v=20261026"></script>
   <style>
     :root {
       --bg: #0d0c0a; --panel: #100f0c;
@@ -187,15 +187,15 @@
       </div>
       ${rows.join('')}
       ${showAtt ? `<div class="att"><div class="lbl">Attunement ${item.att.xp}/${item.att.next}</div><div class="bar"><div class="fill" style="width:${attPct}%"></div></div></div>` : ''}
-      ${payload.bearer ? `<div class="bearer">Borne by <b>${esc(payload.bearer)}</b>${archName ? ` the ${esc(archName)}` : ''} in the Green Lands.<br>Brands are seared. Bonds are earned. Items remember their bearer.</div>` : ''}
+      ${payload.bearer ? `<div class="bearer">Borne by <b>${esc(payload.bearer)}</b>${archName ? ` the ${esc(archName)}` : ''}.<br>Brands are seared. Bonds are earned. Items remember their bearer.</div>` : ''}
       <div class="actions">
         <button class="btn" id="copyBtn">Copy Link</button>
         <a class="btn" href="index.html">Enter the Vault</a>
       </div>`;
 
     document.getElementById('note').innerHTML = isSample
-      ? 'This is a sample relic. Forge your own in <a href="index.html">Brands &amp; Bonds</a>, socket it in the Atelier, and share its card.'
-      : 'A relic from <a href="index.html">Brands &amp; Bonds</a> — a bronze-age ARPG itemization sandbox on the Vesselforge engine.';
+      ? 'This is a sample item. Make your own in <a href="index.html">Inventory and Item Crafting</a> and share its card.'
+      : 'An item from <a href="index.html">Inventory and Item Crafting</a>, the Bronze Age ARPG item prototype.';
 
     document.getElementById('copyBtn').addEventListener('click', async () => {
       const btn = document.getElementById('copyBtn');

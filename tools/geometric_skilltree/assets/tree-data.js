@@ -1518,7 +1518,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "Nightblade Waystone",
+      "name": "Assassin Waystone",
       "patternHook": {
         "effect": "flow-length",
         "value": 1
@@ -2481,7 +2481,7 @@
       "effects": [
         "+12% increased Attack Damage",
         "Unlocks: tower shields become usable",
-        "Unlocks: 2x2 War-call seat",
+        "Unlocks: 2x2 War Horn seat",
         "Your first class passive sets your class; each class passive grants its unlock."
       ],
       "stat": "attackDamage",
@@ -2889,7 +2889,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "Nightblade"
+      "name": "Assassin"
     },
     "6,-7": {
       "id": "6,-7",
@@ -5764,19 +5764,19 @@
       "type": "gateway",
       "axis": "hybrid",
       "effects": [
-        "Gate to the Nightblade outer circle.",
+        "Gate to the Assassin outer circle.",
         "Unlock condition: allocate this gate and complete any inner six-node circle."
       ],
       "stat": null,
       "amount": 0,
       "tags": [
         "gateway",
-        "Nightblade"
+        "Assassin"
       ],
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "Nightblade Gate"
+      "name": "Assassin Gate"
     },
     "9,-10": {
       "id": "9,-10",

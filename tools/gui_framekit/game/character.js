@@ -12,7 +12,7 @@ const I = (icon, name, rarity, type, opts = {}) =>
     round: !/^items\//.test(icon) && !/gem_|pennant|sq_|tri_|chev/.test(icon) }, opts);
 
 const ITEMS = FK.ITEMS = {
-  khopesh:  I("items/khopesh_skymetal", "Skymetal Khopesh", "legendary", "Main Hand · Sword",
+  khopesh:  I("items/khopesh_skymetal", "Hammered Iron Khopesh", "legendary", "Main Hand · Sword",
               { equip: "weapon", stats: ["112–186 damage", "+12% attack speed", "+34 Grace"], flavor: "Fell from a clear sky. Kept its temper." }),
   scaleshield: I("items/hideshield_bronzescale", "Bronze Scale Shield", "rare", "Off Hand · Shield",
               { equip: "offhand", stats: ["+52 Armor", "+11% block"], flavor: "" }),
@@ -46,7 +46,7 @@ const ITEMS = FK.ITEMS = {
   cursigil: I("items/cur_sigil", "Binding Sigil", "epic", "Currency", { qty: 2, stats: ["Seals a modifier in place"], value: 240 }),
   curstone: I("items/cur_stone", "Whetstone", "common", "Currency", { qty: 14, stats: ["+quality, once"], value: 8 }),
   draught:  I("items/cur_draught", "Verdant Draught", "uncommon", "Consumable", { qty: 5, stats: ["Restores 180 life"], value: 45 }),
-  ember:    I("items/ember_shell", "Ember Shell", "rare", "Reagent", { qty: 3, stats: ["Warm forever"], value: 130 }),
+  ember:    I("items/ember_shell", "Beetle Shell", "rare", "Reagent", { qty: 3, stats: ["Warm forever"], value: 130 }),
   bowl:     I("items/bowl_bronze_offering", "Offering Bowl", "uncommon", "Reagent", { stats: ["Accepts most things"], value: 95 }),
   gemR:     I("gem_rare", "Sapphire Shard", "rare", "Socket Gem", { equip: "gem", stats: ["+8% Mana"], qty: 3, value: 150 }),
   gemE:     I("gem_epic", "Amethyst Shard", "epic", "Socket Gem", { equip: "gem", stats: ["+6% Spell Echo"], value: 420 }),
@@ -55,7 +55,7 @@ const ITEMS = FK.ITEMS = {
   hourglass: I("med_hourglass", "Silent Hourglass", "epic", "Curio", { stats: ["The sand falls upward"], value: 480 }),
   ring2:    I("socket_gold", "Radiant Ring", "legendary", "Ring · Relic", { stats: ["+1 to the Verdant Seal"], value: 1500 }),
   qbanner:  I("pennant_quest", "Charter: The Lower Vaults", "uncommon", "Quest", { stats: ["Bring a light. Bring two."] }),
-  wfire:    I("tri_fire", "Ember Ward", "uncommon", "Consumable · Ward", { qty: 5, stats: ["+40% Fire Ward for 60s"], value: 30 }),
+  wfire:    I("tri_fire", "Fire Ward", "uncommon", "Consumable · Ward", { qty: 5, stats: ["+40% Fire Ward for 60s"], value: 30 }),
   wbolt:    I("tri_bolt", "Storm Ward", "uncommon", "Consumable · Ward", { qty: 3, stats: ["+40% Storm Ward for 60s"], value: 30 }),
   wskull:   I("tri_skull", "Grave Ward", "rare", "Consumable · Ward", { qty: 2, stats: ["+40% Grave Ward for 60s"], value: 60 }),
   haste:    I("chev_double", "March Order", "rare", "Consumable", { qty: 4, stats: ["+20% Stride for 30s"], value: 55 }),

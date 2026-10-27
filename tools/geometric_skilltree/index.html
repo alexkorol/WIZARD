@@ -1887,7 +1887,7 @@
        serve fresh markup with stale data (10-minute cache skew). Bump when
        shipping asset changes. -->
   <script src="../rpg_inventory/core/verdigris-stats.js?v=14"></script>
-  <script src="assets/tree-data.js?v=15"></script>
+  <script src="assets/tree-data.js?v=16"></script>
   <script src="assets/patterns.js?v=13"></script>
   <script src="assets/jewels.js?v=15"></script>
   <!-- Painted passive art shared with the Unity ARPG (icons, frames, stone field). -->
@@ -1908,7 +1908,7 @@
       Acrobat: ["second_weapon_set", "dual_wield_one_handers", "quick_rig_slot"],
       Archmage: ["second_curio", "rite_focus_socket", "attendant_focus_slot"],
       Reaver: ["thrown_melee_projectile", "belt_fetish", "spoils_pack"],
-      Nightblade: ["trap_mark_tools", "venom_vials", "preparations_pack"],
+      Assassin: ["trap_mark_tools", "venom_vials", "preparations_pack"],
       Ritualist: ["banners", "war_companion", "reliquary_pack"]
     };
     // The six ring-10 rim corners double as armoury unlock seats: the pure
@@ -1919,7 +1919,7 @@
     const GATE_UNLOCKS = {
       attendant: { name: "Attendant", flag: "attendant_focus_slot", grant: "the Attendant window — an extra focus slot" },
       quickrig: { name: "Quick Rig", flag: "quick_rig_slot", grant: "the Quick Rig window — an extra tool slot" },
-      warcall: { name: "Warcall", flag: "war_call_slot", grant: "the War-call window — an extra horn slot" },
+      warcall: { name: "War Horn", flag: "war_call_slot", grant: "the War Horn slot" },
       preparations: { name: "Preparations", flag: "preparations_pack", grant: "the Preparation Case — a 4×4 pack" },
       trophies: { name: "Trophies", flag: "spoils_pack", grant: "the Spoils Roll — a 4×4 pack" },
       relics: { name: "Relics", flag: "reliquary_pack", grant: "the Reliquary — a 4×4 pack" }
@@ -2052,7 +2052,7 @@
       },
       {
         id: "warcall",
-        title: "Warcall",
+        title: "War Horn",
         gateway: { q: -10, r: 10 },
         axis: "str",
         nodes: [

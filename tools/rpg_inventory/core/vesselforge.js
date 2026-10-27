@@ -295,18 +295,18 @@
         item.fired += 1;
         const nm = material(item);
         item.vessel = Math.min(S.maxVessel, Math.max(item.vessel, nm.vessel[0]));
-        return { item, event: { kind: 'awake', text: `The kiln favors it — the ${mat.name} runs and sets as ${nm.name}.` } };
+        return { item, event: { kind: 'awake', text: `Firing succeeded: ${mat.name} became ${nm.name}.` } };
       }
       if (res === 'scar') {
         if (freeSlots(item) > 0) item.scars += 1;
         item.fired += 1;
-        return { item, event: { kind: 'craft', text: 'The kiln bites — a slot is scarred.' } };
+        return { item, event: { kind: 'craft', text: 'Firing failed: one slot is scarred.' } };
       }
       if (res === 'shatter') {
-        return { destroyed: true, event: { kind: 'craft', text: `The kiln keeps it. The ${mat.name} ${form(item).name.toLowerCase()} shatters.` } };
+        return { destroyed: true, event: { kind: 'craft', text: `Firing failed: the ${mat.name} ${form(item).name.toLowerCase()} breaks.` } };
       }
       item.fired += 1;
-      return { item, event: { kind: 'sys', text: 'The kiln is silent. Nothing changes.' } };
+      return { item, event: { kind: 'sys', text: 'Firing had no effect.' } };
     }
 
     /* ---------------- trophies ---------------- */
@@ -370,9 +370,9 @@
       const themeId = dominantBondTheme(item) || pick(Object.keys(pack.themes));
       const t = pack.themes[themeId];
       item.awakened = {
-        name: `${charName}'s ${pick(t.adjs)} ${pick(t.epithets)}`,
+        name: `${charName}'s ${displayName(item)}`,
         themeId, power: t.power,
-        flavor: `Bound to ${charName} through ${item.evolutions} trials. ${t.memory}`,
+        flavor: `Awakened by ${charName} after ${item.evolutions} uses.`,
       };
     }
 

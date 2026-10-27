@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "wizard.chronicles",
   "slug": "rp_account_creator",
-  "title": "Chronicles",
+  "title": "House Creator",
   "description": "Create houses and characters, simulate permadeath, and track inherited relics.",
   "status": "authoring",
   "visibility": "dashboard",

@@ -80,7 +80,7 @@
                   weights: { ember: 1.7, fortune: 1.5, spirit: 1.3 } },
       bronzescale: { name: 'Bronze-scale', tier: 4, statMult: 1.9, vessel: [4, 5], patience: [4, 6], dropWeight: 3, ascendsTo: 'rivetmail',
                   weights: { ward: 1.6, life: 1.3 } },
-      skymetal: { name: 'Skymetal', tier: 5, statMult: 2.3, vessel: [4, 6], patience: [5, 7], dropWeight: 1, ascendsTo: null,
+      skymetal: { name: 'Hammered Iron', tier: 5, statMult: 2.3, vessel: [4, 6], patience: [5, 7], dropWeight: 1, ascendsTo: null,
                   weights: { blade: 1.4, spirit: 1.4, ember: 1.3 } },
       rivetmail: { name: 'Riveted Mail', tier: 6, statMult: 2.6, vessel: [5, 6], patience: [5, 8], dropWeight: 0.3, ascendsTo: null,
                   weights: { ward: 2.0, life: 1.5 } },
@@ -148,7 +148,7 @@
                     armor: 0, tags: ['fortune'], noVessel: true, materials: ['hide', 'copper', 'amber'], implicit: null },
       relic:      { name: 'Reliquary Object', kind: 'relic', kindLabel: 'Relic', w: 1, h: 1, icon: 'curio',
                     armor: 0, tags: ['spirit'], noVessel: true, materials: ['bone', 'bronze', 'jade'], implicit: null },
-      warhorn:    { name: 'War Horn', kind: 'warcall', kindLabel: 'War-call', w: 2, h: 2, icon: 'curio',
+      warhorn:    { name: 'War Horn', kind: 'warcall', kindLabel: 'War Horn', w: 2, h: 2, icon: 'curio',
                     armor: 0, tags: ['life', 'blunt'], weights: { life: 1.4, blunt: 1.1 },
                     materials: ['bone', 'copper', 'bronze', 'jade', 'skymetal'],
                     implicit: { label: '+8 to Maximum Life', stat: { id: 'life', v: 8 } } },
@@ -163,7 +163,7 @@
       /* Carved stones (jewels, 2026-07-12): vessels that socket into the passive
          tree instead of the paperdoll. Tree-side families live in
          tools/geometric_skilltree/assets/jewels.js. */
-      whorlstone: { name: 'Whorl-stone', kind: 'jewel', kindLabel: 'Carved stone', w: 1, h: 1, icon: 'ring',
+      whorlstone: { name: 'Jewel', kind: 'jewel', kindLabel: 'Jewel', w: 1, h: 1, icon: 'ring',
                     armor: 0, tags: ['fortune'], weights: { fortune: 1.1 },
                     materials: ['jade', 'amber', 'obsidian'],
                     implicit: { label: 'Sockets into the passive tree', stat: null } },
@@ -240,46 +240,46 @@
       slaughter: {
         name: 'Slaughter', color: '#f87171',
         mods: {
-          blood_price:   { name: 'The Blood Price', label: 'Recover {v}% of Life on Kill', shape: 'trigger', roll: [2, 3] },
-          battle_rhythm: { name: 'Battle Rhythm', label: '+{v}% Attack Speed for 4s after a Kill', shape: 'trigger', roll: [12, 18] },
-          read_wound:    { name: 'Read the Wound', label: '+{v}% Critical Chance against Bleeding foes', shape: 'conditional', roll: [15, 25] },
+          blood_price:   { name: 'Life on Kill', label: 'Recover {v}% of Life on Kill', shape: 'trigger', roll: [2, 3] },
+          battle_rhythm: { name: 'Attack Speed after Kill', label: '+{v}% Attack Speed for 4s after a Kill', shape: 'trigger', roll: [12, 18] },
+          read_wound:    { name: 'Critical Chance against Bleeding', label: '+{v}% Critical Chance against Bleeding foes', shape: 'conditional', roll: [15, 25] },
         },
-        epithets: ['Hunger', 'Fang', 'Reckoning'], adjs: ['Red', 'Grim', 'Howling'],
-        power: 'Echoing Kill — slain foes have 15% chance to die twice, doubling their spoils.',
-        memory: 'It has learned to hunger.',
+        epithets: [], adjs: [],
+        power: 'Slain enemies have a 15% chance to drop double spoils.',
+        memory: '',
       },
       warding: {
         name: 'Warding', color: '#93c5fd',
         mods: {
-          shieldwall:   { name: 'The Shieldwall', label: 'Regain {v} Life when you Block', shape: 'trigger', roll: [8, 14] },
-          stand_ground: { name: 'Stand Your Ground', label: '+{v}% Chance to Block while stationary', shape: 'conditional', roll: [3, 5] },
-          old_grudge:   { name: 'Old Grudge', label: '+{v}% Ward for 2s when Hit', shape: 'trigger', roll: [20, 30] },
+          shieldwall:   { name: 'Life on Block', label: 'Regain {v} Life when you Block', shape: 'trigger', roll: [8, 14] },
+          stand_ground: { name: 'Block while Stationary', label: '+{v}% Chance to Block while stationary', shape: 'conditional', roll: [3, 5] },
+          old_grudge:   { name: 'Ward when Hit', label: '+{v}% Ward for 2s when Hit', shape: 'trigger', roll: [20, 30] },
         },
-        epithets: ['Oath', 'Bulwark', 'Vigil'], adjs: ['Unbroken', 'Stone', 'Dawnlit'],
-        power: 'Last Stand — a killing blow instead leaves you at 1 Life, once per battle.',
-        memory: 'It has learned to endure.',
+        epithets: [], adjs: [],
+        power: 'Once per battle, a killing blow leaves you at 1 Life instead.',
+        memory: '',
       },
       spiritwork: {
-        name: 'Spiritwork', color: '#c084fc',
+        name: 'Spirit', color: '#c084fc',
         mods: {
-          clear_mind:  { name: 'Clear Mind', label: '+{v}% Rite Power while Spirit is above three-quarters', shape: 'conditional', roll: [12, 20] },
-          ember_tithe: { name: 'Harvest', label: 'Recover {v}% of Spirit on Kill', shape: 'trigger', roll: [3, 5] },
-          veil_wise:   { name: 'Superstition', label: '{v}% chance to shrug off Curses', shape: 'conditional', roll: [10, 18] },
+          clear_mind:  { name: 'Rite Power at High Spirit', label: '+{v}% Rite Power while Spirit is above three-quarters', shape: 'conditional', roll: [12, 20] },
+          ember_tithe: { name: 'Spirit on Kill', label: 'Recover {v}% of Spirit on Kill', shape: 'trigger', roll: [3, 5] },
+          veil_wise:   { name: 'Curse Avoidance', label: '{v}% chance to shrug off Curses', shape: 'conditional', roll: [10, 18] },
         },
-        epithets: ['Whisper', 'Cinder', 'Riddle'], adjs: ['Silent', 'Ashen', 'Nine-Veiled'],
-        power: 'Twinned Voice — rites have 12% chance to speak twice, free.',
-        memory: 'It has learned to listen.',
+        epithets: [], adjs: [],
+        power: 'Rites have a 12% chance to cast twice at no cost.',
+        memory: '',
       },
       wayfaring: {
         name: 'Wayfaring', color: '#86efac',
         mods: {
-          dead_sprint: { name: 'Dead Sprint', label: '+{v}% Movement Speed for 3s on Kill', shape: 'trigger', roll: [10, 16] },
-          sidestep:    { name: 'Sidestep', label: '{v}% chance to Avoid thrown weapons while moving', shape: 'conditional', roll: [10, 16] },
-          road_lore:   { name: 'Second Wind', label: 'Regain {v} Life per second while moving', shape: 'conditional', roll: [2, 4] },
+          dead_sprint: { name: 'Speed on Kill', label: '+{v}% Movement Speed for 3s on Kill', shape: 'trigger', roll: [10, 16] },
+          sidestep:    { name: 'Thrown Weapon Avoidance', label: '{v}% chance to Avoid thrown weapons while moving', shape: 'conditional', roll: [10, 16] },
+          road_lore:   { name: 'Life Regeneration while Moving', label: 'Regain {v} Life per second while moving', shape: 'conditional', roll: [2, 4] },
         },
-        epithets: ['Stride', 'Wind', 'Lantern'], adjs: ['Fleet', 'Pale', 'Far'],
-        power: 'Untraceable — the first strike against you in every battle misses.',
-        memory: 'It has learned the roads.',
+        epithets: [], adjs: [],
+        power: 'The first hit against you in each battle misses.',
+        memory: '',
       },
     },
 
@@ -294,19 +294,19 @@
     trophies: {
       boar_tusk:   { name: 'Boar Tusk', fragments: 5, kinds: ['weapon', 'belt'],
                      mods: [{ stat: 'phys_pct', v: 10, label: '+{v}% increased Physical Damage', shape: 'scalar' }],
-                     completionBonus: { label: 'Charge — your first strike each battle cannot be blocked', shape: 'trigger' } },
+                     completionBonus: { label: 'Your first hit each battle cannot be blocked', shape: 'trigger' } },
       wolf_fang:   { name: 'Wolf Fang', fragments: 5, kinds: ['weapon', 'gloves'],
                      mods: [{ stat: 'atk_speed', v: 6, label: '+{v}% Attack Speed', shape: 'scalar' }],
-                     completionBonus: { label: 'Pack Sense — you cannot be surprised', shape: 'conditional' } },
+                     completionBonus: { label: 'You cannot be surprised', shape: 'conditional' } },
       river_pearl: { name: 'River Pearl', fragments: 3, kinds: ['amulet', 'ring', 'helmet', 'focus'],
                      mods: [{ stat: 'spirit', v: 12, label: '+{v} to Maximum Spirit', shape: 'flat' }],
-                     completionBonus: { label: 'Undertow — your rites chill their targets', shape: 'trigger' } },
+                     completionBonus: { label: 'Your rites Chill their targets', shape: 'trigger' } },
       ember_shell: { name: 'Beetle Shell', fragments: 3, kinds: ['shield', 'body'],
                      mods: [{ stat: 'ember_res', v: 15, label: '+{v}% to Fire Resistance', shape: 'scalar' }],
-                     completionBonus: { label: 'Cinder Skin — attackers are singed', shape: 'trigger' } },
+                     completionBonus: { label: 'Attackers take Fire damage', shape: 'trigger' } },
       knucklebone: { name: 'Knucklebone', fragments: 3, kinds: ['amulet', 'ring', 'belt', 'focus'],
                      mods: [{ stat: 'fortune', v: 10, label: '+{v}% Goods Found', shape: 'scalar' }],
-                     completionBonus: { label: 'Grandmother’s Rite — once a day, reroll one omen', shape: 'grant' } },
+                     completionBonus: { label: 'Once a day, reroll one omen', shape: 'grant' } },
     },
 
     /* ---------------- craft tools ---------------- */
@@ -325,28 +325,27 @@
 
     /* ---------------- panoply (player-authored sets) ---------------- */
     panoply: {
-      2: { label: 'Panoply (2): your awakened relics hum together — +10% to all their bond values' },
-      3: { label: 'Panoply (3): a saga made solid — awakened powers trigger 25% more often' },
+      2: { label: 'Panoply (2): +10% to the bond values of your awakened items' },
+      3: { label: 'Panoply (3): awakened powers trigger 25% more often' },
     },
 
     /* ---------------- encounters ---------------- */
     encounters: [
-      { text: 'ambushed a boar sounder at the ford', themes: { slaughter: 2, wayfaring: 1 }, trophy: 'boar_tusk', trophyChance: 0.6 },
-      { text: 'held the shield-line at Delaford weir', themes: { warding: 3 }, trophy: 'ember_shell', trophyChance: 0.25 },
-      { text: 'sang down a river-haunt', themes: { spiritwork: 2, warding: 1 }, trophy: 'river_pearl', trophyChance: 0.5 },
-      { text: 'outran the toll-reeves of Verdigris', themes: { wayfaring: 3 }, trophyChance: 0.1 },
-      { text: 'culled the barrow-wolves', themes: { slaughter: 2, spiritwork: 1 }, trophy: 'wolf_fang', trophyChance: 0.6 },
-      { text: 'weathered the ash-storm on the high path', themes: { warding: 2, wayfaring: 1 }, trophyChance: 0.15 },
-      { text: 'traded riddles with a canal-witch', themes: { spiritwork: 3 }, trophy: 'knucklebone', trophyChance: 0.35 },
-      { text: 'broke a raider skiff on the mudflats', themes: { slaughter: 2, warding: 1 }, trophyChance: 0.2 },
-      { text: 'charted the drowned stair by rushlight', themes: { wayfaring: 2, spiritwork: 1 }, trophy: 'river_pearl', trophyChance: 0.3 },
-      { text: 'felled the tusked alderbeast', themes: { slaughter: 3 }, trophy: 'boar_tusk', trophyChance: 0.7 },
+      { text: 'fought a group of boars', themes: { slaughter: 2, wayfaring: 1 }, trophy: 'boar_tusk', trophyChance: 0.6 },
+      { text: 'held a shield line', themes: { warding: 3 }, trophy: 'ember_shell', trophyChance: 0.25 },
+      { text: 'drove off a water spirit', themes: { spiritwork: 2, warding: 1 }, trophy: 'river_pearl', trophyChance: 0.5 },
+      { text: 'outran pursuers', themes: { wayfaring: 3 }, trophyChance: 0.1 },
+      { text: 'killed a wolf pack', themes: { slaughter: 2, spiritwork: 1 }, trophy: 'wolf_fang', trophyChance: 0.6 },
+      { text: 'crossed a mountain pass in an ash storm', themes: { warding: 2, wayfaring: 1 }, trophyChance: 0.15 },
+      { text: 'bargained with a witch', themes: { spiritwork: 3 }, trophy: 'knucklebone', trophyChance: 0.35 },
+      { text: 'sank a raider boat', themes: { slaughter: 2, warding: 1 }, trophyChance: 0.2 },
+      { text: 'explored a flooded stairway', themes: { wayfaring: 2, spiritwork: 1 }, trophy: 'river_pearl', trophyChance: 0.3 },
+      { text: 'killed a large tusked beast', themes: { slaughter: 3 }, trophy: 'boar_tusk', trophyChance: 0.7 },
     ],
 
-    nameTables: {
-      pre: ['Grim', 'Sable', 'Ashen', 'Reed', 'Ember', 'Frost', 'Dusk', 'Copper', 'Thorn', 'Vesper'],
-      post: ['Whisper', 'Ward', 'Bite', 'Song', 'Pledge', 'Shard', 'Gloam', 'Tithe'],
-    },
+    // Random epithet names ("Ember Ward", "Dusk Gloam") were removed on October 26, 2026:
+    // items are named by material and form.
+    nameTables: null,
 
     /* ---------------- character sheet derivation ---------------- */
     derive(sums, items, ctx) {

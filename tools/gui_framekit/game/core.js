@@ -186,7 +186,7 @@ const ABILITIES = [
   ["med_sun", "Radiance", 42, 9, "A wave of noon. Burns what hides."],
   ["med_star", "Guiding Star", 18, 4, "Mark a foe. The web remembers."],
   ["tri_bolt", "Storm Call", 55, 12, "The archive's copper roof earns its keep."],
-  ["tri_fire", "Ember Line", 35, 7, "Draw a line. Dare them."],
+  ["tri_fire", "Fire Line", 35, 7, "Draw a line. Dare them."],
   ["med_shield", "Aegis", 25, 14, "A shield of borrowed marble."],
   ["med_hourglass", "Still Hour", 70, 30, "Stop everything. Keep walking."],
   ["chev_double", "March", 15, 6, "Faster. The lamps are going out."],
@@ -288,7 +288,7 @@ addEventListener("keydown", ev => {
 const BUFFS = [
   ["buff_sq_gold", "chev_double", "March Order", "12m"],
   ["buff_sq_teal", "tri_bolt", "Storm Ward", ""],
-  ["buff_sq_red", "tri_fire", "Ember Ward", "42s"],
+  ["buff_sq_red", "tri_fire", "Fire Ward", "42s"],
 ];
 const buffsEl = $("#buffs");
 BUFFS.forEach(([frame, glyph, name, t]) => {

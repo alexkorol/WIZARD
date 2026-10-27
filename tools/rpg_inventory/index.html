@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brands &amp; Bonds — Vesselforge — WIZARD</title>
-  <meta name="description" content="Bronze-age ARPG inventory running on the Vesselforge modular item engine: sear Brands, grow Bonds, bind Trophies — items remember their bearer.">
+  <title>Inventory and Item Crafting — WIZARD</title>
+  <meta name="description" content="Bronze Age ARPG inventory and item crafting prototype: brands, bonds and trophies on items — items remember their bearer.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -12,12 +12,12 @@
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="core/vesselforge.js"></script>
+  <script src="core/vesselforge.js?v=20261026"></script>
   <script src="core/verdigris-stats.js?v=20260921"></script>
-  <script src="core/verdigris-pack.js?v=20260921"></script>
+  <script src="core/verdigris-pack.js?v=20261026"></script>
   <script src="core/verdigris-combat.js"></script>
   <script src="core/character-item-taxonomy.js"></script>
-  <script src="core/post-calib-wave2-taxonomy.js"></script>
+  <script src="core/post-calib-wave2-taxonomy.js?v=20261026"></script>
 
   <style>
     :root {
@@ -741,7 +741,7 @@
   const PACK_BY_ID = Object.fromEntries(PACK_DEFS.map(def => [def.id, def]));
   const LEGACY_PACK_IDS = { relics: 'reliquary', utility: 'preparations' };
   const AUX_WINDOWS = [
-    { id: 'warcall-window', label: 'War-call', axis: 'str', lane: 1, unlock: 'war_call_slot', slotId: 'warhorn' },
+    { id: 'warcall-window', label: 'War Horn', axis: 'str', lane: 1, unlock: 'war_call_slot', slotId: 'warhorn' },
     { id: 'quickrig-window', label: 'Quick Rig', axis: 'dex', lane: 2, unlock: 'quick_rig_slot', slotId: 'quickRig' },
     { id: 'attendant-window', label: 'Attendant', axis: 'int', lane: 3, unlock: 'attendant_focus_slot', slotId: 'attendant' },
     { id: 'spoils-window', label: 'Spoils Roll', axis: 'str-dex', lane: 4, unlock: 'spoils_pack', packId: 'spoils' },
@@ -1151,7 +1151,7 @@
     ];
     sandals.att = { xp: 40, next: 190, tc: { wayfaring: 9 } };
     sandals.evolutions = 3;
-    sandals.epithetName = 'Pale Stride';
+    sandals.epithetName = null;
     put(sandals);
 
     // A fully awakened relic to show where the road ends.
@@ -1184,7 +1184,7 @@
       hp: null,
       satchel: { red_ochre: 2, woad: 1, soot: 1, marsh_ochre: 0, entrail_omen: 1, bird_omen: 0, smoke_omen: 0, blood_omen: 1 },
       log: [
-        { kind: 'sys', text: 'The vault opens on the Green Lands. Sear Brands, grow Bonds, bind Trophies — the vessel remembers all three.' },
+        { kind: 'sys', text: 'Add brands, grow bonds and bind trophies on your items.' },
       ],
     };
   };
@@ -2101,8 +2101,8 @@
         <div className="top-bar">
           <div>
             <a className="back-link" href="../../index.html">&larr; WIZARD</a>
-            <div className="title">BRANDS <strong>&amp;</strong> BONDS</div>
-            <div className="subtext">Brands are seared. Bonds are earned. Items remember their bearer.</div>
+            <div className="title">INVENTORY <strong>&amp;</strong> ITEM CRAFTING</div>
+            <div className="subtext">Brands are crafted modifiers. Bonds grow from use.</div>
           </div>
           <div className="top-actions">
             <div className="gold-counter">

@@ -46,6 +46,15 @@ Multi-subproject **Verdigris Systems Laboratory** served from `gh-pages`.
   compatibility keys. `tools/geometric_skilltree/tests/invented-terms.test.mjs` (run by
   `wizard-lab.mjs verify`) fails on banned terms in tree, jewel, stat and page text; extend
   its list when a new invented term is caught, never allowlist prose.
+- Owner correction, 2026-10-26 ("same applies to cringey composite terms like
+  'emberguard' 'vesselforge' etc."): no invented compound coinages anywhere players or the
+  owner read them: two nouns mashed into a fantasy name (X-guard, X-forge, X-ward, X-bound,
+  X-born, X-kiss, X-tithe, X-fathers, -weave, -shard, -sworn, -kin, -fall, -mark, -call,
+  -blade ...). Tools and modules get plain descriptive titles ("Inventory and Item
+  Crafting", "Spell Effects Lab"); folder names and code identifiers may keep old names.
+  `scripts/invented-terms.test.mjs` (in verify) scans every tool page, data script and
+  manifest, prints a table of each flagged string and fails; its ALLOW set takes reviewed
+  real English words only (windward, stonework), never coinages.
 
 The owner rejects unrequested flourish across this repository. Use functional
 names, direct labels, and concise descriptions of what a tool does.

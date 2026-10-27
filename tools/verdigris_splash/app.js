@@ -18,7 +18,7 @@ const EPIC_CONTINENTS = [
   { name: "The Shattered Choir", x: -4.25, z: 0.85, rx: 1.75, rz: 1.4, rotation: -0.2, seed: 41, biome: "lush", capital: [-0.55, 0.48], ridge: [-1.2, -0.45, 0.95, 0.35, 0.4, 0.78], peaks: [[-0.55, -0.1, 0.5], [0.45, 0.2, 0.46]] },
   { name: "Aster Vale", x: -0.85, z: 3.1, rx: 2.65, rz: 1.25, rotation: 0.08, seed: 73, biome: "verdant", capital: [0.2, 0.44], ridge: [-1.65, 0.32, 1.55, -0.18, 0.38, 0.6], peaks: [[-0.85, 0.2, 0.38], [0.8, -0.08, 0.34]] },
   { name: "The Copper Waste", x: 4.05, z: 1.05, rx: 2.35, rz: 1.55, rotation: 0.17, seed: 103, biome: "desert", capital: [0.1, 0.52], ridge: [-1.65, -0.25, 1.55, 0.18, 0.47, 0.82], peaks: [[-0.7, -0.2, 0.48], [0.9, 0.22, 0.54]] },
-  { name: "Cairnreach", x: 1.7, z: -3.15, rx: 2.7, rz: 1.18, rotation: -0.03, seed: 137, biome: "alpine", capital: [0.6, 0.38], ridge: [-1.75, 0.18, 1.85, -0.12, 0.4, 0.78], peaks: [[-1.0, 0.12, 0.5], [0.65, -0.1, 0.56]] },
+  { name: "Cairn Ridge", x: 1.7, z: -3.15, rx: 2.7, rz: 1.18, rotation: -0.03, seed: 137, biome: "alpine", capital: [0.6, 0.38], ridge: [-1.75, 0.18, 1.85, -0.12, 0.4, 0.78], peaks: [[-1.0, 0.12, 0.5], [0.65, -0.1, 0.56]] },
   { name: "The Lantern Isles", x: 5.35, z: -2.25, rx: 1.25, rz: 0.88, rotation: 0.34, seed: 181, biome: "verdant", capital: [-0.15, 0.18], ridge: [-0.72, -0.16, 0.7, 0.12, 0.3, 0.44], peaks: [[0.05, 0, 0.3]] },
   { name: "Morrow Keys", x: -5.75, z: -2.2, rx: 0.82, rz: 0.48, rotation: 0.24, seed: 211, biome: "lush", islet: true, ridge: [-0.42, 0.04, 0.38, -0.05, 0.25, 0.26], peaks: [[0.02, 0, 0.2]] },
   { name: "Sunken Stars", x: 2.25, z: 3.88, rx: 0.68, rz: 0.42, rotation: -0.38, seed: 239, biome: "desert", islet: true, ridge: [-0.34, -0.03, 0.32, 0.06, 0.22, 0.22], peaks: [[-0.02, 0, 0.16]] },

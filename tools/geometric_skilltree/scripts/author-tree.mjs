@@ -118,7 +118,7 @@ const SPOKES = {
     gateway: { n: 'Archmage Gate', title: 'Archmage' }
   },
   nightwork: {
-    title: 'Nightblade', cluster: 'nightwork-spoke',
+    title: 'Assassin', cluster: 'nightwork-spoke',
     doorway: { n: 'Ailment Effect', s: 'ailmentEffect', a: 10, x: ['Small wounds, patiently kept open.'] },
     r2small: { n: 'Chaos Resistance', s: 'gloam_res', a: 8 },
     mastery: {
@@ -127,18 +127,18 @@ const SPOKES = {
     },
     r4small: { n: 'Evasion', s: 'evasion', a: 25 },
     waystone: {
-      n: 'Nightblade Waystone', s: 'ailmentEffect', a: 12,
+      n: 'Assassin Waystone', s: 'ailmentEffect', a: 12,
       hook: { effect: 'flow-length', value: 1 },
       fx: ['Flows passing through this Waystone count +1 length', 'You show your position when you strike: +5% damage taken for two seconds (design text)']
     },
     r6notable: { n: 'Deeper Wither', s: 'gloam_res', a: 12, fx: ['+18% increased Ailment Effect', 'Wither you inflict stacks one deeper (design text)'] },
     classNode: {
-      n: 'Nightblade', s: 'ailmentEffect', a: 12,
+      n: 'Assassin', s: 'ailmentEffect', a: 12,
       fx: ['Unlocks: trap and mark tools become equippable', 'Unlocks: venom vial slot', 'Unlocks: 4x4 Preparation Case', 'Your first class passive sets your class; each class passive grants its unlock.']
     },
     r8notable: { n: 'Poison Marked Enemies', s: 'ailmentEffect', a: 20, fx: ['+1.5% to Critical Chance', 'Poisons you inflict on marked enemies deal 15% more (design text)'] },
     r9notable: { n: 'Mark Ally Killers', s: 'gloam_res', a: 15, fx: ['+22% increased Ailment Effect', 'Enemies that kill your allies are marked for you (design text)'] },
-    gateway: { n: 'Nightblade Gate', title: 'Nightblade' }
+    gateway: { n: 'Assassin Gate', title: 'Assassin' }
   },
   dex: {
     title: 'Acrobat', cluster: 'dex-spoke',
@@ -203,7 +203,7 @@ const SPOKES = {
     r6notable: { n: 'Ally Protection', s: 'attackDamage', a: 24, fx: ['+20 to Life', 'Allies behind you take 10% less damage (design text)'] },
     classNode: {
       n: 'Champion', s: 'attackDamage', a: 12,
-      fx: ['Unlocks: tower shields become usable', 'Unlocks: 2x2 War-call seat', 'Your first class passive sets your class; each class passive grants its unlock.']
+      fx: ['Unlocks: tower shields become usable', 'Unlocks: 2x2 War Horn seat', 'Your first class passive sets your class; each class passive grants its unlock.']
     },
     r8notable: { n: 'Steady Stance', s: 'guard_increased', a: 20, fx: ['+15% increased Attack Damage', 'While you have not moved recently, +15% Poise (design text)'] },
     r9notable: { n: 'Faster Recovery', s: 'life', a: 40, fx: ['+18% increased Attack Damage', 'Out-of-combat Life regeneration starts 25% sooner (design text)'] },

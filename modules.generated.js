@@ -103,7 +103,7 @@ window.WIZARD_REGISTRY = {
       "schemaVersion": 1,
       "id": "wizard.chronicles",
       "slug": "rp_account_creator",
-      "title": "Chronicles",
+      "title": "House Creator",
       "description": "Create houses and characters, simulate permadeath, and track inherited relics.",
       "status": "authoring",
       "visibility": "dashboard",
@@ -545,7 +545,7 @@ window.WIZARD_REGISTRY = {
       "schemaVersion": 1,
       "id": "wizard.rpg-inventory",
       "slug": "rpg_inventory",
-      "title": "Vesselforge & Inventory",
+      "title": "Inventory and Item Crafting",
       "description": "Inspect grid inventory, equipment windows, item brands, and bonds.",
       "status": "calibration",
       "visibility": "dashboard",
@@ -745,7 +745,7 @@ window.WIZARD_REGISTRY = {
       "schemaVersion": 1,
       "id": "wizard.spellforge",
       "slug": "spellforge",
-      "title": "Spellforge VFX Lab",
+      "title": "Spell Effects Lab",
       "description": "WebGL2 spell and effect library: 189 layered effects with tunable parameters, a shared GLSL library, per-effect breakdowns and porting notes, and a ratings export for shortlisting effects for the ARPG.",
       "status": "authoring",
       "visibility": "dashboard",
@@ -1089,52 +1089,6 @@ window.WIZARD_REGISTRY = {
     },
     {
       "schemaVersion": 1,
-      "id": "wizard.chronicles",
-      "slug": "rp_account_creator",
-      "title": "Chronicles",
-      "description": "Create houses and characters, simulate permadeath, and track inherited relics.",
-      "status": "authoring",
-      "visibility": "dashboard",
-      "category": "authoring",
-      "group": "chronicles",
-      "launch": "tools/rp_account_creator/index.html",
-      "readme": "tools/rp_account_creator/README.md",
-      "preview": null,
-      "moduleVersion": "1.0.0",
-      "stateVersion": 1,
-      "verdigrisTargets": [
-        "chronicle-meta"
-      ],
-      "capabilities": {
-        "adapter": false,
-        "scenarios": false,
-        "stateExport": false,
-        "stateImport": false,
-        "snapshots": false,
-        "annotations": false,
-        "proposals": false,
-        "fixtures": false,
-        "events": false,
-        "pauseStep": false,
-        "agentFeedback": false
-      },
-      "unsupportedMethods": [
-        "listScenarios",
-        "loadScenario",
-        "getAnnotations",
-        "setAnnotations",
-        "pause",
-        "resume",
-        "step"
-      ],
-      "tags": [
-        "chronicles",
-        "houses",
-        "permadeath"
-      ]
-    },
-    {
-      "schemaVersion": 1,
       "id": "wizard.framekit",
       "slug": "gui_framekit",
       "title": "FrameKit",
@@ -1232,6 +1186,98 @@ window.WIZARD_REGISTRY = {
     },
     {
       "schemaVersion": 1,
+      "id": "wizard.chronicles",
+      "slug": "rp_account_creator",
+      "title": "House Creator",
+      "description": "Create houses and characters, simulate permadeath, and track inherited relics.",
+      "status": "authoring",
+      "visibility": "dashboard",
+      "category": "authoring",
+      "group": "chronicles",
+      "launch": "tools/rp_account_creator/index.html",
+      "readme": "tools/rp_account_creator/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "chronicle-meta"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "listScenarios",
+        "loadScenario",
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "chronicles",
+        "houses",
+        "permadeath"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "wizard.rpg-inventory",
+      "slug": "rpg_inventory",
+      "title": "Inventory and Item Crafting",
+      "description": "Inspect grid inventory, equipment windows, item brands, and bonds.",
+      "status": "calibration",
+      "visibility": "dashboard",
+      "category": "calibration",
+      "group": "character-systems",
+      "launch": "tools/rpg_inventory/index.html",
+      "readme": "tools/rpg_inventory/README.md",
+      "preview": null,
+      "moduleVersion": "1.0.0",
+      "stateVersion": 1,
+      "verdigrisTargets": [
+        "itemization"
+      ],
+      "capabilities": {
+        "adapter": false,
+        "scenarios": false,
+        "stateExport": false,
+        "stateImport": false,
+        "snapshots": false,
+        "annotations": false,
+        "proposals": false,
+        "fixtures": false,
+        "events": false,
+        "pauseStep": false,
+        "agentFeedback": false
+      },
+      "unsupportedMethods": [
+        "listScenarios",
+        "loadScenario",
+        "getAnnotations",
+        "setAnnotations",
+        "pause",
+        "resume",
+        "step"
+      ],
+      "tags": [
+        "inventory",
+        "vesselforge",
+        "itemization"
+      ]
+    },
+    {
+      "schemaVersion": 1,
       "id": "wizard.orbs",
       "slug": "wizard_orbs",
       "title": "Life & Mana Orbs",
@@ -1279,7 +1325,7 @@ window.WIZARD_REGISTRY = {
       "schemaVersion": 1,
       "id": "wizard.spellforge",
       "slug": "spellforge",
-      "title": "Spellforge VFX Lab",
+      "title": "Spell Effects Lab",
       "description": "WebGL2 spell and effect library: 189 layered effects with tunable parameters, a shared GLSL library, per-effect breakdowns and porting notes, and a ratings export for shortlisting effects for the ARPG.",
       "status": "authoring",
       "visibility": "dashboard",
@@ -1420,52 +1466,6 @@ window.WIZARD_REGISTRY = {
         "presentation",
         "threejs",
         "world"
-      ]
-    },
-    {
-      "schemaVersion": 1,
-      "id": "wizard.rpg-inventory",
-      "slug": "rpg_inventory",
-      "title": "Vesselforge & Inventory",
-      "description": "Inspect grid inventory, equipment windows, item brands, and bonds.",
-      "status": "calibration",
-      "visibility": "dashboard",
-      "category": "calibration",
-      "group": "character-systems",
-      "launch": "tools/rpg_inventory/index.html",
-      "readme": "tools/rpg_inventory/README.md",
-      "preview": null,
-      "moduleVersion": "1.0.0",
-      "stateVersion": 1,
-      "verdigrisTargets": [
-        "itemization"
-      ],
-      "capabilities": {
-        "adapter": false,
-        "scenarios": false,
-        "stateExport": false,
-        "stateImport": false,
-        "snapshots": false,
-        "annotations": false,
-        "proposals": false,
-        "fixtures": false,
-        "events": false,
-        "pauseStep": false,
-        "agentFeedback": false
-      },
-      "unsupportedMethods": [
-        "listScenarios",
-        "loadScenario",
-        "getAnnotations",
-        "setAnnotations",
-        "pause",
-        "resume",
-        "step"
-      ],
-      "tags": [
-        "inventory",
-        "vesselforge",
-        "itemization"
       ]
     }
   ]
