@@ -11,7 +11,7 @@
     'hud-resources': 'HUD resources',
     'passive-tree': 'Passive tree',
     'itemization': 'Itemization',
-    'spellcraft': 'Spellcraft',
+    'spellcraft': 'Spells',
     'zone-generation': 'Zone generation',
     'terrain-autotile': 'Terrain autotile',
     'world-presentation': 'World presentation',
