@@ -12,6 +12,8 @@
   'use strict';
 
   const CHANNELS = ['physical', 'ember', 'river', 'storm', 'gloam'];
+  // Legacy keys remain stable for saved items/builds; display names follow the owner correction.
+  const CHANNEL_LABELS = Object.freeze({ physical: 'Physical', ember: 'Fire', river: 'Cold', storm: 'Lightning', gloam: 'Chaos' });
 
   const STANDARD_FOES = {
     bruiser: {
@@ -19,7 +21,7 @@
       hits: [{ channel: 'physical', damage: 180, attack: true, accuracy: 260, weight: 1 }]
     },
     emberCaster: {
-      name: 'Ember Caster',
+      name: 'Fire Caster',
       hits: [{ channel: 'ember', damage: 160, attack: false, weight: 1 }]
     },
     mixedPack: {
@@ -43,10 +45,10 @@
     evasion_increased: { label: 'increased Evasion', shape: 'increased', category: 'defense' },
     accuracy_flat: { label: 'Accuracy', shape: 'flat', category: 'offense' },
     block_chance_flat: { label: 'Block Chance', shape: 'flat', category: 'defense', cap: 75 },
-    ember_resistance: { label: 'Ember Resistance', shape: 'resistance', category: 'defense', cap: 75 },
-    river_resistance: { label: 'River Resistance', shape: 'resistance', category: 'defense', cap: 75 },
-    storm_resistance: { label: 'Storm Resistance', shape: 'resistance', category: 'defense', cap: 75 },
-    gloam_resistance: { label: 'Gloam Resistance', shape: 'resistance', category: 'defense', cap: 75 },
+    ember_resistance: { label: 'Fire Resistance', shape: 'resistance', category: 'defense', cap: 75 },
+    river_resistance: { label: 'Cold Resistance', shape: 'resistance', category: 'defense', cap: 75 },
+    storm_resistance: { label: 'Lightning Resistance', shape: 'resistance', category: 'defense', cap: 75 },
+    gloam_resistance: { label: 'Chaos Resistance', shape: 'resistance', category: 'defense', cap: 75 },
     all_resistance: { label: 'All Resistances', shape: 'resistance', category: 'defense', cap: 75 },
     max_resistance: { label: 'Maximum Resistance', shape: 'cap', category: 'defense' },
     all_attributes: { label: 'All Attributes', shape: 'flat', category: 'attribute' },
@@ -54,7 +56,7 @@
     dex_flat: { label: 'Dexterity', shape: 'flat', category: 'attribute' },
     int_flat: { label: 'Intelligence', shape: 'flat', category: 'attribute' },
     added_physical: { label: 'added Physical Damage', shape: 'flat', category: 'offense' },
-    added_ember: { label: 'added Ember Damage', shape: 'flat', category: 'offense' },
+    added_ember: { label: 'added Fire Damage', shape: 'flat', category: 'offense' },
     physical_increased: { label: 'increased Physical Damage', shape: 'increased', category: 'offense' },
     attack_increased: { label: 'increased Attack Damage', shape: 'increased', category: 'offense' },
     rite_increased: { label: 'increased Rite Damage', shape: 'increased', category: 'offense' },
@@ -63,7 +65,7 @@
     attack_speed_increased: { label: 'increased Attack Speed', shape: 'increased', category: 'offense' },
     rite_speed_increased: { label: 'increased Rite Speed', shape: 'increased', category: 'offense' },
     crit_chance_flat: { label: 'Critical Chance', shape: 'flat', category: 'offense', cap: 95 },
-    crit_bonus_flat: { label: 'Advantage Bonus', shape: 'flat', category: 'offense' },
+    crit_bonus_flat: { label: 'Critical Damage Bonus', shape: 'flat', category: 'offense' },
     ailment_effect: { label: 'Ailment Effect', shape: 'increased', category: 'ailment' },
     cooldown_recovery: { label: 'Cooldown Recovery', shape: 'increased', category: 'utility' },
     move_speed: { label: 'Movement Speed', shape: 'increased', category: 'utility' },
@@ -384,6 +386,7 @@
   return {
     version: '0.1.0',
     CHANNELS,
+    CHANNEL_LABELS,
     STANDARD_FOES,
     STAT_REGISTRY,
     ALIASES,

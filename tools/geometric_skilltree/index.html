@@ -1686,7 +1686,7 @@
           </section>
 
           <section class="section">
-            <div class="section-title">Calling</div>
+            <div class="section-title">Class</div>
             <div class="delta-list" id="calling-display"></div>
           </section>
 
@@ -1719,8 +1719,8 @@
           <div class="choice-list" id="choice-list"></div>
         </div>
         <div class="choice-panel" id="jewel-panel">
-          <p class="choice-title">Carved Stones</p>
-          <p class="choice-copy" id="jewel-panel-copy">Choose a stone for this socket. Stones swap freely out of combat.</p>
+          <p class="choice-title">Jewels</p>
+          <p class="choice-copy" id="jewel-panel-copy">Choose a jewel for this socket. Jewels swap freely out of combat.</p>
           <div class="choice-list" id="jewel-list"></div>
         </div>
       </aside>
@@ -1886,10 +1886,10 @@
   <!-- The ?v= query pins each asset to this HTML so the gh-pages CDN can never
        serve fresh markup with stale data (10-minute cache skew). Bump when
        shipping asset changes. -->
-  <script src="../rpg_inventory/core/verdigris-stats.js?v=13"></script>
-  <script src="assets/tree-data.js?v=13"></script>
+  <script src="../rpg_inventory/core/verdigris-stats.js?v=14"></script>
+  <script src="assets/tree-data.js?v=15"></script>
   <script src="assets/patterns.js?v=13"></script>
-  <script src="assets/jewels.js?v=13"></script>
+  <script src="assets/jewels.js?v=15"></script>
   <!-- Painted passive art shared with the Unity ARPG (icons, frames, stone field). -->
   <script src="assets/art/tree-art.js?v=17"></script>
   <script>
@@ -2010,19 +2010,19 @@
         gateway: { q: 10, r: 0 },
         axis: "int",
         nodes: [
-          { id: "attendant-core", name: "Second Pair of Hands", type: "notable", stat: "castSpeed", amount: 8, effects: ["+8% Rite Speed", "Your attendant hands you what you reach for: draughts pour without pausing your rite"], tag: "spell" },
-          { id: "attendant-candle", name: "Lamp Duty", type: "small", stat: "spirit", amount: 45, effects: ["+45 maximum Spirit"], tag: "mana" },
-          { id: "attendant-inkwell", name: "Ink Palette", type: "small", stat: "ward", amount: 60, effects: ["+60 Ward"], tag: "energy-shield" },
-          { id: "attendant-order", name: "Standing Order", type: "notable", stat: "castSpeed", amount: 6, effects: ["+6% Rite Speed", "Rites repeated within four seconds cost 10% less Spirit"], tag: "spell" },
-          { id: "attendant-pour", name: "Measured Pour", type: "notable", stat: "ward", amount: 70, effects: ["+70 Ward", "Ward recharge begins 20% sooner"], tag: "energy-shield" },
-          { id: "attendant-service", name: "Quiet Service", type: "small", stat: "cooldownRecovery", amount: 6, effects: ["+6% Cooldown Recovery Rate"], tag: "utility" },
-          { id: "attendant-floor", name: "Swept Floor", type: "small", stat: "gloam_res", amount: 8, effects: ["+8% Gloam Resistance"], tag: "resistance" },
-          { id: "attendant-watch", name: "Night Watch", type: "mastery", stat: "cooldownRecovery", amount: 10, effects: ["+10% Cooldown Recovery Rate", "While your Ward is full, your rites reach 15% further"], tag: "utility" },
-          { id: "attendant-flame", name: "Kept Flame", type: "small", stat: "spellDamage", amount: 8, effects: ["+8% Rite Damage"], tag: "spell" },
-          { id: "attendant-lens", name: "Polished Mirror", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
-          { id: "attendant-errand", name: "Errand Run", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
-          { id: "attendant-lamp", name: "Warm Lamplight", type: "small", stat: "spirit", amount: 40, effects: ["+40 maximum Spirit"], tag: "mana" },
-          { id: "attendant-servant", name: "The Good Servant", type: "keystone", stat: null, amount: 0, effects: ["Your attendant focus grants its bonuses to your companions as well", "Your attendant window holds nothing but a focus"], tag: "spell" }
+          { id: "attendant-core", name: "Drink While Casting", type: "notable", stat: "castSpeed", amount: 8, effects: ["+8% Rite Speed", "Drinking a draught does not interrupt your rite"], tag: "spell" },
+          { id: "attendant-candle", name: "Spirit", type: "small", stat: "spirit", amount: 45, effects: ["+45 maximum Spirit"], tag: "mana" },
+          { id: "attendant-inkwell", name: "Ward", type: "small", stat: "ward", amount: 60, effects: ["+60 Ward"], tag: "energy-shield" },
+          { id: "attendant-order", name: "Cheaper Repeated Rites", type: "notable", stat: "castSpeed", amount: 6, effects: ["+6% Rite Speed", "Rites repeated within four seconds cost 10% less Spirit"], tag: "spell" },
+          { id: "attendant-pour", name: "Faster Ward Recharge", type: "notable", stat: "ward", amount: 70, effects: ["+70 Ward", "Ward recharge begins 20% sooner"], tag: "energy-shield" },
+          { id: "attendant-service", name: "Cooldown Recovery", type: "small", stat: "cooldownRecovery", amount: 6, effects: ["+6% Cooldown Recovery Rate"], tag: "utility" },
+          { id: "attendant-floor", name: "Chaos Resistance", type: "small", stat: "gloam_res", amount: 8, effects: ["+8% Chaos Resistance"], tag: "resistance" },
+          { id: "attendant-watch", name: "Cooldown Mastery", type: "mastery", stat: "cooldownRecovery", amount: 10, effects: ["+10% Cooldown Recovery Rate", "While your Ward is full, your rites reach 15% further"], tag: "utility" },
+          { id: "attendant-flame", name: "Rite Damage", type: "small", stat: "spellDamage", amount: 8, effects: ["+8% Rite Damage"], tag: "spell" },
+          { id: "attendant-lens", name: "Critical Chance", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
+          { id: "attendant-errand", name: "Movement Speed", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
+          { id: "attendant-lamp", name: "Spirit", type: "small", stat: "spirit", amount: 40, effects: ["+40 maximum Spirit"], tag: "mana" },
+          { id: "attendant-servant", name: "Shared Focus", type: "keystone", stat: null, amount: 0, effects: ["Your attendant focus grants its bonuses to your companions as well", "Your attendant window holds nothing but a focus"], tag: "spell" }
         ],
         layout: WHEEL_LAYOUT,
         links: WHEEL_LINKS
@@ -2033,19 +2033,19 @@
         gateway: { q: 0, r: -10 },
         axis: "dex",
         nodes: [
-          { id: "quickrig-core", name: "Fast Hands", type: "notable", stat: "attackSpeed", amount: 8, effects: ["+8% Attack Speed", "Swapping to your quick rig tool takes no time"], tag: "weapon" },
-          { id: "quickrig-straps", name: "Oiled Straps", type: "small", stat: "evasion", amount: 85, effects: ["+85 Evasion Rating"], tag: "evasion" },
-          { id: "quickrig-buckle", name: "Spare Toggle", type: "small", stat: "blockChance", amount: 2, effects: ["+2% Block Chance"], tag: "block" },
-          { id: "quickrig-fit", name: "Snap Fit", type: "notable", stat: "attackSpeed", amount: 6, effects: ["+6% Attack Speed", "Your quick rig tool counts as equipped even while stowed"], tag: "weapon" },
-          { id: "quickrig-sleeves", name: "Loose Sleeves", type: "notable", stat: "evasion", amount: 110, effects: ["+110 Evasion Rating", "Evasion counts 10% higher while you are moving"], tag: "evasion" },
-          { id: "quickrig-pocket", name: "Third Pocket", type: "small", stat: "goods_find", amount: 8, effects: ["+8% Goods Found"], tag: "utility" },
-          { id: "quickrig-cord", name: "Waxed Cord", type: "small", stat: "attackSpeed", amount: 4, effects: ["+4% Attack Speed"], tag: "weapon" },
-          { id: "quickrig-reach", name: "Everything In Reach", type: "mastery", stat: "cooldownRecovery", amount: 10, effects: ["+10% Cooldown Recovery Rate", "Tools in your quick rig recover 20% faster"], tag: "utility" },
-          { id: "quickrig-hem", name: "Weighted Hem", type: "small", stat: "accuracy_flat", amount: 60, effects: ["+60 Accuracy"], tag: "accuracy" },
-          { id: "quickrig-knot", name: "Double Knot", type: "small", stat: "life", amount: 55, effects: ["+55 maximum Life"], tag: "life" },
-          { id: "quickrig-release", name: "Quick Release", type: "small", stat: "move", amount: 5, effects: ["+5% Movement Speed"], tag: "utility" },
-          { id: "quickrig-grip", name: "Chalked Grip", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
-          { id: "quickrig-nothing", name: "Drop Nothing", type: "keystone", stat: null, amount: 0, effects: ["Using your quick rig tool cannot be interrupted and takes no time", "You cannot block for two seconds after using it"], tag: "weapon" }
+          { id: "quickrig-core", name: "Instant Tool Swap", type: "notable", stat: "attackSpeed", amount: 8, effects: ["+8% Attack Speed", "Swapping to your quick rig tool takes no time"], tag: "weapon" },
+          { id: "quickrig-straps", name: "Evasion", type: "small", stat: "evasion", amount: 85, effects: ["+85 Evasion Rating"], tag: "evasion" },
+          { id: "quickrig-buckle", name: "Block Chance", type: "small", stat: "blockChance", amount: 2, effects: ["+2% Block Chance"], tag: "block" },
+          { id: "quickrig-fit", name: "Stowed Tool Counts as Equipped", type: "notable", stat: "attackSpeed", amount: 6, effects: ["+6% Attack Speed", "Your quick rig tool counts as equipped even while stowed"], tag: "weapon" },
+          { id: "quickrig-sleeves", name: "Evasion While Moving", type: "notable", stat: "evasion", amount: 110, effects: ["+110 Evasion Rating", "Evasion counts 10% higher while you are moving"], tag: "evasion" },
+          { id: "quickrig-pocket", name: "Goods Found", type: "small", stat: "goods_find", amount: 8, effects: ["+8% Goods Found"], tag: "utility" },
+          { id: "quickrig-cord", name: "Attack Speed", type: "small", stat: "attackSpeed", amount: 4, effects: ["+4% Attack Speed"], tag: "weapon" },
+          { id: "quickrig-reach", name: "Tool Mastery", type: "mastery", stat: "cooldownRecovery", amount: 10, effects: ["+10% Cooldown Recovery Rate", "Tools in your quick rig recover 20% faster"], tag: "utility" },
+          { id: "quickrig-hem", name: "Accuracy", type: "small", stat: "accuracy_flat", amount: 60, effects: ["+60 Accuracy"], tag: "accuracy" },
+          { id: "quickrig-knot", name: "Life", type: "small", stat: "life", amount: 55, effects: ["+55 maximum Life"], tag: "life" },
+          { id: "quickrig-release", name: "Movement Speed", type: "small", stat: "move", amount: 5, effects: ["+5% Movement Speed"], tag: "utility" },
+          { id: "quickrig-grip", name: "Critical Chance", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
+          { id: "quickrig-nothing", name: "Uninterruptible Tools", type: "keystone", stat: null, amount: 0, effects: ["Using your quick rig tool cannot be interrupted and takes no time", "You cannot block for two seconds after using it"], tag: "weapon" }
         ],
         layout: WHEEL_LAYOUT,
         links: WHEEL_LINKS
@@ -2056,19 +2056,19 @@
         gateway: { q: -10, r: 10 },
         axis: "str",
         nodes: [
-          { id: "warcall-core", name: "Deep Breath", type: "notable", stat: "life", amount: 60, effects: ["+60 maximum Life", "Your war-horn's call carries 25% further"], tag: "life" },
-          { id: "warcall-lip", name: "Bronze Lip", type: "small", stat: "attackDamage", amount: 8, effects: ["+8% Attack Damage"], tag: "weapon" },
-          { id: "warcall-note", name: "Long Note", type: "small", stat: "guard", amount: 120, effects: ["+120 Guard"], tag: "armour" },
-          { id: "warcall-rally", name: "Rally Point", type: "notable", stat: "guard", amount: 180, effects: ["+180 Guard", "Allies who hear your horn gain +60 Guard"], tag: "armour" },
-          { id: "warcall-second", name: "Second Wind", type: "notable", stat: "life", amount: 80, effects: ["+80 maximum Life", "Sounding your horn restores 8% Life, once per fight"], tag: "life" },
-          { id: "warcall-pace", name: "Drummer's Pace", type: "small", stat: "attackSpeed", amount: 4, effects: ["+4% Attack Speed"], tag: "weapon" },
-          { id: "warcall-lungs", name: "Bellows Lungs", type: "small", stat: "life", amount: 60, effects: ["+60 maximum Life"], tag: "life" },
-          { id: "warcall-line", name: "Held Line", type: "mastery", stat: "blockChance", amount: 4, effects: ["+4% Block Chance", "While your horn still echoes, you cannot be pushed back"], tag: "block" },
-          { id: "warcall-wind", name: "Carrying Wind", type: "small", stat: "allResistances", amount: 3, effects: ["+3% to all Resistances"], tag: "resistance" },
-          { id: "warcall-pole", name: "Standard Pole", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
-          { id: "warcall-voice", name: "Loud Voice", type: "small", stat: "ailmentEffect", amount: 8, effects: ["+8% Mark and Shout Effect"], tag: "ailment" },
-          { id: "warcall-chest", name: "Broad Chest", type: "small", stat: "guard", amount: 110, effects: ["+110 Guard"], tag: "armour" },
-          { id: "warcall-one", name: "One Voice", type: "keystone", stat: null, amount: 0, effects: ["Your shouts and horn calls affect you twice", "Their effect on allies is halved"], tag: "shout" }
+          { id: "warcall-core", name: "Horn Range", type: "notable", stat: "life", amount: 60, effects: ["+60 maximum Life", "Your war-horn's call carries 25% further"], tag: "life" },
+          { id: "warcall-lip", name: "Attack Damage", type: "small", stat: "attackDamage", amount: 8, effects: ["+8% Attack Damage"], tag: "weapon" },
+          { id: "warcall-note", name: "Guard", type: "small", stat: "guard", amount: 120, effects: ["+120 Guard"], tag: "armour" },
+          { id: "warcall-rally", name: "Horn Guard for Allies", type: "notable", stat: "guard", amount: 180, effects: ["+180 Guard", "Allies who hear your horn gain +60 Guard"], tag: "armour" },
+          { id: "warcall-second", name: "Horn Heal", type: "notable", stat: "life", amount: 80, effects: ["+80 maximum Life", "Sounding your horn restores 8% Life, once per fight"], tag: "life" },
+          { id: "warcall-pace", name: "Attack Speed", type: "small", stat: "attackSpeed", amount: 4, effects: ["+4% Attack Speed"], tag: "weapon" },
+          { id: "warcall-lungs", name: "Life", type: "small", stat: "life", amount: 60, effects: ["+60 maximum Life"], tag: "life" },
+          { id: "warcall-line", name: "Block Mastery", type: "mastery", stat: "blockChance", amount: 4, effects: ["+4% Block Chance", "While your horn still echoes, you cannot be pushed back"], tag: "block" },
+          { id: "warcall-wind", name: "All Resistances", type: "small", stat: "allResistances", amount: 3, effects: ["+3% to all Resistances"], tag: "resistance" },
+          { id: "warcall-pole", name: "Strength", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
+          { id: "warcall-voice", name: "Ailment Effect", type: "small", stat: "ailmentEffect", amount: 8, effects: ["+8% Mark and Shout Effect"], tag: "ailment" },
+          { id: "warcall-chest", name: "Guard", type: "small", stat: "guard", amount: 110, effects: ["+110 Guard"], tag: "armour" },
+          { id: "warcall-one", name: "Shouts Affect You Twice", type: "keystone", stat: null, amount: 0, effects: ["Your shouts and horn calls affect you twice", "Their effect on allies is halved"], tag: "shout" }
         ],
         layout: WHEEL_LAYOUT,
         links: WHEEL_LINKS
@@ -2079,19 +2079,19 @@
         gateway: { q: 10, r: -10 },
         axis: "hybrid",
         nodes: [
-          { id: "preparations-core", name: "Checked Twice", type: "notable", stat: "evasion", amount: 90, effects: ["+90 Evasion Rating", "Nothing in your preparation case spoils or leaks"], tag: "evasion" },
-          { id: "preparations-vial", name: "Spare Vial", type: "small", stat: "life", amount: 50, effects: ["+50 maximum Life"], tag: "life" },
-          { id: "preparations-chalk", name: "Chalk Marks", type: "small", stat: "accuracy_flat", amount: 55, effects: ["+55 Accuracy"], tag: "accuracy" },
-          { id: "preparations-dose", name: "Measured Dose", type: "notable", stat: "ailmentEffect", amount: 15, effects: ["+15% Ailment Effect", "Your vials apply one extra ailment stack"], tag: "ailment" },
-          { id: "preparations-contingency", name: "Contingency", type: "notable", stat: "cooldownRecovery", amount: 8, effects: ["+8% Cooldown Recovery Rate", "The first trap you place each fight costs nothing"], tag: "utility" },
-          { id: "preparations-thread", name: "Waxed Thread", type: "small", stat: "evasion", amount: 70, effects: ["+70 Evasion Rating"], tag: "evasion" },
-          { id: "preparations-start", name: "Early Start", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
-          { id: "preparations-wasted", name: "Nothing Wasted", type: "mastery", stat: "goods_find", amount: 12, effects: ["+12% Goods Found", "Using a prepared item refunds it one time in five"], tag: "utility" },
-          { id: "preparations-hands", name: "Steady Hands", type: "small", stat: "castSpeed", amount: 4, effects: ["+4% Rite Speed"], tag: "spell" },
-          { id: "preparations-map", name: "Clay Map", type: "small", stat: "int", amount: 8, effects: ["+8 Intelligence"], tag: "attribute" },
-          { id: "preparations-shoes", name: "Quiet Shoes", type: "small", stat: "evasion", amount: 70, effects: ["+70 Evasion Rating"], tag: "evasion" },
-          { id: "preparations-kit", name: "Packed Kit", type: "small", stat: "dex", amount: 8, effects: ["+8 Dexterity"], tag: "attribute" },
-          { id: "preparations-plan", name: "The Plan Holds", type: "keystone", stat: null, amount: 0, effects: ["Once per fight, a preparation cancels the hit that would have killed you", "Each item in your preparation case works once per fight"], tag: "hybrid" }
+          { id: "preparations-core", name: "Preserved Preparations", type: "notable", stat: "evasion", amount: 90, effects: ["+90 Evasion Rating", "Nothing in your preparation case spoils or leaks"], tag: "evasion" },
+          { id: "preparations-vial", name: "Life", type: "small", stat: "life", amount: 50, effects: ["+50 maximum Life"], tag: "life" },
+          { id: "preparations-chalk", name: "Accuracy", type: "small", stat: "accuracy_flat", amount: 55, effects: ["+55 Accuracy"], tag: "accuracy" },
+          { id: "preparations-dose", name: "Extra Ailment Stack", type: "notable", stat: "ailmentEffect", amount: 15, effects: ["+15% Ailment Effect", "Your vials apply one extra ailment stack"], tag: "ailment" },
+          { id: "preparations-contingency", name: "Free First Trap", type: "notable", stat: "cooldownRecovery", amount: 8, effects: ["+8% Cooldown Recovery Rate", "The first trap you place each fight costs nothing"], tag: "utility" },
+          { id: "preparations-thread", name: "Evasion", type: "small", stat: "evasion", amount: 70, effects: ["+70 Evasion Rating"], tag: "evasion" },
+          { id: "preparations-start", name: "Movement Speed", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
+          { id: "preparations-wasted", name: "Recovered Throws", type: "mastery", stat: "goods_find", amount: 12, effects: ["+12% Goods Found", "Using a prepared item refunds it one time in five"], tag: "utility" },
+          { id: "preparations-hands", name: "Rite Speed", type: "small", stat: "castSpeed", amount: 4, effects: ["+4% Rite Speed"], tag: "spell" },
+          { id: "preparations-map", name: "Intelligence", type: "small", stat: "int", amount: 8, effects: ["+8 Intelligence"], tag: "attribute" },
+          { id: "preparations-shoes", name: "Evasion", type: "small", stat: "evasion", amount: 70, effects: ["+70 Evasion Rating"], tag: "evasion" },
+          { id: "preparations-kit", name: "Dexterity", type: "small", stat: "dex", amount: 8, effects: ["+8 Dexterity"], tag: "attribute" },
+          { id: "preparations-plan", name: "Death Prevention", type: "keystone", stat: null, amount: 0, effects: ["Once per fight, a preparation cancels the hit that would have killed you", "Each item in your preparation case works once per fight"], tag: "hybrid" }
         ],
         layout: WHEEL_LAYOUT,
         links: WHEEL_LINKS
@@ -2102,19 +2102,19 @@
         gateway: { q: -10, r: 0 },
         axis: "hybrid",
         nodes: [
-          { id: "trophies-core", name: "First Blood", type: "notable", stat: "attackDamage", amount: 10, effects: ["+10% Attack Damage", "Your first hit on an unwounded enemy has Advantage"], tag: "weapon" },
-          { id: "trophies-hilt", name: "Notched Hilt", type: "small", stat: "attackDamage", amount: 6, effects: ["+6% Attack Damage"], tag: "weapon" },
-          { id: "trophies-chase", name: "Long Chase", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
-          { id: "trophies-proof", name: "Proof of the Kill", type: "notable", stat: "critChance", amount: 1.8, effects: ["+1.8% Critical Chance", "Killing blows leave a spoil one time in ten"], tag: "critical" },
-          { id: "trophies-pelts", name: "Weighed Pelts", type: "notable", stat: "goods_find", amount: 15, effects: ["+15% Goods Found", "Beasts drop one extra spoil"], tag: "utility" },
-          { id: "trophies-scars", name: "Old Scars", type: "small", stat: "life", amount: 55, effects: ["+55 maximum Life"], tag: "life" },
-          { id: "trophies-eye", name: "Keen Eye", type: "small", stat: "accuracy_flat", amount: 65, effects: ["+65 Accuracy"], tag: "accuracy" },
-          { id: "trophies-wall", name: "Wall of Horns", type: "mastery", stat: "beast_damage_increased", amount: 15, effects: ["+15% increased Damage against Beasts", "Every trophy in your spoils roll grants +1% Attack Damage, up to ten"], tag: "weapon" },
-          { id: "trophies-knife", name: "Skinner's Knife", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
-          { id: "trophies-pack", name: "Heavy Pack", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
-          { id: "trophies-step", name: "Soft Step", type: "small", stat: "dex", amount: 8, effects: ["+8 Dexterity"], tag: "attribute" },
-          { id: "trophies-boast", name: "Loud Boast", type: "small", stat: "crit_bonus_flat", amount: 10, effects: ["+10% Advantage Bonus"], tag: "critical" },
-          { id: "trophies-home", name: "Take It Home", type: "keystone", stat: null, amount: 0, effects: ["Every trophy in your spoils roll grants +2 to all Attributes", "Spoils cannot be sold or traded"], tag: "hybrid" }
+          { id: "trophies-core", name: "First Hit Bonus", type: "notable", stat: "attackDamage", amount: 10, effects: ["+10% Attack Damage", "Your first hit on an unwounded enemy is a Critical Strike"], tag: "weapon" },
+          { id: "trophies-hilt", name: "Attack Damage", type: "small", stat: "attackDamage", amount: 6, effects: ["+6% Attack Damage"], tag: "weapon" },
+          { id: "trophies-chase", name: "Movement Speed", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
+          { id: "trophies-proof", name: "Spoils on Kill", type: "notable", stat: "critChance", amount: 1.8, effects: ["+1.8% Critical Chance", "Killing blows leave a spoil one time in ten"], tag: "critical" },
+          { id: "trophies-pelts", name: "Extra Beast Spoils", type: "notable", stat: "goods_find", amount: 15, effects: ["+15% Goods Found", "Beasts drop one extra spoil"], tag: "utility" },
+          { id: "trophies-scars", name: "Life", type: "small", stat: "life", amount: 55, effects: ["+55 maximum Life"], tag: "life" },
+          { id: "trophies-eye", name: "Accuracy", type: "small", stat: "accuracy_flat", amount: 65, effects: ["+65 Accuracy"], tag: "accuracy" },
+          { id: "trophies-wall", name: "Trophy Mastery", type: "mastery", stat: "beast_damage_increased", amount: 15, effects: ["+15% increased Damage against Beasts", "Every trophy in your spoils roll grants +1% Attack Damage, up to ten"], tag: "weapon" },
+          { id: "trophies-knife", name: "Critical Chance", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
+          { id: "trophies-pack", name: "Strength", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
+          { id: "trophies-step", name: "Dexterity", type: "small", stat: "dex", amount: 8, effects: ["+8 Dexterity"], tag: "attribute" },
+          { id: "trophies-boast", name: "Critical Damage Bonus", type: "small", stat: "crit_bonus_flat", amount: 10, effects: ["+10% Critical Damage Bonus"], tag: "critical" },
+          { id: "trophies-home", name: "Trophy Attributes", type: "keystone", stat: null, amount: 0, effects: ["Every trophy in your spoils roll grants +2 to all Attributes", "Spoils cannot be sold or traded"], tag: "hybrid" }
         ],
         layout: WHEEL_LAYOUT,
         links: WHEEL_LINKS
@@ -2125,19 +2125,19 @@
         gateway: { q: 0, r: 10 },
         axis: "hybrid",
         nodes: [
-          { id: "relics-core", name: "Dusted Shelf", type: "notable", stat: "ward", amount: 65, effects: ["+65 Ward", "Relics in your reliquary keep their blessings between fights"], tag: "energy-shield" },
-          { id: "relics-smoke", name: "Censer Smoke", type: "small", stat: "gloam_res", amount: 8, effects: ["+8% Gloam Resistance"], tag: "resistance" },
-          { id: "relics-names", name: "Old Names", type: "small", stat: "spirit", amount: 40, effects: ["+40 maximum Spirit"], tag: "mana" },
-          { id: "relics-glass", name: "Warded Faience", type: "notable", stat: "ward", amount: 75, effects: ["+75 Ward", "Ward recharge cannot be interrupted while you carry a relic"], tag: "energy-shield" },
-          { id: "relics-faith", name: "Patient Faith", type: "notable", stat: "allResistances", amount: 4, effects: ["+4% to all Resistances", "Each relic in your reliquary grants +2% Gloam Resistance"], tag: "resistance" },
-          { id: "relics-case", name: "Gilt Case", type: "small", stat: "guard", amount: 110, effects: ["+110 Guard"], tag: "armour" },
-          { id: "relics-candles", name: "Lamp Row", type: "small", stat: "ember_res", amount: 8, effects: ["+8% Ember Resistance"], tag: "resistance" },
-          { id: "relics-weight", name: "Ancestor's Weight", type: "mastery", stat: "spellDamage", amount: 12, effects: ["+12% Rite Damage", "Your heaviest relic is carried for you by a companion"], tag: "spell" },
-          { id: "relics-bone", name: "Bone and Gold", type: "small", stat: "minionDamage", amount: 8, effects: ["+8% Companion Damage"], tag: "minion" },
-          { id: "relics-steps", name: "Worn Steps", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
-          { id: "relics-litany", name: "Litany", type: "small", stat: "castSpeed", amount: 4, effects: ["+4% Rite Speed"], tag: "spell" },
-          { id: "relics-bowl", name: "Offering Bowl", type: "small", stat: "goods_find", amount: 8, effects: ["+8% Goods Found"], tag: "utility" },
-          { id: "relics-reverence", name: "Carried Reverence", type: "keystone", stat: null, amount: 0, effects: ["Relics in your reliquary grant their bonuses as if worn", "Your reliquary cannot be opened during a fight"], tag: "hybrid" }
+          { id: "relics-core", name: "Lasting Relic Blessings", type: "notable", stat: "ward", amount: 65, effects: ["+65 Ward", "Relics in your reliquary keep their blessings between fights"], tag: "energy-shield" },
+          { id: "relics-smoke", name: "Chaos Resistance", type: "small", stat: "gloam_res", amount: 8, effects: ["+8% Chaos Resistance"], tag: "resistance" },
+          { id: "relics-names", name: "Spirit", type: "small", stat: "spirit", amount: 40, effects: ["+40 maximum Spirit"], tag: "mana" },
+          { id: "relics-glass", name: "Uninterrupted Ward Recharge", type: "notable", stat: "ward", amount: 75, effects: ["+75 Ward", "Ward recharge cannot be interrupted while you carry a relic"], tag: "energy-shield" },
+          { id: "relics-faith", name: "Relic Resistances", type: "notable", stat: "allResistances", amount: 4, effects: ["+4% to all Resistances", "Each relic in your reliquary grants +2% Chaos Resistance"], tag: "resistance" },
+          { id: "relics-case", name: "Guard", type: "small", stat: "guard", amount: 110, effects: ["+110 Guard"], tag: "armour" },
+          { id: "relics-candles", name: "Fire Resistance", type: "small", stat: "ember_res", amount: 8, effects: ["+8% Fire Resistance"], tag: "resistance" },
+          { id: "relics-weight", name: "Relic Mastery", type: "mastery", stat: "spellDamage", amount: 12, effects: ["+12% Rite Damage", "Your heaviest relic is carried for you by a companion"], tag: "spell" },
+          { id: "relics-bone", name: "Companion Damage", type: "small", stat: "minionDamage", amount: 8, effects: ["+8% Companion Damage"], tag: "minion" },
+          { id: "relics-steps", name: "Strength", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
+          { id: "relics-litany", name: "Rite Speed", type: "small", stat: "castSpeed", amount: 4, effects: ["+4% Rite Speed"], tag: "spell" },
+          { id: "relics-bowl", name: "Goods Found", type: "small", stat: "goods_find", amount: 8, effects: ["+8% Goods Found"], tag: "utility" },
+          { id: "relics-reverence", name: "Relics Count as Worn", type: "keystone", stat: null, amount: 0, effects: ["Relics in your reliquary grant their bonuses as if worn", "Your reliquary cannot be opened during a fight"], tag: "hybrid" }
         ],
         layout: WHEEL_LAYOUT,
         links: WHEEL_LINKS
@@ -2578,7 +2578,7 @@
             ...(unlockSeat ? ["unlock", unlockSeat.flag.endsWith("pack") ? "pack" : "slot"] : [])
           ]));
           gateway.effects = [
-            ...(unlockSeat ? [`Allocated: unlocks ${unlockSeat.grant} in the armoury.`] : []),
+            ...(unlockSeat ? [`Allocated: unlocks ${unlockSeat.grant} in your equipment.`] : []),
             `Allocated: opens the ${config.title} circle beyond the rim.`
           ];
           gateway.stat = null;
@@ -2799,7 +2799,7 @@
         }
         this.points = { skill: START_POINTS.skill - cost };
         this.selectedNodeId = "0,0";
-        if (!silent) this.commit(`Build loaded: ${nodeIds.length} passives, ${conduitPicks.length} paths, ${this.socketedJewels.size} stones (${cost} points).`);
+        if (!silent) this.commit(`Build loaded: ${nodeIds.length} passives, ${conduitPicks.length} paths, ${this.socketedJewels.size} jewels (${cost} points).`);
         this.recalculate();
         return true;
       }
@@ -2918,14 +2918,14 @@
           const existingSaga = Array.from(this.socketedJewels.entries())
             .find(([otherId, other]) => other.family === "saga" && otherId !== socketId);
           if (existingSaga) {
-            this.commit("Only one saga-stone may be socketed at a time.");
+            this.commit("Only one transforming jewel may be socketed at a time.");
             this.recalculate({ modelChanged: false });
             return;
           }
         }
         this.socketedJewels.set(socketId, jewel);
         this.jewelPickerFor = null;
-        this.commit(`Socketed ${jewel.name} into ${socket.name}. Stones swap freely out of combat.`);
+        this.commit(`Socketed ${jewel.name} into ${socket.name}. Jewels swap freely out of combat.`);
         this.recalculate();
       }
 
@@ -3132,7 +3132,7 @@
         }
         const born = Array.from(this.nodes.values()).find(other => other.type === "sign" && other.active);
         if (born && route.some(step => this.nodes.get(step.nodeId).type === "sign")) {
-          this.commit(`You were born under ${born.name}. Only one Sign may mark a life — refund it first.`);
+          this.commit(`You already have ${born.name}. You can have only one Sign: refund it first.`);
           this.recalculate({ modelChanged: false });
           return true;
         }
@@ -3181,7 +3181,7 @@
         if (node.type === "sign") {
           const born = Array.from(this.nodes.values()).find(other => other.type === "sign" && other.active);
           if (born && born.id !== node.id) {
-            this.commit(`You were born under ${born.name}. Only one Sign may mark a life — refund it first.`);
+            this.commit(`You already have ${born.name}. You can have only one Sign: refund it first.`);
             this.recalculate({ modelChanged: false });
             return;
           }
@@ -3215,9 +3215,9 @@
         if (node.type === "class" && !this.classOrder.includes(node.id)) {
           this.classOrder.push(node.id);
           if (this.classOrder.length === 1) {
-            this.commit(`${node.name} is your calling. Its slot unlocks now reach the armoury.`);
+            this.commit(`${node.name} is your class. Its slot unlocks are now in your equipment.`);
           } else {
-            this.commit(`${node.name} adds its armoury unlocks; your calling stays ${this.characterClassNode()?.name}.`);
+            this.commit(`${node.name} adds its equipment unlocks; your class stays ${this.characterClassNode()?.name}.`);
           }
         }
         conduit.allocatedVariant = option.id;
@@ -3606,10 +3606,10 @@
           castSpeed: "Rite Speed",
           critChance: "Critical Chance",
           allResistances: "All Resistances",
-          resEmber: "Ember Resistance",
-          resRiver: "River Resistance",
-          resStorm: "Storm Resistance",
-          resGloam: "Gloam Resistance",
+          resEmber: "Fire Resistance",
+          resRiver: "Cold Resistance",
+          resStorm: "Lightning Resistance",
+          resGloam: "Chaos Resistance",
           ailmentEffect: "Ailment Effect",
           blockChance: "Block Chance",
           cooldownRecovery: "Cooldown Recovery"
@@ -4707,7 +4707,7 @@
         const tooltip = document.getElementById("tooltip");
         tooltip.classList.add("art");
         tooltip.querySelector(".tooltip-title").textContent = node.name;
-        const typeName = { small: "Passive", notable: "Notable", keystone: "Keystone", mastery: "Mastery", waystone: "Waystone", socket: "Empty socket", gateway: "Gateway", class: "Calling", sign: "Sign", origin: "Origin" }[node.type] || node.type;
+        const typeName = { small: "Passive", notable: "Notable", keystone: "Keystone", mastery: "Mastery", waystone: "Waystone", socket: "Empty socket", gateway: "Gateway", class: "Class", sign: "Sign", origin: "Origin" }[node.type] || node.type;
         const available = this.tree.isAvailableNode(node);
         const route = node.active || available ? [] : this.tree.routeTo(node.id);
         const status = node.id === "0,0" ? "Your starting point" : node.active ? "Allocated" : available ? "Available" : route.length > 1 ? `${route.length} passives away` : "Not yet reachable";
@@ -4723,7 +4723,7 @@
         let action = "";
         let ready = false;
         if (node.id === "0,0") action = "";
-        else if (node.active) action = node.type === "socket" ? "Click to manage the carved stone · right-click to refund" : "Click or right-click to refund";
+        else if (node.active) action = node.type === "socket" ? "Click to manage the jewel · right-click to refund" : "Click or right-click to refund";
         else if (available) { ready = true; action = `Click to allocate · ${node.cost + 1} points`; }
         else if (route.length > 1) {
           const cost = this.tree.routeCost(route);
@@ -4944,10 +4944,10 @@
         const stats = this.tree.stats;
         const unlockText = stats.unlocks.map(flag => flag.replace(/_/g, " ")).join(", ");
         const unlockHtml = stats.unlocks.length
-          ? `<div>Unlocked: ${unlockText}.</div><div>The armoury page reads these unlocks live.</div>`
+          ? `<div>Unlocked: ${unlockText}.</div><div>The inventory page reads these unlocks live.</div>`
           : "";
         if (!stats.characterClass) {
-          display.innerHTML = `<div>No calling yet. The first class milestone you allocate (ring 7) marks your class; class milestones and the six rim corners each add their armoury window.</div>${unlockHtml}`;
+          display.innerHTML = `<div>No class yet. The first class passive you allocate (ring 7) sets your class; class passives and the six rim corners each add their equipment slot.</div>${unlockHtml}`;
           return;
         }
         display.innerHTML = `<div><strong>${stats.characterClass}</strong></div>${unlockHtml}`;
@@ -4970,8 +4970,8 @@
         const current = this.tree.jewelAt(socketId);
         if (copy) {
           copy.textContent = current
-            ? `${socket.name} holds ${current.name}. Choose a different stone or remove it.`
-            : `${socket.name} is empty. Choose a carved stone; stones swap freely out of combat.`;
+            ? `${socket.name} holds ${current.name}. Choose a different jewel or remove it.`
+            : `${socket.name} is empty. Choose a jewel; jewels swap freely out of combat.`;
         }
         (VERDIGRIS_JEWELS?.STASH || []).forEach(jewel => {
           const btn = document.createElement("button");
@@ -5020,10 +5020,10 @@
           evasion: ["Evasion", ""],
           accuracy: ["Accuracy", ""],
           blockChance: ["Block", "%"],
-          resEmber: ["Ember Res", "%"],
-          resRiver: ["River Res", "%"],
-          resStorm: ["Storm Res", "%"],
-          resGloam: ["Gloam Res", "%"],
+          resEmber: ["Fire Res", "%"],
+          resRiver: ["Cold Res", "%"],
+          resStorm: ["Lightning Res", "%"],
+          resGloam: ["Chaos Res", "%"],
           attackDamage: ["Attack Damage", "%"],
           spellDamage: ["Rite Damage", "%"],
           projectileDamage: ["Projectile Damage", "%"],
@@ -5059,7 +5059,7 @@
         const socketJewel = node.type === "socket" ? this.tree.jewelAt(node.id) : null;
         let effects = node.effects.map(line => `<li>${line}</li>`).join("");
         if (saga) {
-          effects += saga.lines.map(line => `<li><em>Conquered — ${line}</em></li>`).join("");
+          effects += saga.lines.map(line => `<li><em>Transformed — ${line}</em></li>`).join("");
         }
         if (socketJewel) {
           effects += `<li><em>Socketed: ${socketJewel.name}</em></li>`;

@@ -8,7 +8,7 @@
   },
   "metadata": {
     "generatedFrom": "tools/geometric_skilltree/scripts/author-tree.mjs (hand-authored tables)",
-    "generatedAt": "2026-10-26",
+    "generatedAt": "2026-10-27",
     "intent": "Phase 4 authored tree: every seat is deliberate data. Zero hash-generated content."
   },
   "patternTuning": {
@@ -90,7 +90,7 @@
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "Firm Grip"
+      "name": "Attack Damage"
     },
     "0,1": {
       "id": "0,1",
@@ -109,7 +109,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "First Rite"
+      "name": "Spirit"
     },
     "1,0": {
       "id": "1,0",
@@ -128,7 +128,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "First Lesson"
+      "name": "Rite Damage"
     },
     "1,-1": {
       "id": "1,-1",
@@ -147,7 +147,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "First Cut"
+      "name": "Ailment Effect"
     },
     "0,-1": {
       "id": "0,-1",
@@ -166,7 +166,7 @@
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "Light Step"
+      "name": "Evasion"
     },
     "-1,0": {
       "id": "-1,0",
@@ -185,7 +185,7 @@
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "First Throw"
+      "name": "Projectile Damage"
     },
     "-2,2": {
       "id": "-2,2",
@@ -203,7 +203,7 @@
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "Broad Back"
+      "name": "Life"
     },
     "-1,2": {
       "id": "-1,2",
@@ -214,8 +214,7 @@
       "axis": "str",
       "effects": [
         "+14% increased Ailment Effect",
-        "Adds 3 Ember Damage to hits",
-        "The kiln teaches: keep them burning."
+        "Adds 3 Fire Damage to hits"
       ],
       "stat": "ailmentEffect",
       "amount": 14,
@@ -223,7 +222,7 @@
       "clusterId": "kiln-line-named",
       "status": "review",
       "notes": "",
-      "name": "Stoked Coals"
+      "name": "Fire Ailments"
     },
     "0,2": {
       "id": "0,2",
@@ -241,7 +240,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "Votive Lamp"
+      "name": "Rite Damage"
     },
     "1,1": {
       "id": "1,1",
@@ -261,7 +260,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "Called to Serve"
+      "name": "Free Companion"
     },
     "2,0": {
       "id": "2,0",
@@ -279,7 +278,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Copied Tablets"
+      "name": "Spirit"
     },
     "2,-1": {
       "id": "2,-1",
@@ -290,8 +289,8 @@
       "axis": "int",
       "effects": [
         "+16% increased Rite Damage",
-        "+6% to River Resistance",
-        "Numbed enemies take +8% from your rites (design text)"
+        "+6% to Cold Resistance",
+        "Chilled enemies take +8% from your rites (design text)"
       ],
       "stat": "spellDamage",
       "amount": 16,
@@ -299,7 +298,7 @@
       "clusterId": "drowned-study-named",
       "status": "review",
       "notes": "",
-      "name": "Cold Reading"
+      "name": "Chilled Targets"
     },
     "2,-2": {
       "id": "2,-2",
@@ -309,7 +308,7 @@
       "type": "small",
       "axis": "hybrid",
       "effects": [
-        "+8% to Gloam Resistance"
+        "+8% to Chaos Resistance"
       ],
       "stat": "gloam_res",
       "amount": 8,
@@ -317,7 +316,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "Covered Lamp"
+      "name": "Chaos Resistance"
     },
     "1,-2": {
       "id": "1,-2",
@@ -329,7 +328,7 @@
       "effects": [
         "+14% increased Ailment Effect",
         "+30 to Evasion",
-        "Your poisons ignore half of Gloam resistance (design text)"
+        "Your poisons ignore half of Chaos resistance (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 14,
@@ -337,7 +336,7 @@
       "clusterId": "unlit-road-named",
       "status": "review",
       "notes": "",
-      "name": "Dirty Fighting"
+      "name": "Poison Penetration"
     },
     "0,-2": {
       "id": "0,-2",
@@ -355,7 +354,7 @@
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "Practiced Fall"
+      "name": "Evasion"
     },
     "-1,-1": {
       "id": "-1,-1",
@@ -367,7 +366,7 @@
       "effects": [
         "+14% increased Projectile Damage",
         "+30 to Accuracy",
-        "Your shots from higher ground Jolt (design text)"
+        "Your shots from higher ground Shock (design text)"
       ],
       "stat": "projectileDamage",
       "amount": 14,
@@ -375,7 +374,7 @@
       "clusterId": "high-paths-named",
       "status": "review",
       "notes": "",
-      "name": "Head for Heights"
+      "name": "High Ground Shock"
     },
     "-2,0": {
       "id": "-2,0",
@@ -393,7 +392,7 @@
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "Belt of Knives"
+      "name": "Projectile Damage"
     },
     "-2,1": {
       "id": "-2,1",
@@ -413,7 +412,7 @@
       "clusterId": "red-field-named",
       "status": "review",
       "notes": "",
-      "name": "Drawn Blood"
+      "name": "Unblockable Against Bleeding"
     },
     "-3,3": {
       "id": "-3,3",
@@ -425,8 +424,7 @@
       "effects": [
         "+14% increased Attack Damage",
         "+25 to Guard",
-        "You cannot be pushed back while attacking (design text)",
-        "The doctrine is short: advance."
+        "You cannot be pushed back while attacking (design text)"
       ],
       "stat": "attackDamage",
       "amount": 14,
@@ -434,7 +432,7 @@
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "Bronze Doctrine"
+      "name": "Attack Mastery"
     },
     "-2,3": {
       "id": "-2,3",
@@ -444,7 +442,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "Adds 3 Ember Damage to hits"
+        "Adds 3 Fire Damage to hits"
       ],
       "stat": "emberkiss",
       "amount": 3,
@@ -452,7 +450,7 @@
       "clusterId": "kiln-approach",
       "status": "review",
       "notes": "",
-      "name": "Dry Tinder"
+      "name": "Added Fire Damage"
     },
     "-1,3": {
       "id": "-1,3",
@@ -463,7 +461,7 @@
       "axis": "str",
       "effects": [
         "+8% increased Attack Damage",
-        "+4% increased Attack Damage against Scalded enemies (design text)"
+        "+4% increased Attack Damage against Ignited enemies (design text)"
       ],
       "stat": "attackDamage",
       "amount": 8,
@@ -471,7 +469,7 @@
       "clusterId": "kiln-approach",
       "status": "review",
       "notes": "",
-      "name": "Warm Bronze"
+      "name": "Attack Damage"
     },
     "0,3": {
       "id": "0,3",
@@ -483,8 +481,7 @@
       "effects": [
         "+14% increased Companion Damage",
         "+15 to Spirit",
-        "Your banners and standing rites reach 15% further (design text)",
-        "The order is old; the war is older."
+        "Your banners and standing rites reach 15% further (design text)"
       ],
       "stat": "minionDamage",
       "amount": 14,
@@ -492,7 +489,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "Order of Service"
+      "name": "Companion Mastery"
     },
     "1,2": {
       "id": "1,2",
@@ -510,7 +507,7 @@
       "clusterId": "procession-approach",
       "status": "review",
       "notes": "",
-      "name": "Censer Smoke"
+      "name": "Rite Damage"
     },
     "2,1": {
       "id": "2,1",
@@ -529,7 +526,7 @@
       "clusterId": "procession-approach",
       "status": "review",
       "notes": "",
-      "name": "Standard Pole"
+      "name": "Companion Damage"
     },
     "3,0": {
       "id": "3,0",
@@ -541,8 +538,7 @@
       "effects": [
         "+14% increased Rite Damage",
         "+20 to Ward",
-        "Your Ward recharge begins 20% sooner",
-        "The school of counting what cannot be touched."
+        "Your Ward recharge begins 20% sooner"
       ],
       "stat": "spellDamage",
       "amount": 14,
@@ -550,7 +546,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Blue Arithmetic"
+      "name": "Ward Mastery"
     },
     "3,-1": {
       "id": "3,-1",
@@ -568,7 +564,7 @@
       "clusterId": "drowned-approach",
       "status": "review",
       "notes": "",
-      "name": "Wet Clay"
+      "name": "Rite Damage"
     },
     "3,-2": {
       "id": "3,-2",
@@ -578,8 +574,8 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+8% to River Resistance",
-        "+6 to Ward while near water in spirit (design text)"
+        "+8% to Cold Resistance",
+        "+6 to Ward (design text)"
       ],
       "stat": "river_resistance",
       "amount": 8,
@@ -587,7 +583,7 @@
       "clusterId": "drowned-approach",
       "status": "review",
       "notes": "",
-      "name": "River Stone"
+      "name": "Cold Resistance"
     },
     "3,-3": {
       "id": "3,-3",
@@ -599,8 +595,7 @@
       "effects": [
         "+16% increased Ailment Effect",
         "+1% to Critical Chance",
-        "Your marks last 20% longer (design text)",
-        "The trade taught after dark, to those who already know a trade."
+        "Your marks last 20% longer (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 16,
@@ -608,7 +603,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "Second Shadow"
+      "name": "Ailment Mastery"
     },
     "2,-3": {
       "id": "2,-3",
@@ -626,7 +621,7 @@
       "clusterId": "unlit-approach",
       "status": "review",
       "notes": "",
-      "name": "Muffled Steps"
+      "name": "Evasion"
     },
     "1,-3": {
       "id": "1,-3",
@@ -645,7 +640,7 @@
       "clusterId": "unlit-approach",
       "status": "review",
       "notes": "",
-      "name": "Thin Blade"
+      "name": "Critical Chance"
     },
     "0,-3": {
       "id": "0,-3",
@@ -657,8 +652,7 @@
       "effects": [
         "+14% increased Evasion",
         "+40 to Accuracy",
-        "+4% increased Movement Speed",
-        "Ground read well is worth more than armour."
+        "+4% increased Movement Speed"
       ],
       "stat": "evasion_increased",
       "amount": 14,
@@ -666,7 +660,7 @@
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "Fieldcraft"
+      "name": "Evasion Mastery"
     },
     "-1,-2": {
       "id": "-1,-2",
@@ -684,7 +678,7 @@
       "clusterId": "high-approach",
       "status": "review",
       "notes": "",
-      "name": "Sling Practice"
+      "name": "Projectile Damage"
     },
     "-2,-1": {
       "id": "-2,-1",
@@ -703,7 +697,7 @@
       "clusterId": "high-approach",
       "status": "review",
       "notes": "",
-      "name": "Sure Footing"
+      "name": "Evasion"
     },
     "-3,0": {
       "id": "-3,0",
@@ -715,8 +709,7 @@
       "effects": [
         "+12% increased Projectile Damage",
         "+6% increased Attack Speed",
-        "Moving between attacks adds +8% damage to the next one (design text)",
-        "The steps are taught to drummers first."
+        "Moving between attacks adds +8% damage to the next one (design text)"
       ],
       "stat": "projectileDamage",
       "amount": 12,
@@ -724,7 +717,7 @@
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "War Dance"
+      "name": "Projectile Mastery"
     },
     "-3,1": {
       "id": "-3,1",
@@ -742,7 +735,7 @@
       "clusterId": "red-approach",
       "status": "review",
       "notes": "",
-      "name": "Nicked Bronze"
+      "name": "Attack Damage"
     },
     "-3,2": {
       "id": "-3,2",
@@ -761,7 +754,7 @@
       "clusterId": "red-approach",
       "status": "review",
       "notes": "",
-      "name": "Open Vein"
+      "name": "Ailment Effect"
     },
     "-4,4": {
       "id": "-4,4",
@@ -779,7 +772,7 @@
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "Scarred Knuckles"
+      "name": "Physical Damage"
     },
     "-3,4": {
       "id": "-3,4",
@@ -797,7 +790,7 @@
       "clusterId": "kiln-approach",
       "status": "review",
       "notes": "",
-      "name": "Charcoal Burner"
+      "name": "Guard"
     },
     "-2,4": {
       "id": "-2,4",
@@ -808,8 +801,8 @@
       "axis": "str",
       "effects": [
         "+35 to Guard",
-        "+10% to Ember Resistance",
-        "When a Scald on an enemy expires, gain 15 Guard for four seconds (design text)"
+        "+10% to Fire Resistance",
+        "When a Ignite on an enemy expires, gain 15 Guard for four seconds (design text)"
       ],
       "stat": "guard",
       "amount": 35,
@@ -817,7 +810,7 @@
       "clusterId": "kiln-line-named",
       "status": "review",
       "notes": "",
-      "name": "Banked Fire"
+      "name": "Guard from Ignites"
     },
     "-1,4": {
       "id": "-1,4",
@@ -835,7 +828,7 @@
       "clusterId": "kiln-approach",
       "status": "review",
       "notes": "",
-      "name": "First Spark"
+      "name": "Ailment Effect"
     },
     "0,4": {
       "id": "0,4",
@@ -845,7 +838,7 @@
       "type": "small",
       "axis": "hybrid",
       "effects": [
-        "+10% to Ember Resistance"
+        "+10% to Fire Resistance"
       ],
       "stat": "ember_res",
       "amount": 10,
@@ -853,7 +846,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "Ash Blessing"
+      "name": "Fire Resistance"
     },
     "1,3": {
       "id": "1,3",
@@ -871,7 +864,7 @@
       "clusterId": "procession-approach",
       "status": "review",
       "notes": "",
-      "name": "Anointed Brow"
+      "name": "Ward"
     },
     "2,2": {
       "id": "2,2",
@@ -891,7 +884,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "Warded Vestments"
+      "name": "Shared Ward"
     },
     "3,1": {
       "id": "3,1",
@@ -909,7 +902,7 @@
       "clusterId": "procession-approach",
       "status": "review",
       "notes": "",
-      "name": "Hymn Cadence"
+      "name": "Rite Speed"
     },
     "4,0": {
       "id": "4,0",
@@ -927,7 +920,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Steady Hand of the Scribe"
+      "name": "Rite Speed"
     },
     "4,-1": {
       "id": "4,-1",
@@ -945,7 +938,7 @@
       "clusterId": "drowned-approach",
       "status": "review",
       "notes": "",
-      "name": "Shiver Script"
+      "name": "Ailment Effect"
     },
     "4,-2": {
       "id": "4,-2",
@@ -957,7 +950,7 @@
       "effects": [
         "+16% increased Ailment Effect",
         "+10% increased Rite Damage",
-        "Numb you inflict slows 10% deeper (design text)"
+        "Chill you inflict slows 10% deeper (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 16,
@@ -965,7 +958,7 @@
       "clusterId": "drowned-study-named",
       "status": "review",
       "notes": "",
-      "name": "Undertow"
+      "name": "Deeper Chill"
     },
     "4,-3": {
       "id": "4,-3",
@@ -983,7 +976,7 @@
       "clusterId": "drowned-approach",
       "status": "review",
       "notes": "",
-      "name": "Cold Margin"
+      "name": "Ward"
     },
     "4,-4": {
       "id": "4,-4",
@@ -1001,7 +994,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "Soft Boots"
+      "name": "Evasion"
     },
     "3,-4": {
       "id": "3,-4",
@@ -1019,7 +1012,7 @@
       "clusterId": "unlit-approach",
       "status": "review",
       "notes": "",
-      "name": "Bitter Paste"
+      "name": "Ailment Effect"
     },
     "2,-4": {
       "id": "2,-4",
@@ -1039,7 +1032,7 @@
       "clusterId": "unlit-road-named",
       "status": "review",
       "notes": "",
-      "name": "Venom Tally"
+      "name": "Deeper Poison"
     },
     "1,-4": {
       "id": "1,-4",
@@ -1049,7 +1042,7 @@
       "type": "small",
       "axis": "dex",
       "effects": [
-        "+8% to Gloam Resistance"
+        "+8% to Chaos Resistance"
       ],
       "stat": "gloam_res",
       "amount": 8,
@@ -1057,7 +1050,7 @@
       "clusterId": "unlit-approach",
       "status": "review",
       "notes": "",
-      "name": "Gutter Wisdom"
+      "name": "Chaos Resistance"
     },
     "0,-4": {
       "id": "0,-4",
@@ -1075,7 +1068,7 @@
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "Quick Breath"
+      "name": "Attack Speed"
     },
     "-1,-3": {
       "id": "-1,-3",
@@ -1093,7 +1086,7 @@
       "clusterId": "high-approach",
       "status": "review",
       "notes": "",
-      "name": "Dry Bowstring"
+      "name": "Attack Speed"
     },
     "-2,-2": {
       "id": "-2,-2",
@@ -1104,8 +1097,8 @@
       "axis": "dex",
       "effects": [
         "+16% increased Projectile Damage",
-        "+8% to Storm Resistance",
-        "Jolted enemies take +10% from your projectiles (design text)"
+        "+8% to Lightning Resistance",
+        "Shocked enemies take +10% from your projectiles (design text)"
       ],
       "stat": "projectileDamage",
       "amount": 16,
@@ -1113,7 +1106,7 @@
       "clusterId": "high-paths-named",
       "status": "review",
       "notes": "",
-      "name": "Storm Line"
+      "name": "Projectile Damage"
     },
     "-3,-1": {
       "id": "-3,-1",
@@ -1131,7 +1124,7 @@
       "clusterId": "high-approach",
       "status": "review",
       "notes": "",
-      "name": "Wind Reading"
+      "name": "Accuracy"
     },
     "-4,0": {
       "id": "-4,0",
@@ -1149,7 +1142,7 @@
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "Loose Shoulders"
+      "name": "Attack Speed"
     },
     "-4,1": {
       "id": "-4,1",
@@ -1167,7 +1160,7 @@
       "clusterId": "red-approach",
       "status": "review",
       "notes": "",
-      "name": "Braced Stance"
+      "name": "Guard"
     },
     "-4,2": {
       "id": "-4,2",
@@ -1187,7 +1180,7 @@
       "clusterId": "red-field-named",
       "status": "review",
       "notes": "",
-      "name": "Shield Splitter"
+      "name": "Guard Break"
     },
     "-4,3": {
       "id": "-4,3",
@@ -1205,7 +1198,7 @@
       "clusterId": "red-approach",
       "status": "review",
       "notes": "",
-      "name": "Follow Through"
+      "name": "Attack Damage"
     },
     "-5,5": {
       "id": "-5,5",
@@ -1217,8 +1210,7 @@
       "effects": [
         "+30 to Guard",
         "Loops closed around this Waystone empower their center +25% further",
-        "Your Evasion is 10% lower while you hold the line (design text)",
-        "Half the column rests here; half never needed to."
+        "Your Evasion is 10% lower while you hold the line (design text)"
       ],
       "stat": "guard",
       "amount": 30,
@@ -1226,7 +1218,7 @@
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Bronze Waystone",
+      "name": "Champion Waystone",
       "patternHook": {
         "effect": "loop-boost",
         "value": 0.25
@@ -1240,7 +1232,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+10% to Ember Resistance"
+        "+10% to Fire Resistance"
       ],
       "stat": "ember_res",
       "amount": 10,
@@ -1248,7 +1240,7 @@
       "clusterId": "kiln-waist",
       "status": "review",
       "notes": "",
-      "name": "Kiln Watch"
+      "name": "Fire Resistance"
     },
     "-3,5": {
       "id": "-3,5",
@@ -1258,8 +1250,8 @@
       "type": "socket",
       "axis": "str",
       "effects": [
-        "An empty seat carved for a whorl-stone.",
-        "Does nothing while empty; carved stones arrive with the stone-carver."
+        "Empty jewel socket.",
+        "Socket a jewel to gain its effect."
       ],
       "stat": null,
       "amount": 0,
@@ -1269,7 +1261,7 @@
       "clusterId": "kiln-line-sockets",
       "status": "review",
       "notes": "",
-      "name": "The Kiln Line Socket"
+      "name": "Fire Jewel Socket"
     },
     "-2,5": {
       "id": "-2,5",
@@ -1280,7 +1272,7 @@
       "axis": "str",
       "effects": [
         "+4% increased Attack Speed",
-        "Your attack rhythm feeds the fire: +3% Ailment Effect (design text)"
+        "+3% increased Ailment Effect (design text)"
       ],
       "stat": "attackSpeed",
       "amount": 4,
@@ -1288,7 +1280,7 @@
       "clusterId": "kiln-waist",
       "status": "review",
       "notes": "",
-      "name": "Bellows Rhythm"
+      "name": "Attack Speed"
     },
     "-1,5": {
       "id": "-1,5",
@@ -1298,7 +1290,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "Adds 5 Ember Damage to hits"
+        "Adds 5 Fire Damage to hits"
       ],
       "stat": "emberkiss",
       "amount": 5,
@@ -1306,7 +1298,7 @@
       "clusterId": "kiln-waist",
       "status": "review",
       "notes": "",
-      "name": "Cinder Bed"
+      "name": "Added Fire Damage"
     },
     "0,5": {
       "id": "0,5",
@@ -1318,8 +1310,7 @@
       "effects": [
         "+20 to Spirit",
         "Enclosures you close around this Waystone guard 50% more",
-        "Your rites cost 5% more Spirit (design text)",
-        "Offerings pile at its foot. Take nothing."
+        "Your rites cost 5% more Spirit (design text)"
       ],
       "stat": "spirit",
       "amount": 20,
@@ -1327,7 +1318,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Votive Waystone",
+      "name": "Ritualist Waystone",
       "patternHook": {
         "effect": "enclosure-boost",
         "value": 0.5
@@ -1349,7 +1340,7 @@
       "clusterId": "procession-waist",
       "status": "review",
       "notes": "",
-      "name": "Waymarker Ribbon"
+      "name": "Spirit"
     },
     "2,3": {
       "id": "2,3",
@@ -1359,8 +1350,8 @@
       "type": "socket",
       "axis": "int",
       "effects": [
-        "An empty seat carved for a whorl-stone.",
-        "Does nothing while empty; carved stones arrive with the stone-carver."
+        "Empty jewel socket.",
+        "Socket a jewel to gain its effect."
       ],
       "stat": null,
       "amount": 0,
@@ -1370,7 +1361,7 @@
       "clusterId": "procession-sockets",
       "status": "review",
       "notes": "",
-      "name": "The Procession Socket"
+      "name": "Companion Jewel Socket"
     },
     "3,2": {
       "id": "3,2",
@@ -1389,7 +1380,7 @@
       "clusterId": "procession-waist",
       "status": "review",
       "notes": "",
-      "name": "Shared Bread"
+      "name": "Life"
     },
     "4,1": {
       "id": "4,1",
@@ -1407,7 +1398,7 @@
       "clusterId": "procession-waist",
       "status": "review",
       "notes": "",
-      "name": "Chant Rhythm"
+      "name": "Rite Speed"
     },
     "5,0": {
       "id": "5,0",
@@ -1419,8 +1410,7 @@
       "effects": [
         "+30 to Ward",
         "Waves passing through this Waystone count +1 length",
-        "Ward recharge is 10% slower",
-        "Half the journey up the blue road, marked in lapis."
+        "Ward recharge is 10% slower"
       ],
       "stat": "ward",
       "amount": 30,
@@ -1428,7 +1418,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Blue Waystone",
+      "name": "Archmage Waystone",
       "patternHook": {
         "effect": "wave-length",
         "value": 1
@@ -1450,7 +1440,7 @@
       "clusterId": "drowned-waist",
       "status": "review",
       "notes": "",
-      "name": "Ford Knowledge"
+      "name": "Rite Speed"
     },
     "5,-2": {
       "id": "5,-2",
@@ -1460,8 +1450,8 @@
       "type": "socket",
       "axis": "int",
       "effects": [
-        "An empty seat carved for a whorl-stone.",
-        "Does nothing while empty; carved stones arrive with the stone-carver."
+        "Empty jewel socket.",
+        "Socket a jewel to gain its effect."
       ],
       "stat": null,
       "amount": 0,
@@ -1471,7 +1461,7 @@
       "clusterId": "drowned-study-sockets",
       "status": "review",
       "notes": "",
-      "name": "The Drowned Study Socket"
+      "name": "Cold Jewel Socket"
     },
     "5,-3": {
       "id": "5,-3",
@@ -1482,7 +1472,7 @@
       "axis": "int",
       "effects": [
         "+9% increased Ailment Effect",
-        "Your Numb spreads to enemies touching its victim (design text)"
+        "Your Chill spreads to enemies touching its victim (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 9,
@@ -1490,7 +1480,7 @@
       "clusterId": "drowned-waist",
       "status": "review",
       "notes": "",
-      "name": "Numb Fingers"
+      "name": "Ailment Effect"
     },
     "5,-4": {
       "id": "5,-4",
@@ -1508,7 +1498,7 @@
       "clusterId": "drowned-waist",
       "status": "review",
       "notes": "",
-      "name": "Drift Nets"
+      "name": "Rite Damage"
     },
     "5,-5": {
       "id": "5,-5",
@@ -1520,8 +1510,7 @@
       "effects": [
         "+12% increased Ailment Effect",
         "Flows passing through this Waystone count +1 length",
-        "You show your position when you strike: +5% damage taken for two seconds (design text)",
-        "A marker stone with the lamp long stolen."
+        "You show your position when you strike: +5% damage taken for two seconds (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 12,
@@ -1529,7 +1518,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Unlit Waystone",
+      "name": "Nightblade Waystone",
       "patternHook": {
         "effect": "flow-length",
         "value": 1
@@ -1551,7 +1540,7 @@
       "clusterId": "unlit-waist",
       "status": "review",
       "notes": "",
-      "name": "Wire and Bell"
+      "name": "Evasion"
     },
     "3,-5": {
       "id": "3,-5",
@@ -1561,8 +1550,8 @@
       "type": "socket",
       "axis": "dex",
       "effects": [
-        "An empty seat carved for a whorl-stone.",
-        "Does nothing while empty; carved stones arrive with the stone-carver."
+        "Empty jewel socket.",
+        "Socket a jewel to gain its effect."
       ],
       "stat": null,
       "amount": 0,
@@ -1572,7 +1561,7 @@
       "clusterId": "unlit-road-sockets",
       "status": "review",
       "notes": "",
-      "name": "The Unlit Road Socket"
+      "name": "Poison Jewel Socket"
     },
     "2,-5": {
       "id": "2,-5",
@@ -1591,7 +1580,7 @@
       "clusterId": "unlit-waist",
       "status": "review",
       "notes": "",
-      "name": "Milked Fangs"
+      "name": "Ailment Effect"
     },
     "1,-5": {
       "id": "1,-5",
@@ -1609,7 +1598,7 @@
       "clusterId": "unlit-waist",
       "status": "review",
       "notes": "",
-      "name": "Dark Adapted"
+      "name": "Accuracy"
     },
     "0,-5": {
       "id": "0,-5",
@@ -1621,8 +1610,7 @@
       "effects": [
         "+45 to Evasion",
         "Rods ending on this Waystone empower both endpoints twice",
-        "You cannot Block while you keep this pace (design text)",
-        "Runners touch the stone and do not stop."
+        "You cannot Block while you keep this pace (design text)"
       ],
       "stat": "evasion",
       "amount": 45,
@@ -1630,7 +1618,7 @@
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Swift Waystone",
+      "name": "Acrobat Waystone",
       "patternHook": {
         "effect": "rod-double"
       }
@@ -1651,7 +1639,7 @@
       "clusterId": "high-waist",
       "status": "review",
       "notes": "",
-      "name": "Goat Track"
+      "name": "Movement Speed"
     },
     "-2,-3": {
       "id": "-2,-3",
@@ -1661,8 +1649,8 @@
       "type": "socket",
       "axis": "dex",
       "effects": [
-        "An empty seat carved for a whorl-stone.",
-        "Does nothing while empty; carved stones arrive with the stone-carver."
+        "Empty jewel socket.",
+        "Socket a jewel to gain its effect."
       ],
       "stat": null,
       "amount": 0,
@@ -1672,7 +1660,7 @@
       "clusterId": "high-paths-sockets",
       "status": "review",
       "notes": "",
-      "name": "The High Paths Socket"
+      "name": "Projectile Jewel Socket"
     },
     "-3,-2": {
       "id": "-3,-2",
@@ -1683,7 +1671,7 @@
       "axis": "dex",
       "effects": [
         "+9% increased Ailment Effect",
-        "Your Jolts last one second longer (design text)"
+        "Your Shocks last one second longer (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 9,
@@ -1691,7 +1679,7 @@
       "clusterId": "high-waist",
       "status": "review",
       "notes": "",
-      "name": "Static Prickle"
+      "name": "Ailment Effect"
     },
     "-4,-1": {
       "id": "-4,-1",
@@ -1709,7 +1697,7 @@
       "clusterId": "high-waist",
       "status": "review",
       "notes": "",
-      "name": "Long Shot Tables"
+      "name": "Projectile Damage"
     },
     "-5,0": {
       "id": "-5,0",
@@ -1721,8 +1709,7 @@
       "effects": [
         "+16% increased Projectile Damage",
         "Waves and flows may both claim conduits touching this Waystone",
-        "-10% increased Reach",
-        "Soldiers bet knives against the stone. The stone keeps them."
+        "-10% increased Reach"
       ],
       "stat": "projectileDamage",
       "amount": 16,
@@ -1730,7 +1717,7 @@
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Thrown Waystone",
+      "name": "Reaver Waystone",
       "patternHook": {
         "effect": "shared-claim"
       }
@@ -1751,7 +1738,7 @@
       "clusterId": "red-waist",
       "status": "review",
       "notes": "",
-      "name": "Whetstone Habit"
+      "name": "Physical Damage"
     },
     "-5,2": {
       "id": "-5,2",
@@ -1761,8 +1748,8 @@
       "type": "socket",
       "axis": "str",
       "effects": [
-        "An empty seat carved for a whorl-stone.",
-        "Does nothing while empty; carved stones arrive with the stone-carver."
+        "Empty jewel socket.",
+        "Socket a jewel to gain its effect."
       ],
       "stat": null,
       "amount": 0,
@@ -1772,7 +1759,7 @@
       "clusterId": "red-field-sockets",
       "status": "review",
       "notes": "",
-      "name": "The Red Field Socket"
+      "name": "Physical Jewel Socket"
     },
     "-5,3": {
       "id": "-5,3",
@@ -1790,7 +1777,7 @@
       "clusterId": "red-waist",
       "status": "review",
       "notes": "",
-      "name": "Corded Forearms"
+      "name": "Attack Speed"
     },
     "-5,4": {
       "id": "-5,4",
@@ -1801,7 +1788,7 @@
       "axis": "str",
       "effects": [
         "+20 to Life",
-        "Bleeding enemies feed your Second Breath (design text)"
+        "Bleeding enemies speed up your out-of-combat Life regeneration (design text)"
       ],
       "stat": "life",
       "amount": 20,
@@ -1809,7 +1796,7 @@
       "clusterId": "red-waist",
       "status": "review",
       "notes": "",
-      "name": "Taste of Copper"
+      "name": "Life"
     },
     "-6,6": {
       "id": "-6,6",
@@ -1829,7 +1816,7 @@
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "Oath of the Front Line"
+      "name": "Ally Protection"
     },
     "-5,6": {
       "id": "-5,6",
@@ -1847,7 +1834,7 @@
       "clusterId": "kiln-oath",
       "status": "review",
       "notes": "",
-      "name": "Fired Clay"
+      "name": "Guard"
     },
     "-4,6": {
       "id": "-4,6",
@@ -1865,7 +1852,7 @@
       "clusterId": "kiln-oath",
       "status": "review",
       "notes": "",
-      "name": "Glaze Line"
+      "name": "Ward"
     },
     "-3,6": {
       "id": "-3,6",
@@ -1875,10 +1862,9 @@
       "type": "keystone",
       "axis": "str",
       "effects": [
-        "All of your damage is dealt as Ember",
-        "You deal no Physical, River, Storm, or Gloam damage",
-        "Scalds you inflict burn 30% hotter (design text)",
-        "What the kiln takes, the kiln keeps."
+        "All of your damage is dealt as Fire",
+        "You deal no Physical, Cold, Lightning, or Chaos damage",
+        "Ignites you inflict burn 30% hotter (design text)"
       ],
       "stat": null,
       "amount": 0,
@@ -1886,7 +1872,7 @@
       "clusterId": "kiln-line-named",
       "status": "review",
       "notes": "",
-      "name": "Oath of Ash"
+      "name": "All Damage as Fire"
     },
     "-2,6": {
       "id": "-2,6",
@@ -1904,7 +1890,7 @@
       "clusterId": "kiln-oath",
       "status": "review",
       "notes": "",
-      "name": "Coal Tally"
+      "name": "Ailment Effect"
     },
     "-1,6": {
       "id": "-1,6",
@@ -1915,7 +1901,7 @@
       "axis": "str",
       "effects": [
         "+9% increased Attack Damage",
-        "Hits against Scalded enemies gain +6% damage (design text)"
+        "Hits against Ignited enemies gain +6% damage (design text)"
       ],
       "stat": "attackDamage",
       "amount": 9,
@@ -1923,7 +1909,7 @@
       "clusterId": "kiln-oath",
       "status": "review",
       "notes": "",
-      "name": "Second Stoke"
+      "name": "Attack Damage"
     },
     "0,6": {
       "id": "0,6",
@@ -1943,7 +1929,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "Battle Liturgy"
+      "name": "Banner Attack Speed"
     },
     "1,5": {
       "id": "1,5",
@@ -1961,7 +1947,7 @@
       "clusterId": "procession-oath",
       "status": "review",
       "notes": "",
-      "name": "Oath Beads"
+      "name": "Ward"
     },
     "2,4": {
       "id": "2,4",
@@ -1979,7 +1965,7 @@
       "clusterId": "procession-oath",
       "status": "review",
       "notes": "",
-      "name": "Litany Tablet"
+      "name": "Rite Damage"
     },
     "3,3": {
       "id": "3,3",
@@ -1990,8 +1976,7 @@
       "axis": "int",
       "effects": [
         "Your rites cost Life instead of Spirit",
-        "Your Spirit is reserved in full to your banners and standing rites",
-        "Blood is the older currency."
+        "Your Spirit is reserved in full to your banners and standing rites"
       ],
       "stat": null,
       "amount": 0,
@@ -1999,7 +1984,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "The Tithe"
+      "name": "Rites Cost Life"
     },
     "4,2": {
       "id": "4,2",
@@ -2017,7 +2002,7 @@
       "clusterId": "procession-oath",
       "status": "review",
       "notes": "",
-      "name": "Bearer Training"
+      "name": "Companion Damage"
     },
     "5,1": {
       "id": "5,1",
@@ -2027,7 +2012,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+10% to Gloam Resistance",
+        "+10% to Chaos Resistance",
         "Wither cannot cross the circle while you stand still (design text)"
       ],
       "stat": "gloam_res",
@@ -2036,7 +2021,7 @@
       "clusterId": "procession-oath",
       "status": "review",
       "notes": "",
-      "name": "Salt Circle"
+      "name": "Chaos Resistance"
     },
     "6,0": {
       "id": "6,0",
@@ -2056,7 +2041,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Third Reading"
+      "name": "Repeated Rites"
     },
     "6,-1": {
       "id": "6,-1",
@@ -2074,7 +2059,7 @@
       "clusterId": "drowned-oath",
       "status": "review",
       "notes": "",
-      "name": "Sounding Line"
+      "name": "Accuracy"
     },
     "6,-2": {
       "id": "6,-2",
@@ -2092,7 +2077,7 @@
       "clusterId": "drowned-oath",
       "status": "review",
       "notes": "",
-      "name": "Undercurrent"
+      "name": "Rite Damage"
     },
     "6,-3": {
       "id": "6,-3",
@@ -2103,8 +2088,7 @@
       "axis": "int",
       "effects": [
         "Your hits never deal critical strikes",
-        "You deal 35% more damage to Numbed enemies",
-        "Advantage is for gamblers. The river always collects."
+        "You deal 35% more damage to Chilled enemies"
       ],
       "stat": null,
       "amount": 0,
@@ -2112,7 +2096,7 @@
       "clusterId": "drowned-study-named",
       "status": "review",
       "notes": "",
-      "name": "Cold Arithmetic"
+      "name": "Chill Over Criticals"
     },
     "6,-4": {
       "id": "6,-4",
@@ -2122,7 +2106,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+10% to River Resistance"
+        "+10% to Cold Resistance"
       ],
       "stat": "river_resistance",
       "amount": 10,
@@ -2130,7 +2114,7 @@
       "clusterId": "drowned-oath",
       "status": "review",
       "notes": "",
-      "name": "Blue Lips"
+      "name": "Cold Resistance"
     },
     "6,-5": {
       "id": "6,-5",
@@ -2149,7 +2133,7 @@
       "clusterId": "drowned-oath",
       "status": "review",
       "notes": "",
-      "name": "Reed Stylus"
+      "name": "Ailment Effect"
     },
     "6,-6": {
       "id": "6,-6",
@@ -2159,7 +2143,7 @@
       "type": "notable",
       "axis": "hybrid",
       "effects": [
-        "+12% to Gloam Resistance",
+        "+12% to Chaos Resistance",
         "+18% increased Ailment Effect",
         "Wither you inflict stacks one deeper (design text)"
       ],
@@ -2169,7 +2153,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "Collector of Debts"
+      "name": "Deeper Wither"
     },
     "5,-6": {
       "id": "5,-6",
@@ -2187,7 +2171,7 @@
       "clusterId": "unlit-oath",
       "status": "review",
       "notes": "",
-      "name": "Cellar Route"
+      "name": "Evasion"
     },
     "4,-6": {
       "id": "4,-6",
@@ -2205,7 +2189,7 @@
       "clusterId": "unlit-oath",
       "status": "review",
       "notes": "",
-      "name": "Rasp and File"
+      "name": "Attack Speed"
     },
     "3,-6": {
       "id": "3,-6",
@@ -2216,8 +2200,7 @@
       "axis": "dex",
       "effects": [
         "You deal 40% more damage to enemies that have not hurt you recently",
-        "Enemies that have hurt you recently take 15% less from you",
-        "The best work is never witnessed twice."
+        "Enemies that have hurt you recently take 15% less from you"
       ],
       "stat": null,
       "amount": 0,
@@ -2225,7 +2208,7 @@
       "clusterId": "unlit-road-named",
       "status": "review",
       "notes": "",
-      "name": "Quiet Work"
+      "name": "Strike the Unhurt"
     },
     "2,-6": {
       "id": "2,-6",
@@ -2244,7 +2227,7 @@
       "clusterId": "unlit-oath",
       "status": "review",
       "notes": "",
-      "name": "Black Dose"
+      "name": "Ailment Effect"
     },
     "1,-6": {
       "id": "1,-6",
@@ -2254,7 +2237,7 @@
       "type": "small",
       "axis": "dex",
       "effects": [
-        "+10% to Gloam Resistance"
+        "+10% to Chaos Resistance"
       ],
       "stat": "gloam_res",
       "amount": 10,
@@ -2262,7 +2245,7 @@
       "clusterId": "unlit-oath",
       "status": "review",
       "notes": "",
-      "name": "Shrouded Lamp"
+      "name": "Chaos Resistance"
     },
     "0,-6": {
       "id": "0,-6",
@@ -2282,7 +2265,7 @@
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "Read the Wind"
+      "name": "Sure First Hit"
     },
     "-1,-5": {
       "id": "-1,-5",
@@ -2300,7 +2283,7 @@
       "clusterId": "high-oath",
       "status": "review",
       "notes": "",
-      "name": "Cliff Nest"
+      "name": "Evasion"
     },
     "-2,-4": {
       "id": "-2,-4",
@@ -2310,7 +2293,7 @@
       "type": "small",
       "axis": "dex",
       "effects": [
-        "+10% to Storm Resistance"
+        "+10% to Lightning Resistance"
       ],
       "stat": "storm_res",
       "amount": 10,
@@ -2318,7 +2301,7 @@
       "clusterId": "high-oath",
       "status": "review",
       "notes": "",
-      "name": "Copper Vane"
+      "name": "Lightning Resistance"
     },
     "-3,-3": {
       "id": "-3,-3",
@@ -2329,8 +2312,7 @@
       "axis": "dex",
       "effects": [
         "Your hits deal up to 40% more damage to distant enemies",
-        "Your hits deal 25% less damage to enemies within reach",
-        "The mountain teaches patience; the valley pays for it."
+        "Your hits deal 25% less damage to enemies within reach"
       ],
       "stat": null,
       "amount": 0,
@@ -2338,7 +2320,7 @@
       "clusterId": "high-paths-named",
       "status": "review",
       "notes": "",
-      "name": "The Long Arc"
+      "name": "Damage at Range"
     },
     "-4,-2": {
       "id": "-4,-2",
@@ -2357,7 +2339,7 @@
       "clusterId": "high-oath",
       "status": "review",
       "notes": "",
-      "name": "Second Quiver"
+      "name": "Projectile Damage"
     },
     "-5,-1": {
       "id": "-5,-1",
@@ -2375,7 +2357,7 @@
       "clusterId": "high-oath",
       "status": "review",
       "notes": "",
-      "name": "Downdraft Timing"
+      "name": "Attack Speed"
     },
     "-6,0": {
       "id": "-6,0",
@@ -2395,7 +2377,7 @@
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "Running Volley"
+      "name": "Throwing While Moving"
     },
     "-6,1": {
       "id": "-6,1",
@@ -2413,7 +2395,7 @@
       "clusterId": "red-oath",
       "status": "review",
       "notes": "",
-      "name": "Broken Teeth"
+      "name": "Attack Damage"
     },
     "-6,2": {
       "id": "-6,2",
@@ -2431,7 +2413,7 @@
       "clusterId": "red-oath",
       "status": "review",
       "notes": "",
-      "name": "Shield Wall Scars"
+      "name": "Guard"
     },
     "-6,3": {
       "id": "-6,3",
@@ -2442,8 +2424,7 @@
       "axis": "str",
       "effects": [
         "Your hits cannot be evaded",
-        "You never deal critical strikes",
-        "A straight line, swung hard, wins wars."
+        "You never deal critical strikes"
       ],
       "stat": null,
       "amount": 0,
@@ -2451,7 +2432,7 @@
       "clusterId": "red-field-named",
       "status": "review",
       "notes": "",
-      "name": "No Flourish"
+      "name": "Hits Cannot Be Evaded"
     },
     "-6,4": {
       "id": "-6,4",
@@ -2470,7 +2451,7 @@
       "clusterId": "red-oath",
       "status": "review",
       "notes": "",
-      "name": "Red Work"
+      "name": "Ailment Effect"
     },
     "-6,5": {
       "id": "-6,5",
@@ -2488,7 +2469,7 @@
       "clusterId": "red-oath",
       "status": "review",
       "notes": "",
-      "name": "Heavy Footfall"
+      "name": "Added Physical Damage"
     },
     "-7,7": {
       "id": "-7,7",
@@ -2501,7 +2482,7 @@
         "+12% increased Attack Damage",
         "Unlocks: tower shields become usable",
         "Unlocks: 2x2 War-call seat",
-        "The first calling marks your class; every calling milestone grants its armoury unlock."
+        "Your first class passive sets your class; each class passive grants its unlock."
       ],
       "stat": "attackDamage",
       "amount": 12,
@@ -2527,7 +2508,7 @@
       "clusterId": "kiln-high",
       "status": "review",
       "notes": "",
-      "name": "Kiln Door"
+      "name": "Guard"
     },
     "-5,7": {
       "id": "-5,7",
@@ -2545,7 +2526,7 @@
       "clusterId": "kiln-high",
       "status": "review",
       "notes": "",
-      "name": "Furnace Shift"
+      "name": "Attack Speed"
     },
     "-4,7": {
       "id": "-4,7",
@@ -2556,8 +2537,8 @@
       "axis": "str",
       "effects": [
         "+20% increased Ailment Effect",
-        "Adds 5 Ember Damage to hits",
-        "Scalds you inflict last twice as long (design text)"
+        "Adds 5 Fire Damage to hits",
+        "Ignites you inflict last twice as long (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 20,
@@ -2565,7 +2546,7 @@
       "clusterId": "kiln-line-named",
       "status": "review",
       "notes": "",
-      "name": "Long Firing"
+      "name": "Lasting Ignites"
     },
     "-3,7": {
       "id": "-3,7",
@@ -2583,7 +2564,7 @@
       "clusterId": "kiln-high",
       "status": "review",
       "notes": "",
-      "name": "Slag Heap"
+      "name": "Life"
     },
     "-2,7": {
       "id": "-2,7",
@@ -2593,7 +2574,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "Adds 6 Ember Damage to hits",
+        "Adds 6 Fire Damage to hits",
         "Your hits shed light; the unlit cannot hide from you (design text)"
       ],
       "stat": "emberkiss",
@@ -2602,7 +2583,7 @@
       "clusterId": "kiln-high",
       "status": "review",
       "notes": "",
-      "name": "Red Glow"
+      "name": "Added Fire Damage"
     },
     "-1,7": {
       "id": "-1,7",
@@ -2612,7 +2593,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+12% to Ember Resistance"
+        "+12% to Fire Resistance"
       ],
       "stat": "ember_res",
       "amount": 12,
@@ -2620,7 +2601,7 @@
       "clusterId": "kiln-high",
       "status": "review",
       "notes": "",
-      "name": "Quench Trough"
+      "name": "Fire Resistance"
     },
     "0,7": {
       "id": "0,7",
@@ -2632,9 +2613,9 @@
       "effects": [
         "+12% increased Companion Damage",
         "Unlocks: banners become usable",
-        "Unlocks: one martial companion-of-war",
+        "Unlocks: one martial companion",
         "Unlocks: 4x4 Reliquary",
-        "The first calling marks your class; every calling milestone grants its armoury unlock."
+        "Your first class passive sets your class; each class passive grants its unlock."
       ],
       "stat": "minionDamage",
       "amount": 12,
@@ -2660,7 +2641,7 @@
       "clusterId": "procession-high",
       "status": "review",
       "notes": "",
-      "name": "Long Watch"
+      "name": "Ward"
     },
     "2,5": {
       "id": "2,5",
@@ -2678,7 +2659,7 @@
       "clusterId": "procession-high",
       "status": "review",
       "notes": "",
-      "name": "Drummer Boy"
+      "name": "Companion Damage"
     },
     "3,4": {
       "id": "3,4",
@@ -2698,7 +2679,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "Processional Guard"
+      "name": "Protected Companions"
     },
     "4,3": {
       "id": "4,3",
@@ -2716,7 +2697,7 @@
       "clusterId": "procession-high",
       "status": "review",
       "notes": "",
-      "name": "Relay of Torches"
+      "name": "Rite Speed"
     },
     "5,2": {
       "id": "5,2",
@@ -2726,7 +2707,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+10% to Ember Resistance"
+        "+10% to Fire Resistance"
       ],
       "stat": "ember_res",
       "amount": 10,
@@ -2734,7 +2715,7 @@
       "clusterId": "procession-high",
       "status": "review",
       "notes": "",
-      "name": "Sacred Ash"
+      "name": "Fire Resistance"
     },
     "6,1": {
       "id": "6,1",
@@ -2753,7 +2734,7 @@
       "clusterId": "procession-high",
       "status": "review",
       "notes": "",
-      "name": "Column Discipline"
+      "name": "Spirit"
     },
     "7,0": {
       "id": "7,0",
@@ -2767,7 +2748,7 @@
         "Unlocks: a second curio slot",
         "Unlocks: rite-foci gain +1 socket",
         "Unlocks: 2x2 Attendant focus seat",
-        "The first calling marks your class; every calling milestone grants its armoury unlock."
+        "Your first class passive sets your class; each class passive grants its unlock."
       ],
       "stat": "spellDamage",
       "amount": 15,
@@ -2793,7 +2774,7 @@
       "clusterId": "drowned-high",
       "status": "review",
       "notes": "",
-      "name": "Flooded Stacks"
+      "name": "Ward"
     },
     "7,-2": {
       "id": "7,-2",
@@ -2811,7 +2792,7 @@
       "clusterId": "drowned-high",
       "status": "review",
       "notes": "",
-      "name": "Cold Catalogue"
+      "name": "Rite Damage"
     },
     "7,-3": {
       "id": "7,-3",
@@ -2831,7 +2812,7 @@
       "clusterId": "drowned-study-named",
       "status": "review",
       "notes": "",
-      "name": "Drowned Archive"
+      "name": "Persistent Marks"
     },
     "7,-4": {
       "id": "7,-4",
@@ -2842,7 +2823,7 @@
       "axis": "int",
       "effects": [
         "+1% to Critical Chance",
-        "Advantage against Numbed enemies is doubled (design text)"
+        "Critical Damage Bonus against Chilled enemies is doubled (design text)"
       ],
       "stat": "critChance",
       "amount": 1,
@@ -2850,7 +2831,7 @@
       "clusterId": "drowned-high",
       "status": "review",
       "notes": "",
-      "name": "Ice Mirror"
+      "name": "Critical Chance"
     },
     "7,-5": {
       "id": "7,-5",
@@ -2868,7 +2849,7 @@
       "clusterId": "drowned-high",
       "status": "review",
       "notes": "",
-      "name": "Slow Water"
+      "name": "Ailment Effect"
     },
     "7,-6": {
       "id": "7,-6",
@@ -2878,7 +2859,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+12% to River Resistance"
+        "+12% to Cold Resistance"
       ],
       "stat": "river_resistance",
       "amount": 12,
@@ -2886,7 +2867,7 @@
       "clusterId": "drowned-high",
       "status": "review",
       "notes": "",
-      "name": "Depth Marks"
+      "name": "Cold Resistance"
     },
     "7,-7": {
       "id": "7,-7",
@@ -2900,7 +2881,7 @@
         "Unlocks: trap and mark tools become equippable",
         "Unlocks: venom vial slot",
         "Unlocks: 4x4 Preparation Case",
-        "The first calling marks your class; every calling milestone grants its armoury unlock."
+        "Your first class passive sets your class; each class passive grants its unlock."
       ],
       "stat": "ailmentEffect",
       "amount": 12,
@@ -2926,7 +2907,7 @@
       "clusterId": "unlit-high",
       "status": "review",
       "notes": "",
-      "name": "Rooftop Line"
+      "name": "Evasion"
     },
     "5,-7": {
       "id": "5,-7",
@@ -2936,7 +2917,7 @@
       "type": "small",
       "axis": "dex",
       "effects": [
-        "+12% to Gloam Resistance"
+        "+12% to Chaos Resistance"
       ],
       "stat": "gloam_res",
       "amount": 12,
@@ -2944,7 +2925,7 @@
       "clusterId": "unlit-high",
       "status": "review",
       "notes": "",
-      "name": "Grave Dust"
+      "name": "Chaos Resistance"
     },
     "4,-7": {
       "id": "4,-7",
@@ -2964,7 +2945,7 @@
       "clusterId": "unlit-road-named",
       "status": "review",
       "notes": "",
-      "name": "Tools of the Trade"
+      "name": "Instant Traps"
     },
     "3,-7": {
       "id": "3,-7",
@@ -2983,7 +2964,7 @@
       "clusterId": "unlit-high",
       "status": "review",
       "notes": "",
-      "name": "Twice-Dipped"
+      "name": "Ailment Effect"
     },
     "2,-7": {
       "id": "2,-7",
@@ -3001,7 +2982,7 @@
       "clusterId": "unlit-high",
       "status": "review",
       "notes": "",
-      "name": "Silent Count"
+      "name": "Critical Chance"
     },
     "1,-7": {
       "id": "1,-7",
@@ -3019,7 +3000,7 @@
       "clusterId": "unlit-high",
       "status": "review",
       "notes": "",
-      "name": "Pick and Tension"
+      "name": "Attack Speed"
     },
     "0,-7": {
       "id": "0,-7",
@@ -3033,7 +3014,7 @@
         "Unlocks: a second weapon set for swapping",
         "Unlocks: dual-wielding one-handers",
         "Unlocks: 2x2 Quick Rig seat",
-        "The first calling marks your class; every calling milestone grants its armoury unlock."
+        "Your first class passive sets your class; each class passive grants its unlock."
       ],
       "stat": "evasion_increased",
       "amount": 12,
@@ -3059,7 +3040,7 @@
       "clusterId": "high-high",
       "status": "review",
       "notes": "",
-      "name": "Pass Warden"
+      "name": "Projectile Damage"
     },
     "-2,-5": {
       "id": "-2,-5",
@@ -3069,7 +3050,7 @@
       "type": "small",
       "axis": "dex",
       "effects": [
-        "+12% to Storm Resistance"
+        "+12% to Lightning Resistance"
       ],
       "stat": "storm_res",
       "amount": 12,
@@ -3077,7 +3058,7 @@
       "clusterId": "high-high",
       "status": "review",
       "notes": "",
-      "name": "Hail Shrug"
+      "name": "Lightning Resistance"
     },
     "-3,-4": {
       "id": "-3,-4",
@@ -3097,7 +3078,7 @@
       "clusterId": "high-paths-named",
       "status": "review",
       "notes": "",
-      "name": "Ridge Runner"
+      "name": "Downhill Pierce"
     },
     "-4,-3": {
       "id": "-4,-3",
@@ -3108,7 +3089,7 @@
       "axis": "dex",
       "effects": [
         "+5% increased Movement Speed",
-        "Sprinting charges your next shot with Storm (design text)"
+        "Sprinting charges your next shot with Lightning damage (design text)"
       ],
       "stat": "move",
       "amount": 5,
@@ -3116,7 +3097,7 @@
       "clusterId": "high-high",
       "status": "review",
       "notes": "",
-      "name": "Skyline Sprint"
+      "name": "Movement Speed"
     },
     "-5,-2": {
       "id": "-5,-2",
@@ -3134,7 +3115,7 @@
       "clusterId": "high-high",
       "status": "review",
       "notes": "",
-      "name": "Far Eye"
+      "name": "Accuracy"
     },
     "-6,-1": {
       "id": "-6,-1",
@@ -3152,7 +3133,7 @@
       "clusterId": "high-high",
       "status": "review",
       "notes": "",
-      "name": "Light Pack"
+      "name": "Evasion"
     },
     "-7,0": {
       "id": "-7,0",
@@ -3166,7 +3147,7 @@
         "Unlocks: thrown weapons count as melee AND projectile",
         "Unlocks: belt fetish slot",
         "Unlocks: 4x4 Spoils Roll",
-        "The first calling marks your class; every calling milestone grants its armoury unlock."
+        "Your first class passive sets your class; each class passive grants its unlock."
       ],
       "stat": "projectileDamage",
       "amount": 12,
@@ -3192,7 +3173,7 @@
       "clusterId": "red-high",
       "status": "review",
       "notes": "",
-      "name": "Drummed Advance"
+      "name": "Attack Speed"
     },
     "-7,2": {
       "id": "-7,2",
@@ -3210,7 +3191,7 @@
       "clusterId": "red-high",
       "status": "review",
       "notes": "",
-      "name": "Pike Discipline"
+      "name": "Reach"
     },
     "-7,3": {
       "id": "-7,3",
@@ -3230,7 +3211,7 @@
       "clusterId": "red-field-named",
       "status": "review",
       "notes": "",
-      "name": "Red Harvest"
+      "name": "Life on Bleeding Kill"
     },
     "-7,4": {
       "id": "-7,4",
@@ -3248,7 +3229,7 @@
       "clusterId": "red-high",
       "status": "review",
       "notes": "",
-      "name": "Muddy Ground"
+      "name": "Guard"
     },
     "-7,5": {
       "id": "-7,5",
@@ -3267,7 +3248,7 @@
       "clusterId": "red-high",
       "status": "review",
       "notes": "",
-      "name": "Crimson Tally"
+      "name": "Attack Damage"
     },
     "-7,6": {
       "id": "-7,6",
@@ -3285,7 +3266,7 @@
       "clusterId": "red-high",
       "status": "review",
       "notes": "",
-      "name": "Butcher Economy"
+      "name": "Ailment Effect"
     },
     "-8,8": {
       "id": "-8,8",
@@ -3305,7 +3286,7 @@
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Standing Order"
+      "name": "Steady Stance"
     },
     "-7,8": {
       "id": "-7,8",
@@ -3323,7 +3304,7 @@
       "clusterId": "kiln-sign",
       "status": "review",
       "notes": "",
-      "name": "Overfire"
+      "name": "Ailment Effect"
     },
     "-6,8": {
       "id": "-6,8",
@@ -3333,9 +3314,9 @@
       "type": "notable",
       "axis": "str",
       "effects": [
-        "+15% to Ember Resistance",
+        "+15% to Fire Resistance",
         "+18% increased Ailment Effect",
-        "Enemies that survive your Scald take +20% Ember from you (design text)"
+        "Enemies that survive your Ignite take +20% Fire damage from you (design text)"
       ],
       "stat": "ember_res",
       "amount": 15,
@@ -3343,7 +3324,7 @@
       "clusterId": "kiln-line-named",
       "status": "review",
       "notes": "",
-      "name": "Patience of the Kiln"
+      "name": "Ignite Exposure"
     },
     "-5,8": {
       "id": "-5,8",
@@ -3361,7 +3342,7 @@
       "clusterId": "kiln-sign",
       "status": "review",
       "notes": "",
-      "name": "Kilnstone Rings"
+      "name": "Guard"
     },
     "-4,8": {
       "id": "-4,8",
@@ -3371,9 +3352,9 @@
       "type": "sign",
       "axis": "str",
       "effects": [
-        "Born under the Kiln: your Scalds never expire on enemies below half Life",
-        "You take 20% increased River damage",
-        "Only one Sign may mark a life."
+        "Your Ignites never expire on enemies below half Life",
+        "You take 20% increased Cold damage",
+        "You can have only one Sign."
       ],
       "stat": null,
       "amount": 0,
@@ -3381,7 +3362,7 @@
       "clusterId": "kiln-line-named",
       "status": "review",
       "notes": "",
-      "name": "Sign of the Kiln"
+      "name": "Sign: Unending Ignites"
     },
     "-3,8": {
       "id": "-3,8",
@@ -3392,7 +3373,7 @@
       "axis": "str",
       "effects": [
         "+10% increased Rite Damage",
-        "Your rites char what they touch: +4% Ailment Effect (design text)"
+        "+4% increased Ailment Effect (design text)"
       ],
       "stat": "spellDamage",
       "amount": 10,
@@ -3400,7 +3381,7 @@
       "clusterId": "kiln-sign",
       "status": "review",
       "notes": "",
-      "name": "Ash Ink"
+      "name": "Rite Damage"
     },
     "-2,8": {
       "id": "-2,8",
@@ -3410,7 +3391,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "Adds 6 Ember Damage to hits"
+        "Adds 6 Fire Damage to hits"
       ],
       "stat": "emberkiss",
       "amount": 6,
@@ -3418,7 +3399,7 @@
       "clusterId": "kiln-sign",
       "status": "review",
       "notes": "",
-      "name": "Ember Tithe"
+      "name": "Added Fire Damage"
     },
     "-1,8": {
       "id": "-1,8",
@@ -3436,7 +3417,7 @@
       "clusterId": "kiln-sign",
       "status": "review",
       "notes": "",
-      "name": "Firing Order"
+      "name": "Attack Damage"
     },
     "0,8": {
       "id": "0,8",
@@ -3456,7 +3437,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "Keeper of the Column"
+      "name": "Shared Resistances"
     },
     "1,7": {
       "id": "1,7",
@@ -3474,7 +3455,7 @@
       "clusterId": "procession-sign",
       "status": "review",
       "notes": "",
-      "name": "Night Office"
+      "name": "Rite Damage"
     },
     "2,6": {
       "id": "2,6",
@@ -3486,7 +3467,7 @@
       "effects": [
         "+20% increased Ward",
         "+10 to Spirit",
-        "Your Ward does not break from Gloam while a rite is maintained (design text)"
+        "Your Ward does not break from Chaos damage while a rite is maintained (design text)"
       ],
       "stat": "ward_pct",
       "amount": 20,
@@ -3494,7 +3475,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "Vigil Unbroken"
+      "name": "Steady Ward"
     },
     "3,5": {
       "id": "3,5",
@@ -3512,7 +3493,7 @@
       "clusterId": "procession-sign",
       "status": "review",
       "notes": "",
-      "name": "Lamp Oil"
+      "name": "Ward"
     },
     "4,4": {
       "id": "4,4",
@@ -3522,9 +3503,9 @@
       "type": "sign",
       "axis": "int",
       "effects": [
-        "Born under the Lamp: your Ward recharges even while you take damage",
+        "Your Ward recharges even while you take damage",
         "Your Ward is 30% smaller",
-        "Only one Sign may mark a life."
+        "You can have only one Sign."
       ],
       "stat": null,
       "amount": 0,
@@ -3532,7 +3513,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "Sign of the Lamp"
+      "name": "Sign: Ward Under Fire"
     },
     "5,3": {
       "id": "5,3",
@@ -3550,7 +3531,7 @@
       "clusterId": "procession-sign",
       "status": "review",
       "notes": "",
-      "name": "Keeper Keys"
+      "name": "Spirit"
     },
     "6,2": {
       "id": "6,2",
@@ -3569,7 +3550,7 @@
       "clusterId": "procession-sign",
       "status": "review",
       "notes": "",
-      "name": "Vested Authority"
+      "name": "Companion Damage"
     },
     "7,1": {
       "id": "7,1",
@@ -3579,7 +3560,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+10% to Gloam Resistance"
+        "+10% to Chaos Resistance"
       ],
       "stat": "gloam_res",
       "amount": 10,
@@ -3587,7 +3568,7 @@
       "clusterId": "procession-sign",
       "status": "review",
       "notes": "",
-      "name": "Incense Coils"
+      "name": "Chaos Resistance"
     },
     "8,0": {
       "id": "8,0",
@@ -3607,7 +3588,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Unwritten Tablet"
+      "name": "Ward Retention"
     },
     "8,-1": {
       "id": "8,-1",
@@ -3625,7 +3606,7 @@
       "clusterId": "drowned-sign",
       "status": "review",
       "notes": "",
-      "name": "Silt Tally"
+      "name": "Rite Damage"
     },
     "8,-2": {
       "id": "8,-2",
@@ -3635,9 +3616,9 @@
       "type": "notable",
       "axis": "int",
       "effects": [
-        "+12% to River Resistance",
+        "+12% to Cold Resistance",
         "+18% increased Rite Damage",
-        "Frozen enemies shatter for River damage around them (design text)"
+        "Frozen enemies shatter for Cold damage around them (design text)"
       ],
       "stat": "river_resistance",
       "amount": 12,
@@ -3645,7 +3626,7 @@
       "clusterId": "drowned-study-named",
       "status": "review",
       "notes": "",
-      "name": "Silt and Silver"
+      "name": "Shattering Freeze"
     },
     "8,-3": {
       "id": "8,-3",
@@ -3663,7 +3644,7 @@
       "clusterId": "drowned-sign",
       "status": "review",
       "notes": "",
-      "name": "Frozen Margin"
+      "name": "Ailment Effect"
     },
     "8,-4": {
       "id": "8,-4",
@@ -3673,9 +3654,9 @@
       "type": "sign",
       "axis": "int",
       "effects": [
-        "Born under the River: enemies you Numb are also Marked",
-        "Your Scalds expire twice as fast",
-        "Only one Sign may mark a life."
+        "Enemies you Chill are also Marked",
+        "Your Ignites expire twice as fast",
+        "You can have only one Sign."
       ],
       "stat": null,
       "amount": 0,
@@ -3683,7 +3664,7 @@
       "clusterId": "drowned-study-named",
       "status": "review",
       "notes": "",
-      "name": "Sign of the River"
+      "name": "Sign: Mark Chilled Enemies"
     },
     "8,-5": {
       "id": "8,-5",
@@ -3702,7 +3683,7 @@
       "clusterId": "drowned-sign",
       "status": "review",
       "notes": "",
-      "name": "The Weir"
+      "name": "Ward"
     },
     "8,-6": {
       "id": "8,-6",
@@ -3720,7 +3701,7 @@
       "clusterId": "drowned-sign",
       "status": "review",
       "notes": "",
-      "name": "Pale Reflection"
+      "name": "Rite Speed"
     },
     "8,-7": {
       "id": "8,-7",
@@ -3730,7 +3711,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+12% to River Resistance"
+        "+12% to Cold Resistance"
       ],
       "stat": "river_resistance",
       "amount": 12,
@@ -3738,7 +3719,7 @@
       "clusterId": "drowned-sign",
       "status": "review",
       "notes": "",
-      "name": "Winter Tallies"
+      "name": "Cold Resistance"
     },
     "8,-8": {
       "id": "8,-8",
@@ -3758,7 +3739,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "Tally of Grudges"
+      "name": "Poison Marked Enemies"
     },
     "7,-8": {
       "id": "7,-8",
@@ -3776,7 +3757,7 @@
       "clusterId": "unlit-sign",
       "status": "review",
       "notes": "",
-      "name": "Adder Pit"
+      "name": "Ailment Effect"
     },
     "6,-8": {
       "id": "6,-8",
@@ -3796,7 +3777,7 @@
       "clusterId": "unlit-road-named",
       "status": "review",
       "notes": "",
-      "name": "The Second Knife"
+      "name": "Poison from Hiding"
     },
     "5,-8": {
       "id": "5,-8",
@@ -3814,7 +3795,7 @@
       "clusterId": "unlit-sign",
       "status": "review",
       "notes": "",
-      "name": "False Seals"
+      "name": "Evasion"
     },
     "4,-8": {
       "id": "4,-8",
@@ -3824,9 +3805,9 @@
       "type": "sign",
       "axis": "dex",
       "effects": [
-        "Born under the Adder: your poisons spread on kill",
+        "Your poisons spread on kill",
         "You cannot Block",
-        "Only one Sign may mark a life."
+        "You can have only one Sign."
       ],
       "stat": null,
       "amount": 0,
@@ -3834,7 +3815,7 @@
       "clusterId": "unlit-road-named",
       "status": "review",
       "notes": "",
-      "name": "Sign of the Adder"
+      "name": "Sign: Spreading Poison"
     },
     "3,-8": {
       "id": "3,-8",
@@ -3844,7 +3825,7 @@
       "type": "small",
       "axis": "dex",
       "effects": [
-        "+12% to Gloam Resistance"
+        "+12% to Chaos Resistance"
       ],
       "stat": "gloam_res",
       "amount": 12,
@@ -3852,7 +3833,7 @@
       "clusterId": "unlit-sign",
       "status": "review",
       "notes": "",
-      "name": "Cold Trail"
+      "name": "Chaos Resistance"
     },
     "2,-8": {
       "id": "2,-8",
@@ -3871,7 +3852,7 @@
       "clusterId": "unlit-sign",
       "status": "review",
       "notes": "",
-      "name": "The Fence"
+      "name": "All Attributes"
     },
     "1,-8": {
       "id": "1,-8",
@@ -3889,7 +3870,7 @@
       "clusterId": "unlit-sign",
       "status": "review",
       "notes": "",
-      "name": "Knife Oath"
+      "name": "Critical Chance"
     },
     "0,-8": {
       "id": "0,-8",
@@ -3909,7 +3890,7 @@
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "Between Raindrops"
+      "name": "Evasion Haste"
     },
     "-1,-7": {
       "id": "-1,-7",
@@ -3927,7 +3908,7 @@
       "clusterId": "high-sign",
       "status": "review",
       "notes": "",
-      "name": "Storm Shelf"
+      "name": "Projectile Damage"
     },
     "-2,-6": {
       "id": "-2,-6",
@@ -3937,9 +3918,9 @@
       "type": "notable",
       "axis": "dex",
       "effects": [
-        "+12% to Storm Resistance",
+        "+12% to Lightning Resistance",
         "+18% increased Projectile Damage",
-        "Your Jolts chain once to the nearest enemy (design text)"
+        "Your Shocks chain once to the nearest enemy (design text)"
       ],
       "stat": "storm_res",
       "amount": 12,
@@ -3947,7 +3928,7 @@
       "clusterId": "high-paths-named",
       "status": "review",
       "notes": "",
-      "name": "Thunder Counting"
+      "name": "Chaining Shock"
     },
     "-3,-5": {
       "id": "-3,-5",
@@ -3958,7 +3939,7 @@
       "axis": "dex",
       "effects": [
         "+11% increased Ailment Effect",
-        "Once per fight, your Jolt becomes a strike (design text)"
+        "Once per fight, your Shock becomes a strike (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 11,
@@ -3966,7 +3947,7 @@
       "clusterId": "high-sign",
       "status": "review",
       "notes": "",
-      "name": "Lightning Jar"
+      "name": "Ailment Effect"
     },
     "-4,-4": {
       "id": "-4,-4",
@@ -3976,9 +3957,9 @@
       "type": "sign",
       "axis": "dex",
       "effects": [
-        "Born under the Storm: your Jolts stack twice as high",
-        "You are always the tallest thing on the field: +15% damage taken from Storm",
-        "Only one Sign may mark a life."
+        "Your Shocks stack twice as high",
+        "+15% increased Lightning damage taken",
+        "You can have only one Sign."
       ],
       "stat": null,
       "amount": 0,
@@ -3986,7 +3967,7 @@
       "clusterId": "high-paths-named",
       "status": "review",
       "notes": "",
-      "name": "Sign of the Storm"
+      "name": "Sign: Double Shock Stacks"
     },
     "-5,-3": {
       "id": "-5,-3",
@@ -4004,7 +3985,7 @@
       "clusterId": "high-sign",
       "status": "review",
       "notes": "",
-      "name": "Anemometer Habit"
+      "name": "Accuracy"
     },
     "-6,-2": {
       "id": "-6,-2",
@@ -4022,7 +4003,7 @@
       "clusterId": "high-sign",
       "status": "review",
       "notes": "",
-      "name": "High Camp"
+      "name": "Evasion"
     },
     "-7,-1": {
       "id": "-7,-1",
@@ -4032,7 +4013,7 @@
       "type": "small",
       "axis": "dex",
       "effects": [
-        "+12% to Storm Resistance"
+        "+12% to Lightning Resistance"
       ],
       "stat": "storm_res",
       "amount": 12,
@@ -4040,7 +4021,7 @@
       "clusterId": "high-sign",
       "status": "review",
       "notes": "",
-      "name": "Peak Silence"
+      "name": "Lightning Resistance"
     },
     "-8,0": {
       "id": "-8,0",
@@ -4060,7 +4041,7 @@
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "Storm of Handles"
+      "name": "Returning Throws"
     },
     "-8,1": {
       "id": "-8,1",
@@ -4078,7 +4059,7 @@
       "clusterId": "red-sign",
       "status": "review",
       "notes": "",
-      "name": "Bull Pens"
+      "name": "Life"
     },
     "-8,2": {
       "id": "-8,2",
@@ -4098,7 +4079,7 @@
       "clusterId": "red-field-named",
       "status": "review",
       "notes": "",
-      "name": "The Weight Behind It"
+      "name": "Longer Stuns"
     },
     "-8,3": {
       "id": "-8,3",
@@ -4116,7 +4097,7 @@
       "clusterId": "red-sign",
       "status": "review",
       "notes": "",
-      "name": "Gore Furrow"
+      "name": "Ailment Effect"
     },
     "-8,4": {
       "id": "-8,4",
@@ -4126,9 +4107,9 @@
       "type": "sign",
       "axis": "str",
       "effects": [
-        "Born under the Bull: your actions cannot be interrupted while your Poise holds",
+        "Your actions cannot be interrupted while your Poise holds",
         "You cannot dodge or give ground",
-        "Only one Sign may mark a life."
+        "You can have only one Sign."
       ],
       "stat": null,
       "amount": 0,
@@ -4136,7 +4117,7 @@
       "clusterId": "red-field-named",
       "status": "review",
       "notes": "",
-      "name": "Sign of the Bull"
+      "name": "Sign: Unstoppable"
     },
     "-8,5": {
       "id": "-8,5",
@@ -4155,7 +4136,7 @@
       "clusterId": "red-sign",
       "status": "review",
       "notes": "",
-      "name": "Trampled Line"
+      "name": "Attack Damage"
     },
     "-8,6": {
       "id": "-8,6",
@@ -4173,7 +4154,7 @@
       "clusterId": "red-sign",
       "status": "review",
       "notes": "",
-      "name": "Horn Scar"
+      "name": "Guard"
     },
     "-8,7": {
       "id": "-8,7",
@@ -4191,7 +4172,7 @@
       "clusterId": "red-sign",
       "status": "review",
       "notes": "",
-      "name": "Red Clay Underfoot"
+      "name": "Physical Damage"
     },
     "-9,9": {
       "id": "-9,9",
@@ -4203,7 +4184,7 @@
       "effects": [
         "+40 to Life",
         "+18% increased Attack Damage",
-        "Second Breath begins 25% sooner (design text)"
+        "Out-of-combat Life regeneration starts 25% sooner (design text)"
       ],
       "stat": "life",
       "amount": 40,
@@ -4211,7 +4192,7 @@
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "Last Out of the Breach"
+      "name": "Faster Recovery"
     },
     "-8,9": {
       "id": "-8,9",
@@ -4229,7 +4210,7 @@
       "clusterId": "kiln-deep",
       "status": "review",
       "notes": "",
-      "name": "Deep Kiln"
+      "name": "Guard"
     },
     "-7,9": {
       "id": "-7,9",
@@ -4239,9 +4220,8 @@
       "type": "notable",
       "axis": "str",
       "effects": [
-        "Adds 10 Ember Damage to hits",
-        "+15% increased Attack Speed while any enemy is Scalded (design text)",
-        "The hottest fire makes no smoke."
+        "Adds 10 Fire Damage to hits",
+        "+15% increased Attack Speed while any enemy is Ignited (design text)"
       ],
       "stat": "emberkiss",
       "amount": 10,
@@ -4249,7 +4229,7 @@
       "clusterId": "kiln-line-named",
       "status": "review",
       "notes": "",
-      "name": "White Heat"
+      "name": "Ignite Attack Speed"
     },
     "-6,9": {
       "id": "-6,9",
@@ -4267,7 +4247,7 @@
       "clusterId": "kiln-deep",
       "status": "review",
       "notes": "",
-      "name": "Salted Flame"
+      "name": "Ailment Effect"
     },
     "-5,9": {
       "id": "-5,9",
@@ -4277,8 +4257,8 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+14% to Ember Resistance",
-        "You cannot be Scalded while at full Life (design text)"
+        "+14% to Fire Resistance",
+        "You cannot be Ignited while at full Life (design text)"
       ],
       "stat": "ember_res",
       "amount": 14,
@@ -4286,7 +4266,7 @@
       "clusterId": "kiln-deep",
       "status": "review",
       "notes": "",
-      "name": "Old Burn Scars"
+      "name": "Fire Resistance"
     },
     "-4,9": {
       "id": "-4,9",
@@ -4296,8 +4276,8 @@
       "type": "socket",
       "axis": "str",
       "effects": [
-        "An empty seat carved for a whorl-stone.",
-        "Does nothing while empty; carved stones arrive with the stone-carver."
+        "Empty jewel socket.",
+        "Socket a jewel to gain its effect."
       ],
       "stat": null,
       "amount": 0,
@@ -4307,7 +4287,7 @@
       "clusterId": "kiln-line-sockets",
       "status": "review",
       "notes": "",
-      "name": "The Kiln Line Deep Socket"
+      "name": "Outer Fire Jewel Socket"
     },
     "-3,9": {
       "id": "-3,9",
@@ -4325,7 +4305,7 @@
       "clusterId": "kiln-deep",
       "status": "review",
       "notes": "",
-      "name": "Clay Sweat"
+      "name": "Life"
     },
     "-2,9": {
       "id": "-2,9",
@@ -4335,7 +4315,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "Adds 6 Ember Damage to hits"
+        "Adds 6 Fire Damage to hits"
       ],
       "stat": "emberkiss",
       "amount": 6,
@@ -4343,7 +4323,7 @@
       "clusterId": "kiln-deep",
       "status": "review",
       "notes": "",
-      "name": "Charmaster Habit"
+      "name": "Added Fire Damage"
     },
     "-1,9": {
       "id": "-1,9",
@@ -4361,7 +4341,7 @@
       "clusterId": "kiln-deep",
       "status": "review",
       "notes": "",
-      "name": "Roaring Draft"
+      "name": "Attack Speed"
     },
     "0,9": {
       "id": "0,9",
@@ -4381,7 +4361,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Long Procession"
+      "name": "Lingering Rites"
     },
     "1,8": {
       "id": "1,8",
@@ -4399,7 +4379,7 @@
       "clusterId": "procession-deep",
       "status": "review",
       "notes": "",
-      "name": "Deep Sanctum"
+      "name": "Ward"
     },
     "2,7": {
       "id": "2,7",
@@ -4410,8 +4390,7 @@
       "axis": "int",
       "effects": [
         "+28% increased Companion Damage",
-        "You may keep one additional companion-of-war (design text)",
-        "The line behind you is also the line beside you."
+        "You may keep one additional companion (design text)"
       ],
       "stat": "minionDamage",
       "amount": 28,
@@ -4419,7 +4398,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "Second Congregation"
+      "name": "Extra Companion"
     },
     "3,6": {
       "id": "3,6",
@@ -4437,7 +4416,7 @@
       "clusterId": "procession-deep",
       "status": "review",
       "notes": "",
-      "name": "Old Devotions"
+      "name": "Rite Damage"
     },
     "4,5": {
       "id": "4,5",
@@ -4447,7 +4426,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+12% to Gloam Resistance"
+        "+12% to Chaos Resistance"
       ],
       "stat": "gloam_res",
       "amount": 12,
@@ -4455,7 +4434,7 @@
       "clusterId": "procession-deep",
       "status": "review",
       "notes": "",
-      "name": "Ossuary Quiet"
+      "name": "Chaos Resistance"
     },
     "5,4": {
       "id": "5,4",
@@ -4465,8 +4444,8 @@
       "type": "socket",
       "axis": "int",
       "effects": [
-        "An empty seat carved for a whorl-stone.",
-        "Does nothing while empty; carved stones arrive with the stone-carver."
+        "Empty jewel socket.",
+        "Socket a jewel to gain its effect."
       ],
       "stat": null,
       "amount": 0,
@@ -4476,7 +4455,7 @@
       "clusterId": "procession-sockets",
       "status": "review",
       "notes": "",
-      "name": "The Procession Deep Socket"
+      "name": "Outer Companion Jewel Socket"
     },
     "6,3": {
       "id": "6,3",
@@ -4495,7 +4474,7 @@
       "clusterId": "procession-deep",
       "status": "review",
       "notes": "",
-      "name": "Warden of Relics"
+      "name": "Companion Damage"
     },
     "7,2": {
       "id": "7,2",
@@ -4513,7 +4492,7 @@
       "clusterId": "procession-deep",
       "status": "review",
       "notes": "",
-      "name": "Undercroft Lamp"
+      "name": "Ward"
     },
     "8,1": {
       "id": "8,1",
@@ -4531,7 +4510,7 @@
       "clusterId": "procession-deep",
       "status": "review",
       "notes": "",
-      "name": "Breviary Margin"
+      "name": "Spirit"
     },
     "9,0": {
       "id": "9,0",
@@ -4551,7 +4530,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Deep Shelf"
+      "name": "Efficient Rites"
     },
     "9,-1": {
       "id": "9,-1",
@@ -4569,7 +4548,7 @@
       "clusterId": "drowned-deep",
       "status": "review",
       "notes": "",
-      "name": "Deep Shelf Reading"
+      "name": "Rite Damage"
     },
     "9,-2": {
       "id": "9,-2",
@@ -4581,7 +4560,7 @@
       "effects": [
         "+24% increased Ailment Effect",
         "+15 to Ward",
-        "Numb builds to Freeze 20% sooner (design text)"
+        "Chill builds to Freeze 20% sooner (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 24,
@@ -4589,7 +4568,7 @@
       "clusterId": "drowned-study-named",
       "status": "review",
       "notes": "",
-      "name": "Patient Current"
+      "name": "Faster Freeze"
     },
     "9,-3": {
       "id": "9,-3",
@@ -4599,7 +4578,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+10% to Gloam Resistance"
+        "+10% to Chaos Resistance"
       ],
       "stat": "gloam_res",
       "amount": 10,
@@ -4607,7 +4586,7 @@
       "clusterId": "drowned-deep",
       "status": "review",
       "notes": "",
-      "name": "Black Water"
+      "name": "Chaos Resistance"
     },
     "9,-4": {
       "id": "9,-4",
@@ -4626,7 +4605,7 @@
       "clusterId": "drowned-deep",
       "status": "review",
       "notes": "",
-      "name": "The Undertaker Current"
+      "name": "Ailment Effect"
     },
     "9,-5": {
       "id": "9,-5",
@@ -4636,8 +4615,8 @@
       "type": "socket",
       "axis": "int",
       "effects": [
-        "An empty seat carved for a whorl-stone.",
-        "Does nothing while empty; carved stones arrive with the stone-carver."
+        "Empty jewel socket.",
+        "Socket a jewel to gain its effect."
       ],
       "stat": null,
       "amount": 0,
@@ -4647,7 +4626,7 @@
       "clusterId": "drowned-study-sockets",
       "status": "review",
       "notes": "",
-      "name": "The Drowned Study Deep Socket"
+      "name": "Outer Cold Jewel Socket"
     },
     "9,-6": {
       "id": "9,-6",
@@ -4665,7 +4644,7 @@
       "clusterId": "drowned-deep",
       "status": "review",
       "notes": "",
-      "name": "Silver Silt"
+      "name": "Ward"
     },
     "9,-7": {
       "id": "9,-7",
@@ -4683,7 +4662,7 @@
       "clusterId": "drowned-deep",
       "status": "review",
       "notes": "",
-      "name": "Cold Authority"
+      "name": "Rite Speed"
     },
     "9,-8": {
       "id": "9,-8",
@@ -4701,7 +4680,7 @@
       "clusterId": "drowned-deep",
       "status": "review",
       "notes": "",
-      "name": "Drowned Tablets"
+      "name": "Spirit"
     },
     "9,-9": {
       "id": "9,-9",
@@ -4711,7 +4690,7 @@
       "type": "notable",
       "axis": "hybrid",
       "effects": [
-        "+15% to Gloam Resistance",
+        "+15% to Chaos Resistance",
         "+22% increased Ailment Effect",
         "Enemies that kill your allies are marked for you (design text)"
       ],
@@ -4721,7 +4700,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "The Long Memory"
+      "name": "Mark Ally Killers"
     },
     "8,-9": {
       "id": "8,-9",
@@ -4739,7 +4718,7 @@
       "clusterId": "unlit-deep",
       "status": "review",
       "notes": "",
-      "name": "Deep Cellars"
+      "name": "Evasion"
     },
     "7,-9": {
       "id": "7,-9",
@@ -4749,7 +4728,7 @@
       "type": "notable",
       "axis": "dex",
       "effects": [
-        "+14% to Gloam Resistance",
+        "+14% to Chaos Resistance",
         "+20% increased Ailment Effect",
         "Wither you inflict cannot be cleansed (design text)"
       ],
@@ -4759,7 +4738,7 @@
       "clusterId": "unlit-road-named",
       "status": "review",
       "notes": "",
-      "name": "Widow Work"
+      "name": "Lasting Wither"
     },
     "6,-9": {
       "id": "6,-9",
@@ -4777,7 +4756,7 @@
       "clusterId": "unlit-deep",
       "status": "review",
       "notes": "",
-      "name": "Old Venom Tablets"
+      "name": "Ailment Effect"
     },
     "5,-9": {
       "id": "5,-9",
@@ -4787,7 +4766,7 @@
       "type": "small",
       "axis": "dex",
       "effects": [
-        "+14% to Gloam Resistance",
+        "+14% to Chaos Resistance",
         "Wither you suffer drains 30% slower (design text)"
       ],
       "stat": "gloam_res",
@@ -4796,7 +4775,7 @@
       "clusterId": "unlit-deep",
       "status": "review",
       "notes": "",
-      "name": "Wither Root"
+      "name": "Chaos Resistance"
     },
     "4,-9": {
       "id": "4,-9",
@@ -4806,8 +4785,8 @@
       "type": "socket",
       "axis": "dex",
       "effects": [
-        "An empty seat carved for a whorl-stone.",
-        "Does nothing while empty; carved stones arrive with the stone-carver."
+        "Empty jewel socket.",
+        "Socket a jewel to gain its effect."
       ],
       "stat": null,
       "amount": 0,
@@ -4817,7 +4796,7 @@
       "clusterId": "unlit-road-sockets",
       "status": "review",
       "notes": "",
-      "name": "The Unlit Road Deep Socket"
+      "name": "Outer Poison Jewel Socket"
     },
     "3,-9": {
       "id": "3,-9",
@@ -4835,7 +4814,7 @@
       "clusterId": "unlit-deep",
       "status": "review",
       "notes": "",
-      "name": "Last Lamp"
+      "name": "Critical Chance"
     },
     "2,-9": {
       "id": "2,-9",
@@ -4853,7 +4832,7 @@
       "clusterId": "unlit-deep",
       "status": "review",
       "notes": "",
-      "name": "Smuggler Hollow"
+      "name": "Evasion"
     },
     "1,-9": {
       "id": "1,-9",
@@ -4871,7 +4850,7 @@
       "clusterId": "unlit-deep",
       "status": "review",
       "notes": "",
-      "name": "Night Tally"
+      "name": "Dexterity"
     },
     "0,-9": {
       "id": "0,-9",
@@ -4881,7 +4860,7 @@
       "type": "notable",
       "axis": "dex",
       "effects": [
-        "+25% to Advantage Bonus",
+        "+25% to Critical Damage Bonus",
         "+50 to Accuracy",
         "Hits against enemies that just missed you gain +1% Critical Chance (design text)"
       ],
@@ -4891,7 +4870,7 @@
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "No Second Chance"
+      "name": "Punish Misses"
     },
     "-1,-8": {
       "id": "-1,-8",
@@ -4909,7 +4888,7 @@
       "clusterId": "high-deep",
       "status": "review",
       "notes": "",
-      "name": "Deep Ravine Line"
+      "name": "Projectile Damage"
     },
     "-2,-7": {
       "id": "-2,-7",
@@ -4929,7 +4908,7 @@
       "clusterId": "high-paths-named",
       "status": "review",
       "notes": "",
-      "name": "Eye of the Slinger"
+      "name": "Long-Range Accuracy"
     },
     "-3,-6": {
       "id": "-3,-6",
@@ -4947,7 +4926,7 @@
       "clusterId": "high-deep",
       "status": "review",
       "notes": "",
-      "name": "Thin Air Lungs"
+      "name": "Movement Speed"
     },
     "-4,-5": {
       "id": "-4,-5",
@@ -4957,8 +4936,8 @@
       "type": "small",
       "axis": "dex",
       "effects": [
-        "+14% to Storm Resistance",
-        "You cannot be Jolted while moving (design text)"
+        "+14% to Lightning Resistance",
+        "You cannot be Shocked while moving (design text)"
       ],
       "stat": "storm_res",
       "amount": 14,
@@ -4966,7 +4945,7 @@
       "clusterId": "high-deep",
       "status": "review",
       "notes": "",
-      "name": "Thunder Bones"
+      "name": "Lightning Resistance"
     },
     "-5,-4": {
       "id": "-5,-4",
@@ -4976,8 +4955,8 @@
       "type": "socket",
       "axis": "dex",
       "effects": [
-        "An empty seat carved for a whorl-stone.",
-        "Does nothing while empty; carved stones arrive with the stone-carver."
+        "Empty jewel socket.",
+        "Socket a jewel to gain its effect."
       ],
       "stat": null,
       "amount": 0,
@@ -4987,7 +4966,7 @@
       "clusterId": "high-paths-sockets",
       "status": "review",
       "notes": "",
-      "name": "The High Paths Deep Socket"
+      "name": "Outer Projectile Jewel Socket"
     },
     "-6,-3": {
       "id": "-6,-3",
@@ -5005,7 +4984,7 @@
       "clusterId": "high-deep",
       "status": "review",
       "notes": "",
-      "name": "Eagle Feathers"
+      "name": "Evasion"
     },
     "-7,-2": {
       "id": "-7,-2",
@@ -5023,7 +5002,7 @@
       "clusterId": "high-deep",
       "status": "review",
       "notes": "",
-      "name": "Summit Tally"
+      "name": "Dexterity"
     },
     "-8,-1": {
       "id": "-8,-1",
@@ -5041,7 +5020,7 @@
       "clusterId": "high-deep",
       "status": "review",
       "notes": "",
-      "name": "Anchor Cairn"
+      "name": "Accuracy"
     },
     "-9,0": {
       "id": "-9,0",
@@ -5061,7 +5040,7 @@
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "Nothing Wasted"
+      "name": "Recovered Throws"
     },
     "-9,1": {
       "id": "-9,1",
@@ -5079,7 +5058,7 @@
       "clusterId": "red-deep",
       "status": "review",
       "notes": "",
-      "name": "Deep Field Ruts"
+      "name": "Attack Damage"
     },
     "-9,2": {
       "id": "-9,2",
@@ -5099,7 +5078,7 @@
       "clusterId": "red-field-named",
       "status": "review",
       "notes": "",
-      "name": "Wading In"
+      "name": "Damage per Nearby Enemy"
     },
     "-9,3": {
       "id": "-9,3",
@@ -5117,7 +5096,7 @@
       "clusterId": "red-deep",
       "status": "review",
       "notes": "",
-      "name": "Old Standard Pole"
+      "name": "Life"
     },
     "-9,4": {
       "id": "-9,4",
@@ -5136,7 +5115,7 @@
       "clusterId": "red-deep",
       "status": "review",
       "notes": "",
-      "name": "Marrow Memory"
+      "name": "Ailment Effect"
     },
     "-9,5": {
       "id": "-9,5",
@@ -5146,8 +5125,8 @@
       "type": "socket",
       "axis": "str",
       "effects": [
-        "An empty seat carved for a whorl-stone.",
-        "Does nothing while empty; carved stones arrive with the stone-carver."
+        "Empty jewel socket.",
+        "Socket a jewel to gain its effect."
       ],
       "stat": null,
       "amount": 0,
@@ -5157,7 +5136,7 @@
       "clusterId": "red-field-sockets",
       "status": "review",
       "notes": "",
-      "name": "The Red Field Deep Socket"
+      "name": "Outer Physical Jewel Socket"
     },
     "-9,6": {
       "id": "-9,6",
@@ -5175,7 +5154,7 @@
       "clusterId": "red-deep",
       "status": "review",
       "notes": "",
-      "name": "Sheaf of Spears"
+      "name": "Reach"
     },
     "-9,7": {
       "id": "-9,7",
@@ -5193,7 +5172,7 @@
       "clusterId": "red-deep",
       "status": "review",
       "notes": "",
-      "name": "Threshing Rhythm"
+      "name": "Attack Speed"
     },
     "-9,8": {
       "id": "-9,8",
@@ -5211,7 +5190,7 @@
       "clusterId": "red-deep",
       "status": "review",
       "notes": "",
-      "name": "Salted Earth"
+      "name": "Guard"
     },
     "-10,10": {
       "id": "-10,10",
@@ -5221,19 +5200,19 @@
       "type": "gateway",
       "axis": "str",
       "effects": [
-        "Shared gate for the Vanguard Oath outer circle.",
+        "Gate to the Champion outer circle.",
         "Unlock condition: allocate this gate and complete any inner six-node circle."
       ],
       "stat": null,
       "amount": 0,
       "tags": [
         "gateway",
-        "Vanguard Oath"
+        "Champion"
       ],
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "Vanguard Oath Gate"
+      "name": "Champion Gate"
     },
     "-9,10": {
       "id": "-9,10",
@@ -5251,7 +5230,7 @@
       "clusterId": "kiln-frontier",
       "status": "review",
       "notes": "",
-      "name": "Kiln Road East"
+      "name": "Strength"
     },
     "-8,10": {
       "id": "-8,10",
@@ -5269,7 +5248,7 @@
       "clusterId": "kiln-frontier",
       "status": "review",
       "notes": "",
-      "name": "Kiln Road West"
+      "name": "Intelligence"
     },
     "-7,10": {
       "id": "-7,10",
@@ -5280,7 +5259,7 @@
       "axis": "str",
       "effects": [
         "+26% increased Ailment Effect",
-        "Enemies you kill while Scalded ignite their nearest ally (design text)"
+        "Enemies you kill while Ignited ignite their nearest ally (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 26,
@@ -5288,7 +5267,7 @@
       "clusterId": "kiln-line-named",
       "status": "review",
       "notes": "",
-      "name": "The Last Firing"
+      "name": "Spreading Ignites"
     },
     "-6,10": {
       "id": "-6,10",
@@ -5306,7 +5285,7 @@
       "clusterId": "kiln-frontier",
       "status": "review",
       "notes": "",
-      "name": "Cartload of Charcoal"
+      "name": "Strength"
     },
     "-5,10": {
       "id": "-5,10",
@@ -5317,7 +5296,7 @@
       "axis": "str",
       "effects": [
         "+22 to Life",
-        "Rest here: Second Breath is 10% faster (design text)"
+        "Out-of-combat Life regeneration starts 10% sooner (design text)"
       ],
       "stat": "life",
       "amount": 22,
@@ -5325,7 +5304,7 @@
       "clusterId": "kiln-frontier",
       "status": "review",
       "notes": "",
-      "name": "Warm Hearthstone"
+      "name": "Life"
     },
     "-4,10": {
       "id": "-4,10",
@@ -5336,7 +5315,7 @@
       "axis": "str",
       "effects": [
         "+22% increased Guard",
-        "+12% to Ember Resistance",
+        "+12% to Fire Resistance",
         "Ground you stand on cannot burn you (design text)"
       ],
       "stat": "guard_increased",
@@ -5345,7 +5324,7 @@
       "clusterId": "kiln-line-named",
       "status": "review",
       "notes": "",
-      "name": "Ash Garden"
+      "name": "Burning Ground Immunity"
     },
     "-3,10": {
       "id": "-3,10",
@@ -5363,7 +5342,7 @@
       "clusterId": "kiln-frontier",
       "status": "review",
       "notes": "",
-      "name": "Potter Marks"
+      "name": "Intelligence"
     },
     "-2,10": {
       "id": "-2,10",
@@ -5381,7 +5360,7 @@
       "clusterId": "kiln-frontier",
       "status": "review",
       "notes": "",
-      "name": "Cracked Amphora"
+      "name": "All Attributes"
     },
     "-1,10": {
       "id": "-1,10",
@@ -5399,7 +5378,7 @@
       "clusterId": "kiln-frontier",
       "status": "review",
       "notes": "",
-      "name": "Fired Brick Path"
+      "name": "Strength"
     },
     "0,10": {
       "id": "0,10",
@@ -5409,19 +5388,19 @@
       "type": "gateway",
       "axis": "hybrid",
       "effects": [
-        "Shared gate for the Seer's Annex outer circle.",
+        "Gate to the Ritualist outer circle.",
         "Unlock condition: allocate this gate and complete any inner six-node circle."
       ],
       "stat": null,
       "amount": 0,
       "tags": [
         "gateway",
-        "Seer's Annex"
+        "Ritualist"
       ],
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "Seer's Annex Gate"
+      "name": "Ritualist Gate"
     },
     "1,9": {
       "id": "1,9",
@@ -5439,7 +5418,7 @@
       "clusterId": "procession-frontier",
       "status": "review",
       "notes": "",
-      "name": "Pilgrim Steps"
+      "name": "Intelligence"
     },
     "2,8": {
       "id": "2,8",
@@ -5450,7 +5429,7 @@
       "axis": "int",
       "effects": [
         "+3 to all Attributes",
-        "Pause here: your next rite costs nothing (design text)"
+        "Your next rite costs no Spirit (design text)"
       ],
       "stat": "attrs",
       "amount": 3,
@@ -5458,7 +5437,7 @@
       "clusterId": "procession-frontier",
       "status": "review",
       "notes": "",
-      "name": "Roadside Shrine"
+      "name": "All Attributes"
     },
     "3,7": {
       "id": "3,7",
@@ -5477,7 +5456,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "The Empty Shrine"
+      "name": "Ward Counts as Rite"
     },
     "4,6": {
       "id": "4,6",
@@ -5495,7 +5474,7 @@
       "clusterId": "procession-frontier",
       "status": "review",
       "notes": "",
-      "name": "Prayer Flags"
+      "name": "Intelligence"
     },
     "5,5": {
       "id": "5,5",
@@ -5513,7 +5492,7 @@
       "clusterId": "procession-frontier",
       "status": "review",
       "notes": "",
-      "name": "Alms Bowl"
+      "name": "Spirit"
     },
     "6,4": {
       "id": "6,4",
@@ -5533,7 +5512,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "Feast After Service"
+      "name": "Spirit on Kill"
     },
     "7,3": {
       "id": "7,3",
@@ -5551,7 +5530,7 @@
       "clusterId": "procession-frontier",
       "status": "review",
       "notes": "",
-      "name": "Stone Lamp Row"
+      "name": "Strength"
     },
     "8,2": {
       "id": "8,2",
@@ -5569,7 +5548,7 @@
       "clusterId": "procession-frontier",
       "status": "review",
       "notes": "",
-      "name": "Vigil Bench"
+      "name": "Ward"
     },
     "9,1": {
       "id": "9,1",
@@ -5587,7 +5566,7 @@
       "clusterId": "procession-frontier",
       "status": "review",
       "notes": "",
-      "name": "The Quiet Mile"
+      "name": "Intelligence"
     },
     "10,0": {
       "id": "10,0",
@@ -5597,19 +5576,19 @@
       "type": "gateway",
       "axis": "int",
       "effects": [
-        "Shared gate for the Genius Circle outer circle.",
+        "Gate to the Archmage outer circle.",
         "Unlock condition: allocate this gate and complete any inner six-node circle."
       ],
       "stat": null,
       "amount": 0,
       "tags": [
         "gateway",
-        "Genius Circle"
+        "Archmage"
       ],
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Genius Circle Gate"
+      "name": "Archmage Gate"
     },
     "10,-1": {
       "id": "10,-1",
@@ -5627,7 +5606,7 @@
       "clusterId": "drowned-frontier",
       "status": "review",
       "notes": "",
-      "name": "River Road North"
+      "name": "Intelligence"
     },
     "10,-2": {
       "id": "10,-2",
@@ -5645,7 +5624,7 @@
       "clusterId": "drowned-frontier",
       "status": "review",
       "notes": "",
-      "name": "Ferry Toll"
+      "name": "All Attributes"
     },
     "10,-3": {
       "id": "10,-3",
@@ -5656,7 +5635,7 @@
       "axis": "int",
       "effects": [
         "+30% increased Rite Damage",
-        "Once rung, your next rite Numbs everything it touches (design text)"
+        "Once rung, your next rite Chills everything it touches (design text)"
       ],
       "stat": "spellDamage",
       "amount": 30,
@@ -5664,7 +5643,7 @@
       "clusterId": "drowned-study-named",
       "status": "review",
       "notes": "",
-      "name": "The Sunken Bell"
+      "name": "Chilling Rite"
     },
     "10,-4": {
       "id": "10,-4",
@@ -5683,7 +5662,7 @@
       "clusterId": "drowned-frontier",
       "status": "review",
       "notes": "",
-      "name": "Mist Bank"
+      "name": "Dexterity"
     },
     "10,-5": {
       "id": "10,-5",
@@ -5701,7 +5680,7 @@
       "clusterId": "drowned-frontier",
       "status": "review",
       "notes": "",
-      "name": "Cold Jetty"
+      "name": "Intelligence"
     },
     "10,-6": {
       "id": "10,-6",
@@ -5713,7 +5692,7 @@
       "effects": [
         "+45 to Ward",
         "+10% increased Ailment Effect",
-        "Marked enemies cannot see past the reeds (design text)"
+        "Marked enemies cannot see you beyond short range (design text)"
       ],
       "stat": "ward",
       "amount": 45,
@@ -5721,7 +5700,7 @@
       "clusterId": "drowned-study-named",
       "status": "review",
       "notes": "",
-      "name": "Court of Reeds"
+      "name": "Blinding Marks"
     },
     "10,-7": {
       "id": "10,-7",
@@ -5739,7 +5718,7 @@
       "clusterId": "drowned-frontier",
       "status": "review",
       "notes": "",
-      "name": "Waterline Steps"
+      "name": "Ward"
     },
     "10,-8": {
       "id": "10,-8",
@@ -5757,7 +5736,7 @@
       "clusterId": "drowned-frontier",
       "status": "review",
       "notes": "",
-      "name": "Heron Watch"
+      "name": "Dexterity"
     },
     "10,-9": {
       "id": "10,-9",
@@ -5775,7 +5754,7 @@
       "clusterId": "drowned-frontier",
       "status": "review",
       "notes": "",
-      "name": "The Far Shore"
+      "name": "Intelligence"
     },
     "10,-10": {
       "id": "10,-10",
@@ -5785,19 +5764,19 @@
       "type": "gateway",
       "axis": "hybrid",
       "effects": [
-        "Shared gate for the Spellblade Annex outer circle.",
+        "Gate to the Nightblade outer circle.",
         "Unlock condition: allocate this gate and complete any inner six-node circle."
       ],
       "stat": null,
       "amount": 0,
       "tags": [
         "gateway",
-        "Spellblade Annex"
+        "Nightblade"
       ],
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "Spellblade Annex Gate"
+      "name": "Nightblade Gate"
     },
     "9,-10": {
       "id": "9,-10",
@@ -5815,7 +5794,7 @@
       "clusterId": "unlit-frontier",
       "status": "review",
       "notes": "",
-      "name": "Unlit Mile One"
+      "name": "Dexterity"
     },
     "8,-10": {
       "id": "8,-10",
@@ -5833,7 +5812,7 @@
       "clusterId": "unlit-frontier",
       "status": "review",
       "notes": "",
-      "name": "Hooded Marker"
+      "name": "Dexterity"
     },
     "7,-10": {
       "id": "7,-10",
@@ -5852,7 +5831,7 @@
       "clusterId": "unlit-road-named",
       "status": "review",
       "notes": "",
-      "name": "The Unlit Door"
+      "name": "Unseen Passage"
     },
     "6,-10": {
       "id": "6,-10",
@@ -5871,7 +5850,7 @@
       "clusterId": "unlit-frontier",
       "status": "review",
       "notes": "",
-      "name": "Thieves Cant"
+      "name": "Intelligence"
     },
     "5,-10": {
       "id": "5,-10",
@@ -5889,7 +5868,7 @@
       "clusterId": "unlit-frontier",
       "status": "review",
       "notes": "",
-      "name": "Ditch Shadow"
+      "name": "Evasion"
     },
     "4,-10": {
       "id": "4,-10",
@@ -5900,7 +5879,7 @@
       "axis": "dex",
       "effects": [
         "+24% increased Ailment Effect",
-        "Poison on Withered enemies deals Gloam instead (design text)"
+        "Poison on Withered enemies deals Chaos damage instead (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 24,
@@ -5908,7 +5887,7 @@
       "clusterId": "unlit-road-named",
       "status": "review",
       "notes": "",
-      "name": "Nightsoil Trade"
+      "name": "Chaos Poison"
     },
     "3,-10": {
       "id": "3,-10",
@@ -5926,7 +5905,7 @@
       "clusterId": "unlit-frontier",
       "status": "review",
       "notes": "",
-      "name": "Owl Hours"
+      "name": "Dexterity"
     },
     "2,-10": {
       "id": "2,-10",
@@ -5944,7 +5923,7 @@
       "clusterId": "unlit-frontier",
       "status": "review",
       "notes": "",
-      "name": "Buried Cache"
+      "name": "All Attributes"
     },
     "1,-10": {
       "id": "1,-10",
@@ -5962,7 +5941,7 @@
       "clusterId": "unlit-frontier",
       "status": "review",
       "notes": "",
-      "name": "The Cold Stile"
+      "name": "Dexterity"
     },
     "0,-10": {
       "id": "0,-10",
@@ -5972,19 +5951,19 @@
       "type": "gateway",
       "axis": "dex",
       "effects": [
-        "Shared gate for the Ranger's Writ outer circle.",
+        "Gate to the Acrobat outer circle.",
         "Unlock condition: allocate this gate and complete any inner six-node circle."
       ],
       "stat": null,
       "amount": 0,
       "tags": [
         "gateway",
-        "Ranger's Writ"
+        "Acrobat"
       ],
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "Ranger's Writ Gate"
+      "name": "Acrobat Gate"
     },
     "-1,-9": {
       "id": "-1,-9",
@@ -6002,7 +5981,7 @@
       "clusterId": "high-frontier",
       "status": "review",
       "notes": "",
-      "name": "High Path One"
+      "name": "Dexterity"
     },
     "-2,-8": {
       "id": "-2,-8",
@@ -6020,7 +5999,7 @@
       "clusterId": "high-frontier",
       "status": "review",
       "notes": "",
-      "name": "Rope Bridge"
+      "name": "All Attributes"
     },
     "-3,-7": {
       "id": "-3,-7",
@@ -6039,7 +6018,7 @@
       "clusterId": "high-paths-named",
       "status": "review",
       "notes": "",
-      "name": "The Watching Peak"
+      "name": "Distant Marks"
     },
     "-4,-6": {
       "id": "-4,-6",
@@ -6058,7 +6037,7 @@
       "clusterId": "high-frontier",
       "status": "review",
       "notes": "",
-      "name": "Scree Slope"
+      "name": "Dexterity"
     },
     "-5,-5": {
       "id": "-5,-5",
@@ -6076,7 +6055,7 @@
       "clusterId": "high-frontier",
       "status": "review",
       "notes": "",
-      "name": "Kestrel Post"
+      "name": "Dexterity"
     },
     "-6,-4": {
       "id": "-6,-4",
@@ -6087,7 +6066,7 @@
       "axis": "dex",
       "effects": [
         "+22% increased Evasion",
-        "+12% to Storm Resistance",
+        "+12% to Lightning Resistance",
         "Projectiles aimed at you drift in the wind (design text)"
       ],
       "stat": "evasion_increased",
@@ -6096,7 +6075,7 @@
       "clusterId": "high-paths-named",
       "status": "review",
       "notes": "",
-      "name": "Gale Shelter"
+      "name": "Projectile Deflection"
     },
     "-7,-3": {
       "id": "-7,-3",
@@ -6114,7 +6093,7 @@
       "clusterId": "high-frontier",
       "status": "review",
       "notes": "",
-      "name": "Windbreak Wall"
+      "name": "Evasion"
     },
     "-8,-2": {
       "id": "-8,-2",
@@ -6132,7 +6111,7 @@
       "clusterId": "high-frontier",
       "status": "review",
       "notes": "",
-      "name": "Old Signal Fire"
+      "name": "Strength"
     },
     "-9,-1": {
       "id": "-9,-1",
@@ -6150,7 +6129,7 @@
       "clusterId": "high-frontier",
       "status": "review",
       "notes": "",
-      "name": "The Last Ridge"
+      "name": "Dexterity"
     },
     "-10,0": {
       "id": "-10,0",
@@ -6160,19 +6139,19 @@
       "type": "gateway",
       "axis": "hybrid",
       "effects": [
-        "Shared gate for the Skirmish Annex outer circle.",
+        "Gate to the Reaver outer circle.",
         "Unlock condition: allocate this gate and complete any inner six-node circle."
       ],
       "stat": null,
       "amount": 0,
       "tags": [
         "gateway",
-        "Skirmish Annex"
+        "Reaver"
       ],
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "Skirmish Annex Gate"
+      "name": "Reaver Gate"
     },
     "-10,1": {
       "id": "-10,1",
@@ -6190,7 +6169,7 @@
       "clusterId": "red-frontier",
       "status": "review",
       "notes": "",
-      "name": "Red Field Gate Road"
+      "name": "Strength"
     },
     "-10,2": {
       "id": "-10,2",
@@ -6208,7 +6187,7 @@
       "clusterId": "red-frontier",
       "status": "review",
       "notes": "",
-      "name": "Broken Cart Axle"
+      "name": "Strength"
     },
     "-10,3": {
       "id": "-10,3",
@@ -6227,7 +6206,7 @@
       "clusterId": "red-field-named",
       "status": "review",
       "notes": "",
-      "name": "The Red Standard"
+      "name": "Banner Bleed"
     },
     "-10,4": {
       "id": "-10,4",
@@ -6246,7 +6225,7 @@
       "clusterId": "red-frontier",
       "status": "review",
       "notes": "",
-      "name": "Crow Fence"
+      "name": "All Attributes"
     },
     "-10,5": {
       "id": "-10,5",
@@ -6264,7 +6243,7 @@
       "clusterId": "red-frontier",
       "status": "review",
       "notes": "",
-      "name": "Boot Churn"
+      "name": "Strength"
     },
     "-10,6": {
       "id": "-10,6",
@@ -6284,7 +6263,7 @@
       "clusterId": "red-field-named",
       "status": "review",
       "notes": "",
-      "name": "Field Surgeon Scorn"
+      "name": "Lasting Bleeds"
     },
     "-10,7": {
       "id": "-10,7",
@@ -6302,7 +6281,7 @@
       "clusterId": "red-frontier",
       "status": "review",
       "notes": "",
-      "name": "Rust Bloom"
+      "name": "Life"
     },
     "-10,8": {
       "id": "-10,8",
@@ -6320,7 +6299,7 @@
       "clusterId": "red-frontier",
       "status": "review",
       "notes": "",
-      "name": "Old Rampart Line"
+      "name": "Guard"
     },
     "-10,9": {
       "id": "-10,9",
@@ -6338,7 +6317,7 @@
       "clusterId": "red-frontier",
       "status": "review",
       "notes": "",
-      "name": "The Long Furrow"
+      "name": "Strength"
     }
   }
 };

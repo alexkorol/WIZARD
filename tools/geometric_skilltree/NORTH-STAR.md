@@ -199,7 +199,7 @@ observed (each is a mold for one of ours):
   ignore / fake / commit. Design our crit trio the same way.
 - **Resource fusion**: skills cost life; 40% of damage taken from mana first; ES
   protects mana instead of life. Costs are systemic (an equation), not a sentence.
-- **Conversion purity**: "all damage becomes Ember; deal no non-Ember damage."
+- **Conversion purity**: "all damage becomes Fire; deal no non-Fire damage."
 - **Spatial tradeoff**: more damage at point-blank range, less at distance — a
   keystone that rewrites positioning rather than stats.
 - **Self-imposed state**: 30% more rite damage while on low life — the downside is a
@@ -363,17 +363,25 @@ New file: `tools/rpg_inventory/core/verdigris-stats.js` (UMD global
 
 ### 4.1 Damage channels
 
-Five channels, Verdigris-flavored (never "fire/cold/lightning/chaos"):
+**Owner correction, 2026-09-21:** use normal combat names: Fire, Cold,
+Lightning, and Chaos. This supersedes the old instruction that demanded
+"Verdigris-flavored" channel names and banned "fire/cold/lightning/chaos".
+The legacy internal keys `ember`, `river`, `storm`, and `gloam` remain only for
+save compatibility. They are not approved display terminology. This correction
+changes naming, not channel mechanics or the approval status of unimplemented effects.
+
+
+Five channels with plain combat names: Physical, Fire, Cold, Lightning, and Chaos.
 
 | Channel | Flavor | Ailment it drives |
 |---|---|---|
 | **Physical** | bronze, stone, muscle | **Bleed** (phys DoT, aggravated by moving) |
-| **Ember** | fire, ash, the kiln | **Scald** (burning DoT) |
-| **River** | cold, water, the drowned | **Numb** (slow, then Freeze at threshold) |
-| **Storm** | lightning, sky, the high paths | **Jolt** (take increased damage, stutter) |
-| **Gloam** | shadow, the unlit, spirit-rot | **Wither** (stacking damage amplification, bypasses Ward) |
+| **Fire** | fire, ash, the kiln | **Scald** (burning DoT) |
+| **Cold** | cold, water, the drowned | **Numb** (slow, then Freeze at threshold) |
+| **Lightning** | lightning, sky, the high paths | **Jolt** (take increased damage, stutter) |
+| **Chaos** | shadow, the unlit, spirit-rot | **Wither** (stacking damage amplification, bypasses Ward) |
 
-Plus **Poison** (phys/gloam weapons + venoms; stacking DoT). Ailment magnitude scales
+Plus **Poison** (physical/chaos weapons + venoms; stacking DoT). Ailment magnitude scales
 from the hit; chance/effect/duration are the tunable stats.
 
 ### 4.2 Defense — layers of mitigation, resolved in order
@@ -386,14 +394,14 @@ An incoming hit walks this pipeline (each layer is a separate testable function)
    sourced mainly from shields; "when you block" is a trigger vocabulary.
 3. **Ward**: a recharging barrier pool that absorbs damage before Life. Recharges after
    N seconds without taking damage. Sourced from armour pieces (`armor` field ×
-   material), jade/amber materials, INT. **Gloam damage bypasses Ward** — its identity.
+   material), jade/amber materials, INT. **Chaos damage bypasses Ward** — its identity.
 4. **Mitigation %**:
    - **Guard (armour value)** vs Physical: diminishing vs large hits
      (`mitigation = guard / (guard + K * hitDamage)` — pick K, test at level-relevant
      hit sizes; big slams must punch through guard stacking).
-   - **Resistances** vs Ember/River/Storm/Gloam: additive %, cap 75 base (raisable a
+   - **Resistances** vs Fire/Cold/Lightning/Chaos: additive %, cap 75 base (raisable a
      few points by rare affixes/nodes), with zone/act penalties as the progression
-     screw. Gloam res is the rarest (PoE chaos-res analog).
+     screw. Chaos res is the rarest (PoE chaos-res analog).
 5. **Life**: the final pool. STR-flavored. Recovery: slow natural regen, **Second
    Breath** (fast out-of-combat recovery), healing rites, **blood-drinking** (leech,
    small numbers, capped).
@@ -401,7 +409,7 @@ An incoming hit walks this pipeline (each layer is a separate testable function)
    interrupt actions. Cheap to model as a threshold stat; feeds the Bull-sign fantasy.
 
 **Effective HP** = the composite the tree UI surfaces: expected hits-to-die vs a
-standard attack profile (define 2–3 reference foes: a phys bruiser, an ember caster, a
+standard attack profile (define 2–3 reference foes: a phys bruiser, a fire caster, a
 mixed pack — data in the stats module, used by tests and the UI).
 
 ### 4.3 Offense
@@ -601,8 +609,8 @@ seam spokes between them, each a named hybrid school:
 - **INT+STR seam** — the *Ritualist* wedge (battle-rites, banners, wards, companions-of-war).
 
 Every wedge (the 60° region between two spokes) gets a themed stat palette drawn from
-§4 so that WHERE you build says WHAT you are. Damage channels map naturally (Ember
-lives near STR/Ritualist, River near INT/Nightwork, Storm near DEX/Skirmisher, Gloam
+§4 so that WHERE you build says WHAT you are. Damage channels map naturally (Fire
+lives near STR/Ritualist, Cold near INT/Nightwork, Lightning near DEX/Skirmisher, Chaos
 threads the Nightwork deep wedge, Physical is universal but concentrated on pure STR).
 
 ### 7.3 Seat plan by ring (authoring skeleton — final counts may flex ±)

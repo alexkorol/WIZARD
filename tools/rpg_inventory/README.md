@@ -158,3 +158,9 @@ Port the data + logic layer as-is; only the React layer is demo-specific.
 Balance knobs: threshold formula in `gainAttunement`
 (`next = 80 + 55 × evolutions`), tier multipliers in `TIER_MULT`, vessel size
 rolls in `createItem`.
+
+## Combat terminology (owner correction, 2026-09-21)
+
+Item modifiers and resistance readouts use Fire, Cold, Lightning, and Chaos.
+The existing stat IDs remain unchanged so saves retain their meanings. These
+labels do not approve unrelated historical names or add new damage mechanics.

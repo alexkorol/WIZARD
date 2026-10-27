@@ -11,7 +11,7 @@ Open `index.html` directly in a browser.
 - The six ring-10 rim corners double as armoury unlock seats, alternating slot/pack around the outer hex: Attendant (INT), Quick Rig (DEX), and Warcall (STR) each unlock an extra gear-slot window on the Vesselforge page; Preparations (DEX/INT), Relics (INT/STR), and Trophies (DEX/STR) each unlock a 4×4 pack. Allocating a corner publishes its flag over the same bridge the class milestones use — no calling required — and each corner is also the gate to its ascendancy circle.
 - Player notes on anything: toggle the Notes button (hotkey `N`) and click any node or conduit to write a note on it, or Alt+click one directly. Gold pins mark noted targets; hover a pin to read, click it to edit, and the selection panel carries an Add Note button. Notes ride build codes, so they persist across reloads and travel with shared builds, and they survive reset on purpose.
 - A single skill-point pool: every node costs 1 point and every path or extra loop link costs 1 point, so travel distance is itself the build cost.
-- Every seat is authored data (`assets/tree-data.js`, emitted by `scripts/author-tree.mjs`): 96 unique named seats across six spoke identities (Champion, Acrobat, Archmage, Reaver, Nightblade, Ritualist) and six themed wedges (Kiln Line, Procession, Drowned Study, Unlit Road, High Paths, Red Field). No procedurally generated content remains.
+- Every seat is authored data (`assets/tree-data.js`, emitted by `scripts/author-tree.mjs`): 96 unique named seats across six spoke identities (Champion, Acrobat, Archmage, Reaver, Nightblade, Ritualist) and six themed wedges (Fire; Companions and Rites; Cold; Poison and Chaos; Projectiles and Lightning; Physical and Bleed). No procedurally generated content remains.
 - Named seat plan by ring: doorway smalls (1), first notables (2), masteries (3), notable belt (4), the Waist — Waystones plus jewel sockets (5), keystones (6), class milestones (7), the Signs — birthsign keystones, exactly one allocatable per character (8), deep notables plus a second socket set (9), gateways and frontier notables (10).
 - Passive nodes provide build effects such as weapon damage, wards, minion damage, evasion, recovery, marks, ailments, and hybrid bonuses.
 - The derived-stat panel now consumes the shared Verdigris stat engine and leads with Effective HP and DPS against the standard mixed-pack profile. Per-allocation deltas surface headline changes first.
@@ -37,7 +37,7 @@ Open `index.html` directly in a browser.
 - Search, undo, reset, pan/zoom, center, desktop hover tooltips, click/tap allocation, and right-click refund.
 - Build codes: `Copy Build` serializes the whole allocation (nodes, conduit variants, carved stones, calling) into one shareable string; `Load Build` restores it with budget and validity checks.
 - Collapsible panels: chevrons hide either side panel, edge tabs bring them back, and `F` toggles both for a tree-only focus view (persisted across reloads).
-- Carved stones (jewels): click an allocated socket to open the stone picker. Five families — Whorl (plain mods), Eye (radius grants), Change (conduit attribute rewrites), Saga (seeded deterministic transforms; same seed, same story; limit one; conquered nodes ignore other stones), and Pattern (geometry benders resolved inside the detector, e.g. waves count longer, loops may miss one conduit). Stones swap freely; `assets/jewels.js` holds the stash and saga tables.
+- Jewels: click an allocated socket to open the jewel picker. Five kinds: stat jewels (plain mods), radius jewels (grants to passives in radius), conversion jewels (conduit attribute rewrites), transforming jewels (seeded deterministic transforms; same seed, same result; limit one; transformed passives ignore other jewels) and pattern jewels (geometry rules resolved inside the detector, e.g. waves count longer, loops may miss one conduit). Jewels swap freely; `assets/jewels.js` holds the stash and transform tables (internal keys `whorl`, `eye`, `change`, `saga`, `pattern`).
 - Designer mode (`Design` button, `D` hotkey, or `?design=1`): seat inspector with live edits and registry-validated stat ids, status/type/stat/cluster overlays with legends, annotation pins, a lint panel with click-to-jump, localStorage-persisted overrides, and tree-data.js/annotation export plus merge-import. Player mode carries zero designer chrome.
 
 ## Interaction Model
@@ -159,10 +159,20 @@ What changed for anyone returning to this tool after June 2026:
 - The tree and Vesselforge share one stat engine (`verdigris-stats.js`);
   Effective HP and DPS lead the sheet and every click shows its delta.
 - Carved stones socket into the tree — five families including seeded
-  saga-stones that deterministically rewrite whole neighborhoods.
+  transforming jewels that deterministically rewrite whole neighborhoods.
 - Ring-8 Signs are birthsign keystones (exactly one per life); ring-7 class
   callings unlock real gear slots on the Vesselforge page over a live bridge.
 - Designer mode (press `D`) lets you inspect, rename, annotate, lint, and
   export the whole tree without leaving the page.
 - A balance suite simulates six leveling archetypes and pins the pattern-power
   envelope so future edits can't silently break the cadence.
+
+## Combat terminology (owner correction, 2026-09-21)
+
+Damage and resistance labels use Fire, Cold, Lightning, and Chaos. Legacy
+`ember`/`river`/`storm`/`gloam` stat keys remain for saved build compatibility.
+The authoring script, generated tree, shared stat registry, jewel effects and
+visible stat panels share these display names. The old NORTH-STAR instruction
+requiring themed channel names is superseded. Literal landscape/weather wording
+and unrelated node titles remain unchanged; effects marked design text remain
+unimplemented proposals rather than newly approved mechanics.

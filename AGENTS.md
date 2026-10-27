@@ -27,6 +27,26 @@ Multi-subproject **Verdigris Systems Laboratory** served from `gh-pages`.
   Rings, ticks, dots, light and material instead. Spellforge (`tools/spellforge`) keeps its
   rune and star layers as reference only; do not port them into Verdigris art.
 
+- Owner correction, 2026-09-21: combat channels and resistances use plain names
+  Fire, Cold, Lightning, and Chaos. Do not revive Ember/River/Storm/Gloam as
+  display synonyms from historical specs, sources, snapshots, or generators.
+  Legacy internal IDs may remain for save compatibility. Keep literal rivers,
+  weather, objects and unrelated existing titles separate from combat terminology.
+  Reuse of a subsystem does not approve its old creative wording; current owner
+  corrections override historical documents that call themselves authoritative.
+
+- Owner correction, 2026-10-26 ("the ai cringe terms are sneaking back into the project …
+  stop inventing ai-trope lore"): player-facing text names mechanics plainly, as Path of
+  Exile does. Damage and ailments are Physical, Fire, Cold, Lightning, Chaos, Bleed,
+  Poison, Ignite, Chill, Freeze, Shock and Wither; never Ember, River, Storm, Gloam, Scald,
+  Numb or Jolt. No invented cultures, sagas, oaths, years or flavour sentences (no
+  Kilnfathers, Drowned Court, Salt Oath, Testimony, "born under", "Second Breath"). Small
+  passives are named by their stat; other passives by what they do; jewels by their
+  effect. Do not fill creative gaps with new lore. Old identifiers stay only as hidden
+  compatibility keys. `tools/geometric_skilltree/tests/invented-terms.test.mjs` (run by
+  `wizard-lab.mjs verify`) fails on banned terms in tree, jewel, stat and page text; extend
+  its list when a new invented term is caught, never allowlist prose.
+
 The owner rejects unrequested flourish across this repository. Use functional
 names, direct labels, and concise descriptions of what a tool does.
 

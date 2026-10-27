@@ -338,8 +338,8 @@ function testAnnotations() {
 function testIronMilestoneLoopBoost() {
   const window = runStandaloneApp();
   const tree = window.skillTree;
-  const iron = Array.from(tree.nodes.values()).find(node => node.name === 'The Bronze Waystone');
-  assert.ok(iron?.seat?.patternHook, 'The Bronze Waystone should carry its pattern hook.');
+  const iron = Array.from(tree.nodes.values()).find(node => node.name === 'Champion Waystone');
+  assert.ok(iron?.seat?.patternHook, 'Champion Waystone should carry its pattern hook.');
 
   // Close a radius-1 loop around a center adjacent to the milestone so the
   // milestone sits on the loop's perimeter.
@@ -361,7 +361,7 @@ function testIronMilestoneLoopBoost() {
   delete iron.seat.patternHook;
   tree.recalculate();
   const plain = tree.getNodeBoost(center).multiplier;
-  assert.ok(boosted > plain, `The Bronze Waystone should empower the crowned center further (${boosted} vs ${plain}).`);
+  assert.ok(boosted > plain, `Champion Waystone should empower the crowned center further (${boosted} vs ${plain}).`);
 }
 
 function testWaveFirstAutoPathing() {
@@ -472,7 +472,7 @@ const tests = [
   ['Rim corners grant their slot and pack unlocks', testRimUnlockSeats],
   ['Ascendancy circles hold 10-15 themed passives behind their corners', testAscendancyClusters],
   ['Notes annotate nodes and conduits and ride build codes', testAnnotations],
-  ['The Bronze Waystone empowers loops that carry it', testIronMilestoneLoopBoost],
+  ['Champion Waystone empowers loops that carry it', testIronMilestoneLoopBoost],
   ['Build codes round-trip a whole allocation', testBuildCodeRoundTrip],
   ['Auto-pathing extends waves by default', testWaveFirstAutoPathing],
   ['Side panels collapse into focus mode', testPanelCollapse],

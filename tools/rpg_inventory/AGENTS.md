@@ -121,6 +121,14 @@ is ready; do not burn Codex weekly quota on recursive multi-agent audit trees.
    default way to fill the roster. Current manual pack:
    `assets_staging/manual-web-wildcard-wave-01/`.
 
+## Combat terminology correction (2026-09-21)
+
+Use Fire, Cold, Lightning, and Chaos in damage/resistance labels. Keep legacy
+stat IDs for saved-item compatibility; never expose them as themed synonyms.
+This is a terminology correction, not authorization to redesign materials,
+ordinary item names, crafting, or damage mechanics. Update source labels and
+consuming UI together so a rebuild cannot restore rejected wording.
+
 ## Inventory UI direction (2026-07-12)
 
 - New base ladders follow `core/INVENTORY-FOOTPRINTS.md`. This is a true
