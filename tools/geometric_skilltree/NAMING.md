@@ -2,8 +2,8 @@
 
 Owner corrections: September 21, 2026 (combat channels are Fire, Cold, Lightning and Chaos;
 never Ember, River, Storm or Gloam) and October 26, 2026 ("the ai cringe terms are sneaking
-back into the project … stop inventing ai-trope lore"). Rules, mirrored in the root
-`AGENTS.md`:
+back into the project … stop inventing ai-trope lore"). Rules (canonical in
+`owner-rules/OWNER-RULES.md`):
 
 - Name mechanics plainly, as Path of Exile does: Physical, Fire, Cold, Lightning, Chaos;
   Bleed, Poison, Ignite, Chill, Freeze, Shock, Wither.
@@ -14,8 +14,8 @@ back into the project … stop inventing ai-trope lore"). Rules, mirrored in the
 - Old identifiers (`ember_res`, `river_resistance`, `saga`, `whorl`, cluster ids such as
   `kiln-line`) stay only as hidden compatibility keys.
 - Invented compounds count too (Nightblade, Warcall, Emberkiss); see the root `NAMING.md`.
-- `tests/invented-terms.test.mjs` (run by `scripts/wizard-lab.mjs verify`) fails on banned
-  terms in tree, jewel, stat and page text. Extend its list when a new invented term is
+- `owner-rules/lint.mjs` (run by `scripts/wizard-lab.mjs verify` and the ARPG build gate)
+  fails on banned terms in tree, jewel, stat and page text. Extend its list when a new invented term is
   caught; never allowlist prose.
 
 Renamed on October 26, compared with the tree on gh-pages before that day (325

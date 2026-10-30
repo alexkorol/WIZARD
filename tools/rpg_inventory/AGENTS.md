@@ -1,5 +1,9 @@
 # AGENTS.md — RPG Inventory (Verdigris) asset work
 
+> **Mandatory reading first: [`owner-rules/OWNER-RULES.md`](../../owner-rules/OWNER-RULES.md)** (the owner's
+> standing rules for WIZARD and the ARPG). This file adds only the item-art pipeline and inventory specifics; it must not restate or
+> contradict those rules.
+
 Standing instructions and hard-won preferences for any agent working on this
 folder. **Read this first.** Alexei has repeated this guidance across sessions —
 do not make him say it again. When he gives new feedback, ADD IT HERE.
@@ -53,46 +57,27 @@ is ready; do not burn Codex weekly quota on recursive multi-agent audit trees.
 
 ## How Alexei wants us to work (meta — this matters most)
 
-1. **Move forward, don't loop.** Prioritize generating NEW items / filling
-   coverage over re-rolling existing assets. Do NOT remake gens to chase
-   perfection. Only regenerate an asset if it is genuinely broken/unusable
-   (e.g. wrong subject, backless helmet, missing half the object). "Good and
-   done" beats "perfect and slow."
-2. **Do not waste ChatGPT image quota.** Gens are rate-limited and slow
-   (~3–4 min each, throttles after a batch). Be deliberate: get the prompt
-   right, generate once, accept if it clears QA. **NEVER re-roll the same
-   concept on failure** (2026-07-06, cost ~6 wasted gens on one item): one
-   attempt per item per run, NO same-run redos; a failed item goes back to
-   the queue with a note, a second failure moves it to `core/BLOCKED.txt`
-   for Alexei to rework the DESC. A "hung" gen usually completes later in
-   its chat — HARVEST it next run instead of re-sending.
+General rules live in `owner-rules/OWNER-RULES.md`: generate once and judge (rule 27), finish
+routine work yourself (38), be concise (45). Pipeline specifics:
+
+1. **Coverage before polish.** Prefer new items over re-rolls; regenerate only a genuinely broken
+   asset (wrong subject, backless helmet, half an object missing).
+2. **One attempt per item per run** (2026-07-06). A failed item goes back to the queue with a
+   note; a second failure moves it to `core/BLOCKED.txt` for Alexei to rework its DESC. A "hung"
+   gen usually completes later in its chat: harvest it next run instead of re-sending.
 2b. **TRUE ALPHA when real; slate matte when not** (2026-07-06/07): real alpha
    PNGs are ideal and must bypass matte generation entirely. ChatGPT/image-2
    batch output is not reliable for true alpha, so source-image loadout
    extraction uses a flat olive-slate matte (`#737A68`) and local
    `core/chroma_key.py` cleanup. Reject painted checkerboards and hot magenta
    fringe. Never flatten RGBA to RGB when inspecting.
-3. **QA every generation on the fly.** Before staging, look at the render and
-   check it against what the item is supposed to be: complete solid object?
-   correct 3/4 dynamic angle? fills the frame, not squished/tiny? a PAIR if it's
-   footwear/handwear/greaves? reads as a cool game asset, not a museum photo?
-   If it fails, that's the moment to catch it — don't stage duds and don't make
-   the user find them later.
+3. **QA before staging:** complete solid object, correct 3/4 dynamic angle, fills the frame, a
+   pair for footwear/handwear/greaves, reads as a game asset rather than a museum photo.
 4. **We are not married to specific items.** If the AI can't render something
    reliably (atlatls/spear-throwers, bows, loose slings, fingerless hand-wraps),
    drop or reconceive it rather than burning tokens. For the hands slot, try
    closed mitts, mitten-gauntlets, hand pouches, or short cuffs before falling
    back to another bracer.
-5. **Style/tone:** concise and direct; do the work; don't over-ask or over-
-   explain; don't grovel.
-6. **Finish routine repo work yourself.** When an in-scope change requires a
-   builder, formatter, test, QA command, or generated-artifact refresh, run it
-   before handing off. Report the completed result; do not give Alexei a command
-   as a next step when the agent can safely execute it. Include commands only as
-   optional reference or when execution is genuinely blocked. Whenever the final
-   response includes a build or verification command, explicitly label whether
-   the agent already ran it and report its success or failure; never present an
-   already-run command as an unlabeled instruction for Alexei to execute.
 7. **Default roster generation unit = coherent loadout extraction**
    (2026-07-27 correction). For manual ChatGPT web production, start from two
    reviewed character/loadout references at one faction + attribute axis + tier
@@ -121,13 +106,10 @@ is ready; do not burn Codex weekly quota on recursive multi-agent audit trees.
    default way to fill the roster. Current manual pack:
    `assets_staging/manual-web-wildcard-wave-01/`.
 
-## Combat terminology correction (2026-09-21)
+## Combat terminology
 
-Use Fire, Cold, Lightning, and Chaos in damage/resistance labels. Keep legacy
-stat IDs for saved-item compatibility; never expose them as themed synonyms.
-This is a terminology correction, not authorization to redesign materials,
-ordinary item names, crafting, or damage mechanics. Update source labels and
-consuming UI together so a rebuild cannot restore rejected wording.
+Fire, Cold, Lightning and Chaos in labels; legacy stat IDs stay hidden for save compatibility
+(`owner-rules/OWNER-RULES.md` rule 5). Update source labels and consuming UI together.
 
 ## Inventory UI direction (2026-07-12)
 

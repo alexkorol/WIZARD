@@ -1,5 +1,9 @@
 # CLAUDE.md — Wizard Orbs showcase
 
+> **Mandatory reading first: [`owner-rules/OWNER-RULES.md`](../../owner-rules/OWNER-RULES.md)** (the owner's
+> standing rules for WIZARD and the ARPG). This file adds only the orb module invariants; it must not restate or
+> contradict those rules.
+
 ARPG life/mana orb demo: a single WebGL2 fragment shader compositing procedural
 liquids into pre-rendered art plates. `index.html` is the only file Pages serves;
 everything else is source.

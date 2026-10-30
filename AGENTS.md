@@ -1,5 +1,11 @@
 # WIZARD repo — agent pointers
 
+> **Mandatory reading first: [`owner-rules/OWNER-RULES.md`](owner-rules/OWNER-RULES.md).**
+> It is the single source of the owner's standing rules for WIZARD and the ARPG
+> (terminology, no invented lore or compound coinages, era, decoration, sourcing, how to
+> work). This file holds only WIZARD-specific procedure. Do not restate owner rules here;
+> change them in `owner-rules/` (see "Changing a rule" there).
+
 Multi-subproject **Verdigris Systems Laboratory** served from `gh-pages`.
 
 > **Working here as part of a multi-agent run?** Read
@@ -22,52 +28,12 @@ Multi-subproject **Verdigris Systems Laboratory** served from `gh-pages`.
 
 ## Copy and presentation
 
-- Owner correction, 2026-10-16: no pentagrams, hexagrams, heptagrams or rune glyphs as
-  decoration in effect, HUD or item art across WIZARD tools; they read as medieval fantasy.
-  Rings, ticks, dots, light and material instead. Spellforge (`tools/spellforge`) keeps its
-  rune and star layers as reference only; do not port them into Verdigris art.
-
-- Owner correction, 2026-09-21: combat channels and resistances use plain names
-  Fire, Cold, Lightning, and Chaos. Do not revive Ember/River/Storm/Gloam as
-  display synonyms from historical specs, sources, snapshots, or generators.
-  Legacy internal IDs may remain for save compatibility. Keep literal rivers,
-  weather, objects and unrelated existing titles separate from combat terminology.
-  Reuse of a subsystem does not approve its old creative wording; current owner
-  corrections override historical documents that call themselves authoritative.
-
-- Owner correction, 2026-10-26 ("the ai cringe terms are sneaking back into the project …
-  stop inventing ai-trope lore"): player-facing text names mechanics plainly, as Path of
-  Exile does. Damage and ailments are Physical, Fire, Cold, Lightning, Chaos, Bleed,
-  Poison, Ignite, Chill, Freeze, Shock and Wither; never Ember, River, Storm, Gloam, Scald,
-  Numb or Jolt. No invented cultures, sagas, oaths, years or flavour sentences (no
-  Kilnfathers, Drowned Court, Salt Oath, Testimony, "born under", "Second Breath"). Small
-  passives are named by their stat; other passives by what they do; jewels by their
-  effect. Do not fill creative gaps with new lore. Old identifiers stay only as hidden
-  compatibility keys. `tools/geometric_skilltree/tests/invented-terms.test.mjs` (run by
-  `wizard-lab.mjs verify`) fails on banned terms in tree, jewel, stat and page text; extend
-  its list when a new invented term is caught, never allowlist prose.
-- Owner correction, 2026-10-26 ("same applies to cringey composite terms like
-  'emberguard' 'vesselforge' etc."): no invented compound coinages anywhere players or the
-  owner read them: two nouns mashed into a fantasy name (X-guard, X-forge, X-ward, X-bound,
-  X-born, X-kiss, X-tithe, X-fathers, -weave, -shard, -sworn, -kin, -fall, -mark, -call,
-  -blade ...). Tools and modules get plain descriptive titles ("Inventory and Item
-  Crafting", "Spell Effects Lab"); folder names and code identifiers may keep old names.
-  `scripts/invented-terms.test.mjs` (in verify) scans every tool page, data script and
-  manifest, prints a table of each flagged string and fails; its ALLOW set takes reviewed
-  real English words only (windward, stonework), never coinages.
-
-The owner rejects unrequested flourish across this repository. Use functional
-names, direct labels, and concise descriptions of what a tool does.
-
-- Do not invent decorative adjectives, fantasy epithets, slogans, lore, fake
-  archive/chapter numbers, or branded synonyms for ordinary actions.
-- Use the owner's terminology. Preserve established project identity and authored
-  game concepts; a UI cleanup does not authorize rewriting game rules or content.
-- Do not interpret "polish" as a request for a new visual style, extra ornament,
-  animations, or marketing copy. Add presentation only when it serves the task.
-- Prefer removing redundant copy to replacing it with another flourish. Make
-  unavailable features and prototype limits explicit instead of disguising them
-  with fictional explanations.
+Owner rules for wording, naming, lore and decoration are in `owner-rules/OWNER-RULES.md`
+(rules 5–13). `owner-rules/lint.mjs` enforces the term rules over every tool page, data
+script and manifest through `owner-rules/wizard.test.mjs` in `node scripts/wizard-lab.mjs
+verify` and CI; it prints a table of each flagged string. Extend `owner-rules/terms.json`
+when a new invented term is caught; its English allowlist takes real words only.
+Rename records: `NAMING.md` and `tools/geometric_skilltree/NAMING.md`.
 
 ## Recurring module work
 

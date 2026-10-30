@@ -1,5 +1,9 @@
 # wizard_orbs — agent pointers
 
+> **Mandatory reading first: [`owner-rules/OWNER-RULES.md`](../../owner-rules/OWNER-RULES.md)** (the owner's
+> standing rules for WIZARD and the ARPG). This file adds only the orb module invariants; it must not restate or
+> contradict those rules.
+
 Read `CLAUDE.md` in this folder before editing anything. Its **Invariants**
 section is binding for all agents and all repo-wide passes (unification,
 standardization, perf, cleanup — no exception).

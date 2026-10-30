@@ -19,7 +19,7 @@ for (const [id, label] of [['ember_resistance', 'Fire Resistance'], ['river_resi
 assert.equal(Pack.brandMods.emberkiss.label, 'Adds {v} Fire Damage');
 assert.equal(Pack.brandMods.emberward.label, '+{v}% to Fire Resistance');
 assert.equal(Pack.brandMods.riverblessed.label, '+{v}% to Cold Resistance');
-// October 26: node titles are functional (see tests/invented-terms.test.mjs for the full lint).
+// October 26: node titles are functional (see owner-rules/lint.mjs for the full lint).
 for (const [id, name] of [['3,-2', 'Cold Resistance'], ['-2,-2', 'Projectile Damage'], ['-2,8', 'Added Fire Damage'], ['8,-4', 'Sign: Mark Chilled Enemies'], ['-4,-4', 'Sign: Double Shock Stacks']]) {
   assert.equal(tree.seats[id].name, name);
 }

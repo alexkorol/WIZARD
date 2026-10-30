@@ -1,8 +1,9 @@
 # Cartographer naming
 
-Use plain geographic or architectural map-type names: Temple, Mesa, Cold River,
-Canyon, Cages, Summit. Apply the same approach to older terrain studies.
+> **Mandatory reading first: [`owner-rules/OWNER-RULES.md`](../../owner-rules/OWNER-RULES.md)** (the owner's
+> standing rules for WIZARD and the ARPG). This file adds only cartographer examples; it must not restate or
+> contradict those rules.
 
-The owner explicitly rejected decorative adjective-plus-noun fantasy naming.
-Do not invent color/material prefixes, ornamental epithets, or lore names unless
-the owner asks for them. Qualifiers should identify a real terrain distinction.
+Map types use plain geographic or architectural names (rule 8): Temple, Mesa, Cold River,
+Canyon, Cages, Summit, applied to older terrain studies too. Qualifiers must identify a real
+terrain distinction.

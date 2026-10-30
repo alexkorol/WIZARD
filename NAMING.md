@@ -2,9 +2,9 @@
 
 Owner corrections: September 21, 2026 (combat channels are Fire, Cold, Lightning and Chaos)
 and October 26, 2026: "stop inventing ai-trope lore", and "same applies to cringey
-composite terms like 'emberguard' 'vesselforge' etc." The rules are in `AGENTS.md`.
-`scripts/invented-terms.test.mjs` (in `scripts/wizard-lab.mjs verify`) enforces them on every
-tool page, data script and manifest and prints a table of anything it flags. Folder names,
+composite terms like 'emberguard' 'vesselforge' etc." The rules are in `owner-rules/OWNER-RULES.md`.
+`owner-rules/lint.mjs` (run by `scripts/wizard-lab.mjs verify`, CI and the ARPG build gate)
+enforces them and prints a table of anything it flags. Folder names,
 file names and code identifiers (for example `tools/spellforge`, `vesselforge.js`,
 `skymetal`, `warcall`, `nightwork`) are kept where renaming them would break saves, links or
 imports.
