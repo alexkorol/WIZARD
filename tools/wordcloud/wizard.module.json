@@ -3,7 +3,7 @@
   "id": "wizard.wordcloud",
   "slug": "wordcloud",
   "title": "Interactive Word Cloud",
-  "description": "Archive candidate. Files preserved; removed from the active Verdigris laboratory surface.",
+  "description": "Archive candidate. Files preserved; removed from the active laboratory surface.",
   "status": "archive",
   "visibility": "archive",
   "category": "utility",

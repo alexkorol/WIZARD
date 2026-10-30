@@ -25,9 +25,11 @@ const KEYS = new Set(T.keyLiterals.map(k => k.toLowerCase()));
 const COMPOUND = new RegExp(`^(?:${T.compoundHeads.join('|')})-?(?:${T.compoundTails.join('|')})(?:s|es)?$`, 'i');
 const INVENTED = new RegExp(`^(?:${T.invented.join('|')})$`, 'i');
 const AILMENT = new RegExp(`^(?:${T.inventedAilments.join('|')})$`);
+// Dropped project names, as proper names only (lowercase "verdigris" is the bronze patina).
+const RETIRED = new RegExp(`^(?:${(T.retiredNames || []).join('|')})$`);
 const CHANNEL = new RegExp(`\\b(?:${T.channelWords.join('|')})\\s+(?:${T.channelNouns.join('|')})\\b`, 'gi');
 const TREE = new RegExp(`(?<![\\w-])(?:${[...T.treeBanned, ...T.treeEra].map(esc).join('|')})(?![\\w-])`, 'i');
-const IDENT = [/\$\{[^}]*\}/g, /\S*\/\S*/g, /\b_\w+/g, /\b[a-z][a-z0-9]*(?:[_-][a-z0-9]+)+\b/g, /\b[a-z]+[A-Z][A-Za-z0-9]*\b/g, /\b[A-Z][a-z]+[A-Z][A-Za-z0-9]*\b/g];
+const IDENT = [/\$\{[^}]*\}/g, /\S*\/\S*/g, /\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\b/g, /\b_\w+/g, /\b[a-z][a-z0-9]*(?:[_-][a-z0-9]+)+\b/g, /\b[a-z]+[A-Z][A-Za-z0-9]*\b/g, /\b[A-Z][a-z]+[A-Z][A-Za-z0-9]*\b/g];
 const prose = text => IDENT.reduce((t, re) => t.replace(re, ' '), text);
 const isKey = text => /^\s*[a-z][a-z0-9]*\s*$/.test(text) || KEYS.has(text.trim().toLowerCase());
 
@@ -39,6 +41,7 @@ export function flagText(text) {
     if (ALLOW.has(word)) continue;
     if (COMPOUND.test(word)) hits.push([token, 'invented compound']);
     else if (INVENTED.test(word) || AILMENT.test(token)) hits.push([token, 'invented term']);
+    else if (RETIRED.test(token)) hits.push([token, 'retired name']);
   }
   return hits;
 }
@@ -124,8 +127,8 @@ export function lint(profile, root) {
 }
 
 function selfTest() {
-  const bad = ['Emberguard Helm', 'Vesselforge engine', '+8% Ember Resistance', 'Your Jolts chain'];
-  const good = ['Firestorm and windward stonework', 'emberkiss', 'the ember cup', 'a heavy jolt'];
+  const bad = ['Emberguard Helm', 'Vesselforge engine', '+8% Ember Resistance', 'Your Jolts chain', 'Verdigris Passive Tree'];
+  const good = ['Firestorm and windward stonework', 'emberkiss', 'the ember cup', 'a heavy jolt', 'verdigris pooling in the grooves', 'VerdigrisStats'];
   for (const s of bad) if (!flagText(s).length) throw new Error(`owner-rules lint self-test missed: ${s}`);
   for (const s of good) if (flagText(s).length) throw new Error(`owner-rules lint self-test flagged: ${s}`);
   if (!flagTree('Iron Doctrine').length || !flagTree('Sign of the Kiln').length || flagTree('Fire Resistance').length) throw new Error('owner-rules lint self-test: tree pass');
@@ -142,6 +145,6 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     console.log(`# Owner-rule text lint: ${profile} (${report.length} flagged)\n\n| Where | Term | Why | Text |\n|---|---|---|---|`);
     for (const r of report) console.log(`| ${r.where} | ${r.term} | ${r.why} | ${r.text.replace(/\|/g, '/')} |`);
   }
-  if (report.length) { console.error(`\n${report.length} owner-rule violation(s); see OWNER-RULES.md rules 5-8 and 12.`); process.exit(1); }
+  if (report.length) { console.error(`\n${report.length} owner-rule violation(s); see OWNER-RULES.md rules 5-8, 12 and 47.`); process.exit(1); }
   console.log(`owner-rules lint (${profile}): ${files} player-facing files clean.`);
 }

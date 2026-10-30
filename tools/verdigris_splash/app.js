@@ -3027,7 +3027,7 @@ function boot() {
   world.add(abyss.group);
 
   const epicWorld = new THREE.Group();
-  epicWorld.name = "Verdigris world atlas";
+  epicWorld.name = "World atlas";
   scene.add(epicWorld);
   const epicUndersideTexture = new THREE.TextureLoader().load("assets/world/celestial_world_underside_texture.png?v=3");
   epicUndersideTexture.colorSpace = THREE.SRGBColorSpace;
@@ -3299,7 +3299,7 @@ function boot() {
     (error) => {
       meshyWorldLoadError = String(error?.message || error || "unknown load error");
       canvas.dataset.meshyWorld = "procedural-fallback";
-      console.warn("Optimized Verdigris world could not load; keeping procedural fallback.", error);
+      console.warn("Optimized world could not load; keeping procedural fallback.", error);
     },
   );
 
@@ -3582,10 +3582,10 @@ function boot() {
       ? "WORLD VIEW"
       : "CROWNLANDS VIEW";
     canvas.setAttribute("aria-label", epicActive
-      ? "The whole floating world of Verdigris. Drag to orbit; scroll or pinch to zoom"
+      ? "The whole floating world. Drag to orbit; scroll or pinch to zoom"
       : "The Crownlands island and the ancient Crown of Tides citadel. Drag to orbit; scroll or pinch to zoom");
     if (announce) {
-      menuStatus.textContent = epicActive ? "World view: the whole of Verdigris." : "Crownlands view: the observatory province.";
+      menuStatus.textContent = epicActive ? "World view: the whole world." : "Crownlands view: the observatory province.";
       menuStatus.classList.add("is-visible");
     }
     resetCameraControl(true);

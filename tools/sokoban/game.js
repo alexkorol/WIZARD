@@ -130,7 +130,7 @@
       'V. Boxes are not independent variables.',
       'VI. The shortest proof may feel impossible.',
       'VII. The final chambers outlast the lesser oracle.',
-      'VIII. The Verdigris Vault remembers your proof.'
+      'VIII. The Vault remembers your proof.'
     ];
     els['archive-note'].textContent = notes[fragments];
   }
@@ -408,7 +408,7 @@
   }
 
   function newRun() {
-    var accepted = window.confirm('Reset the Verdigris Vault campaign? Your cleared-stage record will be erased.');
+    var accepted = window.confirm('Reset the Vault campaign? Your cleared-stage record will be erased.');
     if (!accepted) return;
     save.floor = 1;
     save.cleared = 0;

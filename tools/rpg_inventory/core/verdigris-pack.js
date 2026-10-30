@@ -19,7 +19,7 @@
 
   const pack = {
     id: 'verdigris-1',
-    name: 'Verdigris — the Green Lands',
+    name: 'Bronze Age item pack',
 
     settings: {
       maxVessel: 6,

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "wizard.systems-bench",
   "slug": "systems_bench",
-  "title": "Verdigris Systems Bench",
+  "title": "Systems Bench",
   "description": "Replay recorded events, inspect payloads, and preview module state through the shared adapter.",
   "status": "prototype",
   "visibility": "dashboard",

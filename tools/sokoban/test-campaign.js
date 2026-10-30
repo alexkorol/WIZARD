@@ -33,4 +33,4 @@ assert.strictEqual(/<script src="core\.js"><\/script>/.test(html), false, 'offli
 assert.ok(/<script src="levels\.js"><\/script>/.test(html), 'page must load the frozen pack');
 assert.strictEqual(/Core\.(solve|generate)\s*\(/.test(game), false, 'browser runtime must never solve or generate');
 
-console.log('Verified 24 frozen Verdigris stages, proof routes, taboo cells, and a solver-free browser bundle.');
+console.log('Verified 24 frozen stages, proof routes, taboo cells, and a solver-free browser bundle.');

@@ -9,7 +9,7 @@ documents must not restate or contradict these rules.
 
 - **Canonical copy:** WIZARD `owner-rules/` (gh-pages). The ARPG carries a synced copy;
   never edit that copy. To add or change a rule, see "Changing a rule" at the end.
-- **Enforced by:** `owner-rules/lint.mjs` with `owner-rules/terms.json`, run by WIZARD
+- **Enforced by:** `owner-rules/lint.mjs` with `owner-rules/terms.json` (rules 5–8, 12, 47), run by WIZARD
   `scripts/wizard-lab.mjs verify` (and CI) and by the ARPG build gate.
 
 ## North star
@@ -56,6 +56,13 @@ documents must not restate or contradict these rules.
 11. **Literal objects are fine** (2026-09-21). Real rivers, weather, embers in a fire, the
     owner's ember-in-a-bowl concept, kilns and river pearls stay; the rule targets invented
     terms, not plain words. *Why:* a terminology fix must not rename the world.
+
+47. **No project or game name in player-facing text** (2026-10-30). "Verdigris" is dropped and
+    the game name is undecided: use neutral labels ("Passive Tree", "Systems Laboratory",
+    "World Preview"), and placeholders only where a title is unavoidable (the ARPG splash shows
+    "THE ARPG", the product name). Internal identifiers, file names and namespaces may keep
+    "Verdigris"; lowercase "verdigris" is the bronze patina. *Why:* the owner dropped the name;
+    do not invent a replacement. (Numbered 47 to keep earlier rule numbers stable.)
 
 ## Setting and era
 

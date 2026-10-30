@@ -351,5 +351,9 @@
   "reliquary",
   "milestone",
   "censer"
+ ],
+ "retiredNames": [
+  "Verdigris",
+  "VERDIGRIS"
  ]
 }

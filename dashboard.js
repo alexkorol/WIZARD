@@ -51,7 +51,7 @@
           '</div>' +
           '<h3>' + escapeHtml(mod.title) + '</h3>' +
           '<p class="purpose">' + escapeHtml(mod.description) + '</p>' +
-          '<p class="target"><span>Verdigris target</span> ' + escapeHtml(target) + '</p>' +
+          '<p class="target"><span>Game target</span> ' + escapeHtml(target) + '</p>' +
           '<div class="cta-row">' +
             '<a class="btn btn-primary" href="' + escapeHtml(mod.launch) + '">Launch</a>' +
             '<a class="btn btn-ghost" href="' + escapeHtml(docsUrl(mod)) + '">Documentation</a>' +
