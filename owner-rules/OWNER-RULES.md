@@ -109,6 +109,12 @@ documents must not restate or contradict these rules.
 22. **Scenery rules** (2026-09-20). Luminous crystals belong in caves, not built dungeons
     (use clay lamps); jugs, timbers and rocks are separate assets placed by recipe, never
     fused installations. *Why:* location fit and reusable, independently grounded pieces.
+48. **No cartoon status glyphs over characters** (2026-10-30). No stars, birds, swirls,
+    exclamation or question pops, skulls or other floating symbols above characters or
+    monsters to show a status. Show it through animation (a stagger or slump), a subtle
+    grounded effect on or around the body, and the status UI (health-bar markers, buff
+    bar). *Why:* "[we shouldn't have] stars like that in arpg. Looks so cartoony and
+    cheesy."
 
 ## Assets, sourcing and generation
 
