@@ -195,6 +195,12 @@ Details and implementation notes live in ARPG `the ARPG/Documentation/DESIGN-DIR
 46. **Release media stays current** (2026-09-19). 4–7 feature screenshots and short GIFs in
     the ARPG README, refreshed when updates ship; never promotional art for unbuilt features.
     *Why:* visible, honest progress.
+49. **Captures stay small** (2026-10-31). Keep compressed video only (H.264 around CRF 23):
+    pipe frames into the encoder, or delete raw frame dumps once the encode is verified;
+    `output/` is capped at 10 GB with automatic pruning of the oldest superseded runs (latest
+    before/after per state and pipeline inputs kept); check free disk before large captures.
+    *Why:* capture output filled the owner's disk (113 GB across two ARPG checkouts).
+    (Numbered 49 to keep earlier rule numbers stable.)
 
 ## Domain rule sets
 
