@@ -27,6 +27,13 @@ documents must not restate or contradict these rules.
    plans are history; WIZARD tools remain reference implementations and sources. *Why:* the
    owner moved production to Unity.
 
+50. **Never match ground speed by speeding up playback** (2026-11-06). A clip plays within
+    about 0.9-1.1x of its source rate; speed is matched with stride length and a real gait
+    cycle, not a faster clip. A body that must cover more ground needs a longer stride or a
+    different gait authored for that speed. Large canines gallop at roughly 2-2.5 strides a
+    second. *Why:* "Gallop looks very sped up, a known Claude animation issue." (Numbered 50
+    to keep earlier rule numbers stable.)
+
 ## Language and naming
 
 5. **Plain combat terms** (2026-09-21). Physical, Fire, Cold, Lightning, Chaos; ailments
