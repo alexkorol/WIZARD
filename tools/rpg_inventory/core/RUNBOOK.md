@@ -23,6 +23,9 @@ loop. Filesystem is the only state; no memory required.
    `globalAvoid` into the brief. Supply an artefact shape reference where the
    noun's usual picture is wrong (owner rule 51). A new item type needs a
    precedent added to the builder first.
+   Modpools follow the same rule: a base's mods come from its `modpool`
+   (job, material, zone and shared roles in `core/item_modpools.py`); never
+   give a base a mod its zone's skills do not use.
 1. `python3 core/status.py` — coverage, today's budget usage, prioritized
    queue. It applies `core/asset-review.js`: discarded items are retired, and
    rework items are queued before ordinary missing targets. If 40 gens already

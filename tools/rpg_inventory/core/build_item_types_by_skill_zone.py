@@ -14,13 +14,17 @@ Edit the data in this file, then run:
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import item_modpools  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[3]
 JSON_OUT = ROOT / "tools/rpg_inventory/core/item-types-by-skill-zone.json"
 MD_OUT = ROOT / "docs/ITEM-TYPES-BY-SKILL-ZONE.md"
 
-VERSION = "2026-11-07.1"
+VERSION = "2026-11-07.2"
 
 SLOTS = [
     ("main", "Main hand"),
@@ -410,7 +414,7 @@ def build_json() -> dict:
         "version": VERSION,
         "doc": "docs/ITEM-TYPES-BY-SKILL-ZONE.md",
         "builder": "tools/rpg_inventory/core/build_item_types_by_skill_zone.py",
-        "rule": "Item briefs come from this mapping (zone -> skills -> tools for the job), never from 'stat combo + slot'.",
+        "rule": "Item briefs and modpools come from this mapping (zone -> skills -> tools for the job -> mods for the job), never from 'stat combo + slot'.",
         "axes": {"INT": 90, "DEX": 210, "STR": 330},
         "bands": BANDS,
         "slots": [{"id": s, "label": l} for s, l in SLOTS],
@@ -489,6 +493,8 @@ def build_md(data: dict) -> str:
                     i["name"], f"{z['label']} / {i['band']}", serves, i["materials"], i["silhouette"],
                     i["precedent"], i["confidence"], i["avoid"]]) + " |")
     a("")
+    L.extend(item_modpools.md(data, md_escape))
+    a("")
     a("## Do not make (all zones)")
     a("")
     for s in GLOBAL_AVOID:
@@ -507,6 +513,7 @@ def build_md(data: dict) -> str:
     a("2. Take the slot items for that zone and band from the JSON; skip any with `briefable: false`.")
     a("3. The brief names the item, its construction, silhouette and precedent, and quotes the item's `avoid` plus `globalAvoid`. Supply a shape reference (artefact image) where the noun's usual picture is wrong (rule 51).")
     a("4. A coherent loadout call (RUNBOOK addendum) uses one faction + zone + band in place of faction + axis + tier.")
+    a("5. Mods for a base come from its `modpool`; never add a mod to a base whose skills it does not serve.")
     a("")
     a("## Open questions (global)")
     a("")
@@ -519,7 +526,7 @@ def build_md(data: dict) -> str:
 
 
 def main() -> None:
-    data = build_json()
+    data = item_modpools.attach(build_json())
     JSON_OUT.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
     MD_OUT.write_text(build_md(data))
     n = sum(len(z["items"]) for z in data["zones"])

@@ -47,6 +47,7 @@
   .it.outer::before { background: var(--zc); }
   .it.unconf { color: var(--unconf); font-style: italic; }
   .it.disp { text-decoration: underline dotted var(--muted); }
+  .it.thin::after { content: " thin"; color: var(--muted); font-size: 9.5px; font-style: normal; }
   .sep { color: var(--line); margin: 0 3px; }
   .center { display: flex; flex-direction: column; gap: 12px; }
   svg { width: 100%; height: auto; display: block; }
@@ -67,6 +68,7 @@
   <span><b>Band</b> ring 1-2 core <span class="it core" style="--zc:var(--muted)"></span> · 3-6 mid <span class="it mid" style="--zc:var(--muted)"></span> · 7-10 outer <span class="it outer" style="--zc:var(--muted)"></span></span>
   <span><i style="color:var(--unconf)">italic grey</i> = unconfirmed, not briefable</span>
   <span><span style="text-decoration:underline dotted">dotted</span> = function disputed, disclose in brief</span>
+  <span><span style="color:var(--muted);font-size:9.5px">thin</span> = modpool has too few mods for the base's job</span>
   <span>Zone membership of skills is inferred (no attribute tags in game code).</span>
 </div>
 <main id="main">
@@ -91,8 +93,10 @@ function card(z, slots) {
     const order = { core: 0, mid: 1, outer: 2 };
     its.sort((a, b) => order[a.band] - order[b.band]);
     const cells = its.map(i => {
-      const cls = ['it', i.band, i.confidence === 'U' ? 'unconf' : '', i.confidence === 'Disp' ? 'disp' : ''].join(' ');
-      return `<span class="${cls}" title="${esc(i.skills.join(', ') + ' — ' + i.why + ' | ' + i.precedent)}">${esc(i.name)}</span>`;
+      const thin = i.modpool && i.modpool.flags.length;
+      const cls = ['it', i.band, i.confidence === 'U' ? 'unconf' : '', i.confidence === 'Disp' ? 'disp' : '', thin ? 'thin' : ''].join(' ');
+      const mods = i.modpool ? ' | rolls: ' + i.modpool.pool.map(p => p.mod).join(', ') : '';
+      return `<span class="${cls}" title="${esc(i.skills.join(', ') + ' — ' + i.why + ' | ' + i.precedent + mods)}">${esc(i.name)}</span>`;
     }).join('<span class="sep">·</span> ');
     return `<tr><td class="slot">${esc(s.label)}</td><td>${cells}</td></tr>`;
   }).join('');
