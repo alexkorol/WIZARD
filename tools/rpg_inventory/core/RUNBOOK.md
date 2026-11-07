@@ -13,6 +13,16 @@ loop. Filesystem is the only state; no memory required.
    rows by visual construction family before writing a prompt. A roster row is
    not generation-ready merely because it has a written description or a new
    name.
+0b. **Item briefs come from the skill-zone mapping, not "stat combo + slot"**
+   (owner request 2026-11-07). Never brief "a DEX/INT helmet". Choose a zone
+   and ring band, take that zone's slot items from
+   `core/item-types-by-skill-zone.json` (rebuild with
+   `python3 core/build_item_types_by_skill_zone.py`; doc
+   `docs/ITEM-TYPES-BY-SKILL-ZONE.md`), skip `briefable: false` rows, and copy
+   the item's construction, silhouette, precedent, `avoid` and the file's
+   `globalAvoid` into the brief. Supply an artefact shape reference where the
+   noun's usual picture is wrong (owner rule 51). A new item type needs a
+   precedent added to the builder first.
 1. `python3 core/status.py` — coverage, today's budget usage, prioritized
    queue. It applies `core/asset-review.js`: discarded items are retired, and
    rework items are queued before ordinary missing targets. If 40 gens already
@@ -119,7 +129,7 @@ see-through holes. Helmet eyes must be OPAQUE.
 - Six to eight agents are for one-call locked generation waves only.
 - For routine manual web roster expansion, a locked generation call is one
   coherent wildcard loadout request: two reviewed character/loadout references
-  at one faction + axis + tier, producing up to ten separate paperdoll-slot
+  at one faction + skill zone + band (formerly axis + tier; see step 0b), producing up to ten separate paperdoll-slot
   item images. Do not replace this with ten independently designed item briefs.
   Coverage selects which ladder points to run, not what material recipe to
   impose on each item. Current pack:

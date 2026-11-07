@@ -1,0 +1,2694 @@
+{
+  "schema": "wizard.item-types-by-skill-zone.v1",
+  "version": "2026-11-07.1",
+  "doc": "docs/ITEM-TYPES-BY-SKILL-ZONE.md",
+  "builder": "tools/rpg_inventory/core/build_item_types_by_skill_zone.py",
+  "rule": "Item briefs come from this mapping (zone -> skills -> tools for the job), never from 'stat combo + slot'.",
+  "axes": {
+    "INT": 90,
+    "DEX": 210,
+    "STR": 330
+  },
+  "bands": {
+    "core": {
+      "rings": [
+        1,
+        2
+      ],
+      "meaning": "Shared mechanics near the Origin. Everyday kit any build can wear; cheapest materials (flint, bone, hide, wool, linen)."
+    },
+    "mid": {
+      "rings": [
+        3,
+        6
+      ],
+      "meaning": "Versatile and hybrid archetypes. The working tools of the trade (copper, early bronze, specialist organic kit)."
+    },
+    "outer": {
+      "rings": [
+        7,
+        10
+      ],
+      "meaning": "Specialised archetypes past the ring-7 class node. Full professional or high-status kit (bronze, gold, ivory, inlay); matches the class unlocks."
+    }
+  },
+  "slots": [
+    {
+      "id": "main",
+      "label": "Main hand"
+    },
+    {
+      "id": "off",
+      "label": "Off hand"
+    },
+    {
+      "id": "head",
+      "label": "Head"
+    },
+    {
+      "id": "body",
+      "label": "Body"
+    },
+    {
+      "id": "hands",
+      "label": "Hands"
+    },
+    {
+      "id": "belt",
+      "label": "Belt"
+    },
+    {
+      "id": "feet",
+      "label": "Feet"
+    },
+    {
+      "id": "amulet",
+      "label": "Amulet"
+    },
+    {
+      "id": "ring",
+      "label": "Ring"
+    }
+  ],
+  "confidence": {
+    "A": "attested: real find of this form in the period",
+    "Art": "attested in period art or texts only; construction inferred",
+    "Adapt": "attested elsewhere or for another use; adapted here (disclose)",
+    "Disp": "object attested, but the function used here is disputed (disclose)",
+    "U": "unconfirmed: do not generate without owner sign-off"
+  },
+  "globalAvoid": [
+    "iron or steel look (grey sheen, fullers, crossguards); no chainmail, rivet-mail or plate armour",
+    "stitched modern soles, welts, heels, toe caps on any footwear",
+    "aprons, kilts, loincloths or hanging panels presented as body armour; belts drawn as faulds or tassets",
+    "forked or gnarled sticks as staffs or weapons; crystal-topped staffs",
+    "stone ball set in a metal cup as a 'stone mace' (real maceheads are drilled through and sit on a wooden haft)",
+    "invented-name items, lore epithets or compound coinages (owner rules 6-8)",
+    "medieval silhouettes: closed, crested, visored or nasal helmets; heater or kite shields; longswords; buckles with tongues",
+    "glass vials, potion bottles, lanterns, candles, coins, books, scrolls",
+    "glowing gems, energy veins, glow halos, floating crystals",
+    "pentagrams, rune bands, sigils, pseudo-text or pseudo-cuneiform",
+    "single boot or glove where a pair is the item; cropped cords or shafts; arrows shown in quivers (pipeline rule)"
+  ],
+  "existingBases": [
+    {
+      "name": "Wooden Stick",
+      "zone": "all (starter)",
+      "band": "core"
+    },
+    {
+      "name": "Flint Spear",
+      "zone": "DEX (Reach row)",
+      "band": "mid"
+    },
+    {
+      "name": "Flint Shortsword",
+      "zone": "DEX/STR",
+      "band": "core"
+    },
+    {
+      "name": "Bone Knife",
+      "zone": "INT/DEX (Focus row)",
+      "band": "mid"
+    },
+    {
+      "name": "Flint Hatchet",
+      "zone": "DEX/STR (Alignment row)",
+      "band": "core"
+    },
+    {
+      "name": "Flint Lopper",
+      "zone": "DEX/STR (Reaping sweep)",
+      "band": "mid"
+    },
+    {
+      "name": "Wooden Cudgel",
+      "zone": "STR",
+      "band": "core"
+    },
+    {
+      "name": "Root Ball",
+      "zone": "STR (two-handed maul)",
+      "band": "core"
+    },
+    {
+      "name": "Bone Spikes (claw)",
+      "zone": "DEX (no period precedent: open)",
+      "band": "mid"
+    },
+    {
+      "name": "Jawbone",
+      "zone": "STR (no period precedent: open)",
+      "band": "core"
+    },
+    {
+      "name": "Wood Wand",
+      "zone": "INT/DEX (Focus row)",
+      "band": "core"
+    },
+    {
+      "name": "Wood Rod",
+      "zone": "STR/INT (Alignment row)",
+      "band": "core"
+    },
+    {
+      "name": "Wood Staff",
+      "zone": "INT / STR (Sphere row)",
+      "band": "core"
+    },
+    {
+      "name": "Reed Buckler",
+      "zone": "STR/INT (Element row)",
+      "band": "core"
+    },
+    {
+      "name": "Copper Leaf Dagger",
+      "zone": "DEX/STR",
+      "band": "mid"
+    },
+    {
+      "name": "Bronze Leaf Sword",
+      "zone": "DEX/STR",
+      "band": "mid"
+    },
+    {
+      "name": "Bronze Spiked Club",
+      "zone": "STR (check 'spiked' against finds)",
+      "band": "mid"
+    },
+    {
+      "name": "Banded Stone Maul",
+      "zone": "STR",
+      "band": "mid"
+    },
+    {
+      "name": "Copper / Bronze Leaf / Obsidian / Barbed Spears",
+      "zone": "DEX",
+      "band": "mid-outer"
+    }
+  ],
+  "zones": [
+    {
+      "id": "int",
+      "label": "INT",
+      "angle": 90,
+      "mix": "INT 100",
+      "treeClass": "Archmage (ring 7 class node)",
+      "classUnlocks": "second curio, extra socket on rite foci, Attendant focus slot",
+      "wedges": "Drowned Study (INT leaning INT/DEX: cold, chill, freeze, marks); INT spoke (Ward, Rite Damage)",
+      "latticeRow": "Element row (Archmage)",
+      "gameSkills": [
+        "frost-nova",
+        "blizzard",
+        "frozen-orb",
+        "geyser",
+        "holy-freeze (aura)",
+        "arcane-ward",
+        "energy-shield",
+        "teleport",
+        "cursed (curse)",
+        "weakened (curse)",
+        "power-charges (inferred)"
+      ],
+      "archetypes": "spell bolt 95/4/1, nova, curse 90/8/2, channelled spells, teleport 73/27/0, ward",
+      "role": "Ritual specialist who is also healer and diviner, not a battle-mage. Evidence: shaman burials (Hilazon Tachtit c. 10,000 BC; Bad Duerrenberg c. 7000 BC; Upton Lovell G2a c. 1800 BC), Mari liver models (18th c. BC), the Ramesseum magician's box (c. 1700 BC).",
+      "avoid": [
+        "gem-tipped or glowing staffs",
+        "robes with sigils, star patterns or trim",
+        "floppy hats",
+        "books, scrolls, candles"
+      ],
+      "open": [
+        "No wand-like object is attested outside Egypt; INT wands follow Egyptian finds only.",
+        "No wooden frame drum survives; the clay drum stands in. Is a hide frame drum acceptable as adapted?",
+        "Hvidegaard bag contents need checking against the primary publication before a brief uses them.",
+        "Sources span Natufian to New Kingdom (8,000 years). Should the owner weight regions or periods per ring band?"
+      ],
+      "items": [
+        {
+          "id": "int.main.bronze-serpent-wand",
+          "slot": "main",
+          "band": "mid",
+          "name": "Bronze serpent wand",
+          "skills": [
+            "spell bolt",
+            "channelling"
+          ],
+          "why": "rigid directional rod held toward the target",
+          "materials": "cast copper alloy",
+          "silhouette": "straight or slightly wavy snake, about 28 cm; reads as a thin dark rod with a head",
+          "precedent": "Ramesseum magician's box, Fitzwilliam E.63.1896, c. 1700 BC",
+          "confidence": "A",
+          "avoid": "coiled caduceus; gem eyes; glow",
+          "briefable": true
+        },
+        {
+          "id": "int.main.ivory-curved-wand",
+          "slot": "main",
+          "band": "outer",
+          "name": "Ivory curved wand",
+          "skills": [
+            "curses",
+            "ward",
+            "nova"
+          ],
+          "why": "drawn on the ground to mark a protective circle",
+          "materials": "hippopotamus ivory, incised animals",
+          "silhouette": "flat pale crescent blade shape; shallow carving",
+          "precedent": "Middle Kingdom apotropaic wands, four in the Ramesseum box, c. 1900-1700 BC",
+          "confidence": "A",
+          "avoid": "straight 'magic wand' stick; glowing glyphs",
+          "briefable": true
+        },
+        {
+          "id": "int.main.wooden-staff",
+          "slot": "main",
+          "band": "core",
+          "name": "Wooden staff",
+          "skills": [
+            "channelling",
+            "ward"
+          ],
+          "why": "walking and ritual staff; the everyday caster's long tool",
+          "materials": "straight hardwood, hide grip wrap",
+          "silhouette": "plain straight pole, slight taper",
+          "precedent": "staffs common in Egyptian and Near Eastern art; Wood Staff already a game base",
+          "confidence": "Art",
+          "avoid": "forked or gnarled stick; crystal top",
+          "briefable": true
+        },
+        {
+          "id": "int.off.clay-liver-model",
+          "slot": "off",
+          "band": "mid",
+          "name": "Clay liver model",
+          "skills": [
+            "curses",
+            "marks",
+            "prophecy"
+          ],
+          "why": "the diviner's reading tool; marks and curses read as foresight",
+          "materials": "fired clay with peg holes and ruled zones",
+          "silhouette": "flat lobed plaque, holes and grid only",
+          "precedent": "Mari palace liver models (Louvre AO 19829), Hattusa, Babylon",
+          "confidence": "A",
+          "avoid": "pseudo-cuneiform text lines",
+          "briefable": true
+        },
+        {
+          "id": "int.off.bronze-sistrum",
+          "slot": "off",
+          "band": "outer",
+          "name": "Bronze sistrum",
+          "skills": [
+            "channelled auras"
+          ],
+          "why": "shaken rattle for sustained rites",
+          "materials": "bronze loop frame, loose rods with discs, wood or bronze handle",
+          "silhouette": "loop on a handle with crossbars",
+          "precedent": "New Kingdom Egypt; Tutankhamun's tomb (check record)",
+          "confidence": "A",
+          "avoid": "hand-bell shape",
+          "briefable": true
+        },
+        {
+          "id": "int.off.clay-drum",
+          "slot": "off",
+          "band": "core",
+          "name": "Clay drum",
+          "skills": [
+            "channelling",
+            "nova"
+          ],
+          "why": "steady beat for channelled rites",
+          "materials": "fired clay body with lugs, laced hide head",
+          "silhouette": "goblet or drum body with lugs",
+          "precedent": "Bernburg and Walternienburg cultures, Germany, c. 3200 BC",
+          "confidence": "A",
+          "avoid": "painted Siberian frame drum (ethnographic, 18th c.+)",
+          "briefable": true
+        },
+        {
+          "id": "int.head.antler-headdress",
+          "slot": "head",
+          "band": "outer",
+          "name": "Antler headdress",
+          "skills": [
+            "summoning beasts",
+            "curses"
+          ],
+          "why": "wearing the animal to stand for it",
+          "materials": "roe or red deer antlers on a cut skull plate, hide ties",
+          "silhouette": "two short antlers on a skull cap",
+          "precedent": "Bad Duerrenberg c. 7000 BC; Star Carr frontlets c. 9000 BC",
+          "confidence": "A",
+          "avoid": "horned Viking helmet; antler crown",
+          "briefable": true
+        },
+        {
+          "id": "int.head.sheet-gold-cone-hat",
+          "slot": "head",
+          "band": "outer",
+          "name": "Sheet gold cone hat",
+          "skills": [
+            "ward",
+            "auras"
+          ],
+          "why": "high-status ritual dress for the outer INT build",
+          "materials": "hammered sheet gold, rows of punched circles",
+          "silhouette": "tall narrow cone with a brim",
+          "precedent": "Schifferstadt hat c. 1400-1300 BC; Berlin gold hat c. 1000-800 BC",
+          "confidence": "A",
+          "avoid": "floppy wizard hat; stars and moons",
+          "briefable": true
+        },
+        {
+          "id": "int.head.felt-cap",
+          "slot": "head",
+          "band": "core",
+          "name": "Felt cap",
+          "skills": [
+            "any"
+          ],
+          "why": "plain head cover for the everyday healer",
+          "materials": "felted wool",
+          "silhouette": "rounded cap",
+          "precedent": "Borum Eshoej and Trindhoej caps, Denmark, c. 1370 BC",
+          "confidence": "A",
+          "avoid": "hood with a skull; cowl",
+          "briefable": true
+        },
+        {
+          "id": "int.body.hide-garment-with-bone-point-fringe",
+          "slot": "body",
+          "band": "outer",
+          "name": "Hide garment with bone point fringe",
+          "skills": [
+            "channelling",
+            "summoning"
+          ],
+          "why": "the fringe rattles as the wearer moves",
+          "materials": "hide, perforated bone points, boar tusks",
+          "silhouette": "garment with a dense fringe at hem and chest",
+          "precedent": "Upton Lovell G2a c. 1850-1700 BC; Bad Duerrenberg",
+          "confidence": "A",
+          "avoid": "bone armour plates; skull ornaments",
+          "briefable": true
+        },
+        {
+          "id": "int.body.leopard-skin-over-linen-robe",
+          "slot": "body",
+          "band": "outer",
+          "name": "Leopard skin over linen robe",
+          "skills": [
+            "auras",
+            "ward"
+          ],
+          "why": "the funerary priest's costume",
+          "materials": "leopard pelt, pleated linen",
+          "silhouette": "robe with a pelt over one shoulder",
+          "precedent": "sem-priest in Old to New Kingdom reliefs",
+          "confidence": "Art",
+          "avoid": "robe with sigils; hooded cowl",
+          "briefable": true
+        },
+        {
+          "id": "int.body.oval-wool-cloak",
+          "slot": "body",
+          "band": "core",
+          "name": "Oval wool cloak",
+          "skills": [
+            "any"
+          ],
+          "why": "everyday warmth; does not hinder casting",
+          "materials": "woven wool",
+          "silhouette": "semicircle cloak folded at the shoulder",
+          "precedent": "Muldbjerg and Trindhoej, Denmark, c. 1350 BC",
+          "confidence": "A",
+          "avoid": "trimmed fantasy robe",
+          "briefable": true
+        },
+        {
+          "id": "int.hands.linen-gloves",
+          "slot": "hands",
+          "band": "outer",
+          "name": "Linen gloves",
+          "skills": [
+            "channelling"
+          ],
+          "why": "ritual handling",
+          "materials": "woven linen",
+          "silhouette": "pair of plain gloves with cuffs",
+          "precedent": "Tutankhamun's tomb, c. 1325 BC (check record)",
+          "confidence": "A",
+          "avoid": "gauntlets; glowing palms",
+          "briefable": true
+        },
+        {
+          "id": "int.hands.spiral-arm-rings",
+          "slot": "hands",
+          "band": "core",
+          "name": "Spiral arm rings",
+          "skills": [
+            "any"
+          ],
+          "why": "bare hands free for rites; status on the arm",
+          "materials": "gold or bronze wire",
+          "silhouette": "pair of coils",
+          "precedent": "Central and Northern European Bronze Age hoards",
+          "confidence": "A",
+          "avoid": "fingerless gloves",
+          "briefable": true
+        },
+        {
+          "id": "int.belt.calfskin-belt-with-pouch",
+          "slot": "belt",
+          "band": "core",
+          "name": "Calfskin belt with pouch",
+          "skills": [
+            "healer kit",
+            "ward"
+          ],
+          "why": "carries tinder fungus, birch polypore (medicine) and a bone awl",
+          "materials": "calf leather, sewn pouch",
+          "silhouette": "narrow belt with a flat pouch",
+          "precedent": "Oetzi's belt, c. 3300 BC",
+          "confidence": "A",
+          "avoid": "rectangular buckle; potion bottles",
+          "briefable": true
+        },
+        {
+          "id": "int.belt.leather-charm-bag-on-a-belt",
+          "slot": "belt",
+          "band": "mid",
+          "name": "Leather charm bag on a belt",
+          "skills": [
+            "curses",
+            "summoning"
+          ],
+          "why": "holds animal parts and small objects used in rites",
+          "materials": "leather bag; amber, shell, claw, jaw inside",
+          "silhouette": "belt with a drawstring bag",
+          "precedent": "Hvidegaard burial, Zealand, c. 1300 BC (contents list unverified)",
+          "confidence": "Adapt",
+          "avoid": "glass vials; dangling chimes",
+          "briefable": true
+        },
+        {
+          "id": "int.feet.bearskin-soled-shoes",
+          "slot": "feet",
+          "band": "core",
+          "name": "Bearskin-soled shoes",
+          "skills": [
+            "any"
+          ],
+          "why": "quiet, warm, no hard sole",
+          "materials": "bearskin sole, deer hide upper, grass net liner",
+          "silhouette": "rounded bag-like shoe gathered by a thong",
+          "precedent": "Oetzi, c. 3300 BC",
+          "confidence": "A",
+          "avoid": "stitched modern sole; heel",
+          "briefable": true
+        },
+        {
+          "id": "int.feet.rush-sandals",
+          "slot": "feet",
+          "band": "mid",
+          "name": "Rush sandals",
+          "skills": [
+            "any"
+          ],
+          "why": "light footwear for temple and dry ground",
+          "materials": "rush or papyrus",
+          "silhouette": "flat woven sole, toe thong",
+          "precedent": "Egyptian finds incl. Tutankhamun's tomb",
+          "confidence": "A",
+          "avoid": "chunky modern sandal; separate sole edge",
+          "briefable": true
+        },
+        {
+          "id": "int.amulet.faience-eye-amulet",
+          "slot": "amulet",
+          "band": "mid",
+          "name": "Faience eye amulet",
+          "skills": [
+            "curses",
+            "ward"
+          ],
+          "why": "protective eye",
+          "materials": "blue-green faience on a cord",
+          "silhouette": "small eye shape on a cord",
+          "precedent": "Egyptian udjat amulets, common",
+          "confidence": "A",
+          "avoid": "glowing pendant",
+          "briefable": true
+        },
+        {
+          "id": "int.amulet.stone-cylinder-seal-on-a-cord",
+          "slot": "amulet",
+          "band": "outer",
+          "name": "Stone cylinder seal on a cord",
+          "skills": [
+            "marks",
+            "curses"
+          ],
+          "why": "the owner's mark, rolled onto clay",
+          "materials": "lapis or other stone",
+          "silhouette": "small cylinder on a cord",
+          "precedent": "Mesopotamian seals, common",
+          "confidence": "A",
+          "avoid": "carved runes",
+          "briefable": true
+        },
+        {
+          "id": "int.amulet.drilled-tooth-pendant",
+          "slot": "amulet",
+          "band": "core",
+          "name": "Drilled tooth pendant",
+          "skills": [
+            "summoning"
+          ],
+          "why": "part of the animal worn by the caster",
+          "materials": "drilled animal tooth or talon",
+          "silhouette": "single tooth on a cord",
+          "precedent": "Mesolithic to Bronze Age, common; eagle remains at Hilazon Tachtit",
+          "confidence": "A",
+          "avoid": "gem-set claw",
+          "briefable": true
+        },
+        {
+          "id": "int.ring.gold-wire-spiral-ring",
+          "slot": "ring",
+          "band": "core",
+          "name": "Gold wire spiral ring",
+          "skills": [
+            "any"
+          ],
+          "why": "plain status ring",
+          "materials": "gold wire",
+          "silhouette": "small coil",
+          "precedent": "European Early and Middle Bronze Age",
+          "confidence": "A",
+          "avoid": "faceted solitaire",
+          "briefable": true
+        },
+        {
+          "id": "int.ring.scarab-seal-ring",
+          "slot": "ring",
+          "band": "outer",
+          "name": "Scarab seal ring",
+          "skills": [
+            "ward",
+            "marks"
+          ],
+          "why": "seal of the owner",
+          "materials": "steatite or faience scarab on a swivel",
+          "silhouette": "oval bezel on a wire hoop",
+          "precedent": "Egypt, Middle Kingdom onward",
+          "confidence": "A",
+          "avoid": "glowing gem",
+          "briefable": true
+        }
+      ]
+    },
+    {
+      "id": "int_dex",
+      "label": "INT/DEX",
+      "angle": 150,
+      "mix": "INT ~55 / DEX ~45",
+      "treeClass": "Assassin (ring 7 class node)",
+      "classUnlocks": "trap and mark tools, venom vials, Preparation Case pack",
+      "wedges": "Unlit Road (DEX leaning INT/DEX: poison, wither, traps, stealth); Drowned Study (marks)",
+      "latticeRow": "Focus row (Assassin, or a wand or knife)",
+      "gameSkills": [
+        "poison-cloud",
+        "grasping-vines",
+        "drain-life",
+        "malevolence (aura)",
+        "withered (curse)",
+        "blinded (curse)",
+        "chain-lightning, spark, shock-nova, tornado (placement weakest)"
+      ],
+      "archetypes": "blink 64/34/2, mark 53/45/2, shadow clone 49/49/2, mine 45/52/3, trap 36/61/3, poison, stealth",
+      "role": "Hunter-trapper and poisoner, and the night scout. Evidence: Oetzi's bast net and kit (c. 3300 BC); Egyptian clap-net fowling scenes; Border Cave and Kruger Cave poison applicators; boar's-tusk helmet of the scout. Blink, phase and shadow clone have no physical analogue; the nearest real kit is disguise (animal skins) and pigment for marks.",
+      "avoid": [
+        "clay fire pots or bombs as mines (no pre-Iron-Age evidence)",
+        "caltrops",
+        "black hoods with shadowed faces",
+        "glowing poison vials"
+      ],
+      "open": [
+        "Mines have no period object. Proposal: laid clay sling shot or buried stake traps; needs an owner ruling. Clay fire pots are not attested before the Iron Age.",
+        "Blink, phase and shadow clone have no material correlate. Is the disguise kit (skins, hoods) acceptable as the visual answer?",
+        "Bronze Age arrow poison in Eurasia is not proven archaeologically; the poison container rests on southern African evidence.",
+        "Lightning spells sit here only by inference (shock support is DEX, scaling is INT). Confirm the zone before briefing their foci."
+      ],
+      "items": [
+        {
+          "id": "int_dex.main.flint-dagger-with-bast-sheath",
+          "slot": "main",
+          "band": "core",
+          "name": "Flint dagger with bast sheath",
+          "skills": [
+            "poison strikes",
+            "precision"
+          ],
+          "why": "small blade for the finishing cut and for applying poison",
+          "materials": "flint blade, ash handle, woven bast sheath",
+          "silhouette": "short leaf blade, plain handle, sheath beside it",
+          "precedent": "Oetzi's dagger, c. 3300 BC; Danish fishtail daggers c. 1900 BC",
+          "confidence": "A",
+          "avoid": "curved 'assassin' knife; steel look",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.main.bone-knife",
+          "slot": "main",
+          "band": "mid",
+          "name": "Bone knife",
+          "skills": [
+            "poison",
+            "marks"
+          ],
+          "why": "matches the game's Bone Knife base and the Focus row",
+          "materials": "split long bone, ground edge",
+          "silhouette": "narrow tapered bone blade",
+          "precedent": "bone knives and daggers, Neolithic, common",
+          "confidence": "A",
+          "avoid": "serrated monster-bone blade",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.main.bronze-serpent-wand",
+          "slot": "main",
+          "band": "mid",
+          "name": "Bronze serpent wand",
+          "skills": [
+            "lightning and chaos spells",
+            "marks"
+          ],
+          "why": "shared with INT; the Focus row opens on wands",
+          "materials": "cast copper alloy",
+          "silhouette": "thin rod with a head",
+          "precedent": "Ramesseum box, c. 1700 BC",
+          "confidence": "A",
+          "avoid": "glowing tip",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.off.bast-fowling-net",
+          "slot": "off",
+          "band": "mid",
+          "name": "Bast fowling net",
+          "skills": [
+            "traps"
+          ],
+          "why": "the attested portable trap",
+          "materials": "knotted lime bast cord",
+          "silhouette": "folded net bundle with cords",
+          "precedent": "Oetzi's net; Egyptian clap-net scenes",
+          "confidence": "A",
+          "avoid": "metal bear trap; caltrops (post-Bronze Age)",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.off.horn-poison-container-with-applicator",
+          "slot": "off",
+          "band": "outer",
+          "name": "Horn poison container with applicator",
+          "skills": [
+            "poison",
+            "venom vials (class unlock)"
+          ],
+          "why": "holds arrow or blade poison; the stick applies it",
+          "materials": "horn or bone tube, wooden plug, stick",
+          "silhouette": "short stoppered horn with a stick",
+          "precedent": "Border Cave applicator; San ethnography",
+          "confidence": "Adapt",
+          "avoid": "glowing green vials; glass flasks",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.off.pigment-palette-with-kohl-tube",
+          "slot": "off",
+          "band": "mid",
+          "name": "Pigment palette with kohl tube",
+          "skills": [
+            "marks"
+          ],
+          "why": "the marking kit: ground mineral pigment",
+          "materials": "slate palette, horn or reed tube, grinding pebble",
+          "silhouette": "flat palette with a tube",
+          "precedent": "Predynastic and Dynastic Egyptian palettes",
+          "confidence": "A",
+          "avoid": "palette with pseudo-glyphs",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.head.animal-skin-hood-with-head",
+          "slot": "head",
+          "band": "outer",
+          "name": "Animal skin hood with head",
+          "skills": [
+            "stealth",
+            "blink",
+            "phase"
+          ],
+          "why": "disguise: the wearer becomes the animal",
+          "materials": "wolf or deer skin with head left on",
+          "silhouette": "pelt hood with ears and snout over the brow",
+          "precedent": "Star Carr frontlets; Doloneia (literary); Kahun mask",
+          "confidence": "Adapt",
+          "avoid": "ninja hood; medieval cowl with shadowed face",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.head.bearskin-cap-with-chin-strap",
+          "slot": "head",
+          "band": "core",
+          "name": "Bearskin cap with chin strap",
+          "skills": [
+            "any"
+          ],
+          "why": "everyday hunter cap",
+          "materials": "bearskin",
+          "silhouette": "rounded fur dome, two straps",
+          "precedent": "Oetzi, c. 3300 BC",
+          "confidence": "A",
+          "avoid": "assassin hood",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.body.hide-strip-coat",
+          "slot": "body",
+          "band": "core",
+          "name": "Hide strip coat",
+          "skills": [
+            "stealth",
+            "evasion"
+          ],
+          "why": "quiet, flexible, mottled colour",
+          "materials": "sheep and goat hide in vertical strips",
+          "silhouette": "knee-length coat of alternating strips",
+          "precedent": "Oetzi, c. 3300 BC",
+          "confidence": "A",
+          "avoid": "black stealth suit; strapped leather armour",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.body.grass-cape",
+          "slot": "body",
+          "band": "mid",
+          "name": "Grass cape",
+          "skills": [
+            "traps",
+            "stealth"
+          ],
+          "why": "rain cover and ground blind for the trapper",
+          "materials": "plaited grass",
+          "silhouette": "shaggy cape over shoulders",
+          "precedent": "Oetzi's grass mat or cape (use debated)",
+          "confidence": "Disp",
+          "avoid": "ghillie suit",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.body.wolf-skin-cloak",
+          "slot": "body",
+          "band": "outer",
+          "name": "Wolf skin cloak",
+          "skills": [
+            "stealth",
+            "shadow clone"
+          ],
+          "why": "disguise cloak",
+          "materials": "wolf pelt",
+          "silhouette": "pelt over shoulders and back",
+          "precedent": "Doloneia (literary); pelts generic",
+          "confidence": "Adapt",
+          "avoid": "glowing shadow cloak",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.hands.stone-wrist-guard",
+          "slot": "hands",
+          "band": "mid",
+          "name": "Stone wrist guard",
+          "skills": [
+            "precision"
+          ],
+          "why": "marks the archer; protection disputed",
+          "materials": "polished stone plate, leather strap",
+          "silhouette": "small flat bar with end holes on a strap",
+          "precedent": "Beaker wristguards, Amesbury Archer, c. 2300 BC",
+          "confidence": "Disp",
+          "avoid": "metal vambrace",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.belt.belt-pouch-with-fire-kit",
+          "slot": "belt",
+          "band": "core",
+          "name": "Belt pouch with fire kit",
+          "skills": [
+            "traps",
+            "fire"
+          ],
+          "why": "carries flint, tinder and awl for setting traps and fire",
+          "materials": "calf leather pouch",
+          "silhouette": "belt with flat pouch",
+          "precedent": "Oetzi, c. 3300 BC",
+          "confidence": "A",
+          "avoid": "bandolier of vials",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.belt.esparto-grass-bag",
+          "slot": "belt",
+          "band": "mid",
+          "name": "Esparto grass bag",
+          "skills": [
+            "traps",
+            "preparations"
+          ],
+          "why": "woven bag for snares, cord and plant material",
+          "materials": "plaited esparto grass",
+          "silhouette": "small woven bag on a cord",
+          "precedent": "Cueva de los Murcielagos, Spain, c. 7500-4200 BC",
+          "confidence": "A",
+          "avoid": "poppy symbolism (not confirmed)",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.feet.bearskin-soled-shoes",
+          "slot": "feet",
+          "band": "core",
+          "name": "Bearskin-soled shoes",
+          "skills": [
+            "stealth"
+          ],
+          "why": "quiet fur sole",
+          "materials": "bearskin, deer hide, grass liner",
+          "silhouette": "rounded gathered shoe",
+          "precedent": "Oetzi",
+          "confidence": "A",
+          "avoid": "stitched modern sole",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.feet.esparto-grass-sandals",
+          "slot": "feet",
+          "band": "mid",
+          "name": "Esparto grass sandals",
+          "skills": [
+            "stealth",
+            "movement"
+          ],
+          "why": "light woven sandal",
+          "materials": "plaited esparto",
+          "silhouette": "flat woven sole with ties",
+          "precedent": "Cueva de los Murcielagos",
+          "confidence": "A",
+          "avoid": "modern flip-flop",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.amulet.ochre-crayon-on-a-thong",
+          "slot": "amulet",
+          "band": "mid",
+          "name": "Ochre crayon on a thong",
+          "skills": [
+            "marks"
+          ],
+          "why": "the pigment used to mark, carried at the neck",
+          "materials": "shaped ochre or haematite, hide thong",
+          "silhouette": "small worn stone on a thong",
+          "precedent": "worn ochre pieces common; pendant form adapted",
+          "confidence": "Adapt",
+          "avoid": "glowing stone",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.amulet.pierced-tooth-pendant",
+          "slot": "amulet",
+          "band": "core",
+          "name": "Pierced tooth pendant",
+          "skills": [
+            "any"
+          ],
+          "why": "hunter's token",
+          "materials": "drilled tooth or claw",
+          "silhouette": "single tooth on a cord",
+          "precedent": "common, Mesolithic onward",
+          "confidence": "A",
+          "avoid": "gem-set fang",
+          "briefable": true
+        },
+        {
+          "id": "int_dex.ring.plain-copper-wire-ring",
+          "slot": "ring",
+          "band": "core",
+          "name": "Plain copper wire ring",
+          "skills": [
+            "any"
+          ],
+          "why": "everyday ring",
+          "materials": "copper wire",
+          "silhouette": "plain band",
+          "precedent": "common",
+          "confidence": "A",
+          "avoid": "engraved rune band",
+          "briefable": true
+        }
+      ]
+    },
+    {
+      "id": "dex",
+      "label": "DEX",
+      "angle": 210,
+      "mix": "DEX 100",
+      "treeClass": "Acrobat (ring 7 class node)",
+      "classUnlocks": "second weapon set, dual-wield one-handers, Quick Rig",
+      "wedges": "High Paths (DEX leaning DEX/STR: projectiles, shock, accuracy); Unlit Road (poison, traps, evasion)",
+      "latticeRow": "Reach row (Acrobat, or a spear)",
+      "gameSkills": [
+        "Lunge (spear technique)",
+        "Dodge roll",
+        "Claw chain, Traveling cut, Held spin (claws)",
+        "arrow-volley",
+        "haste",
+        "frenzy-charges (inferred)"
+      ],
+      "archetypes": "bow shot 3/94/3, dash 5/80/15, thrust 2/77/21, grenade 10/59/31, trap 36/61/3, evasive movement",
+      "role": "Hunter-archer and light missile troop: Oetzi's bow and quiver (c. 3300 BC), Beaker archer burials (Amesbury Archer c. 2300 BC), Egyptian archers and slingers (Tutankhamun's bows, slings and throw-sticks c. 1325 BC; Mesehti archer models c. 2000 BC). Dash and evasion fit a skirmisher in clothing, not plates.",
+      "avoid": [
+        "fire pots or grenades (use sling and clay shot)",
+        "studded leather 'rogue' armour",
+        "ranger boots",
+        "hooded archers with shadowed faces"
+      ],
+      "open": [
+        "Claw weapons (Bone Spikes base, Acrobat claw actions) have no period precedent found. Keep the game base, but do not brief new claw items until the owner rules.",
+        "Javelin versus thrusting spear: no clear Bronze Age find-type split; lighter heads are an assumption.",
+        "Stone wristguard function is disputed (possibly ornamental). Label it as an archer's status item?",
+        "Traps as equipment: only nets, snares and throw-sticks are attested; no portable trap device."
+      ],
+      "items": [
+        {
+          "id": "dex.main.yew-self-bow",
+          "slot": "main",
+          "band": "mid",
+          "name": "Yew self bow",
+          "skills": [
+            "bow shot",
+            "arrow-volley",
+            "fast attacks"
+          ],
+          "why": "simple long stave, quick to draw",
+          "materials": "yew, sinew or plant fibre string",
+          "silhouette": "tall thin stave, plain nocks, long diagonal",
+          "precedent": "Oetzi's yew stave c. 3300 BC; Rotten Bottom bow c. 4000 BC",
+          "confidence": "A",
+          "avoid": "recurve elf tips; carved gem grip",
+          "briefable": true
+        },
+        {
+          "id": "dex.main.composite-bow",
+          "slot": "main",
+          "band": "outer",
+          "name": "Composite bow",
+          "skills": [
+            "ranged precision"
+          ],
+          "why": "short bow with high power for the specialist",
+          "materials": "wood core, horn, sinew, birch bark cover",
+          "silhouette": "short, deep double curve, sometimes gold banded",
+          "precedent": "Tutankhamun's composite bows, c. 1325 BC",
+          "confidence": "A",
+          "avoid": "compound bow cams; metal limbs",
+          "briefable": true
+        },
+        {
+          "id": "dex.main.linen-sling-with-clay-shot",
+          "slot": "main",
+          "band": "mid",
+          "name": "Linen sling with clay shot",
+          "skills": [
+            "thrown and lobbed skills (grenade family)"
+          ],
+          "why": "the attested way to lob missiles; replaces fire pots",
+          "materials": "plaited linen cord, woven pouch, baked clay or stone shot",
+          "silhouette": "coiled cord with a diamond pouch and 2-3 egg-shaped shot",
+          "precedent": "Tutankhamun slings (Griffith 585y); Mari clay bullets; Levantine slingstones",
+          "confidence": "A",
+          "avoid": "lead bullets with inscriptions (Iron Age); Y slingshot",
+          "briefable": true
+        },
+        {
+          "id": "dex.main.wooden-throwing-stick",
+          "slot": "main",
+          "band": "mid",
+          "name": "Wooden throwing stick",
+          "skills": [
+            "thrown weapons",
+            "fast attacks"
+          ],
+          "why": "fowling stick thrown at birds",
+          "materials": "curved hardwood, optional faience caps",
+          "silhouette": "flat gently curved bar",
+          "precedent": "Tutankhamun's throw-sticks; Nebamun fowling scene",
+          "confidence": "A",
+          "avoid": "returning boomerang with tribal paint",
+          "briefable": true
+        },
+        {
+          "id": "dex.main.flint-spear",
+          "slot": "main",
+          "band": "mid",
+          "name": "Flint spear",
+          "skills": [
+            "Lunge",
+            "thrust"
+          ],
+          "why": "the game's Flint Spear base; opens the Reach row",
+          "materials": "ash shaft, pressure-flaked flint head, sinew binding",
+          "silhouette": "long shaft with a leaf head",
+          "precedent": "Neolithic flint spearheads, common",
+          "confidence": "A",
+          "avoid": "stubby short shaft",
+          "briefable": true
+        },
+        {
+          "id": "dex.main.bronze-headed-javelin",
+          "slot": "main",
+          "band": "outer",
+          "name": "Bronze-headed javelin",
+          "skills": [
+            "javelin",
+            "thrown"
+          ],
+          "why": "light thrown spear",
+          "materials": "hardwood shaft, small socketed bronze head",
+          "silhouette": "thin 1.5-2 m shaft, small leaf head",
+          "precedent": "socketed spearheads, Aegean and Tumulus Europe",
+          "confidence": "Adapt",
+          "avoid": "fletched javelin; barbed harpoon head",
+          "briefable": true
+        },
+        {
+          "id": "dex.off.hide-quiver-with-stiffening-rod",
+          "slot": "off",
+          "band": "mid",
+          "name": "Hide quiver with stiffening rod",
+          "skills": [
+            "bow shot"
+          ],
+          "why": "carries arrows; the Quick Rig seat holds it",
+          "materials": "goat hide, hazel rod, hide flap",
+          "silhouette": "long narrow tube",
+          "precedent": "Oetzi's quiver, c. 3300 BC",
+          "confidence": "A",
+          "avoid": "arrows drawn inside (pipeline rule); magic arrows",
+          "briefable": true
+        },
+        {
+          "id": "dex.off.leather-bow-case",
+          "slot": "off",
+          "band": "outer",
+          "name": "Leather bow case",
+          "skills": [
+            "composite bow"
+          ],
+          "why": "protects the composite bow",
+          "materials": "rawhide or leather",
+          "silhouette": "tapered case",
+          "precedent": "Tutankhamun chariot cases; New Kingdom reliefs",
+          "confidence": "A",
+          "avoid": "Scythian gorytos (Iron Age)",
+          "briefable": true
+        },
+        {
+          "id": "dex.head.wool-pile-cap",
+          "slot": "head",
+          "band": "core",
+          "name": "Wool pile cap",
+          "skills": [
+            "any"
+          ],
+          "why": "generic DEX head",
+          "materials": "wool with knotted pile",
+          "silhouette": "hemispherical shaggy cap",
+          "precedent": "Borum Eshoej and Trindhoej, c. 1370 BC",
+          "confidence": "A",
+          "avoid": "feathered ranger hat",
+          "briefable": true
+        },
+        {
+          "id": "dex.head.bearskin-cap-with-chin-strap",
+          "slot": "head",
+          "band": "mid",
+          "name": "Bearskin cap with chin strap",
+          "skills": [
+            "hunting"
+          ],
+          "why": "outdoor hunter cap",
+          "materials": "bearskin",
+          "silhouette": "rounded fur dome, two straps",
+          "precedent": "Oetzi",
+          "confidence": "A",
+          "avoid": "assassin hood",
+          "briefable": true
+        },
+        {
+          "id": "dex.head.linen-headcloth",
+          "slot": "head",
+          "band": "outer",
+          "name": "Linen headcloth",
+          "skills": [
+            "desert archer"
+          ],
+          "why": "sun and dust cover for the professional archer",
+          "materials": "linen",
+          "silhouette": "cloth falling behind the head",
+          "precedent": "New Kingdom soldier reliefs",
+          "confidence": "Art",
+          "avoid": "metal helmet on the core archer",
+          "briefable": true
+        },
+        {
+          "id": "dex.body.wool-tunic",
+          "slot": "body",
+          "band": "core",
+          "name": "Wool tunic",
+          "skills": [
+            "any"
+          ],
+          "why": "unrestricted movement",
+          "materials": "woven wool",
+          "silhouette": "simple tunic",
+          "precedent": "Borum Eshoej, c. 1370 BC",
+          "confidence": "A",
+          "avoid": "studded leather jerkin",
+          "briefable": true
+        },
+        {
+          "id": "dex.body.hide-strip-coat",
+          "slot": "body",
+          "band": "mid",
+          "name": "Hide strip coat",
+          "skills": [
+            "dash",
+            "evasion"
+          ],
+          "why": "light and flexible",
+          "materials": "sheep and goat hide strips",
+          "silhouette": "knee-length striped coat",
+          "precedent": "Oetzi",
+          "confidence": "A",
+          "avoid": "corset; chainmail",
+          "briefable": true
+        },
+        {
+          "id": "dex.body.leather-scale-cuirass-on-linen",
+          "slot": "body",
+          "band": "outer",
+          "name": "Leather scale cuirass on linen",
+          "skills": [
+            "chariot archer"
+          ],
+          "why": "the professional archer's light armour",
+          "materials": "rawhide scales on linen backing",
+          "silhouette": "short cuirass of small overlapping scales",
+          "precedent": "Tutankhamun's cuirass (Veldmeijer et al.)",
+          "confidence": "A",
+          "avoid": "kilt or apron as armour",
+          "briefable": true
+        },
+        {
+          "id": "dex.hands.leather-archery-glove",
+          "slot": "hands",
+          "band": "mid",
+          "name": "Leather archery glove",
+          "skills": [
+            "bow shot"
+          ],
+          "why": "protects the draw hand",
+          "materials": "leather",
+          "silhouette": "single glove for the draw hand",
+          "precedent": "Tutankhamun Handlist archery gloves",
+          "confidence": "A",
+          "avoid": "fingerless thief gloves",
+          "briefable": true
+        },
+        {
+          "id": "dex.hands.linen-bow-arm-pad",
+          "slot": "hands",
+          "band": "outer",
+          "name": "Linen bow arm pad",
+          "skills": [
+            "bow shot"
+          ],
+          "why": "protects the bow arm from the string",
+          "materials": "padded linen",
+          "silhouette": "forearm pad with ties",
+          "precedent": "Tutankhamun Handlist (identification tentative)",
+          "confidence": "Disp",
+          "avoid": "spiked metal vambrace",
+          "briefable": true
+        },
+        {
+          "id": "dex.belt.leather-belt-with-pouch",
+          "slot": "belt",
+          "band": "core",
+          "name": "Leather belt with pouch",
+          "skills": [
+            "traps",
+            "repair"
+          ],
+          "why": "carries the flint kit",
+          "materials": "calf leather",
+          "silhouette": "belt with flat pouch",
+          "precedent": "Oetzi",
+          "confidence": "A",
+          "avoid": "buckled belt with potion vials",
+          "briefable": true
+        },
+        {
+          "id": "dex.belt.bronze-belt-box",
+          "slot": "belt",
+          "band": "outer",
+          "name": "Bronze belt box",
+          "skills": [
+            "any"
+          ],
+          "why": "personal kit of tools and spare arrowheads",
+          "materials": "cast bronze box on a leather belt",
+          "silhouette": "small round lidded box on a belt",
+          "precedent": "Tollense personal kit, c. 1250 BC (Uhlig et al. 2019)",
+          "confidence": "A",
+          "avoid": "knife bandolier",
+          "briefable": true
+        },
+        {
+          "id": "dex.feet.one-piece-hide-shoe",
+          "slot": "feet",
+          "band": "core",
+          "name": "One-piece hide shoe",
+          "skills": [
+            "dash"
+          ],
+          "why": "soft, laced, no hard sole",
+          "materials": "single piece of cowhide, thong",
+          "silhouette": "moccasin gathered by a thong",
+          "precedent": "Areni-1 shoe, Armenia, c. 3500 BC",
+          "confidence": "A",
+          "avoid": "stitched separate sole; heel",
+          "briefable": true
+        },
+        {
+          "id": "dex.feet.bearskin-soled-shoes",
+          "slot": "feet",
+          "band": "mid",
+          "name": "Bearskin-soled shoes",
+          "skills": [
+            "dash",
+            "evasion"
+          ],
+          "why": "quiet grip on rough ground",
+          "materials": "bearskin, deer hide, grass liner",
+          "silhouette": "rounded gathered shoe",
+          "precedent": "Oetzi",
+          "confidence": "A",
+          "avoid": "laced ranger boot with toe cap",
+          "briefable": true
+        },
+        {
+          "id": "dex.amulet.stone-bead-on-hide-tassel",
+          "slot": "amulet",
+          "band": "core",
+          "name": "Stone bead on hide tassel",
+          "skills": [
+            "any"
+          ],
+          "why": "plain token",
+          "materials": "marble disc bead, hide strips",
+          "silhouette": "disc bead with a tassel",
+          "precedent": "Oetzi's marble bead",
+          "confidence": "A",
+          "avoid": "claw necklace with gems",
+          "briefable": true
+        },
+        {
+          "id": "dex.amulet.faience-eye-amulet",
+          "slot": "amulet",
+          "band": "outer",
+          "name": "Faience eye amulet",
+          "skills": [
+            "precision"
+          ],
+          "why": "protective eye; plain motif meaning",
+          "materials": "faience",
+          "silhouette": "eye shape on a cord",
+          "precedent": "New Kingdom udjat amulets",
+          "confidence": "A",
+          "avoid": "glowing pendant",
+          "briefable": true
+        },
+        {
+          "id": "dex.ring.jade-archers-thumb-ring",
+          "slot": "ring",
+          "band": "outer",
+          "name": "Jade archer's thumb ring",
+          "skills": [
+            "bow shot",
+            "precision"
+          ],
+          "why": "protects the thumb on the draw",
+          "materials": "jade",
+          "silhouette": "thick ring with a string groove",
+          "precedent": "Fu Hao's tomb, Anyang, c. 1250 BC",
+          "confidence": "A",
+          "avoid": "faceted gem ring",
+          "briefable": true
+        },
+        {
+          "id": "dex.ring.bronze-spiral-ring",
+          "slot": "ring",
+          "band": "core",
+          "name": "Bronze spiral ring",
+          "skills": [
+            "any"
+          ],
+          "why": "plain ring",
+          "materials": "bronze wire",
+          "silhouette": "small coil",
+          "precedent": "Unetice and Tumulus finds",
+          "confidence": "A",
+          "avoid": "rune band",
+          "briefable": true
+        }
+      ]
+    },
+    {
+      "id": "dex_str",
+      "label": "DEX/STR",
+      "angle": 270,
+      "mix": "DEX ~55 / STR ~45",
+      "treeClass": "Reaver (ring 7 class node)",
+      "classUnlocks": "thrown weapons count as melee and projectile, belt fetish, Spoils Roll pack",
+      "wedges": "High Paths (projectiles, accuracy); Red Field (STR leaning DEX/STR: physical, bleed, stun)",
+      "latticeRow": "Alignment row (Reaver, or a rod or axe)",
+      "gameSkills": [
+        "Reaping sweep (axe or Flint Lopper technique, bleed)",
+        "blade-vortex (bleed)",
+        "thrown weapons as melee and projectile"
+      ],
+      "archetypes": "whirlwind 3/51/46, thrust 2/77/21, charge 2/25/73 (edge), strikes, parries, leaps, sweeps, combos",
+      "role": "Fast close-combat fighter: the Aegean warrior with rapier and dagger (Mycenae Shaft Graves c. 1650-1500 BC), the Egyptian and Levantine sickle-sword soldier, the Sherden with round shield (Kadesh and Medinet Habu reliefs), Naue II sword users (c. 1300-1100 BC). Leaps: bull-leaping frescoes (Knossos, ritual not combat). Dual wielding as a technique is unconfirmed; sword and dagger were carried together.",
+      "avoid": [
+        "matched pairs of identical blades sold as one item",
+        "crescent fantasy axes",
+        "rogue studded leather",
+        "greaves in the feet slot"
+      ],
+      "open": [
+        "Dual wielding is unconfirmed as a period technique. The off-hand dagger is presented as a companion blade; disclose to the owner.",
+        "Bull-leaping is ritual or sport. Is it acceptable as the precedent for leap and agility gear?",
+        "Thrown weapons as melee (Reaver unlock): flint hatchet and javelin both qualify; no dedicated throwing axe is attested.",
+        "Clonbrin shield date and Sea Peoples corselet construction need primary-source checks."
+      ],
+      "items": [
+        {
+          "id": "dex_str.main.bronze-rapier",
+          "slot": "main",
+          "band": "outer",
+          "name": "Bronze rapier",
+          "skills": [
+            "thrust",
+            "fast strikes"
+          ],
+          "why": "very long narrow blade made for thrusting",
+          "materials": "bronze with midrib; wood or ivory hilt, gold rivets",
+          "silhouette": "long narrow blade over 90 cm, small rounded shoulder",
+          "precedent": "Mycenaean Type A and B swords, Shaft Graves, c. 1600 BC",
+          "confidence": "A",
+          "avoid": "crossguard or cup hilt (16th c. rapier)",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.main.bronze-sickle-sword",
+          "slot": "main",
+          "band": "mid",
+          "name": "Bronze sickle sword",
+          "skills": [
+            "sweeps",
+            "Reaping sweep",
+            "hooking parries"
+          ],
+          "why": "the outer curve cuts in a sweeping arc",
+          "materials": "cast bronze, inlaid grip",
+          "silhouette": "straight handle into a crescent blade sharp on the outside",
+          "precedent": "Tutankhamun's two khopeshes, c. 1325 BC; Shechem c. 1800 BC",
+          "confidence": "A",
+          "avoid": "scimitar; sharpened inner hook",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.main.bronze-leaf-sword",
+          "slot": "main",
+          "band": "mid",
+          "name": "Bronze leaf sword",
+          "skills": [
+            "combos",
+            "strikes"
+          ],
+          "why": "cut-and-thrust blade for mixed attacks",
+          "materials": "bronze, flanged hilt clad in horn or wood",
+          "silhouette": "leaf blade 60-70 cm, flanged grip",
+          "precedent": "Naue II swords, c. 1300-1000 BC",
+          "confidence": "A",
+          "avoid": "crossguard; longsword length; fullers",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.main.flint-hatchet",
+          "slot": "main",
+          "band": "core",
+          "name": "Flint hatchet",
+          "skills": [
+            "Reaping sweep",
+            "thrown"
+          ],
+          "why": "the game's Flint Hatchet; light axe that can be thrown",
+          "materials": "flint blade in a wooden haft",
+          "silhouette": "short haft, small blade",
+          "precedent": "Neolithic flint axes in wooden hafts (e.g. Oetzi's copper axe as the hafting model)",
+          "confidence": "Adapt",
+          "avoid": "double-bitted axe",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.main.copper-axe",
+          "slot": "main",
+          "band": "mid",
+          "name": "Copper axe",
+          "skills": [
+            "Reaping sweep",
+            "bleed"
+          ],
+          "why": "opens the Alignment row; chopping sweep",
+          "materials": "cast copper blade, yew haft, leather binding",
+          "silhouette": "short haft, flat trapezoid blade",
+          "precedent": "Oetzi's copper axe, c. 3300 BC",
+          "confidence": "A",
+          "avoid": "broad crescent axe; steel sheen",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.off.long-bronze-dagger",
+          "slot": "off",
+          "band": "mid",
+          "name": "Long bronze dagger",
+          "skills": [
+            "combos",
+            "second blade"
+          ],
+          "why": "carried with the sword; companion blade",
+          "materials": "bronze, riveted hilt plate",
+          "silhouette": "broad triangular or leaf blade",
+          "precedent": "Lion Hunt dagger c. 1600 BC; Unetice daggers c. 2000-1600 BC",
+          "confidence": "Adapt",
+          "avoid": "matched pair of fantasy blades",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.off.small-round-leather-shield",
+          "slot": "off",
+          "band": "mid",
+          "name": "Small round leather shield",
+          "skills": [
+            "parries"
+          ],
+          "why": "light shield for fast blocks",
+          "materials": "hardened leather or wood, central grip",
+          "silhouette": "disc with central boss or grip",
+          "precedent": "Sherden shields at Kadesh and Medinet Habu; Clonbrin shield (date unverified)",
+          "confidence": "A",
+          "avoid": "domed medieval buckler; heater shape",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.head.boars-tusk-helmet",
+          "slot": "head",
+          "band": "outer",
+          "name": "Boar's tusk helmet",
+          "skills": [
+            "duelist"
+          ],
+          "why": "the Aegean warrior's helmet",
+          "materials": "split boar tusk plates on felt or leather cap, cheek pieces",
+          "silhouette": "conical dome with banded tiers",
+          "precedent": "Dendra, Knossos, Mycenae, 17th-12th c. BC",
+          "confidence": "A",
+          "avoid": "crest; nasal bar",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.head.reed-headband",
+          "slot": "head",
+          "band": "outer",
+          "name": "Reed headband",
+          "skills": [
+            "any"
+          ],
+          "why": "Sea Peoples headdress",
+          "materials": "reed, feather or leather (disputed) on a band",
+          "silhouette": "band with a row of upright reeds",
+          "precedent": "Medinet Habu reliefs, c. 1175 BC",
+          "confidence": "Art",
+          "avoid": "horned or crested helmet",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.head.leather-cap",
+          "slot": "head",
+          "band": "core",
+          "name": "Leather cap",
+          "skills": [
+            "any"
+          ],
+          "why": "plain cap",
+          "materials": "leather",
+          "silhouette": "close cap",
+          "precedent": "leather helmets inferred from Aegean art; no find",
+          "confidence": "U",
+          "avoid": "visored helmet",
+          "briefable": false
+        },
+        {
+          "id": "dex_str.body.leather-scale-cuirass-on-linen",
+          "slot": "body",
+          "band": "outer",
+          "name": "Leather scale cuirass on linen",
+          "skills": [
+            "any"
+          ],
+          "why": "light armour that keeps the arms free",
+          "materials": "rawhide scales on linen",
+          "silhouette": "short scale cuirass",
+          "precedent": "Tutankhamun's cuirass",
+          "confidence": "A",
+          "avoid": "Dendra panoply (STR zone)",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.body.wool-tunic",
+          "slot": "body",
+          "band": "core",
+          "name": "Wool tunic",
+          "skills": [
+            "any"
+          ],
+          "why": "free movement",
+          "materials": "wool",
+          "silhouette": "simple tunic",
+          "precedent": "Borum Eshoej",
+          "confidence": "A",
+          "avoid": "kilt or loincloth as armour",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.body.banded-corselet",
+          "slot": "body",
+          "band": "mid",
+          "name": "Banded corselet",
+          "skills": [
+            "any"
+          ],
+          "why": "torso cover in horizontal bands",
+          "materials": "construction unconfirmed (linen or leather bands)",
+          "silhouette": "torso with horizontal bands",
+          "precedent": "Sea Peoples corselets at Medinet Habu",
+          "confidence": "Art",
+          "avoid": "riveted studded leather",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.hands.boxing-wrap",
+          "slot": "hands",
+          "band": "mid",
+          "name": "Boxing wrap",
+          "skills": [
+            "strikes",
+            "fast attacks"
+          ],
+          "why": "padded wrap for striking with the hand",
+          "materials": "leather or cloth wrap",
+          "silhouette": "single wrapped glove",
+          "precedent": "Akrotiri boxing fresco c. 1600 BC; Hagia Triada boxer rhyton",
+          "confidence": "Art",
+          "avoid": "cestus with metal; knuckle-dusters",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.hands.woven-linen-gauntlets",
+          "slot": "hands",
+          "band": "outer",
+          "name": "Woven linen gauntlets",
+          "skills": [
+            "any"
+          ],
+          "why": "forearm cover",
+          "materials": "tapestry-woven linen",
+          "silhouette": "pair of long cuffs",
+          "precedent": "Tutankhamun, Griffith 50u (use uncertain)",
+          "confidence": "A",
+          "avoid": "clawed gauntlets",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.belt.wide-cinched-leather-belt",
+          "slot": "belt",
+          "band": "mid",
+          "name": "Wide cinched leather belt",
+          "skills": [
+            "leaps",
+            "agility"
+          ],
+          "why": "tight belt bracing the waist",
+          "materials": "leather, possibly metal clad",
+          "silhouette": "broad belt, narrow waist",
+          "precedent": "Minoan bull-leaping and procession frescoes",
+          "confidence": "Art",
+          "avoid": "belt drawn as faulds",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.belt.leather-belt-with-bronze-disc",
+          "slot": "belt",
+          "band": "outer",
+          "name": "Leather belt with bronze disc",
+          "skills": [
+            "belt fetish (class unlock)"
+          ],
+          "why": "the disc is the fetish-holder slot",
+          "materials": "leather, cast bronze disc with spike",
+          "silhouette": "belt with a round disc at the front",
+          "precedent": "Egtved belt disc, c. 1370 BC (woman's grave; adapted)",
+          "confidence": "Adapt",
+          "avoid": "modern buckle",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.feet.leather-sandals",
+          "slot": "feet",
+          "band": "core",
+          "name": "Leather sandals",
+          "skills": [
+            "movement attacks"
+          ],
+          "why": "light footwear",
+          "materials": "leather sole, thongs",
+          "silhouette": "flat sole with toe thong",
+          "precedent": "Egyptian leather sandals",
+          "confidence": "A",
+          "avoid": "chunky modern sandal",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.feet.soft-leather-ankle-boots",
+          "slot": "feet",
+          "band": "mid",
+          "name": "Soft leather ankle boots",
+          "skills": [
+            "leaps",
+            "dash"
+          ],
+          "why": "ankle support without a hard sole",
+          "materials": "soft leather",
+          "silhouette": "low boot wrapped at the ankle",
+          "precedent": "Aegean frescoes (construction inferred)",
+          "confidence": "Art",
+          "avoid": "stitched separate sole; greaves in feet slot",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.amulet.amber-bead-necklace",
+          "slot": "amulet",
+          "band": "mid",
+          "name": "Amber bead necklace",
+          "skills": [
+            "any"
+          ],
+          "why": "status necklace",
+          "materials": "Baltic amber beads",
+          "silhouette": "string of rounded beads",
+          "precedent": "Kakovatos and other Mycenaean tombs; Wessex spacers",
+          "confidence": "A",
+          "avoid": "glowing amber",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.amulet.gold-fly-pendant",
+          "slot": "amulet",
+          "band": "outer",
+          "name": "Gold fly pendant",
+          "skills": [
+            "combat merit"
+          ],
+          "why": "gold fly; the 'award for valour' reading is contested",
+          "materials": "sheet gold",
+          "silhouette": "three stylised flies on a chain",
+          "precedent": "Queen Ahhotep's gold flies, c. 1550 BC",
+          "confidence": "Disp",
+          "avoid": "insect monster charm",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.ring.gold-signet-ring-with-combat-scene",
+          "slot": "ring",
+          "band": "outer",
+          "name": "Gold signet ring with combat scene",
+          "skills": [
+            "duelist"
+          ],
+          "why": "Aegean signet with a figurative fight",
+          "materials": "gold, oval bezel",
+          "silhouette": "oval bezel larger than the hoop",
+          "precedent": "Shaft Grave IV ring c. 1550 BC; Pylos Combat Agate",
+          "confidence": "A",
+          "avoid": "sigils, crests or pseudo-text on the bezel",
+          "briefable": true
+        },
+        {
+          "id": "dex_str.ring.bronze-spiral-ring",
+          "slot": "ring",
+          "band": "core",
+          "name": "Bronze spiral ring",
+          "skills": [
+            "any"
+          ],
+          "why": "plain ring",
+          "materials": "bronze wire",
+          "silhouette": "small coil",
+          "precedent": "Tollense and Tumulus finds",
+          "confidence": "A",
+          "avoid": "faceted gem",
+          "briefable": true
+        }
+      ]
+    },
+    {
+      "id": "str",
+      "label": "STR",
+      "angle": 330,
+      "mix": "STR 100",
+      "treeClass": "Champion (ring 7 class node)",
+      "classUnlocks": "tower shields, War Horn slot",
+      "wedges": "Red Field (physical, bleed, stun, Life); Kiln Line (fire and ignite on hits)",
+      "latticeRow": "Sphere row (Champion, or a staff or any two-handed weapon)",
+      "gameSkills": [
+        "Attack (strike)",
+        "Ground slam (maul technique)",
+        "Heavy sweep",
+        "Wide sweep",
+        "War cry",
+        "Jawbone chain",
+        "ground-slam",
+        "charge-line (enemy)",
+        "execute (enemy)",
+        "might, fanaticism, thorns, fortify (auras and buffs)",
+        "endurance-charges"
+      ],
+      "archetypes": "slam 3/11/86, warcry 18/6/76, charge 2/25/73, guard 24/7/69, heavy attacks, endurance",
+      "role": "Close-order shield and spear line (Stele of the Vultures c. 2450 BC; Standard of Ur and the PG 789 guards c. 2600 BC), the shock fighter with mace or battle-axe (Narmer Palette c. 3100 BC; Corded Ware battle-axes c. 2900-2350 BC), and the Aegean heavy warrior with tower shield (Lion Hunt dagger c. 1600 BC; Dendra panoply c. 1400 BC).",
+      "avoid": [
+        "double-bitted 'dwarf' axes",
+        "spiked morning stars",
+        "great helms and horned helmets",
+        "muscle cuirasses",
+        "rivets everywhere"
+      ],
+      "open": [
+        "War cry: horns and trumpets are attested (Tutankhamun's trumpets, lurs, animal horns). The game's War Horn slot fits; confirm the horn goes there, not in the off hand.",
+        "Jawbone weapon (Jawbone chain) is a game base with no period find (the Samson story is a later text). Keep or retire?",
+        "Dendra cuirass is one near-complete find; using it as a common base overstates it. Keep to the outer band.",
+        "Banded stone maul needs a specific drilled-stone hammer find as its shape reference before briefing."
+      ],
+      "items": [
+        {
+          "id": "str.main.stone-shaft-hole-battle-axe",
+          "slot": "main",
+          "band": "core",
+          "name": "Stone shaft-hole battle axe",
+          "skills": [
+            "heavy attacks",
+            "slams"
+          ],
+          "why": "weight at the end of a short haft; the haft passes through a drilled hole",
+          "materials": "polished stone, wooden haft",
+          "silhouette": "short haft with an asymmetric drooping head",
+          "precedent": "Corded Ware graves, c. 2900-2350 BC",
+          "confidence": "A",
+          "avoid": "double-bitted axe; head lashed on with straps",
+          "briefable": true
+        },
+        {
+          "id": "str.main.pear-shaped-stone-macehead-on-a-haft",
+          "slot": "main",
+          "band": "mid",
+          "name": "Pear-shaped stone macehead on a haft",
+          "skills": [
+            "slams",
+            "ground impact",
+            "stun"
+          ],
+          "why": "crushing head drilled through and set on a straight haft",
+          "materials": "limestone, breccia or diorite, wooden haft",
+          "silhouette": "slim haft, smooth pear head, no collar",
+          "precedent": "Naqada II maceheads c. 3500-3100 BC; Narmer Palette",
+          "confidence": "A",
+          "avoid": "stone ball in a bronze cup; spikes; flanges",
+          "briefable": true
+        },
+        {
+          "id": "str.main.banded-stone-maul",
+          "slot": "main",
+          "band": "mid",
+          "name": "Banded stone maul",
+          "skills": [
+            "Ground slam"
+          ],
+          "why": "the game's Banded Stone Maul; two-handed slam",
+          "materials": "large drilled stone head, wooden haft, rawhide bands",
+          "silhouette": "long haft, heavy drilled head",
+          "precedent": "drilled stone hammers and mauls, Neolithic and mining sites (check a specific find)",
+          "confidence": "Adapt",
+          "avoid": "rock lashed to a stick; forked haft",
+          "briefable": true
+        },
+        {
+          "id": "str.main.copper-shaft-hole-axe",
+          "slot": "main",
+          "band": "outer",
+          "name": "Copper shaft-hole axe",
+          "skills": [
+            "heavy attacks",
+            "sweeps"
+          ],
+          "why": "deep narrow cleaving head on a long haft",
+          "materials": "cast arsenical copper or bronze, wooden haft",
+          "silhouette": "narrow deep head with socket tube",
+          "precedent": "Royal Cemetery of Ur c. 2600 BC; Hittite axes c. 1600-1200 BC",
+          "confidence": "A",
+          "avoid": "bardiche crescent; steel grey",
+          "briefable": true
+        },
+        {
+          "id": "str.main.arsenical-copper-sword",
+          "slot": "main",
+          "band": "outer",
+          "name": "Arsenical copper sword",
+          "skills": [
+            "strikes"
+          ],
+          "why": "early long copper blade",
+          "materials": "arsenical copper, some silver inlay",
+          "silhouette": "blade 45-60 cm, no crossguard",
+          "precedent": "Arslantepe palace, c. 3300-3000 BC",
+          "confidence": "A",
+          "avoid": "anything over 65 cm; crossguard",
+          "briefable": true
+        },
+        {
+          "id": "str.off.oxhide-tower-shield",
+          "slot": "off",
+          "band": "outer",
+          "name": "Oxhide tower shield",
+          "skills": [
+            "guard",
+            "endurance",
+            "charge"
+          ],
+          "why": "body-length cover; the Champion's tower shield unlock",
+          "materials": "layered oxhide on a wicker or wood frame",
+          "silhouette": "tall rectangle with curved top, hide pattern",
+          "precedent": "Lion Hunt dagger c. 1600 BC; Akrotiri ship fresco",
+          "confidence": "Art",
+          "avoid": "kite or heater shape; steel boss",
+          "briefable": true
+        },
+        {
+          "id": "str.off.rectangular-hide-shield",
+          "slot": "off",
+          "band": "mid",
+          "name": "Rectangular hide shield",
+          "skills": [
+            "guard",
+            "shield line"
+          ],
+          "why": "the close-order line shield",
+          "materials": "hide over wood or wicker",
+          "silhouette": "large rectangle, possible studs",
+          "precedent": "Stele of the Vultures, c. 2450 BC",
+          "confidence": "Art",
+          "avoid": "Roman scutum curve",
+          "briefable": true
+        },
+        {
+          "id": "str.off.cowhide-shield-with-rounded-top",
+          "slot": "off",
+          "band": "core",
+          "name": "Cowhide shield with rounded top",
+          "skills": [
+            "guard"
+          ],
+          "why": "everyday infantry shield",
+          "materials": "piebald cowhide on a wooden frame",
+          "silhouette": "tall shield with round top, hair left on",
+          "precedent": "Mesehti soldier models, Asyut, c. 2000 BC",
+          "confidence": "A",
+          "avoid": "metal-rimmed round shield",
+          "briefable": true
+        },
+        {
+          "id": "str.off.animal-horn",
+          "slot": "off",
+          "band": "outer",
+          "name": "Animal horn",
+          "skills": [
+            "War cry (War Horn slot)"
+          ],
+          "why": "signal horn for the war cry; fits the War Horn slot",
+          "materials": "cattle horn, mouthpiece hole",
+          "silhouette": "curved horn",
+          "precedent": "animal horns common; lurs c. 1000 BC are late",
+          "confidence": "Adapt",
+          "avoid": "metal trumpet in the off hand on the core band",
+          "briefable": true
+        },
+        {
+          "id": "str.head.copper-cap-helmet",
+          "slot": "head",
+          "band": "mid",
+          "name": "Copper cap helmet",
+          "skills": [
+            "guard"
+          ],
+          "why": "plain dome over a padded cap",
+          "materials": "hammered copper, padded leather or wool liner",
+          "silhouette": "round dome with slight back flare",
+          "precedent": "PG 789 guards, Ur, c. 2600 BC",
+          "confidence": "A",
+          "avoid": "visor; nasal bar; crest",
+          "briefable": true
+        },
+        {
+          "id": "str.head.cast-bronze-animal-face-helmet",
+          "slot": "head",
+          "band": "outer",
+          "name": "Cast bronze animal-face helmet",
+          "skills": [
+            "guard",
+            "warcry"
+          ],
+          "why": "Shang infantry helmet",
+          "materials": "cast bronze",
+          "silhouette": "rounded helmet with a face in relief at the front",
+          "precedent": "Anyang M1004, c. 1300-1050 BC",
+          "confidence": "A",
+          "avoid": "great helm; horned Viking helmet",
+          "briefable": true
+        },
+        {
+          "id": "str.head.rawhide-cap",
+          "slot": "head",
+          "band": "core",
+          "name": "Rawhide cap",
+          "skills": [
+            "any"
+          ],
+          "why": "hardened cap",
+          "materials": "rawhide",
+          "silhouette": "close round cap",
+          "precedent": "rawhide skullcap (taxonomy H-03); check a specific find",
+          "confidence": "U",
+          "avoid": "closed helmet",
+          "briefable": false
+        },
+        {
+          "id": "str.body.bronze-plate-cuirass",
+          "slot": "body",
+          "band": "outer",
+          "name": "Bronze plate cuirass",
+          "skills": [
+            "endurance",
+            "guard"
+          ],
+          "why": "full bronze defence for the heaviest build",
+          "materials": "bronze plates, leather ties",
+          "silhouette": "bell-shaped torso with stacked curved bands, high neck",
+          "precedent": "Dendra panoply, c. 1400 BC (single near-complete find)",
+          "confidence": "A",
+          "avoid": "moulded muscle cuirass; rivets",
+          "briefable": true
+        },
+        {
+          "id": "str.body.studded-cloak",
+          "slot": "body",
+          "band": "mid",
+          "name": "Studded cloak",
+          "skills": [
+            "guard"
+          ],
+          "why": "thick cloak covered in round studs",
+          "materials": "wool or felt (unconfirmed), round studs",
+          "silhouette": "cloak fastened at the shoulder, dotted surface",
+          "precedent": "Standard of Ur soldiers, c. 2600 BC",
+          "confidence": "Art",
+          "avoid": "brigandine; chainmail",
+          "briefable": true
+        },
+        {
+          "id": "str.body.hide-wrap",
+          "slot": "body",
+          "band": "core",
+          "name": "Hide wrap",
+          "skills": [
+            "any"
+          ],
+          "why": "plain hide body cover",
+          "materials": "tanned hide",
+          "silhouette": "wrap over one shoulder",
+          "precedent": "generic hide garments (taxonomy B-02)",
+          "confidence": "Adapt",
+          "avoid": "apron or kilt as armour",
+          "briefable": true
+        },
+        {
+          "id": "str.hands.bronze-arm-guards",
+          "slot": "hands",
+          "band": "outer",
+          "name": "Bronze arm guards",
+          "skills": [
+            "guard"
+          ],
+          "why": "forearm defence from the panoply",
+          "materials": "bronze sheet",
+          "silhouette": "pair of tubes",
+          "precedent": "Dendra panoply arm pieces",
+          "confidence": "Adapt",
+          "avoid": "fingered plate gauntlets",
+          "briefable": true
+        },
+        {
+          "id": "str.hands.bronze-arm-spirals",
+          "slot": "hands",
+          "band": "mid",
+          "name": "Bronze arm spirals",
+          "skills": [
+            "any"
+          ],
+          "why": "status coils on the forearm; protection unconfirmed",
+          "materials": "bronze wire",
+          "silhouette": "pair of long coils",
+          "precedent": "Unetice and Tumulus arm spirals, c. 2000-1300 BC",
+          "confidence": "Disp",
+          "avoid": "riveted cuffs",
+          "briefable": true
+        },
+        {
+          "id": "str.belt.leather-belt-with-sheathed-copper-dagger",
+          "slot": "belt",
+          "band": "mid",
+          "name": "Leather belt with sheathed copper dagger",
+          "skills": [
+            "strikes"
+          ],
+          "why": "sidearm on the belt",
+          "materials": "leather, copper dagger, leather sheath",
+          "silhouette": "belt with dagger in sheath",
+          "precedent": "Oetzi's belt; PG 580 gold-sheathed dagger, Ur",
+          "confidence": "A",
+          "avoid": "tongue buckle; flap pouches",
+          "briefable": true
+        },
+        {
+          "id": "str.belt.broad-leather-belt",
+          "slot": "belt",
+          "band": "core",
+          "name": "Broad leather belt",
+          "skills": [
+            "any"
+          ],
+          "why": "plain broad belt",
+          "materials": "leather, toggle closure",
+          "silhouette": "wide band",
+          "precedent": "Warrior Vase, Mycenae, c. 1200 BC",
+          "confidence": "Art",
+          "avoid": "plate segments",
+          "briefable": true
+        },
+        {
+          "id": "str.feet.bronze-greaves-over-hide-shoes",
+          "slot": "feet",
+          "band": "outer",
+          "name": "Bronze greaves over hide shoes",
+          "skills": [
+            "charge",
+            "guard"
+          ],
+          "why": "shin defence (greaves stay with the body set in the pipeline)",
+          "materials": "bronze sheet, hide shoes",
+          "silhouette": "pair of shin plates over shoes",
+          "precedent": "Dendra and Kallithea greaves, c. 1400-1200 BC",
+          "confidence": "A",
+          "avoid": "plate sabatons",
+          "briefable": true
+        },
+        {
+          "id": "str.feet.rawhide-sandals",
+          "slot": "feet",
+          "band": "core",
+          "name": "Rawhide sandals",
+          "skills": [
+            "any"
+          ],
+          "why": "plain sandals",
+          "materials": "rawhide sole, thongs",
+          "silhouette": "flat sole, thongs",
+          "precedent": "Egyptian sandals, many examples",
+          "confidence": "A",
+          "avoid": "stitched welt sole",
+          "briefable": true
+        },
+        {
+          "id": "str.feet.bearskin-soled-shoes",
+          "slot": "feet",
+          "band": "mid",
+          "name": "Bearskin-soled shoes",
+          "skills": [
+            "any"
+          ],
+          "why": "warm, quiet shoe",
+          "materials": "bearskin, deer hide",
+          "silhouette": "rounded gathered shoe",
+          "precedent": "Oetzi",
+          "confidence": "A",
+          "avoid": "heels",
+          "briefable": true
+        },
+        {
+          "id": "str.amulet.gold-crescent-collar",
+          "slot": "amulet",
+          "band": "outer",
+          "name": "Gold crescent collar",
+          "skills": [
+            "endurance",
+            "guard"
+          ],
+          "why": "high-status neck ornament",
+          "materials": "sheet gold",
+          "silhouette": "flat crescent",
+          "precedent": "Irish gold lunulae, c. 2400-2000 BC",
+          "confidence": "A",
+          "avoid": "gorget presented as amulet",
+          "briefable": true
+        },
+        {
+          "id": "str.amulet.boar-tusk-pendant",
+          "slot": "amulet",
+          "band": "core",
+          "name": "Boar tusk pendant",
+          "skills": [
+            "any"
+          ],
+          "why": "hunter's and fighter's token",
+          "materials": "boar tusk, cord",
+          "silhouette": "curved tusk on a cord",
+          "precedent": "tusk pendants, Neolithic and Corded Ware graves",
+          "confidence": "A",
+          "avoid": "gem-set fang",
+          "briefable": true
+        },
+        {
+          "id": "str.ring.plain-copper-band",
+          "slot": "ring",
+          "band": "core",
+          "name": "Plain copper band",
+          "skills": [
+            "any"
+          ],
+          "why": "plain ring",
+          "materials": "cast copper",
+          "silhouette": "plain band",
+          "precedent": "common",
+          "confidence": "A",
+          "avoid": "knuckle-duster ring",
+          "briefable": true
+        },
+        {
+          "id": "str.ring.bronze-spiral-ring",
+          "slot": "ring",
+          "band": "mid",
+          "name": "Bronze spiral ring",
+          "skills": [
+            "any"
+          ],
+          "why": "plain ring",
+          "materials": "bronze wire",
+          "silhouette": "small coil",
+          "precedent": "Unetice, Wessex",
+          "confidence": "A",
+          "avoid": "faceted gem",
+          "briefable": true
+        }
+      ]
+    },
+    {
+      "id": "str_int",
+      "label": "STR/INT",
+      "angle": 30,
+      "mix": "STR ~50 / INT ~50",
+      "treeClass": "Ritualist (ring 7 class node)",
+      "classUnlocks": "banners, a war companion, Reliquary pack",
+      "wedges": "Procession (INT leaning STR/INT: companions, Ward, Spirit); Kiln Line (STR leaning STR/INT: fire, ignite)",
+      "latticeRow": "Element row (Ritualist, or a shield or buckler)",
+      "gameSkills": [
+        "fireball",
+        "fireball-volley",
+        "meteor",
+        "fire-wall",
+        "holy-fire (aura)",
+        "conviction (aura)",
+        "summoning-circle (companion)",
+        "shrine-blessing (resistances)"
+      ],
+      "archetypes": "totem 51/6/43, banner 27/15/58, aura 34/33/33, barrier, elemental slam, summoning (game puts companions here, not in INT)",
+      "role": "War-leader with insignia and the ritual standard-bearer: Narmer Palette standard-bearers (c. 3100 BC), Nahal Mishmar copper standards and maceheads (c. 4000 BC), Alaca Hoeyuek bronze standards (c. 2500-2000 BC), Fu Hao's bronze yue axes (c. 1200 BC), Bush Barrow mace and gold lozenge (c. 1900 BC).",
+      "avoid": [
+        "Nebra disc or Trundholm sun shrunk into amulets",
+        "cloth heraldic banners",
+        "glowing gems on maces",
+        "crowns with points"
+      ],
+      "open": [
+        "Totem as a planted pole: no evidence for planting a standard in battle; the Alaca standards may be cart fittings. The skill stays, the visual is an assumption.",
+        "The pipeline's 'Reliquary' pack name is an open owner question (rule 12).",
+        "Summoning: the game puts companions in the Procession wedge (STR/INT), while the shared chat put summoning in pure INT. This doc follows the game.",
+        "Reed buckler is a game base with no confirmed find; check before briefing new reed shields."
+      ],
+      "items": [
+        {
+          "id": "str_int.main.copper-sceptre-mace",
+          "slot": "main",
+          "band": "mid",
+          "name": "Copper sceptre mace",
+          "skills": [
+            "fire spells",
+            "elemental slam"
+          ],
+          "why": "insignia mace; authority and impact in one object",
+          "materials": "cast copper head on a wooden or copper shaft",
+          "silhouette": "long shaft, knobbed cast head",
+          "precedent": "Nahal Mishmar hoard, c. 4000 BC",
+          "confidence": "A",
+          "avoid": "glowing gem in the head",
+          "briefable": true
+        },
+        {
+          "id": "str_int.main.fossil-stone-mace-with-bone-mounts",
+          "slot": "main",
+          "band": "mid",
+          "name": "Fossil stone mace with bone mounts",
+          "skills": [
+            "elemental slam",
+            "aura"
+          ],
+          "why": "polished stone head; zigzag bone rings on the haft",
+          "materials": "fossil stone, wooden haft, carved bone rings",
+          "silhouette": "slim haft with banded rings and a smooth head",
+          "precedent": "Bush Barrow, c. 1900 BC (Wiltshire Museum)",
+          "confidence": "A",
+          "avoid": "stone ball in a cup",
+          "briefable": true
+        },
+        {
+          "id": "str_int.main.bronze-broad-axe",
+          "slot": "main",
+          "band": "outer",
+          "name": "Bronze broad axe",
+          "skills": [
+            "banner",
+            "conviction"
+          ],
+          "why": "heavy ceremonial axe of military authority",
+          "materials": "cast bronze, wooden haft",
+          "silhouette": "wide flat blade with cast face motif",
+          "precedent": "Fu Hao's yue, Anyang, c. 1200 BC",
+          "confidence": "A",
+          "avoid": "pseudo-glyph inscriptions",
+          "briefable": true
+        },
+        {
+          "id": "str_int.main.wood-rod",
+          "slot": "main",
+          "band": "core",
+          "name": "Wood rod",
+          "skills": [
+            "fire spells"
+          ],
+          "why": "the game's Wood Rod base (Alignment row); plain ritual rod",
+          "materials": "straight hardwood",
+          "silhouette": "short straight rod",
+          "precedent": "game base; rods common in Egyptian art",
+          "confidence": "Art",
+          "avoid": "forked stick",
+          "briefable": true
+        },
+        {
+          "id": "str_int.off.bronze-openwork-disc-standard",
+          "slot": "off",
+          "band": "outer",
+          "name": "Bronze openwork disc standard",
+          "skills": [
+            "banner",
+            "totem",
+            "aura"
+          ],
+          "why": "pole-mounted emblem; the Ritualist's banner unlock",
+          "materials": "cast bronze disc with lattice, stag or bull figures, pole",
+          "silhouette": "disc of lattice on a pole with animal figures",
+          "precedent": "Alaca Hoeyuek standards, c. 2500-2000 BC (mounting debated)",
+          "confidence": "A",
+          "avoid": "cloth banner with heraldry",
+          "briefable": true
+        },
+        {
+          "id": "str_int.off.carved-emblem-on-a-pole",
+          "slot": "off",
+          "band": "core",
+          "name": "Carved emblem on a pole",
+          "skills": [
+            "banner",
+            "totem"
+          ],
+          "why": "plain standard",
+          "materials": "wood, carved animal emblem",
+          "silhouette": "pole with a small carved figure on top",
+          "precedent": "Narmer Palette standards, c. 3100 BC",
+          "confidence": "Art",
+          "avoid": "tabard; heraldic crest",
+          "briefable": true
+        },
+        {
+          "id": "str_int.off.figure-of-eight-shield",
+          "slot": "off",
+          "band": "mid",
+          "name": "Figure-of-eight shield",
+          "skills": [
+            "barrier",
+            "ward"
+          ],
+          "why": "large shield that is also a cult emblem",
+          "materials": "oxhide on a wooden frame",
+          "silhouette": "body-height shape pinched at the waist, dappled hide",
+          "precedent": "Minoan and Mycenaean, c. 1600-1400 BC",
+          "confidence": "Art",
+          "avoid": "heater shape",
+          "briefable": true
+        },
+        {
+          "id": "str_int.off.reed-buckler",
+          "slot": "off",
+          "band": "core",
+          "name": "Reed buckler",
+          "skills": [
+            "barrier"
+          ],
+          "why": "the game's Reed Buckler base (Element row)",
+          "materials": "woven reed on a frame",
+          "silhouette": "small round shield",
+          "precedent": "game base; reed shields in taxonomy S-18 (check a find)",
+          "confidence": "U",
+          "avoid": "toy-like wicker look",
+          "briefable": false
+        },
+        {
+          "id": "str_int.head.gold-helmet-shaped-as-hair",
+          "slot": "head",
+          "band": "outer",
+          "name": "Gold helmet shaped as hair",
+          "skills": [
+            "auras",
+            "conviction"
+          ],
+          "why": "leader's helmet",
+          "materials": "hammered gold",
+          "silhouette": "dome shaped as hair with a bun and ears",
+          "precedent": "Meskalamdug helmet, Ur, c. 2600 BC",
+          "confidence": "A",
+          "avoid": "crown with points",
+          "briefable": true
+        },
+        {
+          "id": "str_int.head.bronze-helmet-with-plume-tube",
+          "slot": "head",
+          "band": "mid",
+          "name": "Bronze helmet with plume tube",
+          "skills": [
+            "warcry with magic",
+            "ward"
+          ],
+          "why": "helmet with a socket for a plume",
+          "materials": "cast bronze",
+          "silhouette": "rounded helmet with a small tube on top",
+          "precedent": "Anyang M1004",
+          "confidence": "A",
+          "avoid": "crest ridge",
+          "briefable": true
+        },
+        {
+          "id": "str_int.head.bronze-horned-helmet",
+          "slot": "head",
+          "band": "outer",
+          "name": "Bronze horned helmet",
+          "skills": [
+            "banner",
+            "aura"
+          ],
+          "why": "ritual horned helmet, late",
+          "materials": "sheet bronze, horns",
+          "silhouette": "dome with two curved horns",
+          "precedent": "Vekso helmets c. 900 BC; Sherden reliefs c. 1175 BC",
+          "confidence": "A",
+          "avoid": "Viking-style helmet on other zones",
+          "briefable": true
+        },
+        {
+          "id": "str_int.body.gold-shoulder-cape",
+          "slot": "body",
+          "band": "outer",
+          "name": "Gold shoulder cape",
+          "skills": [
+            "ward",
+            "auras"
+          ],
+          "why": "ceremonial cape, not armour",
+          "materials": "hammered sheet gold",
+          "silhouette": "short cape over the shoulders with ribbed bands",
+          "precedent": "Mold cape, c. 1900-1600 BC",
+          "confidence": "A",
+          "avoid": "presenting it as armour",
+          "briefable": true
+        },
+        {
+          "id": "str_int.body.leather-scale-corselet",
+          "slot": "body",
+          "band": "mid",
+          "name": "Leather scale corselet",
+          "skills": [
+            "any"
+          ],
+          "why": "protective body for the field leader",
+          "materials": "rawhide scales on linen",
+          "silhouette": "short scale cuirass",
+          "precedent": "Tutankhamun's cuirass",
+          "confidence": "Adapt",
+          "avoid": "chainmail",
+          "briefable": true
+        },
+        {
+          "id": "str_int.body.wool-tunic-with-mantle",
+          "slot": "body",
+          "band": "core",
+          "name": "Wool tunic with mantle",
+          "skills": [
+            "any"
+          ],
+          "why": "plain garment",
+          "materials": "wool",
+          "silhouette": "tunic with rectangular mantle",
+          "precedent": "Borum Eshoej, Muldbjerg",
+          "confidence": "A",
+          "avoid": "robe with sigils",
+          "briefable": true
+        },
+        {
+          "id": "str_int.hands.gold-armlets",
+          "slot": "hands",
+          "band": "mid",
+          "name": "Gold armlets",
+          "skills": [
+            "any"
+          ],
+          "why": "status ornament; no protective form attested",
+          "materials": "gold",
+          "silhouette": "pair of plain cuffs",
+          "precedent": "Wessex-type gold armlets",
+          "confidence": "A",
+          "avoid": "gauntlets",
+          "briefable": true
+        },
+        {
+          "id": "str_int.belt.leather-belt-with-bronze-disc",
+          "slot": "belt",
+          "band": "mid",
+          "name": "Leather belt with bronze disc",
+          "skills": [
+            "Reliquary",
+            "ward"
+          ],
+          "why": "disc at the front holds the belt items",
+          "materials": "leather, cast bronze disc",
+          "silhouette": "belt with a round disc",
+          "precedent": "Egtved belt disc, c. 1370 BC",
+          "confidence": "Adapt",
+          "avoid": "plaque belt with sigils",
+          "briefable": true
+        },
+        {
+          "id": "str_int.belt.leather-belt-with-gold-hook",
+          "slot": "belt",
+          "band": "outer",
+          "name": "Leather belt with gold hook",
+          "skills": [
+            "insignia"
+          ],
+          "why": "hook for dagger and mace",
+          "materials": "leather, gold belt hook",
+          "silhouette": "belt with a small gold hook",
+          "precedent": "Bush Barrow belt hook",
+          "confidence": "A",
+          "avoid": "buckle",
+          "briefable": true
+        },
+        {
+          "id": "str_int.feet.gilded-sandals",
+          "slot": "feet",
+          "band": "outer",
+          "name": "Gilded sandals",
+          "skills": [
+            "auras"
+          ],
+          "why": "ceremonial footwear",
+          "materials": "sheet gold over leather",
+          "silhouette": "flat sandal with thongs",
+          "precedent": "Tutankhamun's gold sandals, c. 1325 BC",
+          "confidence": "A",
+          "avoid": "chunky modern sandal",
+          "briefable": true
+        },
+        {
+          "id": "str_int.feet.rawhide-sandals",
+          "slot": "feet",
+          "band": "core",
+          "name": "Rawhide sandals",
+          "skills": [
+            "any"
+          ],
+          "why": "plain sandals",
+          "materials": "rawhide",
+          "silhouette": "flat sole, thongs",
+          "precedent": "Egyptian sandals",
+          "confidence": "A",
+          "avoid": "stitched welt sole",
+          "briefable": true
+        },
+        {
+          "id": "str_int.amulet.gold-lozenge",
+          "slot": "amulet",
+          "band": "outer",
+          "name": "Gold lozenge",
+          "skills": [
+            "auras",
+            "ward"
+          ],
+          "why": "chest ornament of the leader",
+          "materials": "sheet gold, incised lines",
+          "silhouette": "flat lozenge",
+          "precedent": "Bush Barrow, c. 1900 BC",
+          "confidence": "A",
+          "avoid": "sun disc pendant (Nebra, Trundholm are cult objects)",
+          "briefable": true
+        },
+        {
+          "id": "str_int.amulet.carnelian-and-lapis-bead-collar",
+          "slot": "amulet",
+          "band": "mid",
+          "name": "Carnelian and lapis bead collar",
+          "skills": [
+            "any"
+          ],
+          "why": "status collar",
+          "materials": "carnelian, lapis, gold spacers",
+          "silhouette": "strung beads in rows",
+          "precedent": "Royal Cemetery of Ur",
+          "confidence": "A",
+          "avoid": "gorget presented as amulet",
+          "briefable": true
+        },
+        {
+          "id": "str_int.ring.gold-signet-ring",
+          "slot": "ring",
+          "band": "outer",
+          "name": "Gold signet ring",
+          "skills": [
+            "insignia",
+            "banner"
+          ],
+          "why": "leader's seal",
+          "materials": "gold, oval bezel with figures",
+          "silhouette": "oval bezel larger than the hoop",
+          "precedent": "Mycenaean signet rings, c. 1500 BC",
+          "confidence": "A",
+          "avoid": "sigils on the bezel",
+          "briefable": true
+        },
+        {
+          "id": "str_int.ring.gold-spiral-ring",
+          "slot": "ring",
+          "band": "core",
+          "name": "Gold spiral ring",
+          "skills": [
+            "any"
+          ],
+          "why": "plain ring",
+          "materials": "gold wire",
+          "silhouette": "small coil",
+          "precedent": "Wessex, Unetice",
+          "confidence": "A",
+          "avoid": "glowing ring",
+          "briefable": true
+        }
+      ]
+    }
+  ],
+  "openQuestions": [
+    "No skill or item carries an attribute tag in the game code, and the owner ruled against a forced STR/DEX/INT class split (DESIGN-DIRECTION.md:432). Zone membership here is inferred from the tree's wedge themes, class nodes and the Weaving rows.",
+    "The shared chat's 303-archetype source files could not be retrieved (sandbox links). Only its published sample placements are used; the game's own skills take precedence.",
+    "Outer layer (cloak) slot exists in the game and pipeline but is not broken out per zone here; reuse the zone's body notes for mantles.",
+    "Several names in BASE-DESIGN.md break rule 7 (Skymetal, War-call, Nightglass, Warbelt...). Not renamed here; flagged for the owner.",
+    "Items marked U (unconfirmed) or with unverified precedents must not be briefed until checked; Disp items must disclose the dispute."
+  ]
+}

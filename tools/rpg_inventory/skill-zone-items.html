@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Item Types by Skill Zone</title>
+<style>
+  :root {
+    --bg: #f4f1ea; --panel: #fffdf8; --ink: #23201b; --muted: #6b645a; --line: #d9d2c4;
+    --int: #6b4fb3; --dex: #1f8a7a; --str: #c0621f;
+    --int-dex: #45709a; --dex-str: #6f7a3a; --str-int: #9a4a6a;
+    --ring: #cfc6b4; --unconf: #a39a8c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17161a; --panel: #211f25; --ink: #ece7dc; --muted: #a39d92; --line: #3a363f;
+      --int: #a58ef0; --dex: #4fc7b4; --str: #ee9a5c; --int-dex: #7fa7d1; --dex-str: #b2bd72; --str-int: #d987a7;
+      --ring: #4a4550; --unconf: #7c766d;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17161a; --panel: #211f25; --ink: #ece7dc; --muted: #a39d92; --line: #3a363f;
+    --int: #a58ef0; --dex: #4fc7b4; --str: #ee9a5c; --int-dex: #7fa7d1; --dex-str: #b2bd72; --str-int: #d987a7;
+    --ring: #4a4550; --unconf: #7c766d;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 13px/1.35 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { padding: 16px 20px 6px; display: flex; flex-wrap: wrap; gap: 6px 24px; align-items: baseline; }
+  h1 { font-size: 20px; margin: 0; font-weight: 650; }
+  header p { margin: 0; color: var(--muted); }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; color: var(--muted); font-size: 12px; padding: 0 20px 8px; }
+  .legend b { color: var(--ink); font-weight: 600; }
+  main { display: grid; grid-template-columns: 1fr minmax(420px, 1.05fr) 1fr; gap: 12px; padding: 0 16px 16px; align-items: start; }
+  .col { display: flex; flex-direction: column; gap: 12px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--zc); border-radius: 8px; padding: 10px 12px; }
+  .card h2 { margin: 0 0 2px; font-size: 15px; color: var(--zc); display: flex; justify-content: space-between; gap: 8px; }
+  .card h2 small { color: var(--muted); font-weight: 500; font-size: 11px; }
+  .meta { color: var(--muted); font-size: 11.5px; margin-bottom: 6px; }
+  .skills { font-size: 11.5px; margin-bottom: 6px; }
+  .skills span { display: inline-block; border: 1px solid var(--line); border-radius: 10px; padding: 0 6px; margin: 0 3px 3px 0; }
+  table { border-collapse: collapse; width: 100%; }
+  td { vertical-align: top; padding: 2px 0; border-top: 1px solid var(--line); }
+  td.slot { color: var(--muted); width: 66px; padding-right: 6px; font-size: 11.5px; }
+  .it { white-space: nowrap; }
+  .it::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin: 0 4px 1px 0; border: 1.5px solid var(--zc); vertical-align: middle; }
+  .it.mid::before { background: linear-gradient(90deg, var(--zc) 50%, transparent 50%); }
+  .it.outer::before { background: var(--zc); }
+  .it.unconf { color: var(--unconf); font-style: italic; }
+  .it.disp { text-decoration: underline dotted var(--muted); }
+  .sep { color: var(--line); margin: 0 3px; }
+  .center { display: flex; flex-direction: column; gap: 12px; }
+  svg { width: 100%; height: auto; display: block; }
+  svg text { fill: var(--ink); font-family: inherit; }
+  .avoid { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; font-size: 11.5px; }
+  .avoid h3 { margin: 0 0 4px; font-size: 13px; }
+  .avoid ul { margin: 0; padding-left: 16px; }
+  @media (max-width: 1100px) { main { grid-template-columns: 1fr; } .center { order: -1; } }
+  @media (max-width: 600px) { header, .legend { padding-left: 16px; padding-right: 16px; } .it { white-space: normal; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Item Types by Skill Zone</h1>
+  <p>Zones of the passive tree, the skills in each, and the period tools for those skills. Source: <code>core/item-types-by-skill-zone.json</code>.</p>
+</header>
+<div class="legend">
+  <span><b>Band</b> ring 1-2 core <span class="it core" style="--zc:var(--muted)"></span> · 3-6 mid <span class="it mid" style="--zc:var(--muted)"></span> · 7-10 outer <span class="it outer" style="--zc:var(--muted)"></span></span>
+  <span><i style="color:var(--unconf)">italic grey</i> = unconfirmed, not briefable</span>
+  <span><span style="text-decoration:underline dotted">dotted</span> = function disputed, disclose in brief</span>
+  <span>Zone membership of skills is inferred (no attribute tags in game code).</span>
+</div>
+<main id="main">
+  <div class="col" id="left"></div>
+  <div class="center">
+    <div id="int"></div>
+    <svg id="tree" viewBox="-345 -320 690 640" role="img" aria-label="Circular passive tree with six zones"></svg>
+    <div id="dex_str"></div>
+  </div>
+  <div class="col" id="right"></div>
+</main>
+<div style="padding:0 16px 16px"><div class="avoid" id="avoid"></div></div>
+<script>
+const COLORS = { int: '--int', int_dex: '--int-dex', dex: '--dex', dex_str: '--dex-str', str: '--str', str_int: '--str-int' };
+const PLACE = { int: 'int', int_dex: 'left', dex: 'left', str_int: 'right', str: 'right', dex_str: 'dex_str' };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+function card(z, slots) {
+  const rows = slots.map(s => {
+    const its = z.items.filter(i => i.slot === s.id);
+    if (!its.length) return '';
+    const order = { core: 0, mid: 1, outer: 2 };
+    its.sort((a, b) => order[a.band] - order[b.band]);
+    const cells = its.map(i => {
+      const cls = ['it', i.band, i.confidence === 'U' ? 'unconf' : '', i.confidence === 'Disp' ? 'disp' : ''].join(' ');
+      return `<span class="${cls}" title="${esc(i.skills.join(', ') + ' — ' + i.why + ' | ' + i.precedent)}">${esc(i.name)}</span>`;
+    }).join('<span class="sep">·</span> ');
+    return `<tr><td class="slot">${esc(s.label)}</td><td>${cells}</td></tr>`;
+  }).join('');
+  const skills = z.gameSkills.map(s => `<span>${esc(s)}</span>`).join('');
+  return `<section class="card" style="--zc:var(${COLORS[z.id]})">
+    <h2>${esc(z.label)} <small>${z.angle}° · ${esc(z.treeClass.replace(/ \(.*\)/, ''))}</small></h2>
+    <div class="meta">${esc(z.wedges)}</div>
+    <div class="skills">${skills}</div>
+    <table>${rows}</table></section>`;
+}
+
+function tree(data) {
+  const svg = document.getElementById('tree');
+  const R = 270, ringW = R / 10;
+  const P = (deg, r) => [r * Math.cos(deg * Math.PI / 180), -r * Math.sin(deg * Math.PI / 180)];
+  let out = '';
+  for (const z of data.zones) {
+    const a0 = z.angle - 30, a1 = z.angle + 30;
+    const [x0, y0] = P(a0, R), [x1, y1] = P(a1, R);
+    out += `<path d="M0 0 L${x0} ${y0} A${R} ${R} 0 0 0 ${x1} ${y1} Z" fill="var(${COLORS[z.id]})" fill-opacity="0.16" stroke="var(--line)"/>`;
+    // band arcs tinted by item counts
+    for (const [band, rr] of [['core', [0, 2]], ['mid', [2, 6]], ['outer', [6, 10]]]) {
+      const n = z.items.filter(i => i.band === band).length;
+      const ri = rr[0] * ringW, ro = rr[1] * ringW;
+      const [ax, ay] = P(a0, ro), [bx, by] = P(a1, ro), [cx, cy] = P(a1, ri), [dx, dy] = P(a0, ri);
+      out += `<path d="M${dx} ${dy} L${ax} ${ay} A${ro} ${ro} 0 0 0 ${bx} ${by} L${cx} ${cy} ${ri ? `A${ri} ${ri} 0 0 1 ${dx} ${dy}` : ''} Z" fill="var(${COLORS[z.id]})" fill-opacity="${0.05 + n * 0.022}"/>`;
+      const [tx, ty] = P(z.angle, band === 'outer' ? 8.7 * ringW : (ri + ro) / 2);
+      if (band !== 'core') out += `<text x="${tx}" y="${ty + 4}" text-anchor="middle" font-size="11" fill-opacity="0.8">${band} · ${n}</text>`;
+    }
+  }
+  for (let i = 1; i <= 10; i++) out += `<circle r="${i * ringW}" fill="none" stroke="var(--ring)" stroke-width="${i === 2 || i === 6 || i === 10 ? 1.4 : 0.5}" ${i === 7 ? 'stroke-dasharray="3 3"' : ''}/>`;
+  for (const z of data.zones) {
+    const [x, y] = P(z.angle - 30, R);
+    out += `<line x1="0" y1="0" x2="${x}" y2="${y}" stroke="var(--line)"/>`;
+    const [sx, sy] = P(z.angle, R);
+    out += `<line x1="0" y1="0" x2="${sx}" y2="${sy}" stroke="var(${COLORS[z.id]})" stroke-width="1.2" stroke-opacity="0.35"/>`;
+    const [lx, ly] = P(z.angle, R + 16);
+    const anc = Math.abs(Math.cos(z.angle * Math.PI / 180)) < 0.2 ? 'middle' : (Math.cos(z.angle * Math.PI / 180) > 0 ? 'start' : 'end');
+    out += `<text x="${lx}" y="${ly + (Math.sin(z.angle * Math.PI / 180) > 0.9 ? -2 : Math.sin(z.angle * Math.PI / 180) < -0.9 ? 14 : 5)}" text-anchor="${anc}" font-size="16" font-weight="700" fill="var(${COLORS[z.id]})">${esc(z.label)}</text>`;
+    const [cx, cy] = P(z.angle, 6.55 * ringW);
+    out += `<text x="${cx}" y="${cy + 4}" text-anchor="middle" font-size="10.5" fill="var(--muted)">${esc(z.treeClass.replace(/ \(.*\)/, ''))}</text>`;
+  }
+  out += `<circle r="${ringW * 2}" fill="var(--panel)" stroke="var(--ring)"/>`;
+  out += `<text y="-4" text-anchor="middle" font-size="11" font-weight="600">core</text><text y="10" text-anchor="middle" font-size="9.5" fill="var(--muted)">rings 1-2</text>`;
+  out += `<text x="0" y="${-7 * ringW + 2}" font-size="8.5" text-anchor="middle" fill="var(--muted)" opacity="0">.</text>`;
+  svg.innerHTML = out;
+}
+
+fetch('core/item-types-by-skill-zone.json').then(r => r.json()).then(data => {
+  for (const z of data.zones) {
+    const target = document.getElementById(PLACE[z.id]);
+    target.insertAdjacentHTML(z.id === 'str_int' ? 'afterbegin' : 'beforeend', card(z, data.slots));
+  }
+  tree(data);
+  document.getElementById('avoid').innerHTML = `<h3>Do not make (all zones)</h3><ul>${data.globalAvoid.map(a => `<li>${esc(a)}</li>`).join('')}</ul>`;
+  document.body.dataset.ready = '1';
+}).catch(e => {
+  document.getElementById('main').innerHTML = `<p style="padding:16px">Could not load the mapping JSON (${esc(e.message)}). Serve this folder over http.</p>`;
+});
+</script>
+</body>
+</html>

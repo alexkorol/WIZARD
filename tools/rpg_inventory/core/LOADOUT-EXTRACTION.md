@@ -90,6 +90,13 @@ Intelligence as equipment-design axes rather than naming fixed fantasy classes.
 An attribute axis specifies construction pressure and handling logic; it does
 not decide the character's profession before the faction design is interpreted.
 
+**Skill-zone briefs (2026-11-07, owner request):** item briefs come from
+`core/item-types-by-skill-zone.json` (doc: `docs/ITEM-TYPES-BY-SKILL-ZONE.md`),
+never from "stat combo + slot". Pick a tree zone (INT, INT/DEX, DEX, DEX/STR,
+STR, STR/INT) and ring band (core, mid, outer); the zone's skills decide the
+tools for the job, and each item carries its period precedent and do-not-make
+list. Where this file says "attribute axis", read "skill zone + band".
+
 Keep the source-character render environment colorless. Use a pure
 neutral-white studio background, neutral-white key and rim lights, and neutral
 daylight/studio white balance. A blue-gray background plus cool rim and cool

@@ -364,6 +364,14 @@ produces nine separate files in a 3-attribute-axis by 3-tier matrix: Strength
 T1-T3, Dexterity T1-T3, Intelligence T1-T3. Final character prompts must refer
 to these attribute axes, never name fixed fantasy classes. An axis describes
 how equipment solves problems; it does not choose the character's profession.
+
+**Skill-zone briefs (2026-11-07, owner request):** item briefs come from
+`core/item-types-by-skill-zone.json` (doc: `docs/ITEM-TYPES-BY-SKILL-ZONE.md`),
+never from "stat combo + slot". Pick a tree zone (INT, INT/DEX, DEX, DEX/STR,
+STR, STR/INT) and ring band (core, mid, outer); the zone's skills decide the
+tools for the job, and each item carries its period precedent and do-not-make
+list. Where this file says "attribute axis", read "skill zone + band".
+
 Every file contains one male/female pair sharing the same unisex bases and
 coverage. Use the same recognizable pair through one axis's three tiers, then a
 different pair for the next axis. Do not invent a tenth image, and never
