@@ -1,6 +1,6 @@
 {
   "schema": "wizard.item-types-by-skill-zone.v1",
-  "version": "2026-11-07.2",
+  "version": "2026-11-07.3",
   "doc": "docs/ITEM-TYPES-BY-SKILL-ZONE.md",
   "builder": "tools/rpg_inventory/core/build_item_types_by_skill_zone.py",
   "rule": "Item briefs and modpools come from this mapping (zone -> skills -> tools for the job -> mods for the job), never from 'stat combo + slot'.",
@@ -15,21 +15,24 @@
         1,
         2
       ],
-      "meaning": "Shared mechanics near the Origin. Everyday kit any build can wear; cheapest materials (flint, bone, hide, wool, linen)."
+      "meaning": "Shared mechanics near the Origin. Everyday kit any build can wear; cheapest materials (flint, bone, hide, wool, linen). Period: leans Neolithic and Chalcolithic common kit.",
+      "period": "Neolithic / Chalcolithic common kit"
     },
     "mid": {
       "rings": [
         3,
         6
       ],
-      "meaning": "Versatile and hybrid archetypes. The working tools of the trade (copper, early bronze, specialist organic kit)."
+      "meaning": "Versatile and hybrid archetypes. The working tools of the trade (copper, early bronze, specialist organic kit). Period: Early and Middle Bronze Age.",
+      "period": "Early / Middle Bronze Age"
     },
     "outer": {
       "rings": [
         7,
         10
       ],
-      "meaning": "Specialised archetypes past the ring-7 class node. Full professional or high-status kit (bronze, gold, ivory, inlay); matches the class unlocks."
+      "meaning": "Specialised archetypes past the ring-7 class node. Full professional or high-status kit (bronze, gold, ivory, inlay); matches the class unlocks. Period: Late Bronze Age elite pieces.",
+      "period": "Late Bronze Age elite pieces"
     }
   },
   "slots": [
@@ -68,6 +71,10 @@
     {
       "id": "ring",
       "label": "Ring"
+    },
+    {
+      "id": "warhorn",
+      "label": "War Horn slot"
     }
   ],
   "confidence": {
@@ -133,12 +140,12 @@
     },
     {
       "name": "Bone Spikes (claw)",
-      "zone": "DEX (no period precedent: open)",
+      "zone": "DEX (kept as is; no new claw briefs)",
       "band": "mid"
     },
     {
       "name": "Jawbone",
-      "zone": "STR (no period precedent: open)",
+      "zone": "STR (retired from new briefs: no period find)",
       "band": "core"
     },
     {
@@ -222,7 +229,7 @@
         "No wand-like object is attested outside Egypt; INT wands follow Egyptian finds only.",
         "No wooden frame drum survives; the clay drum stands in. Is a hide frame drum acceptable as adapted?",
         "Hvidegaard bag contents need checking against the primary publication before a brief uses them.",
-        "Sources span Natufian to New Kingdom (8,000 years). Should the owner weight regions or periods per ring band?"
+        "Default, owner may veto (2026-11-07): period weighting by band: core leans Neolithic/Chalcolithic common kit, mid Early/Middle Bronze Age, outer Late Bronze Age elite pieces. Regions stay mixed."
       ],
       "items": [
         {
@@ -1553,7 +1560,7 @@
           "silhouette": "two short antlers on a skull cap",
           "precedent": "Bad Duerrenberg c. 7000 BC; Star Carr frontlets c. 9000 BC",
           "confidence": "A",
-          "avoid": "horned Viking helmet; antler crown",
+          "avoid": "fantasy horned helmet; antler crown",
           "briefable": true,
           "modpool": {
             "category": "head",
@@ -5703,8 +5710,8 @@
         "glowing poison vials"
       ],
       "open": [
-        "Mines have no period object. Proposal: laid clay sling shot or buried stake traps; needs an owner ruling. Clay fire pots are not attested before the Iron Age.",
-        "Blink, phase and shadow clone have no material correlate. Is the disguise kit (skins, hoods) acceptable as the visual answer?",
+        "Default, owner may veto (2026-11-07): mines are buried stake traps and laid sling shot. Clay fire pots stay out (not attested before the Iron Age). The stake bundle stays unconfirmed (not briefable) until a stake-lined pit find is cited; pit traps themselves are attested.",
+        "Default, owner may veto (2026-11-07): blink, phase and shadow clone use the disguise kit (animal skin hood, wolf skin cloak) as their visual answer.",
         "Bronze Age arrow poison in Eurasia is not proven archaeologically; the poison container rests on southern African evidence.",
         "Lightning spells sit here only by inference (shock support is DEX, scaling is INT). Confirm the zone before briefing their foci."
       ],
@@ -10296,6 +10303,499 @@
               "no live job mod: every job mod needs a new combat consumer"
             ]
           }
+        },
+        {
+          "id": "int_dex.off.bundle-of-sharpened-stakes",
+          "slot": "off",
+          "band": "mid",
+          "name": "Bundle of sharpened stakes",
+          "skills": [
+            "mines",
+            "traps"
+          ],
+          "why": "stakes set in a covered pit: the buried trap used for mines",
+          "materials": "split hardwood stakes, fire-hardened points, bast tie",
+          "silhouette": "tied bundle of short pointed stakes",
+          "precedent": "pit traps attested (Scandinavian elk pit rows; Near Eastern desert kites); stake-lined pits need a specific find",
+          "confidence": "U",
+          "avoid": "metal spikes; caltrops",
+          "briefable": false,
+          "modpool": {
+            "category": "tool",
+            "tags": {
+              "job": [
+                "area",
+                "trap"
+              ],
+              "material": [],
+              "zone": [
+                "ailment",
+                "curse",
+                "dex",
+                "int",
+                "mark",
+                "poison"
+              ]
+            },
+            "implicit": [],
+            "minItemLevel": 15,
+            "pool": [
+              {
+                "mod": "ailment-effect",
+                "kind": "S",
+                "role": "zone",
+                "weight": 5,
+                "status": "consumer",
+                "tiersFromIlvl": [
+                  1,
+                  30,
+                  55
+                ]
+              },
+              {
+                "mod": "intelligence",
+                "kind": "S",
+                "role": "shared",
+                "weight": 4,
+                "status": "proposed",
+                "tiersFromIlvl": [
+                  1,
+                  25,
+                  55
+                ]
+              },
+              {
+                "mod": "curse-effect",
+                "kind": "P",
+                "role": "zone",
+                "weight": 6,
+                "status": "proposed",
+                "tiersFromIlvl": [
+                  1,
+                  30,
+                  55
+                ]
+              },
+              {
+                "mod": "mark-effect",
+                "kind": "P",
+                "role": "zone",
+                "weight": 6,
+                "status": "proposed",
+                "tiersFromIlvl": [
+                  1,
+                  30
+                ]
+              },
+              {
+                "mod": "trap-damage",
+                "kind": "P",
+                "role": "job",
+                "weight": 12,
+                "status": "proposed",
+                "tiersFromIlvl": [
+                  1,
+                  25,
+                  55
+                ]
+              },
+              {
+                "mod": "trap-arming",
+                "kind": "S",
+                "role": "job",
+                "weight": 10,
+                "status": "proposed",
+                "tiersFromIlvl": [
+                  1,
+                  30
+                ]
+              },
+              {
+                "mod": "trap-count",
+                "kind": "S",
+                "role": "job",
+                "weight": 3,
+                "status": "proposed",
+                "tiersFromIlvl": [
+                  45
+                ]
+              },
+              {
+                "mod": "poison-chance",
+                "kind": "S",
+                "role": "zone",
+                "weight": 6,
+                "status": "proposed",
+                "tiersFromIlvl": [
+                  1,
+                  30
+                ]
+              },
+              {
+                "mod": "area",
+                "kind": "S",
+                "role": "job",
+                "weight": 9,
+                "status": "proposed",
+                "tiersFromIlvl": [
+                  1,
+                  30,
+                  55
+                ]
+              }
+            ],
+            "excluded": [
+              {
+                "mod": "spirited",
+                "needs": [
+                  "aura",
+                  "channel",
+                  "companion",
+                  "spell",
+                  "warcry"
+                ]
+              },
+              {
+                "mod": "warded",
+                "needs": [
+                  "ward"
+                ]
+              },
+              {
+                "mod": "rite-damage",
+                "needs": [
+                  "spell"
+                ]
+              },
+              {
+                "mod": "rite-speed",
+                "needs": [
+                  "spell"
+                ]
+              },
+              {
+                "mod": "elemental-damage",
+                "needs": [
+                  "cold",
+                  "elemental",
+                  "fire",
+                  "lightning"
+                ]
+              },
+              {
+                "mod": "cooldown",
+                "needs": [
+                  "cooldown",
+                  "movement",
+                  "warcry"
+                ]
+              },
+              {
+                "mod": "ignite-chance",
+                "needs": [
+                  "fire"
+                ]
+              },
+              {
+                "mod": "chill-effect",
+                "needs": [
+                  "cold"
+                ]
+              },
+              {
+                "mod": "warcry-effect",
+                "needs": [
+                  "warcry"
+                ]
+              },
+              {
+                "mod": "aura-effect",
+                "needs": [
+                  "aura",
+                  "banner"
+                ]
+              },
+              {
+                "mod": "companion-damage",
+                "needs": [
+                  "companion"
+                ]
+              },
+              {
+                "mod": "companion-life",
+                "needs": [
+                  "companion"
+                ]
+              },
+              {
+                "mod": "channel-cost",
+                "needs": [
+                  "channel"
+                ]
+              }
+            ],
+            "flags": []
+          }
+        },
+        {
+          "id": "int_dex.belt.pouch-of-clay-sling-shot",
+          "slot": "belt",
+          "band": "mid",
+          "name": "Pouch of clay sling shot",
+          "skills": [
+            "mines",
+            "traps"
+          ],
+          "why": "shot laid on the ground as a mine charge (game use); carried in a pouch",
+          "materials": "hide pouch, baked clay shot",
+          "silhouette": "small pouch with egg-shaped shot showing",
+          "precedent": "Mari baked clay sling bullets; Levantine slingstones; laying them as mines is adapted",
+          "confidence": "Adapt",
+          "avoid": "bombs; fire pots; lead shot",
+          "briefable": true,
+          "modpool": {
+            "category": "belt",
+            "tags": {
+              "job": [
+                "area",
+                "trap"
+              ],
+              "material": [
+                "evasion"
+              ],
+              "zone": [
+                "ailment",
+                "curse",
+                "dex",
+                "int",
+                "mark",
+                "poison"
+              ]
+            },
+            "implicit": [
+              {
+                "mod": "stun",
+                "value": 10,
+                "label": "+10% increased Stun Buildup",
+                "status": "proposed"
+              }
+            ],
+            "minItemLevel": 15,
+            "pool": [
+              {
+                "mod": "hale",
+                "kind": "P",
+                "role": "shared",
+                "weight": 6,
+                "status": "live",
+                "tiersFromIlvl": [
+                  1,
+                  25,
+                  55
+                ]
+              },
+              {
+                "mod": "fire-resistance",
+                "kind": "S",
+                "role": "shared",
+                "weight": 4,
+                "status": "live",
+                "tiersFromIlvl": [
+                  1,
+                  25
+                ]
+              },
+              {
+                "mod": "cold-resistance",
+                "kind": "S",
+                "role": "shared",
+                "weight": 4,
+                "status": "consumer",
+                "tiersFromIlvl": [
+                  1,
+                  25
+                ]
+              },
+              {
+                "mod": "lightning-resistance",
+                "kind": "S",
+                "role": "shared",
+                "weight": 4,
+                "status": "consumer",
+                "tiersFromIlvl": [
+                  1,
+                  25
+                ]
+              },
+              {
+                "mod": "chaos-resistance",
+                "kind": "S",
+                "role": "shared",
+                "weight": 2,
+                "status": "consumer",
+                "tiersFromIlvl": [
+                  15,
+                  45
+                ]
+              },
+              {
+                "mod": "evasion-flat",
+                "kind": "P",
+                "role": "material",
+                "weight": 12,
+                "status": "consumer",
+                "tiersFromIlvl": [
+                  1,
+                  25,
+                  55
+                ]
+              },
+              {
+                "mod": "flask-recovery",
+                "kind": "S",
+                "role": "shared",
+                "weight": 4,
+                "status": "consumer",
+                "tiersFromIlvl": [
+                  1,
+                  30
+                ]
+              },
+              {
+                "mod": "flask-charges",
+                "kind": "S",
+                "role": "shared",
+                "weight": 3,
+                "status": "consumer",
+                "tiersFromIlvl": [
+                  1,
+                  30
+                ]
+              },
+              {
+                "mod": "flask-capacity",
+                "kind": "S",
+                "role": "shared",
+                "weight": 2,
+                "status": "consumer",
+                "tiersFromIlvl": [
+                  15,
+                  45
+                ]
+              },
+              {
+                "mod": "dexterity",
+                "kind": "S",
+                "role": "shared",
+                "weight": 4,
+                "status": "proposed",
+                "tiersFromIlvl": [
+                  1,
+                  25,
+                  55
+                ]
+              },
+              {
+                "mod": "intelligence",
+                "kind": "S",
+                "role": "shared",
+                "weight": 4,
+                "status": "proposed",
+                "tiersFromIlvl": [
+                  1,
+                  25,
+                  55
+                ]
+              },
+              {
+                "mod": "trap-damage",
+                "kind": "P",
+                "role": "job",
+                "weight": 12,
+                "status": "proposed",
+                "tiersFromIlvl": [
+                  1,
+                  25,
+                  55
+                ]
+              },
+              {
+                "mod": "trap-arming",
+                "kind": "S",
+                "role": "job",
+                "weight": 10,
+                "status": "proposed",
+                "tiersFromIlvl": [
+                  1,
+                  30
+                ]
+              },
+              {
+                "mod": "trap-count",
+                "kind": "S",
+                "role": "job",
+                "weight": 3,
+                "status": "proposed",
+                "tiersFromIlvl": [
+                  45
+                ]
+              }
+            ],
+            "excluded": [
+              {
+                "mod": "guard-flat",
+                "needs": [
+                  "guard"
+                ]
+              },
+              {
+                "mod": "projectile-damage",
+                "needs": [
+                  "projectile"
+                ]
+              },
+              {
+                "mod": "cooldown",
+                "needs": [
+                  "cooldown",
+                  "movement",
+                  "warcry"
+                ]
+              },
+              {
+                "mod": "life-regen",
+                "needs": [
+                  "endurance",
+                  "healing"
+                ]
+              },
+              {
+                "mod": "life-regen-percent",
+                "needs": [
+                  "endurance"
+                ]
+              },
+              {
+                "mod": "strength",
+                "needs": [
+                  "str"
+                ]
+              },
+              {
+                "mod": "companion-life",
+                "needs": [
+                  "companion"
+                ]
+              },
+              {
+                "mod": "thrown-damage",
+                "needs": [
+                  "thrown"
+                ]
+              }
+            ],
+            "flags": []
+          }
         }
       ]
     },
@@ -10325,7 +10825,7 @@
         "hooded archers with shadowed faces"
       ],
       "open": [
-        "Claw weapons (Bone Spikes base, Acrobat claw actions) have no period precedent found. Keep the game base, but do not brief new claw items until the owner rules.",
+        "Default, owner may veto (2026-11-07): claws keep the existing Bone Spikes game base, but no new claw items are briefed (no period precedent found).",
         "Javelin versus thrusting spear: no clear Bronze Age find-type split; lighter heads are an assumption.",
         "Stone wristguard function is disputed (possibly ornamental). Label it as an archer's status item?",
         "Traps as equipment: only nets, snares and throw-sticks are attested; no portable trap device."
@@ -17699,7 +18199,7 @@
           "silhouette": "band with a row of upright reeds",
           "precedent": "Medinet Habu reliefs, c. 1175 BC",
           "confidence": "Art",
-          "avoid": "horned or crested helmet",
+          "avoid": "fantasy horned or crested helmet",
           "briefable": true,
           "modpool": {
             "category": "head",
@@ -21294,13 +21794,13 @@
       "avoid": [
         "double-bitted 'dwarf' axes",
         "spiked morning stars",
-        "great helms and horned helmets",
+        "great helms and fantasy (Viking-style) horned helmets; the attested Veksø-type horned helmet stays STR/INT outer only",
         "muscle cuirasses",
         "rivets everywhere"
       ],
       "open": [
-        "War cry: horns and trumpets are attested (Tutankhamun's trumpets, lurs, animal horns). The game's War Horn slot fits; confirm the horn goes there, not in the off hand.",
-        "Jawbone weapon (Jawbone chain) is a game base with no period find (the Samson story is a later text). Keep or retire?",
+        "Default, owner may veto (2026-11-07): the war horn goes in the War Horn slot, not the off hand (horns and trumpets are attested: Tutankhamun's trumpets, lurs, animal horns).",
+        "Default, owner may veto (2026-11-07): the Jawbone weapon is retired from new briefs (no period find; the Samson story is a later text). The existing game base and its Jawbone chain action are untouched.",
         "Dendra cuirass is one near-complete find; using it as a common base overstates it. Keep to the outer band.",
         "Banded stone maul needs a specific drilled-stone hammer find as its shape reference before briefing."
       ],
@@ -23045,19 +23545,19 @@
           }
         },
         {
-          "id": "str.off.animal-horn",
-          "slot": "off",
+          "id": "str.warhorn.animal-horn",
+          "slot": "warhorn",
           "band": "outer",
           "name": "Animal horn",
           "skills": [
             "War cry (War Horn slot)"
           ],
-          "why": "signal horn for the war cry; fits the War Horn slot",
+          "why": "signal horn for the war cry; goes in the War Horn slot the Champion node unlocks",
           "materials": "cattle horn, mouthpiece hole",
           "silhouette": "curved horn",
           "precedent": "animal horns common; lurs c. 1000 BC are late",
           "confidence": "Adapt",
-          "avoid": "metal trumpet in the off hand on the core band",
+          "avoid": "a horn in the off hand; metal trumpet on the core band",
           "briefable": true,
           "modpool": {
             "category": "tool",
@@ -23485,7 +23985,7 @@
           "silhouette": "rounded helmet with a face in relief at the front",
           "precedent": "Anyang M1004, c. 1300-1050 BC",
           "confidence": "A",
-          "avoid": "great helm; horned Viking helmet",
+          "avoid": "great helm; fantasy horned helmet",
           "briefable": true,
           "modpool": {
             "category": "head",
@@ -29474,12 +29974,12 @@
             "banner",
             "aura"
           ],
-          "why": "ritual horned helmet, late",
+          "why": "ritual horned helmet, Late Bronze Age; kept because it is attested",
           "materials": "sheet bronze, horns",
           "silhouette": "dome with two curved horns",
-          "precedent": "Vekso helmets c. 900 BC; Sherden reliefs c. 1175 BC",
+          "precedent": "Veksø helmets, Denmark, c. 900 BC (National Museum of Denmark; attested find); Sherden horned helmets on the Medinet Habu reliefs, c. 1175 BC (art)",
           "confidence": "A",
-          "avoid": "Viking-style helmet on other zones",
+          "avoid": "fantasy horned helmet; any horned helmet outside STR/INT outer",
           "briefable": true,
           "modpool": {
             "category": "head",
@@ -32597,6 +33097,21 @@
       ]
     }
   ],
+  "ownerDefaults": {
+    "note": "Default, owner may veto (2026-11-07, via Dispatch review)",
+    "items": [
+      "Horned helmet: kept only as the STR/INT outer 'Bronze horned helmet', because it is attested (Veksø helmets c. 900 BC; Sherden reliefs c. 1175 BC). STR and other zones ban fantasy (Viking-style) horned helmets.",
+      "Prefix/suffix: adopted. 2 prefixes + 2 suffixes inside the game's 4-mod limit, plus one implicit on weapon, off-hand and jewellery bases (none on body, head, hands, feet, belt). Needs a code change in Itemization.cs to take effect.",
+      "Added Fire: limited to fire-themed bases (STR/INT, Kiln Line), as mapped. This changes live drops once implemented; today the game rolls it on every weapon.",
+      "Mines: buried stake traps and laid sling shot are the period answer (Bundle of sharpened stakes, Pouch of clay sling shot). No fire pots.",
+      "Blink, phase and shadow: the disguise kit (animal skin hood, wolf skin cloak) is the visual answer.",
+      "Claws: keep the existing Bone Spikes base; brief no new claw items.",
+      "Jawbone weapon: retired from new briefs (no period find). The game base and action stay as they are.",
+      "Period weighting: core leans Neolithic/Chalcolithic common kit; mid is Early/Middle Bronze Age; outer is Late Bronze Age elite pieces. Regions stay mixed.",
+      "War Horn: goes in the War Horn slot (unlocked by the Champion node), not the off hand.",
+      "Proposed mod numbers: first-pass values kept, marked provisional (status 'proposed', provisional: true)."
+    ]
+  },
   "openQuestions": [
     "No skill or item carries an attribute tag in the game code, and the owner ruled against a forced STR/DEX/INT class split (DESIGN-DIRECTION.md:432). Zone membership here is inferred from the tree's wedge themes, class nodes and the Weaving rows.",
     "The shared chat's 303-archetype source files could not be retrieved (sandbox links). Only its published sample placements are used; the game's own skills take precedence.",
@@ -32640,7 +33155,8 @@
       ],
       "weight": 12,
       "note": "",
-      "rolledBy": 14
+      "rolledBy": 14,
+      "provisional": false
     },
     {
       "id": "heavy",
@@ -32677,7 +33193,8 @@
       ],
       "weight": 12,
       "note": "",
-      "rolledBy": 14
+      "rolledBy": 14,
+      "provisional": false
     },
     {
       "id": "added-fire",
@@ -32714,7 +33231,8 @@
       ],
       "weight": 6,
       "note": "attack fire; game rolls it on every weapon today",
-      "rolledBy": 3
+      "rolledBy": 3,
+      "provisional": false
     },
     {
       "id": "swift_haft",
@@ -32752,7 +33270,8 @@
       ],
       "weight": 9,
       "note": "hands is an extension (game: weapons only)",
-      "rolledBy": 10
+      "rolledBy": 10,
+      "provisional": false
     },
     {
       "id": "long_reach",
@@ -32782,7 +33301,8 @@
       ],
       "weight": 7,
       "note": "",
-      "rolledBy": 2
+      "rolledBy": 2,
+      "provisional": false
     },
     {
       "id": "hale",
@@ -32824,7 +33344,8 @@
       ],
       "weight": 12,
       "note": "shared; game rolls it on weapons too",
-      "rolledBy": 121
+      "rolledBy": 122,
+      "provisional": false
     },
     {
       "id": "spirited",
@@ -32869,7 +33390,8 @@
       ],
       "weight": 10,
       "note": "Spirit pays for every action; kept to bases that spend heavily",
-      "rolledBy": 30
+      "rolledBy": 30,
+      "provisional": false
     },
     {
       "id": "warded",
@@ -32911,7 +33433,8 @@
       ],
       "weight": 12,
       "note": "",
-      "rolledBy": 42
+      "rolledBy": 42,
+      "provisional": false
     },
     {
       "id": "fire-resistance",
@@ -32946,7 +33469,8 @@
       ],
       "weight": 8,
       "note": "shared",
-      "rolledBy": 100
+      "rolledBy": 101,
+      "provisional": false
     },
     {
       "id": "cold-resistance",
@@ -32981,7 +33505,8 @@
       ],
       "weight": 8,
       "note": "shared",
-      "rolledBy": 100
+      "rolledBy": 101,
+      "provisional": false
     },
     {
       "id": "lightning-resistance",
@@ -33016,7 +33541,8 @@
       ],
       "weight": 8,
       "note": "shared",
-      "rolledBy": 100
+      "rolledBy": 101,
+      "provisional": false
     },
     {
       "id": "chaos-resistance",
@@ -33050,7 +33576,8 @@
       ],
       "weight": 4,
       "note": "shared, rarer",
-      "rolledBy": 94
+      "rolledBy": 95,
+      "provisional": false
     },
     {
       "id": "all-resistance",
@@ -33079,7 +33606,8 @@
       ],
       "weight": 3,
       "note": "shared, jewellery only",
-      "rolledBy": 24
+      "rolledBy": 24,
+      "provisional": false
     },
     {
       "id": "max-resistance",
@@ -33104,7 +33632,8 @@
       ],
       "weight": 2,
       "note": "outer bases only",
-      "rolledBy": 2
+      "rolledBy": 2,
+      "provisional": false
     },
     {
       "id": "guard-flat",
@@ -33145,7 +33674,8 @@
       ],
       "weight": 12,
       "note": "STR defence",
-      "rolledBy": 23
+      "rolledBy": 23,
+      "provisional": false
     },
     {
       "id": "guard-increased",
@@ -33185,7 +33715,8 @@
       ],
       "weight": 10,
       "note": "",
-      "rolledBy": 20
+      "rolledBy": 20,
+      "provisional": false
     },
     {
       "id": "evasion-flat",
@@ -33225,7 +33756,8 @@
       ],
       "weight": 12,
       "note": "DEX defence",
-      "rolledBy": 46
+      "rolledBy": 47,
+      "provisional": false
     },
     {
       "id": "evasion-increased",
@@ -33264,7 +33796,8 @@
       ],
       "weight": 10,
       "note": "",
-      "rolledBy": 34
+      "rolledBy": 34,
+      "provisional": false
     },
     {
       "id": "block",
@@ -33301,7 +33834,8 @@
       ],
       "weight": 8,
       "note": "",
-      "rolledBy": 6
+      "rolledBy": 6,
+      "provisional": false
     },
     {
       "id": "accuracy",
@@ -33344,7 +33878,8 @@
       ],
       "weight": 10,
       "note": "",
-      "rolledBy": 27
+      "rolledBy": 27,
+      "provisional": false
     },
     {
       "id": "crit-chance",
@@ -33384,7 +33919,8 @@
       ],
       "weight": 8,
       "note": "flat percent points",
-      "rolledBy": 18
+      "rolledBy": 18,
+      "provisional": false
     },
     {
       "id": "crit-bonus",
@@ -33416,7 +33952,8 @@
       ],
       "weight": 6,
       "note": "",
-      "rolledBy": 13
+      "rolledBy": 13,
+      "provisional": false
     },
     {
       "id": "projectile-damage",
@@ -33455,7 +33992,8 @@
       ],
       "weight": 12,
       "note": "",
-      "rolledBy": 13
+      "rolledBy": 13,
+      "provisional": false
     },
     {
       "id": "attack-damage",
@@ -33495,7 +34033,8 @@
       ],
       "weight": 8,
       "note": "",
-      "rolledBy": 35
+      "rolledBy": 35,
+      "provisional": false
     },
     {
       "id": "rite-damage",
@@ -33535,7 +34074,8 @@
       ],
       "weight": 12,
       "note": "",
-      "rolledBy": 16
+      "rolledBy": 16,
+      "provisional": false
     },
     {
       "id": "rite-speed",
@@ -33574,7 +34114,8 @@
       ],
       "weight": 9,
       "note": "",
-      "rolledBy": 12
+      "rolledBy": 12,
+      "provisional": false
     },
     {
       "id": "elemental-damage",
@@ -33617,7 +34158,8 @@
       ],
       "weight": 8,
       "note": "",
-      "rolledBy": 22
+      "rolledBy": 22,
+      "provisional": false
     },
     {
       "id": "ailment-effect",
@@ -33662,7 +34204,8 @@
       ],
       "weight": 9,
       "note": "covers bleed, poison, chill, ignite",
-      "rolledBy": 31
+      "rolledBy": 32,
+      "provisional": false
     },
     {
       "id": "cooldown",
@@ -33697,7 +34240,8 @@
       ],
       "weight": 6,
       "note": "",
-      "rolledBy": 5
+      "rolledBy": 5,
+      "provisional": false
     },
     {
       "id": "move-speed",
@@ -33733,7 +34277,8 @@
       ],
       "weight": 12,
       "note": "feet only; values are caps against rule 3 (no sped-up feel)",
-      "rolledBy": 6
+      "rolledBy": 6,
+      "provisional": false
     },
     {
       "id": "life-regen",
@@ -33776,7 +34321,8 @@
       ],
       "weight": 8,
       "note": "",
-      "rolledBy": 4
+      "rolledBy": 4,
+      "provisional": false
     },
     {
       "id": "life-regen-percent",
@@ -33807,7 +34353,8 @@
       ],
       "weight": 4,
       "note": "outer bases",
-      "rolledBy": 1
+      "rolledBy": 1,
+      "provisional": false
     },
     {
       "id": "flask-recovery",
@@ -33838,7 +34385,8 @@
       ],
       "weight": 8,
       "note": "belt is the flask slot (PoE convention)",
-      "rolledBy": 12
+      "rolledBy": 13,
+      "provisional": false
     },
     {
       "id": "flask-charges",
@@ -33869,7 +34417,8 @@
       ],
       "weight": 6,
       "note": "",
-      "rolledBy": 12
+      "rolledBy": 13,
+      "provisional": false
     },
     {
       "id": "flask-capacity",
@@ -33900,7 +34449,8 @@
       ],
       "weight": 4,
       "note": "",
-      "rolledBy": 12
+      "rolledBy": 13,
+      "provisional": false
     },
     {
       "id": "strength",
@@ -33944,7 +34494,8 @@
       ],
       "weight": 8,
       "note": "shared; attributes only on the zone's own axes. Equipment attributes are not read today.",
-      "rolledBy": 67
+      "rolledBy": 67,
+      "provisional": true
     },
     {
       "id": "dexterity",
@@ -33988,7 +34539,8 @@
       ],
       "weight": 8,
       "note": "shared",
-      "rolledBy": 60
+      "rolledBy": 61,
+      "provisional": true
     },
     {
       "id": "intelligence",
@@ -34032,7 +34584,8 @@
       ],
       "weight": 8,
       "note": "shared",
-      "rolledBy": 58
+      "rolledBy": 60,
+      "provisional": true
     },
     {
       "id": "curse-effect",
@@ -34071,7 +34624,8 @@
       ],
       "weight": 10,
       "note": "",
-      "rolledBy": 20
+      "rolledBy": 21,
+      "provisional": true
     },
     {
       "id": "mark-effect",
@@ -34104,7 +34658,8 @@
       ],
       "weight": 10,
       "note": "marks exist only as a tree theme",
-      "rolledBy": 9
+      "rolledBy": 10,
+      "provisional": true
     },
     {
       "id": "trap-damage",
@@ -34142,7 +34697,8 @@
       ],
       "weight": 12,
       "note": "no trap skill in the game yet",
-      "rolledBy": 6
+      "rolledBy": 8,
+      "provisional": true
     },
     {
       "id": "trap-arming",
@@ -34175,7 +34731,8 @@
       ],
       "weight": 10,
       "note": "",
-      "rolledBy": 9
+      "rolledBy": 11,
+      "provisional": true
     },
     {
       "id": "trap-count",
@@ -34200,7 +34757,8 @@
       ],
       "weight": 3,
       "note": "outer bases only",
-      "rolledBy": 6
+      "rolledBy": 8,
+      "provisional": true
     },
     {
       "id": "poison-chance",
@@ -34233,7 +34791,8 @@
       ],
       "weight": 10,
       "note": "game has Poisoned status but no chance stat",
-      "rolledBy": 6
+      "rolledBy": 7,
+      "provisional": true
     },
     {
       "id": "bleed-chance",
@@ -34265,7 +34824,8 @@
       ],
       "weight": 10,
       "note": "",
-      "rolledBy": 9
+      "rolledBy": 9,
+      "provisional": true
     },
     {
       "id": "ignite-chance",
@@ -34297,7 +34857,8 @@
       ],
       "weight": 8,
       "note": "Kiln Line wedge",
-      "rolledBy": 6
+      "rolledBy": 6,
+      "provisional": true
     },
     {
       "id": "chill-effect",
@@ -34329,7 +34890,8 @@
       ],
       "weight": 8,
       "note": "Drowned Study wedge",
-      "rolledBy": 9
+      "rolledBy": 9,
+      "provisional": true
     },
     {
       "id": "stun",
@@ -34366,7 +34928,8 @@
       ],
       "weight": 10,
       "note": "Ground slam staggers today; no stat scales it",
-      "rolledBy": 7
+      "rolledBy": 7,
+      "provisional": true
     },
     {
       "id": "area",
@@ -34405,7 +34968,8 @@
       ],
       "weight": 9,
       "note": "slams, sweeps, novas",
-      "rolledBy": 12
+      "rolledBy": 13,
+      "provisional": true
     },
     {
       "id": "warcry-effect",
@@ -34438,7 +35002,8 @@
       ],
       "weight": 10,
       "note": "War cry bonus is a constant today (ActionRules.WarCryDamageBonus)",
-      "rolledBy": 3
+      "rolledBy": 3,
+      "provisional": true
     },
     {
       "id": "aura-effect",
@@ -34479,7 +35044,8 @@
       ],
       "weight": 10,
       "note": "",
-      "rolledBy": 14
+      "rolledBy": 14,
+      "provisional": true
     },
     {
       "id": "companion-damage",
@@ -34519,7 +35085,8 @@
       ],
       "weight": 12,
       "note": "Ritualist war companion; summoning-circle",
-      "rolledBy": 12
+      "rolledBy": 12,
+      "provisional": true
     },
     {
       "id": "companion-life",
@@ -34552,7 +35119,8 @@
       ],
       "weight": 10,
       "note": "",
-      "rolledBy": 12
+      "rolledBy": 12,
+      "provisional": true
     },
     {
       "id": "channel-cost",
@@ -34584,7 +35152,8 @@
       ],
       "weight": 8,
       "note": "",
-      "rolledBy": 5
+      "rolledBy": 5,
+      "provisional": true
     },
     {
       "id": "thrown-damage",
@@ -34622,7 +35191,8 @@
       ],
       "weight": 10,
       "note": "Reaver unlock makes thrown weapons melee and projectile",
-      "rolledBy": 5
+      "rolledBy": 5,
+      "provisional": true
     },
     {
       "id": "dodge-roll",
@@ -34653,7 +35223,8 @@
       ],
       "weight": 6,
       "note": "rule 36: dodge stays an active roll",
-      "rolledBy": 21
+      "rolledBy": 21,
+      "provisional": true
     },
     {
       "id": "thorns",
@@ -34684,7 +35255,8 @@
       ],
       "weight": 5,
       "note": "thorns aura exists",
-      "rolledBy": 6
+      "rolledBy": 6,
+      "provisional": true
     },
     {
       "id": "life-leech",
@@ -34715,7 +35287,8 @@
       ],
       "weight": 4,
       "note": "melee sustain only; never on trap, spell or ranged bases",
-      "rolledBy": 5
+      "rolledBy": 5,
+      "provisional": true
     }
   ],
   "modpoolReport": {
@@ -34960,15 +35533,16 @@
   "modpoolRules": {
     "source": "Assets/ARPG/Scripts/Core/Itemization.cs:115-128 (live pool) and WizardCombat.cs (stat consumers). Live values are copied, never changed here.",
     "jobRule": "A base rolls mods whose tags match the skills it serves (job, full weight), defence mods its material implies (material, full weight: metal and tusk -> Guard; hide, leather, fur, grass -> Evasion; linen, wool, felt, gold, ivory, faience -> Ward, after the PoE cloth convention), and its zone's themes (zone, 0.6 weight), plus a small shared pool (life, resistances, the zone's own attributes, and flask mods on belts; 0.5 weight). Everything else is excluded with a reason.",
-    "affixCap": "Proposal: 2 prefixes + 2 suffixes, inside the game's MaxModifiers 4. The game has no prefix/suffix split today.",
+    "affixCap": "Default, owner may veto: 2 prefixes + 2 suffixes, inside the game's MaxModifiers 4. The game has no prefix/suffix split yet (code change needed).",
     "tiers": "Tiers unlock by item level as in the game (typically ilvl 1 / 20-30 / 50-60); tier pick weights 10/5/2 (Itemization.TierWeights). A base's band sets its minimum item level: core 1, mid 15, outer 45.",
     "excluded": "Each base lists the slot-eligible mods it does not roll and the tags they need; the base's skills (item.skills) carry none of those tags.",
     "weights": "Mod weight = catalogue weight x role factor (job 1.0, zone 0.6, shared 0.5), so job mods dominate.",
-    "implicits": "Proposal: one fixed implicit per weapon, off-hand and jewellery base, taken from the base's form (spear: reach; tower shield: block and Guard). Body armour, helmets, gloves and boots carry no implicit; their base defence is the material.",
+    "implicits": "Default, owner may veto: one fixed implicit per weapon, off-hand and jewellery base, taken from the base's form (spear: reach; tower shield: block and Guard). Body armour, helmets, gloves and boots carry no implicit; their base defence is the material.",
     "status": {
       "live": "in the roll pool today",
       "consumer": "combat already reads the stat; add the mod to the pool",
-      "proposed": "needs a new combat consumer before it can roll"
-    }
+      "proposed": "needs a new combat consumer before it can roll; values are provisional first-pass numbers"
+    },
+    "addedFire": "Default, owner may veto: added-fire rolls only on fire-tagged bases (STR/INT, Kiln Line); the live game rolls it on every weapon until Itemization.cs changes."
   }
 }

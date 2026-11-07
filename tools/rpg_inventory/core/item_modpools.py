@@ -108,7 +108,7 @@ SKILL_TAGS = [
     ("curse", ["curse"]), ("prophecy", ["curse"]), ("ward", ["ward"]), ("nova", ["spell", "area"]),
     ("summon", ["companion"]), ("companion", ["companion"]), ("aura", ["aura"]), ("conviction", ["aura"]),
     ("mark", ["mark", "precision"]), ("poison", ["poison", "ailment"]), ("venom", ["poison"]),
-    ("trap", ["trap"]), ("preparations", ["trap", "flask"]), ("precision", ["precision"]),
+    ("trap", ["trap"]), ("mine", ["trap", "area"]), ("preparations", ["trap", "flask"]), ("precision", ["precision"]),
     ("stealth", ["evasion"]), ("blink", ["evasion", "movement"]), ("phase", ["evasion"]),
     ("shadow clone", ["evasion"]), ("fire", ["fire"]), ("evasion", ["evasion"]), ("dash", ["movement", "evasion"]),
     ("leaps", ["movement", "evasion"]), ("agility", ["movement", "evasion"]), ("movement", ["movement"]),
@@ -171,6 +171,8 @@ MOD_INDEX = {m[0]: m for m in MODS}
 
 def category(item: dict) -> str:
     n, s = item["name"].lower(), item["slot"]
+    if s == "warhorn":
+        return "tool"
     if s == "main":
         if any(k in n for k in ("wand", "staff", "rod")):
             return "caster"
@@ -287,7 +289,7 @@ def attach(data: dict) -> dict:
     data["mods"] = [{
         "id": m[0], "label": m[1], "kind": m[2], "stat": m[3], "status": m[4], "categories": m[5], "tags": m[6],
         "tiers": [{"tier": i + 1, "ilvl": t[0], "min": t[1], "max": t[2]} for i, t in enumerate(m[7])],
-        "weight": m[8], "note": m[9], "rolledBy": len(rolled.get(m[0], [])),
+        "weight": m[8], "note": m[9], "rolledBy": len(rolled.get(m[0], [])), "provisional": m[4] == "proposed",
     } for m in MODS]
     implicit_mods = {imp["mod"] for z in data["zones"] for it in z["items"] for imp in it["modpool"]["implicit"]}
     data["modpoolReport"] = {
@@ -303,12 +305,13 @@ def attach(data: dict) -> dict:
 MODPOOL_RULES = {
     "source": "Assets/ARPG/Scripts/Core/Itemization.cs:115-128 (live pool) and WizardCombat.cs (stat consumers). Live values are copied, never changed here.",
     "jobRule": "A base rolls mods whose tags match the skills it serves (job, full weight), defence mods its material implies (material, full weight: metal and tusk -> Guard; hide, leather, fur, grass -> Evasion; linen, wool, felt, gold, ivory, faience -> Ward, after the PoE cloth convention), and its zone's themes (zone, 0.6 weight), plus a small shared pool (life, resistances, the zone's own attributes, and flask mods on belts; 0.5 weight). Everything else is excluded with a reason.",
-    "affixCap": "Proposal: 2 prefixes + 2 suffixes, inside the game's MaxModifiers 4. The game has no prefix/suffix split today.",
+    "affixCap": "Default, owner may veto: 2 prefixes + 2 suffixes, inside the game's MaxModifiers 4. The game has no prefix/suffix split yet (code change needed).",
     "tiers": "Tiers unlock by item level as in the game (typically ilvl 1 / 20-30 / 50-60); tier pick weights 10/5/2 (Itemization.TierWeights). A base's band sets its minimum item level: core 1, mid 15, outer 45.",
     "excluded": "Each base lists the slot-eligible mods it does not roll and the tags they need; the base's skills (item.skills) carry none of those tags.",
     "weights": "Mod weight = catalogue weight x role factor (job 1.0, zone 0.6, shared 0.5), so job mods dominate.",
-    "implicits": "Proposal: one fixed implicit per weapon, off-hand and jewellery base, taken from the base's form (spear: reach; tower shield: block and Guard). Body armour, helmets, gloves and boots carry no implicit; their base defence is the material.",
-    "status": {"live": "in the roll pool today", "consumer": "combat already reads the stat; add the mod to the pool", "proposed": "needs a new combat consumer before it can roll"},
+    "implicits": "Default, owner may veto: one fixed implicit per weapon, off-hand and jewellery base, taken from the base's form (spear: reach; tower shield: block and Guard). Body armour, helmets, gloves and boots carry no implicit; their base defence is the material.",
+    "status": {"live": "in the roll pool today", "consumer": "combat already reads the stat; add the mod to the pool", "proposed": "needs a new combat consumer before it can roll; values are provisional first-pass numbers"},
+    "addedFire": "Default, owner may veto: added-fire rolls only on fire-tagged bases (STR/INT, Kiln Line); the live game rolls it on every weapon until Itemization.cs changes.",
 }
 
 
@@ -320,7 +323,7 @@ def md(data: dict, md_escape) -> list:
     a("")
     a("Each base rolls the mods that support the job its zone's skills do, plus a small shared pool. Same zone and skill keys as the item tables above; data in `item_modpools.py`, output under each item's `modpool` in the JSON.")
     a("")
-    for k in ("source", "jobRule", "affixCap", "tiers", "weights", "implicits"):
+    for k in ("source", "jobRule", "affixCap", "tiers", "weights", "implicits", "addedFire"):
         a(f"- **{k}:** {r[k]}")
     a("- **status:** " + "; ".join(f"`{k}` {v}" for k, v in r["status"].items()) + ".")
     a("")
@@ -329,6 +332,8 @@ def md(data: dict, md_escape) -> list:
     a(f"Example: the Bast fowling net (INT/DEX off-hand tool; serves traps) rolls {rolls}. It cannot roll {', '.join(e['mod'] for e in ex['modpool']['excluded'])}: none of its skills are attacks, spells or auras.")
     a("")
     a("### Mod catalogue")
+    a("")
+    a("Status `proposed` values are provisional first-pass numbers (default, owner may veto).")
     a("")
     a("| Mod | Label | P/S | Stat | Status | Slots | Tags | Tiers (ilvl: min-max) | Weight | Bases |")
     a("|---|---|---|---|---|---|---|---|---|---|")
@@ -384,9 +389,7 @@ def md(data: dict, md_escape) -> list:
     a("")
     a("### Modpool open questions")
     a("")
-    a("- The game has no prefix/suffix split and no implicits; both are proposals here. Confirm 2+2 under MaxModifiers 4.")
     a("- Equipment attributes (Strength/Dexterity/Intelligence) are not read by combat today; the shared attribute mods need that consumer.")
-    a("- `added-fire` rolls on every weapon in the game today. This mapping limits it to fire-tagged bases (STR/INT, Kiln Line); that changes live drops and needs an owner ruling.")
-    a("- Proposed mod values are first-pass numbers by analogy to the live tiers; balance is owner-owned.")
+    a("- Resolved as defaults (owner may veto): prefix/suffix 2+2 with implicits; added-fire limited to fire bases; proposed values kept as provisional. See Owner defaults above.")
     a("- Trap, mark, companion, banner and war cry mods depend on skills that do not exist yet as player actions.")
     return L

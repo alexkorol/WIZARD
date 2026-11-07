@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[3]
 JSON_OUT = ROOT / "tools/rpg_inventory/core/item-types-by-skill-zone.json"
 MD_OUT = ROOT / "docs/ITEM-TYPES-BY-SKILL-ZONE.md"
 
-VERSION = "2026-11-07.2"
+VERSION = "2026-11-07.3"
 
 SLOTS = [
     ("main", "Main hand"),
@@ -36,12 +36,13 @@ SLOTS = [
     ("feet", "Feet"),
     ("amulet", "Amulet"),
     ("ring", "Ring"),
+    ("warhorn", "War Horn slot"),
 ]
 
 BANDS = {
-    "core": {"rings": [1, 2], "meaning": "Shared mechanics near the Origin. Everyday kit any build can wear; cheapest materials (flint, bone, hide, wool, linen)."},
-    "mid": {"rings": [3, 6], "meaning": "Versatile and hybrid archetypes. The working tools of the trade (copper, early bronze, specialist organic kit)."},
-    "outer": {"rings": [7, 10], "meaning": "Specialised archetypes past the ring-7 class node. Full professional or high-status kit (bronze, gold, ivory, inlay); matches the class unlocks."},
+    "core": {"rings": [1, 2], "meaning": "Shared mechanics near the Origin. Everyday kit any build can wear; cheapest materials (flint, bone, hide, wool, linen). Period: leans Neolithic and Chalcolithic common kit.", "period": "Neolithic / Chalcolithic common kit"},
+    "mid": {"rings": [3, 6], "meaning": "Versatile and hybrid archetypes. The working tools of the trade (copper, early bronze, specialist organic kit). Period: Early and Middle Bronze Age.", "period": "Early / Middle Bronze Age"},
+    "outer": {"rings": [7, 10], "meaning": "Specialised archetypes past the ring-7 class node. Full professional or high-status kit (bronze, gold, ivory, inlay); matches the class unlocks. Period: Late Bronze Age elite pieces.", "period": "Late Bronze Age elite pieces"},
 }
 
 CONFIDENCE = {
@@ -90,7 +91,7 @@ ZONES = [
             ("off", "mid", "Clay liver model", "curses, marks, prophecy", "the diviner's reading tool; marks and curses read as foresight", "fired clay with peg holes and ruled zones", "flat lobed plaque, holes and grid only", "Mari palace liver models (Louvre AO 19829), Hattusa, Babylon", "A", "pseudo-cuneiform text lines"),
             ("off", "outer", "Bronze sistrum", "channelled auras", "shaken rattle for sustained rites", "bronze loop frame, loose rods with discs, wood or bronze handle", "loop on a handle with crossbars", "New Kingdom Egypt; Tutankhamun's tomb (check record)", "A", "hand-bell shape"),
             ("off", "core", "Clay drum", "channelling, nova", "steady beat for channelled rites", "fired clay body with lugs, laced hide head", "goblet or drum body with lugs", "Bernburg and Walternienburg cultures, Germany, c. 3200 BC", "A", "painted Siberian frame drum (ethnographic, 18th c.+)"),
-            ("head", "outer", "Antler headdress", "summoning beasts, curses", "wearing the animal to stand for it", "roe or red deer antlers on a cut skull plate, hide ties", "two short antlers on a skull cap", "Bad Duerrenberg c. 7000 BC; Star Carr frontlets c. 9000 BC", "A", "horned Viking helmet; antler crown"),
+            ("head", "outer", "Antler headdress", "summoning beasts, curses", "wearing the animal to stand for it", "roe or red deer antlers on a cut skull plate, hide ties", "two short antlers on a skull cap", "Bad Duerrenberg c. 7000 BC; Star Carr frontlets c. 9000 BC", "A", "fantasy horned helmet; antler crown"),
             ("head", "outer", "Sheet gold cone hat", "ward, auras", "high-status ritual dress for the outer INT build", "hammered sheet gold, rows of punched circles", "tall narrow cone with a brim", "Schifferstadt hat c. 1400-1300 BC; Berlin gold hat c. 1000-800 BC", "A", "floppy wizard hat; stars and moons"),
             ("head", "core", "Felt cap", "any", "plain head cover for the everyday healer", "felted wool", "rounded cap", "Borum Eshoej and Trindhoej caps, Denmark, c. 1370 BC", "A", "hood with a skull; cowl"),
             ("body", "outer", "Hide garment with bone point fringe", "channelling, summoning", "the fringe rattles as the wearer moves", "hide, perforated bone points, boar tusks", "garment with a dense fringe at hem and chest", "Upton Lovell G2a c. 1850-1700 BC; Bad Duerrenberg", "A", "bone armour plates; skull ornaments"),
@@ -113,7 +114,7 @@ ZONES = [
             "No wand-like object is attested outside Egypt; INT wands follow Egyptian finds only.",
             "No wooden frame drum survives; the clay drum stands in. Is a hide frame drum acceptable as adapted?",
             "Hvidegaard bag contents need checking against the primary publication before a brief uses them.",
-            "Sources span Natufian to New Kingdom (8,000 years). Should the owner weight regions or periods per ring band?",
+            "Default, owner may veto (2026-11-07): period weighting by band: core leans Neolithic/Chalcolithic common kit, mid Early/Middle Bronze Age, outer Late Bronze Age elite pieces. Regions stay mixed.",
         ],
     },
     {
@@ -151,11 +152,13 @@ ZONES = [
             ("amulet", "mid", "Ochre crayon on a thong", "marks", "the pigment used to mark, carried at the neck", "shaped ochre or haematite, hide thong", "small worn stone on a thong", "worn ochre pieces common; pendant form adapted", "Adapt", "glowing stone"),
             ("amulet", "core", "Pierced tooth pendant", "any", "hunter's token", "drilled tooth or claw", "single tooth on a cord", "common, Mesolithic onward", "A", "gem-set fang"),
             ("ring", "core", "Plain copper wire ring", "any", "everyday ring", "copper wire", "plain band", "common", "A", "engraved rune band"),
+            ("off", "mid", "Bundle of sharpened stakes", "mines, traps", "stakes set in a covered pit: the buried trap used for mines", "split hardwood stakes, fire-hardened points, bast tie", "tied bundle of short pointed stakes", "pit traps attested (Scandinavian elk pit rows; Near Eastern desert kites); stake-lined pits need a specific find", "U", "metal spikes; caltrops"),
+            ("belt", "mid", "Pouch of clay sling shot", "mines, traps", "shot laid on the ground as a mine charge (game use); carried in a pouch", "hide pouch, baked clay shot", "small pouch with egg-shaped shot showing", "Mari baked clay sling bullets; Levantine slingstones; laying them as mines is adapted", "Adapt", "bombs; fire pots; lead shot"),
         ],
         "avoid": ["clay fire pots or bombs as mines (no pre-Iron-Age evidence)", "caltrops", "black hoods with shadowed faces", "glowing poison vials"],
         "open": [
-            "Mines have no period object. Proposal: laid clay sling shot or buried stake traps; needs an owner ruling. Clay fire pots are not attested before the Iron Age.",
-            "Blink, phase and shadow clone have no material correlate. Is the disguise kit (skins, hoods) acceptable as the visual answer?",
+            "Default, owner may veto (2026-11-07): mines are buried stake traps and laid sling shot. Clay fire pots stay out (not attested before the Iron Age). The stake bundle stays unconfirmed (not briefable) until a stake-lined pit find is cited; pit traps themselves are attested.",
+            "Default, owner may veto (2026-11-07): blink, phase and shadow clone use the disguise kit (animal skin hood, wolf skin cloak) as their visual answer.",
             "Bronze Age arrow poison in Eurasia is not proven archaeologically; the poison container rests on southern African evidence.",
             "Lightning spells sit here only by inference (shock support is DEX, scaling is INT). Confirm the zone before briefing their foci.",
         ],
@@ -203,7 +206,7 @@ ZONES = [
         ],
         "avoid": ["fire pots or grenades (use sling and clay shot)", "studded leather 'rogue' armour", "ranger boots", "hooded archers with shadowed faces"],
         "open": [
-            "Claw weapons (Bone Spikes base, Acrobat claw actions) have no period precedent found. Keep the game base, but do not brief new claw items until the owner rules.",
+            "Default, owner may veto (2026-11-07): claws keep the existing Bone Spikes game base, but no new claw items are briefed (no period precedent found).",
             "Javelin versus thrusting spear: no clear Bronze Age find-type split; lighter heads are an assumption.",
             "Stone wristguard function is disputed (possibly ornamental). Label it as an archer's status item?",
             "Traps as equipment: only nets, snares and throw-sticks are attested; no portable trap device.",
@@ -232,7 +235,7 @@ ZONES = [
             ("off", "mid", "Long bronze dagger", "combos, second blade", "carried with the sword; companion blade", "bronze, riveted hilt plate", "broad triangular or leaf blade", "Lion Hunt dagger c. 1600 BC; Unetice daggers c. 2000-1600 BC", "Adapt", "matched pair of fantasy blades"),
             ("off", "mid", "Small round leather shield", "parries", "light shield for fast blocks", "hardened leather or wood, central grip", "disc with central boss or grip", "Sherden shields at Kadesh and Medinet Habu; Clonbrin shield (date unverified)", "A", "domed medieval buckler; heater shape"),
             ("head", "outer", "Boar's tusk helmet", "duelist", "the Aegean warrior's helmet", "split boar tusk plates on felt or leather cap, cheek pieces", "conical dome with banded tiers", "Dendra, Knossos, Mycenae, 17th-12th c. BC", "A", "crest; nasal bar"),
-            ("head", "outer", "Reed headband", "any", "Sea Peoples headdress", "reed, feather or leather (disputed) on a band", "band with a row of upright reeds", "Medinet Habu reliefs, c. 1175 BC", "Art", "horned or crested helmet"),
+            ("head", "outer", "Reed headband", "any", "Sea Peoples headdress", "reed, feather or leather (disputed) on a band", "band with a row of upright reeds", "Medinet Habu reliefs, c. 1175 BC", "Art", "fantasy horned or crested helmet"),
             ("head", "core", "Leather cap", "any", "plain cap", "leather", "close cap", "leather helmets inferred from Aegean art; no find", "U", "visored helmet"),
             ("body", "outer", "Leather scale cuirass on linen", "any", "light armour that keeps the arms free", "rawhide scales on linen", "short scale cuirass", "Tutankhamun's cuirass", "A", "Dendra panoply (STR zone)"),
             ("body", "core", "Wool tunic", "any", "free movement", "wool", "simple tunic", "Borum Eshoej", "A", "kilt or loincloth as armour"),
@@ -281,9 +284,9 @@ ZONES = [
             ("off", "outer", "Oxhide tower shield", "guard, endurance, charge", "body-length cover; the Champion's tower shield unlock", "layered oxhide on a wicker or wood frame", "tall rectangle with curved top, hide pattern", "Lion Hunt dagger c. 1600 BC; Akrotiri ship fresco", "Art", "kite or heater shape; steel boss"),
             ("off", "mid", "Rectangular hide shield", "guard, shield line", "the close-order line shield", "hide over wood or wicker", "large rectangle, possible studs", "Stele of the Vultures, c. 2450 BC", "Art", "Roman scutum curve"),
             ("off", "core", "Cowhide shield with rounded top", "guard", "everyday infantry shield", "piebald cowhide on a wooden frame", "tall shield with round top, hair left on", "Mesehti soldier models, Asyut, c. 2000 BC", "A", "metal-rimmed round shield"),
-            ("off", "outer", "Animal horn", "War cry (War Horn slot)", "signal horn for the war cry; fits the War Horn slot", "cattle horn, mouthpiece hole", "curved horn", "animal horns common; lurs c. 1000 BC are late", "Adapt", "metal trumpet in the off hand on the core band"),
+            ("warhorn", "outer", "Animal horn", "War cry (War Horn slot)", "signal horn for the war cry; goes in the War Horn slot the Champion node unlocks", "cattle horn, mouthpiece hole", "curved horn", "animal horns common; lurs c. 1000 BC are late", "Adapt", "a horn in the off hand; metal trumpet on the core band"),
             ("head", "mid", "Copper cap helmet", "guard", "plain dome over a padded cap", "hammered copper, padded leather or wool liner", "round dome with slight back flare", "PG 789 guards, Ur, c. 2600 BC", "A", "visor; nasal bar; crest"),
-            ("head", "outer", "Cast bronze animal-face helmet", "guard, warcry", "Shang infantry helmet", "cast bronze", "rounded helmet with a face in relief at the front", "Anyang M1004, c. 1300-1050 BC", "A", "great helm; horned Viking helmet"),
+            ("head", "outer", "Cast bronze animal-face helmet", "guard, warcry", "Shang infantry helmet", "cast bronze", "rounded helmet with a face in relief at the front", "Anyang M1004, c. 1300-1050 BC", "A", "great helm; fantasy horned helmet"),
             ("head", "core", "Rawhide cap", "any", "hardened cap", "rawhide", "close round cap", "rawhide skullcap (taxonomy H-03); check a specific find", "U", "closed helmet"),
             ("body", "outer", "Bronze plate cuirass", "endurance, guard", "full bronze defence for the heaviest build", "bronze plates, leather ties", "bell-shaped torso with stacked curved bands, high neck", "Dendra panoply, c. 1400 BC (single near-complete find)", "A", "moulded muscle cuirass; rivets"),
             ("body", "mid", "Studded cloak", "guard", "thick cloak covered in round studs", "wool or felt (unconfirmed), round studs", "cloak fastened at the shoulder, dotted surface", "Standard of Ur soldiers, c. 2600 BC", "Art", "brigandine; chainmail"),
@@ -300,10 +303,10 @@ ZONES = [
             ("ring", "core", "Plain copper band", "any", "plain ring", "cast copper", "plain band", "common", "A", "knuckle-duster ring"),
             ("ring", "mid", "Bronze spiral ring", "any", "plain ring", "bronze wire", "small coil", "Unetice, Wessex", "A", "faceted gem"),
         ],
-        "avoid": ["double-bitted 'dwarf' axes", "spiked morning stars", "great helms and horned helmets", "muscle cuirasses", "rivets everywhere"],
+        "avoid": ["double-bitted 'dwarf' axes", "spiked morning stars", "great helms and fantasy (Viking-style) horned helmets; the attested Veksø-type horned helmet stays STR/INT outer only", "muscle cuirasses", "rivets everywhere"],
         "open": [
-            "War cry: horns and trumpets are attested (Tutankhamun's trumpets, lurs, animal horns). The game's War Horn slot fits; confirm the horn goes there, not in the off hand.",
-            "Jawbone weapon (Jawbone chain) is a game base with no period find (the Samson story is a later text). Keep or retire?",
+            "Default, owner may veto (2026-11-07): the war horn goes in the War Horn slot, not the off hand (horns and trumpets are attested: Tutankhamun's trumpets, lurs, animal horns).",
+            "Default, owner may veto (2026-11-07): the Jawbone weapon is retired from new briefs (no period find; the Samson story is a later text). The existing game base and its Jawbone chain action are untouched.",
             "Dendra cuirass is one near-complete find; using it as a common base overstates it. Keep to the outer band.",
             "Banded stone maul needs a specific drilled-stone hammer find as its shape reference before briefing.",
         ],
@@ -334,7 +337,7 @@ ZONES = [
             ("off", "core", "Reed buckler", "barrier", "the game's Reed Buckler base (Element row)", "woven reed on a frame", "small round shield", "game base; reed shields in taxonomy S-18 (check a find)", "U", "toy-like wicker look"),
             ("head", "outer", "Gold helmet shaped as hair", "auras, conviction", "leader's helmet", "hammered gold", "dome shaped as hair with a bun and ears", "Meskalamdug helmet, Ur, c. 2600 BC", "A", "crown with points"),
             ("head", "mid", "Bronze helmet with plume tube", "warcry with magic, ward", "helmet with a socket for a plume", "cast bronze", "rounded helmet with a small tube on top", "Anyang M1004", "A", "crest ridge"),
-            ("head", "outer", "Bronze horned helmet", "banner, aura", "ritual horned helmet, late", "sheet bronze, horns", "dome with two curved horns", "Vekso helmets c. 900 BC; Sherden reliefs c. 1175 BC", "A", "Viking-style helmet on other zones"),
+            ("head", "outer", "Bronze horned helmet", "banner, aura", "ritual horned helmet, Late Bronze Age; kept because it is attested", "sheet bronze, horns", "dome with two curved horns", "Veksø helmets, Denmark, c. 900 BC (National Museum of Denmark; attested find); Sherden horned helmets on the Medinet Habu reliefs, c. 1175 BC (art)", "A", "fantasy horned helmet; any horned helmet outside STR/INT outer"),
             ("body", "outer", "Gold shoulder cape", "ward, auras", "ceremonial cape, not armour", "hammered sheet gold", "short cape over the shoulders with ribbed bands", "Mold cape, c. 1900-1600 BC", "A", "presenting it as armour"),
             ("body", "mid", "Leather scale corselet", "any", "protective body for the field leader", "rawhide scales on linen", "short scale cuirass", "Tutankhamun's cuirass", "Adapt", "chainmail"),
             ("body", "core", "Wool tunic with mantle", "any", "plain garment", "wool", "tunic with rectangular mantle", "Borum Eshoej, Muldbjerg", "A", "robe with sigils"),
@@ -367,8 +370,8 @@ EXISTING_BASES = [
     ("Flint Lopper", "DEX/STR (Reaping sweep)", "mid"),
     ("Wooden Cudgel", "STR", "core"),
     ("Root Ball", "STR (two-handed maul)", "core"),
-    ("Bone Spikes (claw)", "DEX (no period precedent: open)", "mid"),
-    ("Jawbone", "STR (no period precedent: open)", "core"),
+    ("Bone Spikes (claw)", "DEX (kept as is; no new claw briefs)", "mid"),
+    ("Jawbone", "STR (retired from new briefs: no period find)", "core"),
     ("Wood Wand", "INT/DEX (Focus row)", "core"),
     ("Wood Rod", "STR/INT (Alignment row)", "core"),
     ("Wood Staff", "INT / STR (Sphere row)", "core"),
@@ -378,6 +381,19 @@ EXISTING_BASES = [
     ("Bronze Spiked Club", "STR (check 'spiked' against finds)", "mid"),
     ("Banded Stone Maul", "STR", "mid"),
     ("Copper / Bronze Leaf / Obsidian / Barbed Spears", "DEX", "mid-outer"),
+]
+
+OWNER_DEFAULTS = [
+    "Horned helmet: kept only as the STR/INT outer 'Bronze horned helmet', because it is attested (Veksø helmets c. 900 BC; Sherden reliefs c. 1175 BC). STR and other zones ban fantasy (Viking-style) horned helmets.",
+    "Prefix/suffix: adopted. 2 prefixes + 2 suffixes inside the game's 4-mod limit, plus one implicit on weapon, off-hand and jewellery bases (none on body, head, hands, feet, belt). Needs a code change in Itemization.cs to take effect.",
+    "Added Fire: limited to fire-themed bases (STR/INT, Kiln Line), as mapped. This changes live drops once implemented; today the game rolls it on every weapon.",
+    "Mines: buried stake traps and laid sling shot are the period answer (Bundle of sharpened stakes, Pouch of clay sling shot). No fire pots.",
+    "Blink, phase and shadow: the disguise kit (animal skin hood, wolf skin cloak) is the visual answer.",
+    "Claws: keep the existing Bone Spikes base; brief no new claw items.",
+    "Jawbone weapon: retired from new briefs (no period find). The game base and action stay as they are.",
+    "Period weighting: core leans Neolithic/Chalcolithic common kit; mid is Early/Middle Bronze Age; outer is Late Bronze Age elite pieces. Regions stay mixed.",
+    "War Horn: goes in the War Horn slot (unlocked by the Champion node), not the off hand.",
+    "Proposed mod numbers: first-pass values kept, marked provisional (status 'proposed', provisional: true).",
 ]
 
 GLOBAL_OPEN = [
@@ -422,6 +438,7 @@ def build_json() -> dict:
         "globalAvoid": GLOBAL_AVOID,
         "existingBases": [{"name": n, "zone": z, "band": b} for n, z, b in EXISTING_BASES],
         "zones": zones,
+        "ownerDefaults": {"note": "Default, owner may veto (2026-11-07, via Dispatch review)", "items": OWNER_DEFAULTS},
         "openQuestions": GLOBAL_OPEN,
     }
 
@@ -441,6 +458,13 @@ def build_md(data: dict) -> str:
     a("## Why")
     a("")
     a("A brief like \"DEX/INT helmet\" asks the image model to invent a look for a stat pair, and it fills the gap with fantasy defaults. Instead, each zone of the passive tree is defined by the skills that live there; the item types are the tools a Bronze Age person doing those skills would carry and wear, each tied to a real find, depiction or text. If no evidence exists, the item is marked unconfirmed and not briefed (owner rule 51).")
+    a("")
+    a("## Owner defaults (default, owner may veto)")
+    a("")
+    a("Set 2026-11-07 from the Dispatch review. Each is a default the owner may veto; briefs and modpools follow them until then.")
+    a("")
+    for d in OWNER_DEFAULTS:
+        a(f"- {d}")
     a("")
     a("## Ground truth used")
     a("")
