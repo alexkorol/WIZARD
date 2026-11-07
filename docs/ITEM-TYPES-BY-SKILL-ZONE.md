@@ -11,7 +11,7 @@ A brief like "DEX/INT helmet" asks the image model to invent a look for a stat p
 
 Set 2026-11-07 from the Dispatch review. Each is a default the owner may veto; briefs and modpools follow them until then.
 
-- Horned helmet: kept only as the STR/INT outer 'Bronze horned helmet', because it is attested (Veksø helmets c. 900 BC; Sherden reliefs c. 1175 BC). STR and other zones ban fantasy (Viking-style) horned helmets.
+- Horned helmet: kept only as the STR/INT outer 'Bronze horned helmet', with its cited find: the Veksø helmets, Brøns Mose, Zealand, c. 900 BC, National Museum of Denmark. STR and other zones ban fantasy (Viking-style) horned helmets.
 - Prefix/suffix: adopted. 2 prefixes + 2 suffixes inside the game's 4-mod limit, plus one implicit on weapon, off-hand and jewellery bases (none on body, head, hands, feet, belt). Needs a code change in Itemization.cs to take effect.
 - Added Fire: limited to fire-themed bases (STR/INT and the fire and ignite wedge), as mapped. This changes live drops once implemented; today the game rolls it on every weapon.
 - Mines: buried stake traps and laid sling shot are the period answer (Bundle of sharpened stakes, Pouch of clay sling shot). No fire pots.
@@ -44,7 +44,7 @@ Confidence codes: **A** attested: real find of this form in the period; **Art** 
 ### INT (90 degrees)
 
 - **Tree:** ring-7 INT node: sets the INT class; unlocks a second curio, a spell focus socket and an extra focus slot. Wedges: cold and marks wedge (INT toward INT/DEX): cold, chill, freeze, marks; INT spoke: Ward, spell damage. Weaving: damage type row (opened by the INT class).
-- **Game skills here (inferred zone):** frost-nova, blizzard, frozen-orb, geyser, holy-freeze (aura), arcane-ward, energy-shield, teleport, cursed (curse), weakened (curse), power-charges (inferred).
+- **Game skills here (inferred zone):** frost-nova, blizzard, Slow Cold Orb, geyser, Cold Damage Aura, Long Ward Charge, Ward Charge, teleport, cursed (curse), weakened (curse), power-charges (inferred).
 - **Archetypes (chat INT/DEX/STR):** spell bolt 95/4/1, nova, curse 90/8/2, channelled spells, teleport 73/27/0, ward.
 - **Who does this in the period:** Ritual specialist who is also healer and diviner, not a battle-mage. Evidence: shaman burials (Hilazon Tachtit c. 10,000 BC; Bad Duerrenberg c. 7000 BC; Upton Lovell G2a c. 1800 BC), Mari liver models (18th c. BC), the Ramesseum magician's box (c. 1700 BC).
 - **Core kit:** Wooden staff, Clay drum, Felt cap, Oval wool cloak, Spiral arm rings, Calfskin belt with pouch, Bearskin-soled shoes, Drilled tooth pendant, Gold wire spiral ring.
@@ -60,7 +60,7 @@ Confidence codes: **A** attested: real find of this form in the period; **Art** 
 ### INT/DEX (150 degrees)
 
 - **Tree:** ring-7 INT/DEX node: sets the INT/DEX class; unlocks trap and mark tools, poison vials and a supply pack. Wedges: poison and traps wedge (DEX toward INT/DEX): poison, wither, traps, stealth; cold and marks wedge: marks. Weaving: effect row (opened by the INT/DEX class, a wand or a knife).
-- **Game skills here (inferred zone):** poison-cloud, grasping-vines, drain-life, malevolence (aura), withered (curse), blinded (curse), chain-lightning, spark, shock-nova, tornado (placement weakest).
+- **Game skills here (inferred zone):** poison-cloud, grasping-vines, drain-life, Spell Damage and Chaos Aura, withered (curse), blinded (curse), chain-lightning, spark, shock-nova, tornado (placement weakest).
 - **Archetypes (chat INT/DEX/STR):** blink 64/34/2, mark 53/45/2, shadow clone 49/49/2, mine 45/52/3, trap 36/61/3, poison, stealth.
 - **Who does this in the period:** Hunter-trapper and poisoner, and the night scout. Evidence: Oetzi's bast net and kit (c. 3300 BC); Egyptian clap-net fowling scenes; Border Cave and Kruger Cave poison applicators; boar's-tusk helmet of the scout. Blink, phase and shadow clone have no physical analogue; the nearest real kit is disguise (animal skins) and pigment for marks.
 - **Core kit:** Flint dagger with bast sheath, Bearskin cap with chin strap, Hide strip coat, Belt pouch with fire kit, Bearskin-soled shoes, Pierced tooth pendant, Plain copper wire ring.
@@ -92,7 +92,7 @@ Confidence codes: **A** attested: real find of this form in the period; **Art** 
 ### DEX/STR (270 degrees)
 
 - **Tree:** ring-7 DEX/STR node: sets the DEX/STR class; unlocks thrown weapons count as melee and projectile, a belt charm and an animal parts pack. Wedges: projectile and shock wedge: projectiles, accuracy; physical and bleed wedge (STR toward DEX/STR): physical, bleed, stun. Weaving: intent row (opened by the DEX/STR class, a rod or an axe).
-- **Game skills here (inferred zone):** Bleeding sweep (axe or Two-handed Flint Axe technique, bleed), blade-vortex (bleed), thrown weapons as melee and projectile.
+- **Game skills here (inferred zone):** Bleeding sweep (axe or Two-handed Flint Axe technique, bleed), Spinning Blades (bleed), thrown weapons as melee and projectile.
 - **Archetypes (chat INT/DEX/STR):** whirlwind 3/51/46, thrust 2/77/21, charge 2/25/73 (edge), strikes, parries, leaps, sweeps, combos.
 - **Who does this in the period:** Fast close-combat fighter: the Aegean warrior with rapier and dagger (Mycenae Shaft Graves c. 1650-1500 BC), the Egyptian and Levantine sickle-sword soldier, the Sherden with round shield (Kadesh and Medinet Habu reliefs), Naue II sword users (c. 1300-1100 BC). Leaps: bull-leaping frescoes (Knossos, ritual not combat). Dual wielding as a technique is unconfirmed; sword and dagger were carried together.
 - **Core kit:** Flint hatchet, Leather cap, Wool tunic, Leather sandals, Bronze spiral ring.
@@ -108,7 +108,7 @@ Confidence codes: **A** attested: real find of this form in the period; **Art** 
 ### STR (330 degrees)
 
 - **Tree:** ring-7 STR node: sets the STR class; unlocks tower shields and the War Horn slot. Wedges: physical and bleed wedge: physical, bleed, stun, Life; fire and ignite wedge (STR toward STR/INT): fire and ignite on hits. Weaving: target row (opened by the STR class, a staff or any two-handed weapon).
-- **Game skills here (inferred zone):** Attack (strike), Ground slam (maul technique), Heavy sweep, Wide sweep, War cry, Jawbone combo, ground-slam, charge-line (enemy), execute (enemy), might, fanaticism, thorns, fortify (auras and buffs), endurance-charges.
+- **Game skills here (inferred zone):** Attack (strike), Ground slam (maul technique), Heavy sweep, Wide sweep, War cry, Jawbone Weapon Combo, ground-slam, charge-line (enemy), execute (enemy), Damage Aura, Attack Speed Aura, Reflect Damage Aura, Fortify (auras and buffs), endurance-charges.
 - **Archetypes (chat INT/DEX/STR):** slam 3/11/86, warcry 18/6/76, charge 2/25/73, guard 24/7/69, heavy attacks, endurance.
 - **Who does this in the period:** Close-order shield and spear line (Stele of the Vultures c. 2450 BC; Standard of Ur and the PG 789 guards c. 2600 BC), the shock fighter with mace or battle-axe (Narmer Palette c. 3100 BC; Corded Ware battle-axes c. 2900-2350 BC), and the Aegean heavy warrior with tower shield (Lion Hunt dagger c. 1600 BC; Dendra panoply c. 1400 BC).
 - **Core kit:** Stone shaft-hole battle axe, Cowhide shield with rounded top, Rawhide cap, Hide wrap, Broad leather belt, Rawhide sandals, Boar tusk pendant, Plain copper band.
@@ -124,7 +124,7 @@ Confidence codes: **A** attested: real find of this form in the period; **Art** 
 ### STR/INT (30 degrees)
 
 - **Tree:** ring-7 STR/INT node: sets the STR/INT class; unlocks banners, a war companion and a relic pack. Wedges: companion and Ward wedge (INT toward STR/INT): companions, Ward, Spirit; fire and ignite wedge (STR toward STR/INT): fire, ignite. Weaving: damage type row (opened by the STR/INT class, a shield or a buckler).
-- **Game skills here (inferred zone):** fireball, fireball-volley, meteor, fire-wall, holy-fire (aura), conviction (aura), summoning-circle (companion), shrine-blessing (resistances).
+- **Game skills here (inferred zone):** fireball, fireball-volley, meteor, fire-wall, Fire Damage Aura, Guard Break Aura, summoning-circle (companion), Resistance Bonus.
 - **Archetypes (chat INT/DEX/STR):** totem 51/6/43, banner 27/15/58, aura 34/33/33, barrier, elemental slam, summoning (game puts companions here, not in INT).
 - **Who does this in the period:** War-leader with insignia and the ritual standard-bearer: Narmer Palette standard-bearers (c. 3100 BC), Nahal Mishmar copper standards and maceheads (c. 4000 BC), Alaca Hoeyuek bronze standards (c. 2500-2000 BC), Fu Hao's bronze yue axes (c. 1200 BC), Bush Barrow mace and gold lozenge (c. 1900 BC).
 - **Core kit:** Wood rod, Carved emblem on a pole, Reed buckler, Wool tunic with mantle, Rawhide sandals, Gold spiral ring.
@@ -215,7 +215,7 @@ Columns: item (plain name), zone and band, skills served and why, materials, sil
 | Rawhide cap | STR / core | any: hardened cap | rawhide | close round cap | rawhide skullcap (taxonomy H-03); check a specific find | U | closed helmet |
 | Gold helmet shaped as hair | STR/INT / outer | auras, conviction: leader's helmet | hammered gold | dome shaped as hair with a bun and ears | Meskalamdug helmet, Ur, c. 2600 BC | A | crown with points |
 | Bronze helmet with plume tube | STR/INT / mid | warcry with magic, ward: helmet with a socket for a plume | cast bronze | rounded helmet with a small tube on top | Anyang M1004 | A | crest ridge |
-| Bronze horned helmet | STR/INT / outer | banner, aura: ritual horned helmet, Late Bronze Age; kept because it is attested | sheet bronze, horns | dome with two curved horns | Veksø helmets, Denmark, c. 900 BC (National Museum of Denmark; attested find); Sherden horned helmets on the Medinet Habu reliefs, c. 1175 BC (art) | A | fantasy horned helmet; any horned helmet outside STR/INT outer |
+| Bronze horned helmet | STR/INT / outer | banner, aura: ceremonial horned helmet, Late Bronze Age; kept because the find is cited | sheet bronze, bull horns, bird-of-prey face | dome with two curved bull horns and a beaked face at the front | Veksø helmets: two bronze helmets found 1942 in Brøns Mose bog near Veksø, Zealand; c. 900 BC (birch tar on a horn dated 2019); bog offerings, National Museum of Denmark (https://en.natmus.dk/historical-knowledge/denmark/prehistoric-period-until-1050-ad/the-bronze-age/the-viksoe-helmets/; https://en.wikipedia.org/wiki/Veks%C3%B8_Helmets) | A | fantasy horned helmet; any horned helmet outside STR/INT outer |
 
 ### Body
 

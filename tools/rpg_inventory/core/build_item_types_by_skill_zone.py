@@ -79,8 +79,8 @@ ZONES = [
         "wedges": "cold and marks wedge (INT toward INT/DEX): cold, chill, freeze, marks; INT spoke: Ward, spell damage",
         "latticeRow": "damage type row (opened by the INT class)",
         "gameSkills": [
-            "frost-nova", "blizzard", "frozen-orb", "geyser", "holy-freeze (aura)", "arcane-ward",
-            "energy-shield", "teleport", "cursed (curse)", "weakened (curse)", "power-charges (inferred)",
+            "frost-nova", "blizzard", "Slow Cold Orb", "geyser", "Cold Damage Aura", "Long Ward Charge",
+            "Ward Charge", "teleport", "cursed (curse)", "weakened (curse)", "power-charges (inferred)",
         ],
         "archetypes": "spell bolt 95/4/1, nova, curse 90/8/2, channelled spells, teleport 73/27/0, ward",
         "role": "Ritual specialist who is also healer and diviner, not a battle-mage. Evidence: shaman burials (Hilazon Tachtit c. 10,000 BC; Bad Duerrenberg c. 7000 BC; Upton Lovell G2a c. 1800 BC), Mari liver models (18th c. BC), the Ramesseum magician's box (c. 1700 BC).",
@@ -127,7 +127,7 @@ ZONES = [
         "wedges": "poison and traps wedge (DEX toward INT/DEX): poison, wither, traps, stealth; cold and marks wedge: marks",
         "latticeRow": "effect row (opened by the INT/DEX class, a wand or a knife)",
         "gameSkills": [
-            "poison-cloud", "grasping-vines", "drain-life", "malevolence (aura)", "withered (curse)",
+            "poison-cloud", "grasping-vines", "drain-life", "Spell Damage and Chaos Aura", "withered (curse)",
             "blinded (curse)", "chain-lightning, spark, shock-nova, tornado (placement weakest)",
         ],
         "archetypes": "blink 64/34/2, mark 53/45/2, shadow clone 49/49/2, mine 45/52/3, trap 36/61/3, poison, stealth",
@@ -222,7 +222,7 @@ ZONES = [
         "wedges": "projectile and shock wedge: projectiles, accuracy; physical and bleed wedge (STR toward DEX/STR): physical, bleed, stun",
         "latticeRow": "intent row (opened by the DEX/STR class, a rod or an axe)",
         "gameSkills": [
-            "Bleeding sweep (axe or Two-handed Flint Axe technique, bleed)", "blade-vortex (bleed)", "thrown weapons as melee and projectile",
+            "Bleeding sweep (axe or Two-handed Flint Axe technique, bleed)", "Spinning Blades (bleed)", "thrown weapons as melee and projectile",
         ],
         "archetypes": "whirlwind 3/51/46, thrust 2/77/21, charge 2/25/73 (edge), strikes, parries, leaps, sweeps, combos",
         "role": "Fast close-combat fighter: the Aegean warrior with rapier and dagger (Mycenae Shaft Graves c. 1650-1500 BC), the Egyptian and Levantine sickle-sword soldier, the Sherden with round shield (Kadesh and Medinet Habu reliefs), Naue II sword users (c. 1300-1100 BC). Leaps: bull-leaping frescoes (Knossos, ritual not combat). Dual wielding as a technique is unconfirmed; sword and dagger were carried together.",
@@ -270,8 +270,8 @@ ZONES = [
         "latticeRow": "target row (opened by the STR class, a staff or any two-handed weapon)",
         "gameSkills": [
             "Attack (strike)", "Ground slam (maul technique)", "Heavy sweep", "Wide sweep", "War cry",
-            "Jawbone combo", "ground-slam", "charge-line (enemy)", "execute (enemy)",
-            "might, fanaticism, thorns, fortify (auras and buffs)", "endurance-charges",
+            "Jawbone Weapon Combo", "ground-slam", "charge-line (enemy)", "execute (enemy)",
+            "Damage Aura, Attack Speed Aura, Reflect Damage Aura, Fortify (auras and buffs)", "endurance-charges",
         ],
         "archetypes": "slam 3/11/86, warcry 18/6/76, charge 2/25/73, guard 24/7/69, heavy attacks, endurance",
         "role": "Close-order shield and spear line (Stele of the Vultures c. 2450 BC; Standard of Ur and the PG 789 guards c. 2600 BC), the shock fighter with mace or battle-axe (Narmer Palette c. 3100 BC; Corded Ware battle-axes c. 2900-2350 BC), and the Aegean heavy warrior with tower shield (Lion Hunt dagger c. 1600 BC; Dendra panoply c. 1400 BC).",
@@ -321,8 +321,8 @@ ZONES = [
         "wedges": "companion and Ward wedge (INT toward STR/INT): companions, Ward, Spirit; fire and ignite wedge (STR toward STR/INT): fire, ignite",
         "latticeRow": "damage type row (opened by the STR/INT class, a shield or a buckler)",
         "gameSkills": [
-            "fireball", "fireball-volley", "meteor", "fire-wall", "holy-fire (aura)", "conviction (aura)",
-            "summoning-circle (companion)", "shrine-blessing (resistances)",
+            "fireball", "fireball-volley", "meteor", "fire-wall", "Fire Damage Aura", "Guard Break Aura",
+            "summoning-circle (companion)", "Resistance Bonus",
         ],
         "archetypes": "totem 51/6/43, banner 27/15/58, aura 34/33/33, barrier, elemental slam, summoning (game puts companions here, not in INT)",
         "role": "War-leader with insignia and the ritual standard-bearer: Narmer Palette standard-bearers (c. 3100 BC), Nahal Mishmar copper standards and maceheads (c. 4000 BC), Alaca Hoeyuek bronze standards (c. 2500-2000 BC), Fu Hao's bronze yue axes (c. 1200 BC), Bush Barrow mace and gold lozenge (c. 1900 BC).",
@@ -337,7 +337,7 @@ ZONES = [
             ("off", "core", "Reed buckler", "barrier", "the game's Reed Buckler base (damage type row)", "woven reed on a frame", "small round shield", "game base; reed shields in taxonomy S-18 (check a find)", "U", "toy-like wicker look"),
             ("head", "outer", "Gold helmet shaped as hair", "auras, conviction", "leader's helmet", "hammered gold", "dome shaped as hair with a bun and ears", "Meskalamdug helmet, Ur, c. 2600 BC", "A", "crown with points"),
             ("head", "mid", "Bronze helmet with plume tube", "warcry with magic, ward", "helmet with a socket for a plume", "cast bronze", "rounded helmet with a small tube on top", "Anyang M1004", "A", "crest ridge"),
-            ("head", "outer", "Bronze horned helmet", "banner, aura", "ritual horned helmet, Late Bronze Age; kept because it is attested", "sheet bronze, horns", "dome with two curved horns", "Veksø helmets, Denmark, c. 900 BC (National Museum of Denmark; attested find); Sherden horned helmets on the Medinet Habu reliefs, c. 1175 BC (art)", "A", "fantasy horned helmet; any horned helmet outside STR/INT outer"),
+            ("head", "outer", "Bronze horned helmet", "banner, aura", "ceremonial horned helmet, Late Bronze Age; kept because the find is cited", "sheet bronze, bull horns, bird-of-prey face", "dome with two curved bull horns and a beaked face at the front", "Veksø helmets: two bronze helmets found 1942 in Brøns Mose bog near Veksø, Zealand; c. 900 BC (birch tar on a horn dated 2019); bog offerings, National Museum of Denmark (https://en.natmus.dk/historical-knowledge/denmark/prehistoric-period-until-1050-ad/the-bronze-age/the-viksoe-helmets/; https://en.wikipedia.org/wiki/Veks%C3%B8_Helmets)", "A", "fantasy horned helmet; any horned helmet outside STR/INT outer"),
             ("body", "outer", "Gold shoulder cape", "ward, auras", "ceremonial cape, not armour", "hammered sheet gold", "short cape over the shoulders with ribbed bands", "Mold cape, c. 1900-1600 BC", "A", "presenting it as armour"),
             ("body", "mid", "Leather scale corselet", "any", "protective body for the field leader", "rawhide scales on linen", "short scale cuirass", "Tutankhamun's cuirass", "Adapt", "chainmail"),
             ("body", "core", "Wool tunic with mantle", "any", "plain garment", "wool", "tunic with rectangular mantle", "Borum Eshoej, Muldbjerg", "A", "robe with sigils"),
@@ -384,7 +384,7 @@ EXISTING_BASES = [
 ]
 
 OWNER_DEFAULTS = [
-    "Horned helmet: kept only as the STR/INT outer 'Bronze horned helmet', because it is attested (Veksø helmets c. 900 BC; Sherden reliefs c. 1175 BC). STR and other zones ban fantasy (Viking-style) horned helmets.",
+    "Horned helmet: kept only as the STR/INT outer 'Bronze horned helmet', with its cited find: the Veksø helmets, Brøns Mose, Zealand, c. 900 BC, National Museum of Denmark. STR and other zones ban fantasy (Viking-style) horned helmets.",
     "Prefix/suffix: adopted. 2 prefixes + 2 suffixes inside the game's 4-mod limit, plus one implicit on weapon, off-hand and jewellery bases (none on body, head, hands, feet, belt). Needs a code change in Itemization.cs to take effect.",
     "Added Fire: limited to fire-themed bases (STR/INT and the fire and ignite wedge), as mapped. This changes live drops once implemented; today the game rolls it on every weapon.",
     "Mines: buried stake traps and laid sling shot are the period answer (Bundle of sharpened stakes, Pouch of clay sling shot). No fire pots.",

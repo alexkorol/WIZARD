@@ -1191,6 +1191,141 @@
       "before": "Wayfaring",
       "after": "Movement",
       "note": "prose form (exact string values use the entry above)"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Might",
+      "after": "Damage Aura",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "+20% attack and spell damage. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Fanaticism",
+      "after": "Attack Speed Aura",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "+20% attack speed. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Conviction",
+      "after": "Guard Break Aura",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "nearby enemies lose 25% Guard. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Holy Fire",
+      "after": "Fire Damage Aura",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "fire damage pulses. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Holy Freeze",
+      "after": "Cold Damage Aura",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "cold damage pulses. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Holy Shock",
+      "after": "Lightning Damage Aura",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "lightning damage pulses. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Wrath",
+      "after": "Spell Damage and Lightning Aura",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "+20% spell damage and lightning pulses. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Malevolence",
+      "after": "Spell Damage and Chaos Aura",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "+15% spell damage and chaos pulses. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Thorns",
+      "after": "Reflect Damage Aura",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "reflects 20% of damage taken. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Shrine Blessing",
+      "after": "Resistance Bonus",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "+15% to all four resistances; old display 'Blessing'. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Blade Vortex",
+      "after": "Spinning Blades",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "physical area hazard that leaves Bleeding. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Frozen Orb",
+      "after": "Slow Cold Orb",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "slow cold projectile that Chills. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Energy Shield",
+      "after": "Ward Charge",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "+1 Ward charge. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Arcane Ward",
+      "after": "Long Ward Charge",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "+1 Ward charge, longer. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "spell or skill name",
+      "before": "Jawbone combo",
+      "after": "Jawbone Weapon Combo",
+      "match": "exact-value",
+      "scope": "display",
+      "lint": false,
+      "note": "three-hit jawbone weapon chain. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
     }
   ],
   "scopes": {

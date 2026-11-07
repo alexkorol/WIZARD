@@ -1,7 +1,7 @@
 # Rename map (2026-11-07)
 
 Generated from `rename-map.json` (the source; edit that, then rerun `node owner-rules/apply-rename-map.mjs`).
-Display strings change; ids, keys, unlock flags, stat ids, seat ids and saved-data values keep their old spelling. The lint (`lint.mjs`) fails on any `before` in game text, data and current docs.
+Display strings change; ids, keys, unlock flags, stat ids, seat ids, spell presets and saved-data values keep their old spelling. The lint (`lint.mjs`) fails on any `before` in game text, data and current docs, except entries marked display-only (spell presets that are still keys).
 
 | Category | Before | After | Note |
 |---|---|---|---|
@@ -214,6 +214,21 @@ Display strings change; ids, keys, unlock flags, stat ids, seat ids and saved-da
 | item pipeline | Slaughter | Kill Bonuses | prose form (exact string values use the entry above) |
 | item pipeline | Warding | Block and Ward | prose form (exact string values use the entry above) |
 | item pipeline | Wayfaring | Movement | prose form (exact string values use the entry above) |
+| spell or skill name | Might | Damage Aura | +20% attack and spell damage. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Fanaticism | Attack Speed Aura | +20% attack speed. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Conviction | Guard Break Aura | nearby enemies lose 25% Guard. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Holy Fire | Fire Damage Aura | fire damage pulses. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Holy Freeze | Cold Damage Aura | cold damage pulses. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Holy Shock | Lightning Damage Aura | lightning damage pulses. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Wrath | Spell Damage and Lightning Aura | +20% spell damage and lightning pulses. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Malevolence | Spell Damage and Chaos Aura | +15% spell damage and chaos pulses. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Thorns | Reflect Damage Aura | reflects 20% of damage taken. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Shrine Blessing | Resistance Bonus | +15% to all four resistances; old display 'Blessing'. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Blade Vortex | Spinning Blades | physical area hazard that leaves Bleeding. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Frozen Orb | Slow Cold Orb | slow cold projectile that Chills. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Energy Shield | Ward Charge | +1 Ward charge. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Arcane Ward | Long Ward Charge | +1 Ward charge, longer. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Jawbone combo | Jawbone Weapon Combo | three-hit jawbone weapon chain. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
 
 ## Found but not renamed
 
