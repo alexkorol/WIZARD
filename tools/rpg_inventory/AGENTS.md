@@ -60,6 +60,14 @@ is ready; do not burn Codex weekly quota on recursive multi-agent audit trees.
 General rules live in `owner-rules/OWNER-RULES.md`: generate once and judge (rule 27), finish
 routine work yourself (38), be concise (45). Pipeline specifics:
 
+0. **Period-item check before any prompt (2026-11-07, owner rule 51).** For each
+   item a prompt or slot list names, write down its attested real construction and
+   one source, and check it does its job physically. When the item's usual picture
+   is fantasy or medieval (stone maces, Bronze Age helmets, early swords), attach a
+   shape reference: a scaffold drawn from the artefact or an artefact image. Never
+   reshape a PoE or concept item by swapping in a period material; translate it to the
+   period item that does the same job (for example, a late-tier one-hand heavy weapon
+   becomes a bronze shaft-hole axe, not a stone ball in a bronze cup).
 1. **Coverage before polish.** Prefer new items over re-rolls; regenerate only a genuinely broken
    asset (wrong subject, backless helmet, half an object missing).
 2. **One attempt per item per run** (2026-07-06). A failed item goes back to the queue with a

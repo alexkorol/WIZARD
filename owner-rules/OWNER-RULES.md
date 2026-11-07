@@ -87,6 +87,19 @@ documents must not restate or contradict these rules.
 14. **New places are proposals until approved** (2026-10-01). Test-slice stand-ins (pasture,
     slate village, rock-cut cellars) are not canon. *Why:* the owner invited new location
     ideas, not extension of placeholders.
+51. **Period objects come from evidence, never plausible guesses** (2026-11-07). Before an
+    object, material, construction or form goes into a prompt, design, record or answer,
+    confirm it is attested for the era and physically does its job; if it cannot be
+    confirmed, say so and ask. Translating a source item (a PoE base, a concept piece) means
+    finding the real period item that does the same job, not putting a period material on
+    the later form. Image models draw the most common picture of a word, and for ancient
+    items that picture is usually fantasy or medieval: where the word's usual image is wrong
+    ("stone mace", "Bronze Age helmet"), describe the real construction and supply a shape
+    reference (a scaffold or artefact image) instead of relying on the noun. *Why:* a "stone
+    mace" prompt produced a stone ball in a bronze cup; stone maceheads were drilled through,
+    largely predate the Bronze Age, and survive mostly without hafts, so the model has no
+    correct picture of one. Owner: "this pattern is a very common repeating failure mode and
+    I want to nip it in the bud". (Numbered 51 to keep earlier rule numbers stable.)
 
 ## Visual direction
 
