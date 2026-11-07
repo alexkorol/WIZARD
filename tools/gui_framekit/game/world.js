@@ -55,7 +55,7 @@ $("#chatInput input").addEventListener("keydown", ev => {
 });
 const TOWN_CHATTER = [
   ["Harl", "Fresh bronze in from the coast. It rings true."],
-  ["Mirela", "The reliquary opens at dusk. It is always dusk down here."],
+  ["Mirela", "The shop opens at dusk."],
   ["Cassia", "Nine days quiet. I don't trust it."],
   ["Doran", "The long stair took my knees. It can keep them."],
   ["Harl", "You break it, you own both halves."],

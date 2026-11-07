@@ -131,7 +131,7 @@ seven of those outputs are explicitly assigned above. Existing supply includes:
 The canonical post-calibration audit adds 44 promote candidates, including
 seven spears, six rings, five gloves, four shields, four amulets, four helmets,
 three body armors, three outer-layer/cowl candidates, two boots, two impact
-weapons, one belt/sash, and one war-call.
+weapons, one belt/sash, and one war horn.
 
 This matters at row level:
 
@@ -183,7 +183,7 @@ to admit compact 1x2 held implements. Do not silently ship an undocumented
 exception.
 
 The five `preparation_kit` rows are 1x1. Their descriptions read as individual
-Preparation Case contents, not equipped kits. Rename the class to
+Supply Pack contents, not equipped kits. Rename the class to
 `preparation_content`/runtime `preparation`, or make the objects complete 2x2
 kits. This is a class/footprint ambiguity, not merely naming.
 
@@ -255,7 +255,7 @@ Important gaps:
   ancient taxonomy;
 - **0 distinct caster-rod/wand ladder** despite a 12-base allocation in
   `GENERATION-PLAN.md`;
-- no clearly mobility-focused Quick Rig ladder; the five rigs are load/tool,
+- no clearly mobility-focused Tool slot ladder; the five rigs are load/tool,
   medicine, fletching, and trap carriers;
 - the handwear pool is dominated by forearm defenses.
 
@@ -274,7 +274,7 @@ Recommended rebalance without increasing the 300-row total:
 3. replace 5-7 forearm-defense rows with closed mitt, enclosed
    mitten-gauntlet, complete glove, hand-pouch, and coherent hand-cage bases;
 4. spend the freed rows on 5-10 outer layers, 5 caster rods, and 5
-   mobility-specific Quick Rigs;
+   mobility-specific Tool-slot items;
 5. add a five-rung source-driven bow ladder, or record an explicit project
    decision that bows remain deferred because of model risk.
 

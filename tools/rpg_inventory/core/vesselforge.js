@@ -6,7 +6,7 @@
    only rules. Items are plain JSON. RNG is seedable for reproducible tests.
 
    Power model: every item is a VESSEL with N slots. Slots hold power with
-   provenance — Brands ✦ (crafted), Bonds ◈ (lived), Trophies ✧ (hunted) —
+   provenance — Brands ✦ (crafted), Bonds ◈ (lived), Animal parts ✧ (hunted) —
    or are Scars ✕ (lost). Crafting spends the vessel's finite Patience.
    See ../DESIGN.md for the full design rationale.
    ============================================================================= */

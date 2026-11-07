@@ -319,7 +319,7 @@ retain the silhouette after the ladder is rebuilt.
 | `quickrig_dart_board` | PASS | Backboard, broad harness, and capped tubes avoid quiver/briefcase drift. |
 | `quickrig_medicine_frame` | PASS | Auxiliary extrapolation is allowed; every vessel is secured to a complete back frame. |
 | `quickrig_fletchers_rack` | PASS | Low-snag flank carrier, secured tools, and no bow/arrows are explicit. |
-| `quickrig_riven_trapframe` | PASS | Complete harness and secured compact components preserve the Quick Rig identity. |
+| `quickrig_riven_trapframe` | PASS | Complete harness and secured compact components preserve the Tool slot identity. |
 | `trapkit_snare_packet` | PASS | Explicit component mechanics and no modern wire/spring hardware. |
 | `trapkit_deadfall_board` | PASS | Trigger sticks, prop, cord, and weight have understandable mechanical roles. |
 | `trapkit_weighted_net` | PASS | Dated clay sinkers and a secured folded net make a concrete kit. |
@@ -340,7 +340,7 @@ retain the silhouette after the ladder is rebuilt.
 | `reliquary_bronze_coffer` | PASS | Deep substantial coffer with sparse functional edge plates. |
 | `reliquary_jade_ampulla` | HOLD | Late Antique ampulla silhouette is valid, but a full carved greenstone vessel is an unsupported material translation; confirm as deliberate exotic fiction or use ceramic/metal with one inset. |
 | `reliquary_black_censer` | PASS | Bowl/lid/suspension are anchored; rigid short crown avoids chain failure. |
-| `spoils_raw_horn` | PASS | Raw, dry, minimally processed stock follows the Spoils rules. |
+| `spoils_raw_horn` | PASS | Raw, dry, minimally processed stock follows the Animal parts rules. |
 | `spoils_fang_packet` | PASS | Dry mismatched tooth stock, not jewelry or a mounted trophy. |
 | `spoils_carapace_plate` | HOLD | “Monster carapace” is generic and not source-supported; assign a specific creature/material source before generation. |
 | `spoils_salted_pelt` | HOLD | Same source problem: speciesless nonhuman pelt should be tied to a specific source beast or coherent faction ecology. |

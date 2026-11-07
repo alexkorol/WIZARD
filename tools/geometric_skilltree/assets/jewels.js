@@ -41,17 +41,17 @@
   /* ---- the five sagas: one transformation philosophy each ------------------ */
   const SAGAS = {
     'drowned-court': {
-      name: 'Rite Reroll',
+      name: 'Spell Reroll',
       philosophy: 'full reroll',
       smallPool: [
-        { stat: 'spellDamage', amount: 9, line: '+9% increased Rite Damage' },
+        { stat: 'spellDamage', amount: 9, line: '+9% increased Spell Damage' },
         { stat: 'ward', amount: 22, line: '+22 to Ward' },
         { stat: 'river_resistance', amount: 10, line: '+10% to Cold Resistance' },
         { stat: 'ailmentEffect', amount: 8, line: '+8% increased Ailment Effect' },
-        { stat: 'castSpeed', amount: 4, line: '+4% increased Rite Speed' }
+        { stat: 'castSpeed', amount: 4, line: '+4% increased Cast Speed' }
       ],
       notablePool: [
-        { stat: 'spellDamage', amount: 24, line: '+24% increased Rite Damage' },
+        { stat: 'spellDamage', amount: 24, line: '+24% increased Spell Damage' },
         { stat: 'ward', amount: 45, line: '+45 to Ward' },
         { stat: 'ailmentEffect', amount: 20, line: '+20% increased Ailment Effect' }
       ]
@@ -130,7 +130,7 @@
     { id: 'eye-keen', family: 'eye', name: 'Notable Attack Jewel', radius: 2, grant: { scope: 'notable', stat: 'attackDamage', amount: 6 }, note: 'Allocated notables in radius also grant +6% Attack Damage' },
     { id: 'change-bull', family: 'change', name: 'Strength to Intelligence Jewel', radius: 2, change: { from: 'str', to: 'int', rate: 2 }, note: 'STR from conduits in radius counts as INT, twice over' },
     { id: 'change-heron', family: 'change', name: 'Intelligence to Dexterity Jewel', radius: 2, change: { from: 'int', to: 'dex', rate: 2 }, note: 'INT from conduits in radius counts as DEX, twice over' },
-    { id: 'saga-drowned-773', family: 'saga', name: 'Rite Reroll Jewel (seed 773)', radius: 2, saga: { culture: 'drowned-court', seed: 773 } },
+    { id: 'saga-drowned-773', family: 'saga', name: 'Spell Reroll Jewel (seed 773)', radius: 2, saga: { culture: 'drowned-court', seed: 773 } },
     { id: 'saga-kiln-112', family: 'saga', name: 'Added Fire Jewel (seed 112)', radius: 2, saga: { culture: 'kilnfathers', seed: 112 } },
     { id: 'saga-herd-950', family: 'saga', name: 'Strength Rebase Jewel (seed 950)', radius: 2, saga: { culture: 'first-herd', seed: 950 } },
     { id: 'saga-survey-431', family: 'saga', name: 'Stacking Jewel (seed 431)', radius: 2, saga: { culture: 'quiet-survey', seed: 431 } },

@@ -64,8 +64,8 @@ Implications for the next generation wave:
   consistent with the standing rite-focus/relic/attendant-focus zero-coverage
   gaps.
 - Still zero supply in this wave for: ring, rite focus, relic, warbanner,
-  caster rod, attendant focus, spoils, trap kit, mobility rig, gorytos,
-  reliquary, preparation case, two-hand weapon, compact defensive off-hand,
+  caster rod, extra focus, spoils, trap kit, mobility rig, gorytos,
+  relic pack, supply pack, two-hand weapon, compact defensive off-hand,
   gorget replacement lanes. Belts remain effectively starved (2 promotes).
 - Shields had the worst reject rate (9/20) — nearly all Gate 3 solar/radial or
   spiral hard failures. Future shield prompts must keep the motif ban loud.

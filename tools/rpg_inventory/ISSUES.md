@@ -18,7 +18,7 @@ wishlist is obsolete; this tracks the new system.
 ## Known limitations
 
 - [ ] Bond formation picks from the item's dominant deed theme but ignores
-      item kind (a shield can learn Slaughter if you only ever fight)  —
+      item kind (a shield can learn Kill Bonuses if you only ever fight)  —
       arguably a feature; revisit for balance
 - [ ] No stacking (currencies deliberately live in the satchel; potions/curios
       are single items)

@@ -36,10 +36,12 @@ engine behind class-themed uniques.)
 Venturing forth generates encounters, each weighted toward one or more themes.
 The bearer's archetype adds +1 weight to its own theme on every deed:
 
-- **Slaughter** (Reaver) — The Blood-Price (life on kill), Battle-Rhythm (attack speed after kill), Read-the-Wound (crit vs bleeding)
-- **Warding** (Warden) — The Shieldwall (life on block), Stand-Your-Ground (block while stationary), Old Grudge (armour when hit)
-- **Sorcery** (Magus) — Clear-Mind (spell damage above 75% mana), Ember-Tithe (mana on kill), Veil-Wise (avoid ailments)
-- **Wayfaring** (Strider) — Dead-Sprint (move speed on kill), Sidestep (avoid projectiles while moving), Road-Lore (regen while moving)
+- **Kill Bonuses** (Butcher archetype) — Life on Kill, Attack Speed after Kill, Critical Chance against Bleeding
+- **Block and Ward** (Guard archetype) — Life on Block, Block while Stationary, Ward when Hit
+- **Spirit** (Seer archetype) — Spell Power at High Spirit, Spirit on Kill, Curse Avoidance
+- **Movement** (Scout archetype) — Speed on Kill, Thrown Weapon Avoidance, Life Regeneration while Moving
+
+(Display names follow `core/verdigris-pack.js`; older theme and mod names are listed in `owner-rules/rename-map.json`.)
 
 Equipped items accumulate attunement and log the themes of the deeds performed
 while worn. When an item crosses an attunement threshold it evolves: a new bond

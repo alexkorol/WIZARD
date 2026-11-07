@@ -105,7 +105,7 @@
     },
     {
       "name": "Flint Spear",
-      "zone": "DEX (Reach row)",
+      "zone": "DEX (range row)",
       "band": "mid"
     },
     {
@@ -115,17 +115,17 @@
     },
     {
       "name": "Bone Knife",
-      "zone": "INT/DEX (Focus row)",
+      "zone": "INT/DEX (effect row)",
       "band": "mid"
     },
     {
       "name": "Flint Hatchet",
-      "zone": "DEX/STR (Alignment row)",
+      "zone": "DEX/STR (intent row)",
       "band": "core"
     },
     {
-      "name": "Flint Lopper",
-      "zone": "DEX/STR (Reaping sweep)",
+      "name": "Two-handed Flint Axe",
+      "zone": "DEX/STR (Bleeding sweep)",
       "band": "mid"
     },
     {
@@ -134,12 +134,12 @@
       "band": "core"
     },
     {
-      "name": "Root Ball",
+      "name": "Root Club",
       "zone": "STR (two-handed maul)",
       "band": "core"
     },
     {
-      "name": "Bone Spikes (claw)",
+      "name": "Bone Claws (claw)",
       "zone": "DEX (kept as is; no new claw briefs)",
       "band": "mid"
     },
@@ -150,22 +150,22 @@
     },
     {
       "name": "Wood Wand",
-      "zone": "INT/DEX (Focus row)",
+      "zone": "INT/DEX (effect row)",
       "band": "core"
     },
     {
       "name": "Wood Rod",
-      "zone": "STR/INT (Alignment row)",
+      "zone": "STR/INT (intent row)",
       "band": "core"
     },
     {
       "name": "Wood Staff",
-      "zone": "INT / STR (Sphere row)",
+      "zone": "INT / STR (target row)",
       "band": "core"
     },
     {
       "name": "Reed Buckler",
-      "zone": "STR/INT (Element row)",
+      "zone": "STR/INT (damage type row)",
       "band": "core"
     },
     {
@@ -200,10 +200,10 @@
       "label": "INT",
       "angle": 90,
       "mix": "INT 100",
-      "treeClass": "Archmage (ring 7 class node)",
-      "classUnlocks": "second curio, extra socket on rite foci, Attendant focus slot",
-      "wedges": "Drowned Study (INT leaning INT/DEX: cold, chill, freeze, marks); INT spoke (Ward, Rite Damage)",
-      "latticeRow": "Element row (Archmage)",
+      "treeClass": "ring-7 INT node: sets the INT class",
+      "classUnlocks": "a second curio, a spell focus socket and an extra focus slot",
+      "wedges": "cold and marks wedge (INT toward INT/DEX): cold, chill, freeze, marks; INT spoke: Ward, spell damage",
+      "latticeRow": "damage type row (opened by the INT class)",
       "gameSkills": [
         "frost-nova",
         "blizzard",
@@ -269,7 +269,7 @@
               {
                 "mod": "rite-damage",
                 "value": 10,
-                "label": "+10% increased Rite (spell) Damage",
+                "label": "+10% increased Spell Damage",
                 "status": "consumer"
               }
             ],
@@ -1335,7 +1335,7 @@
               {
                 "mod": "channel-cost",
                 "value": 5,
-                "label": "5% reduced Spirit cost of channelled Rites",
+                "label": "5% reduced Spirit cost of channelled spells",
                 "status": "proposed"
               }
             ],
@@ -5688,10 +5688,10 @@
       "label": "INT/DEX",
       "angle": 150,
       "mix": "INT ~55 / DEX ~45",
-      "treeClass": "Assassin (ring 7 class node)",
-      "classUnlocks": "trap and mark tools, venom vials, Preparation Case pack",
-      "wedges": "Unlit Road (DEX leaning INT/DEX: poison, wither, traps, stealth); Drowned Study (marks)",
-      "latticeRow": "Focus row (Assassin, or a wand or knife)",
+      "treeClass": "ring-7 INT/DEX node: sets the INT/DEX class",
+      "classUnlocks": "trap and mark tools, poison vials and a supply pack",
+      "wedges": "poison and traps wedge (DEX toward INT/DEX): poison, wither, traps, stealth; cold and marks wedge: marks",
+      "latticeRow": "effect row (opened by the INT/DEX class, a wand or a knife)",
       "gameSkills": [
         "poison-cloud",
         "grasping-vines",
@@ -5979,7 +5979,7 @@
             "poison",
             "marks"
           ],
-          "why": "matches the game's Bone Knife base and the Focus row",
+          "why": "matches the game's Bone Knife base and the effect row",
           "materials": "split long bone, ground edge",
           "silhouette": "narrow tapered bone blade",
           "precedent": "bone knives and daggers, Neolithic, common",
@@ -6213,7 +6213,7 @@
             "lightning and chaos spells",
             "marks"
           ],
-          "why": "shared with INT; the Focus row opens on wands",
+          "why": "shared with INT; the effect row opens on wands",
           "materials": "cast copper alloy",
           "silhouette": "thin rod with a head",
           "precedent": "Ramesseum box, c. 1700 BC",
@@ -6245,7 +6245,7 @@
               {
                 "mod": "rite-damage",
                 "value": 10,
-                "label": "+10% increased Rite (spell) Damage",
+                "label": "+10% increased Spell Damage",
                 "status": "consumer"
               }
             ],
@@ -10804,14 +10804,14 @@
       "label": "DEX",
       "angle": 210,
       "mix": "DEX 100",
-      "treeClass": "Acrobat (ring 7 class node)",
-      "classUnlocks": "second weapon set, dual-wield one-handers, Quick Rig",
-      "wedges": "High Paths (DEX leaning DEX/STR: projectiles, shock, accuracy); Unlit Road (poison, traps, evasion)",
-      "latticeRow": "Reach row (Acrobat, or a spear)",
+      "treeClass": "ring-7 DEX node: sets the DEX class",
+      "classUnlocks": "a second weapon set, dual-wielding one-handed weapons and an extra tool slot",
+      "wedges": "projectile and shock wedge (DEX toward DEX/STR): projectiles, shock, accuracy; poison and traps wedge: poison, traps, evasion",
+      "latticeRow": "range row (opened by the DEX class or a spear)",
       "gameSkills": [
         "Lunge (spear technique)",
         "Dodge roll",
-        "Claw chain, Traveling cut, Held spin (claws)",
+        "Claw combo, Moving slash, Channelled spin (claws)",
         "arrow-volley",
         "haste",
         "frenzy-charges (inferred)"
@@ -10825,7 +10825,7 @@
         "hooded archers with shadowed faces"
       ],
       "open": [
-        "Default, owner may veto (2026-11-07): claws keep the existing Bone Spikes game base, but no new claw items are briefed (no period precedent found).",
+        "Default, owner may veto (2026-11-07): claws keep the existing Bone Claws game base, but no new claw items are briefed (no period precedent found).",
         "Javelin versus thrusting spear: no clear Bronze Age find-type split; lighter heads are an assumption.",
         "Stone wristguard function is disputed (possibly ornamental). Label it as an archer's status item?",
         "Traps as equipment: only nets, snares and throw-sticks are attested; no portable trap device."
@@ -11822,7 +11822,7 @@
             "Lunge",
             "thrust"
           ],
-          "why": "the game's Flint Spear base; opens the Reach row",
+          "why": "the game's Flint Spear base; opens the range row",
           "materials": "ash shaft, pressure-flaked flint head, sinew binding",
           "silhouette": "long shaft with a leaf head",
           "precedent": "Neolithic flint spearheads, common",
@@ -12308,7 +12308,7 @@
           "skills": [
             "bow shot"
           ],
-          "why": "carries arrows; the Quick Rig seat holds it",
+          "why": "carries arrows; the extra tool slot holds it",
           "materials": "goat hide, hazel rod, hide flap",
           "silhouette": "long narrow tube",
           "precedent": "Oetzi's quiver, c. 3300 BC",
@@ -16284,12 +16284,12 @@
       "label": "DEX/STR",
       "angle": 270,
       "mix": "DEX ~55 / STR ~45",
-      "treeClass": "Reaver (ring 7 class node)",
-      "classUnlocks": "thrown weapons count as melee and projectile, belt fetish, Spoils Roll pack",
-      "wedges": "High Paths (projectiles, accuracy); Red Field (STR leaning DEX/STR: physical, bleed, stun)",
-      "latticeRow": "Alignment row (Reaver, or a rod or axe)",
+      "treeClass": "ring-7 DEX/STR node: sets the DEX/STR class",
+      "classUnlocks": "thrown weapons count as melee and projectile, a belt charm and an animal parts pack",
+      "wedges": "projectile and shock wedge: projectiles, accuracy; physical and bleed wedge (STR toward DEX/STR): physical, bleed, stun",
+      "latticeRow": "intent row (opened by the DEX/STR class, a rod or an axe)",
       "gameSkills": [
-        "Reaping sweep (axe or Flint Lopper technique, bleed)",
+        "Bleeding sweep (axe or Two-handed Flint Axe technique, bleed)",
         "blade-vortex (bleed)",
         "thrown weapons as melee and projectile"
       ],
@@ -16304,7 +16304,7 @@
       "open": [
         "Dual wielding is unconfirmed as a period technique. The off-hand dagger is presented as a companion blade; disclose to the owner.",
         "Bull-leaping is ritual or sport. Is it acceptable as the precedent for leap and agility gear?",
-        "Thrown weapons as melee (Reaver unlock): flint hatchet and javelin both qualify; no dedicated throwing axe is attested.",
+        "Thrown weapons as melee (DEX/STR class unlock): flint hatchet and javelin both qualify; no dedicated throwing axe is attested.",
         "Clonbrin shield date and Sea Peoples corselet construction need primary-source checks."
       ],
       "items": [
@@ -16586,7 +16586,7 @@
           "name": "Bronze sickle sword",
           "skills": [
             "sweeps",
-            "Reaping sweep",
+            "Bleeding sweep",
             "hooking parries"
           ],
           "why": "the outer curve cuts in a sweeping arc",
@@ -17096,7 +17096,7 @@
           "band": "core",
           "name": "Flint hatchet",
           "skills": [
-            "Reaping sweep",
+            "Bleeding sweep",
             "thrown"
           ],
           "why": "the game's Flint Hatchet; light axe that can be thrown",
@@ -17374,10 +17374,10 @@
           "band": "mid",
           "name": "Copper axe",
           "skills": [
-            "Reaping sweep",
+            "Bleeding sweep",
             "bleed"
           ],
-          "why": "opens the Alignment row; chopping sweep",
+          "why": "opens the intent row; chopping sweep",
           "materials": "cast copper blade, yew haft, leather binding",
           "silhouette": "short haft, flat trapezoid blade",
           "precedent": "Oetzi's copper axe, c. 3300 BC",
@@ -20072,9 +20072,9 @@
           "band": "outer",
           "name": "Leather belt with bronze disc",
           "skills": [
-            "belt fetish (class unlock)"
+            "belt charm (class unlock)"
           ],
-          "why": "the disc is the fetish-holder slot",
+          "why": "the disc holds the belt charm",
           "materials": "leather, cast bronze disc with spike",
           "silhouette": "belt with a round disc at the front",
           "precedent": "Egtved belt disc, c. 1370 BC (woman's grave; adapted)",
@@ -21772,17 +21772,17 @@
       "label": "STR",
       "angle": 330,
       "mix": "STR 100",
-      "treeClass": "Champion (ring 7 class node)",
-      "classUnlocks": "tower shields, War Horn slot",
-      "wedges": "Red Field (physical, bleed, stun, Life); Kiln Line (fire and ignite on hits)",
-      "latticeRow": "Sphere row (Champion, or a staff or any two-handed weapon)",
+      "treeClass": "ring-7 STR node: sets the STR class",
+      "classUnlocks": "tower shields and the War Horn slot",
+      "wedges": "physical and bleed wedge: physical, bleed, stun, Life; fire and ignite wedge (STR toward STR/INT): fire and ignite on hits",
+      "latticeRow": "target row (opened by the STR class, a staff or any two-handed weapon)",
       "gameSkills": [
         "Attack (strike)",
         "Ground slam (maul technique)",
         "Heavy sweep",
         "Wide sweep",
         "War cry",
-        "Jawbone chain",
+        "Jawbone combo",
         "ground-slam",
         "charge-line (enemy)",
         "execute (enemy)",
@@ -21800,7 +21800,7 @@
       ],
       "open": [
         "Default, owner may veto (2026-11-07): the war horn goes in the War Horn slot, not the off hand (horns and trumpets are attested: Tutankhamun's trumpets, lurs, animal horns).",
-        "Default, owner may veto (2026-11-07): the Jawbone weapon is retired from new briefs (no period find; the Samson story is a later text). The existing game base and its Jawbone chain action are untouched.",
+        "Default, owner may veto (2026-11-07): the Jawbone weapon is retired from new briefs (no period find; the Samson story is a later text). The existing game base and its Jawbone combo action are untouched.",
         "Dendra cuirass is one near-complete find; using it as a common base overstates it. Keep to the outer band.",
         "Banded stone maul needs a specific drilled-stone hammer find as its shape reference before briefing."
       ],
@@ -23024,7 +23024,7 @@
             "endurance",
             "charge"
           ],
-          "why": "body-length cover; the Champion's tower shield unlock",
+          "why": "body-length cover; the STR class's tower shield unlock",
           "materials": "layered oxhide on a wicker or wood frame",
           "silhouette": "tall rectangle with curved top, hide pattern",
           "precedent": "Lion Hunt dagger c. 1600 BC; Akrotiri ship fresco",
@@ -23552,7 +23552,7 @@
           "skills": [
             "War cry (War Horn slot)"
           ],
-          "why": "signal horn for the war cry; goes in the War Horn slot the Champion node unlocks",
+          "why": "signal horn for the war cry; goes in the War Horn slot the STR class node unlocks",
           "materials": "cattle horn, mouthpiece hole",
           "silhouette": "curved horn",
           "precedent": "animal horns common; lurs c. 1000 BC are late",
@@ -27695,10 +27695,10 @@
       "label": "STR/INT",
       "angle": 30,
       "mix": "STR ~50 / INT ~50",
-      "treeClass": "Ritualist (ring 7 class node)",
-      "classUnlocks": "banners, a war companion, Reliquary pack",
-      "wedges": "Procession (INT leaning STR/INT: companions, Ward, Spirit); Kiln Line (STR leaning STR/INT: fire, ignite)",
-      "latticeRow": "Element row (Ritualist, or a shield or buckler)",
+      "treeClass": "ring-7 STR/INT node: sets the STR/INT class",
+      "classUnlocks": "banners, a war companion and a relic pack",
+      "wedges": "companion and Ward wedge (INT toward STR/INT): companions, Ward, Spirit; fire and ignite wedge (STR toward STR/INT): fire, ignite",
+      "latticeRow": "damage type row (opened by the STR/INT class, a shield or a buckler)",
       "gameSkills": [
         "fireball",
         "fireball-volley",
@@ -27719,8 +27719,8 @@
       ],
       "open": [
         "Totem as a planted pole: no evidence for planting a standard in battle; the Alaca standards may be cart fittings. The skill stays, the visual is an assumption.",
-        "The pipeline's 'Reliquary' pack name is an open owner question (rule 12).",
-        "Summoning: the game puts companions in the Procession wedge (STR/INT), while the shared chat put summoning in pure INT. This doc follows the game.",
+        "The pipeline's pack names are now plain (relic pack, supply pack, animal parts pack); see owner-rules/rename-map.json.",
+        "Summoning: the game puts companions in the companion and Ward wedge (INT toward STR/INT), while the shared chat put summoning in pure INT. This doc follows the game.",
         "Reed buckler is a game base with no confirmed find; check before briefing new reed shields."
       ],
       "items": [
@@ -28483,7 +28483,7 @@
           "skills": [
             "fire spells"
           ],
-          "why": "the game's Wood Rod base (Alignment row); plain ritual rod",
+          "why": "the game's Wood Rod base (intent row); plain ritual rod",
           "materials": "straight hardwood",
           "silhouette": "short straight rod",
           "precedent": "game base; rods common in Egyptian art",
@@ -28673,7 +28673,7 @@
             "totem",
             "aura"
           ],
-          "why": "pole-mounted emblem; the Ritualist's banner unlock",
+          "why": "pole-mounted emblem; the STR/INT class's banner unlock",
           "materials": "cast bronze disc with lattice, stag or bull figures, pole",
           "silhouette": "disc of lattice on a pole with animal figures",
           "precedent": "Alaca Hoeyuek standards, c. 2500-2000 BC (mounting debated)",
@@ -29313,7 +29313,7 @@
           "skills": [
             "barrier"
           ],
-          "why": "the game's Reed Buckler base (Element row)",
+          "why": "the game's Reed Buckler base (damage type row)",
           "materials": "woven reed on a frame",
           "silhouette": "small round shield",
           "precedent": "game base; reed shields in taxonomy S-18 (check a find)",
@@ -31153,7 +31153,7 @@
           "band": "mid",
           "name": "Leather belt with bronze disc",
           "skills": [
-            "Reliquary",
+            "relic pack",
             "ward"
           ],
           "why": "disc at the front holds the belt items",
@@ -33102,13 +33102,13 @@
     "items": [
       "Horned helmet: kept only as the STR/INT outer 'Bronze horned helmet', because it is attested (Veksø helmets c. 900 BC; Sherden reliefs c. 1175 BC). STR and other zones ban fantasy (Viking-style) horned helmets.",
       "Prefix/suffix: adopted. 2 prefixes + 2 suffixes inside the game's 4-mod limit, plus one implicit on weapon, off-hand and jewellery bases (none on body, head, hands, feet, belt). Needs a code change in Itemization.cs to take effect.",
-      "Added Fire: limited to fire-themed bases (STR/INT, Kiln Line), as mapped. This changes live drops once implemented; today the game rolls it on every weapon.",
+      "Added Fire: limited to fire-themed bases (STR/INT and the fire and ignite wedge), as mapped. This changes live drops once implemented; today the game rolls it on every weapon.",
       "Mines: buried stake traps and laid sling shot are the period answer (Bundle of sharpened stakes, Pouch of clay sling shot). No fire pots.",
       "Blink, phase and shadow: the disguise kit (animal skin hood, wolf skin cloak) is the visual answer.",
-      "Claws: keep the existing Bone Spikes base; brief no new claw items.",
+      "Claws: keep the existing Bone Claws base; brief no new claw items.",
       "Jawbone weapon: retired from new briefs (no period find). The game base and action stay as they are.",
       "Period weighting: core leans Neolithic/Chalcolithic common kit; mid is Early/Middle Bronze Age; outer is Late Bronze Age elite pieces. Regions stay mixed.",
-      "War Horn: goes in the War Horn slot (unlocked by the Champion node), not the off hand.",
+      "War Horn: goes in the War Horn slot (unlocked by the STR class node), not the off hand.",
       "Proposed mod numbers: first-pass values kept, marked provisional (status 'proposed', provisional: true)."
     ]
   },
@@ -33116,7 +33116,7 @@
     "No skill or item carries an attribute tag in the game code, and the owner ruled against a forced STR/DEX/INT class split (DESIGN-DIRECTION.md:432). Zone membership here is inferred from the tree's wedge themes, class nodes and the Weaving rows.",
     "The shared chat's 303-archetype source files could not be retrieved (sandbox links). Only its published sample placements are used; the game's own skills take precedence.",
     "Outer layer (cloak) slot exists in the game and pipeline but is not broken out per zone here; reuse the zone's body notes for mantles.",
-    "Several names in BASE-DESIGN.md break rule 7 (Skymetal, War-call, Nightglass, Warbelt...). Not renamed here; flagged for the owner.",
+    "Coined pipeline names were renamed on 2026-11-07; the before and after list is owner-rules/rename-map.json.",
     "Items marked U (unconfirmed) or with unverified precedents must not be briefed until checked; Disp items must disclose the dispute."
   ],
   "mods": [
@@ -34038,7 +34038,7 @@
     },
     {
       "id": "rite-damage",
-      "label": "+{v}% increased Rite (spell) Damage",
+      "label": "+{v}% increased Spell Damage",
       "kind": "P",
       "stat": "rite_increased",
       "status": "consumer",
@@ -34079,7 +34079,7 @@
     },
     {
       "id": "rite-speed",
-      "label": "+{v}% Rite (casting) Speed",
+      "label": "+{v}% Cast Speed",
       "kind": "S",
       "stat": "rite_speed_increased",
       "status": "consumer",
@@ -34856,7 +34856,7 @@
         }
       ],
       "weight": 8,
-      "note": "Kiln Line wedge",
+      "note": "fire and ignite wedge",
       "rolledBy": 6,
       "provisional": true
     },
@@ -34889,7 +34889,7 @@
         }
       ],
       "weight": 8,
-      "note": "Drowned Study wedge",
+      "note": "cold and marks wedge",
       "rolledBy": 9,
       "provisional": true
     },
@@ -35084,7 +35084,7 @@
         }
       ],
       "weight": 12,
-      "note": "Ritualist war companion; summoning-circle",
+      "note": "STR/INT class war companion; summoning-circle",
       "rolledBy": 12,
       "provisional": true
     },
@@ -35124,7 +35124,7 @@
     },
     {
       "id": "channel-cost",
-      "label": "{v}% reduced Spirit cost of channelled Rites",
+      "label": "{v}% reduced Spirit cost of channelled spells",
       "kind": "S",
       "stat": "channel_cost_reduced",
       "status": "proposed",
@@ -35190,7 +35190,7 @@
         }
       ],
       "weight": 10,
-      "note": "Reaver unlock makes thrown weapons melee and projectile",
+      "note": "the DEX/STR class unlock makes thrown weapons melee and projectile",
       "rolledBy": 5,
       "provisional": true
     },
@@ -35543,6 +35543,6 @@
       "consumer": "combat already reads the stat; add the mod to the pool",
       "proposed": "needs a new combat consumer before it can roll; values are provisional first-pass numbers"
     },
-    "addedFire": "Default, owner may veto: added-fire rolls only on fire-tagged bases (STR/INT, Kiln Line); the live game rolls it on every weapon until Itemization.cs changes."
+    "addedFire": "Default, owner may veto: added-fire rolls only on fire-tagged bases (STR/INT and the fire and ignite wedge); the live game rolls it on every weapon until Itemization.cs changes."
   }
 }

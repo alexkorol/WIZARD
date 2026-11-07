@@ -1,6 +1,6 @@
 {
   "int": {
-    "class": "Archmage",
+    "class": "INT Class",
     "allocated": [
       "0,0",
       "1,0",
@@ -24,7 +24,7 @@
     "ehp": 2050
   },
   "nightwork": {
-    "class": "Nightblade",
+    "class": "INT/DEX Class",
     "allocated": [
       "0,0",
       "1,-2",
@@ -48,7 +48,7 @@
     "ehp": 2154
   },
   "dex": {
-    "class": "Acrobat",
+    "class": "DEX Class",
     "allocated": [
       "-4,-4",
       "-4,-3",
@@ -72,7 +72,7 @@
     "ehp": 3192
   },
   "skirmisher": {
-    "class": "Reaver",
+    "class": "DEX/STR Class",
     "allocated": [
       "-10,0",
       "-9,0",
@@ -96,7 +96,7 @@
     "ehp": 2227
   },
   "str": {
-    "class": "Champion",
+    "class": "STR Class",
     "allocated": [
       "-10,10",
       "-9,9",
@@ -120,7 +120,7 @@
     "ehp": 2345
   },
   "ritualist": {
-    "class": "Ritualist",
+    "class": "STR/INT Class",
     "allocated": [
       "-4,7",
       "-4,8",

@@ -27,9 +27,9 @@ equipment family when the silhouette materially changes.
 | Amulet, pendant, ring, compact seal | 1x1 | - | square |
 | Substantial curio, coffer, vessel, relic | 1x1 | 2x2 when the object is visibly bulky | square |
 | Standalone quiver, gorytos, arrow case | 2x3 | 2x2 only for a compact flank case | portrait |
-| War-call instrument | 2x2 | 1x3 for a straight trumpet; 2x3 for a large drum | square or portrait |
+| War Horn instrument | 2x2 | 1x3 for a straight trumpet; 2x3 for a large drum | square or portrait |
 | Warbanner or weapon-length standard | 2x4 | 1x4 for a narrow pole with a compact finial | tall portrait |
-| Quick Rig, mobility kit, trap rig, Attendant focus | 2x2 | - | square |
+| Tool slot, mobility kit, trap rig, extra focus | 2x2 | - | square |
 | Spoil, prepared reagent, reliquary-pack content | 1x1 | 2x1 for a long bundle or roll | square or landscape |
 
 ## Ladder rules

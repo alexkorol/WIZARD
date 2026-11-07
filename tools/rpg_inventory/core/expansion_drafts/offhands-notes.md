@@ -74,7 +74,7 @@ it as too thin for combat, and removed the Laminated Nile Shield because it
 repeated lower-tier organic laminate logic. Vermand Officer Shield now supplies
 a combat-functional late Roman officer role with silver and glass confined to
 the protective iron boss. The final frozen audit then replaced the historically
-sound but materially plain Iron-Band Warshield with Redglass Boss Shield: five
+sound but materially plain Iron-Band Shield with Redglass Boss Shield: five
 small opaque red-glass studs sit in deep bronze cells on the functional boss and
 short spine, leaving the rawhide fighting face plain and avoiding both a material
 skin and any radial or solar motif.

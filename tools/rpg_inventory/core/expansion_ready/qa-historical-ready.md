@@ -63,7 +63,7 @@ the complete composite survives archaeologically.
 Its construction is physically legible: two independently sealed organic
 bladders supply buoyancy; a shallow, widely spaced raw-skymetal yoke spreads a
 compact shelf load across them; broad fiber lashings secure the rigid
-superstructure without piercing the buoyant bodies. Skymetal is confined to
+superstructure without piercing the buoyant bodies. Meteoric iron is confined to
 the load-bearing upper frame, giving the rung a visible T5 progression without
 asking the rare metal to float or form a flexible joint. The prompt contains no
 body, hands, forearms, worn anatomy, modern valve, hinge, gear, or boat-hull

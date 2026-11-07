@@ -1904,12 +1904,21 @@
     // allocated class milestone contributes its
     // own armoury window unlock. Flags cross to rpg_inventory over the bridge.
     const CLASS_UNLOCKS = {
-      Champion: ["tower_shield", "war_horn_curio", "war_call_slot"],
-      Acrobat: ["second_weapon_set", "dual_wield_one_handers", "quick_rig_slot"],
-      Archmage: ["second_curio", "rite_focus_socket", "attendant_focus_slot"],
-      Reaver: ["thrown_melee_projectile", "belt_fetish", "spoils_pack"],
-      Assassin: ["trap_mark_tools", "venom_vials", "preparations_pack"],
-      Ritualist: ["banners", "war_companion", "reliquary_pack"]
+      "STR Class": ["tower_shield", "war_horn_curio", "war_call_slot"],
+      "DEX Class": ["second_weapon_set", "dual_wield_one_handers", "quick_rig_slot"],
+      "INT Class": ["second_curio", "rite_focus_socket", "attendant_focus_slot"],
+      "DEX/STR Class": ["thrown_melee_projectile", "belt_fetish", "spoils_pack"],
+      "INT/DEX Class": ["trap_mark_tools", "venom_vials", "preparations_pack"],
+      "STR/INT Class": ["banners", "war_companion", "reliquary_pack"]
+    };
+    // Unlock flags are internal keys (some carry retired names); players see these labels.
+    const UNLOCK_LABELS = {
+      tower_shield: "tower shields", war_horn_curio: "war horn curio", war_call_slot: "War Horn slot",
+      second_weapon_set: "second weapon set", dual_wield_one_handers: "dual-wielding one-handed weapons", quick_rig_slot: "extra tool slot",
+      second_curio: "second curio", rite_focus_socket: "spell focus socket", attendant_focus_slot: "extra focus slot",
+      thrown_melee_projectile: "thrown weapons count as melee and projectile", belt_fetish: "belt charm", spoils_pack: "animal parts pack",
+      trap_mark_tools: "trap and mark tools", venom_vials: "poison vials", preparations_pack: "supply pack",
+      banners: "banners", war_companion: "war companion", reliquary_pack: "relic pack"
     };
     // The six ring-10 rim corners double as armoury unlock seats: the pure
     // attribute corners (INT up, DEX lower-left, STR lower-right) each grant an
@@ -1917,12 +1926,12 @@
     // outer hex alternates slot / pack / slot / pack / slot / pack. Flags are
     // shared with CLASS_UNLOCKS, so the armoury page needs no new vocabulary.
     const GATE_UNLOCKS = {
-      attendant: { name: "Attendant", flag: "attendant_focus_slot", grant: "the Attendant window — an extra focus slot" },
-      quickrig: { name: "Quick Rig", flag: "quick_rig_slot", grant: "the Quick Rig window — an extra tool slot" },
+      attendant: { name: "Extra Focus Slot", flag: "attendant_focus_slot", grant: "an extra focus slot" },
+      quickrig: { name: "Tool Slot", flag: "quick_rig_slot", grant: "the extra tool slot" },
       warcall: { name: "War Horn", flag: "war_call_slot", grant: "the War Horn slot" },
-      preparations: { name: "Preparations", flag: "preparations_pack", grant: "the Preparation Case — a 4×4 pack" },
-      trophies: { name: "Trophies", flag: "spoils_pack", grant: "the Spoils Roll — a 4×4 pack" },
-      relics: { name: "Relics", flag: "reliquary_pack", grant: "the Reliquary — a 4×4 pack" }
+      preparations: { name: "Supply Pack", flag: "preparations_pack", grant: "the supply pack (4×4)" },
+      trophies: { name: "Animal Parts Pack", flag: "spoils_pack", grant: "the animal parts pack (4×4)" },
+      relics: { name: "Relic Pack", flag: "reliquary_pack", grant: "the relic pack (4×4)" }
     };
     const BRIDGE_STORAGE_KEY = "verdigris-bridge";
     const BUILD_STORAGE_KEY = "verdigris-skill-tree-build";
@@ -1948,10 +1957,10 @@
     // Muted Verdigris palette: rust, patina, and slate ink instead of the
     // saturated marker colors — matches rpg_inventory and wizard_orbs.
     const AXIS_META = {
-      str: { label: "Strength", short: "STR", color: "#b0674c", path: "Bronze Route" },
-      dex: { label: "Dexterity", short: "DEX", color: "#6f9a7c", path: "Quickstep Trace" },
-      int: { label: "Intelligence", short: "INT", color: "#7286a8", path: "Memory Thread" },
-      hybrid: { label: "Hybrid", short: "HYB", color: "#c9a96a", path: "Braided Span" }
+      str: { label: "Strength", short: "STR", color: "#b0674c", path: "STR path" },
+      dex: { label: "Dexterity", short: "DEX", color: "#6f9a7c", path: "DEX path" },
+      int: { label: "Intelligence", short: "INT", color: "#7286a8", path: "INT path" },
+      hybrid: { label: "Hybrid", short: "HYB", color: "#c9a96a", path: "Hybrid path" }
     };
     const HEX_DIRECTIONS = [
       { q: 1, r: 0 },
@@ -2006,46 +2015,46 @@
     const SUBTREES = [
       {
         id: "attendant",
-        title: "Attendant",
+        title: "Extra Focus Slot",
         gateway: { q: 10, r: 0 },
         axis: "int",
         nodes: [
-          { id: "attendant-core", name: "Drink While Casting", type: "notable", stat: "castSpeed", amount: 8, effects: ["+8% Rite Speed", "Drinking a draught does not interrupt your rite"], tag: "spell" },
+          { id: "attendant-core", name: "Drink While Casting", type: "notable", stat: "castSpeed", amount: 8, effects: ["+8% Cast Speed", "Drinking a draught does not interrupt your spell"], tag: "spell" },
           { id: "attendant-candle", name: "Spirit", type: "small", stat: "spirit", amount: 45, effects: ["+45 maximum Spirit"], tag: "mana" },
           { id: "attendant-inkwell", name: "Ward", type: "small", stat: "ward", amount: 60, effects: ["+60 Ward"], tag: "energy-shield" },
-          { id: "attendant-order", name: "Cheaper Repeated Rites", type: "notable", stat: "castSpeed", amount: 6, effects: ["+6% Rite Speed", "Rites repeated within four seconds cost 10% less Spirit"], tag: "spell" },
+          { id: "attendant-order", name: "Cheaper Repeated Spells", type: "notable", stat: "castSpeed", amount: 6, effects: ["+6% Cast Speed", "Spells repeated within four seconds cost 10% less Spirit"], tag: "spell" },
           { id: "attendant-pour", name: "Faster Ward Recharge", type: "notable", stat: "ward", amount: 70, effects: ["+70 Ward", "Ward recharge begins 20% sooner"], tag: "energy-shield" },
           { id: "attendant-service", name: "Cooldown Recovery", type: "small", stat: "cooldownRecovery", amount: 6, effects: ["+6% Cooldown Recovery Rate"], tag: "utility" },
           { id: "attendant-floor", name: "Chaos Resistance", type: "small", stat: "gloam_res", amount: 8, effects: ["+8% Chaos Resistance"], tag: "resistance" },
-          { id: "attendant-watch", name: "Cooldown Mastery", type: "mastery", stat: "cooldownRecovery", amount: 10, effects: ["+10% Cooldown Recovery Rate", "While your Ward is full, your rites reach 15% further"], tag: "utility" },
-          { id: "attendant-flame", name: "Rite Damage", type: "small", stat: "spellDamage", amount: 8, effects: ["+8% Rite Damage"], tag: "spell" },
+          { id: "attendant-watch", name: "Cooldown Mastery", type: "mastery", stat: "cooldownRecovery", amount: 10, effects: ["+10% Cooldown Recovery Rate", "While your Ward is full, your spells reach 15% further"], tag: "utility" },
+          { id: "attendant-flame", name: "Spell Damage", type: "small", stat: "spellDamage", amount: 8, effects: ["+8% Spell Damage"], tag: "spell" },
           { id: "attendant-lens", name: "Critical Chance", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
           { id: "attendant-errand", name: "Movement Speed", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
           { id: "attendant-lamp", name: "Spirit", type: "small", stat: "spirit", amount: 40, effects: ["+40 maximum Spirit"], tag: "mana" },
-          { id: "attendant-servant", name: "Shared Focus", type: "keystone", stat: null, amount: 0, effects: ["Your attendant focus grants its bonuses to your companions as well", "Your attendant window holds nothing but a focus"], tag: "spell" }
+          { id: "attendant-servant", name: "Shared Focus", type: "keystone", stat: null, amount: 0, effects: ["Your extra focus grants its bonuses to your companions as well", "Your extra focus slot holds nothing but a focus"], tag: "spell" }
         ],
         layout: WHEEL_LAYOUT,
         links: WHEEL_LINKS
       },
       {
         id: "quickrig",
-        title: "Quick Rig",
+        title: "Tool Slot",
         gateway: { q: 0, r: -10 },
         axis: "dex",
         nodes: [
-          { id: "quickrig-core", name: "Instant Tool Swap", type: "notable", stat: "attackSpeed", amount: 8, effects: ["+8% Attack Speed", "Swapping to your quick rig tool takes no time"], tag: "weapon" },
+          { id: "quickrig-core", name: "Instant Tool Swap", type: "notable", stat: "attackSpeed", amount: 8, effects: ["+8% Attack Speed", "Swapping to your tool-slot item takes no time"], tag: "weapon" },
           { id: "quickrig-straps", name: "Evasion", type: "small", stat: "evasion", amount: 85, effects: ["+85 Evasion Rating"], tag: "evasion" },
           { id: "quickrig-buckle", name: "Block Chance", type: "small", stat: "blockChance", amount: 2, effects: ["+2% Block Chance"], tag: "block" },
-          { id: "quickrig-fit", name: "Stowed Tool Counts as Equipped", type: "notable", stat: "attackSpeed", amount: 6, effects: ["+6% Attack Speed", "Your quick rig tool counts as equipped even while stowed"], tag: "weapon" },
+          { id: "quickrig-fit", name: "Stowed Tool Counts as Equipped", type: "notable", stat: "attackSpeed", amount: 6, effects: ["+6% Attack Speed", "Your tool slot tool counts as equipped even while stowed"], tag: "weapon" },
           { id: "quickrig-sleeves", name: "Evasion While Moving", type: "notable", stat: "evasion", amount: 110, effects: ["+110 Evasion Rating", "Evasion counts 10% higher while you are moving"], tag: "evasion" },
           { id: "quickrig-pocket", name: "Goods Found", type: "small", stat: "goods_find", amount: 8, effects: ["+8% Goods Found"], tag: "utility" },
           { id: "quickrig-cord", name: "Attack Speed", type: "small", stat: "attackSpeed", amount: 4, effects: ["+4% Attack Speed"], tag: "weapon" },
-          { id: "quickrig-reach", name: "Tool Mastery", type: "mastery", stat: "cooldownRecovery", amount: 10, effects: ["+10% Cooldown Recovery Rate", "Tools in your quick rig recover 20% faster"], tag: "utility" },
+          { id: "quickrig-reach", name: "Tool Mastery", type: "mastery", stat: "cooldownRecovery", amount: 10, effects: ["+10% Cooldown Recovery Rate", "Tools in your tool slot recover 20% faster"], tag: "utility" },
           { id: "quickrig-hem", name: "Accuracy", type: "small", stat: "accuracy_flat", amount: 60, effects: ["+60 Accuracy"], tag: "accuracy" },
           { id: "quickrig-knot", name: "Life", type: "small", stat: "life", amount: 55, effects: ["+55 maximum Life"], tag: "life" },
           { id: "quickrig-release", name: "Movement Speed", type: "small", stat: "move", amount: 5, effects: ["+5% Movement Speed"], tag: "utility" },
           { id: "quickrig-grip", name: "Critical Chance", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
-          { id: "quickrig-nothing", name: "Uninterruptible Tools", type: "keystone", stat: null, amount: 0, effects: ["Using your quick rig tool cannot be interrupted and takes no time", "You cannot block for two seconds after using it"], tag: "weapon" }
+          { id: "quickrig-nothing", name: "Uninterruptible Tools", type: "keystone", stat: null, amount: 0, effects: ["Using your tool-slot item cannot be interrupted and takes no time", "You cannot block for two seconds after using it"], tag: "weapon" }
         ],
         layout: WHEEL_LAYOUT,
         links: WHEEL_LINKS
@@ -2075,11 +2084,11 @@
       },
       {
         id: "preparations",
-        title: "Preparations",
+        title: "Supply Pack",
         gateway: { q: 10, r: -10 },
         axis: "hybrid",
         nodes: [
-          { id: "preparations-core", name: "Preserved Preparations", type: "notable", stat: "evasion", amount: 90, effects: ["+90 Evasion Rating", "Nothing in your preparation case spoils or leaks"], tag: "evasion" },
+          { id: "preparations-core", name: "Preserved Supplies", type: "notable", stat: "evasion", amount: 90, effects: ["+90 Evasion Rating", "Nothing in your supply pack spoils or leaks"], tag: "evasion" },
           { id: "preparations-vial", name: "Life", type: "small", stat: "life", amount: 50, effects: ["+50 maximum Life"], tag: "life" },
           { id: "preparations-chalk", name: "Accuracy", type: "small", stat: "accuracy_flat", amount: 55, effects: ["+55 Accuracy"], tag: "accuracy" },
           { id: "preparations-dose", name: "Extra Ailment Stack", type: "notable", stat: "ailmentEffect", amount: 15, effects: ["+15% Ailment Effect", "Your vials apply one extra ailment stack"], tag: "ailment" },
@@ -2087,57 +2096,57 @@
           { id: "preparations-thread", name: "Evasion", type: "small", stat: "evasion", amount: 70, effects: ["+70 Evasion Rating"], tag: "evasion" },
           { id: "preparations-start", name: "Movement Speed", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
           { id: "preparations-wasted", name: "Recovered Throws", type: "mastery", stat: "goods_find", amount: 12, effects: ["+12% Goods Found", "Using a prepared item refunds it one time in five"], tag: "utility" },
-          { id: "preparations-hands", name: "Rite Speed", type: "small", stat: "castSpeed", amount: 4, effects: ["+4% Rite Speed"], tag: "spell" },
+          { id: "preparations-hands", name: "Cast Speed", type: "small", stat: "castSpeed", amount: 4, effects: ["+4% Cast Speed"], tag: "spell" },
           { id: "preparations-map", name: "Intelligence", type: "small", stat: "int", amount: 8, effects: ["+8 Intelligence"], tag: "attribute" },
           { id: "preparations-shoes", name: "Evasion", type: "small", stat: "evasion", amount: 70, effects: ["+70 Evasion Rating"], tag: "evasion" },
           { id: "preparations-kit", name: "Dexterity", type: "small", stat: "dex", amount: 8, effects: ["+8 Dexterity"], tag: "attribute" },
-          { id: "preparations-plan", name: "Death Prevention", type: "keystone", stat: null, amount: 0, effects: ["Once per fight, a preparation cancels the hit that would have killed you", "Each item in your preparation case works once per fight"], tag: "hybrid" }
+          { id: "preparations-plan", name: "Death Prevention", type: "keystone", stat: null, amount: 0, effects: ["Once per fight, a preparation cancels the hit that would have killed you", "Each item in your supply pack works once per fight"], tag: "hybrid" }
         ],
         layout: WHEEL_LAYOUT,
         links: WHEEL_LINKS
       },
       {
         id: "trophies",
-        title: "Trophies",
+        title: "Animal Parts Pack",
         gateway: { q: -10, r: 0 },
         axis: "hybrid",
         nodes: [
           { id: "trophies-core", name: "First Hit Bonus", type: "notable", stat: "attackDamage", amount: 10, effects: ["+10% Attack Damage", "Your first hit on an unwounded enemy is a Critical Strike"], tag: "weapon" },
           { id: "trophies-hilt", name: "Attack Damage", type: "small", stat: "attackDamage", amount: 6, effects: ["+6% Attack Damage"], tag: "weapon" },
           { id: "trophies-chase", name: "Movement Speed", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
-          { id: "trophies-proof", name: "Spoils on Kill", type: "notable", stat: "critChance", amount: 1.8, effects: ["+1.8% Critical Chance", "Killing blows leave a spoil one time in ten"], tag: "critical" },
-          { id: "trophies-pelts", name: "Extra Beast Spoils", type: "notable", stat: "goods_find", amount: 15, effects: ["+15% Goods Found", "Beasts drop one extra spoil"], tag: "utility" },
+          { id: "trophies-proof", name: "Animal Parts on Kill", type: "notable", stat: "critChance", amount: 1.8, effects: ["+1.8% Critical Chance", "Killing blows leave an animal part one time in ten"], tag: "critical" },
+          { id: "trophies-pelts", name: "Extra Animal Parts", type: "notable", stat: "goods_find", amount: 15, effects: ["+15% Goods Found", "Beasts drop one extra animal part"], tag: "utility" },
           { id: "trophies-scars", name: "Life", type: "small", stat: "life", amount: 55, effects: ["+55 maximum Life"], tag: "life" },
           { id: "trophies-eye", name: "Accuracy", type: "small", stat: "accuracy_flat", amount: 65, effects: ["+65 Accuracy"], tag: "accuracy" },
-          { id: "trophies-wall", name: "Trophy Mastery", type: "mastery", stat: "beast_damage_increased", amount: 15, effects: ["+15% increased Damage against Beasts", "Every trophy in your spoils roll grants +1% Attack Damage, up to ten"], tag: "weapon" },
+          { id: "trophies-wall", name: "Animal Parts Mastery", type: "mastery", stat: "beast_damage_increased", amount: 15, effects: ["+15% increased Damage against Beasts", "Every animal part in your animal parts pack grants +1% Attack Damage, up to ten"], tag: "weapon" },
           { id: "trophies-knife", name: "Critical Chance", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
           { id: "trophies-pack", name: "Strength", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
           { id: "trophies-step", name: "Dexterity", type: "small", stat: "dex", amount: 8, effects: ["+8 Dexterity"], tag: "attribute" },
           { id: "trophies-boast", name: "Critical Damage Bonus", type: "small", stat: "crit_bonus_flat", amount: 10, effects: ["+10% Critical Damage Bonus"], tag: "critical" },
-          { id: "trophies-home", name: "Trophy Attributes", type: "keystone", stat: null, amount: 0, effects: ["Every trophy in your spoils roll grants +2 to all Attributes", "Spoils cannot be sold or traded"], tag: "hybrid" }
+          { id: "trophies-home", name: "Animal Part Attributes", type: "keystone", stat: null, amount: 0, effects: ["Every animal part in your animal parts pack grants +2 to all Attributes", "Animal parts cannot be sold or traded"], tag: "hybrid" }
         ],
         layout: WHEEL_LAYOUT,
         links: WHEEL_LINKS
       },
       {
         id: "relics",
-        title: "Relics",
+        title: "Relic Pack",
         gateway: { q: 0, r: 10 },
         axis: "hybrid",
         nodes: [
-          { id: "relics-core", name: "Lasting Relic Blessings", type: "notable", stat: "ward", amount: 65, effects: ["+65 Ward", "Relics in your reliquary keep their blessings between fights"], tag: "energy-shield" },
+          { id: "relics-core", name: "Lasting Relic Effects", type: "notable", stat: "ward", amount: 65, effects: ["+65 Ward", "Relics in your relic pack keep their effects between fights"], tag: "energy-shield" },
           { id: "relics-smoke", name: "Chaos Resistance", type: "small", stat: "gloam_res", amount: 8, effects: ["+8% Chaos Resistance"], tag: "resistance" },
           { id: "relics-names", name: "Spirit", type: "small", stat: "spirit", amount: 40, effects: ["+40 maximum Spirit"], tag: "mana" },
           { id: "relics-glass", name: "Uninterrupted Ward Recharge", type: "notable", stat: "ward", amount: 75, effects: ["+75 Ward", "Ward recharge cannot be interrupted while you carry a relic"], tag: "energy-shield" },
-          { id: "relics-faith", name: "Relic Resistances", type: "notable", stat: "allResistances", amount: 4, effects: ["+4% to all Resistances", "Each relic in your reliquary grants +2% Chaos Resistance"], tag: "resistance" },
+          { id: "relics-faith", name: "Relic Resistances", type: "notable", stat: "allResistances", amount: 4, effects: ["+4% to all Resistances", "Each relic in your relic pack grants +2% Chaos Resistance"], tag: "resistance" },
           { id: "relics-case", name: "Guard", type: "small", stat: "guard", amount: 110, effects: ["+110 Guard"], tag: "armour" },
           { id: "relics-candles", name: "Fire Resistance", type: "small", stat: "ember_res", amount: 8, effects: ["+8% Fire Resistance"], tag: "resistance" },
-          { id: "relics-weight", name: "Relic Mastery", type: "mastery", stat: "spellDamage", amount: 12, effects: ["+12% Rite Damage", "Your heaviest relic is carried for you by a companion"], tag: "spell" },
+          { id: "relics-weight", name: "Relic Mastery", type: "mastery", stat: "spellDamage", amount: 12, effects: ["+12% Spell Damage", "Your heaviest relic is carried for you by a companion"], tag: "spell" },
           { id: "relics-bone", name: "Companion Damage", type: "small", stat: "minionDamage", amount: 8, effects: ["+8% Companion Damage"], tag: "minion" },
           { id: "relics-steps", name: "Strength", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
-          { id: "relics-litany", name: "Rite Speed", type: "small", stat: "castSpeed", amount: 4, effects: ["+4% Rite Speed"], tag: "spell" },
+          { id: "relics-litany", name: "Cast Speed", type: "small", stat: "castSpeed", amount: 4, effects: ["+4% Cast Speed"], tag: "spell" },
           { id: "relics-bowl", name: "Goods Found", type: "small", stat: "goods_find", amount: 8, effects: ["+8% Goods Found"], tag: "utility" },
-          { id: "relics-reverence", name: "Relics Count as Worn", type: "keystone", stat: null, amount: 0, effects: ["Relics in your reliquary grant their bonuses as if worn", "Your reliquary cannot be opened during a fight"], tag: "hybrid" }
+          { id: "relics-reverence", name: "Relics Count as Worn", type: "keystone", stat: null, amount: 0, effects: ["Relics in your relic pack grant their bonuses as if worn", "Your relic pack cannot be opened during a fight"], tag: "hybrid" }
         ],
         layout: WHEEL_LAYOUT,
         links: WHEEL_LINKS
@@ -2427,7 +2436,7 @@
       }
 
       get name() {
-        return this.activeOption ? this.activeOption.name : "Unchosen Arc";
+        return this.activeOption ? this.activeOption.name : "No Option Chosen";
       }
 
       get attrs() {
@@ -3599,11 +3608,11 @@
           ward: "Ward",
           accuracy: "Accuracy",
           attackDamage: "Attack Damage",
-          spellDamage: "Rite Damage",
+          spellDamage: "Spell Damage",
           projectileDamage: "Projectile Damage",
           minionDamage: "Companion Damage",
           attackSpeed: "Attack Speed",
-          castSpeed: "Rite Speed",
+          castSpeed: "Cast Speed",
           critChance: "Critical Chance",
           allResistances: "All Resistances",
           resEmber: "Fire Resistance",
@@ -3659,7 +3668,7 @@
             + Math.max(0, detail.maxRadius - 1) * largeLoopStep
             + Math.max(0, detail.loops.length - 1) * extraLoopStep;
         }
-        // The Bronze Waystone: loops carrying it empower their center further.
+        // The STR anchor: loops carrying it empower their center further.
         (this.loopBoostHooks || []).forEach(hook => {
           if (detail.loops.some(loop => loop.nodeIds?.includes(hook.id))) {
             increase *= 1 + (hook.value || 0.25);
@@ -3840,7 +3849,7 @@
         return [
           {
             id: "circle",
-            name: "Loop Crowns",
+            name: "Closed Loops",
             active: activeCircles > 0,
             progress: `${loopDetails.length} center${loopDetails.length === 1 ? "" : "s"} crowned; ${largeLoops} large loop${largeLoops === 1 ? "" : "s"}`,
             description: "Close radius 1, 2, or 3 loops around an allocated center. Larger loops scale the center node and add stronger resonance.",
@@ -3849,7 +3858,7 @@
           },
           {
             id: "axis",
-            name: "Straight Axis Chain",
+            name: "Straight Axis Path",
             active: Object.values(axisChains).some(length => length >= 4),
             progress: `INT ${axisChains.int}, DEX ${axisChains.dex}, STR ${axisChains.str}`,
             description: "Run a connected path straight outward on an attribute axis. Four or more segments imbue the route.",
@@ -3875,7 +3884,7 @@
           },
           {
             id: "loop",
-            name: "Redundant Circuit",
+            name: "Redundant Links",
             active: loopCount >= 3,
             progress: `${loopCount} extra loop conduits`,
             description: "Spend skill points on active-to-active links to build redundant routes.",
@@ -4707,7 +4716,7 @@
         const tooltip = document.getElementById("tooltip");
         tooltip.classList.add("art");
         tooltip.querySelector(".tooltip-title").textContent = node.name;
-        const typeName = { small: "Passive", notable: "Notable", keystone: "Keystone", mastery: "Mastery", waystone: "Waystone", socket: "Empty socket", gateway: "Gateway", class: "Class", sign: "Sign", origin: "Origin" }[node.type] || node.type;
+        const typeName = { small: "Passive", notable: "Notable", keystone: "Keystone", mastery: "Mastery", waystone: "Anchor", socket: "Empty socket", gateway: "Gateway", class: "Class", sign: "Sign", origin: "Origin" }[node.type] || node.type;
         const available = this.tree.isAvailableNode(node);
         const route = node.active || available ? [] : this.tree.routeTo(node.id);
         const status = node.id === "0,0" ? "Your starting point" : node.active ? "Allocated" : available ? "Available" : route.length > 1 ? `${route.length} passives away` : "Not yet reachable";
@@ -4942,7 +4951,7 @@
         const display = document.getElementById("calling-display");
         if (!display) return;
         const stats = this.tree.stats;
-        const unlockText = stats.unlocks.map(flag => flag.replace(/_/g, " ")).join(", ");
+        const unlockText = stats.unlocks.map(flag => UNLOCK_LABELS[flag] || flag.replace(/_/g, " ")).join(", ");
         const unlockHtml = stats.unlocks.length
           ? `<div>Unlocked: ${unlockText}.</div><div>The inventory page reads these unlocks live.</div>`
           : "";
@@ -5025,11 +5034,11 @@
           resStorm: ["Lightning Res", "%"],
           resGloam: ["Chaos Res", "%"],
           attackDamage: ["Attack Damage", "%"],
-          spellDamage: ["Rite Damage", "%"],
+          spellDamage: ["Spell Damage", "%"],
           projectileDamage: ["Projectile Damage", "%"],
           minionDamage: ["Companion Damage", "%"],
           attackSpeed: ["Attack Speed", "%"],
-          castSpeed: ["Rite Speed", "%"],
+          castSpeed: ["Cast Speed", "%"],
           critChance: ["Critical Chance", "%"],
           ailmentEffect: ["Ailment Effect", "%"],
           cooldownRecovery: ["Cooldown Recovery", "%"]

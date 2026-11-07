@@ -13,20 +13,20 @@ Set 2026-11-07 from the Dispatch review. Each is a default the owner may veto; b
 
 - Horned helmet: kept only as the STR/INT outer 'Bronze horned helmet', because it is attested (Veksø helmets c. 900 BC; Sherden reliefs c. 1175 BC). STR and other zones ban fantasy (Viking-style) horned helmets.
 - Prefix/suffix: adopted. 2 prefixes + 2 suffixes inside the game's 4-mod limit, plus one implicit on weapon, off-hand and jewellery bases (none on body, head, hands, feet, belt). Needs a code change in Itemization.cs to take effect.
-- Added Fire: limited to fire-themed bases (STR/INT, Kiln Line), as mapped. This changes live drops once implemented; today the game rolls it on every weapon.
+- Added Fire: limited to fire-themed bases (STR/INT and the fire and ignite wedge), as mapped. This changes live drops once implemented; today the game rolls it on every weapon.
 - Mines: buried stake traps and laid sling shot are the period answer (Bundle of sharpened stakes, Pouch of clay sling shot). No fire pots.
 - Blink, phase and shadow: the disguise kit (animal skin hood, wolf skin cloak) is the visual answer.
-- Claws: keep the existing Bone Spikes base; brief no new claw items.
+- Claws: keep the existing Bone Claws base; brief no new claw items.
 - Jawbone weapon: retired from new briefs (no period find). The game base and action stay as they are.
 - Period weighting: core leans Neolithic/Chalcolithic common kit; mid is Early/Middle Bronze Age; outer is Late Bronze Age elite pieces. Regions stay mixed.
-- War Horn: goes in the War Horn slot (unlocked by the Champion node), not the off hand.
+- War Horn: goes in the War Horn slot (unlocked by the STR class node), not the off hand.
 - Proposed mod numbers: first-pass values kept, marked provisional (status 'proposed', provisional: true).
 
 ## Ground truth used
 
 - Passive tree: `the ARPG/Assets/ARPG/Resources/Wizard/tree-data.js.txt` (generator `tools/geometric_skilltree/scripts/author-tree.mjs`). Ten rings, one Origin, six spokes at 60 degree steps: INT 90, INT/DEX 150, DEX 210, DEX/STR 270, STR 330, STR/INT 30. Class node at ring 7 of each spoke; six themed wedges between spokes.
 - Skills: fixed actions in `Core/ActionPresentation.cs`, 49 spells in `Core/SpellRules.cs`. No skill or item carries an attribute tag; zone membership is inferred from wedge themes, class nodes and the stated Weaving rows (`Core/Weaving.cs:115-142`: wand or knife -> Focus, rod or axe -> Alignment, staff or two-hander -> Sphere, spear -> Reach, shield or buckler -> Element).
-- Shared chat "Compare PoE Skill Types": 303 archetypes with INT/DEX/STR weights. Its files were not retrievable; its published sample placements are used as a secondary guide. Where the chat and the game disagree (summoning: chat INT, game STR/INT Procession wedge), the game wins.
+- Shared chat "Compare PoE Skill Types": 303 archetypes with INT/DEX/STR weights. Its files were not retrievable; its published sample placements are used as a secondary guide. Where the chat and the game disagree (summoning: chat INT, game: the companion and Ward wedge toward STR/INT), the game wins.
 - Item pipeline: `tools/rpg_inventory/core/ANCIENT-EQUIPMENT-TAXONOMY.md` (A0-A2 rows only), `GENERATION-PLAN.md` and `EXPANSION-CORRECTIONS-2026-07-24.md` slop lists, owner rules 6-12 and 51.
 
 ## Ring bands
@@ -43,7 +43,7 @@ Confidence codes: **A** attested: real find of this form in the period; **Art** 
 
 ### INT (90 degrees)
 
-- **Tree:** Archmage (ring 7 class node); unlocks second curio, extra socket on rite foci, Attendant focus slot. Wedges: Drowned Study (INT leaning INT/DEX: cold, chill, freeze, marks); INT spoke (Ward, Rite Damage). Weaving: Element row (Archmage).
+- **Tree:** ring-7 INT node: sets the INT class; unlocks a second curio, a spell focus socket and an extra focus slot. Wedges: cold and marks wedge (INT toward INT/DEX): cold, chill, freeze, marks; INT spoke: Ward, spell damage. Weaving: damage type row (opened by the INT class).
 - **Game skills here (inferred zone):** frost-nova, blizzard, frozen-orb, geyser, holy-freeze (aura), arcane-ward, energy-shield, teleport, cursed (curse), weakened (curse), power-charges (inferred).
 - **Archetypes (chat INT/DEX/STR):** spell bolt 95/4/1, nova, curse 90/8/2, channelled spells, teleport 73/27/0, ward.
 - **Who does this in the period:** Ritual specialist who is also healer and diviner, not a battle-mage. Evidence: shaman burials (Hilazon Tachtit c. 10,000 BC; Bad Duerrenberg c. 7000 BC; Upton Lovell G2a c. 1800 BC), Mari liver models (18th c. BC), the Ramesseum magician's box (c. 1700 BC).
@@ -59,7 +59,7 @@ Confidence codes: **A** attested: real find of this form in the period; **Art** 
 
 ### INT/DEX (150 degrees)
 
-- **Tree:** Assassin (ring 7 class node); unlocks trap and mark tools, venom vials, Preparation Case pack. Wedges: Unlit Road (DEX leaning INT/DEX: poison, wither, traps, stealth); Drowned Study (marks). Weaving: Focus row (Assassin, or a wand or knife).
+- **Tree:** ring-7 INT/DEX node: sets the INT/DEX class; unlocks trap and mark tools, poison vials and a supply pack. Wedges: poison and traps wedge (DEX toward INT/DEX): poison, wither, traps, stealth; cold and marks wedge: marks. Weaving: effect row (opened by the INT/DEX class, a wand or a knife).
 - **Game skills here (inferred zone):** poison-cloud, grasping-vines, drain-life, malevolence (aura), withered (curse), blinded (curse), chain-lightning, spark, shock-nova, tornado (placement weakest).
 - **Archetypes (chat INT/DEX/STR):** blink 64/34/2, mark 53/45/2, shadow clone 49/49/2, mine 45/52/3, trap 36/61/3, poison, stealth.
 - **Who does this in the period:** Hunter-trapper and poisoner, and the night scout. Evidence: Oetzi's bast net and kit (c. 3300 BC); Egyptian clap-net fowling scenes; Border Cave and Kruger Cave poison applicators; boar's-tusk helmet of the scout. Blink, phase and shadow clone have no physical analogue; the nearest real kit is disguise (animal skins) and pigment for marks.
@@ -75,8 +75,8 @@ Confidence codes: **A** attested: real find of this form in the period; **Art** 
 
 ### DEX (210 degrees)
 
-- **Tree:** Acrobat (ring 7 class node); unlocks second weapon set, dual-wield one-handers, Quick Rig. Wedges: High Paths (DEX leaning DEX/STR: projectiles, shock, accuracy); Unlit Road (poison, traps, evasion). Weaving: Reach row (Acrobat, or a spear).
-- **Game skills here (inferred zone):** Lunge (spear technique), Dodge roll, Claw chain, Traveling cut, Held spin (claws), arrow-volley, haste, frenzy-charges (inferred).
+- **Tree:** ring-7 DEX node: sets the DEX class; unlocks a second weapon set, dual-wielding one-handed weapons and an extra tool slot. Wedges: projectile and shock wedge (DEX toward DEX/STR): projectiles, shock, accuracy; poison and traps wedge: poison, traps, evasion. Weaving: range row (opened by the DEX class or a spear).
+- **Game skills here (inferred zone):** Lunge (spear technique), Dodge roll, Claw combo, Moving slash, Channelled spin (claws), arrow-volley, haste, frenzy-charges (inferred).
 - **Archetypes (chat INT/DEX/STR):** bow shot 3/94/3, dash 5/80/15, thrust 2/77/21, grenade 10/59/31, trap 36/61/3, evasive movement.
 - **Who does this in the period:** Hunter-archer and light missile troop: Oetzi's bow and quiver (c. 3300 BC), Beaker archer burials (Amesbury Archer c. 2300 BC), Egyptian archers and slingers (Tutankhamun's bows, slings and throw-sticks c. 1325 BC; Mesehti archer models c. 2000 BC). Dash and evasion fit a skirmisher in clothing, not plates.
 - **Core kit:** Wool pile cap, Wool tunic, Leather belt with pouch, One-piece hide shoe, Stone bead on hide tassel, Bronze spiral ring.
@@ -84,15 +84,15 @@ Confidence codes: **A** attested: real find of this form in the period; **Art** 
 - **Outer kit:** Composite bow, Bronze-headed javelin, Leather bow case, Linen headcloth, Leather scale cuirass on linen, Linen bow arm pad, Bronze belt box, Faience eye amulet, Jade archer's thumb ring.
 - **Do not make in this zone:** fire pots or grenades (use sling and clay shot); studded leather 'rogue' armour; ranger boots; hooded archers with shadowed faces.
 - **Open questions:**
-  - Default, owner may veto (2026-11-07): claws keep the existing Bone Spikes game base, but no new claw items are briefed (no period precedent found).
+  - Default, owner may veto (2026-11-07): claws keep the existing Bone Claws game base, but no new claw items are briefed (no period precedent found).
   - Javelin versus thrusting spear: no clear Bronze Age find-type split; lighter heads are an assumption.
   - Stone wristguard function is disputed (possibly ornamental). Label it as an archer's status item?
   - Traps as equipment: only nets, snares and throw-sticks are attested; no portable trap device.
 
 ### DEX/STR (270 degrees)
 
-- **Tree:** Reaver (ring 7 class node); unlocks thrown weapons count as melee and projectile, belt fetish, Spoils Roll pack. Wedges: High Paths (projectiles, accuracy); Red Field (STR leaning DEX/STR: physical, bleed, stun). Weaving: Alignment row (Reaver, or a rod or axe).
-- **Game skills here (inferred zone):** Reaping sweep (axe or Flint Lopper technique, bleed), blade-vortex (bleed), thrown weapons as melee and projectile.
+- **Tree:** ring-7 DEX/STR node: sets the DEX/STR class; unlocks thrown weapons count as melee and projectile, a belt charm and an animal parts pack. Wedges: projectile and shock wedge: projectiles, accuracy; physical and bleed wedge (STR toward DEX/STR): physical, bleed, stun. Weaving: intent row (opened by the DEX/STR class, a rod or an axe).
+- **Game skills here (inferred zone):** Bleeding sweep (axe or Two-handed Flint Axe technique, bleed), blade-vortex (bleed), thrown weapons as melee and projectile.
 - **Archetypes (chat INT/DEX/STR):** whirlwind 3/51/46, thrust 2/77/21, charge 2/25/73 (edge), strikes, parries, leaps, sweeps, combos.
 - **Who does this in the period:** Fast close-combat fighter: the Aegean warrior with rapier and dagger (Mycenae Shaft Graves c. 1650-1500 BC), the Egyptian and Levantine sickle-sword soldier, the Sherden with round shield (Kadesh and Medinet Habu reliefs), Naue II sword users (c. 1300-1100 BC). Leaps: bull-leaping frescoes (Knossos, ritual not combat). Dual wielding as a technique is unconfirmed; sword and dagger were carried together.
 - **Core kit:** Flint hatchet, Leather cap, Wool tunic, Leather sandals, Bronze spiral ring.
@@ -102,13 +102,13 @@ Confidence codes: **A** attested: real find of this form in the period; **Art** 
 - **Open questions:**
   - Dual wielding is unconfirmed as a period technique. The off-hand dagger is presented as a companion blade; disclose to the owner.
   - Bull-leaping is ritual or sport. Is it acceptable as the precedent for leap and agility gear?
-  - Thrown weapons as melee (Reaver unlock): flint hatchet and javelin both qualify; no dedicated throwing axe is attested.
+  - Thrown weapons as melee (DEX/STR class unlock): flint hatchet and javelin both qualify; no dedicated throwing axe is attested.
   - Clonbrin shield date and Sea Peoples corselet construction need primary-source checks.
 
 ### STR (330 degrees)
 
-- **Tree:** Champion (ring 7 class node); unlocks tower shields, War Horn slot. Wedges: Red Field (physical, bleed, stun, Life); Kiln Line (fire and ignite on hits). Weaving: Sphere row (Champion, or a staff or any two-handed weapon).
-- **Game skills here (inferred zone):** Attack (strike), Ground slam (maul technique), Heavy sweep, Wide sweep, War cry, Jawbone chain, ground-slam, charge-line (enemy), execute (enemy), might, fanaticism, thorns, fortify (auras and buffs), endurance-charges.
+- **Tree:** ring-7 STR node: sets the STR class; unlocks tower shields and the War Horn slot. Wedges: physical and bleed wedge: physical, bleed, stun, Life; fire and ignite wedge (STR toward STR/INT): fire and ignite on hits. Weaving: target row (opened by the STR class, a staff or any two-handed weapon).
+- **Game skills here (inferred zone):** Attack (strike), Ground slam (maul technique), Heavy sweep, Wide sweep, War cry, Jawbone combo, ground-slam, charge-line (enemy), execute (enemy), might, fanaticism, thorns, fortify (auras and buffs), endurance-charges.
 - **Archetypes (chat INT/DEX/STR):** slam 3/11/86, warcry 18/6/76, charge 2/25/73, guard 24/7/69, heavy attacks, endurance.
 - **Who does this in the period:** Close-order shield and spear line (Stele of the Vultures c. 2450 BC; Standard of Ur and the PG 789 guards c. 2600 BC), the shock fighter with mace or battle-axe (Narmer Palette c. 3100 BC; Corded Ware battle-axes c. 2900-2350 BC), and the Aegean heavy warrior with tower shield (Lion Hunt dagger c. 1600 BC; Dendra panoply c. 1400 BC).
 - **Core kit:** Stone shaft-hole battle axe, Cowhide shield with rounded top, Rawhide cap, Hide wrap, Broad leather belt, Rawhide sandals, Boar tusk pendant, Plain copper band.
@@ -117,13 +117,13 @@ Confidence codes: **A** attested: real find of this form in the period; **Art** 
 - **Do not make in this zone:** double-bitted 'dwarf' axes; spiked morning stars; great helms and fantasy (Viking-style) horned helmets; the attested Veksø-type horned helmet stays STR/INT outer only; muscle cuirasses; rivets everywhere.
 - **Open questions:**
   - Default, owner may veto (2026-11-07): the war horn goes in the War Horn slot, not the off hand (horns and trumpets are attested: Tutankhamun's trumpets, lurs, animal horns).
-  - Default, owner may veto (2026-11-07): the Jawbone weapon is retired from new briefs (no period find; the Samson story is a later text). The existing game base and its Jawbone chain action are untouched.
+  - Default, owner may veto (2026-11-07): the Jawbone weapon is retired from new briefs (no period find; the Samson story is a later text). The existing game base and its Jawbone combo action are untouched.
   - Dendra cuirass is one near-complete find; using it as a common base overstates it. Keep to the outer band.
   - Banded stone maul needs a specific drilled-stone hammer find as its shape reference before briefing.
 
 ### STR/INT (30 degrees)
 
-- **Tree:** Ritualist (ring 7 class node); unlocks banners, a war companion, Reliquary pack. Wedges: Procession (INT leaning STR/INT: companions, Ward, Spirit); Kiln Line (STR leaning STR/INT: fire, ignite). Weaving: Element row (Ritualist, or a shield or buckler).
+- **Tree:** ring-7 STR/INT node: sets the STR/INT class; unlocks banners, a war companion and a relic pack. Wedges: companion and Ward wedge (INT toward STR/INT): companions, Ward, Spirit; fire and ignite wedge (STR toward STR/INT): fire, ignite. Weaving: damage type row (opened by the STR/INT class, a shield or a buckler).
 - **Game skills here (inferred zone):** fireball, fireball-volley, meteor, fire-wall, holy-fire (aura), conviction (aura), summoning-circle (companion), shrine-blessing (resistances).
 - **Archetypes (chat INT/DEX/STR):** totem 51/6/43, banner 27/15/58, aura 34/33/33, barrier, elemental slam, summoning (game puts companions here, not in INT).
 - **Who does this in the period:** War-leader with insignia and the ritual standard-bearer: Narmer Palette standard-bearers (c. 3100 BC), Nahal Mishmar copper standards and maceheads (c. 4000 BC), Alaca Hoeyuek bronze standards (c. 2500-2000 BC), Fu Hao's bronze yue axes (c. 1200 BC), Bush Barrow mace and gold lozenge (c. 1900 BC).
@@ -133,8 +133,8 @@ Confidence codes: **A** attested: real find of this form in the period; **Art** 
 - **Do not make in this zone:** Nebra disc or Trundholm sun shrunk into amulets; cloth heraldic banners; glowing gems on maces; crowns with points.
 - **Open questions:**
   - Totem as a planted pole: no evidence for planting a standard in battle; the Alaca standards may be cart fittings. The skill stays, the visual is an assumption.
-  - The pipeline's 'Reliquary' pack name is an open owner question (rule 12).
-  - Summoning: the game puts companions in the Procession wedge (STR/INT), while the shared chat put summoning in pure INT. This doc follows the game.
+  - The pipeline's pack names are now plain (relic pack, supply pack, animal parts pack); see owner-rules/rename-map.json.
+  - Summoning: the game puts companions in the companion and Ward wedge (INT toward STR/INT), while the shared chat put summoning in pure INT. This doc follows the game.
   - Reed buckler is a game base with no confirmed find; check before briefing new reed shields.
 
 ## Item types by slot
@@ -149,19 +149,19 @@ Columns: item (plain name), zone and band, skills served and why, materials, sil
 | Ivory curved wand | INT / outer | curses, ward, nova: drawn on the ground to mark a protective circle | hippopotamus ivory, incised animals | flat pale crescent blade shape; shallow carving | Middle Kingdom apotropaic wands, four in the Ramesseum box, c. 1900-1700 BC | A | straight 'magic wand' stick; glowing glyphs |
 | Wooden staff | INT / core | channelling, ward: walking and ritual staff; the everyday caster's long tool | straight hardwood, hide grip wrap | plain straight pole, slight taper | staffs common in Egyptian and Near Eastern art; Wood Staff already a game base | Art | forked or gnarled stick; crystal top |
 | Flint dagger with bast sheath | INT/DEX / core | poison strikes, precision: small blade for the finishing cut and for applying poison | flint blade, ash handle, woven bast sheath | short leaf blade, plain handle, sheath beside it | Oetzi's dagger, c. 3300 BC; Danish fishtail daggers c. 1900 BC | A | curved 'assassin' knife; steel look |
-| Bone knife | INT/DEX / mid | poison, marks: matches the game's Bone Knife base and the Focus row | split long bone, ground edge | narrow tapered bone blade | bone knives and daggers, Neolithic, common | A | serrated monster-bone blade |
-| Bronze serpent wand | INT/DEX / mid | lightning and chaos spells, marks: shared with INT; the Focus row opens on wands | cast copper alloy | thin rod with a head | Ramesseum box, c. 1700 BC | A | glowing tip |
+| Bone knife | INT/DEX / mid | poison, marks: matches the game's Bone Knife base and the effect row | split long bone, ground edge | narrow tapered bone blade | bone knives and daggers, Neolithic, common | A | serrated monster-bone blade |
+| Bronze serpent wand | INT/DEX / mid | lightning and chaos spells, marks: shared with INT; the effect row opens on wands | cast copper alloy | thin rod with a head | Ramesseum box, c. 1700 BC | A | glowing tip |
 | Yew self bow | DEX / mid | bow shot, arrow-volley, fast attacks: simple long stave, quick to draw | yew, sinew or plant fibre string | tall thin stave, plain nocks, long diagonal | Oetzi's yew stave c. 3300 BC; Rotten Bottom bow c. 4000 BC | A | recurve elf tips; carved gem grip |
 | Composite bow | DEX / outer | ranged precision: short bow with high power for the specialist | wood core, horn, sinew, birch bark cover | short, deep double curve, sometimes gold banded | Tutankhamun's composite bows, c. 1325 BC | A | compound bow cams; metal limbs |
 | Linen sling with clay shot | DEX / mid | thrown and lobbed skills (grenade family): the attested way to lob missiles; replaces fire pots | plaited linen cord, woven pouch, baked clay or stone shot | coiled cord with a diamond pouch and 2-3 egg-shaped shot | Tutankhamun slings (Griffith 585y); Mari clay bullets; Levantine slingstones | A | lead bullets with inscriptions (Iron Age); Y slingshot |
 | Wooden throwing stick | DEX / mid | thrown weapons, fast attacks: fowling stick thrown at birds | curved hardwood, optional faience caps | flat gently curved bar | Tutankhamun's throw-sticks; Nebamun fowling scene | A | returning boomerang with tribal paint |
-| Flint spear | DEX / mid | Lunge, thrust: the game's Flint Spear base; opens the Reach row | ash shaft, pressure-flaked flint head, sinew binding | long shaft with a leaf head | Neolithic flint spearheads, common | A | stubby short shaft |
+| Flint spear | DEX / mid | Lunge, thrust: the game's Flint Spear base; opens the range row | ash shaft, pressure-flaked flint head, sinew binding | long shaft with a leaf head | Neolithic flint spearheads, common | A | stubby short shaft |
 | Bronze-headed javelin | DEX / outer | javelin, thrown: light thrown spear | hardwood shaft, small socketed bronze head | thin 1.5-2 m shaft, small leaf head | socketed spearheads, Aegean and Tumulus Europe | Adapt | fletched javelin; barbed harpoon head |
 | Bronze rapier | DEX/STR / outer | thrust, fast strikes: very long narrow blade made for thrusting | bronze with midrib; wood or ivory hilt, gold rivets | long narrow blade over 90 cm, small rounded shoulder | Mycenaean Type A and B swords, Shaft Graves, c. 1600 BC | A | crossguard or cup hilt (16th c. rapier) |
-| Bronze sickle sword | DEX/STR / mid | sweeps, Reaping sweep, hooking parries: the outer curve cuts in a sweeping arc | cast bronze, inlaid grip | straight handle into a crescent blade sharp on the outside | Tutankhamun's two khopeshes, c. 1325 BC; Shechem c. 1800 BC | A | scimitar; sharpened inner hook |
+| Bronze sickle sword | DEX/STR / mid | sweeps, Bleeding sweep, hooking parries: the outer curve cuts in a sweeping arc | cast bronze, inlaid grip | straight handle into a crescent blade sharp on the outside | Tutankhamun's two khopeshes, c. 1325 BC; Shechem c. 1800 BC | A | scimitar; sharpened inner hook |
 | Bronze leaf sword | DEX/STR / mid | combos, strikes: cut-and-thrust blade for mixed attacks | bronze, flanged hilt clad in horn or wood | leaf blade 60-70 cm, flanged grip | Naue II swords, c. 1300-1000 BC | A | crossguard; longsword length; fullers |
-| Flint hatchet | DEX/STR / core | Reaping sweep, thrown: the game's Flint Hatchet; light axe that can be thrown | flint blade in a wooden haft | short haft, small blade | Neolithic flint axes in wooden hafts (e.g. Oetzi's copper axe as the hafting model) | Adapt | double-bitted axe |
-| Copper axe | DEX/STR / mid | Reaping sweep, bleed: opens the Alignment row; chopping sweep | cast copper blade, yew haft, leather binding | short haft, flat trapezoid blade | Oetzi's copper axe, c. 3300 BC | A | broad crescent axe; steel sheen |
+| Flint hatchet | DEX/STR / core | Bleeding sweep, thrown: the game's Flint Hatchet; light axe that can be thrown | flint blade in a wooden haft | short haft, small blade | Neolithic flint axes in wooden hafts (e.g. Oetzi's copper axe as the hafting model) | Adapt | double-bitted axe |
+| Copper axe | DEX/STR / mid | Bleeding sweep, bleed: opens the intent row; chopping sweep | cast copper blade, yew haft, leather binding | short haft, flat trapezoid blade | Oetzi's copper axe, c. 3300 BC | A | broad crescent axe; steel sheen |
 | Stone shaft-hole battle axe | STR / core | heavy attacks, slams: weight at the end of a short haft; the haft passes through a drilled hole | polished stone, wooden haft | short haft with an asymmetric drooping head | Corded Ware graves, c. 2900-2350 BC | A | double-bitted axe; head lashed on with straps |
 | Pear-shaped stone macehead on a haft | STR / mid | slams, ground impact, stun: crushing head drilled through and set on a straight haft | limestone, breccia or diorite, wooden haft | slim haft, smooth pear head, no collar | Naqada II maceheads c. 3500-3100 BC; Narmer Palette | A | stone ball in a bronze cup; spikes; flanges |
 | Banded stone maul | STR / mid | Ground slam: the game's Banded Stone Maul; two-handed slam | large drilled stone head, wooden haft, rawhide bands | long haft, heavy drilled head | drilled stone hammers and mauls, Neolithic and mining sites (check a specific find) | Adapt | rock lashed to a stick; forked haft |
@@ -170,7 +170,7 @@ Columns: item (plain name), zone and band, skills served and why, materials, sil
 | Copper sceptre mace | STR/INT / mid | fire spells, elemental slam: insignia mace; authority and impact in one object | cast copper head on a wooden or copper shaft | long shaft, knobbed cast head | Nahal Mishmar hoard, c. 4000 BC | A | glowing gem in the head |
 | Fossil stone mace with bone mounts | STR/INT / mid | elemental slam, aura: polished stone head; zigzag bone rings on the haft | fossil stone, wooden haft, carved bone rings | slim haft with banded rings and a smooth head | Bush Barrow, c. 1900 BC (Wiltshire Museum) | A | stone ball in a cup |
 | Bronze broad axe | STR/INT / outer | banner, conviction: heavy ceremonial axe of military authority | cast bronze, wooden haft | wide flat blade with cast face motif | Fu Hao's yue, Anyang, c. 1200 BC | A | pseudo-glyph inscriptions |
-| Wood rod | STR/INT / core | fire spells: the game's Wood Rod base (Alignment row); plain ritual rod | straight hardwood | short straight rod | game base; rods common in Egyptian art | Art | forked stick |
+| Wood rod | STR/INT / core | fire spells: the game's Wood Rod base (intent row); plain ritual rod | straight hardwood | short straight rod | game base; rods common in Egyptian art | Art | forked stick |
 
 ### Off hand
 
@@ -183,17 +183,17 @@ Columns: item (plain name), zone and band, skills served and why, materials, sil
 | Horn poison container with applicator | INT/DEX / outer | poison, venom vials (class unlock): holds arrow or blade poison; the stick applies it | horn or bone tube, wooden plug, stick | short stoppered horn with a stick | Border Cave applicator; San ethnography | Adapt | glowing green vials; glass flasks |
 | Pigment palette with kohl tube | INT/DEX / mid | marks: the marking kit: ground mineral pigment | slate palette, horn or reed tube, grinding pebble | flat palette with a tube | Predynastic and Dynastic Egyptian palettes | A | palette with pseudo-glyphs |
 | Bundle of sharpened stakes | INT/DEX / mid | mines, traps: stakes set in a covered pit: the buried trap used for mines | split hardwood stakes, fire-hardened points, bast tie | tied bundle of short pointed stakes | pit traps attested (Scandinavian elk pit rows; Near Eastern desert kites); stake-lined pits need a specific find | U | metal spikes; caltrops |
-| Hide quiver with stiffening rod | DEX / mid | bow shot: carries arrows; the Quick Rig seat holds it | goat hide, hazel rod, hide flap | long narrow tube | Oetzi's quiver, c. 3300 BC | A | arrows drawn inside (pipeline rule); magic arrows |
+| Hide quiver with stiffening rod | DEX / mid | bow shot: carries arrows; the extra tool slot holds it | goat hide, hazel rod, hide flap | long narrow tube | Oetzi's quiver, c. 3300 BC | A | arrows drawn inside (pipeline rule); magic arrows |
 | Leather bow case | DEX / outer | composite bow: protects the composite bow | rawhide or leather | tapered case | Tutankhamun chariot cases; New Kingdom reliefs | A | Scythian gorytos (Iron Age) |
 | Long bronze dagger | DEX/STR / mid | combos, second blade: carried with the sword; companion blade | bronze, riveted hilt plate | broad triangular or leaf blade | Lion Hunt dagger c. 1600 BC; Unetice daggers c. 2000-1600 BC | Adapt | matched pair of fantasy blades |
 | Small round leather shield | DEX/STR / mid | parries: light shield for fast blocks | hardened leather or wood, central grip | disc with central boss or grip | Sherden shields at Kadesh and Medinet Habu; Clonbrin shield (date unverified) | A | domed medieval buckler; heater shape |
-| Oxhide tower shield | STR / outer | guard, endurance, charge: body-length cover; the Champion's tower shield unlock | layered oxhide on a wicker or wood frame | tall rectangle with curved top, hide pattern | Lion Hunt dagger c. 1600 BC; Akrotiri ship fresco | Art | kite or heater shape; steel boss |
+| Oxhide tower shield | STR / outer | guard, endurance, charge: body-length cover; the STR class's tower shield unlock | layered oxhide on a wicker or wood frame | tall rectangle with curved top, hide pattern | Lion Hunt dagger c. 1600 BC; Akrotiri ship fresco | Art | kite or heater shape; steel boss |
 | Rectangular hide shield | STR / mid | guard, shield line: the close-order line shield | hide over wood or wicker | large rectangle, possible studs | Stele of the Vultures, c. 2450 BC | Art | Roman scutum curve |
 | Cowhide shield with rounded top | STR / core | guard: everyday infantry shield | piebald cowhide on a wooden frame | tall shield with round top, hair left on | Mesehti soldier models, Asyut, c. 2000 BC | A | metal-rimmed round shield |
-| Bronze openwork disc standard | STR/INT / outer | banner, totem, aura: pole-mounted emblem; the Ritualist's banner unlock | cast bronze disc with lattice, stag or bull figures, pole | disc of lattice on a pole with animal figures | Alaca Hoeyuek standards, c. 2500-2000 BC (mounting debated) | A | cloth banner with heraldry |
+| Bronze openwork disc standard | STR/INT / outer | banner, totem, aura: pole-mounted emblem; the STR/INT class's banner unlock | cast bronze disc with lattice, stag or bull figures, pole | disc of lattice on a pole with animal figures | Alaca Hoeyuek standards, c. 2500-2000 BC (mounting debated) | A | cloth banner with heraldry |
 | Carved emblem on a pole | STR/INT / core | banner, totem: plain standard | wood, carved animal emblem | pole with a small carved figure on top | Narmer Palette standards, c. 3100 BC | Art | tabard; heraldic crest |
 | Figure-of-eight shield | STR/INT / mid | barrier, ward: large shield that is also a cult emblem | oxhide on a wooden frame | body-height shape pinched at the waist, dappled hide | Minoan and Mycenaean, c. 1600-1400 BC | Art | heater shape |
-| Reed buckler | STR/INT / core | barrier: the game's Reed Buckler base (Element row) | woven reed on a frame | small round shield | game base; reed shields in taxonomy S-18 (check a find) | U | toy-like wicker look |
+| Reed buckler | STR/INT / core | barrier: the game's Reed Buckler base (damage type row) | woven reed on a frame | small round shield | game base; reed shields in taxonomy S-18 (check a find) | U | toy-like wicker look |
 
 ### Head
 
@@ -267,10 +267,10 @@ Columns: item (plain name), zone and band, skills served and why, materials, sil
 | Leather belt with pouch | DEX / core | traps, repair: carries the flint kit | calf leather | belt with flat pouch | Oetzi | A | buckled belt with potion vials |
 | Bronze belt box | DEX / outer | any: personal kit of tools and spare arrowheads | cast bronze box on a leather belt | small round lidded box on a belt | Tollense personal kit, c. 1250 BC (Uhlig et al. 2019) | A | knife bandolier |
 | Wide cinched leather belt | DEX/STR / mid | leaps, agility: tight belt bracing the waist | leather, possibly metal clad | broad belt, narrow waist | Minoan bull-leaping and procession frescoes | Art | belt drawn as faulds |
-| Leather belt with bronze disc | DEX/STR / outer | belt fetish (class unlock): the disc is the fetish-holder slot | leather, cast bronze disc with spike | belt with a round disc at the front | Egtved belt disc, c. 1370 BC (woman's grave; adapted) | Adapt | modern buckle |
+| Leather belt with bronze disc | DEX/STR / outer | belt charm (class unlock): the disc holds the belt charm | leather, cast bronze disc with spike | belt with a round disc at the front | Egtved belt disc, c. 1370 BC (woman's grave; adapted) | Adapt | modern buckle |
 | Leather belt with sheathed copper dagger | STR / mid | strikes: sidearm on the belt | leather, copper dagger, leather sheath | belt with dagger in sheath | Oetzi's belt; PG 580 gold-sheathed dagger, Ur | A | tongue buckle; flap pouches |
 | Broad leather belt | STR / core | any: plain broad belt | leather, toggle closure | wide band | Warrior Vase, Mycenae, c. 1200 BC | Art | plate segments |
-| Leather belt with bronze disc | STR/INT / mid | Reliquary, ward: disc at the front holds the belt items | leather, cast bronze disc | belt with a round disc | Egtved belt disc, c. 1370 BC | Adapt | plaque belt with sigils |
+| Leather belt with bronze disc | STR/INT / mid | relic pack, ward: disc at the front holds the belt items | leather, cast bronze disc | belt with a round disc | Egtved belt disc, c. 1370 BC | Adapt | plaque belt with sigils |
 | Leather belt with gold hook | STR/INT / outer | insignia: hook for dagger and mace | leather, gold belt hook | belt with a small gold hook | Bush Barrow belt hook | A | buckle |
 
 ### Feet
@@ -329,7 +329,7 @@ Columns: item (plain name), zone and band, skills served and why, materials, sil
 
 | Item | Zone / band | Serves | Materials | Silhouette | Precedent | Conf | Do not make |
 |---|---|---|---|---|---|---|---|
-| Animal horn | STR / outer | War cry (War Horn slot): signal horn for the war cry; goes in the War Horn slot the Champion node unlocks | cattle horn, mouthpiece hole | curved horn | animal horns common; lurs c. 1000 BC are late | Adapt | a horn in the off hand; metal trumpet on the core band |
+| Animal horn | STR / outer | War cry (War Horn slot): signal horn for the war cry; goes in the War Horn slot the STR class node unlocks | cattle horn, mouthpiece hole | curved horn | animal horns common; lurs c. 1000 BC are late | Adapt | a horn in the off hand; metal trumpet on the core band |
 
 ## Modpools
 
@@ -341,7 +341,7 @@ Each base rolls the mods that support the job its zone's skills do, plus a small
 - **tiers:** Tiers unlock by item level as in the game (typically ilvl 1 / 20-30 / 50-60); tier pick weights 10/5/2 (Itemization.TierWeights). A base's band sets its minimum item level: core 1, mid 15, outer 45.
 - **weights:** Mod weight = catalogue weight x role factor (job 1.0, zone 0.6, shared 0.5), so job mods dominate.
 - **implicits:** Default, owner may veto: one fixed implicit per weapon, off-hand and jewellery base, taken from the base's form (spear: reach; tower shield: block and Guard). Body armour, helmets, gloves and boots carry no implicit; their base defence is the material.
-- **addedFire:** Default, owner may veto: added-fire rolls only on fire-tagged bases (STR/INT, Kiln Line); the live game rolls it on every weapon until Itemization.cs changes.
+- **addedFire:** Default, owner may veto: added-fire rolls only on fire-tagged bases (STR/INT and the fire and ignite wedge); the live game rolls it on every weapon until Itemization.cs changes.
 - **status:** `live` in the roll pool today; `consumer` combat already reads the stat; add the mod to the pool; `proposed` needs a new combat consumer before it can roll; values are provisional first-pass numbers.
 
 Example: the Bast fowling net (INT/DEX off-hand tool; serves traps) rolls ailment-effect, intelligence, curse-effect, mark-effect, trap-damage, trap-arming, trap-count, poison-chance. It cannot roll spirited, warded, rite-damage, rite-speed, elemental-damage, cooldown, ignite-chance, chill-effect, area, warcry-effect, aura-effect, companion-damage, companion-life, channel-cost: none of its skills are attacks, spells or auras.
@@ -376,8 +376,8 @@ Status `proposed` values are provisional first-pass numbers (default, owner may 
 | crit-bonus | +{v}% Critical Bonus | S | crit_bonus_flat | consumer | weapon, offweapon, amulet | precision | T1 15: 8-14; T2 45: 15-25 | 6 | 13 |
 | projectile-damage | +{v}% increased Projectile Damage | P | projectile_increased | consumer | weapon, quiver, amulet, belt | projectile | T1 1: 8-14; T2 25: 15-24; T3 55: 25-35 | 12 | 13 |
 | attack-damage | +{v}% increased Attack Damage | P | attack_increased | consumer | weapon, offweapon, ring, amulet, hands | attack | T1 1: 6-10; T2 25: 11-17; T3 55: 18-25 | 8 | 35 |
-| rite-damage | +{v}% increased Rite (spell) Damage | P | rite_increased | consumer | caster, tool, amulet, ring, head | spell | T1 1: 10-16; T2 25: 17-28; T3 55: 29-40 | 12 | 16 |
-| rite-speed | +{v}% Rite (casting) Speed | S | rite_speed_increased | consumer | caster, tool, ring, hands | spell | T1 1: 4-7; T2 25: 8-12; T3 55: 13-17 | 9 | 12 |
+| rite-damage | +{v}% increased Spell Damage | P | rite_increased | consumer | caster, tool, amulet, ring, head | spell | T1 1: 10-16; T2 25: 17-28; T3 55: 29-40 | 12 | 16 |
+| rite-speed | +{v}% Cast Speed | S | rite_speed_increased | consumer | caster, tool, ring, hands | spell | T1 1: 4-7; T2 25: 8-12; T3 55: 13-17 | 9 | 12 |
 | elemental-damage | +{v}% increased Elemental Damage | P | elemental_increased | consumer | caster, tool, weapon, amulet, ring | cold, fire, lightning, elemental | T1 1: 8-14; T2 25: 15-24; T3 55: 25-34 | 8 | 22 |
 | ailment-effect | +{v}% increased Ailment Effect | S | ailment_effect | consumer | weapon, offweapon, caster, tool, amulet, hands | ailment, poison, bleed, curse, cold | T1 1: 8-14; T2 30: 15-24; T3 55: 25-32 | 9 | 32 |
 | cooldown | +{v}% Cooldown Recovery | S | cooldown_recovery | consumer | belt, amulet, head, tool | warcry, cooldown, movement | T1 15: 5-9; T2 45: 10-15 | 6 | 5 |
@@ -405,7 +405,7 @@ Status `proposed` values are provisional first-pass numbers (default, owner may 
 | aura-effect | +{v}% increased Aura Effect | P | aura_effect | proposed | tool, caster, head, body, amulet | aura, banner | T1 1: 5-8; T2 30: 9-13; T3 55: 14-18 | 10 | 14 |
 | companion-damage | Companions deal {v}% increased Damage | P | companion_increased | proposed | tool, caster, head, amulet, ring | companion | T1 1: 10-16; T2 25: 17-26; T3 55: 27-38 | 12 | 12 |
 | companion-life | Companions have {v}% increased Life | S | companion_life_increased | proposed | tool, body, amulet, belt | companion | T1 1: 10-16; T2 30: 17-26 | 10 | 12 |
-| channel-cost | {v}% reduced Spirit cost of channelled Rites | S | channel_cost_reduced | proposed | caster, tool, body | channel | T1 1: 4-7; T2 30: 8-12 | 8 | 5 |
+| channel-cost | {v}% reduced Spirit cost of channelled spells | S | channel_cost_reduced | proposed | caster, tool, body | channel | T1 1: 4-7; T2 30: 8-12 | 8 | 5 |
 | thrown-damage | +{v}% increased Thrown Weapon Damage | P | thrown_increased | proposed | weapon, quiver, belt | thrown | T1 1: 10-16; T2 25: 17-26; T3 55: 27-38 | 10 | 5 |
 | dodge-roll | +{v}% Dodge Roll distance | S | dodge_distance_increased | proposed | feet, body | evasion | T1 15: 5-8; T2 45: 9-12 | 6 | 21 |
 | thorns | Reflects {v} Physical Damage to attackers | S | thorns_flat | proposed | body, shield | thorns | T1 1: 4-8; T2 30: 9-18 | 5 | 6 |
@@ -415,12 +415,12 @@ Status `proposed` values are provisional first-pass numbers (default, owner may 
 
 | Base | Slot | Implicit | Prefixes (weight) | Suffixes (weight) | Not rolled (examples) | Min ilvl | Flags |
 |---|---|---|---|---|---|---|---|
-| Bronze serpent wand | main (caster) | +10% increased Rite (spell) Damage | spirited (10), rite-damage* (12), elemental-damage* (5), curse-effect+ (6) | rite-speed* (9), ailment-effect* (5), chill-effect+ (5), channel-cost+ (8); shared: intelligence | crit-chance, mark-effect, ignite-chance, area, aura-effect, companion-damage | 15 | - |
+| Bronze serpent wand | main (caster) | +10% increased Spell Damage | spirited (10), rite-damage* (12), elemental-damage* (5), curse-effect+ (6) | rite-speed* (9), ailment-effect* (5), chill-effect+ (5), channel-cost+ (8); shared: intelligence | crit-chance, mark-effect, ignite-chance, area, aura-effect, companion-damage | 15 | - |
 | Ivory curved wand | main (caster) | +6% increased Curse Effect | spirited (10), rite-damage* (12), elemental-damage* (5), curse-effect+ (10) | rite-speed* (9), ailment-effect* (9), chill-effect+ (5), area+ (9); shared: intelligence | crit-chance, mark-effect, ignite-chance, aura-effect, companion-damage, channel-cost | 45 | - |
 | Wooden staff | main (caster) | +12 Maximum Spirit | spirited (10), rite-damage* (12), elemental-damage* (5), curse-effect+ (6) | rite-speed* (9), ailment-effect* (5), chill-effect+ (5), channel-cost+ (8); shared: intelligence | crit-chance, mark-effect, ignite-chance, area, aura-effect, companion-damage | 1 | - |
 | Clay liver model | off (tool) | +6% increased Curse Effect | spirited (6), rite-damage* (7), elemental-damage* (5), curse-effect+ (10), mark-effect+ (10) | warded (7), rite-speed* (5), ailment-effect* (9), chill-effect+ (5); shared: intelligence | cooldown, trap-damage, trap-arming, trap-count, poison-chance, ignite-chance ... | 15 | - |
 | Bronze sistrum | off (tool) | +6% increased Aura Effect | spirited (10), rite-damage* (12), elemental-damage* (5), curse-effect+ (6), aura-effect+ (10) | warded (7), rite-speed* (9), ailment-effect* (5), chill-effect+ (5), channel-cost+ (8); shared: intelligence | cooldown, mark-effect, trap-damage, trap-arming, trap-count, poison-chance ... | 45 | - |
-| Clay drum | off (tool) | 5% reduced Spirit cost of channelled Rites | spirited (10), rite-damage* (12), elemental-damage* (5), curse-effect+ (6) | warded (7), rite-speed* (9), ailment-effect* (5), chill-effect+ (5), area+ (9), channel-cost+ (8); shared: intelligence | cooldown, mark-effect, trap-damage, trap-arming, trap-count, poison-chance ... | 1 | - |
+| Clay drum | off (tool) | 5% reduced Spirit cost of channelled spells | spirited (10), rite-damage* (12), elemental-damage* (5), curse-effect+ (6) | warded (7), rite-speed* (9), ailment-effect* (5), chill-effect+ (5), area+ (9), channel-cost+ (8); shared: intelligence | cooldown, mark-effect, trap-damage, trap-arming, trap-count, poison-chance ... | 1 | - |
 | Antler headdress | head (head) | none | spirited (10), evasion-flat* (12), evasion-increased* (10), rite-damage* (7), curse-effect+ (10), companion-damage+ (12) | warded (7); shared: hale, fire-resistance, cold-resistance, lightning-resistance, chaos-resistance, intelligence | guard-flat, guard-increased, accuracy, cooldown, life-regen, strength ... | 45 | - |
 | Sheet gold cone hat | head (head) | none | spirited (10), rite-damage* (7), curse-effect+ (6), aura-effect+ (10) | warded (12); shared: hale, fire-resistance, cold-resistance, lightning-resistance, chaos-resistance, intelligence | guard-flat, guard-increased, evasion-flat, evasion-increased, accuracy, cooldown ... | 45 | - |
 | Felt cap | head (head) | none | spirited (6), rite-damage* (7), curse-effect+ (6) | warded (12); shared: hale, fire-resistance, cold-resistance, lightning-resistance, chaos-resistance, intelligence | guard-flat, guard-increased, evasion-flat, evasion-increased, accuracy, cooldown ... | 1 | - |
@@ -445,7 +445,7 @@ Status `proposed` values are provisional first-pass numbers (default, owner may 
 |---|---|---|---|---|---|---|---|
 | Flint dagger with bast sheath | main (weapon) | +2% Critical Chance | keen (12), heavy (12), attack-damage* (8) | accuracy* (10), crit-chance* (8), crit-bonus* (6), ailment-effect* (9), poison-chance+ (10); shared: hale, dexterity | added-fire, swift_haft, long_reach, spirited, projectile-damage, elemental-damage ... | 1 | - |
 | Bone knife | main (weapon) | +2% Critical Chance | - | accuracy* (10), crit-chance* (8), crit-bonus* (6), ailment-effect* (9), poison-chance+ (10); shared: hale, dexterity | keen, heavy, added-fire, swift_haft, long_reach, spirited ... | 15 | - |
-| Bronze serpent wand | main (caster) | +10% increased Rite (spell) Damage | spirited (10), rite-damage* (12), elemental-damage* (8), curse-effect+ (6), mark-effect+ (10) | crit-chance* (8), rite-speed* (9), ailment-effect* (9); shared: intelligence | ignite-chance, chill-effect, area, aura-effect, companion-damage, channel-cost | 15 | - |
+| Bronze serpent wand | main (caster) | +10% increased Spell Damage | spirited (10), rite-damage* (12), elemental-damage* (8), curse-effect+ (6), mark-effect+ (10) | crit-chance* (8), rite-speed* (9), ailment-effect* (9); shared: intelligence | ignite-chance, chill-effect, area, aura-effect, companion-damage, channel-cost | 15 | - |
 | Bast fowling net | off (tool) | +8% Trap Arming Speed | curse-effect+ (6), mark-effect+ (6), trap-damage+ (12) | ailment-effect* (5), trap-arming+ (10), trap-count+ (3), poison-chance+ (6); shared: intelligence | spirited, warded, rite-damage, rite-speed, elemental-damage, cooldown ... | 15 | - |
 | Horn poison container with applicator | off (tool) | +10% chance to Poison on Hit | curse-effect+ (6), mark-effect+ (6), trap-damage+ (7) | ailment-effect* (9), trap-arming+ (6), trap-count+ (2), poison-chance+ (10); shared: intelligence | spirited, warded, rite-damage, rite-speed, elemental-damage, cooldown ... | 45 | - |
 | Pigment palette with kohl tube | off (tool) | +8% increased Mark Effect | curse-effect+ (6), mark-effect+ (10), trap-damage+ (7) | ailment-effect* (5), trap-arming+ (6), trap-count+ (2), poison-chance+ (6); shared: intelligence | spirited, warded, rite-damage, rite-speed, elemental-damage, cooldown ... | 15 | - |
@@ -650,19 +650,19 @@ Causes, in order of frequency: (1) generic kit whose only listed job is "any" (p
 | Base (`Core/Itemization.cs`) | Zone | Band |
 |---|---|---|
 | Wooden Stick | all (starter) | core |
-| Flint Spear | DEX (Reach row) | mid |
+| Flint Spear | DEX (range row) | mid |
 | Flint Shortsword | DEX/STR | core |
-| Bone Knife | INT/DEX (Focus row) | mid |
-| Flint Hatchet | DEX/STR (Alignment row) | core |
-| Flint Lopper | DEX/STR (Reaping sweep) | mid |
+| Bone Knife | INT/DEX (effect row) | mid |
+| Flint Hatchet | DEX/STR (intent row) | core |
+| Two-handed Flint Axe | DEX/STR (Bleeding sweep) | mid |
 | Wooden Cudgel | STR | core |
-| Root Ball | STR (two-handed maul) | core |
-| Bone Spikes (claw) | DEX (kept as is; no new claw briefs) | mid |
+| Root Club | STR (two-handed maul) | core |
+| Bone Claws (claw) | DEX (kept as is; no new claw briefs) | mid |
 | Jawbone | STR (retired from new briefs: no period find) | core |
-| Wood Wand | INT/DEX (Focus row) | core |
-| Wood Rod | STR/INT (Alignment row) | core |
-| Wood Staff | INT / STR (Sphere row) | core |
-| Reed Buckler | STR/INT (Element row) | core |
+| Wood Wand | INT/DEX (effect row) | core |
+| Wood Rod | STR/INT (intent row) | core |
+| Wood Staff | INT / STR (target row) | core |
+| Reed Buckler | STR/INT (damage type row) | core |
 | Copper Leaf Dagger | DEX/STR | mid |
 | Bronze Leaf Sword | DEX/STR | mid |
 | Bronze Spiked Club | STR (check 'spiked' against finds) | mid |
@@ -682,7 +682,7 @@ Causes, in order of frequency: (1) generic kit whose only listed job is "any" (p
 - No skill or item carries an attribute tag in the game code, and the owner ruled against a forced STR/DEX/INT class split (DESIGN-DIRECTION.md:432). Zone membership here is inferred from the tree's wedge themes, class nodes and the Weaving rows.
 - The shared chat's 303-archetype source files could not be retrieved (sandbox links). Only its published sample placements are used; the game's own skills take precedence.
 - Outer layer (cloak) slot exists in the game and pipeline but is not broken out per zone here; reuse the zone's body notes for mantles.
-- Several names in BASE-DESIGN.md break rule 7 (Skymetal, War-call, Nightglass, Warbelt...). Not renamed here; flagged for the owner.
+- Coined pipeline names were renamed on 2026-11-07; the before and after list is owner-rules/rename-map.json.
 - Items marked U (unconfirmed) or with unverified precedents must not be briefed until checked; Disp items must disclose the dispute.
 
 Defaults chosen without asking (task ran autonomously): zone membership inferred as above; the game's placement wins over the chat; bands are rings 1-2 / 3-6 / 7-10; disputed items are kept but flagged; unconfirmed items are listed but not briefable.

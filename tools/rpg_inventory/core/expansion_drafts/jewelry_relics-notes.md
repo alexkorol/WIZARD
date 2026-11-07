@@ -36,7 +36,7 @@ Sorted by case-sensitive filename under `C:\Users\Alex\Downloads\items_post_cali
 - `185` crossing harness; `186` belt; `187` boots; `189` slippers; `190` forearm/hand protection; `191` slingshot; `192` boots; `193` slingshot; `194` belt; `196` woven body armor; `197` shoulder/body armor; `198` utility belt; `200` gloves.
 - `201` shield; `202` belt; `204` body armor; `205` hood/outer layer; `206` belt; `207` sandals; `209` gloves; `210` spear; `211` shield; `212` helmet; `214` body armor; `216` belt.
 
-No substantial relic vessel, casket, lamp, bowl, book, or reliquary in indices `174..216` passed the portfolio silhouette gate. The intake contributes four direct-use ring candidates and two amulet construction leads, but no direct-use relic curio.
+No substantial relic vessel, casket, lamp, bowl, book, or relic pack in indices `174..216` passed the portfolio silhouette gate. The intake contributes four direct-use ring candidates and two amulet construction leads, but no direct-use relic curio.
 
 ## Generation handoff
 

@@ -113,7 +113,7 @@ export corrected labels/notes from browser localStorage.
 
 Placeholder runtime implementation: the inventory page now loads the taxonomy
 metadata and uses the compact WebP art as an override layer on ordinary
-Vesselforge items. This is deliberately temporary: `Bracers` and `Rite Focus`
+Vesselforge items. This is deliberately temporary: `Bracers` and `Spell Focus`
 were added as broad active bases, and taxonomy rows are mapped approximately to
 existing forms/materials so the art can appear in the backpack, paperdoll, loot
 drops, and tooltips while the next game-ready batches are generated.

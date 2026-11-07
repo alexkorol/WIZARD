@@ -43,8 +43,8 @@ All pass:
 - all runtime kinds use a footprint allowed by
   `INVENTORY-FOOTPRINTS.md`;
 - the roster includes the required weapon, offhand, body, helm, handwear,
-  footwear, belt, jewelry, relic, quiver, gorytos, war-call, warbanner,
-  mobility, trap, attendant, reliquary, and preparation families.
+  footwear, belt, jewelry, relic, quiver, gorytos, war horn, warbanner,
+  mobility, trap, attendant, relic pack, and preparation families.
 
 The resulting action/state split is internally consistent:
 

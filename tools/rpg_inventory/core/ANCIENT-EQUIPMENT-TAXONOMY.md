@@ -7,7 +7,7 @@ Version: 4, 2026-07-13. Version 2 added researched first-class families for all
 six unlockable auxiliary equipment and specialty-pack lanes. Version 3 expands
 the hand slot beyond model-default bracers with mitt, glove, and short-cuff
 families. Version 4 adds half-gauntlet fidelity and source-derived or beast-
-derived Spoils stock.
+derived Animal parts stock.
 
 This taxonomy exists to prevent slot-balanced but silhouette-poor generation.
 Counting ten paperdoll slots is not enough: twenty belts can still be twenty
@@ -426,7 +426,7 @@ and hanging rigging are removed/tucked or the belt is not selected.
 | C-09 | sword belt | A2-A4 | waist band with one compact scabbard suspension point | P2 |
 | C-10 | baldric | A1-A4 | diagonal shoulder-to-hip weapon strap | P2; harness/quickrig, not 2:1 belt slot |
 | C-11 | double suspension belt | A3-A4 | two shallow parallel belts supporting a scabbard | P3 |
-| C-12 | quiver harness | A0-A4 | broad shoulder/waist carrying straps attached to a quiver | P3; Quick Rig |
+| C-12 | quiver harness | A0-A4 | broad shoulder/waist carrying straps attached to a quiver | P3; Tool slot |
 | C-13 | pouch belt | A0-A4 | low waist band with at most one compact flush pouch | P2; no hanging utility rig |
 | C-14 | horse/cavalry suspension belt | A3-A4 | strong shallow belt supporting sword and compact gear | P3 |
 
@@ -462,7 +462,7 @@ and hanging rigging are removed/tucked or the belt is not selected.
 | J-N-07 | torc | A1-A4 | rigid open neck ring with terminal ends | P2; separate from body armor |
 | J-N-08 | gorget/pectoral | A0-A4/L | broad rigid throat/chest ornament as its own item | P2; not amulet if pendant slot requires compactness |
 | J-N-09 | multi-strand collar | A1-A4 | structured bead/plate collar with clear independent backing | P0; overproduced, specialty only |
-| J-N-10 | amulet case | A1-A4 | small box/tube/reliquary worn on a cord | P3 |
+| J-N-10 | amulet case | A1-A4 | small box/tube/relic pack worn on a cord | P3 |
 
 ### Rings, armlets, brooches, and pins
 
@@ -482,7 +482,7 @@ and hanging rigging are removed/tucked or the belt is not selected.
 | J-F-04 | penannular brooch | A3-A4 | open ring brooch with one functional pin | P2 |
 | J-F-05 | dress pin/hair pin | A0-A4 | long pin with substantial head | P2; extraction only if independent from hair |
 
-## Scabbards, quivers, cases, and Quick Rig taxonomy
+## Scabbards, quivers, cases, and Tool slot taxonomy
 
 | ID | Family | Era | Prompt-facing visual definition | Priority/risk |
 |---|---|---:|---|---|
@@ -511,15 +511,15 @@ and hanging rigging are removed/tucked or the belt is not selected.
 | Q-23 | fletching repair case | A0-A4 | narrow case containing spare points, feathers on backing, binding thread, and wax | P3 |
 | Q-24 | fire-and-trap case | A0-A4/L | sturdy divided case with striker, tinder packet, short trigger pieces, and coiled snare line | P2; keep silhouette compact |
 
-Quick Rigs are worn load-bearing equipment, not handheld containers. On a
+Tool-slot items are worn load-bearing equipment, not handheld containers. On a
 character they mount visibly to the back or flank through a backboard, pack
 frame, shoulder harness, broad side strap, or comparable body attachment. In an
 isolated item study, preserve that complete empty frame and harness so its worn
-function remains obvious. A Quick Rig never consumes the off-hand slot and
+function remains obvious. A Tool slot never consumes the off-hand slot and
 never resembles a purse, handbag, satchel, messenger bag, briefcase, suitcase,
 doctor bag, lunchbox, clutch, handled box, or modern luggage.
 
-## War-call, signal, and standard taxonomy
+## War Horn, signal, and standard taxonomy
 
 | ID | Family | Era | Prompt-facing visual definition | Priority/risk |
 |---|---|---:|---|---|
@@ -544,7 +544,7 @@ doctor bag, lunchbox, clutch, handled box, or modern luggage.
 | WC-19 | rigid standard finial | A3-A4 | substantial cast animal or geometric finial fixed to a short fluted standard stem | P3; one motif only |
 | WC-20 | paired clapper board | A0-A4/L | two broad resonant wood, bone, or metal plates joined at one hand grip | P2 |
 
-## Held focus, Attendant, and ritual implement taxonomy
+## Held focus, Extra focus, and ritual implement taxonomy
 
 | ID | Family | Era | Prompt-facing visual definition | Priority/risk |
 |---|---|---:|---|---|
@@ -561,7 +561,7 @@ doctor bag, lunchbox, clutch, handled box, or modern luggage.
 | RF-11 | handled tablet/codex | A3-A4 | substantial hinged/handled writing or divination object | P2; no readable text |
 | RF-12 | seal case | A1-A4 | compact case holding one identifiable seal cylinder/stamp | P3 |
 
-Attendants are Verdigris-magical reinterpretations and may float. They should
+Extra foci are Verdigris-magical reinterpretations and may float. They should
 derive construction from an archaeological object family without becoming
 abstract currency.
 
@@ -584,9 +584,9 @@ abstract currency.
 | AT-15 | mirror-and-lamp attendant | bronze disc mirror and oil lamp | one backed mirror disc orbiting one enclosed flame cup | P3; two-part maximum |
 | AT-16 | scale-cage attendant | armor scales and lamp cage | a dozen overlapping plates forming a hollow rotating shell around light | P3; not coin swarm |
 
-## Spoils, Preparation, Reliquary, and curio taxonomy
+## Animal parts, Preparation, Relic pack, and curio taxonomy
 
-### Spoils Roll
+### Animal Parts Pack
 
 | ID | Family | Historical construction anchor | Prompt-facing visual definition | Priority/risk |
 |---|---|---|---|---|
@@ -608,7 +608,7 @@ abstract currency.
 | SP-16 | hoof or talon sheath | horn and keratin stock | one cleaned but unpolished hoof or talon sheath in a rough pouch | P2 |
 | SP-17 | rough gem-bearing nodule | quarry or alluvial lapidary stock | one uncut precious or semiprecious stone nodule still partly held in natural matrix | P3; only when source gear visibly uses that stone |
 
-Spoils are saleable and consumable crafting ingredients, not completed trophies.
+Animal parts are saleable and consumable crafting ingredients, not completed trophies.
 They should plausibly supply the horn, bone, shell, hide, scale, sinew, feather,
 tooth, or carapace used in equipment like the source character's gear. Allow
 only minimal field processing: washing, scraping, drying, salting, trimming,
@@ -623,7 +623,7 @@ carapace, quill, hide or pelt, or stinger - then present it dry, cleanly
 detached, and inventory-ready. Never use a whole head, face, paw, limb, wet
 flesh, or gory chunk. If neither the source gear nor a beast body supports a
 specific material, choose another auxiliary lane rather than generic filler.
-Sticks, twigs, branches, firewood, and generic stick bundles are never Spoils.
+Sticks, twigs, branches, firewood, and generic stick bundles are never Animal parts.
 
 Do not polish, lacquer, gild, jewel, engrave, inlay, encrust, cap, socket,
 pedestal-mount, plaque-mount, frame, or turn a Spoil into jewelry, ceremonial
@@ -631,7 +631,7 @@ display, weapon, or finished armor. Avoid impossible fantasy horn branching,
 perfect symmetry, precious-metal fittings, wet gore, human remains, and
 butcher-shop horror.
 
-### Preparation Case
+### Supply Pack
 
 | ID | Family | Era | Prompt-facing visual definition | Priority/risk |
 |---|---|---:|---|---|
@@ -660,13 +660,13 @@ Prefer concrete identifiable preparations over generic glowing reagents. The
 object must have a gathered, measured, mixed, packed, or tool-bearing read; it
 is not abstract currency, a potion-shop label, or a modern laboratory kit.
 
-### Reliquary
+### Relic pack
 
 | ID | Family | Era | Prompt-facing visual definition | Priority/risk |
 |---|---|---:|---|---|
 | RL-01 | lidded relic box | A1-A4 | compact deep box with fitted lid and thick walls | P2 |
 | RL-02 | votive coffer | A2-A4 | small chest-shaped container with carrying loops and raised lid | P3 |
-| RL-03 | reliquary pyxis | A1-A4 | cylindrical lidded box in stone, bone, wood, ivory-like material, or metal | P3 |
+| RL-03 | relic pack pyxis | A1-A4 | cylindrical lidded box in stone, bone, wood, ivory-like material, or metal | P3 |
 | RL-04 | pilgrim ampulla | A4 | flattened or globular 5th-6th-century flask with pierced shoulders | P3; replace copied sacred imagery with neutral geometry |
 | RL-05 | offering bowl | A0-A4 | deep footed or handled bowl with credible capacity | P2 |
 | RL-06 | libation vessel | A1-A4 | distinctive spouted jug, rhyton, or two-handled pouring vessel | P3 |

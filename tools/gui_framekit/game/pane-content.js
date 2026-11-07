@@ -195,12 +195,12 @@ function renderCosmetics() {
     if (cosmetic.owned) button.setAttribute("aria-pressed", String(isEquipped));
     button.setAttribute("aria-label", cosmetic.owned
       ? `${cosmetic.name}, ${isEquipped ? "equipped" : "owned"}`
-      : `${cosmetic.name}, locked, ${cosmetic.price} shards in the Reliquary`);
+      : `${cosmetic.name}, locked, ${cosmetic.price} shards in the shop`);
     button.innerHTML = `<img src="assets/${cosmetic.icon}.png" alt=""><b>${cosmetic.name}</b><small>${cosmetic.owned ? (isEquipped ? "Equipped" : "Owned") : `${cosmetic.price} shards`}</small>`;
     button.addEventListener("click", () => {
       if (!cosmetic.owned) {
         FK.openPane("left", "reliquary");
-        FK.chatLog("log", `${cosmetic.name} is available in the Reliquary.`, null, "sys");
+        FK.chatLog("log", `${cosmetic.name} is available in the shop.`, null, "sys");
         FK.notify?.(`${cosmetic.name} is locked.`, "bad");
         return;
       }

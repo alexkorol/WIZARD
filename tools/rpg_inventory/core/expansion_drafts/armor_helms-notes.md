@@ -94,7 +94,7 @@ soft vest.
   Spangenhelm`, follows the Met's sixth-century protective helmet: rounded iron
   crown plates, external gilt-copper structural bands, cheek guards, and nape
   defense. Copied figures, animals, and sacred imagery are explicitly omitted.
-- The adjacent T5 rung is now a pointed `Skymetal Steppe Cone`, preserving a
+- The adjacent T5 rung is now a pointed `Meteoric iron Steppe Cone`, preserving a
   macro-silhouette change from the rounded T4 spangenhelm while translating
   ancient composite-panel load paths into raw dark meteoric iron.
 - Ordinary Late Roman ridge construction is used as a T5 skymetal translation;

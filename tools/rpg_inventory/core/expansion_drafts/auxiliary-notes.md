@@ -8,16 +8,16 @@ Exactly 50 bases are drafted as ten complete five-rung ladders:
 - 5 empty standalone gorytoi
 - 5 war-calls
 - 5 full-length warbanners/standards
-- 5 Quick Rigs
+- 5 Tool-slot items
 - 5 trap kits
 - 5 preparation kits
-- 5 Attendant foci
+- 5 Extra focus foci
 - 5 reliquaries
-- 5 Spoils
+- 5 Animal parts
 
-This is intended as a real PoE1/D2-style base economy. Every adjacent rung changes its macro silhouette or construction, not only its material. Grid footprints follow `INVENTORY-FOOTPRINTS.md`: quivers/gorytoi are 2x3; compact war-calls are 2x2; the straight Etruscan trumpet is 1x3; all full-length warbanners are 2x4 except genuinely narrow finial poles at 1x4; Quick Rigs, trap rigs, and Attendants are 2x2; compact pack contents are 1x1; and the long red-deer antler stock is 2x1. No 3x3 auxiliary footprint remains.
+This is intended as a real PoE1/D2-style base economy. Every adjacent rung changes its macro silhouette or construction, not only its material. Grid footprints follow `INVENTORY-FOOTPRINTS.md`: quivers/gorytoi are 2x3; compact war-calls are 2x2; the straight Etruscan trumpet is 1x3; all full-length warbanners are 2x4 except genuinely narrow finial poles at 1x4; Tool-slot items, trap rigs, and Extra foci are 2x2; compact pack contents are 1x1; and the long red-deer antler stock is 2x1. No 3x3 auxiliary footprint remains.
 
-Quiver and gorytos art is isolation-safe: every description requires an empty standalone container and explicitly excludes bows, bow limbs, bowstrings, arrows, and loose missiles. Warbanners stay compact and non-weapon-length. Quick Rigs always preserve the backboard/frame, shoulder harness, and flank straps; none may read as a handbag, satchel, briefcase, suitcase, or handled box.
+Quiver and gorytos art is isolation-safe: every description requires an empty standalone container and explicitly excludes bows, bow limbs, bowstrings, arrows, and loose missiles. Warbanners stay compact and non-weapon-length. Tool-slot items always preserve the backboard/frame, shoulder harness, and flank straps; none may read as a handbag, satchel, briefcase, suitcase, or handled box.
 
 ## Intake triage: sorted indices 217-260
 
@@ -37,7 +37,7 @@ The range was reviewed visually using case-sensitive filename sorting, matching 
 - `239`, `249`: helmets; `249` is an explicit castle-turret/medieval fantasy failure.
 - `247`: spiked black club; medieval/fantasy failure and outside this portfolio.
 - `228`: oversized jeweled cage-mace/rattle. Rejected for auxiliary use: dangling charm clutter, repeated amber cabochons, overbuilt medieval-fantasy metalwork, and no clean ancient instrument silhouette.
-- `250`: Gothic cage pendant/lantern. Rejected as Attendant source: pointed Gothic tracery, modern-fantasy cage construction, and long loose neck cord. The replacement Attendant uses an asymmetric rectangular three-cup lamp rack anchored to Byzantine polycandelon construction, with no radial wheel silhouette.
+- `250`: Gothic cage pendant/lantern. Rejected as Extra focus source: pointed Gothic tracery, modern-fantasy cage construction, and long loose neck cord. The replacement Extra focus uses an asymmetric rectangular three-cup lamp rack anchored to Byzantine polycandelon construction, with no radial wheel silhouette.
 - `259`: contact-sheet collage rather than one isolated deliverable; reject for direct staging.
 
 Result: no image in 217-260 is directly promoted into this auxiliary draft. This is not a claim that the whole intake batch is unusable; many images in the slice belong to other paperdoll classes, and those should be evaluated by their owning portfolios.
@@ -64,8 +64,8 @@ Accordingly, this TSV is a **base-ladder gap and alias pool**, not an instructio
 Generation/mapping order:
 
 1. **Map before generating:** all ten quiver/gorytos rows, the generic horn/drum/sistrum calls, the pigment/medical-roll preparations, and the pyxis/censer reliquaries. Existing calibrated outputs should be visually reviewed and renamed into these bases when their silhouette and tier fit. Do not regenerate merely to match the draft name.
-2. **High-confidence gaps:** all five complete wearable Quick Rigs (the calibrated carry prompts do not require a backboard plus shoulder harness), all five trap kits, all five species- or material-specific raw Spoils, all five overtly magical Attendants, and all five complete full-length warbanners. These are structurally absent from the repeated calibrated prompt families.
-3. **Conditional gaps after visual review:** the straight Etruscan war trumpet, full braced cornu, and any reliquary or preparation rung whose exact assembly is not present among usable calibrated outputs.
+2. **High-confidence gaps:** all five complete wearable Tool-slot items (the calibrated carry prompts do not require a backboard plus shoulder harness), all five trap kits, all five species- or material-specific raw Animal parts, all five overtly magical Extra foci, and all five complete full-length warbanners. These are structurally absent from the repeated calibrated prompt families.
+3. **Conditional gaps after visual review:** the straight Etruscan war trumpet, full braced cornu, and any relic pack or preparation rung whose exact assembly is not present among usable calibrated outputs.
 
 The existing output paths establish possible supply, not automatic acceptance. Each candidate still needs normal visual QA for one isolated object, pre-ancient construction, no modern hardware, no medieval silhouette, no solar fallback, and the correct no-bow/no-arrow isolation rule. This dedupe must happen before any generation call.
 
@@ -73,7 +73,7 @@ The existing output paths establish possible supply, not automatic acceptance. E
 
 The `source_url` values prioritize museum object records and museum archaeological publications. A few perishable systems (back frames, snares, and deadfall triggers) do not survive as complete ancient objects. Those rows are labeled as conservative reconstructions or lore extrapolations and use archaeological component evidence; the modern ethnographic snare record is cited only for mechanical silhouette and is explicitly not back-dated.
 
-Attendants are the sole overtly magical lane. Their magic changes suspension and motion, while the underlying vessel, bell, spindle, cage, mirror, or asymmetric lamp-rack construction remains historically legible. Spoils remain raw crafting stock; each organic Spoil now names a source species, and the T5 rung is raw iron meteorite rather than T4 obsidian.
+Extra foci are the sole overtly magical lane. Their magic changes suspension and motion, while the underlying vessel, bell, spindle, cage, mirror, or asymmetric lamp-rack construction remains historically legible. Animal parts remain raw crafting stock; each organic Spoil now names a source species, and the T5 rung is raw iron meteorite rather than T4 obsidian.
 
 ## Historical QA correction pass
 
@@ -87,4 +87,4 @@ All auxiliary `REVISE` and `HOLD` findings in `qa-historical.md` were resolved w
 - Removed the celestial `Moon-Groove` name from the documented two-piece cosmetic grinder.
 - Replaced the hard-fail radial lamp wheel with an asymmetric rectangular three-cup lamp rack.
 - Changed the full greenstone ampulla to a direct clay ampulla body with one protected non-structural jade inset and corrected it to a 1x1 relic footprint.
-- Replaced generic Spoils with an aurochs bone blank, wild-boar tusk packet, Nile-crocodile scute patch, and red-deer antler stock. The antler row is directly anchored to Late Bronze Age red-deer working waste from Runnymede Bridge. The former T5 obsidian nodule is now a raw iron-meteorite nodule with a Natural History Museum specimen anchor.
+- Replaced generic Animal parts with an aurochs bone blank, wild-boar tusk packet, Nile-crocodile scute patch, and red-deer antler stock. The antler row is directly anchored to Late Bronze Age red-deer working waste from Runnymede Bridge. The former T5 obsidian nodule is now a raw iron-meteorite nodule with a Natural History Museum specimen anchor.

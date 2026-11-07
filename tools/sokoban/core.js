@@ -633,13 +633,13 @@
       thesis = 'The storage chamber has one useful throat; filling its deepest seals first is part of the proof.';
     } else if (goalEvictions > 0) {
       motif = 'False Finish';
-      thesis = 'A sealed reliquary must move again before the chamber can close.';
+      thesis = 'A sealed relic box must move again before the chamber can close.';
     } else if (counterintuitive > 0) {
       motif = 'Countermarch';
-      thesis = 'Progress begins by pushing at least one reliquary farther from every seal.';
+      thesis = 'Progress begins by pushing at least one relic box farther from every seal.';
     } else if (interdependence >= 6) {
       motif = 'Braided Proof';
-      thesis = 'The reliquaries share a route; solving one means making room for another.';
+      thesis = 'The relic boxes share a route; solving one means making room for another.';
     } else if (congestion >= Math.max(3, Math.floor(actions.length / 3))) {
       motif = 'Shared Lane';
       thesis = 'A narrow lane is both transport route and scarce working space.';

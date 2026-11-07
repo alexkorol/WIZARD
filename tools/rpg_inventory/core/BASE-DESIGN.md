@@ -52,57 +52,57 @@ Key properties to copy:
 | **T2 Copper-age** | first metal | copper, tin, woven linen, boiled leather, cord | plain-functional: *Copper, Tin, Boiled, Woven* |
 | **T3 Bronze-age** | the civilised norm | bronze, lacquered wood, plain leather, bronze studs | soldierly: *Bronze, War-, Legion, Studded* |
 | **T4 Ritual/Exotic** | ceremonial power | obsidian, jade, amber, carved stone, polished shell | refined but generic: *Obsidian, Jade, Amber, Ritual, Carved* |
-| **T5 Otherworldly** | beyond the horizon | skymetal (raw dark meteoric iron) | severe/endgame: *Skymetal, Meteoric, Riven* |
+| **T5 Otherworldly** | beyond the horizon | skymetal (raw dark meteoric iron) | severe/endgame: *Meteoric iron, Meteoric, Riven* |
 
 Not every class needs all five rungs; 3–5 each is fine (like D2's three).
 
 ## Proposed class ladders (names are the deliverable; art follows)
 
 ### Weapons (kind: weapon; sub-class by tag)
-- **Dagger** (blade/swift): Bone Shiv · Copper Knife · Bronze Dirk · Obsidian Fang · Skymetal Kris
-- **Sword / one-hand blade** (blade): Flint Cleaver · Copper Falchion · Bronze Khopesh · Obsidian Shortblade · Skymetal Longsword
-- **Axe** (blade/blunt): Flint Hatchet · Copper Adze · Bronze War-Axe · Obsidian Cleaver · Skymetal Bardiche
-- **Mace / club** (blunt): Driftwood Cudgel · Copper Mace · Bronze War-Mace · Jade Hammer · Skymetal Maul
-- **Two-hand great** (blade/blunt): Bone Maul · Copper Greatclub · Bronze Greataxe · Obsidian Macuahuitl · Skymetal Greatblade
-- **Reach / polearm** (reach): Flint Spear · Bone Harpoon · Bronze Pike · Obsidian Warspear · Skymetal Warspear
-- **Rite-focus** (spirit caster): Bone Idol-Cudgel · Copper Hand Bell · Bronze Pronged Sceptre · Jade Idol-Staff · Skymetal Rite Rod
+- **Dagger** (blade/swift): Bone Shiv · Copper Knife · Bronze Dirk · Obsidian Fang · Meteoric iron Kris
+- **Sword / one-hand blade** (blade): Flint Cleaver · Copper Falchion · Bronze Khopesh · Obsidian Shortblade · Meteoric iron Longsword
+- **Axe** (blade/blunt): Flint Hatchet · Copper Adze · Bronze War-Axe · Obsidian Cleaver · Meteoric iron Bardiche
+- **Mace / club** (blunt): Driftwood Cudgel · Copper Mace · Bronze War-Mace · Jade Hammer · Meteoric iron Maul
+- **Two-hand great** (blade/blunt): Bone Maul · Copper Greatclub · Bronze Two-handed Axe · Obsidian Macuahuitl · Meteoric iron Greatblade
+- **Reach / polearm** (reach): Flint Spear · Bone Harpoon · Bronze Pike · Obsidian Spear · Meteoric iron Spear
+- **Rite-focus** (spirit caster): Bone Idol-Cudgel · Copper Hand Bell · Bronze Pronged Sceptre · Jade Idol-Staff · Meteoric iron Rite Rod
 
 ### Armour
 - **Body** (life/ward line): Hide Wrap · Boiled Vest · Bronze-Studded Jerkin · Bronze-Scale Vest · Sheet-Bronze Corslet
-- **Helmet**: Hide Cap · Bone Crest · Bronze War-Helm · Jade Circlet · Skymetal Greathelm
-- **Gloves/bracers**: Rawhide Wraps · Boiled Bracers · Bronze-Scale Bracers · Bronze Vambraces · Skymetal Gauntlets
-- **Boots**: Bark Sandals · Hide Sandals · Bronze-Shod Sandals · Jade Greaves · Skymetal Greaves
-- **Belt**: Sinew Cord · Woven Girdle · Bronze-Plated Belt · Bronze War-Girdle · Skymetal Warbelt
-- **Shield**: Hide Roundshield · Hide Buckler · Bronze Roundshield · Bronze-Scale Warshield · Sheet-Bronze Tower
+- **Helmet**: Hide Cap · Bone Crest · Bronze Helmet · Jade Circlet · Meteoric iron Large helmet
+- **Gloves/bracers**: Rawhide Wraps · Boiled Bracers · Bronze-Scale Bracers · Bronze Vambraces · Meteoric iron Gauntlets
+- **Boots**: Bark Sandals · Hide Sandals · Bronze-Shod Sandals · Jade Greaves · Meteoric iron Greaves
+- **Belt**: Sinew Cord · Woven Girdle · Bronze-Plated Belt · Bronze War-Girdle · Meteoric iron War belt
+- **Shield**: Hide Roundshield · Hide Buckler · Bronze Roundshield · Bronze-Scale Shield · Sheet-Bronze Tower
 
 ### Jewellery
-- **Amulet / neckpiece**: Bone Pendant · Copper Torc · Jade Gorget · Amber Talisman · Skymetal Sigil
-- **Ring**: Bone Ring · Copper Coil · Jade Band · Amber Ring · Skymetal Ring
-- **Curio / relic** (spirit flavour): use substantial reliquary boxes,
+- **Amulet / neckpiece**: Bone Pendant · Copper Torc · Jade Gorget · Amber Talisman · Meteoric iron Sigil
+- **Ring**: Bone Ring · Copper Coil · Jade Band · Amber Ring · Meteoric iron Ring
+- **Curio / relic** (spirit flavour): use substantial relic pack boxes,
   offering bowls, forked standards, and trophy settings. Do not build a tier
   ladder out of flat tablets, plaques, tiny trinkets, shrine miniatures, or
   loose charms. Finished socketable trophy settings in this curio lane are
-  distinct from raw Spoils Roll crafting materials.
+  distinct from raw Animal Parts Pack crafting materials.
 
 ### Auxiliary equipment (2x2 unlock seats)
 
-- **War-call** (pure STR): Aurochs War Horn · Copper Signal Drum · Bronze
+- **War Horn** (pure STR): Aurochs War Horn · Copper Signal Drum · Bronze
   Command Horn · Jade Command Rattle · Iron Thunder Horn. Complete rallying
   instruments or compact standards with physical authority. Alternative base
   silhouettes come from the researched WC families: Bronze Age broad-curved
   trumpets, straight salpinges/Etruscan trumpets, hooked litui, braced cornua,
   carnyx-like vertical trumpets, sistra, clappers, bells, standard finials, and
   bounded vexilla. Do not make five material skins of the same horn.
-- **Quick Rig** (pure DEX): Hunter's Quick Rig · Copper Dart Case · Bronze
-  Quiver Harness · Nightglass Knife Roll · Skymetal Trap Case. The silhouette
+- **Tool slot** (pure DEX): Hunter's Tool slot · Copper Dart Case · Bronze
+  Quiver Harness · Obsidian Knife Roll · Meteoric iron Trap Case. The silhouette
   includes its fast-access carrying structure; never extract a torso wearing it.
   Alternative Q families include combined gorytoi, lidded quivers, weighted-
   dart racks, sling-bullet side carriers, archer belt kits, fletching cases,
   medicine back-frame rigs, pigment-and-seal cases, and fire-and-trap cases.
-  Every Quick Rig is worn on the back or flank with a visible frame/harness,
+  Every Tool slot is worn on the back or flank with a visible frame/harness,
   never handheld, off-hand equipment, purse-like, or briefcase-like.
-- **Attendant focus** (pure INT): Bone Wisp Orb · Copper Orbit · Bronze Caged
-  Light · Jade Attendant · Black Star Attendant. These are hands-free magical
+- **extra focus** (pure INT): Bone Wisp Orb · Copper Orbit · Bronze Caged
+  Light · Jade Extra focus · Black Star Extra focus. These are hands-free magical
   foci, so overt hovering, glow, orbiting parts, and impossible suspension are
   part of the class rather than prompt failures. Do not make the full ladder
   five spheres: derive alternate structures from polycandelon lamp wheels,
@@ -111,19 +111,19 @@ Not every class needs all five rungs; 3–5 each is fine (like D2's three).
 
 ### Specialty-pack contents (4x4 hybrid-axis windows)
 
-- **Spoils Roll** (STR+DEX): harvested monster parts, shells, fangs, claws,
+- **Animal Parts Pack** (STR+DEX): harvested monster parts, shells, fangs, claws,
   antlers, hides, sinew, feathers, scales, and carapaces. These are saleable
   and consumable raw crafting products, not finished trophies. Allow washing,
   scraping, drying, salting, trimming, plain tying, or rough wrapping only.
   Preserve natural irregularity; do not polish, jewel, metal-cap, display-mount,
   or convert the material into a finished item. Avoid wet gore and human remains.
-- **Preparation Case** (DEX+INT): concrete reagents, venoms, resins, gathered
+- **Supply Pack** (DEX+INT): concrete reagents, venoms, resins, gathered
   plants, pigments, measured powders, ampoules, compact instruments, charts,
   and trap components. Include ancient ointment palettes, two-piece cosmetic
   grinders, pyxides, medicinal salve-stick cases, medicine rolls, fletching
   kits, fire packets, and trap-trigger packets. These are physical loot objects,
   not currency symbols or generic potion-shop bottles.
-- **Reliquary** (INT+STR): relics, charms, offerings, sanctified objects,
+- **Relic pack** (INT+STR): relics, charms, offerings, sanctified objects,
   codices, scroll cases, votive vessels, ancestor fragments, and shrine tokens.
   Include deep boxes, votive coffers, pyxides, neutral-geometry Late Antique
   ampullae, censers, lamps, diptychs, wrapped relics, seal sets, bells, staff
@@ -134,12 +134,12 @@ Not every class needs all five rungs; 3–5 each is fine (like D2's three).
 Most existing finals slot straight into a rung, just renamed:
 `handaxe_bronze`→Bronze War-Axe, `khopesh_bronze`→Bronze Khopesh,
 `macuahuitl_obsidian`→Obsidian Macuahuitl (T4),
-`crest_bronze`→Bronze War-Helm, `gorget_jade`→Jade Gorget, new
-`dagger_bronze`→Bronze Dirk, `helm_bronze`→Bronze War-Helm, etc. Retire the
+`crest_bronze`→Bronze Helmet, `gorget_jade`→Jade Gorget, new
+`dagger_bronze`→Bronze Dirk, `helm_bronze`→Bronze Helmet, etc. Retire the
 combinatorial oddities (quilted sandals, obsidian gorget, atlatls).
 
 ## Naming principles
 
 Evocative > descriptive. Two-word "[flavor/material] [archetype]" mostly, with
-occasional single iconic names at T4/T5 (Bronze-Scale Warshield, Skymetal Kris).
+occasional single iconic names at T4/T5 (Bronze-Scale Shield, Meteoric iron Kris).
 Avoid IDs like `grips_quilted` in player-facing names.

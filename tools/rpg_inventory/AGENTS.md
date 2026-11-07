@@ -133,18 +133,18 @@ Fire, Cold, Lightning and Chaos in labels; legacy stat IDs stay hidden for save 
   skill-tree unlock has not been allocated.
 - The three hybrid axes each unlock one 4x4 specialty pack: STR+DEX, DEX+INT,
   and INT+STR. The three pure axes each unlock one 2x2 auxiliary equipment seat.
-- Canonical mapping: Champion/STR = War-call; Acrobat/DEX = Quick Rig;
-  Archmage/INT = Attendant focus; Reaver/STR+DEX = Spoils Roll;
-  Nightblade/DEX+INT = Preparation Case; Ritualist/INT+STR = Reliquary.
-- Attendant foci may be overtly magical, including semi-floating or orbiting
+- Canonical mapping: STR class/STR = War Horn; DEX class/DEX = Tool slot;
+  INT class/INT = extra focus; DEX/STR class/STR+DEX = Animal Parts Pack;
+  INT/DEX class/DEX+INT = Supply Pack; STR/INT class/INT+STR = Relic pack.
+- Extra focus foci may be overtly magical, including semi-floating or orbiting
   orbs, glow, levitation, and impossible suspension. Currency/reagent prompt
   cautions do not restrict this equipment category.
 - The six-lane research vocabulary is authoritative in
-  `core/ANCIENT-EQUIPMENT-TAXONOMY.md`: WC (War-call), Q (Quick Rig), AT
-  (Attendant), SP (Spoils), PR (Preparation), and RL (Reliquary). Rotate these
-  family IDs across batches. Do not collapse War-call to horns, Quick Rig to
-  quivers, Attendant to bare orbs, Preparation to potion bottles, or Reliquary
-  to boxes/crystals. Spoils are the exception to the finished-item look: they
+  `core/ANCIENT-EQUIPMENT-TAXONOMY.md`: WC (War Horn), Q (Tool slot), AT
+  (Extra focus), SP (Animal parts), PR (Preparation), and RL (Relic pack). Rotate these
+  family IDs across batches. Do not collapse War Horn to horns, Tool slot to
+  quivers, Extra focus to bare orbs, Preparation to potion bottles, or Relic pack
+  to boxes/crystals. Animal parts are the exception to the finished-item look: they
   are raw or minimally field-processed monster materials sold or consumed in
   crafting. Show practical washing, scraping, drying, salting, trimming, plain
   tying, or rough wrapping, but no polishing, gilding, gems, engraving, metal
@@ -154,11 +154,11 @@ Fire, Cold, Lightning and Chaos in labels; legacy stat IDs stay hidden for save 
   source, use one dry, detached, species-specific horn, tooth, claw sheath,
   scale patch, carapace, quill, hide/pelt, or stinger supported by its body.
   Never use whole heads/limbs, gore, sticks, twigs, firewood, or generic stick
-  bundles as Spoils. The
+  bundles as Animal parts. The
   six-image auxiliary pass
   may extrapolate same-culture objects from a source character's craft language;
   that permission does not extend to inventing missing core paperdoll gear.
-- Quick Rigs are worn load-bearing gear on the back or flank. Their complete
+- Tool-slot items are worn load-bearing gear on the back or flank. Their complete
   backboard/pack frame, shoulder harness, side straps, and secured contents stay
   readable in character art and isolated studies. They never occupy a hand or
   off-hand slot and never resemble purses, handbags, satchels, messenger bags,
@@ -212,7 +212,7 @@ despite "no cast shadow" — the local matte then keeps it. If it's bad, trim in
 post rather than regenerating.
 
 Material rules (2026-07-05, see ASSET-BRIEF §Material-specific corrections):
-**Skymetal = raw dark iron** — no glow / star-flecks / crystal blades / teal
+**Meteoric iron = raw dark iron** — no glow / star-flecks / crystal blades / teal
 energy / gilded hilts; but describe the MATERIAL only — do NOT add "mundane / not
 magical / primitive iron" negations (they desaturate the render and kill the
 rim-light continuity). Let the standard v2 lighting apply. **Primitive/low-tier items = ONE
@@ -748,7 +748,7 @@ rung, not an axis sprayed across everything. Our tech arc IS the tier ladder:
 T1 scavenged (flint/bone/hide) → T2 copper → T3 bronze → T4 ritual/exotic
 (obsidian/jade/amber) → T5 otherworldly (skymetal; mail paused). Exotic
 items are high rungs, not whole classes. Give evocative names (Bronze Khopesh,
-Obsidian Macuahuitl, Skymetal Greathelm), never IDs like `grips_quilted`. Full
+Obsidian Macuahuitl, Meteoric iron Large helmet), never IDs like `grips_quilted`. Full
 proposed ladders live in `core/BASE-DESIGN.md`.
 
 ## Item roster decisions
@@ -786,12 +786,12 @@ When asked for roastable prompt candidates, apply the pipeline rules in
 - Check `core/DOWNLOAD-INTAKE.md` before proposing candidates. Do not re-prompt
   silhouettes from a recent manual download burst until those images are
   reviewed, staged, or discarded.
-- The DEX+INT Preparation Case reopens concrete reagent art: identifiable
+- The DEX+INT Supply Pack reopens concrete reagent art: identifiable
   herbs, roots, resins, venoms, pigments, measured powders, ampoules, tools,
   charts, and trap components are valid. Still avoid abstract crafting
   currencies, omen symbols, ingots, molds, seal weights, interchangeable
   glowing reagent stones, and abstract bench tokens. Magical orbiting orbs are
-  valid Attendant equipment, not currency.
+  valid Extra focus equipment, not currency.
 - Default 12-candidate batches cap weapons at two and must include armour or
   helmets, shields/off-hands, limb or waist wearables, jewellery, and
   rite/relic/curio/trophy objects. Smaller batches keep weapons below 25%.
@@ -799,7 +799,7 @@ When asked for roastable prompt candidates, apply the pipeline rules in
   vary class and construction, then move back to non-weapon slots.
 - Relic gear candidates should be concrete ritual implements, not vague magic
   trinkets: double-ended pronged sceptres, heavy hand bells, handled tablets,
-  forked standards, offering bowls, idol-head cudgels, reliquary boxes. Use
+  forked standards, offering bowls, idol-head cudgels, relic pack boxes. Use
   vajra/dorje-like forms as structural inspiration, not direct sacred-symbol
   copies or literal default names.
 - Screen prompt candidates for weak/toy-like base reads. Avoid wicker shields,

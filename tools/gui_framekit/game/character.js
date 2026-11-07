@@ -16,7 +16,7 @@ const ITEMS = FK.ITEMS = {
               { equip: "weapon", stats: ["112–186 damage", "+12% attack speed", "+34 Grace"], flavor: "Fell from a clear sky. Kept its temper." }),
   scaleshield: I("items/hideshield_bronzescale", "Bronze Scale Shield", "rare", "Off Hand · Shield",
               { equip: "offhand", stats: ["+52 Armor", "+11% block"], flavor: "" }),
-  greataxe: I("items/greataxe_obsidian", "Obsidian Greataxe", "epic", "Two-Hand · Axe",
+  greataxe: I("items/greataxe_obsidian", "Obsidian Two-handed Axe", "epic", "Two-Hand · Axe",
               { equip: "weapon", stats: ["203–288 damage", "+22% against structures"], flavor: "The edge is one molecule of night." }),
   helm:     I("items/helm_bronzescale", "Bronze Scale Helm", "rare", "Head",
               { equip: "helm", stats: ["+31 Armor", "+9 Will"], flavor: "" }),

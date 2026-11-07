@@ -77,7 +77,7 @@
     return hexDistance(q - stone.q, r - stone.r) <= radius;
   }
 
-  // Waystone pattern hooks: authored ring-5 seats whose promises the detector
+  // Anchor pattern hooks: authored ring-5 seats whose promises the detector
   // keeps. Each hook: { q, r, id, effect, value } for an ACTIVE waystone.
   function hooksFor(input, effect) {
     return (input.waystones || []).filter(hook => hook.effect === effect);
@@ -208,7 +208,7 @@
   }
 
   function selectExclusivePaths(ctx, tuning, sharedClaimIds = new Set()) {
-    // Conduits touching a shared-claim Waystone may serve one wave AND one
+    // Conduits touching a shared-claim Anchor may serve one wave AND one
     // flow (never two of the same family); everything else is exclusive.
     const claims = new Map();
     const blockedFor = type => id => {
@@ -604,7 +604,7 @@
     const loopPower = patterns.loops.reduce((sum, loop) => sum + loop.radius, 0);
     bonuses.push({
       id: 'circle',
-      name: 'Loop Crowns',
+      name: 'Closed Loops',
       active: patterns.loops.length > 0,
       progress: `${patterns.loops.length} loop crown${patterns.loops.length === 1 ? '' : 's'}; ${patterns.concentric.length} concentric`,
       description: 'Close radius 1-3 loops around allocated centers. Concentric crowns compound the center fantasy.',
@@ -730,7 +730,7 @@
     const ctx = normalize(input);
     const depth = input.depth || Math.max(0, ...ctx.mainNodes.map(node => node.ring || 0));
 
-    // Shared-claim Waystones exempt their touching conduits from wave/flow
+    // Shared-claim Anchors exempt their touching conduits from wave/flow
     // exclusivity (one wave and one flow may both count them).
     const sharedClaimIds = new Set();
     hooksFor(input, 'shared-claim').forEach(hook => {
@@ -768,7 +768,7 @@
     const loopData = detectLoops(ctx, tuning, stonesFor(input, 'loop-gap'));
 
     // Enclosure-boost: Votive-Waystone-style hooks strengthen warding circles
-    // whose perimeter carries the Waystone.
+    // whose perimeter carries the Anchor.
     const enclosureHooks = hooksFor(input, 'enclosure-boost');
     loopData.enclosures.forEach(enclosure => {
       const bonus = enclosureHooks.reduce((sum, hook) =>
@@ -808,7 +808,7 @@
           nodeBoosts,
           nodeId,
           tuning.rods.endpointPercent * (doubled ? 2 : 1),
-          `rod endpoint length ${rod.length}${doubled ? ' (Waystone doubled)' : ''}`
+          `rod endpoint length ${rod.length}${doubled ? ' (Anchor doubled)' : ''}`
         );
       });
     });

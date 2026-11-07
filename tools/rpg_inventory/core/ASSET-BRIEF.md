@@ -109,12 +109,12 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
 10. NO ABSTRACT CURRENCY IDEATION (2026-07-07; revised 2026-07-12). Do not
    propose crafting currencies, omen symbols, ingots, molds, seal weights,
    interchangeable glowing reagent stones, or abstract bench-tool tokens.
-   Concrete Preparation Case reagents and pigments are now valid physical loot.
-   Magical orbiting orbs are valid Attendant equipment, not currency.
+   Concrete Supply Pack reagents and pigments are now valid physical loot.
+   Magical orbiting orbs are valid Extra focus equipment, not currency.
 11. RELIC GEAR MUST BE CONCRETE IMPLEMENTS (2026-07-07). Avoid weak AI-trope
    mystic trinkets. Use strong ritual-object construction: double-ended
    pronged sceptres, heavy hand bells, handled tablets, forked standards,
-   idol-head cudgels, offering bowls, reliquary boxes. Borrow
+   idol-head cudgels, offering bowls, relic pack boxes. Borrow
    silhouette logic from real implements like vajra/dorje forms, but do not
    copy living sacred iconography one-to-one or use exact religious names as
    ordinary base names.
@@ -146,7 +146,7 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
 15. NO BORING FORCED RELIC BASES (2026-07-07). Flat tablets, ward plates,
    symbol plaques, carved slabs, and generic hand-held boards are not exciting
    ARPG loot bases. Relic gear needs a strong held/worn/handled implement with
-   mass and purpose: bowls, bells, pronged sceptres, standards, reliquary boxes,
+   mass and purpose: bowls, bells, pronged sceptres, standards, relic pack boxes,
    idol-head cudgels, trophy settings, or small shield-like foci.
 16. SOURCE-IMAGE LOADOUT EXTRACTION (2026-07-07, Alexei). A full character or
    loadout image can be used as a coherent equipment source, not merely as a
@@ -293,28 +293,28 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    rendering rule and does not replace isolated-item matte/extraction blocks.
 26. SIX AUXILIARY ITEM LANES (2026-07-12). Treat these as first-class slot
    identities in isolated generation, source-character design, and extraction:
-   pure STR War-calls, pure DEX Quick Rigs, pure INT Attendant foci, STR+DEX
-   Spoils, DEX+INT Preparations, and INT+STR Reliquary objects. War-calls include
+   pure STR war horns, pure DEX Tool-slot items, pure INT Extra focus foci, STR+DEX
+   Animal parts, DEX+INT Supplies, and INT+STR Relic pack objects. war horns include
    complete 2x2 horns, ancient trumpets, drums, rattles, sistra, bells, clappers,
-   and compact standards. Quick Rigs include complete 2x2 quivers, gorytoi,
+   and compact standards. Tool-slot items include complete 2x2 quivers, gorytoi,
    dart racks, sling-bullet side carriers, and back/side-mounted
    knife/fletching/medicine frames, pigment cases, and trap rigs shown without
-   a body but with the complete harness. Quick Rigs are never handheld,
+   a body but with the complete harness. Tool-slot items are never handheld,
    off-hand, purse-like, briefcase-like, or modern luggage. Quiver, arrow-case,
    and gorytos art shows the complete standalone container with a capped mouth
    or a visibly open empty mouth. Never include arrows, shafts, fletching, bow
    parts, or a combined archery set; arrows are separate inventory items.
-   Attendants reinterpret ancient
+   Extra foci reinterpret ancient
    lamp wheels, censers, lamps, mirrors, bells, vessels, pyxides, spindles,
    rings, and scale cages as hands-free magical foci; overt levitation, glow,
-   orbiting parts, and impossible suspension are allowed. Spoils are raw or
+   orbiting parts, and impossible suspension are allowed. Animal parts are raw or
    minimally field-processed nonhuman crafting products, valuable as saleable
    material and as ingredients for equipment: washed, scraped, dried, salted,
    trimmed, plainly tied, or roughly wrapped, never polished, jeweled, capped,
    encrusted, display-mounted, or converted into finished prestige trophies.
-   Preparations are concrete
+   Supplies are concrete
    gathered, measured, mixed, packed, or tool-bearing reagents and field kits,
-   never abstract currency. Reliquaries are strong containers, vessels,
+   never abstract currency. relic packs are strong containers, vessels,
    books/cases, preserved fragments, or handled ritual objects. Use the exact
    researched second-pass six-image prompt in `LOADOUT-EXTRACTION.md` and the
    family IDs in `ANCIENT-EQUIPMENT-TAXONOMY.md`.
@@ -396,11 +396,11 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
   into one dominant hue. Axis-specific color hierarchies now vary the nine
   loadouts without losing faction craft identity.
 - 2026-07-12: added the six auxiliary lanes and explicitly allowed overtly
-  magical orbiting orb designs for the Attendant seat.
+  magical orbiting orb designs for the extra focus slot.
 
 ### Material-specific corrections (2026-07-05 review — do not relitigate)
 
-- **Skymetal / meteoric iron = raw dark iron.** Describe the MATERIAL only: raw,
+- **Meteoric iron / meteoric iron = raw dark iron.** Describe the MATERIAL only: raw,
   dark, cold, dense, unpolished grey-black iron on a plain leather-bound grip.
   Avoid the high-fantasy elements — NO glow, NO star-flecks, NO crystalline/gemlike
   blades, NO teal/blue energy veins, NO ornate gilded hilts. BUT do NOT stack
@@ -581,7 +581,7 @@ inventory images, with a planned overshoot manifest of about 640 rows.
 | ring_copper | S | a simple coiled copper ring with clean hammered metal |
 | curio_bone | S | a small carved bone bird curio with a clean simple shape |
 
-## Trophies (5)
+## Animal parts (5)
 
 boar_tusk (large tusk trophy setting), wolf_fang (large fang trophy setting),
 river_pearl (large baroque pearl in a carved shell setting), ember_shell
@@ -589,7 +589,7 @@ river_pearl (large baroque pearl in a carved shell setting), ember_shell
 knucklebone with plain carved marks).
 
 These five are finished socketable trophy artifacts in the older crafting
-system. They are not Spoils Roll contents. Spoils Roll art stays raw or
+system. They are not Animal Parts Pack contents. Animal Parts Pack art stays raw or
 minimally preserved crafting stock as defined in rule 26.
 
 ## Legacy craft tools (frozen)

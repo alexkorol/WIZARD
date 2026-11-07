@@ -7,12 +7,12 @@ Open `index.html` directly in a browser.
 ## Current Feature Set
 
 - Ten-ring main hex lattice (331 nodes) with `INT` running center-to-up, `DEX` center-to-bottom-left, and `STR` center-to-bottom-right. A maxed character has 140 points after the Phase 0 overhaul scaffold, and a center-to-rim route now costs 20 points before optional side paths.
-- Six ascendancy circles hidden behind the rim corners, each named after its corner (Attendant, Quick Rig, Warcall, Preparations, Trophies, Relics) and holding 13 passives themed to that corner's armoury window: an entry notable, eight smalls, two more notables, a mastery, and a capstone keystone. Every circle is the same seed-of-life wheel — a mastery hub, six seats on the hub's ring, and six seats on the outer intersections — with the entry facing the gate and the keystone at the apex.
-- The six ring-10 rim corners double as armoury unlock seats, alternating slot/pack around the outer hex: Attendant (INT), Quick Rig (DEX), and Warcall (STR) each unlock an extra gear-slot window on the Vesselforge page; Preparations (DEX/INT), Relics (INT/STR), and Trophies (DEX/STR) each unlock a 4×4 pack. Allocating a corner publishes its flag over the same bridge the class milestones use — no calling required — and each corner is also the gate to its ascendancy circle.
+- Six ascendancy circles hidden behind the rim corners, each named after its corner (Extra focus, Tool slot, War Horn, Supplies, Animal parts, Relics) and holding 13 passives themed to that corner's armoury window: an entry notable, eight smalls, two more notables, a mastery, and a capstone keystone. Every circle is the same seed-of-life wheel — a mastery hub, six seats on the hub's ring, and six seats on the outer intersections — with the entry facing the gate and the keystone at the apex.
+- The six ring-10 rim corners double as armoury unlock seats, alternating slot/pack around the outer hex: Extra focus (INT), Tool slot (DEX), and War Horn (STR) each unlock an extra gear-slot window on the Vesselforge page; Supplies (DEX/INT), Relics (INT/STR), and Animal parts (DEX/STR) each unlock a 4×4 pack. Allocating a corner publishes its flag over the same bridge the class milestones use — no calling required — and each corner is also the gate to its ascendancy circle.
 - Player notes on anything: toggle the Notes button (hotkey `N`) and click any node or conduit to write a note on it, or Alt+click one directly. Gold pins mark noted targets; hover a pin to read, click it to edit, and the selection panel carries an Add Note button. Notes ride build codes, so they persist across reloads and travel with shared builds, and they survive reset on purpose.
 - A single skill-point pool: every node costs 1 point and every path or extra loop link costs 1 point, so travel distance is itself the build cost.
-- Every seat is authored data (`assets/tree-data.js`, emitted by `scripts/author-tree.mjs`): 96 unique named seats across six spoke identities (Champion, Acrobat, Archmage, Reaver, Nightblade, Ritualist) and six themed wedges (Fire; Companions and Rites; Cold; Poison and Chaos; Projectiles and Lightning; Physical and Bleed). No procedurally generated content remains.
-- Named seat plan by ring: doorway smalls (1), first notables (2), masteries (3), notable belt (4), the Waist — Waystones plus jewel sockets (5), keystones (6), class milestones (7), the Signs — birthsign keystones, exactly one allocatable per character (8), deep notables plus a second socket set (9), gateways and frontier notables (10).
+- Every seat is authored data (`assets/tree-data.js`, emitted by `scripts/author-tree.mjs`): 96 unique named seats across six spoke identities (STR class, DEX class, INT class, DEX/STR class, INT/DEX class, STR/INT class) and six themed wedges (Fire; Companions and Rites; Cold; Poison and Chaos; Projectiles and Lightning; Physical and Bleed). No procedurally generated content remains.
+- Named seat plan by ring: doorway smalls (1), first notables (2), masteries (3), notable belt (4), the Waist — Anchors plus jewel sockets (5), keystones (6), class milestones (7), the Signs — birthsign keystones, exactly one allocatable per character (8), deep notables plus a second socket set (9), gateways and frontier notables (10).
 - Passive nodes provide build effects such as weapon damage, wards, minion damage, evasion, recovery, marks, ailments, and hybrid bonuses.
 - The derived-stat panel now consumes the shared Verdigris stat engine and leads with Effective HP and DPS against the standard mixed-pack profile. Per-allocation deltas surface headline changes first.
 - Passive hierarchy is geometric rather than random: inner notables, fixed axis masteries, ordered outer keystone seats, and rim gateways occupy repeatable ring roles.
@@ -74,7 +74,7 @@ The tree should behave like a full character progression system, not a decorativ
 - Rings 1-2 are foundation picks: cheap passives, first notables, and early identity choices.
 - Rings 3-4 are specialization: axis masteries and stronger local notables start to define a build's school.
 - Rings 5-6 are advanced commitment: expensive outer routing, larger pattern payoffs, and the first keystone seats.
-- Rings 7-8 are outer mastery: class-named milestones (Champion, Acrobat, Archmage) and the Signs — birthsign-style keystones with a defining bonus and a real price.
+- Rings 7-8 are outer mastery: class-named milestones (STR class, DEX class, INT class) and the Signs — birthsign-style keystones with a defining bonus and a real price.
 - Ring 9 is the pre-rim deep notable layer; ring 10 and attached subtrees are capstone expansion: gateways, build-defining routes, and optional endgame branches.
 - Curved paths are the attribute/travel layer. Nodes are passive-effect rewards. Shape patterns are a third layer that converts geometry into build power.
 - Node size and type should follow geometric rules: ring seats, axes, side midpoints, gateways, and earned pattern upgrades. Random large nodes are explicitly out of scope.
@@ -151,8 +151,8 @@ The current UI is standalone and does not require a dev server.
 What changed for anyone returning to this tool after June 2026:
 
 - The tree grew to ten rings (331 seats) and every seat is now hand-authored —
-  the old hash-generated filler is deleted. Six spoke identities (Champion,
-  Acrobat, Archmage, Reaver, Nightblade, Ritualist) and six themed wedges.
+  the old hash-generated filler is deleted. Six spoke identities (STR class,
+  DEX class, INT class, DEX/STR class, INT/DEX class, STR/INT class) and six themed wedges.
 - Geometry became buildcraft: waves, flows, meridians, loop crowns, vesicas,
   grand orbits, symmetry, circuits, enclosures, rods, and crossroads all
   detect, render, and pay through one tuning table.

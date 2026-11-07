@@ -180,7 +180,7 @@ Production takeaways:
   row is explicitly intended as historical reference.
 - 2026-07-07 prompt roast correction: "rite baton" reads weak and prop-like.
   Do not use baton/stick language as the item thesis. The object should read
-  as a substantial sceptre, mace-like hand focus, bell, reliquary box, offering
+  as a substantial sceptre, mace-like hand focus, bell, relic pack box, offering
   bowl, forked standard, or cudgel with real mass.
 - Paired bell/sceptre logic is also strong: bell body, handle, finial, and
   clapper silhouette. Generate as one object unless a pair is explicitly
@@ -227,7 +227,7 @@ legible as a layer on top of a known object.
   silhouette. The sword/helmet/ring art can stay readable and generic while
   the UI says "this item belongs to a higher system."
 - For Verdigris: use frame accents, tooltip side glyphs, and subtle aura
-  washes for Brands/Bonds/Trophies or future factions. Do not bake faction
+  washes for Brands/Bonds/Animal parts or future factions. Do not bake faction
   symbols into ordinary base prompts.
 - Multi-influence is valuable as a UI grammar: two small side marks can mean a
   hybrid state without needing a new full item render.

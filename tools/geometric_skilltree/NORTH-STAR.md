@@ -120,7 +120,7 @@ Load-bearing facts about the current implementation:
    Verdigris is bronze-age, low-fantasy: wards and rites, not "energy shield"; sagas
    and signs, not "ascendancies". Node names are evocative two-to-four word phrases in
    the existing register ("Oath of the Front Line", "Blue Arithmetic"). Class and
-   archetype names are real, resonant words — Ritualist, Champion, Acrobat — never
+   archetype names are real, resonant words — STR/INT class, STR class, DEX class — never
    invented compound lore-shorthand ("Ritekeeper"-style coinages are banned, per
    Alexei). When in doubt, pick the word a player would actually say out loud.
 7. **Simple to touch, deep to master.** One click allocates. Tooltips explain
@@ -161,7 +161,7 @@ factor). The tree hands out `increased` by the hundreds of percent; `more` is ra
 almost exclusively to keystones, masteries, and skill gems. That rationing is WHY
 keystones feel special: a keystone's "40% more" outvalues another 100% `increased`
 when the additive bucket already sits at +300%. Our stat engine (§4.3) enforces the
-same law: small nodes and notables grant `increased`; only keystones, Signs, Waystones,
+same law: small nodes and notables grant `increased`; only keystones, Signs, Anchors,
 and pattern crests may grant `more` — and the lint flags any violation.
 
 ### 3.2 Node hierarchy and real budgets (PoE1 verified numbers)
@@ -175,7 +175,7 @@ unlocking, is the emotion. The hierarchy, with typical budgets:
 | Small (cluster filler) | 5–6% inc. life; 8–12% inc. spell dmg; 12–16% single element; 3–4% attack speed; weapon smalls two-line (12% phys + 3% AS) | Authored cluster smalls, ~1 BU |
 | Notable | 2–3× a small, primary stat + 1–2 riders: "30% inc. lightning + 6% penetration"; "10% inc. life + regen"; the best grant rule changes (+1 curse) | Named seats, 2.5–3 BU, best ones grant small rules |
 | Keystone | No stat budget at all — a rule change with a cost (§3.3) | Keystones + Signs |
-| Mastery (3.16+) | pick-one-of-6 menu per cluster, unlocked by the cluster's notable; once-per-type per character | Waystones + our mastery seats (menu idea worth stealing — see §3.6) |
+| Mastery (3.16+) | pick-one-of-6 menu per cluster, unlocked by the cluster's notable; once-per-type per character | Anchors + our mastery seats (menu idea worth stealing — see §3.6) |
 | Jewel socket | empty node → itemization surface; a 4-mod rare jewel ≈ notable+small, so a socket 1–2 points off-path is worth it, 3+ is a debate | §6 sockets — same tension |
 
 A typical PoE build spends 15–25% of points on pure travel. Distance-as-cost does three
@@ -270,7 +270,7 @@ stats cluttering the tree (moved into opt-in menus), and dead pathing (every clu
 carries a rebate). Cost: power moved from visible geography into hidden menus — less
 legible at a glance. **Our translation**: we keep power visible (geometry IS our
 legibility), but the pick-once-per-character idea belongs in our mastery seats: the
-six ring-3 masteries and six Waystones should offer a small choice (pick 1 of 3
+six ring-3 masteries and six Anchors should offer a small choice (pick 1 of 3
 authored options) so two builds through the same wedge still diverge. Implement as
 data-driven choice nodes; the designer UI must support authoring the options.
 
@@ -512,7 +512,7 @@ every conduit click into a macro decision.
 ### 5.5 Circuits & enclosures (EXISTS as redundant circuit — extend)
 
 - Redundant circuits: keep (cycles = resilience flavor, ES/evasion payoff).
-- **Warding Circle (enclosure)**: a closed circuit that encloses ≥1 UNALLOCATED node:
+- **Block and Ward Circle (enclosure)**: a closed circuit that encloses ≥1 UNALLOCATED node:
   each enclosed node grants a small defensive bonus ("what the circle keeps out").
   This makes deliberately routing AROUND a hole a real strategy and pairs wickedly
   with jewels/keystones that later fill or transform enclosed nodes.
@@ -525,8 +525,8 @@ every conduit click into a macro decision.
   existing bonus.
 - **Crossroads**: a node with 4+ allocated conduits gets a small bonus per conduit
   beyond 3 (hub builds).
-- **Waystones**: the six ring-5 spoke midpoints are named seats (see §7) that interact
-  with patterns (e.g. "waves passing through this Waystone count +1 length").
+- **Anchors**: the six ring-5 spoke midpoints are named seats (see §7) that interact
+  with patterns (e.g. "waves passing through this Anchor count +1 length").
 
 ### 5.7 Pattern stacking law
 
@@ -604,14 +604,14 @@ assumption (`nodeTypeFor` seat rules, `progressionTier`, axis-chain max length,
 Three pure spokes: **STR** (bottom-right), **DEX** (bottom-left), **INT** (up). Three
 seam spokes between them, each a named hybrid school:
 
-- **STR+DEX seam** — the *Skirmisher* wedge (war-dancing, thrown weapons, momentum).
-- **DEX+INT seam** — the *Nightwork* wedge (marks, traps, venoms, unseen action).
-- **INT+STR seam** — the *Ritualist* wedge (battle-rites, banners, wards, companions-of-war).
+- **STR+DEX seam** — the *DEX/STR spoke* wedge (war-dancing, thrown weapons, momentum).
+- **DEX+INT seam** — the *INT/DEX spoke* wedge (marks, traps, venoms, unseen action).
+- **INT+STR seam** — the *STR/INT class* wedge (battle-rites, banners, wards, companions-of-war).
 
 Every wedge (the 60° region between two spokes) gets a themed stat palette drawn from
 §4 so that WHERE you build says WHAT you are. Damage channels map naturally (Fire
-lives near STR/Ritualist, Cold near INT/Nightwork, Lightning near DEX/Skirmisher, Chaos
-threads the Nightwork deep wedge, Physical is universal but concentrated on pure STR).
+lives near STR/STR/INT class, Cold near INT/INT/DEX spoke, Lightning near DEX/DEX/STR spoke, Chaos
+threads the INT/DEX spoke deep wedge, Physical is universal but concentrated on pure STR).
 
 ### 7.3 Seat plan by ring (authoring skeleton — final counts may flex ±)
 
@@ -622,7 +622,7 @@ threads the Nightwork deep wedge, Physical is universal but concentrated on pure
 | 2 (12) | Six **first notables** (one per wedge) + six smalls |
 | 3 (18) | Spoke **masteries I** (6) + themed smalls |
 | 4 (24) | Notable belt (6–8 notables) + smalls; first defensive-layer notables |
-| 5 (30) | **THE WAIST**: six spoke **Waystones** (midpoint mini-keystones with small tradeoffs, pattern-interactive) + six **jewel sockets** (mid-wedge) + smalls |
+| 5 (30) | **THE WAIST**: six spoke **Anchors** (midpoint mini-keystones with small tradeoffs, pattern-interactive) + six **jewel sockets** (mid-wedge) + smalls |
 | 6 (36) | **Keystone ring I**: six keystones (one per wedge) + notables + smalls |
 | 7 (42) | **Class milestones** (6 — see §8) on the spokes + strong notables |
 | 8 (48) | **The Signs** (birthsign keystones; exactly one allocatable — you are born under one sign; enforce mutual exclusivity) + notables |
@@ -633,7 +633,7 @@ Smalls between named seats are authored in **clusters of 2–4 with a local them
 (PoE-cluster style: "the bleed cluster on the STR spoke approach"), not individually
 unique but never identical to a neighboring cluster, and every cluster must feed at
 least one archetype that lives in its wedge. **Every notable, mastery, keystone,
-Waystone, Sign, and class node is globally unique.** Anti-spreadsheet rule (PoE2's
+Anchor, Sign, and class node is globally unique.** Anti-spreadsheet rule (PoE2's
 harshest feedback was smalls that read as a % ledger): a cluster's smalls may be
 plain single-line stats, but at least one small per cluster carries texture — a
 conditional, a flat+percent hybrid, or a micro-mechanic — and the cluster's notable
@@ -663,12 +663,12 @@ Six class nodes at ring 7 spoke seats, one per spoke identity:
 
 | Spoke | Class node | Unlock direction (wire what's feasible) |
 |---|---|---|
-| STR | **Champion** | tower shields; 2x2 War-call auxiliary seat |
-| DEX | **Acrobat** | second weapon set; 2x2 Quick Rig auxiliary seat |
-| INT | **Archmage** | rite-focus socketing; 2x2 Attendant focus seat |
-| STR+DEX | **Reaver** | thrown melee/projectile rules; 4x4 Spoils Roll |
-| DEX+INT | **Nightblade** | trap/mark tools and venom; 4x4 Preparation Case |
-| INT+STR | **Ritualist** | banners and companions; 4x4 Reliquary |
+| STR | **STR class** | tower shields; 2x2 War Horn auxiliary seat |
+| DEX | **DEX class** | second weapon set; 2x2 Tool slot auxiliary seat |
+| INT | **INT class** | rite-focus socketing; 2x2 extra focus seat |
+| STR+DEX | **DEX/STR class** | thrown melee/projectile rules; 4x4 Animal Parts Pack |
+| DEX+INT | **INT/DEX class** | trap/mark tools and venom; 4x4 Supply Pack |
+| INT+STR | **STR/INT class** | banners and companions; 4x4 Relic pack |
 
 Mechanics: the first allocated class node sets `character.class`; later class
 milestones do not replace that Calling, but every active class milestone grants
@@ -688,12 +688,12 @@ acceptable for now; document it).
 - **Budget units**: define 1 BU = the power of a standard small (≈ "+10% increased
   damage" equivalent — the stats module provides an EHP/DPS-normalizing helper to
   compare defensive vs offensive grants). Targets: small ≈ 1 BU, notable ≈ 2.5–3 BU,
-  mastery ≈ 3.5 BU, Waystone ≈ 3 BU + a rule, keystone = rule-change (net BU ≈ 0–1),
+  mastery ≈ 3.5 BU, Anchor ≈ 3 BU + a rule, keystone = rule-change (net BU ≈ 0–1),
   Sign = big rule + real price, class node ≈ 2 BU + unlock. Lint flags any node >±30%
   off its type target.
 - **Cadence targets** (verified by a headless simulation test that greedy-paths
   archetype builds level 1→100): a first notable by ~5 points; wedge identity clear by
-  ~12; first keystone reachable by ~20–25; Waystone/waist reached by ~30; Sign by
+  ~12; first keystone reachable by ~20–25; Anchor/waist reached by ~30; Sign by
   ~45–55; a completed signature pattern (first loop crown or 4+ wave) by ~15–20. No
   stretch of >3 points with zero milestone for any of the six reference archetypes.
 - **Respec**: keep one-by-one refund; patterns recompute live. Jewel swaps free.
@@ -757,7 +757,7 @@ unmet. If blocked, log the blocker in OVERHAUL-LOG.md and pick the next unblocke
   rename it, change its mods, jot a note, see status heatmap, export tree-data.js.)*
 - **Phase 4 — Authoring passes.** Wedge by wedge (six passes), author all named seats
   and clusters per §7 using designer mode; delete the hash-pool generator when
-  coverage is total; write the six Signs' final texts; keystones; Waystones.
+  coverage is total; write the six Signs' final texts; keystones; Anchors.
   *(Accept: lint clean — zero `empty`/`draft` seats, zero duplicate named seats,
   every cluster themed; generator code deleted.)*
 - **Phase 5 — Jewels.** Socket seats live; jewel picker; five families incl. seeded

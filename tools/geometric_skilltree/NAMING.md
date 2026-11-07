@@ -18,6 +18,8 @@ back into the project … stop inventing ai-trope lore"). Rules (canonical in
   fails on banned terms in tree, jewel, stat and page text. Extend its list when a new invented term is
   caught; never allowlist prose.
 
+Renamed again on November 7, 2026: class epithets, wedge names, pack and slot names, "Rite" for spell, axis path names and flavour effects. The full before and after list is `owner-rules/rename-map.json` (table: `owner-rules/RENAME-MAP.md`); the lint fails on any retired name and on any label word outside `terms.json` nameWords.
+
 Renamed on October 26, compared with the tree on gh-pages before that day (325
 seats; ids, stats and mechanics unchanged; 49 of these also went through an earlier era
 rename the same day, which this table supersedes):

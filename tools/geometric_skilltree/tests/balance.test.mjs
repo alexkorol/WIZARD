@@ -2,7 +2,7 @@
    PHASE 7 BALANCE SUITE — the §9 framework.
 
    - Cadence: a greedy simulated player levels each of the six archetypes and
-     must hit milestone windows (first notable, keystone, Waystone, Sign...).
+     must hit milestone windows (first notable, keystone, Anchor, Sign...).
    - Reference builds: the six finished archetype builds are EHP/DPS canaries.
    - Fivehead fixtures: a meridian build and a vesica honeycomb must land in
      the pattern-power envelope (patterns are 20-30% of a specialist's power,
@@ -21,12 +21,12 @@ const FIXTURE_PATH = new URL('./fixtures/reference-builds.json', import.meta.url
 const MEASURE = process.env.BALANCE_MEASURE === '1';
 
 const SPOKES = {
-  int: { corner: [1, 0], class: 'Archmage' },
-  nightwork: { corner: [1, -1], class: 'Assassin' },
-  dex: { corner: [0, -1], class: 'Acrobat' },
-  skirmisher: { corner: [-1, 0], class: 'Reaver' },
-  str: { corner: [-1, 1], class: 'Champion' },
-  ritualist: { corner: [0, 1], class: 'Ritualist' }
+  int: { corner: [1, 0], class: 'INT Class' },
+  nightwork: { corner: [1, -1], class: 'INT/DEX Class' },
+  dex: { corner: [0, -1], class: 'DEX Class' },
+  skirmisher: { corner: [-1, 0], class: 'DEX/STR Class' },
+  str: { corner: [-1, 1], class: 'STR Class' },
+  ritualist: { corner: [0, 1], class: 'STR/INT Class' }
 };
 
 const MILESTONE_TYPES = new Set(['notable', 'mastery', 'waystone', 'keystone', 'class', 'sign', 'socket', 'gateway']);
@@ -221,7 +221,7 @@ function testCadence() {
     const m = sim.milestones;
     assert.ok(m.notable && m.notable <= 8, `${spokeKey}: first notable by 8 points (got ${m.notable}).`);
     assert.ok(m.mastery && m.mastery <= 16, `${spokeKey}: mastery by 16 points (got ${m.mastery}).`);
-    assert.ok(m.waystone && m.waystone <= 30, `${spokeKey}: Waystone by 30 points (got ${m.waystone}).`);
+    assert.ok(m.waystone && m.waystone <= 30, `${spokeKey}: Anchor by 30 points (got ${m.waystone}).`);
     assert.ok(m.keystone && m.keystone <= 30, `${spokeKey}: keystone by 30 points (got ${m.keystone}).`);
     assert.ok(m.class && m.class <= 42, `${spokeKey}: class milestone by 42 points (got ${m.class}).`);
     // The doc's ~45-55 window models breadth-taking builds; this sim is the

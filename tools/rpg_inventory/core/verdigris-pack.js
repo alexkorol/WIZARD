@@ -146,17 +146,17 @@
                     armor: 0, tags: ['beast'], noVessel: true, materials: ['bone', 'hide', 'amber'], implicit: null },
       preparation:{ name: 'Preparation', kind: 'reagent', kindLabel: 'Prepared reagent', w: 1, h: 1, icon: 'tool',
                     armor: 0, tags: ['fortune'], noVessel: true, materials: ['hide', 'copper', 'amber'], implicit: null },
-      relic:      { name: 'Reliquary Object', kind: 'relic', kindLabel: 'Relic', w: 1, h: 1, icon: 'curio',
+      relic:      { name: 'Relic', kind: 'relic', kindLabel: 'Relic', w: 1, h: 1, icon: 'curio',
                     armor: 0, tags: ['spirit'], noVessel: true, materials: ['bone', 'bronze', 'jade'], implicit: null },
       warhorn:    { name: 'War Horn', kind: 'warcall', kindLabel: 'War Horn', w: 2, h: 2, icon: 'curio',
                     armor: 0, tags: ['life', 'blunt'], weights: { life: 1.4, blunt: 1.1 },
                     materials: ['bone', 'copper', 'bronze', 'jade', 'skymetal'],
                     implicit: { label: '+8 to Maximum Life', stat: { id: 'life', v: 8 } } },
-      quickrig:   { name: 'Quick Rig', kind: 'quickrig', kindLabel: 'Readied rig', w: 2, h: 2, icon: 'girdle',
+      quickrig:   { name: 'Tool Slot', kind: 'quickrig', kindLabel: 'Readied rig', w: 2, h: 2, icon: 'girdle',
                     armor: 0, tags: ['swift', 'fortune'], weights: { swift: 1.5, fortune: 1.0 },
                     materials: ['hide', 'quilted', 'copper', 'bronze', 'obsidian', 'skymetal'],
                     implicit: { label: '+4% Attack Speed', stat: { id: 'atk_speed', v: 4 } } },
-      attendant:  { name: 'Attendant Orb', kind: 'attendant', kindLabel: 'Attendant focus', w: 2, h: 2, icon: 'curio',
+      attendant:  { name: 'Extra Focus', kind: 'attendant', kindLabel: 'extra focus', w: 2, h: 2, icon: 'curio',
                     armor: 0, tags: ['spirit', 'ember', 'river'], weights: { spirit: 1.6, ember: 1.0, river: 1.0 },
                     materials: ['bone', 'copper', 'bronze', 'obsidian', 'jade', 'amber', 'skymetal'],
                     implicit: { label: '+10 to Maximum Spirit', stat: { id: 'spirit', v: 10 } } },
@@ -176,7 +176,7 @@
                     weapon: { dmg: [9, 17], aps: 1.0 }, tags: ['blunt'], weights: { blunt: 1.4 },
                     materials: ['bone', 'copper', 'bronze', 'jade', 'obsidian', 'skymetal'],
                     implicit: { label: '15% increased Physical Damage', stat: { id: 'phys_pct', v: 15 } } },
-      greataxe:   { name: 'Greataxe', kind: 'weapon', kindLabel: 'Two-hand axe', w: 2, h: 3, icon: 'axe',
+      greataxe:   { name: 'Two-handed Axe', kind: 'weapon', kindLabel: 'Two-hand axe', w: 2, h: 3, icon: 'axe',
                     weapon: { dmg: [18, 34], aps: 0.8 }, tags: ['blade', 'blunt'], weights: { blade: 1.5 },
                     materials: ['bone', 'copper', 'bronze', 'obsidian', 'skymetal'],
                     implicit: { label: '20% increased Physical Damage', stat: { id: 'phys_pct', v: 20 } } },
@@ -192,7 +192,7 @@
                     armor: 22, tags: ['ward'], weights: { ward: 1.4 },
                     materials: ['bronze', 'bronzescale', 'jade'],
                     implicit: { label: '+8% increased Ward', stat: { id: 'ward_pct', v: 8 } } },
-      focus:      { name: 'Rite Focus', kind: 'focus', kindLabel: 'Off-hand focus', w: 1, h: 3, icon: 'curio',
+      focus:      { name: 'Spell Focus', kind: 'focus', kindLabel: 'Off-hand focus', w: 1, h: 3, icon: 'curio',
                     armor: 0, tags: ['spirit', 'ember', 'ward'], weights: { spirit: 1.4, ember: 1.1, ward: 0.8 },
                     materials: ['bone', 'copper', 'bronze', 'obsidian', 'jade', 'amber', 'skymetal'],
                     implicit: { label: '+10 to Maximum Spirit', stat: { id: 'spirit', v: 10 } } },
@@ -238,7 +238,7 @@
     /* ---------------- bond themes (named conditional memories) ---------------- */
     themes: {
       slaughter: {
-        name: 'Slaughter', color: '#f87171',
+        name: 'Kill Bonuses', color: '#f87171',
         mods: {
           blood_price:   { name: 'Life on Kill', label: 'Recover {v}% of Life on Kill', shape: 'trigger', roll: [2, 3] },
           battle_rhythm: { name: 'Attack Speed after Kill', label: '+{v}% Attack Speed for 4s after a Kill', shape: 'trigger', roll: [12, 18] },
@@ -249,7 +249,7 @@
         memory: '',
       },
       warding: {
-        name: 'Warding', color: '#93c5fd',
+        name: 'Block and Ward', color: '#93c5fd',
         mods: {
           shieldwall:   { name: 'Life on Block', label: 'Regain {v} Life when you Block', shape: 'trigger', roll: [8, 14] },
           stand_ground: { name: 'Block while Stationary', label: '+{v}% Chance to Block while stationary', shape: 'conditional', roll: [3, 5] },
@@ -262,16 +262,16 @@
       spiritwork: {
         name: 'Spirit', color: '#c084fc',
         mods: {
-          clear_mind:  { name: 'Rite Power at High Spirit', label: '+{v}% Rite Power while Spirit is above three-quarters', shape: 'conditional', roll: [12, 20] },
+          clear_mind:  { name: 'Spell Power at High Spirit', label: '+{v}% Spell Power while Spirit is above three-quarters', shape: 'conditional', roll: [12, 20] },
           ember_tithe: { name: 'Spirit on Kill', label: 'Recover {v}% of Spirit on Kill', shape: 'trigger', roll: [3, 5] },
           veil_wise:   { name: 'Curse Avoidance', label: '{v}% chance to shrug off Curses', shape: 'conditional', roll: [10, 18] },
         },
         epithets: [], adjs: [],
-        power: 'Rites have a 12% chance to cast twice at no cost.',
+        power: 'Spells have a 12% chance to cast twice at no cost.',
         memory: '',
       },
       wayfaring: {
-        name: 'Wayfaring', color: '#86efac',
+        name: 'Movement', color: '#86efac',
         mods: {
           dead_sprint: { name: 'Speed on Kill', label: '+{v}% Movement Speed for 3s on Kill', shape: 'trigger', roll: [10, 16] },
           sidestep:    { name: 'Thrown Weapon Avoidance', label: '{v}% chance to Avoid thrown weapons while moving', shape: 'conditional', roll: [10, 16] },
@@ -300,7 +300,7 @@
                      completionBonus: { label: 'You cannot be surprised', shape: 'conditional' } },
       river_pearl: { name: 'River Pearl', fragments: 3, kinds: ['amulet', 'ring', 'helmet', 'focus'],
                      mods: [{ stat: 'spirit', v: 12, label: '+{v} to Maximum Spirit', shape: 'flat' }],
-                     completionBonus: { label: 'Your rites Chill their targets', shape: 'trigger' } },
+                     completionBonus: { label: 'Your spells Chill their targets', shape: 'trigger' } },
       ember_shell: { name: 'Beetle Shell', fragments: 3, kinds: ['shield', 'body'],
                      mods: [{ stat: 'ember_res', v: 15, label: '+{v}% to Fire Resistance', shape: 'scalar' }],
                      completionBonus: { label: 'Attackers take Fire damage', shape: 'trigger' } },

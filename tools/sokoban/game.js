@@ -5,9 +5,9 @@
   var Campaign = window.SokobanCampaign;
   var STORAGE_KEY = 'wizard.sokoban.vault.v2';
   var lessons = [
-    'The first law of the deep: a reliquary may be pushed, but never pulled.',
-    'A reliquary in an unmarked corner is lost. Read the stone before you push.',
-    'Two reliquaries, two seals. Their order matters. Press U to rewind a mistake.',
+    'A relic box can be pushed, never pulled.',
+    'A relic box in an unmarked corner cannot be moved again.',
+    'Two relic boxes, two seals. Their order matters. Press U to rewind a mistake.',
     'Plan backward from each seal. Press H when you want the oracle to reveal one optimal push.'
   ];
   var els = {};
@@ -138,8 +138,8 @@
   function dynamicLesson() {
     if (level.solution.states >= 100000) return 'This chamber survived the full offline oracle budget. Expect attractive pushes that poison a later box-goal matching.';
     if (level.boxes.length >= 5) return 'The deep archive composes several box dependencies at once. Solve the packing order, not one relic at a time.';
-    if (level.boxes.length >= 4) return 'At this depth, the order of pushes is the puzzle. Preserve lanes behind every reliquary.';
-    if (level.solution.analysis.switches >= 3) return 'The shortest rite changes between reliquaries. Keep their paths from crossing too soon.';
+    if (level.boxes.length >= 4) return 'At this depth, the order of pushes is the puzzle. Preserve lanes behind every relic box.';
+    if (level.solution.analysis.switches >= 3) return 'The shortest rite changes between relic boxes. Keep their paths from crossing too soon.';
     if (!level.solution.optimal) return 'Every chamber has a proven route, even when the oracle cannot exhaust its entire state space.';
     return 'Read the walls, preserve your standing squares, and distrust the seal that looks easiest.';
   }
@@ -174,7 +174,7 @@
           if (goals.has(cell)) tile.classList.add('box-on-goal');
           var box = document.createElement('span');
           box.className = 'box-piece';
-          box.setAttribute('aria-label', goals.has(cell) ? 'Reliquary on seal' : 'Reliquary');
+          box.setAttribute('aria-label', goals.has(cell) ? 'Relic box on seal' : 'Relic box');
           tile.appendChild(box);
         }
         if (state.player === cell) {
@@ -204,7 +204,7 @@
     var pushed = false;
     if (boxIndex !== -1) {
       var beyond = Core.indexOf(p.x + direction.x * 2, p.y + direction.y * 2, level.width);
-      if (!level.floor.has(beyond) || state.boxes.indexOf(beyond) !== -1) return announce('The reliquary cannot move ' + direction.name + '.');
+      if (!level.floor.has(beyond) || state.boxes.indexOf(beyond) !== -1) return announce('The relic box cannot move ' + direction.name + '.');
       history.push(snapshot());
       state.boxes[boxIndex] = beyond;
       state.pushes += 1;
@@ -218,7 +218,7 @@
     render();
     if (isSolved()) finishFloor();
     else if (pushed && hasStaticDeadlock()) announce('Dead branch detected. Undo remains unlimited.');
-    else if (pushed) announce('Reliquary pushed ' + direction.name + '.');
+    else if (pushed) announce('Relic box pushed ' + direction.name + '.');
   }
 
   function hasStaticDeadlock() {

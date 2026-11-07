@@ -12,7 +12,7 @@
 ## Design Backlog
 
 - Mini-pattern rules inside the ascendancy circles (loops and waves that only count within one circle).
-- Pick-one mastery menus on the six ring-3 masteries and Waystones (PoE 3.16 lesson; data-driven choice nodes plus designer support).
+- Pick-one mastery menus on the six ring-3 masteries and Anchors (PoE 3.16 lesson; data-driven choice nodes plus designer support).
 - Cluster-jewel-style socketable content inside the ascendancy circles.
 - Loadout points (PoE2 weapon-set analog) — keep the data model open.
 - Anoint analog ("votive oil") once balance settles.

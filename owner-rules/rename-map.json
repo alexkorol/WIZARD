@@ -1,0 +1,1200 @@
+{
+  "schema": "owner-rules.rename-map.v1",
+  "date": "2026-11-07",
+  "rule": "OWNER-RULES.md rules 5-8 and 12: plain functional names. Display strings change; ids, keys, unlock flags, stat ids, seat ids and saved-data values stay.",
+  "apply": "node owner-rules/apply-rename-map.mjs --root <repo> [files...]. Exact-value entries replace a whole string value; phrase entries replace word-bounded text, longest first. In code files only string literals and comments change.",
+  "flaggedNotRenamed": [
+    {
+      "term": "Arcane Lattice node and tier labels (Source, Adversarial, Natural, Destructive, Sustaining, Creative, Air, Water, Earth, Body, Spirit, Mind, Outer, Inner, Manifestation; Plane, Vessel, Tesseract; Schism; Paradigm Shift)",
+      "why": "Saved-weave values, and the lattice is protected by WIZARD AGENTS.md rules 5-6; needs a display layer and its own pass. Proposed: Air/Water/Earth -> Lightning/Cold/Chaos (rule 5); Plane/Vessel/Tesseract -> Tier 1/2/3; Schism -> Swap; Paradigm Shift -> Swap rows."
+    },
+    {
+      "term": "Creature names (Lindwurm, Kraken, Hydra, Bone/Beetle/Lava Golem, Night/Glutton/Chained/Horned Demon, Flying Terror)",
+      "why": "Mythic or fantasy names in CreatureCatalog; a creature pass should name them by what they are (rule 8, e.g. 'Great serpent')."
+    },
+    {
+      "term": "Currency 'Searing Ash'",
+      "why": "Crafting currency named by flourish; propose 'Add Property' style naming in a currency pass."
+    },
+    {
+      "term": "Era items: Hammered Iron, Riveted Mail, Crest, Macuahuitl, Gorytos",
+      "why": "Rule 12 questions (iron, mail, crested helmets, Mesoamerican and Scythian forms), not naming; awaiting owner ruling."
+    },
+    {
+      "term": "VesselForge awakening (generated names and flavour text on awakened items, rpg_inventory README)",
+      "why": "A design rule, not a label; protected by WIZARD AGENTS.md rule 6. Conflicts with rules 6 and 10; owner ruling needed."
+    },
+    {
+      "term": "rpg_inventory faction names (riverspill, dustwind ...)",
+      "why": "Internal lane keys today; any player-facing use needs plain names in a separate pass."
+    },
+    {
+      "term": "Playtest player names (House Arwa, House Olwa, Amazuk, Taru, Ishra)",
+      "why": "Player-chosen names in fixtures, kept as proper names (terms.json nameProper)."
+    }
+  ],
+  "entries": [
+    {
+      "category": "class node",
+      "before": "Archmage Waystone",
+      "after": "INT Anchor"
+    },
+    {
+      "category": "class node",
+      "before": "Archmage Gate",
+      "after": "INT Gate"
+    },
+    {
+      "category": "class node",
+      "before": "Archmage milestone",
+      "after": "INT class node"
+    },
+    {
+      "category": "class node",
+      "before": "the Archmage class",
+      "after": "the INT class"
+    },
+    {
+      "category": "class node",
+      "before": "Archmage class",
+      "after": "INT class"
+    },
+    {
+      "category": "class node",
+      "before": "Archmage",
+      "after": "INT Class",
+      "note": "tree node name, class display, test literal; CLASS_UNLOCKS keys follow",
+      "match": "exact-value"
+    },
+    {
+      "category": "class node",
+      "before": "Assassin Waystone",
+      "after": "INT/DEX Anchor"
+    },
+    {
+      "category": "class node",
+      "before": "Assassin Gate",
+      "after": "INT/DEX Gate"
+    },
+    {
+      "category": "class node",
+      "before": "Assassin milestone",
+      "after": "INT/DEX class node"
+    },
+    {
+      "category": "class node",
+      "before": "the Assassin class",
+      "after": "the INT/DEX class"
+    },
+    {
+      "category": "class node",
+      "before": "Assassin class",
+      "after": "INT/DEX class"
+    },
+    {
+      "category": "class node",
+      "before": "Assassin",
+      "after": "INT/DEX Class",
+      "note": "tree node name, class display, test literal; CLASS_UNLOCKS keys follow",
+      "match": "exact-value"
+    },
+    {
+      "category": "class node",
+      "before": "Nightblade Waystone",
+      "after": "INT/DEX Anchor"
+    },
+    {
+      "category": "class node",
+      "before": "Nightblade Gate",
+      "after": "INT/DEX Gate"
+    },
+    {
+      "category": "class node",
+      "before": "Nightblade milestone",
+      "after": "INT/DEX class node"
+    },
+    {
+      "category": "class node",
+      "before": "the Nightblade class",
+      "after": "the INT/DEX class"
+    },
+    {
+      "category": "class node",
+      "before": "Nightblade class",
+      "after": "INT/DEX class"
+    },
+    {
+      "category": "class node",
+      "before": "Nightblade",
+      "after": "INT/DEX Class",
+      "note": "tree node name, class display, test literal; CLASS_UNLOCKS keys follow",
+      "match": "exact-value"
+    },
+    {
+      "category": "class node",
+      "before": "Acrobat Waystone",
+      "after": "DEX Anchor"
+    },
+    {
+      "category": "class node",
+      "before": "Acrobat Gate",
+      "after": "DEX Gate"
+    },
+    {
+      "category": "class node",
+      "before": "Acrobat milestone",
+      "after": "DEX class node"
+    },
+    {
+      "category": "class node",
+      "before": "the Acrobat class",
+      "after": "the DEX class"
+    },
+    {
+      "category": "class node",
+      "before": "Acrobat class",
+      "after": "DEX class"
+    },
+    {
+      "category": "class node",
+      "before": "Acrobat",
+      "after": "DEX Class",
+      "note": "tree node name, class display, test literal; CLASS_UNLOCKS keys follow",
+      "match": "exact-value"
+    },
+    {
+      "category": "class node",
+      "before": "Reaver Waystone",
+      "after": "DEX/STR Anchor"
+    },
+    {
+      "category": "class node",
+      "before": "Reaver Gate",
+      "after": "DEX/STR Gate"
+    },
+    {
+      "category": "class node",
+      "before": "Reaver milestone",
+      "after": "DEX/STR class node"
+    },
+    {
+      "category": "class node",
+      "before": "the Reaver class",
+      "after": "the DEX/STR class"
+    },
+    {
+      "category": "class node",
+      "before": "Reaver class",
+      "after": "DEX/STR class"
+    },
+    {
+      "category": "class node",
+      "before": "Reaver",
+      "after": "DEX/STR Class",
+      "note": "tree node name, class display, test literal; CLASS_UNLOCKS keys follow",
+      "match": "exact-value"
+    },
+    {
+      "category": "class node",
+      "before": "Champion Waystone",
+      "after": "STR Anchor"
+    },
+    {
+      "category": "class node",
+      "before": "Champion Gate",
+      "after": "STR Gate"
+    },
+    {
+      "category": "class node",
+      "before": "Champion milestone",
+      "after": "STR class node"
+    },
+    {
+      "category": "class node",
+      "before": "the Champion class",
+      "after": "the STR class"
+    },
+    {
+      "category": "class node",
+      "before": "Champion class",
+      "after": "STR class"
+    },
+    {
+      "category": "class node",
+      "before": "Champion",
+      "after": "STR Class",
+      "note": "tree node name, class display, test literal; CLASS_UNLOCKS keys follow",
+      "match": "exact-value"
+    },
+    {
+      "category": "class node",
+      "before": "Ritualist Waystone",
+      "after": "STR/INT Anchor"
+    },
+    {
+      "category": "class node",
+      "before": "Ritualist Gate",
+      "after": "STR/INT Gate"
+    },
+    {
+      "category": "class node",
+      "before": "Ritualist milestone",
+      "after": "STR/INT class node"
+    },
+    {
+      "category": "class node",
+      "before": "the Ritualist class",
+      "after": "the STR/INT class"
+    },
+    {
+      "category": "class node",
+      "before": "Ritualist class",
+      "after": "STR/INT class"
+    },
+    {
+      "category": "class node",
+      "before": "Ritualist",
+      "after": "STR/INT Class",
+      "note": "tree node name, class display, test literal; CLASS_UNLOCKS keys follow",
+      "match": "exact-value"
+    },
+    {
+      "category": "class node",
+      "before": "Archmage/Ritualist",
+      "after": "INT or STR/INT"
+    },
+    {
+      "category": "class node",
+      "before": "Archmage or Ritualist",
+      "after": "INT or STR/INT"
+    },
+    {
+      "category": "wedge or spoke",
+      "before": "The Kiln Line",
+      "after": "the fire and ignite wedge (STR toward STR/INT)"
+    },
+    {
+      "category": "wedge or spoke",
+      "before": "Kiln Line",
+      "after": "fire and ignite wedge (STR toward STR/INT)"
+    },
+    {
+      "category": "wedge or spoke",
+      "before": "The Procession",
+      "after": "the companion and Ward wedge (INT toward STR/INT)"
+    },
+    {
+      "category": "wedge or spoke",
+      "before": "Procession",
+      "after": "companion and Ward wedge (INT toward STR/INT)"
+    },
+    {
+      "category": "wedge or spoke",
+      "before": "The Drowned Study",
+      "after": "the cold and marks wedge (INT toward INT/DEX)"
+    },
+    {
+      "category": "wedge or spoke",
+      "before": "Drowned Study",
+      "after": "cold and marks wedge (INT toward INT/DEX)"
+    },
+    {
+      "category": "wedge or spoke",
+      "before": "The Unlit Road",
+      "after": "the poison and traps wedge (DEX toward INT/DEX)"
+    },
+    {
+      "category": "wedge or spoke",
+      "before": "Unlit Road",
+      "after": "poison and traps wedge (DEX toward INT/DEX)"
+    },
+    {
+      "category": "wedge or spoke",
+      "before": "The High Paths",
+      "after": "the projectile and shock wedge (DEX toward DEX/STR)"
+    },
+    {
+      "category": "wedge or spoke",
+      "before": "High Paths",
+      "after": "projectile and shock wedge (DEX toward DEX/STR)"
+    },
+    {
+      "category": "wedge or spoke",
+      "before": "The Red Field",
+      "after": "the physical and bleed wedge (STR toward DEX/STR)"
+    },
+    {
+      "category": "wedge or spoke",
+      "before": "Red Field",
+      "after": "physical and bleed wedge (STR toward DEX/STR)"
+    },
+    {
+      "category": "wedge or spoke",
+      "before": "Nightwork",
+      "after": "INT/DEX spoke"
+    },
+    {
+      "category": "wedge or spoke",
+      "before": "Skirmisher",
+      "after": "DEX/STR spoke"
+    },
+    {
+      "category": "pack or slot",
+      "before": "the Quick Rig window — an extra tool slot",
+      "after": "the extra tool slot"
+    },
+    {
+      "category": "pack or slot",
+      "before": "the Attendant window — an extra focus slot",
+      "after": "an extra focus slot"
+    },
+    {
+      "category": "pack or slot",
+      "before": "the Preparation Case — a 4×4 pack",
+      "after": "the supply pack (4×4)"
+    },
+    {
+      "category": "pack or slot",
+      "before": "the Spoils Roll — a 4×4 pack",
+      "after": "the animal parts pack (4×4)"
+    },
+    {
+      "category": "pack or slot",
+      "before": "the Reliquary — a 4×4 pack",
+      "after": "the relic pack (4×4)"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Quick Rig window",
+      "after": "tool slot"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Quick Rigs",
+      "after": "Tool-slot items"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Quick Rig",
+      "after": "Tool slot"
+    },
+    {
+      "category": "pack or slot",
+      "before": "quick rig",
+      "after": "tool slot"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Attendant focus",
+      "after": "extra focus"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Attendant Orb",
+      "after": "Extra Focus"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Attendant seat",
+      "after": "extra focus slot"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Attendant window",
+      "after": "extra focus slot"
+    },
+    {
+      "category": "pack or slot",
+      "before": "attendant focus",
+      "after": "extra focus"
+    },
+    {
+      "category": "pack or slot",
+      "before": "attendant window",
+      "after": "extra focus slot"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Attendants",
+      "after": "Extra foci"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Attendant",
+      "after": "Extra focus"
+    },
+    {
+      "category": "pack or slot",
+      "before": "War-calls",
+      "after": "war horns"
+    },
+    {
+      "category": "pack or slot",
+      "before": "War-call",
+      "after": "War Horn"
+    },
+    {
+      "category": "pack or slot",
+      "before": "war-call",
+      "after": "war horn"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Warcall",
+      "after": "War Horn"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Spoils Roll",
+      "after": "Animal Parts Pack"
+    },
+    {
+      "category": "pack or slot",
+      "before": "spoils roll",
+      "after": "animal parts pack"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Spoils on Kill",
+      "after": "Animal Parts on Kill"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Extra Beast Spoils",
+      "after": "Extra Animal Parts"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Spoils cannot be sold",
+      "after": "Animal parts cannot be sold"
+    },
+    {
+      "category": "pack or slot",
+      "before": "leave a spoil",
+      "after": "leave an animal part"
+    },
+    {
+      "category": "pack or slot",
+      "before": "one extra spoil",
+      "after": "one extra animal part"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Trophy Attributes",
+      "after": "Animal Part Attributes"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Trophy Mastery",
+      "after": "Animal Parts Mastery"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Every trophy in your",
+      "after": "Every animal part in your"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Preparation Case",
+      "after": "Supply Pack"
+    },
+    {
+      "category": "pack or slot",
+      "before": "preparation case",
+      "after": "supply pack"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Preserved Preparations",
+      "after": "Preserved Supplies"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Reliquary Object",
+      "after": "Relic"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Lasting Relic Blessings",
+      "after": "Lasting Relic Effects"
+    },
+    {
+      "category": "pack or slot",
+      "before": "keep their blessings",
+      "after": "keep their effects"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Reliquary",
+      "after": "Relic pack"
+    },
+    {
+      "category": "pack or slot",
+      "before": "reliquary",
+      "after": "relic pack"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Reliquaries",
+      "after": "relic packs"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Trophies",
+      "after": "Animal Parts Pack",
+      "note": "gate passive name",
+      "match": "exact-value"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Preparations",
+      "after": "Supply Pack",
+      "note": "gate passive name",
+      "match": "exact-value"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Relics",
+      "after": "Relic Pack",
+      "note": "gate passive name",
+      "match": "exact-value",
+      "lint": false
+    },
+    {
+      "category": "spell term",
+      "before": "Rite Focus socket",
+      "after": "spell focus socket"
+    },
+    {
+      "category": "spell term",
+      "before": "Rite Focus",
+      "after": "Spell Focus"
+    },
+    {
+      "category": "spell term",
+      "before": "Rite foci",
+      "after": "Spell foci"
+    },
+    {
+      "category": "spell term",
+      "before": "Rite Damage",
+      "after": "Spell Damage"
+    },
+    {
+      "category": "spell term",
+      "before": "Rite damage",
+      "after": "Spell damage"
+    },
+    {
+      "category": "spell term",
+      "before": "Rite Speed",
+      "after": "Cast Speed"
+    },
+    {
+      "category": "spell term",
+      "before": "Rite speed",
+      "after": "Cast speed"
+    },
+    {
+      "category": "spell term",
+      "before": "Rite Power",
+      "after": "Spell Power"
+    },
+    {
+      "category": "spell term",
+      "before": "Rite Reroll",
+      "after": "Spell Reroll"
+    },
+    {
+      "category": "spell term",
+      "before": "Rites Cost Life",
+      "after": "Spells Cost Life"
+    },
+    {
+      "category": "spell term",
+      "before": "Efficient Rites",
+      "after": "Efficient Spells"
+    },
+    {
+      "category": "spell term",
+      "before": "Lingering Rites",
+      "after": "Lingering Spells"
+    },
+    {
+      "category": "spell term",
+      "before": "Cheaper Repeated Rites",
+      "after": "Cheaper Repeated Spells"
+    },
+    {
+      "category": "spell term",
+      "before": "Repeated Rites",
+      "after": "Repeated Spells"
+    },
+    {
+      "category": "spell term",
+      "before": "Chilling Rite",
+      "after": "Chilling Spells"
+    },
+    {
+      "category": "spell term",
+      "before": "Ward Counts as Rite",
+      "after": "Ward Counts as a Spell"
+    },
+    {
+      "category": "spell term",
+      "before": "standing rites",
+      "after": "maintained spells",
+      "scope": "game"
+    },
+    {
+      "category": "spell term",
+      "before": "Rites",
+      "after": "Spells",
+      "scope": "game"
+    },
+    {
+      "category": "spell term",
+      "before": "Rite",
+      "after": "Spell",
+      "scope": "game"
+    },
+    {
+      "category": "spell term",
+      "before": "rites",
+      "after": "spells",
+      "scope": "game"
+    },
+    {
+      "category": "spell term",
+      "before": "rite",
+      "after": "spell",
+      "scope": "game"
+    },
+    {
+      "category": "unique item",
+      "before": "Clear Mind",
+      "after": "Spell Damage at High Spirit"
+    },
+    {
+      "category": "skill or base",
+      "before": "Claw chain",
+      "after": "Claw combo"
+    },
+    {
+      "category": "skill or base",
+      "before": "Jawbone chain",
+      "after": "Jawbone combo"
+    },
+    {
+      "category": "skill or base",
+      "before": "Traveling cut",
+      "after": "Moving slash"
+    },
+    {
+      "category": "skill or base",
+      "before": "Held spin",
+      "after": "Channelled spin"
+    },
+    {
+      "category": "skill or base",
+      "before": "Reaping sweep",
+      "after": "Bleeding sweep"
+    },
+    {
+      "category": "skill or base",
+      "before": "Flint Lopper",
+      "after": "Two-handed Flint Axe"
+    },
+    {
+      "category": "skill or base",
+      "before": "Root Ball",
+      "after": "Root Club"
+    },
+    {
+      "category": "skill or base",
+      "before": "Bone Spikes",
+      "after": "Bone Claws"
+    },
+    {
+      "category": "tree label",
+      "before": "Unseen Passage",
+      "after": "Pass Unnoticed"
+    },
+    {
+      "category": "tree label",
+      "before": "Strike the Unhurt",
+      "after": "Damage Before Being Hurt"
+    },
+    {
+      "category": "tree label",
+      "before": "Loop Crowns",
+      "after": "Closed Loops"
+    },
+    {
+      "category": "tree label",
+      "before": "Unchosen Arc",
+      "after": "No Option Chosen"
+    },
+    {
+      "category": "tree label",
+      "before": "Redundant Circuit",
+      "after": "Redundant Links"
+    },
+    {
+      "category": "tree label",
+      "before": "Straight Axis Chain",
+      "after": "Straight Axis Path"
+    },
+    {
+      "category": "tree label",
+      "before": "Bronze Route",
+      "after": "STR path"
+    },
+    {
+      "category": "tree label",
+      "before": "Quickstep Trace",
+      "after": "DEX path"
+    },
+    {
+      "category": "tree label",
+      "before": "Memory Thread",
+      "after": "INT path"
+    },
+    {
+      "category": "tree label",
+      "before": "Braided Span",
+      "after": "Hybrid path"
+    },
+    {
+      "category": "tree label",
+      "before": "Waystones",
+      "after": "Anchors"
+    },
+    {
+      "category": "tree label",
+      "before": "Waystone",
+      "after": "Anchor"
+    },
+    {
+      "category": "tree label",
+      "before": "ember cup",
+      "after": "off-hand focus"
+    },
+    {
+      "category": "weaving row",
+      "before": "Element row",
+      "after": "Damage type row"
+    },
+    {
+      "category": "weaving row",
+      "before": "Focus row",
+      "after": "Effect row"
+    },
+    {
+      "category": "weaving row",
+      "before": "Alignment row",
+      "after": "Intent row"
+    },
+    {
+      "category": "weaving row",
+      "before": "Sphere row",
+      "after": "Target row"
+    },
+    {
+      "category": "weaving row",
+      "before": "Reach row",
+      "after": "Range row"
+    },
+    {
+      "category": "weaving row",
+      "before": "Element",
+      "after": "Damage type",
+      "note": "lattice row label only (ArpgLatticePane LatticeRows and missing-row list); not a global rename",
+      "match": "exact-value",
+      "scope": "lattice",
+      "lint": false
+    },
+    {
+      "category": "weaving row",
+      "before": "Focus",
+      "after": "Effect",
+      "note": "lattice row label only (ArpgLatticePane LatticeRows and missing-row list); not a global rename",
+      "match": "exact-value",
+      "scope": "lattice",
+      "lint": false
+    },
+    {
+      "category": "weaving row",
+      "before": "Alignment",
+      "after": "Intent",
+      "note": "lattice row label only (ArpgLatticePane LatticeRows and missing-row list); not a global rename",
+      "match": "exact-value",
+      "scope": "lattice",
+      "lint": false
+    },
+    {
+      "category": "weaving row",
+      "before": "Sphere",
+      "after": "Target",
+      "note": "lattice row label only (ArpgLatticePane LatticeRows and missing-row list); not a global rename",
+      "match": "exact-value",
+      "scope": "lattice",
+      "lint": false
+    },
+    {
+      "category": "weaving row",
+      "before": "Reach",
+      "after": "Range",
+      "note": "lattice row label only (ArpgLatticePane LatticeRows and missing-row list); not a global rename",
+      "match": "exact-value",
+      "scope": "lattice",
+      "lint": false
+    },
+    {
+      "category": "item pipeline",
+      "before": "Skymetal",
+      "after": "Meteoric iron"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Nightglass",
+      "after": "Obsidian"
+    },
+    {
+      "category": "item pipeline",
+      "before": "War-Helm",
+      "after": "Helmet"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Warbelt",
+      "after": "War belt"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Warshield",
+      "after": "Shield"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Warspear",
+      "after": "Spear"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Greathelm",
+      "after": "Large helmet"
+    },
+    {
+      "category": "flavour sentence",
+      "before": "Road signs mean more to you than most (design text)",
+      "after": null,
+      "match": "exact-value",
+      "note": "dropped: no mechanic stated"
+    },
+    {
+      "category": "flavour sentence",
+      "before": "The crows remember who fed them (design text)",
+      "after": null,
+      "match": "exact-value",
+      "note": "dropped: no mechanic stated"
+    },
+    {
+      "category": "flavour sentence",
+      "before": "Enemies chase you uphill at their peril (design text)",
+      "after": null,
+      "match": "exact-value",
+      "note": "dropped: no mechanic stated"
+    },
+    {
+      "category": "flavour sentence",
+      "before": "You are hard to mark in the mist (design text)",
+      "after": null,
+      "match": "exact-value",
+      "note": "dropped: no mechanic stated"
+    },
+    {
+      "category": "flavour sentence",
+      "before": "Poison from this dose slows (design text)",
+      "after": "Poison you inflict also slows (design text)",
+      "match": "exact-value",
+      "note": "plain restatement"
+    },
+    {
+      "category": "flavour sentence",
+      "before": "Projectiles aimed at you drift in the wind (design text)",
+      "after": "Enemy projectiles are less accurate against you (design text)",
+      "match": "exact-value",
+      "note": "plain restatement"
+    },
+    {
+      "category": "flavour sentence",
+      "before": "Wither cannot cross the circle while you stand still (design text)",
+      "after": "You cannot be Withered while standing still (design text)",
+      "match": "exact-value",
+      "note": "plain restatement"
+    },
+    {
+      "category": "flavour sentence",
+      "before": "Your Bleeds close only when their victim falls (design text)",
+      "after": "Your Bleeds last until the enemy dies (design text)",
+      "match": "exact-value",
+      "note": "plain restatement"
+    },
+    {
+      "category": "flavour sentence",
+      "before": "Your Bleeds remember: reapplying restores full duration (design text)",
+      "after": "Reapplying a Bleed restores its full duration (design text)",
+      "match": "exact-value",
+      "note": "plain restatement"
+    },
+    {
+      "category": "flavour sentence",
+      "before": "Your hits shed light; the unlit cannot hide from you (design text)",
+      "after": "Your hits reveal hidden enemies (design text)",
+      "match": "exact-value",
+      "note": "plain restatement"
+    },
+    {
+      "category": "flavour sentence",
+      "before": "Once rung, your next rite Chills everything it touches (design text)",
+      "after": "After you sound your horn, your next spell Chills everything it hits (design text)",
+      "match": "exact-value",
+      "note": "plain restatement"
+    },
+    {
+      "category": "flavour sentence",
+      "before": "Marks you write cost no Spirit (design text)",
+      "after": "Marks cost no Spirit (design text)",
+      "match": "exact-value",
+      "note": "plain restatement"
+    },
+    {
+      "category": "flavour sentence",
+      "before": "Your Evasion is 10% lower while you hold the line (design text)",
+      "after": "Your Evasion is 10% lower while standing still (design text)",
+      "match": "exact-value",
+      "note": "plain restatement"
+    },
+    {
+      "category": "flavour sentence",
+      "before": "You cannot Block while you keep this pace (design text)",
+      "after": "You cannot Block while moving (design text)",
+      "match": "exact-value",
+      "note": "plain restatement"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Attendant",
+      "after": "Extra Focus Slot",
+      "match": "exact-value",
+      "note": "gate passive and window label"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Quick Rig",
+      "after": "Tool Slot",
+      "match": "exact-value",
+      "note": "gate passive and window label"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Reliquary",
+      "after": "Relic Pack",
+      "match": "exact-value",
+      "note": "window label"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Spoils Roll",
+      "after": "Animal Parts Pack",
+      "match": "exact-value",
+      "note": "window label"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Preparation Case",
+      "after": "Supply Pack",
+      "match": "exact-value",
+      "note": "window label"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Spoils",
+      "after": "Animal parts"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Preparations",
+      "after": "Supplies"
+    },
+    {
+      "category": "pack or slot",
+      "before": "Trophies",
+      "after": "Animal parts"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Slaughter",
+      "after": "Kill Bonuses",
+      "match": "exact-value",
+      "note": "VesselForge bond theme name"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Wayfaring",
+      "after": "Movement",
+      "match": "exact-value",
+      "note": "VesselForge bond theme name"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Warding",
+      "after": "Block and Ward",
+      "match": "exact-value",
+      "note": "VesselForge bond theme name"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Greataxe",
+      "after": "Two-handed Axe",
+      "note": "item base name"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Copper Reliquary",
+      "after": "Copper Relic Box",
+      "note": "object noun: a reliquary is a medieval container; the period object is a relic box"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Jade Reliquary",
+      "after": "Jade Relic Box",
+      "note": "object noun: a reliquary is a medieval container; the period object is a relic box"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Bone Reliquary",
+      "after": "Bone Relic Box",
+      "note": "object noun: a reliquary is a medieval container; the period object is a relic box"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Amber Reliquary",
+      "after": "Amber Relic Box",
+      "note": "object noun: a reliquary is a medieval container; the period object is a relic box"
+    },
+    {
+      "category": "item pipeline",
+      "before": "reliquary box",
+      "after": "relic box",
+      "note": "object noun: a reliquary is a medieval container; the period object is a relic box"
+    },
+    {
+      "category": "item pipeline",
+      "before": "reliquary casket",
+      "after": "relic casket",
+      "note": "object noun: a reliquary is a medieval container; the period object is a relic box"
+    },
+    {
+      "category": "item pipeline",
+      "before": "reliquary coffer",
+      "after": "relic coffer",
+      "note": "object noun: a reliquary is a medieval container; the period object is a relic box"
+    },
+    {
+      "category": "item pipeline",
+      "before": "copper-alloy reliquary",
+      "after": "copper-alloy relic box",
+      "note": "object noun: a reliquary is a medieval container; the period object is a relic box"
+    },
+    {
+      "category": "item pipeline",
+      "before": "copper reliquary",
+      "after": "copper relic box",
+      "note": "object noun: a reliquary is a medieval container; the period object is a relic box"
+    },
+    {
+      "category": "item pipeline",
+      "before": "war-call instrument",
+      "after": "war horn",
+      "note": "object noun: a reliquary is a medieval container; the period object is a relic box"
+    },
+    {
+      "category": "item pipeline",
+      "before": "war-call item",
+      "after": "war horn item",
+      "note": "object noun: a reliquary is a medieval container; the period object is a relic box"
+    },
+    {
+      "category": "item pipeline",
+      "before": "war-call readability",
+      "after": "war horn readability",
+      "note": "object noun: a reliquary is a medieval container; the period object is a relic box"
+    },
+    {
+      "category": "class node",
+      "before": "Champion",
+      "after": "STR class",
+      "note": "prose form (exact string values use the entry above)"
+    },
+    {
+      "category": "class node",
+      "before": "Acrobat",
+      "after": "DEX class",
+      "note": "prose form (exact string values use the entry above)"
+    },
+    {
+      "category": "class node",
+      "before": "Archmage",
+      "after": "INT class",
+      "note": "prose form (exact string values use the entry above)"
+    },
+    {
+      "category": "class node",
+      "before": "Reaver",
+      "after": "DEX/STR class",
+      "note": "prose form (exact string values use the entry above)"
+    },
+    {
+      "category": "class node",
+      "before": "Nightblade",
+      "after": "INT/DEX class",
+      "note": "prose form (exact string values use the entry above)"
+    },
+    {
+      "category": "class node",
+      "before": "Assassin",
+      "after": "INT/DEX class",
+      "note": "prose form (exact string values use the entry above)"
+    },
+    {
+      "category": "class node",
+      "before": "Ritualist",
+      "after": "STR/INT class",
+      "note": "prose form (exact string values use the entry above)"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Slaughter",
+      "after": "Kill Bonuses",
+      "note": "prose form (exact string values use the entry above)"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Warding",
+      "after": "Block and Ward",
+      "note": "prose form (exact string values use the entry above)"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Wayfaring",
+      "after": "Movement",
+      "note": "prose form (exact string values use the entry above)"
+    }
+  ],
+  "scopes": {
+    "game": "tree, jewel, stat, pack and tree-page data in WIZARD; ARPG Scripts and Resources/Wizard",
+    "lattice": "ARPG Scripts/Runtime/ArpgLatticePane.cs only"
+  }
+}

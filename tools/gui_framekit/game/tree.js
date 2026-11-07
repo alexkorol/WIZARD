@@ -14,7 +14,7 @@ const SMALL_NAMES = [
   ["Keen Eye", "+8% chance to notice what matters."],
   ["Stone Skin", "+12 Armor. Weighs nothing."],
   ["Quick Hands", "+6% cast speed with relics."],
-  ["Clear Mind", "+10% mana regeneration."],
+  ["Spell Damage at High Spirit", "+10% mana regeneration."],
   ["Long Stride", "+8% movement on marble floors."],
   ["Steady Aim", "+5% precision with instruments."],
   ["Deep Breath", "Holding your breath lasts twice as long."],

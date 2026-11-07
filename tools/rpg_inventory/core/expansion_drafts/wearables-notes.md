@@ -155,4 +155,4 @@ The TSV cites collection or official museum records row by row. Reused anchors a
 ## Production-schema resolution
 
 - All 50 rows now declare provenance: 41 use `new_generation`, while nine preserve exact canonical `items_post_calib_batch[index]:filename` mappings.
-- Runtime collisions were resolved as distinct bases: `Bronze Lamellar Guards`, `Hammered Bronze Vambraces`, and `Meteor-Plate Warbelt`.
+- Runtime collisions were resolved as distinct bases: `Bronze Lamellar Guards`, `Hammered Bronze Vambraces`, and `Meteor-Plate War belt`.

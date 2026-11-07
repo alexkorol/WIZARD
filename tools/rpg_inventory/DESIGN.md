@@ -86,7 +86,7 @@ Every system above is a position on these axes:
 
 Every item is a **vessel** with a few slots, and every slot has
 **provenance**: power is either **crafted** (Brands ✦), **lived** (Bonds ◈),
-or **taken** (Trophies ✧) — three power sources, three gameplay verbs
+or **taken** (Animal parts ✧) — three power sources, three gameplay verbs
 (craft / play / hunt), all competing for the same scarce space.
 
 ### Materials — the tech-fantasy ladder
@@ -125,7 +125,7 @@ to each named rung**, not an axis sprayed across every class. The exotic stuff
 
 Our material tiers above already *are* the ladder — we just need to (a) curate
 each class's rungs so only sensible materials appear, (b) give every rung an
-evocative name (Bronze Khopesh, Obsidian Cleaver, Skymetal Greathelm) instead of
+evocative name (Bronze Khopesh, Obsidian Cleaver, Meteoric iron Large helmet) instead of
 `{material} {form}`, and (c) use familiar archetype classes (dagger, sword, axe,
 mace, two-hander, spear, focus; body, helm, gloves, boots, belt, shield; amulet,
 ring) with the odd combinatorial items retired.
@@ -154,7 +154,7 @@ should follow that ladder model, not the old grid. (This is also recorded in
   part: the crafting budget and the growth system are the same real estate.
 - **Bonds** as before (named conditional memories, themes from deeds,
   kinship/estrangement, tier I–III, awakening at 3×III), now engine-modular.
-- **Trophies**: TQ-style fragments (boar tusk 0/5) that complete into a
+- **Animal parts**: TQ-style fragments (boar tusk 0/5) that complete into a
   socketable fetish with a completion bonus. The Grim Dawn homage: top-tier
   trophies may **grant a rite** (usable skill) — the only "skill granting"
   in a low-magic world comes from dead things, which fits.

@@ -42,8 +42,8 @@ Use this mode when:
 - isolated prompts keep producing weak or forced items
 - a faction/archetype/source character has a strong coherent kit
 - the goal is a family of paperdoll slot items that visually belong together
-- we need better shields, armor, belts, footwear, War-calls, Quick Rigs,
-  Attendants, specialty-pack contents, relic gear, or offhands than the vacuum
+- we need better shields, armor, belts, footwear, war horns, Tool-slot items,
+  Extra foci, specialty-pack contents, relic gear, or offhands than the vacuum
   prompt pipeline is producing
 
 Do not use it to copy an existing commercial character or living artist style.
@@ -213,20 +213,20 @@ jeweled bodice, ornamental waist chain, generic bracer, open-toe shoe, or
 staff-and-orb focus. A taxonomy target may resolve an ambiguous or flexible
 slot, but it never authorizes inventing core equipment that the source does not
 visibly carry or strongly evidence. The separate six-lane auxiliary pass is
-intentionally a same-culture design pass: it may extrapolate a new War-call,
-Quick Rig, Attendant, Spoil, Preparation, or Reliquary family from the source
+intentionally a same-culture design pass: it may extrapolate a new War Horn,
+Tool slot, Extra focus, Spoil, Preparation, or Relic pack family from the source
 craft system when that object is not literally worn by the character.
 
-Rotate the auxiliary pass beyond one default per category. War-calls can be
+Rotate the auxiliary pass beyond one default per category. war horns can be
 animal horns, Bronze Age curved trumpets, straight salpinges or Etruscan
 trumpets, hooked litui, cornua, carnyx-like vertical trumpets, drums, rattles,
-sistra, clappers, bells, or compact standards. Quick Rigs can be bow quivers,
+sistra, clappers, bells, or compact standards. Tool-slot items can be bow quivers,
 gorytoi, javelin or weighted-dart cases, sling-bullet side carriers, knife rolls,
 archer kits, fletching cases, medicine rolls, pigment cases, trap cases, and
-fire-and-trap cases. Attendants can derive from polycandelon lamp wheels,
+fire-and-trap cases. Extra foci can derive from polycandelon lamp wheels,
 chained censers, suspended oil lamps, mirrors, bells, pyxides, seal-cylinder
 spindles, vessels, or armor-scale cages instead of defaulting to an orb.
-Reliquaries can be boxes, coffers, pyxides, ampullae, offering bowls, libation
+relic packs can be boxes, coffers, pyxides, ampullae, offering bowls, libation
 vessels, censers, lamps, codices, scroll cases, diptychs, wrapped relics, seal
 sets, bells, staff heads, ladles, or shrine keys.
 Preserve the exact source culture and implied era; do not combine unrelated
@@ -236,16 +236,16 @@ Run a second six-image pass for source characters that have enough design
 language to support the unlockable categories. These are real item categories,
 not miscellaneous curios:
 
-1. STR War-call: one signaling-instrument or command-standard family.
-2. DEX Quick Rig: one complete back-worn or side-strapped fast-access weapon,
+1. STR War Horn: one signaling-instrument or command-standard family.
+2. DEX Tool slot: one complete back-worn or side-strapped fast-access weapon,
    tool, ammunition, or field-kit carrier; never handheld or off-hand equipment.
-3. INT Attendant: one hands-free magical focus structurally descended from an
+3. INT Extra focus: one hands-free magical focus structurally descended from an
    ancient lamp, censer, mirror, bell, vessel, spindle, ring, or scale cage.
 4. STR+DEX Spoil: one source-evidenced raw crafting material, or one dry
    species-specific beast harvest, ready to sell or consume in item crafting.
 5. DEX+INT Preparation: one gathered, measured, mixed, packed, or tool-bearing
    reagent or field-preparation family.
-6. INT+STR Reliquary object: one strong container, vessel, book/case, preserved
+6. INT+STR Relic pack object: one strong container, vessel, book/case, preserved
    fragment, or handled ritual-object family.
 
 Use this exact prompt block after the main ten-slot extraction:
@@ -259,7 +259,7 @@ equipment culture and craftsmanship. Create six separate image files, never a
 sheet, collage, lineup, grid, paperdoll, or multi-item canvas. If you cannot
 generate six separate files, generate only item 1 instead of combining them.
 
-1. One 2x2 War-call. Choose exactly one complete family: animal horn; Bronze
+1. One 2x2 War Horn. Choose exactly one complete family: animal horn; Bronze
 Age broad-curved trumpet; straight salpinx or Etruscan bronze trumpet; hooked
 lituus; braced circular cornu; tall carnyx-like trumpet; frame or signal drum;
 handled rattle or sistrum; paired clappers; heavy bell; compact standard;
@@ -268,7 +268,7 @@ mouthpiece, tube, bell, drum body, sounding frame, or standard head. Frame long
 trumpets and standards tip to tip on a steep diagonal rather than shortening
 them into a club or wand.
 
-2. One 2x2 Quick Rig. Choose exactly one complete family: arrow quiver;
+2. One 2x2 Tool slot. Choose exactly one complete family: arrow quiver;
 combined gorytos bowcase-quiver; lidded cylindrical quiver; javelin, dart, or
 weighted-dart case; sling-bullet side carrier containing almond-shaped shot and one
 rolled sling; knife roll; archer belt kit; fletching repair case; medicine
@@ -280,7 +280,7 @@ It is never held in a hand, never assigned to the off-hand slot, and never a
 purse, handbag, satchel, messenger bag, briefcase, suitcase, doctor bag,
 lunchbox, clutch, handled box, or modern luggage silhouette.
 
-3. One 2x2 Attendant focus. Choose exactly one historical construction anchor:
+3. One 2x2 extra focus. Choose exactly one historical construction anchor:
 openwork polycandelon lamp wheel; three-chain censer; suspended oil lamp;
 backed bronze mirror; substantial bell and yoke; lidded pyxis; seal-cylinder
 spindle; footed vessel; spindle whorl; arm ring; or overlapping scale cage.
@@ -289,7 +289,7 @@ Overt magical levitation, glow, orbiting components, counter-rotation, and
 impossible suspension are allowed. Do not default to a bare glowing orb. It
 must not include a hand, arm, person, severed body part, stand, or paperdoll.
 
-4. One Spoils Roll crafting material. Choose exactly one raw or minimally
+4. One Animal Parts Pack crafting material. Choose exactly one raw or minimally
 field-processed nonhuman product: unpolished tusk; naturally mismatched tusk
 pair tied with plain cord; rough horn section; trimmed antler segment; dry jaw
 section; fang bundle; claw bundle; large shell piece; carapace chunk; natural
@@ -308,7 +308,7 @@ scale/plate patch, carapace, quill, pelt/hide, or stinger. Present it dry,
 cleanly detached, and inventory-ready, never as a whole head, face, paw, limb,
 or gory chunk. If neither source supports a material, choose a different
 auxiliary family. Never generate sticks, twigs, branches, firewood, or a generic
-stick bundle as Spoils.
+stick bundle as Animal parts.
 
 Show only minimal practical harvesting or preservation: washed, scraped,
 dried, salted, roughly trimmed, tied with plain cord, or wrapped in rough cloth
@@ -323,7 +323,7 @@ weapon, or finished armor. Do not invent impossible branching horns, perfect
 symmetry, decorative metal cages, or precious-metal fittings. No wet gore,
 human remains, or butcher-shop horror.
 
-5. One Preparation Case item. Choose exactly one concrete family: bound herb
+5. One Supply Pack item. Choose exactly one concrete family: bound herb
 sheaf; dried roots; resin or incense cake; protected venom ampulla; oil or
 unguent flask; divided pigment cakes; measured powder vial; rectangular stone
 ointment palette; two-piece bronze cosmetic grinder; mortar and pestle;
@@ -332,11 +332,11 @@ surgical instrument roll; bandage-and-suture packet; fletching kit; arrow-poison
 pot; fire-making packet; or trap-trigger packet. It must look gathered,
 measured, mixed, packed, or tool-bearing, never like abstract currency, a
 generic potion-shop bottle, or a modern laboratory kit.
-Botanical Preparations must be an identifiable herb, root, bark, resin, or dye
+Botanical Supplies must be an identifiable herb, root, bark, resin, or dye
 plant with useful leaves, flowers, roots, cake, or scraped material; never a
 generic bundle of bare sticks.
 
-6. One Reliquary item. Choose exactly one strong family: deep lidded relic box;
+6. One Relic pack item. Choose exactly one strong family: deep lidded relic box;
 votive coffer; cylindrical pyxis; neutral-geometry 5th-6th-century ampulla;
 offering bowl; libation vessel; lidded censer; ritual lamp; thick closed Late
 Antique codex; sealed scroll case; hinged diptych; ancestor-knucklebone box;

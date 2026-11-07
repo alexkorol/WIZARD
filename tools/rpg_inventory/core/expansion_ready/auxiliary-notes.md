@@ -4,11 +4,11 @@ Status: production-schema complete; no images generated.
 
 ## Roster
 
-Exactly 50 rows form ten five-rung ladders: quiver, gorytos, war_call, warbanner, mobility_rig, trap_kit, preparation_content, attendant, reliquary, and spoils. Every rung equals tier 1-5. Canonical footprints and canvases are explicit. The final T3 reliquary remains the directly anchored Kushan domed copper reliquary from the Manikyala Great Stupa.
+Exactly 50 rows form ten five-rung ladders: quiver, gorytos, war_call, warbanner, mobility_rig, trap_kit, preparation_content, attendant, relic pack, and spoils. Every rung equals tier 1-5. Canonical footprints and canvases are explicit. The final T3 relic pack remains the directly anchored Kushan domed copper relic pack from the Manikyala Great Stupa.
 
 ## Structural corrections
 
-The former Quick Rig set is now an explicitly movement-focused mobility ladder: close-running frame, head-balanced basket, pendular-bag shoulder yoke, Roman sarcina marching pole, and twin-float riven river yoke. Each uses a different movement mechanic and 2x2 square footprint.
+The former Tool slot set is now an explicitly movement-focused mobility ladder: close-running frame, head-balanced basket, pendular-bag shoulder yoke, Roman sarcina marching pole, and twin-float riven river yoke. Each uses a different movement mechanic and 2x2 square footprint.
 
 Preparation rows are runtime `preparation_content`, not equipped kits. Each is a compact 1x1 content object: tinder bundle, nested root mortar, pigment cake, nested bronze grinder, or single wrapped cautery probe.
 

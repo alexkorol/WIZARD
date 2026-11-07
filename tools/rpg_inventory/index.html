@@ -734,19 +734,19 @@
 
   const PACK_DEFS = [
     { id: 'main', label: 'Backpack', w: 12, h: 6, tone: 'main' },
-    { id: 'spoils', label: 'Spoils Roll', w: 4, h: 4, tone: 'mini', unlock: 'spoils_pack' },
-    { id: 'preparations', label: 'Preparation Case', w: 4, h: 4, tone: 'mini', unlock: 'preparations_pack' },
-    { id: 'reliquary', label: 'Reliquary', w: 4, h: 4, tone: 'mini', unlock: 'reliquary_pack' },
+    { id: 'spoils', label: 'Animal Parts Pack', w: 4, h: 4, tone: 'mini', unlock: 'spoils_pack' },
+    { id: 'preparations', label: 'Supply Pack', w: 4, h: 4, tone: 'mini', unlock: 'preparations_pack' },
+    { id: 'reliquary', label: 'Relic Pack', w: 4, h: 4, tone: 'mini', unlock: 'reliquary_pack' },
   ];
   const PACK_BY_ID = Object.fromEntries(PACK_DEFS.map(def => [def.id, def]));
   const LEGACY_PACK_IDS = { relics: 'reliquary', utility: 'preparations' };
   const AUX_WINDOWS = [
     { id: 'warcall-window', label: 'War Horn', axis: 'str', lane: 1, unlock: 'war_call_slot', slotId: 'warhorn' },
-    { id: 'quickrig-window', label: 'Quick Rig', axis: 'dex', lane: 2, unlock: 'quick_rig_slot', slotId: 'quickRig' },
-    { id: 'attendant-window', label: 'Attendant', axis: 'int', lane: 3, unlock: 'attendant_focus_slot', slotId: 'attendant' },
-    { id: 'spoils-window', label: 'Spoils Roll', axis: 'str-dex', lane: 4, unlock: 'spoils_pack', packId: 'spoils' },
-    { id: 'preparations-window', label: 'Preparation Case', axis: 'dex-int', lane: 5, unlock: 'preparations_pack', packId: 'preparations' },
-    { id: 'reliquary-window', label: 'Reliquary', axis: 'int-str', lane: 6, unlock: 'reliquary_pack', packId: 'reliquary' },
+    { id: 'quickrig-window', label: 'Tool Slot', axis: 'dex', lane: 2, unlock: 'quick_rig_slot', slotId: 'quickRig' },
+    { id: 'attendant-window', label: 'Extra Focus Slot', axis: 'int', lane: 3, unlock: 'attendant_focus_slot', slotId: 'attendant' },
+    { id: 'spoils-window', label: 'Animal Parts Pack', axis: 'str-dex', lane: 4, unlock: 'spoils_pack', packId: 'spoils' },
+    { id: 'preparations-window', label: 'Supply Pack', axis: 'dex-int', lane: 5, unlock: 'preparations_pack', packId: 'preparations' },
+    { id: 'reliquary-window', label: 'Relic Pack', axis: 'int-str', lane: 6, unlock: 'reliquary_pack', packId: 'reliquary' },
   ];
   const SLOT_UNLOCKS = { warhorn: 'war_call_slot', quickRig: 'quick_rig_slot', attendant: 'attendant_focus_slot' };
   const UNLOCK_ALIASES = { war_call_slot: ['war_horn_curio'] };
@@ -1037,9 +1037,9 @@
     return false;
   };
   const packRejectReason = (packId) => ({
-    spoils: 'Spoils Roll only holds harvested monster parts and raw crafting materials',
-    preparations: 'Preparation Case only holds gathered or prepared reagents, medical and craft tools, and field supplies',
-    reliquary: 'Reliquary only holds ritual containers, vessels, texts, relics, offerings, and sanctified objects',
+    spoils: 'Animal Parts Pack only holds harvested monster parts and raw crafting materials',
+    preparations: 'Supply Pack only holds gathered or prepared reagents, medical and craft tools, and field supplies',
+    reliquary: 'Relic pack only holds ritual containers, vessels, texts, relics, offerings, and sanctified objects',
   })[normalizePackId(packId)] || 'That item does not belong in this pack';
   const canPlaceItem = (inventory, item, x, y, ignoreId = null, packId = MAIN_PACK_ID) => {
     const targetPackId = normalizePackId(packId);

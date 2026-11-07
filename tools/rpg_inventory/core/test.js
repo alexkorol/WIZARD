@@ -113,12 +113,12 @@ t('inventory layout has six unlock-driven auxiliary windows', () => {
     'occupied equipment slots must hide placeholder labels beneath transparent art');
   assert(!/item-sigil/.test(index) && !/const SIGILS/.test(index),
     'bonded vector watermarks must never attach to item art in slots, inventory, or drag ghosts');
-  assert(/id: 'spoils', label: 'Spoils Roll', w: 4, h: 4/.test(index),
-    'STR+DEX Spoils Roll must exist as a 4x4 specialty grid');
-  assert(/id: 'preparations', label: 'Preparation Case', w: 4, h: 4/.test(index),
-    'DEX+INT Preparation Case must exist as a 4x4 specialty grid');
-  assert(/id: 'reliquary', label: 'Reliquary', w: 4, h: 4/.test(index),
-    'INT+STR Reliquary must exist as a 4x4 specialty grid');
+  assert(/id: 'spoils', label: 'Animal Parts Pack', w: 4, h: 4/.test(index),
+    'STR+DEX Animal Parts Pack must exist as a 4x4 specialty grid');
+  assert(/id: 'preparations', label: 'Supply Pack', w: 4, h: 4/.test(index),
+    'DEX+INT Supply Pack must exist as a 4x4 specialty grid');
+  assert(/id: 'reliquary', label: 'Relic Pack', w: 4, h: 4/.test(index),
+    'INT+STR Relic pack must exist as a 4x4 specialty grid');
   assert(/isSpoilsPackItem/.test(index) && /isPreparationsPackItem/.test(index) && /isReliquaryPackItem/.test(index) && /canUsePack/.test(index),
     'specialty pack placement must reject ordinary equipment');
   assert(/spine mount\|stinger\|hoof/.test(index)
@@ -265,20 +265,20 @@ t('source-image loadout extraction captures coherent kit detail', () => {
   assert(/Generate 10 images\. No commentary\./.test(loadout),
     'loadout prompt must start with an exact numeric image count');
   assert(/Generate 6 images\. No commentary\./.test(loadout)
-      && /One 2x2 War-call/.test(loadout)
-      && /Quick Rig/.test(loadout)
-      && /Attendant focus/.test(loadout)
-      && /Spoils Roll crafting material/.test(loadout)
-      && /Preparation Case item/.test(loadout)
-      && /Reliquary item/.test(loadout),
+      && /One 2x2 War Horn/.test(loadout)
+      && /Tool slot/.test(loadout)
+      && /Extra focus/.test(loadout)
+      && /Animal Parts Pack crafting material/.test(loadout)
+      && /Supply Pack item/.test(loadout)
+      && /Relic [Pp]ack item/.test(loadout),
     'loadout pipeline must include the exact six-image auxiliary extraction pass');
   assert(/Overt magical levitation, glow, orbiting components/.test(loadout),
-    'Attendant extraction must explicitly allow overt magical orbs');
+    'Extra focus extraction must explicitly allow overt magical orbs');
   assert(/SPOILS ARE RAW CRAFT MATERIALS, NOT PRESTIGE TROPHIES/.test(loadout)
       && /ready to sell or consume in item crafting/.test(loadout)
       && /Do not polish, lacquer,\s+gild, jewel, engrave/.test(loadout)
       && /natural asymmetry, cracks, growth ridges/.test(loadout),
-    'Spoils extraction must generate minimally processed crafting stock, not ornate trophies');
+    'Animal parts extraction must generate minimally processed crafting stock, not ornate trophies');
   assert(!/Generate images, no commentary\./.test(loadout),
     'loadout prompt must not use a vague multi-image opener');
   assert(/Output-file rule/.test(loadout) && /generate only slot 1/.test(loadout),
@@ -350,8 +350,8 @@ t('source-image loadout extraction captures coherent kit detail', () => {
   assert(/SLOT HYGIENE AND ANTI-COSTUME CLUTTER/.test(brief) && /Slot hygiene \/ anti-costume clutter/.test(fs.readFileSync(path.join(__dirname, '..', 'AGENTS.md'), 'utf8')),
     'brief and agent guidance must carry anti-costume clutter rules');
   assert(/Held foci and ritual tools belong to the off-hand slot/.test(plan)
-      && /hands-free floating\/orbiting foci belong to the Attendant seat/.test(plan),
-    'generation plan must distinguish held foci from Attendants');
+      && /hands-free floating\/orbiting foci belong to the extra focus slot/.test(plan),
+    'generation plan must distinguish held foci from Extra foci');
 });
 t('ancient equipment taxonomy drives family-level prompt coverage', () => {
   const taxonomy = fs.readFileSync(path.join(__dirname, 'ANCIENT-EQUIPMENT-TAXONOMY.md'), 'utf8');
@@ -375,7 +375,7 @@ t('ancient equipment taxonomy drives family-level prompt coverage', () => {
   assert(/\| SP-02 \| paired tusks \|/.test(taxonomy)
       && /saleable and consumable crafting ingredients/.test(taxonomy)
       && /Do not polish, lacquer, gild, jewel/.test(taxonomy),
-    'Spoils taxonomy must preserve raw crafting-material treatment');
+    'Animal parts taxonomy must preserve raw crafting-material treatment');
   assert(/\| A-12 \| hide combat mitts \|/.test(taxonomy)
       && /\| A-14 \| short wrist cuffs \|/.test(taxonomy)
       && /bracers and vambraces are only two families/.test(taxonomy),
@@ -400,12 +400,12 @@ t('ancient equipment taxonomy drives family-level prompt coverage', () => {
       && /If the source character is a beast/.test(loadout)
       && /Never generate sticks, twigs, branches, firewood/.test(loadout)
       && /rough gem-bearing nodule/.test(taxonomy),
-    'Spoils must derive useful source or beast materials instead of generic sticks');
-  assert(/Quick Rigs are worn load-bearing equipment, not handheld containers/.test(taxonomy)
+    'Animal parts must derive useful source or beast materials instead of generic sticks');
+  assert(/Tool-slot items are worn load-bearing equipment, not handheld containers/.test(taxonomy)
       && /never assigned to the off-hand slot/.test(loadout)
       && /purse, handbag, satchel, messenger bag, briefcase, suitcase/.test(loadout)
       && /backboard\/pack frame/.test(agents),
-    'Quick Rigs must remain back/flank-worn equipment rather than handheld luggage');
+    'Tool-slot items must remain back/flank-worn equipment rather than handheld luggage');
   assert(/Coverage priority codes/.test(taxonomy) && /P3/.test(taxonomy),
     'taxonomy must expose schedulable coverage priorities');
   assert(/Taxonomy coverage rule/.test(loadout)

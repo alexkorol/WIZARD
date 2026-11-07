@@ -8,7 +8,7 @@
   },
   "metadata": {
     "generatedFrom": "tools/geometric_skilltree/scripts/author-tree.mjs (hand-authored tables)",
-    "generatedAt": "2026-10-27",
+    "generatedAt": "2026-11-07",
     "intent": "Phase 4 authored tree: every seat is deliberate data. Zero hash-generated content."
   },
   "patternTuning": {
@@ -119,8 +119,8 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+10% increased Rite Damage",
-        "A clean opening: rites hit harder from the first day."
+        "+10% increased Spell Damage",
+        "A clean opening: spells hit harder from the first day."
       ],
       "stat": "spellDamage",
       "amount": 10,
@@ -128,7 +128,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Rite Damage"
+      "name": "Spell Damage"
     },
     "1,-1": {
       "id": "1,-1",
@@ -232,7 +232,7 @@
       "type": "small",
       "axis": "hybrid",
       "effects": [
-        "+8% increased Rite Damage"
+        "+8% increased Spell Damage"
       ],
       "stat": "spellDamage",
       "amount": 8,
@@ -240,7 +240,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "Rite Damage"
+      "name": "Spell Damage"
     },
     "1,1": {
       "id": "1,1",
@@ -288,9 +288,9 @@
       "type": "notable",
       "axis": "int",
       "effects": [
-        "+16% increased Rite Damage",
+        "+16% increased Spell Damage",
         "+6% to Cold Resistance",
-        "Chilled enemies take +8% from your rites (design text)"
+        "Chilled enemies take +8% from your spells (design text)"
       ],
       "stat": "spellDamage",
       "amount": 16,
@@ -481,7 +481,7 @@
       "effects": [
         "+14% increased Companion Damage",
         "+15 to Spirit",
-        "Your banners and standing rites reach 15% further (design text)"
+        "Your banners and maintained spells reach 15% further (design text)"
       ],
       "stat": "minionDamage",
       "amount": 14,
@@ -499,7 +499,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+8% increased Rite Damage"
+        "+8% increased Spell Damage"
       ],
       "stat": "spellDamage",
       "amount": 8,
@@ -507,7 +507,7 @@
       "clusterId": "procession-approach",
       "status": "review",
       "notes": "",
-      "name": "Rite Damage"
+      "name": "Spell Damage"
     },
     "2,1": {
       "id": "2,1",
@@ -536,7 +536,7 @@
       "type": "mastery",
       "axis": "int",
       "effects": [
-        "+14% increased Rite Damage",
+        "+14% increased Spell Damage",
         "+20 to Ward",
         "Your Ward recharge begins 20% sooner"
       ],
@@ -556,7 +556,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+8% increased Rite Damage"
+        "+8% increased Spell Damage"
       ],
       "stat": "spellDamage",
       "amount": 8,
@@ -564,7 +564,7 @@
       "clusterId": "drowned-approach",
       "status": "review",
       "notes": "",
-      "name": "Rite Damage"
+      "name": "Spell Damage"
     },
     "3,-2": {
       "id": "3,-2",
@@ -875,7 +875,7 @@
       "axis": "int",
       "effects": [
         "+35 to Ward",
-        "+8% increased Rite Damage",
+        "+8% increased Spell Damage",
         "Your Ward also shelters companions at half value (design text)"
       ],
       "stat": "ward",
@@ -894,7 +894,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+4% increased Rite Speed"
+        "+4% increased Cast Speed"
       ],
       "stat": "castSpeed",
       "amount": 4,
@@ -902,7 +902,7 @@
       "clusterId": "procession-approach",
       "status": "review",
       "notes": "",
-      "name": "Rite Speed"
+      "name": "Cast Speed"
     },
     "4,0": {
       "id": "4,0",
@@ -912,7 +912,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+5% increased Rite Speed"
+        "+5% increased Cast Speed"
       ],
       "stat": "castSpeed",
       "amount": 5,
@@ -920,7 +920,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Rite Speed"
+      "name": "Cast Speed"
     },
     "4,-1": {
       "id": "4,-1",
@@ -949,7 +949,7 @@
       "axis": "int",
       "effects": [
         "+16% increased Ailment Effect",
-        "+10% increased Rite Damage",
+        "+10% increased Spell Damage",
         "Chill you inflict slows 10% deeper (design text)"
       ],
       "stat": "ailmentEffect",
@@ -1209,8 +1209,8 @@
       "axis": "str",
       "effects": [
         "+30 to Guard",
-        "Loops closed around this Waystone empower their center +25% further",
-        "Your Evasion is 10% lower while you hold the line (design text)"
+        "Loops closed around this Anchor empower their center +25% further",
+        "Your Evasion is 10% lower while standing still (design text)"
       ],
       "stat": "guard",
       "amount": 30,
@@ -1218,7 +1218,7 @@
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "Champion Waystone",
+      "name": "STR Anchor",
       "patternHook": {
         "effect": "loop-boost",
         "value": 0.25
@@ -1309,8 +1309,8 @@
       "axis": "hybrid",
       "effects": [
         "+20 to Spirit",
-        "Enclosures you close around this Waystone guard 50% more",
-        "Your rites cost 5% more Spirit (design text)"
+        "Enclosures you close around this Anchor guard 50% more",
+        "Your spells cost 5% more Spirit (design text)"
       ],
       "stat": "spirit",
       "amount": 20,
@@ -1318,7 +1318,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "Ritualist Waystone",
+      "name": "STR/INT Anchor",
       "patternHook": {
         "effect": "enclosure-boost",
         "value": 0.5
@@ -1390,7 +1390,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+4% increased Rite Speed"
+        "+4% increased Cast Speed"
       ],
       "stat": "castSpeed",
       "amount": 4,
@@ -1398,7 +1398,7 @@
       "clusterId": "procession-waist",
       "status": "review",
       "notes": "",
-      "name": "Rite Speed"
+      "name": "Cast Speed"
     },
     "5,0": {
       "id": "5,0",
@@ -1409,7 +1409,7 @@
       "axis": "int",
       "effects": [
         "+30 to Ward",
-        "Waves passing through this Waystone count +1 length",
+        "Waves passing through this Anchor count +1 length",
         "Ward recharge is 10% slower"
       ],
       "stat": "ward",
@@ -1418,7 +1418,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Archmage Waystone",
+      "name": "INT Anchor",
       "patternHook": {
         "effect": "wave-length",
         "value": 1
@@ -1432,7 +1432,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+4% increased Rite Speed"
+        "+4% increased Cast Speed"
       ],
       "stat": "castSpeed",
       "amount": 4,
@@ -1440,7 +1440,7 @@
       "clusterId": "drowned-waist",
       "status": "review",
       "notes": "",
-      "name": "Rite Speed"
+      "name": "Cast Speed"
     },
     "5,-2": {
       "id": "5,-2",
@@ -1490,7 +1490,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+9% increased Rite Damage"
+        "+9% increased Spell Damage"
       ],
       "stat": "spellDamage",
       "amount": 9,
@@ -1498,7 +1498,7 @@
       "clusterId": "drowned-waist",
       "status": "review",
       "notes": "",
-      "name": "Rite Damage"
+      "name": "Spell Damage"
     },
     "5,-5": {
       "id": "5,-5",
@@ -1509,7 +1509,7 @@
       "axis": "hybrid",
       "effects": [
         "+12% increased Ailment Effect",
-        "Flows passing through this Waystone count +1 length",
+        "Flows passing through this Anchor count +1 length",
         "You show your position when you strike: +5% damage taken for two seconds (design text)"
       ],
       "stat": "ailmentEffect",
@@ -1518,7 +1518,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "Assassin Waystone",
+      "name": "INT/DEX Anchor",
       "patternHook": {
         "effect": "flow-length",
         "value": 1
@@ -1609,8 +1609,8 @@
       "axis": "dex",
       "effects": [
         "+45 to Evasion",
-        "Rods ending on this Waystone empower both endpoints twice",
-        "You cannot Block while you keep this pace (design text)"
+        "Rods ending on this Anchor empower both endpoints twice",
+        "You cannot Block while moving (design text)"
       ],
       "stat": "evasion",
       "amount": 45,
@@ -1618,7 +1618,7 @@
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "Acrobat Waystone",
+      "name": "DEX Anchor",
       "patternHook": {
         "effect": "rod-double"
       }
@@ -1708,7 +1708,7 @@
       "axis": "hybrid",
       "effects": [
         "+16% increased Projectile Damage",
-        "Waves and flows may both claim conduits touching this Waystone",
+        "Waves and flows may both claim conduits touching this Anchor",
         "-10% increased Reach"
       ],
       "stat": "projectileDamage",
@@ -1717,7 +1717,7 @@
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "Reaver Waystone",
+      "name": "DEX/STR Anchor",
       "patternHook": {
         "effect": "shared-claim"
       }
@@ -1920,7 +1920,7 @@
       "axis": "hybrid",
       "effects": [
         "+24% increased Companion Damage",
-        "+12% increased Rite Damage",
+        "+12% increased Spell Damage",
         "Companions within your banner strike 10% faster (design text)"
       ],
       "stat": "minionDamage",
@@ -1957,7 +1957,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+9% increased Rite Damage"
+        "+9% increased Spell Damage"
       ],
       "stat": "spellDamage",
       "amount": 9,
@@ -1965,7 +1965,7 @@
       "clusterId": "procession-oath",
       "status": "review",
       "notes": "",
-      "name": "Rite Damage"
+      "name": "Spell Damage"
     },
     "3,3": {
       "id": "3,3",
@@ -1975,8 +1975,8 @@
       "type": "keystone",
       "axis": "int",
       "effects": [
-        "Your rites cost Life instead of Spirit",
-        "Your Spirit is reserved in full to your banners and standing rites"
+        "Your spells cost Life instead of Spirit",
+        "Your Spirit is reserved in full to your banners and maintained spells"
       ],
       "stat": null,
       "amount": 0,
@@ -1984,7 +1984,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "Rites Cost Life"
+      "name": "Spells Cost Life"
     },
     "4,2": {
       "id": "4,2",
@@ -2013,7 +2013,7 @@
       "axis": "int",
       "effects": [
         "+10% to Chaos Resistance",
-        "Wither cannot cross the circle while you stand still (design text)"
+        "You cannot be Withered while standing still (design text)"
       ],
       "stat": "gloam_res",
       "amount": 10,
@@ -2031,9 +2031,9 @@
       "type": "notable",
       "axis": "int",
       "effects": [
-        "+26% increased Rite Damage",
+        "+26% increased Spell Damage",
         "+15 to Spirit",
-        "Rites you repeat within four seconds gain +10% effect (design text)"
+        "Spells you repeat within four seconds gain +10% effect (design text)"
       ],
       "stat": "spellDamage",
       "amount": 26,
@@ -2041,7 +2041,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Repeated Rites"
+      "name": "Repeated Spells"
     },
     "6,-1": {
       "id": "6,-1",
@@ -2069,7 +2069,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+10% increased Rite Damage"
+        "+10% increased Spell Damage"
       ],
       "stat": "spellDamage",
       "amount": 10,
@@ -2077,7 +2077,7 @@
       "clusterId": "drowned-oath",
       "status": "review",
       "notes": "",
-      "name": "Rite Damage"
+      "name": "Spell Damage"
     },
     "6,-3": {
       "id": "6,-3",
@@ -2125,7 +2125,7 @@
       "axis": "int",
       "effects": [
         "+10% increased Ailment Effect",
-        "Marks you write cost no Spirit (design text)"
+        "Marks cost no Spirit (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 10,
@@ -2208,7 +2208,7 @@
       "clusterId": "unlit-road-named",
       "status": "review",
       "notes": "",
-      "name": "Strike the Unhurt"
+      "name": "Damage Before Being Hurt"
     },
     "2,-6": {
       "id": "2,-6",
@@ -2219,7 +2219,7 @@
       "axis": "dex",
       "effects": [
         "+10% increased Ailment Effect",
-        "Poison from this dose slows (design text)"
+        "Poison you inflict also slows (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 10,
@@ -2490,7 +2490,7 @@
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "Champion"
+      "name": "STR Class"
     },
     "-6,7": {
       "id": "-6,7",
@@ -2575,7 +2575,7 @@
       "axis": "str",
       "effects": [
         "Adds 6 Fire Damage to hits",
-        "Your hits shed light; the unlit cannot hide from you (design text)"
+        "Your hits reveal hidden enemies (design text)"
       ],
       "stat": "emberkiss",
       "amount": 6,
@@ -2614,7 +2614,7 @@
         "+12% increased Companion Damage",
         "Unlocks: banners become usable",
         "Unlocks: one martial companion",
-        "Unlocks: 4x4 Reliquary",
+        "Unlocks: 4x4 Relic pack",
         "Your first class passive sets your class; each class passive grants its unlock."
       ],
       "stat": "minionDamage",
@@ -2623,7 +2623,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "Ritualist"
+      "name": "STR/INT Class"
     },
     "1,6": {
       "id": "1,6",
@@ -2689,7 +2689,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+4% increased Rite Speed"
+        "+4% increased Cast Speed"
       ],
       "stat": "castSpeed",
       "amount": 4,
@@ -2697,7 +2697,7 @@
       "clusterId": "procession-high",
       "status": "review",
       "notes": "",
-      "name": "Rite Speed"
+      "name": "Cast Speed"
     },
     "5,2": {
       "id": "5,2",
@@ -2726,7 +2726,7 @@
       "axis": "int",
       "effects": [
         "+12 to Spirit",
-        "Your rites are not interrupted by light hits (design text)"
+        "Your spells are not interrupted by light hits (design text)"
       ],
       "stat": "spirit",
       "amount": 12,
@@ -2744,10 +2744,10 @@
       "type": "class",
       "axis": "int",
       "effects": [
-        "+15% increased Rite Damage",
+        "+15% increased Spell Damage",
         "Unlocks: a second curio slot",
         "Unlocks: rite-foci gain +1 socket",
-        "Unlocks: 2x2 Attendant focus seat",
+        "Unlocks: 2x2 extra focus seat",
         "Your first class passive sets your class; each class passive grants its unlock."
       ],
       "stat": "spellDamage",
@@ -2756,7 +2756,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Archmage"
+      "name": "INT Class"
     },
     "7,-1": {
       "id": "7,-1",
@@ -2784,7 +2784,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+10% increased Rite Damage"
+        "+10% increased Spell Damage"
       ],
       "stat": "spellDamage",
       "amount": 10,
@@ -2792,7 +2792,7 @@
       "clusterId": "drowned-high",
       "status": "review",
       "notes": "",
-      "name": "Rite Damage"
+      "name": "Spell Damage"
     },
     "7,-3": {
       "id": "7,-3",
@@ -2802,7 +2802,7 @@
       "type": "notable",
       "axis": "int",
       "effects": [
-        "+24% increased Rite Damage",
+        "+24% increased Spell Damage",
         "+15% increased Ailment Effect",
         "Your marks persist on enemies that leave your sight (design text)"
       ],
@@ -2880,7 +2880,7 @@
         "+12% increased Ailment Effect",
         "Unlocks: trap and mark tools become equippable",
         "Unlocks: venom vial slot",
-        "Unlocks: 4x4 Preparation Case",
+        "Unlocks: 4x4 Supply Pack",
         "Your first class passive sets your class; each class passive grants its unlock."
       ],
       "stat": "ailmentEffect",
@@ -2889,7 +2889,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "Assassin"
+      "name": "INT/DEX Class"
     },
     "6,-7": {
       "id": "6,-7",
@@ -3013,7 +3013,7 @@
         "+12% increased Evasion",
         "Unlocks: a second weapon set for swapping",
         "Unlocks: dual-wielding one-handers",
-        "Unlocks: 2x2 Quick Rig seat",
+        "Unlocks: 2x2 Tool slot seat",
         "Your first class passive sets your class; each class passive grants its unlock."
       ],
       "stat": "evasion_increased",
@@ -3022,7 +3022,7 @@
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "Acrobat"
+      "name": "DEX Class"
     },
     "-1,-6": {
       "id": "-1,-6",
@@ -3146,7 +3146,7 @@
         "+12% increased Projectile Damage",
         "Unlocks: thrown weapons count as melee AND projectile",
         "Unlocks: belt fetish slot",
-        "Unlocks: 4x4 Spoils Roll",
+        "Unlocks: 4x4 Animal Parts Pack",
         "Your first class passive sets your class; each class passive grants its unlock."
       ],
       "stat": "projectileDamage",
@@ -3155,7 +3155,7 @@
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "Reaver"
+      "name": "DEX/STR Class"
     },
     "-7,1": {
       "id": "-7,1",
@@ -3372,7 +3372,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+10% increased Rite Damage",
+        "+10% increased Spell Damage",
         "+4% increased Ailment Effect (design text)"
       ],
       "stat": "spellDamage",
@@ -3381,7 +3381,7 @@
       "clusterId": "kiln-sign",
       "status": "review",
       "notes": "",
-      "name": "Rite Damage"
+      "name": "Spell Damage"
     },
     "-2,8": {
       "id": "-2,8",
@@ -3447,7 +3447,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+10% increased Rite Damage"
+        "+10% increased Spell Damage"
       ],
       "stat": "spellDamage",
       "amount": 10,
@@ -3455,7 +3455,7 @@
       "clusterId": "procession-sign",
       "status": "review",
       "notes": "",
-      "name": "Rite Damage"
+      "name": "Spell Damage"
     },
     "2,6": {
       "id": "2,6",
@@ -3467,7 +3467,7 @@
       "effects": [
         "+20% increased Ward",
         "+10 to Spirit",
-        "Your Ward does not break from Chaos damage while a rite is maintained (design text)"
+        "Your Ward does not break from Chaos damage while a spell is maintained (design text)"
       ],
       "stat": "ward_pct",
       "amount": 20,
@@ -3579,7 +3579,7 @@
       "axis": "int",
       "effects": [
         "+18% increased Ward",
-        "+12% increased Rite Damage",
+        "+12% increased Spell Damage",
         "You keep 10% of Ward when a hit would empty it (design text)"
       ],
       "stat": "ward_pct",
@@ -3598,7 +3598,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+11% increased Rite Damage"
+        "+11% increased Spell Damage"
       ],
       "stat": "spellDamage",
       "amount": 11,
@@ -3606,7 +3606,7 @@
       "clusterId": "drowned-sign",
       "status": "review",
       "notes": "",
-      "name": "Rite Damage"
+      "name": "Spell Damage"
     },
     "8,-2": {
       "id": "8,-2",
@@ -3617,7 +3617,7 @@
       "axis": "int",
       "effects": [
         "+12% to Cold Resistance",
-        "+18% increased Rite Damage",
+        "+18% increased Spell Damage",
         "Frozen enemies shatter for Cold damage around them (design text)"
       ],
       "stat": "river_resistance",
@@ -3693,7 +3693,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+5% increased Rite Speed"
+        "+5% increased Cast Speed"
       ],
       "stat": "castSpeed",
       "amount": 5,
@@ -3701,7 +3701,7 @@
       "clusterId": "drowned-sign",
       "status": "review",
       "notes": "",
-      "name": "Rite Speed"
+      "name": "Cast Speed"
     },
     "8,-7": {
       "id": "8,-7",
@@ -4351,9 +4351,9 @@
       "type": "notable",
       "axis": "hybrid",
       "effects": [
-        "+26% increased Rite Damage",
+        "+26% increased Spell Damage",
         "+20 to Spirit",
-        "Rites you maintain persist 3 seconds after you fall (design text)"
+        "Spells you maintain persist 3 seconds after you fall (design text)"
       ],
       "stat": "spellDamage",
       "amount": 26,
@@ -4361,7 +4361,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "Lingering Rites"
+      "name": "Lingering Spells"
     },
     "1,8": {
       "id": "1,8",
@@ -4408,7 +4408,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+11% increased Rite Damage"
+        "+11% increased Spell Damage"
       ],
       "stat": "spellDamage",
       "amount": 11,
@@ -4416,7 +4416,7 @@
       "clusterId": "procession-deep",
       "status": "review",
       "notes": "",
-      "name": "Rite Damage"
+      "name": "Spell Damage"
     },
     "4,5": {
       "id": "4,5",
@@ -4520,9 +4520,9 @@
       "type": "notable",
       "axis": "int",
       "effects": [
-        "+30% increased Rite Damage",
+        "+30% increased Spell Damage",
         "+30 to Ward",
-        "Rites cost 5% less Spirit (design text)"
+        "Spells cost 5% less Spirit (design text)"
       ],
       "stat": "spellDamage",
       "amount": 30,
@@ -4530,7 +4530,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Efficient Rites"
+      "name": "Efficient Spells"
     },
     "9,-1": {
       "id": "9,-1",
@@ -4540,7 +4540,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+12% increased Rite Damage"
+        "+12% increased Spell Damage"
       ],
       "stat": "spellDamage",
       "amount": 12,
@@ -4548,7 +4548,7 @@
       "clusterId": "drowned-deep",
       "status": "review",
       "notes": "",
-      "name": "Rite Damage"
+      "name": "Spell Damage"
     },
     "9,-2": {
       "id": "9,-2",
@@ -4654,7 +4654,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+5% increased Rite Speed"
+        "+5% increased Cast Speed"
       ],
       "stat": "castSpeed",
       "amount": 5,
@@ -4662,7 +4662,7 @@
       "clusterId": "drowned-deep",
       "status": "review",
       "notes": "",
-      "name": "Rite Speed"
+      "name": "Cast Speed"
     },
     "9,-8": {
       "id": "9,-8",
@@ -5107,7 +5107,7 @@
       "axis": "str",
       "effects": [
         "+12% increased Ailment Effect",
-        "Your Bleeds remember: reapplying restores full duration (design text)"
+        "Reapplying a Bleed restores its full duration (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 12,
@@ -5200,19 +5200,19 @@
       "type": "gateway",
       "axis": "str",
       "effects": [
-        "Gate to the Champion outer circle.",
+        "Gate to the STR outer circle.",
         "Unlock condition: allocate this gate and complete any inner six-node circle."
       ],
       "stat": null,
       "amount": 0,
       "tags": [
         "gateway",
-        "Champion"
+        "STR Class"
       ],
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "Champion Gate"
+      "name": "STR Gate"
     },
     "-9,10": {
       "id": "-9,10",
@@ -5388,19 +5388,19 @@
       "type": "gateway",
       "axis": "hybrid",
       "effects": [
-        "Gate to the Ritualist outer circle.",
+        "Gate to the STR/INT outer circle.",
         "Unlock condition: allocate this gate and complete any inner six-node circle."
       ],
       "stat": null,
       "amount": 0,
       "tags": [
         "gateway",
-        "Ritualist"
+        "STR/INT Class"
       ],
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "Ritualist Gate"
+      "name": "STR/INT Gate"
     },
     "1,9": {
       "id": "1,9",
@@ -5429,7 +5429,7 @@
       "axis": "int",
       "effects": [
         "+3 to all Attributes",
-        "Your next rite costs no Spirit (design text)"
+        "Your next spell costs no Spirit (design text)"
       ],
       "stat": "attrs",
       "amount": 3,
@@ -5448,7 +5448,7 @@
       "axis": "int",
       "effects": [
         "+50 to Ward",
-        "Ward gained from this passive counts as a rite for your keystones (design text)"
+        "Ward gained from this passive counts as a spell for your keystones (design text)"
       ],
       "stat": "ward",
       "amount": 50,
@@ -5456,7 +5456,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "Ward Counts as Rite"
+      "name": "Ward Counts as a Spell"
     },
     "4,6": {
       "id": "4,6",
@@ -5504,7 +5504,7 @@
       "effects": [
         "+30 to Spirit",
         "+12% increased Companion Damage",
-        "Kills during your rites feed 5 Spirit back (design text)"
+        "Kills during your spells feed 5 Spirit back (design text)"
       ],
       "stat": "spirit",
       "amount": 30,
@@ -5576,19 +5576,19 @@
       "type": "gateway",
       "axis": "int",
       "effects": [
-        "Gate to the Archmage outer circle.",
+        "Gate to the INT outer circle.",
         "Unlock condition: allocate this gate and complete any inner six-node circle."
       ],
       "stat": null,
       "amount": 0,
       "tags": [
         "gateway",
-        "Archmage"
+        "INT Class"
       ],
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Archmage Gate"
+      "name": "INT Gate"
     },
     "10,-1": {
       "id": "10,-1",
@@ -5634,8 +5634,8 @@
       "type": "notable",
       "axis": "int",
       "effects": [
-        "+30% increased Rite Damage",
-        "Once rung, your next rite Chills everything it touches (design text)"
+        "+30% increased Spell Damage",
+        "After you sound your horn, your next spell Chills everything it hits (design text)"
       ],
       "stat": "spellDamage",
       "amount": 30,
@@ -5643,7 +5643,7 @@
       "clusterId": "drowned-study-named",
       "status": "review",
       "notes": "",
-      "name": "Chilling Rite"
+      "name": "Chilling Spells"
     },
     "10,-4": {
       "id": "10,-4",
@@ -5653,8 +5653,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+5 to Dexterity",
-        "You are hard to mark in the mist (design text)"
+        "+5 to Dexterity"
       ],
       "stat": "dex",
       "amount": 5,
@@ -5764,19 +5763,19 @@
       "type": "gateway",
       "axis": "hybrid",
       "effects": [
-        "Gate to the Assassin outer circle.",
+        "Gate to the INT/DEX outer circle.",
         "Unlock condition: allocate this gate and complete any inner six-node circle."
       ],
       "stat": null,
       "amount": 0,
       "tags": [
         "gateway",
-        "Assassin"
+        "INT/DEX Class"
       ],
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "Assassin Gate"
+      "name": "INT/DEX Gate"
     },
     "9,-10": {
       "id": "9,-10",
@@ -5831,7 +5830,7 @@
       "clusterId": "unlit-road-named",
       "status": "review",
       "notes": "",
-      "name": "Unseen Passage"
+      "name": "Pass Unnoticed"
     },
     "6,-10": {
       "id": "6,-10",
@@ -5841,8 +5840,7 @@
       "type": "small",
       "axis": "dex",
       "effects": [
-        "+5 to Intelligence",
-        "Road signs mean more to you than most (design text)"
+        "+5 to Intelligence"
       ],
       "stat": "int",
       "amount": 5,
@@ -5951,19 +5949,19 @@
       "type": "gateway",
       "axis": "dex",
       "effects": [
-        "Gate to the Acrobat outer circle.",
+        "Gate to the DEX outer circle.",
         "Unlock condition: allocate this gate and complete any inner six-node circle."
       ],
       "stat": null,
       "amount": 0,
       "tags": [
         "gateway",
-        "Acrobat"
+        "DEX Class"
       ],
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "Acrobat Gate"
+      "name": "DEX Gate"
     },
     "-1,-9": {
       "id": "-1,-9",
@@ -6028,8 +6026,7 @@
       "type": "small",
       "axis": "dex",
       "effects": [
-        "+5 to Dexterity",
-        "Enemies chase you uphill at their peril (design text)"
+        "+5 to Dexterity"
       ],
       "stat": "dex",
       "amount": 5,
@@ -6067,7 +6064,7 @@
       "effects": [
         "+22% increased Evasion",
         "+12% to Lightning Resistance",
-        "Projectiles aimed at you drift in the wind (design text)"
+        "Enemy projectiles are less accurate against you (design text)"
       ],
       "stat": "evasion_increased",
       "amount": 22,
@@ -6139,19 +6136,19 @@
       "type": "gateway",
       "axis": "hybrid",
       "effects": [
-        "Gate to the Reaver outer circle.",
+        "Gate to the DEX/STR outer circle.",
         "Unlock condition: allocate this gate and complete any inner six-node circle."
       ],
       "stat": null,
       "amount": 0,
       "tags": [
         "gateway",
-        "Reaver"
+        "DEX/STR Class"
       ],
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "Reaver Gate"
+      "name": "DEX/STR Gate"
     },
     "-10,1": {
       "id": "-10,1",
@@ -6216,8 +6213,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+3 to all Attributes",
-        "The crows remember who fed them (design text)"
+        "+3 to all Attributes"
       ],
       "stat": "attrs",
       "amount": 3,
@@ -6255,7 +6251,7 @@
       "effects": [
         "+55 to Life",
         "+10% increased Ailment Effect",
-        "Your Bleeds close only when their victim falls (design text)"
+        "Your Bleeds last until the enemy dies (design text)"
       ],
       "stat": "life",
       "amount": 55,

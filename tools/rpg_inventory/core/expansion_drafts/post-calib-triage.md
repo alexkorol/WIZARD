@@ -34,10 +34,10 @@ The 44 direct-salvage candidates are distributed as follows:
 | belt or sash | 1 |
 | outer layer or cowl | 1 |
 | ritual or preparation implement | 1 |
-| war-call | 1 |
+| war horn | 1 |
 
 This batch does **not** provide a safe direct-promotion quiver, warbanner,
-mobility rig, trap kit, Attendant focus, or full preparation case. Those remain
+mobility rig, trap kit, extra focus, or full supply pack. Those remain
 real generation gaps. The apparent quiver contains arrows and is rejected under
 the current empty-container rule. The apparent case is modern luggage-like, and
 the loose tool bundle lacks a complete secured kit body.

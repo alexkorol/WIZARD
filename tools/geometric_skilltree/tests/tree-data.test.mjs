@@ -128,7 +128,7 @@ function testPhase4AuthoredContent() {
     out[seat.type] = (out[seat.type] || 0) + 1;
     return out;
   }, {});
-  assert.equal(roleCounts.waystone, 6, 'Six ring-5 Waystones.');
+  assert.equal(roleCounts.waystone, 6, 'Six ring-5 Anchors.');
   assert.equal(roleCounts.keystone, 6, 'Six ring-6 keystones.');
   assert.equal(roleCounts.sign, 6, 'Six ring-8 Signs.');
   assert.equal(roleCounts.class, 6, 'Six ring-7 class milestones.');
