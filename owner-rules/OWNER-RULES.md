@@ -103,10 +103,12 @@ documents must not restate or contradict these rules.
 
 ## Visual direction
 
-15. **Full 3D with the owner-ruled camera** (2026-09-30). Pitch about 62°, moderate
-    perspective, axis-aligned (not diamond isometric); characters, creatures and world are
-    real 3D from the existing Blender sources. *Why:* "more top down … like Diablo and Path
-    of Exile … go full 3D now".
+15. **Full 3D with the owner-ruled camera** (2026-09-30; pitch changed 2026-11-08). Pitch matches
+    Path of Exile 2's measured camera, about 35–40° above the ground (ARPG
+    `POE-BASELINE-2026-11-06.md`), at a distance that keeps the player at a PoE 2-like screen
+    size; moderate perspective, axis-aligned (not diamond isometric); characters, creatures and
+    world are real 3D from the existing Blender sources. *Why:* "more top down … like Diablo and
+    Path of Exile … go full 3D now"; on the pitch, 2026-11-08: "yes, match PoE" (was about 62°).
 16. **Pixel-art presentation is retired** (2026-09-28). Native resolution, filtered and
     mipmapped surfaces, a post stack; no mixels or resampled sprites. *Why:* the
     "frankenstein" look; the owner prioritises the game looking and feeling good.

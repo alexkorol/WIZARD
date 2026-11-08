@@ -139,7 +139,7 @@
     if (level.solution.states >= 100000) return 'This chamber survived the full offline oracle budget. Expect attractive pushes that poison a later box-goal matching.';
     if (level.boxes.length >= 5) return 'The deep archive composes several box dependencies at once. Solve the packing order, not one relic at a time.';
     if (level.boxes.length >= 4) return 'At this depth, the order of pushes is the puzzle. Preserve lanes behind every relic box.';
-    if (level.solution.analysis.switches >= 3) return 'The shortest rite changes between relic boxes. Keep their paths from crossing too soon.';
+    if (level.solution.analysis.switches >= 3) return 'The shortest route changes between relic boxes. Keep their paths from crossing too soon.';
     if (!level.solution.optimal) return 'Every chamber has a proven route, even when the oracle cannot exhaust its entire state space.';
     return 'Read the walls, preserve your standing squares, and distrust the seal that looks easiest.';
   }

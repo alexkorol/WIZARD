@@ -1365,7 +1365,7 @@
               const newTier = Math.min(relic.tier + 1, 4);
               items.push({ id: generateId(), name: relicDisplayName(relic, newTier), base: relic.base, form: relic.form, material: relic.material, relicId: relic.id });
               house.reliquary = house.reliquary.map(r => r.id === relic.id
-                ? { ...r, tier: newTier, status: 'borne', history: [...r.history, `Handed down to ${name} at the recruiting rite.`] }
+                ? { ...r, tier: newTier, status: 'borne', history: [...r.history, `Handed down to ${name} on recruitment.`] }
                 : r);
             }
           }
