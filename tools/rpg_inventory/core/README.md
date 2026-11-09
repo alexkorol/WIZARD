@@ -1,4 +1,4 @@
-# Vesselforge
+# item crafting system
 
 An engine-agnostic, seedable, **zero-dependency** ARPG itemization engine.
 Items are plain JSON; all game content lives in a swappable *pack*; the engine
@@ -23,17 +23,17 @@ Every item is a **vessel** with N slots. Slots hold power with *provenance*:
 | **Scar** ✕ | the price of severing | a dead slot, forever |
 
 Brands and bonds compete for the same slots, so a fully-crafted item can never
-learn. Bonds carry their shaper's archetype (**kinship**) and give half
-strength in estranged hands. An item holding three tier-III bonds **awakens**
+learn. Bonds carry their shaper's archetype (**class bond**) and give half
+strength in held by another class hands. An item holding three tier-III bonds **awakens**
 into a named unique — a unique is just an item somebody carried long enough.
 
 ## Quickstart
 
 ```js
-const VesselForge = require('vesselforge');
+const item crafting system = require('vesselforge');
 const pack = require('vesselforge/verdigris-pack.js'); // bronze-age content pack
 
-const forge = VesselForge.createForge(pack, { seed: 42 }); // reproducible
+const forge = item crafting system.createForge(pack, { seed: 42 }); // reproducible
 
 // loot
 const item = forge.generateItem({ ilvl: 40 });
@@ -46,7 +46,7 @@ forge.explainOdds(item, { omenId: 'blood_omen' });
 // -> [{ modId: 'keen', label: '+#% increased Physical Damage', p: 0.31 }, ...]
 
 // play — bonds form from what the bearer actually does
-const c = forge.createCharacter({ name: 'Azrael', archetype: 'shieldbearer' });
+const c = forge.createCharacter({ name: 'Test Character', archetype: 'shieldbearer' });
 const r = forge.venture(c, { mainHand: item });
 
 // read — structured, renderer-agnostic
@@ -63,8 +63,8 @@ TypeScript types ship in `vesselforge.d.ts`.
 
 A pack is pure data plus one optional `derive()` for the character sheet:
 materials (a tech/tier ladder with ascension), forms (bases), brand pools with
-tag weights, bond themes, archetypes, trophies, pigments/omens (craft
-steering), encounters, and name tables. `VesselForge.validatePack(pack)`
+tag weights, bond themes, archetypes, trophies, pigments/guaranteed-brand items (craft
+steering), encounters, and name tables. `item crafting system.validatePack(pack)`
 returns a list of problems, empty when clean. See `verdigris-pack.js` for a
 complete worked example and `verdigris-combat.js` for a pack-aware autobattler
 layer that makes bonds fire in combat.
@@ -75,7 +75,7 @@ layer that makes bonds fire in combat.
 - **Immutability**: craft ops clone; your state management stays boring.
 - **No engine lock-in**: nothing here knows about DOM, canvas, or React. The
   demo's grid inventory, drag engine, and rendering live entirely outside.
-- **Tests**: `npm test` (engine invariants, full item life-cycle to awakening,
+- **Tests**: `npm test` (engine invariants, full item life-cycle to upgrade,
   serialization, combat resolution).
 
 MIT. Part of [WIZARD](https://github.com/alexkorol/WIZARD).

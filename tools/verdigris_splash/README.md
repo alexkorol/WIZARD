@@ -1,6 +1,6 @@
 # Verdigris main-menu world
 
-An original real-time Three.js menu for **Verdigris**: a complete floating disc-world before iron, with oceans, island chains, mountain systems, rim waterfalls, auroral curtains, nebulae, and an endless abyss. The default **World** view presents the optimized Celestial Island mesh; the selectable **Crownlands** view preserves the closer living-diorama composition around the Crown of Tides observatory. Menu actions provide prototype feedback rather than navigating into a game.
+An original real-time Three.js menu for **Verdigris**: a complete floating disc-world before iron, with oceans, island chains, mountain systems, rim waterfalls, auroral curtains, nebulae, and an endless abyss. The default **World** view presents the optimized Celestial Island mesh; the selectable **Island** view (`?view=crownlands`) keeps the closer composition around one island and its citadel. Menu actions provide prototype feedback rather than navigating into a game.
 
 ## Run locally
 
@@ -11,7 +11,7 @@ cd tools/verdigris_splash
 python -m http.server 4173 --bind 127.0.0.1
 ```
 
-Open `http://127.0.0.1:4173/`. Use the visible World/Crownlands control or link directly to the close view with `?view=crownlands`. Add `?moment=crown` to hold the 36-second loop at its activation/lightning beat; the parameters can be combined.
+Open `http://127.0.0.1:4173/`. Use the visible World/Island control or link directly to the close view with `?view=crownlands`. Add `?moment=crown` to hold the 36-second loop at its activation/lightning beat; the parameters can be combined.
 
 Run the lightweight static checks with:
 
@@ -54,13 +54,13 @@ The build selects the largest connected body as the world, removes the separate 
 
 ## Architecture and assets
 
-- `app.js` loads the local optimized GLB for World view and builds Crownlands plus a procedural World fallback deterministically. If the model fails to load, the existing procedural atlas remains visible.
+- `app.js` loads the local optimized GLB for World view and builds the Island view plus a procedural World fallback deterministically. If the model fails to load, the existing procedural atlas remains visible.
 - The imported world projects the feather-stitched 4K varied-territory atlas onto the complete upward-facing mesh. A second feather-stitched 4K RGB illumination map adds true emissive lava fissures, low cyan reef life, and rare pulsing grove or settlement points; each channel is terrain-gated so cyan reef light stays in confirmed water while lava and restrained grove light remain on land. A stable height/atlas-masked water skin follows its sea exactly and adds animated micro-waves, broad Fresnel sky reflection, warm directional glints, and fine sparkles without moving opacity blobs. Its sea mask requires genuinely blue or cyan chroma in addition to low relief, preventing charcoal volcanic soil, neutral rock, and terrain shadows from receiving teal ocean shading. At grazing camera angles, the sun's live world position and camera position define a widening specular road across the ocean, combining a warm reflection gradient with broken tight glints. The water shader samples the heightmap at fine, medium, and basin scales: that multi-scale slope field drives the complete normal, ripple, reflection-streak, shimmer, and froth stack toward rising shoals, reefs, and coasts, while flat central basins form slow local gyres instead of one global current. Heightmap relief explicitly remaps low seafloor to deep navy and rising shelves to turquoise on both the solid imported sea surface and its reflective overlay; the painted atlas contributes restrained luminance detail but cannot invert water depth. A far-only depth-of-field pass reads opaque world depth and tracks the active world's camera-space center, leaving foreground geometry and the underside tip sharp while progressively softening only geometry beyond the focus plane—normally the receding rim. Seven ray-marched ellipsoidal weather volumes create internally layered thunderheads, rain shelves, sunlit clouds, high cloud decks, and low local fog banks with true camera parallax. Nine independently turbulent aurora shells form three depth-stacked arcs rather than repeated flat curtains. The world retains seven perimeter waterfalls, lightning, sun shafts, and a cyan/violet nebula field. Broken neutral glacial shelves remain around the imported rim, with clustered icicles and actual geometry gaps wherever a waterfall crosses; shelf breakup leaves natural stone between icy regions instead of drawing a uniform blue ring. Below the rim, the real Meshy relief is retained and textured, then reshaped in Blender: the outer hanging mass is compressed and the deepest authored forms pull inward to one tapered spinning-top peak. The former loose black cone field remains suppressed when the runtime mesh loads.
 - World mode uses nine continuous indexed heightfields: six large named regions plus three outlying island groups. Each has an authored coastline, a primary and branching ridge system, peak groups, valley cuts, terraces, and a biome palette driven by height and slope.
 - The procedural fallback retains an animated ocean, shallow-water shelves, and a closed underside shell. With the imported world active, its ocean and generated backfaces are suppressed in favor of the shaded atlas and the art-directed slate-and-stalactite shell. Seven soft-flowing waterfalls continue past the rim in both cases.
 - World vegetation uses two instanced meshes with deterministic forest masks. Rivers meander from mountain sources toward the coast and subtle road lines connect capitals to their hinterlands. Settlements reuse instanced stone/copper components; six larger capitals add foundations, halls, keeps, roofs, warm window lights, rune beacons, and buttress rhythm. Islets and coastline loops supply ocean scale cues.
-- Crownlands retains its denser continuous radial heightfield with authored ridges, valleys, plateaus, basins, and river masks. Its localized water covers two basins and their connecting river rather than blanketing the terrain.
-- The Crown of Tides is original procedural geometry: stepped foundations, masonry rhythm, bridge rails, buttresses, open arches, copper bands, an armillary crown, emissive rune windows, and a timed activation beam.
+- The Island view retains its denser continuous radial heightfield with authored ridges, valleys, plateaus, basins, and river masks. Its localized water covers two basins and their connecting river rather than blanketing the terrain.
+- The island citadel is original procedural geometry: stepped foundations, masonry rhythm, bridge rails, buttresses, open arches, copper bands, an armillary crown, emissive windows, and a timed activation beam.
 - Repeated trees, settlements, waystones, motes, mist, and flock are instanced or batched. The soft cloud texture is generated at runtime on a small canvas and reused for drifting world-space cloud wisps.
 - The loop's activation beat wakes every capital with a synchronized teal beacon while city windows brighten and the abyss answers below. It remains deterministic and can be held for review with `?moment=crown`.
 - The 36-second loop is deterministic and now uses a restrained spherical pan/tilt path around each responsive hero composition. Dragging provides bounded yaw/pitch orbiting — the pitch range extends below the horizon so the veined underside can be inspected — and wheel, trackpad, and pinch input provide bounded zoom. Keyboard users can navigate with arrows, plus/minus, and Home. After a short inspection pause, all offsets spring smoothly back into the authored loop.
@@ -72,7 +72,7 @@ The build selects the largest connected body as the world, removes the separate 
 
 `Auto` starts from coarse-pointer, viewport, memory, and logical-core hints, then can step down after sustained low frame rate. Manual selection disables adaptive changes until `Auto` is selected again.
 
-| Tier | DPR cap | Shadow map | Crown trees | World trees | City lights | Motes | Volume steps / regions | Aurora layers |
+| Tier | DPR cap | Shadow map | Island trees | World trees | City lights | Motes | Volume steps / regions | Aurora layers |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | High | 1.65 | 2048 | 360 | 860 | 96 | 320 | 24 / 7 | 3 |
 | Balanced | 1.20 | 1024 | 230 | 620 | 72 | 200 | 18 / 6 | 2 |
@@ -90,7 +90,7 @@ Measurements were taken on 2026-07-14 in the Codex in-app Chromium browser, serv
 | World, 390x844 fresh Auto/Balanced | 60 | 16.7 ms | 54 | 125,818 |
 | World, 1728x720 Auto after settling to Balanced | 60 | 16.7 ms | 54 | 125,818 |
 | World activation beat, 1280x720 Auto/Balanced | 60 | 16.7 ms | 56 | 126,010 |
-| Crownlands, 1440x810 Auto/Balanced | 60 | 16.7 ms | 52 | about 54,000 |
+| Island view, 1440x810 Auto/Balanced | 60 | 16.7 ms | 52 | about 54,000 |
 
 At 1728x720, Auto initially selected High and measured 37.8 FPS in this test browser; after 5.2 seconds of sustained pressure it stepped down to Balanced and recovered to the 60 Hz ceiling. This is the intended adaptive path rather than a claim that High reaches 60 FPS on every GPU.
 
@@ -100,7 +100,7 @@ The imported shell and atmosphere stay close to the measured geometry totals; th
 
 ## Accessibility and fallback
 
-- Menu items, World/Crownlands buttons, the scene canvas, and the quality selector support keyboard interaction with visible `:focus-visible` treatment and live-region feedback.
+- Menu items, World/Island buttons, the scene canvas, and the quality selector support keyboard interaction with visible `:focus-visible` treatment and live-region feedback.
 - `prefers-reduced-motion` fixes the cinematic phase, removes pointer/camera motion, and suppresses the flock/lightning beat.
 - Text contrast is protected by a scene grade and local wordmark scrim at desktop, ultrawide, and portrait breakpoints.
 - If the Three.js module cannot load, a seven-second watchdog reveals an authored CSS fallback. If WebGL construction fails, the fallback appears immediately.

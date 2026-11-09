@@ -2,7 +2,7 @@
 """Build six manual web prompts for coherent ten-slot loadout extraction (wave 02).
 
 Wave 02 targets the ladder points the 2026-08-15 supply analysis found starved:
-Riverspill across DEX and INT, plus Stonewood INT. All six points have zero
+Egypt and Mesopotamia across DEX and INT, plus Mesoamerica and Northwest Coast INT. All six points have zero
 balanced-folder outputs (riverspill DEX T1 has a single output; the rest have
 none). Reference pairs were visually selected from the user-reviewed ladder
 folders on 2026-08-15.
@@ -66,7 +66,7 @@ RIVERSPILL = (
 )
 
 STONEWOOD = (
-    "The character references are authoritative. The Stonewood culture is "
+    "The character references are authoritative. The Mesoamerica and Northwest Coast culture is "
     "recognized by carved and steam-bent wood, plank and withe construction, "
     "woven plant fiber, shell, structural hide, knapped obsidian, and "
     "restrained greenstone when those features are actually visible. This is a "
@@ -78,7 +78,7 @@ STONEWOOD = (
 
 FACTION_RULES = {
     "faction_riverspill": ("Nile-Ziggurat Kingdoms", RIVERSPILL),
-    "faction_stonewood": ("Stonewood Compact", STONEWOOD),
+    "faction_stonewood": ("Mesoamerica and Northwest Coast Compact", STONEWOOD),
 }
 
 AXIS_RULES = {
@@ -224,7 +224,7 @@ BATCHES = (
     Batch(
         6,
         "faction_stonewood",
-        "Stonewood Compact",
+        "Mesoamerica and Northwest Coast Compact",
         "INT",
         2,
         (
@@ -352,7 +352,7 @@ craft system visible in the references."""
         "PAPERDOLL WILDCARD SLOTS - GENERATE UP TO 10 SEPARATE ITEM FILES",
     )
     prompt = prompt.replace(
-        "Make the ten items recognizable as one Dustwind DEX Tier 1 family",
+        "Make the ten items recognizable as one Steppe DEX Tier 1 family",
         (
             f"Make all generated items recognizable as one {batch.faction_name} "
             f"{axis_word} Tier {batch.tier} family"
@@ -443,8 +443,8 @@ def main() -> None:
         "Status: ready for manual web generation; no images have been generated.",
         "",
         "Wave 02 targets the ladder points the 2026-08-15 supply analysis found",
-        "starved: Riverspill DEX T1-T3, Riverspill INT T2-T3, Stonewood INT T2.",
-        "Run wave 01 (North/Riverspill STR) first if it has not been run yet.",
+        "starved: Egypt and Mesopotamia DEX T1-T3, Egypt and Mesopotamia INT T2-T3, Mesoamerica and Northwest Coast INT T2.",
+        "Run wave 01 (North/Egypt and Mesopotamia STR) first if it has not been run yet.",
         "",
         "For each batch:",
         "",

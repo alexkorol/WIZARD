@@ -44,10 +44,13 @@ const retiredList = scopes => [...new Set([...(T.retiredPhrases || []),
 const phraseRe = list => list.length ? new RegExp(`(?<![\\w-])(?:${list.map(esc).join('|')})(?![\\w-])`, 'g') : null;
 const RETIRED_GAME = phraseRe(retiredList(['game']));
 const RETIRED_DOCS = phraseRe(retiredList([]));
-const VOCAB = new Set([...(T.nameWords || []), ...(T.nameConnectors || [])].map(w => w.toLowerCase()));
+// Closed glossary (owner, 2026-11-08: "I need a thorough purge"). Every capitalised word in
+// player-facing text, and every word of a Title Case label or stat name, must be a glossary term:
+// introduced by the owner, the standard PoE term in the same meaning, or a plain English word.
+// No exception list: a term enters only through glossary.json with its origin and evidence.
+const G = existsSync(join(HERE, 'glossary.json')) ? JSON.parse(readFileSync(join(HERE, 'glossary.json'), 'utf8')) : { terms: [] };
+const GLOSSARY = new Set(G.terms.map(t => t.term.toLowerCase()));
 const CONNECTORS = new Set((T.nameConnectors || []).map(w => w.toLowerCase()));
-const NAME_EXCEPTIONS = new Set(Object.entries(T.nameExceptions || {}).filter(([k]) => !k.startsWith('_')).flatMap(([, v]) => v));
-const PROPER = new Set((T.nameProper || []).map(w => w.toLowerCase()));
 const ROMAN = /^(?:i|ii|iii|iv|v|vi|vii|viii|ix|x)$/;
 const IDENT = [/\$\{[^}]*\}/g, /\S*\/\S*/g, /\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\b/g, /\b_\w+/g, /\b[a-z][a-z0-9]*(?:[_-][a-z0-9]+)+\b/g, /\b[a-z]+[A-Z][A-Za-z0-9]*\b/g, /\b[A-Z][a-z]+[A-Z][A-Za-z0-9]*\b/g];
 const prose = text => IDENT.reduce((t, re) => t.replace(re, ' '), text);
@@ -88,18 +91,24 @@ export function isLabel(text) {
   if (words.length > 8) return false;
   return words.every(w => /^[A-Z0-9(+%]/.test(w) || CONNECTORS.has(w.toLowerCase().replace(/[()]/g, '')));
 }
-export function flagLabel(text) {
-  if (!VOCAB.size || !isLabel(text) || NAME_EXCEPTIONS.has(text.trim())) return [];
+const glossaryWord = w => w.toLowerCase().replace(/['’]s$/, '').replace(/['’]/g, '');
+// Words a player reads as names: every word of a label; elsewhere every capitalised word.
+export function flagGlossary(text) {
+  if (typeof text !== 'string' || !GLOSSARY.size || isKey(text)) return [];
+  const label = isLabel(text);
   const hits = [];
-  for (const token of text.match(/[A-Za-z][A-Za-z'’-]*/g) || []) {
+  for (const token of prose(text).match(/[A-Za-z][A-Za-z'’-]*/g) || []) {
     for (const part of token.split('-')) {
-      const word = part.toLowerCase().replace(/['’]s$/, '').replace(/['’]/g, '');
-      if (!word || word.length < 2 || ROMAN.test(word) || /^[a-z]$/.test(word)) continue;
-      if (!VOCAB.has(word) && !PROPER.has(word)) hits.push([part, 'outside plain vocabulary (terms.json nameWords)']);
+      if (!part || (!label && !/^[A-Z]/.test(part))) continue;
+      const word = glossaryWord(part);
+      if (word.length < 2 || ROMAN.test(word)) continue;
+      if (!GLOSSARY.has(word) && !CONNECTORS.has(word)) hits.push([part, 'not in owner-rules/GLOSSARY.md']);
     }
   }
   return hits;
 }
+// Kept for callers of the earlier vocabulary pass.
+export const flagLabel = text => (isLabel(text) ? flagGlossary(text) : []);
 
 const LITERAL = /(["'`])((?:\\.|(?!\1)[^\\\n])*)\1/g;
 function codeStrings(code, base = 0) {
@@ -154,7 +163,8 @@ const PROFILES = {
       if (skip.test(p) || statSync(p).size > 8_000_000) continue;
       if (/\.(?:html|js|mjs)$/.test(p) || p.endsWith('wizard.module.json')) text.push(p);
     }
-    for (const p of walk(join(root, 'shared'), [])) if (p.endsWith('.js')) text.push(p);
+    // shared/legacy-names.js is the legacy-key translator, the one place old names may appear.
+    for (const p of walk(join(root, 'shared'), [])) if (p.endsWith('.js') && !p.endsWith('legacy-names.js')) text.push(p);
     const tree = ['tools/geometric_skilltree/assets/tree-data.js', 'tools/geometric_skilltree/assets/jewels.js',
       'tools/rpg_inventory/core/verdigris-stats.js', 'tools/geometric_skilltree/index.html'].map(p => join(root, p));
     // Game data and pages players see: retired names include the game-only entries.
@@ -187,6 +197,9 @@ const PROFILES = {
   }
 };
 
+// Shared with term-inventory.mjs so the inventory reads exactly what the lint reads.
+export { parts, PROFILES, prose };
+
 export function lint(profile, root) {
   const { text, tree } = PROFILES[profile](root);
   const report = [];
@@ -198,15 +211,15 @@ export function lint(profile, root) {
   }
   const p = PROFILES[profile](root);
   const gameSet = new Set(p.game || []);
-  // The spell effects lab names each effect after the other game it recreates (Crawl, PoE).
-  const quotes = /(?:^|\/)tools\/spellforge\//;
+  const quotes = /^$/;
   for (const path of new Set([...(p.game || []), ...text, ...(p.docs || [])])) {
     if (!existsSync(path) || quotes.test(relative(root, path))) continue;
     for (const [line, value] of parts(path)) for (const [term, why] of flagRetired(value, gameSet.has(path))) add(path, line, term, why, value);
   }
-  for (const path of p.labels || []) {
+  // Glossary: every player-facing file (game text, tool pages, data the tools show).
+  for (const path of new Set([...text, ...tree, ...(p.game || []), ...(p.labels || [])])) {
     if (!existsSync(path)) continue;
-    for (const [line, value] of parts(path)) for (const [term, why] of flagLabel(value)) add(path, line, term, why, value);
+    for (const [line, value] of parts(path)) for (const [term, why] of flagGlossary(value)) add(path, line, term, why, value);
   }
   return { report, files: new Set([...text, ...tree, ...(p.docs || [])]).size };
 }
@@ -219,8 +232,8 @@ function selfTest() {
   if (!flagTree('Iron Doctrine').length || !flagTree('Sign of the Kiln').length || flagTree('Fire Resistance').length) throw new Error('owner-rules lint self-test: tree pass');
   if (MAP.entries.length && (!flagRetired('the Archmage class').length || !flagRetired('Quick Rig').length || flagRetired('Fire Resistance').length || flagRetired('a funerary rite', false).length))
     throw new Error('owner-rules lint self-test: retired pass');
-  if (VOCAB.size && (!flagLabel('Drowned Study').length || flagLabel('Fire Resistance').length || flagLabel('Gate to the INT outer circle.').length))
-    throw new Error('owner-rules lint self-test: vocabulary pass');
+  if (GLOSSARY.size && (!flagGlossary('Drowned Study').length || !flagGlossary('costs 10% less Spirit').length || flagGlossary('Fire Resistance').length || flagGlossary('a funerary rite').length))
+    throw new Error('owner-rules lint self-test: glossary pass');
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
@@ -239,6 +252,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     for (const [w, [n, sample]] of [...words].sort()) console.log(`${w}\t${n}\t${sample}`);
     process.exit(0);
   }
+  if (!G.terms.length) { console.error('owner-rules lint: glossary.json is missing; sync it with lint.mjs'); process.exit(2); }
   if (!MAP.entries.length) { console.error('owner-rules lint: rename-map.json is missing; sync it with lint.mjs and terms.json'); process.exit(2); }
   selfTest();
   const { report, files } = lint(profile, root);

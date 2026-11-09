@@ -1,4 +1,4 @@
-/* Geometric skill web — generated radial graph drawn with framekit crops
+/* Passive tree demo — generated radial graph drawn with framekit crops
    and brass canvas connectors (replaces the flat concept poster). */
 (() => {
 "use strict";
@@ -10,40 +10,37 @@ const ctx = canvas.getContext("2d");
 const overlayEl = $("#treeOverlay");
 
 const SMALL_NAMES = [
-  ["Iron Will", "+5% Ward while standing still."],
-  ["Keen Eye", "+8% chance to notice what matters."],
-  ["Stone Skin", "+12 Armor. Weighs nothing."],
-  ["Quick Hands", "+6% cast speed with relics."],
-  ["Spell Damage at High Spirit", "+10% mana regeneration."],
-  ["Long Stride", "+8% movement on marble floors."],
-  ["Steady Aim", "+5% precision with instruments."],
-  ["Deep Breath", "Holding your breath lasts twice as long."],
-  ["Second Wind", "Once a day, refuse to fall."],
-  ["Sharp Edge", "+7% damage with brass and bronze."],
-  ["Sure Footing", "Never slip on the long stair."],
-  ["Old Knowledge", "Read the old script without squinting."],
-  ["Still Water", "+8 Will while unhurt."],
-  ["High Ground", "+6% damage from above."],
-  ["First Spark", "Your first cast each fight is free."],
-  ["Last Word", "+10% damage below 30% life."],
-  ["Fair Wind", "+4% stride, always at your back."],
-  ["Spare Key", "Locks respect you slightly more."],
+  ["Ward", "+5% maximum Ward."],
+  ["Critical Strike Chance", "+8% critical strike chance."],
+  ["Armour", "+12 Armour."],
+  ["Cast Speed", "+6% cast speed."],
+  ["Mana Regeneration", "+10% mana regeneration."],
+  ["Movement Speed", "+8% movement speed."],
+  ["Accuracy", "+5% accuracy."],
+  ["Life", "+10 maximum Life."],
+  ["Life Regeneration", "Regenerate 1% of Life per second."],
+  ["Physical Damage", "+7% physical damage."],
+  ["Evasion", "+8% evasion."],
+  ["Intelligence", "+8 Intelligence."],
+  ["Projectile Damage", "+6% projectile damage."],
+  ["Mana Cost", "-5% mana cost of skills."],
+  ["Damage at Low Life", "+10% damage while below 30% Life."],
 ];
 const NOTABLES = [
-  ["med_star", "True North", "Marks never fade. +15% against marked foes."],
-  ["med_shield", "Warding Sign", "Wards you draw last 40% longer."],
-  ["med_torch", "Bright Lantern", "Your light reaches 8 paces further and burns."],
-  ["med_snake", "Cold Blood", "Immune to panic. +12% crit against the calm."],
-  ["med_scales", "Even Keel", "Damage taken is averaged over 4 seconds."],
-  ["med_hourglass", "Patient Hunter", "+25% damage after standing still for 2s."],
+  ["med_star", "Damage Against Marked Enemies", "+15% damage against marked enemies."],
+  ["med_shield", "Ward Duration", "Wards last 40% longer."],
+  ["med_torch", "Light Radius", "+20% light radius."],
+  ["med_snake", "Critical Strike Multiplier", "+12% critical strike multiplier."],
+  ["med_scales", "Damage Taken Over Time", "Damage taken is spread over 4 seconds."],
+  ["med_hourglass", "Damage After Standing Still", "+25% damage after standing still for 2 seconds."],
 ];
 const OUTER = [
-  ["socket_gold", "Radiant Circle", "All allocated notables also grant +5 Will."],
-  ["med_sunteal", "Noon Vigil", "Radiance costs no mana at full life."],
-  ["socket_gold", "Sealed Oath", "Wards cannot break; they expire instead."],
-  ["med_eaglehead", "High Watch", "You cannot be surprised. Ever."],
-  ["socket_gold", "Deep Archive", "+1 to every skill the web touches."],
-  ["med_flower", "Late Bloom", "Every point refunded returns doubled, once."],
+  ["socket_gold", "Intelligence per Notable", "+5 Intelligence per allocated notable."],
+  ["med_sunteal", "Free Fire Nova at Full Life", "Fire Nova costs no mana while on full Life."],
+  ["socket_gold", "Ward Cannot Break", "Wards cannot break; they expire instead."],
+  ["med_eaglehead", "Cannot Be Stunned", "Cannot be stunned."],
+  ["socket_gold", "+1 to All Skills", "+1 to level of all skills."],
+  ["med_flower", "Area of Effect", "+10% area of effect."],
 ];
 
 /* ------------------------------------------------------ generate graph */
@@ -55,8 +52,8 @@ function addNode(x, y, kind, icon, size, name, desc) {
 }
 const link = (a, b) => { a.edges.push(b); b.edges.push(a); };
 
-const key = addNode(C, C, "keystone", "laurel_sun", 118, "The Verdant Seal",
-  "Every path in the web begins and ends at the seal.");
+const key = addNode(C, C, "keystone", "laurel_sun", 118, "Start",
+  "Starting node. Every path begins here.");
 key.on = true;
 
 const SPOKES = 6;
@@ -187,7 +184,7 @@ nodes.forEach(n => {
   el.addEventListener("pointerenter", ev => {
     present();
     FK.showTip({ name: n.name, rarity: n.on ? "legendary" : (n.kind === "notable" || n.kind === "outer") ? "epic" : "common",
-      type: n.kind === "keystone" ? "Keystone" : n.kind === "outer" ? "Crown Passive · 1 point"
+      type: n.kind === "keystone" ? "Keystone" : n.kind === "outer" ? "Outer Passive · 1 point"
         : n.kind === "notable" ? "Notable · 1 point" : "Passive · 1 point",
       stats: [n.desc] }, n.name, FK.stagePoint(ev));
   });

@@ -9,7 +9,7 @@ target is roughly 500-600 usable inventory images.
 | Bucket | Count | Notes |
 |---|---:|---|
 | Equipment base items | 420 | Named base ladders across weapons, armour, off-hands, jewellery, rite gear, and relics. The former currency/crafting-art budget is redistributed here, mostly to non-weapon slots. |
-| Uniques / awakened relics | 100 | 25 per theme: slaughter, warding, spiritwork, wayfaring. |
+| Uniques / upgraded relics | 100 | 25 per theme: slaughter, warding, spiritwork, wayfaring. |
 | Animal parts / fragments / hunt relics | 40 | Monster parts, ancestor fragments, shrine offerings. |
 | Sets / faction variants | 40 | Small 3-5 piece visual families, not full material grids. |
 | UI / frame / support art | 20 | Frames, benches, sockets, dividers, vendor and inventory accents. |
@@ -60,7 +60,7 @@ base vocabulary to mutate.
 | Non-weapon expansion reserve | 24 | Extra armour, shields, wearable jewellery, belts, greaves/bracers, rite foci, auxiliary gear, relic gear, and trophies. Do not spend this reserve on weapons or abstract currency. |
 | **Total** | **420** |  |
 
-## Uniques and awakened relics
+## Uniques and upgraded relics
 
 Generate after the base vocabulary exists.
 
@@ -115,7 +115,7 @@ recognizable loot objects for the Supply Pack.
    charms, belts, bracers, boots, and off-hands.
 4. Add the 60-row non-weapon expansion reserve.
 5. Add 40 trophies/fragments and 40 shrine/faction tokens.
-6. Add 100 uniques/awakened rows.
+6. Add 100 uniques/upgraded rows.
 7. Add UI/support art only where the app actually needs it.
 
 At 50-60 acceptable gens/day, the 500-600 target is roughly 10-12 production
@@ -152,7 +152,7 @@ Use `NAMEBANK-PRE-AD.md` when selecting base names, construction terms, rare
 prestige buckets, and medieval false-friend filters. The short version: ordinary
 base gear should come from pre-AD archaeological forms and construction
 language, while spectacular votive/display/precious pieces move to uniques,
-awakened relics, shrine loot, or faction prestige sets.
+upgraded relics, shrine loot, or faction prestige sets.
 
 - Player-facing names are base names, not material IDs.
 - Avoid repeated `material noun` rows unless the silhouette changes.
@@ -162,7 +162,7 @@ awakened relics, shrine loot, or faction prestige sets.
   silhouette and stay generic.
 - Base rows do not get invented lore symbols, horned suns, deity marks,
   faction emblems, heavy patina, or grimy verdigris. Save that for uniques,
-  awakened relics, and faction sets.
+  upgraded relics, and faction sets.
 - Base-worthy gear rule: every ordinary base must look worth equipping before
   the tooltip explains it. It should have enough mass, construction, and
   silhouette authority to block, strike, ward, carry, bind, or focus power.

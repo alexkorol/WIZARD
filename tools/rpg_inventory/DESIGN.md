@@ -1,11 +1,11 @@
-# Vesselforge — Design Document
+# item crafting system — Design Document
 
 A modular, engine-agnostic ARPG item system for Verdigris/Delaford-type games.
 Bronze-age, low-power, low-fantasy: **copper is wealth, bronze is power,
 riveted mail is a rumor.**
 
 This document has two halves: (1) what the genre already does, distilled from
-research; (2) the Vesselforge system built on top of it.
+research; (2) the item crafting system system built on top of it.
 
 ---
 
@@ -76,11 +76,11 @@ Every system above is a position on these axes:
 6. **Knowledge economy** — runewords, hidden completion bonuses, recipes
 7. **Identity** — named uniques, MIs, influence marks
 8. **Item growth through play** — almost *unoccupied* in the genre. This is
-   Vesselforge's home turf.
+   item crafting system's home turf.
 
 ---
 
-## Part 2 — Vesselforge
+## Part 2 — item crafting system
 
 ### The one-sentence pitch
 
@@ -141,10 +141,10 @@ should follow that ladder model, not the old grid. (This is also recorded in
 |---|---|---|---|
 | Verb | craft | live | hunt |
 | Shape | flat / scalar only | named conditional & trigger mods | fixed themed mods + completion bonus |
-| Source | tools, pigments, omens | deeds while equipped | fragments from monster families |
+| Source | tools, pigments, guaranteed-brand items | deeds while equipped | fragments from monster families |
 | Removal | efface (slot reusable) | sever → **scar** | pry out (trophy breaks) |
 | Chase | tier gated by ilvl + material | tier III via play or Resonance | completion bonus at full stack |
-| Kinship | none | shaper's archetype; half-strength estranged | none |
+| Class bond | none | shaper's archetype; half-strength held by another class | none |
 
 - **Brands** are the deterministic end: `sear` with optional **pigment**
   (reweight tags, fossil-style) or **omen** (guarantee a tag, essence-style).
@@ -153,23 +153,23 @@ should follow that ladder model, not the old grid. (This is also recorded in
   that *hands the item over to the Bond system*. That interlock is the novel
   part: the crafting budget and the growth system are the same real estate.
 - **Bonds** as before (named conditional memories, themes from deeds,
-  kinship/estrangement, tier I–III, awakening at 3×III), now engine-modular.
+  class bonds (half strength for another class), tier I–III, upgrade at 3×III), now engine-modular.
 - **Animal parts**: TQ-style fragments (boar tusk 0/5) that complete into a
   socketable fetish with a completion bonus. The Grim Dawn homage: top-tier
   trophies may **grant a rite** (usable skill) — the only "skill granting"
   in a low-magic world comes from dead things, which fits.
 
-### Awakening & Panoply
+### Upgrade & Set bonus
 
-Awakening as shipped (3 tier-III bonds → named relic). New: **Panoply** —
-equipped awakened items sharing a kinship resonate (2: minor, 3+: major
+Upgrade as shipped (3 tier-III bonds → named relic). New: **Set bonus** —
+equipped upgraded items sharing a class bond resonate (2: minor, 3+: major
 bonus from the pack). Sets in this world are not dropped, they are *made* —
 the only "set items" are the ones a single life assembled. No other ARPG
 does player-authored sets.
 
 ### Determinism spectrum, mapped
 
-| PoE/LE original | Vesselforge | Flavor |
+| PoE/LE original | item crafting system | Flavor |
 |---|---|---|
 | chaos spam | re-sear freely (costs Patience) | scraping the slate |
 | essence | **Omen** (guarantee tag) | read the entrails first |
@@ -197,7 +197,7 @@ does player-authored sets.
 
 ### What stays out (for now)
 
-Ward-knot metamods, trophy rite cooldowns, estrangement healing, economy/
+Ward-knot metamods, trophy rite cooldowns, class-bond penalty healing, economy/
 trade. Listed in ISSUES.md.
 
 ---

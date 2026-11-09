@@ -5,9 +5,9 @@ const { $, ITEMS } = FK;
 
 const STASH_CAPACITY = 40;
 const STASH = [
-  "greataxe", "gauntlets", "amber", "mirror", "fetish", "gemR", "gemE",
-  "curorb", "cursigil", "curstone", "draught", "ember", "bowl", "ironring",
-  "coral", "hourglass", "wand", "ring2",
+  "greataxe", "amber", "mirror", "fetish", "gemR", "gemE",
+  "curorb", "curstone", "draught", "ember", "bowl",
+  "coral", "wand", "ring2",
 ].map(key => Object.assign({}, ITEMS[key]));
 while (STASH.length < STASH_CAPACITY) STASH.push(null);
 
@@ -83,8 +83,6 @@ renderStash();
 
 /* --------------------------------------------------------------- codex */
 const CODEX = [
-  { title: "Warden of the Verdant Seal", type: "Standing · The Sunken Archive", icon: "med_sun",
-    body: "The lower vaults have been quiet for nine days. The lamps along the long stair are lit and the ledger is current." },
   ...Object.values(ITEMS).filter(item => item.flavor || /Quest|Key|Curio/.test(item.type)).map(item => ({
     title: item.name, type: item.type, icon: item.icon,
     body: item.flavor || (item.stats || []).join(" · "), rarity: item.rarity,
@@ -110,9 +108,8 @@ CODEX.forEach((entry, index) => {
 
 /* ------------------------------------------------------------ crafting */
 const RECIPES = [
-  { id: "reforge", catalyst: "curorb", title: "Reforge Colors", text: "Use a Chromatic Orb on selected equipment.", mark: "Prismatic", stat: "Sockets reforged at the Brass Crucible" },
-  { id: "hone", catalyst: "curstone", title: "Hone Quality", text: "Use a Whetstone to temper selected equipment.", mark: "Tempered", stat: "+5% quality from Crucible honing" },
-  { id: "seal", catalyst: "cursigil", title: "Seal Modifier", text: "Use a Binding Sigil to seal the selected item's inscription.", mark: "Sealed", stat: "Inscription sealed against reforging" },
+  { id: "reforge", catalyst: "curorb", title: "Reroll Socket Colours", text: "Use a Chromatic Orb on selected equipment.", mark: "Recoloured", stat: "Socket colours rerolled" },
+  { id: "hone", catalyst: "curstone", title: "Add Quality", text: "Use a Whetstone to add quality to selected equipment.", mark: "Honed", stat: "+5% quality" },
 ];
 const craftRecipes = $("#craftRecipes");
 const craftTarget = $("#craftTarget");
@@ -186,7 +183,7 @@ const equipped = new Set();
 function renderCosmetics() {
   const cosmetics = FK.COSMETICS || [];
   cosmeticGrid.replaceChildren();
-  cosmeticPreview.innerHTML = `<img src="assets/med_cherub2.png" alt="Aurelius"><div><span>${equipped.size ? "Ceremonial effects active" : "Unadorned"}</span><b>${[...equipped].map(id => cosmetics.find(c => c.id === id)?.name).filter(Boolean).join(" · ") || "No cosmetics equipped"}</b></div>`;
+  cosmeticPreview.innerHTML = `<img src="assets/med_cherub2.png" alt="Character"><div><span>${equipped.size ? "Cosmetics equipped" : "No cosmetics"}</span><b>${[...equipped].map(id => cosmetics.find(c => c.id === id)?.name).filter(Boolean).join(" · ") || "No cosmetics equipped"}</b></div>`;
   cosmetics.forEach(cosmetic => {
     const button = document.createElement("button");
     button.type = "button";
@@ -195,8 +192,8 @@ function renderCosmetics() {
     if (cosmetic.owned) button.setAttribute("aria-pressed", String(isEquipped));
     button.setAttribute("aria-label", cosmetic.owned
       ? `${cosmetic.name}, ${isEquipped ? "equipped" : "owned"}`
-      : `${cosmetic.name}, locked, ${cosmetic.price} shards in the shop`);
-    button.innerHTML = `<img src="assets/${cosmetic.icon}.png" alt=""><b>${cosmetic.name}</b><small>${cosmetic.owned ? (isEquipped ? "Equipped" : "Owned") : `${cosmetic.price} shards`}</small>`;
+      : `${cosmetic.name}, locked, ${cosmetic.price} points in the shop`);
+    button.innerHTML = `<img src="assets/${cosmetic.icon}.png" alt=""><b>${cosmetic.name}</b><small>${cosmetic.owned ? (isEquipped ? "Equipped" : "Owned") : `${cosmetic.price} points`}</small>`;
     button.addEventListener("click", () => {
       if (!cosmetic.owned) {
         FK.openPane("left", "reliquary");

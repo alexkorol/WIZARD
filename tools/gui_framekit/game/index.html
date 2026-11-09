@@ -58,14 +58,14 @@
   <header id="topbar">
     <div id="location" class="banner">
       <img src="assets/banner_arch.png" alt="">
-      <span id="locationName">The Sunken Archive</span>
+      <span id="locationName">Dungeon Level 1</span>
     </div>
     <div id="topright">
       <div id="goldplate" class="banner">
         <img src="assets/banner_plaque.png" alt="">
         <span id="goldAmount">1,248</span>
       </div>
-      <button id="skillBtn" class="systemBtn" title="Skill Web" aria-label="Open Skill Web" aria-controls="skillScreen" aria-expanded="false" aria-keyshortcuts="V">
+      <button id="skillBtn" class="systemBtn" title="Passive Tree" aria-label="Open Passive Tree" aria-controls="skillScreen" aria-expanded="false" aria-keyshortcuts="V">
         <img class="frame" src="assets/panel_sq_small.png" alt="">
         <img class="icon" src="assets/laurel_sun.png" alt="">
       </button>
@@ -82,9 +82,9 @@
       <button class="pane-launch" data-side="left" data-pane="stats" aria-controls="leftPane" aria-expanded="false" aria-keyshortcuts="C"><img src="assets/med_sun.png" alt=""><span>Stats</span></button>
       <button class="pane-launch" data-side="left" data-pane="stash" aria-controls="leftPane" aria-expanded="false" aria-keyshortcuts="K"><img src="assets/med_key.png" alt=""><span>Stash</span></button>
       <button class="pane-launch" data-side="left" data-pane="trade" aria-controls="leftPane" aria-expanded="false" aria-keyshortcuts="T"><img src="assets/med_scales.png" alt=""><span>Trade</span></button>
-      <button class="pane-launch" data-side="left" data-pane="codex" aria-controls="leftPane" aria-expanded="false" aria-keyshortcuts="L"><img src="assets/med_hourglass.png" alt=""><span>Codex</span></button>
+      <button class="pane-launch" data-side="left" data-pane="codex" aria-controls="leftPane" aria-expanded="false" aria-keyshortcuts="L"><img src="assets/med_hourglass.png" alt=""><span>Journal</span></button>
       <button class="pane-launch" data-side="left" data-pane="crafting" aria-controls="leftPane" aria-expanded="false" aria-keyshortcuts="F"><img src="assets/med_torch.png" alt=""><span>Craft</span></button>
-      <button class="pane-launch" data-side="left" data-pane="reliquary" aria-controls="leftPane" aria-expanded="false" aria-keyshortcuts="B"><img src="assets/laurel_sun.png" alt=""><span>Relics</span></button>
+      <button class="pane-launch" data-side="left" data-pane="reliquary" aria-controls="leftPane" aria-expanded="false" aria-keyshortcuts="B"><img src="assets/laurel_sun.png" alt=""><span>Shop</span></button>
     </nav>
 
     <aside id="leftPane" class="pane-shell left closed" data-side="left" aria-hidden="true" aria-labelledby="leftPaneTitle">
@@ -96,10 +96,10 @@
       <div class="pane-body">
         <section class="pane-view" data-pane="stats"><div id="leftCharacterContent" class="character-side"></div></section>
         <section class="pane-view" data-pane="stash"><p id="stashCount" class="pane-kicker">Account storage</p><div class="pane-toolbar"><span id="stashTarget">Select an inventory item to deposit it.</span><button id="stashDeposit" class="pane-action" type="button">Deposit</button></div><div id="stashGrid" class="pane-grid" aria-label="Stash items"></div></section>
-        <section class="pane-view" data-pane="trade"><p class="pane-kicker">Harl · Armourmaster</p><h3 class="pane-section-title">Harl's stock</h3><div id="vendorOverlay" class="pane-grid trade-grid" aria-label="Vendor stock"></div><section class="trade-offer" aria-labelledby="tradeOfferTitle"><h3 id="tradeOfferTitle">Your offer</h3><div id="tradeOfferItem" role="status" aria-live="polite">Select a pack item to sell.</div><div class="trade-actions"><button id="tradeAddOffer" class="pane-action" type="button">Offer selected</button><button id="tradeAccept" class="pane-action primary" type="button" disabled>Accept trade</button><button id="tradeCancel" class="pane-action" type="button" disabled>Cancel</button></div></section><p id="vendorHint" role="status" aria-live="polite">Buy from Harl, or select an item in Inventory to make an offer.</p></section>
-        <section class="pane-view codex-layout" data-pane="codex"><div id="codexList" class="codex-list" aria-label="Codex entries"></div><article id="codexEntry" class="codex-entry" role="region" aria-live="polite" aria-label="Selected codex entry"></article></section>
-        <section class="pane-view" data-pane="crafting"><p class="pane-kicker">Crafting · 3 recipes</p><div id="craftTarget" class="pane-toolbar" role="status" aria-live="polite">Select equipment in Inventory.</div><div id="craftRecipes"></div></section>
-        <section class="pane-view" data-pane="reliquary"><div id="shardPlate">Shards <b id="shardAmount">1,200</b></div><div id="shopCards"></div></section>
+        <section class="pane-view" data-pane="trade"><p class="pane-kicker">Armour Vendor</p><h3 class="pane-section-title">Vendor stock</h3><div id="vendorOverlay" class="pane-grid trade-grid" aria-label="Vendor stock"></div><section class="trade-offer" aria-labelledby="tradeOfferTitle"><h3 id="tradeOfferTitle">Your offer</h3><div id="tradeOfferItem" role="status" aria-live="polite">Select a pack item to sell.</div><div class="trade-actions"><button id="tradeAddOffer" class="pane-action" type="button">Offer selected</button><button id="tradeAccept" class="pane-action primary" type="button" disabled>Accept trade</button><button id="tradeCancel" class="pane-action" type="button" disabled>Cancel</button></div></section><p id="vendorHint" role="status" aria-live="polite">Buy from the vendor, or select an item in Inventory to make an offer.</p></section>
+        <section class="pane-view codex-layout" data-pane="codex"><div id="codexList" class="codex-list" aria-label="Journal entries"></div><article id="codexEntry" class="codex-entry" role="region" aria-live="polite" aria-label="Selected journal entry"></article></section>
+        <section class="pane-view" data-pane="crafting"><p class="pane-kicker">Crafting · 2 recipes</p><div id="craftTarget" class="pane-toolbar" role="status" aria-live="polite">Select equipment in Inventory.</div><div id="craftRecipes"></div></section>
+        <section class="pane-view" data-pane="reliquary"><div id="shardPlate">Points <b id="shardAmount">1,200</b></div><div id="shopCards"></div></section>
       </div>
     </aside>
 
@@ -122,12 +122,12 @@
   </section>
 
   <!-- ========================= fullscreen workspaces ========================= -->
-  <section id="skillScreen" class="overlay-panel" role="dialog" aria-modal="true" aria-label="Skill Web" aria-hidden="true">
+  <section id="skillScreen" class="overlay-panel" role="dialog" aria-modal="true" aria-label="Passive Tree" aria-hidden="true">
     <aside id="skillPanel">
       <img src="assets/modal_winged.png" alt="">
       <div id="skillPanelBody">
-        <h3 id="skillName">The Verdant Seal</h3>
-        <p id="skillDesc">Every path in the web begins and ends at the seal.</p>
+        <h3 id="skillName">Start</h3>
+        <p id="skillDesc">Starting node. Every path begins here.</p>
         <div id="skillMeta"></div>
       </div>
     </aside>
@@ -186,8 +186,8 @@
         <h2 id="settingsTitle">Settings</h2>
         <div class="setrow"><label>Music</label>
           <button class="toggle" data-set="music" role="switch" aria-checked="true" aria-label="Music"><img src="assets/toggle_on.png" alt=""></button></div>
-        <div class="setrow"><label>Drifting motes</label>
-          <button class="toggle" data-set="motes" role="switch" aria-checked="true" aria-label="Drifting motes"><img src="assets/toggle_on.png" alt=""></button></div>
+        <div class="setrow"><label>Ambient particles</label>
+          <button class="toggle" data-set="motes" role="switch" aria-checked="true" aria-label="Ambient particles"><img src="assets/toggle_on.png" alt=""></button></div>
         <div class="setrow"><label>Quality</label>
           <button id="quality" class="dd" aria-label="Quality: High"><img src="assets/dropdown.png" alt=""><span>High</span></button></div>
         <div class="setrow"><label>Show keybinds</label>

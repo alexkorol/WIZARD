@@ -88,6 +88,7 @@
   </div>
 </div>
 
+<script src="../../shared/legacy-names.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function () {
@@ -108,7 +109,7 @@
     ['Adversarial', 'Natural'],
     ['Destructive', 'Sustaining', 'Creative'],
     ['Fire', 'Air', 'Water', 'Earth'],
-    ['Body', 'Spirit', 'Mind'],
+    ['Body', 'Self', 'Mind'],
     ['Outer', 'Inner'],
     ['Manifestation']
   ];
@@ -116,33 +117,34 @@
     Source: '#FFA500', Adversarial: '#FF4444', Natural: '#50C878',
     Destructive: '#DC143C', Sustaining: '#4682B4', Creative: '#9370DB',
     Fire: '#FF6B6B', Air: '#E6E6FA', Water: '#1E90FF', Earth: '#B5651D',
-    Body: '#DAA520', Spirit: '#48D1CC', Mind: '#7B68EE',
+    Body: '#DAA520', Self: '#48D1CC', Mind: '#7B68EE',
     Outer: '#4169E1', Inner: '#CD5C5C', Manifestation: '#7FFFD4'
   };
   var NATIVE = {
     Source: 0, Adversarial: 1, Natural: 1,
     Destructive: 2, Sustaining: 2, Creative: 2,
     Fire: 3, Air: 3, Water: 3, Earth: 3,
-    Body: 4, Spirit: 4, Mind: 4,
+    Body: 4, Self: 4, Mind: 4,
     Outer: 5, Inner: 5, Manifestation: 6
   };
+  // Power per node (the generated epithets were flavour and are removed; owner rule 6).
   var FLAVOR = {
-    Source: { n: 'Akashic', p: 5 }, Adversarial: { n: 'Vile', p: 4 }, Natural: { n: 'Verdant', p: 3 },
-    Destructive: { n: 'Ruinous', p: 5 }, Sustaining: { n: 'Aegis', p: 3 }, Creative: { n: 'Genesis', p: 4 },
-    Fire: { n: 'Pyre', p: 4 }, Air: { n: 'Gale', p: 3 }, Water: { n: 'Tide', p: 3 }, Earth: { n: 'Granite', p: 4 },
-    Body: { n: 'Flesh', p: 3 }, Spirit: { n: 'Soul', p: 4 }, Mind: { n: 'Psyche', p: 4 },
-    Outer: { n: 'of the World', p: 3 }, Inner: { n: 'of the Self', p: 2 }, Manifestation: { n: '', p: 1 }
+    Source: { p: 5 }, Adversarial: { p: 4 }, Natural: { p: 3 },
+    Destructive: { p: 5 }, Sustaining: { p: 3 }, Creative: { p: 4 },
+    Fire: { p: 4 }, Air: { p: 3 }, Water: { p: 3 }, Earth: { p: 4 },
+    Body: { p: 3 }, Self: { p: 4 }, Mind: { p: 4 },
+    Outer: { p: 3 }, Inner: { p: 2 }, Manifestation: { p: 1 }
   };
+  // What each Effect + Range + element weave does, in plain words.
   var FORMS = {
-    'Destructive|Outer': { Fire: 'a roaring fireball that detonates on impact', Air: 'a forking storm of lightning', Water: 'a spear of abyssal ice', Earth: 'a shattering seismic wave' },
-    'Destructive|Inner': { Fire: 'a withering curse of fever and ash', Air: 'a suffocating hex that steals breath', Water: 'a slowing curse', Earth: 'a petrifying affliction' },
-    'Sustaining|Outer': { Fire: 'a ring of fire that shields you', Air: 'a sheltering cyclone barrier', Water: 'a healing tide washing over allies', Earth: 'a bulwark of living stone' },
-    'Sustaining|Inner': { Fire: 'an inner-flame aura of relentless vigor', Air: 'a featherlight aura granting flight', Water: 'life regeneration', Earth: 'unbreakable stoneskin' },
-    'Creative|Outer': { Fire: 'a summoned salamander of living flame', Air: 'a conjured zephyr-djinn bound to service', Water: 'a sculpted servitor of flowing water', Earth: 'a golem risen from raw earth' },
-    'Creative|Inner': { Fire: 'an illusory mantle of burning glory', Air: 'a divination carried on whispering winds', Water: 'a scrying pool opened in the mind’s eye', Earth: 'a transmutation of flesh into enduring stone' }
+    'Destructive|Outer': { Fire: 'fire projectile that explodes on impact', Air: 'lightning that chains between enemies', Water: 'cold projectile', Earth: 'ground wave that damages in a line' },
+    'Destructive|Inner': { Fire: 'curse that burns over time', Air: 'curse that slows', Water: 'curse that slows', Earth: 'curse that holds the target in place' },
+    'Sustaining|Outer': { Fire: 'ring of fire around you', Air: 'wind barrier that deflects projectiles', Water: 'heal for nearby allies', Earth: 'stone barrier' },
+    'Sustaining|Inner': { Fire: 'damage aura', Air: 'movement speed aura', Water: 'life regeneration', Earth: 'armour buff' },
+    'Creative|Outer': { Fire: 'summoned fire creature', Air: 'summoned wind creature', Water: 'summoned water creature', Earth: 'summoned earth creature' },
+    'Creative|Inner': { Fire: 'illusion of the caster', Air: 'reveals hidden enemies', Water: 'reveals the nearby map', Earth: 'turns your skin to stone (armour)' }
   };
-  var SPHERE_C = { Body: 'anchored to flesh and matter', Spirit: 'entwined with the soul', Mind: 'woven through thought itself' };
-  var ALIGN_C = { Adversarial: 'It hungers as it works, corrupting whatever it touches.', Natural: 'It flows in harmony with the natural order.' };
+  var SPHERE_C = { Body: 'targets bodies', Self: 'targets the caster', Mind: 'targets minds' };
   var CENTERS = ['r2s1', 'r3s1', 'r3s2', 'r4s1'];
   var TIERS = ['Plane', 'Vessel', 'Tesseract'];
 
@@ -159,7 +161,7 @@
     Water:         { beh: 'drips',  cnt: 7,  c2: '#9BD4FF', vs: 1.2, dir: 1 },
     Earth:         { beh: 'dust',   cnt: 9,  c2: '#C9A36B', vs: 0.45, dir: 1 },
     Body:          { beh: 'orbit',  cnt: 5,  c2: '#F0D080', vs: 0.9, dir: 1 },
-    Spirit:        { beh: 'wisps',  cnt: 7,  c2: '#A8F0E0', vs: 1.4, dir: 1 },
+    Self:        { beh: 'wisps',  cnt: 7,  c2: '#A8F0E0', vs: 1.4, dir: 1 },
     Mind:          { beh: 'orbit',  cnt: 7,  c2: '#C9B8FF', vs: 2.6, dir: -1 },
     Outer:         { beh: 'flare',  cnt: 5,  c2: '#9FC0FF', vs: 1.3, dir: 1 },
     Inner:         { beh: 'inhale', cnt: 6,  c2: '#FFAFA0', vs: 1.3, dir: -1 },
@@ -298,7 +300,11 @@
     x.fillStyle = g; x.beginPath(); x.arc(64, 64, 60, 0, 6.283); x.fill();
     return new THREE.CanvasTexture(c);
   }
+  // The Sphere node renamed on 2026-11-08 (owner: the old name was made up) is 'Self'.
+  // States saved before the rename are migrated where they load.
+  function displayName(n) { return n; }
   function labelTex(text) {
+    text = displayName(text);
     var c = document.createElement('canvas'); c.width = 512; c.height = 128;
     var x = c.getContext('2d');
     x.font = '600 50px Georgia,serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
@@ -549,20 +555,21 @@
   function genSpell(n) {
     var displaced = 0;
     n.forEach(function (name, r) { if (NATIVE[name] !== r) displaced++; });
-    var title = ((FLAVOR[n[1]] ? FLAVOR[n[1]].n : n[1]) + ' ' + (FLAVOR[n[3]] ? FLAVOR[n[3]].n : n[3]) + ' ' + (FLAVOR[n[5]] ? FLAVOR[n[5]].n : '')).replace(/\s+/g, ' ').trim();
     var ft = FORMS[n[2] + '|' + n[5]];
     var form = ft && ft[n[3]];
-    var sc = SPHERE_C[n[4]] || ('channeled through the displaced essence of ' + n[4]);
-    var ac = ALIGN_C[n[1]] || ('Its moral axis is fractured — ' + n[1] + ' burns where alignment should reside.');
-    var arch, body;
+    var sc = SPHERE_C[n[4]] || ('targets ' + displayName(n[4]).toLowerCase());
+    var path = n.map(displayName).join(' · ');
+    var title, arch, body;
     if (form) {
-      arch = n[2] + ' · ' + n[3] + ' · ' + n[4] + ' · ' + n[5];
-      body = n[0] + ' energy condenses into ' + form + ', ' + sc + '. ' + ac;
+      title = form.charAt(0).toUpperCase() + form.slice(1);
+      arch = displayName(n[2]) + ' · ' + displayName(n[3]) + ' · ' + displayName(n[4]) + ' · ' + displayName(n[5]);
+      body = 'A ' + form + '; ' + sc + '. Path: ' + path + '.';
     } else {
-      arch = 'Aberrant hybrid weave';
-      body = n[0] + ' energy is forced through a warped channel — an aberrant weave of ' + n[2].toLowerCase() + ' and ' + n[3].toLowerCase() + ' resonance, ' + sc + '. ' + ac;
+      title = 'Mixed weave';
+      arch = 'Nodes outside their usual strata';
+      body = 'A ' + n[2].toLowerCase() + ' ' + n[3].toLowerCase() + ' weave with no matching spell form; ' + sc + '. Path: ' + path + '.';
     }
-    var hybrid = displaced > 0 ? ('⚠ ' + displaced + ' node' + (displaced > 1 ? 's' : '') + ' resonating outside ' + (displaced > 1 ? 'their' : 'its') + ' native stratum — the weave warps unpredictably, gaining power at the cost of control.') : null;
+    var hybrid = displaced > 0 ? ('⚠ ' + displaced + ' node' + (displaced > 1 ? 's' : '') + ' resonating outside ' + (displaced > 1 ? 'their' : 'its') + ' native stratum: more power, more instability.') : null;
     var base = 0;
     n.forEach(function (name) { base += (FLAVOR[name] ? FLAVOR[name].p : 3); });
     // Hyperchannel strain: every hop not present in the base lattice taxes the cast.
@@ -1132,7 +1139,7 @@
       if (!data) return;
       if (data.assign) {
         st.assign = new Map();
-        slots.forEach(function (s) { st.assign.set(s.id, data.assign[s.id] || INITIAL[s.row][s.idx]); });
+        slots.forEach(function (s) { var v = window.legacyName ? window.legacyName(data.assign[s.id]) : data.assign[s.id]; st.assign.set(s.id, v || INITIAL[s.row][s.idx]); });
       }
       st.selected = new Map();
       if (data.selected) {

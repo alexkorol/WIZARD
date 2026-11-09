@@ -77,7 +77,7 @@
     return hexDistance(q - stone.q, r - stone.r) <= radius;
   }
 
-  // Anchor pattern hooks: authored ring-5 seats whose promises the detector
+  // Pattern-node hooks: authored ring-5 seats whose promises the detector
   // keeps. Each hook: { q, r, id, effect, value } for an ACTIVE waystone.
   function hooksFor(input, effect) {
     return (input.waystones || []).filter(hook => hook.effect === effect);
@@ -208,7 +208,7 @@
   }
 
   function selectExclusivePaths(ctx, tuning, sharedClaimIds = new Set()) {
-    // Conduits touching a shared-claim Anchor may serve one wave AND one
+    // Conduits touching a shared-claim pattern node may serve one wave AND one
     // flow (never two of the same family); everything else is exclusive.
     const claims = new Map();
     const blockedFor = type => id => {
@@ -686,7 +686,7 @@
     });
     bonuses.push({
       id: 'enclosure',
-      name: 'Warding Circles',
+      name: 'Block and Ward Circles',
       active: patterns.enclosures.length > 0,
       progress: `${patterns.enclosures.length} enclosure${patterns.enclosures.length === 1 ? '' : 's'}`,
       description: 'Close a circuit around one or more unallocated seats.',
@@ -768,7 +768,7 @@
     const loopData = detectLoops(ctx, tuning, stonesFor(input, 'loop-gap'));
 
     // Enclosure-boost: Votive-Waystone-style hooks strengthen warding circles
-    // whose perimeter carries the Anchor.
+    // whose perimeter carries the pattern node.
     const enclosureHooks = hooksFor(input, 'enclosure-boost');
     loopData.enclosures.forEach(enclosure => {
       const bonus = enclosureHooks.reduce((sum, hook) =>
@@ -808,7 +808,7 @@
           nodeBoosts,
           nodeId,
           tuning.rods.endpointPercent * (doubled ? 2 : 1),
-          `rod endpoint length ${rod.length}${doubled ? ' (Anchor doubled)' : ''}`
+          `rod endpoint length ${rod.length}${doubled ? ' (pattern node doubled)' : ''}`
         );
       });
     });

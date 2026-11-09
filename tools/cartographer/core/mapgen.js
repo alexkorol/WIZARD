@@ -671,7 +671,7 @@
       if (b.inBounds(x, y) && b.get(x, y) === TILE.VOID) b.set(x, y, TILE.FLOOR);
     }
 
-    // infernal variant: molten pools eating into the platforms
+    // volcanic variant (id 'infernal'): molten pools eating into the platforms
     if (theme.liquid === 'lava') {
       var noise = makeNoise(rng);
       for (var y2 = 1; y2 < b.h - 1; y2++) {
@@ -1557,7 +1557,7 @@
       },
       decor: { crystal: 2.2, statue: 1, bones: 0.4 }
     }),
-    infernal: theme('infernal', 'Infernal', 'sanctum', {
+    infernal: theme('infernal', 'Volcanic', 'sanctum', {
       liquid: 'lava',
       palette: {
         bg: '#120806',

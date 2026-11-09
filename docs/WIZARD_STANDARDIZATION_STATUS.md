@@ -24,7 +24,7 @@ Default local run: `python -m http.server` from repo root.
 |---|---|---|---|---|---|---|---|
 | `tools/wizard_orbs` | Vessels of Life & Mana | **active** | featured + card | dashboard | yes | via `tools/performance.test.mjs` | `screenshots/shot_hero.png` |
 | `tools/geometric_skilltree` | Geometric Passive Tree | **active** | card | dashboard | yes | 6 local suites + performance | none dedicated |
-| `tools/rpg_inventory` | Vesselforge & Inventory | **active** | card (“Brands & Bonds”) | dashboard | yes | `core/test.js`, `core/verdigris-stats.test.js` | none dedicated |
+| `tools/rpg_inventory` | Inventory and Item Crafting | **active** | card (“Brands & Bonds”) | dashboard | yes | `core/test.js`, `core/verdigris-stats.test.js` | none dedicated |
 | `tools/arcane_lattice` | Arcane Lattice | **active** | card | dashboard | yes | none local on `gh-pages` | none |
 | `tools/cartographer` | Cartographer | **active** | card | dashboard | yes | `core/test.js` | none dedicated |
 | `tools/mason` | Mason Terrain Forge | **active** | card | dashboard | yes | `core/test.js` | none dedicated |
@@ -47,7 +47,7 @@ index.html  (manual card inventory + marketing copy)
   ├─ tools/wizard_orbs          standalone WebGL2; predecessor link to health_globe in README
   ├─ tools/geometric_skilltree  loads ../rpg_inventory/core/verdigris-stats.js
   │                             localStorage bridge `verdigris-bridge` → rpg_inventory
-  ├─ tools/rpg_inventory        React+Babel standalone; VesselForge engine in core/
+  ├─ tools/rpg_inventory        React+Babel standalone; item crafting system engine in core/
   ├─ tools/arcane_lattice       Three.js r128 from CDN; no inbound deps
   ├─ tools/cartographer         core/mapgen.js (node + browser)
   ├─ tools/mason                core/mason.js (node + canvas)
@@ -60,7 +60,7 @@ tools/performance.test.mjs      skill tree harness + string contracts for orbs, 
 Cross-module runtime coupling that must be preserved:
 
 - Geometric tree → `verdigris-stats.js` (script tag + tests).
-- Geometric tree → Vesselforge armoury unlocks via `localStorage['verdigris-bridge']`.
+- Geometric tree → item crafting system armoury unlocks via `localStorage['verdigris-bridge']`.
 - Inventory idle pointer contract asserted by `tools/performance.test.mjs`.
 
 Inspected and **not** depended on by any active Verdigris workflow:
@@ -105,7 +105,7 @@ Direct module URLs must keep working. Archive files must not be deleted in this 
 
 - Branch `codex/arcane-lattice-1-0` / PR #29 (lattice 1.0 polish; not on this branch).
 - Physical deletion or relocation of archive candidates.
-- Rewriting VesselForge item rules, authored tree data, or lattice adjacency.
+- Rewriting item crafting system item rules, authored tree data, or lattice adjacency.
 - Embedding production Verdigris netcode.
 
 ## Milestone follow-through

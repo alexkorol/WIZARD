@@ -36,14 +36,14 @@ cluster. The builder rejects a source stored under another faction, even when
 it looks generically "ancient."
 
 - **North:** Nordic Bronze Age and Mycenaean/Aegean Bronze Age.
-- **Stonewood:** Mesoamerican obsidian/cotton equipment plus
+- **Mesoamerica and Northwest Coast:** Mesoamerican obsidian/cotton equipment plus
   Tlingit/Haida cedar-and-hide construction as material-language support.
-- **Dustwind:** Scythian/Saka steppe equipment only.
-- **Riverspill:** Predynastic/ancient Egyptian and Sumerian/Akkadian equipment.
+- **Steppe:** Scythian/Saka steppe equipment only.
+- **Egypt and Mesopotamia:** Predynastic/ancient Egyptian and Sumerian/Akkadian equipment.
 
 Concrete exclusions from the failed boards: Mycenaean material never goes into
-Dustwind; Persian/steppe cavalry never goes into North; Tibetan/Himalayan
-dorje, vajra, ritual axes, and related forms never go into Riverspill.
+Steppe; Persian/steppe cavalry never goes into North; Tibetan/Himalayan
+dorje, vajra, ritual axes, and related forms never go into Egypt and Mesopotamia.
 
 ## Visual composition
 

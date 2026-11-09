@@ -5,10 +5,10 @@
   var Campaign = window.SokobanCampaign;
   var STORAGE_KEY = 'wizard.sokoban.vault.v2';
   var lessons = [
-    'A relic box can be pushed, never pulled.',
-    'A relic box in an unmarked corner cannot be moved again.',
-    'Two relic boxes, two seals. Their order matters. Press U to rewind a mistake.',
-    'Plan backward from each seal. Press H when you want the oracle to reveal one optimal push.'
+    'A crate can be pushed, never pulled.',
+    'A crate pushed into a corner that is not a target cannot be moved again.',
+    'Two crates, two targets. Their order matters. Press U to undo a mistake.',
+    'Plan backward from each target. Press H to show one optimal push.'
   ];
   var els = {};
   var save = loadSave();
@@ -20,7 +20,6 @@
   var replaying = false;
   var replayToken = 0;
   var analysisRevealed = false;
-  var archiveThresholds = [1, 4, 8, 12, 16, 20, 22, 24];
 
   function byId(id) { return document.getElementById(id); }
 
@@ -43,7 +42,7 @@
       'board-loading', 'board', 'victory', 'descend', 'undo', 'reset', 'hint',
       'floors-cleared', 'best-efficiency', 'floor-jump', 'floor-input', 'descend-debug', 'live-stats',
       'motif-name', 'victory-motif', 'victory-thesis', 'analysis-grade', 'analysis-lines',
-      'analysis-switches', 'analysis-counter', 'analysis-straits', 'replay-proof', 'archive-fragments', 'archive-note'
+      'analysis-switches', 'analysis-counter', 'analysis-straits', 'replay-proof'
     ].forEach(function (id) { els[id] = byId(id); });
   }
 
@@ -56,7 +55,7 @@
     replaying = false;
     analysisRevealed = (save.cleared || 0) >= save.floor;
     els['live-stats'].hidden = !analysisRevealed;
-    els.status.textContent = 'Opening the forged chamber…';
+    els.status.textContent = 'Loading level…';
     els.board.setAttribute('aria-busy', 'true');
     hint = null;
     window.setTimeout(function () {
@@ -68,12 +67,12 @@
         render();
         els['board-loading'].classList.add('hidden');
         els.board.setAttribute('aria-busy', 'false');
-        els.status.textContent = save.floor <= 4 ? 'Tutorial chamber · forged and solver verified' :
-          level.boxes.length + '-relic theorem · tested offline across ' +
-            compactNumber(level.solution.states) + (level.solution.proof === 'offline-constructive' ? '+ oracle states' : ' oracle states');
+        els.status.textContent = save.floor <= 4 ? 'Tutorial level · solver verified' :
+          level.boxes.length + '-crate level · tested offline across ' +
+            compactNumber(level.solution.states) + (level.solution.proof === 'offline-constructive' ? '+ solver states' : ' solver states');
         els.board.focus({ preventScroll: true });
       } catch (error) {
-        els.status.textContent = error.message || 'The chamber could not be carved.';
+        els.status.textContent = error.message || 'The level could not be loaded.';
         els['board-loading'].innerHTML = '<span></span>Reload the campaign pack';
       }
     }, 40);
@@ -85,11 +84,11 @@
     els['floor-input'].value = save.floor;
     els['difficulty-title'].textContent = level.rating.title;
     els.lesson.textContent = lessons[save.floor - 1] || dynamicLesson();
-    els['motif-name'].textContent = analysisRevealed ? level.solution.analysis.motif : 'Sealed until solved';
+    els['motif-name'].textContent = analysisRevealed ? level.solution.analysis.motif : 'Shown after solving';
     els['solution-label'].textContent = analysisRevealed ?
-      (level.solution.moveOptimal ? 'Push / move optimum' : 'Verified route') : 'Proof length';
+      (level.solution.moveOptimal ? 'Push / move optimum' : 'Verified route') : 'Solution length';
     els['optimal-pushes'].textContent = analysisRevealed ?
-      level.solution.actions.length + ' pushes · ' + level.solution.moves + ' moves' : 'sealed';
+      level.solution.actions.length + ' pushes · ' + level.solution.moves + ' moves' : 'hidden';
     els['box-count'].textContent = level.boxes.length;
     els['proof-states'].textContent = analysisRevealed ?
       (level.solution.proof === 'search' || level.solution.proof === 'offline-search' ?
@@ -97,7 +96,7 @@
         level.solution.proof === 'bounds' ? 'distance bound' :
           level.solution.proof === 'lexicographic' ? 'dual optimum' :
             level.solution.proof === 'move-search' ? 'movement search' :
-              compactNumber(level.solution.states) + '+ states') : 'forged offline';
+              compactNumber(level.solution.states) + '+ states') : 'hidden';
     els['replay-proof'].textContent = level.solution.moveOptimal ? 'Watch optimal route' : 'Watch clean route';
     els['floors-cleared'].textContent = save.cleared || 0;
     els['best-efficiency'].textContent = save.bestEfficiency ? Math.round(save.bestEfficiency * 100) + '%' : '—';
@@ -113,35 +112,21 @@
     var atEnd = save.floor >= Campaign.levels.length;
     els.descend.disabled = atEnd;
     els.descend.innerHTML = atEnd ? 'Campaign complete' :
-      'Descend to stage <span>' + String(save.floor + 1).padStart(2, '0') + '</span>';
+      'Next stage <span>' + String(save.floor + 1).padStart(2, '0') + '</span>';
     els['descend-debug'].disabled = atEnd;
   }
 
   function updateArchive() {
-    var cleared = save.cleared || 0;
-    var fragments = archiveThresholds.filter(function (floor) { return cleared >= floor; }).length;
-    els['archive-fragments'].textContent = fragments + ' / ' + archiveThresholds.length;
-    var notes = [
-      'The archive opens after the first proof.',
-      'I. Distance is not difficulty.',
-      'II. A seal can be occupied too early.',
-      'III. A useful push may look like retreat.',
-      'IV. Shared space is the true currency.',
-      'V. Boxes are not independent variables.',
-      'VI. The shortest proof may feel impossible.',
-      'VII. The final chambers outlast the lesser oracle.',
-      'VIII. The Vault remembers your proof.'
-    ];
-    els['archive-note'].textContent = notes[fragments];
+    // The numbered "archive" notes were flavour text and have been removed.
   }
 
   function dynamicLesson() {
-    if (level.solution.states >= 100000) return 'This chamber survived the full offline oracle budget. Expect attractive pushes that poison a later box-goal matching.';
-    if (level.boxes.length >= 5) return 'The deep archive composes several box dependencies at once. Solve the packing order, not one relic at a time.';
-    if (level.boxes.length >= 4) return 'At this depth, the order of pushes is the puzzle. Preserve lanes behind every relic box.';
-    if (level.solution.analysis.switches >= 3) return 'The shortest route changes between relic boxes. Keep their paths from crossing too soon.';
-    if (!level.solution.optimal) return 'Every chamber has a proven route, even when the oracle cannot exhaust its entire state space.';
-    return 'Read the walls, preserve your standing squares, and distrust the seal that looks easiest.';
+    if (level.solution.states >= 100000) return 'This level used the full offline solver budget. Expect tempting pushes that block a later crate.';
+    if (level.boxes.length >= 5) return 'Several crates depend on each other. Solve the packing order, not one crate at a time.';
+    if (level.boxes.length >= 4) return 'The order of pushes is the puzzle. Keep the lanes behind every crate open.';
+    if (level.solution.analysis.switches >= 3) return 'The shortest route switches between crates. Keep their paths from crossing too soon.';
+    if (!level.solution.optimal) return 'Every level has a verified route, even when the solver cannot search its entire state space.';
+    return 'Read the walls, keep the squares you need to stand on, and be wary of the target that looks easiest.';
   }
 
   function compactNumber(value) {
@@ -174,13 +159,13 @@
           if (goals.has(cell)) tile.classList.add('box-on-goal');
           var box = document.createElement('span');
           box.className = 'box-piece';
-          box.setAttribute('aria-label', goals.has(cell) ? 'Relic box on seal' : 'Relic box');
+          box.setAttribute('aria-label', goals.has(cell) ? 'Crate on target' : 'Crate');
           tile.appendChild(box);
         }
         if (state.player === cell) {
           var player = document.createElement('span');
           player.className = 'player-piece';
-          player.setAttribute('aria-label', 'Delver');
+          player.setAttribute('aria-label', 'Player');
           tile.appendChild(player);
         }
         if (hint && hint.box === cell) tile.classList.add('hint-box');
@@ -199,12 +184,12 @@
     var direction = Core.DIRS[directionIndex];
     var p = Core.pointOf(state.player, level.width);
     var next = Core.indexOf(p.x + direction.x, p.y + direction.y, level.width);
-    if (!level.floor.has(next)) return announce('Stone blocks the way.');
+    if (!level.floor.has(next)) return announce('A wall blocks the way.');
     var boxIndex = state.boxes.indexOf(next);
     var pushed = false;
     if (boxIndex !== -1) {
       var beyond = Core.indexOf(p.x + direction.x * 2, p.y + direction.y * 2, level.width);
-      if (!level.floor.has(beyond) || state.boxes.indexOf(beyond) !== -1) return announce('The relic box cannot move ' + direction.name + '.');
+      if (!level.floor.has(beyond) || state.boxes.indexOf(beyond) !== -1) return announce('The crate cannot move ' + direction.name + '.');
       history.push(snapshot());
       state.boxes[boxIndex] = beyond;
       state.pushes += 1;
@@ -218,7 +203,7 @@
     render();
     if (isSolved()) finishFloor();
     else if (pushed && hasStaticDeadlock()) announce('Dead branch detected. Undo remains unlimited.');
-    else if (pushed) announce('Relic box pushed ' + direction.name + '.');
+    else if (pushed) announce('Crate pushed ' + direction.name + '.');
   }
 
   function hasStaticDeadlock() {
@@ -295,7 +280,7 @@
     hint = null;
     els.victory.hidden = true;
     render();
-    announce('Chamber reset. The proof still holds.');
+    announce('Level reset.');
   }
 
   function showHint() {
@@ -307,7 +292,7 @@
       announce('Next verified push: ' + Core.directionName(hint.direction) + '. Gold marks the destination.');
       return;
     }
-    announce('You have left the stored proof branch. Undo or reset to rejoin it.');
+    announce('You have left the stored solution. Undo or reset to rejoin it.');
   }
 
   function knownRouteHint() {
@@ -365,7 +350,7 @@
     els.victory.hidden = true;
     state = { player: level.player, boxes: level.boxes.slice(), moves: 0, pushes: 0, solved: false };
     history = [];
-    announce(level.solution.moveOptimal ? 'Replaying the least-push, least-move proof…' : 'Replaying the cleanest verified route…');
+    announce(level.solution.moveOptimal ? 'Replaying the least-push, least-move solution…' : 'Replaying the verified route…');
     render();
     await pause(280);
     for (var a = 0; a < level.solution.actions.length && token === replayToken; a += 1) {
@@ -403,12 +388,12 @@
       els.victory.hidden = false;
       els.descend.focus();
     } else {
-      announce('The proof replay was interrupted. Reset to try again.');
+      announce('The replay was interrupted. Reset to try again.');
     }
   }
 
   function newRun() {
-    var accepted = window.confirm('Reset the Vault campaign? Your cleared-stage record will be erased.');
+    var accepted = window.confirm('Reset the campaign? Your cleared-stage record will be erased.');
     if (!accepted) return;
     save.floor = 1;
     save.cleared = 0;

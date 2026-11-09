@@ -10,31 +10,31 @@ Open `game/index.html` for the playable game-shell demo. Every visible
 surface is real cropped sheet art — nothing is redrawn in CSS:
 
 - **Main menu, town, and combat scenes** — NPCs with winged nameplates open
-  the vendor and the shop, a portal descends to the vaults, and monsters of
+  the vendor and the shop, a portal leads to the combat level, and monsters of
   four rarities (with a top-center boss bar) fight back while you're down
   there. Kills drop gold and loot straight into the pack.
-- **Independent utility panes** — Stats, Stash, Trade, Codex, Crafting, and
-  Reliquary share the left position while Inventory and Cosmetics share the
+- **Independent utility panes** — Stats, Stash, Trade, Journal, Crafting, and
+  Shop share the left position while Inventory and Cosmetics share the
   right. Either side can remain open, switch, or close without disturbing the
   other. The authored character spread is mounted as exact left/right crops,
   with typed equipment, a 13x8 drag-and-drop pack, charms, belt, inspection,
   two-way stash transfer, crafting, and cosmetic loadouts.
-- **Skill web** — a generated geometric tree (canvas brass connectors,
+- **Passive tree** — a generated geometric tree (canvas brass connectors,
   framekit ring/medallion/keystone nodes) with adjacency and refund rules —
   the concept poster is retired.
 - **HUD** — the wizard_orbs statue orbs as live health/mana globes (chrome
   masked from the orb plates, dynamic fill), a slim ability rack with
   cooldowns and keybinds, role-marked party frames with downed/revive states,
   buffs, and an XP rail.
-- **Trade, Reliquary, chat** — NPCs contextually open the appropriate left
+- **Trade, Shop, chat** — NPCs contextually open the appropriate left
   pane, purchases land in the independently open Inventory, unlocks synchronize
   with Cosmetics, and tabbed chat (Local / Party / Log) logs combat and trade.
 - **Settings** — a winged modal with art-swapped toggles, dropdown, and
   button states.
 
-Pane shortcuts are `C` Stats, `K` Stash, `T` Trade, `L` Codex, `F` Crafting,
-`I` Inventory, and `O` Cosmetics. `V` opens the full-screen Skill Web. Escape
-closes Settings first, then the Skill Web, then the most recently used pane.
+Pane shortcuts are `C` Stats, `K` Stash, `T` Trade, `L` Journal, `F` Crafting,
+`I` Inventory, and `O` Cosmetics. `V` opens the full-screen Passive Tree. Escape
+closes Settings first, then the Passive Tree, then the most recently used pane.
 
 `docs/ASSET-REQUESTS.md` lists the next ten concept sheets to generate.
 

@@ -458,7 +458,7 @@
     }
     .trash-zone.active { border-color: #ef4444; background: rgba(239,68,68,0.09); color: #fca5a5; box-shadow: 0 0 12px rgba(239,68,68,0.25); }
 
-    /* ---------- Atelier ---------- */
+    /* ---------- Crafting Bench ---------- */
     .atelier {
       display: flex; flex-direction: column; gap: 14px;
       border: 1px solid rgba(167,139,250,0.22);
@@ -776,14 +776,14 @@
   const OP_COST = { sear: 60, efface: 40, chisel: 150, fire: 100, resonate: 200, sever: 80 };
   const TOOL_PRICES = { red_ochre: 80, woad: 80, soot: 80, marsh_ochre: 80, entrail_omen: 120, bird_omen: 120, smoke_omen: 120, blood_omen: 120 };
   const TOOL_DESC = {
-    red_ochre: 'Pigment — the mold drinks it: searing leans hard toward blade, blood and blunt.',
-    woad: 'Pigment — searing leans toward ward and life.',
-    soot: 'Pigment — searing leans toward spirit and Fire.',
-    marsh_ochre: 'Pigment — searing leans toward fortune, swiftness and Cold.',
-    entrail_omen: 'Omen — read first, sear after: the next brand is guaranteed to carry the ward tag.',
-    bird_omen: 'Omen — the next brand is guaranteed swift.',
-    smoke_omen: 'Omen — the next brand is guaranteed spirit.',
-    blood_omen: 'Omen — the next brand is guaranteed blood.',
+    red_ochre: 'Pigment: the next added brand favours blade, bleed and blunt.',
+    woad: 'Pigment: the next added brand favours Ward and Life.',
+    soot: 'Pigment: the next added brand favours Mana and Fire.',
+    marsh_ochre: 'Pigment: the next added brand favours item rarity, speed and Cold.',
+    entrail_omen: 'The next added brand is guaranteed a Ward brand.',
+    bird_omen: 'The next added brand is guaranteed a speed brand.',
+    smoke_omen: 'The next added brand is guaranteed a Mana brand.',
+    blood_omen: 'The next added brand is guaranteed a bleed brand.',
   };
 
   /* ---------------- icons (SVG fallbacks for missing art) ---------------- */
@@ -1142,7 +1142,7 @@
       if (row) put(generateTaxonomyLoot(36 + i * 4, row));
     });
 
-    // Pre-loved sandals shaped by some unknown Scout — estranged for a Guard.
+    // Second-hand sandals bonded under another class: their bonds work at half strength.
     const sandals = forge.generateItem({ ilvl: 40, formId: 'sandals', materialId: 'quilted', brands: 0 });
     sandals.vessel = Math.max(sandals.vessel, 3);
     sandals.bonds = [
@@ -1166,13 +1166,12 @@
     relic.evolutions = 9;
     relic.att = { xp: 0, next: 575, tc: { warding: 22 } };
     relic.awakened = {
-      name: "Azrael's Unbroken Vigil", themeId: 'warding',
+      name: 'Bronze Hide Shield', themeId: 'warding',
       power: pack.themes.warding.power,
-      flavor: 'Bound to Azrael through 9 trials. It has learned to endure.',
     };
     put(relic);
 
-    const character = forge.createCharacter({ name: 'Azrael', archetype: 'shieldbearer', gold: 600 });
+    const character = forge.createCharacter({ name: 'Test Character', archetype: 'shieldbearer', gold: 600 });
     character.fragments = { boar_tusk: 3, river_pearl: 1 };
     character.generation = 1;
 
@@ -1301,7 +1300,7 @@
         {showAtt && (
           <div style={{ marginTop: 7 }}>
             <div className="att-label">
-              <span>Attunement{equipped ? '' : ' (equip to grow)'}</span>
+              <span>Bond XP{equipped ? '' : ' (equip to grow)'}</span>
               <span>{item.att.xp}/{item.att.next}</span>
             </div>
             <div className="att-bar"><div style={{ width: `${attPct}%` }} /></div>
@@ -1309,7 +1308,7 @@
         )}
         <div className="foot">
           Drag to move · sell for {forge.sellValue(item)}g
-          {item.vessel > 0 && ' · craft at the Atelier'}
+          {item.vessel > 0 && ' · craft at the Crafting Bench'}
         </div>
       </div>
     );
@@ -1376,13 +1375,13 @@
     return (
       <div className="death-overlay">
         <div className="death-panel">
-          <div className="death-title">{fallenInfo ? fallenInfo.name : 'The bearer'} has fallen</div>
+          <div className="death-title">{fallenInfo ? fallenInfo.name : 'The character'} died</div>
           <div className="death-sub">
-            {fallenInfo ? `Level ${fallenInfo.level} · ${pack.archetypes[fallenInfo.archetype] ? pack.archetypes[fallenInfo.archetype].name : ''} · ${fallenInfo.text}` : 'The chronicle records the end.'}
+            {fallenInfo ? `Level ${fallenInfo.level} · ${pack.archetypes[fallenInfo.archetype] ? pack.archetypes[fallenInfo.archetype].name : ''} · ${fallenInfo.text}` : ''}
             <br />
             {relics.length
-              ? 'What was carried long enough to remember, survives. The rest is lost to the Green Lands.'
-              : 'Nothing had learned enough to survive. The heir starts from bare hands.'}
+              ? 'Upgraded items and the item with the most bond history pass to the next character. Everything else is lost.'
+              : 'No item qualifies to pass on. The next character starts with no items.'}
           </div>
           {relics.map((rel, i) => {
             const kin = rel.bonds && rel.bonds[0] && rel.bonds[0].kinship;
@@ -1393,8 +1392,8 @@
                 <div>
                   <div className="r-name" style={{ color: tint.color }}>{displayItemName(rel)}</div>
                   <div className="r-kin">
-                    {rel.awakened ? 'Awakened relic' : 'Memento'}
-                    {kin && pack.archetypes[kin] ? ` · its bonds answer fully to a ${pack.archetypes[kin].name}` : ''}
+                    {rel.awakened ? 'Upgraded item' : 'Item history'}
+                    {kin && pack.archetypes[kin] ? ` · bonds at full strength for the ${pack.archetypes[kin].name} class` : ''}
                   </div>
                 </div>
               </div>
@@ -2109,14 +2108,14 @@
               <span style={{ width: 8, height: 8, borderRadius: 4, background: '#e0c25e', display: 'inline-block', boxShadow: '0 0 5px rgba(201,162,39,0.8)' }} />
               {character.gold.toLocaleString()}
             </div>
-            <button className="btn primary" onClick={ventureForth} disabled={fallen}>Venture Forth</button>
+            <button className="btn primary" onClick={ventureForth} disabled={fallen}>Simulate fight</button>
             <button className="btn" onClick={restUp} disabled={fallen || curHp >= maxLife || character.gold < restCost}>Rest · {restCost}g</button>
             <button className="btn" onClick={spawnLoot}>Spawn Loot</button>
             <button className="btn" onClick={() => spawnTaxonomySet()}>Spawn Set</button>
             <button className="btn" onClick={() => spawnTaxonomySet('post-calib-wave2')}>Wave 2</button>
             <button className="btn" onClick={sortPack}>Sort Pack</button>
             <button className={`btn ${benchOpen ? 'primary' : ''}`} aria-expanded={benchOpen} onClick={() => setBenchOpen(o => !o)}>
-              {benchOpen ? 'Close Atelier' : `Atelier · ${satchelTotal}`}
+              {benchOpen ? 'Close Crafting Bench' : `Crafting Bench · ${satchelTotal}`}
             </button>
             <a className="btn" href="core/playground.html">Playground</a>
             <a className="btn" href="taxonomy-review.html">Taxonomy</a>
@@ -2165,10 +2164,10 @@
             </div>
           </div>
 
-          {/* Atelier docks left, like a PoE vendor/crafting window. */}
+          {/* Crafting Bench docks left, like a PoE vendor/crafting window. */}
           {benchOpen && (
             <div className="panel">
-              <div className="panel-banner"><span>Atelier</span></div>
+              <div className="panel-banner"><span>Crafting Bench</span></div>
               <div className="atelier">
                 <div className="atelier-top">
                   <div data-atelier-socket="true" className={`atelier-socket ${dragState && dragState.item.vessel ? 'highlight' : ''}`}>
@@ -2180,7 +2179,7 @@
                         <button className="btn small" onClick={returnSocketed}>Return to Pack</button>
                       </React.Fragment>
                     ) : (
-                      <div className="hint">Drag an item here —<br />or tap one in your pack<br />while the Atelier is open.</div>
+                      <div className="hint">Drag an item here —<br />or tap one in your pack<br />while the Crafting Bench is open.</div>
                     )}
                   </div>
 
@@ -2190,33 +2189,33 @@
                         <div className="row-name" style={{ color: itemTint(atelierItem).color }}>
                           {displayItemName(atelierItem)}
                           <span style={{ color: 'var(--dim)', fontSize: '0.72rem', marginLeft: 8 }}>
-                            {pack.materials[atelierItem.materialId].name} · Patience {atelierItem.patience}/{atelierItem.patienceMax}
+                            {pack.materials[atelierItem.materialId].name} · Crafting uses left {atelierItem.patience}/{atelierItem.patienceMax}
                           </span>
                         </div>
                         <VesselPips item={atelierItem} size="1rem" />
 
                         <div className="tool-row">
-                          <button className="btn small" onClick={() => runOp('sear')}>Sear ✦ · {OP_COST.sear}g</button>
+                          <button className="btn small" onClick={() => runOp('sear')}>Add Brand · {OP_COST.sear}g</button>
                           <select className="tool-select" value={pigmentId} onChange={e => setPigmentId(e.target.value)} aria-label="Pigment">
                             <option value="">no pigment</option>
                             {Object.entries(pack.pigments).map(([id, p]) => (
                               <option key={id} value={id} disabled={!(satchel[id] > 0)}>{p.name} ×{satchel[id] || 0}</option>
                             ))}
                           </select>
-                          <select className="tool-select" value={omenId} onChange={e => setOmenId(e.target.value)} aria-label="Omen">
-                            <option value="">no omen</option>
+                          <select className="tool-select" value={omenId} onChange={e => setOmenId(e.target.value)} aria-label="Guaranteed brand">
+                            <option value="">no guaranteed brand</option>
                             {Object.entries(pack.omens).map(([id, o]) => (
                               <option key={id} value={id} disabled={!(satchel[id] > 0)}>{o.name} ×{satchel[id] || 0}</option>
                             ))}
                           </select>
                         </div>
                         <div className="tool-row">
-                          <button className="btn small" onClick={() => runOp('efface')}>Efface · {OP_COST.efface}g</button>
-                          <button className="btn small" onClick={() => runOp('chisel')}>Chisel · {OP_COST.chisel}g</button>
-                          <button className="btn small" onClick={() => runOp('fire')}>Fire 🔥 · {OP_COST.fire}g</button>
-                          <button className="btn small" onClick={() => runOp('resonate')}>Resonate ◈ · {OP_COST.resonate}g</button>
-                          <button className="btn small" onClick={() => runOp('sever')}>Sever · {OP_COST.sever}g</button>
-                          <button className="btn small" disabled={!trophyReady} onClick={bindTrophy}>Bind Trophy ✧</button>
+                          <button className="btn small" onClick={() => runOp('efface')}>Remove Brand · {OP_COST.efface}g</button>
+                          <button className="btn small" onClick={() => runOp('chisel')}>Add Modifier Slot · {OP_COST.chisel}g</button>
+                          <button className="btn small" onClick={() => runOp('fire')}>Material Upgrade · {OP_COST.fire}g</button>
+                          <button className="btn small" onClick={() => runOp('resonate')}>Upgrade Bond · {OP_COST.resonate}g</button>
+                          <button className="btn small" onClick={() => runOp('sever')}>Remove Bond · {OP_COST.sever}g</button>
+                          <button className="btn small" disabled={!trophyReady} onClick={bindTrophy}>Attach Animal Part</button>
                           <button className="btn small" onClick={shareSocketed}>Share Card</button>
                         </div>
 
@@ -2230,16 +2229,16 @@
 
                         {!forge.isSated(atelierItem) && (
                           <div style={{ marginTop: 2 }}>
-                            <div className="att-label"><span>Attunement</span><span>{atelierItem.att.xp}/{atelierItem.att.next}</span></div>
+                            <div className="att-label"><span>Bond XP</span><span>{atelierItem.att.xp}/{atelierItem.att.next}</span></div>
                             <div className="att-bar"><div style={{ width: `${Math.min(100, Math.round(atelierItem.att.xp / atelierItem.att.next * 100))}%` }} /></div>
                           </div>
                         )}
                       </React.Fragment>
                     ) : (
                       <div style={{ color: 'var(--dim)', fontSize: '0.82rem', lineHeight: 1.5 }}>
-                        <p style={{ margin: '0 0 8px' }}><span style={{ color: 'var(--brand)' }}>✦ Brands</span> are seared with pigments and omens — flat numbers, while the vessel's <b>Patience</b> lasts.</p>
-                        <p style={{ margin: '0 0 8px' }}><span style={{ color: 'var(--bond)' }}>◈ Bonds</span> are named memories with conditional powers, kin to your archetype. <span style={{ color: 'var(--trophy)' }}>✧ Trophies</span> are taken from the hunt.</p>
-                        <p style={{ margin: 0 }}>All three fight for the same slots. <span style={{ color: 'var(--awake)' }}>Fire</span> the kiln to gamble the material itself.</p>
+                        <p style={{ margin: '0 0 8px' }}><span style={{ color: 'var(--brand)' }}>✦ Brands</span> are flat modifiers added at the bench; pigments and guaranteed-brand items steer which one. Each item allows a limited number of <b>crafting uses</b>.</p>
+                        <p style={{ margin: '0 0 8px' }}><span style={{ color: 'var(--bond)' }}>◈ Bonds</span> are conditional modifiers gained by using the item; they work at half strength for another class. <span style={{ color: 'var(--trophy)' }}>✧ Animal parts</span> drop from fights and attach to an item.</p>
+                        <p style={{ margin: 0 }}>All three share the same slots. <span style={{ color: 'var(--awake)' }}>Material upgrade</span>: a gamble that can raise the material tier, lock a slot or break the item.</p>
                       </div>
                     )}
                   </div>
@@ -2388,19 +2387,19 @@
             <span className="section-title">Character Record</span>
             <button className="btn small" type="button" onClick={() => setDrawerOpen(false)}>Close</button>
           </div>
-          <div className="section-title">Trophy Fragments</div>
+          <div className="section-title">Animal part pieces</div>
           <div>
             {Object.entries(character.fragments).filter(([, n]) => n > 0).map(([id, n]) => (
               <span key={id} className="pill">✧ {pack.trophies[id].name} {Math.min(n, pack.trophies[id].fragments)}/{pack.trophies[id].fragments}{n >= pack.trophies[id].fragments ? ' ✓' : ''}</span>
             ))}
-            {!Object.values(character.fragments).some(n => n > 0) && <span style={{ color: 'var(--dim)', fontSize: '0.75rem' }}>none yet — hunt</span>}
+            {!Object.values(character.fragments).some(n => n > 0) && <span style={{ color: 'var(--dim)', fontSize: '0.75rem' }}>none yet</span>}
           </div>
-          <div className="section-title">Lineage</div>
+          <div className="section-title">Inheritance</div>
           <div style={{ color: 'var(--dim)', fontSize: '0.75rem', lineHeight: 1.5 }}>
-            Generation {character.generation || 1}. When a bearer falls, awakened relics and the
-            most-storied memento pass to the heir — estranged, unless the heir walks the same path.
+            Generation {character.generation || 1}. When a character dies, upgraded items and the item with the most
+            bond history pass to the next character; bonds from another class work at half strength.
           </div>
-          <div className="section-title">Chronicle</div>
+          <div className="section-title">Log</div>
           <div className="chronicle">
             {log.map((entry, i) => <div key={i} className={`entry ${entry.kind}`}>{entry.text}</div>)}
           </div>

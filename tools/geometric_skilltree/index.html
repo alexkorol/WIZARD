@@ -2020,9 +2020,9 @@
         axis: "int",
         nodes: [
           { id: "attendant-core", name: "Drink While Casting", type: "notable", stat: "castSpeed", amount: 8, effects: ["+8% Cast Speed", "Drinking a draught does not interrupt your spell"], tag: "spell" },
-          { id: "attendant-candle", name: "Spirit", type: "small", stat: "spirit", amount: 45, effects: ["+45 maximum Spirit"], tag: "mana" },
+          { id: "attendant-candle", name: "Mana", type: "small", stat: "spirit", amount: 45, effects: ["+45 maximum Mana"], tag: "mana" },
           { id: "attendant-inkwell", name: "Ward", type: "small", stat: "ward", amount: 60, effects: ["+60 Ward"], tag: "energy-shield" },
-          { id: "attendant-order", name: "Cheaper Repeated Spells", type: "notable", stat: "castSpeed", amount: 6, effects: ["+6% Cast Speed", "Spells repeated within four seconds cost 10% less Spirit"], tag: "spell" },
+          { id: "attendant-order", name: "Cheaper Repeated Spells", type: "notable", stat: "castSpeed", amount: 6, effects: ["+6% Cast Speed", "Spells repeated within four seconds cost 10% less Mana"], tag: "spell" },
           { id: "attendant-pour", name: "Faster Ward Recharge", type: "notable", stat: "ward", amount: 70, effects: ["+70 Ward", "Ward recharge begins 20% sooner"], tag: "energy-shield" },
           { id: "attendant-service", name: "Cooldown Recovery", type: "small", stat: "cooldownRecovery", amount: 6, effects: ["+6% Cooldown Recovery Rate"], tag: "utility" },
           { id: "attendant-floor", name: "Chaos Resistance", type: "small", stat: "gloam_res", amount: 8, effects: ["+8% Chaos Resistance"], tag: "resistance" },
@@ -2030,7 +2030,7 @@
           { id: "attendant-flame", name: "Spell Damage", type: "small", stat: "spellDamage", amount: 8, effects: ["+8% Spell Damage"], tag: "spell" },
           { id: "attendant-lens", name: "Critical Chance", type: "small", stat: "critChance", amount: 1.2, effects: ["+1.2% Critical Chance"], tag: "critical" },
           { id: "attendant-errand", name: "Movement Speed", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
-          { id: "attendant-lamp", name: "Spirit", type: "small", stat: "spirit", amount: 40, effects: ["+40 maximum Spirit"], tag: "mana" },
+          { id: "attendant-lamp", name: "Mana", type: "small", stat: "spirit", amount: 40, effects: ["+40 maximum Mana"], tag: "mana" },
           { id: "attendant-servant", name: "Shared Focus", type: "keystone", stat: null, amount: 0, effects: ["Your extra focus grants its bonuses to your companions as well", "Your extra focus slot holds nothing but a focus"], tag: "spell" }
         ],
         layout: WHEEL_LAYOUT,
@@ -2047,7 +2047,7 @@
           { id: "quickrig-buckle", name: "Block Chance", type: "small", stat: "blockChance", amount: 2, effects: ["+2% Block Chance"], tag: "block" },
           { id: "quickrig-fit", name: "Stowed Tool Counts as Equipped", type: "notable", stat: "attackSpeed", amount: 6, effects: ["+6% Attack Speed", "Your tool slot tool counts as equipped even while stowed"], tag: "weapon" },
           { id: "quickrig-sleeves", name: "Evasion While Moving", type: "notable", stat: "evasion", amount: 110, effects: ["+110 Evasion Rating", "Evasion counts 10% higher while you are moving"], tag: "evasion" },
-          { id: "quickrig-pocket", name: "Goods Found", type: "small", stat: "goods_find", amount: 8, effects: ["+8% Goods Found"], tag: "utility" },
+          { id: "quickrig-pocket", name: "Item Rarity", type: "small", stat: "goods_find", amount: 8, effects: ["+8% increased Item Rarity"], tag: "utility" },
           { id: "quickrig-cord", name: "Attack Speed", type: "small", stat: "attackSpeed", amount: 4, effects: ["+4% Attack Speed"], tag: "weapon" },
           { id: "quickrig-reach", name: "Tool Mastery", type: "mastery", stat: "cooldownRecovery", amount: 10, effects: ["+10% Cooldown Recovery Rate", "Tools in your tool slot recover 20% faster"], tag: "utility" },
           { id: "quickrig-hem", name: "Accuracy", type: "small", stat: "accuracy_flat", amount: 60, effects: ["+60 Accuracy"], tag: "accuracy" },
@@ -2067,8 +2067,8 @@
         nodes: [
           { id: "warcall-core", name: "Horn Range", type: "notable", stat: "life", amount: 60, effects: ["+60 maximum Life", "Your war-horn's call carries 25% further"], tag: "life" },
           { id: "warcall-lip", name: "Attack Damage", type: "small", stat: "attackDamage", amount: 8, effects: ["+8% Attack Damage"], tag: "weapon" },
-          { id: "warcall-note", name: "Guard", type: "small", stat: "guard", amount: 120, effects: ["+120 Guard"], tag: "armour" },
-          { id: "warcall-rally", name: "Horn Guard for Allies", type: "notable", stat: "guard", amount: 180, effects: ["+180 Guard", "Allies who hear your horn gain +60 Guard"], tag: "armour" },
+          { id: "warcall-note", name: "Armour", type: "small", stat: "guard", amount: 120, effects: ["+120 Armour"], tag: "armour" },
+          { id: "warcall-rally", name: "Horn Armour for Allies", type: "notable", stat: "guard", amount: 180, effects: ["+180 Armour", "Allies who hear your horn gain +60 Armour"], tag: "armour" },
           { id: "warcall-second", name: "Horn Heal", type: "notable", stat: "life", amount: 80, effects: ["+80 maximum Life", "Sounding your horn restores 8% Life, once per fight"], tag: "life" },
           { id: "warcall-pace", name: "Attack Speed", type: "small", stat: "attackSpeed", amount: 4, effects: ["+4% Attack Speed"], tag: "weapon" },
           { id: "warcall-lungs", name: "Life", type: "small", stat: "life", amount: 60, effects: ["+60 maximum Life"], tag: "life" },
@@ -2076,7 +2076,7 @@
           { id: "warcall-wind", name: "All Resistances", type: "small", stat: "allResistances", amount: 3, effects: ["+3% to all Resistances"], tag: "resistance" },
           { id: "warcall-pole", name: "Strength", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
           { id: "warcall-voice", name: "Ailment Effect", type: "small", stat: "ailmentEffect", amount: 8, effects: ["+8% Mark and Shout Effect"], tag: "ailment" },
-          { id: "warcall-chest", name: "Guard", type: "small", stat: "guard", amount: 110, effects: ["+110 Guard"], tag: "armour" },
+          { id: "warcall-chest", name: "Armour", type: "small", stat: "guard", amount: 110, effects: ["+110 Armour"], tag: "armour" },
           { id: "warcall-one", name: "Shouts Affect You Twice", type: "keystone", stat: null, amount: 0, effects: ["Your shouts and horn calls affect you twice", "Their effect on allies is halved"], tag: "shout" }
         ],
         layout: WHEEL_LAYOUT,
@@ -2095,7 +2095,7 @@
           { id: "preparations-contingency", name: "Free First Trap", type: "notable", stat: "cooldownRecovery", amount: 8, effects: ["+8% Cooldown Recovery Rate", "The first trap you place each fight costs nothing"], tag: "utility" },
           { id: "preparations-thread", name: "Evasion", type: "small", stat: "evasion", amount: 70, effects: ["+70 Evasion Rating"], tag: "evasion" },
           { id: "preparations-start", name: "Movement Speed", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
-          { id: "preparations-wasted", name: "Recovered Throws", type: "mastery", stat: "goods_find", amount: 12, effects: ["+12% Goods Found", "Using a prepared item refunds it one time in five"], tag: "utility" },
+          { id: "preparations-wasted", name: "Recovered Throws", type: "mastery", stat: "goods_find", amount: 12, effects: ["+12% increased Item Rarity", "Using a prepared item refunds it one time in five"], tag: "utility" },
           { id: "preparations-hands", name: "Cast Speed", type: "small", stat: "castSpeed", amount: 4, effects: ["+4% Cast Speed"], tag: "spell" },
           { id: "preparations-map", name: "Intelligence", type: "small", stat: "int", amount: 8, effects: ["+8 Intelligence"], tag: "attribute" },
           { id: "preparations-shoes", name: "Evasion", type: "small", stat: "evasion", amount: 70, effects: ["+70 Evasion Rating"], tag: "evasion" },
@@ -2115,7 +2115,7 @@
           { id: "trophies-hilt", name: "Attack Damage", type: "small", stat: "attackDamage", amount: 6, effects: ["+6% Attack Damage"], tag: "weapon" },
           { id: "trophies-chase", name: "Movement Speed", type: "small", stat: "move", amount: 4, effects: ["+4% Movement Speed"], tag: "utility" },
           { id: "trophies-proof", name: "Animal Parts on Kill", type: "notable", stat: "critChance", amount: 1.8, effects: ["+1.8% Critical Chance", "Killing blows leave an animal part one time in ten"], tag: "critical" },
-          { id: "trophies-pelts", name: "Extra Animal Parts", type: "notable", stat: "goods_find", amount: 15, effects: ["+15% Goods Found", "Beasts drop one extra animal part"], tag: "utility" },
+          { id: "trophies-pelts", name: "Extra Animal Parts", type: "notable", stat: "goods_find", amount: 15, effects: ["+15% increased Item Rarity", "Beasts drop one extra animal part"], tag: "utility" },
           { id: "trophies-scars", name: "Life", type: "small", stat: "life", amount: 55, effects: ["+55 maximum Life"], tag: "life" },
           { id: "trophies-eye", name: "Accuracy", type: "small", stat: "accuracy_flat", amount: 65, effects: ["+65 Accuracy"], tag: "accuracy" },
           { id: "trophies-wall", name: "Animal Parts Mastery", type: "mastery", stat: "beast_damage_increased", amount: 15, effects: ["+15% increased Damage against Beasts", "Every animal part in your animal parts pack grants +1% Attack Damage, up to ten"], tag: "weapon" },
@@ -2136,16 +2136,16 @@
         nodes: [
           { id: "relics-core", name: "Lasting Relic Effects", type: "notable", stat: "ward", amount: 65, effects: ["+65 Ward", "Relics in your relic pack keep their effects between fights"], tag: "energy-shield" },
           { id: "relics-smoke", name: "Chaos Resistance", type: "small", stat: "gloam_res", amount: 8, effects: ["+8% Chaos Resistance"], tag: "resistance" },
-          { id: "relics-names", name: "Spirit", type: "small", stat: "spirit", amount: 40, effects: ["+40 maximum Spirit"], tag: "mana" },
+          { id: "relics-names", name: "Mana", type: "small", stat: "spirit", amount: 40, effects: ["+40 maximum Mana"], tag: "mana" },
           { id: "relics-glass", name: "Uninterrupted Ward Recharge", type: "notable", stat: "ward", amount: 75, effects: ["+75 Ward", "Ward recharge cannot be interrupted while you carry a relic"], tag: "energy-shield" },
           { id: "relics-faith", name: "Relic Resistances", type: "notable", stat: "allResistances", amount: 4, effects: ["+4% to all Resistances", "Each relic in your relic pack grants +2% Chaos Resistance"], tag: "resistance" },
-          { id: "relics-case", name: "Guard", type: "small", stat: "guard", amount: 110, effects: ["+110 Guard"], tag: "armour" },
+          { id: "relics-case", name: "Armour", type: "small", stat: "guard", amount: 110, effects: ["+110 Armour"], tag: "armour" },
           { id: "relics-candles", name: "Fire Resistance", type: "small", stat: "ember_res", amount: 8, effects: ["+8% Fire Resistance"], tag: "resistance" },
           { id: "relics-weight", name: "Relic Mastery", type: "mastery", stat: "spellDamage", amount: 12, effects: ["+12% Spell Damage", "Your heaviest relic is carried for you by a companion"], tag: "spell" },
           { id: "relics-bone", name: "Companion Damage", type: "small", stat: "minionDamage", amount: 8, effects: ["+8% Companion Damage"], tag: "minion" },
           { id: "relics-steps", name: "Strength", type: "small", stat: "str", amount: 8, effects: ["+8 Strength"], tag: "attribute" },
           { id: "relics-litany", name: "Cast Speed", type: "small", stat: "castSpeed", amount: 4, effects: ["+4% Cast Speed"], tag: "spell" },
-          { id: "relics-bowl", name: "Goods Found", type: "small", stat: "goods_find", amount: 8, effects: ["+8% Goods Found"], tag: "utility" },
+          { id: "relics-bowl", name: "Item Rarity", type: "small", stat: "goods_find", amount: 8, effects: ["+8% increased Item Rarity"], tag: "utility" },
           { id: "relics-reverence", name: "Relics Count as Worn", type: "keystone", stat: null, amount: 0, effects: ["Relics in your relic pack grant their bonuses as if worn", "Your relic pack cannot be opened during a fight"], tag: "hybrid" }
         ],
         layout: WHEEL_LAYOUT,
@@ -3141,7 +3141,7 @@
         }
         const born = Array.from(this.nodes.values()).find(other => other.type === "sign" && other.active);
         if (born && route.some(step => this.nodes.get(step.nodeId).type === "sign")) {
-          this.commit(`You already have ${born.name}. You can have only one Sign: refund it first.`);
+          this.commit(`You already have ${born.name}. You can have only one exclusive keystone: refund it first.`);
           this.recalculate({ modelChanged: false });
           return true;
         }
@@ -3190,7 +3190,7 @@
         if (node.type === "sign") {
           const born = Array.from(this.nodes.values()).find(other => other.type === "sign" && other.active);
           if (born && born.id !== node.id) {
-            this.commit(`You already have ${born.name}. You can have only one Sign: refund it first.`);
+            this.commit(`You already have ${born.name}. You can have only one exclusive keystone: refund it first.`);
             this.recalculate({ modelChanged: false });
             return;
           }
@@ -3597,12 +3597,12 @@
       formatDerivedLabel(key) {
         return {
           life: "Life",
-          mana: "Spirit",
-          spirit: "Spirit",
+          mana: "Mana",
+          spirit: "Mana",
           effectiveHp: "Effective HP",
           dps: "DPS vs Standard",
-          armour: "Guard",
-          guard: "Guard",
+          armour: "Armour",
+          guard: "Armour",
           evasion: "Evasion",
           energyShield: "Ward",
           ward: "Ward",
@@ -4716,7 +4716,7 @@
         const tooltip = document.getElementById("tooltip");
         tooltip.classList.add("art");
         tooltip.querySelector(".tooltip-title").textContent = node.name;
-        const typeName = { small: "Passive", notable: "Notable", keystone: "Keystone", mastery: "Mastery", waystone: "Anchor", socket: "Empty socket", gateway: "Gateway", class: "Class", sign: "Sign", origin: "Origin" }[node.type] || node.type;
+        const typeName = { small: "Passive", notable: "Notable", keystone: "Keystone", mastery: "Mastery", waystone: "Pattern Node", socket: "Empty socket", gateway: "Gateway", class: "Class", sign: "Exclusive Keystone", origin: "Origin" }[node.type] || node.type;
         const available = this.tree.isAvailableNode(node);
         const route = node.active || available ? [] : this.tree.routeTo(node.id);
         const status = node.id === "0,0" ? "Your starting point" : node.active ? "Allocated" : available ? "Available" : route.length > 1 ? `${route.length} passives away` : "Not yet reachable";
@@ -5023,9 +5023,9 @@
           effectiveHp: ["Effective HP", ""],
           dps: ["DPS", ""],
           life: ["Life", ""],
-          spirit: ["Spirit", ""],
+          spirit: ["Mana", ""],
           ward: ["Ward", ""],
-          guard: ["Guard", ""],
+          guard: ["Armour", ""],
           evasion: ["Evasion", ""],
           accuracy: ["Accuracy", ""],
           blockChance: ["Block", "%"],

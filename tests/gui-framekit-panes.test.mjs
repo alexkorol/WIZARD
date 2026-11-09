@@ -42,8 +42,8 @@ for (const id of ['inventoryActions', 'inventoryPrimary', 'inventoryUse', 'trade
 }
 assert.match(character, /aria-pressed/, 'inventory selection must expose its selected state');
 assert.match(character, /movePrimary/, 'inventory must expose keyboard and button equip actions');
-assert.match(tree, /setAttribute\("role", "button"\)/, 'Skill Web nodes must expose button semantics');
-assert.match(world, /Return to the Sunken Archive/, 'combat return portal must retain its accessible route');
+assert.match(tree, /setAttribute\("role", "button"\)/, 'Passive tree nodes must expose button semantics');
+assert.match(world, /Return to Dungeon Level 1/, 'combat return portal must retain its accessible route');
 assert.match(world, /tradeAccept\.addEventListener/, 'Trade must retain the accept-offer workflow');
 
 const expected = {

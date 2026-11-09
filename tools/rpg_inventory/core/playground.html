@@ -62,7 +62,7 @@
         <h2>Character</h2>
         <div class="row">
           <select id="arch"></select>
-          <button id="venture">Venture Forth</button>
+          <button id="venture">Simulate fight</button>
           <button id="venture10">×10</button>
         </div>
         <div id="char"></div>
@@ -119,7 +119,7 @@
     const forge = VesselForge.createForge(VerdigrisPack);
     const $ = (id) => document.getElementById(id);
 
-    let character = forge.createCharacter({ name: 'Orun', archetype: 'shieldbearer', gold: 300 });
+    let character = forge.createCharacter({ name: 'Test Character', archetype: 'shieldbearer', gold: 300 });
     let equipment = { mainHand: null };
     let bench = forge.generateItem({ ilvl: 30 });
 

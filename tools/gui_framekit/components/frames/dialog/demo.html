@@ -53,18 +53,17 @@
 <body>
   <p>open with the button · close with Escape, backdrop, or Cancel</p>
 
-  <button type="button" data-fk-dialog-open id="open-dialog">Seal the circle</button>
+  <button type="button" data-fk-dialog-open id="open-dialog">Open dialog</button>
 
   <div class="fk-dialog" id="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
     <div class="fk-dialog__card">
-      <h2 class="fk-dialog__title" id="dialog-title">Seal the circle?</h2>
+      <h2 class="fk-dialog__title" id="dialog-title">Confirm?</h2>
       <div class="fk-dialog__body">
-        The working will bind for one full lunar cycle. This cannot be
-        undone from the bench.
+        This action cannot be undone.
       </div>
       <div class="fk-dialog__actions">
         <button type="button" data-fk-dialog-close>Cancel</button>
-        <button type="button" class="primary" data-fk-dialog-close autofocus>Seal it</button>
+        <button type="button" class="primary" data-fk-dialog-close autofocus>Confirm</button>
       </div>
     </div>
   </div>

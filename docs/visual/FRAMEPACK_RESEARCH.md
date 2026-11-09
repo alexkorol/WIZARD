@@ -32,7 +32,7 @@ asset pack:
   hairline rules, Cinzel headings, and Source Sans body copy in
   [`index.html`](../../index.html). These are the common laboratory baseline,
   not a command to erase module-specific palettes.
-- Vesselforge uses a 512x512 ornate border image, a 473x112 divider, and a
+- item crafting system uses a 512x512 ornate border image, a 473x112 divider, and a
   256x256 slot texture. The frame is applied with a 118px source slice and
   `stretch` edges in [`tools/rpg_inventory/index.html`](../../tools/rpg_inventory/index.html).
   This proves that a nine-slice-like runtime is viable, but its dense gold

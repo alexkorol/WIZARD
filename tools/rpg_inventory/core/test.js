@@ -1,4 +1,4 @@
-/* Vesselforge test suite — run: node test.js */
+/* item crafting system test suite — run: node test.js */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -101,8 +101,8 @@ t('inventory layout has six unlock-driven auxiliary windows', () => {
     'main backpack must be the intended horizontal 12x6 layout');
   assert(/def\.tone !== 'main'[\s\S]{0,120}<div className="pack-title">/.test(index),
     'main backpack must not render a title or action strip');
-  assert(/className="top-actions"[\s\S]*onClick=\{sortPack\}>Sort Pack<[\s\S]*Atelier/.test(index),
-    'sort and Atelier controls must live in the side command rail');
+  assert(/className="top-actions"[\s\S]*onClick=\{sortPack\}>Sort Pack<[\s\S]*Crafting Bench/.test(index),
+    'sort and Crafting Bench controls must live in the side command rail');
   assert(/syncInventoryScale/.test(index) && /window\.innerHeight \* 0\.0565/.test(index)
       && /window\.innerHeight \* 0\.082/.test(index),
     'inventory cells and paperdoll slots must scale with tall viewports');
@@ -590,7 +590,7 @@ t('sear adds a brand and spends patience', () => {
   eq(r.item.brands.length, 1);
   eq(r.item.patience, it.patience - 1);
 });
-t('patience exhaustion closes crafting', () => {
+t('running out of crafting uses closes crafting', () => {
   let it = forge.generateItem({ ilvl: 40, formId: 'dagger', materialId: 'bronze', brands: 0 });
   let guard = 0;
   while (it.patience > 0 && guard++ < 30) {
@@ -599,7 +599,7 @@ t('patience exhaustion closes crafting', () => {
     it = r.item;
   }
   const r = forge.sear(it);
-  assert(r.error && /patience/i.test(r.error), 'should refuse: ' + r.error);
+  assert(r.error && /crafting uses/i.test(r.error), 'should refuse: ' + r.error);
 });
 t('omen guarantees tag', () => {
   for (let i = 0; i < 30; i++) {
@@ -670,9 +670,9 @@ t('trophy respects kind restriction', () => {
 });
 
 /* ---------------- bonds & kinship ---------------- */
-t('attunement forms themed kinship bonds and estranges correctly', () => {
+t('bond XP forms themed kinship bonds and estranges correctly', () => {
   let it = forge.generateItem({ ilvl: 30, formId: 'hideshield', materialId: 'bronze', brands: 0 });
-  const ctx = { charName: 'Orun', archetype: 'shieldbearer' };
+  const ctx = { charName: 'Test Character', archetype: 'shieldbearer' };
   let events = [];
   for (let i = 0; i < 12 && !it.bonds.length; i++) {
     const r = forge.attune(it, 60, { warding: 3 }, ctx);
@@ -690,7 +690,7 @@ t('attunement forms themed kinship bonds and estranges correctly', () => {
 t('the full life of an item: bonds to tier III then awakening', () => {
   let it = forge.generateItem({ ilvl: 40, formId: 'hideshield', materialId: 'bronze', brands: 0 });
   it.vessel = 3;
-  const ctx = { charName: 'Orun', archetype: 'shieldbearer' };
+  const ctx = { charName: 'Test Character', archetype: 'shieldbearer' };
   let awakeEvent = null;
   for (let i = 0; i < 60 && !it.awakened; i++) {
     const r = forge.attune(it, 200, { warding: 2 }, ctx);
@@ -699,8 +699,8 @@ t('the full life of an item: bonds to tier III then awakening', () => {
     if (aw) awakeEvent = aw;
   }
   assert(it.awakened, 'item awakens');
-  assert(awakeEvent && /AWAKENED/.test(awakeEvent.text), 'awake event fired');
-  assert(it.awakened.name.startsWith("Orun's"), it.awakened.name);
+  assert(awakeEvent && /is upgraded/.test(awakeEvent.text), 'upgrade event fired');
+  assert(!/'s /.test(it.awakened.name), 'upgraded item keeps its plain name: ' + it.awakened.name);
   assert(forge.isSated(it), 'awakened full item is sated');
 });
 t('sever scars the slot', () => {
@@ -717,7 +717,7 @@ t('sever scars the slot', () => {
 /* ---------------- venture loop ---------------- */
 t('venture updates character, attunes gear, may drop loot/fragments', () => {
   const f = VesselForge.createForge(pack, { seed: 42 });
-  let c = f.createCharacter({ name: 'Orun', archetype: 'shieldbearer', gold: 0 });
+  let c = f.createCharacter({ name: 'Test Character', archetype: 'shieldbearer', gold: 0 });
   let eq_ = { mainHand: f.generateItem({ ilvl: 20, formId: 'spear', materialId: 'copper', brands: 0 }) };
   let drops = 0, frags = 0;
   for (let i = 0; i < 25; i++) {
@@ -746,13 +746,13 @@ t('panoply detects player-authored sets', () => {
   const mk = () => {
     const it = forge.generateItem({ ilvl: 60, formId: 'hideshield', materialId: 'bronze', brands: 0 });
     it.bonds = [{ id: 'x', modId: 'shieldwall', themeId: 'warding', base: 10, tier: 3, kinship: 'shieldbearer' }];
-    it.awakened = { name: "Orun's Stone Oath", themeId: 'warding', power: 'p', flavor: 'f' };
+    it.awakened = { name: 'Bronze Hide Shield', themeId: 'warding', power: 'p' };
     return it;
   };
   const ps = forge.panoply([mk(), mk()]);
   eq(ps.length, 1);
   eq(ps[0].count, 2);
-  assert(/Panoply \(2\)/.test(ps[0].bonus.label));
+  assert(/Set \(2\)/.test(ps[0].bonus.label));
 });
 t('tooltip returns structured UI-agnostic lines', () => {
   const it = forge.generateItem({ ilvl: 40, formId: 'dagger', materialId: 'bronze', brands: 2 });

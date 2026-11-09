@@ -14,15 +14,15 @@ const WORLD_RZ = 7.4;
 const WORLD_WATER_LEVEL = 0.14;
 
 const EPIC_CONTINENTS = [
-  { name: "The High March", x: -0.45, z: -0.15, rx: 3.15, rz: 1.75, rotation: -0.08, seed: 17, biome: "temperate", capital: [0.65, 0.72], ridge: [-2.25, 0.35, 2.35, -0.12, 0.48, 1.02], peaks: [[-1.55, 0.22, 0.64], [0.05, 0.02, 0.78], [1.45, -0.18, 0.62]] },
-  { name: "The Shattered Choir", x: -4.25, z: 0.85, rx: 1.75, rz: 1.4, rotation: -0.2, seed: 41, biome: "lush", capital: [-0.55, 0.48], ridge: [-1.2, -0.45, 0.95, 0.35, 0.4, 0.78], peaks: [[-0.55, -0.1, 0.5], [0.45, 0.2, 0.46]] },
-  { name: "Aster Vale", x: -0.85, z: 3.1, rx: 2.65, rz: 1.25, rotation: 0.08, seed: 73, biome: "verdant", capital: [0.2, 0.44], ridge: [-1.65, 0.32, 1.55, -0.18, 0.38, 0.6], peaks: [[-0.85, 0.2, 0.38], [0.8, -0.08, 0.34]] },
-  { name: "The Copper Waste", x: 4.05, z: 1.05, rx: 2.35, rz: 1.55, rotation: 0.17, seed: 103, biome: "desert", capital: [0.1, 0.52], ridge: [-1.65, -0.25, 1.55, 0.18, 0.47, 0.82], peaks: [[-0.7, -0.2, 0.48], [0.9, 0.22, 0.54]] },
-  { name: "Cairn Ridge", x: 1.7, z: -3.15, rx: 2.7, rz: 1.18, rotation: -0.03, seed: 137, biome: "alpine", capital: [0.6, 0.38], ridge: [-1.75, 0.18, 1.85, -0.12, 0.4, 0.78], peaks: [[-1.0, 0.12, 0.5], [0.65, -0.1, 0.56]] },
-  { name: "The Lantern Isles", x: 5.35, z: -2.25, rx: 1.25, rz: 0.88, rotation: 0.34, seed: 181, biome: "verdant", capital: [-0.15, 0.18], ridge: [-0.72, -0.16, 0.7, 0.12, 0.3, 0.44], peaks: [[0.05, 0, 0.3]] },
-  { name: "Morrow Keys", x: -5.75, z: -2.2, rx: 0.82, rz: 0.48, rotation: 0.24, seed: 211, biome: "lush", islet: true, ridge: [-0.42, 0.04, 0.38, -0.05, 0.25, 0.26], peaks: [[0.02, 0, 0.2]] },
-  { name: "Sunken Stars", x: 2.25, z: 3.88, rx: 0.68, rz: 0.42, rotation: -0.38, seed: 239, biome: "desert", islet: true, ridge: [-0.34, -0.03, 0.32, 0.06, 0.22, 0.22], peaks: [[-0.02, 0, 0.16]] },
-  { name: "Gale Teeth", x: 6.25, z: 2.85, rx: 0.58, rz: 0.38, rotation: 0.15, seed: 277, biome: "alpine", islet: true, ridge: [-0.3, 0.02, 0.28, -0.04, 0.2, 0.25], peaks: [[0.04, 0, 0.18]] },
+  { name: "Central continent", x: -0.45, z: -0.15, rx: 3.15, rz: 1.75, rotation: -0.08, seed: 17, biome: "temperate", capital: [0.65, 0.72], ridge: [-2.25, 0.35, 2.35, -0.12, 0.48, 1.02], peaks: [[-1.55, 0.22, 0.64], [0.05, 0.02, 0.78], [1.45, -0.18, 0.62]] },
+  { name: "West continent", x: -4.25, z: 0.85, rx: 1.75, rz: 1.4, rotation: -0.2, seed: 41, biome: "lush", capital: [-0.55, 0.48], ridge: [-1.2, -0.45, 0.95, 0.35, 0.4, 0.78], peaks: [[-0.55, -0.1, 0.5], [0.45, 0.2, 0.46]] },
+  { name: "South continent", x: -0.85, z: 3.1, rx: 2.65, rz: 1.25, rotation: 0.08, seed: 73, biome: "verdant", capital: [0.2, 0.44], ridge: [-1.65, 0.32, 1.55, -0.18, 0.38, 0.6], peaks: [[-0.85, 0.2, 0.38], [0.8, -0.08, 0.34]] },
+  { name: "East desert continent", x: 4.05, z: 1.05, rx: 2.35, rz: 1.55, rotation: 0.17, seed: 103, biome: "desert", capital: [0.1, 0.52], ridge: [-1.65, -0.25, 1.55, 0.18, 0.47, 0.82], peaks: [[-0.7, -0.2, 0.48], [0.9, 0.22, 0.54]] },
+  { name: "North ridge continent", x: 1.7, z: -3.15, rx: 2.7, rz: 1.18, rotation: -0.03, seed: 137, biome: "alpine", capital: [0.6, 0.38], ridge: [-1.75, 0.18, 1.85, -0.12, 0.4, 0.78], peaks: [[-1.0, 0.12, 0.5], [0.65, -0.1, 0.56]] },
+  { name: "Northeast islands", x: 5.35, z: -2.25, rx: 1.25, rz: 0.88, rotation: 0.34, seed: 181, biome: "verdant", capital: [-0.15, 0.18], ridge: [-0.72, -0.16, 0.7, 0.12, 0.3, 0.44], peaks: [[0.05, 0, 0.3]] },
+  { name: "West islet", x: -5.75, z: -2.2, rx: 0.82, rz: 0.48, rotation: 0.24, seed: 211, biome: "lush", islet: true, ridge: [-0.42, 0.04, 0.38, -0.05, 0.25, 0.26], peaks: [[0.02, 0, 0.2]] },
+  { name: "South islet", x: 2.25, z: 3.88, rx: 0.68, rz: 0.42, rotation: -0.38, seed: 239, biome: "desert", islet: true, ridge: [-0.34, -0.03, 0.32, 0.06, 0.22, 0.22], peaks: [[-0.02, 0, 0.16]] },
+  { name: "East islet", x: 6.25, z: 2.85, rx: 0.58, rz: 0.38, rotation: 0.15, seed: 277, biome: "alpine", islet: true, ridge: [-0.3, 0.02, 0.28, -0.04, 0.2, 0.25], peaks: [[0.04, 0, 0.18]] },
 ];
 
 const EPIC_WATERFALLS = [
@@ -1684,10 +1684,10 @@ function createRegionalWeather(texture) {
   weatherTexture.colorSpace = THREE.SRGBColorSpace;
   const sprites = [];
   const regions = [
-    { name: "Gale Teeth storm", center: [5.35, 2.0, 1.8], spread: [2.45, 1.45, 1.6], count: 17, color: 0x647584, opacity: 0.3, scale: [2.6, 5.2], speed: 0.055 },
-    { name: "High March rain", center: [-2.2, 1.25, -1.7], spread: [2.5, 0.55, 1.35], count: 10, color: 0x91a4a6, opacity: 0.21, scale: [1.8, 3.5], speed: 0.035 },
-    { name: "Aster Vale sunlight", center: [-2.7, 1.8, 3.55], spread: [2.05, 0.65, 1.0], count: 8, color: 0xffe4b0, opacity: 0.12, scale: [1.7, 3.15], speed: 0.026 },
-    { name: "Lantern mist", center: [4.65, 0.62, -3.2], spread: [2.0, 0.28, 1.2], count: 10, color: 0xb2cfcc, opacity: 0.18, scale: [1.6, 3.2], speed: 0.022 },
+    { name: "East islet storm", center: [5.35, 2.0, 1.8], spread: [2.45, 1.45, 1.6], count: 17, color: 0x647584, opacity: 0.3, scale: [2.6, 5.2], speed: 0.055 },
+    { name: "Central continent rain", center: [-2.2, 1.25, -1.7], spread: [2.5, 0.55, 1.35], count: 10, color: 0x91a4a6, opacity: 0.21, scale: [1.8, 3.5], speed: 0.035 },
+    { name: "South continent sunlight", center: [-2.7, 1.8, 3.55], spread: [2.05, 0.65, 1.0], count: 8, color: 0xffe4b0, opacity: 0.12, scale: [1.7, 3.15], speed: 0.026 },
+    { name: "Northeast islands mist", center: [4.65, 0.62, -3.2], spread: [2.0, 0.28, 1.2], count: 10, color: 0xb2cfcc, opacity: 0.18, scale: [1.6, 3.2], speed: 0.022 },
   ];
   const materials = regions.map((region) => new THREE.SpriteMaterial({
     map: weatherTexture,
@@ -1757,10 +1757,10 @@ function createVolumetricWeather() {
   const volumes = [];
   const geometry = new THREE.SphereGeometry(1, 40, 24);
   const configurations = [
-    { name: "Gale Teeth thunderhead", position: [5.15, 2.35, 1.8], scale: [3.35, 1.18, 2.2], seed: 1.7, density: 1.65, threshold: 0.36, opacity: 0.82, shadow: 0x41454b, light: 0xd3d8da, drift: [0.022, 0.008] },
-    { name: "High March rain shelf", position: [-2.35, 1.65, -1.75], scale: [3.15, 0.76, 1.92], seed: 4.1, density: 1.4, threshold: 0.39, opacity: 0.7, shadow: 0x5c6063, light: 0xd7d9d6, drift: [0.014, -0.007] },
-    { name: "Aster Vale sunbreak", position: [-2.85, 2.7, 3.45], scale: [2.7, 1.04, 1.72], seed: 7.6, density: 1.25, threshold: 0.41, opacity: 0.68, shadow: 0x807970, light: 0xffedc5, drift: [0.01, 0.006] },
-    { name: "Lantern coast sea fog", position: [4.55, 0.72, -3.12], scale: [2.75, 0.42, 1.55], seed: 10.4, density: 1.45, threshold: 0.37, opacity: 0.64, shadow: 0x656968, light: 0xd9ddda, drift: [0.007, -0.01] },
+    { name: "East islet thunderhead", position: [5.15, 2.35, 1.8], scale: [3.35, 1.18, 2.2], seed: 1.7, density: 1.65, threshold: 0.36, opacity: 0.82, shadow: 0x41454b, light: 0xd3d8da, drift: [0.022, 0.008] },
+    { name: "Central continent rain shelf", position: [-2.35, 1.65, -1.75], scale: [3.15, 0.76, 1.92], seed: 4.1, density: 1.4, threshold: 0.39, opacity: 0.7, shadow: 0x5c6063, light: 0xd7d9d6, drift: [0.014, -0.007] },
+    { name: "South continent sunbreak", position: [-2.85, 2.7, 3.45], scale: [2.7, 1.04, 1.72], seed: 7.6, density: 1.25, threshold: 0.41, opacity: 0.68, shadow: 0x807970, light: 0xffedc5, drift: [0.01, 0.006] },
+    { name: "Northeast islands sea fog", position: [4.55, 0.72, -3.12], scale: [2.75, 0.42, 1.55], seed: 10.4, density: 1.45, threshold: 0.37, opacity: 0.64, shadow: 0x656968, light: 0xd9ddda, drift: [0.007, -0.01] },
     { name: "North rim mist bank", position: [-0.8, 0.54, -5.65], scale: [2.6, 0.34, 0.92], seed: 13.8, density: 1.3, threshold: 0.4, opacity: 0.58, shadow: 0x606568, light: 0xd2d8d7, drift: [0.006, 0.004] },
     { name: "Western waterfall fog", position: [-5.65, 0.38, 0.65], scale: [1.75, 0.5, 1.18], seed: 16.2, density: 1.5, threshold: 0.36, opacity: 0.66, shadow: 0x616869, light: 0xdce2de, drift: [0.004, -0.006] },
     { name: "High wandering cloud deck", position: [0.1, 4.45, -0.5], scale: [5.2, 0.82, 2.25], seed: 20.1, density: 1.12, threshold: 0.42, opacity: 0.5, shadow: 0x64747a, light: 0xe0e7e3, drift: [0.017, 0.003] },
@@ -2138,7 +2138,7 @@ function shadow(mesh, cast = true, receive = true) {
 
 function createCitadel(materials) {
   const group = new THREE.Group();
-  group.name = "Crown of Tides";
+  group.name = "Citadel";
   group.position.set(1.55, heightAt(1.55, -0.2) + 0.02, -0.2);
   group.rotation.y = -0.18;
 
@@ -3577,15 +3577,15 @@ function boot() {
     });
     taglineEl.textContent = epicActive
       ? "Continents, oceans, and waterfalls."
-      : "Crownlands island and observatory.";
+      : "One island at close range.";
     worldStateText.textContent = epicActive
       ? "WORLD VIEW"
-      : "CROWNLANDS VIEW";
+      : "ISLAND VIEW";
     canvas.setAttribute("aria-label", epicActive
       ? "The whole floating world. Drag to orbit; scroll or pinch to zoom"
-      : "The Crownlands island and the ancient Crown of Tides citadel. Drag to orbit; scroll or pinch to zoom");
+      : "One island with a citadel, at close range. Drag to orbit; scroll or pinch to zoom");
     if (announce) {
-      menuStatus.textContent = epicActive ? "World view: the whole world." : "Crownlands view: the observatory province.";
+      menuStatus.textContent = epicActive ? "World view: the whole world." : "Island view: one island at close range.";
       menuStatus.classList.add("is-visible");
     }
     resetCameraControl(true);
@@ -3700,7 +3700,7 @@ function boot() {
       const messages = {
         continue: "Gameplay is not available in this preview.",
         hero: "Character creation is not available in this preview.",
-        chronicle: "The chronicle is not available in this preview.",
+        chronicle: "The log is not available in this preview.",
       };
       menuStatus.textContent = messages[button.dataset.menuAction];
       menuStatus.classList.add("is-visible");

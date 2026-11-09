@@ -6,9 +6,9 @@
      node tools/geometric_skilltree/scripts/author-tree.mjs
 
    Geometry: ten rings, axial hex. Corner spokes (walk order starts at STR):
-     c0 (R,0)  INT / Archmage          c1 (R,-R) INT/DEX spoke / Nightblade
-     c2 (0,-R) DEX / Acrobat           c3 (-R,0) DEX/STR spoke / Reaver
-     c4 (-R,R) STR / Champion          c5 (0,R)  Ritualist / Ritualist
+     c0 (R,0)  INT / INT class          c1 (R,-R) INT/DEX spoke / INT/DEX class
+     c2 (0,-R) DEX / DEX class           c3 (-R,0) DEX/STR spoke / DEX/STR class
+     c4 (-R,R) STR / STR class          c5 (0,R)  STR/INT class / STR/INT class
    Ring side s runs corner (4+s)%6 -> next corner; side index = wedge index.
    ============================================================================= */
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -56,14 +56,14 @@ const STAT_LINES = {
   cooldownRecovery: a => `+${a}% increased Cooldown Recovery`,
   physical_increased: a => `+${a}% increased Physical Damage`,
   ward_pct: a => `+${a}% increased Ward`,
-  guard_increased: a => `+${a}% increased Guard`,
+  guard_increased: a => `+${a}% increased Armour`,
   evasion_increased: a => `+${a}% increased Evasion`,
-  reach_increased: a => `+${a}% increased Reach`,
+  reach_increased: a => `+${a}% increased Melee Strike Range`,
   move: a => `+${a}% increased Movement Speed`,
   life: a => `+${a} to Life`,
-  spirit: a => `+${a} to Spirit`,
+  spirit: a => `+${a} to Mana`,
   ward: a => `+${a} to Ward`,
-  guard: a => `+${a} to Guard`,
+  guard: a => `+${a} to Armour`,
   evasion: a => `+${a} to Evasion`,
   accuracy_flat: a => `+${a} to Accuracy`,
   heavy: a => `Adds ${a} Physical Damage to hits`,
@@ -90,31 +90,31 @@ function lineFor(stat, amount) {
 
 /* =============================================================================
    SPOKES — corner seats per ring. Each spoke owns rings:
-   1 doorway small, 2 small, 3 mastery, 4 small, 5 Anchor, 6 notable,
+   1 doorway small, 2 small, 3 mastery, 4 small, 5 pattern node, 6 notable,
    7 class milestone, 8 notable, 9 notable, 10 gateway.
    ============================================================================= */
 const SPOKES = {
   int: {
     title: 'INT Class', cluster: 'int-spoke',
     doorway: { n: 'Spell Damage', s: 'spellDamage', a: 10, x: ['A clean opening: spells hit harder from the first day.'] },
-    r2small: { n: 'Spirit', s: 'spirit', a: 12 },
+    r2small: { n: 'Mana', s: 'spirit', a: 12 },
     mastery: {
       n: 'Ward Mastery', s: 'spellDamage', a: 14,
       fx: ['+20 to Ward', 'Your Ward recharge begins 20% sooner']
     },
     r4small: { n: 'Cast Speed', s: 'castSpeed', a: 5 },
     waystone: {
-      n: 'INT Anchor', s: 'ward', a: 30,
+      n: 'INT Pattern Node', s: 'ward', a: 30,
       hook: { effect: 'wave-length', value: 1 },
-      fx: ['Waves passing through this Anchor count +1 length', 'Ward recharge is 10% slower']
+      fx: ['Waves passing through this pattern node count +1 length', 'Ward recharge is 10% slower']
     },
-    r6notable: { n: 'Repeated Spells', s: 'spellDamage', a: 26, fx: ['+15 to Spirit', 'Spells you repeat within four seconds gain +10% effect (design text)'] },
+    r6notable: { n: 'Repeated Spells', s: 'spellDamage', a: 26, fx: ['+15 to Mana', 'Spells you repeat within four seconds gain +10% effect (design text)'] },
     classNode: {
       n: 'INT Class', s: 'spellDamage', a: 15,
       fx: ['Unlocks: a second curio slot', 'Unlocks: rite-foci gain +1 socket', 'Unlocks: 2x2 extra focus seat', 'Your first class passive sets your class; each class passive grants its unlock.']
     },
     r8notable: { n: 'Ward Retention', s: 'ward_pct', a: 18, fx: ['+12% increased Spell Damage', 'You keep 10% of Ward when a hit would empty it (design text)'] },
-    r9notable: { n: 'Efficient Spells', s: 'spellDamage', a: 30, fx: ['+30 to Ward', 'Spells cost 5% less Spirit (design text)'] },
+    r9notable: { n: 'Efficient Spells', s: 'spellDamage', a: 30, fx: ['+30 to Ward', 'Spells cost 5% less Mana (design text)'] },
     gateway: { n: 'INT Gate', title: 'INT Class' }
   },
   nightwork: {
@@ -127,9 +127,9 @@ const SPOKES = {
     },
     r4small: { n: 'Evasion', s: 'evasion', a: 25 },
     waystone: {
-      n: 'INT/DEX Anchor', s: 'ailmentEffect', a: 12,
+      n: 'INT/DEX Pattern Node', s: 'ailmentEffect', a: 12,
       hook: { effect: 'flow-length', value: 1 },
-      fx: ['Flows passing through this Anchor count +1 length', 'You show your position when you strike: +5% damage taken for two seconds (design text)']
+      fx: ['Flows passing through this pattern node count +1 length', 'You show your position when you strike: +5% damage taken for two seconds (design text)']
     },
     r6notable: { n: 'Deeper Wither', s: 'gloam_res', a: 12, fx: ['+18% increased Ailment Effect', 'Wither you inflict stacks one deeper (design text)'] },
     classNode: {
@@ -150,9 +150,9 @@ const SPOKES = {
     },
     r4small: { n: 'Attack Speed', s: 'attackSpeed', a: 5 },
     waystone: {
-      n: 'DEX Anchor', s: 'evasion', a: 45,
+      n: 'DEX Pattern Node', s: 'evasion', a: 45,
       hook: { effect: 'rod-double' },
-      fx: ['Rods ending on this Anchor empower both endpoints twice', 'You cannot Block while moving (design text)']
+      fx: ['Rods ending on this pattern node empower both endpoints twice', 'You cannot Block while moving (design text)']
     },
     r6notable: { n: 'Sure First Hit', s: 'accuracy_flat', a: 60, fx: ['+12% increased Attack Speed', 'Your first hit on an unhurt enemy always lands (design text)'] },
     classNode: {
@@ -173,9 +173,9 @@ const SPOKES = {
     },
     r4small: { n: 'Attack Speed', s: 'attackSpeed', a: 5 },
     waystone: {
-      n: 'DEX/STR Anchor', s: 'projectileDamage', a: 16,
+      n: 'DEX/STR Pattern Node', s: 'projectileDamage', a: 16,
       hook: { effect: 'shared-claim' },
-      fx: ['Waves and flows may both claim conduits touching this Anchor', '-10% increased Reach']
+      fx: ['Waves and flows may both claim conduits touching this pattern node', '-10% increased Melee Strike Range']
     },
     r6notable: { n: 'Throwing While Moving', s: 'projectileDamage', a: 24, fx: ['+5% increased Movement Speed', 'Thrown hits while moving gain +10% damage (design text)'] },
     classNode: {
@@ -192,13 +192,13 @@ const SPOKES = {
     r2small: { n: 'Life', s: 'life', a: 18 },
     mastery: {
       n: 'Attack Mastery', s: 'attackDamage', a: 14,
-      fx: ['+25 to Guard', 'You cannot be pushed back while attacking (design text)']
+      fx: ['+25 to Armour', 'You cannot be pushed back while attacking (design text)']
     },
     r4small: { n: 'Physical Damage', s: 'physical_increased', a: 8 },
     waystone: {
-      n: 'STR Anchor', s: 'guard', a: 30,
+      n: 'STR Pattern Node', s: 'guard', a: 30,
       hook: { effect: 'loop-boost', value: 0.25 },
-      fx: ['Loops closed around this Anchor empower their center +25% further', 'Your Evasion is 10% lower while standing still (design text)']
+      fx: ['Loops closed around this pattern node empower their center +25% further', 'Your Evasion is 10% lower while standing still (design text)']
     },
     r6notable: { n: 'Ally Protection', s: 'attackDamage', a: 24, fx: ['+20 to Life', 'Allies behind you take 10% less damage (design text)'] },
     classNode: {
@@ -211,17 +211,17 @@ const SPOKES = {
   },
   ritualist: {
     title: 'STR/INT Class', cluster: 'ritualist-spoke',
-    doorway: { n: 'Spirit', s: 'spirit', a: 12, x: ['Every service starts with a lit taper and a steady voice.'] },
+    doorway: { n: 'Mana', s: 'spirit', a: 12, x: ['Every service starts with a lit taper and a steady voice.'] },
     r2small: { n: 'Spell Damage', s: 'spellDamage', a: 8 },
     mastery: {
       n: 'Companion Mastery', s: 'minionDamage', a: 14,
-      fx: ['+15 to Spirit', 'Your banners and maintained spells reach 15% further (design text)']
+      fx: ['+15 to Mana', 'Your banners and maintained spells reach 15% further (design text)']
     },
     r4small: { n: 'Fire Resistance', s: 'ember_res', a: 10 },
     waystone: {
-      n: 'STR/INT Anchor', s: 'spirit', a: 20,
+      n: 'STR/INT Pattern Node', s: 'spirit', a: 20,
       hook: { effect: 'enclosure-boost', value: 0.5 },
-      fx: ['Enclosures you close around this Anchor guard 50% more', 'Your spells cost 5% more Spirit (design text)']
+      fx: ['Enclosures you close around this pattern node guard 50% more', 'Your spells cost 5% more Mana (design text)']
     },
     r6notable: { n: 'Banner Attack Speed', s: 'minionDamage', a: 24, fx: ['+12% increased Spell Damage', 'Companions within your banner strike 10% faster (design text)'] },
     classNode: {
@@ -229,7 +229,7 @@ const SPOKES = {
       fx: ['Unlocks: banners become usable', 'Unlocks: one martial companion', 'Unlocks: 4x4 Relic pack', 'Your first class passive sets your class; each class passive grants its unlock.']
     },
     r8notable: { n: 'Shared Resistances', s: 'minionDamage', a: 20, fx: ['+20 to Ward', 'Your companion shares your resistances (design text)'] },
-    r9notable: { n: 'Lingering Spells', s: 'spellDamage', a: 26, fx: ['+20 to Spirit', 'Spells you maintain persist 3 seconds after you fall (design text)'] },
+    r9notable: { n: 'Lingering Spells', s: 'spellDamage', a: 26, fx: ['+20 to Mana', 'Spells you maintain persist 3 seconds after you fall (design text)'] },
     gateway: { n: 'STR/INT Gate', title: 'STR/INT Class' }
   }
 };
@@ -242,10 +242,10 @@ const SPOKES = {
    Smalls per ring: r3 2, r4 2, r5 3, r6 4, r7 5, r8 5, r9 6, r10 7.
    ============================================================================= */
 const WEDGES = [
-  { /* 0: STR -> Ritualist — the fire and ignite wedge (STR toward STR/INT) (Fire, Scald, banked defense) */
+  { /* 0: STR -> STR/INT class — the fire and ignite wedge (STR toward STR/INT) (Fire, Scald, banked defense) */
     id: 'kiln-line', title: 'Fire',
     firstNotable: { n: 'Fire Ailments', s: 'ailmentEffect', a: 14, fx: ['Adds 3 Fire Damage to hits'] },
-    beltNotable: { n: 'Guard from Ignites', s: 'guard', a: 35, fx: ['+10% to Fire Resistance', 'When a Ignite on an enemy expires, gain 15 Guard for four seconds (design text)'] },
+    beltNotable: { n: 'Armour from Ignites', s: 'guard', a: 35, fx: ['+10% to Fire Resistance', 'When a Ignite on an enemy expires, gain 15 Armour for four seconds (design text)'] },
     keystone: {
       n: 'All Damage as Fire',
       fx: ['All of your damage is dealt as Fire', 'You deal no Physical, Cold, Lightning, or Chaos damage', 'Ignites you inflict burn 30% hotter (design text)']
@@ -253,7 +253,7 @@ const WEDGES = [
     r7notable: { n: 'Lasting Ignites', s: 'ailmentEffect', a: 20, fx: ['Adds 5 Fire Damage to hits', 'Ignites you inflict last twice as long (design text)'] },
     r8notable: { n: 'Ignite Exposure', s: 'ember_res', a: 15, fx: ['+18% increased Ailment Effect', 'Enemies that survive your Ignite take +20% Fire damage from you (design text)'] },
     sign: {
-      n: 'Sign: Unending Ignites',
+      n: 'Unending Ignites',
       fx: ['Your Ignites never expire on enemies below half Life', 'You take 20% increased Cold damage', 'You can have only one Sign.']
     },
     r9notable: { n: 'Ignite Attack Speed', s: 'emberkiss', a: 10, fx: ['+15% increased Attack Speed while any enemy is Ignited (design text)'] },
@@ -267,7 +267,7 @@ const WEDGES = [
         { n: 'Attack Damage', s: 'attackDamage', a: 8, c: 'kiln-approach', x: ['+4% increased Attack Damage against Ignited enemies (design text)'] }
       ],
       4: [
-        { n: 'Guard', s: 'guard', a: 20, c: 'kiln-approach' },
+        { n: 'Armour', s: 'guard', a: 20, c: 'kiln-approach' },
         { n: 'Ailment Effect', s: 'ailmentEffect', a: 8, c: 'kiln-approach' }
       ],
       5: [
@@ -276,13 +276,13 @@ const WEDGES = [
         { n: 'Added Fire Damage', s: 'emberkiss', a: 5, c: 'kiln-waist' }
       ],
       6: [
-        { n: 'Guard', s: 'guard', a: 25, c: 'kiln-oath' },
+        { n: 'Armour', s: 'guard', a: 25, c: 'kiln-oath' },
         { n: 'Ward', s: 'ward', a: 20, c: 'kiln-oath' },
         { n: 'Ailment Effect', s: 'ailmentEffect', a: 9, c: 'kiln-oath' },
         { n: 'Attack Damage', s: 'attackDamage', a: 9, c: 'kiln-oath', x: ['Hits against Ignited enemies gain +6% damage (design text)'] }
       ],
       7: [
-        { n: 'Guard', s: 'guard_increased', a: 9, c: 'kiln-high' },
+        { n: 'Armour', s: 'guard_increased', a: 9, c: 'kiln-high' },
         { n: 'Attack Speed', s: 'attackSpeed', a: 4, c: 'kiln-high' },
         { n: 'Life', s: 'life', a: 20, c: 'kiln-high' },
         { n: 'Added Fire Damage', s: 'emberkiss', a: 6, c: 'kiln-high', x: ['Your hits reveal hidden enemies (design text)'] },
@@ -290,13 +290,13 @@ const WEDGES = [
       ],
       8: [
         { n: 'Ailment Effect', s: 'ailmentEffect', a: 11, c: 'kiln-sign' },
-        { n: 'Guard', s: 'guard', a: 30, c: 'kiln-sign' },
+        { n: 'Armour', s: 'guard', a: 30, c: 'kiln-sign' },
         { n: 'Spell Damage', s: 'spellDamage', a: 10, c: 'kiln-sign', x: ['+4% increased Ailment Effect (design text)'] },
         { n: 'Added Fire Damage', s: 'emberkiss', a: 6, c: 'kiln-sign' },
         { n: 'Attack Damage', s: 'attackDamage', a: 10, c: 'kiln-sign' }
       ],
       9: [
-        { n: 'Guard', s: 'guard_increased', a: 11, c: 'kiln-deep' },
+        { n: 'Armour', s: 'guard_increased', a: 11, c: 'kiln-deep' },
         { n: 'Ailment Effect', s: 'ailmentEffect', a: 12, c: 'kiln-deep' },
         { n: 'Fire Resistance', s: 'ember_res', a: 14, c: 'kiln-deep', x: ['You cannot be Ignited while at full Life (design text)'] },
         { n: 'Life', s: 'life', a: 25, c: 'kiln-deep' },
@@ -314,24 +314,24 @@ const WEDGES = [
       ]
     }
   },
-  { /* 1: Ritualist -> INT — the companion and Ward wedge (INT toward STR/INT) (spells, wards, companions) */
+  { /* 1: STR/INT class -> INT — the companion and Ward wedge (INT toward STR/INT) (spells, wards, companions) */
     id: 'procession', title: 'Companions and Spells',
-    firstNotable: { n: 'Free Companion', s: 'minionDamage', a: 16, fx: ['+10 to Spirit', 'Your first companion costs no upkeep (design text)'] },
+    firstNotable: { n: 'Free Companion', s: 'minionDamage', a: 16, fx: ['+10 to Mana', 'Your first companion costs no upkeep (design text)'] },
     beltNotable: { n: 'Shared Ward', s: 'ward', a: 35, fx: ['+8% increased Spell Damage', 'Your Ward also shelters companions at half value (design text)'] },
     keystone: {
       n: 'Spells Cost Life',
-      fx: ['Your spells cost Life instead of Spirit', 'Your Spirit is reserved in full to your banners and maintained spells']
+      fx: ['Your spells cost Life instead of Mana', 'Your Mana is reserved in full to your banners and maintained spells']
     },
     r7notable: { n: 'Protected Companions', s: 'minionDamage', a: 22, fx: ['+20 to Ward', 'Companions within your banner cannot be Withered (design text)'] },
-    r8notable: { n: 'Steady Ward', s: 'ward_pct', a: 20, fx: ['+10 to Spirit', 'Your Ward does not break from Chaos damage while a spell is maintained (design text)'] },
+    r8notable: { n: 'Steady Ward', s: 'ward_pct', a: 20, fx: ['+10 to Mana', 'Your Ward does not break from Chaos damage while a spell is maintained (design text)'] },
     sign: {
-      n: 'Sign: Ward Under Fire',
+      n: 'Ward Under Fire',
       fx: ['Your Ward recharges even while you take damage', 'Your Ward is 30% smaller', 'You can have only one Sign.']
     },
     r9notable: { n: 'Extra Companion', s: 'minionDamage', a: 28, fx: ['You may keep one additional companion (design text)'] },
     rimNotables: [
       { n: 'Ward Counts as a Spell', s: 'ward', a: 50, fx: ['Ward gained from this passive counts as a spell for your keystones (design text)'] },
-      { n: 'Spirit on Kill', s: 'spirit', a: 30, fx: ['+12% increased Companion Damage', 'Kills during your spells feed 5 Spirit back (design text)'] }
+      { n: 'Mana on Kill', s: 'spirit', a: 30, fx: ['+12% increased Companion Damage', 'Kills during your spells feed 5 Mana back (design text)'] }
     ],
     smallsByRing: {
       3: [
@@ -343,7 +343,7 @@ const WEDGES = [
         { n: 'Cast Speed', s: 'castSpeed', a: 4, c: 'procession-approach' }
       ],
       5: [
-        { n: 'Spirit', s: 'spirit', a: 10, c: 'procession-waist' },
+        { n: 'Mana', s: 'spirit', a: 10, c: 'procession-waist' },
         { n: 'Life', s: 'life', a: 18, c: 'procession-waist', x: ['Companions heal when you do, at half value (design text)'] },
         { n: 'Cast Speed', s: 'castSpeed', a: 4, c: 'procession-waist' }
       ],
@@ -358,12 +358,12 @@ const WEDGES = [
         { n: 'Companion Damage', s: 'minionDamage', a: 10, c: 'procession-high' },
         { n: 'Cast Speed', s: 'castSpeed', a: 4, c: 'procession-high' },
         { n: 'Fire Resistance', s: 'ember_res', a: 10, c: 'procession-high' },
-        { n: 'Spirit', s: 'spirit', a: 12, c: 'procession-high', x: ['Your spells are not interrupted by light hits (design text)'] }
+        { n: 'Mana', s: 'spirit', a: 12, c: 'procession-high', x: ['Your spells are not interrupted by light hits (design text)'] }
       ],
       8: [
         { n: 'Spell Damage', s: 'spellDamage', a: 10, c: 'procession-sign' },
         { n: 'Ward', s: 'ward', a: 25, c: 'procession-sign' },
-        { n: 'Spirit', s: 'spirit', a: 12, c: 'procession-sign' },
+        { n: 'Mana', s: 'spirit', a: 12, c: 'procession-sign' },
         { n: 'Companion Damage', s: 'minionDamage', a: 10, c: 'procession-sign', x: ['Your companion taunts when you raise a banner (design text)'] },
         { n: 'Chaos Resistance', s: 'gloam_res', a: 10, c: 'procession-sign' }
       ],
@@ -373,13 +373,13 @@ const WEDGES = [
         { n: 'Chaos Resistance', s: 'gloam_res', a: 12, c: 'procession-deep' },
         { n: 'Companion Damage', s: 'minionDamage', a: 11, c: 'procession-deep', x: ['Your companion picks up what you leave behind (design text)'] },
         { n: 'Ward', s: 'ward', a: 28, c: 'procession-deep' },
-        { n: 'Spirit', s: 'spirit', a: 14, c: 'procession-deep' }
+        { n: 'Mana', s: 'spirit', a: 14, c: 'procession-deep' }
       ],
       10: [
         { n: 'Intelligence', s: 'int', a: 5, c: 'procession-frontier' },
-        { n: 'All Attributes', s: 'attrs', a: 3, c: 'procession-frontier', x: ['Your next spell costs no Spirit (design text)'] },
+        { n: 'All Attributes', s: 'attrs', a: 3, c: 'procession-frontier', x: ['Your next spell costs no Mana (design text)'] },
         { n: 'Intelligence', s: 'int', a: 5, c: 'procession-frontier' },
-        { n: 'Spirit', s: 'spirit', a: 12, c: 'procession-frontier' },
+        { n: 'Mana', s: 'spirit', a: 12, c: 'procession-frontier' },
         { n: 'Strength', s: 'str', a: 5, c: 'procession-frontier' },
         { n: 'Ward', s: 'ward', a: 20, c: 'procession-frontier' },
         { n: 'Intelligence', s: 'int', a: 5, c: 'procession-frontier' }
@@ -397,7 +397,7 @@ const WEDGES = [
     r7notable: { n: 'Persistent Marks', s: 'spellDamage', a: 24, fx: ['+15% increased Ailment Effect', 'Your marks persist on enemies that leave your sight (design text)'] },
     r8notable: { n: 'Shattering Freeze', s: 'river_resistance', a: 12, fx: ['+18% increased Spell Damage', 'Frozen enemies shatter for Cold damage around them (design text)'] },
     sign: {
-      n: 'Sign: Mark Chilled Enemies',
+      n: 'Mark Chilled Enemies',
       fx: ['Enemies you Chill are also Marked', 'Your Ignites expire twice as fast', 'You can have only one Sign.']
     },
     r9notable: { n: 'Faster Freeze', s: 'ailmentEffect', a: 24, fx: ['+15 to Ward', 'Chill builds to Freeze 20% sooner (design text)'] },
@@ -423,7 +423,7 @@ const WEDGES = [
         { n: 'Accuracy', s: 'accuracy_flat', a: 40, c: 'drowned-oath' },
         { n: 'Spell Damage', s: 'spellDamage', a: 10, c: 'drowned-oath' },
         { n: 'Cold Resistance', s: 'river_resistance', a: 10, c: 'drowned-oath' },
-        { n: 'Ailment Effect', s: 'ailmentEffect', a: 10, c: 'drowned-oath', x: ['Marks cost no Spirit (design text)'] }
+        { n: 'Ailment Effect', s: 'ailmentEffect', a: 10, c: 'drowned-oath', x: ['Marks cost no Mana (design text)'] }
       ],
       7: [
         { n: 'Ward', s: 'ward', a: 24, c: 'drowned-high' },
@@ -445,7 +445,7 @@ const WEDGES = [
         { n: 'Ailment Effect', s: 'ailmentEffect', a: 12, c: 'drowned-deep', x: ['Enemies Frozen by you thaw 50% slower (design text)'] },
         { n: 'Ward', s: 'ward', a: 30, c: 'drowned-deep' },
         { n: 'Cast Speed', s: 'castSpeed', a: 5, c: 'drowned-deep' },
-        { n: 'Spirit', s: 'spirit', a: 14, c: 'drowned-deep' }
+        { n: 'Mana', s: 'spirit', a: 14, c: 'drowned-deep' }
       ],
       10: [
         { n: 'Intelligence', s: 'int', a: 5, c: 'drowned-frontier' },
@@ -469,7 +469,7 @@ const WEDGES = [
     r7notable: { n: 'Instant Traps', s: 'ailmentEffect', a: 22, fx: ['+8% increased Attack Speed', 'Your traps arm instantly (design text)'] },
     r8notable: { n: 'Poison from Hiding', s: 'critChance', a: 2, fx: ['+15% increased Ailment Effect', 'Your first strike from hiding always poisons (design text)'] },
     sign: {
-      n: 'Sign: Spreading Poison',
+      n: 'Spreading Poison',
       fx: ['Your poisons spread on kill', 'You cannot Block', 'You can have only one Sign.']
     },
     r9notable: { n: 'Lasting Wither', s: 'gloam_res', a: 14, fx: ['+20% increased Ailment Effect', 'Wither you inflict cannot be cleansed (design text)'] },
@@ -541,7 +541,7 @@ const WEDGES = [
     r7notable: { n: 'Downhill Pierce', s: 'move', a: 8, fx: ['+18% increased Projectile Damage', 'Moving downhill, your shots pierce (design text)'] },
     r8notable: { n: 'Chaining Shock', s: 'storm_res', a: 12, fx: ['+18% increased Projectile Damage', 'Your Shocks chain once to the nearest enemy (design text)'] },
     sign: {
-      n: 'Sign: Double Shock Stacks',
+      n: 'Double Shock Stacks',
       fx: ['Your Shocks stack twice as high', '+15% increased Lightning damage taken', 'You can have only one Sign.']
     },
     r9notable: { n: 'Long-Range Accuracy', s: 'accuracy_flat', a: 70, fx: ['+15% increased Projectile Damage', 'Your misses at long range are rerolled once (design text)'] },
@@ -605,7 +605,7 @@ const WEDGES = [
   { /* 5: DEX/STR spoke -> STR — the physical and bleed wedge (STR toward DEX/STR) (physical, bleed, stun, momentum) */
     id: 'red-field', title: 'Physical and Bleed',
     firstNotable: { n: 'Unblockable Against Bleeding', s: 'attackDamage', a: 16, fx: ['+8% increased Ailment Effect', 'Your hits against Bleeding enemies cannot be Blocked (design text)'] },
-    beltNotable: { n: 'Guard Break', s: 'physical_increased', a: 18, fx: ['+15 to Life', 'Your heavy hits break Guard 20% harder (design text)'] },
+    beltNotable: { n: 'Armour Break', s: 'physical_increased', a: 18, fx: ['+15 to Life', 'Your heavy hits break Armour 20% harder (design text)'] },
     keystone: {
       n: 'Hits Cannot Be Evaded',
       fx: ['Your hits cannot be evaded', 'You never deal critical strikes']
@@ -613,7 +613,7 @@ const WEDGES = [
     r7notable: { n: 'Life on Bleeding Kill', s: 'attackDamage', a: 24, fx: ['+10% increased Ailment Effect', 'Kills against Bleeding enemies heal you 15 Life (design text)'] },
     r8notable: { n: 'Longer Stuns', s: 'heavy', a: 8, fx: ['+15% increased Attack Damage', 'Your stuns last 25% longer (design text)'] },
     sign: {
-      n: 'Sign: Unstoppable',
+      n: 'Unstoppable',
       fx: ['Your actions cannot be interrupted while your Poise holds', 'You cannot dodge or give ground', 'You can have only one Sign.']
     },
     r9notable: { n: 'Damage per Nearby Enemy', s: 'life', a: 45, fx: ['+16% increased Attack Damage', 'Each enemy in reach adds +4% to your damage (design text)'] },
@@ -627,7 +627,7 @@ const WEDGES = [
         { n: 'Ailment Effect', s: 'ailmentEffect', a: 8, c: 'red-approach', x: ['Bleeds you inflict on moving enemies worsen (design text)'] }
       ],
       4: [
-        { n: 'Guard', s: 'guard', a: 20, c: 'red-approach' },
+        { n: 'Armour', s: 'guard', a: 20, c: 'red-approach' },
         { n: 'Attack Damage', s: 'attackDamage', a: 8, c: 'red-approach' }
       ],
       5: [
@@ -637,14 +637,14 @@ const WEDGES = [
       ],
       6: [
         { n: 'Attack Damage', s: 'attackDamage', a: 9, c: 'red-oath' },
-        { n: 'Guard', s: 'guard', a: 25, c: 'red-oath' },
+        { n: 'Armour', s: 'guard', a: 25, c: 'red-oath' },
         { n: 'Ailment Effect', s: 'ailmentEffect', a: 10, c: 'red-oath', x: ['Your Bleeds stack on Bleeding enemies (design text)'] },
         { n: 'Added Physical Damage', s: 'heavy', a: 4, c: 'red-oath' }
       ],
       7: [
         { n: 'Attack Speed', s: 'attackSpeed', a: 5, c: 'red-high' },
         { n: 'Reach', s: 'reach_increased', a: 8, c: 'red-high' },
-        { n: 'Guard', s: 'guard_increased', a: 9, c: 'red-high' },
+        { n: 'Armour', s: 'guard_increased', a: 9, c: 'red-high' },
         { n: 'Attack Damage', s: 'attackDamage', a: 10, c: 'red-high', x: ['Each Bleeding enemy adds +2% Attack Damage (design text)'] },
         { n: 'Ailment Effect', s: 'ailmentEffect', a: 10, c: 'red-high' }
       ],
@@ -652,7 +652,7 @@ const WEDGES = [
         { n: 'Life', s: 'life', a: 28, c: 'red-sign' },
         { n: 'Ailment Effect', s: 'ailmentEffect', a: 11, c: 'red-sign' },
         { n: 'Attack Damage', s: 'attackDamage', a: 10, c: 'red-sign', x: ['Enemies you stun are trampled for extra Physical (design text)'] },
-        { n: 'Guard', s: 'guard', a: 30, c: 'red-sign' },
+        { n: 'Armour', s: 'guard', a: 30, c: 'red-sign' },
         { n: 'Physical Damage', s: 'physical_increased', a: 10, c: 'red-sign' }
       ],
       9: [
@@ -661,7 +661,7 @@ const WEDGES = [
         { n: 'Ailment Effect', s: 'ailmentEffect', a: 12, c: 'red-deep', x: ['Reapplying a Bleed restores its full duration (design text)'] },
         { n: 'Reach', s: 'reach_increased', a: 10, c: 'red-deep' },
         { n: 'Attack Speed', s: 'attackSpeed', a: 5, c: 'red-deep' },
-        { n: 'Guard', s: 'guard', a: 32, c: 'red-deep' }
+        { n: 'Armour', s: 'guard', a: 32, c: 'red-deep' }
       ],
       10: [
         { n: 'Strength', s: 'str', a: 5, c: 'red-frontier' },
@@ -669,7 +669,7 @@ const WEDGES = [
         { n: 'All Attributes', s: 'attrs', a: 3, c: 'red-frontier', x: [] },
         { n: 'Strength', s: 'str', a: 5, c: 'red-frontier' },
         { n: 'Life', s: 'life', a: 22, c: 'red-frontier' },
-        { n: 'Guard', s: 'guard', a: 22, c: 'red-frontier' },
+        { n: 'Armour', s: 'guard', a: 22, c: 'red-frontier' },
         { n: 'Strength', s: 'str', a: 5, c: 'red-frontier' }
       ]
     }

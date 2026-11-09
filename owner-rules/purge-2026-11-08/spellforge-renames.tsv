@@ -1,0 +1,118 @@
+id	old	new
+dc-inner-flame	Inner Flame	Fire inside a body
+dc-hellfire-mortar	Hellfire Mortar	Lava trench with a magma mortar
+dc-frozen-ramparts	Frozen Ramparts	Ice-coated walls
+dc-metabolic-englaciation	Metabolic Englaciation	Slowing cold wave
+dc-splinterfrost-shell	Splinterfrost Shell	Ice barricade
+dc-condensation-shield	Condensation Shield	Floating ice shield
+dc-absolute-zero	Absolute Zero	Instant ice block
+dc-glaciate	Glaciate	Ice cone
+dc-vhis-electric-charge	Vhi's Electric Charge	Lightning dash
+dc-orb-of-electrocution	Orb of Electrocution	Ball lightning
+dc-broms-barrelling-boulder	Brom's Barrelling Boulder	Rolling boulder
+dc-ledas-liquefaction	Leda's Liquefaction	Ground turns to mud
+dc-tomb-of-doroklohe	Tomb of Doroklohe	Stone enclosure
+dc-stoneskin	Stoneskin	Stone skin
+dc-orb-of-fragmentation	Orb of Fragmentation	Exploding iron ball
+dc-alistairs-walking-alembic	Alistair's Walking Alembic	Walking alembic
+dc-fulsome-fusillade	Fulsome Fusillade	Exploding flask barrage
+dc-soul-splinter	Soul Splinter	Wisp torn from a body
+dc-grave-claw	Grave Claw	Bone claws from the floor
+dc-deaths-door	Death's Door	Stone doorway, arrows pass through
+dc-twisted-resurrection	Twisted Resurrection	Corpses fused into one body
+dc-gloom	Gloom	Blinding dark ring
+dc-dimensional-bullseye	Dimensional Bullseye	Marked target, echoed bolts
+dc-eringyas-surprising-crocodile	Eringya's Surprising Crocodile	Crocodile from a pool
+dc-malign-gateway	Malign Gateway	Tentacle through a rift
+dc-monstrous-menagerie	Monstrous Menagerie	Manticore from a pit
+dc-gells-gavotte	Gell's Gavotte	Sideways gravity
+dc-kinetic-grapnel	Kinetic Grapnel	Grapnel hook
+dc-nazjas-percussive-tempering	Nazja's Percussive Tempering	Hammer repairs a construct
+dc-forge-phalanx-beetle	Forge Phalanx Beetle	Iron beetle construct
+dc-fortress-blast	Fortress Blast	Stone wall shockwave
+dc-platinum-paragon	Platinum Paragon	Platinum knight construct
+dc-beastly-appendage	Beastly Appendage	Horns and talons
+inv-shining-one-brand-weapon-with-holy-wrath	Brand Weapon With Holy Wrath	Sword set alight on an altar
+inv-kikubaaqudgh-sign-of-ruin	Sign of Ruin	Marks over an enemy group
+inv-kikubaaqudgh-receive-forbidden-knowledge	Receive Forbidden Knowledge	Book of spells absorbed
+inv-okawaru-receive-weapon	Receive Weapon	Four weapons, one chosen
+inv-makhleb-vessel-of-slaughter	Vessel of Slaughter	Transform into a horned obsidian giant
+inv-trog-brothers-in-arms	Brothers in Arms	Two hill giants summoned
+inv-lugonu-depart-the-abyss	Depart the Abyss	Exit through a tear
+inv-lugonu-brand-weapon-with-distortion	Brand Weapon With Distortion	Sword split into copies
+inv-nemelex-xobe-triple-draw	Triple Draw	Three cards, one chosen
+inv-beogh-recall-orcish-followers	Recall Orcish Followers	Recall followers to a banner
+inv-fedhas-madas-evolution	Evolution	Sapling grows into a tree
+inv-cheibriados-step-from-time	Step From Time	Hourglass of sand
+dragon-breath	Dragon Breath	Fire jet
+inv-ashenzari-shatter-the-chains	Shatter the Chains	Chains break, amulet crumbles
+inv-dithmenos-shadow-form	Shadow Form	Black smoke body
+inv-gozag-potion-petition	Potion Petition	Gold potion pour
+inv-gozag-call-merchant	Call Merchant	Merchant stall from coins
+inv-uskayaw-grand-finale	Grand Finale	Dancer bursts out of a target
+inv-hepliaklqana-recall-ancestor	Recall Ancestor	Robed figure from ash
+inv-hepliaklqana-idealise	Idealise	Figure turns to gold
+inv-wu-jian-coun-serpents-lash	Serpent's Lash	Gold serpent dash
+inv-wu-jian-coun-heavenly-storm	Heavenly Storm	Gold storm cloud ring
+inv-ignis-rising-flame	Rising Flame	Fire launches caster upward
+inv-xom-bazaar	Bazaar	Gate to a market
+inv-pakellas-supercharge	Supercharge	Wand charged by a column
+evo-tin-of-tremorstones	Tin of Tremorstones	Tin of exploding pebbles
+evo-staff-of-olgreb	Staff of Olgreb	Poison serpent staff
+hell-rift	Hell Rift	Burning rift
+void-gate	Void Gate	Stone arch onto a starfield
+rw-boiling-blood	Boiling Blood	Blood pool under allies
+rw-blazerip	Blazerip	Fire curtain along a fissure
+rw-holy-fire	Holy Fire	Fire and light cross
+rw-fiery-tormentor	Fiery Tormentor	Horned fire creature
+rw-bloodflame	Blood Flame	Dark red fire on the caster
+rw-conductance	Conductance	Copper coil on a target
+rw-watcher-form	Watcher Form	Stone eye form
+rw-prison-of-thorns	Prison of Thorns	Thorn cage
+ground-fog	Moorland Ground Fog	Ground fog
+god-rays	Cathedral God Rays	Light shafts
+rw-void-drake	Void Drake	Black glass drake
+rw-lifedrain	Lifedrain	Life drain
+rw-hollow-flesh	Hollow Flesh	Living body to husk
+rw-suspend-mortality	Suspend Mortality	Spare life copy
+rw-carnival-of-pain	Carnival of Pain	Linked pain wires
+rw-mass-calcification	Mass Calcification	Allies turn to bone
+rw-soul-tax	Soul Tax	Life strand pulled out
+rw-twilight-gaze	Twilight Gaze	Eye splits light and dark
+rw-soul-wind	Soul Wind	Wind pulls copies from bodies
+rw-choir-of-angels	Choir of Angels	Three winged singers
+rw-holy-armor	Holy Armor	Gold light armour
+rw-word-of-chaos	Word of Chaos	Spoken word teleports enemies
+rw-ironize	Ironize	Allies turned to iron
+rw-flesh-fiend	Flesh Fiend	Flesh mass from a blood pool
+rw-permanence	Permanence	Sand stops, rings lock
+angel-wings	Seraph Wings	Feathered light wings
+cb3-storm-monk	Storm Monk	Strength and Dexterity staff fighter
+cb3-breaker	Breaker	Strength great axe fighter
+cb3-twin-blade	Twin Blade	Dexterity twin khopesh fighter
+cb3-blink-archer	Blink Archer	Dexterity and Intelligence archer
+cb3-pyromancer	Pyromancer	Intelligence fire caster
+cb3-rime-warden	Rime Warden	Intelligence and Strength cold caster
+cb3-tempest-caller	Tempest Caller	Intelligence lightning caster
+cb3-templar	Dawn Templar	Strength and Wisdom spear fighter
+arpg-blessed-hammer	Blessed Hammer	Spiralling hammers
+loading-sigil	Loading Sigil	Loading indicator
+midas-touch	Midas Touch	Gold coating
+combat-move:cb3-storm-monk	Tempest Flurry	Lightning staff combo
+combat-move:cb3-storm-monk	Ice Strike	Freezing staff thrust
+combat-move:cb3-storm-monk	Staff Vault	Staff vault
+combat-move:cb3-storm-monk	Falling Thunder	Lightning landing slam
+combat-move:cb3-storm-monk	Tempest Bell	Lightning bell
+combat-move:cb3-storm-monk	Storm Lattice	Lightning on every enemy
+combat-move:cb3-breaker	Whirling Axe	Spinning axe attack
+combat-move:cb3-twin-blade	Twin Cuts	Alternating blade cuts
+combat-move:cb3-twin-blade	Flicker	Short dash
+combat-move:cb3-blink-archer	Fan Volley	Three-arrow fan
+combat-move:cb3-pyromancer	Flame Staff	Burning staff strikes
+combat-move:cb3-pyromancer	Ember Step	Fire dash
+combat-move:cb3-rime-warden	Rime Staff	Frost staff strikes
+combat-move:cb3-hexweaver	Rift Step	Short teleport
+combat-move:cb3-templar	Dawn Spear	Lit spear strikes
+combat-sub:cb3-gravelord	Lattice · Spirit	Lattice · Self
+combat-sub:cb3-templar	Lattice · Spirit	Lattice · Self
+combat-move:cb3-storm-monk	Fulcrum Throw	Shoulder throw

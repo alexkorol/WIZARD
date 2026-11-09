@@ -139,25 +139,25 @@
     const baseMaxHp = (attrs) => 70 + attrs.str * 6;
     // Classes lean on one axis. Plain archetypes on purpose — no invented titles.
     const CLASSES = [
-      { id: 'warrior', name: 'Warrior', icon: 'shield', attr: 'str', desc: 'The wall the House hides behind. Slow to learn, slower to die.', attrs: { str: 8, dex: 4, int: 3 }, outfitItem: { form: 'Spear', material: 'copper' } },
-      { id: 'rogue', name: 'Rogue', icon: 'sword', attr: 'dex', desc: 'Quick hands, quicker feet. Finds what others walk past.', attrs: { str: 4, dex: 8, int: 3 }, outfitItem: { form: 'Handaxe', material: 'copper' } },
-      { id: 'mage', name: 'Mage', icon: 'scroll', attr: 'int', desc: 'Reads entrails and skies. Knows much, bleeds easily.', attrs: { str: 3, dex: 4, int: 8 }, outfitItem: { form: 'Ring', material: 'copper' } },
+      { id: 'warrior', name: 'Warrior', icon: 'shield', attr: 'str', desc: 'Strength class. Takes less damage.', attrs: { str: 8, dex: 4, int: 3 }, outfitItem: { form: 'Spear', material: 'copper' } },
+      { id: 'rogue', name: 'Rogue', icon: 'sword', attr: 'dex', desc: 'Dexterity class. Finds better items.', attrs: { str: 4, dex: 8, int: 3 }, outfitItem: { form: 'Handaxe', material: 'copper' } },
+      { id: 'mage', name: 'Mage', icon: 'scroll', attr: 'int', desc: 'Intelligence class. Gains more experience.', attrs: { str: 3, dex: 4, int: 8 }, outfitItem: { form: 'Ring', material: 'copper' } },
     ];
 
     const ZONES = [
-      { id: 'fields', name: 'Millbrook Fields', danger: 1, minLevel: 1, desc: 'Tame farmland gone slightly wrong.', lines: ['Following a hedgerow', 'Questioning a nervous shepherd', 'Poking a scarecrow that moved'] },
-      { id: 'woods', name: 'The Dark Woods', danger: 2, minLevel: 3, desc: 'The trees keep their own counsel.', lines: ['Cutting through bramble', 'Marking trunks with chalk', 'Losing sight of the sun'] },
-      { id: 'ruins', name: 'Crumbling Ruins', danger: 3, minLevel: 5, desc: 'Something older than the kingdom.', lines: ['Reading half-worn inscriptions', 'Climbing a fallen column', 'Stepping over old bones'] },
-      { id: 'crypts', name: 'The Sunken Crypts', danger: 4, minLevel: 8, desc: 'The dead here were buried standing up.', lines: ['Wading through black water', 'Counting alcoves in the dark', 'Snuffing the lantern to listen'] },
-      { id: 'rift', name: 'The Pale Rift', danger: 5, minLevel: 11, desc: 'Where the map ends and the scribes go quiet.', lines: ['Walking on ground that hums', 'Ignoring a voice that knows your name', 'Watching two moons where one should be'] },
+      { id: 'fields', name: 'Fields', danger: 1, minLevel: 1, desc: 'Farmland. Lowest danger.', lines: ['Exploring the fields'] },
+      { id: 'woods', name: 'Woods', danger: 2, minLevel: 3, desc: 'Forest.', lines: ['Exploring the woods'] },
+      { id: 'ruins', name: 'Ruins', danger: 3, minLevel: 5, desc: 'Collapsed buildings.', lines: ['Exploring the ruins'] },
+      { id: 'crypts', name: 'Flooded Crypts', danger: 4, minLevel: 8, desc: 'Underground tombs.', lines: ['Exploring the crypts'] },
+      { id: 'rift', name: 'Chasm', danger: 5, minLevel: 11, desc: 'Deep chasm. Highest danger.', lines: ['Exploring the chasm'] },
     ];
 
     const MONSTERS = {
-      1: ['Field Rat', 'Kobold Scavenger', 'Mud Crab', 'Feral Hound'],
-      2: ['Goblin Skirmisher', 'Dire Wolf', 'Bog Wisp', 'Roadside Bandit'],
-      3: ['Skeleton', 'Raider', 'Ghoul', 'Mimic'],
-      4: ['Wight', 'Drowned Soldier', 'Bone Priest', 'Flesh Golem'],
-      5: ['Rift Stalker', 'Pale Seraph', 'Void Beast', 'The Hollow King'],
+      1: ['Field Rat', 'Mud Crab', 'Feral Hound'],
+      2: ['Dire Wolf', 'Bandit'],
+      3: ['Skeleton', 'Raider'],
+      4: ['Zombie', 'Skeleton Warrior'],
+      5: ['Cave Bear', 'Bandit Chief'],
     };
 
     // Itemization: shared canon with tools/rpg_inventory (Vesselforge / Verdigris pack).
@@ -168,7 +168,6 @@
       bronze: { name: 'Bronze', tier: 3 }, obsidian: { name: 'Obsidian', tier: 3 },
       jade: { name: 'Jade', tier: 4 }, amber: { name: 'Amber', tier: 4 }, bronzescale: { name: 'Bronze-scale', tier: 4 },
       skymetal: { name: 'Hammered Iron', tier: 5 },
-      rivetmail: { name: 'Riveted Mail', tier: 6 },
     };
     const FORMS = {
       Handaxe: ['flint', 'copper', 'bronze', 'obsidian', 'skymetal'],
@@ -177,8 +176,8 @@
       Atlatl: ['bone', 'copper', 'bronze'],
       Khopesh: ['copper', 'bronze', 'skymetal'],
       Sling: ['hide', 'quilted'],
-      Shield: ['hide', 'bronze', 'bronzescale', 'rivetmail'],
-      Wrap: ['hide', 'quilted', 'bronzescale', 'rivetmail'],
+      Shield: ['hide', 'bronze', 'bronzescale'],
+      Wrap: ['hide', 'quilted', 'bronzescale'],
       Crest: ['bone', 'hide', 'copper', 'bronze', 'jade'],
       Gorget: ['jade', 'amber', 'bone', 'copper'],
       Ring: ['bone', 'copper', 'jade', 'amber'],
@@ -195,21 +194,20 @@
     const RELIC_STYLE = { text: 'text-purple-300', chip: 'text-purple-300 border-purple-800' };
     const itemStyle = (it) => it.relicId ? RELIC_STYLE : (TIER_STYLE[it.tier] || TIER_STYLE[1]);
     const makeItem = (form, material) => ({ id: generateId(), name: `${MATERIALS[material].name} ${form}`, form, material, tier: MATERIALS[material].tier });
-    // Relics deepen by being carried and lived with (Bonds, in Vesselforge terms) — never "reforged".
-    const TIER_EPITHETS = { 2: 'Remembered', 3: 'Storied', 4: 'Undying' };
+    // Relic bond tier goes up each time a relic is found again.
     const relicDisplayName = (relic, tier) => {
       const t = Math.min(tier, 4);
-      const suffix = TIER_EPITHETS[t] ? `, ${TIER_EPITHETS[t]}` : '';
+      const suffix = t >= 2 ? ` (Bond ${t})` : '';
       return `${possessive(relic.origin)} ${relic.base}${suffix}`;
     };
 
     // Legacy boons: unlocked permanently at renown thresholds.
     const BOONS = [
-      { id: 'oral_tradition', renown: 150, icon: 'book', name: 'Oral Tradition', corruptName: 'Whispered Heresies', desc: 'Tales of the fallen guide the young. Scions gain +15% experience.' },
-      { id: 'ancestral_arms', renown: 400, icon: 'sword', name: 'Ancestral Arms', corruptName: 'Grave Goods', desc: 'New scions set out bearing a circulating relic of the House.' },
-      { id: 'hardened_blood', renown: 800, icon: 'heart', name: 'Hardened Blood', corruptName: 'Ichor of the Void', desc: 'The lineage endures. Scions gain +25 vitality.' },
-      { id: 'grave_whispers', renown: 1500, icon: 'ghost', name: 'Whispers of the Dead', corruptName: 'The Choir Below', desc: 'The dead point the way to what they lost. Relics surface twice as often.' },
-      { id: 'long_memory', renown: 3000, icon: 'history', name: 'The Long Memory', corruptName: 'Eternal Recurrence', desc: 'Each generation begins where the last left a mark. Scions start at level 3.' },
+      { id: 'oral_tradition', renown: 150, icon: 'book', name: '+15% Experience', desc: 'New characters gain 15% more experience.' },
+      { id: 'ancestral_arms', renown: 400, icon: 'sword', name: 'Starting Relic', desc: 'New characters start with one of the House\'s circulating relics.' },
+      { id: 'hardened_blood', renown: 800, icon: 'heart', name: '+25 Life', desc: 'New characters start with +25 maximum Life.' },
+      { id: 'grave_whispers', renown: 1500, icon: 'ghost', name: 'Double Relic Chance', desc: 'Relics drop twice as often.' },
+      { id: 'long_memory', renown: 3000, icon: 'history', name: 'Start at Level 3', desc: 'New characters start at level 3.' },
     ];
     const unlockedBoons = (house) => BOONS.filter(b => house.renown >= b.renown);
     const boonMods = (house) => {
@@ -222,52 +220,21 @@
         startRelic: ids.includes('ancestral_arms'),
       };
     };
-    const boonName = (boon, isCorrupt) => (isCorrupt ? boon.corruptName : boon.name);
+    const boonName = (boon) => boon.name;
 
-    // Verdigris canon: copper is wealth. The House vault counts copper, not gold.
+    // The house currency is copper.
     const OUTFIT_COST = 75;
     const NOBLE_COPPER = 100;
     const CORRUPT_COPPER = 666;
 
     // ============================================================
-    // Lore: offline pools + optional LLM
+    // Optional LLM name check and name suggestions (off unless apiKey is set)
     // ============================================================
-    const OFFLINE_LORE = {
-      houseName: ['Ashford', 'Thornton', 'Calder', 'Oakley', 'Grayson', 'Stillman', 'Blackwell', 'Marlowe', 'Fletcher', 'Mason', 'Weaver', 'Cooper'],
-      voidName: ['The Unhallowed', 'The Hollow House', 'The Broken House', 'The Nameless', 'The Last House'],
-      motto: ['Ash remembers', 'Iron before honey', 'We endure the long dark', 'No crown without thorns', 'The river forgets nothing', 'Silence keeps the keep', 'Debt is a kind of love', 'The last light is ours'],
-      charName: ['Kaelen Dray', 'Mirelle of the Fen', 'Tobias Crane', 'Sera Voss', 'Aldric Thane', 'Wren Calloway', 'Edmun Hale', 'Isolde Marr', 'Petra Quill', 'Rooke Damaris', 'Fenn Oswic', 'Lysa Corveaux'],
-      origin: [
-        'Raised among the lime kilns of a dying quarry town, sworn to outlive its debts.',
-        'Last survivor of a caravan lost in the Foggy Swamp; speaks little of what followed.',
-        'A disgraced retainer seeking to buy back an honored name, one contract at a time.',
-        'Schooled by hedge-clerics in letters and knife-work, in roughly equal measure.',
-        'Born under a hanged moon; the village midwife refused payment and left by night.',
-        'Third child of a third child, owed nothing and determined to collect anyway.',
-        'Kept the tollbridge ledger for nine years, then one morning burned it and walked east.',
-      ],
-      epitaph: [
-        'They walked into the dark so others would not have to.',
-        'Went further than the maps.',
-        'Debt paid in full.',
-        'The river forgets nothing; neither do we.',
-        'Third of the name, first to the wall.',
-        'Asked the wrong question in the right place.',
-        'The House endures because they did not.',
-      ],
-    };
-    const offlineLore = (prompt) => {
-      if (/house name/i.test(prompt)) return /void|chaos/i.test(prompt) ? pick(OFFLINE_LORE.voidName) : pick(OFFLINE_LORE.houseName);
-      if (/motto/i.test(prompt)) return /void|chaos/i.test(prompt) ? 'Chaos Reigns Eternal' : pick(OFFLINE_LORE.motto);
-      if (/character name/i.test(prompt)) return pick(OFFLINE_LORE.charName);
-      if (/origin/i.test(prompt)) return pick(OFFLINE_LORE.origin);
-      if (/epitaph/i.test(prompt)) return pick(OFFLINE_LORE.epitaph);
-      return '';
-    };
+    const offlineLore = () => '';
     async function callGeminiAPI(prompt, systemInstruction, responseSchema = null) {
       if (!apiKey) {
         // offline/dev fallback: judge leniently, draw lore from local pools
-        return responseSchema ? { approved: true, message: 'The scribes nod in silence.' } : offlineLore(prompt);
+        return responseSchema ? { approved: true, message: 'Name accepted.' } : offlineLore(prompt);
       }
       const delays = [500, 1000, 2000];
       for (let i = 0; i <= delays.length; i++) {
@@ -297,11 +264,11 @@
 
     const consultTheScribes = async (type, data) => {
       const systemPrompt = `
-        You are the High Scribe of a grim fantasy realm. Approve only serious, immersive entries.
+        You check names that players choose in a dark fantasy game. Approve only serious names.
         1. Reject modern, silly, meme, or offensive names.
         2. Reject names that are too short or random characters.
-        3. If rejected, respond with a short, in-character refusal.
-        4. If approved, respond with a brief, atmospheric blessing.
+        3. If rejected, respond with a short, plain reason.
+        4. If approved, respond with: Name accepted.
       `;
       const userPrompt = `Judge this ${type}: ${data.name}. Context: ${data.context || 'None'}`;
       const schema = { type: 'OBJECT', properties: { approved: { type: 'BOOLEAN' }, message: { type: 'STRING' } } };
@@ -309,13 +276,13 @@
         return await callGeminiAPI(userPrompt, systemPrompt, schema);
       } catch (err) {
         console.error(err);
-        return { approved: true, message: 'The scribes are silent, but you pass unchallenged.' };
+        return { approved: true, message: 'Name check unavailable; name accepted.' };
       }
     };
 
     const generateLore = async (type, context) => {
       const systemPrompt = `
-        You are a fantasy chronicler. Return ONLY the requested string.
+        You suggest names for a dark fantasy game. Return ONLY the requested string.
         No labels, no quotes, no markdown. Keep it concise.
       `;
       const userPrompt = `Generate a ${type} for: ${context}`;
@@ -422,7 +389,7 @@
             }),
             crypt: (h.crypt || []).map(d => ({
               id: d.id, name: d.name, class: migrateClassId(d.class), level: d.level || 1,
-              epitaph: 'From before the chronicles were kept.', cause: 'Lost to the old records',
+              cause: 'Imported from an older save',
               kills: 0, deeds: [], relics: [], diedAt: d.diedAt || new Date().toISOString(),
             })),
             reliquary: [],
@@ -440,7 +407,7 @@
     // ============================================================
     const TICK_MS = 1600;
     // Material tier weighted by zone danger; DEX (fortune) tilts toward better materials.
-    // Skymetal only surfaces at danger 4+; riveted mail stays a rumor outside the Rift.
+    // Hammered iron (tier 5) only drops at danger 4+.
     function rollLootItem(danger, lootMod) {
       const w = {
         1: Math.max(5, 55 - danger * 9),
@@ -448,7 +415,6 @@
         3: (6 + danger * 3) * lootMod,
         4: (1.5 + danger * 1.5) * lootMod,
         5: danger >= 4 ? danger * 0.7 * lootMod : 0,
-        6: danger === 5 ? 0.25 : 0,
       };
       let r = Math.random() * Object.values(w).reduce((a, b) => a + b, 0);
       let tier = 1;
@@ -479,9 +445,9 @@
         const name = relicDisplayName(relic, newTier);
         s.foundRelics = [...s.foundRelics, relic.id];
         s.items = [...s.items, { id: generateId(), name, base: relic.base, form: relic.form, material: relic.material, relicId: relic.id }];
-        s.deeds = addDeed(s.deeds, `Reclaimed ${name}`);
-        s.logs = pushLog(s.logs, `Unearthed ${name} — once borne by ${relic.origin}. The House remembers.`, 'relic');
-        s.action = 'Turning a relic over in the light';
+        s.deeds = addDeed(s.deeds, `Found relic ${name}`);
+        s.logs = pushLog(s.logs, `Found relic ${name} (previously carried by ${relic.origin})`, 'relic');
+        s.action = 'Found a relic';
       } else if (roll < relicChance + 0.36) {
         // Combat: victory, but it costs blood. STR soaks, INT learns.
         const mob = pick(MONSTERS[d]);
@@ -490,17 +456,17 @@
         s.hp = s.hp - dmg;
         s.kills += 1;
         s.xp += xpGain;
-        s.logs = pushLog(s.logs, `Slew ${mob} (+${xpGain} xp, -${dmg} hp)`, 'fight');
-        s.action = `Wiping the blade clean`;
-        if (d >= 4) s.deeds = addDeed(s.deeds, `Felled a horror of ${zone.name}`);
+        s.logs = pushLog(s.logs, `Killed ${mob} (+${xpGain} xp, -${dmg} life)`, 'fight');
+        s.action = 'Fighting';
+        if (d >= 4) s.deeds = addDeed(s.deeds, `Killed an enemy in ${zone.name}`);
         if (s.hp <= 0) {
           s.hp = 0;
           s.dead = true;
-          s.cause = `Slain by ${mob} in ${zone.name}`;
-          s.logs = pushLog(s.logs, `${s.name} has fallen.`, 'warn');
+          s.cause = `Killed by ${mob} in ${zone.name}`;
+          s.logs = pushLog(s.logs, `${s.name} died.`, 'warn');
           return s;
         }
-        if (s.hp / s.maxHp < 0.25) s.logs = pushLog(s.logs, 'Bleeding badly. The Hall is not far — yet.', 'warn');
+        if (s.hp / s.maxHp < 0.25) s.logs = pushLog(s.logs, 'Life below 25%.', 'warn');
       } else if (roll < relicChance + 0.58) {
         // Loot: copper always; sometimes a vessel worth keeping (tier 2+ material).
         const copper = Math.round((2 + Math.random() * 6) * d);
@@ -508,21 +474,21 @@
         const item = rollLootItem(d, am.loot);
         const art = /^[aeiou]/i.test(item.name) ? 'an' : 'a';
         if (item.tier <= 1) {
-          s.logs = pushLog(s.logs, `Scavenged ${art} ${item.name.toLowerCase()} and ${copper} copper — anyone's tools`, 'loot');
+          s.logs = pushLog(s.logs, `Found ${art} ${item.name} and ${copper} copper (common material)`, 'loot');
         } else if (s.items.length < 8) {
           s.logs = pushLog(s.logs, `Found ${art} ${item.name} and ${copper} copper`, 'loot');
         } else {
-          s.logs = pushLog(s.logs, `Found ${art} ${item.name}, but the pack is full. Left it for the crows. (+${copper} copper)`, 'loot');
+          s.logs = pushLog(s.logs, `Found ${art} ${item.name}; pack full, item left behind (+${copper} copper)`, 'loot');
         }
-        s.action = 'Weighing the take';
+        s.action = 'Looting';
       } else if (roll < relicChance + 0.72) {
         // Rest / recover
         const heal = Math.round(8 + d * 3 + Math.random() * 6);
         s.hp = Math.min(s.maxHp, s.hp + heal);
-        s.logs = pushLog(s.logs, `Made camp and bound wounds (+${heal} hp)`, 'rest');
-        s.action = 'Watching the fire burn low';
+        s.logs = pushLog(s.logs, `Rested (+${heal} life)`, 'rest');
+        s.action = 'Resting';
       } else {
-        // Flavor / travel
+        // Exploring
         const line = pick(zone.lines);
         s.logs = pushLog(s.logs, `${line}...`, 'flavor');
         s.action = line;
@@ -540,8 +506,8 @@
         s.maxHp += 8;
         s.hp = Math.min(s.maxHp, s.hp + Math.round(s.maxHp * 0.4));
         s.logs = pushLog(s.logs, `${s.name} has reached level ${s.level}.`, 'level');
-        if (s.level === 5) s.deeds = addDeed(s.deeds, 'Survived to the fifth rank');
-        if (s.level === 10) s.deeds = addDeed(s.deeds, 'Stood among the ten-ranked');
+        if (s.level === 5) s.deeds = addDeed(s.deeds, 'Reached level 5');
+        if (s.level === 10) s.deeds = addDeed(s.deeds, 'Reached level 10');
       }
       return s;
     }
@@ -586,7 +552,7 @@
         </div>
       </div>
     );
-    const SuggestBtn = ({ onClick, disabled, generating, label = 'Suggest' }) => (
+    const SuggestBtn = ({ onClick, disabled, generating, label = 'Suggest' }) => !apiKey ? null : (
       <button onClick={onClick} disabled={disabled || generating} className="text-amber-400 hover:text-amber-300 flex items-center gap-1 disabled:opacity-40">
         {generating ? <Icon name="loader" size={14} /> : <Icon name="sparkles" size={14} />} {label}
       </button>
@@ -632,7 +598,7 @@
                   <div className="glass rounded-lg p-5 text-center">
                     <Icon name="gem" size={28} className="mx-auto text-purple-300 mb-2" />
                     <h3 className="font-serif text-stone-200 mb-1">Relics</h3>
-                    <p className="text-stone-500">Items from fallen characters can appear as relic drops.</p>
+                    <p className="text-stone-500">Items from dead characters can appear as relic drops.</p>
                   </div>
                 </div>
                 <button onClick={onFound} className="w-full bg-amber-900/20 hover:bg-amber-900/40 text-amber-400 border border-amber-900/40 hover:border-amber-700 py-4 tracking-[0.2em] uppercase font-serif transition rounded-lg">
@@ -651,13 +617,12 @@
                         <Banner sigil={h.sigil} size={52} corrupt={isCorrupt} />
                         <div className="min-w-0">
                           <h2 className="font-serif text-xl text-stone-100 truncate">{h.name}</h2>
-                          <p className="text-xs text-stone-500 italic truncate">"{h.motto}"</p>
                           {isCorrupt && <span className="inline-block mt-1 text-[10px] uppercase tracking-widest text-purple-300 border border-purple-800 rounded px-1.5">Corrupt</span>}
                         </div>
                       </div>
                       <div className="flex gap-4 mt-4 text-xs text-stone-500">
                         <span className="flex items-center gap-1"><Icon name="user" size={13} /> {alive} living</span>
-                        <span className="flex items-center gap-1"><Icon name="skull" size={13} /> {h.crypt.length} fallen</span>
+                        <span className="flex items-center gap-1"><Icon name="skull" size={13} /> {h.crypt.length} dead</span>
                         <span className={`flex items-center gap-1 ${isCorrupt ? 'text-purple-300' : 'text-amber-400'}`}><Icon name="crown" size={13} /> {h.renown}</span>
                       </div>
                       <div className={`mt-4 text-xs uppercase tracking-[0.2em] ${isCorrupt ? 'text-purple-300' : 'text-amber-400'} opacity-0 group-hover:opacity-100 transition flex items-center gap-1`}>
@@ -687,7 +652,6 @@
     // ============================================================
     function Founding({ onCreate, onBack, showNote }) {
       const [name, setName] = useState('');
-      const [motto, setMotto] = useState('');
       const [color, setColor] = useState('gold');
       const [charge, setCharge] = useState('crown');
       const [rejects, setRejects] = useState(0);
@@ -701,26 +665,17 @@
         if (n) setName(n);
         setGenerating(false);
       };
-      const generateMotto = async () => {
-        if (!name) return;
-        setGenerating(true);
-        const m = await generateLore('House Motto', `House ${name} motto, solemn medieval tone.`);
-        if (m) setMotto(m);
-        setGenerating(false);
-      };
       const triggerCorrupt = async () => {
-        const corruptName = await generateLore('House Name', 'Chaotic void house name') || 'The Unhallowed';
-        const corruptMotto = await generateLore('House Motto', 'Chaos reigns eternal') || 'Chaos Reigns Eternal';
-        onCreate(corruptName, corruptMotto, { color: 'void', charge: 'skull' }, true);
-        showNote('The scribes reject you; a Corrupt House is forged in spite.');
+        onCreate('Corrupt House', '', { color: 'void', charge: 'skull' }, true);
+        showNote('Name rejected three times. A Corrupt House was created instead.');
       };
       const handleSubmit = async () => {
         setJudging(true); setMessage(null);
-        const verdict = await consultTheScribes('House', { name, context: motto });
+        const verdict = await consultTheScribes('House', { name });
         setJudging(false);
         if (verdict.approved) {
           showNote(verdict.message);
-          onCreate(name, motto, { color, charge }, false);
+          onCreate(name, '', { color, charge }, false);
         } else {
           const next = rejects + 1;
           setRejects(next);
@@ -732,7 +687,7 @@
       return (
         <div className="min-h-screen flex items-center justify-center bg-stone-950 p-6">
           <div className="w-full max-w-3xl glass rounded-xl shadow-2xl relative overflow-hidden rise-in">
-            <button className="absolute top-4 right-4 text-stone-600 hover:text-stone-300 z-10" onClick={onBack} title="Return to the gate">
+            <button className="absolute top-4 right-4 text-stone-600 hover:text-stone-300 z-10" onClick={onBack} title="Back to houses">
               <Icon name="logout" />
             </button>
             <div className="grid md:grid-cols-5">
@@ -740,18 +695,17 @@
               <div className="md:col-span-2 bg-stone-950/70 border-b md:border-b-0 md:border-r border-stone-800 p-8 flex flex-col items-center justify-center text-center gap-3">
                 <Banner sigil={{ color, charge }} size={110} />
                 <h3 className="font-serif text-xl text-stone-100 min-h-[28px]">{name || 'Unnamed House'}</h3>
-                <p className="text-stone-500 italic text-sm min-h-[20px]">{motto ? `"${motto}"` : 'No words yet spoken'}</p>
                 <p className="text-[11px] text-stone-600 leading-relaxed mt-2">
-                  This banner will hang over every scion you send into the world — and over every name in your crypt.
+                  Banner preview. It is shown on the house list and the house page.
                 </p>
               </div>
               {/* Form */}
               <div className="md:col-span-3 p-8">
-                <h2 className="text-2xl font-serif text-amber-400 mb-1">Founding Ceremony</h2>
-                <p className="text-stone-500 italic text-sm mb-5">"State your name for the record. The scribes are listening."</p>
+                <h2 className="text-2xl font-serif text-amber-400 mb-1">Create House</h2>
+                <p className="text-stone-500 text-sm mb-5">House names are checked before the house is created. Three rejected names create a Corrupt House.</p>
                 <div className="space-y-5">
                   <div>
-                    <div className="text-xs uppercase tracking-widest text-stone-500 mb-1.5">Sigil Color</div>
+                    <div className="text-xs uppercase tracking-widest text-stone-500 mb-1.5">Banner Color</div>
                     <div className="flex flex-wrap gap-2">
                       {SIGIL_COLORS.map(c => (
                         <button key={c.id} onClick={() => setColor(c.id)} title={c.label}
@@ -761,7 +715,7 @@
                     </div>
                   </div>
                   <div>
-                    <div className="text-xs uppercase tracking-widest text-stone-500 mb-1.5">Sigil Charge</div>
+                    <div className="text-xs uppercase tracking-widest text-stone-500 mb-1.5">Banner Emblem</div>
                     <div className="flex flex-wrap gap-2">
                       {SIGIL_CHARGES.map(ch => (
                         <button key={ch} onClick={() => setCharge(ch)} title={ch}
@@ -778,18 +732,11 @@
                     </div>
                     <input value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-4 py-3 font-serif text-lg focus:border-amber-500 outline-none" />
                   </div>
-                  <div>
-                    <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
-                      <span>House Motto</span>
-                      <SuggestBtn onClick={generateMotto} generating={generating} disabled={!name} />
-                    </div>
-                    <input value={motto} onChange={(e) => setMotto(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-4 py-3 font-serif italic focus:border-amber-500 outline-none" />
-                  </div>
                   <RejectionRow rejects={rejects} />
                   <ScribeMessage message={message} />
-                  <button onClick={handleSubmit} disabled={!name || !motto || judging}
+                  <button onClick={handleSubmit} disabled={!name || judging}
                     className="w-full bg-amber-600 hover:bg-amber-500 text-stone-900 font-bold py-3 rounded border border-amber-400 uppercase tracking-widest disabled:opacity-50">
-                    {judging ? 'Consulting Scribes...' : 'Seal the Pact'}
+                    {judging ? 'Checking name...' : 'Create House'}
                   </button>
                 </div>
               </div>
@@ -817,29 +764,28 @@
               <Banner sigil={house.sigil} size={46} corrupt={isCorrupt} />
               <div>
                 <h1 className="text-2xl font-serif leading-tight">{house.name}</h1>
-                <p className="text-sm text-stone-500 italic">"{house.motto}"</p>
               </div>
             </div>
             <div className="flex items-center gap-5">
-              <div className="flex items-center gap-2 text-orange-300" title="House copper — copper is wealth"><Icon name="coins" /> <span className="font-mono">{house.copper}</span></div>
-              <div className="flex items-center gap-2 text-purple-300" title="Renown — earned by the fallen, never spent"><Icon name="crown" /> <span className="font-mono">{house.renown}</span></div>
-              <button onClick={onSwitchHouse} className="p-2 rounded hover:bg-stone-800 text-stone-500 hover:text-stone-200" title="Return to the gate (switch House)"><Icon name="logout" /></button>
+              <div className="flex items-center gap-2 text-orange-300" title="House copper"><Icon name="coins" /> <span className="font-mono">{house.copper}</span></div>
+              <div className="flex items-center gap-2 text-purple-300" title="Renown: earned when a character dies; never spent"><Icon name="crown" /> <span className="font-mono">{house.renown}</span></div>
+              <button onClick={onSwitchHouse} className="p-2 rounded hover:bg-stone-800 text-stone-500 hover:text-stone-200" title="Switch house"><Icon name="logout" /></button>
             </div>
           </header>
 
           <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 max-w-6xl mx-auto w-full">
-            {/* Scions */}
+            {/* Characters */}
             <div className="lg:col-span-2 space-y-4">
               <div className="flex justify-between items-center">
-                <h2 className={`text-xl font-serif flex items-center gap-2 ${accent}`}><Icon name="user" /> Living Scions</h2>
+                <h2 className={`text-xl font-serif flex items-center gap-2 ${accent}`}><Icon name="user" /> Living Characters</h2>
                 <button onClick={onRecruit} className="flex items-center gap-2 bg-stone-800 hover:bg-stone-700 border border-stone-700 px-4 py-2 rounded text-sm">
                   <Icon name="plus" /> Recruit
                 </button>
               </div>
               {house.characters.length === 0 ? (
                 <div className="border border-dashed border-stone-800 rounded-lg p-10 text-center text-stone-500 font-serif">
-                  The halls are empty.<br />
-                  <span className="text-sm text-stone-600 font-sans">Recruit a scion and send them into the world. They will not come back forever.</span>
+                  No characters.<br />
+                  <span className="text-sm text-stone-600 font-sans">Recruit a character to start. Death is permanent.</span>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -864,13 +810,13 @@
                             <button onClick={() => onEnterWorld(ch.id)} className={`px-4 py-2 rounded border text-sm font-semibold ${isCorrupt ? 'border-purple-700 text-purple-300 hover:bg-purple-900/30' : 'border-amber-700 text-amber-400 hover:bg-amber-900/30'}`}>
                               Enter World
                             </button>
-                            <button onClick={() => onRetire(ch.id)} className="p-2 text-stone-500 hover:text-red-400 hover:bg-red-900/10 rounded" title="Take the Grey Vow — retire this scion to the crypt (permanent)">
+                            <button onClick={() => onRetire(ch.id)} className="p-2 text-stone-500 hover:text-red-400 hover:bg-red-900/10 rounded" title="Retire this character (permanent)">
                               <Icon name="skull" />
                             </button>
                           </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4 mt-3">
-                          <Meter value={ch.hp} max={ch.maxHp} color="bg-red-700" label="Vitality" />
+                          <Meter value={ch.hp} max={ch.maxHp} color="bg-red-700" label="Life" />
                           <Meter value={ch.xp} max={ch.level * 100} color="bg-blue-700" label={`To level ${ch.level + 1}`} />
                         </div>
                         {ch.items.length > 0 && (
@@ -888,11 +834,11 @@
 
               {/* Legacy boons */}
               <div className="bg-stone-900 border border-stone-800 rounded-lg p-5 mt-6">
-                <h3 className={`text-lg font-serif flex items-center gap-2 mb-1 ${accent}`}><Icon name="book" /> Legacy of the House</h3>
-                <p className="text-xs text-stone-600 mb-4">Renown is earned only by the dead. It is never spent — it accumulates, and the House grows around it.</p>
+                <h3 className={`text-lg font-serif flex items-center gap-2 mb-1 ${accent}`}><Icon name="book" /> House Bonuses</h3>
+                <p className="text-xs text-stone-600 mb-4">Renown is earned when a character dies and is never spent. Bonuses unlock at renown thresholds and apply to new characters.</p>
                 {nextBoon && (
                   <div className="mb-4">
-                    <Meter value={house.renown} max={nextBoon.renown} color={isCorrupt ? 'bg-purple-700' : 'bg-amber-600'} label={`Next: ${boonName(nextBoon, isCorrupt)}`} />
+                    <Meter value={house.renown} max={nextBoon.renown} color={isCorrupt ? 'bg-purple-700' : 'bg-amber-600'} label={`Next: ${boonName(nextBoon)}`} />
                   </div>
                 )}
                 <div className="space-y-2.5">
@@ -902,7 +848,7 @@
                       <div key={b.id} className={`flex items-start gap-3 text-sm ${has ? '' : 'opacity-45'}`}>
                         <Icon name={b.icon} size={17} className={has ? accent : 'text-stone-600'} />
                         <div>
-                          <span className={`font-serif ${has ? 'text-stone-100' : 'text-stone-400'}`}>{boonName(b, isCorrupt)}</span>
+                          <span className={`font-serif ${has ? 'text-stone-100' : 'text-stone-400'}`}>{boonName(b)}</span>
                           <span className="text-stone-600 text-xs ml-2">{has ? 'unlocked' : `at ${b.renown} renown`}</span>
                           <p className="text-xs text-stone-500">{b.desc}</p>
                         </div>
@@ -913,13 +859,13 @@
               </div>
             </div>
 
-            {/* Right column: reliquary + crypt */}
+            {/* Right column: relics + dead characters */}
             <div className="space-y-4">
               <div className="bg-stone-900 border border-stone-800 rounded-lg p-5">
-                <h3 className="text-lg font-serif text-stone-300 flex items-center gap-2 mb-1"><Icon name="gem" className="text-purple-300" /> Reliquary</h3>
-                <p className="text-xs text-stone-600 mb-3">What the dead carried now circulates in the world's drop tables. Scions — yours, and one day others' — may find it reforged.</p>
+                <h3 className="text-lg font-serif text-stone-300 flex items-center gap-2 mb-1"><Icon name="gem" className="text-purple-300" /> Relics</h3>
+                <p className="text-xs text-stone-600 mb-3">Tier 2+ items carried by dead characters are added to the drop tables. A character who finds one again carries it at a higher bond tier.</p>
                 {house.reliquary.length === 0 ? (
-                  <p className="text-stone-600 text-sm italic">No relics yet circulate. The world takes payment first.</p>
+                  <p className="text-stone-600 text-sm italic">No relics yet.</p>
                 ) : (
                   <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
                     {house.reliquary.map(r => (
@@ -927,7 +873,7 @@
                         <div className="flex justify-between items-center text-sm gap-2">
                           <span className="text-purple-300 truncate">{relicDisplayName(r, r.tier)}</span>
                           <span className={`text-[10px] uppercase tracking-wider shrink-0 ${r.status === 'circulating' ? 'text-stone-500' : 'text-green-400'}`}>
-                            {r.status === 'circulating' ? 'circulating' : 'borne'}
+                            {r.status === 'circulating' ? 'in drop tables' : 'carried'}
                           </span>
                         </div>
                         {openRelic === r.id && (
@@ -942,9 +888,9 @@
               </div>
 
               <div className="bg-stone-900 border border-stone-800 rounded-lg p-5">
-                <h3 className="text-lg font-serif text-stone-300 flex items-center gap-2 mb-3"><Icon name="history" /> The Crypt</h3>
+                <h3 className="text-lg font-serif text-stone-300 flex items-center gap-2 mb-3"><Icon name="history" /> Dead Characters</h3>
                 {house.crypt.length === 0 ? (
-                  <p className="text-stone-600 text-sm italic">No ancestors rest here yet.</p>
+                  <p className="text-stone-600 text-sm italic">None yet.</p>
                 ) : (
                   <div className="space-y-3 max-h-96 overflow-y-auto pr-1">
                     {house.crypt.map(d => (
@@ -953,11 +899,10 @@
                           <span className="text-stone-300 group-hover:text-stone-100">{d.name}</span>
                           <span className="text-stone-600">Lvl {d.level} {CLASSES.find(c => c.id === d.class)?.name || d.class}</span>
                         </div>
-                        <p className="text-xs text-stone-500 italic">"{d.epitaph}"</p>
                         {openCrypt === d.id && (
                           <div className="mt-1.5 pl-2 border-l border-stone-800 space-y-0.5">
                             <p className="text-[11px] text-red-300/70">{d.cause}</p>
-                            <p className="text-[11px] text-stone-500">{d.kills} kills • {d.relics.length} relic{d.relics.length === 1 ? '' : 's'} interred</p>
+                            <p className="text-[11px] text-stone-500">{d.kills} kills • {d.relics.length} relic{d.relics.length === 1 ? '' : 's'} added to drops</p>
                             {d.deeds.map((deed, i) => <p key={i} className="text-[11px] text-stone-500">• {deed}</p>)}
                           </div>
                         )}
@@ -995,17 +940,9 @@
         if (n) setName(n);
         setGenerating(false);
       };
-      const generateOrigin = async () => {
-        if (!name) return;
-        setGenerating(true);
-        const o = await generateLore('Character Origin', `${name}, a ${cls}, gritty dark fantasy origin.`);
-        if (o) setOrigin(o);
-        setGenerating(false);
-      };
       const triggerFool = () => {
-        const pool = ['Bozo the Lost', 'Jester of Ruin', 'The Unworthy', 'Buffoon McStumble', 'Giggles'];
-        onCreate({ name: pick(pool), cls: 'warrior', origin: 'A fool branded by the scribes.', brand: 'fool', outfit: false });
-        showNote('You are branded a Fool. The scribes choose your fate.');
+        onCreate({ name: 'Fool', cls: 'warrior', origin: '', brand: 'fool', outfit: false });
+        showNote('Name rejected three times. The character was created as a Fool named "Fool".');
       };
       const handleSubmit = async () => {
         setJudging(true); setMessage(null);
@@ -1031,8 +968,8 @@
         <div className="min-h-screen flex items-center justify-center bg-stone-950 p-6">
           <div className="w-full max-w-5xl glass rounded-xl shadow-2xl grid md:grid-cols-2 overflow-hidden rise-in">
             <div className="p-8 border-b md:border-b-0 md:border-r border-stone-800">
-              <button onClick={onBack} className="text-sm text-stone-500 hover:text-stone-200 mb-4 flex items-center gap-1">&larr; Return to Hall</button>
-              <h2 className="text-2xl font-serif text-amber-400 mb-4">Choose a Path</h2>
+              <button onClick={onBack} className="text-sm text-stone-500 hover:text-stone-200 mb-4 flex items-center gap-1">&larr; Back to house</button>
+              <h2 className="text-2xl font-serif text-amber-400 mb-4">Choose a Class</h2>
               <div className="space-y-3">
                 {CLASSES.map(c => (
                   <button key={c.id} onClick={() => setCls(c.id)} className={`w-full text-left p-4 rounded border transition ${cls === c.id ? 'border-amber-500 bg-amber-900/20' : 'border-stone-800 bg-stone-950 hover:border-stone-600'}`}>
@@ -1053,11 +990,11 @@
               </div>
               {unlocked.length > 0 && (
                 <div className="mt-5 border-t border-stone-800 pt-4">
-                  <p className="text-xs uppercase tracking-widest text-stone-600 mb-2">The House provides</p>
+                  <p className="text-xs uppercase tracking-widest text-stone-600 mb-2">House bonuses</p>
                   <div className="space-y-1">
                     {unlocked.map(b => (
                       <p key={b.id} className="text-xs text-stone-500 flex items-center gap-2">
-                        <Icon name={b.icon} size={13} className={isCorrupt ? 'text-purple-300' : 'text-amber-400'} /> {boonName(b, isCorrupt)}
+                        <Icon name={b.icon} size={13} className={isCorrupt ? 'text-purple-300' : 'text-amber-400'} /> {boonName(b)}
                       </p>
                     ))}
                   </div>
@@ -1066,34 +1003,33 @@
             </div>
             <div className="p-8 bg-stone-950/60">
               <h3 className="text-xl font-serif text-stone-200 mb-1">Identity</h3>
-              <p className="text-xs text-stone-600 mb-4">Starts at level {mods.startLevel} with {startHp} vitality.</p>
+              <p className="text-xs text-stone-600 mb-4">Starts at level {mods.startLevel} with {startHp} Life.</p>
               <div className="space-y-5">
                 <div>
                   <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
                     <span>Name</span>
                     <SuggestBtn onClick={generateName} generating={generating} />
                   </div>
-                  <input value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-3 py-2 focus:border-amber-500 outline-none" placeholder="Scion name" />
+                  <input value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-3 py-2 focus:border-amber-500 outline-none" placeholder="Character name" />
                 </div>
                 <div>
                   <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
                     <span>Origin (optional)</span>
-                    <SuggestBtn onClick={generateOrigin} generating={generating} disabled={!name} label="Imagine" />
                   </div>
                   <textarea value={origin} onChange={(e) => setOrigin(e.target.value)} className="w-full bg-stone-900 border border-stone-700 rounded px-3 py-2 h-24 resize-none text-sm focus:border-amber-500 outline-none" />
                 </div>
                 <label className={`flex items-start gap-3 text-sm rounded border p-3 cursor-pointer transition ${outfit && canOutfit ? 'border-amber-700 bg-amber-900/10' : 'border-stone-800'} ${canOutfit ? '' : 'opacity-50 cursor-not-allowed'}`}>
                   <input type="checkbox" checked={outfit && canOutfit} disabled={!canOutfit} onChange={(e) => setOutfit(e.target.checked)} className="mt-0.5 accent-amber-600" />
                   <span>
-                    <span className="text-stone-200">Outfit from the vault</span>
+                    <span className="text-stone-200">Buy a starting item</span>
                     <span className="text-orange-300 font-mono ml-2">−{OUTFIT_COST} copper</span>
-                    <span className="block text-xs text-stone-500">Begin with a {outfitName} and +10 vitality. {canOutfit ? '' : 'The vault cannot afford it.'}</span>
+                    <span className="block text-xs text-stone-500">Start with a {outfitName} and +10 Life. {canOutfit ? '' : 'Not enough house copper.'}</span>
                   </span>
                 </label>
                 <RejectionRow rejects={rejects} />
                 <ScribeMessage message={message} />
                 <button onClick={handleSubmit} disabled={!name || judging} className="w-full bg-stone-100 text-stone-900 py-3 font-bold rounded hover:bg-white disabled:opacity-50 flex items-center justify-center gap-2">
-                  {judging ? <><Icon name="loader" size={16} className="text-stone-800" /><span>Consulting...</span></> : <><Icon name="sparkles" className="text-amber-600" /> Sign the Contract</>}
+                  {judging ? <><Icon name="loader" size={16} className="text-stone-800" /><span>Checking name...</span></> : <><Icon name="plus" className="text-amber-600" /> Recruit</>}
                 </button>
               </div>
             </div>
@@ -1115,8 +1051,8 @@
         attrs: char.attrs || attrsFor(char.class, char.level), primary: classDef.attr,
         kills: char.kills, items: char.items, deeds: char.deeds,
         copperFound: 0, houseCopperStart: house.copper, foundRelics: [],
-        logs: [{ t: timeStamp(), m: `${char.name} sets out from the Hall of ${house.name}.`, kind: 'travel' }],
-        ticks: 0, dead: false, cause: null, action: 'Setting out',
+        logs: [{ t: timeStamp(), m: `${char.name} entered the world.`, kind: 'travel' }],
+        ticks: 0, dead: false, cause: null, action: 'Starting',
       }));
       const ctxRef = useRef(null);
       const deathSent = useRef(false);
@@ -1140,7 +1076,7 @@
       const travelTo = (z) => {
         if (z.id === zoneId || sim.dead) return;
         setZoneId(z.id);
-        setSim(s => ({ ...s, logs: pushLog(s.logs, `Traveling to ${z.name}. ${z.desc}`, 'travel'), action: `On the road to ${z.name}` }));
+        setSim(s => ({ ...s, logs: pushLog(s.logs, `Traveling to ${z.name}. ${z.desc}`, 'travel'), action: `Traveling to ${z.name}` }));
       };
       const LOG_COLORS = { fight: 'text-red-300', loot: 'text-amber-200', relic: 'text-purple-300', travel: 'text-stone-400', rest: 'text-green-300', flavor: 'text-stone-500', warn: 'text-red-400 font-bold', level: 'text-amber-400 font-bold' };
 
@@ -1164,14 +1100,14 @@
               </div>
               <button onClick={() => onRetreat(sim)} disabled={sim.dead}
                 className="text-stone-300 hover:text-amber-300 border border-stone-700 hover:border-amber-800 px-4 py-2 text-xs uppercase tracking-widest disabled:opacity-40 rounded">
-                Retreat to the Hall
+                Return to house
               </button>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
               {/* Zones */}
               <div className="space-y-2">
-                <p className="text-[10px] uppercase tracking-widest text-stone-600">The Wilds</p>
+                <p className="text-[10px] uppercase tracking-widest text-stone-600">Zones</p>
                 {ZONES.map(z => {
                   const active = z.id === zoneId;
                   const risky = sim.level < z.minLevel;
@@ -1183,17 +1119,17 @@
                         <DangerPips n={z.danger} />
                       </div>
                       <p className="text-stone-600 mt-0.5">{z.desc}</p>
-                      {risky && <p className="text-red-400/80 mt-0.5">The scribes advise level {z.minLevel}.</p>}
+                      {risky && <p className="text-red-400/80 mt-0.5">Recommended level {z.minLevel}.</p>}
                     </button>
                   );
                 })}
-                <p className="text-[10px] text-stone-700 leading-relaxed pt-1">Deeper wilds pay more in copper, glory, and relics — and take payment in blood. Retreat while you still can.</p>
+                <p className="text-[10px] text-stone-700 leading-relaxed pt-1">Higher-danger zones give more copper, experience and relics, and deal more damage.</p>
               </div>
 
               {/* Main column */}
               <div className="lg:col-span-3 space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <Meter value={Math.max(0, Math.round(sim.hp))} max={sim.maxHp} color={sim.hp / sim.maxHp < 0.3 ? 'bg-red-600' : 'bg-red-800'} label="Vitality" />
+                  <Meter value={Math.max(0, Math.round(sim.hp))} max={sim.maxHp} color={sim.hp / sim.maxHp < 0.3 ? 'bg-red-600' : 'bg-red-800'} label="Life" />
                   <Meter value={sim.xp} max={sim.level * 100} color="bg-blue-700" label={`To level ${sim.level + 1}`} />
                 </div>
                 <div className="grid grid-cols-3 gap-3">
@@ -1233,25 +1169,17 @@
     }
 
     // ============================================================
-    // Rite of Passing (death / retirement ceremony)
+    // Death / retirement dialog
     // ============================================================
     function RiteModal({ char, cause, cancelable, onCommit, onCancel }) {
-      const [epitaph, setEpitaph] = useState('');
-      const [generating, setGenerating] = useState(false);
       // Tier-1 materials are anyone's tools; only tier 2+ vessels carry enough of a life to become relics.
       const relicsToInter = char.items.filter(it => it.relicId || it.tier >= 2);
       const renownGain = char.level * 100 + char.kills * 2 + relicsToInter.length * 50;
-      const suggest = async () => {
-        setGenerating(true);
-        const e = await generateLore('Epitaph', `${char.name}, level ${char.level}, ${cause}. One short solemn line.`);
-        if (e) setEpitaph(e);
-        setGenerating(false);
-      };
       return (
         <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-6">
           <div className="w-full max-w-lg glass rounded-xl p-8 text-center rise-in">
             <Icon name="skull" size={52} className="mx-auto text-red-400 mb-3" />
-            <h2 className="text-2xl font-serif text-stone-100">{char.name} has fallen</h2>
+            <h2 className="text-2xl font-serif text-stone-100">{cancelable ? `Retire ${char.name}?` : `${char.name} died`}</h2>
             <p className="text-sm text-stone-500 mt-1">{cause}</p>
             <div className="grid grid-cols-3 gap-3 my-6 text-sm">
               <div className="bg-stone-900/70 border border-stone-800 rounded p-3">
@@ -1264,34 +1192,26 @@
               </div>
               <div className="bg-stone-900/70 border border-stone-800 rounded p-3">
                 <div className="text-purple-300 font-mono text-lg">{relicsToInter.length}</div>
-                <div className="text-[10px] uppercase tracking-widest text-stone-600">Relics interred</div>
+                <div className="text-[10px] uppercase tracking-widest text-stone-600">Relics added</div>
               </div>
             </div>
             {relicsToInter.length > 0 && (
               <div className="text-left bg-stone-900/50 border border-stone-800 rounded p-3 mb-5">
-                <p className="text-[10px] uppercase tracking-widest text-stone-600 mb-1.5">Given back to the world</p>
+                <p className="text-[10px] uppercase tracking-widest text-stone-600 mb-1.5">Added to the drop tables</p>
                 {relicsToInter.map(it => (
-                  <p key={it.id} className={`text-xs ${itemStyle(it).text}`}>{it.name} <span className="text-stone-600">— its bonds sleep in the metal until another hand wakes them</span></p>
+                  <p key={it.id} className={`text-xs ${itemStyle(it).text}`}>{it.name}</p>
                 ))}
               </div>
             )}
-            <div className="text-left mb-5">
-              <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1">
-                <span>Epitaph</span>
-                <SuggestBtn onClick={suggest} generating={generating} />
-              </div>
-              <textarea value={epitaph} onChange={(e) => setEpitaph(e.target.value)} placeholder="Words for the crypt wall..."
-                className="w-full bg-stone-900 border border-stone-700 rounded px-3 py-2 h-20 resize-none text-sm italic focus:border-amber-500 outline-none" />
-            </div>
             <div className="flex gap-3">
               {cancelable && (
                 <button onClick={onCancel} className="flex-1 border border-stone-700 text-stone-400 hover:text-stone-200 py-3 rounded uppercase tracking-widest text-xs">
-                  Not Yet
+                  Cancel
                 </button>
               )}
-              <button onClick={() => onCommit(epitaph.trim() || pick(OFFLINE_LORE.epitaph))}
+              <button onClick={() => onCommit()}
                 className="flex-1 bg-stone-100 hover:bg-white text-stone-900 font-bold py-3 rounded uppercase tracking-widest text-xs">
-                Commit to the Crypt
+                Confirm
               </button>
             </div>
           </div>
@@ -1327,7 +1247,7 @@
       // --- House lifecycle ---
       const createHouse = (name, motto, sigil, isCorrupt) => {
         if (!isCorrupt && Object.values(houses).some(h => h.name.toLowerCase() === name.toLowerCase())) {
-          showNote('A House of that name already exists in this realm.');
+          showNote('A house with that name already exists.');
           return;
         }
         const id = generateId();
@@ -1357,7 +1277,7 @@
         updateHouse(currentHouseId, h => {
           const house = { ...h };
           if (outfit) house.copper = Math.max(0, house.copper - OUTFIT_COST);
-          // Ancestral Arms: hand down a circulating relic, reforged.
+          // Starting Relic bonus: give the new character a circulating relic, one bond tier higher.
           if (mods.startRelic) {
             const circ = house.reliquary.filter(r => r.status === 'circulating');
             if (circ.length) {
@@ -1393,7 +1313,7 @@
           house.reliquary = house.reliquary.map(r => {
             if (sim.foundRelics.includes(r.id) && r.status === 'circulating') {
               const char = house.characters.find(c => c.id === activeCharId);
-              return { ...r, tier: Math.min(r.tier + 1, 4), status: 'borne', history: [...r.history, `Unearthed by ${char ? char.name : 'a scion'}, reforged.`] };
+              return { ...r, tier: Math.min(r.tier + 1, 4), status: 'borne', history: [...r.history, `Found by ${char ? char.name : 'a character'}.`] };
             }
             return r;
           });
@@ -1403,17 +1323,17 @@
 
       const retreat = (sim) => {
         syncSim(sim);
-        // The house tends its own: scions recover fully in the hall.
+        // Characters recover full Life on returning to the house.
         updateHouse(currentHouseId, h => ({
           ...h,
           characters: h.characters.map(c => c.id === activeCharId ? { ...c, hp: c.maxHp } : c),
         }));
-        showNote('The scion returns. The hearth does the rest.');
+        showNote('Returned to the house. Life restored.');
         setActiveCharId(null);
         setView('hall');
       };
 
-      const commitDeath = (epitaph) => {
+      const commitDeath = () => {
         if (!pendingDeath || !currentHouse) return;
         const char = currentHouse.characters.find(c => c.id === pendingDeath.charId);
         if (!char) { setPendingDeath(null); return; }
@@ -1425,16 +1345,16 @@
           house.characters = h.characters.filter(c => c.id !== char.id);
           house.crypt = [{
             id: char.id, name: char.name, class: char.class, level: char.level,
-            epitaph, cause: pendingDeath.cause, kills: char.kills, deeds: char.deeds,
+            cause: pendingDeath.cause, kills: char.kills, deeds: char.deeds,
             relics: relicsToInter.map(it => it.name), diedAt: new Date().toISOString(),
           }, ...h.crypt];
-          // Inter the dead's notable items: they enter (or return to) circulation.
+          // The dead character's tier 2+ items enter (or return to) the drop tables.
           const date = new Date().toLocaleDateString();
           const returned = [];
           relicsToInter.forEach(it => {
             if (it.relicId) {
               house.reliquary = house.reliquary.map(r => r.id === it.relicId
-                ? { ...r, status: 'circulating', history: [...r.history, `Interred with ${char.name}; returned to the world.`] }
+                ? { ...r, status: 'circulating', history: [...r.history, `Returned to the drop tables when ${char.name} died.`] }
                 : r);
               returned.push(it.relicId);
             }
@@ -1442,7 +1362,7 @@
           const fresh = relicsToInter.filter(it => !it.relicId).map(it => ({
             id: generateId(), base: it.name, form: it.form, material: it.material, origin: char.name, tier: 1,
             status: 'circulating',
-            history: [`Carried by ${char.name}, interred ${date}. Its bonds sleep in the metal, seeded into the world's drop tables.`],
+            history: [`Carried by ${char.name}; added to the drop tables ${date}.`],
           }));
           house.reliquary = [...fresh, ...house.reliquary];
           return house;
@@ -1450,16 +1370,16 @@
         const after = BOONS.filter(b => (currentHouse.renown + renownGain) >= b.renown).length;
         if (after > before) {
           const boon = BOONS.filter(b => (currentHouse.renown + renownGain) >= b.renown).slice(-1)[0];
-          showNote(`${char.name} has fallen. +${renownGain} renown — the House learns: ${boonName(boon, currentHouse.origin === 'corrupt')}.`);
+          showNote(`${char.name} ${pendingDeath.cancelable ? 'retired' : 'died'}. +${renownGain} renown. Unlocked: ${boonName(boon)}.`);
         } else {
-          showNote(`${char.name} has fallen. +${renownGain} renown. ${relicsToInter.length ? 'Their belongings now circulate as relics.' : ''}`);
+          showNote(`${char.name} ${pendingDeath.cancelable ? 'retired' : 'died'}. +${renownGain} renown. ${relicsToInter.length ? 'Their tier 2+ items were added to the drop tables as relics.' : ''}`);
         }
         setPendingDeath(null);
         setActiveCharId(null);
         setView('hall');
       };
 
-      const retire = (charId) => setPendingDeath({ charId, cause: 'Took the Grey Vow and retired to the crypt', cancelable: true });
+      const retire = (charId) => setPendingDeath({ charId, cause: 'Retired', cancelable: true });
       const worldDeath = (cause) => setPendingDeath({ charId: activeCharId, cause, cancelable: false });
 
       // --- Render ---

@@ -1,5 +1,5 @@
 /* =============================================================================
-   VERDIGRIS CONTENT PACK for Vesselforge
+   VERDIGRIS CONTENT PACK for item crafting system
    -----------------------------------------------------------------------------
    Bronze-age, low-power, low-fantasy. Copper is wealth, bronze is power,
    mail is a future-tech rumor beyond the current item horizon. Influences: early
@@ -15,7 +15,7 @@
 }(typeof self !== 'undefined' ? self : this, function (VerdigrisStats) {
   'use strict';
 
-  /* Tags: blade blunt reach hide ward life spirit ember river beast fortune swift blood */
+  /* Tags: blade blunt reach hide ward life mana ember river beast fortune swift blood */
 
   const pack = {
     id: 'verdigris-1',
@@ -94,9 +94,8 @@
                     implicit: { label: '15% increased Physical Damage', stat: { id: 'phys_pct', v: 15 } } },
       spear:      { name: 'Spear', kind: 'weapon', kindLabel: 'Reach weapon', w: 1, h: 4, icon: 'spear',
                     weapon: { dmg: [10, 22], aps: 1.0 }, tags: ['reach'], weights: { reach: 1.5 },
-                    materials: ['flint', 'bone', 'copper', 'obsidian', 'skymetal'],
-                    implicit: { label: 'Strikes keep foes at reach', stat: null } },
-      macuahuitl: { name: 'Macuahuitl', kind: 'weapon', kindLabel: 'Edged club', w: 2, h: 3, icon: 'club',
+                    materials: ['flint', 'bone', 'copper', 'obsidian', 'skymetal'] },
+      macuahuitl: { name: 'Obsidian-edged Club', kind: 'weapon', kindLabel: 'Edged club', w: 2, h: 3, icon: 'club',
                     weapon: { dmg: [14, 30], aps: 0.85 }, tags: ['blade', 'blunt', 'blood'], weights: { blood: 1.6 },
                     materials: ['obsidian', 'flint', 'bone'],
                     implicit: { label: 'Hits cause Bleeding', stat: null } },
@@ -116,10 +115,10 @@
                     armor: 18, tags: ['ward', 'swift'], weights: { ward: 1.0, swift: 1.0 },
                     materials: ['hide', 'quilted', 'copper', 'bronze'],
                     implicit: { label: '+4% Movement Speed', stat: { id: 'move', v: 4 } } },
-      crest:      { name: 'Crest', kind: 'helmet', kindLabel: 'Headpiece', w: 2, h: 2, icon: 'crest',
+      crest:      { name: 'Cap', kind: 'helmet', kindLabel: 'Headpiece', w: 2, h: 2, icon: 'crest',
                     armor: 25, tags: ['ward', 'spirit'], weights: { spirit: 1.2 },
                     materials: ['hide', 'copper', 'bronze', 'jade'],
-                    implicit: { label: '+10 to Maximum Spirit', stat: { id: 'spirit', v: 10 } } },
+                    implicit: { label: '+10 to Maximum Mana', stat: { id: 'spirit', v: 10 } } },
       sandals:    { name: 'Sandals', kind: 'boots', kindLabel: 'Footwear', w: 2, h: 2, icon: 'sandals',
                     armor: 14, tags: ['swift'], weights: { swift: 1.6 },
                     materials: ['hide', 'quilted'],
@@ -142,7 +141,7 @@
                     implicit: { label: '+12 to Maximum Life', stat: { id: 'life', v: 12 } } },
       curio:      { name: 'Curio', kind: 'curio', kindLabel: 'Curio', w: 1, h: 1, icon: 'curio',
                     armor: 0, tags: [], noVessel: true, materials: ['bone', 'amber'], implicit: null },
-      trophy:     { name: 'Hunt Trophy', kind: 'trophy', kindLabel: 'Spoil', w: 1, h: 1, icon: 'curio',
+      trophy:     { name: 'Animal Part', kind: 'trophy', kindLabel: 'Animal part', w: 1, h: 1, icon: 'curio',
                     armor: 0, tags: ['beast'], noVessel: true, materials: ['bone', 'hide', 'amber'], implicit: null },
       preparation:{ name: 'Preparation', kind: 'reagent', kindLabel: 'Prepared reagent', w: 1, h: 1, icon: 'tool',
                     armor: 0, tags: ['fortune'], noVessel: true, materials: ['hide', 'copper', 'amber'], implicit: null },
@@ -152,14 +151,14 @@
                     armor: 0, tags: ['life', 'blunt'], weights: { life: 1.4, blunt: 1.1 },
                     materials: ['bone', 'copper', 'bronze', 'jade', 'skymetal'],
                     implicit: { label: '+8 to Maximum Life', stat: { id: 'life', v: 8 } } },
-      quickrig:   { name: 'Tool Slot', kind: 'quickrig', kindLabel: 'Readied rig', w: 2, h: 2, icon: 'girdle',
+      quickrig:   { name: 'Tool Slot', kind: 'quickrig', kindLabel: 'Tool slot item', w: 2, h: 2, icon: 'girdle',
                     armor: 0, tags: ['swift', 'fortune'], weights: { swift: 1.5, fortune: 1.0 },
                     materials: ['hide', 'quilted', 'copper', 'bronze', 'obsidian', 'skymetal'],
                     implicit: { label: '+4% Attack Speed', stat: { id: 'atk_speed', v: 4 } } },
       attendant:  { name: 'Extra Focus', kind: 'attendant', kindLabel: 'extra focus', w: 2, h: 2, icon: 'curio',
                     armor: 0, tags: ['spirit', 'ember', 'river'], weights: { spirit: 1.6, ember: 1.0, river: 1.0 },
                     materials: ['bone', 'copper', 'bronze', 'obsidian', 'jade', 'amber', 'skymetal'],
-                    implicit: { label: '+10 to Maximum Spirit', stat: { id: 'spirit', v: 10 } } },
+                    implicit: { label: '+10 to Maximum Mana', stat: { id: 'spirit', v: 10 } } },
       /* Carved stones (jewels, 2026-07-12): vessels that socket into the passive
          tree instead of the paperdoll. Tree-side families live in
          tools/geometric_skilltree/assets/jewels.js. */
@@ -195,7 +194,7 @@
       focus:      { name: 'Spell Focus', kind: 'focus', kindLabel: 'Off-hand focus', w: 1, h: 3, icon: 'curio',
                     armor: 0, tags: ['spirit', 'ember', 'ward'], weights: { spirit: 1.4, ember: 1.1, ward: 0.8 },
                     materials: ['bone', 'copper', 'bronze', 'obsidian', 'jade', 'amber', 'skymetal'],
-                    implicit: { label: '+10 to Maximum Spirit', stat: { id: 'spirit', v: 10 } } },
+                    implicit: { label: '+10 to Maximum Mana', stat: { id: 'spirit', v: 10 } } },
     },
 
     /* ---------------- brand mods (flat/scalar only — craft is arithmetic) ----
@@ -215,7 +214,7 @@
                     weight: 12, tiers: [{ roll: [10, 18] }, { roll: [19, 28], minIlvl: 20 }, { roll: [29, 40], minIlvl: 50 }] },
       hale:       { label: '+{v} to Maximum Life', shape: 'flat', tags: ['life'], kinds: ['weapon', 'shield', 'focus', 'attendant', 'warcall', 'quickrig', 'body', 'cloak', 'helmet', 'gloves', 'boots', 'belt', 'amulet', 'ring'],
                     weight: 12, tiers: [{ roll: [10, 20] }, { roll: [21, 35], minIlvl: 25 }, { roll: [36, 55], minIlvl: 55 }] },
-      spirited:   { label: '+{v} to Maximum Spirit', shape: 'flat', tags: ['spirit'], kinds: ['helmet', 'amulet', 'ring', 'weapon', 'focus', 'attendant'],
+      spirited:   { label: '+{v} to Maximum Mana', shape: 'flat', tags: ['spirit'], kinds: ['helmet', 'amulet', 'ring', 'weapon', 'focus', 'attendant'],
                     weight: 10, tiers: [{ roll: [8, 15] }, { roll: [16, 26], minIlvl: 25 }, { roll: [27, 40], minIlvl: 55 }] },
       emberkiss:  { label: 'Adds {v} Fire Damage', shape: 'flat', tags: ['ember'], kinds: ['weapon', 'focus', 'attendant', 'amulet'],
                     weight: 6, tiers: [{ roll: [3, 7] }, { roll: [8, 14], minIlvl: 30 }, { roll: [15, 22], minIlvl: 60 }] },
@@ -227,7 +226,7 @@
                     weight: 9, tiers: [{ roll: [5, 9] }, { roll: [10, 15], minIlvl: 30 }] },
       keen_eye:   { label: '+{v}% Critical Chance', shape: 'scalar', tags: ['blade', 'swift'], kinds: ['weapon', 'ring', 'quickrig'],
                     weight: 7, tiers: [{ roll: [8, 14] }, { roll: [15, 22], minIlvl: 35 }] },
-      wealthy:    { label: '+{v}% Goods Found', shape: 'scalar', tags: ['fortune'], kinds: ['weapon', 'shield', 'focus', 'attendant', 'warcall', 'quickrig', 'body', 'cloak', 'helmet', 'gloves', 'boots', 'belt', 'amulet', 'ring'],
+      wealthy:    { label: '+{v}% increased Item Rarity', shape: 'scalar', tags: ['fortune'], kinds: ['weapon', 'shield', 'focus', 'attendant', 'warcall', 'quickrig', 'body', 'cloak', 'helmet', 'gloves', 'boots', 'belt', 'amulet', 'ring'],
                     weight: 8, tiers: [{ roll: [6, 12] }, { roll: [13, 20], minIlvl: 30 }] },
       beastbane:  { label: '+{v}% Damage against Beasts', shape: 'scalar', tags: ['beast'], kinds: ['weapon'],
                     weight: 7, tiers: [{ roll: [10, 18] }, { roll: [19, 30], minIlvl: 30 }] },
@@ -245,7 +244,7 @@
           read_wound:    { name: 'Critical Chance against Bleeding', label: '+{v}% Critical Chance against Bleeding foes', shape: 'conditional', roll: [15, 25] },
         },
         epithets: [], adjs: [],
-        power: 'Slain enemies have a 15% chance to drop double spoils.',
+        power: 'Kills have a 15% chance to drop twice as many items.',
         memory: '',
       },
       warding: {
@@ -260,10 +259,10 @@
         memory: '',
       },
       spiritwork: {
-        name: 'Spirit', color: '#c084fc',
+        name: 'Mana', color: '#c084fc',
         mods: {
-          clear_mind:  { name: 'Spell Power at High Spirit', label: '+{v}% Spell Power while Spirit is above three-quarters', shape: 'conditional', roll: [12, 20] },
-          ember_tithe: { name: 'Spirit on Kill', label: 'Recover {v}% of Spirit on Kill', shape: 'trigger', roll: [3, 5] },
+          clear_mind:  { name: 'Spell Power at High Mana', label: '+{v}% Spell Power while Mana is above three-quarters', shape: 'conditional', roll: [12, 20] },
+          ember_tithe: { name: 'Mana on Kill', label: 'Recover {v}% of Mana on Kill', shape: 'trigger', roll: [3, 5] },
           veil_wise:   { name: 'Curse Avoidance', label: '{v}% chance to shrug off Curses', shape: 'conditional', roll: [10, 18] },
         },
         epithets: [], adjs: [],
@@ -284,29 +283,27 @@
     },
 
     archetypes: {
-      redhand:     { name: 'Butcher', themeId: 'slaughter' },
-      shieldbearer: { name: 'Guard', themeId: 'warding' },
-      ashspeaker:  { name: 'Seer', themeId: 'spiritwork' },
-      farwalker:   { name: 'Scout', themeId: 'wayfaring' },
+      redhand:     { name: 'Kill Bonuses', themeId: 'slaughter' },
+      shieldbearer: { name: 'Block and Ward', themeId: 'warding' },
+      ashspeaker:  { name: 'Mana', themeId: 'spiritwork' },
+      farwalker:   { name: 'Movement', themeId: 'wayfaring' },
     },
 
-    /* ---------------- trophies (hunted power, TQ/GD homage) ---------------- */
+    /* ---------------- animal parts (pieces collected from fights complete a socketable part) ---------------- */
     trophies: {
       boar_tusk:   { name: 'Boar Tusk', fragments: 5, kinds: ['weapon', 'belt'],
                      mods: [{ stat: 'phys_pct', v: 10, label: '+{v}% increased Physical Damage', shape: 'scalar' }],
                      completionBonus: { label: 'Your first hit each battle cannot be blocked', shape: 'trigger' } },
       wolf_fang:   { name: 'Wolf Fang', fragments: 5, kinds: ['weapon', 'gloves'],
-                     mods: [{ stat: 'atk_speed', v: 6, label: '+{v}% Attack Speed', shape: 'scalar' }],
-                     completionBonus: { label: 'You cannot be surprised', shape: 'conditional' } },
+                     mods: [{ stat: 'atk_speed', v: 6, label: '+{v}% Attack Speed', shape: 'scalar' }] },
       river_pearl: { name: 'River Pearl', fragments: 3, kinds: ['amulet', 'ring', 'helmet', 'focus'],
-                     mods: [{ stat: 'spirit', v: 12, label: '+{v} to Maximum Spirit', shape: 'flat' }],
+                     mods: [{ stat: 'spirit', v: 12, label: '+{v} to Maximum Mana', shape: 'flat' }],
                      completionBonus: { label: 'Your spells Chill their targets', shape: 'trigger' } },
       ember_shell: { name: 'Beetle Shell', fragments: 3, kinds: ['shield', 'body'],
                      mods: [{ stat: 'ember_res', v: 15, label: '+{v}% to Fire Resistance', shape: 'scalar' }],
                      completionBonus: { label: 'Attackers take Fire damage', shape: 'trigger' } },
       knucklebone: { name: 'Knucklebone', fragments: 3, kinds: ['amulet', 'ring', 'belt', 'focus'],
-                     mods: [{ stat: 'fortune', v: 10, label: '+{v}% Goods Found', shape: 'scalar' }],
-                     completionBonus: { label: 'Once a day, reroll one omen', shape: 'grant' } },
+                     mods: [{ stat: 'fortune', v: 10, label: '+{v}% Item Rarity', shape: 'scalar' }] },
     },
 
     /* ---------------- craft tools ---------------- */
@@ -314,33 +311,33 @@
       red_ochre: { name: 'Red Ochre', weights: { blade: 3, blood: 3, blunt: 2, ward: 0.3, spirit: 0.3 } },
       woad:      { name: 'Woad', weights: { ward: 3, life: 2.5, blade: 0.3, blood: 0.2 } },
       soot:      { name: 'Soot', weights: { spirit: 3, ember: 3, fortune: 0.5, life: 0.4 } },
-      marsh_ochre: { name: 'Marsh Ochre', weights: { fortune: 3, swift: 2.5, river: 2 } },
+      marsh_ochre: { name: 'Yellow Ochre', weights: { fortune: 3, swift: 2.5, river: 2 } },
     },
     omens: {
-      entrail_omen: { name: 'Entrail Omen', tag: 'ward' },
-      bird_omen:    { name: 'Bird Omen', tag: 'swift' },
-      smoke_omen:   { name: 'Smoke Omen', tag: 'spirit' },
-      blood_omen:   { name: 'Blood Omen', tag: 'blood' },
+      entrail_omen: { name: 'Guaranteed Ward Brand', tag: 'ward' },
+      bird_omen:    { name: 'Guaranteed Speed Brand', tag: 'swift' },
+      smoke_omen:   { name: 'Guaranteed Mana Brand', tag: 'spirit' },
+      blood_omen:   { name: 'Guaranteed Bleed Brand', tag: 'blood' },
     },
 
-    /* ---------------- panoply (player-authored sets) ---------------- */
+    /* ---------------- set bonus for upgraded items ---------------- */
     panoply: {
-      2: { label: 'Panoply (2): +10% to the bond values of your awakened items' },
-      3: { label: 'Panoply (3): awakened powers trigger 25% more often' },
+      2: { label: 'Set (2): +10% to the bond values of your upgraded items' },
+      3: { label: 'Set (3): upgraded-item powers trigger 25% more often' },
     },
 
-    /* ---------------- encounters ---------------- */
+    /* ---------------- simulated fights (demo): plain descriptions only ---------------- */
     encounters: [
-      { text: 'fought a group of boars', themes: { slaughter: 2, wayfaring: 1 }, trophy: 'boar_tusk', trophyChance: 0.6 },
-      { text: 'held a shield line', themes: { warding: 3 }, trophy: 'ember_shell', trophyChance: 0.25 },
-      { text: 'drove off a water spirit', themes: { spiritwork: 2, warding: 1 }, trophy: 'river_pearl', trophyChance: 0.5 },
-      { text: 'outran pursuers', themes: { wayfaring: 3 }, trophyChance: 0.1 },
-      { text: 'killed a wolf pack', themes: { slaughter: 2, spiritwork: 1 }, trophy: 'wolf_fang', trophyChance: 0.6 },
-      { text: 'crossed a mountain pass in an ash storm', themes: { warding: 2, wayfaring: 1 }, trophyChance: 0.15 },
-      { text: 'bargained with a witch', themes: { spiritwork: 3 }, trophy: 'knucklebone', trophyChance: 0.35 },
-      { text: 'sank a raider boat', themes: { slaughter: 2, warding: 1 }, trophyChance: 0.2 },
-      { text: 'explored a flooded stairway', themes: { wayfaring: 2, spiritwork: 1 }, trophy: 'river_pearl', trophyChance: 0.3 },
-      { text: 'killed a large tusked beast', themes: { slaughter: 3 }, trophy: 'boar_tusk', trophyChance: 0.7 },
+      { text: 'killed boars', themes: { slaughter: 2, wayfaring: 1 }, trophy: 'boar_tusk', trophyChance: 0.6 },
+      { text: 'blocked attacks', themes: { warding: 3 }, trophy: 'ember_shell', trophyChance: 0.25 },
+      { text: 'cast spells in a fight', themes: { spiritwork: 2, warding: 1 }, trophy: 'river_pearl', trophyChance: 0.5 },
+      { text: 'travelled', themes: { wayfaring: 3 }, trophyChance: 0.1 },
+      { text: 'killed wolves', themes: { slaughter: 2, spiritwork: 1 }, trophy: 'wolf_fang', trophyChance: 0.6 },
+      { text: 'blocked attacks while travelling', themes: { warding: 2, wayfaring: 1 }, trophyChance: 0.15 },
+      { text: 'cast spells', themes: { spiritwork: 3 }, trophy: 'knucklebone', trophyChance: 0.35 },
+      { text: 'killed raiders', themes: { slaughter: 2, warding: 1 }, trophyChance: 0.2 },
+      { text: 'travelled and cast spells', themes: { wayfaring: 2, spiritwork: 1 }, trophy: 'river_pearl', trophyChance: 0.3 },
+      { text: 'killed a large boar', themes: { slaughter: 3 }, trophy: 'boar_tusk', trophyChance: 0.7 },
     ],
 
     // Random epithet names ("Ember Ward", "Dusk Gloam") were removed on October 26, 2026:

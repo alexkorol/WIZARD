@@ -60,28 +60,28 @@
       <button class="fk-button" data-size="sm">Small</button>
     </div>
     <div class="fk-input-wrap" style="max-width: 280px;">
-      <label for="sc">Search the grimoire</label>
+      <label for="sc">Search spells</label>
       <input id="sc" class="fk-input" type="text" placeholder="Type…" />
     </div>
     <div class="row" style="max-width: 320px;">
-      <label for="ss" class="stub">Attunement</label>
+      <label for="ss" class="stub">Volume</label>
       <input id="ss" class="fk-slider" type="range" value="42" style="flex:1" />
       <label class="stub"><input class="fk-toggle" type="checkbox" checked /> ward</label>
     </div>
     <div class="fk-tabs" id="show-tabs">
       <div class="fk-tabs-list" role="tablist">
         <button class="fk-tab" role="tab" aria-selected="true" aria-controls="stp1">Spells</button>
-        <button class="fk-tab" role="tab" aria-selected="false" aria-controls="stp2">Lore</button>
+        <button class="fk-tab" role="tab" aria-selected="false" aria-controls="stp2">Items</button>
       </div>
       <div class="fk-tab-panel" role="tabpanel" id="stp1">Fireball, Frost Ward, Blink.</div>
-      <div class="fk-tab-panel" role="tabpanel" id="stp2" hidden>The moon remembers.</div>
+      <div class="fk-tab-panel" role="tabpanel" id="stp2" hidden>Spear, Shield, Ring.</div>
     </div>
   </section>
 
   <section id="hud">
     <h2>HUD — bar / globe / orb / meter / buff-icon</h2>
     <div class="row">
-      <div class="fk-globe" data-tone="ok" role="meter" aria-label="Vitality" aria-valuenow="80"><div class="fk-globe-fill" style="--fk-globe-value:80%"></div><span class="fk-globe-text">80</span></div>
+      <div class="fk-globe" data-tone="ok" role="meter" aria-label="Life" aria-valuenow="80"><div class="fk-globe-fill" style="--fk-globe-value:80%"></div><span class="fk-globe-text">80</span></div>
       <div class="fk-bar" data-tone="ok" role="meter" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="max-width:240px"><div class="fk-bar-fill" style="width:70%"></div></div>
       <span class="fk-orb" data-state="charged"></span>
       <span class="fk-orb" data-state="active"></span>
@@ -94,7 +94,7 @@
     <h2>Inventory — grid / slot / tooltip / drag ghost</h2>
     <div class="fk-grid" style="grid-template-columns: repeat(6, var(--fk-space-6));">
       <div data-tip-host><div class="fk-slot" draggable="true" data-rarity="legendary">👑</div>
-        <div class="fk-item-tooltip" data-rarity="legendary"><span class="fk-item-tooltip-name">Crown of the Pale Court</span><span class="fk-item-tooltip-stat">+9 Presence</span></div>
+        <div class="fk-item-tooltip" data-rarity="legendary"><span class="fk-item-tooltip-name">Bronze Crown</span><span class="fk-item-tooltip-stat">+9 Intelligence</span></div>
       </div>
       <div class="fk-slot" data-rarity="rare" data-stacks="12">⚗</div>
       <div class="fk-slot"></div><div class="fk-slot"></div><div class="fk-slot"></div><div class="fk-slot"></div>
@@ -107,17 +107,17 @@
       <button class="fk-button" id="open-modal">Open modal</button>
       <div class="fk-menu" open role="menu" style="position:relative">
         <button class="fk-menu-item" role="menuitem">Inspect</button>
-        <button class="fk-menu-item" role="menuitem">Attune</button>
+        <button class="fk-menu-item" role="menuitem">Equip</button>
       </div>
     </div>
     <div class="fk-toast-stack">
-      <div class="fk-toast" open data-tone="ok">Potion brewed.</div>
-      <div class="fk-toast" open data-tone="warn">Cauldron low.</div>
+      <div class="fk-toast" open data-tone="ok">Item crafted.</div>
+      <div class="fk-toast" open data-tone="warn">Inventory almost full.</div>
     </div>
-    <div class="fk-modal" id="demo-modal" role="dialog" aria-modal="true" aria-label="Seal the pact?">
+    <div class="fk-modal" id="demo-modal" role="dialog" aria-modal="true" aria-label="Confirm?">
       <div class="fk-modal-box">
-        <p>Seal the pact with the Pale Court?</p>
-        <button class="fk-button" id="close-modal" data-variant="primary">Seal it</button>
+        <p>Confirm this action?</p>
+        <button class="fk-button" id="close-modal" data-variant="primary">Confirm</button>
       </div>
     </div>
   </section>

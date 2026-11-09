@@ -25,6 +25,6 @@ node scripts/wizard-lab.mjs verify
 node scripts/wizard-lab.mjs verify --full
 ```
 
-Also runs retained module-local tests (skill tree, VesselForge, cartographer, mason, splash validate, performance) and any adapter/annotation/bench tests under `tests/`.
+Also runs retained module-local tests (skill tree, item crafting system, cartographer, mason, splash validate, performance) and any adapter/annotation/bench tests under `tests/`.
 
 CI runs the full command.

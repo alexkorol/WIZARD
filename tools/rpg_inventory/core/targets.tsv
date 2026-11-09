@@ -39,7 +39,7 @@ wrap_hide	body	1	Hide Wrap	P	-
 wrap_quilted	body	2	Quilted Vest	P	-
 wrap_studded	body	3	Bronze-Studded Jerkin	P	a plain boiled-leather jerkin reinforced with rows of domed bronze studs
 wrap_bronzescale	body	4	Bronze-Scale Vest	P	-
-wrap_rivetmail	body	5	Rivetmail Hauberk	P	-
+wrap_rivetmail	body	5	Riveted Mail Shirt (retired: mail is after the Bronze Age)	P	-
 crest_hide	helmet	1	Hide Cap	S	a boiled dark leather war cap with a domed skull, broad cheek guards, and complete wearable head protection, clean plain leather surface
 crest_bone	helmet	1	Bone Crest	S	-
 helm_bronze	helmet	3	Bronze Helmet	S	-
@@ -65,7 +65,7 @@ girdle_skymetal	belt	5	Meteoric iron War belt	L	a wide belt of raw dark meteoric
 buckler_hide	shield	2	Hide Buckler	P	-
 buckler_bronze	shield	3	Bronze Roundshield	P	-
 hideshield_bronzescale	shield	4	Bronze-Scale Shield	P	-
-hideshield_rivetmail	shield	5	Rivetmail Towershield	P	-
+hideshield_rivetmail	shield	5	Riveted Tower Shield (retired: rivets in mail and shields are after the Bronze Age)	P	-
 gorget_bone	amulet	1	Bone Pendant	S	-
 gorget_copper	amulet	2	Copper Torc	S	a clean hammered copper torc with a thick crescent body and rounded bulb terminals, one complete neck ring
 gorget_jade	amulet	4	Jade Gorget	S	-
@@ -82,11 +82,11 @@ curio_amber	curio	-	Amber Relic Box	S	a compact relic casket carved entirely fro
 red_ochre	tool	-	Red Ochre	S	-
 woad	tool	-	Woad	S	-
 soot	tool	-	Soot	S	-
-marsh_ochre	tool	-	Marsh Ochre	S	-
-entrail_omen	tool	-	Entrail Omen	S	-
-bird_omen	tool	-	Bird Omen	S	-
-smoke_omen	tool	-	Smoke Omen	S	-
-blood_omen	tool	-	Blood Omen	S	-
+marsh_ochre	tool	-	Yellow Ochre	S	-
+entrail_omen	tool	-	Guaranteed Ward Brand	S	-
+bird_omen	tool	-	Guaranteed Speed Brand	S	-
+smoke_omen	tool	-	Guaranteed Mana Brand	S	-
+blood_omen	tool	-	Guaranteed Bleed Brand	S	-
 lunula_bronze	amulet	3	Bronze Lunula	S	a broad crescent neck collar of clean hammered bronze with a simple raised rim, hung on a plain cord
 signet_bronze	ring	3	Bronze Signet	S	a heavy bronze signet ring with a plain flat oval face and clean hammered bronze surface
 dagger_tusk	dagger	1	Tusk Shank	P	a dagger ground from a single boar tusk, its natural crescent curve tapering to a sharp point, the root end bound in rawhide as a grip

@@ -14,8 +14,8 @@ call. There will be no same-wave rerolls.
 
 | # | Art ID | Slot / grid | Canvas | Primary evidence | Why it earns a roster slot | Highest-risk failures |
 |---:|---|---|---|---|---|---|
-| 1 | `source_river_bast_rib_corselet` | body / 2x3 | P 2:3 | Riverspill DEX T2 equipped-character board `206__p4__...05_06_31 PM.png` | Distinct low-metal B-01 torso defense: continuous backing with narrow vertical bast/fiber ribs; not lamellar, scale, splint, or a costume vest | belt/apron contamination, turning ribs into metal plates or loose reeds, anatomy, turquoise trim |
-| 2 | `source_river_faience_barrel_pendant` | amulet / 1x1 | S 1:1 | Riverspill INT T1 board `...09_29_10 PM (7).png`; same pendant repeated on both figures | Compact three-part barrel-bead silhouette absent from existing torcs, discs, bullae, teeth, shells, drops, and the Wave-02 lozenge | cropped cord, gold/bronze setting, broad collar, extra beads, medallion or radial symbol |
+| 1 | `source_river_bast_rib_corselet` | body / 2x3 | P 2:3 | Egypt and Mesopotamia DEX T2 equipped-character board `206__p4__...05_06_31 PM.png` | Distinct low-metal B-01 torso defense: continuous backing with narrow vertical bast/fiber ribs; not lamellar, scale, splint, or a costume vest | belt/apron contamination, turning ribs into metal plates or loose reeds, anatomy, turquoise trim |
+| 2 | `source_river_faience_barrel_pendant` | amulet / 1x1 | S 1:1 | Egypt and Mesopotamia INT T1 board `...09_29_10 PM (7).png`; same pendant repeated on both figures | Compact three-part barrel-bead silhouette absent from existing torcs, discs, bullae, teeth, shells, drops, and the Wave-02 lozenge | cropped cord, gold/bronze setting, broad collar, extra beads, medallion or radial symbol |
 | 3 | `wpn_dag_flint_lancet` | dagger / 1x2 | P 2:3 | British Museum 1869,0724.95, Late Neolithic Type-I flint lancet | Monolithic extremely narrow thrusting form; distinct from the broad asymmetric flint cutter and all handled metal daggers | separate/fused handle, spearhead, broad leaf blade, glossy obsidian, chunky knapping, museum damage |
 | 4 | `wpn_throw_badarian_stick` | throwing / 1x2 | P 2:3 | British Museum EA59703 Badarian hardwood throwing stick | First non-sling throwing silhouette in the roster; compact one-piece unequal shallow-elbow missile | symmetric boomerang, straight club, paddle, metal fittings, paired sticks, copied cracks/broken tip |
 | 5 | `feet_woven_fibre_sandals` | footwear / 2x2 | S 1:1 | British Museum EA4418 + EA4419 true pair; footwear-history sheet only as secondary typology guard | Entirely woven-fibre soles and sparse cord thongs; materially and structurally distinct from hide, quilted, cage, and calf-wrap footwear | floating ankle loops, invisible feet, modern flip-flop symmetry, rigid sole/heel, mirrored identical pair |
@@ -46,7 +46,7 @@ Manifest:
 
 - Tall capped canister backpack: **REJECT** — speculative/high-tech field-rig
   read; small ancient reed tube bundles do not justify that backpack assembly.
-- Riverspill knobbed bronze ball mace: **REJECT** — medieval/fantasy ball-mace
+- Egypt and Mesopotamia knobbed bronze ball mace: **REJECT** — medieval/fantasy ball-mace
   geometry without a matching ancient load path.
 - Post-calibration bone-toggle amulet: **HOLD** — clean isolation, but copper
   collars and incised marks still need stricter material/meaning review.

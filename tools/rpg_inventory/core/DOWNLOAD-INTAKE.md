@@ -15,7 +15,7 @@ Review sheet: `post-calib-wave2-review.html`. Chroma-keyed promote candidates:
 `assets_staging/post-calib-wave2-cleaned/`. Source files were not moved or
 renamed. Until Alex's review-sheet decisions come back, do NOT re-prompt these
 silhouettes; the batch is heavy on helmets, body armor, boots, outer layers,
-shields, and daggers, and starved on Riverspill, INT gear, rings, belts, and
+shields, and daggers, and starved on Egypt and Mesopotamia, INT gear, rings, belts, and
 all rite/relic/auxiliary families.
 
 Review labels in `tools/rpg_inventory/intake-review.html`. The page shows the
@@ -45,9 +45,9 @@ Accepted assets promoted:
 - `bowl_bronze_offering.png`
 - `hideshield_rawhide_oval.png`
 
-## 2026-07-07 Poludnica Spirit hunter matte experiments
+## 2026-07-07 hunter concept ("poludnica" source images) matte experiments
 
-Two Poludnica Spirit hunter source-image loadout batches were moved out of
+Two hunter concept ("poludnica" source images) source-image loadout batches were moved out of
 Downloads for alpha testing. These are not Sumerian/Babylonian; the earlier
 label came from a bad visual inference and was corrected by Alexei.
 
@@ -113,7 +113,7 @@ export corrected labels/notes from browser localStorage.
 
 Placeholder runtime implementation: the inventory page now loads the taxonomy
 metadata and uses the compact WebP art as an override layer on ordinary
-Vesselforge items. This is deliberately temporary: `Bracers` and `Spell Focus`
+item crafting system items. This is deliberately temporary: `Bracers` and `Spell Focus`
 were added as broad active bases, and taxonomy rows are mapped approximately to
 existing forms/materials so the art can appear in the backpack, paperdoll, loot
 drops, and tooltips while the next game-ready batches are generated.

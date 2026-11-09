@@ -117,7 +117,7 @@ suggested walkability set; redefine it in your game if your rules differ.
 | Dungeon | packed rooms + doorway links + loops | Crypt, Fortress, Sewer, Prison |
 | Caves | cellular automata + liquid pools | Cavern, Ice, Lava, Fungal, Spider, Mines |
 | Catacombs | wide braided maze + galleries + chambers | Bone, Flooded, Tomb |
-| Sanctum | platforms + walkways over the void | Arcane, Infernal |
+| Sanctum | platforms + walkways over the void | Arcane, Volcanic |
 | Ruins | decayed building shells + worn paths | Desert, Overgrown |
 | City | street grid + plaza + building blocks | Market, Derelict |
 | Shore | linear coastline, beach as the highway | Coast, Harbor |

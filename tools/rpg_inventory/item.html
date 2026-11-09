@@ -131,11 +131,10 @@
       item.evolutions = 9;
       item.att = { xp: 0, next: 575, tc: { warding: 22 } };
       item.awakened = {
-        name: "Azrael's Unbroken Vigil", themeId: 'warding',
+        name: 'Bronze Hide Shield', themeId: 'warding',
         power: pack.themes.warding.power,
-        flavor: 'Bound to Azrael through 9 trials. It has learned to endure.',
       };
-      return { v: 1, bearer: 'Azrael', archetype: 'shieldbearer', item };
+      return { v: 1, bearer: 'Test Character', archetype: 'shieldbearer', item };
     };
 
     let payload = null, isSample = false;
@@ -186,7 +185,7 @@
         <img class="item-art" src="${esc(artPath)}" alt="" onerror="this.outerHTML='<span class=&quot;glyph&quot;>&#9672;</span>'">
       </div>
       ${rows.join('')}
-      ${showAtt ? `<div class="att"><div class="lbl">Attunement ${item.att.xp}/${item.att.next}</div><div class="bar"><div class="fill" style="width:${attPct}%"></div></div></div>` : ''}
+      ${showAtt ? `<div class="att"><div class="lbl">Bond XP ${item.att.xp}/${item.att.next}</div><div class="bar"><div class="fill" style="width:${attPct}%"></div></div></div>` : ''}
       ${payload.bearer ? `<div class="bearer">Borne by <b>${esc(payload.bearer)}</b>${archName ? ` the ${esc(archName)}` : ''}.<br>Brands are seared. Bonds are earned. Items remember their bearer.</div>` : ''}
       <div class="actions">
         <button class="btn" id="copyBtn">Copy Link</button>

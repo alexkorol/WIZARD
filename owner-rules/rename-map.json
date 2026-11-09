@@ -673,7 +673,7 @@
     {
       "category": "unique item",
       "before": "Clear Mind",
-      "after": "Spell Damage at High Spirit"
+      "after": "Spell Damage at High Mana"
     },
     {
       "category": "skill or base",
@@ -965,7 +965,7 @@
     {
       "category": "flavour sentence",
       "before": "Marks you write cost no Spirit (design text)",
-      "after": "Marks cost no Spirit (design text)",
+      "after": "Marks cost no Mana (design text)",
       "match": "exact-value",
       "note": "plain restatement"
     },
@@ -1213,7 +1213,7 @@
     {
       "category": "spell or skill name",
       "before": "Conviction",
-      "after": "Guard Break Aura",
+      "after": "Armour Break Aura",
       "match": "exact-value",
       "scope": "display",
       "lint": false,
@@ -1326,6 +1326,243 @@
       "scope": "display",
       "lint": false,
       "note": "three-hit jawbone weapon chain. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves"
+    },
+    {
+      "category": "resource",
+      "before": "Spirit",
+      "after": "Mana",
+      "note": "owner 2026-11-08: 'Spirit' is made up; PoE1 Mana is the resource every skill spends (owner: 'the health and mana orb'). Stat id spirit_flat stays."
+    },
+    {
+      "category": "resource",
+      "before": "Maximum Spirit",
+      "after": "Maximum Mana"
+    },
+    {
+      "category": "resource",
+      "before": "spirit",
+      "after": "mana",
+      "scope": "game",
+      "note": "lowercase game text"
+    },
+    {
+      "category": "stat",
+      "before": "Guard",
+      "after": "Armour",
+      "note": "Guard named the STR defence; PoE's term is Armour (PoE2 Guard is a temporary buff, a different meaning). Stat ids guard_flat/guard_increased stay.",
+      "scope": "game"
+    },
+    {
+      "category": "stat",
+      "before": "Guard Break Aura",
+      "after": "Armour Break Aura",
+      "scope": "game"
+    },
+    {
+      "category": "stat",
+      "before": "Guard break",
+      "after": "Armour break",
+      "scope": "game"
+    },
+    {
+      "category": "unique item",
+      "before": "Spell Damage at High Spirit",
+      "after": "Spell Damage at High Mana"
+    },
+    {
+      "category": "item crafting",
+      "before": "Vesselforge & Inventory",
+      "after": "Inventory and Item Crafting"
+    },
+    {
+      "category": "item crafting",
+      "before": "VesselForge",
+      "after": "item crafting system"
+    },
+    {
+      "category": "item crafting",
+      "before": "Vesselforge",
+      "after": "item crafting system"
+    },
+    {
+      "category": "currency",
+      "before": "Searing Sigil",
+      "after": "Add Brand"
+    },
+    {
+      "category": "currency",
+      "before": "Effacing Stone",
+      "after": "Remove Last Brand"
+    },
+    {
+      "category": "currency",
+      "before": "Orb of Resonance",
+      "after": "Upgrade Bond"
+    },
+    {
+      "category": "currency",
+      "before": "Sundering Knife",
+      "after": "Remove Bond"
+    },
+    {
+      "category": "currency",
+      "before": "Vessel Chisel",
+      "after": "Add Modifier Slot"
+    },
+    {
+      "category": "currency",
+      "before": "Chronicle Draught",
+      "after": "(removed: never implemented)"
+    },
+    {
+      "category": "currency",
+      "before": "Entrail Omen",
+      "after": "Guaranteed Ward Brand"
+    },
+    {
+      "category": "currency",
+      "before": "Bird Omen",
+      "after": "Guaranteed Speed Brand"
+    },
+    {
+      "category": "currency",
+      "before": "Smoke Omen",
+      "after": "Guaranteed Mana Brand"
+    },
+    {
+      "category": "currency",
+      "before": "Blood Omen",
+      "after": "Guaranteed Bleed Brand"
+    },
+    {
+      "category": "currency",
+      "before": "Searing Ash",
+      "after": "Add Modifier"
+    },
+    {
+      "category": "currency",
+      "before": "Scraper",
+      "after": "Remove Last Modifier"
+    },
+    {
+      "category": "item crafting",
+      "before": "Atelier",
+      "after": "Crafting Bench"
+    },
+    {
+      "category": "item crafting",
+      "before": "Attunement",
+      "after": "Bond XP"
+    },
+    {
+      "category": "item crafting",
+      "before": "attunement",
+      "after": "bond XP"
+    },
+    {
+      "category": "item crafting",
+      "before": "Panoply",
+      "after": "Set bonus"
+    },
+    {
+      "category": "item crafting",
+      "before": "Kinship",
+      "after": "Class bond"
+    },
+    {
+      "category": "item crafting",
+      "before": "Hunt Trophy",
+      "after": "Animal Part"
+    },
+    {
+      "category": "item crafting",
+      "before": "Marsh Ochre",
+      "after": "Yellow Ochre"
+    },
+    {
+      "category": "item crafting",
+      "before": "Goods Found",
+      "after": "Item Rarity"
+    },
+    {
+      "category": "item crafting",
+      "before": "Venture Forth",
+      "after": "Simulate fight"
+    },
+    {
+      "category": "creature",
+      "before": "Lindwurm",
+      "after": "Great Serpent"
+    },
+    {
+      "category": "creature",
+      "before": "Night Demon",
+      "after": "Gaunt Demon"
+    },
+    {
+      "category": "creature",
+      "before": "Glutton Demon",
+      "after": "Heavy Demon"
+    },
+    {
+      "category": "creature",
+      "before": "Flying Terror",
+      "after": "Flying Demon"
+    },
+    {
+      "category": "mechanic",
+      "before": "of the Breach",
+      "after": ""
+    },
+    {
+      "category": "mechanic",
+      "before": "of the Vigil",
+      "after": ""
+    },
+    {
+      "category": "mechanic",
+      "before": "of the Hunt",
+      "after": ""
+    },
+    {
+      "category": "place",
+      "before": "Dustwind",
+      "after": "Steppe"
+    },
+    {
+      "category": "place",
+      "before": "Riverspill",
+      "after": "Egypt and Mesopotamia"
+    },
+    {
+      "category": "tree label",
+      "before": "Kilnfathers",
+      "after": "(removed)"
+    },
+    {
+      "category": "place",
+      "before": "Stonewood",
+      "after": "Mesoamerica and Northwest Coast"
+    },
+    {
+      "category": "place",
+      "before": "Nile and Delta",
+      "after": "Egypt and Mesopotamia"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Horn Lamellar Panoply",
+      "after": "Horn Lamellar Armour Set"
+    },
+    {
+      "category": "item pipeline",
+      "before": "Orun",
+      "after": "Test Character"
+    },
+    {
+      "category": "place",
+      "before": "Infernal",
+      "after": "Volcanic"
     }
   ],
   "scopes": {

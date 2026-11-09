@@ -28,7 +28,7 @@ Definition of done (the whole loop is finished when ALL of these hold):
 3. The **pattern-bonus system** (loops, waves, flows, meridians, orbits, symmetry,
    circuits) is implemented per the spec in §5, tested, and visible in the UI.
 4. **Jewel sockets** exist on the tree and at least five jewel families work end to end,
-   including a seeded saga-stone (Timeless-style) transform.
+   including a seeded radius-jewel (Timeless-style) transform.
 5. **Class milestone nodes** exist and at least item-slot/item-type unlock hooks are
    wired (real integration with rpg_inventory's pack where feasible).
 6. The shared **stat registry + combat resolution module** exists, is unit-tested, and
@@ -50,7 +50,7 @@ Definition of done (the whole loop is finished when ALL of these hold):
 | `tools/geometric_skilltree/index.html` | The entire tree app (~4k lines, single file): `GeometricSkillTree`, `SVGRenderer`, `UIController`, `ViewController`, plus all data constants |
 | `tools/geometric_skilltree/README.md` | Current feature set + design rules; keep updated |
 | `tools/geometric_skilltree/tests/progression.test.mjs` | Existing test harness (imports `assets/progression.mjs`) |
-| `tools/rpg_inventory/DESIGN.md` | Vesselforge item system — the itemization the tree must marry |
+| `tools/rpg_inventory/DESIGN.md` | item crafting system item system — the itemization the tree must marry |
 | `tools/rpg_inventory/core/verdigris-pack.js` | Content pack: materials, forms, mods, `derive()` character sheet — the placeholder stat sheet you will replace |
 | `tools/rpg_inventory/core/vesselforge.js` | Pure item-logic engine (UMD, no deps) — the model to follow for the new stats module |
 | `tools/rpg_inventory/core/BASE-DESIGN.md` | Item class ladders (weapon/armour classes) — needed for class-node unlocks |
@@ -116,13 +116,11 @@ Load-bearing facts about the current implementation:
 5. **The tree serves the items and the items serve the tree.** Stat vocabulary is
    shared with rpg_inventory (one registry, §4). Jewels are *items* socketed into the
    tree. Class nodes unlock item slots/types. Neither system makes sense alone.
-6. **Original voice.** Study PoE structure, never copy PoE names or exact numbers.
-   Verdigris is bronze-age, low-fantasy: wards and rites, not "energy shield"; sagas
-   and signs, not "ascendancies". Node names are evocative two-to-four word phrases in
-   the existing register ("Oath of the Front Line", "Blue Arithmetic"). Class and
-   archetype names are real, resonant words — STR/INT class, STR class, DEX class — never
-   invented compound lore-shorthand ("Ritekeeper"-style coinages are banned, per
-   Alexei). When in doubt, pick the word a player would actually say out loud.
+6. **Plain names.** Study PoE structure; use the standard PoE term when the mechanic is the
+   same (Armour, Mana, Keystone), otherwise a plain description of what the thing does. Never
+   invent setting words, epithets or compound coinages (owner rules 5-8; owner 2026-11-08: "I'm
+   noticing a lot of remaining made up stuff ... I need a thorough purge"). Every player-facing
+   word must be in owner-rules/GLOSSARY.md; owner-rules/lint.mjs enforces it.
 7. **Simple to touch, deep to master.** One click allocates. Tooltips explain
    everything in plain language. Patterns are discoverable by playing (the UI hints at
    near-complete patterns). Depth lives in the combinatorics, never in the interface.
@@ -251,7 +249,7 @@ on notables: they are how 331 nodes can feel like 1,300.
   reroll / additive augment (+attr on smalls, notables keep effect and gain a rider) /
   bespoke stacking currency (nodes grant "Devotion", notables scale per-Devotion) /
   blank-and-boost (smalls grant NOTHING, notables become oversized). **Design our five
-  sagas to span the same philosophy spectrum, not five flavors of the same trick.**
+  rewrite rules to span the same spectrum, not five flavors of the same trick.**
   Also steal the composition firewall: transformed nodes are marked "conquered" and
   immune to further modification by other radius jewels; limit 1 Saga-stone socketed.
 - **Cluster jewels** made the tree's edge craftable loot (socket-in-socket subtrees).
@@ -396,7 +394,7 @@ An incoming hit walks this pipeline (each layer is a separate testable function)
    N seconds without taking damage. Sourced from armour pieces (`armor` field ×
    material), jade/amber materials, INT. **Chaos damage bypasses Ward** — its identity.
 4. **Mitigation %**:
-   - **Guard (armour value)** vs Physical: diminishing vs large hits
+   - **Armour (armour value)** vs Physical: diminishing vs large hits
      (`mitigation = guard / (guard + K * hitDamage)` — pick K, test at level-relevant
      hit sizes; big slams must punch through guard stacking).
    - **Resistances** vs Fire/Cold/Lightning/Chaos: additive %, cap 75 base (raisable a
@@ -426,16 +424,16 @@ mixed pack — data in the stats module, used by tests and the UI).
 
 ### 4.4 Attributes (the conduit currency)
 
-- **STR** → +Life per point, +Guard per point, small melee damage scaling.
+- **STR** → +Life per point, +Armour per point, small melee damage scaling.
 - **DEX** → +Evasion per point, +Accuracy per point, small speed scaling.
-- **INT** → +Ward per point, +Spirit (mana) per point, small rite damage scaling.
+- **INT** → +Ward per point, +Mana (mana) per point, small rite damage scaling.
 - Keep conversions in ONE place in the stats module (kill the hardcoded lines in
   `computeStats`). Attribute thresholds gate items (BASE-DESIGN ladders) — jewels that
   transform attributes (§6) get their power from this.
 
 ### 4.5 Resource
 
-**Spirit** (already in verdigris-pack) is the cast/skill resource. Reservation
+**Mana** (already in verdigris-pack) is the cast/skill resource. Reservation
 (banners, standing rites) is a later concern but leave API room.
 
 Deliverables for this section: the module, ~30+ unit tests (pipeline order, guard
@@ -561,17 +559,17 @@ Five families (Verdigris naming — carved stones, not "jewels", in player-facin
 1. **Whorl-stones** (basic): 1–3 authored mods from the shared stat registry. The
    bread-and-butter socket filler; rollable/craftable like any vessel.
 2. **Eye-stones** (radius): affect allocated nodes within lattice radius R of the
-   socket ("small passives in radius also grant +8 Guard"; "notables in radius gain
+   socket ("small passives in radius also grant +8 Armour"; "notables in radius gain
    +5% effect"). Radius shown on hover, exactly like PoE radius jewels.
 3. **Change-stones** (transmuting, radius): rewrite the attribute layer in radius —
    "STR granted by conduits in radius counts as INT", "conduit attributes in radius
    are doubled but nodes there grant no effects", "attributes in radius also count for
    item requirements twice". These create the attribute-transform tricks Alexei wants
    (PoE analog: Brute Force Solution / Might in All Forms — study, don't copy).
-4. **Saga-stones** (the Timeless analog, radius, seeded): each carries a **saga**
-   (one of ~5 legendary Verdigris cultures/heroes — invent them; e.g. the Drowned
-   Court, the Kilnfathers, the First Herd, the Quiet Survey, the Salt Oath) and a
-   **numeric seed** (the "year of the saga"). Deterministically rewrites every node in
+4. **Seeded radius jewels** (the Timeless analog, radius, seeded): each carries one of
+   ~5 rewrite rules (named by what they do: full reroll, added Fire rider, attribute
+   rebasing, stacking, blank-and-boost; no cultures, heroes or lore) and a **numeric
+   seed**. Deterministically rewrites every node in
    radius: smalls get the saga's stat vocabulary, notables are replaced from the
    saga's notable table keyed by `hash(seed, nodeId)`, and any keystone in radius
    becomes the saga's keystone. Same seed = same result forever (theorycraftable,
@@ -719,7 +717,7 @@ Panels & features (all in the existing single-file UI style):
    to the running tree so you can feel a node immediately.
 2. **Status heatmap overlay**: color every seat by status — the authoring progress map.
 3. **Coverage overlays**: color by stat category (where does bleed live? where is
-   Guard?), by node type, by BU budget deviation, by cluster.
+   Armour?), by node type, by BU budget deviation, by cluster.
 4. **Pattern debug overlay**: live-draw detected waves/flows/loops/orbits/symmetry
    with their contributions (also the player-facing "pattern panel" in lite form).
 5. **Lint panel**: duplicate names, empty seats, unresolved stat ids, budget outliers,

@@ -22,7 +22,7 @@ Cards on the dashboard come from the generated registry (`modules.json` / `modul
 |---|---|---|
 | Life & Mana Orbs | `tools/wizard_orbs` | HUD resource calibration |
 | Geometric Passive Tree | `tools/geometric_skilltree` | Passive-tree authoring |
-| Vesselforge & Inventory | `tools/rpg_inventory` | Itemization calibration |
+| Inventory and Item Crafting | `tools/rpg_inventory` | Itemization calibration |
 | Arcane Lattice | `tools/arcane_lattice` | Spellcraft constraints |
 | Cartographer | `tools/cartographer` | Zone generation |
 | Mason — Terrain Tiles | `tools/mason` | Terrain autotile |

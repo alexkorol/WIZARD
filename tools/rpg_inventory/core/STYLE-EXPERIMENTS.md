@@ -94,7 +94,7 @@ instead of collapsing all slots into one sheet.
 
 Character/source prompts are not allowed to rely on chat context, project
 memory, or terse faction names. The image model has no durable knowledge of
-what "Jungle Empire", "Poludnica Spirit hunter", "Seven Kingdoms", or a class
+what "Jungle Empire", "hunter concept ("poludnica" source images)", "Seven Kingdoms", or a class
 name means in Verdigris. Every final prompt must explicitly include:
 
 - full faction design language: materials, palette, construction, cultural

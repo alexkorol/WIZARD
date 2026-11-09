@@ -207,14 +207,14 @@ function testClassCallingAndBridge() {
 
   const champion = classes.find(node => node.name === 'STR Class');
   const acrobat = classes.find(node => node.name === 'DEX Class');
-  assert.ok(champion && acrobat, 'Champion and Acrobat milestones should exist.');
+  assert.ok(champion && acrobat, 'STR class and DEX class milestones should exist.');
 
   champion.active = true;
   tree.classOrder.push(champion.id);
   tree.recalculate();
   assert.equal(tree.stats.characterClass, 'STR Class', 'The first class allocated marks the calling.');
-  assert.ok(tree.stats.unlocks.includes('war_horn_curio'), 'Champion unlocks the war-horn curio slot.');
-  assert.ok(tree.stats.unlocks.includes('war_call_slot'), 'Champion unlocks the War Horn window.');
+  assert.ok(tree.stats.unlocks.includes('war_horn_curio'), 'STR class unlocks the war-horn curio slot.');
+  assert.ok(tree.stats.unlocks.includes('war_call_slot'), 'STR class unlocks the War Horn window.');
   assert.equal(window.VerdigrisBridge.class, 'STR Class', 'The bridge payload publishes the calling.');
   assert.ok(window.VerdigrisBridge.unlocks.includes('tower_shield'), 'The bridge payload carries unlock flags.');
 
@@ -223,7 +223,7 @@ function testClassCallingAndBridge() {
   tree.recalculate();
   assert.equal(tree.stats.characterClass, 'STR Class', 'A second class node leaves the first calling in place.');
   assert.ok(tree.stats.unlocks.includes('second_weapon_set'), 'Every allocated class milestone contributes unlocks.');
-  assert.ok(tree.stats.unlocks.includes('quick_rig_slot'), 'Acrobat unlocks the tool slot.');
+  assert.ok(tree.stats.unlocks.includes('quick_rig_slot'), 'DEX class unlocks the tool slot.');
 
   champion.active = false;
   tree.classOrder = tree.classOrder.filter(id => id !== champion.id);
@@ -338,8 +338,8 @@ function testAnnotations() {
 function testIronMilestoneLoopBoost() {
   const window = runStandaloneApp();
   const tree = window.skillTree;
-  const iron = Array.from(tree.nodes.values()).find(node => node.name === 'STR Anchor');
-  assert.ok(iron?.seat?.patternHook, 'STR Anchor should carry its pattern hook.');
+  const iron = Array.from(tree.nodes.values()).find(node => node.name === 'STR Pattern Node');
+  assert.ok(iron?.seat?.patternHook, 'STR Pattern Node should carry its pattern hook.');
 
   // Close a radius-1 loop around a center adjacent to the milestone so the
   // milestone sits on the loop's perimeter.
@@ -361,7 +361,7 @@ function testIronMilestoneLoopBoost() {
   delete iron.seat.patternHook;
   tree.recalculate();
   const plain = tree.getNodeBoost(center).multiplier;
-  assert.ok(boosted > plain, `STR Anchor should empower the crowned center further (${boosted} vs ${plain}).`);
+  assert.ok(boosted > plain, `STR Pattern Node should empower the crowned center further (${boosted} vs ${plain}).`);
 }
 
 function testWaveFirstAutoPathing() {
@@ -472,7 +472,7 @@ const tests = [
   ['Rim corners grant their slot and pack unlocks', testRimUnlockSeats],
   ['Ascendancy circles hold 10-15 themed passives behind their corners', testAscendancyClusters],
   ['Notes annotate nodes and conduits and ride build codes', testAnnotations],
-  ['STR Anchor empowers loops that carry it', testIronMilestoneLoopBoost],
+  ['STR Pattern Node empowers loops that carry it', testIronMilestoneLoopBoost],
   ['Build codes round-trip a whole allocation', testBuildCodeRoundTrip],
   ['Auto-pathing extends waves by default', testWaveFirstAutoPathing],
   ['Side panels collapse into focus mode', testPanelCollapse],

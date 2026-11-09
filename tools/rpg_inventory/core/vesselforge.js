@@ -1,7 +1,7 @@
 /* =============================================================================
    VESSELFORGE — modular ARPG item-system engine
    -----------------------------------------------------------------------------
-   Zero dependencies. UMD: browser global `VesselForge` or Node require().
+   Zero dependencies. UMD: browser global `item crafting system` or Node require().
    All game content lives in a pack (see verdigris-pack.js); the engine is
    only rules. Items are plain JSON. RNG is seedable for reproducible tests.
 
@@ -251,43 +251,43 @@
 
     function sear(srcItem, o = {}) {
       const item = clone(srcItem);
-      if (!item.vessel) return err('This holds no vessel');
-      if (freeSlots(item) <= 0) return err('No free vessel slot');
-      if (!spendPatience(item, 1)) return err('The vessel has no patience left for tools');
-      if (o.omenId && !pack.omens[o.omenId]) return err('Unknown omen');
+      if (!item.vessel) return err('This item has no modifier slots');
+      if (freeSlots(item) <= 0) return err('No free modifier slot');
+      if (!spendPatience(item, 1)) return err('No crafting uses left on this item');
+      if (o.omenId && !pack.omens[o.omenId]) return err('Unknown guaranteed-brand item');
       if (o.pigmentId && !pack.pigments[o.pigmentId]) return err('Unknown pigment');
       const brand = rollBrand(item, o);
-      if (!brand) return err(o.omenId ? 'The omen shows nothing this vessel can hold' : 'No brand will take');
+      if (!brand) return err(o.omenId ? 'No brand with that tag fits this item' : 'No brand fits this item');
       item.brands.push(brand);
       maybeName(item);
-      return { item, event: { kind: 'craft', text: `Seared: ${fmt(brandMod(brand).label, brand.value)} (T${brand.tier})` } };
+      return { item, event: { kind: 'craft', text: `Added brand: ${fmt(brandMod(brand).label, brand.value)} (T${brand.tier})` } };
     }
 
     function efface(srcItem) {
       const item = clone(srcItem);
-      if (!item.brands.length) return err('No brand to efface');
-      if (!spendPatience(item, 1)) return err('The vessel has no patience left for tools');
+      if (!item.brands.length) return err('No brand to remove');
+      if (!spendPatience(item, 1)) return err('No crafting uses left on this item');
       const removed = item.brands.pop();
-      return { item, event: { kind: 'craft', text: `Effaced: ${fmt(brandMod(removed).label, removed.value)}` } };
+      return { item, event: { kind: 'craft', text: `Removed brand: ${fmt(brandMod(removed).label, removed.value)}` } };
     }
 
     function chisel(srcItem) {
       const item = clone(srcItem);
-      if (!item.vessel) return err('This holds no vessel');
-      if (item.vessel >= S.maxVessel) return err('The vessel can hold no more');
-      if (!spendPatience(item, 2)) return err('Carving needs 2 patience');
+      if (!item.vessel) return err('This item has no modifier slots');
+      if (item.vessel >= S.maxVessel) return err('This item has the most modifier slots it can have');
+      if (!spendPatience(item, 2)) return err('Adding a slot needs 2 crafting uses');
       item.vessel += 1;
-      return { item, event: { kind: 'craft', text: `Carved a new vessel slot (${item.vessel}/${S.maxVessel})` } };
+      return { item, event: { kind: 'craft', text: `Added a modifier slot (${item.vessel}/${S.maxVessel})` } };
     }
 
     /* ---------------- firing (material ascension gamble) ---------------- */
     function fire(srcItem) {
       const item = clone(srcItem);
-      if (!item.vessel) return err('This holds no vessel');
+      if (!item.vessel) return err('This item has no modifier slots');
       const mat = material(item);
       if (!mat.ascendsTo) return err(`${mat.name} cannot be fired higher`);
       if (retiredMaterials.has(mat.ascendsTo)) return err(`${pack.materials[mat.ascendsTo].name} is not available yet`);
-      if (!spendPatience(item, 2)) return err('Firing needs 2 patience');
+      if (!spendPatience(item, 2)) return err('A material upgrade needs 2 crafting uses');
       const outcomes = Object.entries(S.fireOutcomes).map(([k, w]) => ({ w, k }));
       const res = pickWeighted(outcomes).k;
       if (res === 'ascend') {
@@ -295,24 +295,24 @@
         item.fired += 1;
         const nm = material(item);
         item.vessel = Math.min(S.maxVessel, Math.max(item.vessel, nm.vessel[0]));
-        return { item, event: { kind: 'awake', text: `Firing succeeded: ${mat.name} became ${nm.name}.` } };
+        return { item, event: { kind: 'awake', text: `Material upgrade succeeded: ${mat.name} became ${nm.name}.` } };
       }
       if (res === 'scar') {
         if (freeSlots(item) > 0) item.scars += 1;
         item.fired += 1;
-        return { item, event: { kind: 'craft', text: 'Firing failed: one slot is scarred.' } };
+        return { item, event: { kind: 'craft', text: 'Material upgrade failed: one slot is locked.' } };
       }
       if (res === 'shatter') {
-        return { destroyed: true, event: { kind: 'craft', text: `Firing failed: the ${mat.name} ${form(item).name.toLowerCase()} breaks.` } };
+        return { destroyed: true, event: { kind: 'craft', text: `Material upgrade failed: the ${mat.name} ${form(item).name.toLowerCase()} breaks.` } };
       }
       item.fired += 1;
-      return { item, event: { kind: 'sys', text: 'Firing had no effect.' } };
+      return { item, event: { kind: 'sys', text: 'Material upgrade had no effect.' } };
     }
 
     /* ---------------- trophies ---------------- */
     function addFragment(stash, trophyId) {
       const t = pack.trophies[trophyId];
-      if (!t) return err('Unknown trophy');
+      if (!t) return err('Unknown animal part');
       const next = Object.assign({}, stash);
       next[trophyId] = (next[trophyId] || 0) + 1;
       const completed = next[trophyId] >= t.fragments;
@@ -321,24 +321,24 @@
 
     function socketTrophy(srcItem, trophyId, stash) {
       const t = pack.trophies[trophyId];
-      if (!t) return err('Unknown trophy');
+      if (!t) return err('Unknown animal part');
       if ((stash[trophyId] || 0) < t.fragments) return err(`Needs ${t.fragments} fragments`);
       const item = clone(srcItem);
-      if (!item.vessel) return err('This holds no vessel');
+      if (!item.vessel) return err('This item has no modifier slots');
       if (!t.kinds.includes(item.kind)) return err(`A ${t.name} will not bind to this`);
-      if (item.trophies.some(x => x.trophyId === trophyId)) return err('Already bears this trophy');
-      if (freeSlots(item) <= 0) return err('No free vessel slot');
+      if (item.trophies.some(x => x.trophyId === trophyId)) return err('This animal part is already attached');
+      if (freeSlots(item) <= 0) return err('No free modifier slot');
       item.trophies.push({ id: genId(), trophyId });
       const nextStash = Object.assign({}, stash);
       nextStash[trophyId] -= t.fragments;
-      return { item, stash: nextStash, event: { kind: 'craft', text: `Bound trophy: ${t.name}` } };
+      return { item, stash: nextStash, event: { kind: 'craft', text: `Attached animal part: ${t.name}` } };
     }
 
     function pryTrophy(srcItem) {
       const item = clone(srcItem);
-      if (!item.trophies.length) return err('No trophy to pry out');
+      if (!item.trophies.length) return err('No animal part to remove');
       const removed = item.trophies.pop();
-      return { item, event: { kind: 'craft', text: `Pried out ${pack.trophies[removed.trophyId].name} — it crumbles.` } };
+      return { item, event: { kind: 'craft', text: `Removed ${pack.trophies[removed.trophyId].name}; it is destroyed.` } };
     }
 
     /* ---------------- bonds ---------------- */
@@ -370,9 +370,8 @@
       const themeId = dominantBondTheme(item) || pick(Object.keys(pack.themes));
       const t = pack.themes[themeId];
       item.awakened = {
-        name: `${charName}'s ${displayName(item)}`,
+        name: displayName(item),
         themeId, power: t.power,
-        flavor: `Awakened by ${charName} after ${item.evolutions} uses.`,
       };
     }
 
@@ -399,12 +398,12 @@
       if (weakest) {
         weakest.tier += 1;
         item.evolutions += 1;
-        return { kind: 'bond', text: `Bond deepened on ${displayName(item)}: ${bondMod(weakest).name} → ${ROMAN[weakest.tier - 1]}` };
+        return { kind: 'bond', text: `Bond upgraded on ${displayName(item)}: ${bondMod(weakest).name} → ${ROMAN[weakest.tier - 1]}` };
       }
       if (!item.awakened && item.bonds.length >= 3 && item.bonds.every(b => b.tier === 3)) {
         awaken(item, ctx.charName);
         item.evolutions += 1;
-        return { kind: 'awake', text: `${displayName(item)} has AWAKENED as "${item.awakened.name}"` };
+        return { kind: 'awake', text: `${displayName(item)} is upgraded: ${item.awakened.power}` };
       }
       return null;
     }
@@ -435,22 +434,22 @@
       if (!weakest) return err(item.bonds.length ? 'All bonds are at tier III' : 'No bond to deepen');
       weakest.tier += 1;
       item.evolutions += 1;
-      return { item, event: { kind: 'bond', text: `Resonance: ${bondMod(weakest).name} → ${ROMAN[weakest.tier - 1]}` } };
+      return { item, event: { kind: 'bond', text: `Bond upgraded: ${bondMod(weakest).name} → ${ROMAN[weakest.tier - 1]}` } };
     }
 
     function sever(srcItem) {
       const item = clone(srcItem);
-      if (!item.bonds.length) return err('No bond to sever');
+      if (!item.bonds.length) return err('No bond to remove');
       const weakest = [...item.bonds].sort((a, b) => a.tier - b.tier)[0];
       item.bonds = item.bonds.filter(b => b.id !== weakest.id);
       item.scars += 1;
-      return { item, event: { kind: 'craft', text: `Severed ${bondMod(weakest).name}. The slot is scarred.` } };
+      return { item, event: { kind: 'craft', text: `Removed ${bondMod(weakest).name}. The slot is locked.` } };
     }
 
     /* ---------------- character & ventures ---------------- */
     function createCharacter(o = {}) {
       return {
-        v: 1, name: o.name || 'Nameless',
+        v: 1, name: o.name || 'Unnamed',
         archetype: o.archetype || Object.keys(pack.archetypes)[0],
         xp: 0, gold: o.gold || 0, deeds: {}, fragments: {},
       };
@@ -459,7 +458,7 @@
 
     function venture(character, equipment, opts = {}) {
       const c = JSON.parse(JSON.stringify(character));
-      const enc = opts.encounter || pick(pack.encounters || [{ text: 'wandered the hills', themes: {} }]);
+      const enc = opts.encounter || pick(pack.encounters || [{ text: 'travelled', themes: {} }]);
       const events = [];
       const gold = rint(20, 65);
       c.gold += gold;
@@ -526,7 +525,7 @@
           }
         });
         if (item.awakened) {
-          conditionals.push({ source: displayName(item), name: 'Awakened', shape: 'trigger', text: item.awakened.power, themeId: item.awakened.themeId });
+          conditionals.push({ source: displayName(item), name: 'Upgraded', shape: 'trigger', text: item.awakened.power, themeId: item.awakened.themeId });
         }
       });
       const panoplies = panoply(items);
@@ -578,12 +577,11 @@
         t.mods.forEach(m => push('trophy', `   ${fmt(m.label, m.v)}`));
         if (t.completionBonus) push('trophy', `   ${t.completionBonus.label}`, 'bonus');
       });
-      if (item.scars) push('scar', `✕ ${item.scars} scarred slot${item.scars > 1 ? 's' : ''}`);
+      if (item.scars) push('scar', `✕ ${item.scars} locked slot${item.scars > 1 ? 's' : ''}`);
       if (item.awakened) {
         push('power', item.awakened.power, 'awakened');
-        push('flavor', item.awakened.flavor);
       }
-      if (item.vessel && !isSated(item)) push('attune', `Attunement ${item.att.xp}/${item.att.next}`);
+      if (item.vessel && !isSated(item)) push('attune', `Bond XP ${item.att.xp}/${item.att.next}`);
       return lines;
     }
 

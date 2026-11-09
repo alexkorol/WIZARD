@@ -1,0 +1,434 @@
+file	before	after
+tools/rp_account_creator/index.html	desc: 'The wall the House hides behind. Slow to learn, slower to die.'	desc: 'Strength class. Takes less damage.'
+tools/rp_account_creator/index.html	desc: 'Quick hands, quicker feet. Finds what others walk past.'	desc: 'Dexterity class. Finds better items.'
+tools/rp_account_creator/index.html	desc: 'Reads entrails and skies. Knows much, bleeds easily.'	desc: 'Intelligence class. Gains more experience.'
+tools/rp_account_creator/index.html	name: 'Millbrook Fields', danger: 1, minLevel: 1, desc: 'Tame farmland gone slightly wrong.', lines: ['Following a hedgerow', 'Questioning a nervous shepherd', 'Poking a scarecrow that moved'] }	name: 'Fields', danger: 1, minLevel: 1, desc: 'Farmland. Lowest danger.', lines: ['Exploring the fields'] }
+tools/rp_account_creator/index.html	name: 'The Dark Woods', danger: 2, minLevel: 3, desc: 'The trees keep their own counsel.', lines: ['Cutting through bramble', 'Marking trunks with chalk', 'Losing sight of the sun'] }	name: 'Woods', danger: 2, minLevel: 3, desc: 'Forest.', lines: ['Exploring the woods'] }
+tools/rp_account_creator/index.html	name: 'Crumbling Ruins', danger: 3, minLevel: 5, desc: 'Something older than the kingdom.', lines: ['Reading half-worn inscriptions', 'Climbing a fallen column', 'Stepping over old bones'] }	name: 'Ruins', danger: 3, minLevel: 5, desc: 'Collapsed buildings.', lines: ['Exploring the ruins'] }
+tools/rp_account_creator/index.html	name: 'The Sunken Crypts', danger: 4, minLevel: 8, desc: 'The dead here were buried standing up.', lines: ['Wading through black water', 'Counting alcoves in the dark', 'Snuffing the lantern to listen'] }	name: 'Flooded Crypts', danger: 4, minLevel: 8, desc: 'Underground tombs.', lines: ['Exploring the crypts'] }
+tools/rp_account_creator/index.html	name: 'The Pale Rift', danger: 5, minLevel: 11, desc: 'Where the map ends and the scribes go quiet.', lines: ['Walking on ground that hums', 'Ignoring a voice that knows your name', 'Watching two moons where one should be'] }	name: 'Chasm', danger: 5, minLevel: 11, desc: 'Deep chasm. Highest danger.', lines: ['Exploring the chasm'] }
+tools/rp_account_creator/index.html	1: ['Field Rat', 'Kobold Scavenger', 'Mud Crab', 'Feral Hound'], 2: ['Goblin Skirmisher', 'Dire Wolf', 'Bog Wisp', 'Roadside Bandit'], 3: ['Skeleton', 'Raider', 'Ghoul', 'Mimic'], 4: ['Wight', 'Drowned Soldier', 'Bone Priest', 'Flesh Golem'], 5: ['Rift Stalker', 'Pale Seraph', 'Void Beast', 'The Hol	1: ['Field Rat', 'Mud Crab', 'Feral Hound'], 2: ['Dire Wolf', 'Bandit'], 3: ['Skeleton', 'Raider'], 4: ['Zombie', 'Skeleton Warrior'], 5: ['Cave Bear', 'Bandit Chief'],
+tools/rp_account_creator/index.html	skymetal: { name: 'Hammered Iron', tier: 5 }, rivetmail: { name: 'Riveted Mail', tier: 6 },	skymetal: { name: 'Hammered Iron', tier: 5 },
+tools/rp_account_creator/index.html	Shield: ['hide', 'bronze', 'bronzescale', 'rivetmail'],	Shield: ['hide', 'bronze', 'bronzescale'],
+tools/rp_account_creator/index.html	Wrap: ['hide', 'quilted', 'bronzescale', 'rivetmail'],	Wrap: ['hide', 'quilted', 'bronzescale'],
+tools/rp_account_creator/index.html	const TIER_EPITHETS = { 2: 'Remembered', 3: 'Storied', 4: 'Undying' }; const relicDisplayName = (relic, tier) => { const t = Math.min(tier, 4); const suffix = TIER_EPITHETS[t] ? `, ${TIER_EPITHETS[t]}` : '';	const relicDisplayName = (relic, tier) => { const t = Math.min(tier, 4); const suffix = t >= 2 ? ` (Bond ${t})` : '';
+tools/rp_account_creator/index.html	{ id: 'oral_tradition', renown: 150, icon: 'book', name: 'Oral Tradition', corruptName: 'Whispered Heresies', desc: 'Tales of the fallen guide the young. Scions gain +15% experience.' }, { id: 'ancestral_arms', renown: 400, icon: 'sword', name: 'Ancestral Arms', corruptName: 'Grave Goods', desc: 'Ne	{ id: 'oral_tradition', renown: 150, icon: 'book', name: '+15% Experience', desc: 'New characters gain 15% more experience.' }, { id: 'ancestral_arms', renown: 400, icon: 'sword', name: 'Starting Relic', desc: 'New characters start with one of the House\'s circulating relics.' }, { id: 'hardened_blo
+tools/rp_account_creator/index.html	const boonName = (boon, isCorrupt) => (isCorrupt ? boon.corruptName : boon.name);	const boonName = (boon) => boon.name;
+tools/rp_account_creator/index.html	// ============================================================ // Lore: offline pools + optional LLM // ============================================================ const OFFLINE_LORE = { houseName: ['Ashford', 'Thornton', 'Calder', 'Oakley', 'Grayson', 'Stillman', 'Blackwell', 'Marlowe', 'Fletcher	// ============================================================ // Optional LLM name check and name suggestions (off unless apiKey is set) // ============================================================ const offlineLore = () => '';
+tools/rp_account_creator/index.html	return responseSchema ? { approved: true, message: 'The scribes nod in silence.' } : offlineLore(prompt);	return responseSchema ? { approved: true, message: 'Name accepted.' } : offlineLore(prompt);
+tools/rp_account_creator/index.html	You are the High Scribe of a grim fantasy realm. Approve only serious, immersive entries. 1. Reject modern, silly, meme, or offensive names. 2. Reject names that are too short or random characters. 3. If rejected, respond with a short, in-character refusal. 4. If approved, respond with a brief, atmo	You check names that players choose in a dark fantasy game. Approve only serious names. 1. Reject modern, silly, meme, or offensive names. 2. Reject names that are too short or random characters. 3. If rejected, respond with a short, plain reason. 4. If approved, respond with: Name accepted.
+tools/rp_account_creator/index.html	return { approved: true, message: 'The scribes are silent, but you pass unchallenged.' };	return { approved: true, message: 'Name check unavailable; name accepted.' };
+tools/rp_account_creator/index.html	You are a fantasy chronicler. Return ONLY the requested string.	You suggest names for a dark fantasy game. Return ONLY the requested string.
+tools/rp_account_creator/index.html	epitaph: 'From before the chronicles were kept.', cause: 'Lost to the old records',	cause: 'Imported from an older save',
+tools/rp_account_creator/index.html	// Skymetal only surfaces at danger 4+; riveted mail stays a rumor outside the Rift.	// Hammered iron (tier 5) only drops at danger 4+.
+tools/rp_account_creator/index.html	5: danger >= 4 ? danger * 0.7 * lootMod : 0, 6: danger === 5 ? 0.25 : 0,	5: danger >= 4 ? danger * 0.7 * lootMod : 0,
+tools/rp_account_creator/index.html	s.deeds = addDeed(s.deeds, `Reclaimed ${name}`);	s.deeds = addDeed(s.deeds, `Found relic ${name}`);
+tools/rp_account_creator/index.html	s.logs = pushLog(s.logs, `Unearthed ${name} — once borne by ${relic.origin}. The House remembers.`, 'relic');	s.logs = pushLog(s.logs, `Found relic ${name} (previously carried by ${relic.origin})`, 'relic');
+tools/rp_account_creator/index.html	s.action = 'Turning a relic over in the light';	s.action = 'Found a relic';
+tools/rp_account_creator/index.html	s.logs = pushLog(s.logs, `Slew ${mob} (+${xpGain} xp, -${dmg} hp)`, 'fight');	s.logs = pushLog(s.logs, `Killed ${mob} (+${xpGain} xp, -${dmg} life)`, 'fight');
+tools/rp_account_creator/index.html	s.action = `Wiping the blade clean`;	s.action = 'Fighting';
+tools/rp_account_creator/index.html	if (d >= 4) s.deeds = addDeed(s.deeds, `Felled a horror of ${zone.name}`);	if (d >= 4) s.deeds = addDeed(s.deeds, `Killed an enemy in ${zone.name}`);
+tools/rp_account_creator/index.html	s.cause = `Slain by ${mob} in ${zone.name}`;	s.cause = `Killed by ${mob} in ${zone.name}`;
+tools/rp_account_creator/index.html	s.logs = pushLog(s.logs, `${s.name} has fallen.`, 'warn');	s.logs = pushLog(s.logs, `${s.name} died.`, 'warn');
+tools/rp_account_creator/index.html	s.logs = pushLog(s.logs, 'Bleeding badly. The Hall is not far — yet.', 'warn');	s.logs = pushLog(s.logs, 'Life below 25%.', 'warn');
+tools/rp_account_creator/index.html	s.logs = pushLog(s.logs, `Scavenged ${art} ${item.name.toLowerCase()} and ${copper} copper — anyone's tools`, 'loot');	s.logs = pushLog(s.logs, `Found ${art} ${item.name} and ${copper} copper (common material)`, 'loot');
+tools/rp_account_creator/index.html	s.logs = pushLog(s.logs, `Found ${art} ${item.name}, but the pack is full. Left it for the crows. (+${copper} copper)`, 'loot');	s.logs = pushLog(s.logs, `Found ${art} ${item.name}; pack full, item left behind (+${copper} copper)`, 'loot');
+tools/rp_account_creator/index.html	s.action = 'Weighing the take';	s.action = 'Looting';
+tools/rp_account_creator/index.html	s.logs = pushLog(s.logs, `Made camp and bound wounds (+${heal} hp)`, 'rest');	s.logs = pushLog(s.logs, `Rested (+${heal} life)`, 'rest');
+tools/rp_account_creator/index.html	s.action = 'Watching the fire burn low';	s.action = 'Resting';
+tools/rp_account_creator/index.html	// Flavor / travel	// Exploring
+tools/rp_account_creator/index.html	addDeed(s.deeds, 'Survived to the fifth rank');	addDeed(s.deeds, 'Reached level 5');
+tools/rp_account_creator/index.html	addDeed(s.deeds, 'Stood among the ten-ranked');	addDeed(s.deeds, 'Reached level 10');
+tools/rp_account_creator/index.html	const SuggestBtn = ({ onClick, disabled, generating, label = 'Suggest' }) => ( <button	const SuggestBtn = ({ onClick, disabled, generating, label = 'Suggest' }) => !apiKey ? null : ( <button
+tools/rp_account_creator/index.html	<p className="text-xs text-stone-500 italic truncate">"{h.motto}"</p>	(removed)
+tools/rp_account_creator/index.html	const [motto, setMotto] = useState(''); const [color, setColor] = useState('gold');	const [color, setColor] = useState('gold');
+tools/rp_account_creator/index.html	const generateMotto = async () => { if (!name) return; setGenerating(true); const m = await generateLore('House Motto', `House ${name} motto, solemn medieval tone.`); if (m) setMotto(m); setGenerating(false); };	(removed)
+tools/rp_account_creator/index.html	const corruptName = await generateLore('House Name', 'Chaotic void house name') || 'The Unhallowed'; const corruptMotto = await generateLore('House Motto', 'Chaos reigns eternal') || 'Chaos Reigns Eternal'; onCreate(corruptName, corruptMotto, { color: 'void', charge: 'skull' }, true); showNote('The 	onCreate('Corrupt House', '', { color: 'void', charge: 'skull' }, true); showNote('Name rejected three times. A Corrupt House was created instead.');
+tools/rp_account_creator/index.html	const verdict = await consultTheScribes('House', { name, context: motto });	const verdict = await consultTheScribes('House', { name });
+tools/rp_account_creator/index.html	onCreate(name, motto, { color, charge }, false);	onCreate(name, '', { color, charge }, false);
+tools/rp_account_creator/index.html	onClick={onBack} title="Return to the gate">	onClick={onBack} title="Back to houses">
+tools/rp_account_creator/index.html	<p className="text-stone-500 italic text-sm min-h-[20px]">{motto ? `"${motto}"` : 'No words yet spoken'}</p> <p className="text-[11px] text-stone-600 leading-relaxed mt-2"> This banner will hang over every scion you send into the world — and over every name in your crypt. </p>	<p className="text-[11px] text-stone-600 leading-relaxed mt-2"> Banner preview. It is shown on the house list and the house page. </p>
+tools/rp_account_creator/index.html	<h2 className="text-2xl font-serif text-amber-400 mb-1">Founding Ceremony</h2>	<h2 className="text-2xl font-serif text-amber-400 mb-1">Create House</h2>
+tools/rp_account_creator/index.html	<p className="text-stone-500 italic text-sm mb-5">"State your name for the record. The scribes are listening."</p>	<p className="text-stone-500 text-sm mb-5">House names are checked before the house is created. Three rejected names create a Corrupt House.</p>
+tools/rp_account_creator/index.html	mb-1.5">Sigil Color</div>	mb-1.5">Banner Color</div>
+tools/rp_account_creator/index.html	mb-1.5">Sigil Charge</div>	mb-1.5">Banner Emblem</div>
+tools/rp_account_creator/index.html	<div> <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1"> <span>House Motto</span> <SuggestBtn onClick={generateMotto} generating={generating} disabled={!name} /> </div> <input value={motto} onChange={(e) => setMotto(e.target.value)} className="w	(removed)
+tools/rp_account_creator/index.html	disabled={!name || !motto || judging}	disabled={!name || judging}
+tools/rp_account_creator/index.html	{judging ? 'Consulting Scribes...' : 'Seal the Pact'}	{judging ? 'Checking name...' : 'Create House'}
+tools/rp_account_creator/index.html	<p className="text-sm text-stone-500 italic">"{house.motto}"</p>	(removed)
+tools/rp_account_creator/index.html	title="House copper — copper is wealth"	title="House copper"
+tools/rp_account_creator/index.html	title="Renown — earned by the fallen, never spent"	title="Renown: earned when a character dies; never spent"
+tools/rp_account_creator/index.html	title="Return to the gate (switch House)"	title="Switch house"
+tools/rp_account_creator/index.html	<Icon name="user" /> Living Scions</h2>	<Icon name="user" /> Living Characters</h2>
+tools/rp_account_creator/index.html	The halls are empty.<br /> <span className="text-sm text-stone-600 font-sans">Recruit a scion and send them into the world. They will not come back forever.</span>	No characters.<br /> <span className="text-sm text-stone-600 font-sans">Recruit a character to start. Death is permanent.</span>
+tools/rp_account_creator/index.html	title="Take the Grey Vow — retire this scion to the crypt (permanent)"	title="Retire this character (permanent)"
+tools/rp_account_creator/index.html	label="Vitality"	label="Life"
+tools/rp_account_creator/index.html	<Icon name="book" /> Legacy of the House</h3>	<Icon name="book" /> House Bonuses</h3>
+tools/rp_account_creator/index.html	Renown is earned only by the dead. It is never spent — it accumulates, and the House grows around it.	Renown is earned when a character dies and is never spent. Bonuses unlock at renown thresholds and apply to new characters.
+tools/rp_account_creator/index.html	label={`Next: ${boonName(nextBoon, isCorrupt)}`}	label={`Next: ${boonName(nextBoon)}`}
+tools/rp_account_creator/index.html	{boonName(b, isCorrupt)}</span>	{boonName(b)}</span>
+tools/rp_account_creator/index.html	{/* Right column: reliquary + crypt */}	{/* Right column: relics + dead characters */}
+tools/rp_account_creator/index.html	<Icon name="gem" className="text-purple-300" /> Reliquary</h3>	<Icon name="gem" className="text-purple-300" /> Relics</h3>
+tools/rp_account_creator/index.html	What the dead carried now circulates in the world's drop tables. Scions — yours, and one day others' — may find it reforged.	Tier 2+ items carried by dead characters are added to the drop tables. A character who finds one again carries it at a higher bond tier.
+tools/rp_account_creator/index.html	No relics yet circulate. The world takes payment first.	No relics yet.
+tools/rp_account_creator/index.html	{r.status === 'circulating' ? 'circulating' : 'borne'}	{r.status === 'circulating' ? 'in drop tables' : 'carried'}
+tools/rp_account_creator/index.html	<Icon name="history" /> The Crypt</h3>	<Icon name="history" /> Dead Characters</h3>
+tools/rp_account_creator/index.html	No ancestors rest here yet.	None yet.
+tools/rp_account_creator/index.html	<p className="text-xs text-stone-500 italic">"{d.epitaph}"</p>	(removed)
+tools/rp_account_creator/index.html	relic{d.relics.length === 1 ? '' : 's'} interred</p>	relic{d.relics.length === 1 ? '' : 's'} added to drops</p>
+tools/rp_account_creator/index.html	const generateOrigin = async () => { if (!name) return; setGenerating(true); const o = await generateLore('Character Origin', `${name}, a ${cls}, gritty dark fantasy origin.`); if (o) setOrigin(o); setGenerating(false); };	(removed)
+tools/rp_account_creator/index.html	const pool = ['Bozo the Lost', 'Jester of Ruin', 'The Unworthy', 'Buffoon McStumble', 'Giggles']; onCreate({ name: pick(pool), cls: 'warrior', origin: 'A fool branded by the scribes.', brand: 'fool', outfit: false }); showNote('You are branded a Fool. The scribes choose your fate.');	onCreate({ name: 'Fool', cls: 'warrior', origin: '', brand: 'fool', outfit: false }); showNote('Name rejected three times. The character was created as a Fool named "Fool".');
+tools/rp_account_creator/index.html	&larr; Return to Hall</button>	&larr; Back to house</button>
+tools/rp_account_creator/index.html	mb-4">Choose a Path</h2>	mb-4">Choose a Class</h2>
+tools/rp_account_creator/index.html	mb-2">The House provides</p>	mb-2">House bonuses</p>
+tools/rp_account_creator/index.html	{boonName(b, isCorrupt)}	{boonName(b)}
+tools/rp_account_creator/index.html	Starts at level {mods.startLevel} with {startHp} vitality.	Starts at level {mods.startLevel} with {startHp} Life.
+tools/rp_account_creator/index.html	placeholder="Scion name"	placeholder="Character name"
+tools/rp_account_creator/index.html	<span>Origin (optional)</span> <SuggestBtn onClick={generateOrigin} generating={generating} disabled={!name} label="Imagine" />	<span>Origin (optional)</span>
+tools/rp_account_creator/index.html	<span className="text-stone-200">Outfit from the vault</span>	<span className="text-stone-200">Buy a starting item</span>
+tools/rp_account_creator/index.html	Begin with a {outfitName} and +10 vitality. {canOutfit ? '' : 'The vault cannot afford it.'}	Start with a {outfitName} and +10 Life. {canOutfit ? '' : 'Not enough house copper.'}
+tools/rp_account_creator/index.html	<span>Consulting...</span>	<span>Checking name...</span>
+tools/rp_account_creator/index.html	<Icon name="sparkles" className="text-amber-600" /> Sign the Contract</>	<Icon name="plus" className="text-amber-600" /> Recruit</>
+tools/rp_account_creator/index.html	m: `${char.name} sets out from the Hall of ${house.name}.`, kind: 'travel' }],	m: `${char.name} entered the world.`, kind: 'travel' }],
+tools/rp_account_creator/index.html	action: 'Setting out',	action: 'Starting',
+tools/rp_account_creator/index.html	action: `On the road to ${z.name}` }));	action: `Traveling to ${z.name}` }));
+tools/rp_account_creator/index.html	Retreat to the Hall	Return to house
+tools/rp_account_creator/index.html	text-stone-600">The Wilds</p>	text-stone-600">Zones</p>
+tools/rp_account_creator/index.html	The scribes advise level {z.minLevel}.	Recommended level {z.minLevel}.
+tools/rp_account_creator/index.html	Deeper wilds pay more in copper, glory, and relics — and take payment in blood. Retreat while you still can.	Higher-danger zones give more copper, experience and relics, and deal more damage.
+tools/rp_account_creator/index.html	// Rite of Passing (death / retirement ceremony)	// Death / retirement dialog
+tools/rp_account_creator/index.html	const [epitaph, setEpitaph] = useState(''); const [generating, setGenerating] = useState(false);	(removed)
+tools/rp_account_creator/index.html	const suggest = async () => { setGenerating(true); const e = await generateLore('Epitaph', `${char.name}, level ${char.level}, ${cause}. One short solemn line.`); if (e) setEpitaph(e); setGenerating(false); };	(removed)
+tools/rp_account_creator/index.html	<h2 className="text-2xl font-serif text-stone-100">{char.name} has fallen</h2>	<h2 className="text-2xl font-serif text-stone-100">{cancelable ? `Retire ${char.name}?` : `${char.name} died`}</h2>
+tools/rp_account_creator/index.html	text-stone-600">Relics interred</div>	text-stone-600">Relics added</div>
+tools/rp_account_creator/index.html	mb-1.5">Given back to the world</p>	mb-1.5">Added to the drop tables</p>
+tools/rp_account_creator/index.html	{it.name} <span className="text-stone-600">— its bonds sleep in the metal until another hand wakes them</span></p>	{it.name}</p>
+tools/rp_account_creator/index.html	<div className="text-left mb-5"> <div className="flex justify-between items-center text-xs uppercase tracking-widest text-stone-500 mb-1"> <span>Epitaph</span> <SuggestBtn onClick={suggest} generating={generating} /> </div> <textarea value={epitaph} onChange={(e) => setEpitaph(e.target.value)} place	(removed)
+tools/rp_account_creator/index.html	Not Yet	Cancel
+tools/rp_account_creator/index.html	<button onClick={() => onCommit(epitaph.trim() || pick(OFFLINE_LORE.epitaph))}	<button onClick={() => onCommit()}
+tools/rp_account_creator/index.html	Commit to the Crypt	Confirm
+tools/rp_account_creator/index.html	showNote('A House of that name already exists in this realm.');	showNote('A house with that name already exists.');
+tools/rp_account_creator/index.html	// Ancestral Arms: hand down a circulating relic, reforged.	// Starting Relic bonus: give the new character a circulating relic, one bond tier higher.
+tools/rp_account_creator/index.html	history: [...r.history, `Unearthed by ${char ? char.name : 'a scion'}, reforged.`] };	history: [...r.history, `Found by ${char ? char.name : 'a character'}.`] };
+tools/rp_account_creator/index.html	// The house tends its own: scions recover fully in the hall.	// Characters recover full Life on returning to the house.
+tools/rp_account_creator/index.html	showNote('The scion returns. The hearth does the rest.');	showNote('Returned to the house. Life restored.');
+tools/rp_account_creator/index.html	const commitDeath = (epitaph) => {	const commitDeath = () => {
+tools/rp_account_creator/index.html	epitaph, cause: pendingDeath.cause,	cause: pendingDeath.cause,
+tools/rp_account_creator/index.html	// Inter the dead's notable items: they enter (or return to) circulation.	// The dead character's tier 2+ items enter (or return to) the drop tables.
+tools/rp_account_creator/index.html	history: [...r.history, `Interred with ${char.name}; returned to the world.`] }	history: [...r.history, `Returned to the drop tables when ${char.name} died.`] }
+tools/rp_account_creator/index.html	history: [`Carried by ${char.name}, interred ${date}. Its bonds sleep in the metal, seeded into the world's drop tables.`],	history: [`Carried by ${char.name}; added to the drop tables ${date}.`],
+tools/rp_account_creator/index.html	showNote(`${char.name} has fallen. +${renownGain} renown — the House learns: ${boonName(boon, currentHouse.origin === 'corrupt')}.`);	showNote(`${char.name} died. +${renownGain} renown. Unlocked: ${boonName(boon)}.`);
+tools/rp_account_creator/index.html	showNote(`${char.name} has fallen. +${renownGain} renown. ${relicsToInter.length ? 'Their belongings now circulate as relics.' : ''}`);	showNote(`${char.name} died. +${renownGain} renown. ${relicsToInter.length ? 'Their tier 2+ items were added to the drop tables as relics.' : ''}`);
+tools/rp_account_creator/index.html	cause: 'Took the Grey Vow and retired to the crypt', cancelable: true	cause: 'Retired', cancelable: true
+tools/rp_account_creator/README.md	# Chronicles Roleplay-enforced house founding and permadeath chronicle for Verdigris. Found a House, send scions into the world, inherit relics, and keep a scribe-judged record of names.	# House Creator Create a House, recruit characters, run a simulated permadeath expedition, and carry items from dead characters forward as relics. Names can be checked by an optional LLM call (off unless an API key is set).
+tools/rp_account_creator/README.md	It is a presentation/authoring laboratory for chronicle meta-progression, not the production account service.	It is a prototype of house meta-progression, not the production account service.
+tools/rp_account_creator/index.html	// Relics deepen by being carried and lived with (Bonds, in Vesselforge terms) — never "reforged".	// Relic bond tier goes up each time a relic is found again.
+tools/rp_account_creator/index.html	// Verdigris canon: copper is wealth. The House vault counts copper, not gold.	// The house currency is copper.
+tools/rp_account_creator/index.html	Items from fallen characters can appear as relic drops.	Items from dead characters can appear as relic drops.
+tools/rp_account_creator/index.html	{h.crypt.length} fallen</span>	{h.crypt.length} dead</span>
+tools/rp_account_creator/index.html	{/* Scions */}	{/* Characters */}
+tools/gui_framekit/game/character.js	"+34 Grace"], flavor: "Fell from a clear sky. Kept its temper." }	"+34 Dexterity"], flavor: "" }
+tools/gui_framekit/game/character.js	"+22% against structures"], flavor: "The edge is one molecule of night." }	"+22% against structures"], flavor: "" }
+tools/gui_framekit/game/character.js	stats: ["+31 Armor", "+9 Will"]	stats: ["+31 Armor", "+9 Intelligence"]
+tools/gui_framekit/game/character.js	plate: I("items/astral_plate", "Astral Plate", "epic", "Body", { equip: "chest", stats: ["+88 Armor", "+15 Ward", "You can see the web faintly"], flavor: "" }),	(removed)
+tools/gui_framekit/game/character.js	stats: ["+24 Armor", "+8% Stride"]	stats: ["+24 Armor", "+8% Movement Speed"]
+tools/gui_framekit/game/character.js	stats: ["+18 Will", "+5% Spell Echo"], flavor: "It remembers being worn." }	stats: ["+18 Intelligence", "+5% Spell Echo"], flavor: "" }
+tools/gui_framekit/game/character.js	gauntlets: I("items/chain_gauntlets", "Chain Gauntlets", "uncommon", "Hands", { stats: ["+14 Armor"], flavor: "", value: 120 }),	(removed)
+tools/gui_framekit/game/character.js	I("items/arc_wand", "Arc Wand", "rare", "Main Hand · Wand", { equip: "weapon", stats: ["+41 Spell Power", "Chains once"], value: 340 })	I("items/arc_wand", "Wand", "rare", "Main Hand · Wand", { equip: "weapon", stats: ["+41% Spell Damage", "Chains once"], value: 340 })
+tools/gui_framekit/game/character.js	{ stats: ["+22 Vitality"], value: 90 }	{ stats: ["+22 Life"], value: 90 }
+tools/gui_framekit/game/character.js	ironring: I("items/iron_ring", "Iron Ring", "common", "Ring", { stats: ["+9 Armor"], value: 35 }),	(removed)
+tools/gui_framekit/game/character.js	{ stats: ["Something is inside it"], value: 210, flavor: "It was expensive when it was sap." }	{ stats: [], value: 210, flavor: "" }
+tools/gui_framekit/game/character.js	{ stats: ["Shows the room behind the room"], value: 620 }	{ stats: [], value: 620 }
+tools/gui_framekit/game/character.js	I("items/fetish_bone", "Bone Fetish", "uncommon", "Curio", { stats: ["+4% damage to the ungrateful dead"], value: 75 })	I("items/fetish_bone", "Bone Charm", "uncommon", "Curio", { stats: ["+4% damage against undead"], value: 75 })
+tools/gui_framekit/game/character.js	stats: ["Reforges an item's colors"]	stats: ["Rerolls socket colours"]
+tools/gui_framekit/game/character.js	cursigil: I("items/cur_sigil", "Binding Sigil", "epic", "Currency", { qty: 2, stats: ["Seals a modifier in place"], value: 240 }),	(removed)
+tools/gui_framekit/game/character.js	stats: ["+quality, once"]	stats: ["Adds quality to a weapon"]
+tools/gui_framekit/game/character.js	I("items/cur_draught", "Verdant Draught", "uncommon", "Consumable"	I("items/cur_draught", "Life Flask", "uncommon", "Consumable"
+tools/gui_framekit/game/character.js	{ qty: 3, stats: ["Warm forever"], value: 130 }	{ qty: 3, stats: [], value: 130 }
+tools/gui_framekit/game/character.js	{ stats: ["Accepts most things"], value: 95 }	{ stats: [], value: 95 }
+tools/gui_framekit/game/character.js	stats: ["+1 Radiant Skill"]	stats: ["+1 to Level of all Fire Skills"]
+tools/gui_framekit/game/character.js	I("med_key", "Vault Key", "legendary", "Key", { stats: ["Opens one locked thing"], flavor: "The teeth rearrange when you look away." })	I("med_key", "Key", "legendary", "Key", { stats: ["Opens one locked door or chest"], flavor: "" })
+tools/gui_framekit/game/character.js	hourglass: I("med_hourglass", "Silent Hourglass", "epic", "Curio", { stats: ["The sand falls upward"], value: 480 }),	(removed)
+tools/gui_framekit/game/character.js	I("socket_gold", "Radiant Ring", "legendary", "Ring · Relic", { stats: ["+1 to the Verdant Seal"], value: 1500 })	I("socket_gold", "Gold Ring", "legendary", "Ring · Relic", { stats: ["+1 to Level of all Skills"], value: 1500 })
+tools/gui_framekit/game/character.js	I("pennant_quest", "Charter: The Lower Vaults", "uncommon", "Quest", { stats: ["Bring a light. Bring two."] })	I("pennant_quest", "Quest: Dungeon Level 2", "uncommon", "Quest", { stats: ["Clear Dungeon Level 2"] })
+tools/gui_framekit/game/character.js	I("tri_bolt", "Storm Ward", "uncommon", "Consumable · Ward", { qty: 3, stats: ["+40% Storm Ward for 60s"]	I("tri_bolt", "Lightning Ward", "uncommon", "Consumable · Ward", { qty: 3, stats: ["+40% Lightning Ward for 60s"]
+tools/gui_framekit/game/character.js	I("tri_skull", "Grave Ward", "rare", "Consumable · Ward", { qty: 2, stats: ["+40% Grave Ward for 60s"]	I("tri_skull", "Chaos Ward", "rare", "Consumable · Ward", { qty: 2, stats: ["+40% Chaos Ward for 60s"]
+tools/gui_framekit/game/character.js	I("chev_double", "March Order", "rare", "Consumable", { qty: 4, stats: ["+20% Stride for 30s"]	I("chev_double", "Haste", "rare", "Consumable", { qty: 4, stats: ["+20% Movement Speed for 30s"]
+tools/gui_framekit/game/character.js	{ charm: true, stats: ["+20 Vitality"] }	{ charm: true, stats: ["+20 Life"] }
+tools/gui_framekit/game/character.js	fill(bySlotKind("chest")[0], ITEMS.plate);	(removed)
+tools/gui_framekit/game/character.js	ITEMS.key, ITEMS.wand, ITEMS.hourglass, ITEMS.mirror, ITEMS.gemL, null, ITEMS.coral, ITEMS.ironring,	ITEMS.key, ITEMS.wand, null, ITEMS.mirror, ITEMS.gemL, null, ITEMS.coral, null,
+tools/gui_framekit/game/character.js	ITEMS.gauntlets, ITEMS.fetish, ITEMS.curorb, ITEMS.cursigil, ITEMS.curstone, null, ITEMS.ember, ITEMS.bowl,	null, ITEMS.fetish, ITEMS.curorb, null, ITEMS.curstone, null, ITEMS.ember, ITEMS.bowl,
+tools/gui_framekit/game/character.js	[318, 155, "Will", 61, "will"],	[318, 155, "INT", 61, "will"],
+tools/gui_framekit/game/character.js	[261, 276, "Might", 34, "might"],	[261, 276, "STR", 34, "might"],
+tools/gui_framekit/game/character.js	[375, 276, "Grace", 42, "grace"],	[375, 276, "DEX", 42, "grace"],
+tools/gui_framekit/game/character.js	<div id="charName">Aurelius</div>	<div id="charName">Character</div>
+tools/gui_framekit/game/character.js	<div id="charTitle">Mage · Ninth Circle · Level 47</div>	<div id="charTitle">Mage · Level 47</div>
+tools/gui_framekit/game/character.js	<div class="statline"><span>Vitality</span><b>900</b></div>	<div class="statline"><span>Life</span><b>900</b></div>
+tools/gui_framekit/game/character.js	<div><div id="loreName">Warden of the Verdant Seal</div> <div id="loreType">Standing · The Sunken Archive</div></div> </div> <div class="divider"></div> <div id="loreBody">The lower vaults have been quiet for nine days. The lamps along the long stair are lit and the ledger is current. <em>Select any	<div><div id="loreName">No item selected</div> <div id="loreType">Item details</div></div> </div> <div class="divider"></div> <div id="loreBody"><em>Select any item to inspect it.</em></div>`;
+tools/gui_framekit/game/pane-content.js	"greataxe", "gauntlets", "amber", "mirror", "fetish", "gemR", "gemE", "curorb", "cursigil", "curstone", "draught", "ember", "bowl", "ironring", "coral", "hourglass", "wand", "ring2",	"greataxe", "amber", "mirror", "fetish", "gemR", "gemE", "curorb", "curstone", "draught", "ember", "bowl", "coral", "wand", "ring2",
+tools/gui_framekit/game/pane-content.js	{ title: "Warden of the Verdant Seal", type: "Standing · The Sunken Archive", icon: "med_sun", body: "The lower vaults have been quiet for nine days. The lamps along the long stair are lit and the ledger is current." },	(removed)
+tools/gui_framekit/game/pane-content.js	{ id: "reforge", catalyst: "curorb", title: "Reforge Colors", text: "Use a Chromatic Orb on selected equipment.", mark: "Prismatic", stat: "Sockets reforged at the Brass Crucible" },	{ id: "reforge", catalyst: "curorb", title: "Reroll Socket Colours", text: "Use a Chromatic Orb on selected equipment.", mark: "Recoloured", stat: "Socket colours rerolled" },
+tools/gui_framekit/game/pane-content.js	{ id: "hone", catalyst: "curstone", title: "Hone Quality", text: "Use a Whetstone to temper selected equipment.", mark: "Tempered", stat: "+5% quality from Crucible honing" },	{ id: "hone", catalyst: "curstone", title: "Add Quality", text: "Use a Whetstone to add quality to selected equipment.", mark: "Honed", stat: "+5% quality" },
+tools/gui_framekit/game/pane-content.js	{ id: "seal", catalyst: "cursigil", title: "Seal Modifier", text: "Use a Binding Sigil to seal the selected item's inscription.", mark: "Sealed", stat: "Inscription sealed against reforging" },	(removed)
+tools/gui_framekit/game/pane-content.js	<img src="assets/med_cherub2.png" alt="Aurelius"><div><span>${equipped.size ? "Ceremonial effects active" : "Unadorned"}</span>	<img src="assets/med_cherub2.png" alt="Character"><div><span>${equipped.size ? "Cosmetics equipped" : "No cosmetics"}</span>
+tools/gui_framekit/game/pane-content.js	: `${cosmetic.name}, locked, ${cosmetic.price} shards in the shop`);	: `${cosmetic.name}, locked, ${cosmetic.price} points in the shop`);
+tools/gui_framekit/game/pane-content.js	`${cosmetic.price} shards`}</small>	`${cosmetic.price} points`}</small>
+tools/gui_framekit/game/world.js	FK.chatLog(activeChan, ev.target.value.trim(), "Aurelius", "self");	FK.chatLog(activeChan, ev.target.value.trim(), "You", "self");
+tools/gui_framekit/game/world.js	const TOWN_CHATTER = [ ["Harl", "Fresh bronze in from the coast. It rings true."], ["Mirela", "The shop opens at dusk."], ["Cassia", "Nine days quiet. I don't trust it."], ["Doran", "The long stair took my knees. It can keep them."], ["Harl", "You break it, you own both halves."], ["Mirela", "Some r	FK.chatLog("local", "Entered Dungeon Level 1.", null, "sys"); FK.chatLog("party", "Party Member 1 has joined the party.", null, "sys"); FK.chatLog("party", "Party Member 2 has joined the party.", null, "sys");
+tools/gui_framekit/game/world.js	{ name: "Cassia", icon: "med_cherub"	{ name: "Party Member 1", icon: "med_cherub"
+tools/gui_framekit/game/world.js	{ name: "Doran", icon: "med_eaglehead"	{ name: "Party Member 2", icon: "med_eaglehead"
+tools/gui_framekit/game/world.js	const status = p.dead ? "Fallen" :	const status = p.dead ? "Dead" :
+tools/gui_framekit/game/world.js	p.stateLabel.textContent = p.dead ? "Fallen" :	p.stateLabel.textContent = p.dead ? "Dead" :
+tools/gui_framekit/game/world.js	`${p.name} is down. Revive them before the light fades.`	`${p.name} is down. Revive them within 8 seconds.`
+tools/gui_framekit/game/world.js	`${p.name} has fallen. Return to town to regroup.`	`${p.name} died. Return to Dungeon Level 1 to revive.`
+tools/gui_framekit/game/world.js	{ name: "Harl, Armourmaster", icon: "med_bull"	{ name: "Armour Vendor", icon: "med_bull"
+tools/gui_framekit/game/world.js	{ name: "Mirela, Keeper of Relics", icon: "laurel_sun"	{ name: "Vendor", icon: "laurel_sun"
+tools/gui_framekit/game/world.js	{ name: "Silent Archivist", icon: "med_cherub"	{ name: "Journal", icon: "med_cherub"
+tools/gui_framekit/game/world.js	portal.setAttribute("aria-label", "Descend to the Lower Vaults");	portal.setAttribute("aria-label", "Enter Dungeon Level 2");
+tools/gui_framekit/game/world.js	{ name: "Vault Husk", icon: "med_skull"	{ name: "Skeleton", icon: "med_skull"
+tools/gui_framekit/game/world.js	{ name: "Gilded Adder", icon: "med_snake"	{ name: "Adder", icon: "med_snake"
+tools/gui_framekit/game/world.js	{ name: "Warden of Chains", icon: "med_chain"	{ name: "Chained Guard", icon: "med_chain"
+tools/gui_framekit/game/world.js	affix: "Chains the Living · Cannot Be Moved" },	affix: "Cannot Be Knocked Back" },
+tools/gui_framekit/game/world.js	const BOSS = { name: "Custodian of the Ninth Circle",	const BOSS = { name: "Boss",
+tools/gui_framekit/game/world.js	exitPlate.setAttribute("aria-label", "Return to the Sunken Archive");	exitPlate.setAttribute("aria-label", "Return to Dungeon Level 1");
+tools/gui_framekit/game/world.js	<b>Return to the Archive</b>	<b>Return to Level 1</b>
+tools/gui_framekit/game/world.js	s === "combat" ? "The Lower Vaults" : "The Sunken Archive";	s === "combat" ? "Dungeon Level 2" : "Dungeon Level 1";
+tools/gui_framekit/game/world.js	FK.chatLog("log", "You descend the long stair.", null, "sys");	FK.chatLog("log", "Entered Dungeon Level 2.", null, "sys");
+tools/gui_framekit/game/world.js	canOffer ? `Offer ${selected.item.name} to Harl` : "Offer selected pack item to Harl"	canOffer ? `Offer ${selected.item.name} to the vendor` : "Offer selected pack item to the vendor"
+tools/gui_framekit/game/world.js	`${selected.item.name} selected · Harl will appraise it.`	`${selected.item.name} selected · the vendor will quote a price.`
+tools/gui_framekit/game/world.js	· Harl offers ${quote} gold.`	· the vendor offers ${quote} gold.`
+tools/gui_framekit/game/world.js	vendorHint.textContent = "Accept Harl's price, or cancel to keep the item.";	vendorHint.textContent = "Accept the vendor's price, or cancel to keep the item.";
+tools/gui_framekit/game/world.js	`Sold ${item.name} to Harl for ${quote} gold.`	`Sold ${item.name} to the vendor for ${quote} gold.`
+tools/gui_framekit/game/world.js	clearTradeOffer("Trade complete. Harl is ready for another offer.");	clearTradeOffer("Trade complete.");
+tools/gui_framekit/game/world.js	name: "Gilded Weapon Gleam", price: 950, flavor: "Your weapons remember the sun.", owned: false },	name: "Gold Weapon Glow", price: 950, flavor: "Weapon effect", owned: false },
+tools/gui_framekit/game/world.js	name: "Verdant Footprints", price: 420, flavor: "Moss follows where you walk.", owned: true },	name: "Green Footprints", price: 420, flavor: "Footstep trail", owned: true },
+tools/gui_framekit/game/world.js	name: "Fire Portal", price: 780, flavor: "Arrive like a warning.", owned: false },	name: "Fire Portal", price: 780, flavor: "Portal effect", owned: false },
+tools/gui_framekit/game/world.js	aria-label="Buy ${name} for ${price} shards"><img src="assets/btn_primary.png" alt=""><span>${price} shards</span>	aria-label="Buy ${name} for ${price} points"><img src="assets/btn_primary.png" alt=""><span>${price} points</span>
+tools/gui_framekit/game/world.js	`You need ${price - FK.shards} more shards.`	`You need ${price - FK.shards} more points.`
+tools/gui_framekit/game/world.js	/* --------------------------------------------------------- reliquary */	/* ------------------------------------------------------------- shop */
+tools/gui_framekit/game/core.js	["med_sun", "Radiance", 42, 9, "A wave of noon. Burns what hides."], ["med_star", "Guiding Star", 18, 4, "Mark a foe. The web remembers."], ["tri_bolt", "Storm Call", 55, 12, "The archive's copper roof earns its keep."], ["tri_fire", "Fire Line", 35, 7, "Draw a line. Dare them."], ["med_shield", "Ae	["med_sun", "Fire Nova", 42, 9, "Deals fire damage around you."], ["med_star", "Mark Target", 18, 4, "Marks an enemy."], ["tri_bolt", "Lightning Strike", 55, 12, "Strikes an enemy with lightning."], ["tri_fire", "Fire Line", 35, 7, "Leaves a line of fire on the ground."], ["med_shield", "Shield", 25
+tools/gui_framekit/game/core.js	["buff_sq_gold", "chev_double", "March Order", "12m"],	["buff_sq_gold", "chev_double", "Haste", "12m"],
+tools/gui_framekit/game/core.js	["buff_sq_teal", "tri_bolt", "Storm Ward", ""],	["buff_sq_teal", "tri_bolt", "Lightning Ward", ""],
+tools/gui_framekit/game/tree.js	const SMALL_NAMES = [ ["Iron Will", "+5% Ward while standing still."], ["Keen Eye", "+8% chance to notice what matters."], ["Stone Skin", "+12 Armor. Weighs nothing."], ["Quick Hands", "+6% cast speed with relics."], ["Spell Damage at High Mana", "+10% mana regeneration."], ["Long Stride", "+8% move	const SMALL_NAMES = [ ["Ward", "+5% maximum Ward."], ["Critical Strike Chance", "+8% critical strike chance."], ["Armour", "+12 Armour."], ["Cast Speed", "+6% cast speed."], ["Mana Regeneration", "+10% mana regeneration."], ["Movement Speed", "+8% movement speed."], ["Accuracy", "+5% accuracy."], ["
+tools/gui_framekit/game/tree.js	["med_star", "True North", "Marks never fade. +15% against marked foes."], ["med_shield", "Warding Sign", "Wards you draw last 40% longer."], ["med_torch", "Bright Lantern", "Your light reaches 8 paces further and burns."], ["med_snake", "Cold Blood", "Immune to panic. +12% crit against the calm."],	["med_star", "Damage Against Marked Enemies", "+15% damage against marked enemies."], ["med_shield", "Ward Duration", "Wards last 40% longer."], ["med_torch", "Light Radius", "+20% light radius."], ["med_snake", "Critical Strike Multiplier", "+12% critical strike multiplier."], ["med_scales", "Damag
+tools/gui_framekit/game/tree.js	["socket_gold", "Radiant Circle", "All allocated notables also grant +5 Will."], ["med_sunteal", "Noon Vigil", "Radiance costs no mana at full life."], ["socket_gold", "Sealed Oath", "Wards cannot break; they expire instead."], ["med_eaglehead", "High Watch", "You cannot be surprised. Ever."], ["soc	["socket_gold", "Intelligence per Notable", "+5 Intelligence per allocated notable."], ["med_sunteal", "Free Fire Nova at Full Life", "Fire Nova costs no mana while on full Life."], ["socket_gold", "Ward Cannot Break", "Wards cannot break; they expire instead."], ["med_eaglehead", "Cannot Be Stunned
+tools/gui_framekit/game/tree.js	const key = addNode(C, C, "keystone", "laurel_sun", 118, "The Verdant Seal", "Every path in the web begins and ends at the seal.");	const key = addNode(C, C, "keystone", "laurel_sun", 118, "Start", "Starting node. Every path begins here.");
+tools/gui_framekit/game/tree.js	n.kind === "outer" ? "Crown Passive · 1 point"	n.kind === "outer" ? "Outer Passive · 1 point"
+tools/gui_framekit/game/tree.js	/* Geometric skill web — generated radial graph	/* Passive tree demo — generated radial graph
+tools/gui_framekit/game/index.html	<span id="locationName">The Sunken Archive</span>	<span id="locationName">Dungeon Level 1</span>
+tools/gui_framekit/game/index.html	title="Skill Web" aria-label="Open Skill Web"	title="Passive Tree" aria-label="Open Passive Tree"
+tools/gui_framekit/game/index.html	<img src="assets/med_hourglass.png" alt=""><span>Codex</span>	<img src="assets/med_hourglass.png" alt=""><span>Journal</span>
+tools/gui_framekit/game/index.html	<img src="assets/laurel_sun.png" alt=""><span>Relics</span>	<img src="assets/laurel_sun.png" alt=""><span>Shop</span>
+tools/gui_framekit/game/index.html	<p class="pane-kicker">Harl · Armourmaster</p><h3 class="pane-section-title">Harl's stock</h3>	<p class="pane-kicker">Armour Vendor</p><h3 class="pane-section-title">Vendor stock</h3>
+tools/gui_framekit/game/index.html	Buy from Harl, or select	Buy from the vendor, or select
+tools/gui_framekit/game/index.html	aria-label="Codex entries"	aria-label="Journal entries"
+tools/gui_framekit/game/index.html	aria-label="Selected codex entry"	aria-label="Selected journal entry"
+tools/gui_framekit/game/index.html	Crafting · 3 recipes	Crafting · 2 recipes
+tools/gui_framekit/game/index.html	<div id="shardPlate">Shards <b id="shardAmount">	<div id="shardPlate">Points <b id="shardAmount">
+tools/gui_framekit/game/index.html	aria-label="Skill Web" aria-hidden="true">	aria-label="Passive Tree" aria-hidden="true">
+tools/gui_framekit/game/index.html	<h3 id="skillName">The Verdant Seal</h3> <p id="skillDesc">Every path in the web begins and ends at the seal.</p>	<h3 id="skillName">Start</h3> <p id="skillDesc">Starting node. Every path begins here.</p>
+tools/gui_framekit/game/index.html	>Drifting motes<	>Ambient particles<
+tools/gui_framekit/game/index.html	aria-label="Drifting motes"	aria-label="Ambient particles"
+tools/gui_framekit/game/world.js	["wand", 340], ["gauntlets", 120], ["amber", 210], ["fetish", 75],	["wand", 340], ["amber", 210], ["fetish", 75],
+tools/gui_framekit/game/world.js	<b>To the Lower Vaults</b>	<b>To Dungeon Level 2</b>
+tools/gui_framekit/game/world.js	/* monsters fight back while the vaults are active */	/* monsters fight back while the combat scene is active */
+tools/gui_framekit/README.md	a portal descends to the vaults,	a portal leads to the combat level,
+tools/gui_framekit/README.md	Stats, Stash, Trade, Codex, Crafting, and Reliquary share	Stats, Stash, Trade, Journal, Crafting, and Shop share
+tools/gui_framekit/README.md	- **Skill web** — a generated	- **Passive tree** — a generated
+tools/gui_framekit/README.md	- **Trade, Reliquary, chat**	- **Trade, Shop, chat**
+tools/gui_framekit/README.md	`L` Codex, `F` Crafting,	`L` Journal, `F` Crafting,
+tools/gui_framekit/README.md	`V` opens the full-screen Skill Web. Escape closes Settings first, then the Skill Web,	`V` opens the full-screen Passive Tree. Escape closes Settings first, then the Passive Tree,
+tools/gui_framekit/index.html	<span>THE SUNKEN ARCHIVE</span><small>LOWER VAULTS · DEPTH III</small>	<span>DUNGEON LEVEL 2</span><small>AREA LEVEL 47</small>
+tools/gui_framekit/index.html	<span>VIT</span>	<span>LIFE</span>
+tools/gui_framekit/index.html	>Lattice Warden<	>Character<
+tools/gui_framekit/index.html	>FIELD LOADOUT<	>LOADOUT<
+tools/gui_framekit/index.html	data-item="Sunken Crown"	data-item="Crown"
+tools/gui_framekit/index.html	data-item="Verdigris Mantle"	data-item="Cloak"
+tools/gui_framekit/index.html	<small>MANTLE</small>	<small>CLOAK</small>
+tools/gui_framekit/index.html	data-item="Aether Key"	data-item="Key"
+tools/gui_framekit/index.html	data-item="Lattice Codex"><span>◇</span><small>CODEX</small>	data-item="Focus"><span>◇</span><small>FOCUS</small>
+tools/gui_framekit/index.html	aria-label="Field pack"	aria-label="Pack"
+tools/gui_framekit/index.html	>FIELD PACK<	>PACK<
+tools/gui_framekit/index.html	data-item="Oracle Lens"	data-item="Bronze Mirror"
+tools/gui_framekit/index.html	data-item="Aether Vial"	data-item="Mana Flask"
+tools/gui_framekit/index.html	data-item="Warden Key"	data-item="Key"
+tools/gui_framekit/index.html	data-item="Moon Seal"	data-item="Cylinder Seal"
+tools/gui_framekit/index.html	data-item="Ashen Compass"	data-item="Amulet"
+tools/gui_framekit/index.html	data-item="Vault Sigil"	data-item="Ring"
+tools/gui_framekit/index.html	data-item="Ember Flask"	data-item="Life Flask"
+tools/gui_framekit/index.html	data-item="Chain Ward"	data-item="Belt"
+tools/gui_framekit/index.html	<strong id="selected-name">Oracle Lens</strong>	<strong id="selected-name">Bronze Mirror</strong>
+tools/gui_framekit/index.html	Low vitality<	Low life<
+tools/gui_framekit/index.html	>Corner and seal layer<	>Corner ornament layer<
+tools/gui_framekit/demo/showcase.html	<label for="sc">Search the grimoire</label>	<label for="sc">Search spells</label>
+tools/gui_framekit/demo/showcase.html	<label for="ss" class="stub">Attunement</label>	<label for="ss" class="stub">Volume</label>
+tools/gui_framekit/demo/showcase.html	aria-controls="stp2">Lore</button>	aria-controls="stp2">Items</button>
+tools/gui_framekit/demo/showcase.html	id="stp2" hidden>The moon remembers.</div>	id="stp2" hidden>Spear, Shield, Ring.</div>
+tools/gui_framekit/demo/showcase.html	aria-label="Vitality" aria-valuenow="80"	aria-label="Life" aria-valuenow="80"
+tools/gui_framekit/demo/showcase.html	<span class="fk-item-tooltip-name">Crown of the Pale Court</span><span class="fk-item-tooltip-stat">+9 Presence</span>	<span class="fk-item-tooltip-name">Bronze Crown</span><span class="fk-item-tooltip-stat">+9 Intelligence</span>
+tools/gui_framekit/demo/showcase.html	<button class="fk-menu-item" role="menuitem">Attune</button>	<button class="fk-menu-item" role="menuitem">Equip</button>
+tools/gui_framekit/demo/showcase.html	<div class="fk-toast" open data-tone="ok">Potion brewed.</div>	<div class="fk-toast" open data-tone="ok">Item crafted.</div>
+tools/gui_framekit/demo/showcase.html	<div class="fk-toast" open data-tone="warn">Cauldron low.</div>	<div class="fk-toast" open data-tone="warn">Inventory almost full.</div>
+tools/gui_framekit/demo/showcase.html	aria-label="Seal the pact?"	aria-label="Confirm?"
+tools/gui_framekit/demo/showcase.html	<p>Seal the pact with the Pale Court?</p>	<p>Confirm this action?</p>
+tools/gui_framekit/demo/showcase.html	data-variant="primary">Seal it</button>	data-variant="primary">Confirm</button>
+tools/gui_framekit/components/controls/input/demo.html	<label for="a">Incantation</label>	<label for="a">Spell name</label>
+tools/gui_framekit/components/controls/input/demo.html	placeholder="Speak, friend…"	placeholder="Type a name…"
+tools/gui_framekit/components/controls/input/demo.html	<label for="c">Sealed (disabled)</label>	<label for="c">Locked (disabled)</label>
+tools/gui_framekit/components/controls/input/demo.html	value="warded" disabled	value="locked" disabled
+tools/gui_framekit/components/controls/slider/demo.html	<label for="s">Attunement</label>	<label for="s">Volume</label>
+tools/gui_framekit/components/controls/slider/demo.html	<label for="d">Sealed (disabled)</label>	<label for="d">Locked (disabled)</label>
+tools/gui_framekit/components/controls/toggle/demo.html	> Moonlit scrying</label>	> Show keybinds</label>
+tools/gui_framekit/components/controls/tabs/demo.html	aria-controls="p1">Grimoire</button>	aria-controls="p1">Spells</button>
+tools/gui_framekit/components/controls/tabs/demo.html	aria-controls="p3">Familiars</button>	aria-controls="p3">Companions</button>
+tools/gui_framekit/components/controls/tabs/demo.html	id="p1">Spells and cantrips, alphabetized by school.</div>	id="p1">Spells, sorted by name.</div>
+tools/gui_framekit/components/controls/tabs/demo.html	id="p2" hidden>Eye of newt, tongue of frog — stock is low.</div>	id="p2" hidden>Reagents in your pack.</div>
+tools/gui_framekit/components/controls/tabs/demo.html	id="p3" hidden>One (1) raven, unlicensed.</div>	id="p3" hidden>No companions.</div>
+tools/gui_framekit/components/hud/globe/demo.html	aria-label="Vitality" aria-valuenow="80"	aria-label="Life" aria-valuenow="80"
+tools/gui_framekit/components/hud/globe/demo.html	aria-label="Essence" aria-valuenow="25"	aria-label="Ward" aria-valuenow="25"
+tools/gui_framekit/components/hud/buff-icon/demo.html	title="Blessing of Brass"	title="Damage buff"
+tools/gui_framekit/components/hud/buff-icon/demo.html	title="Curse of Ash"	title="Poison"
+tools/gui_framekit/components/overlays/context-menu/demo.html	role="menuitem">Copy glyph</button>	role="menuitem">Copy name</button>
+tools/gui_framekit/components/overlays/context-menu/demo.html	role="menuitem">Banish</button>	role="menuitem">Destroy</button>
+tools/gui_framekit/components/overlays/menu/demo.html	role="menuitem">Attune</button>	role="menuitem">Equip</button>
+tools/gui_framekit/components/overlays/menu/demo.html	role="menuitem" disabled>Transmute</button>	role="menuitem" disabled>Craft</button>
+tools/gui_framekit/components/overlays/toast/demo.html	data-tone="ok">Potion brewed.</div>	data-tone="ok">Item crafted.</div>
+tools/gui_framekit/components/overlays/toast/demo.html	data-tone="warn">Cauldron running low.</div>	data-tone="warn">Inventory almost full.</div>
+tools/gui_framekit/components/overlays/toast/demo.html	data-tone="danger">Familiar escaped!</div>	data-tone="danger">Character died.</div>
+tools/gui_framekit/components/overlays/modal/demo.html	aria-label="Seal the pact?"	aria-label="Confirm?"
+tools/gui_framekit/components/overlays/modal/demo.html	<p>Seal the pact with the Pale Court?</p>	<p>Confirm this action?</p>
+tools/gui_framekit/components/overlays/modal/demo.html	<p><small>This cannot be unsealed.</small></p>	<p><small>This cannot be undone.</small></p>
+tools/gui_framekit/components/frames/dialog/demo.html	id="open-dialog">Seal the circle</button>	id="open-dialog">Open dialog</button>
+tools/gui_framekit/components/frames/dialog/demo.html	id="dialog-title">Seal the circle?</h2>	id="dialog-title">Confirm?</h2>
+tools/gui_framekit/components/frames/dialog/demo.html	The working will bind for one full lunar cycle. This cannot be undone from the bench.	This action cannot be undone.
+tools/gui_framekit/components/frames/dialog/demo.html	data-fk-dialog-close autofocus>Seal it</button>	data-fk-dialog-close autofocus>Confirm</button>
+tools/gui_framekit/components/frames/window/demo.html	<span class="fk-window__title">Circle Calibration — Bench 03</span>	<span class="fk-window__title">Inlay Window</span>
+tools/gui_framekit/components/frames/window/demo.html	<span class="fk-window__title">Reagent Ledger</span>	<span class="fk-window__title">Reagents</span>
+tools/gui_framekit/components/inventory/item-tooltip/demo.html	<p>Hover the quill:</p>	<p>Hover the item:</p>
+tools/gui_framekit/components/inventory/item-tooltip/demo.html	<span class="fk-item-tooltip-name">Raven Quill</span>	<span class="fk-item-tooltip-name">Bone Needle</span>
+tools/gui_framekit/components/inventory/item-tooltip/demo.html	<span class="fk-item-tooltip-stat">+3 Finesse</span>	<span class="fk-item-tooltip-stat">+3 Dexterity</span>
+tools/gui_framekit/components/inventory/item-tooltip/demo.html	<span class="fk-item-tooltip-stat">+1 Scribing</span>	<span class="fk-item-tooltip-stat">+1 to Level of all Skills</span>
+tools/gui_framekit/tokens/demo.html	<span>The laboratory hums while the circle cools.</span>	<span>The quick brown fox jumps over the lazy dog.</span>
+tools/gui_framekit/tokens/demo.html	<span>VITAE 042 / MANA 87% / 1,204g</span>	<span>LIFE 042 / MANA 87% / 1,204g</span>
+tools/gui_framekit/base/demo.html	mana := circle.charge * focus.attunement assert mana &lt;= vessel.capacity	mana := base_mana * (1 + increased_mana) assert mana &lt;= max_mana
+tools/gui_framekit/assets/demo.html	alt="vitality orb sprite"	alt="life orb sprite"
+tools/gui_framekit/assets/demo.html	alt="essence orb sprite"	alt="third orb sprite"
+tools/gui_framekit/components/inventory/item-tooltip/demo.html	trigger glyph feather (quill)	trigger glyph bone
+tools/sokoban/core.js	var title = 'Initiate'; if (score >= 20) title = 'Delver'; if (score >= 34) title = 'Pathfinder'; if (score >= 50) title = 'Warden'; if (score >= 68) title = 'Abyssal'; if (score >= 88) title = 'Oracular';	var title = 'Difficulty 1'; if (score >= 20) title = 'Difficulty 2'; if (score >= 34) title = 'Difficulty 3'; if (score >= 50) title = 'Difficulty 4'; if (score >= 68) title = 'Difficulty 5'; if (score >= 88) title = 'Difficulty 6';
+tools/sokoban/core.js	var thesis = 'The destinations are simple; the order in which you occupy them is not.';	var thesis = 'The targets are simple; the order in which you fill them is not.';
+tools/sokoban/core.js	motif = 'Single Strait'; thesis = 'The storage chamber has one useful throat; filling its deepest seals first is part of the proof.';	motif = 'Single Corridor'; thesis = 'The storage area has one useful entrance; filling its deepest targets first is part of the solution.';
+tools/sokoban/core.js	thesis = 'A sealed relic box must move again before the chamber can close.';	thesis = 'A crate already on a target must move again before the level can be solved.';
+tools/sokoban/core.js	motif = 'Countermarch'; thesis = 'Progress begins by pushing at least one relic box farther from every seal.';	motif = 'Push Away First'; thesis = 'Progress begins by pushing at least one crate farther from every target.';
+tools/sokoban/core.js	motif = 'Braided Proof'; thesis = 'The relic boxes share a route; solving one means making room for another.';	motif = 'Shared Route'; thesis = 'The crates share a route; solving one means making room for another.';
+tools/sokoban/core.js	motif = 'Broken Vector'; thesis = 'The shortest proof changes direction more often than distance suggests.';	motif = 'Many Direction Changes'; thesis = 'The shortest solution changes direction more often than distance suggests.';
+tools/sokoban/forge-campaign.js	name: 'Vault I', title: 'The Vault',	name: 'Campaign 1', title: 'Sokoban Campaign',
+tools/sokoban/levels.js	"name":"Vault I","title":"The Vault"	"name":"Campaign 1","title":"Sokoban Campaign"
+tools/sokoban/levels.js	"title":"Oracular"	"title":"Difficulty 6"
+tools/sokoban/levels.js	"title":"Pathfinder"	"title":"Difficulty 3"
+tools/sokoban/levels.js	"title":"Warden"	"title":"Difficulty 4"
+tools/sokoban/levels.js	"title":"Abyssal"	"title":"Difficulty 5"
+tools/sokoban/levels.js	"motif":"Single Strait"	"motif":"Single Corridor"
+tools/sokoban/levels.js	"motif":"Countermarch"	"motif":"Push Away First"
+tools/sokoban/levels.js	"motif":"Braided Proof"	"motif":"Shared Route"
+tools/sokoban/levels.js	"thesis":"The storage chamber has one useful throat; filling its deepest seals first is part of the proof."	"thesis":"The storage area has one useful entrance; filling its deepest targets first is part of the solution."
+tools/sokoban/levels.js	"thesis":"The destinations are simple; the order in which you occupy them is not."	"thesis":"The targets are simple; the order in which you fill them is not."
+tools/sokoban/levels.js	"thesis":"Progress begins by pushing at least one relic box farther from every seal."	"thesis":"Progress begins by pushing at least one crate farther from every target."
+tools/sokoban/levels.js	"thesis":"The relic boxes share a route; solving one means making room for another."	"thesis":"The crates share a route; solving one means making room for another."
+tools/sokoban/levels.js	"thesis":"A sealed relic box must move again before the chamber can close."	"thesis":"A crate already on a target must move again before the level can be solved."
+tools/sokoban/game.js	'A relic box can be pushed, never pulled.', 'A relic box in an unmarked corner cannot be moved again.', 'Two relic boxes, two seals. Their order matters. Press U to rewind a mistake.', 'Plan backward from each seal. Press H when you want the oracle to reveal one optimal push.'	'A crate can be pushed, never pulled.', 'A crate pushed into a corner that is not a target cannot be moved again.', 'Two crates, two targets. Their order matters. Press U to undo a mistake.', 'Plan backward from each target. Press H to show one optimal push.'
+tools/sokoban/game.js	var archiveThresholds = [1, 4, 8, 12, 16, 20, 22, 24];	(removed)
+tools/sokoban/game.js	'analysis-switches', 'analysis-counter', 'analysis-straits', 'replay-proof', 'archive-fragments', 'archive-note'	'analysis-switches', 'analysis-counter', 'analysis-straits', 'replay-proof'
+tools/sokoban/game.js	els.status.textContent = 'Opening the forged chamber…';	els.status.textContent = 'Loading level…';
+tools/sokoban/game.js	els.status.textContent = save.floor <= 4 ? 'Tutorial chamber · forged and solver verified' : level.boxes.length + '-relic theorem · tested offline across ' + compactNumber(level.solution.states) + (level.solution.proof === 'offline-constructive' ? '+ oracle states' : ' oracle states');	els.status.textContent = save.floor <= 4 ? 'Tutorial level · solver verified' : level.boxes.length + '-crate level · tested offline across ' + compactNumber(level.solution.states) + (level.solution.proof === 'offline-constructive' ? '+ solver states' : ' solver states');
+tools/sokoban/game.js	els.status.textContent = error.message || 'The chamber could not be carved.';	els.status.textContent = error.message || 'The level could not be loaded.';
+tools/sokoban/game.js	level.solution.analysis.motif : 'Sealed until solved';	level.solution.analysis.motif : 'Shown after solving';
+tools/sokoban/game.js	'Verified route') : 'Proof length';	'Verified route') : 'Solution length';
+tools/sokoban/game.js	level.solution.moves + ' moves' : 'sealed';	level.solution.moves + ' moves' : 'hidden';
+tools/sokoban/game.js	compactNumber(level.solution.states) + '+ states') : 'forged offline';	compactNumber(level.solution.states) + '+ states') : 'hidden';
+tools/sokoban/game.js	'Descend to stage <span>' + String(save.floor + 1).padStart(2, '0') + '</span>';	'Next stage <span>' + String(save.floor + 1).padStart(2, '0') + '</span>';
+tools/sokoban/game.js	var cleared = save.cleared || 0; var fragments = archiveThresholds.filter(function (floor) { return cleared >= floor; }).length; els['archive-fragments'].textContent = fragments + ' / ' + archiveThresholds.length; var notes = [ 'The archive opens after the first proof.', 'I. Distance is not difficul	// The numbered "archive" notes were flavour text and have been removed.
+tools/sokoban/game.js	return 'This chamber survived the full offline oracle budget. Expect attractive pushes that poison a later box-goal matching.';	return 'This level used the full offline solver budget. Expect tempting pushes that block a later crate.';
+tools/sokoban/game.js	return 'The deep archive composes several box dependencies at once. Solve the packing order, not one relic at a time.';	return 'Several crates depend on each other. Solve the packing order, not one crate at a time.';
+tools/sokoban/game.js	return 'At this depth, the order of pushes is the puzzle. Preserve lanes behind every relic box.';	return 'The order of pushes is the puzzle. Keep the lanes behind every crate open.';
+tools/sokoban/game.js	return 'The shortest route changes between relic boxes. Keep their paths from crossing too soon.';	return 'The shortest route switches between crates. Keep their paths from crossing too soon.';
+tools/sokoban/game.js	return 'Every chamber has a proven route, even when the oracle cannot exhaust its entire state space.';	return 'Every level has a verified route, even when the solver cannot search its entire state space.';
+tools/sokoban/game.js	return 'Read the walls, preserve your standing squares, and distrust the seal that looks easiest.';	return 'Read the walls, keep the squares you need to stand on, and be wary of the target that looks easiest.';
+tools/sokoban/game.js	goals.has(cell) ? 'Relic box on seal' : 'Relic box'	goals.has(cell) ? 'Crate on target' : 'Crate'
+tools/sokoban/game.js	player.setAttribute('aria-label', 'Delver');	player.setAttribute('aria-label', 'Player');
+tools/sokoban/game.js	announce('Stone blocks the way.');	announce('A wall blocks the way.');
+tools/sokoban/game.js	announce('The relic box cannot move ' + direction.name + '.');	announce('The crate cannot move ' + direction.name + '.');
+tools/sokoban/game.js	announce('Relic box pushed ' + direction.name + '.');	announce('Crate pushed ' + direction.name + '.');
+tools/sokoban/game.js	announce('Chamber reset. The proof still holds.');	announce('Level reset.');
+tools/sokoban/game.js	announce('You have left the stored proof branch. Undo or reset to rejoin it.');	announce('You have left the stored solution. Undo or reset to rejoin it.');
+tools/sokoban/game.js	'Replaying the least-push, least-move proof…' : 'Replaying the cleanest verified route…'	'Replaying the least-push, least-move solution…' : 'Replaying the verified route…'
+tools/sokoban/game.js	announce('The proof replay was interrupted. Reset to try again.');	announce('The replay was interrupted. Reset to try again.');
+tools/sokoban/game.js	window.confirm('Reset the Vault campaign? Your cleared-stage record will be erased.');	window.confirm('Reset the campaign? Your cleared-stage record will be erased.');
+tools/sokoban/index.html	>Skip to chamber<	>Skip to level<
+tools/sokoban/index.html	aria-label="Floor information"	aria-label="Stage information"
+tools/sokoban/index.html	<p class="label">Vault progress</p>	<p class="label">Progress</p>
+tools/sokoban/index.html	<p class="motif"><span>Chamber thesis</span><strong id="motif-name">Sealed until solved</strong></p>	<p class="motif"><span>Level type</span><strong id="motif-name">Shown after solving</strong></p>
+tools/sokoban/index.html	<dt id="solution-label">Proof length</dt><dd><span id="optimal-pushes">sealed</span></dd>	<dt id="solution-label">Solution length</dt><dd><span id="optimal-pushes">hidden</span></dd>
+tools/sokoban/index.html	<div><dt>Relics</dt><dd id="box-count">—</dd></div>	<div><dt>Crates</dt><dd id="box-count">—</dd></div>
+tools/sokoban/index.html	<div><dt>Proof</dt><dd id="proof-states">—</dd></div>	<div><dt>Solver search</dt><dd id="proof-states">—</dd></div>
+tools/sokoban/index.html	<span id="status">Opening the forged campaign…</span>	<span id="status">Loading campaign…</span>
+tools/sokoban/index.html	<span></span>Opening a forged chamber</div>	<span></span>Loading level</div>
+tools/sokoban/index.html	aria-label="Sokoban chamber"	aria-label="Sokoban level"
+tools/sokoban/index.html	<p>Thesis revealed · <span id="victory-motif">Packing Order</span></p>	<p>Level type · <span id="victory-motif">Packing Order</span></p>
+tools/sokoban/index.html	<span>proof grade</span>	<span>solution grade</span>
+tools/sokoban/index.html	<span>countermarches</span>	<span>reversals</span>
+tools/sokoban/index.html	<span>strait entries</span>	<span>corridor entries</span>
+tools/sokoban/index.html	type="button">Watch shortest proof</button>	type="button">Watch shortest solution</button>
+tools/sokoban/index.html	type="button">Descend to stage <span>02</span></button>	type="button">Next stage <span>02</span></button>
+tools/sokoban/index.html	aria-label="Descent record"	aria-label="Progress record"
+tools/sokoban/index.html	<p class="label">Delver's ledger</p>	<p class="label">Record</p>
+tools/sokoban/index.html	<span>Floors cleared</span>	<span>Stages cleared</span>
+tools/sokoban/index.html	<div class="record"> <span>Archive fragments</span> <strong id="archive-fragments">0 / 8</strong> </div> <p class="archive-note" id="archive-note">The archive opens after the first proof.</p>	(removed)
+tools/sokoban/index.html	This chamber was forged and solver-tested offline. No search engine runs in your browser.	Every level was generated and solver-tested offline. No solver runs in your browser.
+tools/sokoban/index.html	The vault was forged ahead of release, so candidate generation	The campaign was generated ahead of release, so candidate generation
+tools/sokoban/index.html	The browser now contains only the campaign, its proof routes, and the rules of play.	The browser contains only the campaign, its solution routes, and the rules of play.
+tools/sokoban/index.html	<span>Solver resistance</span><span>Countermarches</span><span>Box barriers</span><span>Storage straits</span>	<span>Solver effort</span><span>Reversals</span><span>Box barriers</span><span>Corridors</span>
+tools/sokoban/index.html	ordered by solver resistance, shared lanes,	ordered by solver effort, shared lanes,
+tools/sokoban/README.md	# The Verdigris Vault A finite, pre-forged Sokoban campaign for integration into Verdigris. The shipped page contains 24 frozen stages, their verified proof routes,	# Sokoban A finite, pre-generated Sokoban campaign. The shipped page contains 24 frozen stages, their verified solution routes,
+tools/sokoban/README.md	- R: reset the chamber	- R: reset the level
+tools/sokoban/index.html	content="A finite campaign of 24 offline-forged Sokoban chambers for Verdigris, ordered by solver resistance and logical interdependence."	content="A finite campaign of 24 offline-generated Sokoban levels, ordered by solver effort and crate interdependence."
+tools/sokoban/index.html	content="Twenty-four pre-forged chambers measured by solver resistance, misdirection, and interdependence."	content="Twenty-four pre-generated Sokoban levels ordered by solver effort, misleading pushes, and interdependence."
+tools/sokoban/README.md	Vault I campaign version	Campaign 1 version
+tools/verdigris_splash/app.js	{ name: "The High March", x:	{ name: "Central continent", x:
+tools/verdigris_splash/app.js	{ name: "The Shattered Choir", x:	{ name: "West continent", x:
+tools/verdigris_splash/app.js	{ name: "Aster Vale", x:	{ name: "South continent", x:
+tools/verdigris_splash/app.js	{ name: "The Copper Waste", x:	{ name: "East desert continent", x:
+tools/verdigris_splash/app.js	{ name: "Cairn Ridge", x:	{ name: "North ridge continent", x:
+tools/verdigris_splash/app.js	{ name: "The Lantern Isles", x:	{ name: "Northeast islands", x:
+tools/verdigris_splash/app.js	{ name: "Morrow Keys", x:	{ name: "West islet", x:
+tools/verdigris_splash/app.js	{ name: "Sunken Stars", x:	{ name: "South islet", x:
+tools/verdigris_splash/app.js	{ name: "Gale Teeth", x:	{ name: "East islet", x:
+tools/verdigris_splash/app.js	{ name: "Gale Teeth storm",	{ name: "East islet storm",
+tools/verdigris_splash/app.js	{ name: "High March rain",	{ name: "Central continent rain",
+tools/verdigris_splash/app.js	{ name: "Aster Vale sunlight",	{ name: "South continent sunlight",
+tools/verdigris_splash/app.js	{ name: "Lantern mist",	{ name: "Northeast islands mist",
+tools/verdigris_splash/app.js	{ name: "Gale Teeth thunderhead",	{ name: "East islet thunderhead",
+tools/verdigris_splash/app.js	{ name: "High March rain shelf",	{ name: "Central continent rain shelf",
+tools/verdigris_splash/app.js	{ name: "Aster Vale sunbreak",	{ name: "South continent sunbreak",
+tools/verdigris_splash/app.js	{ name: "Lantern coast sea fog",	{ name: "Northeast islands sea fog",
+tools/verdigris_splash/app.js	group.name = "Crown of Tides";	group.name = "Citadel";
+tools/verdigris_splash/app.js	: "Crownlands island and observatory.";	: "One island at close range.";
+tools/verdigris_splash/app.js	: "CROWNLANDS VIEW";	: "ISLAND VIEW";
+tools/verdigris_splash/app.js	: "The Crownlands island and the ancient Crown of Tides citadel. Drag to orbit; scroll or pinch to zoom");	: "One island with a citadel, at close range. Drag to orbit; scroll or pinch to zoom");
+tools/verdigris_splash/app.js	: "Crownlands view: the observatory province.";	: "Island view: one island at close range.";
+tools/verdigris_splash/app.js	chronicle: "The chronicle is not available in this preview.",	chronicle: "The log is not available in this preview.",
+tools/verdigris_splash/index.html	<i aria-hidden="true"></i>Crownlands</button>	<i aria-hidden="true"></i>Island</button>
+tools/verdigris_splash/index.html	<span class="label">Chronicle</span>	<span class="label">Log</span>
+tools/verdigris_splash/index.html	Mountain ranges, forests, desert kingdoms, island cities, and waterfalls gather above a luminous abyss. An optional Crownlands view moves closer to the ancient observatory.	Mountain ranges, forests, deserts, island cities, and waterfalls sit above a glowing abyss. An optional Island view moves closer to one island and its citadel.
+tools/verdigris_splash/README.md	the selectable **Crownlands** view preserves the closer living-diorama composition around the Crown of Tides observatory.	the selectable **Island** view (`?view=crownlands`) keeps the closer composition around one island and its citadel.
+tools/verdigris_splash/README.md	Use the visible World/Crownlands control	Use the visible World/Island control
+tools/verdigris_splash/README.md	builds Crownlands plus a procedural World fallback	builds the Island view plus a procedural World fallback
+tools/verdigris_splash/README.md	- Crownlands retains its denser	- The Island view retains its denser
+tools/verdigris_splash/README.md	- The Crown of Tides is original procedural geometry:	- The island citadel is original procedural geometry:
+tools/verdigris_splash/README.md	emissive rune windows,	emissive windows,
+tools/verdigris_splash/README.md	| Crown trees |	| Island trees |
+tools/verdigris_splash/README.md	| Crownlands, 1440x810	| Island view, 1440x810
+tools/verdigris_splash/README.md	World/Crownlands buttons	World/Island buttons
+tools/cartographer/core/mapgen.js	infernal: theme('infernal', 'Infernal', 'sanctum', {	infernal: theme('infernal', 'Volcanic', 'sanctum', {
+tools/cartographer/core/mapgen.js	// infernal variant: molten pools eating into the platforms	// volcanic variant (id 'infernal'): molten pools eating into the platforms
+tools/cartographer/core/expedition.js	landmark:'Celestial dial', description:'Suspended stone courts and narrow bridges around an open astral void.'	landmark:'Sundial', description:'Suspended stone courts and narrow bridges around an open void.'
+tools/cartographer/README.md	| Sanctum | platforms + walkways over the void | Arcane, Infernal |	| Sanctum | platforms + walkways over the void | Arcane, Volcanic |

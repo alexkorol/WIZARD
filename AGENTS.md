@@ -22,7 +22,7 @@ Multi-subproject **Verdigris Systems Laboratory** served from `gh-pages`.
 3. Do not add public dashboard cards by editing `index.html` by hand. Add or edit `tools/<slug>/wizard.module.json` and run `node scripts/wizard-lab.mjs generate`.
 4. Do not delete archive candidates unless a task packet says so.
 5. Do not modify `codex/arcane-lattice-1-0` from unrelated workstreams.
-6. Do not rewrite VesselForge item rules, authored passive-tree data, or Arcane Lattice adjacency merely for standardization.
+6. Do not rewrite item crafting system item rules, authored passive-tree data, or Arcane Lattice adjacency merely for standardization.
 7. Identity copy is owner-owned. Do not delete or replace the WIZARD name, backronym, or laboratory framing without an owner ruling, and do not push the module grid below the fold with new hero copy (INC-W006).
 8. Serve local previews on loopback only: `python -m http.server <your port> --bind 127.0.0.1` (INC-W008).
 

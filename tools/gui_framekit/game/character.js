@@ -13,53 +13,45 @@ const I = (icon, name, rarity, type, opts = {}) =>
 
 const ITEMS = FK.ITEMS = {
   khopesh:  I("items/khopesh_skymetal", "Hammered Iron Khopesh", "legendary", "Main Hand · Sword",
-              { equip: "weapon", stats: ["112–186 damage", "+12% attack speed", "+34 Grace"], flavor: "Fell from a clear sky. Kept its temper." }),
+              { equip: "weapon", stats: ["112–186 damage", "+12% attack speed", "+34 Dexterity"], flavor: "" }),
   scaleshield: I("items/hideshield_bronzescale", "Bronze Scale Shield", "rare", "Off Hand · Shield",
               { equip: "offhand", stats: ["+52 Armor", "+11% block"], flavor: "" }),
   greataxe: I("items/greataxe_obsidian", "Obsidian Two-handed Axe", "epic", "Two-Hand · Axe",
-              { equip: "weapon", stats: ["203–288 damage", "+22% against structures"], flavor: "The edge is one molecule of night." }),
+              { equip: "weapon", stats: ["203–288 damage", "+22% against structures"], flavor: "" }),
   helm:     I("items/helm_bronzescale", "Bronze Scale Helm", "rare", "Head",
-              { equip: "helm", stats: ["+31 Armor", "+9 Will"], flavor: "" }),
-  plate:    I("items/astral_plate", "Astral Plate", "epic", "Body",
-              { equip: "chest", stats: ["+88 Armor", "+15 Ward", "You can see the web faintly"], flavor: "" }),
+              { equip: "helm", stats: ["+31 Armor", "+9 Intelligence"], flavor: "" }),
   girdle:   I("items/girdle_bronzeplate", "Bronze Girdle", "uncommon", "Waist",
               { equip: "belt", stats: ["+16 Armor", "+1 Belt Slot"], flavor: "" }),
   greaves:  I("items/greaves_bronze", "Bronze Greaves", "rare", "Feet",
-              { equip: "boots", stats: ["+24 Armor", "+8% Stride"], flavor: "" }),
+              { equip: "boots", stats: ["+24 Armor", "+8% Movement Speed"], flavor: "" }),
   onyx:     I("items/onyx_amulet", "Onyx Amulet", "epic", "Neck · Talisman",
-              { equip: "amulet", stats: ["+18 Will", "+5% Spell Echo"], flavor: "It remembers being worn." }),
-  gauntlets: I("items/chain_gauntlets", "Chain Gauntlets", "uncommon", "Hands",
-              { stats: ["+14 Armor"], flavor: "", value: 120 }),
-  wand:     I("items/arc_wand", "Arc Wand", "rare", "Main Hand · Wand",
-              { equip: "weapon", stats: ["+41 Spell Power", "Chains once"], value: 340 }),
+              { equip: "amulet", stats: ["+18 Intelligence", "+5% Spell Echo"], flavor: "" }),
+  wand:     I("items/arc_wand", "Wand", "rare", "Main Hand · Wand",
+              { equip: "weapon", stats: ["+41% Spell Damage", "Chains once"], value: 340 }),
   coral:    I("items/coral_ring", "Coral Ring", "uncommon", "Ring",
-              { stats: ["+22 Vitality"], value: 90 }),
-  ironring: I("items/iron_ring", "Iron Ring", "common", "Ring",
-              { stats: ["+9 Armor"], value: 35 }),
+              { stats: ["+22 Life"], value: 90 }),
   amber:    I("items/curio_amber", "Amber Curio", "rare", "Curio",
-              { stats: ["Something is inside it"], value: 210, flavor: "It was expensive when it was sap." }),
+              { stats: [], value: 210, flavor: "" }),
   mirror:   I("items/mirror_obsidian", "Obsidian Mirror", "epic", "Curio",
-              { stats: ["Shows the room behind the room"], value: 620 }),
-  fetish:   I("items/fetish_bone", "Bone Fetish", "uncommon", "Curio",
-              { stats: ["+4% damage to the ungrateful dead"], value: 75 }),
-  curorb:   I("items/cur_orb", "Chromatic Orb", "rare", "Currency", { qty: 7, stats: ["Reforges an item's colors"], value: 60 }),
-  cursigil: I("items/cur_sigil", "Binding Sigil", "epic", "Currency", { qty: 2, stats: ["Seals a modifier in place"], value: 240 }),
-  curstone: I("items/cur_stone", "Whetstone", "common", "Currency", { qty: 14, stats: ["+quality, once"], value: 8 }),
-  draught:  I("items/cur_draught", "Verdant Draught", "uncommon", "Consumable", { qty: 5, stats: ["Restores 180 life"], value: 45 }),
-  ember:    I("items/ember_shell", "Beetle Shell", "rare", "Reagent", { qty: 3, stats: ["Warm forever"], value: 130 }),
-  bowl:     I("items/bowl_bronze_offering", "Offering Bowl", "uncommon", "Reagent", { stats: ["Accepts most things"], value: 95 }),
+              { stats: [], value: 620 }),
+  fetish:   I("items/fetish_bone", "Bone Charm", "uncommon", "Curio",
+              { stats: ["+4% damage against undead"], value: 75 }),
+  curorb:   I("items/cur_orb", "Chromatic Orb", "rare", "Currency", { qty: 7, stats: ["Rerolls socket colours"], value: 60 }),
+  curstone: I("items/cur_stone", "Whetstone", "common", "Currency", { qty: 14, stats: ["Adds quality to a weapon"], value: 8 }),
+  draught:  I("items/cur_draught", "Life Flask", "uncommon", "Consumable", { qty: 5, stats: ["Restores 180 life"], value: 45 }),
+  ember:    I("items/ember_shell", "Beetle Shell", "rare", "Reagent", { qty: 3, stats: [], value: 130 }),
+  bowl:     I("items/bowl_bronze_offering", "Offering Bowl", "uncommon", "Reagent", { stats: [], value: 95 }),
   gemR:     I("gem_rare", "Sapphire Shard", "rare", "Socket Gem", { equip: "gem", stats: ["+8% Mana"], qty: 3, value: 150 }),
   gemE:     I("gem_epic", "Amethyst Shard", "epic", "Socket Gem", { equip: "gem", stats: ["+6% Spell Echo"], value: 420 }),
-  gemL:     I("gem_legendary", "Amber Shard", "legendary", "Socket Gem", { equip: "gem", stats: ["+1 Radiant Skill"], value: 1100 }),
-  key:      I("med_key", "Vault Key", "legendary", "Key", { stats: ["Opens one locked thing"], flavor: "The teeth rearrange when you look away." }),
-  hourglass: I("med_hourglass", "Silent Hourglass", "epic", "Curio", { stats: ["The sand falls upward"], value: 480 }),
-  ring2:    I("socket_gold", "Radiant Ring", "legendary", "Ring · Relic", { stats: ["+1 to the Verdant Seal"], value: 1500 }),
-  qbanner:  I("pennant_quest", "Charter: The Lower Vaults", "uncommon", "Quest", { stats: ["Bring a light. Bring two."] }),
+  gemL:     I("gem_legendary", "Amber Shard", "legendary", "Socket Gem", { equip: "gem", stats: ["+1 to Level of all Fire Skills"], value: 1100 }),
+  key:      I("med_key", "Key", "legendary", "Key", { stats: ["Opens one locked door or chest"], flavor: "" }),
+  ring2:    I("socket_gold", "Gold Ring", "legendary", "Ring · Relic", { stats: ["+1 to Level of all Skills"], value: 1500 }),
+  qbanner:  I("pennant_quest", "Quest: Dungeon Level 2", "uncommon", "Quest", { stats: ["Clear Dungeon Level 2"] }),
   wfire:    I("tri_fire", "Fire Ward", "uncommon", "Consumable · Ward", { qty: 5, stats: ["+40% Fire Ward for 60s"], value: 30 }),
-  wbolt:    I("tri_bolt", "Storm Ward", "uncommon", "Consumable · Ward", { qty: 3, stats: ["+40% Storm Ward for 60s"], value: 30 }),
-  wskull:   I("tri_skull", "Grave Ward", "rare", "Consumable · Ward", { qty: 2, stats: ["+40% Grave Ward for 60s"], value: 60 }),
-  haste:    I("chev_double", "March Order", "rare", "Consumable", { qty: 4, stats: ["+20% Stride for 30s"], value: 55 }),
-  charm1:   I("sq_heart", "Heart Charm", "uncommon", "Charm", { charm: true, stats: ["+20 Vitality"] }),
+  wbolt:    I("tri_bolt", "Lightning Ward", "uncommon", "Consumable · Ward", { qty: 3, stats: ["+40% Lightning Ward for 60s"], value: 30 }),
+  wskull:   I("tri_skull", "Chaos Ward", "rare", "Consumable · Ward", { qty: 2, stats: ["+40% Chaos Ward for 60s"], value: 60 }),
+  haste:    I("chev_double", "Haste", "rare", "Consumable", { qty: 4, stats: ["+20% Movement Speed for 30s"], value: 55 }),
+  charm1:   I("sq_heart", "Heart Charm", "uncommon", "Charm", { charm: true, stats: ["+20 Life"] }),
   charm2:   I("sq_star", "Star Charm", "rare", "Charm", { charm: true, stats: ["+2% Crit"] }),
 };
 Object.entries(ITEMS).forEach(([key, item]) => { item.key = key; });
@@ -175,7 +167,6 @@ fill(equipSlots.weapon, ITEMS.khopesh);
 fill(equipSlots.offhand, ITEMS.scaleshield);
 const bySlotKind = k => slots.filter(s => s.accepts === k);
 fill(bySlotKind("helm")[0], ITEMS.helm);
-fill(bySlotKind("chest")[0], ITEMS.plate);
 fill(bySlotKind("belt")[0], ITEMS.girdle);
 fill(bySlotKind("boots")[0], ITEMS.greaves);
 fill(bySlotKind("amulet")[0], ITEMS.onyx);
@@ -209,9 +200,9 @@ document.querySelectorAll("#setSwap .setBtn").forEach(b =>
 
 /* stats triangle — the triad circles hold attribute values */
 const TRIAD = [
-  [318, 155, "Will", 61, "will"],
-  [261, 276, "Might", 34, "might"],
-  [375, 276, "Grace", 42, "grace"],
+  [318, 155, "INT", 61, "will"],
+  [261, 276, "STR", 34, "might"],
+  [375, 276, "DEX", 42, "grace"],
 ];
 TRIAD.forEach(([cx, cy, label, val, cls]) => {
   const d = div(`triad ${cls}`, { left: px(cx - 27), top: px(cy - 27) });
@@ -240,9 +231,9 @@ QUICK.forEach(([x, y, w, h], i) => {
 const COLS = [855, 907, 960, 1012, 1065, 1118, 1170, 1223, 1276, 1328, 1381, 1434, 1486];
 const ROWS = [402, 458, 512, 567, 621, 676, 732, 786];
 const bagItems = [
-  ITEMS.key, ITEMS.wand, ITEMS.hourglass, ITEMS.mirror, ITEMS.gemL, null, ITEMS.coral, ITEMS.ironring,
+  ITEMS.key, ITEMS.wand, null, ITEMS.mirror, ITEMS.gemL, null, ITEMS.coral, null,
   ITEMS.ring2, null, ITEMS.qbanner, null, ITEMS.amber,
-  ITEMS.gauntlets, ITEMS.fetish, ITEMS.curorb, ITEMS.cursigil, ITEMS.curstone, null, ITEMS.ember, ITEMS.bowl,
+  null, ITEMS.fetish, ITEMS.curorb, null, ITEMS.curstone, null, ITEMS.ember, ITEMS.bowl,
 ];
 let bi = 0;
 ROWS.forEach((y, r) => COLS.forEach(x => {
@@ -263,10 +254,10 @@ arch.innerHTML = `<img src="assets/med_cherub2.png" style="position:absolute;lef
 /* info well */
 const info = div("spread-text", { left: px(392), top: px(140), width: px(322), height: px(238) });
 info.innerHTML = `
-  <div id="charName">Aurelius</div>
-  <div id="charTitle">Mage · Ninth Circle · Level 47</div>
+  <div id="charName">Character</div>
+  <div id="charTitle">Mage · Level 47</div>
   <div class="divider"></div>
-  <div class="statline"><span>Vitality</span><b>900</b></div>
+  <div class="statline"><span>Life</span><b>900</b></div>
   <div class="statline"><span>Mana</span><b>540</b></div>
   <div class="statline"><span>Ward</span><b>117</b></div>
   <div class="statline"><span>Renown</span><b>2,406</b></div>`;
@@ -285,13 +276,11 @@ function inspect(item) {
     lore.innerHTML = `
       <div id="loreTitleRow">
         <img id="loreIcon" src="assets/med_sun.png" style="border-radius:50%">
-        <div><div id="loreName">Warden of the Verdant Seal</div>
-        <div id="loreType">Standing · The Sunken Archive</div></div>
+        <div><div id="loreName">No item selected</div>
+        <div id="loreType">Item details</div></div>
       </div>
       <div class="divider"></div>
-      <div id="loreBody">The lower vaults have been quiet for nine days. The lamps
-      along the long stair are lit and the ledger is current. <em>Select any item
-      to inspect it.</em></div>`;
+      <div id="loreBody"><em>Select any item to inspect it.</em></div>`;
     return;
   }
   lore.innerHTML = `

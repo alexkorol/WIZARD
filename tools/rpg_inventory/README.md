@@ -17,18 +17,18 @@ for the same slots:
 
 | | Brand ✦ | Bond ◈ |
 |---|---|---|
-| Origin | Seared on at the Atelier with currencies | Grown while equipped, through ventures |
-| Speed | Instant | Slow (attunement thresholds) |
-| Form | **Flat, unconditional numbers** (`+38 Life`) | **Named, conditional, triggered effects** ("The Shieldwall — Regain 12 Life when you Block") |
-| Kinship | None — anyone's craft | Carries the shaper's archetype; **half strength in estranged hands** |
-| Removal | Effaced freely (slot is reusable) | Severed only by knife — the slot is **scarred** (✕) forever |
+| Origin | Seared on at the Crafting Bench with currencies | Grown while equipped, through ventures |
+| Speed | Instant | Slow (bond XP thresholds) |
+| Form | **Flat, unconditional numbers** (`+38 Life`) | **Named, conditional, triggered effects** ("The Life on Block — Regain 12 Life when you Block") |
+| Class bond | None — anyone's craft | Carries the shaper's archetype; **half strength in held by another class hands** |
+| Removal | Removed freely (slot is reusable) | Severed only by knife — the slot is **scarred** (✕) forever |
 | Ceiling | Fixed roll | Tiers I → II → III (values scale ×1 / ×1.6 / ×2.2) |
 
 Because they share slots, a fully-branded item can never learn. That's the
 core tension: instant crafted power vs. long-term earned power. The design is
 deliberately disjoint: craft is arithmetic, memory is behavior. (PoE 1
 influences: The Surrender's "recover Life when you Block", on-kill momentum
-triggers, full/low-resource thresholds; the estranged-kinship rule is the lore
+triggers, full/low-resource thresholds; the held by another class-class bond rule is the lore
 engine behind class-themed uniques.)
 
 ### Deeds, themes, archetypes
@@ -36,21 +36,21 @@ engine behind class-themed uniques.)
 Venturing forth generates encounters, each weighted toward one or more themes.
 The bearer's archetype adds +1 weight to its own theme on every deed:
 
-- **Kill Bonuses** (Butcher archetype) — Life on Kill, Attack Speed after Kill, Critical Chance against Bleeding
-- **Block and Ward** (Guard archetype) — Life on Block, Block while Stationary, Ward when Hit
-- **Spirit** (Seer archetype) — Spell Power at High Spirit, Spirit on Kill, Curse Avoidance
-- **Movement** (Scout archetype) — Speed on Kill, Thrown Weapon Avoidance, Life Regeneration while Moving
+- **Kill Bonuses** (Kill Bonuses class) — Life on Kill, Attack Speed after Kill, Critical Chance against Bleeding
+- **Block and Ward** (Armour archetype) — Life on Block, Block while Stationary, Ward when Hit
+- **Mana** (Mana class) — Spell Power at High Mana, Mana on Kill, Curse Avoidance
+- **Movement** (Movement class) — Speed on Kill, Thrown Weapon Avoidance, Life Regeneration while Moving
 
 (Display names follow `core/verdigris-pack.js`; older theme and mod names are listed in `owner-rules/rename-map.json`.)
 
-Equipped items accumulate attunement and log the themes of the deeds performed
-while worn. When an item crosses an attunement threshold it evolves: a new bond
-forms (from the dominant theme in *that item's* history, kinship-stamped with
+Equipped items accumulate bond XP and log the themes of the deeds performed
+while worn. When an item crosses an bond XP threshold it evolves: a new bond
+forms (from the dominant theme in *that item's* history, class bond-stamped with
 the current archetype), or an existing bond deepens a tier. Because bonds are
 conditional they never contribute to the flat character sheet — only brands
 and implicits do.
 
-### Awakening
+### Upgrade
 
 An item holding **three tier-III bonds** awakens: it takes a generated name from
 its bearer (`Azrael's Unbroken Vigil`), a keystone power from its dominant theme,
@@ -58,7 +58,7 @@ and flavor text summarizing its history. This is the lore mechanism for
 character-themed uniques à la Diablo/PoE — a unique is just an item somebody
 carried long enough.
 
-An awakened item's frame glows ember-orange. Before that, frames shift from
+An upgraded item's frame glows ember-orange. Before that, frames shift from
 grey (plain) to gold (craft-heavy) to the **dominant bond theme's colour**
 (memory-heavy) as bonds outgrow brands — and bonded items show a faint theme
 sigil watermark behind their art, an homage to PoE's Shaper/Elder influence
@@ -84,16 +84,16 @@ Review dashboards (open from a local static server at the repo root):
 Current generation queue and paste-ready prompts:
 `core/IMAGE-GEN-SHOPPING-LIST-2026-08-15.md`.
 
-### Currencies (the Atelier)
+### Currencies (the Crafting Bench)
 
 | Currency | Effect |
 |---|---|
-| Searing Sigil | Sear a random Brand into a free slot |
-| Effacing Stone | Remove the newest Brand, freeing its slot |
-| Chronicle Draught | Grant a full threshold of attunement at the bench |
-| Orb of Resonance | Deepen the faintest Bond one tier |
-| Sundering Knife | Sever the faintest Bond; the slot is scarred |
-| Vessel Chisel | Carve an extra vessel slot (max 6) |
+| Add Brand | Sear a random Brand into a free slot |
+| Remove Last Brand | Remove the newest Brand, freeing its slot |
+| (removed: never implemented) | Grant a full threshold of bond XP at the bench |
+| Upgrade Bond | Deepen the faintest Bond one tier |
+| Remove Bond | Sever the faintest Bond; the slot is scarred |
+| Add Modifier Slot | Carve an extra vessel slot (max 6) |
 
 Currencies live in a satchel (counts, not grid clutter) and can be bought with
 gold or found while venturing.
@@ -104,16 +104,16 @@ gold or found while venturing.
   collision checks — pointer events, works with touch
 - Paperdoll with 10 slots, swap-on-equip, and a live character sheet computed
   from implicits + brands + bonds through the shared Verdigris stat engine
-- Atelier bench that expands above the backpack: drag an item into the socket
+- Crafting Bench bench that expands above the backpack: drag an item into the socket
   (or tap one while the bench is open) and apply currencies
-- Venture Forth loop: gold, XP, loot, currency finds, and a chronicle log
+- Simulate fight loop: gold, XP, loot, currency finds, and a chronicle log
 - PoE-style tooltips: base stats, implicit, vessel pips, brand/bond sections
-  with tier chips, attunement progress, awakened power + flavor
+  with tier chips, bond XP progress, upgraded power + flavor
 - Vendor (drag to sell; price scales with inscriptions), Sort, Reset
 - Full state persistence in localStorage; editable character name feeds
-  future awakened item names
+  future upgraded item names
 
-## Vesselforge — the modular core (`core/`)
+## item crafting system — the modular core (`core/`)
 
 The item system now also exists as a standalone, engine-agnostic library,
 designed from a genre survey (PoE, Craft of Exile, Last Epoch, D2/D4, Titan
@@ -121,10 +121,10 @@ Quest, Grim Dawn — see [DESIGN.md](DESIGN.md)):
 
 - **`core/vesselforge.js`** — zero-dependency UMD engine: seedable RNG,
   plain-JSON items, materials ladder, tag/weight brand pools with pigments
-  (fossil-style reweighting) and omens (essence-style guarantees), Patience
+  (fossil-style reweighting) and guaranteed-brand items (essence-style guarantees), Patience
   (crafting budget), kiln Firing (material-ascension gamble), bonds with
-  kinship/estrangement/awakening, trophies (fragment → fetish → completion
-  bonus), Panoply (player-authored sets), `explainOdds()` (Craft-of-Exile
+  class bonds (half strength for another class)/upgrade, trophies (fragment → fetish → completion
+  bonus), Set bonus (player-authored sets), `explainOdds()` (Craft-of-Exile
   transparency as API), structured `tooltip()` lines for any renderer.
 - **`core/verdigris-pack.js`** — the bronze-age content pack: flint→bone→
   copper→bronze→obsidian→jade→skymetal→riveted-mail material ladder,
@@ -134,7 +134,7 @@ Quest, Grim Dawn — see [DESIGN.md](DESIGN.md)):
   sheet: five damage channels, attributes, layered mitigation, EHP profiles,
   and additive `increased` vs protected multiplicative `more` math. The passive
   tree consumes the same module.
-- **`core/test.js`** — Vesselforge Node suite (`node core/test.js`).
+- **`core/test.js`** — item crafting system Node suite (`node core/test.js`).
 - **`core/verdigris-stats.test.js`** — stat-engine Node suite (`node core/verdigris-stats.test.js`).
 - **`core/playground.html`** — framework-free harness exercising the whole
   loop (also the target for automated asset integration).

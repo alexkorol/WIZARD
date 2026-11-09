@@ -21,12 +21,12 @@ All 18 were visually reviewed before finalizing this draft.
 Seven ladder bases consume those generated outputs instead of requesting duplicate
 generation:
 
-- Reed Pelta uses the clean crescent shield from Dustwind DEX T1.
-- Waisted Oxhide Shield uses the plain figure-eight shield from Dustwind STR T1.
+- Reed Pelta uses the clean crescent shield from Steppe DEX T1.
+- Waisted Oxhide Shield uses the plain figure-eight shield from Steppe STR T1.
 - Open-Side Body Shield uses the tall notched shield from North DEX T3.
 - Bronze Parma uses the restrained oval bronze-and-wood shield from North DEX T1.
-- Bronze Pronged Sceptre uses the complete double-ended implement from Dustwind STR T2.
-- Bronze Tripod Censer uses the complete lidded vessel from Dustwind Misc.
+- Bronze Pronged Sceptre uses the complete double-ended implement from Steppe STR T2.
+- Bronze Tripod Censer uses the complete lidded vessel from Steppe Misc.
 - Ram-Head Rhyton uses the substantial handled animal-terminal vessel from North DEX T2.
 
 Direct duplicate proposals were removed or changed: the second crescent shield
@@ -42,7 +42,7 @@ Every offhands row marked REVISE, HOLD, or REJECT in `qa-historical.md` was
 resolved before generation:
 
 - Shell Buckler was replaced by Hide Oval Buckler, directly tied to the
-  Salisbury Hoard hide-shaped shield model. Bone Parrying Guard was replaced by
+  Salisbury Hoard hide-shaped shield model. Bone Parrying Armour was replaced by
   Laminated Hide Buckler, whose three wood layers, leather face, and copper
   fasteners are directly preserved in the Qasr Ibrim shield fragment.
 - The unsupported lapis, mixed shell-and-bone, and carapace shields were

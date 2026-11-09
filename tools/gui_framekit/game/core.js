@@ -183,16 +183,16 @@ FK.spendMana = (n) => {
 
 /* ------------------------------------------------------------ abilities */
 const ABILITIES = [
-  ["med_sun", "Radiance", 42, 9, "A wave of noon. Burns what hides."],
-  ["med_star", "Guiding Star", 18, 4, "Mark a foe. The web remembers."],
-  ["tri_bolt", "Storm Call", 55, 12, "The archive's copper roof earns its keep."],
-  ["tri_fire", "Fire Line", 35, 7, "Draw a line. Dare them."],
-  ["med_shield", "Aegis", 25, 14, "A shield of borrowed marble."],
-  ["med_hourglass", "Still Hour", 70, 30, "Stop everything. Keep walking."],
-  ["chev_double", "March", 15, 6, "Faster. The lamps are going out."],
-  ["med_snake", "Coil", 30, 10, "Patience with teeth."],
-  ["laurel_sun", "Triumph", 50, 20, "For a moment, you have already won."],
-  ["med_key", "Open", 10, 3, "Most doors. Some arguments."],
+  ["med_sun", "Fire Nova", 42, 9, "Deals fire damage around you."],
+  ["med_star", "Mark Target", 18, 4, "Marks an enemy."],
+  ["tri_bolt", "Lightning Strike", 55, 12, "Strikes an enemy with lightning."],
+  ["tri_fire", "Fire Line", 35, 7, "Leaves a line of fire on the ground."],
+  ["med_shield", "Shield", 25, 14, "Grants a temporary damage shield."],
+  ["med_hourglass", "Stop Time", 70, 30, "Stops enemies for a short time."],
+  ["chev_double", "Haste", 15, 6, "Increases movement speed for a short time."],
+  ["med_snake", "Poison Strike", 30, 10, "Strikes an enemy and poisons it."],
+  ["laurel_sun", "Warcry", 50, 20, "Increases damage for a short time."],
+  ["med_key", "Open", 10, 3, "Opens a locked door or chest."],
 ];
 const KEYS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 FK.abils = [];
@@ -286,8 +286,8 @@ addEventListener("keydown", ev => {
 
 /* --------------------------------------------------------------- buffs */
 const BUFFS = [
-  ["buff_sq_gold", "chev_double", "March Order", "12m"],
-  ["buff_sq_teal", "tri_bolt", "Storm Ward", ""],
+  ["buff_sq_gold", "chev_double", "Haste", "12m"],
+  ["buff_sq_teal", "tri_bolt", "Lightning Ward", ""],
   ["buff_sq_red", "tri_fire", "Fire Ward", "42s"],
 ];
 const buffsEl = $("#buffs");

@@ -8,7 +8,7 @@ Open `index.html` directly in a browser.
 
 - Ten-ring main hex lattice (331 nodes) with `INT` running center-to-up, `DEX` center-to-bottom-left, and `STR` center-to-bottom-right. A maxed character has 140 points after the Phase 0 overhaul scaffold, and a center-to-rim route now costs 20 points before optional side paths.
 - Six ascendancy circles hidden behind the rim corners, each named after its corner (Extra focus, Tool slot, War Horn, Supplies, Animal parts, Relics) and holding 13 passives themed to that corner's armoury window: an entry notable, eight smalls, two more notables, a mastery, and a capstone keystone. Every circle is the same seed-of-life wheel — a mastery hub, six seats on the hub's ring, and six seats on the outer intersections — with the entry facing the gate and the keystone at the apex.
-- The six ring-10 rim corners double as armoury unlock seats, alternating slot/pack around the outer hex: Extra focus (INT), Tool slot (DEX), and War Horn (STR) each unlock an extra gear-slot window on the Vesselforge page; Supplies (DEX/INT), Relics (INT/STR), and Animal parts (DEX/STR) each unlock a 4×4 pack. Allocating a corner publishes its flag over the same bridge the class milestones use — no calling required — and each corner is also the gate to its ascendancy circle.
+- The six ring-10 rim corners double as armoury unlock seats, alternating slot/pack around the outer hex: Extra focus (INT), Tool slot (DEX), and War Horn (STR) each unlock an extra gear-slot window on the item crafting system page; Supplies (DEX/INT), Relics (INT/STR), and Animal parts (DEX/STR) each unlock a 4×4 pack. Allocating a corner publishes its flag over the same bridge the class milestones use — no calling required — and each corner is also the gate to its ascendancy circle.
 - Player notes on anything: toggle the Notes button (hotkey `N`) and click any node or conduit to write a note on it, or Alt+click one directly. Gold pins mark noted targets; hover a pin to read, click it to edit, and the selection panel carries an Add Note button. Notes ride build codes, so they persist across reloads and travel with shared builds, and they survive reset on purpose.
 - A single skill-point pool: every node costs 1 point and every path or extra loop link costs 1 point, so travel distance is itself the build cost.
 - Every seat is authored data (`assets/tree-data.js`, emitted by `scripts/author-tree.mjs`): 96 unique named seats across six spoke identities (STR class, DEX class, INT class, DEX/STR class, INT/DEX class, STR/INT class) and six themed wedges (Fire; Companions and Rites; Cold; Poison and Chaos; Projectiles and Lightning; Physical and Bleed). No procedurally generated content remains.
@@ -109,7 +109,7 @@ The important design takeaways are structural rather than cosmetic:
 
 ## Implementation Notes
 
-The app is a standalone HTML/SVG implementation with classic-script data assets. `assets/tree-data.js` defines `window.TREE_DATA`, including the Phase 0 bootstrap entries for every main-lattice seat and the central `patternTuning` table. `assets/patterns.js` defines the pure `VerdigrisPatterns` detector used by the runtime and tests. `../rpg_inventory/core/verdigris-stats.js` defines the shared stat registry and EHP/DPS math consumed by both this tree and Vesselforge. The main runtime classes are:
+The app is a standalone HTML/SVG implementation with classic-script data assets. `assets/tree-data.js` defines `window.TREE_DATA`, including the Phase 0 bootstrap entries for every main-lattice seat and the central `patternTuning` table. `assets/patterns.js` defines the pure `VerdigrisPatterns` detector used by the runtime and tests. `../rpg_inventory/core/verdigris-stats.js` defines the shared stat registry and EHP/DPS math consumed by both this tree and item crafting system. The main runtime classes are:
 
 - `GeometricSkillTree`: builds nodes/conduits, handles allocation, refund, undo, stats, and shape bonuses.
 - `SVGRenderer`: draws rings, axis lines, nodes, conduits, subtrees, tooltips, and render states.
@@ -156,12 +156,12 @@ What changed for anyone returning to this tool after June 2026:
 - Geometry became buildcraft: waves, flows, meridians, loop crowns, vesicas,
   grand orbits, symmetry, circuits, enclosures, rods, and crossroads all
   detect, render, and pay through one tuning table.
-- The tree and Vesselforge share one stat engine (`verdigris-stats.js`);
+- The tree and item crafting system share one stat engine (`verdigris-stats.js`);
   Effective HP and DPS lead the sheet and every click shows its delta.
 - Carved stones socket into the tree — five families including seeded
   transforming jewels that deterministically rewrite whole neighborhoods.
 - Ring-8 Signs are birthsign keystones (exactly one per life); ring-7 class
-  callings unlock real gear slots on the Vesselforge page over a live bridge.
+  callings unlock real gear slots on the item crafting system page over a live bridge.
 - Designer mode (press `D`) lets you inspect, rename, annotate, lint, and
   export the whole tree without leaving the page.
 - A balance suite simulates six leveling archetypes and pins the pattern-power

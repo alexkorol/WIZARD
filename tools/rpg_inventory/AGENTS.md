@@ -101,12 +101,12 @@ routine work yourself (38), be concise (45). Pipeline specifics:
    Alex's pasted examples normally define the **kind** of vivid Pinterest-like
    reference to research; they are not a preapproved image library to recycle.
    Curated sources are faction-locked before layout: Mycenaean/Aegean and
-   Nordic Bronze belong to North; Scythian/Saka belongs to Dustwind;
+   Nordic Bronze belong to North; Scythian/Saka belongs to Steppe;
    Mesoamerican plus cedar/hide Tlingit/Haida construction belongs to
-   Stonewood; Predynastic/ancient Egyptian plus Sumerian/Akkadian belongs to
-   Riverspill. Never move a source merely because it looks generically ancient.
-   In particular, no Mycenaean source in Dustwind and no Tibetan/Himalayan
-   dorje, vajra, or ritual-axe form in Riverspill.
+   Mesoamerica and Northwest Coast; Predynastic/ancient Egyptian plus Sumerian/Akkadian belongs to
+   Egypt and Mesopotamia. Never move a source merely because it looks generically ancient.
+   In particular, no Mycenaean source in Steppe and no Tibetan/Himalayan
+   dorje, vajra, or ritual-axe form in Egypt and Mesopotamia.
    It is never a material shopping list and never outranks Images A/B.
    Skip weak or unsupported slots rather than inventing filler.
    Individually source-audited prompts are

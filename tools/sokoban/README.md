@@ -1,6 +1,6 @@
-# The Verdigris Vault
+# Sokoban
 
-A finite, pre-forged Sokoban campaign for integration into Verdigris. The shipped page contains 24 frozen stages, their verified proof routes, and a compact movement engine. It performs no level generation or solver search in the browser.
+A finite, pre-generated Sokoban campaign. The shipped page contains 24 frozen stages, their verified solution routes, and a compact movement engine. It performs no level generation or solver search in the browser.
 
 ## Runtime architecture
 
@@ -34,11 +34,11 @@ The tutorials remain first. The remaining candidates are sorted offline using so
 
 - Arrow keys or WASD: move / push
 - U or Z: undo one move
-- R: reset the chamber
+- R: reset the level
 - H: show the next push while still on the stored proof branch
 - Swipe or use the on-screen direction pad on touch devices
 
-Progress is stored locally under the Vault I campaign version.
+Progress is stored locally under the Campaign 1 version.
 
 ## Verification
 

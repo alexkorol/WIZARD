@@ -35,7 +35,7 @@ MODS = [
     ("swift_haft", "+{v}% Attack Speed", "S", "attack_speed_increased", "live", WEAPONS + ["hands"], ["fast"], [(1, 5, 8), (25, 9, 13), (55, 14, 18)], 9, "hands is an extension (game: weapons only)"),
     ("long_reach", "+{v}% increased Reach", "S", "reach_increased", "live", ["weapon"], ["reach"], [(1, 6, 10), (30, 11, 16)], 7, ""),
     ("hale", "+{v} Maximum Life", "P", "life_flat", "live", ARMOUR + ["belt", "shield", "amulet", "ring", "weapon"], [], [(1, 10, 20), (25, 21, 35), (55, 36, 55)], 12, "shared; game rolls it on weapons too"),
-    ("spirited", "+{v} Maximum Spirit", "P", "spirit_flat", "live", ["caster", "tool", "weapon", "amulet", "ring", "head"], ["spell", "channel", "aura", "warcry", "companion"], [(1, 8, 15), (25, 16, 26), (55, 27, 40)], 10, "Spirit pays for every action; kept to bases that spend heavily"),
+    ("spirited", "+{v} Maximum Mana", "P", "spirit_flat", "live", ["caster", "tool", "weapon", "amulet", "ring", "head"], ["spell", "channel", "aura", "warcry", "companion"], [(1, 8, 15), (25, 16, 26), (55, 27, 40)], 10, "Mana pays for every action; kept to bases that spend heavily"),
     ("warded", "{v}% faster Ward recharge", "S", "ward_increased", "live", ARMOUR + ["shield", "tool", "amulet"], ["ward"], [(1, 10, 18), (20, 19, 28), (50, 29, 40)], 12, ""),
     ("fire-resistance", "+{v}% Fire Resistance", "S", "fire_resistance", "live", ARMOUR + ["belt", "shield", "amulet", "ring"], [], [(1, 8, 15), (25, 16, 25)], 8, "shared"),
     # --- consumer exists in WizardCombat.cs, not yet in the pool -------------
@@ -44,8 +44,8 @@ MODS = [
     ("chaos-resistance", "+{v}% Chaos Resistance", "S", "chaos_resistance", "consumer", ARMOUR + ["belt", "amulet", "ring"], [], [(15, 5, 10), (45, 11, 17)], 4, "shared, rarer"),
     ("all-resistance", "+{v}% to all Resistances", "S", "all_resistance", "consumer", JEWEL, [], [(20, 4, 7), (50, 8, 12)], 3, "shared, jewellery only"),
     ("max-resistance", "+{v}% to maximum Resistances", "S", "max_resistance", "consumer", ["body", "shield"], ["endurance"], [(55, 1, 2)], 2, "outer bases only"),
-    ("guard-flat", "+{v} Guard", "P", "guard_flat", "consumer", ARMOUR + ["shield", "belt"], ["guard"], [(1, 8, 16), (25, 17, 32), (55, 33, 55)], 12, "STR defence"),
-    ("guard-increased", "+{v}% increased Guard", "P", "guard_increased", "consumer", ARMOUR + ["shield"], ["guard"], [(1, 10, 18), (25, 19, 30), (55, 31, 45)], 10, ""),
+    ("guard-flat", "+{v} Armour", "P", "guard_flat", "consumer", ARMOUR + ["shield", "belt"], ["guard"], [(1, 8, 16), (25, 17, 32), (55, 33, 55)], 12, "STR defence"),
+    ("guard-increased", "+{v}% increased Armour", "P", "guard_increased", "consumer", ARMOUR + ["shield"], ["guard"], [(1, 10, 18), (25, 19, 30), (55, 31, 45)], 10, ""),
     ("evasion-flat", "+{v} Evasion", "P", "evasion_flat", "consumer", ARMOUR + ["belt"], ["evasion"], [(1, 10, 20), (25, 21, 40), (55, 41, 65)], 12, "DEX defence"),
     ("evasion-increased", "+{v}% increased Evasion", "P", "evasion_increased", "consumer", ARMOUR, ["evasion"], [(1, 10, 18), (25, 19, 30), (55, 31, 45)], 10, ""),
     ("block", "+{v}% Chance to Block", "S", "block_chance_flat", "consumer", ["shield", "offweapon"], ["block"], [(1, 2, 4), (30, 5, 7), (55, 8, 10)], 8, ""),
@@ -84,7 +84,7 @@ MODS = [
     ("aura-effect", "+{v}% increased Aura Effect", "P", "aura_effect", "proposed", ["tool", "caster", "head", "body", "amulet"], ["aura", "banner"], [(1, 5, 8), (30, 9, 13), (55, 14, 18)], 10, ""),
     ("companion-damage", "Companions deal {v}% increased Damage", "P", "companion_increased", "proposed", ["tool", "caster", "head", "amulet", "ring"], ["companion"], [(1, 10, 16), (25, 17, 26), (55, 27, 38)], 12, "STR/INT class war companion; summoning-circle"),
     ("companion-life", "Companions have {v}% increased Life", "S", "companion_life_increased", "proposed", ["tool", "body", "amulet", "belt"], ["companion"], [(1, 10, 16), (30, 17, 26)], 10, ""),
-    ("channel-cost", "{v}% reduced Spirit cost of channelled spells", "S", "channel_cost_reduced", "proposed", ["caster", "tool", "body"], ["channel"], [(1, 4, 7), (30, 8, 12)], 8, ""),
+    ("channel-cost", "{v}% reduced Mana cost of channelled spells", "S", "channel_cost_reduced", "proposed", ["caster", "tool", "body"], ["channel"], [(1, 4, 7), (30, 8, 12)], 8, ""),
     ("thrown-damage", "+{v}% increased Thrown Weapon Damage", "P", "thrown_increased", "proposed", ["weapon", "quiver", "belt"], ["thrown"], [(1, 10, 16), (25, 17, 26), (55, 27, 38)], 10, "the DEX/STR class unlock makes thrown weapons melee and projectile"),
     ("dodge-roll", "+{v}% Dodge Roll distance", "S", "dodge_distance_increased", "proposed", ["feet", "body"], ["evasion"], [(15, 5, 8), (45, 9, 12)], 6, "rule 36: dodge stays an active roll"),
     ("thorns", "Reflects {v} Physical Damage to attackers", "S", "thorns_flat", "proposed", ["body", "shield"], ["thorns"], [(1, 4, 8), (30, 9, 18)], 5, "thorns aura exists"),
@@ -304,12 +304,12 @@ def attach(data: dict) -> dict:
 
 MODPOOL_RULES = {
     "source": "Assets/ARPG/Scripts/Core/Itemization.cs:115-128 (live pool) and WizardCombat.cs (stat consumers). Live values are copied, never changed here.",
-    "jobRule": "A base rolls mods whose tags match the skills it serves (job, full weight), defence mods its material implies (material, full weight: metal and tusk -> Guard; hide, leather, fur, grass -> Evasion; linen, wool, felt, gold, ivory, faience -> Ward, after the PoE cloth convention), and its zone's themes (zone, 0.6 weight), plus a small shared pool (life, resistances, the zone's own attributes, and flask mods on belts; 0.5 weight). Everything else is excluded with a reason.",
+    "jobRule": "A base rolls mods whose tags match the skills it serves (job, full weight), defence mods its material implies (material, full weight: metal and tusk -> Armour; hide, leather, fur, grass -> Evasion; linen, wool, felt, gold, ivory, faience -> Ward, after the PoE cloth convention), and its zone's themes (zone, 0.6 weight), plus a small shared pool (life, resistances, the zone's own attributes, and flask mods on belts; 0.5 weight). Everything else is excluded with a reason.",
     "affixCap": "Default, owner may veto: 2 prefixes + 2 suffixes, inside the game's MaxModifiers 4. The game has no prefix/suffix split yet (code change needed).",
     "tiers": "Tiers unlock by item level as in the game (typically ilvl 1 / 20-30 / 50-60); tier pick weights 10/5/2 (Itemization.TierWeights). A base's band sets its minimum item level: core 1, mid 15, outer 45.",
     "excluded": "Each base lists the slot-eligible mods it does not roll and the tags they need; the base's skills (item.skills) carry none of those tags.",
     "weights": "Mod weight = catalogue weight x role factor (job 1.0, zone 0.6, shared 0.5), so job mods dominate.",
-    "implicits": "Default, owner may veto: one fixed implicit per weapon, off-hand and jewellery base, taken from the base's form (spear: reach; tower shield: block and Guard). Body armour, helmets, gloves and boots carry no implicit; their base defence is the material.",
+    "implicits": "Default, owner may veto: one fixed implicit per weapon, off-hand and jewellery base, taken from the base's form (spear: reach; tower shield: block and Armour). Body armour, helmets, gloves and boots carry no implicit; their base defence is the material.",
     "status": {"live": "in the roll pool today", "consumer": "combat already reads the stat; add the mod to the pool", "proposed": "needs a new combat consumer before it can roll; values are provisional first-pass numbers"},
     "addedFire": "Default, owner may veto: added-fire rolls only on fire-tagged bases (STR/INT and the fire and ignite wedge); the live game rolls it on every weapon until Itemization.cs changes.",
 }
@@ -380,7 +380,7 @@ def md(data: dict, md_escape) -> list:
     a("")
     a("Weapons and off-hands are thin with fewer than 3 job or zone mods. Armour, belts and jewellery count their material defences too, but need at least one skill-linked mod. Either is also flagged when every job mod still needs a combat consumer. Most thin bases serve only \"any\": they are generic kit and either need a job (a skill they help) or should stay low-value core bases.")
     a("")
-    a("Causes, in order of frequency: (1) generic kit whose only listed job is \"any\" (plain belts, rings, caps, tunics); give it a skill it helps or keep it as a low-value core base. (2) Slot types with few catalogue mods: quivers and bow cases have only projectile, accuracy, thrown and Dexterity, because arrow count, pierce and similar mods have no combat consumer; shields have only block, Guard and stun. (3) Off-zone materials: a leather belt in a STR zone gets Evasion from its material but nothing from the zone.")
+    a("Causes, in order of frequency: (1) generic kit whose only listed job is \"any\" (plain belts, rings, caps, tunics); give it a skill it helps or keep it as a low-value core base. (2) Slot types with few catalogue mods: quivers and bow cases have only projectile, accuracy, thrown and Dexterity, because arrow count, pierce and similar mods have no combat consumer; shields have only block, Armour and stun. (3) Off-zone materials: a leather belt in a STR zone gets Evasion from its material but nothing from the zone.")
     a("")
     a("| Base | Zone | Flags |")
     a("|---|---|---|")

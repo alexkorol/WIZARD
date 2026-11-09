@@ -320,7 +320,7 @@ craft system visible in the references."""
         "PAPERDOLL WILDCARD SLOTS - GENERATE UP TO 10 SEPARATE ITEM FILES",
     )
     prompt = prompt.replace(
-        "Make the ten items recognizable as one Dustwind DEX Tier 1 family",
+        "Make the ten items recognizable as one Steppe DEX Tier 1 family",
         (
             f"Make all generated items recognizable as one {batch.faction_name} "
             f"Strength Tier {batch.tier} family"

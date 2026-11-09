@@ -1,0 +1,3723 @@
+{
+ "rule": "Keep a term only if (a) the owner introduced it, (b) it is a plain English description of what it does, or (c) it is the standard PoE1/PoE2 term used in the same meaning. Everything else is purged (renamed plainly, or removed with its mechanic if that mechanic was invented and does nothing). 'Spirit' and 'blood' were named by the owner as made up (2026-11-08).",
+ "watch": [
+  "spirit",
+  "spirits",
+  "spiritual",
+  "blood",
+  "bloody",
+  "breath",
+  "guard",
+  "rite",
+  "rites",
+  "omen",
+  "omens",
+  "bond",
+  "bonds",
+  "brand",
+  "brands",
+  "attunement",
+  "attuned",
+  "awakened",
+  "awakening",
+  "deed",
+  "deeds",
+  "bearer",
+  "kinship",
+  "kin",
+  "patience",
+  "fortune",
+  "curio",
+  "curios",
+  "relic",
+  "relics",
+  "trophy",
+  "trophies",
+  "spoil",
+  "spoils",
+  "theme",
+  "themes",
+  "archetype",
+  "archetypes",
+  "totem",
+  "banner",
+  "sign",
+  "signs",
+  "anchor",
+  "schism",
+  "tesseract",
+  "plane",
+  "vessel",
+  "vessels",
+  "sanctified",
+  "consecrated",
+  "votive",
+  "offering",
+  "offerings",
+  "ritual",
+  "rituals",
+  "ancestor",
+  "ancestors",
+  "soul",
+  "souls",
+  "essence",
+  "aether",
+  "arcane",
+  "mystic",
+  "mystical",
+  "holy",
+  "divine",
+  "sacred",
+  "blessed",
+  "blessing",
+  "hex",
+  "doom",
+  "fate",
+  "glory",
+  "valour",
+  "valor",
+  "oath",
+  "oaths",
+  "saga",
+  "sagas",
+  "chant",
+  "litany",
+  "rune",
+  "runes",
+  "calling",
+  "callings",
+  "lore",
+  "legend",
+  "legendary",
+  "epithet",
+  "memory",
+  "memories",
+  "wisdom",
+  "insight",
+  "vigil",
+  "breach",
+  "hunt",
+  "shard",
+  "shards",
+  "fragment",
+  "fragments",
+  "dye",
+  "dyes",
+  "ash",
+  "embers",
+  "ember",
+  "gloom",
+  "shadow",
+  "shadows",
+  "void",
+  "abyss",
+  "eldritch"
+ ],
+ "poe": [
+  "life",
+  "mana",
+  "ward",
+  "armour",
+  "armor",
+  "evasion",
+  "block",
+  "accuracy",
+  "critical",
+  "crit",
+  "strike",
+  "chance",
+  "multiplier",
+  "damage",
+  "physical",
+  "fire",
+  "cold",
+  "lightning",
+  "chaos",
+  "elemental",
+  "resistance",
+  "resistances",
+  "maximum",
+  "increased",
+  "reduced",
+  "more",
+  "less",
+  "added",
+  "adds",
+  "attack",
+  "attacks",
+  "spell",
+  "spells",
+  "cast",
+  "casting",
+  "speed",
+  "movement",
+  "projectile",
+  "projectiles",
+  "area",
+  "effect",
+  "duration",
+  "cooldown",
+  "recovery",
+  "regeneration",
+  "regenerate",
+  "leech",
+  "flask",
+  "flasks",
+  "charge",
+  "charges",
+  "endurance",
+  "frenzy",
+  "power",
+  "aura",
+  "auras",
+  "curse",
+  "curses",
+  "mark",
+  "marks",
+  "totem",
+  "totems",
+  "trap",
+  "traps",
+  "mine",
+  "mines",
+  "minion",
+  "minions",
+  "companion",
+  "companions",
+  "banner",
+  "banners",
+  "warcry",
+  "warcries",
+  "stun",
+  "stuns",
+  "stunned",
+  "ignite",
+  "ignited",
+  "ignites",
+  "chill",
+  "chilled",
+  "freeze",
+  "frozen",
+  "shock",
+  "shocked",
+  "bleed",
+  "bleeding",
+  "bleeds",
+  "poison",
+  "poisoned",
+  "wither",
+  "withered",
+  "blind",
+  "blinded",
+  "maim",
+  "hinder",
+  "ailment",
+  "ailments",
+  "keystone",
+  "keystones",
+  "notable",
+  "notables",
+  "mastery",
+  "masteries",
+  "jewel",
+  "jewels",
+  "socket",
+  "sockets",
+  "passive",
+  "passives",
+  "tree",
+  "ascendancy",
+  "strength",
+  "dexterity",
+  "intelligence",
+  "attribute",
+  "attributes",
+  "unique",
+  "uniques",
+  "rare",
+  "magic",
+  "normal",
+  "prefix",
+  "suffix",
+  "implicit",
+  "explicit",
+  "modifier",
+  "modifiers",
+  "affix",
+  "affixes",
+  "tier",
+  "tiers",
+  "quality",
+  "corrupted",
+  "orb",
+  "orbs",
+  "currency",
+  "portal",
+  "stash",
+  "vendor",
+  "map",
+  "maps",
+  "boss",
+  "pack",
+  "packs",
+  "act",
+  "town",
+  "hideout",
+  "quest",
+  "gem",
+  "gems",
+  "support",
+  "skill",
+  "skills",
+  "weapon",
+  "weapons",
+  "quiver",
+  "shield",
+  "shields",
+  "helmet",
+  "helm",
+  "gloves",
+  "boots",
+  "belt",
+  "amulet",
+  "ring",
+  "rings",
+  "sword",
+  "swords",
+  "axe",
+  "axes",
+  "mace",
+  "maces",
+  "sceptre",
+  "staff",
+  "staves",
+  "wand",
+  "wands",
+  "dagger",
+  "daggers",
+  "claw",
+  "claws",
+  "bow",
+  "bows",
+  "spear",
+  "spears",
+  "flail",
+  "focus",
+  "buckler",
+  "talisman",
+  "charm",
+  "charms",
+  "relic",
+  "relics",
+  "rune",
+  "runes",
+  "soul",
+  "reservation",
+  "onslaught",
+  "fortify",
+  "haste",
+  "wrath",
+  "malevolence",
+  "conviction",
+  "fanaticism",
+  "might",
+  "thorns",
+  "reflect",
+  "penetration",
+  "exposure",
+  "overkill",
+  "culling",
+  "execute",
+  "dodge",
+  "roll",
+  "sprint",
+  "parry",
+  "guard",
+  "spirit"
+ ],
+ "owner": {
+  "ward": "owner: 'characters should start with one ward' (ledger)",
+  "mana": "owner: 'the health and mana orb' (ledger)",
+  "health": "owner: 'health and mana orb'",
+  "brand": "owner: 'brands are added through explicit enchantments and crafts' (ledger)",
+  "brands": "owner (ledger)",
+  "bond": "owner: 'bonds are gradually gained by using the item' (ledger)",
+  "bonds": "owner (ledger)",
+  "enchantment": "owner (ledger)",
+  "craft": "owner (ledger)",
+  "crafting": "owner: 'crafting should be more like PoE' (ledger)",
+  "flask": "owner: 'flask/remedy bar' (ledger)",
+  "remedy": "owner: 'flask/remedy bar' (ledger)",
+  "refund": "owner: 'Refund points should only be needed to refund the passive skill nodes' (ledger)",
+  "lattice": "owner: 'my skill tree and spell lattice idea'",
+  "weave": "owner: 'dex and str need their own ways to weave power'",
+  "wizard": "owner: project name WIZARD (identity copy, AGENTS rule 7)",
+  "source": "owner lattice node ('only the source, fire and manifestation nodes are in play')",
+  "manifestation": "owner lattice node (same quote)",
+  "adversarial": "owner lattice canon (tools/arcane_lattice, owner's spell lattice)",
+  "natural": "owner lattice canon",
+  "destructive": "owner lattice canon",
+  "sustaining": "owner lattice canon",
+  "creative": "owner lattice canon",
+  "air": "owner lattice canon",
+  "water": "owner lattice canon",
+  "earth": "owner lattice canon",
+  "body": "owner lattice canon",
+  "mind": "owner lattice canon",
+  "outer": "owner lattice canon",
+  "inner": "owner lattice canon",
+  "plane": "owner lattice canon (tier)",
+  "vessel": "owner lattice canon (tier 1 'Vessel')",
+  "tesseract": "owner lattice canon (tier 2)",
+  "schism": "owner lattice canon",
+  "paradigm": "owner lattice canon ('Paradigm Shift')",
+  "dimensional": "owner lattice canon",
+  "ascension": "owner lattice canon"
+ },
+ "terms": {
+  "spirit": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Mana",
+   "note": "Decided 2026-11-08. Names the resource every action spends (verdigris-stats.js label Spirit; tree-data \"+12 to Spirit\"); PoE2 Spirit is a reservation budget, so fails (c). Owner: \"health and mana orb\"."
+  },
+  "guard": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English in its literal sense only (a prison guard, an arm guard; the defence stat is Armour); never a name, theme or tag of a mechanic (the retired-name pass enforces the game-text sense)"
+  },
+  "ward": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"characters should start with one ward\"."
+  },
+  "blood": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English in its literal sense only (blood spatter on a hit, a pool of blood); never a name, theme or tag of a mechanic (the retired-name pass enforces the game-text sense). Owner 2026-11-08 named \"blood\" as made up: every theme, tag display and name using it was renamed (Bleed, Life on Kill)"
+  },
+  "brand": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"brands are added through explicit enchantments and crafts\"."
+  },
+  "brands": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner idea (brands and bonds)."
+  },
+  "bond": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"bonds are gradually gained by using the item sort of like item-local xp\"."
+  },
+  "bonds": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner idea (brands and bonds)."
+  },
+  "source": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "adversarial": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "natural": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "destructive": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "sustaining": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "creative": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "fire": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "air": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "water": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "earth": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "body": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "mind": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "outer": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "inner": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "manifestation": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "plane": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "vessel": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling. VesselForge's item-capacity \"vessel\" is a different, agent meaning: see \"vessel slot\"."
+  },
+  "tesseract": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "schism": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
+  },
+  "anim": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "api": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "arpg": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "arpgzc": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "bd": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "bfffe": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "boolean": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "bsdf": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "calib": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "capuv": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "cc": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "cd": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "cfe": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "cpu": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "css": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "daa": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "db": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "dc": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "debug": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "def": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "desc": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "dm": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "domcontentloaded": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "dsp": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "dto": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "ee": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "exr": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "fbx": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "fc": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "fcbf": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "ff": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "ffa": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "ffafa": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "ffd": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "ffe": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "fffd": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "fk": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "footfinger": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "fps": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "fragcolor": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "framepack": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "WIZARD module / asset-format name (Framepack Gallery); a tool name, not game vocabulary."
+  },
+  "gcp": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "glsl": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "gltfloader": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "gpu": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "hhmmss": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "hsl": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "http": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "hyb": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "idat": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "iend": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "ihdr": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "ik": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "ior": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "json": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "lbs": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "lm": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "lodgroup": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "lv": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "mb": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "mch": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "mikk": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "mit": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "mlx": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "nla": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "normalgl": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "nw": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "ofl": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "pbr": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "pcm": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "pg": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Excavation grave number (Ur PG 789) in ITEM-TYPES-BY-SKILL-ZONE.md."
+  },
+  "pointcoord": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "pre": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "proj": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "qa": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "readme": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "rgb": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "rgba": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "rms": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "rpg": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "segoe": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Font."
+  },
+  "cinzel": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Font."
+  },
+  "slerp": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "sw": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "textarea": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "toebase": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "treesmall": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "ui": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "upperarm": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "url": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "uv": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "uvs": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "vae": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "vfx": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "vistulashort": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "vorbis": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "webgl": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "wasd": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "xl": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "xz": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "zard": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Broken split of the WIZARD wordmark in cartographer/index.html."
+  },
+  "kubernetes": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "wordcloud demo data."
+  },
+  "vue": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "wordcloud demo data."
+  },
+  "ffmpeg": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "principled": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "aug": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Date in file names (ChatGPT Image Aug 13 ...)."
+  },
+  "oct": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Date."
+  },
+  "pm": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Time in file names."
+  },
+  "downloads": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "File path."
+  },
+  "tnt": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "pixel_sandbox material."
+  },
+  "ii": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "iii": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "iv": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  "vi": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Roman numeral. The sokoban archive notes it numbers are flavour; see entry \"sokoban archive notes\"."
+  },
+  "vii": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Roman numeral; see \"sokoban archive notes\"."
+  },
+  "viii": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Roman numeral; see \"sokoban archive notes\"."
+  },
+  "esc": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Key name; owner: \"'esc' needs to pause the game\"."
+  },
+  "grefuntor": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Third-party source asset name in CreatureCatalog.cs provenance string (\"Original Grefuntor horned demon source\"); not a display name."
+  },
+  "mudeater": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Third-party source asset name in imported-source.json; not displayed."
+  },
+  "str": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "PoE attribute abbreviation; owner: \"dex and str need their own ways\"."
+  },
+  "dex": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "PoE attribute abbreviation; owner uses \"dex\"."
+  },
+  "int": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "PoE attribute abbreviation; owner: \"not only int characters\"."
+  },
+  "lmb": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"slots mapped to main keys: lmb, space, rmb\"."
+  },
+  "rmb": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner key list."
+  },
+  "xp": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"item-local xp\"."
+  },
+  "dps": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"damage per second\"."
+  },
+  "hp": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Gaming plain (\"Effective HP\")."
+  },
+  "waypoint": {
+   "origin": "poe",
+   "verdict": "keep",
+   "after": null,
+   "note": "PoE term in same meaning; owner: \"Also need overmap/act map and waypoints\"."
+  },
+  "allocated": {
+   "origin": "poe",
+   "verdict": "keep",
+   "after": null,
+   "note": "PoE passive-tree verb in same meaning; owner: \"allocating\"."
+  },
+  "evaded": {
+   "origin": "poe",
+   "verdict": "keep",
+   "after": null,
+   "note": "PoE Evasion vocabulary in same meaning (\"Hits Cannot Be Evaded\")."
+  },
+  "evading": {
+   "origin": "poe",
+   "verdict": "keep",
+   "after": null,
+   "note": "PoE Evasion vocabulary."
+  },
+  "shortsword": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"flint shortsword should be in the sword ladder\"."
+  },
+  "accad": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "ACCAD (Ohio State motion-capture lab), source credit in imported-source.json."
+  },
+  "ahhotep": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "akrotiri": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "alaca": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "alexei": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "The owner (Alexei Korol)."
+  },
+  "korol": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "The owner."
+  },
+  "amesbury": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "anyang": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "areni": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "armenia": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "arslantepe": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "asyut": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "bc": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Date era marker."
+  },
+  "bernburg": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "borum": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "br": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Fragment of Brøns Mose (find site)."
+  },
+  "clonbrin": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "dendra": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "doloneia": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Iliad Book 10, literary source cited in item-types doc."
+  },
+  "duerrenberg": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "dynastic": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Egyptian period name."
+  },
+  "egtved": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "eshoej": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "eurasia": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "europe": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "fitzwilliam": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "germany": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "handlist": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "hattusa": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "hilazon": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "hoeyuek": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "hvidegaard": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "kadesh": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "kahun": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "kakovatos": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "kallithea": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "knossos": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "kruger": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "lovell": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "medinet": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "mesehti": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "meskalamdug": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "mishmar": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "muldbjerg": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "murcielagos": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "mycenae": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "nahal": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "naqada": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "narmer": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "naue": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "nebamun": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "nebra": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "oetzi": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "pylos": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "ramesseum": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "schifferstadt": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "sherden": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "spain": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "tachtit": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "tollense": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "triada": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "trindhoej": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "trundholm": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "tutankhamun": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "uhlig": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "unetice": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "upton": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "veks": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "veldmeijer": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "walternienburg": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "wessex": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "zealand": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
+  },
+  "kenney": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Asset author (kenney.nl), audio manifest credit."
+  },
+  "wortmann": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Audio credit (Paul Wortmann)."
+  },
+  "google": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Google Fonts credit."
+  },
+  "diablo": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Reference game named in docs."
+  },
+  "sokoban": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real puzzle genre; tool title \"Sokoban\"."
+  },
+  "formline": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real Northwest Coast design term in a garment description."
+  },
+  "vesica": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real geometry (vesica piscis): passive-tree pattern \"Vesica Lenses\" (patterns.js)."
+  },
+  "khopesh": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real Egyptian/Levantine sickle-sword, base name in verdigris-pack.js; real-world name in the same meaning."
+  },
+  "macuahuitl": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real Mesoamerican obsidian-edged club (verdigris-pack.js base). Name is real; note it is attested only from Postclassic Mesoamerica, outside \"Bronze Age and earlier\" (rule 12/51 era question, not a naming one)."
+  },
+  "activated": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "assembling": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "backpack": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Plain inventory label."
+  },
+  "box": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "boxes": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "carved": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "catalog": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "cauldron": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real object (bronze cauldrons are attested); gui_framekit toast demo and offhand list."
+  },
+  "centred": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "charged": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Plain adjective (aura-lab layer \"Charged\"). The aura-lab layer \"Charged runes\" is purged separately (rule 13)."
+  },
+  "cheaper": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "\"Cheaper Repeated Spells\" describes the effect."
+  },
+  "collapsed": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "combo": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "committed": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "continuing": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "crumbling": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "\"Crumbling Ruins\" (rp_account_creator) is a plain terrain description."
+  },
+  "deeper": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "\"Deeper Wither/Chill/Poison\" describe the effect."
+  },
+  "demo": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "desktop": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "draped": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "earlier": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "equipped": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "eyedropper": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "feet": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "flagged": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "fractured": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "gameplay": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "generated": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "handaxe": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real tool name (hand axe)."
+  },
+  "headwrap": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "held": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "knapped": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real flint-working term."
+  },
+  "larger": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "loadout": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Plain UI word."
+  },
+  "localized": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "meltwater": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real terrain (\"Meltwater tributary\")."
+  },
+  "merged": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "metre": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "modified": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "moved": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Plain word. The gui_framekit monster affix \"Chains the Living · Cannot Be Moved\" is flavour, purged separately."
+  },
+  "newer": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "ochre": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real Bronze Age pigment (Red Ochre). \"Marsh Ochre\" is purged separately."
+  },
+  "offline": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "optimized": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "overlapping": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "packaged": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "paused": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "pixel": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "planned": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "preserved": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Plain word in node name \"Preserved Supplies\"."
+  },
+  "proposed": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "ragdoll": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "rainforest": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real terrain."
+  },
+  "regen": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Plain gaming abbreviation."
+  },
+  "required": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "respec": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Standard ARPG word for refunding the passive tree."
+  },
+  "runtime": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "served": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "shared": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "shockwave": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Plain VFX layer name (aura-lab.json)."
+  },
+  "snowfield": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real terrain."
+  },
+  "snowmelt": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real terrain (\"Snowmelt passages\")."
+  },
+  "solved": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "specialised": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "startup": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "stat": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "stats": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "stored": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "studded": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "subtrees": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "teleport": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Plain spell name (SpellRules.cs Teleport)."
+  },
+  "textured": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "timeline": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "titlebar": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "tooltip": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "trailhead": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real terrain word (rule 8: maps by real terrain)."
+  },
+  "trimmed": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "unauthored": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "unblockable": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "\"Unblockable Against Bleeding\" describes the effect."
+  },
+  "unequip": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "username": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "validating": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "valour": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "verified": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "viewport": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "warclub": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real weapon name (war club)."
+  },
+  "wetland": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real terrain."
+  },
+  "wireframe": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Ordinary English word used in its normal meaning."
+  },
+  "automap": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Standard ARPG map word."
+  },
+  "donut": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Plain shape word in a monster ability (\"Donut Eruption\", SpellRules.cs); describes the ring-shaped area."
+  },
+  "foley": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real audio-production term."
+  },
+  "behaviour": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Debug panel label (SerpentBody.cs)."
+  },
+  "aether": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Coined keystone/class name in skilltree-content.json; not owner, not PoE, not a description.",
+   "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented."
+  },
+  "noctilux": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Coined keystone/class name in skilltree-content.json; not owner, not PoE, not a description.",
+   "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented."
+  },
+  "fractal": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Coined keystone/class name in skilltree-content.json; not owner, not PoE, not a description.",
+   "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented."
+  },
+  "flowstep": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Coined keystone/class name in skilltree-content.json; not owner, not PoE, not a description.",
+   "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented."
+  },
+  "mythic": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Coined keystone/class name in skilltree-content.json; not owner, not PoE, not a description.",
+   "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented."
+  },
+  "akashic": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Source",
+   "note": "arcane_lattice/index.html FLAVOR table: generated-spell name word for the Source node (\"Akashic\"). Theosophy term, invented flavour; name the spell by its node."
+  },
+  "aldric": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "ashford": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "blackwell": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "calder": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "calloway": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "corveaux": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "damaris": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "edmun": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "fenn": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "grayson": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "kaelen": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "lysa": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "marlowe": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "marr": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "mirelle": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "oakley": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "oswic": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "petra": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "rooke": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "thornton": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "voss": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "millbrook": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented place name \"Millbrook Fields\". tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "interred": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Word occurs only in an agent-written flavour sentence (rule 10). tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "survived": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Word occurs only in an agent-written flavour sentence (rule 10). tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "scavenged": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English tier label (found materials)"
+  },
+  "wiping": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Word occurs only in an agent-written flavour sentence (rule 10). tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "ignoring": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Word occurs only in an agent-written flavour sentence (rule 10). tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "amazuk": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Test Character 1",
+   "note": "Invented name. Scripts/Runtime/ArpgPlaytestAccount.cs seeds the playtest/QA account with these invented house and character names."
+  },
+  "taru": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Test Character 2",
+   "note": "Invented name. Scripts/Runtime/ArpgPlaytestAccount.cs seeds the playtest/QA account with these invented house and character names."
+  },
+  "ishra": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Test Character 3",
+   "note": "Invented name. Scripts/Runtime/ArpgPlaytestAccount.cs seeds the playtest/QA account with these invented house and character names."
+  },
+  "arwa": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Test House 1",
+   "note": "Invented name. Scripts/Runtime/ArpgPlaytestAccount.cs seeds the playtest/QA account with these invented house and character names."
+  },
+  "olwa": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Test House 2",
+   "note": "Invented name. Scripts/Runtime/ArpgPlaytestAccount.cs seeds the playtest/QA account with these invented house and character names."
+  },
+  "armourmaster": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Armour Vendor",
+   "note": "tools/gui_framekit/game (UI demo) world.js/pane-content.js invented NPC names. \"Armourmaster\" is also a coined compound (rule 7)."
+  },
+  "harl": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Armour Vendor",
+   "note": "tools/gui_framekit/game (UI demo) world.js/pane-content.js invented NPC names. \"Armourmaster\" is also a coined compound (rule 7)."
+  },
+  "doran": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Vendor",
+   "note": "tools/gui_framekit/game (UI demo) world.js/pane-content.js invented NPC names. \"Armourmaster\" is also a coined compound (rule 7)."
+  },
+  "mirela": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Vendor",
+   "note": "tools/gui_framekit/game (UI demo) world.js/pane-content.js invented NPC names. \"Armourmaster\" is also a coined compound (rule 7)."
+  },
+  "azrael": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Example generated unique name \"Azrael's Unbroken Vigil\" (rpg_inventory/index.html, item.html, core/README.md).",
+   "mechanic": "Awakening: an item with three tier-III bonds takes a generated name from its bearer, a keystone power and flavour text (vesselforge.js awakenItem; README \"Awakening\"). Owner never asked for it."
+  },
+  "crownlands": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Island",
+   "note": "verdigris_splash/app.js \"Crownlands island and observatory\", \"Crown of Tides citadel\": invented region name in the world preview."
+  },
+  "orun": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Character",
+   "note": "Invented default character name in rpg_inventory/core/playground.html:122 (createCharacter name Orun) and \"Orun's Stone Oath\" (oath, rule 6)."
+  },
+  "effaced": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Removed",
+   "note": "vesselforge.js tooltip \"Effaced: ...\" for a removed brand; \"efface\" is an agent verb for removal (README currency \"Effacing Stone\")."
+  },
+  "readied": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Tool Slot",
+   "note": "verdigris-pack.js forms.quickrig kindLabel \"Readied rig\" (form name already \"Tool Slot\")."
+  },
+  "shieldwall": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Life on Block",
+   "note": "verdigris-combat.js:138 heal label \"The Shieldwall\"; README bond example. Bond mod display name is already \"Life on Block\" (verdigris-pack.js themes.warding)."
+  },
+  "sidestep": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English (a sideways dodge)"
+  },
+  "grimoire": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Spells",
+   "note": "gui_framekit tabs demo tab \"Grimoire\" (and Spellforge Grimoire). A grimoire is a book: no books in a Bronze Age setting (rule 12). Name by function."
+  },
+  "guiding": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Mark Target",
+   "note": "gui_framekit/game/core.js:187 ability \"Guiding Star\" with flavour \"Mark a foe. The web remembers.\" Name by effect."
+  },
+  "vit": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Life",
+   "note": "gui_framekit/index.html stat \"VIT 784\"; the resource is Life (PoE)."
+  },
+  "vitae": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "LIFE",
+   "note": "gui_framekit/tokens/demo.html \"VITAE 042 / MANA 87%\": Latin flourish for Life."
+  },
+  "heptagram": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "aura-lab.json layers \"Heptagram\", \"Blight heptagram\": rule 13 bans pentagram/hexagram/heptagram decoration."
+  },
+  "lindwurm": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Great Serpent",
+   "note": "CreatureCatalog.cs:84 \"Lindwurm\" (Germanic medieval dragon word) for a \"procedural great serpent, nine metres\"; name by what it is."
+  },
+  "mana": {
+   "origin": "poe",
+   "verdict": "keep",
+   "after": null,
+   "note": "PoE1 resource; owner: \"health and mana orb\". Replacement for Spirit."
+  },
+  "vesselforge": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Inventory and Item Crafting",
+   "note": "Owner: \"cringey composite terms like 'emberguard' 'vesselforge'\"; rule 8 example name \"Inventory and Item Crafting\". Module/library name in README, DESIGN.md, MODULE_CAPABILITY_AUDIT.md, vesselforge.js."
+  },
+  "clay": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English in its literal sense only (the material, e.g. a clay liver model; the currency is Reroll Values); never a name, theme or tag of a mechanic (the retired-name pass enforces the game-text sense)"
+  },
+  "scraper": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Remove Last Modifier",
+   "note": "ARPG Itemization.cs:149 currency: removes the most recently added property (close to PoE Orb of Annulment, which removes a random one)."
+  },
+  "omens": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "guaranteed-tag brands",
+   "note": "verdigris-pack.js omens table; see \"omen\"."
+  },
+  "awakened": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Rare / Upgraded",
+   "note": "PoE Awakened means awakened gems; here it named a rare (ARPG) or an upgraded item (WIZARD)"
+  },
+  "awakening": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "README section \"Awakening\".",
+   "mechanic": "See \"awakened\" (WIZARD named-unique mechanic, agent addition)."
+  },
+  "attunement": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Bond XP",
+   "note": "rpg_inventory/index.html label \"Attunement\"; README \"attunement thresholds\"; it is the item-local XP the owner described for bonds."
+  },
+  "pigment": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "Pigment material names (Red Ochre, Woad, Soot) are real Bronze Age pigments (rule 11). Purge only the flavour description \"the mold drinks it\" (index.html).",
+   "mechanic": "Pigments reweight which brand tags a sear rolls (vesselforge.js:213, PoE Fossil-like). Agent addition; the pigment names are real materials so they pass as names, but the mechanic was never requested."
+  },
+  "panoply": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Set bonus",
+   "note": "verdigris-pack.js panoply labels.",
+   "mechanic": "Player-authored sets: \"Panoply (2): +10% to the bond values of your awakened items\", \"(3): awakened powers trigger 25% more often\" (verdigris-pack.js panoply). Agent addition; depends on awakening."
+  },
+  "kinship": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "README table row \"Kinship\".",
+   "mechanic": "Bonds carry the shaper's archetype and work at half strength for a different archetype (vesselforge.js:84 estrangedFactor 0.5, :117-122 isEstranged). Agent addition."
+  },
+  "estranged": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "README \"half strength in estranged hands\"; vesselforge.js isEstranged.",
+   "mechanic": "See \"kinship\"."
+  },
+  "lineage": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "index.html section \"Lineage\".",
+   "mechanic": "Inheritance: \"When a bearer falls, awakened relics and the most-storied memento pass to the heir — estranged, unless the heir walks the same path\" (rpg_inventory/index.html:2398). Agent addition."
+  },
+  "atelier": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Crafting Bench",
+   "note": "rpg_inventory/index.html \"craft at the Atelier\", \"Close Atelier\"; PoE term Crafting Bench."
+  },
+  "encounters": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "verdigris-pack.js encounters[].text.",
+   "mechanic": "verdigris-pack.js encounters: flavour lines (\"drove off a water spirit\", \"bargained with a witch\", \"crossed a mountain pass in an ash storm\") that assign bond themes. Remove the flavour; bond XP should come from real play (ARPG uses kills/blocks)."
+  },
+  "breach": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Surrounded Kills",
+   "note": "ARPG Vessels.cs:21 bond family; credited for a kill with 3+ enemies within reach (ArpgModel.cs:669-670). Item shows \"<name> of the Breach\" (Vessels.cs:88)."
+  },
+  "vigil": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Ward Blocks",
+   "note": "ARPG Vessels.cs:21 bond family; credited when Ward absorbs a blow (ArpgModel.cs:632). Display \"of the Vigil\"; WIZARD example \"Unbroken Vigil\"."
+  },
+  "butcher": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Archetype name (redhand/ashspeaker/farwalker ids).",
+   "mechanic": "verdigris-pack.js archetypes; archetype adds +1 weight to its theme on every deed and drives kinship (vesselforge.js). Owner never asked for archetypes; ARPG uses STR/DEX/INT classes."
+  },
+  "seer": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Archetype name (redhand/ashspeaker/farwalker ids).",
+   "mechanic": "verdigris-pack.js archetypes; archetype adds +1 weight to its theme on every deed and drives kinship (vesselforge.js). Owner never asked for archetypes; ARPG uses STR/DEX/INT classes."
+  },
+  "scout": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Archetype name (redhand/ashspeaker/farwalker ids).",
+   "mechanic": "verdigris-pack.js archetypes; archetype adds +1 weight to its theme on every deed and drives kinship (vesselforge.js). Owner never asked for archetypes; ARPG uses STR/DEX/INT classes."
+  },
+  "crest": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English in its literal sense only (a feather crest on a cap); never a name, theme or tag of a mechanic (the retired-name pass enforces the game-text sense)"
+  },
+  "rivetmail": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Coined compound for riveted mail (rule 7); targets.tsv \"Rivetmail Hauberk\", \"Rivetmail Towershield\"; retired material."
+  },
+  "skymetal": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Meteoric iron",
+   "note": "Rule 7 example coinage; id still used for material \"Hammered Iron\" and art ids (focus_skymetal, starwand_skymetal)."
+  },
+  "reliquary": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Rule 12: Ritualist's \"Reliquary\" pack is an open owner question (protected item prompt); ARPG display already \"Relic Pack\"."
+  },
+  "waystone": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "pattern node",
+   "note": "Internal node type id \"waystone\" in tree-data.js; PoE2 Waystone is a map item. Hidden id, rename with the display."
+  },
+  "helios": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented keystone/class/cluster name in skilltree-content.json.",
+   "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented."
+  },
+  "ecliptic": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented keystone/class/cluster name in skilltree-content.json.",
+   "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented."
+  },
+  "myriad": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented keystone/class/cluster name in skilltree-content.json.",
+   "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented."
+  },
+  "hexafoil": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented keystone/class/cluster name in skilltree-content.json.",
+   "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented."
+  },
+  "zephyr": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented keystone/class/cluster name in skilltree-content.json.",
+   "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented."
+  },
+  "cassia": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Vendor",
+   "note": "world.js NPC name."
+  },
+  "aurelius": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "pane-content.js companion name with \"Ceremonial effects active\"."
+  },
+  "familiars": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Companions",
+   "note": "gui_framekit tabs demo; PoE2 term is Companions."
+  },
+  "incantation": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Spell name",
+   "note": "gui_framekit input demo label."
+  },
+  "wight": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "ghoul": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "giggles": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "thane": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "delver": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Difficulty 2",
+   "note": "sokoban/core.js:1242-1247 difficulty titles by score; name by level. (\"Warden\"/\"Guardian\" in cartographer expedition rooms are plain room roles and stay.)"
+  },
+  "oracular": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Difficulty 6",
+   "note": "sokoban/core.js:1242-1247 difficulty titles by score; name by level. (\"Warden\"/\"Guardian\" in cartographer expedition rooms are plain room roles and stay.)"
+  },
+  "dustwind": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Steppe",
+   "note": "rpg_inventory/core/MIXED-REFERENCE-BOARD-POLICY.md:41 region \"Dustwind: Scythian/Saka steppe equipment\"; also AGENTS.md and post-calib wave-2 approvals. Coined compound (rule 7)."
+  },
+  "riverspill": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Nile and Mesopotamia",
+   "note": "MIXED-REFERENCE-BOARD-POLICY.md:42 region \"Riverspill: Predynastic/ancient Egyptian and Sumerian/Akkadian\". Coined compound (rule 7)."
+  },
+  "kilnfathers": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "NORTH-STAR.md lists invented cultures \"the Drowned Court, the Kilnfathers, the First Herd, the Quiet Survey, the Salt Oath\"; jewels.js saga ids (drowned-court, kilnfathers, first-herd, quiet-survey, salt-oath). Rule 6 bans invented cultures and sagas."
+  },
+  "ember": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English in its literal sense only (embers in a fire (rule 11); never the Fire damage type (rule 5)); never a name, theme or tag of a mechanic (the retired-name pass enforces the game-text sense)"
+  },
+  "river": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English in its literal sense only (a river pearl, a river; never the Cold damage type (rule 5)); never a name, theme or tag of a mechanic (the retired-name pass enforces the game-text sense)"
+  },
+  "storm": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English in its literal sense only (weather; never the Lightning damage type (rule 5)); never a name, theme or tag of a mechanic (the retired-name pass enforces the game-text sense)"
+  },
+  "gloam": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Chaos",
+   "note": "Rule 5: never as game terms. Still in verdigris-pack.js tags/weights and pigment text, stat ids ember_res/storm_res/river_resistance, ARPG legacy mapping (CombatTerminology.cs). Literal embers/rivers stay (rule 11)."
+  },
+  "house": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"House management should be accessible from the main menu\"."
+  },
+  "stash": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"the stash guy\"; PoE."
+  },
+  "remedy": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"flask/remedy bar\"."
+  },
+  "flask": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"flask/remedy bar\"; PoE."
+  },
+  "refund": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"Refund points\"."
+  },
+  "card": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: arcomage-like card game and \"divinationcard-like items\"."
+  },
+  "deck": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"build-a-deck menu\"."
+  },
+  "horn": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner tile tiers: \"wood, horn, ivory\"."
+  },
+  "ivory": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner tile tiers."
+  },
+  "weave": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"weave power into their active skills\"."
+  },
+  "lattice": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"WIZARD spell lattice system\"."
+  },
+  "kraken": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"the tentacles, kraken\"."
+  },
+  "hydra": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Owner: \"Hydra necks clip\"."
+  },
+  "bricks": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcomage resource name in TownCards.cs; owner asked for an \"arcomage -like minigame\" (rule (a) via owner request)."
+  },
+  "gems": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "Arcomage resource (TownCards.cs); owner-requested arcomage game."
+  },
+  "tobias": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample name or flavour word. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "stillman": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample name or flavour word. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "sera": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample name or flavour word. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "isolde": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample name or flavour word. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "wren": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample name or flavour word. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "dray": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample name or flavour word. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "remembered": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "Invented sample name or flavour word. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets."
+  },
+  "infernal": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Volcanic",
+   "note": "cartographer/core/mapgen.js:1560 map theme \"Infernal\" (a hell theme); rule 8 names maps by real terrain or architecture."
+  },
+  "verdigris": {
+   "origin": "owner",
+   "verdict": "keep",
+   "after": null,
+   "note": "Rule 47: the game name is dropped from player-facing text; lowercase \"verdigris\" (bronze patina) and internal ids (VerdigrisStats, verdigris-pack.js) stay. geometric_skilltree/index.html:1542 theme label \"Verdigris\" is a palette name (patina) and may stay."
+  },
+  "curio": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Plain English object word (small curious object); not a PoE term in this meaning (PoE Heist curios are displays).",
+   "mechanic": "Item kind with no implicit and no modifier slots (verdigris-pack.js forms.curio noVessel); ARPG seats it in the War Horn seat and grants a \"second curio\" unlock. No owner request found."
+  },
+  "relic": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Plain English (sacred object) in the same sense as the item; PoE2 Sanctum relics differ, so the keep rests on (b), not (c). Rule 12 notes the Reliquary pack question."
+  },
+  "fletcher": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real occupation word in rp_account_creator background list."
+  },
+  "cooper": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real occupation word in rp_account_creator background list."
+  },
+  "weaver": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "Real occupation word in rp_account_creator background list."
+  },
+  "disp": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "Code token / file format (Disp = \"disputed\" confidence class in skill-zone-items.html)."
+  },
+  "png": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "File format."
+  },
+  "omen": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English only for the real divination object (a liver-model omen piece); never a currency or item type (renamed: Upgrade to Rare, Guaranteed X Brand)"
+  },
+  "awaken": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "upgrade to rare",
+   "note": "See \"awakened\"."
+  },
+  "memento": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "History",
+   "note": "rpg_inventory/index.html:1396 label \"Memento\" (bond history); bonds are described as \"named memories\"."
+  },
+  "embers": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English in its literal sense only (embers in a fire); never a name, theme or tag of a mechanic (the retired-name pass enforces the game-text sense)"
+  },
+  "hunt": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English in its literal sense only (hunting animals; the bond family is Rare Kills); never a name, theme or tag of a mechanic (the retired-name pass enforces the game-text sense)"
+  },
+  "reach": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English in its literal sense only (to reach a node; the stat is Melee Strike Range); never a name, theme or tag of a mechanic (the retired-name pass enforces the game-text sense)"
+  },
+  "sign": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English in its literal sense only (a sign; the node type is Exclusive Keystone); never a name, theme or tag of a mechanic (the retired-name pass enforces the game-text sense)"
+  },
+  "anchor": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English in its literal sense only (feet anchored to the ground; the node type is Pattern Node); never a name, theme or tag of a mechanic (the retired-name pass enforces the game-text sense)"
+  },
+  "upgraded": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain description"
+  },
+  "guaranteed": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain description"
+  },
+  "forgecraft": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Constructs",
+   "note": "spellforge category key"
+  },
+  "tremorstones": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Rising stones",
+   "note": ""
+  },
+  "verdite": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Green",
+   "note": "variant name"
+  },
+  "undeath": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Undead tint",
+   "note": "param label"
+  },
+  "runestone": {
+   "origin": "real-world",
+   "verdict": "purge",
+   "after": "Carved standing stone",
+   "note": "rule 13: no rune decoration"
+  },
+  "summonings": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plural of summoning (spellforge category key)"
+  },
+  "willpower": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "wil": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "abbreviation in a demo stat line"
+  },
+  "brdf": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "compiled": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "eqs": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "ext": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "frag": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "fsb": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "fsf": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "gdc": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "hlsl": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "hz": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "instanced": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "kepler": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "mikkelsen": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "op": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "pcg": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "perlin": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "proc": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "pt": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "sdf": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "sdfs": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "sz": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "toolkit": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "ue": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "umg": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "vdb": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "vertexid": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "voronoi": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "worley": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "wp": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "wpo": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "lichtenberg": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "graphics or tooling term in a WIZARD lab page"
+  },
+  "afterheat": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "airstrike": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "avatar": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "carousel": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "centre": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "closing": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "colour": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "combos": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "condensing": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "confetti": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "exploding": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "fewer": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "gemstone": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "greatsword": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "iceball": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "inhaled": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "liftoff": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "lowest": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "magnetized": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "overcharged": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "released": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "riffling": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "shortlist": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "smoulder": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "spiralling": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "starfield": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "stylisation": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "teleports": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "testbed": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "vapour": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "vapours": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "whiteout": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "wingspan": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "wingtip": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "farmland": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English"
+  },
+  "spellforge": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Spell Effects Lab",
+   "note": "X-forge compound (rule 7); the owner rule 8 example names the tool \"Spell Effects Lab\""
+  },
+  "colours": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English (British spelling)"
+  },
+  "recoloured": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English (British spelling)"
+  },
+  "mesoamerica": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "replacement word"
+  }
+ },
+ "proposalsMerged": {
+  "from": "term-proposals.json (review subagent, 2026-11-08)",
+  "count": 468
+ }
+}

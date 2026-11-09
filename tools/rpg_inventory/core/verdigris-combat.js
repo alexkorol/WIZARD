@@ -112,12 +112,12 @@
         if (foeHp <= 0) {
           kills += 1;
           say('deed', `The ${foeName} falls${crit ? ' to a brutal strike' : ''}.`);
-          if (bond('blood_price')) heal(maxHp * bond('blood_price') / 100, 'The Blood Price');
+          if (bond('blood_price')) heal(maxHp * bond('blood_price') / 100, 'Life on Kill');
           if (bond('battle_rhythm')) {
             rhythmBoost = bond('battle_rhythm'); procs += 1;
             say('bond', `Battle Rhythm — the pace quickens (+${rhythmBoost}% Attack Speed).`);
           }
-          if (bond('ember_tithe')) { procs += 1; say('bond', `Harvest — spirit flows back from the kill.`); }
+          if (bond('ember_tithe')) { procs += 1; say('bond', `Mana on Kill.`); }
           if (bond('dead_sprint')) { procs += 1; say('bond', `Dead Sprint — nothing at the kill-site can catch you.`); }
           if (echoingKill && roll(0.15)) { spoilsMult += 1; say('awake', `Echoing Kill — the ${foeName} dies twice; its spoils double.`); }
           break;
@@ -129,13 +129,13 @@
           say('awake', `Untraceable — the first strike against you misses.`);
           continue;
         }
-        if (roll(avoidChance)) { procs += 1; say('bond', `Sidestep — the blow finds only air.`); continue; }
+        if (roll(avoidChance)) { procs += 1; say('bond', `Avoided a hit.`); continue; }
         if (roll(blockChance)) {
           procs += 1;
           say('bond', bond('stand_ground')
             ? `Stand Your Ground — blocked without yielding a step.`
             : `Blocked.`);
-          if (bond('shieldwall')) heal(bond('shieldwall'), 'The Shieldwall');
+          if (bond('shieldwall')) heal(bond('shieldwall'), 'Life on Block');
           continue;
         }
         const ward = wardBase * (1 + grudgeWard / 100);
@@ -151,7 +151,7 @@
         }
 
         /* --- round end --- */
-        if (bond('road_lore') && hp > 0 && hp < maxHp) heal(bond('road_lore'), 'Second Wind');
+        if (bond('road_lore') && hp > 0 && hp < maxHp) heal(bond('road_lore'), 'Life Regeneration while Moving');
 
         if (hp <= 0 && lastStandReady) {
           lastStandReady = false; hp = 1; procs += 1;

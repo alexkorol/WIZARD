@@ -1,0 +1,5783 @@
+{
+ "spirit": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Mana",
+  "mechanic": null,
+  "evidence": "Decided 2026-11-08. Names the resource every action spends (verdigris-stats.js label Spirit; tree-data \"+12 to Spirit\"); PoE2 Spirit is a reservation budget, so fails (c). Owner: \"health and mana orb\".",
+  "surface": "Spirit",
+  "category": "resource",
+  "scope": "decided"
+ },
+ "guard": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Armour",
+  "mechanic": null,
+  "evidence": "Decided. Names the STR armour stat (verdigris-stats.js label Guard; tree-data \"+25 to Guard\"); PoE2 Guard is a temporary buff, fails (c). Also the archetype name \"Guard\" (verdigris-pack.js archetypes.shieldbearer).",
+  "surface": "Guard",
+  "category": "stat",
+  "scope": "decided"
+ },
+ "ward": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"characters should start with one ward\".",
+  "surface": "Ward",
+  "category": "resource",
+  "scope": "decided"
+ },
+ "blood": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Bleed",
+  "mechanic": null,
+  "evidence": "Decided: blood as a name/theme is purged; literal blood VFX (Blood Hit, Blood drips in aura-lab.json) stays. Theme/tag \"blood\" in verdigris-pack.js weights, pigment and omen tags, mod id bloodgroove, \"Blood Omen\", \"The Blood Price\".",
+  "surface": "blood",
+  "category": "theme",
+  "scope": "decided"
+ },
+ "brand": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"brands are added through explicit enchantments and crafts\".",
+  "scope": "decided"
+ },
+ "brands": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner idea (brands and bonds).",
+  "scope": "decided"
+ },
+ "bond": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"bonds are gradually gained by using the item sort of like item-local xp\".",
+  "scope": "decided"
+ },
+ "bonds": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner idea (brands and bonds).",
+  "scope": "decided"
+ },
+ "source": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "adversarial": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "natural": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "destructive": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "sustaining": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "creative": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "fire": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "air": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "water": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "earth": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "body": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "mind": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "outer": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "inner": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "manifestation": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "plane": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "vessel": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling. VesselForge's item-capacity \"vessel\" is a different, agent meaning: see \"vessel slot\".",
+  "scope": "decided"
+ },
+ "tesseract": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "schism": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon (owner spell-lattice system), kept per ruling.",
+  "scope": "decided"
+ },
+ "paradigm shift": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcane Lattice canon.",
+  "surface": "Paradigm Shift",
+  "scope": "decided"
+ },
+ "spirit (lattice node)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Self",
+  "mechanic": null,
+  "evidence": "Decided: lattice Sphere node Spirit -> Self (ARPG CombatTerminology.cs:16-18 already maps it; WIZARD arcane_lattice NATIVE/FLAVOR tables still say Spirit).",
+  "surface": "Spirit",
+  "category": "node",
+  "scope": "decided"
+ },
+ "anim": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "api": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "arpg": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "arpgzc": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "bd": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "bfffe": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "boolean": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "bsdf": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "calib": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "capuv": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "cc": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "cd": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "cfe": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "cpu": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "css": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "daa": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "db": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "dc": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "debug": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "def": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "desc": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "dm": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "domcontentloaded": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "dsp": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "dto": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "ee": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "exr": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "fbx": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "fc": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "fcbf": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "ff": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "ffa": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "ffafa": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "ffd": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "ffe": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "fffd": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "fk": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "footfinger": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "fps": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "fragcolor": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "framepack": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "WIZARD module / asset-format name (Framepack Gallery); a tool name, not game vocabulary.",
+  "scope": "1"
+ },
+ "gcp": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "glsl": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "gltfloader": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "gpu": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "hhmmss": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "hsl": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "http": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "hyb": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "idat": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "iend": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "ihdr": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "ik": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "ior": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "json": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "lbs": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "lm": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "lodgroup": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "lv": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "mb": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "mch": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "mikk": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "mit": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "mlx": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "nla": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "normalgl": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "nw": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "ofl": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "pbr": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "pcm": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "pg": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Excavation grave number (Ur PG 789) in ITEM-TYPES-BY-SKILL-ZONE.md.",
+  "scope": "1"
+ },
+ "pointcoord": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "pre": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "proj": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "qa": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "readme": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "rgb": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "rgba": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "rms": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "rpg": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "segoe": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Font.",
+  "scope": "1"
+ },
+ "cinzel": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Font.",
+  "scope": "1"
+ },
+ "slerp": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "sw": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "textarea": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "toebase": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "treesmall": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "ui": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "upperarm": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "url": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "uv": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "uvs": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "vae": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "vfx": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "vistulashort": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "vorbis": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "webgl": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "wasd": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "xl": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "xz": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "zard": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Broken split of the WIZARD wordmark in cartographer/index.html.",
+  "scope": "1"
+ },
+ "kubernetes": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "wordcloud demo data.",
+  "scope": "1"
+ },
+ "vue": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "wordcloud demo data.",
+  "scope": "1"
+ },
+ "ffmpeg": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "principled": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "aug": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Date in file names (ChatGPT Image Aug 13 ...).",
+  "scope": "1"
+ },
+ "oct": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Date.",
+  "scope": "1"
+ },
+ "pm": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Time in file names.",
+  "scope": "1"
+ },
+ "downloads": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "File path.",
+  "scope": "1"
+ },
+ "tnt": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "pixel_sandbox material.",
+  "scope": "1"
+ },
+ "ii": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "iii": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "iv": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary.",
+  "scope": "1"
+ },
+ "vi": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Roman numeral. The sokoban archive notes it numbers are flavour; see entry \"sokoban archive notes\".",
+  "scope": "1"
+ },
+ "vii": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Roman numeral; see \"sokoban archive notes\".",
+  "scope": "1"
+ },
+ "viii": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Roman numeral; see \"sokoban archive notes\".",
+  "scope": "1"
+ },
+ "esc": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Key name; owner: \"'esc' needs to pause the game\".",
+  "scope": "1"
+ },
+ "grefuntor": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Third-party source asset name in CreatureCatalog.cs provenance string (\"Original Grefuntor horned demon source\"); not a display name.",
+  "scope": "1"
+ },
+ "mudeater": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Third-party source asset name in imported-source.json; not displayed.",
+  "scope": "1"
+ },
+ "str": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "PoE attribute abbreviation; owner: \"dex and str need their own ways\".",
+  "scope": "1"
+ },
+ "dex": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "PoE attribute abbreviation; owner uses \"dex\".",
+  "scope": "1"
+ },
+ "int": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "PoE attribute abbreviation; owner: \"not only int characters\".",
+  "scope": "1"
+ },
+ "lmb": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"slots mapped to main keys: lmb, space, rmb\".",
+  "scope": "1"
+ },
+ "rmb": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner key list.",
+  "scope": "1"
+ },
+ "xp": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"item-local xp\".",
+  "scope": "1"
+ },
+ "dps": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"damage per second\".",
+  "scope": "1"
+ },
+ "hp": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Gaming plain (\"Effective HP\").",
+  "scope": "1"
+ },
+ "waypoint": {
+  "origin": "poe",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "PoE term in same meaning; owner: \"Also need overmap/act map and waypoints\".",
+  "scope": "1"
+ },
+ "allocated": {
+  "origin": "poe",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "PoE passive-tree verb in same meaning; owner: \"allocating\".",
+  "scope": "1"
+ },
+ "evaded": {
+  "origin": "poe",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "PoE Evasion vocabulary in same meaning (\"Hits Cannot Be Evaded\").",
+  "scope": "1"
+ },
+ "evading": {
+  "origin": "poe",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "PoE Evasion vocabulary.",
+  "scope": "1"
+ },
+ "shortsword": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"flint shortsword should be in the sword ladder\".",
+  "scope": "1"
+ },
+ "accad": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "ACCAD (Ohio State motion-capture lab), source credit in imported-source.json.",
+  "scope": "1"
+ },
+ "ahhotep": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "akrotiri": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "alaca": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "alexei": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "The owner (Alexei Korol).",
+  "scope": "1"
+ },
+ "korol": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "The owner.",
+  "scope": "1"
+ },
+ "amesbury": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "anyang": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "areni": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "armenia": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "arslantepe": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "asyut": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "bc": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Date era marker.",
+  "scope": "1"
+ },
+ "bernburg": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "borum": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "br": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Fragment of Brøns Mose (find site).",
+  "scope": "1"
+ },
+ "clonbrin": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "dendra": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "doloneia": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Iliad Book 10, literary source cited in item-types doc.",
+  "scope": "1"
+ },
+ "duerrenberg": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "dynastic": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Egyptian period name.",
+  "scope": "1"
+ },
+ "egtved": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "eshoej": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "eurasia": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "europe": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "fitzwilliam": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "germany": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "handlist": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "hattusa": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "hilazon": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "hoeyuek": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "hvidegaard": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "kadesh": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "kahun": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "kakovatos": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "kallithea": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "knossos": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "kruger": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "lovell": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "medinet": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "mesehti": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "meskalamdug": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "mishmar": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "muldbjerg": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "murcielagos": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "mycenae": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "nahal": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "naqada": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "narmer": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "naue": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "nebamun": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "nebra": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "oetzi": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "pylos": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "ramesseum": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "schifferstadt": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "sherden": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "spain": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "tachtit": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "tollense": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "triada": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "trindhoej": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "trundholm": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "tutankhamun": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "uhlig": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "unetice": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "upton": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "veks": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "veldmeijer": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "walternienburg": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "wessex": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "zealand": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md).",
+  "scope": "1"
+ },
+ "kenney": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Asset author (kenney.nl), audio manifest credit.",
+  "scope": "1"
+ },
+ "wortmann": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Audio credit (Paul Wortmann).",
+  "scope": "1"
+ },
+ "google": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Google Fonts credit.",
+  "scope": "1"
+ },
+ "diablo": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Reference game named in docs.",
+  "scope": "1"
+ },
+ "sokoban": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real puzzle genre; tool title \"Sokoban\".",
+  "scope": "1"
+ },
+ "formline": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real Northwest Coast design term in a garment description.",
+  "scope": "1"
+ },
+ "vesica": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real geometry (vesica piscis): passive-tree pattern \"Vesica Lenses\" (patterns.js).",
+  "scope": "1"
+ },
+ "khopesh": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real Egyptian/Levantine sickle-sword, base name in verdigris-pack.js; real-world name in the same meaning.",
+  "scope": "1"
+ },
+ "macuahuitl": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real Mesoamerican obsidian-edged club (verdigris-pack.js base). Name is real; note it is attested only from Postclassic Mesoamerica, outside \"Bronze Age and earlier\" (rule 12/51 era question, not a naming one).",
+  "scope": "1"
+ },
+ "activated": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "assembling": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "backpack": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Plain inventory label.",
+  "scope": "1"
+ },
+ "box": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "boxes": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "carved": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "catalog": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "cauldron": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real object (bronze cauldrons are attested); gui_framekit toast demo and offhand list.",
+  "scope": "1"
+ },
+ "centred": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "charged": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Plain adjective (aura-lab layer \"Charged\"). The aura-lab layer \"Charged runes\" is purged separately (rule 13).",
+  "scope": "1"
+ },
+ "cheaper": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "\"Cheaper Repeated Spells\" describes the effect.",
+  "scope": "1"
+ },
+ "collapsed": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "combo": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "committed": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "continuing": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "crumbling": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "\"Crumbling Ruins\" (rp_account_creator) is a plain terrain description.",
+  "scope": "1"
+ },
+ "deeper": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "\"Deeper Wither/Chill/Poison\" describe the effect.",
+  "scope": "1"
+ },
+ "demo": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "desktop": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "draped": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "earlier": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "equipped": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "eyedropper": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "feet": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "flagged": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "fractured": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "gameplay": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "generated": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "handaxe": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real tool name (hand axe).",
+  "scope": "1"
+ },
+ "headwrap": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "held": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "knapped": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real flint-working term.",
+  "scope": "1"
+ },
+ "larger": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "loadout": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Plain UI word.",
+  "scope": "1"
+ },
+ "localized": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "meltwater": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real terrain (\"Meltwater tributary\").",
+  "scope": "1"
+ },
+ "merged": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "metre": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "modified": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "moved": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Plain word. The gui_framekit monster affix \"Chains the Living · Cannot Be Moved\" is flavour, purged separately.",
+  "scope": "1"
+ },
+ "newer": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "ochre": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real Bronze Age pigment (Red Ochre). \"Marsh Ochre\" is purged separately.",
+  "scope": "1"
+ },
+ "offline": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "optimized": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "overlapping": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "packaged": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "paused": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "pixel": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "planned": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "preserved": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Plain word in node name \"Preserved Supplies\".",
+  "scope": "1"
+ },
+ "proposed": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "ragdoll": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "rainforest": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real terrain.",
+  "scope": "1"
+ },
+ "regen": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Plain gaming abbreviation.",
+  "scope": "1"
+ },
+ "required": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "respec": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Standard ARPG word for refunding the passive tree.",
+  "scope": "1"
+ },
+ "runtime": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "served": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "shared": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "shockwave": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Plain VFX layer name (aura-lab.json).",
+  "scope": "1"
+ },
+ "snowfield": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real terrain.",
+  "scope": "1"
+ },
+ "snowmelt": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real terrain (\"Snowmelt passages\").",
+  "scope": "1"
+ },
+ "solved": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "specialised": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "startup": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "stat": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "stats": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "stored": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "studded": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "subtrees": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "teleport": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Plain spell name (SpellRules.cs Teleport).",
+  "scope": "1"
+ },
+ "textured": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "timeline": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "titlebar": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "tooltip": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "trailhead": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real terrain word (rule 8: maps by real terrain).",
+  "scope": "1"
+ },
+ "trimmed": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "unauthored": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "unblockable": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "\"Unblockable Against Bleeding\" describes the effect.",
+  "scope": "1"
+ },
+ "unequip": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "username": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "validating": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "valour": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "verified": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "viewport": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "warclub": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real weapon name (war club).",
+  "scope": "1"
+ },
+ "wetland": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real terrain.",
+  "scope": "1"
+ },
+ "wireframe": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Ordinary English word used in its normal meaning.",
+  "scope": "1"
+ },
+ "automap": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Standard ARPG map word.",
+  "scope": "1"
+ },
+ "donut": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Plain shape word in a monster ability (\"Donut Eruption\", SpellRules.cs); describes the ring-shaped area.",
+  "scope": "1"
+ },
+ "foley": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real audio-production term.",
+  "scope": "1"
+ },
+ "behaviour": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Debug panel label (SerpentBody.cs).",
+  "scope": "1"
+ },
+ "aether": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Coined keystone/class name in skilltree-content.json; not owner, not PoE, not a description.",
+  "surface": "Aether Spindle Keystone",
+  "category": "node",
+  "scope": "1"
+ },
+ "noctilux": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Coined keystone/class name in skilltree-content.json; not owner, not PoE, not a description.",
+  "surface": "Noctilux Prism Keystone",
+  "category": "node",
+  "scope": "1"
+ },
+ "fractal": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Coined keystone/class name in skilltree-content.json; not owner, not PoE, not a description.",
+  "surface": "Fractal Bastion Keystone",
+  "category": "node",
+  "scope": "1"
+ },
+ "flowstep": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Coined keystone/class name in skilltree-content.json; not owner, not PoE, not a description.",
+  "surface": "Flowstep",
+  "category": "node",
+  "scope": "1"
+ },
+ "mythic": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Coined keystone/class name in skilltree-content.json; not owner, not PoE, not a description.",
+  "surface": "Mythic capstones",
+  "category": "node",
+  "scope": "1"
+ },
+ "akashic": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Source",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table: generated-spell name word for the Source node (\"Akashic\"). Theosophy term, invented flavour; name the spell by its node.",
+  "surface": "Akashic",
+  "category": "theme",
+  "scope": "1"
+ },
+ "aldric": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Aldric Thane",
+  "category": "UI",
+  "scope": "1"
+ },
+ "ashford": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Ashford",
+  "category": "UI",
+  "scope": "1"
+ },
+ "blackwell": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Blackwell",
+  "category": "UI",
+  "scope": "1"
+ },
+ "calder": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Calder",
+  "category": "UI",
+  "scope": "1"
+ },
+ "calloway": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Wren Calloway",
+  "category": "UI",
+  "scope": "1"
+ },
+ "corveaux": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Lysa Corveaux",
+  "category": "UI",
+  "scope": "1"
+ },
+ "damaris": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Rooke Damaris",
+  "category": "UI",
+  "scope": "1"
+ },
+ "edmun": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Edmun Hale",
+  "category": "UI",
+  "scope": "1"
+ },
+ "fenn": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Fenn Oswic",
+  "category": "UI",
+  "scope": "1"
+ },
+ "grayson": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Grayson",
+  "category": "UI",
+  "scope": "1"
+ },
+ "kaelen": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Kaelen Dray",
+  "category": "UI",
+  "scope": "1"
+ },
+ "lysa": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Lysa Corveaux",
+  "category": "UI",
+  "scope": "1"
+ },
+ "marlowe": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Marlowe",
+  "category": "UI",
+  "scope": "1"
+ },
+ "marr": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Isolde Marr",
+  "category": "UI",
+  "scope": "1"
+ },
+ "mirelle": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Mirelle of the Fen",
+  "category": "UI",
+  "scope": "1"
+ },
+ "oakley": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Oakley",
+  "category": "UI",
+  "scope": "1"
+ },
+ "oswic": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Fenn Oswic",
+  "category": "UI",
+  "scope": "1"
+ },
+ "petra": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Petra Quill",
+  "category": "UI",
+  "scope": "1"
+ },
+ "rooke": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Rooke Damaris",
+  "category": "UI",
+  "scope": "1"
+ },
+ "thornton": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Thornton",
+  "category": "UI",
+  "scope": "1"
+ },
+ "voss": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample character name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Sera Voss",
+  "category": "UI",
+  "scope": "1"
+ },
+ "millbrook": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented place name \"Millbrook Fields\". tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Millbrook Fields",
+  "category": "place",
+  "scope": "1"
+ },
+ "interred": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Word occurs only in an agent-written flavour sentence (rule 10). tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Interred with ${char.name}; returned to the world.",
+  "category": "UI",
+  "scope": "1"
+ },
+ "survived": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Word occurs only in an agent-written flavour sentence (rule 10). tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Survived to the fifth rank",
+  "category": "UI",
+  "scope": "1"
+ },
+ "scavenged": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Word occurs only in an agent-written flavour sentence (rule 10). tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Scavenged ${art} ... and ${copper} copper — anyone's tools",
+  "category": "UI",
+  "scope": "1"
+ },
+ "wiping": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Word occurs only in an agent-written flavour sentence (rule 10). tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Wiping the blade clean",
+  "category": "UI",
+  "scope": "1"
+ },
+ "ignoring": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Word occurs only in an agent-written flavour sentence (rule 10). tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Ignoring a voice that knows your name",
+  "category": "UI",
+  "scope": "1"
+ },
+ "amazuk": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Test Character 1",
+  "mechanic": null,
+  "evidence": "Invented name. Scripts/Runtime/ArpgPlaytestAccount.cs seeds the playtest/QA account with these invented house and character names.",
+  "surface": "Amazuk",
+  "category": "UI",
+  "scope": "1"
+ },
+ "taru": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Test Character 2",
+  "mechanic": null,
+  "evidence": "Invented name. Scripts/Runtime/ArpgPlaytestAccount.cs seeds the playtest/QA account with these invented house and character names.",
+  "surface": "Taru",
+  "category": "UI",
+  "scope": "1"
+ },
+ "ishra": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Test Character 3",
+  "mechanic": null,
+  "evidence": "Invented name. Scripts/Runtime/ArpgPlaytestAccount.cs seeds the playtest/QA account with these invented house and character names.",
+  "surface": "Ishra",
+  "category": "UI",
+  "scope": "1"
+ },
+ "arwa": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Test House 1",
+  "mechanic": null,
+  "evidence": "Invented name. Scripts/Runtime/ArpgPlaytestAccount.cs seeds the playtest/QA account with these invented house and character names.",
+  "surface": "House Arwa",
+  "category": "UI",
+  "scope": "1"
+ },
+ "olwa": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Test House 2",
+  "mechanic": null,
+  "evidence": "Invented name. Scripts/Runtime/ArpgPlaytestAccount.cs seeds the playtest/QA account with these invented house and character names.",
+  "surface": "House Olwa",
+  "category": "UI",
+  "scope": "1"
+ },
+ "armourmaster": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Armour Vendor",
+  "mechanic": null,
+  "evidence": "tools/gui_framekit/game (UI demo) world.js/pane-content.js invented NPC names. \"Armourmaster\" is also a coined compound (rule 7).",
+  "surface": "Harl · Armourmaster",
+  "category": "UI",
+  "scope": "1"
+ },
+ "harl": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Armour Vendor",
+  "mechanic": null,
+  "evidence": "tools/gui_framekit/game (UI demo) world.js/pane-content.js invented NPC names. \"Armourmaster\" is also a coined compound (rule 7).",
+  "surface": "Harl",
+  "category": "UI",
+  "scope": "2"
+ },
+ "doran": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Vendor",
+  "mechanic": null,
+  "evidence": "tools/gui_framekit/game (UI demo) world.js/pane-content.js invented NPC names. \"Armourmaster\" is also a coined compound (rule 7).",
+  "surface": "Doran",
+  "category": "UI",
+  "scope": "1"
+ },
+ "mirela": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Vendor",
+  "mechanic": null,
+  "evidence": "tools/gui_framekit/game (UI demo) world.js/pane-content.js invented NPC names. \"Armourmaster\" is also a coined compound (rule 7).",
+  "surface": "Mirela",
+  "category": "UI",
+  "scope": "1"
+ },
+ "azrael": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Awakening: an item with three tier-III bonds takes a generated name from its bearer, a keystone power and flavour text (vesselforge.js awakenItem; README \"Awakening\"). Owner never asked for it.",
+  "evidence": "Example generated unique name \"Azrael's Unbroken Vigil\" (rpg_inventory/index.html, item.html, core/README.md).",
+  "surface": "Azrael's Unbroken Vigil",
+  "category": "item/base",
+  "scope": "1"
+ },
+ "crownlands": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Island",
+  "mechanic": null,
+  "evidence": "verdigris_splash/app.js \"Crownlands island and observatory\", \"Crown of Tides citadel\": invented region name in the world preview.",
+  "surface": "Crownlands",
+  "category": "place",
+  "scope": "1"
+ },
+ "orun": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Character",
+  "mechanic": null,
+  "evidence": "Invented default character name in rpg_inventory/core/playground.html:122 (createCharacter name Orun) and \"Orun's Stone Oath\" (oath, rule 6).",
+  "surface": "Orun",
+  "category": "UI",
+  "scope": "1"
+ },
+ "effaced": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Removed",
+  "mechanic": null,
+  "evidence": "vesselforge.js tooltip \"Effaced: ...\" for a removed brand; \"efface\" is an agent verb for removal (README currency \"Effacing Stone\").",
+  "surface": "Effaced",
+  "category": "mechanic",
+  "scope": "1"
+ },
+ "readied": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Tool Slot",
+  "mechanic": null,
+  "evidence": "verdigris-pack.js forms.quickrig kindLabel \"Readied rig\" (form name already \"Tool Slot\").",
+  "surface": "Readied rig",
+  "category": "item/base",
+  "scope": "1"
+ },
+ "shieldwall": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Life on Block",
+  "mechanic": null,
+  "evidence": "verdigris-combat.js:138 heal label \"The Shieldwall\"; README bond example. Bond mod display name is already \"Life on Block\" (verdigris-pack.js themes.warding).",
+  "surface": "The Shieldwall",
+  "category": "mod",
+  "scope": "1"
+ },
+ "sidestep": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Avoided",
+  "mechanic": null,
+  "evidence": "verdigris-combat.js:132 log line \"Sidestep — the blow finds only air.\" (flavour); mod display name already \"Thrown Weapon Avoidance\".",
+  "surface": "Sidestep",
+  "category": "mod",
+  "scope": "1"
+ },
+ "grimoire": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Spells",
+  "mechanic": null,
+  "evidence": "gui_framekit tabs demo tab \"Grimoire\" (and Spellforge Grimoire). A grimoire is a book: no books in a Bronze Age setting (rule 12). Name by function.",
+  "surface": "Grimoire",
+  "category": "UI",
+  "scope": "1"
+ },
+ "guiding": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Mark Target",
+  "mechanic": null,
+  "evidence": "gui_framekit/game/core.js:187 ability \"Guiding Star\" with flavour \"Mark a foe. The web remembers.\" Name by effect.",
+  "surface": "Guiding Star",
+  "category": "UI",
+  "scope": "1"
+ },
+ "vit": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Life",
+  "mechanic": null,
+  "evidence": "gui_framekit/index.html stat \"VIT 784\"; the resource is Life (PoE).",
+  "surface": "VIT",
+  "category": "stat",
+  "scope": "1"
+ },
+ "vitae": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "LIFE",
+  "mechanic": null,
+  "evidence": "gui_framekit/tokens/demo.html \"VITAE 042 / MANA 87%\": Latin flourish for Life.",
+  "surface": "VITAE",
+  "category": "stat",
+  "scope": "1"
+ },
+ "heptagram": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "aura-lab.json layers \"Heptagram\", \"Blight heptagram\": rule 13 bans pentagram/hexagram/heptagram decoration.",
+  "surface": "Heptagram",
+  "category": "UI",
+  "scope": "1"
+ },
+ "lindwurm": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Great Serpent",
+  "mechanic": null,
+  "evidence": "CreatureCatalog.cs:84 \"Lindwurm\" (Germanic medieval dragon word) for a \"procedural great serpent, nine metres\"; name by what it is.",
+  "surface": "Lindwurm",
+  "category": "creature",
+  "scope": "1"
+ },
+ "mana": {
+  "origin": "poe",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "PoE1 resource; owner: \"health and mana orb\". Replacement for Spirit.",
+  "surface": "Mana",
+  "category": "resource"
+ },
+ "goods found": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Item Rarity",
+  "mechanic": "Does nothing: goods_find is summed into the sheet (verdigris-stats.js:365) but no loot code reads it in WIZARD or the ARPG (grep goods_find / fortune: ARPG 0 files).",
+  "evidence": "Stat \"Goods Found\" (verdigris-stats.js:72; tree smalls \"+8% Goods Found\"; brand mod \"wealthy\"). PoE equivalent: increased Rarity of Items found.",
+  "surface": "Goods Found",
+  "category": "stat"
+ },
+ "spell power": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Spell Damage",
+  "mechanic": null,
+  "evidence": "Bond mod \"Spell Power at High Spirit\" / \"+{v}% Spell Power while Spirit is above three-quarters\" (verdigris-pack.js themes.spiritwork.clear_mind). PoE: Spell Damage.",
+  "surface": "Spell Power",
+  "category": "mod"
+ },
+ "spell power at high spirit": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Spell Damage at High Mana",
+  "mechanic": null,
+  "evidence": "verdigris-pack.js clear_mind name.",
+  "surface": "Spell Power at High Spirit",
+  "category": "mod"
+ },
+ "spirit on kill": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Mana on Kill",
+  "mechanic": null,
+  "evidence": "verdigris-pack.js ember_tithe name; tree \"Spirit on Kill\".",
+  "surface": "Spirit on Kill",
+  "category": "mod"
+ },
+ "spell damage at high spirit": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Spell Damage at High Mana",
+  "mechanic": null,
+  "evidence": "Tree/WIZARD node name.",
+  "surface": "Spell Damage at High Spirit",
+  "category": "node"
+ },
+ "vesselforge": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Inventory and Item Crafting",
+  "mechanic": null,
+  "evidence": "Owner: \"cringey composite terms like 'emberguard' 'vesselforge'\"; rule 8 example name \"Inventory and Item Crafting\". Module/library name in README, DESIGN.md, MODULE_CAPABILITY_AUDIT.md, vesselforge.js.",
+  "surface": "Vesselforge",
+  "category": "mechanic",
+  "scope": "3"
+ },
+ "vessel slot": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "modifier slot",
+  "mechanic": null,
+  "evidence": "VesselForge calls an item a \"vessel\" with 2-6 slots shared by brands, bonds, trophies and scars (vesselforge.js:113-114; errors \"No free vessel slot\", \"The vessel can hold no more\"; README \"Vessels\"). The owner's Vessel is the lattice tier, a different meaning. PoE: modifier (affix) slots.",
+  "surface": "vessel slot",
+  "category": "mechanic"
+ },
+ "vessel chisel": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Add Modifier Slot",
+  "mechanic": "Currency that carves an extra slot (max 6) for 2 patience (vesselforge.js:274 chisel). Agent addition.",
+  "evidence": "README Currencies table; index.html button \"Chisel\".",
+  "surface": "Vessel Chisel",
+  "category": "currency"
+ },
+ "searing sigil": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Add Brand",
+  "mechanic": null,
+  "evidence": "WIZARD currency \"Sear a random Brand into a free slot\" (README). Function = PoE Exalted/Augmentation; sigil is also rune-glyph vocabulary (rule 13).",
+  "surface": "Searing Sigil",
+  "category": "currency"
+ },
+ "searing ash": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Add Modifier",
+  "mechanic": null,
+  "evidence": "ARPG Itemization.cs:147 currency: \"add one new property (up to four)\". PoE equivalents: Orb of Augmentation (magic) / Exalted Orb (rare).",
+  "surface": "Searing Ash",
+  "category": "currency"
+ },
+ "clay": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Reroll Values",
+  "mechanic": null,
+  "evidence": "ARPG Itemization.cs:148 currency \"Clay\": rerolls the values of its properties within their tiers (PoE Divine Orb). Clay is a material; the name does not say what it does.",
+  "surface": "Clay",
+  "category": "currency"
+ },
+ "scraper": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Remove Last Modifier",
+  "mechanic": null,
+  "evidence": "ARPG Itemization.cs:149 currency: removes the most recently added property (close to PoE Orb of Annulment, which removes a random one).",
+  "surface": "Scraper",
+  "category": "currency"
+ },
+ "omens": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "guaranteed-tag brands",
+  "mechanic": null,
+  "evidence": "verdigris-pack.js omens table; see \"omen\".",
+  "surface": "omens",
+  "category": "currency"
+ },
+ "entrail omen": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Guaranteed Ward Brand",
+  "mechanic": null,
+  "evidence": "verdigris-pack.js omens: the omen forces the next sear to a brand with this tag (vesselforge.js:204-207).",
+  "surface": "Entrail Omen",
+  "category": "currency"
+ },
+ "bird omen": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Guaranteed Speed Brand",
+  "mechanic": null,
+  "evidence": "verdigris-pack.js omens: the omen forces the next sear to a brand with this tag (vesselforge.js:204-207).",
+  "surface": "Bird Omen",
+  "category": "currency"
+ },
+ "smoke omen": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Guaranteed Mana Brand",
+  "mechanic": null,
+  "evidence": "verdigris-pack.js omens: the omen forces the next sear to a brand with this tag (vesselforge.js:204-207).",
+  "surface": "Smoke Omen",
+  "category": "currency"
+ },
+ "blood omen": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Guaranteed Bleed Brand",
+  "mechanic": null,
+  "evidence": "verdigris-pack.js omens: the omen forces the next sear to a brand with this tag (vesselforge.js:204-207).",
+  "surface": "Blood Omen",
+  "category": "currency"
+ },
+ "awakened": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Rare",
+  "mechanic": "WIZARD: three tier-III bonds awaken an item into a named unique with a keystone power (vesselforge.js awakenItem). ARPG: awakened == rare (Itemization.cs:286 RarityOf). PoE \"Awakened\" means awakened support gems; different meaning.",
+  "evidence": "ARPG text \"an Omen must awaken it\", \"is already awakened\"; WIZARD \"Awakened relic\", Panoply text.",
+  "surface": "Awakened",
+  "category": "mechanic"
+ },
+ "awakening": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "See \"awakened\" (WIZARD named-unique mechanic, agent addition).",
+  "evidence": "README section \"Awakening\".",
+  "surface": "Awakening",
+  "category": "mechanic"
+ },
+ "attunement": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Bond XP",
+  "mechanic": null,
+  "evidence": "rpg_inventory/index.html label \"Attunement\"; README \"attunement thresholds\"; it is the item-local XP the owner described for bonds.",
+  "surface": "Attunement",
+  "category": "mechanic"
+ },
+ "chronicle draught": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Currency granting a full attunement threshold at the bench (README Currencies). Agent addition; owner: \"definetely no potions like d2\".",
+  "evidence": "README Currencies table.",
+  "surface": "Chronicle Draught",
+  "category": "currency"
+ },
+ "orb of resonance": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Upgrade Bond",
+  "mechanic": null,
+  "evidence": "README currency \"Deepen the faintest Bond one tier\".",
+  "surface": "Orb of Resonance",
+  "category": "currency"
+ },
+ "sundering knife": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Remove Bond",
+  "mechanic": "Severing a bond leaves the slot permanently \"scarred\" (README table; vesselforge.js usedSlots counts item.scars). Scarring is an agent addition.",
+  "evidence": "README currency \"Sever the faintest Bond; the slot is scarred\".",
+  "surface": "Sundering Knife",
+  "category": "currency"
+ },
+ "effacing stone": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Remove Last Brand",
+  "mechanic": null,
+  "evidence": "README currency \"Remove the newest Brand\".",
+  "surface": "Effacing Stone",
+  "category": "currency"
+ },
+ "kiln firing": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Material-ascension gamble: 2 patience, outcomes ascend 40 / scar 30 / silent 20 / shatter 10 (verdigris-pack.js settings.fireOutcomes; vesselforge.js:284 fire). Owner never asked for it.",
+  "evidence": "rpg_inventory/index.html:2242 \"Fire the kiln to gamble the material itself\"; README \"kiln Firing\".",
+  "surface": "Fire the kiln",
+  "category": "mechanic"
+ },
+ "pigment": {
+  "origin": "real-world",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": "Pigments reweight which brand tags a sear rolls (vesselforge.js:213, PoE Fossil-like). Agent addition; the pigment names are real materials so they pass as names, but the mechanic was never requested.",
+  "evidence": "Pigment material names (Red Ochre, Woad, Soot) are real Bronze Age pigments (rule 11). Purge only the flavour description \"the mold drinks it\" (index.html).",
+  "surface": "Pigment",
+  "category": "mechanic"
+ },
+ "marsh ochre": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Yellow Ochre",
+  "mechanic": null,
+  "evidence": "verdigris-pack.js pigments.marsh_ochre: \"Marsh Ochre\" is not a pigment name; yellow ochre is the real one.",
+  "surface": "Marsh Ochre",
+  "category": "currency"
+ },
+ "the mold drinks it": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Pigment flavour text in rpg_inventory/index.html (\"Pigment — the mold drinks it: searing leans hard toward ...\").",
+  "surface": "the mold drinks it",
+  "category": "UI"
+ },
+ "hunt trophy": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Animal Part",
+  "mechanic": "Trophies: fragments collected from fights complete into a socketable item with a completion bonus (vesselforge.js addFragment; README \"fragment → fetish → completion bonus\", TQ/GD homage). Agent addition.",
+  "evidence": "verdigris-pack.js forms.trophy name \"Hunt Trophy\"; ARPG already uses \"Animal Parts\".",
+  "surface": "Hunt Trophy",
+  "category": "item/base"
+ },
+ "trophy fragments": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "See \"hunt trophy\" (fragment collection mechanic).",
+  "evidence": "rpg_inventory/index.html section title.",
+  "surface": "Trophy Fragments",
+  "category": "UI"
+ },
+ "panoply": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Set bonus",
+  "mechanic": "Player-authored sets: \"Panoply (2): +10% to the bond values of your awakened items\", \"(3): awakened powers trigger 25% more often\" (verdigris-pack.js panoply). Agent addition; depends on awakening.",
+  "evidence": "verdigris-pack.js panoply labels.",
+  "surface": "Panoply",
+  "category": "mechanic"
+ },
+ "kinship": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Bonds carry the shaper's archetype and work at half strength for a different archetype (vesselforge.js:84 estrangedFactor 0.5, :117-122 isEstranged). Agent addition.",
+  "evidence": "README table row \"Kinship\".",
+  "surface": "Kinship",
+  "category": "mechanic"
+ },
+ "estranged": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "See \"kinship\".",
+  "evidence": "README \"half strength in estranged hands\"; vesselforge.js isEstranged.",
+  "surface": "estranged",
+  "category": "mechanic"
+ },
+ "lineage": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Inheritance: \"When a bearer falls, awakened relics and the most-storied memento pass to the heir — estranged, unless the heir walks the same path\" (rpg_inventory/index.html:2398). Agent addition.",
+  "evidence": "index.html section \"Lineage\".",
+  "surface": "Lineage",
+  "category": "mechanic"
+ },
+ "atelier": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Crafting Bench",
+  "mechanic": null,
+  "evidence": "rpg_inventory/index.html \"craft at the Atelier\", \"Close Atelier\"; PoE term Crafting Bench.",
+  "surface": "Atelier",
+  "category": "UI"
+ },
+ "close atelier": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Close Crafting Bench",
+  "mechanic": null,
+  "evidence": "rpg_inventory/index.html button.",
+  "surface": "Close Atelier",
+  "category": "UI"
+ },
+ "venture forth": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Simulate Fight",
+  "mechanic": "Demo loop: a button rolls a random text encounter, gold, XP, loot and bond themes (rpg_inventory/index.html:2112 ventureForth; verdigris-pack.js encounters). Agent addition with flavour text.",
+  "evidence": "index.html button \"Venture Forth\".",
+  "surface": "Venture Forth",
+  "category": "UI"
+ },
+ "encounters": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "verdigris-pack.js encounters: flavour lines (\"drove off a water spirit\", \"bargained with a witch\", \"crossed a mountain pass in an ash storm\") that assign bond themes. Remove the flavour; bond XP should come from real play (ARPG uses kills/blocks).",
+  "evidence": "verdigris-pack.js encounters[].text.",
+  "surface": "encounters",
+  "category": "mechanic"
+ },
+ "breach": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Surrounded Kills",
+  "mechanic": null,
+  "evidence": "ARPG Vessels.cs:21 bond family; credited for a kill with 3+ enemies within reach (ArpgModel.cs:669-670). Item shows \"<name> of the Breach\" (Vessels.cs:88).",
+  "surface": "Breach",
+  "category": "mechanic"
+ },
+ "vigil": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Ward Blocks",
+  "mechanic": null,
+  "evidence": "ARPG Vessels.cs:21 bond family; credited when Ward absorbs a blow (ArpgModel.cs:632). Display \"of the Vigil\"; WIZARD example \"Unbroken Vigil\".",
+  "surface": "Vigil",
+  "category": "mechanic"
+ },
+ "of the breach": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Vessels.DisplayName appends \" of the <family>\" to bonded items (Vessels.cs:88): an invented epithet; show the bond in the tooltip only.",
+  "surface": "of the Breach / of the Vigil / of the Hunt",
+  "category": "item/base"
+ },
+ "butcher": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "verdigris-pack.js archetypes; archetype adds +1 weight to its theme on every deed and drives kinship (vesselforge.js). Owner never asked for archetypes; ARPG uses STR/DEX/INT classes.",
+  "evidence": "Archetype name (redhand/ashspeaker/farwalker ids).",
+  "surface": "Butcher",
+  "category": "theme"
+ },
+ "seer": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "verdigris-pack.js archetypes; archetype adds +1 weight to its theme on every deed and drives kinship (vesselforge.js). Owner never asked for archetypes; ARPG uses STR/DEX/INT classes.",
+  "evidence": "Archetype name (redhand/ashspeaker/farwalker ids).",
+  "surface": "Seer",
+  "category": "theme"
+ },
+ "scout": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "verdigris-pack.js archetypes; archetype adds +1 weight to its theme on every deed and drives kinship (vesselforge.js). Owner never asked for archetypes; ARPG uses STR/DEX/INT classes.",
+  "evidence": "Archetype name (redhand/ashspeaker/farwalker ids).",
+  "surface": "Scout",
+  "category": "theme"
+ },
+ "guard (archetype)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "verdigris-pack.js archetypes; archetype adds +1 weight to its theme on every deed and drives kinship (vesselforge.js). Owner never asked for archetypes; ARPG uses STR/DEX/INT classes.",
+  "evidence": "archetypes.shieldbearer name \"Guard\".",
+  "surface": "Guard",
+  "category": "theme"
+ },
+ "spirit (bond theme)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Mana",
+  "mechanic": null,
+  "evidence": "verdigris-pack.js themes.spiritwork name \"Spirit\" (README already says Mana).",
+  "surface": "Spirit",
+  "category": "theme"
+ },
+ "kill bonuses": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Bond theme name; plain description.",
+  "surface": "Kill Bonuses",
+  "category": "theme"
+ },
+ "block and ward": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Bond theme name; plain.",
+  "surface": "Block and Ward",
+  "category": "theme"
+ },
+ "the blood price": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Life on Kill",
+  "mechanic": null,
+  "evidence": "verdigris-combat.js:115 heal label; mod id blood_price.",
+  "surface": "The Blood Price",
+  "category": "mod"
+ },
+ "second wind": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Life Regeneration while Moving",
+  "mechanic": null,
+  "evidence": "verdigris-combat.js:154 heal label for road_lore.",
+  "surface": "Second Wind",
+  "category": "mod"
+ },
+ "once a day, reroll one omen": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Knucklebone completion bonus refers to omens and a daily timer that no code implements (shape \"grant\").",
+  "evidence": "verdigris-pack.js trophies.knucklebone.completionBonus.",
+  "surface": "Once a day, reroll one omen",
+  "category": "mod"
+ },
+ "you cannot be surprised": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Wolf Fang completion bonus; \"surprised\" is not a mechanic anywhere in WIZARD or the ARPG (does nothing).",
+  "evidence": "verdigris-pack.js trophies.wolf_fang.completionBonus.",
+  "surface": "You cannot be surprised",
+  "category": "mod"
+ },
+ "strikes keep foes at reach": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Spear implicit with stat null: does nothing (verdigris-pack.js forms.spear).",
+  "evidence": "verdigris-pack.js",
+  "surface": "Strikes keep foes at reach",
+  "category": "mod"
+ },
+ "slain enemies have a 15% chance to drop double spoils": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Awakened theme power text; only meaningful with awakening.",
+  "evidence": "verdigris-pack.js themes.slaughter.power",
+  "surface": "Slain enemies have a 15% chance to drop double spoils.",
+  "category": "mod"
+ },
+ "crest": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Cap",
+  "mechanic": null,
+  "evidence": "verdigris-pack.js forms.crest \"Crest\" (kindLabel Headpiece) in hide/copper/bronze/jade. A crest is a plume, not a headpiece; rule 12 bans crested helmets. Attested soft headwear: caps (Borum Eshoej, Trindhoej caps cited in item-types doc).",
+  "surface": "Crest",
+  "category": "item/base"
+ },
+ "riveted mail": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "verdigris-pack.js materials.rivetmail \"Riveted Mail\" (already in retiredMaterials): mail is post-Bronze Age (rule 12).",
+  "surface": "Riveted Mail",
+  "category": "item/base"
+ },
+ "rivetmail": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Coined compound for riveted mail (rule 7); targets.tsv \"Rivetmail Hauberk\", \"Rivetmail Towershield\"; retired material.",
+  "surface": "Rivetmail",
+  "category": "item/base",
+  "scope": "3"
+ },
+ "skymetal": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Meteoric iron",
+  "mechanic": null,
+  "evidence": "Rule 7 example coinage; id still used for material \"Hammered Iron\" and art ids (focus_skymetal, starwand_skymetal).",
+  "surface": "skymetal",
+  "category": "item/base",
+  "scope": "3"
+ },
+ "hammered iron": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Rule 12: open owner question; 2026-10-02 owner ruling allows meteorite-sourced \"Hammered Iron\" until settled.",
+  "surface": "Hammered Iron",
+  "category": "item/base"
+ },
+ "extra focus": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": "Auxiliary INT slot (attendant): unlocks a second focus seat; no owner request found (InventoryAuxiliary.cs:19).",
+  "evidence": "Plain description.",
+  "surface": "Extra Focus",
+  "category": "item/base"
+ },
+ "tool slot": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": "Auxiliary DEX seat (quickRig); only layout code reads it (InventoryAuxiliary.cs:18, InventoryLayout.cs:33).",
+  "evidence": "Plain description.",
+  "surface": "Tool Slot",
+  "category": "UI"
+ },
+ "war horn": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": "Auxiliary STR seat (warcall) for horns/curios; no owner request found (InventoryAuxiliary.cs:17).",
+  "evidence": "Real object.",
+  "surface": "War Horn",
+  "category": "item/base"
+ },
+ "animal parts pack": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": "Class-gated extra pack; also unlocks a lattice row (Weaving.cs:137 spoils_pack). Agent design, plain name.",
+  "evidence": "Already renamed from \"Spoils Roll\".",
+  "surface": "Animal Parts Pack",
+  "category": "UI"
+ },
+ "reliquary": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Rule 12: Ritualist's \"Reliquary\" pack is an open owner question (protected item prompt); ARPG display already \"Relic Pack\".",
+  "surface": "Reliquary",
+  "category": "UI"
+ },
+ "of the world": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Outer",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table builds generated spell names from these words (e.g. \"Pyre ... of the World\"). Not owner canon; name the spell by its node.",
+  "surface": "of the World",
+  "category": "theme"
+ },
+ "of the self": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Inner",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table builds generated spell names from these words (e.g. \"Pyre ... of the World\"). Not owner canon; name the spell by its node.",
+  "surface": "of the Self",
+  "category": "theme"
+ },
+ "it hungers as it works, corrupting whatever it touches.": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "arcane_lattice ALIGN_C flavour sentence (and \"It flows in harmony with the natural order.\"), plus FORMS descriptions like \"a conjured zephyr-djinn bound to service\".",
+  "surface": "It hungers as it works, corrupting whatever it touches.",
+  "category": "UI"
+ },
+ "aberrant hybrid weave": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Mixed-node spell",
+  "mechanic": null,
+  "evidence": "arcane_lattice spell generator label and warning \"the weave warps unpredictably, gaining power at the cost of control\" (+2 power each displaced node).",
+  "surface": "Aberrant hybrid weave",
+  "category": "UI"
+ },
+ "sign: unending ignites": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Unending Ignites",
+  "mechanic": "See \"sign\".",
+  "evidence": "author-tree.mjs ring-8 keystone.",
+  "surface": "Sign: Unending Ignites",
+  "category": "node"
+ },
+ "sign: ward under fire": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Ward Under Fire",
+  "mechanic": "See \"sign\".",
+  "evidence": "author-tree.mjs ring-8 keystone.",
+  "surface": "Sign: Ward Under Fire",
+  "category": "node"
+ },
+ "sign: mark chilled enemies": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Mark Chilled Enemies",
+  "mechanic": "See \"sign\".",
+  "evidence": "author-tree.mjs ring-8 keystone.",
+  "surface": "Sign: Mark Chilled Enemies",
+  "category": "node"
+ },
+ "sign: spreading poison": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Spreading Poison",
+  "mechanic": "See \"sign\".",
+  "evidence": "author-tree.mjs ring-8 keystone.",
+  "surface": "Sign: Spreading Poison",
+  "category": "node"
+ },
+ "sign: double shock stacks": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Double Shock Stacks",
+  "mechanic": "See \"sign\".",
+  "evidence": "author-tree.mjs ring-8 keystone.",
+  "surface": "Sign: Double Shock Stacks",
+  "category": "node"
+ },
+ "sign: unstoppable": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Unstoppable",
+  "mechanic": "See \"sign\".",
+  "evidence": "author-tree.mjs ring-8 keystone.",
+  "surface": "Sign: Unstoppable",
+  "category": "node"
+ },
+ "int anchor": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "INT Pattern Node",
+  "mechanic": null,
+  "evidence": "author-tree.mjs waystone seat.",
+  "surface": "INT Anchor",
+  "category": "node"
+ },
+ "int/dex anchor": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "INT/DEX Pattern Node",
+  "mechanic": null,
+  "evidence": "author-tree.mjs waystone seat.",
+  "surface": "INT/DEX Anchor",
+  "category": "node"
+ },
+ "dex anchor": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "DEX Pattern Node",
+  "mechanic": null,
+  "evidence": "author-tree.mjs waystone seat.",
+  "surface": "DEX Anchor",
+  "category": "node"
+ },
+ "dex/str anchor": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "DEX/STR Pattern Node",
+  "mechanic": null,
+  "evidence": "author-tree.mjs waystone seat.",
+  "surface": "DEX/STR Anchor",
+  "category": "node"
+ },
+ "str anchor": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "STR Pattern Node",
+  "mechanic": null,
+  "evidence": "author-tree.mjs waystone seat.",
+  "surface": "STR Anchor",
+  "category": "node"
+ },
+ "str/int anchor": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "STR/INT Pattern Node",
+  "mechanic": null,
+  "evidence": "author-tree.mjs waystone seat.",
+  "surface": "STR/INT Anchor",
+  "category": "node"
+ },
+ "waystone": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "pattern node",
+  "mechanic": null,
+  "evidence": "Internal node type id \"waystone\" in tree-data.js; PoE2 Waystone is a map item. Hidden id, rename with the display.",
+  "surface": "waystone",
+  "category": "node",
+  "scope": "3"
+ },
+ "oath of the front line": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Ally Protection",
+  "mechanic": null,
+  "evidence": "NAMING.md lists it as the old name of the \"Ally Protection\" notable; NORTH-STAR.md:122 still cites it as the naming register (\"Oath of the Front Line\", \"Blue Arithmetic\") and runtime-smoke.test.mjs:121 types it. Oath (rule 6).",
+  "surface": "Oath of the Front Line",
+  "category": "node"
+ },
+ "evocative two-to-four word phrases": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "names that state the effect",
+  "mechanic": null,
+  "evidence": "NORTH-STAR.md:121 instructs \"Node names are evocative two-to-four word phrases\", contradicting owner rule 8. Doc instruction to correct.",
+  "surface": "evocative two-to-four word phrases",
+  "category": "node",
+  "scope": "3"
+ },
+ "helios": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Helios Anchor Keystone",
+  "category": "node"
+ },
+ "ecliptic": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Ecliptic Archive Keystone",
+  "category": "node"
+ },
+ "myriad": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Myriad Bloom Keystone",
+  "category": "node"
+ },
+ "hexafoil": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Hexafoil Apex Keystone",
+  "category": "node"
+ },
+ "zephyr": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Zephyr Crown Keystone",
+  "category": "node"
+ },
+ "genesis ward": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Genesis Ward",
+  "category": "node"
+ },
+ "seed core": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Seed Core",
+  "category": "node"
+ },
+ "vault husk": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Skeleton",
+  "mechanic": null,
+  "evidence": "gui_framekit/game/world.js monster.",
+  "surface": "Vault Husk",
+  "category": "creature"
+ },
+ "gilded adder": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Snake",
+  "mechanic": null,
+  "evidence": "world.js monster (affix \"Quick · Venomous\").",
+  "surface": "Gilded Adder",
+  "category": "creature"
+ },
+ "warden of chains": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Chained Guard",
+  "mechanic": null,
+  "evidence": "world.js rare monster.",
+  "surface": "Warden of Chains",
+  "category": "creature"
+ },
+ "custodian of the ninth circle": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Boss",
+  "mechanic": null,
+  "evidence": "world.js boss.",
+  "surface": "Custodian of the Ninth Circle",
+  "category": "creature"
+ },
+ "chains the living": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Cannot Be Knocked Back",
+  "mechanic": null,
+  "evidence": "world.js rare affix line.",
+  "surface": "Chains the Living · Cannot Be Moved",
+  "category": "UI"
+ },
+ "the sunken archive": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Dungeon Level 1",
+  "mechanic": null,
+  "evidence": "world.js zone.",
+  "surface": "The Sunken Archive",
+  "category": "place"
+ },
+ "the lower vaults": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Dungeon Level 2",
+  "mechanic": null,
+  "evidence": "world.js zone (\"Descend to the Lower Vaults\").",
+  "surface": "The Lower Vaults",
+  "category": "place"
+ },
+ "warden of the verdant seal": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Boss",
+  "mechanic": null,
+  "evidence": "world.js/pane-content quest text (\"The Verdant Seal\").",
+  "surface": "Warden of the Verdant Seal",
+  "category": "UI"
+ },
+ "silent archivist": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Vendor",
+  "mechanic": null,
+  "evidence": "world.js NPC.",
+  "surface": "Silent Archivist",
+  "category": "UI"
+ },
+ "cassia": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Vendor",
+  "mechanic": null,
+  "evidence": "world.js NPC name.",
+  "surface": "Cassia",
+  "category": "UI"
+ },
+ "aurelius": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "pane-content.js companion name with \"Ceremonial effects active\".",
+  "surface": "Aurelius",
+  "category": "UI"
+ },
+ "storm call": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Lightning Strike",
+  "mechanic": null,
+  "evidence": "core.js:188, flavour \"The archive's copper roof earns its keep.\" Storm (rule 5).",
+  "surface": "Storm Call",
+  "category": "UI"
+ },
+ "still hour": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Stop Time",
+  "mechanic": null,
+  "evidence": "core.js ability, flavour \"Stop everything. Keep walking.\"",
+  "surface": "Still Hour",
+  "category": "UI"
+ },
+ "reagent ledger": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Reagents",
+  "mechanic": null,
+  "evidence": "gui_framekit window demo title.",
+  "surface": "Reagent Ledger",
+  "category": "UI"
+ },
+ "familiars": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Companions",
+  "mechanic": null,
+  "evidence": "gui_framekit tabs demo; PoE2 term is Companions.",
+  "surface": "Familiars",
+  "category": "UI"
+ },
+ "incantation": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Spell name",
+  "mechanic": null,
+  "evidence": "gui_framekit input demo label.",
+  "surface": "Incantation",
+  "category": "UI"
+ },
+ "seal the circle": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Confirm",
+  "mechanic": null,
+  "evidence": "gui_framekit dialog demo button flavour.",
+  "surface": "Seal the circle",
+  "category": "UI"
+ },
+ "verdant draught": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Life Flask",
+  "mechanic": null,
+  "evidence": "gui_framekit/game/character.js consumable; owner: no D2 potions.",
+  "surface": "Verdant Draught",
+  "category": "UI"
+ },
+ "binding sigil": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "gui_framekit character.js currency; sigil (rule 13).",
+  "surface": "Binding Sigil",
+  "category": "UI"
+ },
+ "bone fetish": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Bone Charm",
+  "mechanic": null,
+  "evidence": "gui_framekit character.js item.",
+  "surface": "Bone Fetish",
+  "category": "UI"
+ },
+ "astral plate": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "gui_framekit character.js armour: plate armour is banned (rule 12) and \"Astral\" is a flourish.",
+  "surface": "Astral Plate",
+  "category": "UI"
+ },
+ "silent hourglass": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "gui_framekit character.js item: hourglass is post-Bronze Age.",
+  "surface": "Silent Hourglass",
+  "category": "UI"
+ },
+ "oracle lens": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "gui_framekit/index.html \"Oracle Lens Legendary focus\": lens (glass) is post-Bronze Age; invented name.",
+  "surface": "Oracle Lens",
+  "category": "UI"
+ },
+ "sealed oath": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "gui_framekit/game/tree.js node; oath (rule 6).",
+  "surface": "Sealed Oath",
+  "category": "UI"
+ },
+ "cold blood": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "gui_framekit/game/tree.js node (blood theme).",
+  "surface": "Cold Blood",
+  "category": "UI"
+ },
+ "old knowledge": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "gui_framekit/game/tree.js node name with no stated effect.",
+  "surface": "Old Knowledge",
+  "category": "UI"
+ },
+ "deep archive": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "gui_framekit/game/tree.js node.",
+  "surface": "Deep Archive",
+  "category": "UI"
+ },
+ "noon vigil": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "gui_framekit/game/tree.js node.",
+  "surface": "Noon Vigil",
+  "category": "UI"
+ },
+ "bright lantern": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "gui_framekit/game/tree.js node: lanterns are post-Bronze Age (rule 12).",
+  "surface": "Bright Lantern",
+  "category": "UI"
+ },
+ "the web remembers": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "core.js ability flavour text (rule 10).",
+  "surface": "Mark a foe. The web remembers.",
+  "category": "UI"
+ },
+ "pale seraph": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Pale Seraph",
+  "category": "creature"
+ },
+ "wight": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Wight",
+  "category": "creature"
+ },
+ "ghoul": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Ghoul",
+  "category": "creature"
+ },
+ "kobold scavenger": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Kobold Scavenger",
+  "category": "creature"
+ },
+ "goblin skirmisher": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Goblin Skirmisher",
+  "category": "creature"
+ },
+ "jester of ruin": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Jester of Ruin",
+  "category": "creature"
+ },
+ "buffoon mcstumble": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Buffoon McStumble",
+  "category": "creature"
+ },
+ "bozo the lost": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Bozo the Lost",
+  "category": "creature"
+ },
+ "giggles": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Giggles",
+  "category": "creature"
+ },
+ "rift stalker": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Rift Stalker",
+  "category": "creature"
+ },
+ "the hollow king": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "The Hollow King",
+  "category": "creature"
+ },
+ "the unhallowed": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "The Unhallowed",
+  "category": "creature"
+ },
+ "the unworthy": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented enemy/killer name. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "The Unworthy",
+  "category": "creature"
+ },
+ "house motto": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets. The House itself is owner vocabulary; \"House Motto\" is not.",
+  "surface": "House Motto",
+  "category": "UI"
+ },
+ "oral tradition": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Oral Tradition",
+  "category": "UI"
+ },
+ "eternal recurrence": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Eternal Recurrence",
+  "category": "UI"
+ },
+ "ancestral arms": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Ancestral Arms",
+  "category": "UI"
+ },
+ "whispered heresies": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Whispered Heresies",
+  "category": "UI"
+ },
+ "whispers of the dead": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Whispers of the Dead",
+  "category": "UI"
+ },
+ "seal the pact": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Seal the Pact",
+  "category": "UI"
+ },
+ "ichor of the void": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Ichor of the Void",
+  "category": "UI"
+ },
+ "mirelle of the fen": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Mirelle of the Fen",
+  "category": "UI"
+ },
+ "the choir below": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "The Choir Below",
+  "category": "UI"
+ },
+ "thane": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Aldric Thane",
+  "category": "UI"
+ },
+ "lantern isles": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "verdigris_splash/app.js invented region, citadel or item name in the world preview (rule 6).",
+  "surface": "The Lantern Isles",
+  "category": "place"
+ },
+ "aster vale": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "verdigris_splash/app.js invented region, citadel or item name in the world preview (rule 6).",
+  "surface": "Aster Vale",
+  "category": "place"
+ },
+ "morrow keys": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "verdigris_splash/app.js invented region, citadel or item name in the world preview (rule 6).",
+  "surface": "Morrow Keys",
+  "category": "place"
+ },
+ "crown of tides": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "verdigris_splash/app.js invented region, citadel or item name in the world preview (rule 6).",
+  "surface": "Crown of Tides",
+  "category": "place"
+ },
+ "crown of the pale court": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "verdigris_splash/app.js invented region, citadel or item name in the world preview (rule 6).",
+  "surface": "Crown of the Pale Court",
+  "category": "place"
+ },
+ "delver": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Difficulty 2",
+  "mechanic": null,
+  "evidence": "sokoban/core.js:1242-1247 difficulty titles by score; name by level. (\"Warden\"/\"Guardian\" in cartographer expedition rooms are plain room roles and stay.)",
+  "surface": "Delver",
+  "category": "UI"
+ },
+ "oracular": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Difficulty 6",
+  "mechanic": null,
+  "evidence": "sokoban/core.js:1242-1247 difficulty titles by score; name by level. (\"Warden\"/\"Guardian\" in cartographer expedition rooms are plain room roles and stay.)",
+  "surface": "Oracular",
+  "category": "UI"
+ },
+ "sokoban archive notes": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "sokoban/game.js:124-133 numbered \"archive\" notes (\"VII. The final chambers outlast the lesser oracle.\", \"VIII. The Vault remembers your proof.\"): flavour text (rule 10).",
+  "surface": "The archive opens after the first proof.",
+  "category": "UI"
+ },
+ "flying terror": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Flying Demon",
+  "mechanic": null,
+  "evidence": "CreatureCatalog.cs:57 Demon category; \"Terror\" is an epithet.",
+  "surface": "Flying Terror",
+  "category": "creature"
+ },
+ "night demon": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Gaunt Demon",
+  "mechanic": null,
+  "evidence": "CreatureCatalog.cs:53: \"bald gaunt demon body with long articulated fingers\"; nothing in code ties it to night.",
+  "surface": "Night Demon",
+  "category": "creature"
+ },
+ "glutton demon": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Heavy Demon",
+  "mechanic": null,
+  "evidence": "CreatureCatalog.cs:54 \"Heavy original demon body\"; \"Glutton\" is an epithet.",
+  "surface": "Glutton Demon",
+  "category": "creature"
+ },
+ "the first house": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "House",
+  "mechanic": null,
+  "evidence": "ARPG ArpgModel.cs:107 default House name. The House is owner vocabulary; \"The First\" is an invented title.",
+  "surface": "The First House",
+  "category": "place"
+ },
+ "storm shelf": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Legacy place names \"Storm Shelf\", \"Storm of Handles\", \"River Road North\" kept as regex exceptions in ARPG CombatTerminology.cs:29; storm/river (rule 5). Remove with the old names.",
+  "surface": "Storm Shelf",
+  "category": "place"
+ },
+ "dustwind": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Steppe",
+  "mechanic": null,
+  "evidence": "rpg_inventory/core/MIXED-REFERENCE-BOARD-POLICY.md:41 region \"Dustwind: Scythian/Saka steppe equipment\"; also AGENTS.md and post-calib wave-2 approvals. Coined compound (rule 7).",
+  "surface": "Dustwind",
+  "category": "place",
+  "scope": "3"
+ },
+ "riverspill": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Nile and Mesopotamia",
+  "mechanic": null,
+  "evidence": "MIXED-REFERENCE-BOARD-POLICY.md:42 region \"Riverspill: Predynastic/ancient Egyptian and Sumerian/Akkadian\". Coined compound (rule 7).",
+  "surface": "Riverspill",
+  "category": "place",
+  "scope": "3"
+ },
+ "kilnfathers": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "NORTH-STAR.md lists invented cultures \"the Drowned Court, the Kilnfathers, the First Herd, the Quiet Survey, the Salt Oath\"; jewels.js saga ids (drowned-court, kilnfathers, first-herd, quiet-survey, salt-oath). Rule 6 bans invented cultures and sagas.",
+  "surface": "Kilnfathers",
+  "category": "theme",
+  "scope": "3"
+ },
+ "ember": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Fire",
+  "mechanic": null,
+  "evidence": "Rule 5: never as game terms. Still in verdigris-pack.js tags/weights and pigment text, stat ids ember_res/storm_res/river_resistance, ARPG legacy mapping (CombatTerminology.cs). Literal embers/rivers stay (rule 11).",
+  "surface": "Ember",
+  "category": "theme"
+ },
+ "river": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Cold",
+  "mechanic": null,
+  "evidence": "Rule 5: never as game terms. Still in verdigris-pack.js tags/weights and pigment text, stat ids ember_res/storm_res/river_resistance, ARPG legacy mapping (CombatTerminology.cs). Literal embers/rivers stay (rule 11).",
+  "surface": "River",
+  "category": "theme"
+ },
+ "storm": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Lightning",
+  "mechanic": null,
+  "evidence": "Rule 5: never as game terms. Still in verdigris-pack.js tags/weights and pigment text, stat ids ember_res/storm_res/river_resistance, ARPG legacy mapping (CombatTerminology.cs). Literal embers/rivers stay (rule 11).",
+  "surface": "Storm",
+  "category": "theme"
+ },
+ "gloam": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Chaos",
+  "mechanic": null,
+  "evidence": "Rule 5: never as game terms. Still in verdigris-pack.js tags/weights and pigment text, stat ids ember_res/storm_res/river_resistance, ARPG legacy mapping (CombatTerminology.cs). Literal embers/rivers stay (rule 11).",
+  "surface": "Gloam",
+  "category": "theme"
+ },
+ "ember tithe": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Added Fire Damage",
+  "mechanic": null,
+  "evidence": "Old name kept only as a save/compat mapping (ARPG CombatTerminology.cs:20-28; verdigris-pack.js comment). Display already renamed; delete when saves allow.",
+  "surface": "Ember Tithe",
+  "category": "mod"
+ },
+ "sign of the river": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Mark Chilled Enemies",
+  "mechanic": null,
+  "evidence": "Old name kept only as a save/compat mapping (ARPG CombatTerminology.cs:20-28; verdigris-pack.js comment). Display already renamed; delete when saves allow.",
+  "surface": "Sign of the River",
+  "category": "mod"
+ },
+ "sign of the storm": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Double Shock Stacks",
+  "mechanic": null,
+  "evidence": "Old name kept only as a save/compat mapping (ARPG CombatTerminology.cs:20-28; verdigris-pack.js comment). Display already renamed; delete when saves allow.",
+  "surface": "Sign of the Storm",
+  "category": "mod"
+ },
+ "storm line": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Projectile Damage",
+  "mechanic": null,
+  "evidence": "Old name kept only as a save/compat mapping (ARPG CombatTerminology.cs:20-28; verdigris-pack.js comment). Display already renamed; delete when saves allow.",
+  "surface": "Storm Line",
+  "category": "mod"
+ },
+ "river stone": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Cold Resistance",
+  "mechanic": null,
+  "evidence": "Old name kept only as a save/compat mapping (ARPG CombatTerminology.cs:20-28; verdigris-pack.js comment). Display already renamed; delete when saves allow.",
+  "surface": "River Stone",
+  "category": "mod"
+ },
+ "flint lopper": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Two-handed Flint Axe",
+  "mechanic": null,
+  "evidence": "Old name kept only as a save/compat mapping (ARPG CombatTerminology.cs:20-28; verdigris-pack.js comment). Display already renamed; delete when saves allow.",
+  "surface": "Flint Lopper",
+  "category": "mod"
+ },
+ "ember ward": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Old name kept only as a save/compat mapping (ARPG CombatTerminology.cs:20-28; verdigris-pack.js comment). Display already renamed; delete when saves allow.",
+  "surface": "Ember Ward",
+  "category": "mod"
+ },
+ "dusk gloam": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Old name kept only as a save/compat mapping (ARPG CombatTerminology.cs:20-28; verdigris-pack.js comment). Display already renamed; delete when saves allow.",
+  "surface": "Dusk Gloam",
+  "category": "mod"
+ },
+ "root ball": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"The root ball and the looper are two handed weapons\". ARPG maps the display to \"Root Club\" (CombatTerminology.cs:20); owner name may be restored.",
+  "surface": "Root Ball",
+  "category": "item/base"
+ },
+ "charged runes": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "ARPG Resources/VFX/aura-lab.json layer: rune-glyph/heptagram decoration banned by rule 13; owner on stun stars: \"not so cheesy and cartoony as literal five pointed start swirling above\".",
+  "surface": "Charged runes",
+  "category": "UI"
+ },
+ "blood runes": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "ARPG Resources/VFX/aura-lab.json layer: rune-glyph/heptagram decoration banned by rule 13; owner on stun stars: \"not so cheesy and cartoony as literal five pointed start swirling above\".",
+  "surface": "Blood runes",
+  "category": "UI"
+ },
+ "rage runes": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "ARPG Resources/VFX/aura-lab.json layer: rune-glyph/heptagram decoration banned by rule 13; owner on stun stars: \"not so cheesy and cartoony as literal five pointed start swirling above\".",
+  "surface": "Rage runes",
+  "category": "UI"
+ },
+ "blight heptagram": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "ARPG Resources/VFX/aura-lab.json layer: rune-glyph/heptagram decoration banned by rule 13; owner on stun stars: \"not so cheesy and cartoony as literal five pointed start swirling above\".",
+  "surface": "Blight heptagram",
+  "category": "UI"
+ },
+ "stun stars": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "ARPG Resources/VFX/aura-lab.json layer: rune-glyph/heptagram decoration banned by rule 13; owner on stun stars: \"not so cheesy and cartoony as literal five pointed start swirling above\".",
+  "surface": "Stun stars",
+  "category": "UI"
+ },
+ "holy fire": {
+  "origin": "other-game",
+  "verdict": "purge",
+  "after": "Fire Damage Aura",
+  "mechanic": null,
+  "evidence": "Diablo II paladin aura names, kept only as presets; display already plain (SpellRules.cs:39).",
+  "surface": "Holy Fire",
+  "category": "mechanic"
+ },
+ "holy freeze": {
+  "origin": "other-game",
+  "verdict": "purge",
+  "after": "Cold Damage Aura",
+  "mechanic": null,
+  "evidence": "Diablo II paladin aura names, kept only as presets; display already plain (SpellRules.cs:39).",
+  "surface": "Holy Freeze",
+  "category": "mechanic"
+ },
+ "holy shock": {
+  "origin": "other-game",
+  "verdict": "purge",
+  "after": "Lightning Damage Aura",
+  "mechanic": null,
+  "evidence": "Diablo II paladin aura names, kept only as presets; display already plain (SpellRules.cs:39).",
+  "surface": "Holy Shock",
+  "category": "mechanic"
+ },
+ "energy shield": {
+  "origin": "poe",
+  "verdict": "purge",
+  "after": "Ward Charge",
+  "mechanic": null,
+  "evidence": "PoE term used in a different meaning: the preset is a Ward charge, displayed \"Ward Charge\" (SpellRules.cs:43). Fails (c) as a display name.",
+  "surface": "Energy Shield",
+  "category": "mechanic"
+ },
+ "house": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"House management should be accessible from the main menu\"."
+ },
+ "stash": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"the stash guy\"; PoE."
+ },
+ "remedy": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"flask/remedy bar\"."
+ },
+ "flask": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"flask/remedy bar\"; PoE."
+ },
+ "refund": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"Refund points\"."
+ },
+ "card": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: arcomage-like card game and \"divinationcard-like items\"."
+ },
+ "deck": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"build-a-deck menu\"."
+ },
+ "horn": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner tile tiers: \"wood, horn, ivory\"."
+ },
+ "ivory": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner tile tiers."
+ },
+ "weave": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"weave power into their active skills\"."
+ },
+ "lattice": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"WIZARD spell lattice system\"."
+ },
+ "kraken": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"the tentacles, kraken\"."
+ },
+ "hydra": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Owner: \"Hydra necks clip\"."
+ },
+ "bricks": {
+  "origin": "other-game",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcomage resource name in TownCards.cs; owner asked for an \"arcomage -like minigame\" (rule (a) via owner request).",
+  "surface": "Bricks",
+  "category": "currency"
+ },
+ "gems": {
+  "origin": "other-game",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Arcomage resource (TownCards.cs); owner-requested arcomage game.",
+  "surface": "Gems",
+  "category": "currency"
+ },
+ "tobias": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample name or flavour word. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Tobias Crane",
+  "category": "UI"
+ },
+ "stillman": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample name or flavour word. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Stillman",
+  "category": "UI"
+ },
+ "sera": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample name or flavour word. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Sera Voss",
+  "category": "UI"
+ },
+ "isolde": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample name or flavour word. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Isolde Marr",
+  "category": "UI"
+ },
+ "wren": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample name or flavour word. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Wren Calloway",
+  "category": "UI"
+ },
+ "dray": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample name or flavour word. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Kaelen Dray",
+  "category": "UI"
+ },
+ "remembered": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented sample name or flavour word. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Remembered",
+  "category": "UI"
+ },
+ "raven quill": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "gui_framekit item-tooltip demo item \"Raven Quill\": quill pens/writing on paper are post-Bronze Age (rule 12).",
+  "surface": "Raven Quill",
+  "category": "item/base"
+ },
+ "infernal": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Volcanic",
+  "mechanic": null,
+  "evidence": "cartographer/core/mapgen.js:1560 map theme \"Infernal\" (a hell theme); rule 8 names maps by real terrain or architecture.",
+  "surface": "Infernal",
+  "category": "place"
+ },
+ "verdigris": {
+  "origin": "owner",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Rule 47: the game name is dropped from player-facing text; lowercase \"verdigris\" (bronze patina) and internal ids (VerdigrisStats, verdigris-pack.js) stay. geometric_skilltree/index.html:1542 theme label \"Verdigris\" is a palette name (patina) and may stay.",
+  "surface": "Verdigris"
+ },
+ "curio": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": "Item kind with no implicit and no modifier slots (verdigris-pack.js forms.curio noVessel); ARPG seats it in the War Horn seat and grants a \"second curio\" unlock. No owner request found.",
+  "evidence": "Plain English object word (small curious object); not a PoE term in this meaning (PoE Heist curios are displays).",
+  "surface": "Curio",
+  "category": "item/base"
+ },
+ "relic": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Plain English (sacred object) in the same sense as the item; PoE2 Sanctum relics differ, so the keep rests on (b), not (c). Rule 12 notes the Reliquary pack question.",
+  "surface": "Relic",
+  "category": "item/base"
+ },
+ "fletcher": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real occupation word in rp_account_creator background list."
+ },
+ "cooper": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real occupation word in rp_account_creator background list."
+ },
+ "weaver": {
+  "origin": "plain",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Real occupation word in rp_account_creator background list."
+ },
+ "disp": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Code token / file format (Disp = \"disputed\" confidence class in skill-zone-items.html).",
+  "scope": "1"
+ },
+ "png": {
+  "origin": "technical",
+  "verdict": "keep",
+  "after": null,
+  "mechanic": null,
+  "evidence": "File format.",
+  "scope": "1"
+ },
+ "hunt (bond family)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Rare Kills",
+  "mechanic": null,
+  "evidence": "ARPG Vessels.cs:21 bond family; credited for an elite kill (ArpgModel.cs:668). Display \"of the Hunt\".",
+  "surface": "Hunt",
+  "category": "mechanic"
+ },
+ "memory (bond)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "bond",
+  "mechanic": null,
+  "evidence": "verdigris-pack.js theme field \"memory\"; README \"Bonds are named memories\". Plain word used as a coined name for bonds.",
+  "surface": "memory",
+  "category": "mechanic"
+ },
+ "codex (pane)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Journal",
+  "mechanic": null,
+  "evidence": "gui_framekit/game/index.html:85 pane launcher \"Codex\" (a book form, rule 12).",
+  "surface": "Codex",
+  "category": "UI"
+ },
+ "warden (sokoban rank)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Difficulty 4",
+  "mechanic": null,
+  "evidence": "sokoban/core.js:1242-1247 difficulty titles by score; name by level. (\"Warden\"/\"Guardian\" in cartographer expedition rooms are plain room roles and stay.)",
+  "surface": "Warden",
+  "category": "UI"
+ },
+ "sign (tree node type)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Keystone",
+  "mechanic": "Signs are \"birthsign keystones, exactly one per life\" (geometric_skilltree README:15,163); the one-only limit is enforced in index.html:3142-3193 (\"You can have only one Sign: refund it first\"). Elder-Scrolls idea, never asked for by the owner; PoE keystones have no such limit.",
+  "evidence": "Ring-8 node type \"sign\", names \"Sign: Ward Under Fire\" etc. (author-tree.mjs:256-616; ARPG CombatTerminology maps \"Sign of the River\" to \"Sign: ...\").",
+  "surface": "Sign",
+  "category": "node"
+ },
+ "anchor (tree node type)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Pattern Node",
+  "mechanic": null,
+  "evidence": "Ring-5 node type (internal \"waystone\", shown as \"Anchor\", index.html:4719): \"INT Anchor\" grants a stat and changes pattern scoring (\"Waves passing through this Anchor count +1 length\", author-tree.mjs:106-224). The word does not say what it does; PoE2 \"Waystone\" (the internal id) is a map item, a different meaning.",
+  "surface": "Anchor",
+  "category": "node"
+ },
+ "scar (slot)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "locked slot",
+  "mechanic": "Scarred slots are permanently unusable after a bond is removed (vesselforge.js usedSlots + item.scars); fire() outcome \"scar\". Agent addition.",
+  "evidence": "README \"Severed only by knife — the slot is scarred (✕) forever\".",
+  "surface": "scar",
+  "category": "mechanic"
+ },
+ "sever (bond)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Remove",
+  "mechanic": null,
+  "evidence": "vesselforge.js \"No bond to sever\"; README.",
+  "surface": "sever",
+  "category": "mechanic"
+ },
+ "deepen (bond)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Upgrade",
+  "mechanic": null,
+  "evidence": "vesselforge.js \"No bond to deepen\".",
+  "surface": "deepen",
+  "category": "mechanic"
+ },
+ "venture (demo loop)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Simulate Fight",
+  "mechanic": null,
+  "evidence": "See \"venture forth\".",
+  "surface": "Venture",
+  "category": "UI"
+ },
+ "searing (currency word)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Add",
+  "mechanic": null,
+  "evidence": "Used in \"Searing Sigil\", \"Searing Ash\" and pigment text \"searing leans toward ...\".",
+  "surface": "Searing",
+  "category": "currency"
+ },
+ "firing (kiln gamble)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "See \"kiln firing\".",
+  "evidence": "vesselforge.js \"Firing needs 2 patience\".",
+  "surface": "Firing",
+  "category": "mechanic"
+ },
+ "trophy (item kind)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "animal part",
+  "mechanic": "See \"hunt trophy\".",
+  "evidence": "vesselforge.js \"Unknown trophy\", \"No trophy to pry out\"; index.html \"Bind Trophy ✧\", \"Trophy Fragments\".",
+  "surface": "Trophy",
+  "category": "mechanic"
+ },
+ "archetype (vesselforge)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "class",
+  "mechanic": "verdigris-pack.js archetypes; archetype adds +1 weight to its theme on every deed and drives kinship (vesselforge.js). Owner never asked for archetypes; ARPG uses STR/DEX/INT classes.",
+  "evidence": "rpg_inventory/index.html, README.",
+  "surface": "archetype",
+  "category": "mechanic"
+ },
+ "goods (stat)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Item Rarity",
+  "mechanic": null,
+  "evidence": "See \"goods found\"; also design text \"Goods you find are worth 10% more\" (author-tree.mjs:511).",
+  "surface": "Goods",
+  "category": "stat"
+ },
+ "fortune (tag)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "item rarity",
+  "mechanic": null,
+  "evidence": "Tag \"fortune\" in verdigris-pack.js weights and pigment text (\"searing leans toward fortune, swiftness and Cold\", rpg_inventory/index.html:782); maps to goods_find.",
+  "surface": "fortune",
+  "category": "theme"
+ },
+ "deed (bond xp)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "bond XP source",
+  "mechanic": null,
+  "evidence": "README \"Deeds, themes, archetypes\"; ARPG Vessels.cs \"deed families\".",
+  "surface": "deed",
+  "category": "mechanic"
+ },
+ "nameless (default bearer)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Default bearer name used when awakening names an item (vesselforge.js).",
+  "evidence": "vesselforge.js / index.html \"Nameless\".",
+  "surface": "Nameless",
+  "category": "UI"
+ },
+ "chronicle (log)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Log",
+  "mechanic": null,
+  "evidence": "rpg_inventory/index.html drawer \"‹‹ Chronicle\" and section \"Chronicle\"; also verdigris_splash and dashboard.js.",
+  "surface": "Chronicle",
+  "category": "UI"
+ },
+ "choir (splash)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "verdigris_splash/app.js invented region, citadel or item name in the world preview (rule 6).",
+  "surface": "Choir",
+  "category": "place"
+ },
+ "coil (framekit ability)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Poison Bite",
+  "mechanic": null,
+  "evidence": "core.js ability, flavour \"Patience with teeth.\"",
+  "surface": "Coil",
+  "category": "UI"
+ },
+ "radiance (framekit ability)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Fire Nova",
+  "mechanic": null,
+  "evidence": "gui_framekit/game/core.js:186 ability, flavour \"A wave of noon. Burns what hides.\"",
+  "surface": "Radiance",
+  "category": "UI"
+ },
+ "triumph (framekit ability)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Damage Buff",
+  "mechanic": null,
+  "evidence": "core.js ability, flavour \"For a moment, you have already won.\"",
+  "surface": "Triumph",
+  "category": "UI"
+ },
+ "initiate (sokoban rank)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Difficulty 1",
+  "mechanic": null,
+  "evidence": "sokoban/core.js:1242-1247 difficulty titles by score; name by level. (\"Warden\"/\"Guardian\" in cartographer expedition rooms are plain room roles and stay.)",
+  "surface": "Initiate",
+  "category": "UI"
+ },
+ "pathfinder (sokoban rank)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Difficulty 3",
+  "mechanic": null,
+  "evidence": "sokoban/core.js:1242-1247 difficulty titles by score; name by level. (\"Warden\"/\"Guardian\" in cartographer expedition rooms are plain room roles and stay.)",
+  "surface": "Pathfinder",
+  "category": "UI"
+ },
+ "abyssal (sokoban rank)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Difficulty 5",
+  "mechanic": null,
+  "evidence": "sokoban/core.js:1242-1247 difficulty titles by score; name by level. (\"Warden\"/\"Guardian\" in cartographer expedition rooms are plain room roles and stay.)",
+  "surface": "Abyssal",
+  "category": "UI"
+ },
+ "storied (rp field)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Storied",
+  "category": "UI"
+ },
+ "undying (rp title)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Undying",
+  "category": "UI"
+ },
+ "epitaph (rp field)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "Invented field, title or flavour. tools/rp_account_creator/index.html sample character/place names and flavour lines, all agent-written; a name field the player fills needs no invented presets.",
+  "surface": "Epitaph",
+  "category": "UI"
+ },
+ "attune (menu demo)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "gui_framekit menu demo item \"Attune\" (no function).",
+  "surface": "Attune",
+  "category": "UI"
+ },
+ "vitality (stat)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Life",
+  "mechanic": null,
+  "evidence": "gui_framekit/game/character.js \"80 Vitality\", HUD globe demo; rp_account_creator. The stat is Life.",
+  "surface": "Vitality",
+  "category": "stat"
+ },
+ "presence (stat)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": null,
+  "evidence": "verdigris_splash/app.js item line \"Crown of the Pale Court +9 Presence\": invented stat.",
+  "surface": "Presence",
+  "category": "stat"
+ },
+ "reach (stat)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Melee Strike Range",
+  "mechanic": null,
+  "evidence": "Stat label \"increased Reach\" (verdigris-stats.js:74 reach_increased; mod \"long_reach\"; tree \"Reach\"); ARPG ArpgModel.cs:228 Reach = weapon reach x increased reach_increased, i.e. melee range. PoE term: Melee Strike Range.",
+  "surface": "Reach",
+  "category": "stat"
+ },
+ "patience (crafting budget)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Invented crafting budget: each item rolls patience from its material (verdigris-pack.js materials.*.patience) and every sear/efface/chisel/fire spends it (vesselforge.js:244 spendPatience). ARPG Itemization.cs:317: \"Patience [is] not implemented\". Owner asked for PoE-like rarity steps, not a per-item budget.",
+  "evidence": "rpg_inventory/index.html section \"Patience\"; error \"The vessel has no patience left for tools\".",
+  "surface": "Patience",
+  "category": "resource"
+ },
+ "chisel (currency)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Add Modifier Slot",
+  "mechanic": null,
+  "evidence": "rpg_inventory/index.html:2215 button \"Chisel\"; see \"vessel chisel\".",
+  "surface": "Chisel",
+  "category": "currency"
+ },
+ "sear (verb)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Add Brand",
+  "mechanic": null,
+  "evidence": "playground.html button \"Sear ✦\"; vesselforge.js sear(). Owner says brands are \"added\".",
+  "surface": "Sear",
+  "category": "mechanic"
+ },
+ "efface (verb)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Remove Brand",
+  "mechanic": null,
+  "evidence": "playground.html button \"Efface\"; vesselforge.js efface().",
+  "surface": "Efface",
+  "category": "mechanic"
+ },
+ "saga (jewel family)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "seeded",
+  "mechanic": null,
+  "evidence": "jewels.js family \"saga\" (Timeless-Jewel analogue) with culture ids; display already \"Spell Reroll Jewel (seed 773)\". Rule 6 names sagas.",
+  "surface": "saga",
+  "category": "item/base",
+  "scope": "3"
+ },
+ "property (modifier)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Modifier",
+  "mechanic": null,
+  "evidence": "ARPG Itemization.cs uses \"property\" for item modifiers in every currency text and tooltip (FamilyName returns \"Property\"); PoE term is modifier.",
+  "surface": "Property",
+  "category": "mod"
+ },
+ "omen": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Upgrade to Rare",
+  "mechanic": null,
+  "evidence": "ARPG Itemization.cs:153: turns a magic item rare and adds one property (= PoE Regal Orb). PoE2 Omens modify the next currency use, a different meaning, so fails (c). WIZARD: Entrail/Bird/Smoke/Blood Omen guarantee a tag on the next sear (vesselforge.js:204, = PoE Essence-like).",
+  "surface": "Omen",
+  "category": "currency"
+ },
+ "awaken": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "upgrade to rare",
+  "mechanic": null,
+  "evidence": "See \"awakened\".",
+  "surface": "awaken",
+  "category": "mechanic"
+ },
+ "veil (lattice tier)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "tier",
+  "mechanic": null,
+  "evidence": "Lattice tier labels \"first veil — the plane\", \"second veil — the vessel\", \"third veil — the tesseract\" (arcane_lattice TIERS in an earlier build quoted in owner-typed.txt); canon tiers are Plane, Vessel, Tesseract.",
+  "surface": "veil",
+  "category": "node"
+ },
+ "memento": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "History",
+  "mechanic": null,
+  "evidence": "rpg_inventory/index.html:1396 label \"Memento\" (bond history); bonds are described as \"named memories\".",
+  "surface": "Memento",
+  "category": "UI"
+ },
+ "spoil (kind label)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Animal Part",
+  "mechanic": null,
+  "evidence": "verdigris-pack.js forms.trophy kindLabel \"Spoil\".",
+  "surface": "Spoil",
+  "category": "item/base"
+ },
+ "celestial (keystone)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Celestial Edge Keystone",
+  "category": "node"
+ },
+ "prism (dead tree)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Prism",
+  "category": "node"
+ },
+ "nexus (dead tree)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Prime Seed Nexus",
+  "category": "node"
+ },
+ "bulwark (dead tree)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Bulwark",
+  "category": "node"
+ },
+ "infusion (dead tree)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Infusion",
+  "category": "node"
+ },
+ "resonant (dead tree)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Resonant",
+  "category": "node"
+ },
+ "chord (dead tree)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Chord",
+  "category": "node"
+ },
+ "spire (dead tree)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Spire Adept",
+  "category": "node"
+ },
+ "petal (dead tree)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Petal Vanguard",
+  "category": "node"
+ },
+ "solar (dead tree)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Solar",
+  "category": "node"
+ },
+ "lumen (dead tree)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Lumen",
+  "category": "node"
+ },
+ "sirocco (dead tree)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Sirocco",
+  "category": "node"
+ },
+ "adept (dead tree)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Spire Adept",
+  "category": "node"
+ },
+ "savant (dead tree)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Lattice Savant",
+  "category": "node"
+ },
+ "vanguard (dead tree)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": null,
+  "mechanic": "Dead data: tools/geometric_skilltree/assets/skilltree-content.json is not loaded by any page or script in WIZARD or the ARPG (grep: no references); its keystone and class names are invented.",
+  "evidence": "Invented keystone/class/cluster name in skilltree-content.json.",
+  "surface": "Petal Vanguard",
+  "category": "node"
+ },
+ "vile (lattice spell name)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Adversarial",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table builds generated spell names from these words (e.g. \"Pyre ... of the World\"). Not owner canon; name the spell by its node.",
+  "surface": "Vile",
+  "category": "theme"
+ },
+ "verdant (lattice spell name)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Natural",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table builds generated spell names from these words (e.g. \"Pyre ... of the World\"). Not owner canon; name the spell by its node.",
+  "surface": "Verdant",
+  "category": "theme"
+ },
+ "ruinous (lattice spell name)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Destructive",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table builds generated spell names from these words (e.g. \"Pyre ... of the World\"). Not owner canon; name the spell by its node.",
+  "surface": "Ruinous",
+  "category": "theme"
+ },
+ "aegis (lattice spell name)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Sustaining",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table builds generated spell names from these words (e.g. \"Pyre ... of the World\"). Not owner canon; name the spell by its node. Also gui_framekit ability \"Aegis\".",
+  "surface": "Aegis",
+  "category": "theme"
+ },
+ "genesis (lattice spell name)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Creative",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table builds generated spell names from these words (e.g. \"Pyre ... of the World\"). Not owner canon; name the spell by its node.",
+  "surface": "Genesis",
+  "category": "theme"
+ },
+ "pyre (lattice spell name)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Fire",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table builds generated spell names from these words (e.g. \"Pyre ... of the World\"). Not owner canon; name the spell by its node.",
+  "surface": "Pyre",
+  "category": "theme"
+ },
+ "gale (lattice spell name)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Air",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table builds generated spell names from these words (e.g. \"Pyre ... of the World\"). Not owner canon; name the spell by its node.",
+  "surface": "Gale",
+  "category": "theme"
+ },
+ "tide (lattice spell name)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Water",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table builds generated spell names from these words (e.g. \"Pyre ... of the World\"). Not owner canon; name the spell by its node.",
+  "surface": "Tide",
+  "category": "theme"
+ },
+ "granite (lattice spell name)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Earth",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table builds generated spell names from these words (e.g. \"Pyre ... of the World\"). Not owner canon; name the spell by its node.",
+  "surface": "Granite",
+  "category": "theme"
+ },
+ "flesh (lattice spell name)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Body",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table builds generated spell names from these words (e.g. \"Pyre ... of the World\"). Not owner canon; name the spell by its node.",
+  "surface": "Flesh",
+  "category": "theme"
+ },
+ "soul (lattice spell name)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Self",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table builds generated spell names from these words (e.g. \"Pyre ... of the World\"). Not owner canon; name the spell by its node.",
+  "surface": "Soul",
+  "category": "theme"
+ },
+ "psyche (lattice spell name)": {
+  "origin": "agent-invented",
+  "verdict": "purge",
+  "after": "Mind",
+  "mechanic": null,
+  "evidence": "arcane_lattice/index.html FLAVOR table builds generated spell names from these words (e.g. \"Pyre ... of the World\"). Not owner canon; name the spell by its node.",
+  "surface": "Psyche",
+  "category": "theme"
+ }
+}

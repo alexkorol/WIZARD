@@ -14,7 +14,7 @@ Open `index.html` directly or via the WIZARD dashboard. Three.js loads from CDN.
 | Alignment | Adversarial, Natural |
 | Focus | Destructive, Sustaining, Creative |
 | Element | Fire, Air, Water, Earth |
-| Sphere | Body, Spirit, Mind |
+| Sphere | Body, Self, Mind |
 | Reach | Outer, Inner |
 | Manifestation | Manifestation |
 

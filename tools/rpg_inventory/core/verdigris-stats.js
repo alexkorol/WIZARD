@@ -2,7 +2,7 @@
    VERDIGRIS STATS - shared offense/defense rules
    -----------------------------------------------------------------------------
    Zero dependencies. UMD: browser global `VerdigrisStats` or Node require().
-   This module is the common stat vocabulary for Vesselforge and the geometric
+   This module is the common stat vocabulary for item crafting system and the geometric
    passive tree.
    ============================================================================= */
 (function (root, factory) {
@@ -36,11 +36,11 @@
 
   const STAT_REGISTRY = {
     life_flat: { label: 'Life', shape: 'flat', category: 'defense' },
-    spirit_flat: { label: 'Spirit', shape: 'flat', category: 'resource' },
+    spirit_flat: { label: 'Mana', shape: 'flat', category: 'resource' },
     ward_flat: { label: 'Ward', shape: 'flat', category: 'defense' },
     ward_increased: { label: 'increased Ward', shape: 'increased', category: 'defense' },
-    guard_flat: { label: 'Guard', shape: 'flat', category: 'defense' },
-    guard_increased: { label: 'increased Guard', shape: 'increased', category: 'defense' },
+    guard_flat: { label: 'Armour', shape: 'flat', category: 'defense' },
+    guard_increased: { label: 'increased Armour', shape: 'increased', category: 'defense' },
     evasion_flat: { label: 'Evasion', shape: 'flat', category: 'defense' },
     evasion_increased: { label: 'increased Evasion', shape: 'increased', category: 'defense' },
     accuracy_flat: { label: 'Accuracy', shape: 'flat', category: 'offense' },
@@ -69,9 +69,9 @@
     ailment_effect: { label: 'Ailment Effect', shape: 'increased', category: 'ailment' },
     cooldown_recovery: { label: 'Cooldown Recovery', shape: 'increased', category: 'utility' },
     move_speed: { label: 'Movement Speed', shape: 'increased', category: 'utility' },
-    goods_find: { label: 'Goods Found', shape: 'increased', category: 'utility' },
+    goods_find: { label: 'Item Rarity', shape: 'increased', category: 'utility' },
     beast_damage_increased: { label: 'increased Damage against Beasts', shape: 'increased', category: 'offense' },
-    reach_increased: { label: 'increased Reach', shape: 'increased', category: 'utility' },
+    reach_increased: { label: 'increased Melee Strike Range', shape: 'increased', category: 'utility' },
     attack_more: { label: 'more Attack Damage', shape: 'more', category: 'offense', protected: true },
     defense_more: { label: 'more Defense', shape: 'more', category: 'defense', protected: true }
   };

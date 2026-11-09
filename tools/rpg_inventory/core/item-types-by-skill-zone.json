@@ -653,7 +653,7 @@
               {
                 "mod": "spirited",
                 "value": 12,
-                "label": "+12 Maximum Spirit",
+                "label": "+12 Maximum Mana",
                 "status": "live"
               }
             ],
@@ -1335,7 +1335,7 @@
               {
                 "mod": "channel-cost",
                 "value": 5,
-                "label": "5% reduced Spirit cost of channelled spells",
+                "label": "5% reduced Mana cost of channelled spells",
                 "status": "proposed"
               }
             ],
@@ -23060,7 +23060,7 @@
               {
                 "mod": "guard-flat",
                 "value": 20,
-                "label": "+20 Guard",
+                "label": "+20 Armour",
                 "status": "consumer"
               }
             ],
@@ -26726,7 +26726,7 @@
               {
                 "mod": "guard-increased",
                 "value": 8,
-                "label": "+8% increased Guard",
+                "label": "+8% increased Armour",
                 "status": "consumer"
               }
             ],
@@ -27697,7 +27697,7 @@
       "mix": "STR ~50 / INT ~50",
       "treeClass": "ring-7 STR/INT node: sets the STR/INT class",
       "classUnlocks": "banners, a war companion and a relic pack",
-      "wedges": "companion and Ward wedge (INT toward STR/INT): companions, Ward, Spirit; fire and ignite wedge (STR toward STR/INT): fire, ignite",
+      "wedges": "companion and Ward wedge (INT toward STR/INT): companions, Ward, Mana; fire and ignite wedge (STR toward STR/INT): fire, ignite",
       "latticeRow": "damage type row (opened by the STR/INT class, a shield or a buckler)",
       "gameSkills": [
         "fireball",
@@ -27705,7 +27705,7 @@
         "meteor",
         "fire-wall",
         "Fire Damage Aura",
-        "Guard Break Aura",
+        "Armour Break Aura",
         "summoning-circle (companion)",
         "Resistance Bonus"
       ],
@@ -33349,7 +33349,7 @@
     },
     {
       "id": "spirited",
-      "label": "+{v} Maximum Spirit",
+      "label": "+{v} Maximum Mana",
       "kind": "P",
       "stat": "spirit_flat",
       "status": "live",
@@ -33389,7 +33389,7 @@
         }
       ],
       "weight": 10,
-      "note": "Spirit pays for every action; kept to bases that spend heavily",
+      "note": "Mana pays for every action; kept to bases that spend heavily",
       "rolledBy": 30,
       "provisional": false
     },
@@ -33637,7 +33637,7 @@
     },
     {
       "id": "guard-flat",
-      "label": "+{v} Guard",
+      "label": "+{v} Armour",
       "kind": "P",
       "stat": "guard_flat",
       "status": "consumer",
@@ -33679,7 +33679,7 @@
     },
     {
       "id": "guard-increased",
-      "label": "+{v}% increased Guard",
+      "label": "+{v}% increased Armour",
       "kind": "P",
       "stat": "guard_increased",
       "status": "consumer",
@@ -35124,7 +35124,7 @@
     },
     {
       "id": "channel-cost",
-      "label": "{v}% reduced Spirit cost of channelled spells",
+      "label": "{v}% reduced Mana cost of channelled spells",
       "kind": "S",
       "stat": "channel_cost_reduced",
       "status": "proposed",
@@ -35532,12 +35532,12 @@
   },
   "modpoolRules": {
     "source": "Assets/ARPG/Scripts/Core/Itemization.cs:115-128 (live pool) and WizardCombat.cs (stat consumers). Live values are copied, never changed here.",
-    "jobRule": "A base rolls mods whose tags match the skills it serves (job, full weight), defence mods its material implies (material, full weight: metal and tusk -> Guard; hide, leather, fur, grass -> Evasion; linen, wool, felt, gold, ivory, faience -> Ward, after the PoE cloth convention), and its zone's themes (zone, 0.6 weight), plus a small shared pool (life, resistances, the zone's own attributes, and flask mods on belts; 0.5 weight). Everything else is excluded with a reason.",
+    "jobRule": "A base rolls mods whose tags match the skills it serves (job, full weight), defence mods its material implies (material, full weight: metal and tusk -> Armour; hide, leather, fur, grass -> Evasion; linen, wool, felt, gold, ivory, faience -> Ward, after the PoE cloth convention), and its zone's themes (zone, 0.6 weight), plus a small shared pool (life, resistances, the zone's own attributes, and flask mods on belts; 0.5 weight). Everything else is excluded with a reason.",
     "affixCap": "Default, owner may veto: 2 prefixes + 2 suffixes, inside the game's MaxModifiers 4. The game has no prefix/suffix split yet (code change needed).",
     "tiers": "Tiers unlock by item level as in the game (typically ilvl 1 / 20-30 / 50-60); tier pick weights 10/5/2 (Itemization.TierWeights). A base's band sets its minimum item level: core 1, mid 15, outer 45.",
     "excluded": "Each base lists the slot-eligible mods it does not roll and the tags they need; the base's skills (item.skills) carry none of those tags.",
     "weights": "Mod weight = catalogue weight x role factor (job 1.0, zone 0.6, shared 0.5), so job mods dominate.",
-    "implicits": "Default, owner may veto: one fixed implicit per weapon, off-hand and jewellery base, taken from the base's form (spear: reach; tower shield: block and Guard). Body armour, helmets, gloves and boots carry no implicit; their base defence is the material.",
+    "implicits": "Default, owner may veto: one fixed implicit per weapon, off-hand and jewellery base, taken from the base's form (spear: reach; tower shield: block and Armour). Body armour, helmets, gloves and boots carry no implicit; their base defence is the material.",
     "status": {
       "live": "in the roll pool today",
       "consumer": "combat already reads the stat; add the mod to the pool",

@@ -126,7 +126,7 @@
     { id: 'whorl-red', family: 'whorl', name: 'Red Jewel', mods: [{ stat: 'attackDamage', amount: 12 }, { stat: 'life', amount: 20 }] },
     { id: 'whorl-blue', family: 'whorl', name: 'Blue Jewel', mods: [{ stat: 'spellDamage', amount: 12 }, { stat: 'ward', amount: 25 }] },
     { id: 'whorl-green', family: 'whorl', name: 'Green Jewel', mods: [{ stat: 'projectileDamage', amount: 12 }, { stat: 'evasion', amount: 30 }, { stat: 'accuracy_flat', amount: 30 }] },
-    { id: 'eye-guard', family: 'eye', name: 'Small Passive Guard Jewel', radius: 2, grant: { scope: 'small', stat: 'guard', amount: 8 }, note: 'Allocated small passives in radius also grant +8 Guard' },
+    { id: 'eye-guard', family: 'eye', name: 'Small Passive Armour Jewel', radius: 2, grant: { scope: 'small', stat: 'guard', amount: 8 }, note: 'Allocated small passives in radius also grant +8 Armour' },
     { id: 'eye-keen', family: 'eye', name: 'Notable Attack Jewel', radius: 2, grant: { scope: 'notable', stat: 'attackDamage', amount: 6 }, note: 'Allocated notables in radius also grant +6% Attack Damage' },
     { id: 'change-bull', family: 'change', name: 'Strength to Intelligence Jewel', radius: 2, change: { from: 'str', to: 'int', rate: 2 }, note: 'STR from conduits in radius counts as INT, twice over' },
     { id: 'change-heron', family: 'change', name: 'Intelligence to Dexterity Jewel', radius: 2, change: { from: 'int', to: 'dex', rate: 2 }, note: 'INT from conduits in radius counts as DEX, twice over' },

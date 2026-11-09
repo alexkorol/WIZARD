@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Sokoban — WIZARD</title>
-  <meta name="description" content="A finite campaign of 24 offline-forged Sokoban chambers for Verdigris, ordered by solver resistance and logical interdependence.">
+  <meta name="description" content="A finite campaign of 24 offline-generated Sokoban levels, ordered by solver effort and crate interdependence.">
   <meta name="theme-color" content="#0b100f">
   <meta property="og:title" content="Sokoban — WIZARD">
-  <meta property="og:description" content="Twenty-four pre-forged chambers measured by solver resistance, misdirection, and interdependence.">
+  <meta property="og:description" content="Twenty-four pre-generated Sokoban levels ordered by solver effort, misleading pushes, and interdependence.">
   <meta property="og:image" content="assets/theorem-vault.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#chamber">Skip to chamber</a>
+  <a class="skip-link" href="#chamber">Skip to level</a>
   <div class="mist" aria-hidden="true"></div>
 
   <header class="topbar">
@@ -38,15 +38,15 @@
     </section>
 
     <section class="game-shell" aria-label="Sokoban game">
-      <aside class="floor-panel" aria-label="Floor information">
+      <aside class="floor-panel" aria-label="Stage information">
         <div class="depth-rule"><span></span><i></i><span></span></div>
-        <p class="label">Vault progress</p>
+        <p class="label">Progress</p>
         <p class="floor-number"><span>Stage</span><strong id="floor-number">01</strong></p>
         <div class="difficulty">
           <span id="difficulty-title">Tutorial</span>
           <div class="pips" id="difficulty-pips" aria-label="Difficulty"></div>
         </div>
-        <p class="motif"><span>Chamber thesis</span><strong id="motif-name">Sealed until solved</strong></p>
+        <p class="motif"><span>Level type</span><strong id="motif-name">Shown after solving</strong></p>
         <form class="floor-jump" id="floor-jump">
           <label for="floor-input">Stage select</label>
           <div>
@@ -57,35 +57,35 @@
         <button class="debug-descend" id="descend-debug" type="button">Next stage <span aria-hidden="true">↓</span></button>
         <p class="lesson" id="lesson">Push crates onto targets. Crates cannot be pulled.</p>
         <dl class="measurements">
-          <div class="spoiler"><dt id="solution-label">Proof length</dt><dd><span id="optimal-pushes">sealed</span></dd></div>
-          <div><dt>Relics</dt><dd id="box-count">—</dd></div>
-          <div><dt>Proof</dt><dd id="proof-states">—</dd></div>
+          <div class="spoiler"><dt id="solution-label">Solution length</dt><dd><span id="optimal-pushes">hidden</span></dd></div>
+          <div><dt>Crates</dt><dd id="box-count">—</dd></div>
+          <div><dt>Solver search</dt><dd id="proof-states">—</dd></div>
         </dl>
       </aside>
 
       <div class="chamber-column">
         <div class="status-line" role="status" aria-live="polite">
-          <span id="status">Opening the forged campaign…</span>
+          <span id="status">Loading campaign…</span>
           <span class="live-stats" id="live-stats" hidden><b id="move-count">0</b> steps · <b id="push-count">0</b> pushes</span>
         </div>
 
         <div class="board-frame" id="chamber">
-          <div class="board-loading" id="board-loading"><span></span>Opening a forged chamber</div>
-          <div class="board" id="board" role="grid" aria-label="Sokoban chamber" tabindex="0"></div>
+          <div class="board-loading" id="board-loading"><span></span>Loading level</div>
+          <div class="board" id="board" role="grid" aria-label="Sokoban level" tabindex="0"></div>
           <div class="victory" id="victory" hidden>
             <div class="victory-sigil" aria-hidden="true">✦</div>
-            <p>Thesis revealed · <span id="victory-motif">Packing Order</span></p>
+            <p>Level type · <span id="victory-motif">Packing Order</span></p>
             <h2 id="victory-thesis">Continue to the next level.</h2>
             <div class="analysis-grid" aria-label="Solution analysis">
-              <div><strong id="analysis-grade">A</strong><span>proof grade</span></div>
+              <div><strong id="analysis-grade">A</strong><span>solution grade</span></div>
               <div><strong id="analysis-lines">0</strong><span>route moves</span></div>
               <div><strong id="analysis-switches">0</strong><span>box changes</span></div>
-              <div><strong id="analysis-counter">0</strong><span>countermarches</span></div>
-              <div><strong id="analysis-straits">0</strong><span>strait entries</span></div>
+              <div><strong id="analysis-counter">0</strong><span>reversals</span></div>
+              <div><strong id="analysis-straits">0</strong><span>corridor entries</span></div>
             </div>
             <div class="victory-actions">
-              <button class="secondary-button" id="replay-proof" type="button">Watch shortest proof</button>
-              <button class="primary-button" id="descend" type="button">Descend to stage <span>02</span></button>
+              <button class="secondary-button" id="replay-proof" type="button">Watch shortest solution</button>
+              <button class="primary-button" id="descend" type="button">Next stage <span>02</span></button>
             </div>
           </div>
         </div>
@@ -106,31 +106,26 @@
         </div>
       </div>
 
-      <aside class="ledger" aria-label="Descent record">
-        <p class="label">Delver's ledger</p>
+      <aside class="ledger" aria-label="Progress record">
+        <p class="label">Record</p>
         <div class="record">
-          <span>Floors cleared</span>
+          <span>Stages cleared</span>
           <strong id="floors-cleared">0</strong>
         </div>
         <div class="record">
           <span>Best efficiency</span>
           <strong id="best-efficiency">—</strong>
         </div>
-        <div class="record">
-          <span>Archive fragments</span>
-          <strong id="archive-fragments">0 / 8</strong>
-        </div>
-        <p class="archive-note" id="archive-note">The archive opens after the first proof.</p>
-        <p class="guarantee"><span aria-hidden="true">◇</span> This chamber was forged and solver-tested offline. No search engine runs in your browser.</p>
+        <p class="guarantee"><span aria-hidden="true">◇</span> Every level was generated and solver-tested offline. No solver runs in your browser.</p>
       </aside>
     </section>
 
     <section class="method-note" aria-labelledby="method-title">
       <p class="eyebrow">Campaign generation</p>
       <h2 id="method-title">Level selection</h2>
-      <p>The vault was forged ahead of release, so candidate generation and solver search could spend far more time than an interactive page allows. The final 24 were frozen, validated, and ordered by solver resistance, shared lanes, counterintuitive pushes, box barriers, and storage dependencies. The browser now contains only the campaign, its proof routes, and the rules of play.</p>
+      <p>The campaign was generated ahead of release, so candidate generation and solver search could spend far more time than an interactive page allows. The final 24 were frozen, validated, and ordered by solver effort, shared lanes, counterintuitive pushes, box barriers, and storage dependencies. The browser contains only the campaign, its solution routes, and the rules of play.</p>
       <div class="method-marks" aria-label="Difficulty signals">
-        <span>Solver resistance</span><span>Countermarches</span><span>Box barriers</span><span>Storage straits</span>
+        <span>Solver effort</span><span>Reversals</span><span>Box barriers</span><span>Corridors</span>
       </div>
     </section>
   </main>

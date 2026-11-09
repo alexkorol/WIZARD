@@ -627,25 +627,25 @@
       Math.min(8, interiorStructure * 0.25) + Math.min(6, chokePoints.size * 0.6) +
       storageEntries * 2.5 + barrierBoxes * 3;
     var motif = 'Packing Order';
-    var thesis = 'The destinations are simple; the order in which you occupy them is not.';
+    var thesis = 'The targets are simple; the order in which you fill them is not.';
     if (storageEntries >= Math.max(2, Math.ceil(seenIds.size / 2))) {
-      motif = 'Single Strait';
-      thesis = 'The storage chamber has one useful throat; filling its deepest seals first is part of the proof.';
+      motif = 'Single Corridor';
+      thesis = 'The storage area has one useful entrance; filling its deepest targets first is part of the solution.';
     } else if (goalEvictions > 0) {
       motif = 'False Finish';
-      thesis = 'A sealed relic box must move again before the chamber can close.';
+      thesis = 'A crate already on a target must move again before the level can be solved.';
     } else if (counterintuitive > 0) {
-      motif = 'Countermarch';
-      thesis = 'Progress begins by pushing at least one relic box farther from every seal.';
+      motif = 'Push Away First';
+      thesis = 'Progress begins by pushing at least one crate farther from every target.';
     } else if (interdependence >= 6) {
-      motif = 'Braided Proof';
-      thesis = 'The relic boxes share a route; solving one means making room for another.';
+      motif = 'Shared Route';
+      thesis = 'The crates share a route; solving one means making room for another.';
     } else if (congestion >= Math.max(3, Math.floor(actions.length / 3))) {
       motif = 'Shared Lane';
       thesis = 'A narrow lane is both transport route and scarce working space.';
     } else if (boxLines >= Math.max(5, seenIds.size * 2)) {
-      motif = 'Broken Vector';
-      thesis = 'The shortest proof changes direction more often than distance suggests.';
+      motif = 'Many Direction Changes';
+      thesis = 'The shortest solution changes direction more often than distance suggests.';
     }
     return {
       boxLines: boxLines,
@@ -1239,12 +1239,12 @@
     // Human difficulty is driven much more by changes of box, direction, and
     // misleading progress than by raw solution length or search-space size.
     var score = solution.pushes * 0.32 + analysis.interest + Math.log2(solution.states + 1) * 0.45;
-    var title = 'Initiate';
-    if (score >= 20) title = 'Delver';
-    if (score >= 34) title = 'Pathfinder';
-    if (score >= 50) title = 'Warden';
-    if (score >= 68) title = 'Abyssal';
-    if (score >= 88) title = 'Oracular';
+    var title = 'Difficulty 1';
+    if (score >= 20) title = 'Difficulty 2';
+    if (score >= 34) title = 'Difficulty 3';
+    if (score >= 50) title = 'Difficulty 4';
+    if (score >= 68) title = 'Difficulty 5';
+    if (score >= 88) title = 'Difficulty 6';
     return { score: Math.round(score), title: levelNumber <= 4 ? 'Tutorial' : title };
   }
 

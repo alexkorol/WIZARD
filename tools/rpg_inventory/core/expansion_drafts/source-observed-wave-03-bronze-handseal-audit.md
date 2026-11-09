@@ -67,7 +67,7 @@ For the intended tall-handled comparative family only:
   `ChatGPT Image Jul 10, 2026, 10_53_50 PM (2).png`, is a rejected handled
   circular ritual prop with shell/turquoise clutter. It confirms the
   disc-plus-handle fallback is weak and motif-prone.
-- `expansion_ready/offhands-supply-map.tsv` already rejects the Dustwind INT
+- `expansion_ready/offhands-supply-map.tsv` already rejects the Steppe INT
   T2 ritual output because a small seal/mirror-like prop does not meet
   substantial held-focus scale. No current balanced, post-calibration, or
   Wave 03 staging source supplies a better hand-seal base.

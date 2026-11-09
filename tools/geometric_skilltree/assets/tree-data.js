@@ -8,7 +8,7 @@
   },
   "metadata": {
     "generatedFrom": "tools/geometric_skilltree/scripts/author-tree.mjs (hand-authored tables)",
-    "generatedAt": "2026-11-07",
+    "generatedAt": "2026-11-09",
     "intent": "Phase 4 authored tree: every seat is deliberate data. Zero hash-generated content."
   },
   "patternTuning": {
@@ -100,7 +100,7 @@
       "type": "small",
       "axis": "hybrid",
       "effects": [
-        "+12 to Spirit",
+        "+12 to Mana",
         "Every service starts with a lit taper and a steady voice."
       ],
       "stat": "spirit",
@@ -109,7 +109,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "Spirit"
+      "name": "Mana"
     },
     "1,0": {
       "id": "1,0",
@@ -251,7 +251,7 @@
       "axis": "int",
       "effects": [
         "+16% increased Companion Damage",
-        "+10 to Spirit",
+        "+10 to Mana",
         "Your first companion costs no upkeep (design text)"
       ],
       "stat": "minionDamage",
@@ -270,7 +270,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+12 to Spirit"
+        "+12 to Mana"
       ],
       "stat": "spirit",
       "amount": 12,
@@ -278,7 +278,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "Spirit"
+      "name": "Mana"
     },
     "2,-1": {
       "id": "2,-1",
@@ -423,7 +423,7 @@
       "axis": "str",
       "effects": [
         "+14% increased Attack Damage",
-        "+25 to Guard",
+        "+25 to Armour",
         "You cannot be pushed back while attacking (design text)"
       ],
       "stat": "attackDamage",
@@ -480,7 +480,7 @@
       "axis": "hybrid",
       "effects": [
         "+14% increased Companion Damage",
-        "+15 to Spirit",
+        "+15 to Mana",
         "Your banners and maintained spells reach 15% further (design text)"
       ],
       "stat": "minionDamage",
@@ -782,7 +782,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+20 to Guard"
+        "+20 to Armour"
       ],
       "stat": "guard",
       "amount": 20,
@@ -790,7 +790,7 @@
       "clusterId": "kiln-approach",
       "status": "review",
       "notes": "",
-      "name": "Guard"
+      "name": "Armour"
     },
     "-2,4": {
       "id": "-2,4",
@@ -800,9 +800,9 @@
       "type": "notable",
       "axis": "str",
       "effects": [
-        "+35 to Guard",
+        "+35 to Armour",
         "+10% to Fire Resistance",
-        "When a Ignite on an enemy expires, gain 15 Guard for four seconds (design text)"
+        "When a Ignite on an enemy expires, gain 15 Armour for four seconds (design text)"
       ],
       "stat": "guard",
       "amount": 35,
@@ -810,7 +810,7 @@
       "clusterId": "kiln-line-named",
       "status": "review",
       "notes": "",
-      "name": "Guard from Ignites"
+      "name": "Armour from Ignites"
     },
     "-1,4": {
       "id": "-1,4",
@@ -1152,7 +1152,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+20 to Guard"
+        "+20 to Armour"
       ],
       "stat": "guard",
       "amount": 20,
@@ -1160,7 +1160,7 @@
       "clusterId": "red-approach",
       "status": "review",
       "notes": "",
-      "name": "Guard"
+      "name": "Armour"
     },
     "-4,2": {
       "id": "-4,2",
@@ -1172,7 +1172,7 @@
       "effects": [
         "+18% increased Physical Damage",
         "+15 to Life",
-        "Your heavy hits break Guard 20% harder (design text)"
+        "Your heavy hits break Armour 20% harder (design text)"
       ],
       "stat": "physical_increased",
       "amount": 18,
@@ -1180,7 +1180,7 @@
       "clusterId": "red-field-named",
       "status": "review",
       "notes": "",
-      "name": "Guard Break"
+      "name": "Armour Break"
     },
     "-4,3": {
       "id": "-4,3",
@@ -1208,8 +1208,8 @@
       "type": "waystone",
       "axis": "str",
       "effects": [
-        "+30 to Guard",
-        "Loops closed around this Anchor empower their center +25% further",
+        "+30 to Armour",
+        "Loops closed around this pattern node empower their center +25% further",
         "Your Evasion is 10% lower while standing still (design text)"
       ],
       "stat": "guard",
@@ -1218,7 +1218,7 @@
       "clusterId": "str-spoke",
       "status": "review",
       "notes": "",
-      "name": "STR Anchor",
+      "name": "STR Pattern Node",
       "patternHook": {
         "effect": "loop-boost",
         "value": 0.25
@@ -1308,9 +1308,9 @@
       "type": "waystone",
       "axis": "hybrid",
       "effects": [
-        "+20 to Spirit",
-        "Enclosures you close around this Anchor guard 50% more",
-        "Your spells cost 5% more Spirit (design text)"
+        "+20 to Mana",
+        "Enclosures you close around this pattern node guard 50% more",
+        "Your spells cost 5% more Mana (design text)"
       ],
       "stat": "spirit",
       "amount": 20,
@@ -1318,7 +1318,7 @@
       "clusterId": "ritualist-spoke",
       "status": "review",
       "notes": "",
-      "name": "STR/INT Anchor",
+      "name": "STR/INT Pattern Node",
       "patternHook": {
         "effect": "enclosure-boost",
         "value": 0.5
@@ -1332,7 +1332,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+10 to Spirit"
+        "+10 to Mana"
       ],
       "stat": "spirit",
       "amount": 10,
@@ -1340,7 +1340,7 @@
       "clusterId": "procession-waist",
       "status": "review",
       "notes": "",
-      "name": "Spirit"
+      "name": "Mana"
     },
     "2,3": {
       "id": "2,3",
@@ -1409,7 +1409,7 @@
       "axis": "int",
       "effects": [
         "+30 to Ward",
-        "Waves passing through this Anchor count +1 length",
+        "Waves passing through this pattern node count +1 length",
         "Ward recharge is 10% slower"
       ],
       "stat": "ward",
@@ -1418,7 +1418,7 @@
       "clusterId": "int-spoke",
       "status": "review",
       "notes": "",
-      "name": "INT Anchor",
+      "name": "INT Pattern Node",
       "patternHook": {
         "effect": "wave-length",
         "value": 1
@@ -1509,7 +1509,7 @@
       "axis": "hybrid",
       "effects": [
         "+12% increased Ailment Effect",
-        "Flows passing through this Anchor count +1 length",
+        "Flows passing through this pattern node count +1 length",
         "You show your position when you strike: +5% damage taken for two seconds (design text)"
       ],
       "stat": "ailmentEffect",
@@ -1518,7 +1518,7 @@
       "clusterId": "nightwork-spoke",
       "status": "review",
       "notes": "",
-      "name": "INT/DEX Anchor",
+      "name": "INT/DEX Pattern Node",
       "patternHook": {
         "effect": "flow-length",
         "value": 1
@@ -1609,7 +1609,7 @@
       "axis": "dex",
       "effects": [
         "+45 to Evasion",
-        "Rods ending on this Anchor empower both endpoints twice",
+        "Rods ending on this pattern node empower both endpoints twice",
         "You cannot Block while moving (design text)"
       ],
       "stat": "evasion",
@@ -1618,7 +1618,7 @@
       "clusterId": "dex-spoke",
       "status": "review",
       "notes": "",
-      "name": "DEX Anchor",
+      "name": "DEX Pattern Node",
       "patternHook": {
         "effect": "rod-double"
       }
@@ -1708,8 +1708,8 @@
       "axis": "hybrid",
       "effects": [
         "+16% increased Projectile Damage",
-        "Waves and flows may both claim conduits touching this Anchor",
-        "-10% increased Reach"
+        "Waves and flows may both claim conduits touching this pattern node",
+        "-10% increased Melee Strike Range"
       ],
       "stat": "projectileDamage",
       "amount": 16,
@@ -1717,7 +1717,7 @@
       "clusterId": "skirmisher-spoke",
       "status": "review",
       "notes": "",
-      "name": "DEX/STR Anchor",
+      "name": "DEX/STR Pattern Node",
       "patternHook": {
         "effect": "shared-claim"
       }
@@ -1826,7 +1826,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+25 to Guard"
+        "+25 to Armour"
       ],
       "stat": "guard",
       "amount": 25,
@@ -1834,7 +1834,7 @@
       "clusterId": "kiln-oath",
       "status": "review",
       "notes": "",
-      "name": "Guard"
+      "name": "Armour"
     },
     "-4,6": {
       "id": "-4,6",
@@ -1975,8 +1975,8 @@
       "type": "keystone",
       "axis": "int",
       "effects": [
-        "Your spells cost Life instead of Spirit",
-        "Your Spirit is reserved in full to your banners and maintained spells"
+        "Your spells cost Life instead of Mana",
+        "Your Mana is reserved in full to your banners and maintained spells"
       ],
       "stat": null,
       "amount": 0,
@@ -2032,7 +2032,7 @@
       "axis": "int",
       "effects": [
         "+26% increased Spell Damage",
-        "+15 to Spirit",
+        "+15 to Mana",
         "Spells you repeat within four seconds gain +10% effect (design text)"
       ],
       "stat": "spellDamage",
@@ -2125,7 +2125,7 @@
       "axis": "int",
       "effects": [
         "+10% increased Ailment Effect",
-        "Marks cost no Spirit (design text)"
+        "Marks cost no Mana (design text)"
       ],
       "stat": "ailmentEffect",
       "amount": 10,
@@ -2405,7 +2405,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+25 to Guard"
+        "+25 to Armour"
       ],
       "stat": "guard",
       "amount": 25,
@@ -2413,7 +2413,7 @@
       "clusterId": "red-oath",
       "status": "review",
       "notes": "",
-      "name": "Guard"
+      "name": "Armour"
     },
     "-6,3": {
       "id": "-6,3",
@@ -2500,7 +2500,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+9% increased Guard"
+        "+9% increased Armour"
       ],
       "stat": "guard_increased",
       "amount": 9,
@@ -2508,7 +2508,7 @@
       "clusterId": "kiln-high",
       "status": "review",
       "notes": "",
-      "name": "Guard"
+      "name": "Armour"
     },
     "-5,7": {
       "id": "-5,7",
@@ -2725,7 +2725,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+12 to Spirit",
+        "+12 to Mana",
         "Your spells are not interrupted by light hits (design text)"
       ],
       "stat": "spirit",
@@ -2734,7 +2734,7 @@
       "clusterId": "procession-high",
       "status": "review",
       "notes": "",
-      "name": "Spirit"
+      "name": "Mana"
     },
     "7,0": {
       "id": "7,0",
@@ -3183,7 +3183,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+8% increased Reach"
+        "+8% increased Melee Strike Range"
       ],
       "stat": "reach_increased",
       "amount": 8,
@@ -3221,7 +3221,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+9% increased Guard"
+        "+9% increased Armour"
       ],
       "stat": "guard_increased",
       "amount": 9,
@@ -3229,7 +3229,7 @@
       "clusterId": "red-high",
       "status": "review",
       "notes": "",
-      "name": "Guard"
+      "name": "Armour"
     },
     "-7,5": {
       "id": "-7,5",
@@ -3276,7 +3276,7 @@
       "type": "notable",
       "axis": "str",
       "effects": [
-        "+20% increased Guard",
+        "+20% increased Armour",
         "+15% increased Attack Damage",
         "While you have not moved recently, +15% Poise (design text)"
       ],
@@ -3334,7 +3334,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+30 to Guard"
+        "+30 to Armour"
       ],
       "stat": "guard",
       "amount": 30,
@@ -3342,7 +3342,7 @@
       "clusterId": "kiln-sign",
       "status": "review",
       "notes": "",
-      "name": "Guard"
+      "name": "Armour"
     },
     "-4,8": {
       "id": "-4,8",
@@ -3362,7 +3362,7 @@
       "clusterId": "kiln-line-named",
       "status": "review",
       "notes": "",
-      "name": "Sign: Unending Ignites"
+      "name": "Unending Ignites"
     },
     "-3,8": {
       "id": "-3,8",
@@ -3466,7 +3466,7 @@
       "axis": "int",
       "effects": [
         "+20% increased Ward",
-        "+10 to Spirit",
+        "+10 to Mana",
         "Your Ward does not break from Chaos damage while a spell is maintained (design text)"
       ],
       "stat": "ward_pct",
@@ -3513,7 +3513,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "Sign: Ward Under Fire"
+      "name": "Ward Under Fire"
     },
     "5,3": {
       "id": "5,3",
@@ -3523,7 +3523,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+12 to Spirit"
+        "+12 to Mana"
       ],
       "stat": "spirit",
       "amount": 12,
@@ -3531,7 +3531,7 @@
       "clusterId": "procession-sign",
       "status": "review",
       "notes": "",
-      "name": "Spirit"
+      "name": "Mana"
     },
     "6,2": {
       "id": "6,2",
@@ -3664,7 +3664,7 @@
       "clusterId": "drowned-study-named",
       "status": "review",
       "notes": "",
-      "name": "Sign: Mark Chilled Enemies"
+      "name": "Mark Chilled Enemies"
     },
     "8,-5": {
       "id": "8,-5",
@@ -3815,7 +3815,7 @@
       "clusterId": "unlit-road-named",
       "status": "review",
       "notes": "",
-      "name": "Sign: Spreading Poison"
+      "name": "Spreading Poison"
     },
     "3,-8": {
       "id": "3,-8",
@@ -3967,7 +3967,7 @@
       "clusterId": "high-paths-named",
       "status": "review",
       "notes": "",
-      "name": "Sign: Double Shock Stacks"
+      "name": "Double Shock Stacks"
     },
     "-5,-3": {
       "id": "-5,-3",
@@ -4117,7 +4117,7 @@
       "clusterId": "red-field-named",
       "status": "review",
       "notes": "",
-      "name": "Sign: Unstoppable"
+      "name": "Unstoppable"
     },
     "-8,5": {
       "id": "-8,5",
@@ -4146,7 +4146,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+30 to Guard"
+        "+30 to Armour"
       ],
       "stat": "guard",
       "amount": 30,
@@ -4154,7 +4154,7 @@
       "clusterId": "red-sign",
       "status": "review",
       "notes": "",
-      "name": "Guard"
+      "name": "Armour"
     },
     "-8,7": {
       "id": "-8,7",
@@ -4202,7 +4202,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+11% increased Guard"
+        "+11% increased Armour"
       ],
       "stat": "guard_increased",
       "amount": 11,
@@ -4210,7 +4210,7 @@
       "clusterId": "kiln-deep",
       "status": "review",
       "notes": "",
-      "name": "Guard"
+      "name": "Armour"
     },
     "-7,9": {
       "id": "-7,9",
@@ -4352,7 +4352,7 @@
       "axis": "hybrid",
       "effects": [
         "+26% increased Spell Damage",
-        "+20 to Spirit",
+        "+20 to Mana",
         "Spells you maintain persist 3 seconds after you fall (design text)"
       ],
       "stat": "spellDamage",
@@ -4502,7 +4502,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+14 to Spirit"
+        "+14 to Mana"
       ],
       "stat": "spirit",
       "amount": 14,
@@ -4510,7 +4510,7 @@
       "clusterId": "procession-deep",
       "status": "review",
       "notes": "",
-      "name": "Spirit"
+      "name": "Mana"
     },
     "9,0": {
       "id": "9,0",
@@ -4522,7 +4522,7 @@
       "effects": [
         "+30% increased Spell Damage",
         "+30 to Ward",
-        "Spells cost 5% less Spirit (design text)"
+        "Spells cost 5% less Mana (design text)"
       ],
       "stat": "spellDamage",
       "amount": 30,
@@ -4672,7 +4672,7 @@
       "type": "small",
       "axis": "hybrid",
       "effects": [
-        "+14 to Spirit"
+        "+14 to Mana"
       ],
       "stat": "spirit",
       "amount": 14,
@@ -4680,7 +4680,7 @@
       "clusterId": "drowned-deep",
       "status": "review",
       "notes": "",
-      "name": "Spirit"
+      "name": "Mana"
     },
     "9,-9": {
       "id": "9,-9",
@@ -5146,7 +5146,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+10% increased Reach"
+        "+10% increased Melee Strike Range"
       ],
       "stat": "reach_increased",
       "amount": 10,
@@ -5182,7 +5182,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+32 to Guard"
+        "+32 to Armour"
       ],
       "stat": "guard",
       "amount": 32,
@@ -5190,7 +5190,7 @@
       "clusterId": "red-deep",
       "status": "review",
       "notes": "",
-      "name": "Guard"
+      "name": "Armour"
     },
     "-10,10": {
       "id": "-10,10",
@@ -5314,7 +5314,7 @@
       "type": "notable",
       "axis": "str",
       "effects": [
-        "+22% increased Guard",
+        "+22% increased Armour",
         "+12% to Fire Resistance",
         "Ground you stand on cannot burn you (design text)"
       ],
@@ -5429,7 +5429,7 @@
       "axis": "int",
       "effects": [
         "+3 to all Attributes",
-        "Your next spell costs no Spirit (design text)"
+        "Your next spell costs no Mana (design text)"
       ],
       "stat": "attrs",
       "amount": 3,
@@ -5484,7 +5484,7 @@
       "type": "small",
       "axis": "int",
       "effects": [
-        "+12 to Spirit"
+        "+12 to Mana"
       ],
       "stat": "spirit",
       "amount": 12,
@@ -5492,7 +5492,7 @@
       "clusterId": "procession-frontier",
       "status": "review",
       "notes": "",
-      "name": "Spirit"
+      "name": "Mana"
     },
     "6,4": {
       "id": "6,4",
@@ -5502,9 +5502,9 @@
       "type": "notable",
       "axis": "int",
       "effects": [
-        "+30 to Spirit",
+        "+30 to Mana",
         "+12% increased Companion Damage",
-        "Kills during your spells feed 5 Spirit back (design text)"
+        "Kills during your spells feed 5 Mana back (design text)"
       ],
       "stat": "spirit",
       "amount": 30,
@@ -5512,7 +5512,7 @@
       "clusterId": "procession-named",
       "status": "review",
       "notes": "",
-      "name": "Spirit on Kill"
+      "name": "Mana on Kill"
     },
     "7,3": {
       "id": "7,3",
@@ -6287,7 +6287,7 @@
       "type": "small",
       "axis": "str",
       "effects": [
-        "+22 to Guard"
+        "+22 to Armour"
       ],
       "stat": "guard",
       "amount": 22,
@@ -6295,7 +6295,7 @@
       "clusterId": "red-frontier",
       "status": "review",
       "notes": "",
-      "name": "Guard"
+      "name": "Armour"
     },
     "-10,9": {
       "id": "-10,9",

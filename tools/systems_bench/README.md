@@ -21,7 +21,7 @@ views.
   remains compatible with the Vessels adapter through `postMessage`.
 - `fixtures/inventory-state.v1.json` — explicit inventory-state snapshots
   rendered by a preview adapter inside the Bench. It does not load or modify
-  VesselForge.
+  item crafting system.
 
 The inventory session uses the shared event envelope with type
 `inventory.state.changed`. Each event carries a complete `stateVersion: 1`

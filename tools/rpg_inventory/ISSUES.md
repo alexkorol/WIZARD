@@ -1,6 +1,6 @@
-# Brands & Bonds / Vesselforge — Known Limitations & Ideas
+# Brands & Bonds / item crafting system — Known Limitations & Ideas
 
-## Vesselforge core (2026-07)
+## item crafting system core (2026-07)
 
 - [x] Engine/content split shipped (`core/`), 22 tests green
 - [x] `index.html` rewired onto the core (save key `wizard_vesselforge_v3`;
@@ -10,7 +10,7 @@
 - [ ] Ward-knot metamods ("brands cannot be effaced") — PoE metacraft analog
 - [ ] Trophy rites as usable skills with cooldowns (Grim Dawn components)
 - [ ] Estrangement healing / kinship re-stamping over time
-- [ ] Panoply bonuses are display-only labels; make them structured mods
+- [ ] Set bonus bonuses are display-only labels; make them structured mods
 
 Rewritten 2026-07 alongside the full module rebuild. The old grid-inventory
 wishlist is obsolete; this tracks the new system.
@@ -54,7 +54,7 @@ wishlist is obsolete; this tracks the new system.
 - [x] Drag & drop: grid ↔ paperdoll ↔ atelier socket ↔ vendor, with swap,
       ghost preview, and no item loss on failed drops
 - [x] All six currencies incl. error paths (full vessel, no brand/bond, max slots)
-- [x] Bond growth + tiering through Venture Forth; awakening path
+- [x] Bond growth + tiering through Simulate fight; awakening path
 - [x] Persistence across reloads (versioned localStorage key, corrupt-save fallback)
 - [x] Mobile layout (375px): no horizontal overflow, grid scrolls, bench stacks
 - [x] Live character sheet aggregation from implicits + brands + bonds

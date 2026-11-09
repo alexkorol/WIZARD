@@ -52,13 +52,13 @@ stronger. The verdicts remain proposals; the sheet makes overturning easy.
 
 ## Promote-pool skew (128 promotes)
 
-- Faction: unclear 34, North 32, Stonewood 31, Dustwind 27, **Riverspill 4**.
+- Faction: unclear 34, North 32, Mesoamerica and Northwest Coast 31, Steppe 27, **Egypt and Mesopotamia 4**.
 - Tier: T1 34, T2 44, T3 32, T4 15, T5 3.
 - Axis: DEX 78, STR 28, STR+DEX 12, INT 7, DEX+INT 2, INT+STR 1.
 
 Implications for the next generation wave:
 
-- **Riverspill is starved** (4 promotes) — the batch barely touched
+- **Egypt and Mesopotamia is starved** (4 promotes) — the batch barely touched
   Egyptian/Sumerian language.
 - **INT gear is starved** (10 promotes across all INT-containing axes) —
   consistent with the standing rite-focus/relic/attendant-focus zero-coverage

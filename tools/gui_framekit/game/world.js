@@ -48,34 +48,19 @@ $("#chatInput input").addEventListener("keydown", ev => {
       document.querySelectorAll(".chatTab").forEach(x =>
         x.classList.toggle("active", x.dataset.chan === activeChan));
     }
-    FK.chatLog(activeChan, ev.target.value.trim(), "Aurelius", "self");
+    FK.chatLog(activeChan, ev.target.value.trim(), "You", "self");
     ev.target.value = "";
   }
   ev.stopPropagation();
 });
-const TOWN_CHATTER = [
-  ["Harl", "Fresh bronze in from the coast. It rings true."],
-  ["Mirela", "The shop opens at dusk."],
-  ["Cassia", "Nine days quiet. I don't trust it."],
-  ["Doran", "The long stair took my knees. It can keep them."],
-  ["Harl", "You break it, you own both halves."],
-  ["Mirela", "Some relics hum when the boy walks past. Curious."],
-];
-let chatterI = 0;
-setInterval(() => {
-  if (FK.scene === "town") {
-    const [who, text] = TOWN_CHATTER[chatterI++ % TOWN_CHATTER.length];
-    FK.chatLog("local", text, who);
-  }
-}, 9000);
-FK.chatLog("local", "Welcome to the Sunken Archive.", null, "sys");
-FK.chatLog("party", "Cassia has joined the party.", null, "sys");
-FK.chatLog("party", "Doran has joined the party.", null, "sys");
+FK.chatLog("local", "Entered Dungeon Level 1.", null, "sys");
+FK.chatLog("party", "Party Member 1 has joined the party.", null, "sys");
+FK.chatLog("party", "Party Member 2 has joined the party.", null, "sys");
 
 /* ------------------------------------------------------------- party */
 const PARTY = [
-  { name: "Cassia", icon: "med_cherub", role: "role_shield", hp: 0.86, mp: 0.6, leader: true },
-  { name: "Doran", icon: "med_eaglehead", role: "role_sword", hp: 0.72, mp: 0.4, leader: false },
+  { name: "Party Member 1", icon: "med_cherub", role: "role_shield", hp: 0.86, mp: 0.6, leader: true },
+  { name: "Party Member 2", icon: "med_eaglehead", role: "role_sword", hp: 0.72, mp: 0.4, leader: false },
 ];
 const partyEl = $("#party");
 PARTY.forEach(p => {
@@ -99,7 +84,7 @@ PARTY.forEach(p => {
   p.stateEl = d.querySelector(".stateFrame");
   p.stateLabel = d.querySelector(".astate");
   d.addEventListener("pointerenter", ev => {
-    const status = p.dead ? "Fallen" : p.downed ? "Downed · click to revive" : `${Math.round(p.hp * 100)}% life`;
+    const status = p.dead ? "Dead" : p.downed ? "Downed · click to revive" : `${Math.round(p.hp * 100)}% life`;
     FK.showTip(null, `${p.name} · ${status}`, FK.stagePoint(ev));
   });
   d.addEventListener("pointerleave", FK.hideTip);
@@ -123,7 +108,7 @@ function drawParty() {
     } else {
       p.stateEl.removeAttribute("src");
     }
-    p.stateLabel.textContent = p.dead ? "Fallen" : p.downed ? "Revive" : "";
+    p.stateLabel.textContent = p.dead ? "Dead" : p.downed ? "Revive" : "";
   });
 }
 function reviveParty(p) {
@@ -139,12 +124,12 @@ function damageParty(p, amount) {
   p.hp = Math.max(0, p.hp - amount);
   if (p.hp === 0) {
     p.downed = true;
-    FK.chatLog("party", `${p.name} is down. Revive them before the light fades.`, null, "bad");
+    FK.chatLog("party", `${p.name} is down. Revive them within 8 seconds.`, null, "bad");
     p.fallTimer = setTimeout(() => {
       if (!p.downed) return;
       p.dead = true;
       drawParty();
-      FK.chatLog("party", `${p.name} has fallen. Return to town to regroup.`, null, "bad");
+      FK.chatLog("party", `${p.name} died. Return to Dungeon Level 1 to revive.`, null, "bad");
     }, 8000);
   }
   drawParty();
@@ -154,9 +139,9 @@ drawParty();
 /* ------------------------------------------------------------- town */
 const townEl = $("#sceneTown");
 const NPCS = [
-  { name: "Harl, Armourmaster", icon: "med_bull", x: 560, y: 470, open: "trade" },
-  { name: "Mirela, Keeper of Relics", icon: "laurel_sun", x: 960, y: 380, open: "reliquary" },
-  { name: "Silent Archivist", icon: "med_cherub", x: 1310, y: 500, open: "codex" },
+  { name: "Armour Vendor", icon: "med_bull", x: 560, y: 470, open: "trade" },
+  { name: "Vendor", icon: "laurel_sun", x: 960, y: 380, open: "reliquary" },
+  { name: "Journal", icon: "med_cherub", x: 1310, y: 500, open: "codex" },
 ];
 NPCS.forEach(n => {
   const d = document.createElement("div");
@@ -186,11 +171,11 @@ const portal = document.createElement("div");
 portal.className = "npc portal";
 portal.tabIndex = 0;
 portal.setAttribute("role", "button");
-portal.setAttribute("aria-label", "Descend to the Lower Vaults");
+portal.setAttribute("aria-label", "Enter Dungeon Level 2");
 portal.style.left = px(1620); portal.style.top = px(430);
 portal.innerHTML = `
   <img class="face" src="assets/socket_gold.png" alt="">
-  <span class="plate"><img src="assets/plate_winged.png" alt=""><b>To the Lower Vaults</b></span>`;
+  <span class="plate"><img src="assets/plate_winged.png" alt=""><b>To Dungeon Level 2</b></span>`;
 portal.addEventListener("click", () => FK.setScene("combat"));
 portal.addEventListener("keydown", ev => {
   if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); FK.setScene("combat"); }
@@ -200,14 +185,14 @@ townEl.appendChild(portal);
 /* ------------------------------------------------------------ combat */
 const combatEl = $("#sceneCombat");
 const MONSTERS = [
-  { name: "Vault Husk", icon: "med_skull", rarity: "normal", max: 220, x: 520, y: 520, size: 74 },
-  { name: "Vault Husk", icon: "med_skull", rarity: "normal", max: 220, x: 660, y: 610, size: 74 },
-  { name: "Gilded Adder", icon: "med_snake", rarity: "magic", max: 420, x: 900, y: 470, size: 84,
+  { name: "Skeleton", icon: "med_skull", rarity: "normal", max: 220, x: 520, y: 520, size: 74 },
+  { name: "Skeleton", icon: "med_skull", rarity: "normal", max: 220, x: 660, y: 610, size: 74 },
+  { name: "Adder", icon: "med_snake", rarity: "magic", max: 420, x: 900, y: 470, size: 84,
     affix: "Quick · Venomous" },
-  { name: "Warden of Chains", icon: "med_chain", rarity: "rare", max: 900, x: 1180, y: 560, size: 100,
-    affix: "Chains the Living · Cannot Be Moved" },
+  { name: "Chained Guard", icon: "med_chain", rarity: "rare", max: 900, x: 1180, y: 560, size: 100,
+    affix: "Cannot Be Knocked Back" },
 ];
-const BOSS = { name: "Custodian of the Ninth Circle", icon: "med_lion", rarity: "unique",
+const BOSS = { name: "Boss", icon: "med_lion", rarity: "unique",
   max: 4200, x: 1500, y: 420, size: 136 };
 const bossBar = $("#bossBar");
 const bossDeplete = bossBar.querySelector(".deplete");
@@ -283,11 +268,11 @@ const exitPlate = document.createElement("div");
 exitPlate.className = "npc portal";
 exitPlate.tabIndex = 0;
 exitPlate.setAttribute("role", "button");
-exitPlate.setAttribute("aria-label", "Return to the Sunken Archive");
+exitPlate.setAttribute("aria-label", "Return to Dungeon Level 1");
 exitPlate.style.left = px(320); exitPlate.style.top = px(300);
 exitPlate.innerHTML = `
   <img class="face" src="assets/socket_ring.png" alt="">
-  <span class="plate"><img src="assets/plate_winged.png" alt=""><b>Return to the Archive</b></span>`;
+  <span class="plate"><img src="assets/plate_winged.png" alt=""><b>Return to Level 1</b></span>`;
 const returnToTown = () => FK.setScene("town");
 exitPlate.addEventListener("click", returnToTown);
 exitPlate.addEventListener("keydown", ev => {
@@ -295,7 +280,7 @@ exitPlate.addEventListener("keydown", ev => {
 });
 combatEl.appendChild(exitPlate);
 
-/* monsters fight back while the vaults are active */
+/* monsters fight back while the combat scene is active */
 setInterval(() => {
   if (FK.scene !== "combat") return;
   const alive = MONSTERS.concat([BOSS]).filter(m => !m.dead);
@@ -332,15 +317,15 @@ function syncScene(s) {
   combatEl.classList.toggle("active", s === "combat");
   bossBar.classList.toggle("show", s === "combat" && !BOSS.dead);
   $("#locationName").textContent =
-    s === "combat" ? "The Lower Vaults" : "The Sunken Archive";
-  if (s === "combat") FK.chatLog("log", "You descend the long stair.", null, "sys");
+    s === "combat" ? "Dungeon Level 2" : "Dungeon Level 1";
+  if (s === "combat") FK.chatLog("log", "Entered Dungeon Level 2.", null, "sys");
 }
 document.addEventListener("fk-scene", ev => syncScene(ev.detail));
 syncScene(FK.scene); /* core may have routed a deep link before we listened */
 
 /* ------------------------------------------------------------ vendor */
 const STOCK = [
-  ["wand", 340], ["gauntlets", 120], ["amber", 210], ["fetish", 75],
+  ["wand", 340], ["amber", 210], ["fetish", 75],
   ["ember", 130], ["bowl", 95], ["gemR", 150], ["draught", 45],
 ];
 const vendorOverlay = $("#vendorOverlay");
@@ -389,11 +374,11 @@ function syncTradeOffer() {
   const selected = FK.selectedSlot;
   const canOffer = Boolean(selected?.item && selected.zone === "inventory" && selected.item.value);
   tradeAddOffer.disabled = !canOffer;
-  tradeAddOffer.setAttribute("aria-label", canOffer ? `Offer ${selected.item.name} to Harl` : "Offer selected pack item to Harl");
+  tradeAddOffer.setAttribute("aria-label", canOffer ? `Offer ${selected.item.name} to the vendor` : "Offer selected pack item to the vendor");
   tradeAccept.disabled = !tradeOffer;
   tradeCancel.disabled = !tradeOffer;
   if (!tradeOffer) tradeOfferItem.textContent = canOffer
-    ? `${selected.item.name} selected · Harl will appraise it.`
+    ? `${selected.item.name} selected · the vendor will quote a price.`
     : "Select a valuable pack item to sell.";
 }
 function clearTradeOffer(message = "Offer cleared.") {
@@ -407,8 +392,8 @@ tradeAddOffer.addEventListener("click", () => {
   const quantity = slot.item.qty || 1;
   const quote = Math.max(1, Math.floor(slot.item.value * quantity * 0.55));
   tradeOffer = { slot, item: slot.item, quote, quantity };
-  tradeOfferItem.textContent = `${slot.item.name}${quantity > 1 ? ` ×${quantity}` : ""} · Harl offers ${quote} gold.`;
-  vendorHint.textContent = "Accept Harl's price, or cancel to keep the item.";
+  tradeOfferItem.textContent = `${slot.item.name}${quantity > 1 ? ` ×${quantity}` : ""} · the vendor offers ${quote} gold.`;
+  vendorHint.textContent = "Accept the vendor's price, or cancel to keep the item.";
   tradeAccept.disabled = false;
   tradeCancel.disabled = false;
 });
@@ -422,9 +407,9 @@ tradeAccept.addEventListener("click", () => {
   }
   FK.removeFromPack(slot, quantity);
   FK.setGold(FK.gold + quote);
-  FK.chatLog("log", `Sold ${item.name} to Harl for ${quote} gold.`, null, "loot");
+  FK.chatLog("log", `Sold ${item.name} to the vendor for ${quote} gold.`, null, "loot");
   FK.notify?.(`Trade accepted · +${quote} gold`, "good");
-  clearTradeOffer("Trade complete. Harl is ready for another offer.");
+  clearTradeOffer("Trade complete.");
 });
 tradeCancel.addEventListener("click", () => clearTradeOffer());
 document.addEventListener("fk-selection-change", () => {
@@ -437,11 +422,11 @@ document.addEventListener("fk-inventory-change", () => {
 });
 syncTradeOffer();
 
-/* --------------------------------------------------------- reliquary */
+/* ------------------------------------------------------------- shop */
 const MTX = FK.COSMETICS = [
-  { id: "gleam", slot: "weapon", card: "card_gold", icon: "laurel_sun", name: "Gilded Weapon Gleam", price: 950, flavor: "Your weapons remember the sun.", owned: false },
-  { id: "footprints", slot: "trail", card: "card_green", icon: "med_flower", name: "Verdant Footprints", price: 420, flavor: "Moss follows where you walk.", owned: true },
-  { id: "portal", slot: "portal", card: "card_red", icon: "tri_fire", name: "Fire Portal", price: 780, flavor: "Arrive like a warning.", owned: false },
+  { id: "gleam", slot: "weapon", card: "card_gold", icon: "laurel_sun", name: "Gold Weapon Glow", price: 950, flavor: "Weapon effect", owned: false },
+  { id: "footprints", slot: "trail", card: "card_green", icon: "med_flower", name: "Green Footprints", price: 420, flavor: "Footstep trail", owned: true },
+  { id: "portal", slot: "portal", card: "card_red", icon: "tri_fire", name: "Fire Portal", price: 780, flavor: "Portal effect", owned: false },
 ];
 const cardsEl = $("#shopCards");
 MTX.forEach(cosmetic => {
@@ -453,7 +438,7 @@ MTX.forEach(cosmetic => {
     <img class="cardIcon" src="assets/${icon}.png" alt="">
     <div class="cardName">${name}</div>
     <div class="cardFlavor">${flavor}</div>
-    <button class="btn small" aria-label="Buy ${name} for ${price} shards"><img src="assets/btn_primary.png" alt=""><span>${price} shards</span></button>`;
+    <button class="btn small" aria-label="Buy ${name} for ${price} points"><img src="assets/btn_primary.png" alt=""><span>${price} points</span></button>`;
   const btn = d.querySelector(".btn");
   if (cosmetic.owned) {
     d.classList.add("owned");
@@ -467,7 +452,7 @@ MTX.forEach(cosmetic => {
     if (FK.shards < price) {
       btn.classList.add("shake");
       setTimeout(() => btn.classList.remove("shake"), 350);
-      FK.notify?.(`You need ${price - FK.shards} more shards.`, "bad");
+      FK.notify?.(`You need ${price - FK.shards} more points.`, "bad");
       return;
     }
     FK.setShards(FK.shards - price);

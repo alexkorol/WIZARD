@@ -318,10 +318,10 @@ ZONES = [
         "mix": "STR ~50 / INT ~50",
         "treeClass": "ring-7 STR/INT node: sets the STR/INT class",
         "classUnlocks": "banners, a war companion and a relic pack",
-        "wedges": "companion and Ward wedge (INT toward STR/INT): companions, Ward, Spirit; fire and ignite wedge (STR toward STR/INT): fire, ignite",
+        "wedges": "companion and Ward wedge (INT toward STR/INT): companions, Ward, Mana; fire and ignite wedge (STR toward STR/INT): fire, ignite",
         "latticeRow": "damage type row (opened by the STR/INT class, a shield or a buckler)",
         "gameSkills": [
-            "fireball", "fireball-volley", "meteor", "fire-wall", "Fire Damage Aura", "Guard Break Aura",
+            "fireball", "fireball-volley", "meteor", "fire-wall", "Fire Damage Aura", "Armour Break Aura",
             "summoning-circle (companion)", "Resistance Bonus",
         ],
         "archetypes": "totem 51/6/43, banner 27/15/58, aura 34/33/33, barrier, elemental slam, summoning (game puts companions here, not in INT)",

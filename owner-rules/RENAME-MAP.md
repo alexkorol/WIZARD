@@ -1,7 +1,6 @@
-# Rename map (2026-11-07)
+# Rename map
 
-Generated from `rename-map.json` (the source; edit that, then rerun `node owner-rules/apply-rename-map.mjs`).
-Display strings change; ids, keys, unlock flags, stat ids, seat ids, spell presets and saved-data values keep their old spelling. The lint (`lint.mjs`) fails on any `before` in game text, data and current docs, except entries marked display-only (spell presets that are still keys).
+Generated from `rename-map.json` (the source; edit that, then run `node owner-rules/apply-rename-map.mjs`). Display strings change; ids, keys, unlock flags, stat ids, seat ids, spell presets and saved-data values keep their spelling, except where a save migration is noted. The lint fails on any `before` in player text and current docs (display-only entries excepted). Full purge lists of 2026-11-08: `purge-2026-11-08/`.
 
 | Category | Before | After | Note |
 |---|---|---|---|
@@ -127,7 +126,7 @@ Display strings change; ids, keys, unlock flags, stat ids, seat ids, spell prese
 | spell term | Rite | Spell | (scope: game) |
 | spell term | rites | spells | (scope: game) |
 | spell term | rite | spell | (scope: game) |
-| unique item | Clear Mind | Spell Damage at High Spirit |  |
+| unique item | Clear Mind | Spell Damage at High Mana |  |
 | skill or base | Claw chain | Claw combo |  |
 | skill or base | Jawbone chain | Jawbone combo |  |
 | skill or base | Traveling cut | Moving slash |  |
@@ -177,7 +176,7 @@ Display strings change; ids, keys, unlock flags, stat ids, seat ids, spell prese
 | flavour sentence | Your Bleeds remember: reapplying restores full duration (design text) | Reapplying a Bleed restores its full duration (design text) | plain restatement (exact value) |
 | flavour sentence | Your hits shed light; the unlit cannot hide from you (design text) | Your hits reveal hidden enemies (design text) | plain restatement (exact value) |
 | flavour sentence | Once rung, your next rite Chills everything it touches (design text) | After you sound your horn, your next spell Chills everything it hits (design text) | plain restatement (exact value) |
-| flavour sentence | Marks you write cost no Spirit (design text) | Marks cost no Spirit (design text) | plain restatement (exact value) |
+| flavour sentence | Marks you write cost no Spirit (design text) | Marks cost no Mana (design text) | plain restatement (exact value) |
 | flavour sentence | Your Evasion is 10% lower while you hold the line (design text) | Your Evasion is 10% lower while standing still (design text) | plain restatement (exact value) |
 | flavour sentence | You cannot Block while you keep this pace (design text) | You cannot Block while moving (design text) | plain restatement (exact value) |
 | pack or slot | Attendant | Extra Focus Slot | gate passive and window label (exact value) |
@@ -216,7 +215,7 @@ Display strings change; ids, keys, unlock flags, stat ids, seat ids, spell prese
 | item pipeline | Wayfaring | Movement | prose form (exact string values use the entry above) |
 | spell or skill name | Might | Damage Aura | +20% attack and spell damage. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
 | spell or skill name | Fanaticism | Attack Speed Aura | +20% attack speed. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
-| spell or skill name | Conviction | Guard Break Aura | nearby enemies lose 25% Guard. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| spell or skill name | Conviction | Armour Break Aura | nearby enemies lose 25% Guard. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
 | spell or skill name | Holy Fire | Fire Damage Aura | fire damage pulses. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
 | spell or skill name | Holy Freeze | Cold Damage Aura | cold damage pulses. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
 | spell or skill name | Holy Shock | Lightning Damage Aura | lightning damage pulses. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
@@ -229,6 +228,52 @@ Display strings change; ids, keys, unlock flags, stat ids, seat ids, spell prese
 | spell or skill name | Energy Shield | Ward Charge | +1 Ward charge. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
 | spell or skill name | Arcane Ward | Long Ward Charge | +1 Ward charge, longer. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
 | spell or skill name | Jawbone combo | Jawbone Weapon Combo | three-hit jawbone weapon chain. Display only (SpellRules.DisplayName / ActionPresentation); the preset and id keep the old spelling as keys for VFX, aura gameplay and saves (exact value) (scope: display) |
+| resource | Spirit | Mana | owner 2026-11-08: 'Spirit' is made up; PoE1 Mana is the resource every skill spends (owner: 'the health and mana orb'). Stat id spirit_flat stays. |
+| resource | Maximum Spirit | Maximum Mana |  |
+| resource | spirit | mana | lowercase game text (scope: game) |
+| stat | Guard | Armour | Guard named the STR defence; PoE's term is Armour (PoE2 Guard is a temporary buff, a different meaning). Stat ids guard_flat/guard_increased stay. (scope: game) |
+| stat | Guard Break Aura | Armour Break Aura | (scope: game) |
+| stat | Guard break | Armour break | (scope: game) |
+| unique item | Spell Damage at High Spirit | Spell Damage at High Mana |  |
+| item crafting | Vesselforge & Inventory | Inventory and Item Crafting |  |
+| item crafting | VesselForge | item crafting system |  |
+| item crafting | Vesselforge | item crafting system |  |
+| currency | Searing Sigil | Add Brand |  |
+| currency | Effacing Stone | Remove Last Brand |  |
+| currency | Orb of Resonance | Upgrade Bond |  |
+| currency | Sundering Knife | Remove Bond |  |
+| currency | Vessel Chisel | Add Modifier Slot |  |
+| currency | Chronicle Draught | (removed: never implemented) |  |
+| currency | Entrail Omen | Guaranteed Ward Brand |  |
+| currency | Bird Omen | Guaranteed Speed Brand |  |
+| currency | Smoke Omen | Guaranteed Mana Brand |  |
+| currency | Blood Omen | Guaranteed Bleed Brand |  |
+| currency | Searing Ash | Add Modifier |  |
+| currency | Scraper | Remove Last Modifier |  |
+| item crafting | Atelier | Crafting Bench |  |
+| item crafting | Attunement | Bond XP |  |
+| item crafting | attunement | bond XP |  |
+| item crafting | Panoply | Set bonus |  |
+| item crafting | Kinship | Class bond |  |
+| item crafting | Hunt Trophy | Animal Part |  |
+| item crafting | Marsh Ochre | Yellow Ochre |  |
+| item crafting | Goods Found | Item Rarity |  |
+| item crafting | Venture Forth | Simulate fight |  |
+| creature | Lindwurm | Great Serpent |  |
+| creature | Night Demon | Gaunt Demon |  |
+| creature | Glutton Demon | Heavy Demon |  |
+| creature | Flying Terror | Flying Demon |  |
+| mechanic | of the Breach |  |  |
+| mechanic | of the Vigil |  |  |
+| mechanic | of the Hunt |  |  |
+| place | Dustwind | Steppe |  |
+| place | Riverspill | Egypt and Mesopotamia |  |
+| tree label | Kilnfathers | (removed) |  |
+| place | Stonewood | Mesoamerica and Northwest Coast |  |
+| place | Nile and Delta | Egypt and Mesopotamia |  |
+| item pipeline | Horn Lamellar Panoply | Horn Lamellar Armour Set |  |
+| item pipeline | Orun | Test Character |  |
+| place | Infernal | Volcanic |  |
 
 ## Found but not renamed
 
@@ -239,11 +284,3 @@ Display strings change; ids, keys, unlock flags, stat ids, seat ids, spell prese
 - **VesselForge awakening (generated names and flavour text on awakened items, rpg_inventory README)**: A design rule, not a label; protected by WIZARD AGENTS.md rule 6. Conflicts with rules 6 and 10; owner ruling needed.
 - **rpg_inventory faction names (riverspill, dustwind ...)**: Internal lane keys today; any player-facing use needs plain names in a separate pass.
 - **Playtest player names (House Arwa, House Olwa, Amazuk, Taru, Ishra)**: Player-chosen names in fixtures, kept as proper names (terms.json nameProper).
-
-## Labels kept pending review (`terms.json` nameExceptions)
-
-- era: Hammered Iron, Riveted Mail, Crest, Macuahuitl
-- creature: Beetle Golem, Bone Golem, Chained Demon, Flying Terror, Glutton Demon, Horned Demon, Hydra, Kraken, Lava Golem, Lindwurm, Night Demon
-- lattice: Paradigm Shift, Schism, Schism:, Tesseract
-- currency: Searing Ash
-- literal: Ember
