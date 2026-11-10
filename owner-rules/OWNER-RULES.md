@@ -10,8 +10,8 @@ documents must not restate or contradict these rules.
 - **Canonical copy:** WIZARD `owner-rules/` (gh-pages). The ARPG carries a synced copy;
   never edit that copy. To add or change a rule, see "Changing a rule" at the end.
 - **Enforced by:** `owner-rules/lint.mjs` with `owner-rules/terms.json` (rules 5–8, 12, 47), run by WIZARD
-  `scripts/wizard-lab.mjs verify` (and CI); in the ARPG by hand, `node tools/sync-owner-rules.mjs --check`
-  (its build gate and test suite were retired in the 2026-11-09 deslop).
+  `scripts/wizard-lab.mjs verify` (and CI) and by every ARPG build (`SliceBuild.OwnerRules`; the ARPG's
+  separate test gate was retired in the 2026-11-09 deslop).
 
 ## North star
 
@@ -241,8 +241,7 @@ These hold detailed, domain-specific requirements and must open by pointing here
    WIZARD only. Give the date, the owner's words where available and one line of why.
 2. Run `node owner-rules/lint.mjs wizard` and `node scripts/wizard-lab.mjs verify`, commit,
    and push to gh-pages.
-3. In the ARPG, run `node tools/sync-owner-rules.mjs` and commit the updated copy;
-   `node tools/sync-owner-rules.mjs --check` reports a copy that differs from the published one or
-   was edited locally (the ARPG has had no build gate since 2026-11-09).
+3. In the ARPG, run `node tools/sync-owner-rules.mjs` and commit the updated copy. The ARPG
+   build refuses while its copy differs from the published one or has been edited locally.
 4. Remove any older wording of the same rule from AGENTS.md, CLAUDE.md, skills or docs;
    those files point here instead of repeating rules.
