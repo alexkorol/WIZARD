@@ -495,7 +495,7 @@ t('character source prompts are self-contained and non-proprietary', () => {
       /global desaturation/.test(agents + brief + style),
     'source-character prompts must reject the shared blue cast and subdued grade');
   assert(/Only Nile Intelligence/.test(agents + brief) &&
-      /Northern, Cedar, and Silkroad/.test(agents + brief + style),
+      /Northern, Cedar, and Silk Road/.test(agents + brief + style),
     'blue palette drivers must be restricted to the assigned Nile Intelligence field');
   assert(/Do not save Alexei's proprietary legacy character prompts/.test(docs),
     'docs must protect proprietary legacy prompt examples');

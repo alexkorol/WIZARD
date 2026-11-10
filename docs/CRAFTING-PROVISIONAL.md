@@ -35,4 +35,4 @@ Nothing else limits crafting: no per-item crafting budget, no material-upgrade g
 
 ## Removed from the earlier draft
 
-Crafting uses (Patience), the material-upgrade gamble (kiln), locked slots (scars), half-strength bonds for another class (kinship), set bonus for upgraded items (Panoply), automatic inheritance (Lineage), and the pre-made Mana set and unique (ARPG `spiritwork-*` recipes).
+Crafting uses (Patience), the material-upgrade gamble (kiln), locked slots (scars), half-strength bonds for another class (kinship), the set bonus for upgraded items, automatic inheritance (Lineage), and the pre-made Mana set and unique (ARPG `spiritwork-*` recipes).
