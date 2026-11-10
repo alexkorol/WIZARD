@@ -376,6 +376,8 @@ Calls the rules did not settle outright. Each was applied; reverse any by saying
 - **Art era:** the art pipeline follows rule 12 ("Bronze Age and earlier"). 94 targets anchored in later Old World cultures are held; the list with their previous actions is tools/rpg_inventory/core/expansion_ready/held-after-bronze-age.tsv. The taxonomy's AD 600 ceiling was an agent draft from before the rule. The Americas count by technology (stone, obsidian, copper).
 - **Iron in effects:** effect text says "metal" where it said iron or steel; the shaders still draw dark metal.
 - **Side tools:** account creator icons scroll → flame, book → history or crown, coins → gem; GUI demo Hammered Iron Khopesh → Bronze Dagger.
+- **Spell Effects Lab (rule 13):** runes, rune rings, pentagrams, hexagrams, star polygons and hexagon plates in about 35 effects → rings, ticks and dots with the same timing; "sigil", "glyph" and "rune" labels → ring, mark or what is drawn. Removed as built around a forbidden object (rules 12, 13): runestone, spell book (Kikubaaqudgh), card deck and Nemelex draw, Gozag coins and lantern, hourglass (Suspend Mortality), cog device (Pakellas), iron chains (Ashenzari); the lab now has 181 effects. The ARPG catalog copy is rebuilt to match.
+- **Kept as light or material, not drawn figures:** 4- to 12-point burst flashes, the skill-tree keystone octagon plate, hex-tiled noise, scale and chitin patterns.
 - **Kept:** the pixel sandbox's Glass and Gunpowder (a physics toy outside the setting); "scroll to zoom" (the mouse wheel); review records of past art generations (they record what was generated).
 
 ## Kept because the owner introduced it
