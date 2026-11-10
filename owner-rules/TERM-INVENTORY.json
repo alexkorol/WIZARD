@@ -917,16 +917,16 @@
     "ADD"
    ],
    "count": {
-    "wizard": 36,
+    "wizard": 38,
     "arpg": 2
    },
-   "total": 38,
+   "total": 40,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 17,
+   "fileCount": 19,
    "files": [
     "wizard:tools/slerp/README.md (10)",
     "wizard:tools/space_shooter/README.md (5)",
@@ -934,7 +934,7 @@
     "wizard:tools/geometric_skilltree/index.html (2)",
     "wizard:tools/geometric_skilltree/NORTH-STAR.md (2)",
     "wizard:tools/rpg_inventory/AGENTS.md (2)",
-    "wizard:tools/rpg_inventory/README.md (2)",
+    "wizard:tools/rpg_inventory/DESIGN.md (2)",
     "wizard:tools/rpg_inventory/core/STYLE-EXPERIMENTS.md (2)"
    ],
    "context": "Add Note",
@@ -949,16 +949,16 @@
     "Added"
    ],
    "count": {
-    "wizard": 24,
+    "wizard": 25,
     "arpg": 10
    },
-   "total": 34,
+   "total": 35,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 14,
+   "fileCount": 15,
    "files": [
     "wizard:tools/geometric_skilltree/assets/tree-data.js (6)",
     "wizard:tools/geometric_skilltree/scripts/author-tree.mjs (6)",
@@ -1004,22 +1004,20 @@
     "Adding"
    ],
    "count": {
-    "wizard": 4,
+    "wizard": 3,
     "arpg": 0
    },
-   "total": 4,
+   "total": 3,
    "kinds": [
-    "doc",
-    "game"
+    "doc"
    ],
-   "fileCount": 4,
+   "fileCount": 3,
    "files": [
-    "wizard:tools/rpg_inventory/core/vesselforge.js (1)",
     "wizard:docs/ADDING_A_MODULE.md (1)",
     "wizard:docs/UI_FRAMEPACK_INTERFACE.md (1)",
     "wizard:README.md (1)"
    ],
-   "context": "Adding a slot needs 2 crafting uses",
+   "context": "# Adding a module",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -1081,15 +1079,15 @@
     "Adds"
    ],
    "count": {
-    "wizard": 25,
+    "wizard": 24,
     "arpg": 14
    },
-   "total": 39,
+   "total": 38,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 11,
+   "fileCount": 10,
    "files": [
     "wizard:tools/geometric_skilltree/assets/tree-data.js (10)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/tree-data.js.txt (10)",
@@ -2322,16 +2320,16 @@
     "ALL"
    ],
    "count": {
-    "wizard": 90,
+    "wizard": 89,
     "arpg": 26
    },
-   "total": 116,
+   "total": 115,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 41,
+   "fileCount": 40,
    "files": [
     "wizard:tools/spellforge/index.html (20)",
     "wizard:tools/geometric_skilltree/assets/tree-data.js (9)",
@@ -3210,10 +3208,10 @@
     "An"
    ],
    "count": {
-    "wizard": 21,
+    "wizard": 19,
     "arpg": 6
    },
-   "total": 27,
+   "total": 25,
    "kinds": [
     "doc",
     "game"
@@ -3221,13 +3219,13 @@
    "fileCount": 22,
    "files": [
     "wizard:docs/MODULE_CAPABILITY_AUDIT.md (2)",
-    "wizard:tools/rpg_inventory/README.md (2)",
-    "wizard:tools/rpg_inventory/core/README.md (2)",
     "wizard:tools/rpg_inventory/core/expansion_ready/wearables.tsv (2)",
     "wizard:tools/rpg_inventory/core/targets-600.tsv (2)",
     "wizard:tools/cartographer/core/map-types.js (1)",
     "wizard:tools/rpg_inventory/item.html (1)",
-    "wizard:tools/spellforge/index.html (1)"
+    "wizard:tools/spellforge/index.html (1)",
+    "wizard:tools/verdigris_splash/index.html (1)",
+    "wizard:tools/spellforge/catalog.json (1)"
    ],
    "context": "An eroded gorge opens into fighting basins, divides around rock fins and sends side ravines into the cliffs.",
    "origin": "plain",
@@ -3496,16 +3494,16 @@
     "Animal"
    ],
    "count": {
-    "wizard": 52,
+    "wizard": 54,
     "arpg": 12
    },
-   "total": 64,
+   "total": 66,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 22,
+   "fileCount": 24,
    "files": [
     "wizard:tools/geometric_skilltree/index.html (7)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/model.js.txt (7)",
@@ -3685,16 +3683,18 @@
     "Annulment"
    ],
    "count": {
-    "wizard": 1,
+    "wizard": 3,
     "arpg": 0
    },
-   "total": 1,
+   "total": 3,
    "kinds": [
     "doc"
    ],
-   "fileCount": 1,
+   "fileCount": 3,
    "files": [
-    "wizard:docs/CRAFTING-PROVISIONAL.md (1)"
+    "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)",
+    "wizard:tools/rpg_inventory/core/README.md (1)"
    ],
    "context": "| Remove Last Modifier | Annulment Orb (adapted: last, not random) | Removes the most recently added modifier |",
    "origin": "plain",
@@ -4470,26 +4470,26 @@
     "Archetype"
    ],
    "count": {
-    "wizard": 37,
+    "wizard": 28,
     "arpg": 1
    },
-   "total": 38,
+   "total": 29,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 16,
+   "fileCount": 15,
    "files": [
     "wizard:tools/geometric_skilltree/NORTH-STAR.md (9)",
-    "wizard:tools/rpg_inventory/core/README.md (6)",
-    "wizard:tools/rpg_inventory/README.md (4)",
     "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (3)",
-    "wizard:tools/rpg_inventory/index.html (2)",
+    "wizard:tools/rpg_inventory/core/README.md (3)",
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (2)",
-    "wizard:tools/rpg_inventory/DESIGN.md (2)",
-    "wizard:tools/rpg_inventory/core/STYLE-EXPERIMENTS.md (2)"
+    "wizard:tools/rpg_inventory/core/STYLE-EXPERIMENTS.md (2)",
+    "wizard:tools/rpg_inventory/index.html (1)",
+    "wizard:tools/rpg_inventory/core/vesselforge.js (1)",
+    "wizard:tools/spellforge/index.html (1)"
    ],
-   "context": "Heir archetype",
+   "context": "Character archetype",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -4502,25 +4502,25 @@
     "Archetypes"
    ],
    "count": {
-    "wizard": 26,
+    "wizard": 24,
     "arpg": 0
    },
-   "total": 26,
+   "total": 24,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 10,
+   "fileCount": 9,
    "files": [
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (9)",
     "wizard:tools/spellforge/index.html (5)",
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (4)",
-    "wizard:tools/rpg_inventory/README.md (2)",
     "wizard:tools/rpg_inventory/core/vesselforge.js (1)",
     "wizard:tools/geometric_skilltree/NORTH-STAR.md (1)",
     "wizard:tools/geometric_skilltree/README.md (1)",
-    "wizard:tools/rpg_inventory/DESIGN.md (1)"
+    "wizard:tools/rpg_inventory/DESIGN.md (1)",
+    "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (1)"
    ],
    "context": "archetypes",
    "origin": "plain",
@@ -4887,16 +4887,16 @@
     "Armour"
    ],
    "count": {
-    "wizard": 122,
+    "wizard": 121,
     "arpg": 60
    },
-   "total": 182,
+   "total": 181,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 32,
+   "fileCount": 31,
    "files": [
     "wizard:tools/geometric_skilltree/assets/tree-data.js (31)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/tree-data.js.txt (31)",
@@ -4965,10 +4965,10 @@
     "ARPG"
    ],
    "count": {
-    "wizard": 68,
+    "wizard": 67,
     "arpg": 55
    },
-   "total": 123,
+   "total": 122,
    "kinds": [
     "doc",
     "game",
@@ -5877,16 +5877,16 @@
     "AT"
    ],
    "count": {
-    "wizard": 52,
+    "wizard": 53,
     "arpg": 7
    },
-   "total": 59,
+   "total": 60,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 19,
+   "fileCount": 20,
    "files": [
     "wizard:tools/rpg_inventory/core/ANCIENT-EQUIPMENT-TAXONOMY.md (17)",
     "wizard:tools/spellforge/index.html (6)",
@@ -6006,24 +6006,25 @@
     "Attach"
    ],
    "count": {
-    "wizard": 6,
+    "wizard": 7,
     "arpg": 1
    },
-   "total": 7,
+   "total": 8,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 6,
+   "fileCount": 7,
    "files": [
     "wizard:tools/rpg_inventory/core/PIXEL-PROMPTS.md (2)",
+    "wizard:tools/rpg_inventory/core/playground.html (1)",
     "wizard:tools/spellforge/index.html (1)",
     "wizard:tools/spellforge/catalog.json (1)",
     "wizard:tools/rpg_inventory/AGENTS.md (1)",
     "wizard:tools/rpg_inventory/core/GOAL.md (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (1)"
    ],
-   "context": "A ring mesh with a volumetric fire material for gameplay distance, or this raymarch in a bounding cylinder for close shots. Attach to the ch",
+   "context": "Attach animal part ✧",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -6298,18 +6299,20 @@
     "Augmentation"
    ],
    "count": {
-    "wizard": 1,
+    "wizard": 3,
     "arpg": 0
    },
-   "total": 1,
+   "total": 3,
    "kinds": [
     "doc"
    ],
-   "fileCount": 1,
+   "fileCount": 3,
    "files": [
-    "wizard:docs/CRAFTING-PROVISIONAL.md (1)"
+    "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)",
+    "wizard:tools/rpg_inventory/core/README.md (1)"
    ],
-   "context": "| Add Modifier | Augmentation / Exalted Orb | Adds one modifier while the rarity has room |",
+   "context": "| Add Modifier | Transmutation + Augmentation / Exalted Orb | Turns a Normal item Magic and adds one modifier; otherwise adds one modifier w",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -6814,45 +6817,21 @@
    "note": null
   },
   {
-   "term": "awaken",
-   "surfaces": [
-    "Awaken"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/README.md (1)"
-   ],
-   "context": "items through the deeds their bearer performs. Saturated items **Awaken** into",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "upgrade to rare",
-   "note": "See \"awakened\"."
-  },
-  {
    "term": "awakened",
    "surfaces": [
     "awakened"
    ],
    "count": {
-    "wizard": 8,
+    "wizard": 5,
     "arpg": 0
    },
-   "total": 8,
+   "total": 5,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 4,
+   "fileCount": 3,
    "files": [
-    "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (3)",
     "wizard:tools/rpg_inventory/core/vesselforge.js (2)",
     "wizard:tools/rpg_inventory/core/REFERENCE-NOTES.md (2)",
     "wizard:tools/rpg_inventory/core/NAMEBANK-PRE-AD.md (1)"
@@ -6861,7 +6840,7 @@
    "origin": "agent-invented",
    "verdict": "purge",
    "after": "Rare / Upgraded",
-   "note": "PoE Awakened means awakened gems; here it named a rare (ARPG) or an upgraded item (WIZARD)"
+   "note": "PoE Awakened means awakened gems; here it named a rare (ARPG) or an upgraded item (WIZARD) Remaining hits: the saved-item field `awakened` in vesselforge.js (kept so saves load) and PoE's own \"Awakened\" gems in REFERENCE-NOTES.md."
   },
   {
    "term": "away",
@@ -7225,17 +7204,17 @@
     "Backpack"
    ],
    "count": {
-    "wizard": 4,
+    "wizard": 5,
     "arpg": 3
    },
-   "total": 7,
+   "total": 8,
    "kinds": [
     "game",
     "label"
    ],
    "fileCount": 3,
    "files": [
-    "wizard:tools/rpg_inventory/index.html (4)",
+    "wizard:tools/rpg_inventory/index.html (5)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgInventoryPane.cs (2)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/InventoryAuxiliary.cs (1)"
    ],
@@ -7407,6 +7386,31 @@
     "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
    ],
    "context": "Pendular Bag Yoke",
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": null
+  },
+  {
+   "term": "bags",
+   "surfaces": [
+    "Bags"
+   ],
+   "count": {
+    "wizard": 5,
+    "arpg": 0
+   },
+   "total": 5,
+   "kinds": [
+    "doc"
+   ],
+   "fileCount": 3,
+   "files": [
+    "wizard:tools/rpg_inventory/core/expansion_ready/wearables.tsv (2)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (2)",
+    "wizard:tools/rpg_inventory/core/expansion_ready/wave-01.tsv (1)"
+   ],
+   "context": "Cuffed Foot Bags",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -7773,16 +7777,16 @@
     "Banner"
    ],
    "count": {
-    "wizard": 159,
+    "wizard": 160,
     "arpg": 12
    },
-   "total": 171,
+   "total": 172,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 10,
+   "fileCount": 11,
    "files": [
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (126)",
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (10)",
@@ -8670,18 +8674,17 @@
     "Bearer"
    ],
    "count": {
-    "wizard": 5,
+    "wizard": 3,
     "arpg": 1
    },
-   "total": 6,
+   "total": 4,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 4,
+   "fileCount": 3,
    "files": [
-    "wizard:tools/rpg_inventory/README.md (2)",
     "wizard:tools/rpg_inventory/core/README.md (2)",
     "wizard:tools/rpg_inventory/item.html (1)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgSession.cs (1)"
@@ -8780,18 +8783,18 @@
     "Because"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 1,
     "arpg": 0
    },
-   "total": 2,
+   "total": 1,
    "kinds": [
     "doc"
    ],
    "fileCount": 1,
    "files": [
-    "wizard:tools/rpg_inventory/README.md (2)"
+    "wizard:tools/rpg_inventory/README.md (1)"
    ],
-   "context": "Because they share slots, a fully-branded item can never learn. That's the",
+   "context": "one Bond level. Bonds work the same for every class. Because bonds are",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -8832,16 +8835,16 @@
     "BEFORE"
    ],
    "count": {
-    "wizard": 17,
+    "wizard": 16,
     "arpg": 3
    },
-   "total": 20,
+   "total": 19,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 16,
+   "fileCount": 15,
    "files": [
     "wizard:tools/spellforge/index.html (2)",
     "wizard:tools/spellforge/catalog.json (2)",
@@ -8981,7 +8984,7 @@
     "wizard:tools/rpg_inventory/core/expansion_ready/auxiliary.tsv (1)",
     "wizard:tools/rpg_inventory/core/expansion_ready/wave-02-chroma.tsv (1)"
    ],
-   "context": "- **Rite-focus** (spirit caster): Bone Idol-Cudgel · Copper Hand Bell · Bronze Pronged Sceptre · Jade Idol-Staff · Meteoric iron Rite Rod",
+   "context": "- **Rite-focus** (mana caster): Bone Idol-Cudgel · Copper Hand Bell · Bronze Pronged Sceptre · Jade Idol-Staff · Meteoric iron Spell Rod",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -9077,10 +9080,10 @@
     "Bench"
    ],
    "count": {
-    "wizard": 23,
+    "wizard": 25,
     "arpg": 0
    },
-   "total": 23,
+   "total": 25,
    "kinds": [
     "doc",
     "game",
@@ -9089,8 +9092,8 @@
    "fileCount": 9,
    "files": [
     "wizard:docs/MODULE_CAPABILITY_AUDIT.md (8)",
+    "wizard:tools/rpg_inventory/README.md (5)",
     "wizard:tools/rpg_inventory/index.html (3)",
-    "wizard:tools/rpg_inventory/README.md (3)",
     "wizard:tools/systems_bench/index.html (2)",
     "wizard:docs/WIZARD_STANDARDIZATION_STATUS.md (2)",
     "wizard:tools/systems_bench/README.md (2)",
@@ -9432,17 +9435,16 @@
     "Bind"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 1,
     "arpg": 0
    },
-   "total": 2,
+   "total": 1,
    "kinds": [
     "game"
    ],
-   "fileCount": 2,
+   "fileCount": 1,
    "files": [
-    "wizard:tools/gui_framekit/components/overlays/context-menu/demo.html (1)",
-    "wizard:tools/rpg_inventory/core/playground.html (1)"
+    "wizard:tools/gui_framekit/components/overlays/context-menu/demo.html (1)"
    ],
    "context": "Bind to hotbar",
    "origin": "plain",
@@ -9638,30 +9640,6 @@
    "note": null
   },
   {
-   "term": "blackline",
-   "surfaces": [
-    "Blackline"
-   ],
-   "count": {
-    "wizard": 2,
-    "arpg": 0
-   },
-   "total": 2,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 2,
-   "files": [
-    "wizard:tools/rpg_inventory/core/expansion_ready/auxiliary.tsv (1)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
-   ],
-   "context": "Blackline Trap Case",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Dark Hide Trap Case",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
-  },
-  {
    "term": "blackthorn",
    "surfaces": [
     "Blackthorn"
@@ -9692,25 +9670,25 @@
     "Blade"
    ],
    "count": {
-    "wizard": 43,
+    "wizard": 47,
     "arpg": 18
    },
-   "total": 61,
+   "total": 65,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 12,
+   "fileCount": 13,
    "files": [
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (12)",
     "wizard:tools/spellforge/index.html (11)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (11)",
     "wizard:tools/spellforge/catalog.json (10)",
     "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (6)",
+    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (3)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/SpellRules.cs (3)",
-    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-recipes.json (3)",
-    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (1)"
+    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-recipes.json (3)"
    ],
    "context": "Wooden Blade Edged with Lashed Shark Teeth",
    "origin": "plain",
@@ -10306,10 +10284,10 @@
     "Block"
    ],
    "count": {
-    "wizard": 54,
+    "wizard": 55,
     "arpg": 13
    },
-   "total": 67,
+   "total": 68,
    "kinds": [
     "doc",
     "game",
@@ -10820,16 +10798,16 @@
     "Body"
    ],
    "count": {
-    "wizard": 80,
+    "wizard": 81,
     "arpg": 29
    },
-   "total": 109,
+   "total": 110,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 33,
+   "fileCount": 34,
    "files": [
     "wizard:tools/spellforge/index.html (31)",
     "wizard:tools/spellforge/catalog.json (13)",
@@ -10845,29 +10823,6 @@
    "verdict": "keep",
    "after": null,
    "note": "Arcane Lattice canon (owner spell-lattice system), kept per ruling."
-  },
-  {
-   "term": "bodyshield",
-   "surfaces": [
-    "Bodyshield"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/core/targets.tsv (1)"
-   ],
-   "context": "Oxhide Bodyshield",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Body Shield",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "boeotian",
@@ -11019,7 +10974,7 @@
     "wizard:tools/spellforge/catalog.json (4)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (4)"
    ],
-   "context": "Bolts are lit steel meshes that stay embedded after the hit. The copies are clipped against the rift plane, so they slide out of nothing.",
+   "context": "Bolts are lit metal meshes that stay embedded after the hit. The copies are clipped against the rift plane, so they slide out of nothing.",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -11032,26 +10987,26 @@
     "Bond"
    ],
    "count": {
-    "wizard": 60,
+    "wizard": 58,
     "arpg": 8
    },
-   "total": 68,
+   "total": 66,
    "kinds": [
     "doc",
     "game"
    ],
    "fileCount": 15,
    "files": [
-    "wizard:tools/rpg_inventory/README.md (15)",
-    "wizard:tools/rpg_inventory/core/vesselforge.js (11)",
-    "wizard:tools/rpg_inventory/index.html (10)",
+    "wizard:tools/rpg_inventory/README.md (14)",
+    "wizard:tools/rpg_inventory/core/vesselforge.js (9)",
     "wizard:tools/rpg_inventory/core/verdigris-combat.js (8)",
-    "wizard:tools/rpg_inventory/DESIGN.md (4)",
-    "arpg:the ARPG/Assets/ARPG/Scripts/Core/Vessels.cs (4)",
-    "wizard:tools/rpg_inventory/item.html (3)",
-    "wizard:docs/CRAFTING-PROVISIONAL.md (3)"
+    "wizard:tools/rpg_inventory/index.html (7)",
+    "wizard:tools/rpg_inventory/DESIGN.md (6)",
+    "wizard:docs/CRAFTING-PROVISIONAL.md (4)",
+    "wizard:tools/rpg_inventory/core/README.md (4)",
+    "arpg:the ARPG/Assets/ARPG/Scripts/Core/Vessels.cs (4)"
    ],
-   "context": "Set (2): +10% to the bond values of your upgraded items",
+   "context": "bond",
    "origin": "owner",
    "verdict": "keep",
    "after": null,
@@ -11064,22 +11019,22 @@
     "Bonds"
    ],
    "count": {
-    "wizard": 33,
+    "wizard": 36,
     "arpg": 0
    },
-   "total": 33,
+   "total": 36,
    "kinds": [
     "doc",
     "game"
    ],
    "fileCount": 10,
    "files": [
-    "wizard:tools/rpg_inventory/README.md (8)",
-    "wizard:docs/CRAFTING-PROVISIONAL.md (6)",
+    "wizard:tools/rpg_inventory/README.md (10)",
+    "wizard:docs/CRAFTING-PROVISIONAL.md (7)",
     "wizard:tools/rpg_inventory/core/README.md (6)",
-    "wizard:tools/rpg_inventory/index.html (4)",
-    "wizard:tools/rpg_inventory/DESIGN.md (4)",
-    "wizard:tools/rpg_inventory/core/vesselforge.js (1)",
+    "wizard:tools/rpg_inventory/DESIGN.md (5)",
+    "wizard:tools/rpg_inventory/index.html (2)",
+    "wizard:tools/rpg_inventory/core/vesselforge.js (2)",
     "wizard:tools/rpg_inventory/item.html (1)",
     "wizard:tools/rpg_inventory/wizard.module.json (1)"
    ],
@@ -11184,10 +11139,10 @@
     "Bonuses"
    ],
    "count": {
-    "wizard": 6,
+    "wizard": 7,
     "arpg": 0
    },
-   "total": 6,
+   "total": 7,
    "kinds": [
     "doc",
     "label"
@@ -11196,8 +11151,8 @@
    "files": [
     "wizard:tools/rpg_inventory/core/verdigris-pack.js (2)",
     "wizard:tools/rpg_inventory/README.md (2)",
-    "wizard:tools/geometric_skilltree/index.html (1)",
-    "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (1)"
+    "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (2)",
+    "wizard:tools/geometric_skilltree/index.html (1)"
    ],
    "context": "Shape Bonuses",
    "origin": "plain",
@@ -12131,25 +12086,25 @@
     "brand"
    ],
    "count": {
-    "wizard": 50,
+    "wizard": 65,
     "arpg": 6
    },
-   "total": 56,
+   "total": 71,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 14,
+   "fileCount": 15,
    "files": [
     "wizard:tools/rpg_inventory/index.html (15)",
-    "wizard:tools/rpg_inventory/core/vesselforge.js (6)",
-    "wizard:tools/rpg_inventory/README.md (6)",
+    "wizard:tools/rpg_inventory/README.md (11)",
+    "wizard:tools/rpg_inventory/core/vesselforge.js (8)",
+    "wizard:tools/rpg_inventory/DESIGN.md (5)",
     "wizard:tools/rpg_inventory/core/verdigris-pack.js (4)",
     "wizard:tools/spellforge/index.html (4)",
     "wizard:tools/spellforge/catalog.json (4)",
-    "wizard:tools/rpg_inventory/core/targets.tsv (4)",
-    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (4)"
+    "wizard:docs/CRAFTING-PROVISIONAL.md (4)"
    ],
    "context": "Guaranteed Ward Brand",
    "origin": "owner",
@@ -12212,24 +12167,24 @@
     "Brands"
    ],
    "count": {
-    "wizard": 21,
+    "wizard": 25,
     "arpg": 1
    },
-   "total": 22,
+   "total": 26,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 13,
+   "fileCount": 14,
    "files": [
-    "wizard:tools/rpg_inventory/README.md (5)",
+    "wizard:tools/rpg_inventory/README.md (6)",
+    "wizard:tools/rpg_inventory/core/vesselforge.js (4)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (3)",
-    "wizard:tools/rpg_inventory/DESIGN.md (3)",
+    "wizard:tools/rpg_inventory/DESIGN.md (2)",
     "wizard:tools/rpg_inventory/core/README.md (2)",
     "wizard:tools/rpg_inventory/index.html (1)",
     "wizard:tools/rpg_inventory/item.html (1)",
-    "wizard:tools/rpg_inventory/wizard.module.json (1)",
-    "wizard:tools/spellforge/index.html (1)"
+    "wizard:tools/rpg_inventory/wizard.module.json (1)"
    ],
    "context": "Add brands, grow bonds and bind trophies on your items.",
    "origin": "owner",
@@ -12765,30 +12720,6 @@
    "note": null
   },
   {
-   "term": "broadblade",
-   "surfaces": [
-    "Broadblade"
-   ],
-   "count": {
-    "wizard": 2,
-    "arpg": 0
-   },
-   "total": 2,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 2,
-   "files": [
-    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (1)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
-   ],
-   "context": "Ivory-Butt Broadblade",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Bronze Dagger",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
-  },
-  {
    "term": "broadleaf",
    "surfaces": [
     "Broadleaf"
@@ -12846,20 +12777,20 @@
     "Bronze"
    ],
    "count": {
-    "wizard": 525,
+    "wizard": 526,
     "arpg": 23
    },
-   "total": 548,
+   "total": 549,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 45,
+   "fileCount": 44,
    "files": [
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (82)",
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (78)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (65)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (66)",
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (50)",
     "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (31)",
     "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (28)",
@@ -13481,6 +13412,29 @@
    "verdict": "keep",
    "after": null,
    "note": null
+  },
+  {
+   "term": "builder",
+   "surfaces": [
+    "Builder"
+   ],
+   "count": {
+    "wizard": 1,
+    "arpg": 0
+   },
+   "total": 1,
+   "kinds": [
+    "doc"
+   ],
+   "fileCount": 1,
+   "files": [
+    "wizard:tools/arcane_lattice/README.md (1)"
+   ],
+   "context": "# The Arcane Lattice — Spell Builder",
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "replacement word (2026-11-09)"
   },
   {
    "term": "builds",
@@ -15166,7 +15120,7 @@
    "files": [
     "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (1)"
    ],
-   "context": "| Helmets / crowns | 24 | Caps, crests, helms, masks, warcrowns, greathelms; distinct silhouettes. |",
+   "context": "| Helmets / crowns | 24 | Caps, crests, helms, masks, crowns, greathelms; distinct silhouettes. |",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -15429,29 +15383,6 @@
    "note": null
   },
   {
-   "term": "carries",
-   "surfaces": [
-    "Carries"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/README.md (1)"
-   ],
-   "context": "| Class bond | None — anyone's craft | Carries the shaper's archetype; **half strength in held by another class hands** |",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
    "term": "carry",
    "surfaces": [
     "Carry"
@@ -15505,29 +15436,6 @@
     "wizard:tools/cartographer/core/mapgen.js (1)"
    ],
    "context": "WIZARD Cartographer",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
-   "term": "carve",
-   "surfaces": [
-    "Carve"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/README.md (1)"
-   ],
-   "context": "| Add Modifier Slot | Carve an extra vessel slot (max 6) |",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -16141,7 +16049,7 @@
     "wizard:tools/rpg_inventory/core/LOADOUT-EXTRACTION.md (1)",
     "wizard:tools/rpg_inventory/core/STYLE-EXPERIMENTS.md (1)"
    ],
-   "context": "Blue is not a shared faction signal: Northern, Cedar, and Silkroad production",
+   "context": "Blue is not a shared faction signal: Northern, Cedar, and Silk Road production",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -16153,20 +16061,18 @@
     "Ceiling"
    ],
    "count": {
-    "wizard": 5,
+    "wizard": 4,
     "arpg": 2
    },
-   "total": 7,
+   "total": 6,
    "kinds": [
-    "doc",
     "game"
    ],
-   "fileCount": 4,
+   "fileCount": 3,
    "files": [
     "wizard:tools/spellforge/index.html (2)",
     "wizard:tools/spellforge/catalog.json (2)",
-    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (2)",
-    "wizard:tools/rpg_inventory/README.md (1)"
+    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (2)"
    ],
    "context": "Ceiling stone",
    "origin": "plain",
@@ -17088,24 +16994,25 @@
    "term": "character",
    "surfaces": [
     "Character",
+    "Character's",
     "CHARACTER"
    ],
    "count": {
-    "wizard": 38,
+    "wizard": 41,
     "arpg": 14
    },
-   "total": 52,
+   "total": 55,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 26,
+   "fileCount": 27,
    "files": [
     "wizard:tools/spellforge/index.html (5)",
     "wizard:tools/spellforge/catalog.json (5)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (5)",
-    "wizard:tools/rpg_inventory/index.html (3)",
+    "wizard:tools/rpg_inventory/index.html (4)",
     "wizard:tools/rp_account_creator/index.html (3)",
     "wizard:tools/rpg_inventory/AGENTS.md (3)",
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (3)",
@@ -17877,29 +17784,6 @@
    "note": null
   },
   {
-   "term": "chisel",
-   "surfaces": [
-    "Chisel"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "game"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/core/playground.html (1)"
-   ],
-   "context": "Chisel slot",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
    "term": "chitin",
    "surfaces": [
     "Chitin"
@@ -18502,7 +18386,7 @@
     "wizard:tools/rpg_inventory/core/expansion_ready/jewelry_relics.tsv (1)",
     "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
    ],
-   "context": "Bronze Rite Cista",
+   "context": "Bronze Spell Cista",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -18760,16 +18644,16 @@
     "Class"
    ],
    "count": {
-    "wizard": 48,
+    "wizard": 46,
     "arpg": 35
    },
-   "total": 83,
+   "total": 81,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 13,
+   "fileCount": 11,
    "files": [
     "wizard:tools/geometric_skilltree/scripts/author-tree.mjs (18)",
     "wizard:tools/geometric_skilltree/assets/tree-data.js (12)",
@@ -18964,21 +18848,22 @@
     "Clay"
    ],
    "count": {
-    "wizard": 15,
+    "wizard": 17,
     "arpg": 3
    },
-   "total": 18,
+   "total": 20,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 6,
+   "fileCount": 7,
    "files": [
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (7)",
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (6)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (2)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/ExplorationBiomes.cs (2)",
+    "wizard:tools/rpg_inventory/core/expansion_ready/auxiliary.tsv (1)",
     "wizard:tools/rpg_inventory/core/expansion_ready/jewelry_relics.tsv (1)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/EndlessDungeon.cs (1)"
    ],
    "context": "Clay liver model",
@@ -18986,30 +18871,6 @@
    "verdict": "keep",
    "after": null,
    "note": "plain English in its literal sense only (the material, e.g. a clay liver model; the currency is Reroll Values); never a name, theme or tag of a mechanic (the retired-name pass enforces the game-text sense)"
-  },
-  {
-   "term": "clayweight",
-   "surfaces": [
-    "Clayweight"
-   ],
-   "count": {
-    "wizard": 2,
-    "arpg": 0
-   },
-   "total": 2,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 2,
-   "files": [
-    "wizard:tools/rpg_inventory/core/expansion_ready/auxiliary.tsv (1)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
-   ],
-   "context": "Clayweight Trigger Case",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Clay Weight",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "clean",
@@ -19689,25 +19550,25 @@
     "Club"
    ],
    "count": {
-    "wizard": 36,
+    "wizard": 38,
     "arpg": 4
    },
-   "total": 40,
+   "total": 42,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 12,
+   "fileCount": 13,
    "files": [
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (16)",
     "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (8)",
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (4)",
     "wizard:tools/rpg_inventory/core/verdigris-pack.js (2)",
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (2)",
+    "wizard:tools/rpg_inventory/core/targets.tsv (2)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/Itemization.cs (2)",
-    "wizard:tools/rp_account_creator/index.html (1)",
-    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (1)"
+    "wizard:tools/rp_account_creator/index.html (1)"
    ],
    "context": "Obsidian-edged Club",
    "origin": "plain",
@@ -24115,25 +23976,25 @@
     "CRAFTING"
    ],
    "count": {
-    "wizard": 18,
+    "wizard": 23,
     "arpg": 0
    },
-   "total": 18,
+   "total": 23,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 10,
+   "fileCount": 11,
    "files": [
+    "wizard:tools/rpg_inventory/README.md (5)",
     "wizard:tools/rpg_inventory/index.html (4)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (3)",
-    "wizard:tools/rpg_inventory/README.md (3)",
+    "wizard:tools/rpg_inventory/DESIGN.md (3)",
     "wizard:tools/rpg_inventory/core/playground.html (2)",
     "wizard:tools/gui_framekit/game/index.html (1)",
     "wizard:tools/rpg_inventory/item.html (1)",
-    "wizard:tools/rpg_inventory/wizard.module.json (1)",
-    "wizard:docs/WIZARD_STANDARDIZATION_STATUS.md (1)"
+    "wizard:tools/rpg_inventory/wizard.module.json (1)"
    ],
    "context": "· craft at the Crafting Bench",
    "origin": "owner",
@@ -24814,23 +24675,24 @@
     "CROWN"
    ],
    "count": {
-    "wizard": 10,
+    "wizard": 11,
     "arpg": 3
    },
-   "total": 13,
+   "total": 14,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 6,
+   "fileCount": 7,
    "files": [
     "wizard:tools/spellforge/index.html (4)",
     "wizard:tools/spellforge/catalog.json (3)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (3)",
     "wizard:tools/gui_framekit/demo/showcase.html (1)",
     "wizard:tools/gui_framekit/index.html (1)",
-    "wizard:tools/geometric_skilltree/NORTH-STAR.md (1)"
+    "wizard:tools/geometric_skilltree/NORTH-STAR.md (1)",
+    "wizard:tools/rpg_inventory/core/targets.tsv (1)"
    ],
    "context": "Bronze Crown  +9 Intelligence",
    "origin": "plain",
@@ -25244,9 +25106,9 @@
    "note": null
   },
   {
-   "term": "cuff",
+   "term": "cuffed",
    "surfaces": [
-    "Cuff"
+    "Cuffed"
    ],
    "count": {
     "wizard": 3,
@@ -25262,7 +25124,7 @@
     "wizard:tools/rpg_inventory/core/expansion_ready/wearables.tsv (1)",
     "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
    ],
-   "context": "Meteor-Cuff Footbags",
+   "context": "Cuffed Foot Bags",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -25351,10 +25213,10 @@
     "Curio"
    ],
    "count": {
-    "wizard": 43,
+    "wizard": 42,
     "arpg": 11
    },
-   "total": 54,
+   "total": 53,
    "kinds": [
     "doc",
     "game",
@@ -25364,7 +25226,7 @@
    "files": [
     "wizard:tools/rpg_inventory/core/verdigris-pack.js (9)",
     "wizard:tools/rpg_inventory/core/targets.tsv (9)",
-    "wizard:tools/rpg_inventory/index.html (5)",
+    "wizard:tools/rpg_inventory/index.html (4)",
     "wizard:tools/gui_framekit/game/character.js (4)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/inventory-parity.json (4)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/InventoryAuxiliary.cs (3)",
@@ -25408,16 +25270,16 @@
     "Currencies"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 1,
     "arpg": 0
    },
-   "total": 2,
+   "total": 1,
    "kinds": [
     "doc"
    ],
    "fileCount": 1,
    "files": [
-    "wizard:tools/rpg_inventory/README.md (2)"
+    "wizard:tools/rpg_inventory/README.md (1)"
    ],
    "context": "### Currencies (the Crafting Bench)",
    "origin": "plain",
@@ -25969,10 +25831,10 @@
     "Dagger"
    ],
    "count": {
-    "wizard": 31,
+    "wizard": 33,
     "arpg": 1
    },
-   "total": 32,
+   "total": 34,
    "kinds": [
     "doc",
     "game",
@@ -25982,9 +25844,9 @@
    "files": [
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (15)",
     "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (7)",
+    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (3)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (3)",
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (2)",
-    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (2)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (2)",
     "wizard:tools/rpg_inventory/core/verdigris-pack.js (1)",
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (1)",
     "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (1)"
@@ -26156,16 +26018,16 @@
     "Dark"
    ],
    "count": {
-    "wizard": 112,
+    "wizard": 114,
     "arpg": 31
    },
-   "total": 143,
+   "total": 145,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 12,
+   "fileCount": 13,
    "files": [
     "wizard:tools/spellforge/index.html (34)",
     "wizard:tools/spellforge/catalog.json (30)",
@@ -26173,8 +26035,8 @@
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (27)",
     "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (14)",
     "wizard:tools/rpg_inventory/post-calib-wave2-review.html (2)",
-    "wizard:tools/mason/index.html (1)",
-    "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (1)"
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (2)",
+    "wizard:tools/mason/index.html (1)"
    ],
    "context": ", the DARK region is",
    "origin": "plain",
@@ -26571,18 +26433,21 @@
     "Death"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 4,
     "arpg": 2
    },
-   "total": 4,
+   "total": 6,
    "kinds": [
+    "doc",
     "game",
     "label"
    ],
-   "fileCount": 4,
+   "fileCount": 6,
    "files": [
     "wizard:tools/geometric_skilltree/index.html (1)",
+    "wizard:tools/rpg_inventory/index.html (1)",
     "wizard:tools/spellforge/index.html (1)",
+    "wizard:tools/rpg_inventory/README.md (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/model.js.txt (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/aura-lab.json (1)"
    ],
@@ -26923,19 +26788,19 @@
     "Deeds"
    ],
    "count": {
-    "wizard": 9,
+    "wizard": 8,
     "arpg": 0
    },
-   "total": 9,
+   "total": 8,
    "kinds": [
     "doc",
     "game"
    ],
    "fileCount": 4,
    "files": [
-    "wizard:tools/rpg_inventory/DESIGN.md (3)",
     "wizard:tools/rpg_inventory/README.md (3)",
     "wizard:tools/rpg_inventory/core/playground.html (2)",
+    "wizard:tools/rpg_inventory/DESIGN.md (2)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (1)"
    ],
    "context": "<div style=\"color:var(--dim)\">deeds: ${Object.entries(character.deeds).map(([t, n]) =>",
@@ -26968,29 +26833,6 @@
     "wizard:tools/geometric_skilltree/NORTH-STAR.md (1)"
    ],
    "context": "Deep chasm. Highest danger.",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
-   "term": "deepen",
-   "surfaces": [
-    "Deepen"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/README.md (1)"
-   ],
-   "context": "| Upgrade Bond | Deepen the faintest Bond one tier |",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -29947,16 +29789,19 @@
     "divine"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 5,
     "arpg": 0
    },
-   "total": 2,
+   "total": 5,
    "kinds": [
     "doc"
    ],
-   "fileCount": 2,
+   "fileCount": 5,
    "files": [
     "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/DESIGN.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)",
+    "wizard:tools/rpg_inventory/core/README.md (1)",
     "wizard:tools/rpg_inventory/core/expansion_ready/weapons-notes.md (1)"
    ],
    "context": "| Reroll Values | Divine Orb | Rerolls modifier values within their tiers |",
@@ -32751,29 +32596,6 @@
    "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
   },
   {
-   "term": "efface",
-   "surfaces": [
-    "Efface"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "label"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/core/playground.html (1)"
-   ],
-   "context": "Efface",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
    "term": "effect",
    "surfaces": [
     "Effect"
@@ -32839,10 +32661,10 @@
     "EFFECTS"
    ],
    "count": {
-    "wizard": 9,
+    "wizard": 10,
     "arpg": 4
    },
-   "total": 13,
+   "total": 14,
    "kinds": [
     "doc",
     "game",
@@ -32851,7 +32673,7 @@
    "fileCount": 10,
    "files": [
     "wizard:tools/spellforge/index.html (3)",
-    "wizard:tools/spellforge/README.md (2)",
+    "wizard:tools/spellforge/README.md (3)",
     "wizard:tools/geometric_skilltree/index.html (1)",
     "wizard:tools/spellforge/wizard.module.json (1)",
     "wizard:tools/rpg_inventory/core/REFERENCE-NOTES.md (1)",
@@ -33342,9 +33164,9 @@
    ],
    "count": {
     "wizard": 71,
-    "arpg": 45
+    "arpg": 46
    },
-   "total": 116,
+   "total": 117,
    "kinds": [
     "doc",
     "game",
@@ -34981,7 +34803,7 @@
    "files": [
     "wizard:tools/rpg_inventory/DESIGN.md (1)"
    ],
-   "context": "| essence | **Omen** (guarantee tag) | read the entrails first |",
+   "context": "| essence | **Guaranteed X Brand** (guarantee tag) | |",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -34993,16 +34815,17 @@
     "Essences"
    ],
    "count": {
-    "wizard": 1,
+    "wizard": 2,
     "arpg": 0
    },
-   "total": 1,
+   "total": 2,
    "kinds": [
     "doc"
    ],
-   "fileCount": 1,
+   "fileCount": 2,
    "files": [
-    "wizard:docs/CRAFTING-PROVISIONAL.md (1)"
+    "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)"
    ],
    "context": "| Guaranteed X Brand, pigments | PoE2 Omens, Essences | Guarantee which brand the next craft adds |",
    "origin": "plain",
@@ -35278,23 +35101,23 @@
     "EVERY"
    ],
    "count": {
-    "wizard": 110,
+    "wizard": 107,
     "arpg": 20
    },
-   "total": 130,
+   "total": 127,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 43,
+   "fileCount": 41,
    "files": [
     "wizard:tools/spellforge/index.html (19)",
     "wizard:tools/spellforge/catalog.json (17)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (17)",
     "wizard:tools/geometric_skilltree/NORTH-STAR.md (8)",
-    "wizard:tools/rpg_inventory/DESIGN.md (5)",
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (5)",
     "wizard:tools/rpg_inventory/AGENTS.md (4)",
+    "wizard:tools/rpg_inventory/DESIGN.md (4)",
     "wizard:tools/rpg_inventory/core/LOADOUT-EXTRACTION.md (4)"
    ],
    "context": "Every service starts with a lit taper and a steady voice.",
@@ -35359,15 +35182,15 @@
     "Everything"
    ],
    "count": {
-    "wizard": 15,
+    "wizard": 14,
     "arpg": 4
    },
-   "total": 19,
+   "total": 18,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 12,
+   "fileCount": 11,
    "files": [
     "wizard:tools/spellforge/index.html (3)",
     "wizard:tools/spellforge/catalog.json (3)",
@@ -35375,8 +35198,8 @@
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (2)",
     "wizard:tools/geometric_skilltree/assets/tree-data.js (1)",
     "wizard:tools/geometric_skilltree/scripts/author-tree.mjs (1)",
-    "wizard:tools/rpg_inventory/index.html (1)",
-    "wizard:docs/ASSET_PIPELINE.md (1)"
+    "wizard:docs/ASSET_PIPELINE.md (1)",
+    "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (1)"
    ],
    "context": "Everything in camp can be thrown once.",
    "origin": "plain",
@@ -35544,18 +35367,20 @@
     "Exalted"
    ],
    "count": {
-    "wizard": 1,
+    "wizard": 3,
     "arpg": 0
    },
-   "total": 1,
+   "total": 3,
    "kinds": [
     "doc"
    ],
-   "fileCount": 1,
+   "fileCount": 3,
    "files": [
-    "wizard:docs/CRAFTING-PROVISIONAL.md (1)"
+    "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)",
+    "wizard:tools/rpg_inventory/core/README.md (1)"
    ],
-   "context": "| Add Modifier | Augmentation / Exalted Orb | Adds one modifier while the rarity has room |",
+   "context": "| Add Modifier | Transmutation + Augmentation / Exalted Orb | Turns a Normal item Magic and adds one modifier; otherwise adds one modifier w",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -35925,19 +35750,20 @@
    ],
    "count": {
     "wizard": 9,
-    "arpg": 5
+    "arpg": 6
    },
-   "total": 14,
+   "total": 15,
    "kinds": [
     "game",
     "label"
    ],
-   "fileCount": 4,
+   "fileCount": 5,
    "files": [
     "wizard:tools/spellforge/index.html (6)",
     "wizard:tools/spellforge/catalog.json (3)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (3)",
-    "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgProceduralWorld.cs (2)"
+    "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgProceduralWorld.cs (2)",
+    "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgExitGlow.cs (1)"
    ],
    "context": "Exit spikes",
    "origin": "plain",
@@ -36242,7 +36068,7 @@
     "wizard:tools/spellforge/catalog.json (2)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (2)"
    ],
-   "context": "Exploding iron ball",
+   "context": "Exploding metal ball",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -37286,7 +37112,7 @@
     "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (1)",
     "wizard:tools/rpg_inventory/core/targets.tsv (1)"
    ],
-   "context": "- **Sword / one-hand blade** (blade): Flint Cleaver · Copper Falchion · Bronze Khopesh · Obsidian Shortblade · Meteoric iron Longsword",
+   "context": "- **Sword / one-hand blade** (blade): Flint Cleaver · Copper Falchion · Bronze Khopesh · Obsidian Short Blade · Meteoric iron Longsword",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -37346,23 +37172,24 @@
     "Fallen"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 3,
     "arpg": 3
    },
-   "total": 5,
+   "total": 6,
    "kinds": [
     "game",
     "label"
    ],
-   "fileCount": 5,
+   "fileCount": 6,
    "files": [
+    "wizard:tools/rpg_inventory/index.html (1)",
     "wizard:tools/spellforge/index.html (1)",
     "wizard:tools/spellforge/catalog.json (1)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/ActionRules.cs (1)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgHud.cs (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (1)"
    ],
-   "context": "Fallen bricks",
+   "context": "Fallen character",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -37613,29 +37440,6 @@
    "verdict": "keep",
    "after": null,
    "note": "plain English"
-  },
-  {
-   "term": "farwalker",
-   "surfaces": [
-    "Farwalker"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/README.md (1)"
-   ],
-   "context": "Farwalker archetypes.",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Movement",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "fast",
@@ -39207,16 +39011,16 @@
     "Fire"
    ],
    "count": {
-    "wizard": 293,
+    "wizard": 292,
     "arpg": 174
    },
-   "total": 467,
+   "total": 466,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 48,
+   "fileCount": 47,
    "files": [
     "wizard:tools/spellforge/index.html (99)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (71)",
@@ -39378,30 +39182,6 @@
     "wizard:tools/rpg_inventory/core/LOADOUT-EXTRACTION.md (1)"
    ],
    "context": "ANATOMY FIREWALL - FIRST PASS:",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
-   "term": "firing",
-   "surfaces": [
-    "Firing"
-   ],
-   "count": {
-    "wizard": 3,
-    "arpg": 0
-   },
-   "total": 3,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 2,
-   "files": [
-    "wizard:tools/rpg_inventory/DESIGN.md (2)",
-    "wizard:tools/rpg_inventory/README.md (1)"
-   ],
-   "context": "fossils built into the metallurgy. **Firing** (kiln/pyre rite) is the",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -39629,17 +39409,17 @@
     "Fixed"
    ],
    "count": {
-    "wizard": 1,
+    "wizard": 2,
     "arpg": 3
    },
-   "total": 4,
+   "total": 5,
    "kinds": [
     "doc",
     "game"
    ],
    "fileCount": 4,
    "files": [
-    "wizard:tools/rpg_inventory/README.md (1)",
+    "wizard:tools/rpg_inventory/README.md (2)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgInventoryPane.cs (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/Cartographer3D/generated-rooms/bake-b53df9d2f136b1834dd6/Sources/assembly.json (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/Cartographer3D/generated-rooms/bake-b53df9d2f136b1834dd6/Sources/tileset.json (1)"
@@ -39985,17 +39765,20 @@
     "Flap"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 4,
     "arpg": 1
    },
-   "total": 3,
+   "total": 5,
    "kinds": [
+    "doc",
     "game"
    ],
-   "fileCount": 3,
+   "fileCount": 5,
    "files": [
     "wizard:tools/spellforge/index.html (1)",
     "wizard:tools/spellforge/catalog.json (1)",
+    "wizard:tools/rpg_inventory/core/expansion_ready/wearables.tsv (1)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (1)"
    ],
    "context": "Flap speed",
@@ -40192,21 +39975,20 @@
     "Flat"
    ],
    "count": {
-    "wizard": 9,
+    "wizard": 8,
     "arpg": 0
    },
-   "total": 9,
+   "total": 8,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 7,
+   "fileCount": 6,
    "files": [
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (2)",
     "wizard:tools/rpg_inventory/core/PIXEL-PROMPTS.md (2)",
     "wizard:tools/mason/index.html (1)",
     "wizard:tools/geometric_skilltree/NORTH-STAR.md (1)",
-    "wizard:tools/rpg_inventory/README.md (1)",
     "wizard:tools/rpg_inventory/core/RUNBOOK.md (1)",
     "wizard:tools/rpg_inventory/docs/CASE-STUDY.md (1)"
    ],
@@ -41013,53 +40795,30 @@
     "FOOT"
    ],
    "count": {
-    "wizard": 6,
+    "wizard": 11,
     "arpg": 28
    },
-   "total": 34,
+   "total": 39,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 6,
+   "fileCount": 8,
    "files": [
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/GaitDeclarations.cs (26)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (3)",
     "wizard:tools/spellforge/index.html (2)",
     "wizard:tools/spellforge/catalog.json (2)",
+    "wizard:tools/rpg_inventory/core/expansion_ready/wearables.tsv (2)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (2)",
     "wizard:tools/rpg_inventory/core/expansion_ready/jewelry_relics.tsv (1)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
+    "wizard:tools/rpg_inventory/core/expansion_ready/wave-01.tsv (1)"
    ],
    "context": "Foot prisms",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
    "note": "replacement word (2026-11-09)"
-  },
-  {
-   "term": "footbags",
-   "surfaces": [
-    "Footbags"
-   ],
-   "count": {
-    "wizard": 5,
-    "arpg": 0
-   },
-   "total": 5,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 3,
-   "files": [
-    "wizard:tools/rpg_inventory/core/expansion_ready/wearables.tsv (2)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (2)",
-    "wizard:tools/rpg_inventory/core/expansion_ready/wave-01.tsv (1)"
-   ],
-   "context": "Meteor-Cuff Footbags",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Foot Bags",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "footed",
@@ -41458,16 +41217,16 @@
     "Forging"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 1,
     "arpg": 0
    },
-   "total": 2,
+   "total": 1,
    "kinds": [
     "doc"
    ],
    "fileCount": 1,
    "files": [
-    "wizard:tools/rpg_inventory/DESIGN.md (2)"
+    "wizard:tools/rpg_inventory/DESIGN.md (1)"
    ],
    "context": "- **Forging Potential**: every item has a finite craft budget. Every",
    "origin": "plain",
@@ -41506,19 +41265,19 @@
     "Forked"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 4,
     "arpg": 0
    },
-   "total": 2,
+   "total": 4,
    "kinds": [
     "doc"
    ],
    "fileCount": 2,
    "files": [
-    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (1)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
+    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (2)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (2)"
    ],
-   "context": "Forked Wood Rod",
+   "context": "Forked Copper Sword",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -41548,30 +41307,6 @@
    "verdict": "keep",
    "after": null,
    "note": null
-  },
-  {
-   "term": "forksword",
-   "surfaces": [
-    "Forksword"
-   ],
-   "count": {
-    "wizard": 2,
-    "arpg": 0
-   },
-   "total": 2,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 2,
-   "files": [
-    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (1)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
-   ],
-   "context": "Copper Forksword",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Forked Copper Sword",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "form",
@@ -42061,16 +41796,16 @@
     "Fragment"
    ],
    "count": {
-    "wizard": 41,
+    "wizard": 40,
     "arpg": 10
    },
-   "total": 51,
+   "total": 50,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 21,
+   "fileCount": 20,
    "files": [
     "wizard:tools/spellforge/index.html (9)",
     "wizard:tools/rpg_inventory/core/targets-600.tsv (7)",
@@ -42103,14 +41838,14 @@
     "game",
     "label"
    ],
-   "fileCount": 20,
+   "fileCount": 21,
    "files": [
     "wizard:tools/spellforge/index.html (5)",
     "wizard:tools/spellforge/catalog.json (5)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (5)",
-    "wizard:tools/rpg_inventory/core/playground.html (3)",
     "wizard:tools/rpg_inventory/DESIGN.md (3)",
     "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (3)",
+    "wizard:tools/rpg_inventory/core/playground.html (2)",
     "wizard:tools/rpg_inventory/core/vesselforge.js (2)",
     "wizard:tools/rpg_inventory/AGENTS.md (2)"
    ],
@@ -44115,28 +43850,27 @@
   {
    "term": "generation",
    "surfaces": [
-    "Generation",
-    "GENERATION"
+    "GENERATION",
+    "Generation"
    ],
    "count": {
-    "wizard": 5,
+    "wizard": 4,
     "arpg": 3
    },
-   "total": 8,
+   "total": 7,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 6,
+   "fileCount": 5,
    "files": [
     "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (2)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgHud.cs (2)",
-    "wizard:tools/rpg_inventory/index.html (1)",
     "wizard:tools/cartographer/index.html (1)",
     "wizard:tools/rpg_inventory/docs/CASE-STUDY.md (1)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/ArpgModel.cs (1)"
    ],
-   "context": "Generation ${heir.generation}. ${heir.name} takes up the mantle.",
+   "context": "Mesa      World  Automap  Topology        MAP  Seed 2718   Mesa     N ✧    Expand map  Fit  −  +  Explore  Route  Landmarks    ● Entry  ◆ Of",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -45185,7 +44919,7 @@
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (2)",
     "wizard:tools/rpg_inventory/docs/CASE-STUDY.md (1)"
    ],
-   "context": "Glowing veins spread over the helmet and gauntlets, then keratin horns and hooked talons punch out through the steel in a spray of metal and",
+   "context": "Glowing veins spread over the helmet and gauntlets, then keratin horns and hooked talons punch out through the metal in a spray of metal and",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -45560,17 +45294,16 @@
    ],
    "count": {
     "wizard": 2,
-    "arpg": 2
+    "arpg": 1
    },
-   "total": 4,
+   "total": 3,
    "kinds": [
     "game"
    ],
-   "fileCount": 4,
+   "fileCount": 3,
    "files": [
     "wizard:tools/geometric_skilltree/assets/tree-data.js (1)",
     "wizard:tools/geometric_skilltree/scripts/author-tree.mjs (1)",
-    "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgSkillTreePane.cs (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/tree-data.js.txt (1)"
    ],
    "context": "Goods you find are worth 10% more (design text)",
@@ -45990,29 +45723,6 @@
    "note": null
   },
   {
-   "term": "grant",
-   "surfaces": [
-    "Grant"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/README.md (1)"
-   ],
-   "context": "| (removed: never implemented) | Grant a full threshold of bond XP at the bench |",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
    "term": "granted",
    "surfaces": [
     "Granted"
@@ -46352,79 +46062,6 @@
    "verdict": "keep",
    "after": null,
    "note": null
-  },
-  {
-   "term": "greatblade",
-   "surfaces": [
-    "Greatblade"
-   ],
-   "count": {
-    "wizard": 4,
-    "arpg": 0
-   },
-   "total": 4,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 4,
-   "files": [
-    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (1)",
-    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (1)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)",
-    "wizard:tools/rpg_inventory/core/targets.tsv (1)"
-   ],
-   "context": "- **Two-hand great** (blade/blunt): Bone Maul · Copper Greatclub · Bronze Two-handed Axe · Obsidian Macuahuitl · Meteoric iron Greatblade",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Two-handed Blade",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
-  },
-  {
-   "term": "greatclub",
-   "surfaces": [
-    "Greatclub"
-   ],
-   "count": {
-    "wizard": 2,
-    "arpg": 0
-   },
-   "total": 2,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 2,
-   "files": [
-    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (1)",
-    "wizard:tools/rpg_inventory/core/targets.tsv (1)"
-   ],
-   "context": "- **Two-hand great** (blade/blunt): Bone Maul · Copper Greatclub · Bronze Two-handed Axe · Obsidian Macuahuitl · Meteoric iron Greatblade",
-   "origin": "other-game",
-   "verdict": "keep",
-   "after": null,
-   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
-  },
-  {
-   "term": "greatclubs",
-   "surfaces": [
-    "Greatclubs"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (1)"
-   ],
-   "context": "| Two-hand heavy weapons | 18 | Greatclubs, greataxes, macuahuitls, execution blades, temple mauls. |",
-   "origin": "other-game",
-   "verdict": "keep",
-   "after": null,
-   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
   },
   {
    "term": "greater",
@@ -47015,7 +46652,7 @@
    "files": [
     "wizard:tools/rpg_inventory/README.md (1)"
    ],
-   "context": "| Origin | Seared on at the Crafting Bench with currencies | Grown while equipped, through ventures |",
+   "context": "| Origin | Added at the Crafting Bench with currencies | Grown while equipped, through simulated fights |",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -47027,19 +46664,21 @@
     "Growth"
    ],
    "count": {
-    "wizard": 12,
+    "wizard": 13,
     "arpg": 6
    },
-   "total": 18,
+   "total": 19,
    "kinds": [
+    "doc",
     "game",
     "label"
    ],
-   "fileCount": 3,
+   "fileCount": 4,
    "files": [
     "wizard:tools/spellforge/index.html (6)",
     "wizard:tools/spellforge/catalog.json (6)",
-    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (6)"
+    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (6)",
+    "wizard:tools/rpg_inventory/README.md (1)"
    ],
    "context": "Growth runs from the ground up: feet first, then the body, then the head and spines. Each crystal overshoots slightly as it locks in.",
    "origin": "plain",
@@ -47099,21 +46738,23 @@
     "Guaranteed"
    ],
    "count": {
-    "wizard": 10,
+    "wizard": 12,
     "arpg": 0
    },
-   "total": 10,
+   "total": 12,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 4,
+   "fileCount": 6,
    "files": [
     "wizard:tools/rpg_inventory/core/verdigris-pack.js (4)",
     "wizard:tools/rpg_inventory/core/targets.tsv (4)",
     "wizard:tools/rpg_inventory/index.html (1)",
-    "wizard:docs/CRAFTING-PROVISIONAL.md (1)"
+    "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/DESIGN.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)"
    ],
    "context": "Guaranteed Ward Brand",
    "origin": "plain",
@@ -47618,20 +47259,22 @@
     "Hammered"
    ],
    "count": {
-    "wizard": 5,
+    "wizard": 7,
     "arpg": 0
    },
-   "total": 5,
+   "total": 7,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 4,
+   "fileCount": 6,
    "files": [
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (2)",
     "wizard:tools/rpg_inventory/core/verdigris-pack.js (1)",
     "wizard:tools/gui_framekit/game/character.js (1)",
+    "wizard:tools/rpg_inventory/README.md (1)",
+    "wizard:tools/rpg_inventory/core/RUNBOOK.md (1)",
     "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (1)"
    ],
    "context": "Hammered Iron",
@@ -48941,29 +48584,6 @@
    "note": null
   },
   {
-   "term": "heir",
-   "surfaces": [
-    "Heir"
-   ],
-   "count": {
-    "wizard": 2,
-    "arpg": 0
-   },
-   "total": 2,
-   "kinds": [
-    "game"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/index.html (2)"
-   ],
-   "context": "Heir name",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
    "term": "held",
    "surfaces": [
     "Held"
@@ -49545,11 +49165,11 @@
     "game",
     "label"
    ],
-   "fileCount": 21,
+   "fileCount": 19,
    "files": [
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (44)",
     "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (22)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (20)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (21)",
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (16)",
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (12)",
     "wizard:tools/rpg_inventory/core/expansion_ready/wearables.tsv (9)",
@@ -50185,6 +49805,29 @@
     "wizard:tools/spellforge/catalog.json (1)"
    ],
    "context": "Hold the haft like it owes you money.",
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": null
+  },
+  {
+   "term": "holds",
+   "surfaces": [
+    "Holds"
+   ],
+   "count": {
+    "wizard": 1,
+    "arpg": 0
+   },
+   "total": 1,
+   "kinds": [
+    "doc"
+   ],
+   "fileCount": 1,
+   "files": [
+    "wizard:tools/rpg_inventory/README.md (1)"
+   ],
+   "context": "| Rarity | Holds |",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -51198,22 +50841,21 @@
     "Hunt"
    ],
    "count": {
-    "wizard": 16,
+    "wizard": 14,
     "arpg": 1
    },
-   "total": 17,
+   "total": 15,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 8,
+   "fileCount": 7,
    "files": [
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (6)",
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (3)",
-    "wizard:tools/rpg_inventory/DESIGN.md (2)",
     "wizard:tools/rpg_inventory/core/ANCIENT-EQUIPMENT-TAXONOMY.md (2)",
     "wizard:tools/rpg_inventory/index.html (1)",
-    "wizard:tools/rpg_inventory/core/playground.html (1)",
+    "wizard:tools/rpg_inventory/DESIGN.md (1)",
     "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (1)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/InventoryAuxiliary.cs (1)"
    ],
@@ -51495,29 +51137,6 @@
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (1)"
    ],
    "context": "18. SLOT HYGIENE AND ANTI-COSTUME CLUTTER (2026-07-08). Item extraction prompts",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
-   "term": "hyperdimensional",
-   "surfaces": [
-    "Hyperdimensional"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/arcane_lattice/README.md (1)"
-   ],
-   "context": "# The Arcane Lattice — Hyperdimensional Spellcrafter",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -51916,7 +51535,7 @@
     "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (2)",
     "wizard:tools/rpg_inventory/core/targets.tsv (2)"
    ],
-   "context": "- **Rite-focus** (spirit caster): Bone Idol-Cudgel · Copper Hand Bell · Bronze Pronged Sceptre · Jade Idol-Staff · Meteoric iron Rite Rod",
+   "context": "- **Rite-focus** (mana caster): Bone Idol-Cudgel · Copper Hand Bell · Bronze Pronged Sceptre · Jade Idol-Staff · Meteoric iron Spell Rod",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -52229,10 +51848,10 @@
     "III"
    ],
    "count": {
-    "wizard": 19,
+    "wizard": 20,
     "arpg": 2
    },
-   "total": 21,
+   "total": 22,
    "kinds": [
     "doc",
     "game",
@@ -52241,13 +51860,13 @@
    "fileCount": 14,
    "files": [
     "wizard:tools/rpg_inventory/DESIGN.md (4)",
-    "wizard:tools/rpg_inventory/core/vesselforge.js (2)",
-    "wizard:docs/CRAFTING-PROVISIONAL.md (2)",
+    "wizard:docs/CRAFTING-PROVISIONAL.md (3)",
     "wizard:tools/rpg_inventory/README.md (2)",
+    "wizard:tools/rpg_inventory/core/README.md (2)",
     "wizard:tools/rpg_inventory/core/targets-600.tsv (2)",
     "wizard:tools/geometric_skilltree/index.html (1)",
     "wizard:tools/rpg_inventory/index.html (1)",
-    "wizard:tools/verdigris_splash/index.html (1)"
+    "wizard:tools/rpg_inventory/core/vesselforge.js (1)"
    ],
    "context": "Tier III",
    "origin": "technical",
@@ -53544,19 +53163,18 @@
     "Inherited"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 1,
     "arpg": 0
    },
-   "total": 2,
+   "total": 1,
    "kinds": [
     "game"
    ],
-   "fileCount": 2,
+   "fileCount": 1,
    "files": [
-    "wizard:tools/rpg_inventory/index.html (1)",
     "wizard:tools/gui_framekit/base/demo.html (1)"
    ],
-   "context": "Inherited: ${displayItemName(rel)} — it remembers ${legacy.fallen ? legacy.fallen.name : 'another hand'}.",
+   "context": "Inherited font",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -53961,25 +53579,25 @@
     "Instant"
    ],
    "count": {
-    "wizard": 9,
+    "wizard": 8,
     "arpg": 4
    },
-   "total": 13,
+   "total": 12,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 11,
+   "fileCount": 10,
    "files": [
     "wizard:tools/spellforge/index.html (3)",
     "wizard:tools/geometric_skilltree/assets/tree-data.js (1)",
     "wizard:tools/geometric_skilltree/index.html (1)",
     "wizard:tools/geometric_skilltree/scripts/author-tree.mjs (1)",
     "wizard:tools/spellforge/catalog.json (1)",
-    "wizard:tools/rpg_inventory/README.md (1)",
     "wizard:tools/slerp/README.md (1)",
-    "arpg:the ARPG/Assets/ARPG/Resources/Wizard/tree-data.js.txt (1)"
+    "arpg:the ARPG/Assets/ARPG/Resources/Wizard/tree-data.js.txt (1)",
+    "arpg:the ARPG/Assets/ARPG/Resources/Wizard/model.js.txt (1)"
    ],
    "context": "Instant Traps",
    "origin": "plain",
@@ -54983,25 +54601,25 @@
     "Iron"
    ],
    "count": {
-    "wizard": 106,
-    "arpg": 10
+    "wizard": 89,
+    "arpg": 1
    },
-   "total": 116,
+   "total": 90,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 24,
+   "fileCount": 23,
    "files": [
     "wizard:tools/rpg_inventory/core/targets-600.tsv (26)",
-    "wizard:tools/spellforge/index.html (11)",
     "wizard:tools/rpg_inventory/core/expansion_ready/offhands.tsv (10)",
-    "wizard:tools/spellforge/catalog.json (9)",
-    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (9)",
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (8)",
     "wizard:tools/rpg_inventory/core/expansion_ready/jewelry_relics.tsv (7)",
-    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (5)"
+    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (5)",
+    "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (4)",
+    "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (4)",
+    "wizard:tools/rpg_inventory/core/ANCIENT-EQUIPMENT-TAXONOMY.md (4)"
    ],
    "context": "Hammered Iron",
    "origin": "plain",
@@ -55162,7 +54780,7 @@
    "files": [
     "wizard:tools/rpg_inventory/DESIGN.md (1)"
    ],
-   "context": "trade. Listed in ISSUES.md.",
+   "context": "Metamods, trophy rite cooldowns, economy/trade. Listed in ISSUES.md.",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -55259,24 +54877,24 @@
     "ITEM"
    ],
    "count": {
-    "wizard": 67,
-    "arpg": 14
+    "wizard": 73,
+    "arpg": 15
    },
-   "total": 81,
+   "total": 88,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 35,
+   "fileCount": 37,
    "files": [
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (13)",
+    "wizard:tools/rpg_inventory/README.md (7)",
     "wizard:tools/geometric_skilltree/index.html (6)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgInventoryPane.cs (6)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/model.js.txt (6)",
     "wizard:tools/rpg_inventory/item.html (4)",
     "wizard:tools/rpg_inventory/skill-zone-items.html (4)",
-    "wizard:tools/rpg_inventory/README.md (3)",
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (3)"
    ],
    "context": "Item Rarity",
@@ -55321,10 +54939,10 @@
     "ITEMS"
    ],
    "count": {
-    "wizard": 21,
+    "wizard": 22,
     "arpg": 5
    },
-   "total": 26,
+   "total": 27,
    "kinds": [
     "doc",
     "game",
@@ -55337,8 +54955,8 @@
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (5)",
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (2)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (2)",
+    "wizard:tools/rpg_inventory/README.md (2)",
     "wizard:tools/gui_framekit/demo/showcase.html (1)",
-    "wizard:tools/rpg_inventory/item.html (1)",
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (1)"
    ],
    "context": "Items",
@@ -55354,15 +54972,15 @@
     "ITS"
    ],
    "count": {
-    "wizard": 36,
+    "wizard": 37,
     "arpg": 20
    },
-   "total": 56,
+   "total": 57,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 18,
+   "fileCount": 19,
    "files": [
     "wizard:tools/spellforge/index.html (11)",
     "wizard:tools/spellforge/catalog.json (11)",
@@ -56351,16 +55969,17 @@
     "Just"
    ],
    "count": {
-    "wizard": 1,
+    "wizard": 2,
     "arpg": 0
    },
-   "total": 1,
+   "total": 2,
    "kinds": [
     "doc"
    ],
-   "fileCount": 1,
+   "fileCount": 2,
    "files": [
-    "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (1)"
+    "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (1)",
+    "wizard:tools/rpg_inventory/core/RUNBOOK.md (1)"
    ],
    "context": "and breaks continuity with the rest of the set. Just name the material and let",
    "origin": "plain",
@@ -56990,10 +56609,10 @@
     "Kill"
    ],
    "count": {
-    "wizard": 27,
+    "wizard": 28,
     "arpg": 4
    },
-   "total": 31,
+   "total": 32,
    "kinds": [
     "doc",
     "game",
@@ -57006,9 +56625,9 @@
     "wizard:tools/rpg_inventory/core/verdigris-combat.js (3)",
     "wizard:tools/geometric_skilltree/assets/tree-data.js (2)",
     "wizard:tools/geometric_skilltree/scripts/author-tree.mjs (2)",
+    "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (2)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/tree-data.js.txt (2)",
-    "wizard:tools/geometric_skilltree/index.html (1)",
-    "wizard:tools/spellforge/index.html (1)"
+    "wizard:tools/geometric_skilltree/index.html (1)"
    ],
    "context": "Life on Bleeding Kill",
    "origin": "plain",
@@ -57163,7 +56782,7 @@
     "wizard:tools/rpg_inventory/core/expansion_ready/offhands.tsv (1)",
     "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
    ],
-   "context": "Bronze or Iron Age Kiltubbrid one-piece wooden roundshield provides the direct wood-body and boss precedent",
+   "context": "Bronze or Iron Age Kiltubbrid one-piece wooden round shield provides the direct wood-body and boss precedent",
    "origin": "real-world",
    "verdict": "keep",
    "after": null,
@@ -57255,22 +56874,23 @@
     "kinship"
    ],
    "count": {
-    "wizard": 1,
+    "wizard": 2,
     "arpg": 0
    },
-   "total": 1,
+   "total": 2,
    "kinds": [
     "doc"
    ],
-   "fileCount": 1,
+   "fileCount": 2,
    "files": [
-    "wizard:docs/CRAFTING-PROVISIONAL.md (1)"
+    "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/DESIGN.md (1)"
    ],
-   "context": "Crafting uses (Patience), the material-upgrade gamble (kiln), locked slots (scars), half-strength bonds for another class (kinship), set bon",
+   "context": "Crafting uses (Patience), the material-upgrade gamble (kiln), locked slots (scars), half-strength bonds for another class (kinship), the set",
    "origin": "agent-invented",
    "verdict": "purge",
    "after": null,
-   "note": "README table row \"Kinship\"."
+   "note": "README table row \"Kinship\". Remaining hits name the removed mechanic in the \"removed\" lists of CRAFTING-PROVISIONAL.md and DESIGN.md."
   },
   {
    "term": "kit",
@@ -57845,10 +57465,10 @@
     "LAB"
    ],
    "count": {
-    "wizard": 18,
+    "wizard": 19,
     "arpg": 1
    },
-   "total": 19,
+   "total": 20,
    "kinds": [
     "doc",
     "game",
@@ -57857,7 +57477,7 @@
    "fileCount": 5,
    "files": [
     "wizard:tools/spellforge/index.html (14)",
-    "wizard:tools/spellforge/README.md (2)",
+    "wizard:tools/spellforge/README.md (3)",
     "wizard:tools/spellforge/wizard.module.json (1)",
     "wizard:tools/slerp/README.md (1)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgAuraPreview.cs (1)"
@@ -58760,31 +58380,31 @@
   {
    "term": "last",
    "surfaces": [
-    "LAST",
-    "Last"
+    "Last",
+    "LAST"
    ],
    "count": {
-    "wizard": 10,
+    "wizard": 16,
     "arpg": 2
    },
-   "total": 12,
+   "total": 18,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 10,
+   "fileCount": 11,
    "files": [
-    "wizard:tools/rpg_inventory/DESIGN.md (2)",
+    "wizard:tools/rpg_inventory/DESIGN.md (7)",
     "wizard:tools/rpg_inventory/README.md (2)",
+    "wizard:tools/rpg_inventory/core/playground.html (1)",
     "wizard:tools/rpg_inventory/core/verdigris-combat.js (1)",
     "wizard:tools/spellforge/index.html (1)",
     "wizard:tools/spellforge/catalog.json (1)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
-    "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (1)",
-    "wizard:tools/rpg_inventory/core/README.md (1)"
+    "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (1)"
    ],
-   "context": "LAST STAND — a killing blow lands, and the relic refuses it. 1 Life remains.",
+   "context": "Remove Last Modifier",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -59200,22 +58820,21 @@
   {
    "term": "le",
    "surfaces": [
-    "LE's",
     "LE"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 1,
     "arpg": 0
    },
-   "total": 2,
+   "total": 1,
    "kinds": [
     "doc"
    ],
    "fileCount": 1,
    "files": [
-    "wizard:tools/rpg_inventory/DESIGN.md (2)"
+    "wizard:tools/rpg_inventory/DESIGN.md (1)"
    ],
-   "context": "Every operation costs **Patience** (LE's Forging Potential); when the",
+   "context": "[LE glyphs/runes](",
    "origin": "other-game",
    "verdict": "keep",
    "after": null,
@@ -59276,16 +58895,16 @@
     "Leaf"
    ],
    "count": {
-    "wizard": 32,
+    "wizard": 34,
     "arpg": 8
    },
-   "total": 40,
+   "total": 42,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 12,
+   "fileCount": 14,
    "files": [
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (14)",
     "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (7)",
@@ -59294,37 +58913,13 @@
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/Itemization.cs (3)",
     "wizard:tools/spellforge/index.html (1)",
     "wizard:tools/spellforge/catalog.json (1)",
-    "arpg:the ARPG/Assets/ARPG/Scripts/Core/ArpgModel.cs (1)"
+    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (1)"
    ],
    "context": "Copper Leaf-blade Dagger, Leather-wrapped Grip, Wood Pommel",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
    "note": null
-  },
-  {
-   "term": "leafblade",
-   "surfaces": [
-    "Leafblade"
-   ],
-   "count": {
-    "wizard": 2,
-    "arpg": 0
-   },
-   "total": 2,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 2,
-   "files": [
-    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (1)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
-   ],
-   "context": "Flange-Hilt Leafblade",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Leaf Sword",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "leak",
@@ -59697,22 +59292,21 @@
     "Legendary"
    ],
    "count": {
-    "wizard": 10,
+    "wizard": 9,
     "arpg": 0
    },
-   "total": 10,
+   "total": 9,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 6,
+   "fileCount": 5,
    "files": [
     "wizard:tools/gui_framekit/game/character.js (4)",
     "wizard:tools/rpg_inventory/DESIGN.md (2)",
     "wizard:tools/gui_framekit/game/core.js (1)",
     "wizard:tools/gui_framekit/game/tree.js (1)",
-    "wizard:tools/gui_framekit/index.html (1)",
-    "wizard:tools/rpg_inventory/README.md (1)"
+    "wizard:tools/gui_framekit/index.html (1)"
    ],
    "context": "legendary",
    "origin": "plain",
@@ -60009,16 +59603,16 @@
     "LEVEL"
    ],
    "count": {
-    "wizard": 28,
+    "wizard": 27,
     "arpg": 15
    },
-   "total": 43,
+   "total": 42,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 21,
+   "fileCount": 20,
    "files": [
     "wizard:tools/gui_framekit/game/world.js (7)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/aura-lab.json (5)",
@@ -60029,7 +59623,7 @@
     "wizard:tools/spellforge/index.html (2)",
     "wizard:tools/spellforge/catalog.json (2)"
    ],
-   "context": "Level ${fallenInfo.level} · ${pack.archetypes[fallenInfo.archetype] ? pack.archetypes[fallenInfo.archetype].name : ''} · ${fallenInfo.text}",
+   "context": "+1 to Level of all Skills",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -60210,10 +59804,10 @@
     "LIFE"
    ],
    "count": {
-    "wizard": 228,
+    "wizard": 227,
     "arpg": 69
    },
-   "total": 297,
+   "total": 296,
    "kinds": [
     "doc",
     "game",
@@ -60572,11 +60166,11 @@
    "files": [
     "wizard:docs/CRAFTING-PROVISIONAL.md (1)"
    ],
-   "context": "Crafting uses (Patience), the material-upgrade gamble (kiln), locked slots (scars), half-strength bonds for another class (kinship), set bon",
+   "context": "Crafting uses (Patience), the material-upgrade gamble (kiln), locked slots (scars), half-strength bonds for another class (kinship), the set",
    "origin": "agent-invented",
    "verdict": "purge",
    "after": null,
-   "note": "index.html section \"Lineage\"."
+   "note": "index.html section \"Lineage\". Remaining hit names the removed mechanic in the \"removed\" list of CRAFTING-PROVISIONAL.md."
   },
   {
    "term": "lined",
@@ -60939,7 +60533,7 @@
    "files": [
     "wizard:tools/rpg_inventory/DESIGN.md (1)"
    ],
-   "context": "trade. Listed in ISSUES.md.",
+   "context": "Metamods, trophy rite cooldowns, economy/trade. Listed in ISSUES.md.",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -61727,16 +61321,16 @@
     "LONG"
    ],
    "count": {
-    "wizard": 39,
+    "wizard": 40,
     "arpg": 4
    },
-   "total": 43,
+   "total": 44,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 27,
+   "fileCount": 28,
    "files": [
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (5)",
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (4)",
@@ -61752,29 +61346,6 @@
    "verdict": "keep",
    "after": null,
    "note": null
-  },
-  {
-   "term": "longblade",
-   "surfaces": [
-    "Longblade"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/core/targets.tsv (1)"
-   ],
-   "context": "Meteoric iron Longblade",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Long Flint Blade",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "longer",
@@ -61818,7 +61389,7 @@
    "files": [
     "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (1)"
    ],
-   "context": "- **Sword / one-hand blade** (blade): Flint Cleaver · Copper Falchion · Bronze Khopesh · Obsidian Shortblade · Meteoric iron Longsword",
+   "context": "- **Sword / one-hand blade** (blade): Flint Cleaver · Copper Falchion · Bronze Khopesh · Obsidian Short Blade · Meteoric iron Longsword",
    "origin": "real-world",
    "verdict": "keep",
    "after": null,
@@ -61946,22 +61517,23 @@
     "Loot"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 3,
     "arpg": 8
    },
-   "total": 10,
+   "total": 11,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 7,
+   "fileCount": 8,
    "files": [
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgGame.cs (2)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgWorldLoot.cs (2)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/aura-lab.json (2)",
     "wizard:tools/rpg_inventory/core/playground.html (1)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/DESIGN.md (1)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgWorld.cs (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (1)"
    ],
@@ -62001,24 +61573,24 @@
     "Lore"
    ],
    "count": {
-    "wizard": 34,
+    "wizard": 32,
     "arpg": 4
    },
-   "total": 38,
+   "total": 36,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 23,
+   "fileCount": 22,
    "files": [
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (5)",
     "wizard:tools/rpg_inventory/core/ANCIENT-EQUIPMENT-TAXONOMY.md (4)",
     "wizard:tools/rpg_inventory/core/STYLE-EXPERIMENTS.md (3)",
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (2)",
     "wizard:tools/rpg_inventory/AGENTS.md (2)",
-    "wizard:tools/rpg_inventory/README.md (2)",
     "wizard:tools/rpg_inventory/core/LOADOUT-EXTRACTION.md (2)",
-    "wizard:tools/rpg_inventory/core/REFERENCE-NOTES.md (2)"
+    "wizard:tools/rpg_inventory/core/REFERENCE-NOTES.md (2)",
+    "wizard:AGENTS.md (2)"
    ],
    "context": "invented-name items, lore epithets or compound coinages (owner rules 6-8)",
    "origin": "plain",
@@ -62607,24 +62179,27 @@
     "Magic"
    ],
    "count": {
-    "wizard": 5,
+    "wizard": 18,
     "arpg": 2
    },
-   "total": 7,
+   "total": 20,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 5,
+   "fileCount": 9,
    "files": [
-    "wizard:docs/CRAFTING-PROVISIONAL.md (3)",
+    "wizard:tools/rpg_inventory/README.md (6)",
+    "wizard:docs/CRAFTING-PROVISIONAL.md (4)",
+    "wizard:tools/rpg_inventory/core/README.md (3)",
+    "wizard:tools/rpg_inventory/core/vesselforge.js (2)",
     "wizard:tools/spellforge/index.html (1)",
     "wizard:tools/spellforge/catalog.json (1)",
-    "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgInventoryPane.cs (1)",
-    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (1)"
+    "wizard:tools/rpg_inventory/DESIGN.md (1)",
+    "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgInventoryPane.cs (1)"
    ],
-   "context": "Magic circle",
+   "context": "Magic",
    "origin": "poe",
    "verdict": "keep",
    "after": null,
@@ -62784,20 +62359,22 @@
     "Mail"
    ],
    "count": {
-    "wizard": 6,
+    "wizard": 8,
     "arpg": 0
    },
-   "total": 6,
+   "total": 8,
    "kinds": [
     "doc",
     "label"
    ],
-   "fileCount": 5,
+   "fileCount": 7,
    "files": [
     "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (2)",
     "wizard:tools/rpg_inventory/core/verdigris-pack.js (1)",
     "wizard:tools/rpg_inventory/AGENTS.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)",
     "wizard:tools/rpg_inventory/core/ANCIENT-EQUIPMENT-TAXONOMY.md (1)",
+    "wizard:tools/rpg_inventory/core/RUNBOOK.md (1)",
     "wizard:tools/rpg_inventory/core/targets.tsv (1)"
    ],
    "context": "Riveted Mail",
@@ -62918,21 +62495,22 @@
     "Makes"
    ],
    "count": {
-    "wizard": 8,
+    "wizard": 9,
     "arpg": 2
    },
-   "total": 10,
+   "total": 11,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 6,
+   "fileCount": 7,
    "files": [
     "wizard:tools/spellforge/index.html (2)",
     "wizard:tools/spellforge/catalog.json (2)",
     "wizard:docs/MODULE_CAPABILITY_AUDIT.md (2)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (2)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)",
     "wizard:tools/rpg_inventory/docs/CASE-STUDY.md (1)"
    ],
    "context": "Makes the caster nearly invulnerable for a brief time while reducing them to the brink of death.",
@@ -63002,16 +62580,16 @@
     "MANA"
    ],
    "count": {
-    "wizard": 137,
+    "wizard": 139,
     "arpg": 56
    },
-   "total": 193,
+   "total": 195,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 44,
+   "fileCount": 45,
    "files": [
     "wizard:tools/geometric_skilltree/assets/tree-data.js (31)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/tree-data.js.txt (31)",
@@ -64092,15 +63670,15 @@
     "MATERIAL"
    ],
    "count": {
-    "wizard": 34,
+    "wizard": 31,
     "arpg": 13
    },
-   "total": 47,
+   "total": 44,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 11,
+   "fileCount": 10,
    "files": [
     "wizard:tools/spellforge/index.html (7)",
     "wizard:tools/spellforge/catalog.json (7)",
@@ -64108,10 +63686,10 @@
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (7)",
     "arpg:the ARPG/Assets/ARPG/Resources/Art/Lighting/manifest.json (6)",
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (5)",
-    "wizard:tools/rpg_inventory/core/vesselforge.js (4)",
-    "wizard:tools/rpg_inventory/DESIGN.md (1)"
+    "wizard:tools/rpg_inventory/DESIGN.md (2)",
+    "wizard:tools/rpg_inventory/core/EXPANSION-MANIFEST-SCHEMA.md (1)"
    ],
-   "context": "Material upgrade succeeded: ${mat.name} became ${nm.name}.",
+   "context": "Niagara: a mesh emitter spawning along a spline with spawn delay by index and a scale curve with overshoot. Material is a standard lit rock ",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -64873,45 +64451,22 @@
    "note": null
   },
   {
-   "term": "memories",
-   "surfaces": [
-    "memories"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/DESIGN.md (1)"
-   ],
-   "context": "- **Bonds** as before (named conditional memories, themes from deeds,",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
    "term": "memory",
    "surfaces": [
     "Memory",
     "memory"
    ],
    "count": {
-    "wizard": 15,
+    "wizard": 14,
     "arpg": 4
    },
-   "total": 19,
+   "total": 18,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 12,
+   "fileCount": 11,
    "files": [
     "wizard:tools/spellforge/index.html (3)",
     "wizard:tools/rpg_inventory/core/REFERENCE-NOTES.md (3)",
@@ -64920,7 +64475,7 @@
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (2)",
     "wizard:tools/geometric_skilltree/NORTH-STAR.md (1)",
     "wizard:tools/rpg_inventory/AGENTS.md (1)",
-    "wizard:tools/rpg_inventory/README.md (1)"
+    "wizard:tools/rpg_inventory/core/RUNBOOK.md (1)"
    ],
    "context": "Memory",
    "origin": "plain",
@@ -64935,16 +64490,16 @@
    ],
    "count": {
     "wizard": 0,
-    "arpg": 15
+    "arpg": 16
    },
-   "total": 15,
+   "total": 16,
    "kinds": [
     "game",
     "label"
    ],
    "fileCount": 3,
    "files": [
-    "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgMenuScene.cs (7)",
+    "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgMenuScene.cs (8)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgHudFrameKit.cs (5)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgMenu.cs (3)"
    ],
@@ -65378,19 +64933,20 @@
     "Metal"
    ],
    "count": {
-    "wizard": 21,
-    "arpg": 5
+    "wizard": 49,
+    "arpg": 18
    },
-   "total": 26,
+   "total": 67,
    "kinds": [
     "doc",
+    "game",
     "label"
    ],
    "fileCount": 10,
    "files": [
-    "wizard:tools/spellforge/index.html (5)",
-    "wizard:tools/spellforge/catalog.json (5)",
-    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (5)",
+    "wizard:tools/spellforge/index.html (20)",
+    "wizard:tools/spellforge/catalog.json (18)",
+    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (18)",
     "wizard:tools/rpg_inventory/core/expansion_ready/wearables-supply-map.tsv (4)",
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (2)",
     "wizard:tools/rpg_inventory/AGENTS.md (1)",
@@ -65429,30 +64985,53 @@
    "note": null
   },
   {
+   "term": "metamods",
+   "surfaces": [
+    "Metamods"
+   ],
+   "count": {
+    "wizard": 1,
+    "arpg": 0
+   },
+   "total": 1,
+   "kinds": [
+    "doc"
+   ],
+   "fileCount": 1,
+   "files": [
+    "wizard:tools/rpg_inventory/DESIGN.md (1)"
+   ],
+   "context": "Metamods, trophy rite cooldowns, economy/trade. Listed in ISSUES.md.",
+   "origin": "poe",
+   "verdict": "keep",
+   "after": null,
+   "note": "PoE crafting term (meta-crafting modifiers) in design notes (2026-11-09 review)"
+  },
+  {
    "term": "meteor",
    "surfaces": [
     "Meteor"
    ],
    "count": {
-    "wizard": 24,
+    "wizard": 21,
     "arpg": 8
    },
-   "total": 32,
+   "total": 29,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 10,
+   "fileCount": 9,
    "files": [
-    "wizard:tools/rpg_inventory/core/expansion_ready/wearables.tsv (9)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (9)",
+    "wizard:tools/rpg_inventory/core/expansion_ready/wearables.tsv (8)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (8)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (3)",
     "wizard:tools/spellforge/index.html (2)",
     "wizard:tools/spellforge/catalog.json (2)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/SpellRules.cs (2)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/aura-lab.json (2)",
-    "wizard:tools/rpg_inventory/core/expansion_ready/wave-01.tsv (1)"
+    "wizard:tools/spellforge/README.md (1)"
    ],
    "context": "Meteor",
    "origin": "plain",
@@ -65466,20 +65045,20 @@
     "Meteoric"
    ],
    "count": {
-    "wizard": 94,
+    "wizard": 92,
     "arpg": 0
    },
-   "total": 94,
+   "total": 92,
    "kinds": [
     "doc"
    ],
    "fileCount": 12,
    "files": [
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (29)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (28)",
     "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (17)",
     "wizard:tools/rpg_inventory/core/targets.tsv (13)",
-    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (10)",
     "wizard:tools/rpg_inventory/core/expansion_ready/jewelry_relics.tsv (9)",
+    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (9)",
     "wizard:tools/rpg_inventory/core/expansion_ready/armor_helms.tsv (8)",
     "wizard:tools/rpg_inventory/AGENTS.md (2)",
     "wizard:tools/rpg_inventory/core/expansion_ready/offhands.tsv (2)"
@@ -66748,21 +66327,25 @@
     "Modifier"
    ],
    "count": {
-    "wizard": 3,
+    "wizard": 14,
     "arpg": 4
    },
-   "total": 7,
+   "total": 18,
    "kinds": [
     "doc",
+    "game",
     "label"
    ],
-   "fileCount": 3,
+   "fileCount": 6,
    "files": [
+    "wizard:tools/rpg_inventory/DESIGN.md (7)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/Itemization.cs (4)",
+    "wizard:tools/rpg_inventory/core/playground.html (2)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (2)",
-    "wizard:tools/rpg_inventory/README.md (1)"
+    "wizard:tools/rpg_inventory/README.md (2)",
+    "wizard:tools/rpg_inventory/core/vesselforge.js (1)"
    ],
-   "context": "Add Modifier",
+   "context": "Add Modifier ✦",
    "origin": "poe",
    "verdict": "keep",
    "after": null,
@@ -67734,10 +67317,10 @@
     "Movement"
    ],
    "count": {
-    "wizard": 60,
+    "wizard": 61,
     "arpg": 23
    },
-   "total": 83,
+   "total": 84,
    "kinds": [
     "doc",
     "game",
@@ -68326,20 +67909,19 @@
     "Name"
    ],
    "count": {
-    "wizard": 9,
+    "wizard": 8,
     "arpg": 2
    },
-   "total": 11,
+   "total": 10,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 6,
+   "fileCount": 5,
    "files": [
     "wizard:tools/rp_account_creator/index.html (6)",
     "wizard:tools/geometric_skilltree/index.html (1)",
-    "wizard:tools/rpg_inventory/index.html (1)",
     "wizard:tools/rpg_inventory/core/LOADOUT-EXTRACTION.md (1)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgMenu.cs (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/Fonts/Alegreya-OFL.txt (1)"
@@ -68407,16 +67989,16 @@
     "Nameless"
    ],
    "count": {
-    "wizard": 3,
+    "wizard": 2,
     "arpg": 0
    },
-   "total": 3,
+   "total": 2,
    "kinds": [
     "label"
    ],
    "fileCount": 1,
    "files": [
-    "wizard:tools/rpg_inventory/index.html (3)"
+    "wizard:tools/rpg_inventory/index.html (2)"
    ],
    "context": "Nameless",
    "origin": "plain",
@@ -69350,10 +68932,10 @@
     "NEVER"
    ],
    "count": {
-    "wizard": 58,
+    "wizard": 57,
     "arpg": 0
    },
-   "total": 58,
+   "total": 57,
    "kinds": [
     "doc",
     "game"
@@ -69365,9 +68947,9 @@
     "wizard:tools/geometric_skilltree/NORTH-STAR.md (5)",
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (4)",
     "wizard:tools/rpg_inventory/core/ANCIENT-EQUIPMENT-TAXONOMY.md (3)",
-    "wizard:tools/rpg_inventory/core/RUNBOOK.md (3)",
     "wizard:tools/wizard_orbs/AGENTS.md (3)",
-    "wizard:tools/mason/index.html (2)"
+    "wizard:tools/mason/index.html (2)",
+    "wizard:tools/rpg_inventory/core/GOAL.md (2)"
    ],
    "context": "- Treat every cell as a separate, independent tile. Never merge, extend, or continue any shape into a neighboring cell.\\n",
    "origin": "plain",
@@ -69382,16 +68964,16 @@
     "New"
    ],
    "count": {
-    "wizard": 55,
+    "wizard": 54,
     "arpg": 6
    },
-   "total": 61,
+   "total": 60,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 26,
+   "fileCount": 25,
    "files": [
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (10)",
     "wizard:tools/geometric_skilltree/NORTH-STAR.md (6)",
@@ -69484,27 +69066,27 @@
     "Next"
    ],
    "count": {
-    "wizard": 8,
+    "wizard": 12,
     "arpg": 5
    },
-   "total": 13,
+   "total": 17,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 9,
+   "fileCount": 11,
    "files": [
+    "wizard:tools/rpg_inventory/index.html (3)",
     "wizard:tools/arcane_lattice/index.html (2)",
     "wizard:tools/sokoban/game.js (2)",
     "wizard:tools/sokoban/index.html (2)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgExploration.cs (2)",
     "wizard:tools/rp_account_creator/index.html (1)",
-    "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (1)",
-    "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgAuraPreview.cs (1)",
-    "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgHud.cs (1)"
+    "wizard:tools/rpg_inventory/core/playground.html (1)",
+    "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (1)"
    ],
-   "context": "Next dimension",
+   "context": "Next character name",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -69583,30 +69165,6 @@
    "verdict": "keep",
    "after": null,
    "note": null
-  },
-  {
-   "term": "nightglass",
-   "surfaces": [
-    "Nightglass"
-   ],
-   "count": {
-    "wizard": 2,
-    "arpg": 0
-   },
-   "total": 2,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 2,
-   "files": [
-    "wizard:tools/rpg_inventory/core/expansion_ready/jewelry_relics.tsv (1)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
-   ],
-   "context": "Nightglass-Inset Mirror",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Obsidian",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "nile",
@@ -69724,22 +69282,22 @@
     "NO"
    ],
    "count": {
-    "wizard": 163,
+    "wizard": 161,
     "arpg": 50
    },
-   "total": 213,
+   "total": 211,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 87,
+   "fileCount": 88,
    "files": [
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (17)",
-    "wizard:tools/rpg_inventory/core/vesselforge.js (10)",
-    "wizard:tools/rpg_inventory/index.html (8)",
+    "wizard:tools/rpg_inventory/core/vesselforge.js (8)",
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (8)",
     "wizard:tools/rpg_inventory/core/LOADOUT-EXTRACTION.md (8)",
+    "wizard:tools/rpg_inventory/index.html (7)",
     "wizard:tools/geometric_skilltree/NORTH-STAR.md (7)",
     "wizard:tools/spellforge/index.html (6)",
     "wizard:docs/visual/OWNER_INPUT_CORRECTION_001.md (6)"
@@ -69916,20 +69474,19 @@
     "None"
    ],
    "count": {
-    "wizard": 5,
+    "wizard": 4,
     "arpg": 0
    },
-   "total": 5,
+   "total": 4,
    "kinds": [
     "doc",
     "label"
    ],
-   "fileCount": 5,
+   "fileCount": 4,
    "files": [
     "wizard:dashboard.js (1)",
     "wizard:docs/ARCHIVE_REDIRECT_PLAN.md (1)",
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (1)",
-    "wizard:tools/rpg_inventory/README.md (1)",
     "wizard:tools/rpg_inventory/docs/CASE-STUDY.md (1)"
    ],
    "context": "None",
@@ -69993,25 +69550,25 @@
     "Normal"
    ],
    "count": {
-    "wizard": 6,
+    "wizard": 14,
     "arpg": 3
    },
-   "total": 9,
+   "total": 17,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 8,
+   "fileCount": 12,
    "files": [
+    "wizard:tools/rpg_inventory/README.md (3)",
+    "wizard:docs/CRAFTING-PROVISIONAL.md (2)",
+    "wizard:tools/rpg_inventory/core/README.md (2)",
     "wizard:tools/rpg_inventory/core/REFERENCE-NOTES.md (2)",
-    "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/core/vesselforge.js (1)",
     "wizard:docs/UI_FRAMEPACK_INTERFACE.md (1)",
     "wizard:tools/cartographer/VERIFICATION.md (1)",
-    "wizard:tools/rpg_inventory/core/ANCIENT-EQUIPMENT-TAXONOMY.md (1)",
-    "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgGroundSurfaces.cs (1)",
-    "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgInventoryPane.cs (1)",
-    "arpg:the ARPG/Assets/ARPG/Resources/Art/LivingBodies/Expansion/glutton-demon/imported-source.json (1)"
+    "wizard:tools/rpg_inventory/DESIGN.md (1)"
    ],
    "context": "Normal",
    "origin": "poe",
@@ -70375,15 +69932,15 @@
     "NOTHING"
    ],
    "count": {
-    "wizard": 12,
+    "wizard": 14,
     "arpg": 11
    },
-   "total": 23,
+   "total": 25,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 12,
+   "fileCount": 14,
    "files": [
     "wizard:tools/spellforge/index.html (4)",
     "wizard:tools/spellforge/catalog.json (3)",
@@ -70846,10 +70403,10 @@
     "Obsidian"
    ],
    "count": {
-    "wizard": 65,
+    "wizard": 67,
     "arpg": 6
    },
-   "total": 71,
+   "total": 73,
    "kinds": [
     "doc",
     "game",
@@ -70861,9 +70418,9 @@
     "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (8)",
     "wizard:tools/rpg_inventory/core/targets.tsv (7)",
     "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (6)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (6)",
     "wizard:tools/spellforge/index.html (5)",
     "wizard:tools/spellforge/catalog.json (5)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (5)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (5)"
    ],
    "context": "Obsidian",
@@ -71408,28 +70965,27 @@
   {
    "term": "omen",
    "surfaces": [
-    "omen",
-    "Omen"
+    "omen"
    ],
    "count": {
-    "wizard": 21,
+    "wizard": 19,
     "arpg": 7
    },
-   "total": 28,
+   "total": 26,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 12,
+   "fileCount": 11,
    "files": [
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/Itemization.cs (6)",
     "wizard:tools/rpg_inventory/core/playground.html (5)",
     "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (4)",
     "wizard:tools/rpg_inventory/core/asset-review.js (2)",
     "wizard:tools/rpg_inventory/review.html (2)",
-    "wizard:tools/rpg_inventory/DESIGN.md (2)",
     "wizard:tools/rpg_inventory/core/verdigris-manifest.tsv (2)",
-    "wizard:tools/rpg_inventory/core/vesselforge.js (1)"
+    "wizard:tools/rpg_inventory/core/vesselforge.js (1)",
+    "wizard:tools/rpg_inventory/AGENTS.md (1)"
    ],
    "context": "a clay liver-model omen piece incised with a divination grid in the Mesopotamian style, some lines rubbed with red ochre",
    "origin": "plain",
@@ -71443,23 +70999,24 @@
     "Omens"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 3,
     "arpg": 0
    },
-   "total": 2,
+   "total": 3,
    "kinds": [
     "doc"
    ],
-   "fileCount": 2,
+   "fileCount": 3,
    "files": [
     "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)",
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (1)"
    ],
    "context": "| Guaranteed X Brand, pigments | PoE2 Omens, Essences | Guarantee which brand the next craft adds |",
    "origin": "agent-invented",
    "verdict": "purge",
    "after": "guaranteed-tag brands",
-   "note": "verdigris-pack.js omens table; see \"omen\"."
+   "note": "verdigris-pack.js omens table; see \"omen\". Remaining hits are PoE2 Omens, the PoE analogue named in CRAFTING-PROVISIONAL.md and README.md."
   },
   {
    "term": "on",
@@ -71468,16 +71025,16 @@
     "On"
    ],
    "count": {
-    "wizard": 39,
+    "wizard": 40,
     "arpg": 6
    },
-   "total": 45,
+   "total": 46,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 14,
+   "fileCount": 15,
    "files": [
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (14)",
     "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (6)",
@@ -71561,15 +71118,15 @@
     "ONLY"
    ],
    "count": {
-    "wizard": 23,
+    "wizard": 25,
     "arpg": 5
    },
-   "total": 28,
+   "total": 30,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 15,
+   "fileCount": 17,
    "files": [
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (4)",
     "wizard:tools/spellforge/index.html (3)",
@@ -72063,25 +71620,25 @@
     "Orb"
    ],
    "count": {
-    "wizard": 25,
+    "wizard": 29,
     "arpg": 14
    },
-   "total": 39,
+   "total": 43,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 15,
+   "fileCount": 16,
    "files": [
     "wizard:tools/spellforge/index.html (7)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (6)",
     "wizard:tools/spellforge/catalog.json (5)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (4)",
+    "wizard:tools/rpg_inventory/README.md (4)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/SpellRules.cs (4)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-recipes.json (3)",
-    "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (2)",
-    "wizard:tools/gui_framekit/game/character.js (1)"
+    "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (2)"
    ],
    "context": "Chromatic Orb",
    "origin": "poe",
@@ -72959,30 +72516,6 @@
    "note": "plain English"
   },
   {
-   "term": "overflap",
-   "surfaces": [
-    "Overflap"
-   ],
-   "count": {
-    "wizard": 2,
-    "arpg": 0
-   },
-   "total": 2,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 2,
-   "files": [
-    "wizard:tools/rpg_inventory/core/expansion_ready/wearables.tsv (1)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
-   ],
-   "context": "Classical Overflap Boots",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "over-flap (doc)",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
-  },
-  {
    "term": "overflow",
    "surfaces": [
     "Overflow"
@@ -73776,7 +73309,7 @@
     "wizard:tools/rpg_inventory/core/expansion_ready/auxiliary.tsv (2)",
     "wizard:tools/rpg_inventory/core/targets-600.tsv (2)"
    ],
-   "context": "Snareline Packet",
+   "context": "Snare Packet",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -74427,29 +73960,6 @@
    "verdict": "keep",
    "after": null,
    "note": null
-  },
-  {
-   "term": "panoply",
-   "surfaces": [
-    "Panoply"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:docs/CRAFTING-PROVISIONAL.md (1)"
-   ],
-   "context": "Crafting uses (Patience), the material-upgrade gamble (kiln), locked slots (scars), half-strength bonds for another class (kinship), set bon",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Set bonus",
-   "note": "verdigris-pack.js panoply labels."
   },
   {
    "term": "pants",
@@ -75128,25 +74638,23 @@
     "Patience"
    ],
    "count": {
-    "wizard": 11,
+    "wizard": 5,
     "arpg": 0
    },
-   "total": 11,
+   "total": 5,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 7,
+   "fileCount": 5,
    "files": [
-    "wizard:tools/rpg_inventory/DESIGN.md (5)",
-    "wizard:tools/rpg_inventory/core/playground.html (1)",
     "wizard:tools/rpg_inventory/core/vesselforge.js (1)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
-    "wizard:tools/rpg_inventory/README.md (1)",
+    "wizard:tools/rpg_inventory/DESIGN.md (1)",
     "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (1)",
     "wizard:tools/rpg_inventory/core/REFERENCE-NOTES.md (1)"
    ],
-   "context": "The forge is lit. Roll an item, read the odds, spend its patience wisely.",
+   "context": "patience",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -76688,18 +76196,19 @@
     "Pigments"
    ],
    "count": {
-    "wizard": 1,
+    "wizard": 3,
     "arpg": 0
    },
-   "total": 1,
+   "total": 3,
    "kinds": [
     "doc"
    ],
-   "fileCount": 1,
+   "fileCount": 2,
    "files": [
+    "wizard:tools/rpg_inventory/README.md (2)",
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (1)"
    ],
-   "context": "Pigments: red_ochre, woad, soot, marsh_ochre. Omens: entrail_omen,",
+   "context": "| Pigments, Guaranteed X Brand | PoE2 Omens, Essences | Steer or guarantee which brand the next craft adds |",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -77189,7 +76698,7 @@
     "wizard:tools/rpg_inventory/core/expansion_ready/offhands.tsv (1)",
     "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
    ],
-   "context": "Plank Roundshield",
+   "context": "Plank Round Shield",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -78336,18 +77845,20 @@
     "Pommel"
    ],
    "count": {
-    "wizard": 6,
+    "wizard": 8,
     "arpg": 0
    },
-   "total": 6,
+   "total": 8,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 2,
+   "fileCount": 4,
    "files": [
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (4)",
-    "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (2)"
+    "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (2)",
+    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (1)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
    ],
    "context": "Copper Leaf-blade Dagger, Leather-wrapped Grip, Wood Pommel",
    "origin": "plain",
@@ -78709,16 +78220,16 @@
     "Potential"
    ],
    "count": {
-    "wizard": 3,
+    "wizard": 2,
     "arpg": 0
    },
-   "total": 3,
+   "total": 2,
    "kinds": [
     "doc"
    ],
    "fileCount": 1,
    "files": [
-    "wizard:tools/rpg_inventory/DESIGN.md (3)"
+    "wizard:tools/rpg_inventory/DESIGN.md (2)"
    ],
    "context": "- **Forging Potential**: every item has a finite craft budget. Every",
    "origin": "plain",
@@ -80166,7 +79677,7 @@
     "wizard:tools/rpg_inventory/core/expansion_ready/offhands.tsv (1)",
     "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
    ],
-   "context": "- **Rite-focus** (spirit caster): Bone Idol-Cudgel · Copper Hand Bell · Bronze Pronged Sceptre · Jade Idol-Staff · Meteoric iron Rite Rod",
+   "context": "- **Rite-focus** (mana caster): Bone Idol-Cudgel · Copper Hand Bell · Bronze Pronged Sceptre · Jade Idol-Staff · Meteoric iron Spell Rod",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -82033,22 +81544,25 @@
     "Rare"
    ],
    "count": {
-    "wizard": 5,
+    "wizard": 21,
     "arpg": 6
    },
-   "total": 11,
+   "total": 27,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 5,
+   "fileCount": 10,
    "files": [
+    "wizard:tools/rpg_inventory/README.md (7)",
+    "wizard:tools/rpg_inventory/core/vesselforge.js (4)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (4)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/Itemization.cs (4)",
-    "wizard:tools/rpg_inventory/core/NAMEBANK-PRE-AD.md (1)",
-    "arpg:the ARPG/Assets/ARPG/Scripts/Core/Vessels.cs (1)",
-    "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgInventoryPane.cs (1)"
+    "wizard:tools/rpg_inventory/DESIGN.md (2)",
+    "wizard:tools/rpg_inventory/core/README.md (2)",
+    "wizard:tools/rpg_inventory/core/playground.html (1)",
+    "wizard:tools/rpg_inventory/core/NAMEBANK-PRE-AD.md (1)"
    ],
    "context": "Upgrade to Rare",
    "origin": "poe",
@@ -82062,25 +81576,25 @@
     "Rarity"
    ],
    "count": {
-    "wizard": 14,
-    "arpg": 8
+    "wizard": 24,
+    "arpg": 9
    },
-   "total": 22,
+   "total": 33,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 9,
+   "fileCount": 13,
    "files": [
     "wizard:tools/geometric_skilltree/index.html (6)",
+    "wizard:tools/rpg_inventory/README.md (6)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/model.js.txt (6)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (3)",
+    "wizard:tools/rpg_inventory/core/README.md (3)",
     "wizard:tools/rpg_inventory/core/verdigris-pack.js (2)",
     "wizard:tools/rpg_inventory/core/verdigris-stats.js (1)",
-    "wizard:tools/spellforge/index.html (1)",
-    "wizard:tools/spellforge/catalog.json (1)",
-    "arpg:the ARPG/Assets/ARPG/Resources/Wizard/stats.js.txt (1)"
+    "wizard:tools/spellforge/index.html (1)"
    ],
    "context": "Item Rarity",
    "origin": "plain",
@@ -83164,21 +82678,24 @@
     "Record"
    ],
    "count": {
-    "wizard": 3,
+    "wizard": 5,
     "arpg": 0
    },
-   "total": 3,
+   "total": 5,
    "kinds": [
     "doc",
+    "game",
     "label"
    ],
-   "fileCount": 3,
+   "fileCount": 5,
    "files": [
+    "wizard:tools/rpg_inventory/index.html (1)",
     "wizard:tools/sokoban/index.html (1)",
     "wizard:docs/visual/OWNER_INPUT_CORRECTION_001.md (1)",
-    "wizard:tools/rpg_inventory/AGENTS.md (1)"
+    "wizard:tools/rpg_inventory/AGENTS.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)"
    ],
-   "context": "Record",
+   "context": "The ${carried.length} item${carried.length > 1 ? 's' : ''} they carried stay at the death site as a house recovery. A later character of the",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -83426,23 +82943,23 @@
     "RED"
    ],
    "count": {
-    "wizard": 133,
+    "wizard": 135,
     "arpg": 48
    },
-   "total": 181,
+   "total": 183,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 17,
+   "fileCount": 18,
    "files": [
     "wizard:tools/spellforge/index.html (48)",
     "wizard:tools/spellforge/catalog.json (45)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (45)",
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (19)",
     "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (10)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (2)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (3)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/aura-lab.json (2)",
     "wizard:tools/geometric_skilltree/assets/jewels.js (1)"
    ],
@@ -83497,30 +83014,6 @@
    "verdict": "keep",
    "after": null,
    "note": null
-  },
-  {
-   "term": "redglass",
-   "surfaces": [
-    "Redglass"
-   ],
-   "count": {
-    "wizard": 2,
-    "arpg": 0
-   },
-   "total": 2,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 2,
-   "files": [
-    "wizard:tools/rpg_inventory/core/expansion_ready/offhands.tsv (1)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
-   ],
-   "context": "Redglass Boss Shield",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Red-Stud",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "redirect",
@@ -84035,16 +83528,18 @@
     "Regal"
    ],
    "count": {
-    "wizard": 1,
+    "wizard": 3,
     "arpg": 0
    },
-   "total": 1,
+   "total": 3,
    "kinds": [
     "doc"
    ],
-   "fileCount": 1,
+   "fileCount": 3,
    "files": [
-    "wizard:docs/CRAFTING-PROVISIONAL.md (1)"
+    "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)",
+    "wizard:tools/rpg_inventory/core/README.md (1)"
    ],
    "context": "| Upgrade to Rare | Regal Orb | Makes a Magic item Rare and adds one modifier |",
    "origin": "plain",
@@ -84467,16 +83962,16 @@
     "RELIC"
    ],
    "count": {
-    "wizard": 243,
+    "wizard": 241,
     "arpg": 27
    },
-   "total": 270,
+   "total": 268,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 41,
+   "fileCount": 39,
    "files": [
     "wizard:tools/rpg_inventory/core/targets-600.tsv (56)",
     "wizard:tools/rpg_inventory/core/expansion_ready/jewelry_relics.tsv (42)",
@@ -84500,25 +83995,25 @@
     "Relics"
    ],
    "count": {
-    "wizard": 33,
+    "wizard": 29,
     "arpg": 5
    },
-   "total": 38,
+   "total": 34,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 17,
+   "fileCount": 16,
    "files": [
     "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (7)",
     "wizard:tools/geometric_skilltree/index.html (4)",
-    "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (4)",
     "wizard:tools/rpg_inventory/core/REFERENCE-NOTES.md (4)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/model.js.txt (4)",
     "wizard:tools/rp_account_creator/index.html (2)",
     "wizard:tools/geometric_skilltree/README.md (2)",
-    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (2)"
+    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (2)",
+    "wizard:tools/rpg_inventory/index.html (1)"
    ],
    "context": "relics",
    "origin": "poe",
@@ -84671,19 +84166,18 @@
     "Removal"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 1,
     "arpg": 0
    },
-   "total": 2,
+   "total": 1,
    "kinds": [
     "doc"
    ],
-   "fileCount": 2,
+   "fileCount": 1,
    "files": [
-    "wizard:tools/rpg_inventory/DESIGN.md (1)",
-    "wizard:tools/rpg_inventory/README.md (1)"
+    "wizard:tools/rpg_inventory/DESIGN.md (1)"
    ],
-   "context": "| Removal | efface (slot reusable) | sever → **scar** | pry out (trophy breaks) |",
+   "context": "| Removal | Remove Last Modifier | Remove Last Modifier | Remove Last Modifier (the part is destroyed) |",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -84695,25 +84189,25 @@
     "Remove"
    ],
    "count": {
-    "wizard": 12,
+    "wizard": 16,
     "arpg": 3
    },
-   "total": 15,
+   "total": 19,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 9,
+   "fileCount": 11,
    "files": [
-    "wizard:tools/rpg_inventory/README.md (3)",
+    "wizard:tools/rpg_inventory/DESIGN.md (5)",
     "wizard:tools/rpg_inventory/core/LOADOUT-EXTRACTION.md (3)",
     "wizard:tools/geometric_skilltree/index.html (2)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/aura-lab.json (2)",
+    "wizard:tools/rpg_inventory/core/playground.html (1)",
     "wizard:tools/spellforge/index.html (1)",
     "wizard:tools/spellforge/catalog.json (1)",
-    "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
-    "wizard:tools/rpg_inventory/AGENTS.md (1)"
+    "wizard:docs/CRAFTING-PROVISIONAL.md (1)"
    ],
    "context": "<strong>Remove ${current.name}</strong><span>The socket stays allocated; the stone returns to the stash.</span>",
    "origin": "plain",
@@ -84727,20 +84221,19 @@
     "Removed"
    ],
    "count": {
-    "wizard": 7,
+    "wizard": 6,
     "arpg": 1
    },
-   "total": 8,
+   "total": 7,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 6,
+   "fileCount": 5,
    "files": [
     "wizard:tools/rpg_inventory/core/vesselforge.js (3)",
     "wizard:tools/geometric_skilltree/index.html (1)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
-    "wizard:tools/rpg_inventory/README.md (1)",
     "wizard:tools/rpg_inventory/core/expansion_ready/offhands-notes.md (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/model.js.txt (1)"
    ],
@@ -84756,20 +84249,21 @@
     "Removes"
    ],
    "count": {
-    "wizard": 4,
+    "wizard": 5,
     "arpg": 1
    },
-   "total": 5,
+   "total": 6,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 5,
+   "fileCount": 6,
    "files": [
     "wizard:tools/spellforge/index.html (1)",
     "wizard:tools/spellforge/catalog.json (1)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
     "wizard:tools/geometric_skilltree/NORTH-STAR.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (1)"
    ],
    "context": "Removes the caster for a while; they return unchanged after monsters have wandered off.",
@@ -85404,22 +84898,24 @@
     "Reroll"
    ],
    "count": {
-    "wizard": 5,
+    "wizard": 9,
     "arpg": 3
    },
-   "total": 8,
+   "total": 12,
    "kinds": [
     "doc",
     "label"
    ],
-   "fileCount": 6,
+   "fileCount": 9,
    "files": [
     "wizard:tools/geometric_skilltree/assets/jewels.js (2)",
+    "wizard:tools/rpg_inventory/DESIGN.md (2)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/jewels.js.txt (2)",
     "wizard:tools/gui_framekit/game/pane-content.js (1)",
+    "wizard:tools/rpg_inventory/core/playground.html (1)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
-    "wizard:tools/rpg_inventory/core/PIXEL-PROMPTS.md (1)",
-    "arpg:the ARPG/Assets/ARPG/Scripts/Core/Itemization.cs (1)"
+    "wizard:tools/rpg_inventory/README.md (1)",
+    "wizard:tools/rpg_inventory/core/PIXEL-PROMPTS.md (1)"
    ],
    "context": "Spell Reroll",
    "origin": "plain",
@@ -85456,18 +84952,19 @@
     "Rerolls"
    ],
    "count": {
-    "wizard": 2,
+    "wizard": 3,
     "arpg": 0
    },
-   "total": 2,
+   "total": 3,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 2,
+   "fileCount": 3,
    "files": [
     "wizard:tools/gui_framekit/game/character.js (1)",
-    "wizard:docs/CRAFTING-PROVISIONAL.md (1)"
+    "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)"
    ],
    "context": "Rerolls socket colours",
    "origin": "plain",
@@ -85910,52 +85407,6 @@
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (1)"
    ],
    "context": "- Resolved as defaults (owner may veto): prefix/suffix 2+2 with implicits; added-fire limited to fire bases; proposed values kept as provisi",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
-   "term": "resonance",
-   "surfaces": [
-    "Resonance"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/DESIGN.md (1)"
-   ],
-   "context": "| Chase | tier gated by ilvl + material | tier III via play or Resonance | completion bonus at full stack |",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
-   "term": "resonate",
-   "surfaces": [
-    "Resonate"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "game"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/core/playground.html (1)"
-   ],
-   "context": "Resonate ◈",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -87155,7 +86606,7 @@
     "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (1)",
     "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
    ],
-   "context": "Rhomphaia Greatblade",
+   "context": "Rhomphaia",
    "origin": "real-world",
    "verdict": "keep",
    "after": null,
@@ -87710,19 +87161,19 @@
     "Ring"
    ],
    "count": {
-    "wizard": 83,
+    "wizard": 85,
     "arpg": 15
    },
-   "total": 98,
+   "total": 100,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 25,
+   "fileCount": 26,
    "files": [
     "wizard:tools/spellforge/index.html (14)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (11)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (12)",
     "wizard:tools/rpg_inventory/core/expansion_ready/jewelry_relics.tsv (10)",
     "wizard:tools/spellforge/catalog.json (8)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (8)",
@@ -87735,30 +87186,6 @@
    "verdict": "keep",
    "after": null,
    "note": null
-  },
-  {
-   "term": "ringblade",
-   "surfaces": [
-    "Ringblade"
-   ],
-   "count": {
-    "wizard": 2,
-    "arpg": 0
-   },
-   "total": 2,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 2,
-   "files": [
-    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (1)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
-   ],
-   "context": "Meteoric Ringblade",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Ring-Pommel Sword",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "ringing",
@@ -87993,23 +87420,19 @@
     "Rite"
    ],
    "count": {
-    "wizard": 46,
+    "wizard": 7,
     "arpg": 0
    },
-   "total": 46,
+   "total": 7,
    "kinds": [
     "doc"
    ],
-   "fileCount": 16,
+   "fileCount": 4,
    "files": [
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (8)",
-    "wizard:tools/rpg_inventory/core/REFERENCE-NOTES.md (6)",
-    "wizard:tools/rpg_inventory/core/expansion_ready/offhands.tsv (6)",
-    "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (5)",
-    "wizard:tools/rpg_inventory/DESIGN.md (3)",
     "wizard:tools/geometric_skilltree/NORTH-STAR.md (2)",
-    "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (2)",
-    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (2)"
+    "wizard:tools/rpg_inventory/DESIGN.md (2)",
+    "wizard:tools/rpg_inventory/core/DOWNLOAD-INTAKE.md (2)",
+    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (1)"
    ],
    "context": "- **Self-imposed state**: 30% more rite damage while on low life — the downside is a",
    "origin": "plain",
@@ -88167,20 +87590,22 @@
     "Riveted"
    ],
    "count": {
-    "wizard": 6,
+    "wizard": 8,
     "arpg": 0
    },
-   "total": 6,
+   "total": 8,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 4,
+   "fileCount": 6,
    "files": [
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (2)",
     "wizard:tools/rpg_inventory/core/targets.tsv (2)",
     "wizard:tools/rpg_inventory/core/verdigris-pack.js (1)",
+    "wizard:tools/rpg_inventory/README.md (1)",
+    "wizard:tools/rpg_inventory/core/RUNBOOK.md (1)",
     "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (1)"
    ],
    "context": "Riveted Mail",
@@ -88308,6 +87733,32 @@
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/CreatureCatalog.cs (1)"
    ],
    "context": "Giant Roach",
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": null
+  },
+  {
+   "term": "road",
+   "surfaces": [
+    "Road"
+   ],
+   "count": {
+    "wizard": 4,
+    "arpg": 0
+   },
+   "total": 4,
+   "kinds": [
+    "doc"
+   ],
+   "fileCount": 4,
+   "files": [
+    "wizard:tools/rpg_inventory/AGENTS.md (1)",
+    "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (1)",
+    "wizard:tools/rpg_inventory/core/LOADOUT-EXTRACTION.md (1)",
+    "wizard:tools/rpg_inventory/core/STYLE-EXPERIMENTS.md (1)"
+   ],
+   "context": "Blue is not a shared faction signal: Northern, Cedar, and Silk Road production",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -88718,7 +88169,7 @@
    "files": [
     "wizard:tools/rpg_inventory/core/playground.html (1)"
    ],
-   "context": "Rolled: ${forge.displayName(bench)} (ilvl ${bench.ilvl})",
+   "context": "Rolled: ${forge.rarityName(bench)} ${forge.displayName(bench)} (ilvl ${bench.ilvl})",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -89115,51 +88566,29 @@
     "Round"
    ],
    "count": {
-    "wizard": 4,
+    "wizard": 13,
     "arpg": 0
    },
-   "total": 4,
+   "total": 13,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 3,
+   "fileCount": 7,
    "files": [
+    "wizard:tools/rpg_inventory/core/expansion_ready/offhands.tsv (3)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (3)",
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (2)",
+    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (2)",
     "wizard:tools/rpg_inventory/post-calib-wave2-review.html (1)",
-    "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (1)"
+    "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (1)",
+    "wizard:tools/rpg_inventory/core/targets.tsv (1)"
    ],
    "context": "Hide-faced Round Shield, Laced Wood Rim",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
    "note": null
-  },
-  {
-   "term": "roundshield",
-   "surfaces": [
-    "Roundshield"
-   ],
-   "count": {
-    "wizard": 9,
-    "arpg": 0
-   },
-   "total": 9,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 4,
-   "files": [
-    "wizard:tools/rpg_inventory/core/expansion_ready/offhands.tsv (3)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (3)",
-    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (2)",
-    "wizard:tools/rpg_inventory/core/targets.tsv (1)"
-   ],
-   "context": "- **Shield**: Hide Roundshield · Hide Buckler · Bronze Roundshield · Bronze-Scale Shield · Sheet-Bronze Tower",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Round Shield",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "route",
@@ -90630,29 +90059,6 @@
    "note": null
   },
   {
-   "term": "saturated",
-   "surfaces": [
-    "Saturated"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/README.md (1)"
-   ],
-   "context": "items through the deeds their bearer performs. Saturated items **Awaken** into",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
    "term": "saturation",
    "surfaces": [
     "Saturation"
@@ -90987,20 +90393,18 @@
     "Scar"
    ],
    "count": {
-    "wizard": 3,
+    "wizard": 2,
     "arpg": 2
    },
-   "total": 5,
+   "total": 4,
    "kinds": [
-    "doc",
     "game",
     "label"
    ],
-   "fileCount": 5,
+   "fileCount": 4,
    "files": [
     "wizard:tools/spellforge/index.html (1)",
     "wizard:tools/spellforge/catalog.json (1)",
-    "wizard:tools/rpg_inventory/core/README.md (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-recipes.json (1)"
    ],
@@ -91197,7 +90601,7 @@
     "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (1)",
     "wizard:tools/rpg_inventory/core/targets.tsv (1)"
    ],
-   "context": "- **Rite-focus** (spirit caster): Bone Idol-Cudgel · Copper Hand Bell · Bronze Pronged Sceptre · Jade Idol-Staff · Meteoric iron Rite Rod",
+   "context": "- **Rite-focus** (mana caster): Bone Idol-Cudgel · Copper Hand Bell · Bronze Pronged Sceptre · Jade Idol-Staff · Meteoric iron Spell Rod",
    "origin": "poe",
    "verdict": "keep",
    "after": null,
@@ -92143,31 +91547,6 @@
    "note": null
   },
   {
-   "term": "sear",
-   "surfaces": [
-    "Sear"
-   ],
-   "count": {
-    "wizard": 3,
-    "arpg": 0
-   },
-   "total": 3,
-   "kinds": [
-    "doc",
-    "game"
-   ],
-   "fileCount": 2,
-   "files": [
-    "wizard:tools/rpg_inventory/core/playground.html (2)",
-    "wizard:tools/rpg_inventory/README.md (1)"
-   ],
-   "context": "Sear ✦",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
    "term": "search",
    "surfaces": [
     "Search"
@@ -92193,29 +91572,6 @@
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgSkillTreePane.cs (1)"
    ],
    "context": "Search",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
-   "term": "seared",
-   "surfaces": [
-    "Seared"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/README.md (1)"
-   ],
-   "context": "| Origin | Seared on at the Crafting Bench with currencies | Grown while equipped, through ventures |",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -93134,26 +92490,26 @@
     "Set"
    ],
    "count": {
-    "wizard": 19,
+    "wizard": 14,
     "arpg": 7
    },
-   "total": 26,
+   "total": 21,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 15,
+   "fileCount": 12,
    "files": [
     "wizard:tools/spellforge/index.html (5)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/Itemization.cs (4)",
-    "wizard:tools/rpg_inventory/core/verdigris-pack.js (2)",
     "wizard:tools/spellforge/catalog.json (2)",
-    "wizard:tools/rpg_inventory/DESIGN.md (2)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (2)",
     "wizard:docs/ADDING_A_MODULE.md (1)",
-    "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (1)"
+    "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (1)",
+    "wizard:tools/geometric_skilltree/README.md (1)",
+    "wizard:tools/mason/README.md (1)"
    ],
-   "context": "Set (2): +10% to the bond values of your upgraded items",
+   "context": "Set flash",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -93165,17 +92521,16 @@
     "Sets"
    ],
    "count": {
-    "wizard": 3,
+    "wizard": 2,
     "arpg": 0
    },
-   "total": 3,
+   "total": 2,
    "kinds": [
     "doc"
    ],
-   "fileCount": 3,
+   "fileCount": 2,
    "files": [
     "wizard:tools/rpg_inventory/AGENTS.md (1)",
-    "wizard:tools/rpg_inventory/DESIGN.md (1)",
     "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (1)"
    ],
    "context": "reviewed. Sets should be coordinated, not motif-cloned across every slot.",
@@ -93313,31 +92668,6 @@
    "note": null
   },
   {
-   "term": "sever",
-   "surfaces": [
-    "Sever"
-   ],
-   "count": {
-    "wizard": 2,
-    "arpg": 0
-   },
-   "total": 2,
-   "kinds": [
-    "doc",
-    "game"
-   ],
-   "fileCount": 2,
-   "files": [
-    "wizard:tools/rpg_inventory/core/playground.html (1)",
-    "wizard:tools/rpg_inventory/README.md (1)"
-   ],
-   "context": "Sever ◈→✕",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
    "term": "several",
    "surfaces": [
     "Several"
@@ -93355,29 +92685,6 @@
     "wizard:tools/sokoban/game.js (1)"
    ],
    "context": "Several crates depend on each other. Solve the packing order, not one crate at a time.",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
-   "term": "severed",
-   "surfaces": [
-    "Severed"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/README.md (1)"
-   ],
-   "context": "| Removal | Removed freely (slot is reusable) | Severed only by knife — the slot is **scarred** (✕) forever |",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -94196,10 +93503,10 @@
     "Shell"
    ],
    "count": {
-    "wizard": 25,
+    "wizard": 26,
     "arpg": 5
    },
-   "total": 30,
+   "total": 31,
    "kinds": [
     "doc",
     "game",
@@ -94212,9 +93519,9 @@
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (5)",
     "wizard:tools/rpg_inventory/core/targets-600.tsv (4)",
     "wizard:tools/rpg_inventory/core/expansion_ready/offhands.tsv (2)",
+    "wizard:tools/rpg_inventory/core/targets.tsv (2)",
     "wizard:tools/rpg_inventory/core/verdigris-pack.js (1)",
-    "wizard:tools/gui_framekit/game/character.js (1)",
-    "wizard:tools/rpg_inventory/core/expansion_ready/jewelry_relics.tsv (1)"
+    "wizard:tools/gui_framekit/game/character.js (1)"
    ],
    "context": "Beetle Shell",
    "origin": "plain",
@@ -94308,23 +93615,23 @@
     "Shield"
    ],
    "count": {
-    "wizard": 69,
+    "wizard": 78,
     "arpg": 11
    },
-   "total": 80,
+   "total": 89,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 20,
+   "fileCount": 19,
    "files": [
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (18)",
-    "wizard:tools/rpg_inventory/core/expansion_ready/offhands.tsv (13)",
-    "wizard:tools/rpg_inventory/core/targets-600.tsv (13)",
+    "wizard:tools/rpg_inventory/core/expansion_ready/offhands.tsv (16)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (16)",
     "wizard:tools/rpg_inventory/core/expansion_ready/post-calib-wave2-approved.tsv (8)",
-    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (3)",
-    "wizard:tools/rpg_inventory/core/targets.tsv (3)",
+    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (5)",
+    "wizard:tools/rpg_inventory/core/targets.tsv (5)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/SpellRules.cs (3)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgAuraGameplay.cs (3)"
    ],
@@ -94861,10 +94168,10 @@
     "Short"
    ],
    "count": {
-    "wizard": 15,
+    "wizard": 16,
     "arpg": 5
    },
-   "total": 20,
+   "total": 21,
    "kinds": [
     "doc",
     "game"
@@ -94873,41 +94180,18 @@
    "files": [
     "wizard:tools/spellforge/index.html (6)",
     "wizard:tools/spellforge/catalog.json (2)",
+    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (2)",
     "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (2)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/CreatureCatalog.cs (2)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (2)",
     "wizard:tools/cartographer/core/layouts.js (1)",
-    "wizard:tools/rpg_inventory/DESIGN.md (1)",
-    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (1)"
+    "wizard:tools/rpg_inventory/DESIGN.md (1)"
    ],
    "context": "Read the broad central nave and paired columns. Short doorways lead to side chapels; the guardian continues along the nave.",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
    "note": null
-  },
-  {
-   "term": "shortblade",
-   "surfaces": [
-    "Shortblade"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (1)"
-   ],
-   "context": "- **Sword / one-hand blade** (blade): Flint Cleaver · Copper Falchion · Bronze Khopesh · Obsidian Shortblade · Meteoric iron Longsword",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Short Blade",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "shortlist",
@@ -95654,50 +94938,29 @@
     "Silk"
    ],
    "count": {
-    "wizard": 6,
+    "wizard": 10,
     "arpg": 3
    },
-   "total": 9,
+   "total": 13,
    "kinds": [
+    "doc",
     "game"
    ],
-   "fileCount": 3,
+   "fileCount": 7,
    "files": [
     "wizard:tools/spellforge/index.html (3)",
     "wizard:tools/spellforge/catalog.json (3)",
-    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (3)"
+    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (3)",
+    "wizard:tools/rpg_inventory/AGENTS.md (1)",
+    "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (1)",
+    "wizard:tools/rpg_inventory/core/LOADOUT-EXTRACTION.md (1)",
+    "wizard:tools/rpg_inventory/core/STYLE-EXPERIMENTS.md (1)"
    ],
    "context": "Silk scraps and brass foil flutter down with drag and sway and settle flat; a wet specular blood pool spreads under the arrival pose.",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
    "note": "replacement word (2026-11-09)"
-  },
-  {
-   "term": "silkroad",
-   "surfaces": [
-    "Silkroad"
-   ],
-   "count": {
-    "wizard": 4,
-    "arpg": 0
-   },
-   "total": 4,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 4,
-   "files": [
-    "wizard:tools/rpg_inventory/AGENTS.md (1)",
-    "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (1)",
-    "wizard:tools/rpg_inventory/core/LOADOUT-EXTRACTION.md (1)",
-    "wizard:tools/rpg_inventory/core/STYLE-EXPERIMENTS.md (1)"
-   ],
-   "context": "Blue is not a shared faction signal: Northern, Cedar, and Silkroad production",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Silk Road",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "silver",
@@ -95851,6 +95114,29 @@
    "verdict": "keep",
    "after": null,
    "note": null
+  },
+  {
+   "term": "simulated",
+   "surfaces": [
+    "Simulated"
+   ],
+   "count": {
+    "wizard": 2,
+    "arpg": 0
+   },
+   "total": 2,
+   "kinds": [
+    "doc"
+   ],
+   "fileCount": 1,
+   "files": [
+    "wizard:tools/rpg_inventory/README.md (2)"
+   ],
+   "context": "Simulated fights generate encounters, each weighted toward one or more themes.",
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English (2026-11-09 review)"
   },
   {
    "term": "simulation",
@@ -96083,7 +95369,7 @@
     "wizard:tools/rpg_inventory/core/EXPANSION-MANIFEST-SCHEMA.md (1)",
     "wizard:tools/rpg_inventory/core/RUNBOOK.md (1)"
    ],
-   "context": "The build reads as construction. Six forged stakes rise in a sweep, then the ice grows between them and iron straps bind each block.",
+   "context": "The build reads as construction. Six forged stakes rise in a sweep, then the ice grows between them and metal straps bind each block.",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -96988,16 +96274,16 @@
     "SLOT"
    ],
    "count": {
-    "wizard": 24,
+    "wizard": 23,
     "arpg": 17
    },
-   "total": 41,
+   "total": 40,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 19,
+   "fileCount": 18,
    "files": [
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (7)",
     "wizard:tools/geometric_skilltree/index.html (4)",
@@ -97020,21 +96306,20 @@
     "Slots"
    ],
    "count": {
-    "wizard": 5,
+    "wizard": 4,
     "arpg": 1
    },
-   "total": 6,
+   "total": 5,
    "kinds": [
     "doc",
     "label"
    ],
-   "fileCount": 6,
+   "fileCount": 5,
    "files": [
     "wizard:tools/spellforge/index.html (1)",
     "wizard:tools/spellforge/catalog.json (1)",
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (1)",
     "wizard:tools/rpg_inventory/core/LOADOUT-EXTRACTION.md (1)",
-    "wizard:tools/rpg_inventory/core/README.md (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (1)"
    ],
    "context": "Skill Bar Slots",
@@ -97050,23 +96335,22 @@
     "slow"
    ],
    "count": {
-    "wizard": 11,
+    "wizard": 10,
     "arpg": 5
    },
-   "total": 16,
+   "total": 15,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 8,
+   "fileCount": 7,
    "files": [
     "wizard:tools/spellforge/index.html (4)",
     "wizard:tools/spellforge/catalog.json (3)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (3)",
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (2)",
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (1)",
-    "wizard:tools/rpg_inventory/README.md (1)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/SpellRules.cs (1)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/aura-lab.json (1)"
    ],
@@ -97503,9 +96787,9 @@
    "note": null
   },
   {
-   "term": "snareline",
+   "term": "snare",
    "surfaces": [
-    "Snareline"
+    "Snare"
    ],
    "count": {
     "wizard": 2,
@@ -97520,11 +96804,11 @@
     "wizard:tools/rpg_inventory/core/expansion_ready/auxiliary.tsv (1)",
     "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
    ],
-   "context": "Snareline Packet",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Snare Packet",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+   "context": "Snare Packet",
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": null
   },
   {
    "term": "snes",
@@ -99219,10 +98503,10 @@
     "SPEED"
    ],
    "count": {
-    "wizard": 170,
+    "wizard": 169,
     "arpg": 91
    },
-   "total": 261,
+   "total": 260,
    "kinds": [
     "doc",
     "game",
@@ -99251,16 +98535,16 @@
     "Spell"
    ],
    "count": {
-    "wizard": 105,
+    "wizard": 117,
     "arpg": 67
    },
-   "total": 172,
+   "total": 184,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 28,
+   "fileCount": 36,
    "files": [
     "wizard:tools/geometric_skilltree/assets/tree-data.js (40)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/tree-data.js.txt (40)",
@@ -99269,7 +98553,7 @@
     "wizard:tools/spellforge/index.html (6)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgLatticePane.cs (6)",
     "wizard:tools/geometric_skilltree/index.html (5)",
-    "wizard:tools/geometric_skilltree/assets/jewels.js (4)"
+    "wizard:tools/spellforge/README.md (5)"
    ],
    "context": "+10% increased Spell Damage",
    "origin": "poe",
@@ -99299,52 +98583,6 @@
    "verdict": "keep",
    "after": null,
    "note": null
-  },
-  {
-   "term": "spellcrafter",
-   "surfaces": [
-    "Spellcrafter"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/arcane_lattice/README.md (1)"
-   ],
-   "context": "# The Arcane Lattice — Hyperdimensional Spellcrafter",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Spell Builder",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
-  },
-  {
-   "term": "spellforge",
-   "surfaces": [
-    "Spellforge"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/spellforge/README.md (1)"
-   ],
-   "context": "The ARPG (Unity) ships   built from  , maps its spells to Spellforge effect ids, and carries an HLSL port of   as  . The ARPG set (Spark, Sh",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Spell Effects Lab",
-   "note": "X-forge compound (rule 7); the owner rule 8 example names the tool \"Spell Effects Lab\""
   },
   {
    "term": "spells",
@@ -99882,15 +99120,15 @@
     "spirit"
    ],
    "count": {
-    "wizard": 41,
+    "wizard": 38,
     "arpg": 13
    },
-   "total": 54,
+   "total": 51,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 10,
+   "fileCount": 8,
    "files": [
     "wizard:tools/rpg_inventory/core/verdigris-pack.js (12)",
     "wizard:tools/geometric_skilltree/assets/tree-data.js (10)",
@@ -99899,13 +99137,13 @@
     "wizard:tools/geometric_skilltree/index.html (3)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/model.js.txt (3)",
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (2)",
-    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (2)"
+    "wizard:tools/cartographer/README.md (1)"
    ],
    "context": "spirit",
    "origin": "agent-invented",
    "verdict": "purge",
    "after": "Mana",
-   "note": "Decided 2026-11-08. Names the resource every action spends (verdigris-stats.js label Spirit; tree-data \"+12 to Spirit\"); PoE2 Spirit is a reservation budget, so fails (c). Owner: \"health and mana orb\"."
+   "note": "Decided 2026-11-08. Names the resource every action spends (verdigris-stats.js label Spirit; tree-data \"+12 to Spirit\"); PoE2 Spirit is a reservation budget, so fails (c). Owner: \"health and mana orb\". Remaining hits are the stat id `spirit` / `spirit_flat` (kept so saves and tree data load; displayed as Mana) and the phrase \"in the spirit of\"."
   },
   {
    "term": "spirits",
@@ -99929,29 +99167,6 @@
    "verdict": "keep",
    "after": null,
    "note": null
-  },
-  {
-   "term": "spiritwork",
-   "surfaces": [
-    "Spiritwork"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (1)"
-   ],
-   "context": "| Spiritwork | 25 | Bone, soot, ash, smoke, carved masks, quiet ritual objects. |",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": null,
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "spit",
@@ -101804,22 +101019,18 @@
     "Steel"
    ],
    "count": {
-    "wizard": 8,
-    "arpg": 5
+    "wizard": 0,
+    "arpg": 1
    },
-   "total": 13,
+   "total": 1,
    "kinds": [
-    "game",
-    "label"
+    "game"
    ],
-   "fileCount": 4,
+   "fileCount": 1,
    "files": [
-    "wizard:tools/spellforge/index.html (4)",
-    "wizard:tools/spellforge/catalog.json (4)",
-    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (4)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-recipes.json (1)"
    ],
-   "context": "Steel splinters",
+   "context": "Steel light",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -101843,6 +101054,29 @@
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/aura-lab.json (1)"
    ],
    "context": "Steeled",
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": null
+  },
+  {
+   "term": "steer",
+   "surfaces": [
+    "Steer"
+   ],
+   "count": {
+    "wizard": 1,
+    "arpg": 0
+   },
+   "total": 1,
+   "kinds": [
+    "doc"
+   ],
+   "fileCount": 1,
+   "files": [
+    "wizard:tools/rpg_inventory/README.md (1)"
+   ],
+   "context": "| Pigments, Guaranteed X Brand | PoE2 Omens, Essences | Steer or guarantee which brand the next craft adds |",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -103104,6 +102338,30 @@
    "note": null
   },
   {
+   "term": "stud",
+   "surfaces": [
+    "Stud"
+   ],
+   "count": {
+    "wizard": 2,
+    "arpg": 0
+   },
+   "total": 2,
+   "kinds": [
+    "doc"
+   ],
+   "fileCount": 2,
+   "files": [
+    "wizard:tools/rpg_inventory/core/expansion_ready/offhands.tsv (1)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
+   ],
+   "context": "Red-Stud Boss Shield",
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "replacement word (2026-11-09)"
+  },
+  {
    "term": "studded",
    "surfaces": [
     "Studded"
@@ -104103,6 +103361,29 @@
    "note": null
   },
   {
+   "term": "superseded",
+   "surfaces": [
+    "Superseded"
+   ],
+   "count": {
+    "wizard": 1,
+    "arpg": 0
+   },
+   "total": 1,
+   "kinds": [
+    "doc"
+   ],
+   "fileCount": 1,
+   "files": [
+    "wizard:tools/rpg_inventory/DESIGN.md (1)"
+   ],
+   "context": "> **Superseded in part (2026-11-09).** Crafting now follows the provisional",
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English (2026-11-09 review)"
+  },
+  {
    "term": "supersedes",
    "surfaces": [
     "Supersedes"
@@ -104326,29 +103607,6 @@
     "wizard:docs/visual/FRAMEPACK_RESEARCH.md (1)"
    ],
    "context": "WIZARD-SURGE-011 deliverable. Read-only audit of the five archive",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": null
-  },
-  {
-   "term": "surrender",
-   "surfaces": [
-    "Surrender's"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/README.md (1)"
-   ],
-   "context": "influences: The Surrender's \"recover Life when you Block\", on-kill momentum",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -104896,25 +104154,25 @@
     "Sword"
    ],
    "count": {
-    "wizard": 24,
+    "wizard": 30,
     "arpg": 6
    },
-   "total": 30,
+   "total": 36,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 14,
+   "fileCount": 15,
    "files": [
     "wizard:tools/spellforge/index.html (5)",
     "wizard:tools/spellforge/catalog.json (5)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (5)",
     "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (4)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (4)",
+    "wizard:tools/rpg_inventory/core/expansion_ready/weapons.tsv (3)",
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (2)",
-    "wizard:tools/rpg_inventory/core/verdigris-pack.js (1)",
-    "wizard:tools/gui_framekit/game/character.js (1)",
-    "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (1)"
+    "wizard:tools/rpg_inventory/core/verdigris-pack.js (1)"
    ],
    "context": "Sickle-sword",
    "origin": "poe",
@@ -106394,10 +105652,10 @@
     "TEST"
    ],
    "count": {
-    "wizard": 23,
+    "wizard": 24,
     "arpg": 7
    },
-   "total": 30,
+   "total": 31,
    "kinds": [
     "doc",
     "game",
@@ -106408,11 +105666,11 @@
     "wizard:docs/MODULE_CAPABILITY_AUDIT.md (7)",
     "wizard:tools/sokoban/test-core.js (6)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgPlaytestAccount.cs (5)",
+    "wizard:tools/rpg_inventory/item.html (2)",
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (2)",
     "wizard:tools/rpg_inventory/index.html (1)",
     "wizard:dashboard.js (1)",
-    "wizard:tools/rpg_inventory/core/playground.html (1)",
-    "wizard:tools/rpg_inventory/item.html (1)"
+    "wizard:tools/rpg_inventory/core/playground.html (1)"
    ],
    "context": "Test Character",
    "origin": "plain",
@@ -106705,19 +105963,18 @@
   {
    "term": "that",
    "surfaces": [
-    "That",
-    "That's"
+    "That"
    ],
    "count": {
-    "wizard": 32,
+    "wizard": 30,
     "arpg": 34
    },
-   "total": 66,
+   "total": 64,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 24,
+   "fileCount": 22,
    "files": [
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/ArpgModel.cs (9)",
     "wizard:tools/spellforge/index.html (7)",
@@ -106742,16 +105999,16 @@
     "the"
    ],
    "count": {
-    "wizard": 1595,
+    "wizard": 1592,
     "arpg": 577
    },
-   "total": 2172,
+   "total": 2169,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 103,
+   "fileCount": 101,
    "files": [
     "wizard:tools/spellforge/index.html (540)",
     "wizard:tools/spellforge/catalog.json (527)",
@@ -106806,18 +106063,18 @@
     "Theme"
    ],
    "count": {
-    "wizard": 28,
+    "wizard": 29,
     "arpg": 1
    },
-   "total": 29,
+   "total": 30,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 14,
+   "fileCount": 16,
    "files": [
-    "wizard:tools/rpg_inventory/README.md (5)",
+    "wizard:tools/rpg_inventory/README.md (4)",
     "wizard:tools/cartographer/terrain-lab.html (3)",
     "wizard:tools/rpg_inventory/core/vesselforge.js (3)",
     "wizard:tools/cartographer/README.md (3)",
@@ -106839,10 +106096,10 @@
     "Themes"
    ],
    "count": {
-    "wizard": 21,
+    "wizard": 22,
     "arpg": 0
    },
-   "total": 21,
+   "total": 22,
    "kinds": [
     "doc",
     "game"
@@ -106851,8 +106108,8 @@
    "files": [
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (4)",
     "wizard:tools/cartographer/README.md (4)",
+    "wizard:tools/rpg_inventory/README.md (4)",
     "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (3)",
-    "wizard:tools/rpg_inventory/README.md (3)",
     "wizard:tools/geometric_skilltree/README.md (2)",
     "wizard:tools/rpg_inventory/DESIGN.md (2)",
     "wizard:tools/cartographer/index.html (1)",
@@ -106896,15 +106153,16 @@
     "There's"
    ],
    "count": {
-    "wizard": 5,
+    "wizard": 7,
     "arpg": 0
    },
-   "total": 5,
+   "total": 7,
    "kinds": [
     "doc"
    ],
-   "fileCount": 5,
+   "fileCount": 6,
    "files": [
+    "wizard:tools/rpg_inventory/README.md (2)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
     "wizard:docs/MODULE_CAPABILITY_AUDIT.md (1)",
     "wizard:docs/WIZARD_STANDARDIZATION_STATUS.md (1)",
@@ -106954,15 +106212,15 @@
     "They"
    ],
    "count": {
-    "wizard": 51,
+    "wizard": 52,
     "arpg": 14
    },
-   "total": 65,
+   "total": 66,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 19,
+   "fileCount": 20,
    "files": [
     "wizard:tools/spellforge/index.html (14)",
     "wizard:tools/spellforge/catalog.json (14)",
@@ -106973,7 +106231,7 @@
     "wizard:tools/rpg_inventory/core/ANCIENT-EQUIPMENT-TAXONOMY.md (2)",
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (2)"
    ],
-   "context": "Shock collars stand perpendicular to the flight line at the muzzle, the pierce point and two mid-air points. They are four quads packed into",
+   "context": "They carried no items.",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -107159,10 +106417,10 @@
     "THIS"
    ],
    "count": {
-    "wizard": 133,
+    "wizard": 131,
     "arpg": 20
    },
-   "total": 153,
+   "total": 151,
    "kinds": [
     "doc",
     "game"
@@ -107173,10 +106431,10 @@
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (9)",
     "wizard:tools/rpg_inventory/AGENTS.md (7)",
     "wizard:tools/rpg_inventory/core/STYLE-EXPERIMENTS.md (7)",
-    "wizard:tools/rpg_inventory/core/vesselforge.js (6)",
     "wizard:tools/cartographer/RESEARCH.md (6)",
     "wizard:docs/MODULE_CAPABILITY_AUDIT.md (5)",
-    "wizard:tools/rpg_inventory/core/LOADOUT-EXTRACTION.md (5)"
+    "wizard:tools/rpg_inventory/core/LOADOUT-EXTRACTION.md (5)",
+    "wizard:tools/rpg_inventory/core/vesselforge.js (4)"
    ],
    "context": "This passive grants nothing",
    "origin": "plain",
@@ -107350,15 +106608,15 @@
     "Three"
    ],
    "count": {
-    "wizard": 52,
+    "wizard": 53,
     "arpg": 16
    },
-   "total": 68,
+   "total": 69,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 16,
+   "fileCount": 17,
    "files": [
     "wizard:tools/spellforge/index.html (18)",
     "wizard:tools/spellforge/catalog.json (16)",
@@ -107821,19 +107079,18 @@
     "Tiers"
    ],
    "count": {
-    "wizard": 5,
+    "wizard": 4,
     "arpg": 0
    },
-   "total": 5,
+   "total": 4,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 3,
+   "fileCount": 2,
    "files": [
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (2)",
-    "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (2)",
-    "wizard:tools/rpg_inventory/README.md (1)"
+    "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (2)"
    ],
    "context": "Tiers unlock by item level as in the game (typically ilvl 1 / 20-30 / 50-60); tier pick weights 10/5/2 (Itemization.TierWeights). A base's b",
    "origin": "poe",
@@ -108328,16 +107585,16 @@
     "TO"
    ],
    "count": {
-    "wizard": 23,
+    "wizard": 24,
     "arpg": 9
    },
-   "total": 32,
+   "total": 33,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 21,
+   "fileCount": 22,
    "files": [
     "wizard:tools/rpg_inventory/core/post-calib-wave2-taxonomy.js (4)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgZoneMap.cs (4)",
@@ -109844,6 +109101,31 @@
    "note": null
   },
   {
+   "term": "transmutation",
+   "surfaces": [
+    "Transmutation"
+   ],
+   "count": {
+    "wizard": 3,
+    "arpg": 0
+   },
+   "total": 3,
+   "kinds": [
+    "doc"
+   ],
+   "fileCount": 3,
+   "files": [
+    "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)",
+    "wizard:tools/rpg_inventory/core/README.md (1)"
+   ],
+   "context": "| Add Modifier | Transmutation + Augmentation / Exalted Orb | Turns a Normal item Magic and adds one modifier; otherwise adds one modifier w",
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": null
+  },
+  {
    "term": "transmutations",
    "surfaces": [
     "Transmutations"
@@ -110455,7 +109737,7 @@
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgHud.cs (2)",
     "wizard:tools/geometric_skilltree/index.html (1)",
     "wizard:tools/rpg_inventory/index.html (1)",
-    "wizard:tools/rpg_inventory/README.md (1)",
+    "wizard:tools/rpg_inventory/core/vesselforge.js (1)",
     "wizard:tools/rpg_inventory/core/ANCIENT-EQUIPMENT-TAXONOMY.md (1)"
    ],
    "context": "trophies",
@@ -110471,22 +109753,22 @@
     "Trophy"
    ],
    "count": {
-    "wizard": 35,
+    "wizard": 31,
     "arpg": 8
    },
-   "total": 43,
+   "total": 39,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 18,
+   "fileCount": 17,
    "files": [
     "wizard:tools/rpg_inventory/core/vesselforge.js (5)",
     "wizard:tools/rpg_inventory/index.html (4)",
-    "wizard:tools/rpg_inventory/core/playground.html (4)",
     "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (4)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/inventory-parity.json (4)",
-    "wizard:tools/rpg_inventory/DESIGN.md (3)",
+    "wizard:tools/rpg_inventory/core/playground.html (2)",
+    "wizard:tools/rpg_inventory/DESIGN.md (2)",
     "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (2)",
     "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (2)"
    ],
@@ -110904,18 +110186,21 @@
     "Turns"
    ],
    "count": {
-    "wizard": 6,
+    "wizard": 8,
     "arpg": 3
    },
-   "total": 9,
+   "total": 11,
    "kinds": [
+    "doc",
     "game"
    ],
-   "fileCount": 3,
+   "fileCount": 5,
    "files": [
     "wizard:tools/spellforge/index.html (3)",
     "wizard:tools/spellforge/catalog.json (3)",
-    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (3)"
+    "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (3)",
+    "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)"
    ],
    "context": "Turns the air around a target into poison gas for one turn, poisoning it.",
    "origin": "plain",
@@ -110950,9 +110235,9 @@
    "note": null
   },
   {
-   "term": "turtleshell",
+   "term": "turtle",
    "surfaces": [
-    "Turtleshell"
+    "Turtle"
    ],
    "count": {
     "wizard": 1,
@@ -110966,11 +110251,11 @@
    "files": [
     "wizard:tools/rpg_inventory/core/targets.tsv (1)"
    ],
-   "context": "Turtleshell Shield",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Turtle Shell",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+   "context": "Turtle Shell Shield",
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": null
   },
   {
    "term": "tusk",
@@ -111235,25 +110520,25 @@
     "Two"
    ],
    "count": {
-    "wizard": 74,
+    "wizard": 78,
     "arpg": 24
    },
-   "total": 98,
+   "total": 102,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 33,
+   "fileCount": 32,
    "files": [
     "wizard:tools/spellforge/index.html (20)",
     "wizard:tools/spellforge/catalog.json (18)",
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (18)",
+    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (6)",
     "wizard:tools/rpg_inventory/core/item-types-by-skill-zone.json (4)",
-    "wizard:tools/rpg_inventory/core/BASE-DESIGN.md (4)",
     "wizard:tools/rpg_inventory/core/expansion_ready/armor_helms-notes.md (3)",
-    "wizard:tools/rpg_inventory/core/verdigris-pack.js (2)",
-    "wizard:tools/gui_framekit/game/character.js (2)"
+    "wizard:tools/rpg_inventory/core/targets.tsv (3)",
+    "wizard:tools/rpg_inventory/core/verdigris-pack.js (2)"
    ],
    "context": "Two-handed Axe",
    "origin": "plain",
@@ -112201,7 +111486,7 @@
    "files": [
     "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (4)"
    ],
-   "context": "| Uniques / upgraded relics | 100 | 25 per theme: slaughter, warding, spiritwork, wayfaring. |",
+   "context": "| Uniques / upgraded relics | 100 | 25 per bond theme: Kill Bonuses, Block and Ward, Mana, Movement. |",
    "origin": "poe",
    "verdict": "keep",
    "after": null,
@@ -112998,16 +112283,17 @@
     "game",
     "label"
    ],
-   "fileCount": 6,
+   "fileCount": 7,
    "files": [
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/Itemization.cs (3)",
     "wizard:tools/rpg_inventory/DESIGN.md (2)",
-    "wizard:tools/rpg_inventory/README.md (2)",
+    "wizard:tools/rpg_inventory/core/playground.html (1)",
     "wizard:tools/spellforge/index.html (1)",
     "wizard:tools/spellforge/catalog.json (1)",
-    "wizard:docs/CRAFTING-PROVISIONAL.md (1)"
+    "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)"
    ],
-   "context": "Upgrade ally",
+   "context": "Upgrade to Rare",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -113019,20 +112305,22 @@
     "Upgraded"
    ],
    "count": {
-    "wizard": 3,
+    "wizard": 4,
     "arpg": 0
    },
-   "total": 3,
+   "total": 4,
    "kinds": [
+    "doc",
     "game",
     "label"
    ],
-   "fileCount": 2,
+   "fileCount": 3,
    "files": [
-    "wizard:tools/rpg_inventory/index.html (2)",
-    "wizard:tools/rpg_inventory/core/vesselforge.js (1)"
+    "wizard:tools/rpg_inventory/core/vesselforge.js (2)",
+    "wizard:tools/rpg_inventory/DESIGN.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)"
    ],
-   "context": "Upgraded items and the item with the most bond history pass to the next character. Everything else is lost.",
+   "context": "Upgraded to Rare. Added brand: ${brandText(brand)}",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -113899,23 +113187,26 @@
     "Values"
    ],
    "count": {
-    "wizard": 4,
+    "wizard": 8,
     "arpg": 1
    },
-   "total": 5,
+   "total": 9,
    "kinds": [
     "doc",
     "label"
    ],
-   "fileCount": 5,
+   "fileCount": 8,
    "files": [
+    "wizard:tools/rpg_inventory/DESIGN.md (2)",
+    "wizard:tools/rpg_inventory/core/playground.html (1)",
     "wizard:tools/slerp/index.html (1)",
     "wizard:tools/wizard_orbs/index.html (1)",
     "wizard:tools/wizard_orbs/src/template.html (1)",
     "wizard:docs/CRAFTING-PROVISIONAL.md (1)",
+    "wizard:tools/rpg_inventory/README.md (1)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Core/Itemization.cs (1)"
    ],
-   "context": "Copy Hex Values",
+   "context": "Reroll Values",
    "origin": "plain",
    "verdict": "keep",
    "after": null,
@@ -114499,29 +113790,6 @@
    "note": null
   },
   {
-   "term": "venturing",
-   "surfaces": [
-    "Venturing"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/README.md (1)"
-   ],
-   "context": "Venturing forth generates encounters, each weighted toward one or more themes.",
-   "origin": "plain",
-   "verdict": "keep",
-   "after": null,
-   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
-  },
-  {
    "term": "verb",
    "surfaces": [
     "Verb"
@@ -114955,31 +114223,31 @@
   {
    "term": "vessel",
    "surfaces": [
-    "vessel",
-    "Vessel"
+    "Vessel",
+    "vessel"
    ],
    "count": {
-    "wizard": 76,
+    "wizard": 64,
     "arpg": 4
    },
-   "total": 80,
+   "total": 68,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 28,
+   "fileCount": 24,
    "files": [
     "wizard:tools/rpg_inventory/core/targets-600.tsv (12)",
     "wizard:tools/rpg_inventory/core/ANCIENT-EQUIPMENT-TAXONOMY.md (11)",
     "wizard:tools/rpg_inventory/core/expansion_ready/jewelry_relics.tsv (7)",
     "wizard:tools/rpg_inventory/core/LOADOUT-EXTRACTION.md (5)",
-    "wizard:tools/rpg_inventory/DESIGN.md (4)",
-    "wizard:tools/rpg_inventory/README.md (4)",
     "wizard:tools/rpg_inventory/core/expansion_ready/wave-01.tsv (4)",
-    "wizard:tools/arcane_lattice/README.md (3)"
+    "wizard:tools/arcane_lattice/README.md (3)",
+    "wizard:tools/rpg_inventory/core/expansion_ready/offhands-supply-map.tsv (3)",
+    "wizard:tools/rpg_inventory/core/expansion_ready/offhands.tsv (3)"
    ],
-   "context": "vessel",
+   "context": "Vessel",
    "origin": "owner",
    "verdict": "keep",
    "after": null,
@@ -114992,15 +114260,15 @@
     "Vessels"
    ],
    "count": {
-    "wizard": 24,
+    "wizard": 23,
     "arpg": 2
    },
-   "total": 26,
+   "total": 25,
    "kinds": [
     "doc",
     "game"
    ],
-   "fileCount": 18,
+   "fileCount": 17,
    "files": [
     "wizard:tools/rpg_inventory/core/GENERATION-PLAN.md (3)",
     "wizard:docs/WIZARD_STANDARDIZATION_STATUS.md (2)",
@@ -116525,10 +115793,10 @@
     "War"
    ],
    "count": {
-    "wizard": 99,
+    "wizard": 100,
     "arpg": 18
    },
-   "total": 117,
+   "total": 118,
    "kinds": [
     "doc",
     "game",
@@ -116552,29 +115820,6 @@
    "note": null
   },
   {
-   "term": "warbanner",
-   "surfaces": [
-    "Warbanner"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/core/INVENTORY-FOOTPRINTS.md (1)"
-   ],
-   "context": "| Warbanner or weapon-length standard | 2x4 | 1x4 for a narrow pole with a compact finial | tall portrait |",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "War banner",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
-  },
-  {
    "term": "warclub",
    "surfaces": [
     "Warclub"
@@ -116596,29 +115841,6 @@
    "verdict": "keep",
    "after": null,
    "note": "Real weapon name (war club)."
-  },
-  {
-   "term": "warcrown",
-   "surfaces": [
-    "Warcrown"
-   ],
-   "count": {
-    "wizard": 1,
-    "arpg": 0
-   },
-   "total": 1,
-   "kinds": [
-    "doc"
-   ],
-   "fileCount": 1,
-   "files": [
-    "wizard:tools/rpg_inventory/core/targets.tsv (1)"
-   ],
-   "context": "Feathered Warcrown",
-   "origin": "agent-invented",
-   "verdict": "purge",
-   "after": "Crown",
-   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
   },
   {
    "term": "warcry",
@@ -116659,7 +115881,7 @@
     "game",
     "label"
    ],
-   "fileCount": 47,
+   "fileCount": 46,
    "files": [
     "wizard:tools/geometric_skilltree/assets/tree-data.js (52)",
     "arpg:the ARPG/Assets/ARPG/Resources/Wizard/tree-data.js.txt (52)",
@@ -117506,16 +116728,18 @@
     "Weight"
    ],
    "count": {
-    "wizard": 1,
+    "wizard": 3,
     "arpg": 0
    },
-   "total": 1,
+   "total": 3,
    "kinds": [
     "doc"
    ],
-   "fileCount": 1,
+   "fileCount": 3,
    "files": [
-    "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (1)"
+    "wizard:docs/ITEM-TYPES-BY-SKILL-ZONE.md (1)",
+    "wizard:tools/rpg_inventory/core/expansion_ready/auxiliary.tsv (1)",
+    "wizard:tools/rpg_inventory/core/targets-600.tsv (1)"
    ],
    "context": "| Mod | Label | P/S | Stat | Status | Slots | Tags | Tiers (ilvl: min-max) | Weight | Bases |",
    "origin": "plain",
@@ -117856,16 +117080,16 @@
     "when"
    ],
    "count": {
-    "wizard": 31,
+    "wizard": 34,
     "arpg": 6
    },
-   "total": 37,
+   "total": 40,
    "kinds": [
     "doc",
     "game",
     "label"
    ],
-   "fileCount": 17,
+   "fileCount": 19,
    "files": [
     "wizard:tools/spellforge/index.html (5)",
     "wizard:tools/spellforge/catalog.json (5)",
@@ -117873,8 +117097,8 @@
     "arpg:the ARPG/Assets/ARPG/Resources/VFX/spellforge-catalog.json (5)",
     "wizard:tools/rpg_inventory/AGENTS.md (3)",
     "wizard:tools/geometric_skilltree/NORTH-STAR.md (2)",
-    "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (2)",
-    "wizard:tools/geometric_skilltree/assets/tree-data.js (1)"
+    "wizard:tools/rpg_inventory/README.md (2)",
+    "wizard:tools/rpg_inventory/core/ASSET-BRIEF.md (2)"
    ],
    "context": "When a Ignite on an enemy expires, gain 15 Armour for four seconds (design text)",
    "origin": "plain",
@@ -120073,17 +119297,17 @@
     "XP"
    ],
    "count": {
-    "wizard": 10,
+    "wizard": 9,
     "arpg": 3
    },
-   "total": 13,
+   "total": 12,
    "kinds": [
     "doc",
     "game"
    ],
    "fileCount": 7,
    "files": [
-    "wizard:tools/rpg_inventory/README.md (6)",
+    "wizard:tools/rpg_inventory/README.md (5)",
     "arpg:the ARPG/Assets/ARPG/Scripts/Runtime/ArpgInventoryPane.cs (2)",
     "wizard:tools/gui_framekit/game/core.js (1)",
     "wizard:tools/rpg_inventory/core/vesselforge.js (1)",

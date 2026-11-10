@@ -9,7 +9,7 @@ target is roughly 500-600 usable inventory images.
 | Bucket | Count | Notes |
 |---|---:|---|
 | Equipment base items | 420 | Named base ladders across weapons, armour, off-hands, jewellery, spell gear, and relics. The former currency/crafting-art budget is redistributed here, mostly to non-weapon slots. |
-| Uniques / upgraded relics | 100 | 25 per theme: slaughter, warding, spiritwork, wayfaring. |
+| Uniques / upgraded relics | 100 | 25 per bond theme: Kill Bonuses, Block and Ward, Mana, Movement. |
 | Animal parts / fragments / hunt relics | 40 | Monster parts, ancestor fragments, shrine offerings. |
 | Sets / faction variants | 40 | Small 3-5 piece visual families, not full material grids. |
 | UI / frame / support art | 20 | Frames, benches, sockets, dividers, vendor and inventory accents. |
@@ -68,7 +68,7 @@ Generate after the base vocabulary exists.
 |---|---:|---|
 | Kill Bonuses | 25 | Red ochre, chipped edges, tooth/tusk trophies, but not gore soup. |
 | Block and Ward | 25 | Shields, knots, blue-white mineral, heavy geometry, oath marks. |
-| Spiritwork | 25 | Bone, soot, ash, smoke, carved masks, quiet ritual objects. |
+| Mana | 25 | Bone, soot, ash, smoke, carved masks, quiet ritual objects. |
 | Movement | 25 | Sandals, boots, travel belts, map cases, staff heads, travel-worn gear. |
 
 Uniques should alter silhouette, not just add glow. Example patterns: an

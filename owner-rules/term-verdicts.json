@@ -379,7 +379,7 @@
    "origin": "agent-invented",
    "verdict": "purge",
    "after": "Mana",
-   "note": "Decided 2026-11-08. Names the resource every action spends (verdigris-stats.js label Spirit; tree-data \"+12 to Spirit\"); PoE2 Spirit is a reservation budget, so fails (c). Owner: \"health and mana orb\"."
+   "note": "Decided 2026-11-08. Names the resource every action spends (verdigris-stats.js label Spirit; tree-data \"+12 to Spirit\"); PoE2 Spirit is a reservation budget, so fails (c). Owner: \"health and mana orb\". Remaining hits are the stat id `spirit` / `spirit_flat` (kept so saves and tree data load; displayed as Mana) and the phrase \"in the spirit of\"."
   },
   "guard": {
    "origin": "plain",
@@ -2731,13 +2731,13 @@
    "origin": "agent-invented",
    "verdict": "purge",
    "after": "guaranteed-tag brands",
-   "note": "verdigris-pack.js omens table; see \"omen\"."
+   "note": "verdigris-pack.js omens table; see \"omen\". Remaining hits are PoE2 Omens, the PoE analogue named in CRAFTING-PROVISIONAL.md and README.md."
   },
   "awakened": {
    "origin": "agent-invented",
    "verdict": "purge",
    "after": "Rare / Upgraded",
-   "note": "PoE Awakened means awakened gems; here it named a rare (ARPG) or an upgraded item (WIZARD)"
+   "note": "PoE Awakened means awakened gems; here it named a rare (ARPG) or an upgraded item (WIZARD) Remaining hits: the saved-item field `awakened` in vesselforge.js (kept so saves load) and PoE's own \"Awakened\" gems in REFERENCE-NOTES.md."
   },
   "awakening": {
    "origin": "agent-invented",
@@ -2770,7 +2770,7 @@
    "origin": "agent-invented",
    "verdict": "purge",
    "after": null,
-   "note": "README table row \"Kinship\".",
+   "note": "README table row \"Kinship\". Remaining hits name the removed mechanic in the \"removed\" lists of CRAFTING-PROVISIONAL.md and DESIGN.md.",
    "mechanic": "Bonds carry the shaper's archetype and work at half strength for a different archetype (vesselforge.js:84 estrangedFactor 0.5, :117-122 isEstranged). Agent addition."
   },
   "estranged": {
@@ -2784,7 +2784,7 @@
    "origin": "agent-invented",
    "verdict": "purge",
    "after": null,
-   "note": "index.html section \"Lineage\".",
+   "note": "index.html section \"Lineage\". Remaining hit names the removed mechanic in the \"removed\" list of CRAFTING-PROVISIONAL.md.",
    "mechanic": "Inheritance: \"When a bearer falls, awakened relics and the most-storied memento pass to the heir — estranged, unless the heir walks the same path\" (rpg_inventory/index.html:2398). Agent addition."
   },
   "atelier": {
@@ -5400,6 +5400,24 @@
    "verdict": "keep",
    "after": null,
    "note": "abbreviation in design docs (CDR cooldown recovery, RT ray tracing) (2026-11-09 review)"
+  },
+  "metamods": {
+   "origin": "poe",
+   "verdict": "keep",
+   "after": null,
+   "note": "PoE crafting term (meta-crafting modifiers) in design notes (2026-11-09 review)"
+  },
+  "simulated": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English (2026-11-09 review)"
+  },
+  "superseded": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English (2026-11-09 review)"
   }
  },
  "proposalsMerged": {

@@ -327,22 +327,46 @@ Sources: owner-rules/rename-map.json (the map both repositories apply), purge-20
 - Arcane Lattice tool: generated spell epithets (Akashic, Vile, Pyre, Psyche …) and moral asides ("It hungers as it works …"); titles now say what the spell does.
 - Passive tree: four effect lines with no mechanic ("Road signs mean more to you than most", "The crows remember who fed them" …).
 
-## Invented mechanics flagged (not removed unless they do nothing)
+## Owner rulings of 2026-11-09, applied
 
-- **Removed (did nothing):** two animal-part completion bonuses ("You cannot be surprised", "Once a day, reroll one omen"), the empty spear implicit, the unused skilltree-content.json.
-- **Item Rarity (was Goods Found):** summed on the sheet, but no loot code reads it in WIZARD or the ARPG. Keep as a planned PoE stat, or remove.
-- **Crafting uses (was Patience):** per-item crafting budget spent by every bench action (WIZARD only; the ARPG notes it is not implemented).
-- **Material upgrade (was Firing the kiln):** gamble that raises the material tier, locks a slot or breaks the item.
-- **Locked slots (was scars):** removing a bond permanently locks its slot.
-- **Class bonds (was kinship/estrangement):** bonds work at half strength for another class.
-- **Upgraded items (was awakening):** three tier-III bonds give an item a theme power; set bonus for 2-3 upgraded items (was Panoply).
-- **Inheritance (was Lineage):** upgraded items pass to the next character on death.
-- **Pigments and guaranteed brands (were omens):** steer which brand the bench adds.
-- **Animal parts (were trophies):** pieces from fights complete an attachable part.
-- **Simulated fights (was Venture Forth):** demo button rolling random fights and bond XP.
-- **Exclusive keystone (was Sign):** only one per character.
-- **Bond families (ARPG):** bond XP from surrounded kills, Ward blocks and rare kills.
-- **Rule 13 decoration still present:** rune and heptagram layers in the ARPG Aura Lab recipes (aura-lab.json); needs a visual pass, not a rename.
+Owner: crafting follows "the blueprint that PoE and PoE 2 laid out", adapted, with brands and bonds instead of prefixes and suffixes, as a temporary system tuned in playtest; "no pre-made set or unique items"; items tied to houses and found when a character permadies; "no runes and no hexagons and other stuff for auras"; "Just no iron for now"; riveted mail does not fit. Recorded as owner rules 12, 13 and 52. Spec: docs/CRAFTING-PROVISIONAL.md.
+
+**Crafting and loot (WIZARD item crafting and the ARPG):**
+- Crafting uses (was Patience) → removed
+- Material upgrade gamble (was the kiln) → removed
+- Locked slots (was scars) → removed
+- Half-strength bonds for another class (was kinship) → removed
+- Set bonus for upgraded items (was Panoply) → removed
+- Automatic inheritance on death (was Lineage) → house recovery: everything a fallen character carried stays at the death site for later characters of the house (the ARPG already did this; WIZARD now matches)
+- Pre-made Mana set (wand, buckler) and unique rod (ARPG) → no longer drop; saved pieces load as ordinary magic or rare items
+- Upgraded item (three bonds at Bond III) → kept: the one way an item becomes special, named after the character who raised it
+- Rarity → Normal / Magic / Rare as in PoE: Rare holds up to four modifiers, at most two brands and up to three bonds
+- Currencies → Add Modifier (turns a Normal item Magic, or adds one modifier), Upgrade to Rare, Reroll Values, Remove Last Modifier; pigments and Guaranteed X Brand steer the brand
+- Item Rarity (did nothing) → raises the share of Magic and Rare drops in WIZARD, and of magic drops in the ARPG
+
+**Iron (rule 12):**
+- Hammered Iron (skymetal) → retired with Riveted Mail; no drops, no upgrades into either; old saves still load
+- Account creator → Hammered Iron and its tier-5 roll removed; Macuahuitl → Obsidian-edged Club, Crest → Cap
+- Art pipeline → 72 iron, steel or glass targets set to `hold_owner_rule`; the validator rejects any such row under a generate action
+- Spell Effects Lab and the ARPG effect catalog → iron and steel in effect names, tags and descriptions become metal (112 strings in WIZARD, 60 in the ARPG; ids and shaders unchanged)
+
+**Auras (rule 13, ARPG aura-lab.json):**
+- Blood runes → Ring; Charged runes → Charged rings; Heptagram → Ring; Blight heptagram → Blight ring; Hex ward → Ward ring; Frost lattice (hexagon grid) → Frost ring; Rage runes → Rage rings
+- Rune, heptagram and hexagon-grid drawings → plain rings; the stun stars layer → removed
+
+**Art-pipeline coinages (rule 7):**
+- Ivory-Butt Broadblade → Ivory-Butt Bronze Dagger; Copper Forksword → Forked Copper Sword; Flange-Hilt Leafblade → Flange-Hilt Leaf Sword
+- Clayweight Trigger Case → Clay Weight Trigger Case; Snareline Packet → Snare Packet; Blackline Trap Case → Dark Hide Trap Case
+- Oxhide Bodyshield → Oxhide Body Shield; Turtleshell Shield → Turtle Shell Shield; Roundshield → Round Shield; Redglass Boss Shield → Red-Stud Boss Shield
+- Feathered Warcrown → Feathered Crown; Nightglass-Inset Mirror → Obsidian-Inset Mirror; Meteoric Ringblade → Ring-Pommel Sword; Rhomphaia Greatblade → Rhomphaia
+- Meteor-Cuff Footbags → Cuffed Foot Bags; Copper Greatclub → Copper Two-handed Club; Obsidian Shortblade → Obsidian Short Blade; Warbanner → War banner; Silkroad → Silk Road
+- Arcane Lattice "Hyperdimensional Spellcrafter" → Spell Builder
+
+**Other fixes:**
+- Bondwright's Primer drawer quote (invented flavour) → removed; "Brands are seared…" → "Brands are crafted. Bonds grow from use."
+- WIZARD checks that were failing → fixed: the dashboard module grid is back above the fold at 1280×800; identity checks look for "Systems Laboratory" (rule 47); a stale evidence anchor fixed
+
+Still open as an owner choice (no rule settles it): which rarity, if any, earns a loot beam in the ARPG (beams only ever marked the removed set and unique drops).
 
 ## Kept because the owner introduced it
 
@@ -354,10 +378,10 @@ Ward, Mana ("health and mana orb"), brands and bonds, crafting and enchantments,
 - "Blood", "ember", "clay", "crest", "river", "storm", "guard" stay only as literal objects (hit spatter, embers in a fire, a clay liver model, a river pearl, a prison guard). The lint bans them as names of mechanics in game text.
 - Root Club stays (the owner once wrote "root ball", but did not introduce it).
 - Currencies follow the ARPG's plain style (Add Modifier …); the PoE names (Regal Orb, Divine Orb …) are noted in term-proposals.json if preferred.
-- Kept pending an era ruling (rule 12): Hammered Iron, Riveted Mail (retired from drops), Macuahuitl renamed Obsidian-edged Club.
+- Era ruling applied 2026-11-09: Hammered Iron and Riveted Mail retired; Macuahuitl renamed Obsidian-edged Club.
 
 
 ## Where the check runs (2026-11-09)
 
 - WIZARD: `node scripts/wizard-lab.mjs verify` runs `owner-rules/lint.mjs wizard` on every run (quick and full). The test wrapper `owner-rules/wizard.test.mjs` is removed.
-- ARPG: the build script runs it. `SliceBuild.OwnerRules` runs `tools/sync-owner-rules.mjs --check` and `owner-rules/lint.mjs arpg` before every build (Build, BuildWindows, BuildBoth, BuildPreview) and refuses to build on any player-facing word outside GLOSSARY.md. This replaces Editor/OwnerRulesVerification.cs, which the deslop pass deletes with the test harness. Branch `claude/glossary-build`; it lands on main after the deslop pass.
+- ARPG: the build script runs it. `SliceBuild.OwnerRules` runs `tools/sync-owner-rules.mjs --check` and `owner-rules/lint.mjs arpg` before every build (Build, BuildWindows, BuildBoth, BuildPreview) and refuses to build on any player-facing word outside GLOSSARY.md. This replaces Editor/OwnerRulesVerification.cs, which the deslop pass deletes with the test harness. On ARPG main since 0f140f74.

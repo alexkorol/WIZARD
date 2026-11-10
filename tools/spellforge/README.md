@@ -18,7 +18,7 @@ Single-file WebGL2 laboratory for spell, aura, fire, atmosphere, item and HUD ef
 
 ## Verdigris use
 
-The ARPG (Unity) ships `Resources/VFX/spellforge-catalog.json` built from `catalog.json`, maps its spells to Spellforge effect ids, and carries an HLSL port of `lib.glsl` as `Shaders/Spellforge.hlsl`. The ARPG set (Spark, Shock Nova, Frost Nova, Frozen Orb, Arctic Armour, Geyser, Spiralling hammers, Righteous Fire, Fireball Volley, Meteor, Grasping Vines, Tornado, Blade Vortex, Corpse Explosion) is the shortlist for the skills system.
+The ARPG (Unity) ships `Resources/VFX/spellforge-catalog.json` built from `catalog.json`, maps its spells to Spell Effects Lab effect ids, and carries an HLSL port of `lib.glsl` as `Shaders/Spellforge.hlsl`. The ARPG set (Spark, Shock Nova, Frost Nova, Frozen Orb, Arctic Armour, Geyser, Spiralling hammers, Righteous Fire, Fireball Volley, Meteor, Grasping Vines, Tornado, Blade Vortex, Corpse Explosion) is the shortlist for the skills system.
 
 ## Limits
 

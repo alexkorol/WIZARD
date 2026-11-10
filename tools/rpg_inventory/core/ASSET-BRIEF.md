@@ -89,7 +89,7 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    fetishes, deity/frieze motifs, or named symbolic decoration. Use "plain
    leather", "dark leather", "plain cord", "simple stitched seams", "clean
    bronze", "raw dark iron", etc. Save strong color accents and ceremonial
-   trim for uniques, awakened relics, faction sets, or reviewed exceptions.
+   trim for upgraded items, faction sets, or reviewed exceptions.
 7. COMMIT FULLY TO EXOTIC MATERIALS (2026-07-06, Alexei — "full permission
    to step away from AI tropes and cliche fantasy constructs"). "X-inlaid
    Y" is a trope hedge: not jade-inlaid bronze greaves but greaves carved
@@ -413,7 +413,7 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
   heavy patina into ordinary base-item DESCs. Think thrice before adding any
   symbol at all. Use shape, silhouette, construction, and material as the base
   identity. Extreme wear, verdigris, grime, and overt symbolic flair are for
-  uniques/awakened relics only, or for an explicit reviewed exception.
+  upgraded items only, or for an explicit reviewed exception.
 - **No spiral motifs.** Spirals are overused. If a base needs ornament, prefer
   generic geometry: plain raised rims, concentric ridges, chevrons, punched
   dots/studs, or simple bands.
@@ -462,7 +462,7 @@ The notes below are retained as history. They overfit early concept art and
 caused base generations to drift into fake lore symbols, heavy patina, and
 grimy "Verdigris means every item is green" leakage. For base items, follow
 the 2026-07-07 rule above instead: generic, clean, silhouette-first. Use this
-ornament vocabulary only for uniques, awakened relics, faction sets, or rows
+ornament vocabulary only for upgraded items, faction sets, or rows
 explicitly reviewed as lore-heavy.
 
 The old wealth ladder is no longer valid for ordinary bases. Do not use the
@@ -480,7 +480,7 @@ For base rows, tier should read through silhouette and construction:
   a base item.
 
 Use gold, lapis, feathers, deity marks, patina, dyed leather, and elaborate
-ceremonial trim only for uniques, awakened relics, faction sets, or an
+ceremonial trim only for upgraded items, faction sets, or an
 explicitly reviewed exception.
 
 If a result still trends warm, regenerate once with "make the white balance

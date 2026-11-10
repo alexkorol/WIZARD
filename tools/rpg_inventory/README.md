@@ -136,9 +136,9 @@ Quest, Grim Dawn — see [DESIGN.md](DESIGN.md)):
   saves, `explainOdds()` (Craft-of-Exile transparency as API), structured
   `tooltip()` lines for any renderer.
 - **`core/verdigris-pack.js`** — the bronze-age content pack: flint→bone→
-  copper→bronze→obsidian→jade→skymetal→riveted-mail material ladder,
-  macuahuitl/atlatl/khopesh-flavored forms, Redhand/Shieldbearer/Ashspeaker/
-  Farwalker archetypes.
+  copper→bronze→obsidian→jade material ladder (Hammered Iron and Riveted Mail
+  retired: no iron, rule 12), period forms (obsidian-edged club, atlatl, khopesh)
+  and four bond themes: Kill Bonuses, Block and Ward, Mana, Movement.
 - **`core/verdigris-stats.js`** — zero-dependency UMD stat registry and combat
   sheet: five damage channels, attributes, layered mitigation, EHP profiles,
   and additive `increased` vs protected multiplicative `more` math. The passive
