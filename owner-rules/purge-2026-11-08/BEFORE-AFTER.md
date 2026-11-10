@@ -356,3 +356,8 @@ Ward, Mana ("health and mana orb"), brands and bonds, crafting and enchantments,
 - Currencies follow the ARPG's plain style (Add Modifier …); the PoE names (Regal Orb, Divine Orb …) are noted in term-proposals.json if preferred.
 - Kept pending an era ruling (rule 12): Hammered Iron, Riveted Mail (retired from drops), Macuahuitl renamed Obsidian-edged Club.
 
+
+## Where the check runs (2026-11-09)
+
+- WIZARD: `node scripts/wizard-lab.mjs verify` runs `owner-rules/lint.mjs wizard` on every run (quick and full). The test wrapper `owner-rules/wizard.test.mjs` is removed.
+- ARPG: the build script runs it. `SliceBuild.OwnerRules` runs `tools/sync-owner-rules.mjs --check` and `owner-rules/lint.mjs arpg` before every build (Build, BuildWindows, BuildBoth, BuildPreview) and refuses to build on any player-facing word outside GLOSSARY.md. This replaces Editor/OwnerRulesVerification.cs, which the deslop pass deletes with the test harness. Branch `claude/glossary-build`; it lands on main after the deslop pass.
