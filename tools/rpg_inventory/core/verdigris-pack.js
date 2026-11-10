@@ -21,10 +21,10 @@
     id: 'verdigris-1',
     name: 'Bronze Age item pack',
 
+    /* Crafting and drop numbers are provisional (docs/CRAFTING-PROVISIONAL.md);
+       rarity room and drop weights use the engine defaults in vesselforge.js. */
     settings: {
-      maxVessel: 6,
       tierMults: [1, 1.6, 2.2],
-      fireOutcomes: { ascend: 40, scar: 30, silent: 20, shatter: 10 },
     },
 
     /* Art produced under BASE-DESIGN ladder names resolves through these
@@ -58,31 +58,31 @@
       'hideshield_rivetmail',
     ],
 
-    /* ---------------- materials: the tech-fantasy ladder ---------------- */
+    /* ---------------- materials ---------------- */
     materials: {
-      flint:    { name: 'Flint',    tier: 1, statMult: 1.0, vessel: [2, 3], patience: [2, 3], dropWeight: 30, ascendsTo: null,
+      flint:    { name: 'Flint',    tier: 1, statMult: 1.0, dropWeight: 30,
                   weights: { blade: 1.4, blood: 1.2, ward: 0.6 } },
-      bone:     { name: 'Bone',     tier: 1, statMult: 0.9, vessel: [2, 4], patience: [2, 4], dropWeight: 25, ascendsTo: null,
+      bone:     { name: 'Bone',     tier: 1, statMult: 0.9, dropWeight: 25,
                   weights: { beast: 1.6, spirit: 1.3, ember: 0.5 } },
-      hide:     { name: 'Hide',     tier: 1, statMult: 0.9, vessel: [2, 3], patience: [3, 4], dropWeight: 30, ascendsTo: 'quilted',
+      hide:     { name: 'Hide',     tier: 1, statMult: 0.9, dropWeight: 30,
                   weights: { beast: 1.3, swift: 1.3, ward: 0.8 } },
-      quilted:  { name: 'Quilted',  tier: 2, statMult: 1.2, vessel: [2, 4], patience: [3, 5], dropWeight: 16, ascendsTo: 'bronzescale',
+      quilted:  { name: 'Quilted',  tier: 2, statMult: 1.2, dropWeight: 16,
                   weights: { ward: 1.3, life: 1.3, blade: 0.6 } },
-      copper:   { name: 'Copper',   tier: 2, statMult: 1.25, vessel: [2, 4], patience: [3, 5], dropWeight: 18, ascendsTo: 'bronze',
+      copper:   { name: 'Copper',   tier: 2, statMult: 1.25, dropWeight: 18,
                   weights: { river: 1.3, fortune: 1.3 } },
-      bronze:   { name: 'Bronze',   tier: 3, statMult: 1.6, vessel: [3, 5], patience: [4, 6], dropWeight: 9, ascendsTo: null,
+      bronze:   { name: 'Bronze',   tier: 3, statMult: 1.6, dropWeight: 9,
                   weights: { blade: 1.2, ward: 1.2, blunt: 1.2 } },
-      obsidian: { name: 'Obsidian', tier: 3, statMult: 1.55, vessel: [3, 5], patience: [2, 4], dropWeight: 8, ascendsTo: null,
+      obsidian: { name: 'Obsidian', tier: 3, statMult: 1.55, dropWeight: 8,
                   weights: { blade: 1.8, blood: 1.8, ward: 0.4 } },
-      jade:     { name: 'Jade',     tier: 4, statMult: 1.7, vessel: [4, 5], patience: [4, 6], dropWeight: 4, ascendsTo: null,
+      jade:     { name: 'Jade',     tier: 4, statMult: 1.7, dropWeight: 4,
                   weights: { spirit: 1.8, ward: 1.5, blood: 0.5 } },
-      amber:    { name: 'Amber',    tier: 4, statMult: 1.65, vessel: [4, 5], patience: [4, 6], dropWeight: 4, ascendsTo: null,
+      amber:    { name: 'Amber',    tier: 4, statMult: 1.65, dropWeight: 4,
                   weights: { ember: 1.7, fortune: 1.5, spirit: 1.3 } },
-      bronzescale: { name: 'Bronze-scale', tier: 4, statMult: 1.9, vessel: [4, 5], patience: [4, 6], dropWeight: 3, ascendsTo: null,
+      bronzescale: { name: 'Bronze-scale', tier: 4, statMult: 1.9, dropWeight: 3,
                   weights: { ward: 1.6, life: 1.3 } },
-      skymetal: { name: 'Hammered Iron', tier: 5, statMult: 2.3, vessel: [4, 6], patience: [5, 7], dropWeight: 1, ascendsTo: null,
+      skymetal: { name: 'Hammered Iron', tier: 5, statMult: 2.3, dropWeight: 1,
                   weights: { blade: 1.4, spirit: 1.4, ember: 1.3 } },
-      rivetmail: { name: 'Riveted Mail', tier: 6, statMult: 2.6, vessel: [5, 6], patience: [5, 8], dropWeight: 0.3, ascendsTo: null,
+      rivetmail: { name: 'Riveted Mail', tier: 6, statMult: 2.6, dropWeight: 0.3,
                   weights: { ward: 2.0, life: 1.5 } },
     },
 
@@ -318,12 +318,6 @@
       bird_omen:    { name: 'Guaranteed Speed Brand', tag: 'swift' },
       smoke_omen:   { name: 'Guaranteed Mana Brand', tag: 'spirit' },
       blood_omen:   { name: 'Guaranteed Bleed Brand', tag: 'blood' },
-    },
-
-    /* ---------------- set bonus for upgraded items ---------------- */
-    panoply: {
-      2: { label: 'Set (2): +10% to the bond values of your upgraded items' },
-      3: { label: 'Set (3): upgraded-item powers trigger 25% more often' },
     },
 
     /* ---------------- simulated fights (demo): plain descriptions only ---------------- */

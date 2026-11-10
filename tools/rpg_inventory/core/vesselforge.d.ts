@@ -24,10 +24,7 @@ export interface MaterialDef {
   name: string;
   tier: number;
   statMult: number;
-  vessel: [number, number];
-  patience: [number, number];
   dropWeight?: number;
-  ascendsTo?: string | null;
   weights?: Record<string, number>;
 }
 
@@ -85,7 +82,6 @@ export interface Pack {
   trophies?: Record<string, TrophyDef>;
   pigments?: Record<string, { name: string; weights: Record<string, number> }>;
   omens?: Record<string, { name: string; tag: string }>;
-  panoply?: Record<number, { label: string }>;
   encounters?: Encounter[];
   nameTables?: { pre: string[]; post: string[] };
   retiredForms?: string[];
@@ -95,17 +91,22 @@ export interface Pack {
   derive?(sums: Record<string, number>, items: Item[], ctx: AggregateCtx): Record<string, number>;
 }
 
-export interface Brand { id: string; modId: string; tier: number; value: number }
+/** seq orders modifiers by when they were added (Remove Last Modifier). */
+export interface Brand { id: string; modId: string; tier: number; value: number; seq?: number }
 export interface Bond {
   id: string;
   modId: string;
   themeId: string;
   base: number;
   tier: 1 | 2 | 3;
-  kinship: string | null;
+  seq?: number;
 }
-export interface TrophySocket { id: string; trophyId: string }
-export interface Awakened { name: string; themeId: string; power: string; flavor: string }
+export interface TrophySocket { id: string; trophyId: string; seq?: number }
+/** Upgraded item: named after the character who raised it, with one theme power. */
+export interface Awakened { name: string; themeId: string; power: string }
+
+export type Rarity = 'normal' | 'magic' | 'rare';
+export interface RarityLimit { brands: number; bonds: number; total: number }
 
 export interface Item {
   v: number;
@@ -116,16 +117,12 @@ export interface Item {
   w: number;
   h: number;
   ilvl: number;
-  vessel: number;
-  scars: number;
-  patience: number;
-  patienceMax: number;
+  rarity: Rarity;
   brands: Brand[];
   bonds: Bond[];
   trophies: TrophySocket[];
   att: { xp: number; next: number; tc: Record<string, number> };
   evolutions: number;
-  fired: number;
   epithetName: string | null;
   awakened: Awakened | null;
 }
@@ -141,20 +138,19 @@ export interface Character {
 }
 
 export interface ForgeSettings {
-  maxVessel: number;
   tierMults: number[];
   brandTierWeights: number[];
   attuneBase: number;
   attuneStep: number;
-  estrangedFactor: number;
-  fireOutcomes: { ascend: number; scar: number; silent: number; shatter: number };
-  brandCountWeights: number[];
+  rarityLimits: Record<Rarity, RarityLimit>;
+  bondsToUpgrade: number;
+  dropRarityWeights: Record<Rarity, number>;
+  dropBrands: { magic: [number, number]; rare: [number, number] };
   sellBase: number;
 }
 
 export interface GameEvent { kind: string; text: string }
 export type OpResult = { item: Item; event: GameEvent } | { error: string };
-export type FireResult = OpResult | { destroyed: true; event: GameEvent };
 
 export interface AggregateCtx { archetype?: string; level?: number; charName?: string }
 export interface Conditional {
@@ -164,7 +160,6 @@ export interface Conditional {
   text: string;
   themeId?: string;
   tier?: number;
-  estranged?: boolean;
 }
 export interface TooltipLine { section: string; text: string; tone: string }
 export interface OddsEntry { modId: string; label: string; p: number }
@@ -176,6 +171,7 @@ export interface VentureResult {
   fragments: string[];
   events: GameEvent[];
   encounter: Encounter;
+  itemRarity: number;
 }
 
 export interface Forge {
@@ -183,43 +179,46 @@ export interface Forge {
   settings: ForgeSettings;
   reseed(seed: number): void;
 
-  generateItem(opts?: { ilvl?: number; formId?: string; materialId?: string; brands?: number }): Item;
+  generateItem(opts?: { ilvl?: number; formId?: string; materialId?: string; brands?: number; rarity?: Rarity; itemRarity?: number }): Item;
   materialPoolFor(form: string | FormDef, ilvl: number): Array<{ w: number; id: string }>;
+  /** Drop rarity odds for a given % increased Item Rarity (provisional). */
+  rarityOdds(itemRarity?: number): Record<Rarity, number>;
+  itemRarityOf(items: Array<Item | null>, ctx?: AggregateCtx): number;
 
-  sear(item: Item, opts?: { pigmentId?: string; omenId?: string }): OpResult;
-  efface(item: Item): OpResult;
-  chisel(item: Item): OpResult;
-  fire(item: Item): FireResult;
+  addModifier(item: Item, opts?: { pigmentId?: string; omenId?: string }): OpResult;
+  upgradeToRare(item: Item, opts?: { pigmentId?: string; omenId?: string }): OpResult;
+  rerollValues(item: Item): OpResult;
+  removeLastModifier(item: Item): OpResult;
   explainOdds(item: Item, opts?: { pigmentId?: string; omenId?: string }): OddsEntry[];
 
   attune(item: Item, xp: number, themeWeights: Record<string, number>, ctx: AggregateCtx): { item: Item; events: GameEvent[] };
-  resonate(item: Item): OpResult;
-  sever(item: Item): OpResult;
   isSated(item: Item): boolean;
 
   addFragment(stash: Record<string, number>, trophyId: string): { stash: Record<string, number>; completed: boolean; event: GameEvent } | { error: string };
   socketTrophy(item: Item, trophyId: string, stash: Record<string, number>): { item: Item; stash: Record<string, number>; event: GameEvent } | { error: string };
-  pryTrophy(item: Item): OpResult;
 
   createCharacter(opts?: { name?: string; archetype?: string; gold?: number }): Character;
   charLevel(c: Character): number;
-  venture(character: Character, equipment: Record<string, Item | null>, opts?: { encounter?: Encounter }): VentureResult;
+  venture(character: Character, equipment: Record<string, Item | null>, opts?: { encounter?: Encounter; itemRarity?: number }): VentureResult;
 
   aggregate(items: Array<Item | null>, ctx?: AggregateCtx): {
     sums: Record<string, number>;
     sheet: Record<string, number>;
     conditionals: Conditional[];
-    panoplies: Array<{ kinship: string; count: number; bonus: { label: string } }>;
   };
-  panoply(items: Array<Item | null>): Array<{ kinship: string; count: number; bonus: { label: string } }>;
-  tooltip(item: Item, ctx?: AggregateCtx): TooltipLine[];
+  tooltip(item: Item): TooltipLine[];
   sellValue(item: Item): number;
   displayName(item: Item): string;
+  rarityName(item: Item): string;
   dominantBondTheme(item: Item): string | null;
-  bondValue(bond: Bond, estranged: boolean): number;
-  isEstranged(bond: Bond, archetype?: string): boolean;
+  bondValue(bond: Bond): number;
   freeSlots(item: Item): number;
+  isCraftable(item: Item): boolean;
+  canAddBrand(item: Item): boolean;
+  canAddBond(item: Item): boolean;
 
+  /** Loads an item from an older save: strips removed fields, assigns rarity. */
+  normalizeItem(item: unknown): Item;
   serialize(state: unknown): string;
   deserialize(raw: string): unknown;
 }

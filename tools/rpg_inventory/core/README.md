@@ -11,21 +11,26 @@ don't go: **items that remember their bearer**.
 - Live demo (React inventory): [Brands & Bonds](https://alexkorol.github.io/WIZARD/tools/rpg_inventory/)
 - Live odds playground (framework-free): [playground.html](https://alexkorol.github.io/WIZARD/tools/rpg_inventory/core/playground.html)
 
-## The power model
+## The power model (provisional)
 
-Every item is a **vessel** with N slots. Slots hold power with *provenance*:
+The rules follow [`docs/CRAFTING-PROVISIONAL.md`](../../../docs/CRAFTING-PROVISIONAL.md):
+the PoE crafting blueprint, adapted; the owner tunes the numbers in playtest.
+Rarity sets the room: **Normal** holds no modifiers, **Magic** one or two,
+**Rare** up to four (at most two brands, up to three bonds).
 
 | Power | Origin | Shape |
 |---|---|---|
-| **Brand** ✦ | crafted at a bench, instantly | flat, unconditional numbers |
-| **Bond** ◈ | grown while equipped, through play | named, conditional, triggered effects |
-| **Trophy** ✧ | hunted fragments, socketed | hybrid |
-| **Scar** ✕ | the price of severing | a dead slot, forever |
+| **Brand** ✦ (prefix) | added at the bench with currencies | fixed stat lines, tiered |
+| **Bond** ◈ (suffix) | grown while equipped, through play (Bond I → III) | named, conditional, triggered effects |
+| **Animal part** ✧ | collected fragments, attached | hybrid |
 
-Brands and bonds compete for the same slots, so a fully-crafted item can never
-learn. Bonds carry their shaper's archetype (**class bond**) and give half
-strength in held by another class hands. An item holding three tier-III bonds **awakens**
-into a named unique — a unique is just an item somebody carried long enough.
+Crafting currencies: `addModifier` (Transmutation + Augmentation / Exalted; a Normal item becomes Magic), `upgradeToRare`
+(Regal), `rerollValues` (Divine), `removeLastModifier` (Annulment, adapted).
+Nothing else limits crafting. Bonds work the same for every class. When an
+item's three bonds reach Bond III it becomes an upgraded item named after the
+character who raised it, with one theme power; there are no pre-made uniques
+and no set bonuses. Item Rarity raises the Magic/Rare share of drops
+(`rarityOdds()`).
 
 ## Quickstart
 
@@ -39,7 +44,8 @@ const forge = item crafting system.createForge(pack, { seed: 42 }); // reproduci
 const item = forge.generateItem({ ilvl: 40 });
 
 // craft — every op returns { item, event } or { error }, never mutates input
-const seared = forge.sear(item, { pigmentId: 'red_ochre' });
+const crafted = forge.addModifier(item, { pigmentId: 'red_ochre' });
+const rare = forge.upgradeToRare(crafted.item); // Magic -> Rare, adds one brand
 
 // craft transparency, Craft-of-Exile style, as an API
 forge.explainOdds(item, { omenId: 'blood_omen' });
@@ -50,11 +56,13 @@ const c = forge.createCharacter({ name: 'Test Character', archetype: 'shieldbear
 const r = forge.venture(c, { mainHand: item });
 
 // read — structured, renderer-agnostic
-forge.tooltip(item, { archetype: c.archetype }); // [{ section, text, tone }, ...]
-forge.aggregate([item], { archetype: c.archetype }); // { sums, sheet, conditionals, panoplies }
+forge.tooltip(item); // [{ section, text, tone }, ...]
+forge.aggregate([item], { archetype: c.archetype }); // { sums, sheet, conditionals }
+forge.rarityOdds(50); // drop rarity odds with 50% increased Item Rarity
 
 // persist
 const save = forge.serialize({ items: [item] });
+const loaded = forge.normalizeItem(oldItem); // older saves: removed fields stripped
 ```
 
 TypeScript types ship in `vesselforge.d.ts`.
@@ -62,7 +70,7 @@ TypeScript types ship in `vesselforge.d.ts`.
 ## Writing your own pack
 
 A pack is pure data plus one optional `derive()` for the character sheet:
-materials (a tech/tier ladder with ascension), forms (bases), brand pools with
+materials (a tier ladder), forms (bases), brand pools with
 tag weights, bond themes, archetypes, trophies, pigments/guaranteed-brand items (craft
 steering), encounters, and name tables. `item crafting system.validatePack(pack)`
 returns a list of problems, empty when clean. See `verdigris-pack.js` for a

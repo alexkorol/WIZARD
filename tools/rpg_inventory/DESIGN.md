@@ -82,12 +82,21 @@ Every system above is a position on these axes:
 
 ## Part 2 — item crafting system
 
+> **Superseded in part (2026-11-09).** Crafting now follows the provisional
+> spec [`docs/CRAFTING-PROVISIONAL.md`](../../docs/CRAFTING-PROVISIONAL.md)
+> (owner rule 52): Normal/Magic/Rare rarity sets the modifier room; the bench
+> currencies are Add Modifier, Upgrade to Rare, Reroll Values and Remove Last
+> Modifier. Crafting uses (Patience), the material-upgrade gamble (kiln
+> firing), locked slots (scars), half-strength bonds for another class
+> (kinship), the set bonus for upgraded items and automatic inheritance were
+> removed. The sections below are updated to match; older rationale for the
+> removed mechanics is history only.
+
 ### The one-sentence pitch
 
-Every item is a **vessel** with a few slots, and every slot has
-**provenance**: power is either **crafted** (Brands ✦), **lived** (Bonds ◈),
-or **taken** (Animal parts ✧) — three power sources, three gameplay verbs
-(craft / play / hunt), all competing for the same scarce space.
+Every item has a rarity that sets how many modifiers it holds, and every
+modifier has **provenance**: power is either **crafted** (Brands ✦, the
+prefixes), **lived** (Bonds ◈, the suffixes), or **taken** (Animal parts ✧).
 
 ### Materials — the tech-fantasy ladder
 
@@ -103,11 +112,9 @@ wrap, shield…) crossed with a **material ladder**:
 | 5 | skymetal (meteoric iron) | fell from heaven, one per saga |
 | 6 | wrought iron, riveted mail | *technology from beyond the horizon* |
 
-Material sets base stats, vessel slot count, **Patience** (craft budget), and
-*reweights the mod pool* (obsidian loves bleed/crit, jade loves ward/spirit) —
-fossils built into the metallurgy. **Firing** (kiln/pyre rite) is the
-corruption analog: a gamble to ascend the material one tier — or scar the
-vessel, or shatter it.
+Material sets base stats and *reweights the brand pool* (obsidian loves
+bleed/crit, jade loves ward/spirit) — fossils built into the metallurgy.
+Material never changes after the item drops.
 
 ### Base items — class ladders, not a raw form×material grid (2026-07-04 revision — Alexei's vision)
 
@@ -142,50 +149,50 @@ should follow that ladder model, not the old grid. (This is also recorded in
 | Verb | craft | live | hunt |
 | Shape | flat / scalar only | named conditional & trigger mods | fixed themed mods + completion bonus |
 | Source | tools, pigments, guaranteed-brand items | deeds while equipped | fragments from monster families |
-| Removal | efface (slot reusable) | sever → **scar** | pry out (trophy breaks) |
-| Chase | tier gated by ilvl + material | tier III via play or Resonance | completion bonus at full stack |
-| Class bond | none | shaper's archetype; half-strength held by another class | none |
+| Removal | Remove Last Modifier | Remove Last Modifier | Remove Last Modifier (the part is destroyed) |
+| Chase | tier gated by ilvl + material | Bond III via play | completion bonus at full stack |
 
-- **Brands** are the deterministic end: `sear` with optional **pigment**
-  (reweight tags, fossil-style) or **omen** (guarantee a tag, essence-style).
-  Every operation costs **Patience** (LE's Forging Potential); when the
-  vessel's patience is spent, only deeds can change it — crafting closure
-  that *hands the item over to the Bond system*. That interlock is the novel
-  part: the crafting budget and the growth system are the same real estate.
-- **Bonds** as before (named conditional memories, themes from deeds,
-  class bonds (half strength for another class), tier I–III, upgrade at 3×III), now engine-modular.
+- **Brands** are the deterministic end: `addModifier` / `upgradeToRare` with
+  optional **pigment** (reweight tags, fossil-style) or **guaranteed brand**
+  (guarantee a tag, essence-style). Only the rarity's room limits crafting.
+- **Bonds**: named conditional effects, themes from deeds, Bond I–III, the
+  same value for every class; three bonds at Bond III upgrade the item.
 - **Animal parts**: TQ-style fragments (boar tusk 0/5) that complete into a
   socketable fetish with a completion bonus. The Grim Dawn homage: top-tier
   trophies may **grant a rite** (usable skill) — the only "skill granting"
   in a low-magic world comes from dead things, which fits.
 
-### Upgrade & Set bonus
+### Upgraded items
 
-Upgrade as shipped (3 tier-III bonds → named relic). New: **Set bonus** —
-equipped upgraded items sharing a class bond resonate (2: minor, 3+: major
-bonus from the pack). Sets in this world are not dropped, they are *made* —
-the only "set items" are the ones a single life assembled. No other ARPG
-does player-authored sets.
+Three bonds at Bond III → an upgraded item named after the character who
+raised it, with one power from its dominant bond theme. No pre-made uniques or
+sets exist, and there are no set bonuses.
+
+### Loot and houses
+
+Item Rarity raises the Magic/Rare share of drops (`rarityOdds()`, provisional
+weights). When a character dies in a simulated fight, everything they carried
+stays as a house recovery that a later character of the house can take back;
+there is no automatic inheritance.
 
 ### Determinism spectrum, mapped
 
 | PoE/LE original | item crafting system | Flavor |
 |---|---|---|
-| chaos spam | re-sear freely (costs Patience) | scraping the slate |
-| essence | **Omen** (guarantee tag) | read the entrails first |
-| fossil | **Pigment** (reweight tags) | ochre in the mold |
-| metamod | **Ward-knot** (lock brands from efface/sear) *(future)* | a knot no stranger unties |
-| forging potential | **Patience** | the vessel tires of hands |
-| corruption | **Firing** | the kiln keeps what it likes |
-| exalted T6–7 | materials T5–6 drop-only | skymetal cannot be smelted |
+| transmutation + augmentation / exalted | **Add Modifier** (Normal becomes Magic) | |
+| regal | **Upgrade to Rare** | |
+| divine | **Reroll Values** | |
+| annulment | **Remove Last Modifier** (last, not random) | |
+| essence | **Guaranteed X Brand** (guarantee tag) | |
+| fossil | **Pigment** (reweight tags) | |
 
 ### Engine / content split (the "pluggable" requirement)
 
 - **`core/vesselforge.js`** — pure logic, zero dependencies, UMD (browser
   global or Node require). Seedable RNG. Items are plain JSON. No DOM, no
   rendering: `tooltip(item)` returns *structured lines* (section/kind/text/
-  tone) for any UI to draw. `explainOdds()` exposes the weight table for any
-  sear — Craft of Exile transparency as a first-class API.
+  tone) for any UI to draw. `explainOdds()` exposes the weight table for the
+  next brand — Craft of Exile transparency as a first-class API.
 - **`core/verdigris-pack.js`** — all content: materials, forms, mods (with
   shape/tags/tiers/ilvl gates), themes, archetypes, trophies, tools,
   encounters, name tables. Register any pack: `createForge(pack, {seed})`.
@@ -197,8 +204,7 @@ does player-authored sets.
 
 ### What stays out (for now)
 
-Ward-knot metamods, trophy rite cooldowns, class-bond penalty healing, economy/
-trade. Listed in ISSUES.md.
+Metamods, trophy rite cooldowns, economy/trade. Listed in ISSUES.md.
 
 ---
 

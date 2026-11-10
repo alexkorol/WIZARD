@@ -36,12 +36,11 @@
     .tone-plain { color: var(--text); } .tone-branded { color: var(--brand); }
     .tone-bonded { color: var(--bond); } .tone-awakened { color: var(--awake); }
     .sec-brand { color: var(--brand); } .sec-bond { color: var(--bond); }
-    .sec-trophy { color: var(--trophy); } .sec-scar { color: var(--scar); }
+    .sec-trophy { color: var(--trophy); }
     .sec-implicit { color: #8fb7e8; font-style: italic; }
-    .sec-kind, .sec-vessel, .sec-attune, .sec-base { color: var(--dim); }
+    .sec-kind, .sec-rarity, .sec-attune, .sec-base { color: var(--dim); }
     .sec-power { color: var(--awake); } .sec-flavor { color: #b7a98a; font-style: italic; }
     .sec-stat { color: #d6d0c2; }
-    .estranged { opacity: 0.55; font-style: italic; }
     table { border-collapse: collapse; width: 100%; }
     td { padding: 2px 6px; border-bottom: 1px solid rgba(233,228,216,0.05); color: var(--muted); }
     td:last-child { text-align: right; color: var(--text); }
@@ -86,22 +85,20 @@
           <button id="equip">Equip → main hand</button>
         </div>
         <div class="row">
-          <button id="sear">Sear ✦</button>
+          <button id="addModifier">Add Modifier ✦</button>
+          <button id="upgradeToRare">Upgrade to Rare</button>
           <select id="pigment"><option value="">no pigment</option></select>
           <select id="omen"><option value="">no omen</option></select>
         </div>
         <div class="row">
-          <button id="efface">Efface</button>
-          <button id="chisel">Chisel slot</button>
-          <button id="fire">Fire in kiln</button>
-          <button id="resonate">Resonate ◈</button>
-          <button id="sever">Sever ◈→✕</button>
-          <button id="trophy">Bind trophy ✧</button>
+          <button id="rerollValues">Reroll Values</button>
+          <button id="removeLastModifier">Remove Last Modifier</button>
+          <button id="trophy">Attach animal part ✧</button>
         </div>
         <div id="tooltip" class="card" style="border-color: rgba(201,162,39,0.3)"></div>
       </div>
       <div class="card">
-        <h2>Sear odds (live, explainOdds)</h2>
+        <h2>Next brand odds (live, explainOdds)</h2>
         <table class="odds" id="odds"></table>
       </div>
       <div class="card">
@@ -112,9 +109,9 @@
     </div>
   </div>
 
-  <script src="vesselforge.js?v=20261026"></script>
+  <script src="vesselforge.js?v=20261109"></script>
   <script src="verdigris-stats.js?v=20261026"></script>
-  <script src="verdigris-pack.js?v=20261030"></script>
+  <script src="verdigris-pack.js?v=20261109"></script>
   <script>
     const forge = VesselForge.createForge(VerdigrisPack);
     const $ = (id) => document.getElementById(id);
@@ -151,43 +148,41 @@
         .map(([id, n]) => `<span class="pill">✧ ${VerdigrisPack.trophies[id].name} ${n}/${VerdigrisPack.trophies[id].fragments}</span>`)
         .join('') || '<span style="color:var(--dim)">no trophy fragments yet</span>';
       // bench tooltip (structured lines -> html)
-      $('tooltip').innerHTML = bench ? forge.tooltip(bench, ctx).map(l =>
-        `<div class="sec-${l.section} ${l.tone === 'estranged' ? 'estranged' : ''} ${l.section === 'name' ? 'tt-name tone-' + l.tone : ''}">${l.text}</div>`
+      $('tooltip').innerHTML = bench ? forge.tooltip(bench).map(l =>
+        `<div class="sec-${l.section} ${l.section === 'name' ? 'tt-name tone-' + l.tone : ''}">${l.text}</div>`
       ).join('') : '<span style="color:var(--dim)">no item — roll one</span>';
       // odds
-      $('odds').innerHTML = bench && bench.vessel ? forge.explainOdds(bench, {
+      $('odds').innerHTML = bench && forge.isCraftable(bench) ? forge.explainOdds(bench, {
         pigmentId: $('pigment').value || undefined, omenId: $('omen').value || undefined,
       }).map(o => `<tr><td>${o.label}</td><td>${(o.p * 100).toFixed(1)}%</td></tr>`).join('') : '';
       // sheet
       const agg = forge.aggregate(Object.values(equipment), ctx);
       $('sheet').innerHTML = Object.entries(agg.sheet).map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
       $('conds').innerHTML = agg.conditionals.map(c =>
-        `<div class="${c.estranged ? 'estranged' : ''}" style="color:${c.themeId ? VerdigrisPack.themes[c.themeId].color : 'var(--trophy)'}">◈ ${c.name} — ${c.text}${c.estranged ? ' (estranged)' : ''}</div>`
-      ).join('') + agg.panoplies.map(p => `<div style="color:var(--awake)">${p.bonus.label}</div>`).join('');
+        `<div style="color:${c.themeId ? VerdigrisPack.themes[c.themeId].color : 'var(--trophy)'}">◈ ${c.name} — ${c.text}</div>`
+      ).join('');
     }
 
     function applyOp(res) {
       if (res.error) { log({ kind: 'err', text: res.error }); return; }
-      if (res.destroyed) { bench = null; }
-      else if (res.item) bench = res.item;
+      if (res.item) bench = res.item;
       if (res.stash) character.fragments = res.stash;
       if (res.event) log(res.event);
       (res.events || []).forEach(log);
       render();
     }
 
-    $('roll').onclick = () => { bench = forge.generateItem({ ilvl: +$('ilvl').value }); log({ kind: 'craft', text: `Rolled: ${forge.displayName(bench)} (ilvl ${bench.ilvl})` }); render(); };
-    $('sear').onclick = () => bench && applyOp(forge.sear(bench, { pigmentId: $('pigment').value || undefined, omenId: $('omen').value || undefined }));
-    $('efface').onclick = () => bench && applyOp(forge.efface(bench));
-    $('chisel').onclick = () => bench && applyOp(forge.chisel(bench));
-    $('fire').onclick = () => bench && applyOp(forge.fire(bench));
-    $('resonate').onclick = () => bench && applyOp(forge.resonate(bench));
-    $('sever').onclick = () => bench && applyOp(forge.sever(bench));
+    $('roll').onclick = () => { bench = forge.generateItem({ ilvl: +$('ilvl').value }); log({ kind: 'craft', text: `Rolled: ${forge.rarityName(bench)} ${forge.displayName(bench)} (ilvl ${bench.ilvl})` }); render(); };
+    const tools = () => ({ pigmentId: $('pigment').value || undefined, omenId: $('omen').value || undefined });
+    $('addModifier').onclick = () => bench && applyOp(forge.addModifier(bench, tools()));
+    $('upgradeToRare').onclick = () => bench && applyOp(forge.upgradeToRare(bench, tools()));
+    $('rerollValues').onclick = () => bench && applyOp(forge.rerollValues(bench));
+    $('removeLastModifier').onclick = () => bench && applyOp(forge.removeLastModifier(bench));
     $('trophy').onclick = () => {
       if (!bench) return;
       const ready = Object.entries(character.fragments).find(([id, n]) =>
         n >= VerdigrisPack.trophies[id].fragments && VerdigrisPack.trophies[id].kinds.includes(bench.kind));
-      if (!ready) { log({ kind: 'err', text: 'No completed trophy fits this item — hunt more fragments' }); return; }
+      if (!ready) { log({ kind: 'err', text: 'No completed animal part fits this item' }); return; }
       applyOp(forge.socketTrophy(bench, ready[0], character.fragments));
     };
     $('equip').onclick = () => {
@@ -208,10 +203,10 @@
     }
     $('venture').onclick = doVenture;
     $('venture10').onclick = () => { for (let i = 0; i < 10; i++) doVenture(); };
-    $('arch').onchange = (e) => { character.archetype = e.target.value; log({ kind: 'deed', text: `${character.name} walks the ${VerdigrisPack.archetypes[character.archetype].name}'s path.` }); render(); };
+    $('arch').onchange = (e) => { character.archetype = e.target.value; log({ kind: 'deed', text: `${character.name} class: ${VerdigrisPack.archetypes[character.archetype].name}.` }); render(); };
     $('pigment').onchange = render; $('omen').onchange = render;
 
-    log({ kind: 'deed', text: 'The forge is lit. Roll an item, read the odds, spend its patience wisely.' });
+    log({ kind: 'deed', text: 'Roll an item, read the brand odds, then craft (provisional rules: docs/CRAFTING-PROVISIONAL.md).' });
     render();
   </script>
 </body>

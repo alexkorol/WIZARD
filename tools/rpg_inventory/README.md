@@ -1,68 +1,78 @@
 # Brands & Bonds — ARPG Inventory System
 
-A single-file ARPG inventory demo built around an original itemization system:
-**Brands** are seared onto items at a crafting bench; **Bonds** grow on equipped
-items through the deeds their bearer performs. Saturated items **Awaken** into
-named uniques — the in-world explanation for why every legendary relic is named
-after somebody.
+A single-file ARPG inventory demo. Crafting is **provisional**: it follows
+[`docs/CRAFTING-PROVISIONAL.md`](../../docs/CRAFTING-PROVISIONAL.md) (owner rule 52),
+the PoE crafting blueprint adapted, and the owner tunes the numbers in playtest.
+**Brands** take the place of PoE prefixes and are added at the Crafting Bench;
+**Bonds** take the place of suffixes and grow on equipped items through the
+character's deeds.
 
 Live demo: `tools/rpg_inventory/index.html` (no build step — React 18 + Babel standalone).
 
 ## The system
 
-### Vessels
+### Item and rarity
 
-Every piece of gear is a *vessel* with 2–6 slots. Two kinds of power compete
-for the same slots:
+An item is a base (form × material) with the base's implicit, plus modifiers.
+Rarity sets how many modifiers it holds:
+
+| Rarity | Holds |
+|---|---|
+| Normal | no modifiers |
+| Magic | one or two modifiers |
+| Rare | up to four modifiers: at most two brands, up to three bonds |
+
+Nothing else limits crafting: no per-item crafting budget, no material-upgrade
+gamble, no locked slots, no class penalty on bonds. Animal parts ✧ attached to
+an item also take a modifier place.
 
 | | Brand ✦ | Bond ◈ |
 |---|---|---|
-| Origin | Seared on at the Crafting Bench with currencies | Grown while equipped, through ventures |
-| Speed | Instant | Slow (bond XP thresholds) |
-| Form | **Flat, unconditional numbers** (`+38 Life`) | **Named, conditional, triggered effects** ("The Life on Block — Regain 12 Life when you Block") |
-| Class bond | None — anyone's craft | Carries the shaper's archetype; **half strength in held by another class hands** |
-| Removal | Removed freely (slot is reusable) | Severed only by knife — the slot is **scarred** (✕) forever |
-| Ceiling | Fixed roll | Tiers I → II → III (values scale ×1 / ×1.6 / ×2.2) |
+| Origin | Added at the Crafting Bench with currencies | Grown while equipped, through simulated fights |
+| Form | **Fixed stat lines** (`+38 Life`), tiered by item level and material | **Named, conditional, triggered effects** ("Life on Block — Regain 12 Life when you Block") |
+| Growth | Fixed roll | Bond I → II → III (values scale ×1 / ×1.6 / ×2.2) |
 
-Because they share slots, a fully-branded item can never learn. That's the
-core tension: instant crafted power vs. long-term earned power. The design is
-deliberately disjoint: craft is arithmetic, memory is behavior. (PoE 1
-influences: The Surrender's "recover Life when you Block", on-kill momentum
-triggers, full/low-resource thresholds; the held by another class-class bond rule is the lore
-engine behind class-themed uniques.)
+### Deeds and themes
 
-### Deeds, themes, archetypes
+Simulated fights generate encounters, each weighted toward one or more themes.
+The character's class adds +1 weight to its own theme on every deed:
 
-Venturing forth generates encounters, each weighted toward one or more themes.
-The bearer's archetype adds +1 weight to its own theme on every deed:
-
-- **Kill Bonuses** (Kill Bonuses class) — Life on Kill, Attack Speed after Kill, Critical Chance against Bleeding
-- **Block and Ward** (Armour archetype) — Life on Block, Block while Stationary, Ward when Hit
-- **Mana** (Mana class) — Spell Power at High Mana, Mana on Kill, Curse Avoidance
-- **Movement** (Movement class) — Speed on Kill, Thrown Weapon Avoidance, Life Regeneration while Moving
+- **Kill Bonuses** — Life on Kill, Attack Speed after Kill, Critical Chance against Bleeding
+- **Block and Ward** — Life on Block, Block while Stationary, Ward when Hit
+- **Mana** — Spell Power at High Mana, Mana on Kill, Curse Avoidance
+- **Movement** — Speed on Kill, Thrown Weapon Avoidance, Life Regeneration while Moving
 
 (Display names follow `core/verdigris-pack.js`; older theme and mod names are listed in `owner-rules/rename-map.json`.)
 
 Equipped items accumulate bond XP and log the themes of the deeds performed
-while worn. When an item crosses an bond XP threshold it evolves: a new bond
-forms (from the dominant theme in *that item's* history, class bond-stamped with
-the current archetype), or an existing bond deepens a tier. Because bonds are
-conditional they never contribute to the flat character sheet — only brands
-and implicits do.
+while worn. At each bond XP threshold a new bond forms (from the dominant theme
+in that item's history) while the rarity has room, or an existing bond goes up
+one Bond level. Bonds work the same for every class. Because bonds are
+conditional they never contribute to the flat character sheet — only brands,
+animal parts and implicits do.
 
-### Upgrade
+### Upgraded items
 
-An item holding **three tier-III bonds** awakens: it takes a generated name from
-its bearer (`Azrael's Unbroken Vigil`), a keystone power from its dominant theme,
-and flavor text summarizing its history. This is the lore mechanism for
-character-themed uniques à la Diablo/PoE — a unique is just an item somebody
-carried long enough.
+No pre-made unique or set items exist. When an item's **three bonds reach
+Bond III** it becomes an upgraded item named after the character who raised it
+(`Test Character's Bronze Shield`) with one power from its dominant bond theme.
+There are no set bonuses. On a Rare item three bonds leave room for one brand.
 
-An upgraded item's frame glows ember-orange. Before that, frames shift from
-grey (plain) to gold (craft-heavy) to the **dominant bond theme's colour**
-(memory-heavy) as bonds outgrow brands — and bonded items show a faint theme
-sigil watermark behind their art, an homage to PoE's Shaper/Elder influence
-backgrounds.
+### Item Rarity and drops
+
+Simulated fights may drop an item. Its rarity is rolled Normal 70 / Magic 25 /
+Rare 5 (provisional weights). **Item Rarity** (PoE "increased Rarity of Items
+found", summed on the character sheet from brands and animal parts) multiplies
+the Magic and Rare weights by `1 + Item Rarity / 100`, so it raises the share of
+Magic and Rare drops (`forge.rarityOdds()`).
+
+### Death and house recoveries
+
+Items belong to the house. When a character dies in a simulated fight
+(permadeath), everything they carried stays at the death site as a **house
+recovery**. The next character starts with two plain items; any later
+character of the house can take the recovery back from the Character Record
+(items that do not fit stay in the recovery). There is no automatic inheritance.
 
 ### Art pipeline
 
@@ -86,17 +96,16 @@ Current generation queue and paste-ready prompts:
 
 ### Currencies (the Crafting Bench)
 
-| Currency | Effect |
-|---|---|
-| Add Brand | Sear a random Brand into a free slot |
-| Remove Last Brand | Remove the newest Brand, freeing its slot |
-| (removed: never implemented) | Grant a full threshold of bond XP at the bench |
-| Upgrade Bond | Deepen the faintest Bond one tier |
-| Remove Bond | Sever the faintest Bond; the slot is scarred |
-| Add Modifier Slot | Carve an extra vessel slot (max 6) |
+| Currency | PoE analogue | Effect |
+|---|---|---|
+| Add Modifier | Transmutation + Augmentation / Exalted Orb | Turns a Normal item Magic and adds one brand; otherwise adds one brand while the rarity has room |
+| Upgrade to Rare | Regal Orb | Makes a Magic item Rare and adds one brand |
+| Reroll Values | Divine Orb | Rerolls brand values within their tiers and bond values within their ranges |
+| Remove Last Modifier | Annulment Orb (adapted: last, not random) | Removes the most recently added brand, bond or animal part |
+| Pigments, Guaranteed X Brand | PoE2 Omens, Essences | Steer or guarantee which brand the next craft adds |
 
-Currencies live in a satchel (counts, not grid clutter) and can be bought with
-gold or found while venturing.
+Pigments and guaranteed-brand items live in a satchel (counts, not grid
+clutter) and are bought with gold. Bench currencies cost gold in this demo.
 
 ## Features
 
@@ -107,11 +116,11 @@ gold or found while venturing.
 - Crafting Bench bench that expands above the backpack: drag an item into the socket
   (or tap one while the bench is open) and apply currencies
 - Simulate fight loop: gold, XP, loot, currency finds, and a chronicle log
-- PoE-style tooltips: base stats, implicit, vessel pips, brand/bond sections
-  with tier chips, bond XP progress, upgraded power + flavor
+- PoE-style tooltips: rarity and modifier count, base stats, implicit,
+  brand/bond sections with tiers, bond XP progress, upgraded power
 - Vendor (drag to sell; price scales with inscriptions), Sort, Reset
-- Full state persistence in localStorage; editable character name feeds
-  future upgraded item names
+- Full state persistence in localStorage (older saves load; removed fields
+  are stripped); the character name names upgraded items
 
 ## item crafting system — the modular core (`core/`)
 
@@ -120,12 +129,12 @@ designed from a genre survey (PoE, Craft of Exile, Last Epoch, D2/D4, Titan
 Quest, Grim Dawn — see [DESIGN.md](DESIGN.md)):
 
 - **`core/vesselforge.js`** — zero-dependency UMD engine: seedable RNG,
-  plain-JSON items, materials ladder, tag/weight brand pools with pigments
-  (fossil-style reweighting) and guaranteed-brand items (essence-style guarantees), Patience
-  (crafting budget), kiln Firing (material-ascension gamble), bonds with
-  class bonds (half strength for another class)/upgrade, trophies (fragment → fetish → completion
-  bonus), Set bonus (player-authored sets), `explainOdds()` (Craft-of-Exile
-  transparency as API), structured `tooltip()` lines for any renderer.
+  plain-JSON items, Normal/Magic/Rare rarity, tag/weight brand pools with pigments
+  (fossil-style reweighting) and guaranteed-brand items (essence-style guarantees),
+  the four bench currencies, bonds with bond XP and the upgraded item, animal parts
+  (fragments → completion bonus), Item Rarity drop odds, `normalizeItem()` for old
+  saves, `explainOdds()` (Craft-of-Exile transparency as API), structured
+  `tooltip()` lines for any renderer.
 - **`core/verdigris-pack.js`** — the bronze-age content pack: flint→bone→
   copper→bronze→obsidian→jade→skymetal→riveted-mail material ladder,
   macuahuitl/atlatl/khopesh-flavored forms, Redhand/Shieldbearer/Ashspeaker/
@@ -158,8 +167,9 @@ The mechanics are isolated from the rendering:
 
 Port the data + logic layer as-is; only the React layer is demo-specific.
 Balance knobs: threshold formula in `gainAttunement`
-(`next = 80 + 55 × evolutions`), tier multipliers in `TIER_MULT`, vessel size
-rolls in `createItem`.
+(`next = 80 + 55 × evolutions`), tier multipliers in `TIER_MULT`, rarity room,
+drop rarity weights and brand counts in the engine settings (`rarityLimits`,
+`dropRarityWeights`, `dropBrands`).
 
 ## Combat terminology (owner correction, 2026-09-21)
 

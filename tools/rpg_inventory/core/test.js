@@ -18,7 +18,7 @@ t('pack validates clean', () => {
   eq(VesselForge.validatePack(pack).length, 0, JSON.stringify(VesselForge.validatePack(pack)));
 });
 t('validation catches broken pack', () => {
-  const bad = JSON.parse(JSON.stringify({ id: 'x', settings: {}, materials: { a: { tier: 1, vessel: [2, 2], patience: [2, 2] } }, forms: {}, brandMods: {}, themes: {}, archetypes: { z: { themeId: 'nope' } } }));
+  const bad = JSON.parse(JSON.stringify({ id: 'x', settings: {}, materials: { a: { tier: 1 } }, forms: {}, brandMods: {}, themes: {}, archetypes: { z: { themeId: 'nope' } } }));
   assert(VesselForge.validatePack(bad).length > 0, 'should report issues');
 });
 
@@ -35,18 +35,67 @@ t('seeded generation is reproducible', () => {
 });
 
 /* ---------------- generation invariants ---------------- */
-t('generated items respect vessel/material invariants', () => {
+t('generated items respect rarity/material invariants', () => {
   for (let i = 0; i < 200; i++) {
     const it = forge.generateItem({ ilvl: 1 + (i % 80) });
     const mat = pack.materials[it.materialId];
     const f = pack.forms[it.formId];
     assert(f.materials.includes(it.materialId), `${it.formId} in ${it.materialId}`);
     assert(mat.tier <= 1 + Math.floor(it.ilvl / 15), 'material tier gated by ilvl');
-    if (it.vessel) {
-      assert(it.brands.length <= it.vessel, 'brands fit vessel');
-      assert(it.patience >= 0 && it.patience <= it.patienceMax, 'patience sane');
-    }
+    assert(['normal', 'magic', 'rare'].includes(it.rarity), 'rarity set: ' + it.rarity);
+    const lim = forge.settings.rarityLimits[it.rarity];
+    assert(it.brands.length <= lim.brands && it.brands.length <= lim.total, 'brands fit the rarity');
+    if (it.rarity === 'normal') eq(it.brands.length, 0, 'Normal holds no modifiers');
+    if (it.rarity === 'magic') assert(it.brands.length >= 1 && it.brands.length <= 2, 'Magic holds one or two');
   }
+});
+t('no removed field is generated (crafting uses, locked slots, class tag, set bonus)', () => {
+  const removed = ['patience', 'patienceMax', 'scars', 'fired', 'vessel'];
+  const f = VesselForge.createForge(pack, { seed: 5 });
+  let c = f.createCharacter({ name: 'T', archetype: 'shieldbearer' });
+  let gear = { offHand: f.generateItem({ ilvl: 40, formId: 'hideshield', materialId: 'bronze', rarity: 'rare', brands: 1 }) };
+  const seen = [];
+  for (let i = 0; i < 60; i++) {
+    const r = f.venture(c, gear);
+    c = r.character; gear = r.equipment;
+    seen.push(...r.drops, gear.offHand);
+  }
+  for (let i = 0; i < 100; i++) seen.push(f.generateItem({ ilvl: 1 + (i % 80) }));
+  seen.forEach(it => {
+    removed.forEach(k => assert(!(k in it), `${k} generated on ${it.formId}`));
+    it.bonds.forEach(b => assert(!('kinship' in b), 'bond carries no class tag'));
+  });
+  assert(gear.offHand.bonds.length > 0, 'bonds still form');
+  ['fire', 'chisel', 'sever', 'resonate', 'panoply', 'isEstranged', 'sear', 'efface'].forEach(k =>
+    assert(!(k in f), `engine still exports ${k}`));
+  assert(!('panoply' in pack) && !('fireOutcomes' in pack.settings), 'pack has no set bonus or material-upgrade table');
+  Object.values(pack.materials).forEach(m => {
+    assert(!('patience' in m) && !('ascendsTo' in m) && !('vessel' in m), `material ${m.name} carries removed fields`);
+  });
+  assert(!('panoplies' in f.aggregate([gear.offHand], { level: 1 })), 'aggregate has no set bonus');
+});
+t('Item Rarity raises the Magic/Rare share of drops', () => {
+  const base = forge.rarityOdds(0);
+  const boosted = forge.rarityOdds(100);
+  assert(boosted.magic + boosted.rare > base.magic + base.rare, 'odds rise with Item Rarity');
+  assert(Math.abs(boosted.normal + boosted.magic + boosted.rare - 1) < 1e-9, 'odds sum to 1');
+  const share = (ir) => {
+    const f = VesselForge.createForge(pack, { seed: 2024 });
+    let n = 0;
+    for (let i = 0; i < 3000; i++) {
+      const it = f.generateItem({ ilvl: 40, formId: 'ring', materialId: 'copper', itemRarity: ir });
+      if (it.rarity !== 'normal') n++;
+    }
+    return n / 3000;
+  };
+  const plain = share(0), rich = share(150);
+  assert(rich > plain + 0.1, `Magic/Rare share ${plain.toFixed(3)} -> ${rich.toFixed(3)}`);
+  // the simulated fights read Item Rarity from the equipped items
+  const ring = forge.generateItem({ ilvl: 40, formId: 'ring', materialId: 'copper', rarity: 'magic', brands: 0 });
+  ring.brands.push({ id: 'w1', modId: 'wealthy', tier: 2, value: 20, seq: 1 });
+  assert(forge.itemRarityOf([ring], { level: 1 }) >= 20, 'equipped Item Rarity is summed');
+  const r = forge.venture(forge.createCharacter({ name: 'T' }), { ring1: ring });
+  assert(r.itemRarity >= 20, 'venture uses equipped Item Rarity: ' + r.itemRarity);
 });
 t('low ilvl never drops skymetal or unavailable mail', () => {
   for (let i = 0; i < 100; i++) {
@@ -582,29 +631,92 @@ t('wearable item prompts require plausible construction', () => {
     'bracer target must include backing and straps');
 });
 
-/* ---------------- crafting: sear/patience/pigment/omen ---------------- */
-t('sear adds a brand and spends patience', () => {
-  const it = forge.generateItem({ ilvl: 40, formId: 'dagger', materialId: 'bronze', brands: 0 });
-  const r = forge.sear(it);
+/* ---------------- crafting currencies, pigments, guaranteed brands ---------------- */
+t('Add Modifier adds a brand on a Magic item and needs no crafting uses', () => {
+  let it = forge.generateItem({ ilvl: 40, formId: 'dagger', materialId: 'bronze', rarity: 'magic', brands: 0 });
+  const r = forge.addModifier(it);
   assert(!r.error, r.error);
   eq(r.item.brands.length, 1);
-  eq(r.item.patience, it.patience - 1);
-});
-t('running out of crafting uses closes crafting', () => {
-  let it = forge.generateItem({ ilvl: 40, formId: 'dagger', materialId: 'bronze', brands: 0 });
-  let guard = 0;
-  while (it.patience > 0 && guard++ < 30) {
-    const r = it.brands.length ? forge.efface(it) : forge.sear(it);
-    if (r.error) break;
-    it = r.item;
+  // add, remove, add again many times: only rarity room limits crafting
+  it = r.item;
+  for (let i = 0; i < 25; i++) {
+    const rm = forge.removeLastModifier(it); assert(!rm.error, rm.error); it = rm.item;
+    const add = forge.addModifier(it); assert(!add.error, add.error); it = add.item;
   }
-  const r = forge.sear(it);
-  assert(r.error && /crafting uses/i.test(r.error), 'should refuse: ' + r.error);
+  eq(it.brands.length, 1);
+});
+t('rarity room: Normal holds none, Magic two, Rare two brands and four modifiers', () => {
+  const normal = forge.generateItem({ ilvl: 40, formId: 'wrap', materialId: 'quilted', rarity: 'normal' });
+  eq(normal.brands.length, 0, 'Normal holds no modifiers');
+  let magic = forge.generateItem({ ilvl: 40, formId: 'wrap', materialId: 'quilted', rarity: 'magic', brands: 2 });
+  eq(magic.brands.length, 2);
+  assert(forge.addModifier(magic).error, 'Magic holds two');
+  magic = forge.removeLastModifier(magic).item;
+  const rare = forge.upgradeToRare(magic);
+  assert(!rare.error, rare.error);
+  eq(rare.item.rarity, 'rare');
+  eq(rare.item.brands.length, 2, 'Upgrade to Rare adds one modifier');
+  assert(/brands/.test(forge.addModifier(rare.item).error || ''), 'Rare holds two brands');
+  assert(forge.upgradeToRare(rare.item).error, 'only Magic items upgrade to Rare');
+  assert(forge.upgradeToRare(normal).error, 'Normal items do not upgrade to Rare');
+});
+t('Add Modifier on a Normal item makes it Magic and adds one brand; bonds can then form', () => {
+  let it = forge.generateItem({ ilvl: 40, formId: 'hideshield', materialId: 'bronze', rarity: 'normal' });
+  eq(it.rarity, 'normal');
+  const r = forge.addModifier(it, { omenId: 'entrail_omen' });
+  assert(!r.error, r.error);
+  eq(r.item.rarity, 'magic');
+  eq(r.item.brands.length, 1);
+  assert(pack.brandMods[r.item.brands[0].modId].tags.includes('ward'), 'guaranteed brand applies');
+  assert(/Made Magic/.test(r.event.text), r.event.text);
+  eq(it.rarity, 'normal', 'input not mutated');
+  it = r.item;
+  for (let i = 0; i < 12 && !it.bonds.length; i++) it = forge.attune(it, 60, { warding: 3 }, { charName: 'X' }).item;
+  eq(it.bonds.length, 1, 'the now-Magic item forms a bond in its free place');
+  eq(it.bonds.length + it.brands.length, 2, 'Magic holds two');
+  const curio = forge.generateItem({ ilvl: 20, formId: 'curio', materialId: 'bone' });
+  assert(forge.addModifier(curio).error, 'items without modifiers stay uncraftable');
+});
+t('Reroll Values keeps tiers and rerolls within them', () => {
+  let it = forge.generateItem({ ilvl: 70, formId: 'wrap', materialId: 'quilted', rarity: 'rare', brands: 2 });
+  it.bonds.push({ id: 'd1', modId: 'shieldwall', themeId: 'warding', base: 10, tier: 2, seq: 9 });
+  const seenValues = new Set();
+  for (let i = 0; i < 40; i++) {
+    const r = forge.rerollValues(it);
+    assert(!r.error, r.error);
+    r.item.brands.forEach((b, j) => {
+      eq(b.tier, it.brands[j].tier, 'tier kept');
+      const roll = pack.brandMods[b.modId].tiers[b.tier - 1].roll;
+      assert(b.value >= roll[0] && b.value <= roll[1], 'value within tier');
+    });
+    eq(r.item.bonds[0].tier, 2, 'Bond level kept');
+    const br = pack.themes.warding.mods.shieldwall.roll;
+    assert(r.item.bonds[0].base >= br[0] && r.item.bonds[0].base <= br[1], 'bond base within range');
+    seenValues.add(r.item.brands[0].value);
+  }
+  assert(seenValues.size > 1, 'values change');
+  const empty = forge.generateItem({ ilvl: 40, formId: 'wrap', materialId: 'quilted', rarity: 'magic', brands: 0 });
+  assert(forge.rerollValues(empty).error, 'nothing to reroll');
+});
+t('Remove Last Modifier removes the most recently added one', () => {
+  let it = forge.generateItem({ ilvl: 40, formId: 'spear', materialId: 'copper', rarity: 'rare', brands: 1 });
+  const first = it.brands[0].modId;
+  it = forge.addModifier(it).item;
+  const second = it.brands[1].modId;
+  const r = forge.attune(it, 100, { slaughter: 2 }, { charName: 'X', archetype: 'redhand' });
+  it = r.item;
+  eq(it.bonds.length, 1, 'bond formed after the brands');
+  it = forge.removeLastModifier(it).item;
+  eq(it.bonds.length, 0, 'bond removed first');
+  it = forge.removeLastModifier(it).item;
+  eq(it.brands.length, 1); eq(it.brands[0].modId, first, `removed ${second}`);
+  eq(it.rarity, 'rare', 'rarity stays');
+  assert(!('scars' in it), 'no locked slot');
 });
 t('omen guarantees tag', () => {
   for (let i = 0; i < 30; i++) {
-    const it = forge.generateItem({ ilvl: 40, formId: 'wrap', materialId: 'quilted', brands: 0 });
-    const r = forge.sear(it, { omenId: 'entrail_omen' });
+    const it = forge.generateItem({ ilvl: 40, formId: 'wrap', materialId: 'quilted', rarity: 'magic', brands: 0 });
+    const r = forge.addModifier(it, { omenId: 'entrail_omen' });
     if (r.error) continue;
     const mod = pack.brandMods[r.item.brands[0].modId];
     assert(mod.tags.includes('ward'), `omen gave ${r.item.brands[0].modId}`);
@@ -621,30 +733,11 @@ t('pigment skews odds and explainOdds sums to 1', () => {
 });
 t('brand tiers gate by ilvl', () => {
   for (let i = 0; i < 60; i++) {
-    const it = forge.generateItem({ ilvl: 5, formId: 'handaxe', materialId: 'flint', brands: 0 });
-    const r = forge.sear(it);
+    const it = forge.generateItem({ ilvl: 5, formId: 'handaxe', materialId: 'flint', rarity: 'magic', brands: 0 });
+    const r = forge.addModifier(it);
     if (r.error) continue;
     eq(r.item.brands[0].tier, 1, 'ilvl 5 rolls only T1');
   }
-});
-
-/* ---------------- firing ---------------- */
-t('firing ascends, scars, silences, or shatters — and hide never skips tiers', () => {
-  const seen = {};
-  for (let i = 0; i < 120; i++) {
-    const it = forge.generateItem({ ilvl: 30, formId: 'wrap', materialId: 'hide', brands: 0 });
-    const r = forge.fire(it);
-    if (r.destroyed) { seen.shatter = 1; continue; }
-    assert(!r.error, r.error);
-    if (r.item.materialId !== 'hide') { seen.ascend = 1; eq(r.item.materialId, 'quilted'); }
-    else if (r.item.scars > it.scars) seen.scar = 1;
-    else seen.silent = 1;
-  }
-  assert(seen.ascend && seen.scar && seen.silent && seen.shatter, JSON.stringify(seen));
-});
-t('top materials cannot be fired', () => {
-  const it = forge.generateItem({ ilvl: 79, formId: 'wrap', materialId: 'bronzescale', brands: 0 });
-  assert(forge.fire(it).error, 'retired mail ascension must refuse the kiln');
 });
 
 /* ---------------- trophies ---------------- */
@@ -656,7 +749,7 @@ t('trophy fragments complete and socket', () => {
     stash = r.stash; completed = r.completed;
   }
   assert(completed, '5/5 completes');
-  const it = forge.generateItem({ ilvl: 30, formId: 'spear', materialId: 'copper', brands: 0 });
+  const it = forge.generateItem({ ilvl: 30, formId: 'spear', materialId: 'copper', rarity: 'magic', brands: 0 });
   const r = forge.socketTrophy(it, 'boar_tusk', stash);
   assert(!r.error, r.error);
   eq(r.item.trophies.length, 1);
@@ -669,27 +762,27 @@ t('trophy respects kind restriction', () => {
   assert(forge.socketTrophy(it, 'boar_tusk', { boar_tusk: 5 }).error, 'tusk on sandals must fail');
 });
 
-/* ---------------- bonds & kinship ---------------- */
-t('bond XP forms themed kinship bonds and estranges correctly', () => {
-  let it = forge.generateItem({ ilvl: 30, formId: 'hideshield', materialId: 'bronze', brands: 0 });
+/* ---------------- bonds ---------------- */
+t('bond XP forms themed bonds at full value for every class', () => {
+  let it = forge.generateItem({ ilvl: 30, formId: 'hideshield', materialId: 'bronze', rarity: 'magic', brands: 0 });
   const ctx = { charName: 'Test Character', archetype: 'shieldbearer' };
-  let events = [];
   for (let i = 0; i < 12 && !it.bonds.length; i++) {
-    const r = forge.attune(it, 60, { warding: 3 }, ctx);
-    it = r.item; events.push(...r.events);
+    it = forge.attune(it, 60, { warding: 3 }, ctx).item;
   }
   assert(it.bonds.length >= 1, 'bond formed');
   eq(it.bonds[0].themeId, 'warding', 'dominant theme wins');
-  eq(it.bonds[0].kinship, 'shieldbearer');
-  const full = forge.bondValue(it.bonds[0], false);
-  const est = forge.bondValue(it.bonds[0], true);
-  assert(Math.abs(est - full / 2) <= 0.55, `estranged ~half (${est} vs ${full})`);
-  assert(forge.isEstranged(it.bonds[0], 'redhand'), 'estranged for redhand');
-  assert(!forge.isEstranged(it.bonds[0], 'shieldbearer'), 'kin for shieldbearer');
+  assert(!('kinship' in it.bonds[0]), 'no class tag on bonds');
+  const a = forge.aggregate([it], { archetype: 'redhand', level: 1 }).conditionals[0].text;
+  const b = forge.aggregate([it], { archetype: 'shieldbearer', level: 1 }).conditionals[0].text;
+  eq(a, b, 'another class gets the same bond value');
 });
-t('the full life of an item: bonds to tier III then awakening', () => {
-  let it = forge.generateItem({ ilvl: 40, formId: 'hideshield', materialId: 'bronze', brands: 0 });
-  it.vessel = 3;
+t('a Normal item forms no bonds', () => {
+  let it = forge.generateItem({ ilvl: 30, formId: 'hideshield', materialId: 'bronze', rarity: 'normal' });
+  it = forge.attune(it, 1000, { warding: 3 }, { charName: 'X' }).item;
+  eq(it.bonds.length, 0);
+});
+t('the full life of an item: three bonds to Bond III, then upgraded and named after the character', () => {
+  let it = forge.generateItem({ ilvl: 40, formId: 'hideshield', materialId: 'bronze', rarity: 'rare', brands: 0 });
   const ctx = { charName: 'Test Character', archetype: 'shieldbearer' };
   let awakeEvent = null;
   for (let i = 0; i < 60 && !it.awakened; i++) {
@@ -698,27 +791,39 @@ t('the full life of an item: bonds to tier III then awakening', () => {
     const aw = r.events.find(e => e.kind === 'awake');
     if (aw) awakeEvent = aw;
   }
-  assert(it.awakened, 'item awakens');
+  assert(it.awakened, 'item is upgraded');
+  eq(it.bonds.length, 3);
+  assert(it.bonds.every(b => b.tier === 3), 'all bonds at Bond III');
   assert(awakeEvent && /is upgraded/.test(awakeEvent.text), 'upgrade event fired');
-  assert(!/'s /.test(it.awakened.name), 'upgraded item keeps its plain name: ' + it.awakened.name);
-  assert(forge.isSated(it), 'awakened full item is sated');
+  eq(it.awakened.name, "Test Character's Bronze Shield", 'named after the character');
+  assert(typeof it.awakened.power === 'string' && it.awakened.power.length > 0, 'one theme power');
+  assert(forge.isSated(it), 'upgraded full item is sated');
 });
-t('sever scars the slot', () => {
-  let it = forge.generateItem({ ilvl: 30, formId: 'spear', materialId: 'copper', brands: 0 });
-  const r0 = forge.attune(it, 100, { slaughter: 2 }, { charName: 'X', archetype: 'redhand' });
-  it = r0.item;
-  if (!it.bonds.length) return; // rng gave a tier-up instead; fine
-  const before = it.bonds.length;
-  const r = forge.sever(it);
-  eq(r.item.bonds.length, before - 1);
-  eq(r.item.scars, 1);
+t('old saves load: removed fields are stripped, rarity is assigned', () => {
+  const old = {
+    v: 1, id: 'old1', formId: 'hideshield', materialId: 'bronze', kind: 'shield', w: 2, h: 3, ilvl: 40,
+    vessel: 4, scars: 1, patience: 0, patienceMax: 4, fired: 2,
+    brands: [{ id: 'b', modId: 'hale', tier: 1, value: 15 }],
+    bonds: [{ id: 'd', modId: 'shieldwall', themeId: 'warding', base: 10, tier: 2, kinship: 'farwalker' }],
+    trophies: [], att: { xp: 0, next: 190, tc: { warding: 3 } }, evolutions: 2, epithetName: null, awakened: null,
+  };
+  const it = forge.normalizeItem(old);
+  ['vessel', 'scars', 'patience', 'patienceMax', 'fired'].forEach(k => assert(!(k in it), k + ' stripped'));
+  assert(!('kinship' in it.bonds[0]), 'kinship stripped');
+  eq(it.rarity, 'magic');
+  assert(it.brands[0].seq < it.bonds[0].seq, 'modifier order assigned');
+  assert(forge.tooltip(it).some(l => l.section === 'rarity'), 'tooltip renders');
+  assert(!forge.tooltip(it).some(l => /locked|Patience|estranged/i.test(l.text)), 'no removed lines');
+  const big = forge.normalizeItem({ ...old, brands: [old.brands[0], { id: 'b2', modId: 'warded', tier: 1, value: 12 }], trophies: [{ id: 't', trophyId: 'ember_shell' }] });
+  eq(big.rarity, 'rare');
+  eq(forge.normalizeItem(old).id, 'old1');
 });
 
 /* ---------------- venture loop ---------------- */
 t('venture updates character, attunes gear, may drop loot/fragments', () => {
   const f = VesselForge.createForge(pack, { seed: 42 });
   let c = f.createCharacter({ name: 'Test Character', archetype: 'shieldbearer', gold: 0 });
-  let eq_ = { mainHand: f.generateItem({ ilvl: 20, formId: 'spear', materialId: 'copper', brands: 0 }) };
+  let eq_ = { mainHand: f.generateItem({ ilvl: 20, formId: 'spear', materialId: 'copper', rarity: 'magic', brands: 0 }) };
   let drops = 0, frags = 0;
   for (let i = 0; i < 25; i++) {
     const r = f.venture(c, eq_);
@@ -731,35 +836,24 @@ t('venture updates character, attunes gear, may drop loot/fragments', () => {
   assert((c.deeds.warding || 0) > 0, 'archetype biases deeds');
 });
 
-/* ---------------- aggregation, panoply, tooltip ---------------- */
+/* ---------------- aggregation, tooltip ---------------- */
 t('aggregate splits flat sheet from conditionals', () => {
   const it = forge.generateItem({ ilvl: 40, formId: 'wrap', materialId: 'quilted', brands: 0 });
   it.brands.push({ id: 'b1', modId: 'hale', tier: 1, value: 20 });
-  it.bonds.push({ id: 'd1', modId: 'shieldwall', themeId: 'warding', base: 10, tier: 1, kinship: 'shieldbearer' });
+  it.bonds.push({ id: 'd1', modId: 'shieldwall', themeId: 'warding', base: 10, tier: 1 });
   const agg = forge.aggregate([it], { archetype: 'shieldbearer', level: 1 });
   eq(agg.sums.hale, 20, 'brand in sums');
   eq(agg.conditionals.length, 1, 'bond in conditionals');
   assert(agg.sheet.life >= 110, 'derive() applied: ' + agg.sheet.life);
   assert(!('shieldwall' in agg.sums), 'bond NOT in flat sums');
 });
-t('panoply detects player-authored sets', () => {
-  const mk = () => {
-    const it = forge.generateItem({ ilvl: 60, formId: 'hideshield', materialId: 'bronze', brands: 0 });
-    it.bonds = [{ id: 'x', modId: 'shieldwall', themeId: 'warding', base: 10, tier: 3, kinship: 'shieldbearer' }];
-    it.awakened = { name: 'Bronze Hide Shield', themeId: 'warding', power: 'p' };
-    return it;
-  };
-  const ps = forge.panoply([mk(), mk()]);
-  eq(ps.length, 1);
-  eq(ps[0].count, 2);
-  assert(/Set \(2\)/.test(ps[0].bonus.label));
-});
 t('tooltip returns structured UI-agnostic lines', () => {
   const it = forge.generateItem({ ilvl: 40, formId: 'dagger', materialId: 'bronze', brands: 2 });
   const lines = forge.tooltip(it, { archetype: 'redhand' });
   assert(lines.every(l => l.section && typeof l.text === 'string'), 'line shape');
   assert(lines.some(l => l.section === 'name'), 'has name');
-  assert(lines.some(l => l.section === 'vessel' && /Patience/.test(l.text)), 'shows patience');
+  assert(lines.some(l => l.section === 'rarity' && /^Magic · 2\/2 modifiers$/.test(l.text)), 'shows rarity and room');
+  assert(!lines.some(l => /Patience|locked slot|estranged/.test(l.text)), 'no removed lines');
 });
 
 /* ---------------- serialization ---------------- */
@@ -777,7 +871,6 @@ t('serialize/deserialize round-trips and rejects foreign packs', () => {
 const Combat = require('./verdigris-combat.js');
 const mkFighter = (bonds, awakenedTheme) => {
   const it = forge.generateItem({ ilvl: 60, formId: 'hideshield', materialId: 'bronze', brands: 0 });
-  it.vessel = Math.max(it.vessel, bonds.length);
   it.bonds = bonds;
   if (awakenedTheme) it.awakened = { name: 'X', themeId: awakenedTheme, power: 'p', flavor: 'f' };
   return it;
@@ -785,8 +878,8 @@ const mkFighter = (bonds, awakenedTheme) => {
 t('battle resolves deterministically with seeded rng and bonds fire', () => {
   const mul = (seed) => { let a = seed >>> 0; return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let x = Math.imul(a ^ (a >>> 15), 1 | a); x = (x + Math.imul(x ^ (x >>> 7), 61 | x)) ^ x; return ((x ^ (x >>> 14)) >>> 0) / 4294967296; }; };
   const shield = mkFighter([
-    { id: 'b1', modId: 'shieldwall', themeId: 'warding', base: 14, tier: 3, kinship: 'shieldbearer' },
-    { id: 'b2', modId: 'stand_ground', themeId: 'warding', base: 5, tier: 3, kinship: 'shieldbearer' },
+    { id: 'b1', modId: 'shieldwall', themeId: 'warding', base: 14, tier: 3 },
+    { id: 'b2', modId: 'stand_ground', themeId: 'warding', base: 5, tier: 3 },
   ]);
   const run = (seed) => Combat.resolveBattle(forge, pack, {
     items: [shield], level: 6, charName: 'T', archetype: 'shieldbearer',

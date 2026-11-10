@@ -9,13 +9,13 @@ Owner, 2026-11-09: "for crafting mechanics we can sort of use the blueprint that
 - **Base:** form × material, with the base's implicit (PoE implicit).
 - **Brands** take the place of PoE prefixes: fixed stat lines rolled from the base's brand pool, tiered by item level and material.
 - **Bonds** take the place of PoE suffixes: stat lines that grow with the character's deeds (bond XP, Bond I → III).
-- **Rarity** (PoE): Normal holds no modifiers; Magic holds one or two; Rare holds up to two brands and two bonds (four modifiers).
+- **Rarity** (PoE): Normal holds no modifiers; Magic holds one or two; Rare holds up to four modifiers: at most two brands and up to three bonds (so three bonds can reach Bond III, leaving room for one brand).
 
 ## Crafting (PoE currency, function-named)
 
 | Currency | PoE analogue | Effect |
 |---|---|---|
-| Add Modifier | Augmentation / Exalted Orb | Adds one modifier while the rarity has room |
+| Add Modifier | Transmutation + Augmentation / Exalted Orb | Turns a Normal item Magic and adds one modifier; otherwise adds one modifier while the rarity has room |
 | Upgrade to Rare | Regal Orb | Makes a Magic item Rare and adds one modifier |
 | Reroll Values | Divine Orb | Rerolls modifier values within their tiers |
 | Remove Last Modifier | Annulment Orb (adapted: last, not random) | Removes the most recently added modifier |
