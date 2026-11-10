@@ -5418,6 +5418,12 @@
    "verdict": "keep",
    "after": null,
    "note": "plain English (2026-11-09 review)"
+  },
+  "captured": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English (2026-11-10 review)"
   }
  },
  "proposalsMerged": {

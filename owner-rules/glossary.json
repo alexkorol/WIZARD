@@ -478,10 +478,6 @@
    "origin": "plain"
   },
   {
-   "term": "aqua",
-   "origin": "plain"
-  },
-  {
    "term": "aquamarine",
    "origin": "plain"
   },
@@ -765,10 +761,6 @@
    "origin": "plain"
   },
   {
-   "term": "awning",
-   "origin": "plain"
-  },
-  {
    "term": "aws",
    "origin": "plain"
   },
@@ -950,10 +942,6 @@
   },
   {
    "term": "beaker",
-   "origin": "plain"
-  },
-  {
-   "term": "beakers",
    "origin": "plain"
   },
   {
@@ -1300,10 +1288,6 @@
    "origin": "plain"
   },
   {
-   "term": "book",
-   "origin": "plain"
-  },
-  {
    "term": "boolean",
    "origin": "technical",
    "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
@@ -1326,10 +1310,6 @@
   },
   {
    "term": "bore",
-   "origin": "plain"
-  },
-  {
-   "term": "borne",
    "origin": "plain"
   },
   {
@@ -1411,10 +1391,6 @@
    "term": "brand",
    "origin": "owner",
    "note": "Owner: \"brands are added through explicit enchantments and crafts\"."
-  },
-  {
-   "term": "branded",
-   "origin": "plain"
   },
   {
    "term": "branding",
@@ -1621,10 +1597,6 @@
    "origin": "plain"
   },
   {
-   "term": "burner",
-   "origin": "plain"
-  },
-  {
    "term": "burning",
    "origin": "plain"
   },
@@ -1638,10 +1610,6 @@
   },
   {
    "term": "burst",
-   "origin": "plain"
-  },
-  {
-   "term": "bursts",
    "origin": "plain"
   },
   {
@@ -1754,6 +1722,11 @@
    "origin": "plain"
   },
   {
+   "term": "captured",
+   "origin": "plain",
+   "note": "plain English (2026-11-10 review)"
+  },
+  {
    "term": "capuv",
    "origin": "technical",
    "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
@@ -1764,17 +1737,8 @@
    "note": "Owner: arcomage-like card game and \"divinationcard-like items\"."
   },
   {
-   "term": "cards",
-   "origin": "plain"
-  },
-  {
    "term": "carnelian",
    "origin": "plain"
-  },
-  {
-   "term": "carousel",
-   "origin": "plain",
-   "note": "plain English"
   },
   {
    "term": "carr",
@@ -2088,10 +2052,6 @@
    "origin": "plain"
   },
   {
-   "term": "choice",
-   "origin": "plain"
-  },
-  {
    "term": "choose",
    "origin": "plain"
   },
@@ -2242,10 +2202,6 @@
    "origin": "plain"
   },
   {
-   "term": "clock",
-   "origin": "plain"
-  },
-  {
    "term": "cloister",
    "origin": "plain"
   },
@@ -2354,10 +2310,6 @@
    "origin": "plain"
   },
   {
-   "term": "coins",
-   "origin": "plain"
-  },
-  {
    "term": "cold",
    "origin": "poe"
   },
@@ -2399,10 +2351,6 @@
    "term": "colours",
    "origin": "plain",
    "note": "plain English (British spelling)"
-  },
-  {
-   "term": "column",
-   "origin": "plain"
   },
   {
    "term": "combat",
@@ -2496,11 +2444,6 @@
   {
    "term": "cone",
    "origin": "plain"
-  },
-  {
-   "term": "confetti",
-   "origin": "plain",
-   "note": "plain English"
   },
   {
    "term": "confirm",
@@ -2668,10 +2611,6 @@
    "origin": "plain"
   },
   {
-   "term": "corked",
-   "origin": "plain"
-  },
-  {
    "term": "corkscrew",
    "origin": "plain"
   },
@@ -2741,10 +2680,6 @@
   },
   {
    "term": "courtyards",
-   "origin": "plain"
-  },
-  {
-   "term": "covers",
    "origin": "plain"
   },
   {
@@ -2888,11 +2823,6 @@
   {
    "term": "crumble",
    "origin": "plain"
-  },
-  {
-   "term": "crumbling",
-   "origin": "plain",
-   "note": "\"Crumbling Ruins\" (rp_account_creator) is a plain terrain description."
   },
   {
    "term": "crushed",
@@ -3126,11 +3056,6 @@
    "origin": "plain"
   },
   {
-   "term": "deck",
-   "origin": "owner",
-   "note": "Owner: \"build-a-deck menu\"."
-  },
-  {
    "term": "declared",
    "origin": "plain"
   },
@@ -3194,10 +3119,6 @@
   },
   {
    "term": "deliberately",
-   "origin": "plain"
-  },
-  {
-   "term": "deluge",
    "origin": "plain"
   },
   {
@@ -3349,10 +3270,6 @@
    "origin": "plain"
   },
   {
-   "term": "digits",
-   "origin": "plain"
-  },
-  {
    "term": "dim",
    "origin": "plain"
   },
@@ -3452,10 +3369,6 @@
   },
   {
    "term": "dispose",
-   "origin": "plain"
-  },
-  {
-   "term": "dissolve",
    "origin": "plain"
   },
   {
@@ -3639,10 +3552,6 @@
   },
   {
    "term": "drawn",
-   "origin": "plain"
-  },
-  {
-   "term": "draws",
    "origin": "plain"
   },
   {
@@ -4418,11 +4327,6 @@
    "origin": "plain"
   },
   {
-   "term": "fewer",
-   "origin": "plain",
-   "note": "plain English"
-  },
-  {
    "term": "ff",
    "origin": "technical",
    "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
@@ -4647,10 +4551,6 @@
    "origin": "plain"
   },
   {
-   "term": "flare",
-   "origin": "plain"
-  },
-  {
    "term": "flash",
    "origin": "plain"
   },
@@ -4662,10 +4562,6 @@
    "term": "flask",
    "origin": "owner",
    "note": "Owner: \"flask/remedy bar\"; PoE."
-  },
-  {
-   "term": "flasks",
-   "origin": "poe"
   },
   {
    "term": "flat",
@@ -4700,10 +4596,6 @@
    "origin": "plain"
   },
   {
-   "term": "floods",
-   "origin": "plain"
-  },
-  {
    "term": "floor",
    "origin": "plain"
   },
@@ -4725,10 +4617,6 @@
   },
   {
    "term": "flying",
-   "origin": "plain"
-  },
-  {
-   "term": "foam",
    "origin": "plain"
   },
   {
@@ -4995,10 +4883,6 @@
    "origin": "poe"
   },
   {
-   "term": "frugal",
-   "origin": "plain"
-  },
-  {
    "term": "fsb",
    "origin": "technical",
    "note": "graphics or tooling term in a WIZARD lab page"
@@ -5022,10 +4906,6 @@
   },
   {
    "term": "fully",
-   "origin": "plain"
-  },
-  {
-   "term": "fume",
    "origin": "plain"
   },
   {
@@ -5352,10 +5232,6 @@
    "origin": "plain"
   },
   {
-   "term": "grains",
-   "origin": "plain"
-  },
-  {
    "term": "grand",
    "origin": "plain"
   },
@@ -5416,16 +5292,7 @@
    "origin": "plain"
   },
   {
-   "term": "greatsword",
-   "origin": "plain",
-   "note": "plain English"
-  },
-  {
    "term": "greaves",
-   "origin": "plain"
-  },
-  {
-   "term": "greek",
    "origin": "plain"
   },
   {
@@ -5458,19 +5325,11 @@
    "origin": "plain"
   },
   {
-   "term": "grin",
-   "origin": "plain"
-  },
-  {
    "term": "grip",
    "origin": "plain"
   },
   {
    "term": "grit",
-   "origin": "plain"
-  },
-  {
-   "term": "groove",
    "origin": "plain"
   },
   {
@@ -5919,10 +5778,6 @@
    "origin": "plain"
   },
   {
-   "term": "hourglass",
-   "origin": "plain"
-  },
-  {
    "term": "house",
    "origin": "owner",
    "note": "Owner: \"House management should be accessible from the main menu\"."
@@ -6214,10 +6069,6 @@
    "origin": "plain"
   },
   {
-   "term": "ink",
-   "origin": "plain"
-  },
-  {
    "term": "inlay",
    "origin": "plain"
   },
@@ -6248,10 +6099,6 @@
   },
   {
    "term": "instability",
-   "origin": "plain"
-  },
-  {
-   "term": "instance",
    "origin": "plain"
   },
   {
@@ -6464,10 +6311,6 @@
    "origin": "plain"
   },
   {
-   "term": "joints",
-   "origin": "plain"
-  },
-  {
    "term": "journal",
    "origin": "plain"
   },
@@ -6605,10 +6448,6 @@
    "origin": "plain"
   },
   {
-   "term": "knight",
-   "origin": "plain"
-  },
-  {
    "term": "knob",
    "origin": "plain"
   },
@@ -6718,10 +6557,6 @@
    "origin": "plain"
   },
   {
-   "term": "lantern",
-   "origin": "plain"
-  },
-  {
    "term": "large",
    "origin": "plain"
   },
@@ -6813,10 +6648,6 @@
    "origin": "plain"
   },
   {
-   "term": "leaky",
-   "origin": "plain"
-  },
-  {
    "term": "lean",
    "origin": "plain"
   },
@@ -6826,10 +6657,6 @@
   },
   {
    "term": "leaps",
-   "origin": "plain"
-  },
-  {
-   "term": "learn",
    "origin": "plain"
   },
   {
@@ -6866,10 +6693,6 @@
   },
   {
    "term": "legendary",
-   "origin": "plain"
-  },
-  {
-   "term": "legs",
    "origin": "plain"
   },
   {
@@ -6952,10 +6775,6 @@
   },
   {
    "term": "lights",
-   "origin": "plain"
-  },
-  {
-   "term": "limbs",
    "origin": "plain"
   },
   {
@@ -7193,10 +7012,6 @@
   },
   {
    "term": "mage",
-   "origin": "plain"
-  },
-  {
-   "term": "magenta",
    "origin": "plain"
   },
   {
@@ -7464,10 +7279,6 @@
    "origin": "plain"
   },
   {
-   "term": "merchant",
-   "origin": "plain"
-  },
-  {
    "term": "merged",
    "origin": "plain",
    "note": "Ordinary English word used in its normal meaning."
@@ -7730,10 +7541,6 @@
   },
   {
    "term": "moor",
-   "origin": "plain"
-  },
-  {
-   "term": "mortar",
    "origin": "plain"
   },
   {
@@ -8094,10 +7901,6 @@
   },
   {
    "term": "nub",
-   "origin": "plain"
-  },
-  {
-   "term": "number",
    "origin": "plain"
   },
   {
@@ -8509,10 +8312,6 @@
    "origin": "plain"
   },
   {
-   "term": "paper",
-   "origin": "plain"
-  },
-  {
    "term": "paradigm",
    "origin": "owner",
    "note": "owner lattice canon ('Paradigm Shift')"
@@ -8627,10 +8426,6 @@
    "origin": "plain"
   },
   {
-   "term": "pays",
-   "origin": "plain"
-  },
-  {
    "term": "pbr",
    "origin": "technical",
    "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
@@ -8721,10 +8516,6 @@
   },
   {
    "term": "phase",
-   "origin": "plain"
-  },
-  {
-   "term": "phial",
    "origin": "plain"
   },
   {
@@ -8845,10 +8636,6 @@
   },
   {
    "term": "plates",
-   "origin": "plain"
-  },
-  {
-   "term": "platinum",
    "origin": "plain"
   },
   {
@@ -9209,10 +8996,6 @@
    "origin": "plain"
   },
   {
-   "term": "quarrels",
-   "origin": "plain"
-  },
-  {
    "term": "quarry",
    "origin": "plain"
   },
@@ -9382,10 +9165,6 @@
   },
   {
    "term": "react",
-   "origin": "plain"
-  },
-  {
-   "term": "reaction",
    "origin": "plain"
   },
   {
@@ -9602,11 +9381,6 @@
    "origin": "plain"
   },
   {
-   "term": "released",
-   "origin": "plain",
-   "note": "plain English"
-  },
-  {
    "term": "releases",
    "origin": "plain"
   },
@@ -9638,10 +9412,6 @@
   },
   {
    "term": "removed",
-   "origin": "plain"
-  },
-  {
-   "term": "removes",
    "origin": "plain"
   },
   {
@@ -9928,11 +9698,6 @@
   {
    "term": "ridges",
    "origin": "plain"
-  },
-  {
-   "term": "riffling",
-   "origin": "plain",
-   "note": "plain English"
   },
   {
    "term": "rift",
@@ -10408,10 +10173,6 @@
    "origin": "plain"
   },
   {
-   "term": "scute",
-   "origin": "plain"
-  },
-  {
    "term": "scythian",
    "origin": "plain"
   },
@@ -10734,10 +10495,6 @@
    "origin": "plain"
   },
   {
-   "term": "shine",
-   "origin": "plain"
-  },
-  {
    "term": "ship",
    "origin": "plain"
   },
@@ -10993,10 +10750,6 @@
   },
   {
    "term": "slams",
-   "origin": "plain"
-  },
-  {
-   "term": "slap",
    "origin": "plain"
   },
   {
@@ -11266,10 +11019,6 @@
    "note": "Real archaeological site, find, period, place, museum or scholar cited in item research (item-types-by-skill-zone.json / ITEM-TYPES-BY-SKILL-ZONE.md)."
   },
   {
-   "term": "spare",
-   "origin": "plain"
-  },
-  {
    "term": "spark",
    "origin": "plain"
   },
@@ -11356,10 +11105,6 @@
   },
   {
    "term": "spill",
-   "origin": "plain"
-  },
-  {
-   "term": "spilt",
    "origin": "plain"
   },
   {
@@ -11534,14 +11279,6 @@
   },
   {
    "term": "stain",
-   "origin": "plain"
-  },
-  {
-   "term": "stall",
-   "origin": "plain"
-  },
-  {
-   "term": "stamp",
    "origin": "plain"
   },
   {
@@ -11859,6 +11596,10 @@
    "origin": "plain"
   },
   {
+   "term": "style",
+   "origin": "plain"
+  },
+  {
    "term": "stylisation",
    "origin": "plain",
    "note": "plain English"
@@ -12132,10 +11873,6 @@
   },
   {
    "term": "taxonomy",
-   "origin": "plain"
-  },
-  {
-   "term": "teaches",
    "origin": "plain"
   },
   {
@@ -12478,10 +12215,6 @@
    "origin": "plain"
   },
   {
-   "term": "tome",
-   "origin": "plain"
-  },
-  {
    "term": "tongue",
    "origin": "plain"
   },
@@ -12545,10 +12278,6 @@
   },
   {
    "term": "tornado",
-   "origin": "plain"
-  },
-  {
-   "term": "torrent",
    "origin": "plain"
   },
   {
@@ -12977,10 +12706,6 @@
    "origin": "plain"
   },
   {
-   "term": "unleashes",
-   "origin": "plain"
-  },
-  {
    "term": "unlike",
    "origin": "plain"
   },
@@ -13253,10 +12978,6 @@
    "origin": "plain"
   },
   {
-   "term": "vented",
-   "origin": "plain"
-  },
-  {
    "term": "verdant",
    "origin": "plain"
   },
@@ -13365,10 +13086,6 @@
   },
   {
    "term": "visit",
-   "origin": "plain"
-  },
-  {
-   "term": "visor",
    "origin": "plain"
   },
   {
