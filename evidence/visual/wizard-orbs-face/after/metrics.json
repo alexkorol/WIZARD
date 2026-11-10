@@ -1,0 +1,99 @@
+{
+  "label": "after",
+  "frozenTime": 12.34,
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "url": "http://127.0.0.1:8192/tools/wizard_orbs/index.html",
+  "states": {
+    "0pct": {
+      "portraitTintBR": -0.0253,
+      "portraitSaturation": 0.1081,
+      "liquidTintBR": -0.009
+    },
+    "50pct": {
+      "portraitTintBR": 0.0552,
+      "portraitSaturation": 0.2562,
+      "liquidTintBR": 0.3117,
+      "expectedSurfaceRowArt": 458,
+      "fillLineMaxOverBaseline": 2.1
+    },
+    "100pct": {
+      "portraitTintBR": 0.229,
+      "portraitSaturation": 0.4393,
+      "liquidTintBR": 0.2607,
+      "expectedSurfaceRowArt": 195,
+      "fillLineMaxOverBaseline": 0
+    }
+  },
+  "thresholds": {
+    "tintBoundBR": 0.09,
+    "fillLineRatioBound": 1.6,
+    "liquidMinBR": 0.18
+  },
+  "roi": {
+    "FACE_ROI": {
+      "x0": 1190,
+      "y0Top": 235,
+      "x1": 1350,
+      "y1Top": 505
+    },
+    "PORTRAIT_CORE": {
+      "x0": 1205,
+      "y0Top": 250,
+      "x1": 1335,
+      "y1Top": 405
+    },
+    "LIQUID_REF": {
+      "x0": 950,
+      "y0Top": 450,
+      "x1": 1100,
+      "y1Top": 600
+    },
+    "imageRect": {
+      "face": {
+        "x0": 889,
+        "x1": 1002,
+        "y0": 168,
+        "y1": 358
+      },
+      "core": {
+        "x0": 900,
+        "x1": 992,
+        "y0": 178,
+        "y1": 287
+      },
+      "liquid": {
+        "x0": 720,
+        "x1": 826,
+        "y0": 319,
+        "y1": 425
+      },
+      "canvasCss": {
+        "left": 241.21875,
+        "top": 149.890625,
+        "width": 796.125,
+        "height": 383.453125
+      }
+    }
+  },
+  "webgl": {
+    "compileLinkAssertedVia": "__WizardOrbs present + S.time advancing (template throws on COMPILE/LINK_STATUS failure)",
+    "contextAttributes": "webgl2 { antialias:false, alpha:true, premultipliedAlpha:true }"
+  },
+  "determinismHook": "freeze()",
+  "repeatCaptureMaxChannelDelta": 0,
+  "checks": {
+    "tint@50%": "PASS",
+    "tint@100%": "FAIL",
+    "fillline@50%": "FAIL",
+    "liquid-body@50%": "PASS",
+    "liquid-body@100%": "PASS"
+  },
+  "metricsDelta": {
+    "tintDelta50": 0.0805,
+    "tintDelta100": 0.2543,
+    "fillLineRatio50": 2.1
+  }
+}

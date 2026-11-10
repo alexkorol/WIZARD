@@ -342,7 +342,30 @@ vec3 manaLiquid(vec2 p, float surf, float surfFlat){
 }
 
 /* --------------------------- ORB COMPOSITE ------------------------ */
-vec3 orbContent(vec2 p, bool life, vec3 empty, float thick, vec3 stoneTex){
+// Foreground portrait weight: where the guardian statue stands in front of
+// the glass, its geometry survives in the normal plate as high-frequency
+// detail at two scales (finger edges and narrow features at ~3 px, broad
+// masses like the cheek/braid via center-vs-tap contrast at ~9 px). Gating
+// by the empty plate's luma rejects the smooth specular rim band while
+// keeping shadowed marble. Open glass/liquid measure <=0.01; statue 0.13+.
+float normEdge(vec2 suv){
+  vec3 c = texture(uNorm, suv).rgb;
+  float d = length(texture(uNorm, suv + vec2(3.0, 0.0) / ART).rgb - c)
+          + length(texture(uNorm, suv - vec2(3.0, 0.0) / ART).rgb - c)
+          + length(texture(uNorm, suv + vec2(0.0, 3.0) / ART).rgb - c)
+          + length(texture(uNorm, suv - vec2(0.0, 3.0) / ART).rgb - c);
+  d += length(texture(uNorm, suv + vec2(9.0, 0.0) / ART).rgb - c)
+     + length(texture(uNorm, suv - vec2(9.0, 0.0) / ART).rgb - c)
+     + length(texture(uNorm, suv + vec2(0.0, 9.0) / ART).rgb - c)
+     + length(texture(uNorm, suv - vec2(0.0, 9.0) / ART).rgb - c);
+  return d * 0.125;
+}
+float foreground(vec2 uv){
+  float nd = normEdge(uv);
+  float eL = luma(texture(uEmpty, uv).rgb);
+  return smoothstep(0.008, 0.020, nd) * smoothstep(0.055, 0.135, eL);
+}
+vec3 orbContent(vec2 p, bool life, vec3 empty, float thick, vec3 stoneTex, float fg){
   float t = uTime;
   float lvl   = life ? uLvlL  : uLvlR;
   float slosh = life ? uSloshL : uSloshR;
@@ -391,10 +414,14 @@ vec3 orbContent(vec2 p, bool life, vec3 empty, float thick, vec3 stoneTex){
     // topping out: the surface energy dissolves into a gentle whole-orb bloom
     lc *= 1.0 + fullKick * 0.45;
     lc += liqAvg * fullKick * 0.30;
-    col = mix(col, lc, inLiq * 0.97);
+    // the guardian portrait stands in front of the glass: it stays materially
+    // opaque (empty-plate marble, washed by the wall-glow terms below) while
+    // open glass keeps the full liquid body. fg is plate-static, so the
+    // transition never tracks the rising surface — no fill line crosses her.
+    col = mix(col, lc, inLiq * 0.97 * (1.0 - fg));
     // the plate's glass reflections read over the liquid (top only —
     // the pedestal seen through the bottom of the glass stays hidden)
-    col += empty * empty * 0.65 * (0.12 + 0.88 * smoothstep(-0.70, -0.05, p.y));
+    col += empty * empty * 0.65 * (0.12 + 0.88 * smoothstep(-0.70, -0.05, p.y)) * (1.0 - fg * 0.85);
   }
 
   // anime splash above the surface (low hp, or kicked by big hits)
@@ -403,13 +430,13 @@ vec3 orbContent(vec2 p, bool life, vec3 empty, float thick, vec3 stoneTex){
     col = mix(col, spl.rgb, clamp(spl.a, 0.0, 1.0) * inner);
   }
 
-  // meniscus: front line + dimmer back ellipse edge
+  // meniscus: front line + dimmer back ellipse edge (yields to the portrait)
   float chord = sqrt(max(1.0 - lvl * lvl, 0.02));
   float inSpan = smoothstep(chord + 0.03, chord - 0.02, abs(p.x));
   float men = exp(-abs(p.y - surf) * 55.0) * inSpan;
   vec3 menCol = life ? vec3(1.0, 0.30, 0.22) : vec3(0.55, 0.85, 1.1);
   float domeFade = 1.0 - smoothstep(0.72, 0.92, lvl);
-  col += men * (0.7 + 0.6 * beat) * menCol * (0.45 + 0.55 * res + 0.4 * low) * domeFade;
+  col += men * (0.7 + 0.6 * beat) * menCol * (0.45 + 0.55 * res + 0.4 * low) * domeFade * (1.0 - fg);
   col += liqAvg * fullKick * 0.12;
 
   // ---- reservation: everything above the line is the petrified orb plate ----
@@ -535,8 +562,9 @@ void main(){
 
   vec3 col = base;
   vec3 stoneTex = texture(uStone, uv).rgb;
-  if (aL > 0.001) col = mix(col, orbContent(pL, true,  empty, thick, stoneTex), aL);
-  if (aR > 0.001) col = mix(col, orbContent(pR, false, empty, thick, stoneTex), aR);
+  float fg = foreground(uv);
+  if (aL > 0.001) col = mix(col, orbContent(pL, true,  empty, thick, stoneTex, fg), aL);
+  if (aR > 0.001) col = mix(col, orbContent(pR, false, empty, thick, stoneTex, fg), aR);
 
   // gentle tone + grain
   col = col / (1.0 + col * 0.10);

@@ -507,6 +507,35 @@ addEventListener('resize', resize);
 let last = performance.now(), lastDraw = -1000, fpsE = S.fpsCap, fpsTick = 0;
 const fpsEl = $('fps');
 const motion = reduced ? 0.45 : 1.0;
+/* deterministic capture hook: pin uTime and halt all sim updates so a
+   screenshot at a given state is byte-stable across runs (test-only). */
+let frozenAt = null;
+
+function draw(lvlL, lvlR){
+  gl.uniform2f(U.uRes, canvas.width, canvas.height);
+  gl.uniform2f(U.uViewOrigin, ORB_VIEW.x0 / ART_SIZE.w, ORB_VIEW.y0 / ART_SIZE.h);
+  gl.uniform2f(U.uViewSize, (ORB_VIEW.x1 - ORB_VIEW.x0) / ART_SIZE.w, (ORB_VIEW.y1 - ORB_VIEW.y0) / ART_SIZE.h);
+  gl.uniform1f(U.uTime, S.time);
+  gl.uniform1f(U.uHP, S.hpD);
+  gl.uniform1f(U.uMP, S.mpD);
+  gl.uniform1f(U.uLvlL, lvlL);
+  gl.uniform1f(U.uLvlR, lvlR);
+  gl.uniform1f(U.uSloshL, S.sloshL.a);
+  gl.uniform1f(U.uSloshR, S.sloshR.a);
+  gl.uniform1f(U.uBeat, S.beat);
+  gl.uniform1i(U.uOct, S.oct);
+  gl.uniform1f(U.uFlashL, S.flashL);
+  gl.uniform1f(U.uFlashR, S.flashR);
+  gl.uniform1f(U.uFullL, S.fullL);
+  gl.uniform1f(U.uFullR, S.fullR);
+  gl.uniform1f(U.uPoison, S.poison);
+  gl.uniform1f(U.uBleed, Math.min(1, S.bleedT.length / 4));
+  gl.uniform1f(U.uResL, S.resL);
+  gl.uniform1f(U.uResR, S.resR);
+  gl.uniform1f(U.uResLvlL, S.resL > 0.003 ? levelFromFill(1 - S.resL) : 2.0);
+  gl.uniform1f(U.uResLvlR, S.resR > 0.003 ? levelFromFill(1 - S.resR) : 2.0);
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
+}
 
 function frame(now){
   requestAnimationFrame(frame);
@@ -515,6 +544,12 @@ function frame(now){
   const drawElapsed = now - lastDraw;
   if (drawElapsed < drawInterval) return;
   lastDraw = now - (drawElapsed % drawInterval);
+  if (frozenAt !== null){
+    S.time = frozenAt;
+    syncReadouts();
+    draw(levelFromFill(S.hpD), levelFromFill(S.mpD));
+    return;
+  }
   let dt = Math.min((now - last) / 1000, 0.05);
   last = now;
 
@@ -580,29 +615,7 @@ function frame(now){
   syncReadouts();
 
   /* draw */
-  gl.uniform2f(U.uRes, canvas.width, canvas.height);
-  gl.uniform2f(U.uViewOrigin, ORB_VIEW.x0 / ART_SIZE.w, ORB_VIEW.y0 / ART_SIZE.h);
-  gl.uniform2f(U.uViewSize, (ORB_VIEW.x1 - ORB_VIEW.x0) / ART_SIZE.w, (ORB_VIEW.y1 - ORB_VIEW.y0) / ART_SIZE.h);
-  gl.uniform1f(U.uTime, S.time);
-  gl.uniform1f(U.uHP, S.hpD);
-  gl.uniform1f(U.uMP, S.mpD);
-  gl.uniform1f(U.uLvlL, lvlL);
-  gl.uniform1f(U.uLvlR, lvlR);
-  gl.uniform1f(U.uSloshL, S.sloshL.a);
-  gl.uniform1f(U.uSloshR, S.sloshR.a);
-  gl.uniform1f(U.uBeat, S.beat);
-  gl.uniform1i(U.uOct, S.oct);
-  gl.uniform1f(U.uFlashL, S.flashL);
-  gl.uniform1f(U.uFlashR, S.flashR);
-  gl.uniform1f(U.uFullL, S.fullL);
-  gl.uniform1f(U.uFullR, S.fullR);
-  gl.uniform1f(U.uPoison, S.poison);
-  gl.uniform1f(U.uBleed, Math.min(1, S.bleedT.length / 4));
-  gl.uniform1f(U.uResL, S.resL);
-  gl.uniform1f(U.uResR, S.resR);
-  gl.uniform1f(U.uResLvlL, S.resL > 0.003 ? levelFromFill(1 - S.resL) : 2.0);
-  gl.uniform1f(U.uResLvlR, S.resR > 0.003 ? levelFromFill(1 - S.resR) : 2.0);
-  gl.drawArrays(gl.TRIANGLES, 0, 3);
+  draw(lvlL, lvlR);
 }
 
 Promise.all([loadImg(ART_B64, 'image/jpeg'), loadImg(MASK_B64, 'image/png'), loadImg(NORM_B64, 'image/jpeg'),
@@ -622,7 +635,8 @@ Promise.all([loadImg(ART_B64, 'image/jpeg'), loadImg(MASK_B64, 'image/png'), loa
   sync(); syncReadouts(); resize();
   requestAnimationFrame(t => { last = t; frame(t); });
 });
-window.__WizardOrbs = { S, setHP, setMP, takeDamage, addBleed, HP_MAX, MP_MAX };
+window.__WizardOrbs = { S, setHP, setMP, takeDamage, addBleed, HP_MAX, MP_MAX,
+  freeze: t => { frozenAt = t; } };
 </script>
 <script src="../../shared/wizard-lab.js"></script>
 <script src="../../shared/wizard-annotations.js"></script>
