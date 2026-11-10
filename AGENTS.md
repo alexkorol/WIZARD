@@ -29,10 +29,10 @@ Multi-subproject **Verdigris Systems Laboratory** served from `gh-pages`.
 ## Copy and presentation
 
 Owner rules for wording, naming, lore and decoration are in `owner-rules/OWNER-RULES.md`
-(rules 5–13). `owner-rules/lint.mjs` enforces the term rules over every tool page, data
-script and manifest through `owner-rules/wizard.test.mjs` in `node scripts/wizard-lab.mjs
-verify` and CI; it prints a table of each flagged string. Extend `owner-rules/terms.json`
-when a new invented term is caught; its English allowlist takes real words only.
+(rules 5–13). `node scripts/wizard-lab.mjs verify` runs `owner-rules/lint.mjs` on every
+run: each capitalised word and label word in player-facing text must be in the closed
+glossary (`owner-rules/GLOSSARY.md`), and retired names (`owner-rules/rename-map.json`) fail.
+New terms enter only through `owner-rules/term-verdicts.json` with their origin.
 Rename records: `NAMING.md` and `tools/geometric_skilltree/NAMING.md`.
 
 ## Recurring module work

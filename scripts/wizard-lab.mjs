@@ -464,7 +464,6 @@ function checkModuleTests(failures, results) {
     'tools/geometric_skilltree/tests/jewels.test.js',
     'tools/geometric_skilltree/tests/tree-data.test.mjs',
     'tools/geometric_skilltree/tests/channel-terminology.test.mjs',
-    'owner-rules/wizard.test.mjs',
     'owner-rules/rename-map.test.mjs',
     'tools/geometric_skilltree/tests/runtime-smoke.test.mjs',
     'tools/geometric_skilltree/tests/balance.test.mjs',
@@ -532,6 +531,13 @@ function generate() {
   return true;
 }
 
+// Owner rules: the shared lint (owner-rules/lint.mjs) checks every player-facing string against
+// the closed glossary and the retired names on every verify, quick or full.
+function checkOwnerRules(failures) {
+  const result = spawnSync(process.execPath, [path.join(ROOT, 'owner-rules/lint.mjs'), 'wizard', '--root', ROOT], { cwd: ROOT, encoding: 'utf8' });
+  if (result.status !== 0) fail(failures, `owner-rules lint failed (${result.status}):\n${(result.stdout + result.stderr).trim().slice(0, 4000)}`);
+}
+
 function verify() {
   const { modules, failures } = collectModules();
   const results = [];
@@ -544,6 +550,7 @@ function verify() {
     checkActiveLinks(registry, failures);
     smokeLaunchFiles(registry, failures);
     checkRootCopy(failures);
+    checkOwnerRules(failures);
     const full = process.argv.includes('--full') || process.env.WIZARD_VERIFY_FULL === '1';
     if (full) {
       checkModuleTests(failures, results);
