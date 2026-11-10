@@ -50,8 +50,6 @@ img { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
   20% { opacity: 1; }
   to { opacity: 0; transform: translate(-50%, -34px); }
 }
-.floater.dmg { color: #f3ddb0; font-size: 22px; }
-.floater.crit { color: #f0b048; font-size: 30px; }
 
 .shake { animation: shake .3s; }
 @keyframes shake {

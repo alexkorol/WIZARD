@@ -234,11 +234,7 @@ function hitMonster(m) {
   const dmg = 40 + Math.round(Math.random() * 60);
   const crit = Math.random() < 0.18;
   m.cur -= crit ? dmg * 2 : dmg;
-  const f = document.createElement("span");
-  f.className = "floater dmg" + (crit ? " crit" : "");
-  f.textContent = crit ? `${dmg * 2}!` : dmg;
-  m.el.appendChild(f);
-  setTimeout(() => f.remove(), 1000);
+  // No damage numbers over characters or monsters (owner rule 35); the health bar shows the hit.
   drawMonster(m);
   if (m.cur <= 0) {
     m.dead = true;
