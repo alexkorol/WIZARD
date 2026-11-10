@@ -7,7 +7,7 @@
   "sub": null,
   "stage": "ui",
   "src": null,
-  "blurb": "ARPG resource orb: sloshing liquid with a lit meniscus, swirling body, glass lens highlights and a forged rim.",
+  "blurb": "ARPG resource orb: sloshing liquid with a lit meniscus, swirling body, glassy highlights and a forged rim.",
   "port": "UMG or UI Toolkit: one material on an image widget with Fill as a scalar parameter driven by gameplay. Keep it in a single pass so it batches with the HUD.",
   "level": null,
   "tags": [
@@ -43,7 +43,7 @@
    },
    {
     "id": "glass",
-    "label": "Glass",
+    "label": "Sheen",
     "type": "range",
     "value": "1"
    }
@@ -436,27 +436,27 @@
  },
  {
   "id": "dc-hellfire-mortar",
-  "name": "Lava trench with a magma mortar",
+  "name": "Lava trench throwing magma",
   "set": "Crawl",
   "cat": "Fire",
   "sub": "Construct/Fire/Earth",
   "stage": "full",
-  "src": "Splits the ground into a lava-filled chasm along which a mortar travels, firing magma at enemies.",
-  "blurb": "The floor unzips into a glowing trench, a basalt mortar surfaces in the lava and grinds along it, lobbing shells of magma that splash and cool where they land.",
-  "port": "The trench is a decal with a parallax occlusion or bump offset node and a flow-mapped lava material. The mortar is a small rigged mesh moved along a spline. Shells and splatter are Niagara mesh particles with collision, plus a cooling curve on emissive.",
+  "src": "Splits the ground into a lava-filled chasm along which a basalt block travels, throwing magma at enemies.",
+  "blurb": "The floor unzips into a glowing trench, a basalt block surfaces in the lava and grinds along it, throwing blobs of magma that splash and cool where they land.",
+  "port": "The trench is a decal with a parallax occlusion or bump offset node and a flow-mapped lava material. The block is a small rigged mesh moved along a spline. The thrown magma and splatter are Niagara mesh particles with collision, plus a cooling curve on emissive.",
   "level": "7",
   "tags": [
    "parallax chasm",
    "lava flow",
    "lit basalt meshes",
-   "ballistic shells",
+   "ballistic blobs",
    "cooling splatter"
   ],
   "notes": [
    "The chasm is a parallax decal: the lava surface is sampled a fixed depth below the floor along the view ray, so the far wall shows and the trench reads as a real cut.",
    "Broken slabs along both lips are instanced lit rocks that hop as the crack passes, then sit in the glow of the lava.",
-   "The mortar is a lathed basalt barrel on a rock base. It rises out of the flow, tracks each foe, recoils when it fires and keeps a hot muzzle.",
-   "Shells are crusted magma meshes on a true ballistic arc. Each impact throws viscous blobs that land, flatten and cool from yellow to dull red."
+   "The thrower is a lathed basalt block on a rock base. It rises out of the flow, turns toward each foe, recoils when it throws and keeps a hot mouth.",
+   "The thrown magma is crusted meshes on a true ballistic arc. Each impact throws viscous blobs that land, flatten and cool from yellow to dull red."
   ],
   "params": [
    {
@@ -473,7 +473,7 @@
    },
    {
     "id": "size",
-    "label": "Shell size",
+    "label": "Magma size",
     "type": "range",
     "value": "1"
    },
@@ -503,13 +503,13 @@
     "count": "80"
    },
    {
-    "name": "Mortar base",
+    "name": "Basalt base",
     "geo": "'rock'",
     "blend": "opaque",
     "count": "5"
    },
    {
-    "name": "Magma shells",
+    "name": "Magma blobs",
     "geo": "'sphere'",
     "blend": "opaque",
     "count": "3"
@@ -906,7 +906,7 @@
    }
   ],
   "variants": [
-   "Glass sheath",
+   "Clear ice sheath",
    "Deep winter",
    "Dark blue"
   ],
@@ -1218,7 +1218,7 @@
    "Behind the front the vertices are pushed out by a 3D cell pattern, so the smooth body turns into bulky plates. Normals switch to screen derivative facets.",
    "Spines are instanced crystals placed on the body surface. Each one grows with an overshoot when the front reaches its height, largest on the shoulders and back.",
    "The snap is the beat: the form swells ten percent, a spiked rim flashes for two frames and the loose rime shell bursts off as chips and powder.",
-   "Afterwards the only glow is a slow pulse in the chest and the visor. Mist is born on the body and falls, and frost spreads on the floor around the feet."
+   "Afterwards the only glow is a slow pulse in the chest and the eye slit. Mist is born on the body and falls, and frost spreads on the floor around the feet."
   ],
   "params": [
    {
@@ -1921,7 +1921,7 @@
   "sub": "Buff/Air",
   "stage": "full",
   "src": "Surrounds the caster with a wind wall that knocks aside most incoming projectiles.",
-  "blurb": "A fast wall of wind stands up around the caster and a volley of crossbow quarrels is slapped out of the air one after another, each sent tumbling to clatter across the flagstones.",
+  "blurb": "A fast wall of wind stands up around the caster and a volley of arrows is slapped out of the air one after another, each sent tumbling to clatter across the flagstones.",
   "port": "Tube mesh with panning streak textures and refraction for the wall. Missiles are mesh particles with a collision event against the ward that swaps velocity to the tangent and enables tumble plus floor collision. Crescents are single-frame sprites spawned from the event.",
   "level": "6",
   "tags": [
@@ -1933,9 +1933,9 @@
   ],
   "notes": [
    "The barrier is a flared tube with two layers of fast horizontal streaks, refraction and grit carried round in it. It is hard and quick where Repel Missiles is slow and faint.",
-   "Five quarrels are instanced lathed meshes. Each flies straight to its own contact point, then takes the wind tangent as its new velocity, tumbles, bounces once and stays on the floor.",
+   "Five arrows are instanced lathed meshes. Each flies straight to its own contact point, then takes the wind tangent as its new velocity, tumbles, bounces once and stays on the floor.",
    "Every contact gets a hard white crescent along the wind direction for three frames, a ripple and a lit puff of torn air.",
-   "The floor keeps the story: a scoured ring where the wall stands and five spent quarrels lying where they came to rest."
+   "The floor keeps the story: a scoured ring where the wall stands and five spent arrows lying where they came to rest."
   ],
   "params": [
    {
@@ -2676,7 +2676,7 @@
   ],
   "variants": [
    "Cold metal",
-   "Brass shot",
+   "Bronze shot",
    "Overcharged"
   ],
   "layers": [
@@ -2700,184 +2700,6 @@
    }
   ],
   "chars": 7724
- },
- {
-  "id": "dc-alistairs-walking-alembic",
-  "name": "Walking alembic",
-  "set": "Crawl",
-  "cat": "Alchemy",
-  "sub": "Construct/Alchemy",
-  "stage": "full",
-  "src": "Builds a walking alchemical construct that fights, vents toxic clouds and eventually dispenses potions to allies.",
-  "blurb": "A brass tripod unfolds from a hot ring on the floor, a flask is blown into its cradle and filled, and the finished still stumps forward, belches fumes and throws a punch.",
-  "port": "A small skeletal mesh with a control rig for the tripod gait and an assembly montage. Glass and liquid are two materials with a fill scalar; fumes and forge sparks are Niagara emitters on sockets.",
-  "level": "5",
-  "tags": [
-   "instanced rig",
-   "glass and brass",
-   "procedural walk",
-   "lit fumes",
-   "forge assembly"
-  ],
-  "notes": [
-   "The whole construct is three instanced layers: cylinders stretched between joint positions, spheres on the joints and rebuilt tori for rings and coil. One set of GLSL joint functions drives all of them.",
-   "Assembly is staged per part with overshoot. The flask inflates white hot like blown glass and cools clear before the liquid rises in it.",
-   "The liquid is an inner flask clipped at a sloshing level with rising bubble noise. The glass over it is fresnel and environment reflection only.",
-   "Legs lift in sequence with a body bob, the near arm winds up and drives through, and the spout vents lit fumes on the punch."
-  ],
-  "params": [
-   {
-    "id": "tint",
-    "label": "Liquid",
-    "type": "color",
-    "value": "'#58d060'"
-   },
-   {
-    "id": "fume",
-    "label": "Fumes",
-    "type": "color",
-    "value": "'#b8c840'"
-   },
-   {
-    "id": "brass",
-    "label": "Metal",
-    "type": "color",
-    "value": "'#c08a3a'"
-   },
-   {
-    "id": "vent",
-    "label": "Fume amount",
-    "type": "range",
-    "value": "1"
-   }
-  ],
-  "variants": [
-   "Blue vitriol",
-   "Aqua regia",
-   "Leaky still"
-  ],
-  "layers": [
-   {
-    "name": "Forge ring",
-    "geo": "['ground',1]",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Joints",
-    "geo": "'sphere'",
-    "blend": "opaque",
-    "count": "13"
-   },
-   {
-    "name": "Rings and coil",
-    "geo": "['torus',.08]",
-    "blend": "opaque",
-    "count": "6"
-   },
-   {
-    "name": "Liquid",
-    "geo": "'flask'",
-    "blend": "opaque",
-    "count": null
-   },
-   {
-    "name": "Flask glass",
-    "geo": "'flask'",
-    "blend": "alpha",
-    "count": null
-   }
-  ],
-  "chars": 12982
- },
- {
-  "id": "dc-fulsome-fusillade",
-  "name": "Exploding flask barrage",
-  "set": "Crawl",
-  "cat": "Alchemy",
-  "sub": "Direct damage/Alchemy",
-  "stage": "full",
-  "src": "For several turns, rains exploding beakers of random elements on enemies, with overlapping blasts reacting for extra damage.",
-  "blurb": "Corked glass beakers tumble out of the dark and burst one after another in fire, venom, lightning and frost, ending with two that land together and react.",
-  "port": "One Niagara system per reagent spawned from a data-driven projectile event, with a shared glass shatter mesh emitter. The residue is a decal chosen by reagent. The reaction is a gameplay event that swaps in a steam burst when two impact radii overlap.",
-  "level": "8",
-  "tags": [
-   "instanced glass",
-   "per-instance timeline",
-   "element variants",
-   "lit smoke",
-   "residue decals"
-  ],
-  "notes": [
-   "Seven instanced flasks share one timeline function. Each has its own impact time, target and reagent, and every other layer indexes the same function so glass, burst, smoke and stain stay in step.",
-   "Each reagent gets a different material answer: blackbody fire with soot, a heavy green gas that hugs the floor, hair thin arcs with a fern scorch, and pale mist with ice chips and frost.",
-   "Glass and ice shards are lit instanced meshes on ballistic arcs with one bounce. They stay where they land, next to the scorch, puddle or frost patch.",
-   "The last two beakers land on the same spot. Fire meeting frost gives a larger white steam burst and the only full size graphic flash in the piece."
-  ],
-  "params": [
-   {
-    "id": "tint",
-    "label": "Reaction flash",
-    "type": "color",
-    "value": "'#9fc4e8'"
-   },
-   {
-    "id": "power",
-    "label": "Blast size",
-    "type": "range",
-    "value": "1"
-   },
-   {
-    "id": "smoke",
-    "label": "Smoke",
-    "type": "range",
-    "value": "1"
-   },
-   {
-    "id": "elem",
-    "label": "Reagent (0 mixed)",
-    "type": "range",
-    "value": "0"
-   }
-  ],
-  "variants": [
-   "All fire",
-   "All frost",
-   "All poison"
-  ],
-  "layers": [
-   {
-    "name": "Residue",
-    "geo": "['ground',1]",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Beakers",
-    "geo": "'flask'",
-    "blend": "opaque",
-    "count": null
-   },
-   {
-    "name": "Shards",
-    "geo": "'crystal'",
-    "blend": "opaque",
-    "count": "84"
-   },
-   {
-    "name": "Arcs",
-    "geo": "['strip',20]",
-    "blend": "add",
-    "count": "21"
-   },
-   {
-    "name": "Impact flash",
-    "geo": "'quad'",
-    "blend": "add",
-    "count": null
-   }
-  ],
-  "chars": 13796
  },
  {
   "id": "dc-soul-splinter",
@@ -3161,7 +2983,7 @@
   "notes": [
    "The corpses are instanced mannequin meshes laid flat. They are pulled in three hard yanks with rests between, and each leaves a wet smear along its path.",
    "The fused body is a solid raymarched form: ellipsoids and capsules blended with smooth minimum, so torsos, heads and spare arms melt into one body. It writes depth, so drops and smoke sort against it.",
-   "Its surface is cut into patches by 3D voronoi. Each patch takes a different dead flesh tone or an armour plate, and the borders become dark seams with stitch marks and a dying glow.",
+   "Its surface is cut into patches by 3D voronoi. Each patch takes a different dead flesh tone or a piece of armour, and the borders become dark seams with stitch marks and a dying glow.",
    "Residue is the drag smears, the pool that spreads under the mass, and the gore thrown out at the moment it stands."
   ],
   "params": [
@@ -3251,7 +3073,7 @@
    "Darkness is the effect. The two brazier lights lean toward the caster during the tell, then go out the moment the wave front reaches them, while a growing negative light sinks the middle of the room.",
    "The impact frame is a negative graphic: a spiked black burst with a thin violet rim, held for three frames.",
    "The wave is a ring of lit dark smoke puffs that roll forward around a travelling core, with a soot decal following the front so the floor stays dimmer behind it.",
-   "Each bystander flinches as the front passes and a torn band of shadow cloth knits itself around the visor. Snuffed braziers keep smoking from cooling coals."
+   "Each bystander flinches as the front passes and a torn band of shadow cloth knits itself around the eye slit. Snuffed braziers keep smoking from cooling coals."
   ],
   "params": [
    {
@@ -3373,14 +3195,14 @@
  },
  {
   "id": "dc-dimensional-bullseye",
-  "name": "Marked target, echoed bolts",
+  "name": "Marked target, echoed arrows",
   "set": "Crawl",
   "cat": "Hexes",
   "sub": "Curse/Movement",
   "stage": "full",
   "src": "Links the caster's projectiles to a target so each shot at another enemy also teleports a copy at the target.",
-  "blurb": "A reticle of bent space locks onto one foe, and every bolt thrown at its neighbour is echoed out of a small rift and buried in the marked one.",
-  "port": "Reticle as a translucent material with scene-colour refraction on a camera-facing card. Bolts are mesh particles with a clip plane parameter, and the rifts are small portal cards with a cubemap interior.",
+  "blurb": "A reticle of bent space locks onto one foe, and every arrow shot at its neighbour is echoed out of a small rift and buried in the marked one.",
+  "port": "Reticle as a translucent material with scene-colour refraction on a camera-facing card. Arrows are mesh particles with a clip plane parameter, and the rifts are small portal cards with a cubemap interior.",
   "level": "4",
   "tags": [
    "refraction",
@@ -3390,10 +3212,10 @@
    "graphic line"
   ],
   "notes": [
-   "Two foes make the rule readable: the caster shoots the far one, and a twin bolt leaves a rift beside the marked one a few frames later.",
+   "Two foes make the rule readable: the caster shoots the far one, and a twin arrow leaves a rift beside the marked one a few frames later.",
    "The reticle is mostly refraction. Thin rings and ticks are drawn with screen-space derivatives, and the lens inside them magnifies the armour behind.",
-   "Bolts are lit metal meshes that stay embedded after the hit. The copies are clipped against the rift plane, so they slide out of nothing.",
-   "A hard hairline joins the bolt in flight to its rift for two frames. The rift then closes into a jagged scar of light that fades slowly."
+   "Arrows are lit metal meshes that stay embedded after the hit. The copies are clipped against the rift plane, so they slide out of nothing.",
+   "A hard hairline joins the arrow in flight to its rift for two frames. The rift then closes into a jagged scar of light that fades slowly."
   ],
   "params": [
    {
@@ -3428,7 +3250,7 @@
   ],
   "layers": [
    {
-    "name": "Bolts",
+    "name": "Arrows",
     "geo": "'crystal'",
     "blend": "opaque",
     "count": "4"
@@ -3440,7 +3262,7 @@
     "count": "2"
    },
    {
-    "name": "Bolt streaks",
+    "name": "Arrow streaks",
     "geo": "['strip',1]",
     "blend": "add",
     "count": "4"
@@ -4287,7 +4109,7 @@
   "sub": "Construct",
   "stage": "full",
   "src": "A magic hammer strikes one of the caster's constructs, repairing and empowering it and damaging adjacent enemies.",
-  "blurb": "A translucent sledgehammer assembles from embers above a cracked metal construct, swings back and falls in one stroke; the cracks weld shut, temper colours run down the hull and molten slag spatters the floor while the shock throws back everyone beside it.",
+  "blurb": "A translucent sledgehammer assembles from embers above a cracked metal construct, swings back and falls in one stroke; the cracks close, temper colours run down the hull and molten slag spatters the floor while the shock throws back everyone beside it.",
   "port": "Construct material with a temper gradient driven by a world-space front parameter and a crack mask that lerps closed. The hammer is a translucent mesh with fresnel emissive and a dissolve. Slag is a Niagara mesh emitter with collision that switches to a flattened splat mesh on impact.",
   "level": "5",
   "tags": [
@@ -4382,21 +4204,21 @@
   "sub": "Construct",
   "stage": "full",
   "src": "Builds a mechanical beetle that stays beside the caster and boosts their armour class.",
-  "blurb": "Five white-hot forgings fly in and lock into an metal beetle at the caster's side, which cools, opens its eyes and draws a plate pattern over the caster.",
+  "blurb": "Five white-hot forgings fly in and lock into a metal beetle at the caster's side, which cools, opens its eyes and draws a lattice pattern over the caster.",
   "port": "Build the beetle as five skeletal mesh parts with a heat material parameter and animate the assembly in Sequencer or a Niagara mesh emitter. The ward is an overlay material on the character driven by one sweep scalar.",
   "level": "6",
   "tags": [
    "raymarched sdf",
    "part assembly",
    "cooling metal",
-   "plate overlay",
+   "lattice overlay",
    "lit steam"
   ],
   "notes": [
    "The beetle is one solid raymarched SDF made of five parts. Each part has its own arrival time, offset and heat, so the construct visibly assembles instead of fading in.",
-   "Heat is a per-part scalar that feeds an emissive ramp and the scene light. Parts arrive glowing and cool to dark hammered metal with brass trim over about two seconds.",
+   "Heat is a per-part scalar that feeds an emissive ramp and the scene light. Parts arrive glowing and cool to dark hammered metal with bronze trim over about two seconds.",
    "Every lock throws a small fan of sparks that fall and bounce. The forge circle under the beetle stays behind as a cooling scorch with a pale ash lip.",
-   "The armour bonus is a plate lattice drawn on a shell of the caster mesh. It sweeps up the body once when the last part locks, then settles to a faint rim."
+   "The armour bonus is a lattice drawn on a shell of the caster mesh. It sweeps up the body once when the last part locks, then settles to a faint rim."
   ],
   "params": [
    {
@@ -4407,7 +4229,7 @@
    },
    {
     "id": "ward",
-    "label": "Ward plates",
+    "label": "Ward lattice",
     "type": "color",
     "value": "'#ffd9a0'"
    },
@@ -4426,7 +4248,7 @@
   ],
   "variants": [
    "Cold metal",
-   "Brass works",
+   "Bronze works",
    "Slag"
   ],
   "layers": [
@@ -4437,7 +4259,7 @@
     "count": null
    },
    {
-    "name": "Ward plates",
+    "name": "Ward lattice",
     "geo": "'sphere'",
     "blend": "add",
     "count": null
@@ -4554,13 +4376,13 @@
  },
  {
   "id": "dc-platinum-paragon",
-  "name": "Platinum knight construct",
+  "name": "Silver warrior construct",
   "set": "Crawl",
   "cat": "Constructs",
   "sub": "Construct",
   "stage": "full",
   "src": "Builds a powerful metal champion wielding a copy of the caster's weapon; it can later be overloaded for a wide flurry of attacks.",
-  "blurb": "A white-hot platinum knight drops out of the dark onto a ring mark, cracks the floor, cools to polished metal and then overloads into a four-cut flurry.",
+  "blurb": "A white-hot silver warrior drops out of the dark onto a ring mark, cracks the floor, cools to polished metal and then overloads into a four-cut flurry.",
   "port": "A skeletal mesh with a heat and charge scalar in its material, landing driven by a Sequencer track. Rubble and sparks are Niagara mesh and sprite emitters with collision, the crescents are four slash meshes with an erode material and the crater is a decal with a cooling emissive curve.",
   "level": "9",
   "tags": [
@@ -4572,9 +4394,9 @@
   ],
   "notes": [
    "Tell: the caster raises a hand and a ring of ticks burns into the floor where the champion will land. The fall itself is a third of a second with a thin descent streak above it.",
-   "The knight is the stage mannequin with its own material: polished platinum with engraved plate seams, a heat term that starts blackbody white and cools over two seconds, and steam lifting off its surface.",
+   "The warrior is the stage mannequin with its own material: polished silver with engraved seams, a heat term that starts blackbody white and cools over two seconds, and steam lifting off its surface.",
    "Landing is pressure, not magic: a hard white floor ring for three frames, a refraction ring, thrown rubble that bounces and stays, and a dust skirt lit by the cooling body.",
-   "The overload is the second beat. Seams and the replica greatsword charge in the tint, the knight sinks slightly, then four bold crescents cut around it in 0.3 seconds and leave hot gouges in the stone."
+   "The overload is the second beat. Seams and the replica sword charge in the tint, the warrior sinks slightly, then four bold crescents cut around it in 0.3 seconds and leave hot gouges in the stone."
   ],
   "params": [
    {
@@ -4615,13 +4437,13 @@
     "count": null
    },
    {
-    "name": "Knight",
+    "name": "Warrior",
     "geo": "['dummy','cast']",
     "blend": "opaque",
     "count": null
    },
    {
-    "name": "Replica greatsword",
+    "name": "Replica sword",
     "geo": "'sword'",
     "blend": "opaque",
     "count": null
@@ -4655,7 +4477,7 @@
   "sub": "Shape change",
   "stage": "full",
   "src": "Temporarily grows horns or talons for an extra melee attack.",
-  "blurb": "Glowing veins spread over the helmet and gauntlets, then keratin horns and hooked talons punch out through the metal in a spray of metal and blood, steaming as they cool.",
+  "blurb": "Glowing veins spread over the helmet and hands, then keratin horns and hooked talons punch out through the metal in a spray of metal and blood, steaming as they cool.",
   "port": "Horn and talon meshes on head and hand sockets with a morph or scale curve and a dissolve-in mask; the armour material gets a vein emissive driven by distance from the sockets. Niagara bursts for splinters (mesh renderer with collision), sparks and steam, plus a spatter decal.",
   "level": "1",
   "tags": [
@@ -5360,7 +5182,7 @@
   ],
   "notes": [
    "Anticipation: a shield-boss ring is burned into the floor by one clockwise sweep while four light shafts open and each lights its own pool of floor.",
-   "The weapons are real lit meshes: two swords from the sword mesh and a spear and flanged mace reshaped from one cylinder in the vertex shader, all with bronze fittings.",
+   "The weapons are real lit meshes: two swords from the sword mesh and a spear and mace reshaped from one cylinder in the vertex shader, all with bronze fittings.",
    "Impact: the refused weapons erode from the point upward into rising gold ash, the chosen one lifts, then slams into the stone with a held eight-point flash, chips and a dust ring.",
    "Residue: the blade stays embedded and quivers to rest, cracks and pale dust ring its foot and the floor ring cools to a dull engraved glow."
   ],
@@ -5393,7 +5215,7 @@
   "variants": [
    "Spear chosen",
    "Mace chosen",
-   "Greatsword, pale orange"
+   "Long blade, pale orange"
   ],
   "layers": [
    {
@@ -5644,18 +5466,18 @@
   "sub": "Movement",
   "stage": "full",
   "src": "Takes the caster back to where they came from.",
-  "blurb": "Standing on a black glass floor, the caster rips a seam in the air, warm torchlight from the dungeon they left spills through, and they are drawn into it like thread before the tear snaps shut.",
+  "blurb": "Standing on a polished obsidian floor, the caster rips a seam in the air, warm torchlight from the dungeon they left spills through, and they are drawn into it like thread before the tear snaps shut.",
   "port": "Niagara: shard mesh emitter with a gravity switch on a user event, a character world position offset material for the pull, and the tear as a masked card with a scene capture of the destination inside. The seam is a ribbon with an emissive cooling curve.",
   "level": null,
   "tags": [
    "ragged tear",
    "body spaghettify",
-   "instanced black glass",
+   "instanced obsidian",
    "lit haze",
    "residue seam"
   ],
   "notes": [
-   "Tell: a hairline crack lengthens in the air while black glass shards orbit in the violet haze. The floor is black plate glass, shaded with real reflections.",
+   "Tell: a hairline crack lengthens in the air while obsidian shards orbit in the violet haze. The floor is polished obsidian, shaded with real reflections.",
    "The tear opens to a different light. Its inside is a warm torchlit glimpse of the dungeon and a warm point light spills out over the caster and the floor, the only warm note in the frame.",
    "The caster is a custom mannequin whose vertex shader drags each vertex into the tear with a delay by distance, so the near arm goes first and the body unravels into it.",
    "Impact is the snap: the tear closes in four frames behind a jagged slit and the broken spiral. The orbiting shards lose their hold and fall, bounce and stay, and a cooling seam keeps dripping sparks."
@@ -5693,13 +5515,13 @@
   ],
   "layers": [
    {
-    "name": "Black glass floor",
+    "name": "Obsidian floor",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
    },
    {
-    "name": "Black glass shards",
+    "name": "Obsidian shards",
     "geo": "'crystal'",
     "blend": "opaque",
     "count": "44"
@@ -5733,21 +5555,21 @@
   "sub": "Teleport enemy",
   "stage": "full",
   "src": "Sends a creature far away; those that resist are still weakened.",
-  "blurb": "A splinter of black glass flicked from the caster's hand bites the floor under the target, the stone opens into a turning shaft of nothing, and ribbons of black glass wind around the victim and drag it down before the floor slams shut.",
+  "blurb": "A splinter of obsidian flicked from the caster's hand bites the floor under the target, the stone opens into a turning shaft of nothing, and ribbons of obsidian wind around the victim and drag it down before the floor slams shut.",
   "port": "Unreal: the pit is a decal with a parallax interior cylinder in the material (or a stencil portal). Ribbons are Niagara ribbon emitters on a helix module, the shards a mesh emitter, and the target sink is gameplay animation plus a world position offset twist.",
   "level": null,
   "tags": [
    "raytraced pit",
    "helix ribbons",
-   "instanced black glass",
+   "instanced obsidian",
    "spiral distortion",
    "floor scar"
   ],
   "notes": [
    "The pit is a ray layer: it finds where the camera ray meets the floor inside the rift, then intersects the inside wall of a cylinder below it, so the hole has real parallax depth and the sinking body is cut cleanly by the floor.",
    "The target is a stage actor animated in JS: it sinks with an accelerating curve, spins faster as it goes and sways, which sells the drag without any custom body.",
-   "Five helix ribbons of black glass are camera-facing strips built from an analytic path. They climb out of the pit, wrap the body and are pulled down with it.",
-   "Impact is the close: a hard ring snaps inward with a two-frame spike, splinters of glass erupt around the rim and stay, and the fused spiral scar keeps cooling violet veins."
+   "Five helix ribbons of obsidian are camera-facing strips built from an analytic path. They climb out of the pit, wrap the body and are pulled down with it.",
+   "Impact is the close: a hard ring snaps inward with a two-frame spike, splinters of obsidian erupt around the rim and stay, and the fused spiral scar keeps cooling violet veins."
   ],
   "params": [
    {
@@ -5816,21 +5638,21 @@
   "sub": "Weapon buff",
   "stage": "ground",
   "src": "Permanently gives a melee weapon a chance to teleport what it hits.",
-  "blurb": "A sword hangs over a broken spiral drawn on the floor while a ring of black glass splinters winds in and drives into the metal; the blade splits into three phase-shifted copies, snaps back, and is left dark, veined and slightly blurred.",
+  "blurb": "A sword hangs over a broken spiral drawn on the floor while a ring of obsidian splinters winds in and drives into the metal; the blade splits into three phase-shifted copies, snaps back, and is left dark, veined and slightly blurred.",
   "port": "Unreal: the effect is a material parameter blend on the weapon (emissive veins, fresnel, darkened base) plus a distortion mesh parented to the blade. Ghost copies are two extra mesh renders with world position offset driven by a damped spring curve.",
   "level": null,
   "tags": [
    "phase ghosts",
-   "instanced black glass",
+   "instanced obsidian",
    "heat haze distortion",
    "branded material",
    "floor mark"
   ],
   "notes": [
-   "Tell: the floor mark burns in from the centre out and sixteen black glass splinters spiral inward on a tightening helix. The blade already shivers: three additive copies jitter a few millimetres apart.",
+   "Tell: the floor mark burns in from the centre out and sixteen obsidian splinters spiral inward on a tightening helix. The blade already shivers: three additive copies jitter a few millimetres apart.",
    "Impact: the splinters reach the metal in the same frame. A jagged slit and the spiked burst hold for two frames, the copies jump apart by a hand's width and ring back with a damped oscillation.",
-   "The brand is a material change on the real sword mesh: the metal darkens toward black glass with a violet fresnel and crawling vein cracks. The copies never fully settle, so the weapon keeps a faint double outline.",
-   "Residue: a refraction field shimmers along the blade for the rest of the clip, flakes of glass shed from the metal and lie on the floor, and the floor mark cools to a dim pulse."
+   "The brand is a material change on the real sword mesh: the metal darkens toward obsidian with a violet fresnel and crawling vein cracks. The copies never fully settle, so the weapon keeps a faint double outline.",
+   "Residue: a refraction field shimmers along the blade for the rest of the clip, flakes of obsidian shed from the metal and lie on the floor, and the floor mark cools to a dim pulse."
   ],
   "params": [
    {
@@ -6234,95 +6056,6 @@
    }
   ],
   "chars": 12330
- },
- {
-  "id": "inv-cheibriados-step-from-time",
-  "name": "Hourglass of sand",
-  "set": "Crawl",
-  "cat": "Invocations",
-  "sub": "Escape",
-  "stage": "full",
-  "src": "Removes the caster for a while; they return unchanged after monsters have wandered off.",
-  "blurb": "A bronze-ringed hourglass of light closes around the caster, who runs down into it as sand; the glass stands empty while time flickers past, then the sand climbs back up into the same body.",
-  "port": "Character dissolve material with a world-height threshold and edge emission, a sand cone mesh with a height parameter and Niagara sand ribbons that switch direction on a curve. The hourglass is a translucent refractive mesh with a bronze static frame.",
-  "level": null,
-  "tags": [
-   "height dissolve",
-   "sand simulation",
-   "glass refraction",
-   "bronze frame",
-   "residue"
-  ],
-  "notes": [
-   "Tell: the scute dial draws under the feet and the hourglass fades in as a refracting fresnel shell inside a lit bronze frame.",
-   "The body is a custom mannequin clipped by a height threshold with a glowing sand edge; grains fall from the edge onto a lathe sand cone that grows as the body drains.",
-   "The empty beat is held: flicker in the effect light suggests hours passing, then the threshold reverses and grains rise from the cone back into the body.",
-   "The glass shatters into glints at the end and the spilt sand ring stays on the floor as residue."
-  ],
-  "params": [
-   {
-    "id": "tint",
-    "label": "Time light",
-    "type": "color",
-    "value": "'#9cc4ff'"
-   },
-   {
-    "id": "sand",
-    "label": "Sand",
-    "type": "color",
-    "value": "'#c9b48a'"
-   },
-   {
-    "id": "glass",
-    "label": "Glass",
-    "type": "range",
-    "value": "1"
-   },
-   {
-    "id": "flicker",
-    "label": "Time flicker",
-    "type": "range",
-    "value": "1"
-   }
-  ],
-  "variants": [
-   "Silver sand",
-   "Amber hour",
-   "Still glass"
-  ],
-  "layers": [
-   {
-    "name": "Spilt sand",
-    "geo": "['ground',1]",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Scute dial",
-    "geo": "['ground',1]",
-    "blend": "add",
-    "count": null
-   },
-   {
-    "name": "Body",
-    "geo": "'dummy'",
-    "blend": "opaque",
-    "count": null
-   },
-   {
-    "name": "Bronze frame",
-    "geo": "['torus',.07]",
-    "blend": "opaque",
-    "count": "2"
-   },
-   {
-    "name": "Frame posts",
-    "geo": "'tube'",
-    "blend": "opaque",
-    "count": "3"
-   }
-  ],
-  "chars": 8778
  },
  {
   "id": "campfire",
@@ -6842,7 +6575,7 @@
   "notes": [
    "Tell: crack lines from the triplanar noise sheet climb the armour as an indigo front with the metal darkening below it, while dark motes are drawn into the body.",
    "Impact: 36 instanced armour plates are thrown off on ballistic arcs with tumble and a bounce, and an eclipse corona flashes behind the head.",
-   "The form is the same mannequin with an ink material whose silhouette is alpha clipped by fresnel and rising noise, wrapped in a displaced smoke shell and a stream of lit wisps.",
+   "The form is the same mannequin with an ink-like black material whose silhouette is alpha clipped by fresnel and rising noise, wrapped in a displaced smoke shell and a stream of lit wisps.",
    "Residue: the shed plates stay on the floor around a soft umbra stain, and the room stays dimmer while the form holds."
   ],
   "params": [
@@ -6897,89 +6630,6 @@
    }
   ],
   "chars": 7674
- },
- {
-  "id": "inv-gozag-potion-petition",
-  "name": "Gold potion pour",
-  "set": "Crawl",
-  "cat": "Invocations",
-  "sub": "Potion",
-  "stage": "full",
-  "src": "Pays gold to receive the effects of one of three offered sets of potions.",
-  "blurb": "Coins stream up from the caster's hands into the chosen of three offered flasks, which fills with molten gold and tips it over them in a shining pour that gilds the armour and sinks in.",
-  "port": "Niagara mesh renderer for coins with curl orbits and a collision path for the misses, a glass material with a liquid level parameter, a spline mesh for the pour and a character overlay material with a world height mask for the gilding.",
-  "level": null,
-  "tags": [
-   "instanced coins",
-   "liquid metal",
-   "glass shading",
-   "gilding mask",
-   "coin stamp"
-  ],
-  "notes": [
-   "Tell: three glass flasks appear overhead and 60 instanced gold coins spiral up from both hands. Ten miss, tumble and land on the floor where they stay.",
-   "Impact: the two rejected flasks erode into gold dust, the chosen one is full and tips, and a stamped coin face flashes for two frames.",
-   "The pour is a strip ribbon shaded as liquid metal with a moving front. A gilding mask runs down the armour with drip noise, then sinks in with a warm pulse.",
-   "Residue: shining splats on the floor that dull as they dry, and the scattered coins."
-  ],
-  "params": [
-   {
-    "id": "tint",
-    "label": "Gold light",
-    "type": "color",
-    "value": "'#ffb040'"
-   },
-   {
-    "id": "coins",
-    "label": "Coins",
-    "type": "range",
-    "value": "1"
-   },
-   {
-    "id": "shine",
-    "label": "Shine",
-    "type": "range",
-    "value": "1"
-   }
-  ],
-  "variants": [
-   "Pale electrum",
-   "Red gold",
-   "Frugal"
-  ],
-  "layers": [
-   {
-    "name": "Gold splats",
-    "geo": "['ground',1]",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Flasks",
-    "geo": "'flask'",
-    "blend": "alpha",
-    "count": "3"
-   },
-   {
-    "name": "Coins",
-    "geo": "['lathe',P310_COIN,20]",
-    "blend": "opaque",
-    "count": "60"
-   },
-   {
-    "name": "Pour",
-    "geo": "['strip',32]",
-    "blend": "opaque",
-    "count": null
-   },
-   {
-    "name": "Gilding",
-    "geo": "['dummy','both']",
-    "blend": "alpha",
-    "count": null
-   }
-  ],
-  "chars": 9349
  },
  {
   "id": "inv-qazlal-upheaval",
@@ -7078,21 +6728,21 @@
   "sub": "Kill and move",
   "stage": "full",
   "src": "Merges with a target and bursts out of it, killing it and placing the caster at its location.",
-  "blurb": "The dancer dives into a foe inside a spiral of crimson silk, the body throbs three beats faster and faster, then bursts into gore, silk scraps and brass foil with the dancer standing where it stood.",
-  "port": "Niagara: the dive is a sequencer-driven character with a scale track, ribbons from a spline component, gore as a mesh renderer with collision and a blood decal spawned on impact events. Confetti uses a mesh renderer with a flutter drag module.",
+  "blurb": "The dancer dives into a foe inside a spiral of crimson silk, the body throbs three beats faster and faster, then bursts into gore, silk scraps and gold foil with the dancer standing where it stood.",
+  "port": "Niagara: the dive is a sequencer-driven character with a scale track, ribbons from a spline component, gore as a mesh renderer with collision and a blood decal spawned on impact events. The scraps use a mesh renderer with a flutter drag module.",
   "level": null,
   "tags": [
    "ribbon wrap",
    "instanced gore",
    "wet decal",
    "graphic burst",
-   "cloth confetti"
+   "cloth scraps"
   ],
   "notes": [
    "Two taps print the drum ring, then the dive is a hip-pivoted arc that shrinks the dancer into the target chest while three silk ribbons trail and then bind the body.",
    "The held beat is three accelerating heartbeats swell the armour and leak crimson light through noise cracks before the burst.",
    "The burst frame is an eight-point crimson star held for three frames; chunks are wet lit flesh and armour shards on ballistic arcs that bounce and stay.",
-   "Silk scraps and brass foil flutter down with drag and sway and settle flat; a wet specular blood pool spreads under the arrival pose."
+   "Silk scraps and gold foil flutter down with drag and sway and settle flat; a wet specular blood pool spreads under the arrival pose."
   ],
   "params": [
    {
@@ -7109,7 +6759,7 @@
    },
    {
     "id": "confetti",
-    "label": "Confetti",
+    "label": "Flakes",
     "type": "range",
     "value": "1"
    }
@@ -7151,7 +6801,7 @@
     "count": "56"
    },
    {
-    "name": "Silk and brass confetti",
+    "name": "Silk and gold foil scraps",
     "geo": "'quad'",
     "blend": "opaque",
     "count": "120"
@@ -7338,10 +6988,10 @@
    "brush mark"
   ],
   "notes": [
-   "The serpent is one camera-facing strip with a fake cylindrical normal, so its hex scales are lit as gold metal with ink-dark seams; the head carries two hot eyes.",
+   "The serpent is one camera-facing strip with a fake cylindrical normal, so its hex scales are lit as gold metal with dark seams; the head carries two hot eyes.",
    "Its body follows a single path parameter: a tightening helix around the body, then a bezier lash; a lagged tail on the same path makes the whip motion with no simulation.",
    "The whip crack is the impact frame: a bold gold crescent held for three frames with a light pulse, followed by two instant relocations that leave eroding afterimages.",
-   "Residue is a brushed ink circle at the start mark, scuffed dust at each footfall and gold leaf shed by the serpent as it dissolves, which flutters down and lies flat."
+   "Residue is a brushed soot circle at the start mark, scuffed dust at each footfall and gold leaf shed by the serpent as it dissolves, which flutters down and lies flat."
   ],
   "params": [
    {
@@ -7352,7 +7002,7 @@
    },
    {
     "id": "ink",
-    "label": "Ink",
+    "label": "Soot",
     "type": "color",
     "value": "'#15100c'"
    },
@@ -7370,7 +7020,7 @@
   ],
   "layers": [
    {
-    "name": "Ink circle and scuffs",
+    "name": "Soot circle and scuffs",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
@@ -7404,7 +7054,7 @@
   "sub": "Buff",
   "stage": "full",
   "src": "Raises a ring of gold cloud that increases evasion, accuracy and damage, growing with each melee attack.",
-  "blurb": "A ring of heavy storm cloud condenses around the fighter and is lit from inside in gold; every strike flashes through it, swells it and adds a stroke to the brushed ink circle on the floor.",
+  "blurb": "A ring of heavy storm cloud condenses around the fighter and is lit from inside in gold; every strike flashes through it, swells it and adds a stroke to the brushed soot circle on the floor.",
   "port": "Unreal: a heterogeneous volume or a local volumetric fog material on a torus mesh, with a Niagara gold-leaf emitter in a vortex and strike events from the anim notify driving a growth parameter and point light flashes.",
   "level": null,
   "tags": [
@@ -7416,7 +7066,7 @@
   ],
   "notes": [
    "The cloud is a raymarched torus of 3D noise, swirled faster near the centre, with one shadow tap toward the inner light and one toward the key so it reads as lit vapour rather than glow.",
-   "Growth is literal: each of the three strikes adds radius, height and density to the cloud and extends the brushed ink circle under the fighter.",
+   "Growth is literal: each of the three strikes adds radius, height and density to the cloud and extends the brushed soot circle under the fighter.",
    "Strike beats are gold crescents held for three frames at the fist, spark bursts and a light inside the cloud, so the flash is seen as illumination of the volume.",
    "Gold leaf orbits inside the storm and drifting sparks rise through it; the floor keeps a wind-swept dust spiral."
   ],
@@ -7447,7 +7097,7 @@
   ],
   "layers": [
    {
-    "name": "Wind spiral and ink circle",
+    "name": "Wind spiral and soot circle",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
@@ -7555,64 +7205,6 @@
    }
   ],
   "chars": 14061
- },
- {
-  "id": "inv-xom-bazaar",
-  "name": "Gate to a market",
-  "set": "Crawl",
-  "cat": "Invocations",
-  "sub": "Shop",
-  "stage": "full",
-  "src": "Takes the caster to a market.",
-  "blurb": "A gilded oval gate unfolds, its parallax interior a lantern-lit market under striped canopies; it takes the caster\u2019s gold, swallows them and snaps shut in a spray of confetti.",
-  "port": "Unreal: interior mapping material on the portal plane (or a scene capture of a small bazaar set), Niagara mesh emitters for coins and confetti with collision and a flutter drag module. The pinch is a scale curve on the character with a radial blur post pass.",
-  "level": null,
-  "tags": [
-   "parallax interior",
-   "marquee bulbs",
-   "instanced coins",
-   "paper confetti",
-   "thin-film residue"
-  ],
-  "notes": [
-   "The gate interior is one quad that ray-intersects three planes behind itself (lantern strings, striped canopy and stalls, warm haze), so the market has real parallax as the camera moves.",
-   "The gold frame carries chasing marquee bulbs for the carnival note; colour stays muted reds, creams and brass rather than neon.",
-   "Coins are instanced lit meshes that stream from the body into the gate, and a few are spat back out to tumble, land and lie flat.",
-   "The pinch is the impact: the caster spins down to nothing in the gate, the grin flashes and paper confetti flutters down onto an oily ring. The look: a thin-film iridescent sheen, a crooked grin mark on the impact frame and an oily iridescent stain left on the floor."
-  ],
-  "params": [],
-  "variants": [
-   "Blue and red",
-   "Gold",
-   "Pale lanterns"
-  ],
-  "layers": [
-   {
-    "name": "Floor stain",
-    "geo": "['ground',1]",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Market interior",
-    "geo": "'quad'",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Gilded frame",
-    "geo": "['torus',.07]",
-    "blend": "opaque",
-    "count": null
-   },
-   {
-    "name": "Confetti",
-    "geo": "'box'",
-    "blend": "opaque",
-    "count": "70"
-   }
-  ],
-  "chars": 9689
  },
  {
   "id": "evo-wand-of-digging",
@@ -7774,83 +7366,6 @@
   "chars": 12210
  },
  {
-  "id": "evo-phial-of-floods",
-  "name": "Phial of Floods",
-  "set": "Crawl",
-  "cat": "Evocations",
-  "sub": "Device",
-  "stage": "full",
-  "src": "Unleashes a torrent of water that smashes the target, floods the area with shallow water and waterlogs air-breathers so they cannot cast spells.",
-  "blurb": "A stoppered blue phial is uncorked and a torrent far larger than the bottle hammers the target, then spreads into a rippling shallow flood.",
-  "port": "Niagara ribbon or a spline mesh with a panning water material for the jet, a mesh renderer for the droplets, and a deferred decal with animated normal maps for the flood.",
-  "level": null,
-  "tags": [
-   "lathe glass",
-   "analytic tube",
-   "lit water",
-   "ripple decal",
-   "ballistic droplets"
-  ],
-  "notes": [
-   "The phial is a lathe flask with an alpha glass shell over a sloshing liquid core; the cork pops off on a ballistic arc and stays where it lands.",
-   "The torrent is a lathe tube bent along a bezier in the vertex shader. Its radius swells from the neck to the target, so it reads as impossibly large for the bottle.",
-   "Water is shaded from the stage environment and the effect lights with a fresnel term, flowing normals and foam, never as an emissive fill.",
-   "The flood is a ground decal with expanding ripple normals and caustic light. It drains through a noise threshold and leaves dark wet patches with a specular sheen."
-  ],
-  "params": [
-   {
-    "id": "tint",
-    "label": "Water",
-    "type": "color",
-    "value": "'#3f8fd8'"
-   },
-   {
-    "id": "force",
-    "label": "Torrent size",
-    "type": "range",
-    "value": "1"
-   },
-   {
-    "id": "flood",
-    "label": "Flood radius",
-    "type": "range",
-    "value": "1"
-   },
-   {
-    "id": "foam",
-    "label": "Foam",
-    "type": "range",
-    "value": "1"
-   }
-  ],
-  "variants": [
-   "Dark blue",
-   "Brackish",
-   "Deluge"
-  ],
-  "layers": [
-   {
-    "name": "Flood",
-    "geo": "['ground',1]",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Phial glass",
-    "geo": "'flask'",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Body drench",
-    "geo": "'dummy'",
-    "blend": "alpha",
-    "count": null
-   }
-  ],
-  "chars": 10855
- },
- {
   "id": "evo-tin-of-tremorstones",
   "name": "Tin of exploding pebbles",
   "set": "Crawl",
@@ -8000,7 +7515,7 @@
   "sub": "Device",
   "stage": "full",
   "src": "Fires several trails of flame in a direction, leaving burning clouds.",
-  "blurb": "A brass oil lamp is tipped forward and pours a tongue of fire onto the floor that splits into three snaking trails, each leaving rolling clouds of flame, smoke and a scorched track.",
+  "blurb": "A bronze oil lamp is tipped forward and pours a tongue of fire onto the floor that splits into three snaking trails, each leaving rolling clouds of flame, smoke and a scorched track.",
   "port": "Niagara: three spline-following spawners with a moving head distance, each leaving a grid of short-lived looping fire emitters. The decal is a deferred decal reading a baked trail mask, the lamp a static mesh with a socket for the pour.",
   "level": null,
   "tags": [
@@ -8011,7 +7526,7 @@
    "lathe prop"
   ],
   "notes": [
-   "The lamp is a brass lathe pot with a lathe spout and a torus handle, all rotated together in the vertex shader so the pour tilt stays rigid.",
+   "The lamp is a bronze lathe pot with a lathe spout and a torus handle, all rotated together in the vertex shader so the pour tilt stays rigid.",
    "Three trails share every particle layer: the particle index picks the trail, and each sprite is born when the trail head passes its point, then loops a short burn cycle until its patch burns out.",
    "Fire uses the tinted flame ramp with a real alpha mask and partial additive blending so overlapping sprites do not stack to white.",
    "The scorch decal measures distance to each analytic path directly, so the char, the pale ash lip and the cooling ember line follow the flames exactly."
@@ -8025,7 +7540,7 @@
    },
    {
     "id": "brass",
-    "label": "Brass",
+    "label": "Bronze",
     "type": "color",
     "value": "'#9a6a2c'"
    },
@@ -8043,7 +7558,7 @@
    }
   ],
   "variants": [
-   "Greek fire",
+   "Hot flame",
    "Green",
    "Cold flame"
   ],
@@ -8076,7 +7591,7 @@
    "lit smoke"
   ],
   "notes": [
-   "The rod is a lathe with a procedurally ridged copper coil, a wooden grip and a glass bulb; three instanced box prongs splay from the head.",
+   "The rod is a lathe with a procedurally ridged copper coil, a wooden grip and a rock-crystal bulb; three instanced box prongs splay from the head.",
    "The fan is fourteen instanced ribbons. Each bolt has a hair thin white core and a faint tinted halo, and its jagged path reseeds every 40 ms so the sheet stutters.",
    "The sustained beat drives a strobing light at the target and at the floor, so the whole room flickers blue-white.",
    "Residue is a Lichtenberg scorch fan whose branches cool from tint to soot, plus thin smoke rising from the floor strikes and the prongs."
@@ -8120,7 +7635,7 @@
     "count": null
    },
    {
-    "name": "Glass bulb",
+    "name": "Crystal bulb",
     "geo": "'sphere'",
     "blend": "add",
     "count": null
@@ -9104,7 +8619,7 @@
    "Anticipation is accretion: motes spiral inward and the icicle grows while spinning, then recoils a hand width before launch.",
    "The splash is the hook. The tile grid around the target erupts in leaning crystal clusters, staggered by distance so the cold reads as spreading outward.",
    "Shards and frost mist are lit by the stage key and the cold impact light. Mist sinks and creeps along the floor instead of rising.",
-   "Residue is physical: crystal clusters stay standing, a square rime decal follows the tile layout and the chest plate is frosted where it hit."
+   "Residue is physical: crystal clusters stay standing, a square rime decal follows the tile layout and the chest is frosted where it hit."
   ],
   "params": [
    {
@@ -9135,7 +8650,7 @@
   "variants": [
    "Glacial blue",
    "Rime heavy",
-   "Clear glass"
+   "Clear ice"
   ],
   "layers": [
    {
@@ -9587,7 +9102,7 @@
    "exit sparks"
   ],
   "notes": [
-   "The tell is short: a few arcs crawl over the gauntlet while the hand light rises with a per-frame flicker.",
+   "The tell is short: a few arcs crawl over the hand while the hand light rises with a per-frame flicker.",
    "The beam is a nearly straight channel with two thin braided strands, held for two frames and restruck twice. Only the braids reseed per stroke, so the core reads as one beam.",
    "Five forks drop from the beam to the floor and leave fused pits with a pale ash lip and a cooling glassy centre, so the line of the beam stays on the floor afterwards.",
    "Each target recoils on a slight delay down the line, flashes with vein light, and sprays sparks out of its back in the beam direction."
@@ -10728,7 +10243,7 @@
   "sub": null,
   "stage": "ground",
   "src": null,
-  "blurb": "Cold rain falls in depth layers onto wet stone. A lantern catches the drops and distant lightning lights the sky.",
+  "blurb": "Cold rain falls in depth layers onto wet stone. A clay oil lamp catches the drops and distant lightning lights the sky.",
   "port": "Niagara: GPU sprites with velocity alignment for near rain and a camera-facing cylinder with a panning streak texture for far rain. Ripples are a flipbook normal decal blended into the wet surface layer.",
   "level": null,
   "tags": [
@@ -10741,7 +10256,7 @@
    "Rain is two particle layers at different distances plus a scrolling streak sheet for the far field, which is cheaper than more particles.",
    "Every drop is timed to reach the floor exactly at the end of its life, so nothing pops out in mid air.",
    "Splash rings are flat particles. The wet sheen layer rebuilds the stage puddle mask and adds ripple normals from a cell-based ring function.",
-   "Drops, rings and the sheen all read the lantern through fxLight, so rain near the lantern turns warm and the floor shows a long reflection.",
+   "Drops, rings and the sheen all read the lamp through fxLight, so rain near the lamp turns warm and the floor shows a long reflection.",
    "The distant flash is a huge far light plus a sky glow, with a flicker and an echo strike."
   ],
   "params": [
@@ -10753,7 +10268,7 @@
    },
    {
     "id": "lamp",
-    "label": "Lantern",
+    "label": "Lamp",
     "type": "color",
     "value": "'#ffa24a'"
    },
@@ -10883,13 +10398,13 @@
  },
  {
   "id": "rw-void-drake",
-  "name": "Black glass drake",
+  "name": "Obsidian drake",
   "set": "Rift Wizard",
   "cat": "Arcane",
   "sub": "Arcane/Dragon/Summon",
   "stage": "full",
   "src": "Summons a flying drake whose breath melts walls.",
-  "blurb": "Obsidian shards climb out of a crack in the floor and lock together into a black glass drake whose wings are windows onto a starfield; it hangs on slow beats and breathes a sputtering dark violet stream that slumps a stone wall into dripping violet glass.",
+  "blurb": "Obsidian shards climb out of a crack in the floor and lock together into an obsidian drake whose wings are windows onto a starfield; it hangs on slow beats and breathes a sputtering dark violet stream that slumps a stone wall into dripping violet melt.",
   "port": "Skeletal drake with an emissive seam mask and a scene-texture starfield on the wing membrane material, a Niagara shard convergence emitter for the summon, a breath beam plus smoke emitter on a mouth socket, and a wall mesh with a world-position-offset melt mask and a drip emitter that spawns puddle decals.",
   "level": "4",
   "tags": [
@@ -10897,13 +10412,13 @@
    "starfield wings",
    "obsidian shards",
    "melting wall",
-   "glass residue"
+   "melt residue"
   ],
   "notes": [
    "Summon: a jagged rift opens in the flagstones, instanced obsidian shards rise and converge, and the raymarched body materialises through a noise mask while its plate seams burn bright and cool.",
-   "The body is glossy black glass with faceted plates from 3D voronoi and a thin violet rim; the wing membranes show a parallax starfield, which separates this drake from the fire, ice and storm drakes.",
+   "The body is glossy obsidian with faceted plates from 3D voronoi and a thin violet rim; the wing membranes show a parallax starfield, which separates this drake from the fire, ice and storm drakes.",
    "The breath is not a cone: a tight, flickering core thread wrapped in dark void smoke and violet motes, aimed at a wall rather than a foe, matching the wall-melting rule.",
-   "The wall is a subdivided box whose vertices slump inward and sag downward around the impact; it glows, drips violet glass that pools at its base, then cools to a glossy dark scar."
+   "The wall is a subdivided box whose vertices slump inward and sag downward around the impact; it glows, drips violet melt that pools at its base, then cools to a glossy dark scar."
   ],
   "params": [
    {
@@ -10938,7 +10453,7 @@
   ],
   "layers": [
    {
-    "name": "Rift scar and glass pool",
+    "name": "Rift scar and melt pool",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": "2"
@@ -11132,18 +10647,18 @@
   "sub": "Chaos/Dark/Buff or curse",
   "stage": "full",
   "src": "For a few turns, whenever an enemy takes physical, fire or lightning damage, the nearest enemies take that much chaos damage.",
-  "blurb": "A lacquered red and black carousel wheels out under the enemy line, a rusted crown of hooks strings them up like puppets and barbed threads stitch them together, so when a firebolt burns one, the damage runs down the wires and snaps through the others.",
-  "port": "Niagara ribbons with a sag parameter for the wires and a moving emissive band for the pulse; the crown is a static mesh with a dissolve material. The carousel is a decal using a polar stripe function with a rotation parameter.",
+  "blurb": "A lacquered red and black disc turns out under the enemy line, a corroded crown of hooks strings them up like puppets and barbed threads stitch them together, so when a firebolt burns one, the damage runs down the wires and snaps through the others.",
+  "port": "Niagara ribbons with a sag parameter for the wires and a moving emissive band for the pulse; the crown is a static mesh with a dissolve material. The disc is a decal using a polar stripe function with a rotation parameter.",
   "level": "4",
   "tags": [
-   "marionette threads",
+   "puppet threads",
    "striped polar disc",
    "pulse propagation",
    "alpha graphic crescent",
    "lit fire and smoke"
   ],
   "notes": [
-   "Tell: the floor disc unwinds in a spiral, an metal crown with hanging hooks erodes into being above the group and barbed wires drop from it to every shoulder, then sag between the chests.",
+   "Tell: the floor disc unwinds in a spiral, a metal crown with hanging hooks erodes into being above the group and barbed wires drop from it to every shoulder, then sag between the chests.",
    "Impact: the caster triggers it with an ordinary firebolt. On the hit a crimson bead runs along the links and lands on the neighbours a beat later as a black crescent with a red rim, held for three frames.",
    "The wires are camera-facing strips with a parabolic sag that snaps taut when the pulse passes, and a barbed width profile so they read as wire, not light.",
    "Residue: the burnt target smokes, the wheel keeps turning, the wires keep trembling and blood sprays onto the flagstones under the victims."
@@ -11163,7 +10678,7 @@
    },
    {
     "id": "spin",
-    "label": "Carousel speed",
+    "label": "Disc speed",
     "type": "range",
     "value": "1"
    },
@@ -11181,7 +10696,7 @@
   ],
   "layers": [
    {
-    "name": "Carousel disc",
+    "name": "Spinning disc",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
@@ -11369,12 +10884,12 @@
   "sub": "Dark/Light/Direct damage",
   "stage": "full",
   "src": "Deals a third of the target's current HP as light and chaos damage and heals the caster.",
-  "blurb": "A seal marks a third of the target, then a braided strand of white light and black smoke is pulled out of its chest into the caster, and hot tarnished coins fall away.",
-  "port": "Two Niagara ribbon emitters sharing a spline with a phase offset; the coins are a mesh emitter with collision and a heat dynamic parameter. The seal is a decal plus a camera-facing material driven by a single fill scalar.",
+  "blurb": "A seal marks a third of the target, then a braided strand of white light and black smoke is pulled out of its chest into the caster, and hot tarnished gold discs fall away.",
+  "port": "Two Niagara ribbon emitters sharing a spline with a phase offset; the gold discs are a mesh emitter with collision and a heat dynamic parameter. The seal is a decal plus a camera-facing material driven by a single fill scalar.",
   "level": "5",
   "tags": [
    "analytic ribbons",
-   "instanced coins",
+   "instanced gold discs",
    "seal sdf",
    "lit smoke",
    "split flash"
@@ -11383,7 +10898,7 @@
    "Tell: a gold assessment seal forms over the target and a wedge sweeps exactly one third of it, so the game rule reads before anything moves.",
    "Impact: the seal slams shut, a split white and black crescent holds for two frames, and the target lurches toward the caster.",
    "The strand is two camera-facing ribbons on one bezier path, wound around each other as a helix: one additive and pale, one alpha and black, so it is half light and half dark.",
-   "Residue: sixteen instanced coins spill out white-hot, tumble, bounce and cool to tarnished gold on the floor, a one-third brand smokes under the target and the caster keeps a fading warm rim."
+   "Residue: sixteen instanced gold discs spill out white-hot, tumble, bounce and cool to tarnished gold on the floor, a one-third brand smokes under the target and the caster keeps a fading warm rim."
   ],
   "params": [
    {
@@ -11400,7 +10915,7 @@
    },
    {
     "id": "coins",
-    "label": "Coin heat",
+    "label": "Gold heat",
     "type": "range",
     "value": "1"
    },
@@ -11446,7 +10961,7 @@
   "sub": "Dark/Light/Eye/Buff or curse",
   "stage": "full",
   "src": "All enemies lose chaos and light resistance for several turns.",
-  "blurb": "A seam splits the air above the field and opens on a wet eye with a gold and obsidian iris; its gaze throws half the room into dusk gold and half into cold shadow, and the rings around each enemy crack and rain down as gilt and black glass.",
+  "blurb": "A seam splits the air above the field and opens on a wet eye with a gold and obsidian iris; its gaze throws half the room into dusk gold and half into cold shadow, and the rings around each enemy crack and rain down as gilt and obsidian.",
   "port": "Eyeball as a mesh with an iris material driven by a gaze vector and a lid mask from a screen-aligned SDF. The split lighting is two dynamic lights, one with negative intensity or a light function; shards are a Niagara mesh emitter with collision.",
   "level": "6",
   "tags": [
@@ -11701,20 +11216,20 @@
   "sub": "Light/Buff or curse",
   "stage": "full",
   "src": "Buff: gain large resistance to physical, fire, lightning and chaos damage.",
-  "blurb": "Molten gold runs up the body in the seams of an unseen harness, then floods outward into overlapping lames of translucent amber light that set like cast glass, dripping beads of gold that cool on the floor.",
-  "port": "A character overlay material with a seam mask texture and two scalars (seam reveal height, plate fill), a Niagara mesh emitter for droplets with collision, and a decal for the scorch ring.",
+  "blurb": "Molten gold runs up the body in the seams of an unseen harness, then floods outward into overlapping bands of translucent amber light that set like amber, dripping beads of gold that cool on the floor.",
+  "port": "A character overlay material with a seam mask texture and two scalars (seam reveal height, band fill), a Niagara mesh emitter for droplets with collision, and a decal for the scorch ring.",
   "level": "3",
   "tags": [
    "body shell",
-   "lame sdf pattern",
+   "band sdf pattern",
    "molten seams",
    "refraction",
    "instanced droplets"
   ],
   "notes": [
-   "Tell: a lame pattern in object space (horizontal bands on the torso and legs, rings on the arms and a centre ridge) glows as molten seams climbing from the feet.",
-   "Impact: the plates fill from the seams outward in one beat, a hard ring flashes on the floor for two frames and the light spikes.",
-   "The armour is a shell pushed off the body along normals: amber glass with gold metal reflection, a fresnel rim, a small refraction offset and bright seams, over a custom body that keeps the stage mannequin material.",
+   "Tell: a band pattern in object space (horizontal bands on the torso and legs, rings on the arms and a centre ridge) glows as molten seams climbing from the feet.",
+   "Impact: the bands fill from the seams outward in one beat, a hard ring flashes on the floor for two frames and the light spikes.",
+   "The armour is a shell pushed off the body along normals: glassy amber with gold metal reflection, a fresnel rim, a small refraction offset and bright seams, over a custom body that keeps the stage mannequin material.",
    "Residue: drops fall from the seams on ballistic paths and land as instanced gold beads that cool from white to metal, inside a pale scorched ring."
   ],
   "params": [
@@ -11726,7 +11241,7 @@
    },
    {
     "id": "glass",
-    "label": "Plate glass",
+    "label": "Amber shell",
     "type": "color",
     "value": "'#d79a3a'"
    },
@@ -11768,7 +11283,7 @@
     "count": null
    },
    {
-    "name": "Light plate",
+    "name": "Light bands",
     "geo": "'dummy'",
     "blend": "alpha",
     "count": null
@@ -11873,14 +11388,14 @@
  },
  {
   "id": "rw-ironize",
-  "name": "Allies turned to metal",
+  "name": "Allies turned to bronze",
   "set": "Rift Wizard",
   "cat": "Metallic",
   "sub": "Metallic/Buff or curse/Summon",
   "stage": "full",
   "src": "All allies gain physical, fire and lightning resistance and become metallic.",
-  "blurb": "Metal filings crawl across the floor from the caster to each ally, then a white-hot forging seam climbs every body from boots to helm, leaving riveted metal plate that glows, cools to dark metal and steams.",
-  "port": "A character material layer with a world height mask driven by one scalar per pawn, blending to a tileable riveted metal material with an emissive temperature curve. Niagara handles filings (spline-follow), seam sparks (skeletal mesh surface sampling above the mask height) and steam.",
+  "blurb": "Metal filings crawl across the floor from the caster to each ally, then a white-hot forging seam climbs every body from boots to helm, leaving riveted bronze that glows, cools to dark bronze and steams.",
+  "port": "A character material layer with a world height mask driven by one scalar per pawn, blending to a tileable riveted bronze material with an emissive temperature curve. Niagara handles filings (spline-follow), seam sparks (skeletal mesh surface sampling above the mask height) and steam.",
   "level": "3",
   "tags": [
    "forging seam",
@@ -11891,9 +11406,9 @@
   ],
   "notes": [
    "Tell: dark filings stream along curved field lines on the floor and gather at each ally boots, drawn as lit metallic specks.",
-   "The metal shell is an opaque copy of each mannequin, alpha clipped above a noisy seam line that rises over one second; the plate pattern, rivets and hammered normals are procedural in object space.",
+   "The metal shell is an opaque copy of each mannequin, alpha clipped above a noisy seam line that rises over one second; the panel pattern, rivets and hammered normals are procedural in object space.",
    "The seam front is a thin blackbody band that throws stretched sparks and slag drips, and its light rides up the body so the floor and neighbours change colour.",
-   "Residue: plates cool from orange to grey metal over three seconds, steam lifts off the shoulders, and slag splashes harden on the floor around the feet. A hard glint pops on each helm as it completes."
+   "Residue: the shells cool from orange to dark bronze over three seconds, steam lifts off the shoulders, and slag splashes harden on the floor around the feet. A hard glint pops on each helm as it completes."
   ],
   "params": [
    {
@@ -11906,7 +11421,7 @@
     "id": "iron",
     "label": "Metal",
     "type": "color",
-    "value": "'#6e7177'"
+    "value": "'#9a6a3a'"
    },
    {
     "id": "cool",
@@ -11922,7 +11437,7 @@
    }
   ],
   "variants": [
-   "Bronze",
+   "Copper",
    "Blackened",
    "Silvered"
   ],
@@ -12033,9 +11548,9 @@
   ],
   "notes": [
    "Tell: grains spawn on the body surface and fall under gravity, piling at the feet, while two bronze rings climb out of the floor spinning fast.",
-   "Impact: the rings slam to a stop at chest height, crossing like an armillary; a hard ring flash and a pale light spike mark the lock.",
+   "Impact: the rings slam to a stop at chest height, crossing at right angles; a hard ring flash and a pale light spike mark the lock.",
    "Every grain is closed-form: its falling position is frozen at the lock time, held, then eased onto a slow upward spiral, so time visibly stops and reverses.",
-   "Residue: a clock-face circle with twelve ticks is cut into the floor and filled with molten gold that cools to metal, and the sand pile stays."
+   "Residue: a circle with twelve ticks is cut into the floor and filled with molten gold that cools to metal, and the sand pile stays."
   ],
   "params": [
    {
@@ -12070,7 +11585,7 @@
   ],
   "layers": [
    {
-    "name": "Clock mark",
+    "name": "Ring of ticks",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
@@ -12168,7 +11683,7 @@
    "carved tick sdf"
   ],
   "notes": [
-   "The sword is lit and opaque. Marks from tick() sit on the ridge and the cutting edges glow, both fed by noise that scrolls from guard to tip.",
+   "The sword is lit and opaque. Marks from tick() sit on the ridge and the cutting edges glow, both fed by noise that scrolls from hilt to tip.",
    "The shell is a second copy of the blade scaled outward in the vertex shader and eroded with fast noise, so the element hugs the metal.",
    "The big silhouette comes from a strip billboarded around the blade axis. It never shows an edge and carries the flames, mist or lightning arcs.",
    "Flow sets whether the element rises like fire or sinks like frost, and the same value drives the particles into embers or drips.",
@@ -12752,8 +12267,8 @@
   "cat": "Holy",
   "sub": "Projectile",
   "stage": "full",
-  "src": "Each cast throws a translucent warhammer that spirals outward around the caster, tumbling end over end and ringing off every foe it passes through.",
-  "blurb": "Three quick casts throw three engraved translucent warhammers that tumble end over end along overlapping clockwise spirals, ring off the foes they pierce and dissolve into motes.",
+  "src": "Each cast throws a translucent hammer that spirals outward around the caster, tumbling end over end and ringing off every foe it passes through.",
+  "blurb": "Three quick casts throw three engraved translucent hammers that tumble end over end along overlapping clockwise spirals, ring off the foes they pierce and dissolve into motes.",
   "port": "Niagara: one emitter per cast spawning a mesh particle whose position is a spiral curve sampled by normalised age, with a ribbon emitter attached for the trail and a second for the spin smear. Collision with pawns fires an event emitter for the glint and spark burst; the hammer material uses an engraving mask with emissive in the grooves and a dissolve driven by particle age.",
   "level": "6",
   "tags": [
@@ -12908,8 +12423,8 @@
   "cat": "Fire",
   "sub": "Projectile",
   "stage": "full",
-  "src": "One cast throws a shotgun fan of fireballs that detonate on everything in front of the caster.",
-  "blurb": "A single throw splits a ball of fire into seven, fanning out like buckshot; they burst on three mannequins and the floor in a rippling wall of explosions that leaves soot, embers and scorch marks.",
+  "src": "One cast throws a wide fan of fireballs that detonate on everything in front of the caster.",
+  "blurb": "A single throw splits a ball of fire into seven, fanning out like a handful of thrown stones; they burst on three mannequins and the floor in a rippling wall of explosions that leaves soot, embers and scorch marks.",
   "port": "Niagara: one emitter spawns N projectile particles in a cone with per-particle speed and delay, each with a ribbon and a collision event that triggers burst emitters and a deferred decal. In VFX Graph, a GPU event per collision drives the burst systems.",
   "level": "6",
   "tags": [
@@ -13243,19 +12758,19 @@
   "sub": "Area",
   "stage": "full",
   "src": "Each cast adds another translucent blade to the storm orbiting the caster; the blades cut everything they pass and expire one by one.",
-  "blurb": "Twelve pale green-cyan sabres stream from the casting hand and settle on three orbit rings around the caster, each drawing a thin circling trail, while a green-grey mist whirls at the centre; they expire one at a time in the order they were cast.",
+  "blurb": "Twelve pale green-cyan curved blades stream from the casting hand and settle on three orbit rings around the caster, each drawing a thin circling trail, while a green-grey mist whirls at the centre; they expire one at a time in the order they were cast.",
   "port": "Niagara: one mesh emitter with a ring module (angle = slot + speed[ring]*age, radius[ring]) spawning one blade per stack event, a ribbon renderer sampling the same orbit, a sprite emitter for the lit mist with a vortex force. Blade material: translucent with fresnel edge emissive and an erosion scalar; trails as additive ribbons with age fade.",
   "level": "4",
   "tags": [
-   "instanced sabre mesh",
+   "instanced curved blade mesh",
    "fresnel ghost material",
    "analytic ribbons",
    "lit mist vortex",
    "alpha erosion"
   ],
   "notes": [
-   "Reference: the Blade Vortex wiki screenshot (research/refs/poe_blade_vortex_wiki.png): curved sabre silhouettes on two or three radii, flat to their orbit, thin ring trails, a mist vortex at the centre.",
-   "The sabre is a custom lens-section mesh (curved centre line, widening belly, tapered tip, short hilt) registered as a GEO builder and drawn instanced. Each instance is placed in the vertex shader on an analytic orbit: three radii at three angular speeds, slot angles spread per ring, with radius wobble, height weave and a slow roll so no ring is a rigid wheel.",
+   "Reference: the Blade Vortex wiki screenshot (research/refs/poe_blade_vortex_wiki.png): curved blade silhouettes on two or three radii, flat to their orbit, thin ring trails, a mist vortex at the centre.",
+   "The blade is a custom lens-section mesh (curved centre line, widening belly, tapered tip, short hilt) registered as a GEO builder and drawn instanced. Each instance is placed in the vertex shader on an analytic orbit: three radii at three angular speeds, slot angles spread per ring, with radius wobble, height weave and a slow roll so no ring is a rigid wheel.",
    "The ghost material is two passes: an alpha body (tint plus env() reflection scaled by fresnel, streak noise) and an additive shell (hot cutting edge, dimmer spine, fresnel rim, simplex flicker) plus a faint billboard halo per blade. Blades materialise and expire by soft alpha erosion of 3D simplex noise with a glowing rim, shedding motes.",
    "Trails are camera-facing ribbons that resample the orbit function over nearly one full turn into the past, so every blade draws its own thin circle; the ribbon holds and fades after its blade expires, so the rings are the residue that goes last.",
    "The centre vortex is lit vapour sprites (puffLit under the effect lights, green-grey albedo, a touch of tint) spiralling in with the stack count, plus thin additive wisps and five tumbling blade ghosts inside it. Four quickly rigged casts keep the hand out while the blades stack from it."
@@ -13501,11 +13016,11 @@
   "sub": null,
   "stage": "ground",
   "src": null,
-  "blurb": "A corked glass flask with a sloshing, softly glowing liquid, rising bubbles and thick glass reflections.",
-  "port": "Unreal: liquid as a masked material with a world-aligned plane clip and two-sided shading that swaps the normal on back faces. Glass as a separate translucent mesh with a reflection capture. Bubbles in Niagara, killed at the fill height.",
+  "blurb": "A stoppered faience flask with a sloshing, softly glowing liquid, rising bubbles and thick glazed reflections.",
+  "port": "Unreal: liquid as a masked material with a world-aligned plane clip and two-sided shading that swaps the normal on back faces. The flask shell as a separate translucent mesh with a reflection capture. Bubbles in Niagara, killed at the fill height.",
   "level": null,
   "tags": [
-   "glass",
+   "faience",
    "liquid clip",
    "fresnel",
    "parallax swirl",
@@ -13514,7 +13029,7 @@
   "notes": [
    "The liquid is a slightly smaller copy of the flask, alpha clipped at a tilting plane. Back faces seen through the cut are shaded as the flat liquid surface.",
    "Liquid depth is faked by stepping a refracted ray through 3D noise in object space, so the swirl shifts with parallax like a volume.",
-   "Glass is two alpha passes, back faces then front faces. Opacity and reflection both follow fresnel, so the silhouette is thick and the centre is clear.",
+   "The flask shell is two alpha passes, back faces then front faces. Opacity and reflection both follow fresnel, so the silhouette is thick and the centre is clear.",
    "Bubbles follow the flask profile and stop at the fill line. They skip the depth test because they live inside the opaque liquid.",
    "A point light inside the flask tints the floor, which grounds the glow."
   ],
@@ -13570,13 +13085,13 @@
     "count": null
    },
    {
-    "name": "Glass back",
+    "name": "Flask back",
     "geo": "'flask'",
     "blend": "alpha",
     "count": null
    },
    {
-    "name": "Glass front",
+    "name": "Flask front",
     "geo": "'flask'",
     "blend": "alpha",
     "count": null

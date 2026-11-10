@@ -2992,7 +2992,7 @@ function combatOverlay(el,O){if(!O){el.hidden=true;return;}el.hidden=false;
 LAB.add({
   id:'health-globe', name:'Life Globe', cat:'UI', stage:'ui',
   tags:['sdf','liquid surface','fake refraction','ui shader'],
-  blurb:'ARPG resource orb: sloshing liquid with a lit meniscus, swirling body, glass lens highlights and a forged rim.',
+  blurb:'ARPG resource orb: sloshing liquid with a lit meniscus, swirling body, glassy highlights and a forged rim.',
   notes:[
     'The sphere is faked in 2D: a disc SDF gives a normal, which bends the liquid lookup so the surface appears to wrap.',
     'The fill line is two sine waves plus noise; the meniscus is a thin bright band along that line with foam above it.',
@@ -3004,7 +3004,7 @@ LAB.add({
     {id:'fill',label:'Fill',min:0,max:1,value:.68},
     {id:'tint',label:'Liquid',type:'color',value:'#d3141c'},
     {id:'slosh',label:'Slosh',min:0,max:2,value:.7},
-    {id:'glass',label:'Glass',min:0,max:1.5,value:1}
+    {id:'glass',label:'Sheen',min:0,max:1.5,value:1}
   ],
   variants:[
     {name:'Mana',set:{tint:'#1a4cff'}},
@@ -3714,17 +3714,17 @@ const sm=x=>{x=clamp01(x);return x*x*(3-2*x);};
 const yaw=a=>lerp(lerp(yawFor(0,a),yawFor(1,a),sm((a-2.65)/.6)),yawFor(2,a),sm((a-3.95)/.6));
 const recoil=a=>TF.reduce((s,t)=>s+(a>t?Math.exp(-(a-t)*6):0),0);
 LAB.add({
-  id:'dc-hellfire-mortar', name:'Lava trench with a magma mortar', set:'Crawl', cat:'Fire', sub:'Construct/Fire/Earth', level:7, legacy:false, duration:6.9, stage:'full',
-  src:'Splits the ground into a lava-filled chasm along which a mortar travels, firing magma at enemies.',
-  tags:['parallax chasm','lava flow','lit basalt meshes','ballistic shells','cooling splatter'],
-  blurb:'The floor unzips into a glowing trench, a basalt mortar surfaces in the lava and grinds along it, lobbing shells of magma that splash and cool where they land.',
+  id:'dc-hellfire-mortar', name:'Lava trench throwing magma', set:'Crawl', cat:'Fire', sub:'Construct/Fire/Earth', level:7, legacy:false, duration:6.9, stage:'full',
+  src:'Splits the ground into a lava-filled chasm along which a basalt block travels, throwing magma at enemies.',
+  tags:['parallax chasm','lava flow','lit basalt meshes','ballistic blobs','cooling splatter'],
+  blurb:'The floor unzips into a glowing trench, a basalt block surfaces in the lava and grinds along it, throwing blobs of magma that splash and cool where they land.',
   notes:[
     'The chasm is a parallax decal: the lava surface is sampled a fixed depth below the floor along the view ray, so the far wall shows and the trench reads as a real cut.',
     'Broken slabs along both lips are instanced lit rocks that hop as the crack passes, then sit in the glow of the lava.',
-    'The mortar is a lathed basalt barrel on a rock base. It rises out of the flow, tracks each foe, recoils when it fires and keeps a hot muzzle.',
-    'Shells are crusted magma meshes on a true ballistic arc. Each impact throws viscous blobs that land, flatten and cool from yellow to dull red.'
+    'The thrower is a lathed basalt block on a rock base. It rises out of the flow, turns toward each foe, recoils when it throws and keeps a hot mouth.',
+    'The thrown magma is crusted meshes on a true ballistic arc. Each impact throws viscous blobs that land, flatten and cool from yellow to dull red.'
   ],
-  port:'The trench is a decal with a parallax occlusion or bump offset node and a flow-mapped lava material. The mortar is a small rigged mesh moved along a spline. Shells and splatter are Niagara mesh particles with collision, plus a cooling curve on emissive.',
+  port:'The trench is a decal with a parallax occlusion or bump offset node and a flow-mapped lava material. The block is a small rigged mesh moved along a spline. The thrown magma and splatter are Niagara mesh particles with collision, plus a cooling curve on emissive.',
   cam:{yaw:.55,pitch:.24,dist:9.2,target:[-1.25,1.,0.]},
   actors:[{p:[-1.5,0,-2.5],ry:.25},{p:[1.9,0,-2.4],ry:-.2},{p:[-3.9,0,1.9],ry:2.3}],
   caster:{kind:'slamcast',release:HREL,actor:2,to:[-2.6,.6],at:[-3.45,.3,1.5]},
@@ -3732,7 +3732,7 @@ LAB.add({
   params:[
     {id:'tint',label:'Lava',type:'color',value:'#ff6a1c'},
     {id:'width',label:'Chasm width',min:.6,max:1.6,value:1},
-    {id:'size',label:'Shell size',min:.6,max:1.6,value:1},
+    {id:'size',label:'Magma size',min:.6,max:1.6,value:1},
     {id:'fumes',label:'Fumes',min:0,max:1.5,value:1}
   ],
   variants:[
@@ -3785,21 +3785,21 @@ float hmHot(){float h=0.;for(int i=0;i<3;i++){float tt=u_age-hmTF(float(i));h+=s
       p+=vec3(x,sc*.22+hop,HM_Z+sd*(hw+.04+irnd.w*irnd.w*.38*op));vis=step(.03,op);`,fs:`
       vec3 nn=flatN(P);if(dot(nn,V)<0.)nn=-nn;float k1=tri(P*1.3+rnd.xyz*4.,nn).r;
       col=shade(vec3(.09,.085,.085)*(.5+k1),.9,0.,nn,V,P);a=1.;`},
-    {name:'Mortar barrel',geo:['lathe',[[0,0],[.21,0],[.25,.08],[.2,.2],[.19,.8],[.25,.86],[.25,1],[.15,1],[.15,.5],[0,.5]],14],blend:'opaque',
+    {name:'Basalt block',geo:['lathe',[[0,0],[.21,0],[.25,.08],[.2,.2],[.19,.8],[.25,.86],[.25,1],[.15,1],[.15,.5],[0,.5]],14],blend:'opaque',
       xf:(t,a)=>{const ph=yaw(a),rc=recoil(a)*.22;return {p:[mx(a)+.556*Math.sin(ph)*rc,my(a)+.35-.83*rc,HZ+.556*Math.cos(ph)*rc],r:[-.59,ph,0],s:[1.35,1.45,1.35]};},fs:`
       vec3 nn=flatN(P);if(dot(nn,V)<0.)nn=-nn;float cr=tri(OP*1.6,nn).a;float k1=tri(OP*2.3,nn).r;
       float bore=step(length(OP.xz),.16)*step(.45,OP.y);float hot=hmHot();
       col=shade(vec3(.075,.065,.06)*(.45+k1)*(1.-bore*.7),.82,0.,nn,V,P);
       float heat=smoothstep(.5,.95,cr)*(.45+.5*hot+.5*smoothstep(.5,0.,OP.y))+bore*(.5+.6*hot)+smoothstep(.85,1.,OP.y)*hot*.35*k1;
       col+=flame(min(heat,1.3),P_tint)*1.5;a=1.;`},
-    {name:'Mortar base',geo:'rock',blend:'opaque',count:5,vs:`
+    {name:'Basalt base',geo:'rock',blend:'opaque',count:5,vs:`
       float an=inst*1.3+.3;float sc=mix(.34,.5,irnd.x);
       p=rotAxis(p*sc,normalize(irnd.xyz-.5),inst*2.)+vec3(cos(an)*.27,.12+.06*sin(inst*2.3),sin(an)*.2)+vec3(hmMx(u_age),hmMy(u_age),HM_Z);
       n=rotAxis(n,normalize(irnd.xyz-.5),inst*2.);`,fs:`
       vec3 nn=flatN(P);if(dot(nn,V)<0.)nn=-nn;float cr=tri(P*1.6+rnd.xyz,nn).a;float k1=tri(P*2.3,nn).r;
       col=shade(vec3(.075,.065,.06)*(.45+k1),.82,0.,nn,V,P);
       col+=flame(min(smoothstep(.5,.95,cr)*(.3+.9*smoothstep(.35,0.,P.y))+smoothstep(.12,0.,P.y)*.8,1.2),P_tint)*1.5;a=1.;`},
-    {name:'Magma shells',geo:'sphere',blend:'opaque',count:3,vs:`
+    {name:'Magma blobs',geo:'sphere',blend:'opaque',count:3,vs:`
       float tau=u_age-hmTF(inst);vec3 c=hmShell(inst,tau);p+=n*(nz(uv*2.+inst*.3).r-.5)*.45;
       vec3 ax=normalize(vec3(1.,.3,.2));p=rotAxis(p,ax,tau*9.)*.17*P_size+c;n=rotAxis(n,ax,tau*9.);
       vis=step(0.,tau)*step(tau,HM_FT);`,fs:`
@@ -4340,7 +4340,7 @@ LAB.add({
     {id:'mist',label:'Vapour',min:0,max:1.5,value:1}
   ],
   variants:[
-    {name:'Glass sheath',set:{rime:.1,spikes:.8}},
+    {name:'Clear ice sheath',set:{rime:.1,spikes:.8}},
     {name:'Deep winter',set:{rime:1,mist:1.5,spikes:1.3}},
     {name:'Dark blue',set:{tint:'#5a78e0',rime:.35}}
   ],
@@ -4849,7 +4849,7 @@ LAB.add({
     'Behind the front the vertices are pushed out by a 3D cell pattern, so the smooth body turns into bulky plates. Normals switch to screen derivative facets.',
     'Spines are instanced crystals placed on the body surface. Each one grows with an overshoot when the front reaches its height, largest on the shoulders and back.',
     'The snap is the beat: the form swells ten percent, a spiked rim flashes for two frames and the loose rime shell bursts off as chips and powder.',
-    'Afterwards the only glow is a slow pulse in the chest and the visor. Mist is born on the body and falls, and frost spreads on the floor around the feet.'
+    'Afterwards the only glow is a slow pulse in the chest and the eye slit. Mist is born on the body and falls, and frost spreads on the floor around the feet.'
   ],
   port:'Character material with a Transform scalar: height masked lerp to an ice layer plus world position offset from a cell texture. Spines are socketed meshes scaled by the same scalar. Shell burst and mist are Niagara emitters sampling the skeletal mesh surface.',
   cam:{yaw:.55,pitch:.12,dist:4.9,target:[0,1.05,0]},
@@ -5948,12 +5948,12 @@ LAB.add({
   src:'Surrounds the caster with a wind wall that knocks aside most incoming projectiles.',
   duration:5.8,stage:'full',
   tags:['vortex wall','instanced missiles','ballistic tumble','graphic crescents','refraction'],
-  blurb:'A fast wall of wind stands up around the caster and a volley of crossbow quarrels is slapped out of the air one after another, each sent tumbling to clatter across the flagstones.',
+  blurb:'A fast wall of wind stands up around the caster and a volley of arrows is slapped out of the air one after another, each sent tumbling to clatter across the flagstones.',
   notes:[
     'The barrier is a flared tube with two layers of fast horizontal streaks, refraction and grit carried round in it. It is hard and quick where Repel Missiles is slow and faint.',
-    'Five quarrels are instanced lathed meshes. Each flies straight to its own contact point, then takes the wind tangent as its new velocity, tumbles, bounces once and stays on the floor.',
+    'Five arrows are instanced lathed meshes. Each flies straight to its own contact point, then takes the wind tangent as its new velocity, tumbles, bounces once and stays on the floor.',
     'Every contact gets a hard white crescent along the wind direction for three frames, a ripple and a lit puff of torn air.',
-    'The floor keeps the story: a scoured ring where the wall stands and five spent quarrels lying where they came to rest.'
+    'The floor keeps the story: a scoured ring where the wall stands and five spent arrows lying where they came to rest.'
   ],
   port:'Tube mesh with panning streak textures and refraction for the wall. Missiles are mesh particles with a collision event against the ward that swaps velocity to the tangent and enables tumble plus floor collision. Crescents are single-frame sprites spawned from the event.',
   cam:{yaw:.38,pitch:.15,dist:6.2,target:[.2,1.1,.2]},
@@ -5992,7 +5992,7 @@ vec3 dfTan(float i){float az=dfAz(i);return vec3(-sin(az),0.,cos(az));}`,
       float dustm=smoothstep(.25,.95,n1*.6+n2*.5)*smoothstep(2.4,1.3,pc.y)*smoothstep(.6,1.1,pc.y)*(1.-groove*.8);
       vec3 dc=vec3(.42,.4,.36)*(u_amb*5.+u_keyCol*.5+fxLight(P)*.6);float aD=dustm*.36*P_wall,aG=groove*.3;
       col=dc*aD/max(aD+aG,1e-3);a=sat(aD+aG)*up*(.3+.7*ring+.4*dustm);`},
-    {name:'Quarrels',geo:['lathe',[[0,0],[.034,.006],[.034,.1],[.014,.15],[.014,.42],[.03,.425],[0,.53]],6],count:5,blend:'opaque',vs:`
+    {name:'Arrows',geo:['lathe',[[0,0],[.034,.006],[.034,.1],[.014,.15],[.014,.42],[.03,.425],[0,.53]],6],count:5,blend:'opaque',vs:`
       float th=dfTh(inst);float tt=u_age-th;vec3 W=dfW(inst);vec3 rad=dfRad(inst);vec3 tn=dfTan(inst);
       vec3 inDir=normalize(-rad+vec3(0.,-.06,0.)+tn*(irnd.x-.5)*.3);vec3 c;vec3 d;data=vec4(p,inst);
       if(tt<0.){c=W+inDir*tt*17.;d=inDir;}
@@ -6004,8 +6004,8 @@ vec3 dfTan(float i){float az=dfAz(i);return vec3(-sin(az),0.,cos(az));}`,
         d=rotAxis(hd,ax,(te-tc)*mix(9.,15.,irnd.y)*(irnd.z<.5?1.:-1.));}
       vec3 q=(p-vec3(0.,.27,0.))*vec3(1.1,1.5,1.1);p=c+aimY(q,d);n=aimY(n,d);vis=step(-.6,tt)*step(u_life,.985);`,
       fs:`float y=data.y;float k=nz(vec2(y*4.,atan(data.z,data.x)*.3+data.w)).r;
-      vec3 wood=vec3(.5,.37,.22)*(.6+.7*k);vec3 steel=vec3(.5,.51,.55);vec3 vane=vec3(.42,.38,.3);
-      float hd=step(.42,y);float fl=step(y,.11);vec3 alb=mix(mix(wood,vane,fl),steel,hd);
+      vec3 wood=vec3(.5,.37,.22)*(.6+.7*k);vec3 bronze=vec3(.6,.42,.2);vec3 vane=vec3(.42,.38,.3);
+      float hd=step(.42,y);float fl=step(y,.11);vec3 alb=mix(mix(wood,vane,fl),bronze,hd);
       col=shade(alb,mix(.7,.3,hd),hd*.9,N,V,P);a=1.;`},
     {name:'Hand gather',type:'particles',count:60,life:.55,blend:'alpha',soft:.1,stretch:.6,sim:`
       float ba=u_age-T;float on=smoothstep(.15,DF_REL*.7,ba)*step(ba,DF_REL)*step(-5.,u_hand.y);vec3 h=r.x<.5?u_hand:u_handL;
@@ -6831,8 +6831,8 @@ float ssMask(vec3 op){float n=nz(op.xy*1.1+op.z*.9).r+nz(op.xy*3.7+op.z*2.9).b*.
 })();
 /* ---- 211_crawl_earth-alchemy.js ---- */
 (function(){
-/* Crawl pack 211: late Earth magic and the Alchemy school.
-   Stone, iron, quicksilver, glass and heavy gas. Materials are lit; emissive stays small. */
+/* Crawl pack 211: late Earth magic.
+   Stone, metal and quicksilver. Materials are lit; emissive stays small. */
 
 /* ============ Statue Form ============ */
 {
@@ -6963,7 +6963,7 @@ LAB.add({
   ],
   variants:[
     {name:'Cold metal',set:{tint:'#7fc4ff',metal:'#59606c'}},
-    {name:'Brass shot',set:{metal:'#a8843c',tint:'#ffb040'}},
+    {name:'Bronze shot',set:{metal:'#a8843c',tint:'#ffb040'}},
     {name:'Overcharged',set:{force:1.6,smoke:1.4}}
   ],
   glsl:`
@@ -7035,292 +7035,6 @@ float ofGone(){return step(OF_HIT,u_life);}`,
     {name:'Shock distortion',geo:'quad',billboard:true,blend:'add',xf:{p:[B[0],B[1],0],s:3.6},fs:`
       float tt=ofT();vec2 g=uv*2.-1.;float d=length(g)*1.8;
       float w=band(d,tt*5.,.22)*exp(-tt*5.)*ofGone();dist=normalize(g+1e-4)*w*.028;a=0.;`}
-  ]
-});
-}
-{
-const DUR=6, PUNCH=4.3;
-const sm=(a,b,x)=>{x=Math.min(Math.max((x-a)/(b-a),0),1);return x*x*(3-2*x);};
-const rootX=age=>-1.2+1.2*sm(2.4,4.1,age);
-LAB.add({
-  id:'dc-alistairs-walking-alembic', name:"Walking alembic", set:'Crawl', cat:'Alchemy', sub:'Construct/Alchemy', level:5, legacy:false,
-  src:'Builds a walking alchemical construct that fights, vents toxic clouds and eventually dispenses potions to allies.',
-  duration:DUR, stage:'full',
-  markers:{release:.2, impact:PUNCH},
-  actors:(t,age)=>{const T=age-PUNCH;const k=T>0?Math.exp(-T*3)*Math.sin(Math.min(T*10,Math.PI*.5)):0;return [{p:[1.5+k*.22,0,0],ry:-1.57,rx:-k*.3}];},
-  shadows:(t,age)=>[[rootX(age),0,1.1,.8]],
-  tags:['instanced rig','glass and brass','procedural walk','lit fumes','forge assembly'],
-  blurb:'A brass tripod unfolds from a hot ring on the floor, a flask is blown into its cradle and filled, and the finished still stumps forward, belches fumes and throws a punch.',
-  notes:[
-    'The whole construct is three instanced layers: cylinders stretched between joint positions, spheres on the joints and rebuilt tori for rings and coil. One set of GLSL joint functions drives all of them.',
-    'Assembly is staged per part with overshoot. The flask inflates white hot like blown glass and cools clear before the liquid rises in it.',
-    'The liquid is an inner flask clipped at a sloshing level with rising bubble noise. The glass over it is fresnel and environment reflection only.',
-    'Legs lift in sequence with a body bob, the near arm winds up and drives through, and the spout vents lit fumes on the punch.'
-  ],
-  port:'A small skeletal mesh with a control rig for the tripod gait and an assembly montage. Glass and liquid are two materials with a fill scalar; fumes and forge sparks are Niagara emitters on sockets.',
-  cam:{yaw:.52,pitch:.1,dist:5.7,target:[.05,1.1,0]},
-  params:[
-    {id:'tint',label:'Liquid',type:'color',value:'#58d060'},
-    {id:'fume',label:'Fumes',type:'color',value:'#b8c840'},
-    {id:'brass',label:'Metal',type:'color',value:'#c08a3a'},
-    {id:'vent',label:'Fume amount',min:0,max:1.6,value:1}
-  ],
-  variants:[
-    {name:'Blue vitriol',set:{tint:'#3fa0ff',fume:'#9ab0d0'}},
-    {name:'Aqua regia',set:{tint:'#ff8a30',fume:'#d08a40',brass:'#8f8f98'}},
-    {name:'Leaky still',set:{vent:1.6}}
-  ],
-  glsl:`
-#define AL_PUNCH ${PUNCH.toFixed(3)}
-float alIn(float t0,float d){return sat((u_age-t0)/d);}
-float alWalk(){return smoothstep(2.4,2.8,u_age)*(1.-smoothstep(5.2,5.6,u_age));}
-vec3 alRootT(float tm){float w=smoothstep(2.4,2.8,tm)*(1.-smoothstep(5.2,5.6,tm));return vec3(-1.2+1.2*smoothstep(2.4,4.1,tm),abs(sin(tm*5.))*.035*w,sin(tm*5.)*.03*w);}
-vec3 alRoot(){return alRootT(u_age);}
-float alRise(){return .82*easeOut(alIn(.15,.6));}
-float alPunch(){return smoothstep(AL_PUNCH-.18,AL_PUNCH-.02,u_age)*(1.-smoothstep(AL_PUNCH+.05,AL_PUNCH+.6,u_age));}
-void alLeg(float k,out vec3 hip,out vec3 knee,out vec3 foot){vec3 R=alRoot();float an=k*TAU/3.+.5;vec3 d=vec3(cos(an),0.,sin(an));
-  float e=easeOutBack(alIn(.2+k*.12,.45));float ph=u_age*5.+k*TAU/3.;float lift=max(sin(ph),0.)*.17*alWalk();float strd=cos(ph)*.1*alWalk();
-  hip=vec3(R.x,R.y+alRise(),R.z)+d*.3;
-  vec3 kf=vec3(R.x,0.,R.z)+d*.8+vec3(strd*.5,.6+lift*.6+R.y*.5,0.);vec3 ff=vec3(R.x,0.,R.z)+d*.76+vec3(strd,lift+.035,0.);
-  knee=mix(hip,kf,e);foot=mix(hip,ff,e);}
-void alArm(float sd,out vec3 sh,out vec3 el,out vec3 fi){vec3 R=alRoot()+vec3(0.,.82,0.);
-  float e=easeOutBack(alIn(sd>0.?1.8:1.92,.4));float pk=sd>0.?alPunch():0.;
-  float wd=sd>0.?smoothstep(AL_PUNCH-.55,AL_PUNCH-.25,u_age)*(1.-smoothstep(AL_PUNCH-.22,AL_PUNCH-.1,u_age)):0.;
-  sh=R+vec3(.08,.3,sd*.54);
-  vec3 elI=sh+vec3(.12-wd*.25,-.3+wd*.12,sd*.14);vec3 fiI=elI+vec3(.34-wd*.12,.12+.03*sin(u_age*5.+sd),-sd*.08);
-  vec3 elP=sh+vec3(.5,.12,-sd*.1);vec3 fiP=sh+vec3(1.12,.14,-sd*.4);
-  el=mix(sh,mix(elI,elP,pk),e);fi=mix(sh,mix(fiI,fiP,pk),e);}
-void alCyl(inout vec3 g,inout vec3 ng,vec3 a0,vec3 b0,float rr){vec3 ax=b0-a0;float L=length(ax);vec3 d=ax/max(L,1e-4);
-  vec3 s1=normalize(cross(d,abs(d.y)<.9?vec3(0.,1.,0.):vec3(1.,0.,0.)));vec3 s2=cross(d,s1);
-  g=a0+s1*g.x*rr+d*g.y*L+s2*g.z*rr;ng=normalize(s1*ng.x+d*ng.y+s2*ng.z);}
-vec3 alBrass(vec3 w,vec3 nn,vec3 v,float kind){float k=tri(w*2.5,nn).r;float k2=tri(w*8.,nn).b;
-  vec3 alb=mix(P_brass,vec3(.75,.38,.22),step(.5,kind))*(.55+.6*k);alb=mix(alb,alb*vec3(.35,.5,.4),smoothstep(.6,.85,k2)*.5);
-  return shade(alb,.3+.25*k,1.,nn,v,w);}`,
-  lights:(t,age,life,P)=>{const x=rootX(age);const fill=sm(1.5,2.4,age);const hot=age>1?Math.exp(-(age-1.2)*1.6)*Math.min((age-1)*5,1):0;
-    const asm=age<2.4?(.5+.5*Math.sin(age*37)*Math.sin(age*11)):0;const bn=age>2.2?1:0;const T=age-PUNCH;const e=T>0?Math.exp(-T*12):0;
-    const end=1-sm(5.6,6,age);
-    return [{p:[x+.2,1.25,.5],c:P.tint.map(v=>v*2.6*fill*end),r:4.5},{p:[x,.55,0],c:[3.2*bn*end*(.85+.15*Math.sin(t*23)),1.5*bn*end,.4*bn*end],r:3},
-      {p:[x,.9,.6],c:[5*hot+2.2*asm,2.4*hot+1.1*asm,.6*hot+.3*asm],r:5},{p:[1.25,1.35,.3],c:[5*e,4.6*e,3.8*e],r:5}];},
-  layers:[
-    {name:'Forge ring',geo:['ground',1],blend:'alpha',xf:{p:[-1.2,.012,0],s:1.25},fs:`
-      vec2 g=uv*2.-1.;vec2 pc=polar(g);float k=nzL(vec2(pc.x*6.,.4)).r;
-      float ringm=(band(pc.y,.72+(k-.5)*.04,.045)+band(pc.y,.3,.028)*.6)*(.45+.9*nzL(vec2(pc.x*17.,.7)).b);
-      float spokes=smoothstep(.985,1.,cos((pc.x*TAU-.5)*3.))*smoothstep(.3,.36,pc.y)*smoothstep(.76,.7,pc.y)*.8;
-      float m=sat(ringm+spokes);
-      float heat=u_age<2.2?smoothstep(0.,.6,u_age)*(.75+.25*sin(u_age*9.)):exp(-(u_age-2.2)*1.3);
-      col=vec3(.006)+blackbody(m*heat*(.6+.4*k))*1.1;a=m*.9*smoothstep(0.,.35,u_age)*(1.-smoothstep(.94,1.,u_life));`},
-    {name:'Limbs',geo:['lathe',[[0,0],[.85,0],[1,.05],[1,.95],[.85,1],[0,1]],10],blend:'opaque',count:15,vs:`
-      vec3 a0;vec3 b0;float rr=.03;float t0=.2;float kind=0.;
-      if(inst<3.){vec3 h;vec3 kn;vec3 f;alLeg(inst,h,kn,f);a0=h;b0=kn;rr=.052;}
-      else if(inst<6.){vec3 h;vec3 kn;vec3 f;alLeg(inst-3.,h,kn,f);a0=kn;b0=f;rr=.042;}
-      else if(inst<10.){float j=inst-6.;float sd=j<2.?1.:-1.;vec3 s0;vec3 e0;vec3 f0;alArm(sd,s0,e0,f0);if(mod(j,2.)<.5){a0=s0;b0=e0;rr=.056;}else{a0=e0;b0=f0;rr=.048;}t0=sd>0.?1.8:1.92;}
-      else if(inst<11.){vec3 R=alRoot()+vec3(0.,.82,0.);float e=easeOutBack(alIn(1.7,.3));a0=R+vec3(0.,1.13,0.);b0=a0+vec3(.44,.17,0.)*max(e,.01);rr=.05;t0=1.7;kind=1.;}
-      else if(inst<12.){vec3 R=alRoot()+vec3(0.,alRise(),0.);a0=R+vec3(0.,-.3,0.);b0=R+vec3(0.,-.07,0.);rr=.085;t0=.5;}
-      else{float j=inst-12.;float an=j*TAU/3.+.5+TAU/6.;vec3 R=alRoot()+vec3(0.,.82,0.);float e=alIn(1.25,.25);
-        a0=R+vec3(cos(an)*.3,0.,sin(an)*.3);b0=mix(a0+vec3(0.,.01,0.),R+vec3(cos(an)*.5,.3,sin(an)*.5),e);rr=.018;t0=1.25;}
-      alCyl(p,n,a0,b0,rr);data=vec4(kind,0.,0.,0.);vis=step(t0,u_age)*step(u_life,.985);`,
-      fs:`col=alBrass(P,N,V,data.x);a=1.;`},
-    {name:'Joints',geo:'sphere',blend:'opaque',count:13,vs:`
-      vec3 c0;float rr=.05;float t0=.2;vec3 sq=vec3(1.);
-      if(inst<3.){vec3 h;vec3 kn;vec3 f;alLeg(inst,h,kn,f);c0=kn;rr=.072;}
-      else if(inst<6.){vec3 h;vec3 kn;vec3 f;alLeg(inst-3.,h,kn,f);c0=f;rr=.1;sq=vec3(1.,.5,1.);}
-      else if(inst<12.){float j=inst-6.;float sd=mod(j,2.)<.5?1.:-1.;vec3 s0;vec3 e0;vec3 f0;alArm(sd,s0,e0,f0);float w3=floor(j/2.);
-        c0=w3<.5?s0:w3<1.5?e0:f0;rr=w3<.5?.085:w3<1.5?.07:.13;t0=sd>0.?1.8:1.92;if(w3>1.5)sq=vec3(1.15,.85,.85);}
-      else{c0=alRoot()+vec3(0.,.82+1.13,0.);rr=.11;t0=1.65;sq=vec3(1.,.75,1.);}
-      p=c0+p*rr*sq;vis=step(t0,u_age)*step(u_life,.985);`,
-      fs:`col=alBrass(P,N,V,0.);a=1.;`},
-    {name:'Rings and coil',geo:['torus',.08],blend:'opaque',count:6,vs:`
-      vec3 cc=p-n*.08;float R1=.3;float th=.03;float y=0.;float t0=.15;float kind=0.;
-      if(inst<1.){R1=.3;th=.032;y=alRise();}
-      else if(inst<2.){float e=easeOutBack(alIn(1.3,.3));R1=mix(.95,.5,e);th=.036;y=1.1;t0=1.3;}
-      else if(inst<3.){float e=easeOutBack(alIn(1.45,.25));R1=mix(.45,.135,e);th=.03;y=1.66;t0=1.45;}
-      else{float j=inst-3.;float e=easeOutBack(alIn(1.5+j*.08,.25));R1=mix(.45,.152,e);th=.018;y=1.73+j*.065;t0=1.5+j*.08;kind=1.;}
-      p=alRoot()+vec3(0.,y,0.)+cc*R1+n*th;data=vec4(kind,0.,0.,0.);vis=step(t0,u_age)*step(u_life,.985);`,
-      fs:`col=alBrass(P,N,V,data.x);a=1.;`},
-    {name:'Liquid',geo:'flask',blend:'opaque',vs:`
-      data.xyz=p;float g=easeOutBack(alIn(.9,.45));p=alRoot()+vec3(0.,.825,0.)+p*1.5*.93*g;`,fs:`
-      float fill=easeInOut(alIn(1.5,.9));float lvl=alRoot().y+.84+fill*.5+(sin(P.x*9.+u_time*5.)*.012+sin(P.z*7.-u_time*4.3)*.01)*fill*(1.+2.*alWalk());
-      a=step(P.y,lvl)*step(.001,fill)*step(u_life,.985);
-      float dpt=sat((lvl-P.y)/.5);float boil=sat((u_age-2.2)*2.)*.7+.3;
-      float bub=smoothstep(.68,.85,nz(vec2(data.x*2.5+data.z*2.,data.y*3.-u_time*.55)).g);
-      float men=smoothstep(.03,0.,lvl-P.y);
-      col=shade(P_tint*(.1+.25*(1.-dpt)),.15,0.,N,V,P)*.6+P_tint*P_tint*(.03+.1*(1.-dpt))+glow((.1+.4*bub*boil+.5*men),P_tint)*.32;`},
-    {name:'Flask glass',geo:'flask',blend:'alpha',vs:`
-      float g=easeOutBack(alIn(.9,.45));p=alRoot()+vec3(0.,.8,0.)+p*1.5*g;`,fs:`
-      float fr=fresnel(N,V,3.);vec3 rf=reflect(-V,N);float hot=exp(-max(u_age-1.25,0.)*1.7)*step(.9,u_age);
-      col=(env(rf,.03)*1.6+fxLight(P)*.3)*(.25+fr)+vec3(.5,.62,.56)*.02+blackbody(hot*.8)*.38;
-      a=sat(.14+fr*.7+hot*.45)*step(.9,u_age)*step(u_life,.985);`},
-    {name:'Vented fumes',type:'particles',count:84,life:1.25,burst:true,delay:2.5,spread:2.2,blend:'alpha',soft:.4,sim:`
-      float on=step(3.05,born)*step(born,3.55)+step(4.2,born)*step(born,4.7)+.22;
-      vec3 tip=alRootT(born)+vec3(.46,2.13,0.);float d=(1.-exp(-T*2.4))/2.4;
-      vec3 dir=normalize(vec3(1.,.42,0.)+(r.yzw-.5)*.5);
-      pos=tip+dir*mix(1.6,3.8,q.x)*d*(.4+.6*sat(on))+vec3(0.,T*.25,0.)+curl3(tip*2.+vec3(id*.1,T*.4,0.))*.18*t;
-      size=mix(.09,.62,easeOut(t))*(.6+.6*q.y)*(.45+.55*sat(on));alpha=sat(on);spin=q.z*6.+T*(q.w-.5);`,
-      fs:`float m=puff(uv,rnd,pt);col=puffLit(uv,P,mix(vec3(.3),P_fume,.4)*.8);a=m*.5*P_vent*smoothstep(0.,.08,pt);`},
-    {name:'Burner flame',type:'particles',count:22,life:.32,blend:'add',soft:.1,sim:`
-      vec3 o=alRoot()+vec3((r.y-.5)*.09,.76,(r.z-.5)*.09);pos=o+vec3(0.,T*.28,0.);
-      size=.07*(.6+.6*q.x)*(1.-t*.6)*step(2.2,u_age)*step(u_life,.97);alpha=1.;spin=q.y*6.;`,
-      fs:`float k=nz(uv*.6+rnd.xy+vec2(0.,pt*.4)).r;float m=erode(softDot(uv)*(.5+k),pt*.7,.2);col=mix(blackbody(1.25-pt*.9),vec3(.25,.45,1.)*1.2,sat(1.-pt*3.))*m*.8;a=1.;`},
-    {name:'Forge sparks',type:'particles',count:130,life:.8,burst:true,delay:.2,spread:2.1,stretch:.035,blend:'add',soft:0,sim:`
-      float an=r.y*TAU;float hh=mix(.1,.85,r.z)*sat(born/.8)+step(1.2,born)*r.w*.9;
-      vec3 o=alRootT(born)+vec3(cos(an)*.38,hh,sin(an)*.38);vec3 dir=normalize(vec3(cos(an),q.z*1.2-.2,sin(an)));
-      float sp=mix(.8,3.6,q.x*q.x);pos=o+dir*sp*T+vec3(0.,-4.9*T*T,0.);pos.y=abs(pos.y)*.55+.012;
-      size=.009*(.5+q.y);alpha=1.-t;`,
-      fs:`col=blackbody(1.3-pt*.9)*streak(uv)*2.2;a=1.;`},
-    {name:'Punch flash',geo:'quad',billboard:true,blend:'add',depthTest:false,xf:{p:[1.3,1.3,.2],s:.45},fs:`
-      float T=u_age-AL_PUNCH;float e=step(0.,T)*exp(-T*16.);vec2 g=uv*2.-1.;vec2 pc=polar(g);
-      float sp=pow(nzL(vec2(pc.x*6.,.52)).a,.5)*smoothstep(1.,.15,pc.y)*smoothstep(0.,.15,pc.y);
-      float shard=smoothstep(.6,.9,sp+.5*(1.-pc.y));
-      col=vec3(1.,.93,.8)*(shard*.9+hotDot(uv)*.45)*e;a=1.;dist=normalize(g+1e-4)*band(pc.y,T*5.,.2)*e*.02;`}
-  ]
-});
-}
-
-})();
-/* ---- 212_crawl_alchemy.js ---- */
-(function(){
-/* Pack 212: Crawl alchemy. Venom, sludge and glassware: heavy lit liquids and gases, restrained sick greens. */
-
-/* shared helpers (private to this pack) */
-const AL_LIB=`
-// place a unit radius, y 0..1 mesh between two points with a taper. v = position along (0..1).
-void alSeg(inout vec3 p,inout vec3 n,vec3 a0,vec3 b0,float r0,float r1,float v){
-  vec3 ax=b0-a0;float L=max(length(ax),1e-4);ax/=L;vec3 sx=normalize(cross(ax,abs(ax.y)>.95?vec3(1.,0.,0.):vec3(0.,1.,0.)));vec3 sz=cross(sx,ax);
-  float rr=mix(r0,r1,v);vec3 c=a0+ax*v*L+(sx*p.x+sz*p.z)*rr;n=normalize(sx*n.x+sz*n.z+ax*n.y*.3);p=c;}
-// lit liquid bead for sprites: soft-sphere lighting plus a tight highlight
-vec3 alBead(vec2 u,vec3 wp,vec3 alb){vec2 c=u*2.-1.;float z=sqrt(max(1.-dot(c,c),0.));vec3 nn=normalize(u_right*c.x+u_up*c.y-u_fwd*z);
-  vec3 hv=normalize(u_keyDir+normalize(u_cam-wp));return puffLit(u,wp,alb)*1.6+u_keyCol*pow(sat(dot(nn,hv)),30.)*.5+alb*fxLight(wp)*.5;}
-// droplet spatter: voronoi cells with a random radius, dens = fraction of cells that hold a drop
-float alSpat(vec2 w,float dens){vec3 v=voronoi(w);float rr=.1+.3*fract(v.z*7.31);return smoothstep(rr,rr-.06,v.x)*step(1.-dens,v.z);}
-float alDrop(vec2 u){vec2 c=u*2.-1.;return smoothstep(1.,.55,length(c*vec2(1.,.92)+vec2(0.,-.08*(1.-c.y*c.y))));}
-`;
-{
-const DUR=6.8,NB=7,H0=1.5,HS=.68,HR=5.,REL=.7;
-const hitT=i=>i<5?H0+i*HS:HR;
-const tgt=i=>{if(i>4)return [1.9,0,-.3];const a=i*2.4+.6,r=.75+.3*i;return [1.9+Math.cos(a)*r,0,-.3+Math.sin(a)*r*.8];};
-const ELS=[0,3,2,1,0,0,1],ECOL=[[1,.42,.1],[.55,.8,1],[.75,.65,1],[.5,.85,.15]];
-LAB.add({
-  id:'dc-fulsome-fusillade',name:'Exploding flask barrage',set:'Crawl',cat:'Alchemy',sub:'Direct damage/Alchemy',level:8,legacy:false,
-  src:'For several turns, rains exploding beakers of random elements on enemies, with overlapping blasts reacting for extra damage.',
-  duration:DUR,stage:'full',
-  caster:{kind:'channel',release:REL,channel:HR-REL-.6},
-  markers:{release:REL,impact:HR},
-  actors:[{p:[-3.3,0,.7],ry:1.4},{p:[1.3,0,.25],ry:-1.5},{p:[2.7,0,-1.],ry:-1.9}],
-  tags:['instanced glass','per-instance timeline','element variants','lit smoke','residue decals'],
-  blurb:'Corked glass beakers tumble out of the dark and burst one after another in fire, venom, lightning and frost, ending with two that land together and react.',
-  notes:[
-    'Seven instanced flasks share one timeline function. Each has its own impact time, target and reagent, and every other layer indexes the same function so glass, burst, smoke and stain stay in step.',
-    'Each reagent gets a different material answer: blackbody fire with soot, a heavy green gas that hugs the floor, hair thin arcs with a fern scorch, and pale mist with ice chips and frost.',
-    'Glass and ice shards are lit instanced meshes on ballistic arcs with one bounce. They stay where they land, next to the scorch, puddle or frost patch.',
-    'The last two beakers land on the same spot. Fire meeting frost gives a larger white steam burst and the only full size graphic flash in the piece.'
-  ],
-  port:'One Niagara system per reagent spawned from a data-driven projectile event, with a shared glass shatter mesh emitter. The residue is a decal chosen by reagent. The reaction is a gameplay event that swaps in a steam burst when two impact radii overlap.',
-  cam:{yaw:.48,pitch:.17,dist:8.,target:[.1,1.,0]},
-  params:[
-    {id:'tint',label:'Reaction flash',type:'color',value:'#9fc4e8'},
-    {id:'power',label:'Blast size',min:.6,max:1.5,value:1},
-    {id:'smoke',label:'Smoke',min:0,max:1.5,value:1},
-    {id:'elem',label:'Reagent (0 mixed)',min:0,max:4,value:0}
-  ],
-  variants:[
-    {name:'All fire',set:{elem:1}},
-    {name:'All frost',set:{elem:2,smoke:.7}},
-    {name:'All poison',set:{elem:4,tint:'#e8ffd0'}}
-  ],
-  glsl:`
-float ffHit(float i){return i<4.5?${H0.toFixed(2)}+i*${HS.toFixed(2)}:${HR.toFixed(2)};}
-vec3 ffTgt(float i){if(i>4.5)return vec3(1.9,0.,-.3);float an=i*2.4+.6,rr=.75+.3*i;return vec3(1.9+cos(an)*rr,0.,-.3+sin(an)*rr*.8);}
-float ffEl(float i){if(P_elem>.5)return floor(P_elem+.5)-1.;return i<.5?0.:i<1.5?3.:i<2.5?2.:i<3.5?1.:i<5.5?0.:1.;}
-vec3 ffCol(float e){return e<.5?vec3(1.,.42,.1):e<1.5?vec3(.55,.8,1.):e<2.5?vec3(.75,.65,1.):vec3(.5,.85,.15);}`,
-  lights:(t,age,life,P)=>{const L=[];
-    for(let i=0;i<NB;i++){const T=age-hitT(i);if(T<0)continue;const el=P.elem>.5?Math.floor(P.elem+.5)-1:ELS[i];const c=ECOL[el];
-      const e=Math.exp(-T*5.5)*(el===0?8:5)+(el===0?2.5*Math.exp(-T*1.3):el===3?1.*Math.exp(-T*.5):0);const g=tgt(i);
-      L.push({p:[g[0],1.25,g[2]+.5],c:c.map(v=>(v+.06)*e*P.power*(i>4?.35:1)),r:9,e});}
-    L.sort((a,b)=>b.e-a.e);return L.slice(0,4);},
-  layers:[
-    {name:'Residue',geo:['ground',1],blend:'alpha',count:NB,vs:`
-      float th=ffHit(inst);vec3 tg=ffTgt(inst);float big=inst>4.5?1.45:1.;p*=1.25*big*P_power;p.xz=rot(inst*1.7)*p.xz;p+=tg;p.y=.012+inst*.0015;
-      vis=step(th,u_age);data=vec4(ffEl(inst),u_age-th,inst,0.);`,fs:`
-      float el=data.x;float T=data.y;vec2 q=uv*2.-1.;float d=length(q);float n=nz(uv*1.3+data.z*.37).r;float cr=nz(uv*2.2+data.z*.61).a;
-      float fade=1.-smoothstep(.94,1.,u_life);float m=smoothstep(1.,.25,d+(n-.5)*.7)*fade;
-      if(el<.5){col=vec3(.004)+blackbody(cr*smoothstep(.8,.05,d)*exp(-T*1.5)*1.1)*1.4;a=m*.88;}
-      else if(el<1.5){float fr=smoothstep(.35,.75,nz(uv*5.+3.).b*.6+cr*.6);col=shade(vec3(.5,.62,.74)*(.45+.6*fr),.55,0.,vec3(0.,1.,0.),V,P);a=m*(.3+.5*fr)*smoothstep(0.,.3,T);}
-      else if(el<2.5){vec2 pc=polar(q);float fern=smoothstep(.7,.9,nzL(vec2(pc.x*3.,pc.y*.35+data.z*.3)).a)*smoothstep(1.,.1,d);
-        col=vec3(.004)+glow(fern*exp(-T*3.)*1.2,ffCol(2.))*2.;a=sat(fern*.9+smoothstep(.45,0.,d)*.7)*fade;}
-      else{float pm=smoothstep(.8,.35,d+(n-.5)*.9)*fade;vec3 nn=normalize(vec3((n-.5)*.5,1.,(cr-.5)*.4));
-        col=shade(vec3(.035,.06,.012),.1,0.,nn,V,P)+glow(smoothstep(.6,.9,nz(uv*3.-vec2(0.,u_time*.03)).g)*.22,ffCol(3.))*.5;a=pm*.92;}`},
-    {name:'Beakers',geo:'flask',blend:'opaque',count:NB,vs:`
-      float th=ffHit(inst);float tf=th-u_age;vec3 tg=ffTgt(inst);
-      vec3 ax=normalize(irnd.xyz-.5);float sp=tf*mix(4.,7.,irnd.w)+inst;
-      p.y-=.33;p=rotAxis(p*.56,ax,sp);n=rotAxis(n,ax,sp);
-      p+=tg+vec3(-tf*1.7,.2+2.2*tf+4.9*tf*tf,inst>4.5?(inst-5.5)*1.5*tf:tf*(irnd.x-.5));
-      vis=step(0.,tf)*step(tf,1.);p*=1.;data=vec4(ffEl(inst),0.,0.,0.);`,fs:`
-      vec3 ec=ffCol(data.x);float liq=smoothstep(.5,.44,uv.y);float cork=smoothstep(.86,.9,uv.y);
-      vec3 rf=reflect(-V,N);float fr=fresnel(N,V,3.);
-      vec3 glass=env(rf,.04)*(.3+fr*1.4)+shade(vec3(.03,.04,.04),.08,0.,N,V,P);
-      vec3 liquid=shade(ec*ec*.6,.2,0.,N,V,P)+ec*ec*(.3+.7*sat(dot(N,V)))*.1+glass*.6;
-      col=mix(glass,liquid,liq);col=mix(col,shade(vec3(.2,.13,.07),.9,0.,N,V,P),cork);a=1.;`},
-    {name:'Shards',geo:'crystal',blend:'opaque',count:84,vs:`
-      float b=mod(inst,7.);float th=ffHit(b);float T=max(u_age-th,0.);vec3 tg=ffTgt(b);float el=ffEl(b);
-      vec3 dir=normalize(vec3(irnd.x*2.-1.,irnd.y*1.1+.2,irnd.z*2.-1.));float sp=mix(1.5,5.5,irnd.w*irnd.w)*P_power;
-      float vy=dir.y*sp;float g=9.8;float h0=.15;float tl=(vy+sqrt(vy*vy+2.*g*h0))/g;float vy2=(g*tl-vy)*.28;float tl2=2.*vy2/g;
-      float tt=min(T,tl+tl2);float y=tt<tl?h0+vy*tt-.5*g*tt*tt:vy2*(tt-tl)-.5*g*(tt-tl)*(tt-tl);
-      float hx=tt<tl?tt:tl+(tt-tl)*.45;vec2 xz=dir.xz*sp*(1.-exp(-hx*1.4))/1.4;
-      float ice=step(.5,el)*step(el,1.5);float sc=mix(.035,.08,hash11(inst*7.7))*(1.+ice*1.2);
-      float spinT=min(T,tl+tl2*.8);vec3 ax=normalize(irnd.xyz-.5);float sa=spinT*mix(4.,12.,irnd.w)+inst;
-      p=rotAxis(p*sc*vec3(1.,.55,.3),ax,sa);n=rotAxis(n,ax,sa);
-      p+=tg+vec3(xz.x,max(y,0.)+sc*.1,xz.y);vis=step(th,u_age)*step(u_life,.985);data=vec4(el,ice,0.,0.);`,fs:`
-      vec3 nn=flatN(P);if(dot(nn,V)<0.)nn=-nn;vec3 ec=ffCol(data.x);
-      vec3 alb=mix(vec3(.16,.2,.2),vec3(.55,.7,.82),data.y);
-      col=shade(alb,.1,0.,nn,V,P)+env(reflect(-V,nn),.05)*.3+ec*fxLight(P)*.03;a=1.;`},
-    {name:'Smoke and gas',type:'particles',count:77,life:DUR,burst:true,blend:'alpha',soft:.6,sim:`
-      float b=mod(id,7.);float Tl=T-ffHit(b)-.04;float lf=mix(1.5,2.3,q.x);float tl=Tl/lf;vec3 tg=ffTgt(b);float el=ffEl(b);float big=b>4.5?1.6:1.;
-      vec3 dir=normalize(vec3(r.y-.5,r.z*.6+.15,r.w-.5));float d=(1.-exp(-Tl*2.4))/2.4;float heavy=step(2.5,el);
-      pos=tg+vec3(0.,.3,0.)+dir*(.25+mix(1.,3.2,q.y)*big*P_power*d)*vec3(1.,1.-heavy*.65,1.)+vec3(0.,Tl*mix(.5,.04,heavy),0.)+curl3(dir*2.+Tl*.2)*.25*sat(tl);
-      size=(tl>0.&&tl<1.)?mix(.3,1.1,easeOut(tl))*big*(.7+.6*q.z):0.;spin=q.w*6.+Tl*(q.x-.5);data=vec4(el,tl,b,0.);`,fs:`
-      float tl=data.y;float el=data.x;float m=puff(uv,rnd,tl);
-      vec3 alb=el<.5?vec3(.05,.045,.04):el<1.5?vec3(.3,.36,.44):el<2.5?vec3(.12,.12,.15):vec3(.13,.17,.06);
-      if(data.z>4.5)alb=vec3(.4,.42,.45);
-      col=puffLit(uv,P,alb)+(el<.5?blackbody(sat(1.-tl*4.)*.8)*.35:vec3(0.));a=m*.55*P_smoke*smoothstep(0.,.3,tl);`},
-    {name:'Bursts',type:'particles',count:126,life:DUR,burst:true,blend:'add',soft:.5,sim:`
-      float b=mod(id,7.);float Tl=T-ffHit(b);float el=ffEl(b);float lf=mix(.45,.85,q.x)*(el<.5&&b<4.5?1.25:.4);float tl=Tl/lf;vec3 tg=ffTgt(b);float big=b>4.5?1.6:1.;
-      vec3 dir=normalize(vec3(r.y-.5,r.z*.9+.1,r.w-.5));float d=(1.-exp(-Tl*4.))/4.;
-      pos=tg+vec3(0.,.22,0.)+dir*mix(1.,4.5,q.y)*big*P_power*d+vec3(0.,Tl*.5,0.);
-      size=(tl>0.&&tl<1.)?mix(.2,.72,easeOut(tl))*big*P_power*(.7+.6*q.z):0.;spin=q.w*6.+Tl*(q.x-.5)*2.;data=vec4(el,tl,b,0.);`,fs:`
-      float tl=data.y;float el=data.x;
-      float n=nz(uv*.55+rnd.xy*3.+vec2(0.,-tl*.3)).r*.65+nz(uv*1.4+rnd.zw).g*.35;
-      float m=sat(1.-length(uv-.5)*2.)*n*2.3;float e=erode(m,mix(.12,1.,tl),.28);
-      vec3 c=el<.5?blackbody(min(e*m*(1.3-tl)*1.05,1.5)):flame(min(e*m*(1.-tl*1.1),1.1),ffCol(el))*(el>2.5?.05:.025);
-      if(data.z>4.5)c=flame(min(e*m*(1.-tl*1.2),1.1),P_tint)*.035;
-      col=c;a=e;`},
-    {name:'Sparks and droplets',type:'particles',count:140,life:DUR,burst:true,stretch:.035,blend:'add',soft:0,sim:`
-      float b=mod(id,7.);float Tl=T-ffHit(b);float lf=mix(.5,1.1,q.z);float tl=Tl/lf;vec3 tg=ffTgt(b);
-      vec3 dir=normalize(vec3(r.y-.5,r.z*.8+.08,r.w-.5));float sp=mix(3.,10.,q.x*q.x)*P_power;float d=(1.-exp(-Tl*2.))/2.;
-      pos=tg+vec3(0.,.2,0.)+dir*sp*d+vec3(0.,-3.5*Tl*Tl,0.);pos.y=abs(pos.y)+.02;
-      size=(tl>0.&&tl<1.)?.013*(1.+q.y):0.;alpha=1.-tl*tl;data=vec4(ffEl(b),tl,0.,0.);`,
-      fs:`col=(data.x<.5?blackbody(1.15):glow(1.,ffCol(data.x)))*streak(uv)*4.5;a=1.;`},
-    {name:'Arcs',geo:['strip',20],blend:'add',count:21,vs:`
-      float b=mod(inst,7.);float T=u_age-ffHit(b);vec3 tg=ffTgt(b);
-      vec3 a0=tg+vec3(0.,.25,0.);vec3 dir=normalize(vec3(irnd.x-.5,irnd.y*.7-.05,irnd.z-.5));vec3 b0=a0+dir*mix(1.,2.3,irnd.w)*P_power;b0.y=max(b0.y,.03);
-      float s=uv.y;float fl=floor(u_time*28.)+inst;vec3 c=mix(a0,b0,s);
-      vec3 pr=normalize(cross(dir,vec3(.3,1.,.2)));vec3 pr2=cross(dir,pr);
-      c+=(pr*jag(s*7.,fl)+pr2*jag(s*7.+3.,fl+9.))*.2*sin(s*PI)+(pr*jag(s*23.,fl+4.))*.05*sin(s*PI);
-      vec3 side=normalize(cross(b0-a0,u_cam-c));p=c+side*p.x*.03;
-      vis=step(0.,T)*step(T,.28)*step(1.5,ffEl(b))*step(ffEl(b),2.5);data=vec4(exp(-max(T,0.)*9.),0.,0.,0.);`,
-      fs:`float x=abs(uv.x*2.-1.);col=(vec3(1.)*smoothstep(.3,0.,x)*3.+ffCol(2.)*inv(x,.2)*.5)*data.x;a=1.;`},
-    {name:'Impact flash',geo:'quad',blend:'add',depthTest:false,count:NB,vs:`
-      float th=ffHit(inst);float T=u_age-th;vec3 tg=ffTgt(inst);float big=inst>4.5?1.25:1.;
-      vec2 c=p.xy;p=tg+vec3(0.,.4,0.)+(u_right*c.x+u_up*c.y)*1.05*big*P_power;vis=step(0.,T)*step(T,.3);data=vec4(ffEl(inst),T,inst,big);`,fs:`
-      float e=exp(-data.y*14.)*step(data.y,.06);vec2 q=uv*2.-1.;vec2 pc=polar(q);
-      float spikes=pow(nzL(vec2(pc.x*4.+data.z*.31,.37)).a,.6)*smoothstep(1.,.15,pc.y)*smoothstep(0.,.2,pc.y);
-      float shard=smoothstep(.55,.9,spikes+.5*(1.-pc.y))*step(4.5,data.z);
-      vec3 ec=mix(ffCol(data.x),vec3(1.),.3);if(data.z>4.5)ec=mix(P_tint,vec3(.75,.55,.45),.35);
-      col=ec*(shard*.55+hotDot(uv)*.3)*e;a=1.;
-      float w=band(pc.y,data.y*3.5,.2)*exp(-data.y*5.);dist=normalize(q+1e-4)*w*.02;`},
-    {name:'Caster gesture',geo:'quad',billboard:true,blend:'add',xf:(t,a)=>{const c=LAB.casterNow;return {p:c?c.handR:[-2.9,1.35,1.02],s:.42};},fs:`
-      float k=0.;float nx=0.;for(int i=0;i<7;i++){float fi=float(i);float e=exp(-abs(u_age-(ffHit(fi)-1.))*5.);if(e>k){k=e;nx=fi;}}k*=smoothstep(.1,${REL.toFixed(2)},u_age);
-      vec2 q=uv*2.-1.;float ring=band(length(q),.6-.35*k,.03)*k;
-      col=glow((hotDot(uv)*.8+ring*.5)*k,ffCol(ffEl(nx)))*1.2;a=1.;`}
   ]
 });
 }
@@ -7808,7 +7522,7 @@ LAB.add({
   notes:[
     'The corpses are instanced mannequin meshes laid flat. They are pulled in three hard yanks with rests between, and each leaves a wet smear along its path.',
     'The fused body is a solid raymarched form: ellipsoids and capsules blended with smooth minimum, so torsos, heads and spare arms melt into one body. It writes depth, so drops and smoke sort against it.',
-    'Its surface is cut into patches by 3D voronoi. Each patch takes a different dead flesh tone or an armour plate, and the borders become dark seams with stitch marks and a dying glow.',
+    'Its surface is cut into patches by 3D voronoi. Each patch takes a different dead flesh tone or a piece of armour, and the borders become dark seams with stitch marks and a dying glow.',
     'Residue is the drag smears, the pool that spreads under the mass, and the gore thrown out at the moment it stands.'
   ],
   port:'Corpses are skeletal meshes moved by a timeline with a decal trail. The fused body is an authored mesh revealed with a scale and morph curve; the patch and seam look is a material using a 3D cellular texture. Gore uses Niagara mesh droplets with collision decals.',
@@ -7960,7 +7674,7 @@ LAB.add({
     'Darkness is the effect. The two brazier lights lean toward the caster during the tell, then go out the moment the wave front reaches them, while a growing negative light sinks the middle of the room.',
     'The impact frame is a negative graphic: a spiked black burst with a thin violet rim, held for three frames.',
     'The wave is a ring of lit dark smoke puffs that roll forward around a travelling core, with a soot decal following the front so the floor stays dimmer behind it.',
-    'Each bystander flinches as the front passes and a torn band of shadow cloth knits itself around the visor. Snuffed braziers keep smoking from cooling coals.'
+    'Each bystander flinches as the front passes and a torn band of shadow cloth knits itself around the eye slit. Snuffed braziers keep smoking from cooling coals.'
   ],
   port:'Point lights with a timeline curve per brazier and a negative light or post-process darkening volume for the sink. The ring is a Niagara emitter with a radial velocity and a roll vortex, the soot a growing decal, and the shroud a skinned cloth mesh with a dissolve material.',
   cam:{yaw:.05,pitch:.2,dist:7.6,target:[0,1.,0]},
@@ -8253,17 +7967,17 @@ const p216b_H=p216_W(p216b_C,p216_HR);
 const p216b_TF=[1.9,3.05],p216b_R=.8;
 const p216b_BC=[p216b_EB.p[0],1.2,p216b_EB.p[2]];
 LAB.add({
-  id:'dc-dimensional-bullseye', name:'Marked target, echoed bolts', set:'Crawl', cat:'Hexes', sub:'Curse/Movement', level:4, legacy:false, duration:5.4, stage:'full',
+  id:'dc-dimensional-bullseye', name:'Marked target, echoed arrows', set:'Crawl', cat:'Hexes', sub:'Curse/Movement', level:4, legacy:false, duration:5.4, stage:'full',
   src:"Links the caster's projectiles to a target so each shot at another enemy also teleports a copy at the target.",
   tags:['refraction','instanced meshes','portal card','ballistic sparks','graphic line'],
-  blurb:'A reticle of bent space locks onto one foe, and every bolt thrown at its neighbour is echoed out of a small rift and buried in the marked one.',
+  blurb:'A reticle of bent space locks onto one foe, and every arrow shot at its neighbour is echoed out of a small rift and buried in the marked one.',
   notes:[
-    'Two foes make the rule readable: the caster shoots the far one, and a twin bolt leaves a rift beside the marked one a few frames later.',
+    'Two foes make the rule readable: the caster shoots the far one, and a twin arrow leaves a rift beside the marked one a few frames later.',
     'The reticle is mostly refraction. Thin rings and ticks are drawn with screen-space derivatives, and the lens inside them magnifies the armour behind.',
-    'Bolts are lit metal meshes that stay embedded after the hit. The copies are clipped against the rift plane, so they slide out of nothing.',
-    'A hard hairline joins the bolt in flight to its rift for two frames. The rift then closes into a jagged scar of light that fades slowly.'
+    'Arrows are lit metal meshes that stay embedded after the hit. The copies are clipped against the rift plane, so they slide out of nothing.',
+    'A hard hairline joins the arrow in flight to its rift for two frames. The rift then closes into a jagged scar of light that fades slowly.'
   ],
-  port:'Reticle as a translucent material with scene-colour refraction on a camera-facing card. Bolts are mesh particles with a clip plane parameter, and the rifts are small portal cards with a cubemap interior.',
+  port:'Reticle as a translucent material with scene-colour refraction on a camera-facing card. Arrows are mesh particles with a clip plane parameter, and the rifts are small portal cards with a cubemap interior.',
   cam:{yaw:.4,pitch:.13,dist:8.2,target:[-.25,1.15,0]},
   caster:{kind:'channel',release:p216b_R,channel:2.5,at:p216b_H},
   markers:{release:p216b_R,impact:p216b_TF[0]+.26},
@@ -8308,7 +8022,7 @@ float p216b_open(float s){float T=u_age-p216b_tf(s);return easeOutBack(sat((T+.1
     L.push({p:[hh[0]+.1,hh[1]+.1,hh[2]+.1],c:c.map(v=>(v*5+.4)*fire+v*(.5*lock+2.*pre)),r:3.5});
     return L;},
   layers:[
-    {name:'Bolts',geo:'crystal',blend:'opaque',count:4,vs:`
+    {name:'Arrows',geo:'crystal',blend:'opaque',count:4,vs:`
       vec3 dr;vec4 st=p216b_dart(inst,dr);vec3 ux=normalize(cross(dr,vec3(0.,1.,0.)));vec3 wz=cross(ux,dr);
       float tw=u_age*14.*step(st.w,1.5);ux=rotAxis(ux,dr,tw);wz=rotAxis(wz,dr,tw);
       data=vec4(p.y,inst<1.5?1.:0.,0.,0.);
@@ -8348,7 +8062,7 @@ float p216b_open(float s){float T=u_age-p216b_tf(s);return easeOutBack(sat((T+.1
       float jl=stroke(q2.x-jag(q2.y*5.+data.x*9.,data.x+3.)*.07,.012)*smoothstep(.62,.3,abs(q2.y))*scar;
       col=mix(voidc,glow(1.,P_tint)*1.05,sat(rim))+glow(jl*1.1,P_tint)*1.3;a=sat(hole+rim+jl);
       dist=-normalize(q2+1e-4)*band(rr,edge+.14,.2)*.02*o*P_warp;`},
-    {name:'Bolt streaks',geo:['strip',1],blend:'add',count:4,vs:`
+    {name:'Arrow streaks',geo:['strip',1],blend:'add',count:4,vs:`
       vec3 dr;vec4 st=p216b_dart(inst,dr);float len=inst<1.5?1.5:.5;
       float sT=u_age-p216b_tf(mod(inst,2.));float gone=inst<1.5?sat(sT/P216B_FL):sat((sT-P216B_EX)/P216B_CF);
       vec3 c=st.xyz-dr*(.2+uv.y*len*min(gone*3.,1.));vec3 sd=normalize(cross(dr,u_cam-c));
@@ -10027,7 +9741,7 @@ LAB.add({
   id:'dc-nazjas-percussive-tempering', name:"Hammer repairs a construct", set:'Crawl', cat:'Constructs', sub:'Construct', level:5, legacy:false, duration:p222i_D, stage:'full',
   src:"A magic hammer strikes one of the caster's constructs, repairing and empowering it and damaging adjacent enemies.",
   tags:['temper colours','instanced slag','graphic flash','shockwave','lit dust'],
-  blurb:'A translucent sledgehammer assembles from embers above a cracked metal construct, swings back and falls in one stroke; the cracks weld shut, temper colours run down the hull and molten slag spatters the floor while the shock throws back everyone beside it.',
+  blurb:'A translucent sledgehammer assembles from embers above a cracked metal construct, swings back and falls in one stroke; the cracks close, temper colours run down the hull and molten slag spatters the floor while the shock throws back everyone beside it.',
   notes:[
     'The construct is a lit lathe hull with rivet bands. Before the strike its cracks smoulder and spit; after it a heat front runs down the body, sealing the cracks and leaving real oxide temper bands from straw to bronze to blue.',
     'The hammer is a translucent forge tool: dark translucent body with a burning rim, built from embers that converge on it and dissolving back into sparks two frames after the strike.',
@@ -10174,13 +9888,13 @@ const hcR=()=>LAB.casterNow?LAB.casterNow.handR:HA;
 LAB.add({
   id:'dc-forge-phalanx-beetle', name:'Metal beetle construct', set:'Crawl', cat:'Constructs', sub:'Construct', level:6, legacy:false, duration:DUR, stage:'full',
   src:'Builds a mechanical beetle that stays beside the caster and boosts their armour class.',
-  tags:['raymarched sdf','part assembly','cooling metal','plate overlay','lit steam'],
-  blurb:'Five white-hot forgings fly in and lock into an metal beetle at the caster\'s side, which cools, opens its eyes and draws a plate pattern over the caster.',
+  tags:['raymarched sdf','part assembly','cooling metal','lattice overlay','lit steam'],
+  blurb:'Five white-hot forgings fly in and lock into a metal beetle at the caster\'s side, which cools, opens its eyes and draws a lattice pattern over the caster.',
   notes:[
     'The beetle is one solid raymarched SDF made of five parts. Each part has its own arrival time, offset and heat, so the construct visibly assembles instead of fading in.',
-    'Heat is a per-part scalar that feeds an emissive ramp and the scene light. Parts arrive glowing and cool to dark hammered metal with brass trim over about two seconds.',
+    'Heat is a per-part scalar that feeds an emissive ramp and the scene light. Parts arrive glowing and cool to dark hammered metal with bronze trim over about two seconds.',
     'Every lock throws a small fan of sparks that fall and bounce. The forge circle under the beetle stays behind as a cooling scorch with a pale ash lip.',
-    'The armour bonus is a plate lattice drawn on a shell of the caster mesh. It sweeps up the body once when the last part locks, then settles to a faint rim.'
+    'The armour bonus is a lattice drawn on a shell of the caster mesh. It sweeps up the body once when the last part locks, then settles to a faint rim.'
   ],
   port:'Build the beetle as five skeletal mesh parts with a heat material parameter and animate the assembly in Sequencer or a Niagara mesh emitter. The ward is an overlay material on the character driven by one sweep scalar.',
   cam:{yaw:.62,pitch:.2,dist:4.7,target:[.1,.85,.25]},
@@ -10190,13 +9904,13 @@ LAB.add({
   shadows:[[BP[0],BP[2],.62,.7]],
   params:[
     {id:'tint',label:'Forge heat',type:'color',value:'#ff8a3c'},
-    {id:'ward',label:'Ward plates',type:'color',value:'#ffd9a0'},
+    {id:'ward',label:'Ward lattice',type:'color',value:'#ffd9a0'},
     {id:'heat',label:'Heat',min:.4,max:1.6,value:1},
     {id:'steam',label:'Steam',min:0,max:1.5,value:1}
   ],
   variants:[
     {name:'Cold metal',set:{tint:'#7fb4ff',ward:'#bcd8ff',heat:.7,steam:1.4}},
-    {name:'Brass works',set:{tint:'#ffb23c',ward:'#ffe08a',heat:1.3}},
+    {name:'Bronze works',set:{tint:'#ffb23c',ward:'#ffe08a',heat:1.3}},
     {name:'Slag',set:{tint:'#ff4a2a',ward:'#ff9a7a',heat:1.5,steam:.5}}
   ],
   glsl:`
@@ -10288,7 +10002,7 @@ vec2 p223_bMap(vec3 w){vec3 q=p223_bLoc(w);vec2 res=vec2(1e3,0.);float sc;vec3 l
       vec3 o=p223_BP+vec3((r.y-.5)*.5,.3+r.z*.15,(r.w-.5)*.8);
       pos=o+vec3(0.,T*.42,0.)+curl3(o*2.+T*.3)*.22*t;size=mix(.12,.5,easeOut(t))*(.6+.6*q.x);spin=q.y*6.+T*(q.z-.5);alpha=g;`,
       fs:`float m=vapour(uv,rnd,pt);col=puffLit(uv,P,vec3(.3,.3,.32));a=m*.3*P_steam;`},
-    {name:'Ward plates',geo:'sphere',blend:'add',cull:'back',xf:(t,age)=>{const hc=LAB.casterNow;const c=hc?hc.chest:[CA.p[0],1.2,CA.p[2]];return {p:[c[0],.95,c[2]],r:[0,CA.ry,0],s:[.5,1.,.44]};},fs:`
+    {name:'Ward lattice',geo:'sphere',blend:'add',cull:'back',xf:(t,age)=>{const hc=LAB.casterNow;const c=hc?hc.chest:[CA.p[0],1.2,CA.p[2]];return {p:[c[0],.95,c[2]],r:[0,CA.ry,0],s:[.5,1.,.44]};},fs:`
       float lt=u_age-p223_LINK;float fr=fresnel(N,V,2.6);float yy=OP.y+1.;
       vec4 hx=hexGrid(vec2(atan(OP.x,OP.z)*1.3,yy*2.6));float edge=smoothstep(.045,.01,hx.z);
       float sweep=band(yy,lt*2.6,.22)*step(0.,lt);float held=smoothstep(0.,.8,lt)*(.3+.12*sin(u_time*2.2+yy*3.))*exp(-max(lt-1.,0.)*.6);
@@ -10440,15 +10154,15 @@ const sword=a=>{const lx=lean(a);const h=p223_add([PG[0],yOf(a),PG[2]],p223_rxy(
   const rx=lx+.32;const o=p223_add(h,p223_rxy([0,.14*SS,0],rx,PRY));return {p:o,r:[rx,PRY,0],s:SS};};
 const chg=a=>a<FL?Math.pow(p223_ss((a-3.2)/(FL-3.2)),2):.12+.9*Math.exp(-(a-FL)*3);
 LAB.add({
-  id:'dc-platinum-paragon', name:'Platinum knight construct', set:'Crawl', cat:'Constructs', sub:'Construct', level:9, legacy:false, duration:DUR, stage:'full',
+  id:'dc-platinum-paragon', name:'Silver warrior construct', set:'Crawl', cat:'Constructs', sub:'Construct', level:9, legacy:false, duration:DUR, stage:'full',
   src:'Builds a powerful metal champion wielding a copy of the caster\'s weapon; it can later be overloaded for a wide flurry of attacks.',
   tags:['custom mannequin shader','cooling metal','instanced rubble','graphic arcs','lit dust'],
-  blurb:'A white-hot platinum knight drops out of the dark onto a ring mark, cracks the floor, cools to polished metal and then overloads into a four-cut flurry.',
+  blurb:'A white-hot silver warrior drops out of the dark onto a ring mark, cracks the floor, cools to polished metal and then overloads into a four-cut flurry.',
   notes:[
     'Tell: the caster raises a hand and a ring of ticks burns into the floor where the champion will land. The fall itself is a third of a second with a thin descent streak above it.',
-    'The knight is the stage mannequin with its own material: polished platinum with engraved plate seams, a heat term that starts blackbody white and cools over two seconds, and steam lifting off its surface.',
+    'The warrior is the stage mannequin with its own material: polished silver with engraved seams, a heat term that starts blackbody white and cools over two seconds, and steam lifting off its surface.',
     'Landing is pressure, not magic: a hard white floor ring for three frames, a refraction ring, thrown rubble that bounces and stays, and a dust skirt lit by the cooling body.',
-    'The overload is the second beat. Seams and the replica greatsword charge in the tint, the knight sinks slightly, then four bold crescents cut around it in 0.3 seconds and leave hot gouges in the stone.'
+    'The overload is the second beat. Seams and the replica sword charge in the tint, the warrior sinks slightly, then four bold crescents cut around it in 0.3 seconds and leave hot gouges in the stone.'
   ],
   port:'A skeletal mesh with a heat and charge scalar in its material, landing driven by a Sequencer track. Rubble and sparks are Niagara mesh and sprite emitters with collision, the crescents are four slash meshes with an erode material and the crater is a decal with a cooling emissive curve.',
   cam:{yaw:.36,pitch:.14,dist:8,target:[-.45,1.25,0]},
@@ -10504,7 +10218,7 @@ vec3 p223_ry(vec3 v,float b){float c=cos(b),s=sin(b);return vec3(v.x*c+v.z*s,v.y
       vec3 base=mix(vec3(.26,.25,.23)*lit*(.6+.5*nz(uv*5.).b),vec3(.005),max(max(crater*.85,crack),gz));
       col=base+glow(min(sat(sig)*pre*(.7+.3*n),1.1),P_tint)*1.6+blackbody(min((crack+crater*nz(uv*4.).g*.6)*exp(-T*1.3)*P_heat,1.)*.95)*.8+blackbody(min(gh,1.)*.9);
       a=max(max(max(crater*.8,crack*.9),max(lip*.5*P_dust,gz*.9)),sat(sig)*pre)*p223_pEnd();`},
-    {name:'Knight',geo:['dummy','cast'],blend:'opaque',xf:(t,a)=>body(a),fs:`
+    {name:'Warrior',geo:['dummy','cast'],blend:'opaque',xf:(t,a)=>body(a),fs:`
       float heat=p223_pHeat();float ch=p223_pChg();
       vec4 tx=tri(OP*2.5,N);
       float ly=abs(fract(OP.y*6.5)-.5)*2.;float seam=smoothstep(.9,.97,ly)*step(.88,OP.y)*step(OP.y,1.5)*step(abs(OP.x),.26);
@@ -10519,7 +10233,7 @@ vec3 p223_ry(vec3 v,float b){float c=cos(b),s=sin(b);return vec3(v.x*c+v.z*s,v.y
       if(id>.5){float eye=smoothstep(.022,.008,length(vec2(abs(OP.x)-.042,(OP.y-1.73)*1.6)))*step(.04,OP.z);col+=glow(eye*(.5+ch)*p223_pOn(),P_tint)*3.;}
       float ek=1.-p223_pEnd();float dn=tx.r*.7+tx.b*.3;col+=glow(band(dn,ek*1.1-.05,.04)*step(.001,ek),P_tint)*1.2;
       a=step(ek*1.1-.05,dn);`},
-    {name:'Replica greatsword',geo:'sword',blend:'opaque',xf:(t,a)=>sword(a),fs:`
+    {name:'Replica sword',geo:'sword',blend:'opaque',xf:(t,a)=>sword(a),fs:`
       float heat=p223_pHeat();float ch=p223_pChg();
       vec3 alb=id<.5?P_metal*1.05:id<1.5?P_metal*vec3(1.,.82,.55):id<2.5?vec3(.05,.04,.035):P_metal*vec3(1.,.82,.55);
       float rough=id<.5?.1:id<2.5&&id>1.5?.7:.3;float metal=id>1.5&&id<2.5?0.:1.;
@@ -10609,7 +10323,7 @@ LAB.add({
   markers:{release:1.1,impact:1.25},
   src:'Temporarily grows horns or talons for an extra melee attack.',
   tags:['spline tube growth','emissive veins','instanced shards','wet decal','lit steam'],
-  blurb:'Glowing veins spread over the helmet and gauntlets, then keratin horns and hooked talons punch out through the metal in a spray of metal and blood, steaming as they cool.',
+  blurb:'Glowing veins spread over the helmet and hands, then keratin horns and hooked talons punch out through the metal in a spray of metal and blood, steaming as they cool.',
   notes:[
     'Horns and talons are tube meshes bent along cubic splines in the vertex shader. Growth evaluates the spline only up to a growth scalar with a back-eased overshoot, so they punch out and settle.',
     'The anticipation is in the body material: crack veins crawl outward from the scalp and the hands with an accelerating pulse while the figure trembles.',
@@ -11424,7 +11138,7 @@ LAB.add({
   blurb:"A plain sword lifts off a stone altar, turns point down and is swallowed by white-gold fire, then the flame draws itself into the edges of the blade and the lit sword drives itself into the altar.",
   notes:[
     "Tell: the sword rises and turns with a slight wobble while a sunburst is burned into the altar top. Impact: a hard sunburst flash and the blade ignites from the guard to the point.",
-    "The fire is tinted flame sprites with real alpha, rising off sample points along the blade, with lit smoke above. The steel underneath heats through the same flame ramp.",
+    "The fire is tinted flame sprites with real alpha, rising off sample points along the blade, with lit smoke above. The metal underneath heats through the same flame ramp.",
     "Second beat: the fire collapses into the blade and its cutting edges and fuller stay lit with a steady light line. The light then calms to a slow breath.",
     "Third beat: the sword drops and plants itself in the altar with a jolt, throwing stone chips and dust. Scorch, ash and the gold mark remain on the stone."
   ],
@@ -11950,7 +11664,7 @@ LAB.add({
   blurb:'Four weapons descend point-first down shafts of red-gold light over a burning circle; three burn away to gold ash and the chosen blade drives itself into the flagstones at the caster\'s feet.',
   notes:[
     'Anticipation: a shield-boss ring is burned into the floor by one clockwise sweep while four light shafts open and each lights its own pool of floor.',
-    'The weapons are real lit meshes: two swords from the sword mesh and a spear and flanged mace reshaped from one cylinder in the vertex shader, all with bronze fittings.',
+    'The weapons are real lit meshes: two swords from the sword mesh and a spear and mace reshaped from one cylinder in the vertex shader, all with bronze fittings.',
     'Impact: the refused weapons erode from the point upward into rising gold ash, the chosen one lifts, then slams into the stone with a held eight-point flash, chips and a dust ring.',
     'Residue: the blade stays embedded and quivers to rest, cracks and pale dust ring its foot and the floor ring cools to a dull engraved glow.'
   ],
@@ -11967,7 +11681,7 @@ LAB.add({
   variants:[
     {name:'Spear chosen',set:{pick:1}},
     {name:'Mace chosen',set:{pick:3,tint:'#ff9446'}},
-    {name:'Greatsword, pale orange',set:{pick:0,tint:'#ffd9a0',shaft:1.3}}
+    {name:'Long blade, pale orange',set:{pick:0,tint:'#ffd9a0',shaft:1.3}}
   ],
   glsl:P303_OK+rtGL(RW_K,DUR)+`
 #define RW_PRE ${RW_PRE.toFixed(2)}
@@ -12274,85 +11988,6 @@ float p304_gouge(vec2 q,float seed){ // three ragged claw gouges, q in metres ar
     float d=sdSeg(q,o+vec2(-.12,-.55),o+vec2(.14,.55));float tp=sat(1.-abs(q.y-o.y)/.6);
     d+=(nz(q*2.3+fi+seed).r-.5)*.05;m=max(m,smoothstep(.045*tp+.004,.0,d));}
   return m;}`;
-const P304_BOOK_GLSL=`
-#define P304_BETA .14
-vec3 p304_bn(vec3 l){l.yz=p304_r2(l.yz,P304_BT);float c=cos(P304_BY),s=sin(P304_BY);return vec3(c*l.x+s*l.z,l.y,-s*l.x+c*l.z);}
-vec3 p304_bw(vec3 l){return P304_B+p304_bn(l*P304_BS*p304_bvis());}
-vec3 p304_bfront(){return P304_B+p304_bn(vec3(0.,0.,.25))*P304_BS;}
-#ifdef FRAG
-float p304_dissolve(vec3 w){return nz(w.xy*2.3+w.z*1.7).r*.7+nz(w.xz*5.).b*.3-p304_bero()*1.15;}
-#endif`;
-const P304_BOOK_LAYERS=[
-  {name:'Tome',geo:'box',count:4,blend:'opaque',vs:`
-    if(inst<1.5){
-    float side=inst<.5?1.:-1.;float g=side>0.?-P304_BETA:mix(-P304_BETA,PI+P304_BETA,p304_open());
-    vec3 dir=vec3(cos(g),0.,sin(g));vec3 nI=side>0.?vec3(-sin(g),0.,cos(g)):vec3(sin(g),0.,-cos(g));
-    data=vec4(p,side);
-    vec3 l=dir*(p.x*.18+.17)+vec3(0.,p.y*.245,0.)+nI*(p.z*.008-.027);vec3 ln=dir*n.x+vec3(0.,n.y,0.)+nI*n.z;
-    p=p304_bw(l);n=p304_bn(ln);vis=step(.01,p304_bvis());}else{
-    float side=inst<2.5?1.:-1.;float g=side>0.?-P304_BETA:mix(-P304_BETA,PI+P304_BETA,p304_open());
-    vec3 dir=vec3(cos(g),0.,sin(g));vec3 nI=side>0.?vec3(-sin(g),0.,cos(g)):vec3(sin(g),0.,-cos(g));
-    data=vec4(p,side);
-    float bow=(1.-p.x*p.x)*.0+(p.x+1.)*.5;
-    vec3 l=dir*(p.x*.17+.175)+vec3(0.,p.y*.232,0.)+nI*(p.z*.009-.01+.012*sin(bow*PI)*step(0.,p.z));
-    vec3 ln=dir*n.x+vec3(0.,n.y,0.)+nI*n.z;p=p304_bw(l);n=p304_bn(ln);vis=step(.01,p304_bvis());}`,
-    fs:`if(inst<1.5){if(p304_dissolve(P)<0.)discard;
-    vec3 o=data.xyz;float k=nz(o.xy*vec2(1.3,.9)+data.w).r,k2=nz(o.xy*4.).b;
-    vec3 alb=vec3(.05,.06,.1)*(.6+.7*k)*(.8+.4*k2);float rough=.55;float met=0.;
-    float gild=max(step(.88,abs(o.x)),step(.9,abs(o.y)))*step(-.5,-o.z);
-    float emb=p304_text(o.xy*vec2(1.,1.4)*1.1,.62,26.,.09,7.)+band(length(o.xy*vec2(1.,1.4)),.75,.025)+band(length(o.xy*vec2(1.,1.4)),.5,.02);
-    emb*=step(o.z,-.5);
-    alb=mix(alb,vec3(.7,.56,.3),sat(gild+emb*.9));rough=mix(rough,.32,sat(gild+emb));met=sat(gild+emb);
-    col=shade(alb,rough,met,normalize(N),V,P);
-    float de=p304_dissolve(P);col+=glow(smoothstep(.06,.0,de)*step(.001,p304_bero())*1.1,P_tint)*1.6;a=1.;}else{if(p304_dissolve(P)<0.)discard;
-    vec3 o=data.xyz;vec2 pu=vec2(data.w>0.?(o.x+1.)*.5:(1.-o.x)*.5,o.y*.5+.5);
-    float face=step(.9,o.z);
-    float ink=p304_ink(pu,data.w*3.+5.)*face;float gut=smoothstep(.0,.15,pu.x)*.6+.4;
-    vec3 alb=p304_vellum(pu,data.w)*(1.-ink*.8);
-    float edges=(.7+.3*sin(dot(o,vec3(0.,0.,1.))*140.));alb=mix(alb*edges*.85,alb,face);
-    alb*=mix(1.,gut,face);
-    col=shade(alb,.8,0.,normalize(N),V,P);
-    col+=glow(min(ink*p304_pglow()*step(0.,data.w),1.),P_tint)*.8*P_power;
-    float de=p304_dissolve(P);col+=glow(smoothstep(.06,.0,de)*step(.001,p304_bero())*1.1,P_tint)*1.6;a=1.;}`},
-  {name:'Riffling pages',geo:['plane',10,3],count:14,blend:'opaque',vs:`
-    float pr=p304_flipP(inst);float u=(p.x+1.)*.5;
-    float g=mix(-P304_BETA,PI+P304_BETA,easeInOut(pr));float gp=g-sin(pr*PI)*u*.9*(1.-2.*step(p304_flipDir(),0.));
-    vec3 dir=vec3(cos(gp),0.,sin(gp));vec3 nI=vec3(-sin(gp),0.,cos(gp));
-    vec3 l=dir*(u*.335+.01)+vec3(0.,p.y*.228,0.)+nI*.006;
-    p=p304_bw(l);n=p304_bn(nI);vis=step(.001,pr)*step(pr,.999)*step(.01,p304_bvis());data=vec4(u,p.y*.5+.5,inst,pr);`,
-    fs:`vec2 pu=data.xy;float ink=p304_ink(pu,data.z*1.3);vec3 alb=p304_vellum(pu,data.z)*(1.-ink*.8);
-    col=shade(alb,.8,0.,normalize(N),V,P)+glow(ink*.35*sin(data.w*PI),P_tint)*P_power;a=1.;`}
-];
-const P304_BOLT_GLSL=`
-vec3 p304_path(float x,float i){vec3 s=p304_bfront();vec3 e=P304_E+vec3(0.,0.,.06*i);vec3 m=mix(s,e,.5)+vec3(0.,.35,.15*i);return bez2(s,m,e,x);}
-float p304_head(float i){return sat((u_age-p304_bt(i))/.2);}
-float p304_tail(float i){return sat((u_age-p304_bt(i)-.06)/.24);}
-float p304_hitT(float i){return u_age-p304_bt(i)-.2;}`;
-const P304_BOLT_LAYERS=[
-  {name:'Lance',geo:['strip',64],count:3,blend:'add',vs:`
-    if(mod(inst,3.)<.5){
-    float i=floor(inst/3.);float s=uv.y;float hd=p304_head(i),tl=p304_tail(i);float ss=mix(tl,hd,s);
-    vec3 c=p304_path(ss,i);vec3 tg=normalize(p304_path(ss+.01,i)-c+1e-4);
-    float on=step(.0005,hd-tl)*step(0.,u_age-p304_bt(i));float w=mix(.035,.1,s*s)*on;
-    p=c+normalize(cross(tg,u_cam-c))*p.x*w;data=vec4(ss,s,i,hd);}else{
-    float i=floor(inst/3.);float k=mod(inst,3.)-1.;float s=uv.y;float hd=p304_head(i),tl=sat((u_age-p304_bt(i)-.03)/.4);float ss=mix(tl,hd,s);
-    vec3 c=p304_path(ss,i);vec3 tg=normalize(p304_path(ss+.01,i)-c+1e-4);vec3 b1=normalize(cross(tg,vec3(0.,1.,0.)));vec3 b2=cross(b1,tg);
-    float an=ss*28.+k*PI+u_age*6.;float rr=.11*(1.-s*.4);c+=(b1*cos(an)+b2*sin(an))*rr;
-    float on=step(.0005,hd-tl)*step(0.,u_age-p304_bt(i));
-    p=c+normalize(cross(tg,u_cam-c))*p.x*.035*on;data=vec4(ss,s,i,-1.);}`,
-    fs:`if(data.w>-.5){float x=uv.x*2.-1.;float core=inv(x,.12)*smoothstep(1.,.6,abs(x));float n=nz(vec2(data.x*6.-u_time*3.,uv.x)).r;
-    col=glow(min(core*(.4+.9*data.y)*(.7+.5*n),1.4),P_tint)*2.*P_power;a=1.;}else{float tx=fract(data.x*30.);float gl=smoothstep(.22,.07,tick(vec2((tx-.5)*2.2,(uv.x*2.-1.)*1.1),floor(data.x*30.)+data.z*9.));
-    col=glow(min(gl*(.3+data.y),1.2),P_tint)*1.4*P_power;a=1.;}`},
-  {name:'Ink spatter',type:'particles',count:110,life:3.5,blend:'alpha',soft:0,stretch:.02,sim:`
-    float i=mod(id,P304_NB);float T2=p304_hitT(i);float on=step(0.,T2);T2=max(T2,0.);
-    vec3 dir=normalize(vec3(.6+r.y,r.z*1.2-.1,r.w*1.6-.8));float sp=mix(1.5,5.,q.x*q.x);
-    float g=9.8;vec3 v=dir*sp;float tl=(v.y+sqrt(v.y*v.y+2.*g*P304_E.y))/g;float tt=min(T2,tl);
-    pos=P304_E+vec3(v.x*tt,v.y*tt-.5*g*tt*tt,v.z*tt);pos.y=max(pos.y,.012);
-    float landed=step(tl,T2);size=mix(.016,.04,q.y)*on*(1.+landed*1.5)*sat(P_ink);alpha=1.;data=vec4(landed,T2,0.,0.);`,
-    fs:`float m=data.x>.5?smoothstep(1.,.6,length(uv-.5)*2.+(nz(uv*.7+rnd.xy).r-.5)*.6):softDot(uv)*1.6;
-    vec3 nn=normalize(u_up+(vec3(rnd.x,0.,rnd.y)-.5)*.6);
-    col=vec3(.01,.012,.03)+(fxLight(P)*.3+u_keyCol*.25+env(reflect(-V,vec3(0.,1.,0.)),.1)*.3)*pow(softDot(uv),2.)+glow(exp(-data.y*2.)*.5,P_tint)*.4;a=sat(m);`}
-];
 {
 const DUR=6.4,L1=1.55,L2=1.9;
 const CAS={p:[-2.9,0,.9],ry:1.25};
@@ -12681,10 +12316,10 @@ const CRY=p306_face(C,T)+.25,TRY=-.35;
 LAB.add({
   id:'inv-lugonu-depart-the-abyss', name:'Exit through a tear', set:'Crawl', cat:'Invocations', sub:'Movement', legacy:false, duration:D, stage:'full',
   src:'Takes the caster back to where they came from.',
-  tags:['ragged tear','body spaghettify','instanced black glass','lit haze','residue seam'],
-  blurb:"Standing on a black glass floor, the caster rips a seam in the air, warm torchlight from the dungeon they left spills through, and they are drawn into it like thread before the tear snaps shut.",
+  tags:['ragged tear','body spaghettify','instanced obsidian','lit haze','residue seam'],
+  blurb:"Standing on a polished obsidian floor, the caster rips a seam in the air, warm torchlight from the dungeon they left spills through, and they are drawn into it like thread before the tear snaps shut.",
   notes:[
-    "Tell: a hairline crack lengthens in the air while black glass shards orbit in the violet haze. The floor is black plate glass, shaded with real reflections.",
+    "Tell: a hairline crack lengthens in the air while obsidian shards orbit in the violet haze. The floor is polished obsidian, shaded with real reflections.",
     "The tear opens to a different light. Its inside is a warm torchlit glimpse of the dungeon and a warm point light spills out over the caster and the floor, the only warm note in the frame.",
     "The caster is a custom mannequin whose vertex shader drags each vertex into the tear with a delay by distance, so the near arm goes first and the body unravels into it.",
     "Impact is the snap: the tear closes in four frames behind a jagged slit and the broken spiral. The orbiting shards lose their hold and fall, bounce and stay, and a cooling seam keeps dripping sparks."
@@ -12732,7 +12367,7 @@ vec3 p306a_shardPos(float i,vec4 h,float tt){vec3 o=p306a_orbit(i,h,tt);float k=
     else{const k=p306_ss(.1,TO,age);L.push({p:p306_add(T,[0,0,.3]),c:p306_mul(c,1.8*k*(1-o)),r:3.5});}
     return L;},
   layers:[
-    {name:'Black glass floor',geo:['ground',1],blend:'alpha',xf:{p:[0,.012,0],s:5.2},fs:`
+    {name:'Obsidian floor',geo:['ground',1],blend:'alpha',xf:{p:[0,.012,0],s:5.2},fs:`
       vec2 w=(uv*2.-1.)*5.2;w.y=-w.y;float vein;vec3 c=p306_abyssFloor(w,V,P,P_tint,u_time,vein);
       float d=length(w-vec2(.2,-.2));float m=smoothstep(5.,2.4,d+nz(uv*1.3).r*1.5);
       float pls=.55+.45*sin(u_time*1.7-length(w)*1.3);
@@ -12743,7 +12378,7 @@ vec3 p306a_shardPos(float i,vec4 h,float tt){vec3 o=p306a_orbit(i,h,tt);float k=
       col=mix(col,vec3(.42,.38,.44)*(u_amb*7.+fxLight(P)*.35),lip*on*.55);
       col+=glow(seam*on*(exp(-T*.7)*.8+.15),P_tint)*1.3;
       a=m*.94;`},
-    {name:'Black glass shards',geo:'crystal',blend:'opaque',count:44,vs:`
+    {name:'Obsidian shards',geo:'crystal',blend:'opaque',count:44,vs:`
       float i=inst;vec4 h=irnd;float sc=mix(.07,.2,h.w*h.w);
       float T=p306a_T();vec3 ax=normalize(h.zxy-.5);float sp=mix(.6,2.,h.y);
       vec3 pp;float ang;
@@ -12835,13 +12470,13 @@ const H=p306_yaw(C,CRY,p306_HANDR);
 LAB.add({
   id:'inv-lugonu-banish', name:'Banish', set:'Crawl', cat:'Invocations', sub:'Teleport enemy', legacy:false, duration:D, stage:'full',
   src:'Sends a creature far away; those that resist are still weakened.',
-  tags:['raytraced pit','helix ribbons','instanced black glass','spiral distortion','floor scar'],
-  blurb:"A splinter of black glass flicked from the caster's hand bites the floor under the target, the stone opens into a turning shaft of nothing, and ribbons of black glass wind around the victim and drag it down before the floor slams shut.",
+  tags:['raytraced pit','helix ribbons','instanced obsidian','spiral distortion','floor scar'],
+  blurb:"A splinter of obsidian flicked from the caster's hand bites the floor under the target, the stone opens into a turning shaft of nothing, and ribbons of obsidian wind around the victim and drag it down before the floor slams shut.",
   notes:[
     "The pit is a ray layer: it finds where the camera ray meets the floor inside the rift, then intersects the inside wall of a cylinder below it, so the hole has real parallax depth and the sinking body is cut cleanly by the floor.",
     "The target is a stage actor animated in JS: it sinks with an accelerating curve, spins faster as it goes and sways, which sells the drag without any custom body.",
-    "Five helix ribbons of black glass are camera-facing strips built from an analytic path. They climb out of the pit, wrap the body and are pulled down with it.",
-    "Impact is the close: a hard ring snaps inward with a two-frame spike, splinters of glass erupt around the rim and stay, and the fused spiral scar keeps cooling violet veins."
+    "Five helix ribbons of obsidian are camera-facing strips built from an analytic path. They climb out of the pit, wrap the body and are pulled down with it.",
+    "Impact is the close: a hard ring snaps inward with a two-frame spike, splinters of obsidian erupt around the rim and stay, and the fused spiral scar keeps cooling violet veins."
   ],
   port:"Unreal: the pit is a decal with a parallax interior cylinder in the material (or a stencil portal). Ribbons are Niagara ribbon emitters on a helix module, the shards a mesh emitter, and the target sink is gameplay animation plus a world position offset twist.",
   cam:{yaw:.38,pitch:.2,dist:7.4,target:[-.1,.95,0]},
@@ -12912,7 +12547,7 @@ vec3 p306b_bolt(float k){vec3 e=P306B_X+vec3(-.25,0.,.1);vec3 m=mix(P306B_H,e,.5
       float T=p306b_T();float Rc=mix(1.05*P_depth,0.,sat(T/.1));float ring=exp(-abs(r-Rc)*45.)*step(0.,T)*step(T,.14);float bl=band(r,T*6.,.3)*exp(-T*5.)*step(0.,T);
       col=glow(min(sg*1.1+arms*.7+rim*.8,1.3),P_tint)*1.3+glow(ring*1.2,P_tint)*1.6+vec3(.8,.7,.9)*ring*.6;a=1.;
       dist=vec2(-q.y,q.x)/max(r,.01)*smoothstep(R+1.6,R,r)*step(R,r)*smoothstep(0.,.4,R)*.018*P_warp+normalize(q+1e-4)*bl*.02;`},
-    {name:'Glass ribbons',geo:['strip',48],count:5,blend:'alpha',vs:`
+    {name:'Obsidian ribbons',geo:['strip',48],count:5,blend:'alpha',vs:`
       float s=uv.y;float fi=inst;float sk=p306b_sink();
       float grow=smoothstep(P306B_TH,P306B_TH+.45,u_age)*(1.-smoothstep(P306B_TC-.25,P306B_TC,u_age));
       float top=mix(.3,2.1,irnd.x)*grow;float hh=s*top-sk*smoothstep(.0,1.,s)*.9;
@@ -12963,13 +12598,13 @@ const D=5.4,TI=1.75;
 LAB.add({
   id:'inv-lugonu-brand-weapon-with-distortion', name:'Sword split into copies', set:'Crawl', cat:'Invocations', sub:'Weapon buff', legacy:false, duration:D, stage:'ground',
   src:'Permanently gives a melee weapon a chance to teleport what it hits.',
-  tags:['phase ghosts','instanced black glass','heat haze distortion','branded material','floor mark'],
-  blurb:"A sword hangs over a broken spiral drawn on the floor while a ring of black glass splinters winds in and drives into the steel; the blade splits into three phase-shifted copies, snaps back, and is left dark, veined and slightly blurred.",
+  tags:['phase ghosts','instanced obsidian','heat haze distortion','branded material','floor mark'],
+  blurb:"A sword hangs over a broken spiral drawn on the floor while a ring of obsidian splinters winds in and drives into the metal; the blade splits into three phase-shifted copies, snaps back, and is left dark, veined and slightly blurred.",
   notes:[
-    "Tell: the floor mark burns in from the centre out and sixteen black glass splinters spiral inward on a tightening helix. The blade already shivers: three additive copies jitter a few millimetres apart.",
-    "Impact: the splinters reach the steel in the same frame. A jagged slit and the spiked burst hold for two frames, the copies jump apart by a hand's width and ring back with a damped oscillation.",
-    "The brand is a material change on the real sword mesh: the steel darkens toward black glass with a violet fresnel and crawling vein cracks. The copies never fully settle, so the weapon keeps a faint double outline.",
-    "Residue: a refraction field shimmers along the blade for the rest of the clip, flakes of glass shed from the steel and lie on the floor, and the floor mark cools to a dim pulse."
+    "Tell: the floor mark burns in from the centre out and sixteen obsidian splinters spiral inward on a tightening helix. The blade already shivers: three additive copies jitter a few millimetres apart.",
+    "Impact: the splinters reach the metal in the same frame. A jagged slit and the spiked burst hold for two frames, the copies jump apart by a hand's width and ring back with a damped oscillation.",
+    "The brand is a material change on the real sword mesh: the metal darkens toward obsidian with a violet fresnel and crawling vein cracks. The copies never fully settle, so the weapon keeps a faint double outline.",
+    "Residue: a refraction field shimmers along the blade for the rest of the clip, flakes of obsidian shed from the metal and lie on the floor, and the floor mark cools to a dim pulse."
   ],
   port:"Unreal: the effect is a material parameter blend on the weapon (emissive veins, fresnel, darkened base) plus a distortion mesh parented to the blade. Ghost copies are two extra mesh renders with world position offset driven by a damped spring curve.",
   cam:{yaw:.4,pitch:.1,dist:3.6,target:[0,1.,0]},
@@ -13194,7 +12829,7 @@ LAB.add({
   notes:[
     "The standard is three instanced boxes, two crystal horns and a vertex animated banner; it drops in, bites the floor, shudders and stays as residue.",
     "The horn call is a ground ring and a dust wave keyed to the banner mark igniting, so the summons has a source before any orc appears.",
-    "Each follower arrives under a hair thin jagged bolt that lives for three frames, then cools from a bronze silhouette glow into its iron and hide material.",
+    "Each follower arrives under a hair thin jagged bolt that lives for three frames, then cools from a bronze silhouette glow into its metal and hide material.",
     "Arrivals are deliberately uneven in time and space so the five reads as a muster, not a pattern; each leaves a scorch star on the floor."
   ],
   port:"Unreal: a static mesh standard with a cloth simulation, a beam emitter with jitter for the bolts, and per character dynamic material overlay for the arrival glow. Scorch stars are decals.",
@@ -13556,10 +13191,9 @@ float p308u_dry(){return easeInOut((p308u_tH()-.3)/2.2);}`,
 })();
 /* ---- 309_inv_fedhas-madash-cheibriado.js ---- */
 (function(){
-/* Crawl collection: god invocations of Fedhas Madash, Cheibriados and Ashenzari.
+/* Crawl collection: god invocations of Fedhas Madash.
    Each god has one visual identity across its abilities.
    Fedhas Madash: wet bark, loam, moss and fungal flesh; a bioluminescent spring-green accent; the fiddlehead spiral sigil ringed with leaves.
-   Cheibriados: weathered bronze, pale sand and tortoise-shell scutes; a pale time-blue accent; the hexagonal scute dial with clock ticks.
    Ashenzari: blackened iron chains and dark smoke; a violet-blue accent; the shackled eye seal. */
 const p309_sat=x=>Math.min(Math.max(x,0),1);
 const p309_eOut=x=>{x=p309_sat(x);return 1-(1-x)*(1-x)*(1-x);};
@@ -13731,101 +13365,6 @@ float p309evCharge(){float t=p309evT();return t<0.?pow(sat(u_age/P309EV_HS),2.):
       float nl=7.;float an=atan(q.y,q.x)+.3;float sa=mod(an+PI/nl,TAU/nl)-PI/nl;vec2 l=vec2(cos(sa),sin(sa))*length(q);
       float blade=smoothstep(1.,.8,length((l-vec2(.5,0.))/vec2(.45,.035)));
       col=(glow(.95,P_tint)*blade*.28+mix(vec3(1.,.97,.85),P_tint,.4)*hotDot(uv)*.35)*e;a=1.;`}
-  ]
-});
-}
-const P309_CHE=`
-float p309CheSig(vec2 q,float w,float grow,float hand){
-  float r=length(q);float a01=atan(q.y,q.x)/TAU+.5;float on=step(a01,grow*1.02);
-  float m=(smoothstep(w,0.,abs(r-.93))+smoothstep(w*.7,0.,abs(r-.82))*.7)*on;
-  float k=a01*12.;float f=abs(fract(k)-.5)*TAU*r/12.;float mj=step(mod(floor(k),3.),.5);
-  m+=smoothstep(w*1.3,0.,f)*step(mix(.86,.7,mj),r)*step(r,.9)*on*(.55+.45*mj);
-  float dk=a01*18.;float dd=length(vec2((fract(dk)-.5)*TAU*.5/18.,r-.5))-.03;m+=smoothstep(w*2.6,0.,dd)*step(r,.64)*smoothstep(.1,.8,grow)*.75;m+=smoothstep(w*1.5,0.,abs(r-.32))*smoothstep(.1,.8,grow)*.5;
-  m+=smoothstep(w*1.2,0.,sdSeg(rot(hand)*q,vec2(0.),vec2(0.,.56)))*smoothstep(.5,1.,grow);
-  return sat(m);}
-vec3 p309Bronze(vec3 P,vec3 n){vec4 k=tri(P*3.,n);vec3 b=vec3(.5,.33,.16)*(.6+.6*k.r);float vg=smoothstep(.55,.8,k.g);return mix(b,vec3(.17,.28,.24),vg*.55);}
-`;
-{
-const DUR=6.8;const O0=.115,O1=.353,I0=.494,I1=.724,SH=.759;
-const HG=['lathe',[[.62,0],[.67,.05],[.63,.3],[.5,.68],[.44,.95],[.5,1.22],[.63,1.6],[.67,1.85],[.62,1.9]],40,3];
-LAB.add({
-  id:'inv-cheibriados-step-from-time', name:'Hourglass of sand', set:'Crawl', cat:'Invocations', sub:'Escape', duration:DUR, stage:'full', dummy:false,
-  src:'Removes the caster for a while; they return unchanged after monsters have wandered off.',
-  tags:['height dissolve','sand simulation','glass refraction','bronze frame','residue'],
-  blurb:'A bronze-ringed hourglass of light closes around the caster, who runs down into it as sand; the glass stands empty while time flickers past, then the sand climbs back up into the same body.',
-  notes:[
-    'Tell: the scute dial draws under the feet and the hourglass fades in as a refracting fresnel shell inside a lit bronze frame.',
-    'The body is a custom mannequin clipped by a height threshold with a glowing sand edge; grains fall from the edge onto a lathe sand cone that grows as the body drains.',
-    'The empty beat is held: flicker in the effect light suggests hours passing, then the threshold reverses and grains rise from the cone back into the body.',
-    'The glass shatters into glints at the end and the spilt sand ring stays on the floor as residue.'
-  ],
-  port:'Character dissolve material with a world-height threshold and edge emission, a sand cone mesh with a height parameter and Niagara sand ribbons that switch direction on a curve. The hourglass is a translucent refractive mesh with a bronze static frame.',
-  markers:{release:+(O0*DUR).toFixed(2),impact:+(O1*DUR).toFixed(2)},
-  cam:{yaw:.5,pitch:.14,dist:5.2,target:[0,1.,0]},
-  params:[
-    {id:'tint',label:'Time light',type:'color',value:'#9cc4ff'},
-    {id:'sand',label:'Sand',type:'color',value:'#c9b48a'},
-    {id:'glass',label:'Glass',min:.3,max:1.5,value:1},
-    {id:'flicker',label:'Time flicker',min:0,max:1.5,value:1}
-  ],
-  variants:[
-    {name:'Silver sand',set:{sand:'#b8bcc4',tint:'#c8d8ff'}},
-    {name:'Amber hour',set:{sand:'#d8a868',tint:'#ffc890'}},
-    {name:'Still glass',set:{flicker:0,glass:.6}}
-  ],
-  glsl:`${P309_CHE}
-float p309sfH(){float l=u_life;if(l<${O0})return 2.;if(l<${O1})return mix(1.95,-.05,easeInOut((l-${O0})/${(O1-O0).toFixed(3)}));if(l<${I0})return -.1;if(l<${I1})return mix(-.05,1.95,easeInOut((l-${I0})/${(I1-I0).toFixed(3)}));return 2.;}
-float p309sfAmt(){float l=u_life;if(l<${O0})return 0.;if(l<${O1})return easeInOut((l-${O0})/${(O1-O0).toFixed(3)});if(l<${I0})return 1.;if(l<${I1})return 1.-easeInOut((l-${I0})/${(I1-I0).toFixed(3)});return 0.;}
-float p309sfOut(){return step(${O0},u_life)*step(u_life,${O1});}
-float p309sfIn(){return step(${I0},u_life)*step(u_life,${I1});}
-float p309sfGlass(){return smoothstep(0.,.11,u_life)*(1.-step(${SH},u_life));}`,
-  lights:(t,age,life,P)=>{const c=P.tint;const g=p309_sat(life/.1)*(life<SH?1:Math.exp(-(life-SH)*DUR*4));
-    const fl=life>O1&&life<I0?(.35+.65*Math.abs(Math.sin(age*4.2))*(Math.sin(age*11)>0?1:.55))*P.flicker+(1-P.flicker)*.6:1;
-    const vf=Math.exp(-Math.abs(life-O1)*DUR*7)+Math.exp(-Math.abs(life-I1)*DUR*7);
-    return [{p:[0,1.1,.75],c:p309_warm(c,2.2*g*fl+2.6*vf,.15),r:4.5},{p:[0,.3,0],c:p309_warm(c,1.2*g,.25),r:2.2},{p:[.5,2.1,.4],c:p309_warm(c,1.*g*fl,.3),r:3}];},
-  layers:[
-    {name:'Spilt sand',geo:['ground',1],blend:'alpha',xf:{p:[0,.011,0],s:1.5},fs:`
-      float d=length(uv-.5)*2.;float n=nz(uv*2.).r;float g=smoothstep(${O0},${O1},u_life);
-      float m=(band(d+(n-.5)*.25,.62,.2)*smoothstep(${SH-.02},1.,u_life*1.02)*1.2+smoothstep(.45,.1,d+(n-.5)*.3)*.6*g)*g;
-      vec4 k=nz(uv*5.);col=P_sand*.25*(.6+.6*k.r)*(.35+u_amb*5.+fxLight(P)*.25);a=sat(m)*.75*(.6+.4*k.b);`},
-    {name:'Scute dial',geo:['ground',1],blend:'add',xf:{p:[0,.02,0],s:1.2},fs:`
-      vec2 q=uv*2.-1.;float g=sat(u_life/.12);float m=p309CheSig(q,.012,g,-u_age*.4);
-      col=glow(m*(.4+.35*g)*(1.-smoothstep(${SH},.98,u_life)),P_tint)*.8;a=1.;`},
-    {name:'Body',geo:'dummy',blend:'opaque',fs:`
-      float H=p309sfH();float n=nz(OP.xz*3.+OP.y*.7).r;float cut=OP.y+(n-.5)*.08;if(cut>H)discard;
-      vec3 nn=normalize(N);col=dummyMat(OP,nn,V,P);float e=smoothstep(H-.12,H,cut)*step(H,1.9);
-      float gr=step(.55,nz(OP.xy*14.+OP.z*5.).b);col=mix(col,shade(P_sand*.5,.9,0.,nn,V,P),e*.8)+glow(e*(.5+.5*gr),P_tint)*.9*e;a=1.;`},
-    {name:'Sand cone',geo:['lathe',[[0,0],[1,0],[.7,.15],[.3,.6],[0,1]],24],blend:'opaque',vs:`
-      float A=p309sfAmt();float rr=.55*sqrt(A)+.001;p*=vec3(rr,.42*A+.001,rr);`,
-      fs:`vec3 nn=normalize(N);vec4 k=tri(P*8.,nn);col=shade(P_sand*.45*(.7+.5*k.r),.95,0.,nn,V,P);a=1.;`},
-    {name:'Falling grains',type:'particles',count:260,life:.7,blend:'alpha',soft:.05,stretch:1.4,sim:`
-      float H=p309sfH();vec3 b=bodySurf(r);b.y=min(b.y,H);vec3 pile=vec3((r.y-.5)*.3,.42*p309sfAmt()*.8,(r.z-.5)*.3);
-      vec3 o=p309sfOut()>.5?b:pile;vec3 tg=p309sfOut()>.5?pile:b;
-      pos=p309sfOut()>.5?o+vec3(0.,-4.9*T*T*.8,0.):mix(o,tg,easeIn(t))+curl3(r.xyz*5.+T)*.04*sin(t*PI);
-      pos.y=max(pos.y,pile.y*.5);size=.01*(.6+q.y)*max(p309sfOut(),p309sfIn())*step(.08,H+.1)*step(H,1.92);alpha=1.;`,
-      fs:`col=puffLit(uv,P,P_sand*.8)+glow(.25,P_tint)*.25;a=softDot(uv);`},
-    {name:'Hourglass glass',geo:HG,blend:'add',cull:'back',fs:`
-      vec3 nn=normalize(N);float g=p309sfGlass()*P_glass;float fr=fresnel(nn,V,2.2);vec2 hu=vec2(atan(OP.z,OP.x)*1.3,OP.y*2.2);
-      float sc=smoothstep(.06,0.,hexGrid(hu*1.5).z);float cs=pow(nz(vec2(hu.x*.5,OP.y*.8-u_time*.15)).r,3.);
-      float br=nz(vec2(atan(OP.z,OP.x),OP.y)*1.7).r;float shat=step(${SH},u_life)*step(br,(u_life-${SH})*14.);
-      col=glow((fr*.32+sc*fr*.22+cs*.04)*g*(1.-shat),P_tint)*.6+env(reflect(-V,nn),.1)*fr*.3*g;a=1.;dist=nn.xy*fr*g*.01;`},
-    {name:'Bronze frame',geo:['torus',.07],blend:'opaque',count:2,vs:`
-      float i=float(inst);float y=i<.5?.04:1.88;p=p*vec3(.69,1.,.69)+vec3(0.,y,0.);float sh=step(${SH},u_life);
-      float tf=max(u_life-${SH},0.)*${DUR.toFixed(1)};p.y-=sh*min(i*4.9*tf*tf,1.83);vis=step(.04,u_life);`,
-      fs:`vec3 nn=normalize(N);col=shade(p309Bronze(P,nn)*1.2,.3,.9,nn,V,P);a=sat(u_life/.08);`},
-    {name:'Frame posts',geo:'tube',blend:'opaque',count:3,vs:`
-      float i=float(inst);float an=i*TAU/3.+.5;vec3 c=vec3(cos(an),0.,sin(an))*.72;float sh=step(${SH},u_life);
-      p=p*vec3(.022,1.84,.022)+c+vec3(0.,.04,0.);float tf=max(u_life-${SH},0.)*${DUR.toFixed(1)};
-      p=rotAxis(p-c,normalize(vec3(-sin(an),0.,cos(an))),-min(tf*tf*1.5,1.5)*sh)+c;vis=step(.06,u_life);`,
-      fs:`vec3 nn=normalize(N);col=shade(p309Bronze(P,nn),.35,.9,nn,V,P);a=1.;`},
-    {name:'Glass shards',type:'particles',count:120,life:1.2,burst:true,delay:SH*DUR,spread:.1,blend:'add',soft:0,sim:`
-      float an=r.y*TAU;float y=r.z*1.9;float rr=.5+.15*abs(y-.95);vec3 o=vec3(cos(an)*rr,y,sin(an)*rr);
-      vec3 v=vec3(cos(an),.2,sin(an))*mix(.5,1.6,q.x);pos=o+v*T+vec3(0.,-4.9*T*T,0.);pos.y=max(pos.y,.02);
-      size=.016*(.5+q.y)*(1.-t);spin=q.z*6.+T*10.;`,
-      fs:`col=glow(1.,P_tint)*glint(uv)*1.6;a=1.;`},
-    {name:'Vanish slit',geo:'quad',billboard:true,blend:'add',depthTest:false,xf:{p:[0,1,0],s:[1.2,1.4,1]},fs:`
-      float e=exp(-abs(u_life-${O1})*${DUR.toFixed(1)}*14.)+exp(-abs(u_life-${I1})*${DUR.toFixed(1)}*14.);vec2 q=uv*2.-1.;
-      float m=smoothstep(.06,0.,abs(q.x)*(1.+abs(q.y)*2.))*smoothstep(1.,.3,abs(q.y));col=(glow(1.,P_tint)*m*.7+mix(vec3(1.),P_tint,.4)*hotDot(uv)*.2)*e;a=1.;`}
   ]
 });
 }
@@ -14565,11 +14104,11 @@ vec3 dbCone(float s,float ang,float rad){
 })();
 /* ---- 310_inv_ashenzari-dithmenos.js ---- */
 (function(){
-/* Pack 310: god invocations from Crawl. Ashenzari, Dithmenos, Gozag.
+/* Pack 310: god invocations from Crawl. Dithmenos.
    Each god has one visual identity across its abilities:
    Ashenzari (the Shackled): tarnished black iron chain links, a cold verdigris teal accent, the eye inside a ring of links.
    Dithmenos (shadows): flat ink-black matter, light sinks, a thin indigo rim, the eclipse ring (black disc, hard corona).
-   Gozag (gold): real metal coins, warm gold light, the stamped coin face with a reeded rim. */
+   */
 
 /* ---------- shared identity GLSL ---------- */
 const P310_DITH=`
@@ -14581,19 +14120,6 @@ vec2 p310_eclipse(vec2 q,float R,float seed){float r=length(q);vec2 pc=polar(q);
   return vec2(disc,ring+cor*.55);}
 vec3 p310_inkSurf(vec3 n,vec3 v,vec3 p){return max(shade(vec3(.005,.005,.007),.16,0.,n,v,p),vec3(0.))+env(reflect(-v,n),.12)*(.03+.35*fresnel(n,v,4.));}
 `;
-const P310_GOZ=`
-vec3 p310_gold(vec3 n,vec3 v,vec3 p,float rough){return shade(vec3(1.,.74,.32),rough,1.,n,v,p)+vec3(1.,.74,.32)*u_amb*.6;}
-float p310_coinFace(vec2 q){float r=length(q);float an=atan(q.y,q.x);
-  float reed=step(.86,r)*(.5+.5*sin(an*48.));
-  float rim=band(r,.8,.04);
-  vec2 s=q*1.35;float crown=sdSeg(s,vec2(-.45,-.25),vec2(.45,-.25));
-  crown=min(crown,sdSeg(s,vec2(-.45,-.25),vec2(-.5,.3)));crown=min(crown,sdSeg(s,vec2(.45,-.25),vec2(.5,.3)));
-  crown=min(crown,sdSeg(s,vec2(-.5,.3),vec2(-.25,0.)));crown=min(crown,sdSeg(s,vec2(-.25,0.),vec2(0.,.42)));
-  crown=min(crown,sdSeg(s,vec2(0.,.42),vec2(.25,0.)));crown=min(crown,sdSeg(s,vec2(.25,0.),vec2(.5,.3)));
-  float cm=smoothstep(.09,.05,crown)*step(r,.78);
-  return sat(reed*.6+rim+cm)*step(r,1.);}
-`;
-const P310_COIN=[[0,-.07],[.44,-.07],[.5,-.035],[.5,.035],[.44,.07],[0,.07]];
 {
 const P310H_D=5.2,P310H_TF=1.3;
 LAB.add({
@@ -14606,7 +14132,7 @@ LAB.add({
   notes:[
     'Tell: crack lines from the triplanar noise sheet climb the armour as an indigo front with the metal darkening below it, while dark motes are drawn into the body.',
     'Impact: 36 instanced armour plates are thrown off on ballistic arcs with tumble and a bounce, and an eclipse corona flashes behind the head.',
-    'The form is the same mannequin with an ink material whose silhouette is alpha clipped by fresnel and rising noise, wrapped in a displaced smoke shell and a stream of lit wisps.',
+    'The form is the same mannequin with an ink-like black material whose silhouette is alpha clipped by fresnel and rising noise, wrapped in a displaced smoke shell and a stream of lit wisps.',
     'Residue: the shed plates stay on the floor around a soft umbra stain, and the room stays dimmer while the form holds.'
   ],
   port:'Character material swap driven by a dissolve front, Niagara mesh renderer for the shed plates with collision, a mesh-sampling smoke emitter, and a negative light component on the character.',
@@ -14687,125 +14213,6 @@ float p310h_lv(){return sat((u_age-.15)/(P310H_TF-.15))*1.95;}`,
     {name:'Eclipse corona',geo:'quad',billboard:true,blend:'alpha',depthTest:false,xf:{p:[0,1.62,-.1],s:.95},fs:`
       float T=u_age-P310H_TF;float e=step(0.,T)*(T<.05?1.:exp(-(T-.05)*9.));vec2 q=uv*2.-1.;vec2 ec=p310_eclipse(q,.42+T*.25,9.);
       col=mix(vec3(.8),glow(1.,P_tint),.8)*.95;a=sat(ec.y*1.3)*e;`}
-  ]
-});
-}
-{
-const P310I_D=5.2,P310I_IMP=1.8;
-LAB.add({
-  id:'inv-gozag-potion-petition', name:'Gold potion pour', set:'Crawl', cat:'Invocations', sub:'Potion', legacy:false,
-  src:'Pays gold to receive the effects of one of three offered sets of potions.',
-  duration:P310I_D, stage:'full', actors:[{p:[0,0,0],ry:0,pose:'both'}],
-  markers:{release:.5,impact:P310I_IMP},
-  tags:['instanced coins','liquid metal','glass shading','gilding mask','coin stamp'],
-  blurb:"Coins stream up from the caster's hands into the chosen of three offered flasks, which fills with molten gold and tips it over them in a shining pour that gilds the armour and sinks in.",
-  notes:[
-    'Tell: three glass flasks appear overhead and 60 instanced gold coins spiral up from both hands. Ten miss, tumble and land on the floor where they stay.',
-    'Impact: the two rejected flasks erode into gold dust, the chosen one is full and tips, and a stamped coin face flashes for two frames.',
-    'The pour is a strip ribbon shaded as liquid metal with a moving front. A gilding mask runs down the armour with drip noise, then sinks in with a warm pulse.',
-    'Residue: shining splats on the floor that dull as they dry, and the scattered coins.'
-  ],
-  port:'Niagara mesh renderer for coins with curl orbits and a collision path for the misses, a glass material with a liquid level parameter, a spline mesh for the pour and a character overlay material with a world height mask for the gilding.',
-  cam:{yaw:.32,pitch:.08,dist:4.6,target:[0,1.6,.2]},
-  params:[
-    {id:'tint',label:'Gold light',type:'color',value:'#ffb040'},
-    {id:'coins',label:'Coins',min:.3,max:1,value:1},
-    {id:'shine',label:'Shine',min:.4,max:1.6,value:1}
-  ],
-  variants:[
-    {name:'Pale electrum',set:{tint:'#f0e0a0'}},
-    {name:'Red gold',set:{tint:'#ff8050'}},
-    {name:'Frugal',set:{coins:.4,shine:.7}}
-  ],
-  glsl:P310_GOZ+`
-#define P310I_IMP ${P310I_IMP.toFixed(3)}
-vec3 p310i_fp(float i){return i<.5?vec3(-.55,2.42,.38):i<1.5?vec3(0.,2.58,.42):vec3(.55,2.42,.38);}
-float p310i_tilt(){return 2.15*easeInOut(sat((u_age-P310I_IMP)/.22))*(1.-easeInOut(sat((u_age-2.75)/.4))*.0);}
-vec3 p310i_mouth(){float a=p310i_tilt();vec2 l=vec2(0.,.75*.42-.16);return p310i_fp(1.)+vec3(0.,.16,0.)+vec3(l.x*cos(a)-l.y*sin(a),l.x*sin(a)+l.y*cos(a),0.);}
-float p310i_fill(){return sat((u_age-.9)/.85);}`,
-  lights:(t,age,life,P)=>{const c=P.tint,f=Math.pow(Math.min(Math.max((age-.4)/1.3,0),1),2);const e=age>P310I_IMP?Math.exp(-(age-P310I_IMP)*13):0;
-    const pour=Math.min(Math.max((age-1.9)/.2,0),1)*Math.max(0,1-(age-3.05)/1.4);const ab=age>3.25&&age<4.65?Math.sin((age-3.25)/1.4*Math.PI):0;
-    return [{p:[0,2.75,.6],c:c.map(v=>v*(2.2*f*(age<3.15?1:Math.max(0,1-(age-3.15)/.6)))+5*e),r:5},
-      {p:[.3,1.7,.9],c:c.map(v=>v*(1.3*pour+1.*ab)*P.shine),r:3.5},{p:[0,.3,.6],c:c.map(v=>v*1.2*pour),r:2.5}];},
-  layers:[
-    {name:'Gold splats',geo:['ground',1],blend:'alpha',xf:{p:[0,.011,.15],s:1.2},fs:`
-      float n=nz(P.xz*2.4).g;float d=length(P.xz-vec2(0.,.15));
-      float grow=sat((u_age-2.1)/1.)*(1.-smoothstep(.92,1.,u_life));
-      float spl=smoothstep(.72-.12*grow,.8-.12*grow,n)*smoothstep(1.1,.2,d)*step(.01,grow);
-      float pud=smoothstep(.45,.25,length((P.xz-vec2(.05,.35))*vec2(1.,1.4))+(nz(P.xz*1.5).r-.5)*.3)*grow;
-      float m=max(spl,pud);float dry=smoothstep(2.95,4.75,u_age);
-      vec3 nn=normalize(vec3((nz(P.xz*4.).r-.5)*.3,1.,(nz(P.xz*4.+.5).r-.5)*.3));
-      col=p310_gold(nn,V,P,mix(.12,.45,dry))*P_shine;a=m*.95;`},
-    {name:'Flasks',geo:'flask',blend:'alpha',count:3,vs:`
-      float i=inst;float s=.42*easeOutBack(sat((u_age-.3-i*.12)/.45));
-      float a2=i>.5&&i<1.5?p310i_tilt():0.;vec3 q=p*s-vec3(0.,.16,0.);
-      q=vec3(q.x*cos(a2)-q.y*sin(a2),q.x*sin(a2)+q.y*cos(a2),q.z);vec3 nq=vec3(n.x*cos(a2)-n.y*sin(a2),n.x*sin(a2)+n.y*cos(a2),n.z);
-      data=vec4(p,a2);p=p310i_fp(i)+vec3(0.,.16,0.)+q;n=nq;vis=step(.001,s);`,
-      fs:`vec3 nn=normalize(N);float i=inst;vec3 o=data.xyz;
-      float side=step(abs(i-1.),.5);
-      float dis=(1.-side)*sat((u_age-P310I_IMP+.15)/.55);float mid=side*sat((u_age-3.05)/.6);
-      float er=nz(o.xy*3.+i).r;float cut=max(dis,mid);if(er<cut*1.1)discard;
-      float lvl=side>.5?mix(.08,.5,p310i_fill())*(1.-sat((u_age-P310I_IMP-.1)/1.1)):.42;
-      float liq=step(o.y,lvl)*step(.02,o.y);
-      vec3 lc=i<.5?vec3(.16,.02,.025):i>1.5?vec3(.02,.07,.13):vec3(0.);
-      float fr=fresnel(nn,V,3.);vec3 rf=env(reflect(-V,nn),.08);
-      vec3 gl=rf*(.08+.9*fr)+vec3(.02);
-      vec3 liqc=side>.5?glow(.75,P_tint)*1.1*P_shine+p310_gold(nn,V,P,.2)*.5:lc*(u_amb*5.+fxLight(P)*.3+.03)+rf*.25*fr+vec3(.01);
-      float edge=band(er,cut*1.1,.05)*step(.001,cut);
-      col=mix(gl,liqc,liq*.8)+glow(edge*.9,P_tint);a=mix(.2+.6*fr,mix(.75,.92,side),liq);a=max(a,edge);`},
-    {name:'Coins',geo:['lathe',P310_COIN,20],blend:'opaque',count:60,vs:`
-      float i=inst;vis=step(irnd.y,P_coins*1.02-.01);
-      float side=mod(i,2.)*2.-1.;vec3 hand=vec3(side*.33,1.61,.58);
-      float t0=.5+i/60.*.75;float k=(u_age-t0)/.65;float miss=step(50.,i);
-      vec3 sc=vec3(.09);vec3 lp=p*sc;vec3 ax=normalize(irnd.xzw-.5+.001);float sp=u_age*mix(8.,18.,irnd.y);
-      vec3 o=rotAxis(lp,ax,sp);vec3 on=rotAxis(n,ax,sp);vec3 c0;
-      vec3 tgt=p310i_fp(1.)+vec3(0.,.4,0.);
-      vec3 b1=hand+vec3(side*.5,.6,.25),b2=tgt+vec3(-side*.6,.25,.3);
-      if(k<0.){vis=0.;c0=hand;}
-      else if(miss<.5){c0=bez3(hand,b1,b2,tgt,easeIn(sat(k))*.5+sat(k)*.5);vis*=step(k,1.);}
-      else{float kk=min(k,.55);c0=bez3(hand,b1,b2,tgt,kk);vec3 v0=(bez3(hand,b1,b2,tgt,.55)-bez3(hand,b1,b2,tgt,.5))/.03+vec3((irnd.z-.5)*2.,0.,(irnd.x-.5)*2.+.8);
-        float T=max(k-.55,0.)*.6;float g=9.8;float h0=c0.y-.007;float vy=v0.y*.4;float t1=(vy+sqrt(vy*vy+2.*g*h0))/g;float vy2=(g*t1-vy)*.3;float t2=2.*vy2/g;
-        float tt=min(T,t1+t2);float y=tt<t1?c0.y+vy*tt-.5*g*tt*tt:.007+vy2*(tt-t1)-.5*g*(tt-t1)*(tt-t1);
-        float hx=tt<t1?tt:t1+(tt-t1)*.3;vec2 xz=c0.xz+v0.xz*.25*(1.-exp(-hx*1.4))/1.4;c0=vec3(xz.x,max(y,.007),xz.y);
-        float sa=min(T,t1+t2)*14.;o=rotAxis(lp,ax,sp*step(T,0.)+sa);on=rotAxis(n,ax,sp*step(T,0.)+sa);
-        float fl=smoothstep(t1,t1+t2+.05,T);o=mix(o,lp,fl);on=normalize(mix(on,n,fl));}
-      p=c0+o;n=on;data=vec4(lp/.09,0.);`,
-      fs:`vec3 nn=normalize(N);vec3 o=data.xyz;float face=step(.06,abs(o.y));
-      float mk=p310_coinFace(o.xz/.5)*face;vec3 g=p310_gold(nn,V,P,mix(.32,.18,mk));col=g*(1.-mk*.35)*P_shine;a=1.;`},
-    {name:'Pour',geo:['strip',32],blend:'opaque',vs:`
-      float s=uv.y;vec3 m0=p310i_mouth();vec3 hd=vec3(0.,1.88,.04);
-      float T=u_age-P310I_IMP-.12;float front=sat(T/.2);float tail=sat((u_age-2.9)/.4);
-      float ss=mix(tail,front,s);
-      vec3 c=bez2(m0,m0+vec3(-.05,-.2,0.),hd,ss);c.x+=sin(ss*9.-u_age*14.)*.012*ss;
-      vec3 c2=bez2(m0,m0+vec3(-.05,-.2,0.),hd,ss+.01);vec3 tg=normalize(c2-c+1e-5);vec3 sd=normalize(cross(tg,u_cam-c));
-      float w=mix(.03,.022,ss)*(1.+.25*sin(ss*21.-u_age*25.));p=c+sd*p.x*w;
-      data=vec4(p.x,ss,0.,0.);vis=step(0.,T)*step(tail,.99);`,
-      fs:`float x=uv.x*2.-1.;vec3 sd=normalize(cross(normalize(u_cam-P),vec3(0.,1.,0.))+1e-4);
-      vec3 nn=normalize(sd*x+normalize(u_cam-P)*sqrt(max(1.-x*x,0.)));
-      float n=nz(vec2(uv.x*.5,uv.y*3.-u_age*4.)).r;
-      col=p310_gold(nn,V,P,.1)*P_shine+glow(.45+.3*n,P_tint)*.5;a=1.;`},
-    {name:'Gilding',geo:['dummy','both'],blend:'alpha',vs:`p+=n*.007;`,fs:`
-      vec3 nn=normalize(N);float n=nz(vec2(OP.x*4.+OP.z*3.,.2)).r;float n2=nz(vec2(OP.x*2.+OP.z,OP.y*.7)).g;
-      float fr=mix(1.95,-.1,easeOut(sat((u_age-1.97)/1.2)));float cov=smoothstep(-.03,.03,OP.y-fr+(n-.5)*.45*sat(u_age-1.97));
-      cov*=step(1.97,u_age);
-      float ab=sat((u_age-3.3)/1.3);float keep=smoothstep(ab*1.1,ab*1.1+.15,n2);
-      float pulse=band(n2,ab*1.1,.08)*step(.01,ab)*step(ab,.99);
-      vec3 pn=normalize(nn+vec3(nz(OP.xy*6.+u_age*.3).r-.5,0.,nz(OP.zy*6.).r-.5)*.25);
-      col=p310_gold(pn,V,P,.14)*P_shine+glow(pulse*1.1,P_tint)*.9;a=cov*max(keep,pulse)*.95;`},
-    {name:'Splash drops',type:'particles',count:90,life:.9,burst:true,delay:P310I_IMP+.28,spread:1.,blend:'alpha',soft:.02,sim:`
-      vec3 o=vec3((r.y-.5)*.5,1.75-r.z*.25,(r.w-.5)*.3+.05);vec3 v=normalize(vec3(o.x*2.,.6,o.z*2.+.3))*mix(.8,2.,q.x);
-      pos=o+v*T+vec3(0.,-4.9*T*T,0.);pos.y=max(pos.y,.01);
-      size=mix(.008,.02,q.y)*step(.02,pos.y)*P_coins;spin=q.z*6.;`,
-      fs:`vec2 c=uv*2.-1.;float m=smoothstep(1.,.7,length(c));vec3 nn=normalize(u_right*c.x+u_up*c.y-u_fwd*sqrt(max(1.-dot(c,c),0.)));
-      col=p310_gold(nn,-u_fwd,P,.12)*P_shine+glow(.4,P_tint)*.3;a=m;`},
-    {name:'Gold dust',type:'particles',count:80,life:1.4,burst:true,delay:P310I_IMP-.12,spread:.4,blend:'add',soft:0,sim:`
-      float i=step(.5,r.x)*2.;vec3 c=p310i_fp(i)+vec3(0.,.15,0.)+(r.yzw-.5)*vec3(.25,.3,.25);
-      pos=c+vec3((q.x-.5)*.4*t,-.5*t*t-.1*t,(q.y-.5)*.4*t)+curl3(c*3.+T)*.06*t;size=.012*(.6+q.z)*(1.-t);alpha=1.;`,
-      fs:`col=glow(.9,P_tint)*hotDot(uv)*1.6;a=1.;`},
-    {name:'Coin stamp flash',geo:'quad',billboard:true,blend:'add',depthTest:false,xf:{p:[0,2.85,.45],s:.48},fs:`
-      float T=u_age-P310I_IMP;float e=step(0.,T)*(T<.05?1.:exp(-(T-.05)*32.));vec2 q=uv*2.-1.;
-      float f=p310_coinFace(q*1.05)+band(length(q),.97,.02)*1.5;
-      col=glow(.95,P_tint)*f*e*.9+glow(hotDot(uv)*e*.5,P_tint);a=1.;`}
   ]
 });
 }
@@ -15055,22 +14462,22 @@ LAB.add({
   id:'inv-uskayaw-grand-finale', name:'Dancer bursts out of a target', set:'Crawl', cat:'Invocations', sub:'Kill and move', legacy:false,
   src:'Merges with a target and bursts out of it, killing it and placing the caster at its location.',
   duration:5.4, stage:'full', markers:{release:p312g_TL,impact:p312g_TB+.03},
-  tags:['ribbon wrap','instanced gore','wet decal','graphic burst','cloth confetti'],
-  blurb:'The dancer dives into a foe inside a spiral of crimson silk, the body throbs three beats faster and faster, then bursts into gore, silk scraps and brass foil with the dancer standing where it stood.',
+  tags:['ribbon wrap','instanced gore','wet decal','graphic burst','cloth scraps'],
+  blurb:'The dancer dives into a foe inside a spiral of crimson silk, the body throbs three beats faster and faster, then bursts into gore, silk scraps and gold foil with the dancer standing where it stood.',
   notes:[
     'Two taps print the drum ring, then the dive is a hip-pivoted arc that shrinks the dancer into the target chest while three silk ribbons trail and then bind the body.',
     'The held beat is three accelerating heartbeats swell the armour and leak crimson light through noise cracks before the burst.',
     'The burst frame is an eight-point crimson star held for three frames; chunks are wet lit flesh and armour shards on ballistic arcs that bounce and stay.',
-    'Silk scraps and brass foil flutter down with drag and sway and settle flat; a wet specular blood pool spreads under the arrival pose.'
+    'Silk scraps and gold foil flutter down with drag and sway and settle flat; a wet specular blood pool spreads under the arrival pose.'
   ],
-  port:'Niagara: the dive is a sequencer-driven character with a scale track, ribbons from a spline component, gore as a mesh renderer with collision and a blood decal spawned on impact events. Confetti uses a mesh renderer with a flutter drag module.',
+  port:'Niagara: the dive is a sequencer-driven character with a scale track, ribbons from a spline component, gore as a mesh renderer with collision and a blood decal spawned on impact events. The scraps use a mesh renderer with a flutter drag module.',
   cam:{yaw:.24,pitch:.19,dist:7.4,target:[-.2,1.,0]},
   actors:[],
   shadows:(t,age)=>{const b=p312g_body(age);return [[b.p[0],b.p[2],.55,b.s>.05?.8:0],[p312g_TG[0],p312g_TG[2],.55,age<p312g_TB?.8:0]];},
   params:[
     {id:'tint',label:'Revel',type:'color',value:'#e0213f'},
     {id:'gore',label:'Gore',min:0,max:1.5,value:1},
-    {id:'confetti',label:'Confetti',min:0,max:1.5,value:1}
+    {id:'confetti',label:'Flakes',min:0,max:1.5,value:1}
   ],
   variants:[
     {name:'No blood',set:{gore:0,confetti:1.4}},
@@ -15149,7 +14556,7 @@ vec3 p312g_rib(float s,float ii){
       vec3 flesh=shade(mix(vec3(.2,.012,.016),vec3(.06,.004,.004),k),.2+.2*k,0.,nn,V,P);
       vec3 metal=shade(vec3(.17,.165,.18)*(.7+.6*k),.35,.7,nn,V,P);
       col=mix(flesh,metal,data.x);a=1.;`},
-    {name:'Silk and brass confetti',geo:'quad',blend:'opaque',count:120,vs:`
+    {name:'Silk and gold foil scraps',geo:'quad',blend:'opaque',count:120,vs:`
       float T=p312g_TBt()-irnd.w*.05;vec3 dir=normalize(vec3(irnd.x*2.-1.,irnd.y*1.3+.4,irnd.z*2.-1.));float sp=mix(3.,8.5,irnd.y);
       float k=1.8;float d=(1.-exp(-T*k))/k;float fallT=max(T-.4,0.);
       vec3 c=P312G_TG+vec3(0.,1.25,0.)+dir*sp*d+vec3(0.,-.55*fallT-1.*min(T,.4)*min(T,.4),0.);
@@ -15441,17 +14848,17 @@ LAB.add({
   tags:['analytic ribbon','whip timing','afterimages','instanced gold leaf','brush mark'],
   blurb:'A gold-scaled serpent coils up the fighter from heel to crown, cracks forward like a whip, and the fighter takes two instant steps along its line, leaving fading gold afterimages and swirling dust.',
   notes:[
-    'The serpent is one camera-facing strip with a fake cylindrical normal, so its hex scales are lit as gold metal with ink-dark seams; the head carries two hot eyes.',
+    'The serpent is one camera-facing strip with a fake cylindrical normal, so its hex scales are lit as gold metal with dark seams; the head carries two hot eyes.',
     'Its body follows a single path parameter: a tightening helix around the body, then a bezier lash; a lagged tail on the same path makes the whip motion with no simulation.',
     'The whip crack is the impact frame: a bold gold crescent held for three frames with a light pulse, followed by two instant relocations that leave eroding afterimages.',
-    'Residue is a brushed ink circle at the start mark, scuffed dust at each footfall and gold leaf shed by the serpent as it dissolves, which flutters down and lies flat.'
+    'Residue is a brushed soot circle at the start mark, scuffed dust at each footfall and gold leaf shed by the serpent as it dissolves, which flutters down and lies flat.'
   ],
   port:'Niagara ribbon renderer fed by a spline that is animated by one scalar, with a material that builds scales from hex UVs; afterimages are pose-snapshotted skeletal meshes with a fresnel dissolve material.',
   cam:{yaw:.18,pitch:.13,dist:7.8,target:[-.3,1.2,0]},
   actors:(t,age)=>{const x=p312z_x(age);const lean=age<p312z_TJ[0]-.3?.05:age<p312z_TJ[1]+.35?.16:.16-.12*p312_ss((age-p312z_TJ[1]-.35)/.5);return [{p:[x,0,0],ry:Math.PI/2,rx:lean,pose:'cast'}];},
   params:[
     {id:'tint',label:'Gold',type:'color',value:'#ffbf47'},
-    {id:'ink',label:'Ink',type:'color',value:'#15100c'},
+    {id:'ink',label:'Soot',type:'color',value:'#15100c'},
     {id:'scale',label:'Serpent size',min:.6,max:1.6,value:1}
   ],
   variants:[
@@ -15480,7 +14887,7 @@ float p312z_dis(){return sat((u_age-1.7)/.9);}`,
       {p:[p312z_X[0]+4.4,1.2,.4],c:p312_add(p312_mul(c,4*crack),[1.4*crack,1.2*crack,.9*crack]),r:5},
       {p:[p312z_X[1],.6,.5],c:p312_mul(c,2.2*j[0]),r:3.5},{p:[p312z_X[2],.6,.5],c:p312_mul(c,2.2*j[1]),r:3.5}];},
   layers:[
-    {name:'Ink circle and scuffs',geo:['ground',1],blend:'alpha',xf:{p:[0,.012,0],s:[3.6,1,1.6]},fs:`
+    {name:'Soot circle and scuffs',geo:['ground',1],blend:'alpha',xf:{p:[0,.012,0],s:[3.6,1,1.6]},fs:`
       vec2 q=P.xz;vec2 qa=q-vec2(P312Z_XA,0.);float n=nz(q*.6).r;
       float en=p312_enso(rot(1.2)*qa,.95,easeOut(sat((u_age-.05)/.6)),.0);
       float sc=0.;for(int i=0;i<3;i++){float x=i==0?P312Z_XA:i==1?P312Z_XB:P312Z_XC;float tj=i==0?P312Z_TJ1:i==1?P312Z_TJ1:P312Z_TJ2;
@@ -15547,10 +14954,10 @@ LAB.add({
   src:'Raises a ring of gold cloud that increases evasion, accuracy and damage, growing with each melee attack.',
   duration:7, stage:'full', markers:{release:.2,impact:p312h_TS[2]},
   tags:['raymarched cloud','self-shadowed volume','instanced gold leaf','strike flashes','brush mark'],
-  blurb:'A ring of heavy storm cloud condenses around the fighter and is lit from inside in gold; every strike flashes through it, swells it and adds a stroke to the brushed ink circle on the floor.',
+  blurb:'A ring of heavy storm cloud condenses around the fighter and is lit from inside in gold; every strike flashes through it, swells it and adds a stroke to the brushed soot circle on the floor.',
   notes:[
     'The cloud is a raymarched torus of 3D noise, swirled faster near the centre, with one shadow tap toward the inner light and one toward the key so it reads as lit vapour rather than glow.',
-    'Growth is literal: each of the three strikes adds radius, height and density to the cloud and extends the brushed ink circle under the fighter.',
+    'Growth is literal: each of the three strikes adds radius, height and density to the cloud and extends the brushed soot circle under the fighter.',
     'Strike beats are gold crescents held for three frames at the fist, spark bursts and a light inside the cloud, so the flash is seen as illumination of the volume.',
     'Gold leaf orbits inside the storm and drifting sparks rise through it; the floor keeps a wind-swept dust spiral.'
   ],
@@ -15589,7 +14996,7 @@ float p312h_strike(){float s=0.;for(int i=0;i<3;i++){float ts=i==0?P312H_T1:i==1
       {p:[Math.cos(a1)*1.5,1.3,Math.sin(a1)*1.5],c:p312_mul(c,(.8+2.5*fl)*g),r:2.8},
       {p:[Math.cos(a2)*1.6,.9,Math.sin(a2)*1.6],c:p312_mul(c,1.2*g),r:2.8}];},
   layers:[
-    {name:'Wind spiral and ink circle',geo:['ground',1],blend:'alpha',xf:{p:[0,.012,0],s:2.6},fs:`
+    {name:'Wind spiral and soot circle',geo:['ground',1],blend:'alpha',xf:{p:[0,.012,0],s:2.6},fs:`
       vec2 q=P.xz;float d=length(q);float ang=atan(q.y,q.x);float g=p312h_g();
       float sp=fract(ang/TAU*4.+d*.7-u_time*.25);float swirl=smoothstep(.5,.15,abs(sp-.5))*smoothstep(2.4,1.,d)*smoothstep(.3,.7,d)*smoothstep(.2,.5,g);
       float prog=.25*smoothstep(.1,1.,u_age)+.25*(smoothstep(P312H_T1,P312H_T1+.2,u_age)+smoothstep(P312H_T2,P312H_T2+.2,u_age)+smoothstep(P312H_T3,P312H_T3+.2,u_age));
@@ -15801,130 +15208,6 @@ vec3 p313_ry(vec3 p,float a){float c=cos(a),s=sin(a);return vec3(c*p.x-s*p.z,p.y
 vec4 p313_triL(vec3 p,vec3 n){vec3 w=pow(abs(n),vec3(4.));w/=w.x+w.y+w.z;return nzL(p.zy)*w.x+nzL(p.xz+.37)*w.y+nzL(p.xy+.71)*w.z;}
 vec2 p313_box(vec3 ro,vec3 rd,vec3 bmn,vec3 bmx){vec3 ir=1./rd;vec3 t0=(bmn-ro)*ir,t1=(bmx-ro)*ir;vec3 a0=min(t0,t1),a1=max(t0,t1);
   return vec2(max(max(a0.x,a0.y),max(a0.z,0.)),min(min(a1.x,a1.y),a1.z));}`;
-
-})();
-/* ---- 314_inv_xom-pakellas.js ---- */
-(function(){
-/* Pack 314: Crawl invocations of Xom and Pakellas.
-   Xom identity: thin-film iridescence (an oil-slick sheen) on every surface the god touches, a crooked grinning sigil
-   on the impact frame, and oily iridescent residue on the floor.
-   Pakellas identity: brass and dark ebony devices, hair-thin blue-white electric arcs, and a cog-dial sigil with tick marks,
-   leaving hot brass, scorch and smoke behind. */
-
-const p314_CG=`
-float p314_spk(vec2 q,float seed){vec2 pc=polar(q);float s=pow(nzL(vec2(pc.x*5.+seed,.37)).a,.6)*smoothstep(1.,.15,pc.y)*smoothstep(0.,.2,pc.y);return smoothstep(.55,.9,s+.5*(1.-pc.y));}
-`;
-const p314_XG=p314_CG+`
-vec3 p314_film(float c,float k){return mix(vec3(.5),.5+.5*cos(TAU*(vec3(0.,.33,.67)+k+1.4*(1.-c))),.6);}
-vec3 p314_xom(vec3 tint,float ph){return hueShift(tint,.16*sin(ph));}
-float p314_grinD(vec2 q){q=rot(.1)*q;
-  float c1=length(q-vec2(0.,.2))-.62;float c2=length(q-vec2(.06,.42))-.68;float m=max(max(c1,-c2),q.y-.12);
-  float e1=sdSeg(q,vec2(-.42,.4),vec2(-.13,.27))-.055;float e2=sdSeg(q,vec2(.15,.29),vec2(.41,.5))-.045;
-  return min(m,min(e1,e2));}
-`;
-const p314_cl=x=>Math.min(Math.max(x,0),1);
-const p314_sm=x=>{x=p314_cl(x);return x*x*(3-2*x);};
-const p314_hue=(c,ph)=>{const k=.5+.5*Math.sin(ph),j=.5+.5*Math.sin(ph*1.7+2);return [c[0]*(1-k*.5)+c[1]*k*.5,c[1]*(1-j*.5)+c[2]*j*.5,c[2]*(1-k*.4)+c[0]*k*.4];};
-const p314_xomNotes='The look: a thin-film iridescent sheen, a crooked grin mark on the impact frame and an oily iridescent stain left on the floor.';
-{
-const p314e_D=6.4,p314e_OPEN=1.,p314e_PIN=3.95,p314e_SHUT=4.35,p314e_G=[1,1.25,-.6],p314e_GRY=-.6;
-const p314e_NW=[Math.sin(p314e_GRY),0,Math.cos(p314e_GRY)];
-const p314e_A0=[-.9,0,.6],p314e_A1=[p314e_G[0]+p314e_NW[0]*.55,0,p314e_G[2]+p314e_NW[2]*.55];
-const p314e_act=a=>{const k=p314_sm((a-2.)/1.75);return [p314e_A0[0]+(p314e_A1[0]-p314e_A0[0])*k,0,p314e_A0[2]+(p314e_A1[2]-p314e_A0[2])*k];};
-const p314e_op=a=>{const x=p314_cl((a-p314e_OPEN)/.9);const o=x<=0?0:1+1.70158*Math.pow(x-1,3)+.70158*Math.pow(x-1,2);return o*(1-Math.pow(p314_cl((a-p314e_SHUT)/.3),3));};
-LAB.add({
-  id:'inv-xom-bazaar', name:'Gate to a market', set:'Crawl', cat:'Invocations', sub:'Shop', legacy:false,
-  src:'Takes the caster to a market.',
-  duration:p314e_D, stage:'full',
-  actors:(t,age)=>{const ry=Math.atan2(p314e_G[0]-p314e_A0[0],p314e_G[2]-p314e_A0[2]);
-    if(age<p314e_PIN){const lean=p314_sm((age-2.)/1.4)*.12;return [{p:p314e_act(age),ry:ry,rx:lean}];}
-    if(age<p314e_SHUT){const k=p314_sm((age-p314e_PIN)/.32);const a=p314e_act(age);
-      return [{p:[a[0]+(p314e_G[0]-a[0])*k,k*1.05,a[2]+(p314e_G[2]-a[2])*k],ry:ry+k*9,s:1-.94*k,pose:'both'}];}
-    return [{p:[p314e_G[0],-5,p314e_G[2]],ry:0,s:.05}];},
-  tags:['parallax interior','marquee bulbs','instanced coins','paper confetti','thin-film residue'],
-  blurb:'A gilded oval gate unfolds, its parallax interior a lantern-lit market under striped canopies; it takes the caster’s gold, swallows them and snaps shut in a spray of confetti.',
-  notes:['The gate interior is one quad that ray-intersects three planes behind itself (lantern strings, striped canopy and stalls, warm haze), so the market has real parallax as the camera moves.',
-    'The gold frame carries chasing marquee bulbs for the carnival note; colour stays muted reds, creams and brass rather than neon.',
-    'Coins are instanced lit meshes that stream from the body into the gate, and a few are spat back out to tumble, land and lie flat.',
-    'The pinch is the impact: the caster spins down to nothing in the gate, the grin flashes and paper confetti flutters down onto an oily ring. '+p314_xomNotes],
-  port:'Unreal: interior mapping material on the portal plane (or a scene capture of a small bazaar set), Niagara mesh emitters for coins and confetti with collision and a flutter drag module. The pinch is a scale curve on the character with a radial blur post pass.',
-  cam:{yaw:.12,pitch:.14,dist:6.7,target:[.25,1.15,-.2]},
-  markers:{release:p314e_OPEN,impact:p314e_PIN},
-  params:[{id:'tint',label:'Chaos hue',type:'color',value:'#c25cff'},{id:'warm',label:'Lantern warmth',type:'color',value:'#ff9a4a'},{id:'coins',label:'Gold',min:0,max:1.4,value:1}],
-  variants:[{name:'Blue and red',set:{warm:'#ff6a3a',tint:'#5a7bff'}},{name:'Gold',set:{tint:'#ffcf5a',coins:1.4}},{name:'Pale lanterns',set:{warm:'#ffd9a0',tint:'#3fd0c0'}}],
-  glsl:p314_XG+`
-const vec3 p314e_G=vec3(1.,1.25,-.6);
-const vec3 p314e_NW=vec3(-.5646,0.,.8253);
-const vec3 p314e_RT=vec3(.8253,0.,.5646);
-#define p314e_OPEN 1.0
-#define p314e_PIN 3.95
-#define p314e_SHUT 4.35
-float p314e_op(){float x=sat((u_age-p314e_OPEN)/.9);float o=1.+1.70158*(x-1.)*(x-1.)*(x-1.)+.70158*(x-1.)*(x-1.);return o*step(p314e_OPEN,u_age)*(1.-easeIn(sat((u_age-p314e_SHUT)/.3)));}
-vec3 p314e_act(float a0){float k=easeInOut((a0-2.)/1.75);vec3 A1=vec3(1.,0.,-.6)+p314e_NW*.55;return mix(vec3(-.9,0.,.6),A1,k);}`,
-  lights:(t,age,life,P)=>{const op=p314e_op(age),w=P.warm,c=P.tint;const G=p314e_G,N=p314e_NW;
-    const pin=age>p314e_PIN?14*Math.exp(-(age-p314e_PIN)*10):0;const tell=age<1.4?p314_sm((age-.1)/.8)*(1-p314_cl((age-1.)/.4)):0;
-    return [{p:[G[0]+N[0]*.45,1.2,G[2]+N[2]*.45],c:w.map(v=>v*4.5*op),r:6},{p:[G[0]+N[0]*.2,2.5,G[2]+N[2]*.2],c:[1.2*op,.95*op,.7*op],r:4},
-      {p:[G[0]+N[0]*.4,1.25,G[2]+N[2]*.4],c:c.map(v=>v*(3*tell+.4*op)+pin),r:5}];},
-  layers:[
-    {name:'Floor stain',geo:['ground',1],blend:'alpha',xf:{p:[.75,.012,-.25],s:1.5},fs:`
-      vec2 w=P.xz-p314e_G.xz;float d=length(w)/1.05;float n=nz(P.xz*.6).r;float on=smoothstep(p314e_SHUT,p314e_SHUT+.4,u_age);
-      float ring=band(d+(n-.5)*.5,.75,.2)*on;vec3 up=vec3(0.,1.,0.);
-      float glit=step(.97,hash21(floor(P.xz*30.)))*smoothstep(1.3,.2,d)*smoothstep(.45,.7,u_life);
-      col=p314_film(dot(up,V),n*2.+u_time*.02)*env(reflect(-V,up),.1)*ring+vec3(.01)*ring+vec3(1.,.75,.35)*glit*(.4+fxLight(P)*.4);
-      a=max(ring*.6,glit*.8)*(1.-smoothstep(.95,1.,u_life));`},
-    {name:'Market interior',geo:'quad',blend:'alpha',xf:{p:p314e_G,r:[0,p314e_GRY,0],s:[.8,1.2,1]},fs:`
-      vec2 l=uv*2.-1.;float op=p314e_op();float e=length(vec2(l.x/max(op,.001),l.y));
-      vec3 rd=normalize(P-u_cam);float dn=max(dot(rd,-p314e_NW),.08);vec3 c=vec3(0.);
-      vec3 h=P+rd*(6./dn);float lu=dot(h-p314e_G,p314e_RT),lv=h.y-p314e_G.y;
-      c=P_warm*.03*(.3+.7*smoothstep(-1.5,2.,lv))+P_warm*.18*hotDot(fract(vec2(lu*.8,lv*.8+.2)))*step(.5,hash21(floor(vec2(lu*.8,lv*.8+.2))));
-      h=P+rd*(2.4/dn);lu=dot(h-p314e_G,p314e_RT);lv=h.y-p314e_G.y;
-      float can=smoothstep(.0,.05,lv-.35-.18*cos(lu*2.2));float stp=step(.5,fract(lu*2.2+.25*lv));
-      vec3 cc=mix(vec3(.16,.03,.025),vec3(.3,.26,.2),stp)*(.15+.6*smoothstep(1.6,.4,lv))*mix(vec3(1.),P_warm,.6);
-      float stall=smoothstep(-.45,-.55,lv+.1*sin(lu*3.));vec2 gc=vec2(lu,lv)*14.;float gl2=step(.9,hash21(floor(gc)))*hotDot(fract(gc))*stall;
-      c=mix(c,cc,can);c=mix(c,vec3(.02,.015,.012)+P_warm*.03,stall*.9)+vec3(1.,.8,.4)*gl2*.6;
-      h=P+rd*(.9/dn);lu=dot(h-p314e_G,p314e_RT);lv=h.y-p314e_G.y;
-      float ys=.55-.22*cos(lu*1.4);float cell=floor(lu*2.6);float lx=fract(lu*2.6)-.5;float hang=ys-.1;
-      float ld=length(vec2(lx*.385,(lv-hang)*.8));float lan=smoothstep(.05,.025,ld)+.25*smoothstep(.14,.0,ld);
-      vec3 lc=hsv(fract(hash11(cell)*.5+.95),.45,1.)*mix(vec3(1.),P_warm,.6);
-      c=c*(1.-sat(lan)*.6)+lc*lan*1.3+P_warm*inv(abs(lv-ys),.004)*.04;
-      vec2 tw=twirl(l,2.5+u_time*.4);float sw=nz(tw*.6+u_time*.05).r;float rim=smoothstep(.72,1.,e);
-      c=mix(c,p314_film(e,sw*2.+u_time*.1)*.18+glow(sw*.45,P_tint)*.25,rim*.7);
-      col=c;a=smoothstep(1.,.97,e)*step(.001,op);`},
-    {name:'Gilded frame',geo:['torus',.07],blend:'opaque',xf:(t,age,life,P)=>{const o=p314e_op(age);return {p:p314e_G,r:[Math.PI/2,p314e_GRY,0],s:[.84*Math.max(o,.001),1,1.24*Math.min(1,o*3)]};},fs:`
-      vec3 nn=normalize(N);float k=nz(uv*vec2(6.,1.)).r;vec3 alb=vec3(.75,.52,.22)*(.7+.4*k);
-      col=shade(alb,.3,1.,nn,V,P)+p314_film(dot(nn,V),k*2.)*env(reflect(-V,nn),.2)*.25;
-      float bu=fract(uv.x*36.);float bulb=smoothstep(.22,.1,length(vec2(bu-.5,(fract(uv.y)-.0)*1.6)));
-      float chase=step(.5,fract(uv.x*36./3.+u_time*1.5));col+=P_warm*vec3(1.,.85,.7)*bulb*(1.2+1.4*chase)*step(.3,p314e_op());a=step(.02,p314e_op());`},
-    {name:'Coins',geo:['lathe',[[0,-.12],[1,-.12],[1,.12],[0,.12]],18],blend:'opaque',count:40,vs:`
-      vec3 pos;vec3 ax=normalize(irnd.xyz-.5);float sc=.045;vis=0.;
-      if(inst<28.){float te=1.9+irnd.x*1.8;float x=(u_age-te)/.55;vec3 s0=p314e_act(te)+bodySurf(hash41(inst*1.9+3.))*vec3(1.,.9,1.);
-        vec3 G=p314e_G;pos=bez2(s0,mix(s0,G,.5)+vec3(0.,.8,0.),G,easeIn(sat(x)));vis=step(0.,x)*step(x,1.)*step(irnd.w,P_coins*.75);
-        p=rotAxis(p*sc,ax,u_age*14.+inst);n=rotAxis(n,ax,u_age*14.+inst);}
-      else{float tb=u_age-p314e_SHUT-.05;vec3 v=p314e_NW*mix(1.2,2.8,irnd.x)+p314e_RT*(irnd.y-.5)*2.5+vec3(0.,mix(1.,3.,irnd.z),0.);
-        float g=9.8;float tl=(v.y+sqrt(v.y*v.y+2.*g*1.1))/g;float tt=min(max(tb,0.),tl);
-        pos=p314e_G+vec3(0.,-.15,0.)+vec3(v.x,0.,v.z)*tt+vec3(0.,v.y*tt-.5*g*tt*tt,0.);
-        if(tb>tl){float s2=1.-exp(-(tb-tl)*5.);pos.xz+=v.xz*.18*s2;pos.y=.004;p=rotAxis(p*sc,vec3(0.,1.,0.),irnd.w*6.);n=rotAxis(n,vec3(0.,1.,0.),irnd.w*6.);}
-        else{p=rotAxis(p*sc,ax,tt*16.+inst);n=rotAxis(n,ax,tt*16.+inst);}
-        vis=step(0.,tb)*step(irnd.w,P_coins*.75);}
-      p+=pos;`,
-      fs:`vec3 nn=normalize(N);col=shade(vec3(.85,.62,.25)*(.8+.3*nz(OP.xz*20.).b),.25,1.,nn,V,P);a=1.;`},
-    {name:'Confetti',geo:'box',blend:'opaque',count:70,vs:`
-      float tb=u_age-p314e_SHUT;vec3 v=p314e_NW*mix(.6,2.,irnd.x)+p314e_RT*(irnd.y-.5)*3.+vec3(0.,mix(.8,2.6,irnd.z),0.);
-      float k=2.2;float d=(1.-exp(-max(tb,0.)*k))/k;float tt=max(tb,0.);
-      vec3 pos=p314e_G+(irnd.xyz-.5)*vec3(.6,1.,.6)+v*d-vec3(0.,.45*tt,0.)+p314e_RT*sin(tt*5.+inst)*.12*sat(tt);
-      float land=step(pos.y,.006);pos.y=max(pos.y,.005);
-      vec3 ax=normalize(irnd.zxy-.5);vec3 lp=p*vec3(.05,.002,.035);
-      if(land>.5){p=rotAxis(lp,vec3(0.,1.,0.),irnd.w*6.);n=rotAxis(n,vec3(0.,1.,0.),irnd.w*6.);}else{p=rotAxis(lp,ax,tt*9.+inst);n=rotAxis(n,ax,tt*9.+inst);}
-      p+=pos;vis=step(0.,tb);`,
-      fs:`vec3 nn=normalize(N);vec3 alb=hsv(fract(rnd.x*.8+.95),.55,.55)*mix(vec3(1.),P_warm,.3);
-      col=shade(alb,.6,0.,nn,V,P)+p314_film(abs(dot(nn,V)),rnd.y*3.)*env(reflect(-V,nn),.3)*.25*step(.6,rnd.z);a=1.;`},
-    {name:'Grin spark',geo:'quad',billboard:true,blend:'add',depthTest:false,xf:{p:p314e_G,s:.8},fs:`
-      float k=smoothstep(.1,.85,u_age)*(1.-sat((u_age-1.)/.4));float e2=u_age>p314e_PIN?(u_age-p314e_PIN<.06?1.:exp(-(u_age-p314e_PIN-.06)*14.)):0.;
-      vec2 q=(uv*2.-1.)*mix(1.25,2.2,1.-k)*(1.-e2*.3);q=rot(u_age*4.*(1.-e2))*q;float d=p314_grinD(q);
-      col=glow(min(aa(d)*k*.45+stroke(d,.03)*k*.8,.9),P_tint)*.9+(mix(vec3(1.,.95,.9),P_tint,.3)*aa(d)*.9+glow(stroke(d,.04),P_tint)*.8)*e2;a=1.;`}
-  ]
-});
-}
 
 })();
 /* ---- 400_evo_wand.js ---- */
@@ -16243,8 +15526,6 @@ const p403_cl=x=>Math.min(Math.max(x,0),1);
 const p403_off=H=>{const C=LAB.casterNow;return C?[C.handR[0]-H[0],C.handR[1]-H[1],C.handR[2]-H[2]]:[0,0,0];};
 const p403_ss=(a,b,x)=>{const t=p403_cl((x-a)/(b-a));return t*t*(3-2*t);};
 const p403_LIB=`
-vec3 p403_glass(vec3 nn,vec3 v,vec3 pp,vec3 tint,float thick){vec3 rf=reflect(-v,nn);float fr=fresnel(nn,v,4.);
-  return env(rf,.05)*mix(.06,1.,fr)*1.2+tint*(.04+.6*fxLight(pp)*.2)*thick+fxLight(pp)*.05;}
 vec3 p403_metal(vec3 base,vec3 pp,vec3 nn,vec3 v,float rough){vec4 k=tri(pp*3.,nn);float wear=smoothstep(.45,.8,k.r);
   vec3 alb=base*(.7+.45*k.b)*mix(1.,.55,wear*.6);return shade(alb,sat(rough+.25*wear-.1*k.b),1.,nn,v,pp);}
 vec3 p403_wood(vec3 base,vec3 pp,vec3 nn,vec3 v,vec3 ax){float g=dot(pp,ax);vec3 q=pp-ax*g;
@@ -16252,149 +15533,6 @@ vec3 p403_wood(vec3 base,vec3 pp,vec3 nn,vec3 v,vec3 ax){float g=dot(pp,ax);vec3
   vec3 alb=base*(.55+.6*grain)*(.8+.35*smoothstep(.3,.7,rings));return shade(alb,.62,0.,nn,v,pp);}
 `;
 const p403_T1=[2.3,0,0];
-{
-const A=[-2.3,0,1.05],ARY=1.25,H=p403_hand(A,ARY),S=.42;
-const AIM=[p403_PI/2-.2,ARY+.06,0];              // final pose: neck toward the target
-const REST=[.15,ARY,-.25];
-const OPEN=.17,JET=.22,JEND=.52,DUR=5.2;
-const fpose=l=>{const k=p403_ss(.1,.2,l)*(1-p403_ss(.62,.75,l)*.7);const r=REST.map((v,i)=>v+(AIM[i]-v)*k);
-  const ax=p403_rv([0,1,0],r);return {r,p:p403_add(p403_add(H,p403_off(H)),ax,-.22*S),ax};};
-const FA=fpose(.4);const MOUTH=p403_add(FA.p,FA.ax,.78*S);
-const TG=[2.12,1.22,.05];
-LAB.add({
-  id:'evo-phial-of-floods', name:'Phial of Floods', set:'Crawl', cat:'Evocations', sub:'Device', legacy:false, duration:DUR, stage:'full',
-  src:'Unleashes a torrent of water that smashes the target, floods the area with shallow water and waterlogs air-breathers so they cannot cast spells.',
-  tags:['lathe glass','analytic tube','lit water','ripple decal','ballistic droplets'],
-  blurb:'A stoppered blue phial is uncorked and a torrent far larger than the bottle hammers the target, then spreads into a rippling shallow flood.',
-  notes:[
-    'The phial is a lathe flask with an alpha glass shell over a sloshing liquid core; the cork pops off on a ballistic arc and stays where it lands.',
-    'The torrent is a lathe tube bent along a bezier in the vertex shader. Its radius swells from the neck to the target, so it reads as impossibly large for the bottle.',
-    'Water is shaded from the stage environment and the effect lights with a fresnel term, flowing normals and foam, never as an emissive fill.',
-    'The flood is a ground decal with expanding ripple normals and caustic light. It drains through a noise threshold and leaves dark wet patches with a specular sheen.'
-  ],
-  port:'Niagara ribbon or a spline mesh with a panning water material for the jet, a mesh renderer for the droplets, and a deferred decal with animated normal maps for the flood.',
-  cam:{yaw:-.18,pitch:.13,dist:7.4,target:[-.45,1.1,.3]},
-  caster:{kind:'channel',release:JET*DUR,channel:(JEND-JET)*DUR,at:H},
-  markers:{release:JET*DUR,impact:JET*DUR+.17},
-  actors:[{p:A,ry:ARY,pose:'cast'},{p:p403_T1,ry:-1.5}],
-  params:[
-    {id:'tint',label:'Water',type:'color',value:'#3f8fd8'},
-    {id:'force',label:'Torrent size',min:.6,max:1.5,value:1},
-    {id:'flood',label:'Flood radius',min:.5,max:1.5,value:1},
-    {id:'foam',label:'Foam',min:0,max:1.5,value:1}
-  ],
-  variants:[
-    {name:'Dark blue',set:{tint:'#1f5f7a',foam:.6}},
-    {name:'Brackish',set:{tint:'#5c8a6a',flood:1.3}},
-    {name:'Deluge',set:{tint:'#5aa8ff',force:1.4,flood:1.4}}
-  ],
-  glsl:p403_LIB+`
-#define PF_MOUTH ${p403_v3(MOUTH)}
-#define PF_TG ${p403_v3(TG)}
-#define PF_OPEN ${OPEN.toFixed(3)}
-#define PF_JET ${JET.toFixed(3)}
-#define PF_JEND ${JEND.toFixed(3)}
-#define PF_H ${p403_v3(H)}
-vec3 pfM(){return PF_MOUTH+(u_hand.y>-5.?u_hand-PF_H:vec3(0.));}
-vec3 pfPath(float s){vec3 m0=pfM();vec3 m=mix(m0,PF_TG,.5)+vec3(0.,.22,0.);return bez2(m0,m,PF_TG,s);}
-float pfT(){return max(u_age-PF_JET*u_dur,0.);}
-float pfHit(){return step(PF_JET+.02,u_life);}`,
-  lights:(t,age,life,P)=>{const c=P.tint,L=[];
-    const g=life<JET?.6+2.4*p403_ss(0,JET,life):Math.max(0,2.4*Math.exp(-(life-JET)*DUR*2.5));
-    L.push({p:p403_add(fpose(life).p,[0,.05,.15]),c:c.map(v=>v*g+.05*g),r:2.4});
-    if(life>JET){const tt=(life-JET)*DUR;const e=6*Math.exp(-tt*5)+1.4*(1-p403_ss(JEND-.05,JEND+.08,life));
-      L.push({p:[1.8,1.1,.5],c:c.map(v=>(v*.7+.3)*e),r:6});
-      const f=p403_ss(JET,JET+.1,life)*(1-p403_ss(.7,.98,life))*1.2;L.push({p:[1.,.25,.8],c:c.map(v=>v*f*1.4+.1*f),r:5});}
-    return L;},
-  layers:[
-    {name:'Flood',geo:['ground',1],blend:'alpha',xf:(t,a,l,P)=>({p:[1.7,.014,.2],s:3.4*P.flood}),fs:`
-      float tt=pfT();vec2 q=(uv-.5)*2.;q.x*=1.;float d=length(q);
-      float n=nz(uv*1.6+.2).r;float n2=nz(uv*4.+.7).g;
-      float rad=easeOut(tt/1.4)*.95*pfHit();
-      float body=smoothstep(rad,rad-.12,d+(n-.5)*.35);
-      float drain=sat((u_life-.62)/.36);
-      float keep=smoothstep(drain*1.1-.1,drain*1.1+.05,n*.6+n2*.4+ (1.-d)*.25);
-      float wet=body*keep;
-      float rip=sin(d*42.-tt*13.+n*6.)*exp(-tt*.7)*.5+sin(d*17.-tt*6.)*.5;
-      vec2 g=vec2(nz(uv*3.+vec2(tt*.05,0.)).r-nz(uv*3.+vec2(0.,tt*.05)+.31).r,nz(uv*3.1+.5).r-.5)*.8+normalize(q+1e-4)*rip*.18*(1.-drain);
-      vec3 nn=normalize(vec3(g.x,1.,g.y));
-      float edge=band(d+(n-.5)*.35,rad-.04,.05)*(1.-drain)*smoothstep(0.,.3,tt);
-      vec3 vv=normalize(u_cam-P);
-      col=shade(P_tint*.05+.01,.06,0.,nn,vv,P)*1.1;
-      vec3 cv=voronoi(uv*9.+vec2(tt*.25,-tt*.18)+g*1.5).xyz;float caus=pow(sat(1.-(cv.y-cv.x)*4.),6.);
-      col+=P_tint*caus*.1*(1.-drain)*(.15+fxLight(P).b*.3);
-      float brk=smoothstep(.4,.7,nz(uv*7.+tt*.1).g);col+=vec3(.5,.56,.62)*edge*brk*.35*P_foam*(.4+fxLight(P).b*.3);
-      float dampA=smoothstep(.5,.75,n2)*smoothstep(1.,.3,d)*smoothstep(.3,.6,drain)*.55;
-      a=sat(wet*.82+edge*brk*.3*P_foam)+dampA*(1.-wet)*step(.01,rad);
-      dist=nn.xz*.012*wet*(1.-drain);`},
-    {name:'Cork',geo:['lathe',[[0,0],[.75,0],[.8,.3],[.95,.85],[.7,1],[0,1]],12],blend:'opaque',xf:(t,age,l,P)=>{
-        const f=fpose(Math.min(l,OPEN));const r=f.r;const base=p403_add(f.p,f.ax,.73*S);
-        if(l<OPEN){const tw=p403_ss(.05,OPEN,l)*5;return {p:p403_add(base,f.ax,p403_ss(.08,OPEN,l)*.03),r:[r[0],r[1]+tw,r[2]],s:.065};}
-        const tt=(l-OPEN)*DUR;const tl=.62;const t2=Math.min(tt,tl);
-        let y=base[1]+3.2*t2-4.9*t2*t2;if(tt>tl){const b=tt-tl;y=Math.max(.03,0.03+Math.max(0,1.1*b-4.9*b*b));}
-        const kx=Math.min(tt,1.1);return {p:[base[0]-.55*kx,Math.max(y,.03),base[2]+.7*kx],r:[r[0]+Math.min(tt,1.)*9,r[1],r[2]+Math.min(tt,1.)*5],s:.065};},
-      fs:`vec3 nn=normalize(N);float k=tri(P*14.,nn).g;float k2=tri(P*40.,nn).b;
-      col=shade(vec3(.42,.3,.19)*(.6+.5*k)*(.8+.4*k2),.85,0.,nn,V,P);a=1.;`},
-    {name:'Phial liquid',geo:['lathe',[[0,.02],[.2,.03],[.27,.08],[.29,.2],[.26,.34],[.14,.46],[.07,.53],[.065,.62],[0,.62]],24,2],blend:'opaque',xf:(t,a,l,P)=>{const f=fpose(l);return {p:p403_add(f.p,f.ax,.01),r:f.r,s:S};},
-      fs:`float lv=mix(.6,.12,smoothstep(PF_JET,PF_JEND,u_life));float yy=OP.y;
-      float slosh=sin(OP.x*20.+u_time*9.)*.012;a=step(yy,lv+slosh);
-      vec3 nn=normalize(N);float fl=nz(vec2(OP.x*3.+OP.z*2.,OP.y*2.-u_time*.8)).r;
-      float charge=u_life<PF_JET?.4+.8*smoothstep(0.,PF_JET,u_life):.4*exp(-pfT()*2.);
-      col=P_tint*.1*(.4+fl)*(.3+charge)+glow(fl*fl*charge*.7,P_tint)*.4+shade(P_tint*.05,.1,0.,nn,V,P);`},
-    {name:'Phial glass',geo:'flask',blend:'alpha',cull:'back',xf:(t,a,l,P)=>{const f=fpose(l);return {p:f.p,r:f.r,s:S};},
-      fs:`vec3 nn=normalize(N);float sc=smoothstep(.6,.9,tri(P*30.,nn).b)*.4;
-      col=p403_glass(nn,V,P,P_tint,1.)+vec3(.6,.7,.75)*sc*fresnel(nn,V,1.);
-      float lip=smoothstep(.69,.72,OP.y);col+=lip*vec3(.15);a=.18+.7*fresnel(nn,V,3.)+lip*.3+sc*.2;`},
-    {name:'Torrent',geo:['lathe',[[1,0],[1,.025],[1,.05],[1,.075],[1,.1],[1,.125],[1,.15],[1,.175],[1,.2],[1,.25],[1,.3],[1,.35],[1,.4],[1,.45],[1,.5],[1,.55],[1,.6],[1,.65],[1,.7],[1,.75],[1,.8],[1,.85],[1,.9],[1,.95],[1,1]],24],blend:'alpha',vs:`
-      float s=p.y;float age=u_age-PF_OPEN*u_dur-.08;
-      vec3 c=pfPath(s);vec3 tg=normalize(pfPath(min(s+.02,1.))-pfPath(max(s-.02,0.)));
-      vec3 sd=normalize(cross(tg,vec3(0.,1.,0.)));vec3 up=cross(sd,tg);
-      float head=sat(age/.16);float tail=sat((u_age-PF_JEND*u_dur)/.35);
-      float w=mix(.028,.36,pow(s,.8))*P_force*(.85+.25*sin(s*30.-u_time*25.))*mix(1.,.75,smoothstep(.9,1.,s));
-      w*=1.-tail*.6;w*=smoothstep(head+.001,head-.07,s)*step(tail*1.05,s);
-      float wob=nz(vec2(atan(p.z,p.x)*.16+.5,s*2.-u_time*3.)).r-.5;
-      p=c+(sd*p.x+up*p.z)*w*(1.+wob*.5);n=normalize(sd*n.x+up*n.z);
-      data=vec4(s,head,tail,w);`,
-      fs:`
-      float s=data.x;vec3 nn=normalize(N+0.*V);
-      float fl=nz(vec2(uv.x*2.,s*1.2-u_time*2.2)).r;float fl2=nz(vec2(uv.x*5.+.3,s*2.5-u_time*3.7)).b;
-      nn=normalize(nn+(vec3(fl,fl2,fl*fl2)-.5)*.6);
-      vec3 rf=reflect(-V,nn);float fr=fresnel(nn,V,3.);
-      float streaks=smoothstep(.62,.9,nz(vec2(uv.x*4.,s*.6-u_time*1.6)).b);
-      col=env(rf,.1)*mix(.12,1.,fr)*1.3+P_tint*(.05+.35*fxLight(P).b)*(.3+fl)+vec3(.7,.8,.9)*streaks*.25*(.3+fr);
-      float foam=smoothstep(.62,.92,fl*fl2*1.6+smoothstep(.75,1.,s)*.25+smoothstep(.15,0.,data.y-s)*.6)*P_foam;
-      col=mix(col,vec3(.42,.47,.52)*(.5+fxLight(P)*.2+u_amb*4.),foam*.8);
-      a=sat(.32+.55*fr+foam*.8+streaks*.2)*step(.001,data.w);
-      dist=nn.xy*.02*a;`},
-    {name:'Spray droplets',type:'particles',count:220,life:1.4,burst:true,delay:JET*DUR+.06,spread:(JEND-JET)*DUR,stretch:.035,blend:'alpha',soft:0,sim:`
-      vec3 dir=normalize(vec3(-(.2+r.y*.9),r.z*1.4+.1,(r.w-.5)*2.2));float sp=mix(1.5,6.,q.x*q.x)*P_force;
-      pos=PF_TG+vec3(.05,(q.z-.5)*.4,(q.w-.5)*.4)+dir*sp*T+vec3(0.,-4.9*T*T,0.);
-      size=.012*(.5+q.y*1.2);alpha=step(.02,pos.y);`,
-      fs:`vec3 l=fxLight(P);col=vec3(.55,.62,.7)*(u_amb*5.+.2)+l*.25+P_tint*.15;a=streak(uv)*1.4;`},
-    {name:'Splash mist',type:'particles',count:40,life:1.8,burst:true,delay:JET*DUR+.04,spread:(JEND-JET)*DUR,blend:'alpha',soft:.5,sim:`
-      vec3 dir=normalize(vec3(-(.3+r.y),r.z*1.1-.1,(r.w-.5)*2.));float d=(1.-exp(-T*2.5))/2.5;
-      pos=PF_TG+dir*mix(.6,2.,q.x)*d*P_force+vec3(0.,-T*.25,0.);pos.y=max(pos.y,.2);
-      size=mix(.12,.45,easeOut(t))*(.7+.6*q.y);spin=q.z*6.;`,
-      fs:`float m=vapour(uv,rnd,pt);col=puffLit(uv,P,vec3(.5,.56,.62)*.35+P_tint*.05);a=m*.18;`},
-    {name:'Impact sheet',geo:'quad',billboard:true,blend:'alpha',depthTest:false,xf:{p:p403_add(TG,[-.15,0,.05]),s:1.15},fs:`
-      float tt=u_age-(PF_JET*u_dur+.17);float on=step(0.,tt)*step(tt,.06);vec2 q=uv*2.-1.;q.x=-q.x;vec2 pc=polar(q);
-      float sp=pow(nzL(vec2(pc.x*5.,.27)).a,.6)*smoothstep(1.,.25,pc.y)*smoothstep(.1,.35,pc.y);float m=smoothstep(.55,.85,sp+.45*(1.-pc.y))*smoothstep(-.3,.4,q.x);
-      col=vec3(.6,.7,.8)*(.35+fxLight(P)*.08)+P_tint*.12;a=m*on*.55;`},
-    {name:'Body drench',geo:'dummy',blend:'alpha',cull:'back',xf:{p:p403_T1,r:[0,-1.5,0]},vs:`p+=n*.01;`,fs:`
-      float tt=pfT();float on=pfHit()*smoothstep(0.,.25,tt)*(1.-smoothstep(.85,1.,u_life));
-      vec3 nn=normalize(N);float run=nz(vec2(OP.x*3.+OP.z*2.,OP.y*.8+tt*.35)).r;float run2=nz(vec2(OP.x*9.,OP.y*2.+tt*.9)).b;
-      float cov=smoothstep(.35,.6,run*.7+run2*.5)*on;
-      vec3 rf=reflect(-V,normalize(nn+(run2-.5)*.5));
-      col=env(rf,.08)*1.6*fresnel(nn,V,2.)+brdf(vec3(0.),.05,0.,nn,V,normalize(vec3(-1.,1.,.5)))*3.+P_tint*.08;
-      a=cov*(.35+.5*fresnel(nn,V,2.));`},
-    {name:'Body drips',type:'particles',count:80,life:.9,blend:'alpha',stretch:.03,soft:0,sim:`
-      vec3 b=bodySurf(r);float s=sin(-1.5),c=cos(-1.5);b=vec3(b.x*c+b.z*s,b.y,-b.x*s+b.z*c);
-      pos=vec3(${p403_T1[0].toFixed(2)},0.,0.)+b+vec3(0.,-4.9*T*T,0.);
-      float on=step(PF_JET+.03,u_life)*(1.-smoothstep(.75,.95,u_life));size=.009*(.6+q.x)*on*step(.02,pos.y);`,
-      fs:`col=vec3(.5,.58,.66)*(u_amb*6.+.25)+fxLight(P)*.3;a=streak(uv)*1.2;`}
-  ]
-});
-}
 {
 const A=[-2.05,0,1.05],ARY=1.2,H=p403_hand(A,ARY),DUR=5.6;
 const TD=[.62,.78,-.05];const TR=p403_aim([0,0,0],TD);const TAX=p403_rv([0,1,0],TR);const TB=p403_add(H,TAX,-.03);const MOUTH=p403_add(TB,TAX,.085);
@@ -16684,8 +15822,8 @@ LAB.add({
   markers:{release:T0,impact:T1+.15},
   shadows:[[.9,.7,2.4,.35]],
   tags:['multi-event particles','blackbody fire','lit smoke','analytic trail decal','lathe prop'],
-  blurb:"A brass oil lamp is tipped forward and pours a tongue of fire onto the floor that splits into three snaking trails, each leaving rolling clouds of flame, smoke and a scorched track.",
-  notes:["The lamp is a brass lathe pot with a lathe spout and a torus handle, all rotated together in the vertex shader so the pour tilt stays rigid.",
+  blurb:"A bronze oil lamp is tipped forward and pours a tongue of fire onto the floor that splits into three snaking trails, each leaving rolling clouds of flame, smoke and a scorched track.",
+  notes:["The lamp is a bronze lathe pot with a lathe spout and a torus handle, all rotated together in the vertex shader so the pour tilt stays rigid.",
     "Three trails share every particle layer: the particle index picks the trail, and each sprite is born when the trail head passes its point, then loops a short burn cycle until its patch burns out.",
     "Fire uses the tinted flame ramp with a real alpha mask and partial additive blending so overlapping sprites do not stack to white.",
     "The scorch decal measures distance to each analytic path directly, so the char, the pale ash lip and the cooling ember line follow the flames exactly."],
@@ -16693,11 +15831,11 @@ LAB.add({
   cam:{yaw:.36,pitch:.2,dist:7.4,target:[.35,.8,.45]},
   params:[
     {id:'tint',label:'Flame',type:'color',value:'#ff8a3a'},
-    {id:'brass',label:'Brass',type:'color',value:'#9a6a2c'},
+    {id:'brass',label:'Bronze',type:'color',value:'#9a6a2c'},
     {id:'heat',label:'Fire volume',min:.5,max:1.5,value:1},
     {id:'smoke',label:'Smoke',min:0,max:1.5,value:1}
   ],
-  variants:[{name:'Greek fire',set:{tint:'#ffc070',heat:1.25}},{name:'Green',set:{tint:'#7aff6a',brass:'#4a5a3a'}},{name:'Cold flame',set:{tint:'#6aa0ff',smoke:.4}}],
+  variants:[{name:'Hot flame',set:{tint:'#ffc070',heat:1.25}},{name:'Green',set:{tint:'#7aff6a',brass:'#4a5a3a'}},{name:'Cold flame',set:{tint:'#6aa0ff',smoke:.4}}],
   glsl:p404_G+`
 #define p404b_T0 ${T0.toFixed(3)}
 #define p404b_T1 ${T1.toFixed(3)}
@@ -16829,7 +15967,7 @@ LAB.add({
   tags:['instanced ribbons','jagged noise','strobe lighting','scorch decal','lit smoke'],
   blurb:'A copper coil rod crackles between its three prongs, then holds open a fan of white lightning that rakes the target and the floor, leaving branching scorch and ozone smoke.',
   notes:[
-    'The rod is a lathe with a procedurally ridged copper coil, a wooden grip and a glass bulb; three instanced box prongs splay from the head.',
+    'The rod is a lathe with a procedurally ridged copper coil, a wooden grip and a rock-crystal bulb; three instanced box prongs splay from the head.',
     'The fan is fourteen instanced ribbons. Each bolt has a hair thin white core and a faint tinted halo, and its jagged path reseeds every 40 ms so the sheet stutters.',
     'The sustained beat drives a strobing light at the target and at the floor, so the whole room flickers blue-white.',
     'Residue is a Lichtenberg scorch fan whose branches cool from tint to soot, plus thin smoke rising from the floor strikes and the prongs.'
@@ -16890,7 +16028,7 @@ vec3 p405_end(float i){float a=(i/6.-.5)*1.1*P_spread;
       q=rotAxis(q,vec3(-sin(an),0.,cos(an)),-.42);n=rotAxis(n,vec3(-sin(an),0.,cos(an)),-.42);
       p=q+vec3(cos(an)*.045,.68,sin(an)*.045);`,fs:`
       vec3 nn=normalize(N);col=shade(vec3(.6,.33,.2),.3,1.,nn,V,P);a=1.;`},
-    {name:'Glass bulb',geo:'sphere',blend:'add',xf:(t,age,life,P)=>{const f=p405_rodXf(DIR,GRIP,(t,a,l)=>l>FIRE&&l<END?.02*Math.sin(a*60):p405_kick(a,END*D,.06))(t,age,life,P);return {p:p405_add(f.p,DIR,.775*p405_RS),s:.042*p405_RS};},fs:`
+    {name:'Crystal bulb',geo:'sphere',blend:'add',xf:(t,age,life,P)=>{const f=p405_rodXf(DIR,GRIP,(t,a,l)=>l>FIRE&&l<END?.02*Math.sin(a*60):p405_kick(a,END*D,.06))(t,age,life,P);return {p:p405_add(f.p,DIR,.775*p405_RS),s:.042*p405_RS};},fs:`
       float fr=fresnel(N,V,3.);vec3 rf=env(reflect(-V,N),.05);
       float fil=hotDot(vec2(.5)+(OP.xy)*.5);
       float k=u_life<p405_FIRE?sat(u_life/p405_FIRE)*(.5+.5*sin(u_age*80.)):u_life<p405_END?1.2:exp(-(u_age-p405_END*u_dur)*2.)*.6;
@@ -18620,7 +17758,7 @@ LAB.add({
     'Anticipation is accretion: motes spiral inward and the icicle grows while spinning, then recoils a hand width before launch.',
     'The splash is the hook. The tile grid around the target erupts in leaning crystal clusters, staggered by distance so the cold reads as spreading outward.',
     'Shards and frost mist are lit by the stage key and the cold impact light. Mist sinks and creeps along the floor instead of rising.',
-    'Residue is physical: crystal clusters stay standing, a square rime decal follows the tile layout and the chest plate is frosted where it hit.'
+    'Residue is physical: crystal clusters stay standing, a square rime decal follows the tile layout and the chest is frosted where it hit.'
   ],
   port:'Niagara mesh projectile with a collision event. The tile eruption is a second mesh emitter spawning from a 3 by 3 grid location module with a per-ring delay. Rime is a deferred decal plus a material layer blend on the target.',
   cam:{yaw:.3,pitch:.17,dist:7.6,target:[.1,1.,0]},
@@ -18637,7 +17775,7 @@ LAB.add({
   variants:[
     {name:'Glacial blue',set:{tint:'#4f8ee8',frost:.2}},
     {name:'Rime heavy',set:{frost:1.1,mist:1.4}},
-    {name:'Clear glass',set:{tint:'#c4e2f2',frost:0,mist:.5,spread:.8}}
+    {name:'Clear ice',set:{tint:'#c4e2f2',frost:0,mist:.5,spread:.8}}
   ],
   glsl:p502_LIB+`
 #define P502I_A ${p502_V(A)}
@@ -19341,7 +18479,7 @@ LAB.add({
   tags:['instanced strips','straight beam','ground forks','fused pits','exit sparks'],
   blurb:"A straight, braided beam leaves the hand and skewers three foes in a row, raking the floor with forks that leave a dotted line of fused, smoking pits.",
   notes:[
-    "The tell is short: a few arcs crawl over the gauntlet while the hand light rises with a per-frame flicker.",
+    "The tell is short: a few arcs crawl over the hand while the hand light rises with a per-frame flicker.",
     "The beam is a nearly straight channel with two thin braided strands, held for two frames and restruck twice. Only the braids reseed per stroke, so the core reads as one beam.",
     "Five forks drop from the beam to the floor and leave fused pits with a pale ash lip and a cooling glassy centre, so the line of the beam stays on the floor afterwards.",
     "Each target recoils on a slight delay down the line, flashes with vein light, and sprays sparks out of its back in the beam direction."
@@ -19577,9 +18715,9 @@ LAB.add({
         return {p,ry:p504_face(e,TG),rx:-.16*v*Math.min(1,(age-P0)*2)+-.08*shk(ts-i*.03)};})];},
   shadows:[[TG[0],TG[2],1.4,.3]],
   tags:['metal filings','dipole field','instanced metal','drag scuffs','contact shock'],
-  blurb:"A spark lands on an armoured foe and iron filings in the dust snap into its field; scrap slides in and clings, two enemies are dragged across the floor, and the moment they touch it they are shocked rigid.",
+  blurb:"A spark lands on an armoured foe and metal filings in the dust snap into its field; scrap slides in and clings, two enemies are dragged across the floor, and the moment they touch it they are shocked rigid.",
   notes:[
-    "The field is shown with matter, not rings: seven hundred instanced iron filings on the floor rotate from random into the field of a vertical dipole, in a wave that spreads outward, and stand up near the target.",
+    "The field is shown with matter, not rings: seven hundred instanced metal filings on the floor rotate from random into the field of a vertical dipole, in a wave that spreads outward, and stand up near the target.",
     "Glowing loops follow the real dipole field line equation r = L sin squared theta around the target, with flowing dashes that run pole to pole.",
     "The pull accelerates as distance closes, the dragged foes lean back against it, and their feet leave pale scuff trails and kicked dust.",
     "Adjacency triggers a short double stroke between the target and each foe, a needle burst, sparks and stun twitching. Filings and scuffs stay as residue."
@@ -19732,7 +18870,7 @@ LAB.add({
     "The coil is a subdivided plane bent into a wire-thin helix in the vertex shader. It grows from the feet up, then cinches inward as it takes hold.",
     "The copy reads as cause and effect: one strike from above, the coil flashes white along its length, then an identical strike lands again a few frames later.",
     "The floor keeps a fern-shaped Lichtenberg burn from both strikes, cooling from tint to char, and the copper stays heat-tinted and smoking.",
-    "Colour is copper and steel with a cold blue halo only on the bolts, so the second strike is the brightest moment in the shot."
+    "Colour is copper and metal with a cold blue halo only on the bolts, so the second strike is the brightest moment in the shot."
   ],
   port:"Spline mesh or a ribbon along a helix spline for the coil, with a grow parameter on its material. Strikes are beam emitters triggered twice from one event, and the burn is a decal with a temperature scalar.",
   cam:{yaw:.5,pitch:.14,dist:6.9,target:[.15,1.15,0]},
@@ -21248,19 +20386,19 @@ const rainLayer=(name,count,life,box,fwd,size,stretch,gain,seed)=>({name,type:'p
 LAB.add({
   id:'rain', name:'Night Rain', cat:'Atmosphere', stage:'ground',
   tags:['stretched particles','depth layers','ripple normals','wet specular'],
-  blurb:'Cold rain falls in depth layers onto wet stone. A lantern catches the drops and distant lightning lights the sky.',
+  blurb:'Cold rain falls in depth layers onto wet stone. A clay oil lamp catches the drops and distant lightning lights the sky.',
   notes:[
     'Rain is two particle layers at different distances plus a scrolling streak sheet for the far field, which is cheaper than more particles.',
     'Every drop is timed to reach the floor exactly at the end of its life, so nothing pops out in mid air.',
     'Splash rings are flat particles. The wet sheen layer rebuilds the stage puddle mask and adds ripple normals from a cell-based ring function.',
-    'Drops, rings and the sheen all read the lantern through fxLight, so rain near the lantern turns warm and the floor shows a long reflection.',
+    'Drops, rings and the sheen all read the lamp through fxLight, so rain near the lamp turns warm and the floor shows a long reflection.',
     'The distant flash is a huge far light plus a sky glow, with a flicker and an echo strike.'
   ],
   port:'Niagara: GPU sprites with velocity alignment for near rain and a camera-facing cylinder with a panning streak texture for far rain. Ripples are a flipbook normal decal blended into the wet surface layer.',
   cam:{yaw:.62,pitch:.13,dist:6.4,target:[-.2,1.05,0]},
   params:[
     {id:'tint',label:'Rain',type:'color',value:'#a8bedc'},
-    {id:'lamp',label:'Lantern',type:'color',value:'#ffa24a'},
+    {id:'lamp',label:'Lamp',type:'color',value:'#ffa24a'},
     {id:'heavy',label:'Intensity',min:.2,max:1.6,value:1},
     {id:'wind',label:'Wind',min:-1.5,max:1.5,value:.6},
     {id:'flash',label:'Lightning',min:0,max:2,value:1}
@@ -21285,15 +20423,14 @@ vec2 rnRip(vec2 g,float sc,float sd){vec2 gg=g*sc;vec2 c=floor(gg);vec2 f=fract(
   lights:(t,a,l,P)=>{const f=1+.1*Math.sin(t*9)+.06*Math.sin(t*21.3+1);const b=rnFlashJS(t)*P.flash;
     return [{p:[LANTERN[0],.36,LANTERN[2]],c:P.lamp.map(v=>v*5.5*f),r:7},{p:[-9,15,-12],c:P.tint.map(v=>(v*.6+.4)*b*900),r:80}];},
   layers:[
-    {name:'Lantern',geo:['lathe',[[0,0],[.13,0],[.13,.035],[.105,.05],[.105,.3],[.15,.315],[.07,.4],[.02,.43],[0,.43]],4],blend:'opaque',
+    {name:'Oil lamp',geo:['lathe',[[0,0],[.13,0],[.13,.035],[.105,.05],[.105,.3],[.15,.315],[.07,.4],[.02,.43],[0,.43]],16],blend:'opaque',
       xf:{p:[LANTERN[0],0,LANTERN[2]],r:[0,.9,0]},fs:`
       vec3 nn=flatN(P);if(dot(nn,V)<0.)nn=-nn;
-      float y=OP.y;float pane=step(.055,y)*step(y,.295)*smoothstep(.07,.11,abs(fract(uv.x*4.)-.5)*.5+.0)*step(abs(fract(uv.x*4.)-.5),.4);
-      float bar=smoothstep(.012,.006,abs(y-.175));
-      vec3 metal=shade(vec3(.09,.075,.06),.5,.8,nn,V,P);
+      float y=OP.y;float flame=smoothstep(.29,.32,y);
+      vec3 clay=shade(vec3(.36,.22,.13)*(.85+.3*nz(vec2(uv.x*6.,y*5.)).r),.9,0.,nn,V,P);
       float fl=.8+.2*sin(u_time*9.)+.1*sin(u_time*21.3+1.);
-      vec3 glass=glow((.55+.5*smoothstep(.3,.05,y))*fl,P_lamp)*1.6;
-      col=mix(metal,glass,pane*(1.-bar));a=1.;`},
+      vec3 fire=glow((.55+.6*smoothstep(.43,.3,y))*fl,P_lamp)*1.6;
+      col=mix(clay,fire,flame);a=1.;`},
     {name:'Sky flash',type:'ray',blend:'add',fs:`
       float f=rnFlash();vec3 fd=normalize(vec3(-.55,.16,-.82));
       float az=atan(rd.z,rd.x)/TAU;
@@ -21333,7 +20470,7 @@ vec2 rnRip(vec2 g,float sc,float sd){vec2 gg=g*sc;vec2 c=floor(gg);vec2 f=fract(
       float d=length(uv-.5)*2.;float ring=band(d,.78,.2)*(1.-pt)*(1.-pt);
       float dot0=sat(1.-d*2.5)*sat(1.-pt*5.);
       col=(P_tint*.18+fxLight(P)*.5+rnBolt()*rnFlash()*.35)*(ring+dot0*3.);a=1.;`},
-    {name:'Lantern glow',geo:'quad',billboard:true,blend:'add',soft:.2,xf:{p:[LANTERN[0],.2,LANTERN[2]],s:.75},fs:`
+    {name:'Lamp glow',geo:'quad',billboard:true,blend:'add',soft:.2,xf:{p:[LANTERN[0],.2,LANTERN[2]],s:.75},fs:`
       col=glow(hotDot(uv)*.42*(.9+.1*sin(u_time*9.)),P_lamp);a=1.;`}
   ]
 });
@@ -21479,16 +20616,16 @@ const p511_march=(map,c,R,steps)=>`
      for(int i=0;i<${steps};i++){mp=ro+rd*mt;float dv=${map}(mp);if(dv<.0015*mt){mh=true;break;}mt+=dv*.9;if(mt>mEnd)break;}
      if(mh){vec2 e=vec2(1.,-1.)*.004;mn=normalize(e.xyy*${map}(mp+e.xyy)+e.yyx*${map}(mp+e.yyx)+e.yxy*${map}(mp+e.yxy)+e.xxx*${map}(mp+e.xxx));}}}`;
 LAB.add({
-  id:'rw-void-drake', name:'Black glass drake', set:'Rift Wizard', cat:'Arcane', sub:'Arcane/Dragon/Summon', level:4, legacy:false,
+  id:'rw-void-drake', name:'Obsidian drake', set:'Rift Wizard', cat:'Arcane', sub:'Arcane/Dragon/Summon', level:4, legacy:false,
   src:'Summons a flying drake whose breath melts walls.',
   duration:DUR, stage:'full',
-  tags:['raymarched drake','starfield wings','obsidian shards','melting wall','glass residue'],
-  blurb:'Obsidian shards climb out of a crack in the floor and lock together into a black glass drake whose wings are windows onto a starfield; it hangs on slow beats and breathes a sputtering dark violet stream that slumps a stone wall into dripping violet glass.',
+  tags:['raymarched drake','starfield wings','obsidian shards','melting wall','melt residue'],
+  blurb:'Obsidian shards climb out of a crack in the floor and lock together into an obsidian drake whose wings are windows onto a starfield; it hangs on slow beats and breathes a sputtering dark violet stream that slumps a stone wall into dripping violet melt.',
   notes:[
     'Summon: a jagged rift opens in the flagstones, instanced obsidian shards rise and converge, and the raymarched body materialises through a noise mask while its plate seams burn bright and cool.',
-    'The body is glossy black glass with faceted plates from 3D voronoi and a thin violet rim; the wing membranes show a parallax starfield, which separates this drake from the fire, ice and storm drakes.',
+    'The body is glossy obsidian with faceted plates from 3D voronoi and a thin violet rim; the wing membranes show a parallax starfield, which separates this drake from the fire, ice and storm drakes.',
     'The breath is not a cone: a tight, flickering core thread wrapped in dark void smoke and violet motes, aimed at a wall rather than a foe, matching the wall-melting rule.',
-    'The wall is a subdivided box whose vertices slump inward and sag downward around the impact; it glows, drips violet glass that pools at its base, then cools to a glossy dark scar.'
+    'The wall is a subdivided box whose vertices slump inward and sag downward around the impact; it glows, drips violet melt that pools at its base, then cools to a glossy dark scar.'
   ],
   port:'Skeletal drake with an emissive seam mask and a scene-texture starfield on the wing membrane material, a Niagara shard convergence emitter for the summon, a breath beam plus smoke emitter on a mouth socket, and a wall mesh with a world-position-offset melt mask and a drip emitter that spawns puddle decals.',
   cam:{yaw:-.28,pitch:.1,dist:10.,target:[-.1,1.75,.4]},
@@ -21562,7 +20699,7 @@ float p511j_mapv(vec3 p){return u_age<P511J_TSOL-.05?1.:p511j_map(p);}`,
     o.push({p:[H[0]+.3,H[1]-.9,H[2]+.8],c:p511_mul(p511_mix(c,[1,1,1],.5),.5*p511_sat((age-TSOL)/.5)),r:4});
     return o;},
   layers:[
-    {name:'Rift scar and glass pool',geo:['ground',1],blend:'alpha',count:2,vs:`
+    {name:'Rift scar and melt pool',geo:['ground',1],blend:'alpha',count:2,vs:`
       data=vec4(p.x,p.z,inst,0.);if(inst<.5){p.xz*=vec2(1.5,.55);p.xz=rot(.2)*p.xz;p+=vec3(P511J_H.x-.1,.013,P511J_H.z+.2);}else{p.xz*=vec2(.55,1.1);p+=vec3(P511J_IP.x-.25,.014,P511J_IP.z);}`,
       fs:`vec2 q=data.xy;vec3 Lt=u_amb*9.+fxLight(P)*.45+.03;
       if(data.z<.5){float n=nz(q*vec2(.5,1.)+.3).r;float line=abs(q.y+(n-.5)*.7+.2*sin(q.x*5.));float op=easeOut(sat((u_age-P511J_TS0)/.3));
@@ -21633,7 +20770,7 @@ float p511j_mapv(vec3 p){return u_age<P511J_TSOL-.05?1.:p511j_map(p);}`,
       if(s>1.){float tt=T-.3;vec3 bd=normalize(vec3(-1.,(q.x-.3)*1.5,(q.y-.5)*2.));ps+=bd*tt*mix(1.,4.,q.z)+vec3(0.,-4.9*tt*tt,0.);}
       pos=ps;size=.012*(.5+q.w)*on;`,
       fs:`col=glow(.95,P_tint)*streak(uv)*1.6;a=1.;`},
-    {name:'Glass drips',type:'particles',count:90,life:1.2,blend:'add',additive:.7,stretch:.6,soft:0,sim:`
+    {name:'Slag drips',type:'particles',count:90,life:1.2,blend:'add',additive:.7,stretch:.6,soft:0,sim:`
       float e=u_age-T;float on=step(P511J_TB0+.5,e)*step(e,P511J_TB1+.9);float ang=r.y*2.4-1.2;
       vec3 o=P511J_IP+vec3(-.06,-.25-.25*r.z,sin(ang)*.4);float fall=max(T-.25*q.x,0.);vec3 ps=o+vec3(-.05*fall,-4.9*fall*fall,0.);
       float land=step(ps.y,.02);pos=vec3(ps.x,max(ps.y,.02),ps.z);size=.022*(.6+q.y)*on*(1.-land*.5);data=vec4(e,0.,0.,0.);`,
@@ -21969,15 +21106,15 @@ LAB.add({
   id:'rw-carnival-of-pain', name:'Linked pain wires', set:'Rift Wizard', cat:'Dark', level:4, legacy:false, sub:'Chaos/Dark/Buff or curse',
   src:'For a few turns, whenever an enemy takes physical, fire or lightning damage, the nearest enemies take that much chaos damage.',
   duration:D, stage:'full',
-  tags:['marionette threads','striped polar disc','pulse propagation','alpha graphic crescent','lit fire and smoke'],
-  blurb:'A lacquered red and black carousel wheels out under the enemy line, a rusted crown of hooks strings them up like puppets and barbed threads stitch them together, so when a firebolt burns one, the damage runs down the wires and snaps through the others.',
+  tags:['puppet threads','striped polar disc','pulse propagation','alpha graphic crescent','lit fire and smoke'],
+  blurb:'A lacquered red and black disc turns out under the enemy line, a corroded crown of hooks strings them up like puppets and barbed threads stitch them together, so when a firebolt burns one, the damage runs down the wires and snaps through the others.',
   notes:[
-    'Tell: the floor disc unwinds in a spiral, an metal crown with hanging hooks erodes into being above the group and barbed wires drop from it to every shoulder, then sag between the chests.',
+    'Tell: the floor disc unwinds in a spiral, a metal crown with hanging hooks erodes into being above the group and barbed wires drop from it to every shoulder, then sag between the chests.',
     'Impact: the caster triggers it with an ordinary firebolt. On the hit a crimson bead runs along the links and lands on the neighbours a beat later as a black crescent with a red rim, held for three frames.',
     'The wires are camera-facing strips with a parabolic sag that snaps taut when the pulse passes, and a barbed width profile so they read as wire, not light.',
     'Residue: the burnt target smokes, the wheel keeps turning, the wires keep trembling and blood sprays onto the flagstones under the victims.'
   ],
-  port:'Niagara ribbons with a sag parameter for the wires and a moving emissive band for the pulse; the crown is a static mesh with a dissolve material. The carousel is a decal using a polar stripe function with a rotation parameter.',
+  port:'Niagara ribbons with a sag parameter for the wires and a moving emissive band for the pulse; the crown is a static mesh with a dissolve material. The disc is a decal using a polar stripe function with a rotation parameter.',
   cam:{yaw:.26,pitch:.11,dist:9.2,target:[-.35,1.75,-.15]},
   actors:(t,age)=>[CAS,...EN.map((e,i)=>({p:e.p,ry:e.ry,rx:lean(i,age)}))],
   caster:{kind:'cast',release:TB,at:HAND},
@@ -21985,7 +21122,7 @@ LAB.add({
   params:[
     {id:'tint',label:'Pain',type:'color',value:'#ff1a34'},
     {id:'fire',label:'Trigger',type:'color',value:'#ff7a26'},
-    {id:'spin',label:'Carousel speed',min:0,max:2,value:1},
+    {id:'spin',label:'Disc speed',min:0,max:2,value:1},
     {id:'pain',label:'Intensity',min:.3,max:1.6,value:1}
   ],
   variants:[
@@ -22030,7 +21167,7 @@ vec3 p514cpBolt(float s){return bez2(P514CP_HAND,P514CP_MID,P514CP_ECH0,s);}`,
     [1,2].forEach(i=>{const p=chest(i,age);L.push({p:[p[0]-.35,p[1],p[2]+.15],c:p514_add(p514_mul(c,6*fl*pa),p514_mul([1,1,1],xp>0&&xp<.07?5:0)),r:3.5});});
     return L;},
   layers:[
-    {name:'Carousel disc',geo:['ground',1],blend:'alpha',xf:{p:[C[0],.014,C[2]],s:2.75},fs:`
+    {name:'Spinning disc',geo:['ground',1],blend:'alpha',xf:{p:[C[0],.014,C[2]],s:2.75},fs:`
       vec2 q=uv*2.-1.;float r=length(q);float ang=atan(q.y,q.x)/TAU+.5;
       float spin=u_age*.09*P_spin;float tw=ang+spin+r*.18;
       float app=p514cpFloor();float rev=smoothstep(0.,.08,app*1.15-fract(ang-.25)*.9-r*.15);
@@ -22401,15 +21538,15 @@ LAB.add({
   id:'rw-soul-tax', name:'Life strand pulled out', set:'Rift Wizard', cat:'Dark', level:5, legacy:false, sub:'Dark/Light/Direct damage',
   src:"Deals a third of the target's current HP as light and chaos damage and heals the caster.",
   duration:p515D, stage:'full',
-  tags:['analytic ribbons','instanced coins','seal sdf','lit smoke','split flash'],
-  blurb:'A seal marks a third of the target, then a braided strand of white light and black smoke is pulled out of its chest into the caster, and hot tarnished coins fall away.',
+  tags:['analytic ribbons','instanced gold discs','seal sdf','lit smoke','split flash'],
+  blurb:'A seal marks a third of the target, then a braided strand of white light and black smoke is pulled out of its chest into the caster, and hot tarnished gold discs fall away.',
   notes:[
     'Tell: a gold assessment seal forms over the target and a wedge sweeps exactly one third of it, so the game rule reads before anything moves.',
     'Impact: the seal slams shut, a split white and black crescent holds for two frames, and the target lurches toward the caster.',
     'The strand is two camera-facing ribbons on one bezier path, wound around each other as a helix: one additive and pale, one alpha and black, so it is half light and half dark.',
-    'Residue: sixteen instanced coins spill out white-hot, tumble, bounce and cool to tarnished gold on the floor, a one-third brand smokes under the target and the caster keeps a fading warm rim.'
+    'Residue: sixteen instanced gold discs spill out white-hot, tumble, bounce and cool to tarnished gold on the floor, a one-third brand smokes under the target and the caster keeps a fading warm rim.'
   ],
-  port:'Two Niagara ribbon emitters sharing a spline with a phase offset; the coins are a mesh emitter with collision and a heat dynamic parameter. The seal is a decal plus a camera-facing material driven by a single fill scalar.',
+  port:'Two Niagara ribbon emitters sharing a spline with a phase offset; the gold discs are a mesh emitter with collision and a heat dynamic parameter. The seal is a decal plus a camera-facing material driven by a single fill scalar.',
   cam:{yaw:.22,pitch:.12,dist:7.7,target:[-.25,1.3,0]},
   caster:{kind:'channel',release:p515TR,channel:p515TA-p515TR+.25,at:[-2.05,1.5,.62]},
   markers:{release:p515TR,impact:p515TR},
@@ -22418,7 +21555,7 @@ LAB.add({
   params:[
     {id:'tint',label:'Light half',type:'color',value:'#ffd79a'},
     {id:'dark',label:'Dark half',type:'color',value:'#5a3a7a'},
-    {id:'coins',label:'Coin heat',min:0,max:1.5,value:1},
+    {id:'coins',label:'Gold heat',min:0,max:1.5,value:1},
     {id:'smoke',label:'Smoke',min:0,max:1.5,value:1}
   ],
   variants:[
@@ -22489,7 +21626,7 @@ float p515stSeal(vec2 q,float fill){
       size=(lt>0.&&lt<1.)?mix(.05,.16,lt)*(.6+q.z):0.;alpha=1.-lt;spin=q.w*6.;data=vec4(step(.5,q.w),0.,0.,0.);`,
       fs:`float m=vapour(uv,rnd,pt);vec3 lc=P_tint*.9+.1;
       col=data.x>.5?puffLit(uv,P,vec3(.6))*lc+glow(.25,P_tint)*.3:puffLit(uv,P,P_dark*.12);a=m*(data.x>.5?.45:.8);`},
-    {name:'Coins',geo:['lathe',[[0,-.014],[.095,-.014],[.105,-.006],[.105,.006],[.095,.014],[0,.014]],18],blend:'opaque',count:16,vs:`
+    {name:'Gold discs',geo:['lathe',[[0,-.014],[.095,-.014],[.105,-.006],[.105,.006],[.095,.014],[0,.014]],18],blend:'opaque',count:16,vs:`
       data=vec4(p,0.);float T=max(u_age-P515ST_TR-.06*irnd.w,0.);
       vec3 dir=normalize(vec3(-.45-irnd.x*.9,.25+irnd.y*.9,(irnd.z-.5)*1.7));float sp=mix(1.4,3.4,irnd.w);
       float h0=P515ST_C.y-.1;float vy=dir.y*sp;float g=9.8;float tl=(vy+sqrt(vy*vy+2.*g*h0))/g;
@@ -22547,7 +21684,7 @@ LAB.add({
   src:'All enemies lose chaos and light resistance for several turns.',
   duration:p515D, stage:'full',
   tags:['alpha-clipped eyeball','light sink','terminator decal','instanced shards','rift rim'],
-  blurb:'A seam splits the air above the field and opens on a wet eye with a gold and obsidian iris; its gaze throws half the room into dusk gold and half into cold shadow, and the rings around each enemy crack and rain down as gilt and black glass.',
+  blurb:'A seam splits the air above the field and opens on a wet eye with a gold and obsidian iris; its gaze throws half the room into dusk gold and half into cold shadow, and the rings around each enemy crack and rain down as gilt and obsidian.',
   notes:[
     'The eye is a lit sphere alpha-clipped to an almond aperture computed in camera space, so lids open as a rift in the air while the ball keeps real specular and depth.',
     'The iris is split down the middle: one half brushed gold metal, the other black obsidian, with a hot seam between them and a vertical slit pupil that scans the field.',
@@ -22939,20 +22076,20 @@ LAB.add({
   id:'rw-holy-armor', name:'Gold light armour', set:'Rift Wizard', cat:'Holy', level:3, legacy:false, sub:'Light/Buff or curse',
   src:'Buff: gain large resistance to physical, fire, lightning and chaos damage.',
   duration:p515D, stage:'full', dummy:false,
-  tags:['body shell','lame sdf pattern','molten seams','refraction','instanced droplets'],
-  blurb:'Molten gold runs up the body in the seams of an unseen harness, then floods outward into overlapping lames of translucent amber light that set like cast glass, dripping beads of gold that cool on the floor.',
+  tags:['body shell','band sdf pattern','molten seams','refraction','instanced droplets'],
+  blurb:'Molten gold runs up the body in the seams of an unseen harness, then floods outward into overlapping bands of translucent amber light that set like amber, dripping beads of gold that cool on the floor.',
   notes:[
-    'Tell: a lame pattern in object space (horizontal bands on the torso and legs, rings on the arms and a centre ridge) glows as molten seams climbing from the feet.',
-    'Impact: the plates fill from the seams outward in one beat, a hard ring flashes on the floor for two frames and the light spikes.',
-    'The armour is a shell pushed off the body along normals: amber glass with gold metal reflection, a fresnel rim, a small refraction offset and bright seams, over a custom body that keeps the stage mannequin material.',
+    'Tell: a band pattern in object space (horizontal bands on the torso and legs, rings on the arms and a centre ridge) glows as molten seams climbing from the feet.',
+    'Impact: the bands fill from the seams outward in one beat, a hard ring flashes on the floor for two frames and the light spikes.',
+    'The armour is a shell pushed off the body along normals: glassy amber with gold metal reflection, a fresnel rim, a small refraction offset and bright seams, over a custom body that keeps the stage mannequin material.',
     'Residue: drops fall from the seams on ballistic paths and land as instanced gold beads that cool from white to metal, inside a pale scorched ring.'
   ],
-  port:'A character overlay material with a seam mask texture and two scalars (seam reveal height, plate fill), a Niagara mesh emitter for droplets with collision, and a decal for the scorch ring.',
+  port:'A character overlay material with a seam mask texture and two scalars (seam reveal height, band fill), a Niagara mesh emitter for droplets with collision, and a decal for the scorch ring.',
   cam:{yaw:.42,pitch:.12,dist:4.5,target:[0,1.05,0]},
   markers:{release:.2,impact:p515TI},
   params:[
     {id:'tint',label:'Gold',type:'color',value:'#ffc45a'},
-    {id:'glass',label:'Plate glass',type:'color',value:'#d79a3a'},
+    {id:'glass',label:'Amber shell',type:'color',value:'#d79a3a'},
     {id:'clarity',label:'Translucency',min:.2,max:1.,value:.6},
     {id:'drips',label:'Molten drips',min:0,max:1.5,value:1}
   ],
@@ -22996,7 +22133,7 @@ vec2 p515haLames(vec3 o){
     {name:'Floor flash',geo:['ground',1],blend:'add',xf:{p:[0,.03,0],s:2.},fs:`
       vec2 q=(uv*2.-1.)*2.;float tt=u_age-P515HA_TI;float on=step(0.,tt)*step(tt,.075);
       float ring=smoothstep(.05,.0,abs(length(q)-.75-tt*6.));col=vec3(1.,.9,.7)*ring*1.8*on;a=1.;`},
-    {name:'Light plate',geo:'dummy',blend:'alpha',cull:'back',vs:`p+=n*(.032+.012*step(.86,p.y)*step(p.y,1.5));`,fs:`
+    {name:'Light bands',geo:'dummy',blend:'alpha',cull:'back',vs:`p+=n*(.032+.012*step(.86,p.y)*step(p.y,1.5));`,fs:`
       vec2 lm=p515haLames(OP);float sd=lm.x;float fill=p515haFill();float up=p515haSeamUp();
       float n=nz(OP.xy*3.+OP.z*2.+lm.y*.37).r;float n2=nz(OP.xy*9.+u_time*.05).b;
       float rev=step(OP.y/1.8,up);
@@ -23249,30 +22386,30 @@ const p517irCA=[-2.5,0,-1.1],p517irH=[-1.95,1.61,-.68];
 const p517irA=[[-.75,0,.55],[.65,0,-.35],[1.95,0,.6]],p517irRY=[.25,-.15,-.45];
 const p517irSeam=(i,age)=>(age-p517irT0-i*p517irST)/p517irSP;
 LAB.add({
-  id:'rw-ironize', name:'Allies turned to metal', set:'Rift Wizard', cat:'Metallic', level:3, legacy:false, sub:'Metallic/Buff or curse/Summon',
+  id:'rw-ironize', name:'Allies turned to bronze', set:'Rift Wizard', cat:'Metallic', level:3, legacy:false, sub:'Metallic/Buff or curse/Summon',
   src:'All allies gain physical, fire and lightning resistance and become metallic.',
   duration:p517irDUR, stage:'full',
   tags:['forging seam','metal shell','metal filings','cooling blackbody','slag drips'],
-  blurb:'Metal filings crawl across the floor from the caster to each ally, then a white-hot forging seam climbs every body from boots to helm, leaving riveted metal plate that glows, cools to dark metal and steams.',
+  blurb:'Metal filings crawl across the floor from the caster to each ally, then a white-hot forging seam climbs every body from boots to helm, leaving riveted bronze that glows, cools to dark bronze and steams.',
   notes:[
     'Tell: dark filings stream along curved field lines on the floor and gather at each ally boots, drawn as lit metallic specks.',
-    'The metal shell is an opaque copy of each mannequin, alpha clipped above a noisy seam line that rises over one second; the plate pattern, rivets and hammered normals are procedural in object space.',
+    'The metal shell is an opaque copy of each mannequin, alpha clipped above a noisy seam line that rises over one second; the panel pattern, rivets and hammered normals are procedural in object space.',
     'The seam front is a thin blackbody band that throws stretched sparks and slag drips, and its light rides up the body so the floor and neighbours change colour.',
-    'Residue: plates cool from orange to grey metal over three seconds, steam lifts off the shoulders, and slag splashes harden on the floor around the feet. A hard glint pops on each helm as it completes.'
+    'Residue: the shells cool from orange to dark bronze over three seconds, steam lifts off the shoulders, and slag splashes harden on the floor around the feet. A hard glint pops on each helm as it completes.'
   ],
-  port:'A character material layer with a world height mask driven by one scalar per pawn, blending to a tileable riveted metal material with an emissive temperature curve. Niagara handles filings (spline-follow), seam sparks (skeletal mesh surface sampling above the mask height) and steam.',
+  port:'A character material layer with a world height mask driven by one scalar per pawn, blending to a tileable riveted bronze material with an emissive temperature curve. Niagara handles filings (spline-follow), seam sparks (skeletal mesh surface sampling above the mask height) and steam.',
   cam:{yaw:.08,pitch:.16,dist:7.4,target:[.2,1.,0]},
   caster:{kind:'cast',release:p517irT0,at:p517irH},
   markers:{release:p517irT0,impact:p517irT0+p517irST+p517irSP},
   actors:[{p:p517irCA,ry:.85,pose:'cast'},{p:p517irA[0],ry:p517irRY[0]},{p:p517irA[1],ry:p517irRY[1]},{p:p517irA[2],ry:p517irRY[2]}],
   params:[
     {id:'tint',label:'Forge heat',type:'color',value:'#ff7a2a'},
-    {id:'iron',label:'Metal',type:'color',value:'#6e7177'},
+    {id:'iron',label:'Metal',type:'color',value:'#9a6a3a'},
     {id:'cool',label:'Cooling speed',min:.4,max:2,value:1},
     {id:'steam',label:'Steam',min:0,max:1.5,value:1}
   ],
   variants:[
-    {name:'Bronze',set:{iron:'#9a6a3a',tint:'#ffa040'}},
+    {name:'Copper',set:{iron:'#b5673a',tint:'#ffa040'}},
     {name:'Blackened',set:{iron:'#2c2d31',cool:.6}},
     {name:'Silvered',set:{iron:'#b0b6c0',tint:'#9fd0ff',steam:.4}}
   ],
@@ -23551,9 +22688,9 @@ LAB.add({
   blurb:'Gold sand pours off the caster until two engraved bronze rings rise and lock around them with a clang; the falling sand stops dead in the air and begins to drift back up.',
   notes:[
     'Tell: grains spawn on the body surface and fall under gravity, piling at the feet, while two bronze rings climb out of the floor spinning fast.',
-    'Impact: the rings slam to a stop at chest height, crossing like an armillary; a hard ring flash and a pale light spike mark the lock.',
+    'Impact: the rings slam to a stop at chest height, crossing at right angles; a hard ring flash and a pale light spike mark the lock.',
     'Every grain is closed-form: its falling position is frozen at the lock time, held, then eased onto a slow upward spiral, so time visibly stops and reverses.',
-    'Residue: a clock-face circle with twelve ticks is cut into the floor and filled with molten gold that cools to metal, and the sand pile stays.'
+    'Residue: a circle with twelve ticks is cut into the floor and filled with molten gold that cools to metal, and the sand pile stays.'
   ],
   port:'Niagara: grains with a per-particle time-scale curve driven by a user parameter (1 before the lock, 0 during the hold, negative after). Rings are static meshes with an engraved metal material on a timeline; the floor mark is a decal with an emissive cool-down.',
   cam:{yaw:.45,pitch:.16,dist:5.,target:[0,1.,0]},
@@ -23588,7 +22725,7 @@ mat3 p518j_ringR(float k,out vec3 c){float rs=p518j_rise();float tl=p518j_tl();f
     L.push({p:[0,.1,0],c:p518_sc(g,tl>0?1.4*p518_ex(tl*.6):0),r:2.2});
     return L;},
   layers:[
-    {name:'Clock mark',geo:['ground',1],blend:'alpha',xf:{p:[0,.012,0],s:1.5},fs:`
+    {name:'Ring of ticks',geo:['ground',1],blend:'alpha',xf:{p:[0,.012,0],s:1.5},fs:`
       vec2 q=(uv-.5)*2.;float r=length(q);float tl=p518j_tl();float on=step(P518J_LK,u_life);
       float cut=smoothstep(.06,.0,abs(r-.88)-.012)*smoothstep(1.2,.0,tl*6.-(atan(q.y,q.x)/TAU+.5)*1.2+0.)*on;
       cut=smoothstep(.02,.0,abs(r-.88)-.008)*on*step((atan(q.y,q.x)/TAU+.5),tl*4.);
@@ -23749,7 +22886,7 @@ LAB.add({
   tags:['lit mesh','vertex shell','axis billboard','analytic ribbon','tick sdf'],
   blurb:'A floating blade with glowing tick marks and edges, an elemental shell, a camera-facing aura, two orbiting ribbons and sparks or drips.',
   notes:[
-    'The sword is lit and opaque. Marks from tick() sit on the ridge and the cutting edges glow, both fed by noise that scrolls from guard to tip.',
+    'The sword is lit and opaque. Marks from tick() sit on the ridge and the cutting edges glow, both fed by noise that scrolls from hilt to tip.',
     'The shell is a second copy of the blade scaled outward in the vertex shader and eroded with fast noise, so the element hugs the metal.',
     'The big silhouette comes from a strip billboarded around the blade axis. It never shows an edge and carries the flames, mist or lightning arcs.',
     'Flow sets whether the element rises like fire or sinks like frost, and the same value drives the particles into embers or drips.',
@@ -26462,7 +25599,7 @@ function p630Collapse(w, O) {
 }
 
 LAB.add(LAB.Combat.make({ id: "cb3-hexweaver", name: "Intelligence and Dexterity caster", seq: seqHex3, cat: "Builds", sub: "Lattice · Mind",
-  blurb: "Mind spells that change enemy behaviour: Cause Fear drops two to their knees and sends the imps running, the dark ring blinds a pack into killing each other, the mark echoes every bolt into a marked brute, and Singularity drags everything that is left in and crushes it. The khopesh takes each opening.",
+  blurb: "Mind spells that change enemy behaviour: Cause Fear drops two to their knees and sends the imps running, the dark ring blinds a pack into killing each other, the mark echoes every arrow into a marked brute, and Singularity drags everything that is left in and crushes it. The khopesh takes each opening.",
   tags: ["mind", "lab spells", "khopesh", "enemy behaviour", "anticipation", "planted gait"],
   notes: ["Fear and confusion are authored as enemy behaviour: kneel and tremble, flee goals pointing away from him, and blinded foes that walk to a neighbour, face it and strike it (w.hurt between foes).",
     "The off hand casts while the weapon hand holds the khopesh back; the big casts raise the blade with the free hand.",
@@ -28094,9 +27231,9 @@ const IMP=HITS.length?HITS[0].t:1.7;
 const ryTo=(x,z)=>Math.atan2(-x,-z);
 LAB.add({
   id:'arpg-blessed-hammer', name:'Spiralling hammers', set:'ARPG', cat:'Holy', sub:'Projectile', level:6, legacy:false, duration:DUR, stage:'full',
-  src:'Each cast throws a translucent warhammer that spirals outward around the caster, tumbling end over end and ringing off every foe it passes through.',
+  src:'Each cast throws a translucent hammer that spirals outward around the caster, tumbling end over end and ringing off every foe it passes through.',
   tags:['instanced metal meshes','analytic spiral','camera ribbons','spin smear','velocity sparks'],
-  blurb:'Three quick casts throw three engraved translucent warhammers that tumble end over end along overlapping clockwise spirals, ring off the foes they pierce and dissolve into motes.',
+  blurb:'Three quick casts throw three engraved translucent hammers that tumble end over end along overlapping clockwise spirals, ring off the foes they pierce and dissolve into motes.',
   notes:[
     'Hammers are lit meshes, not sprites: a rounded, flared box head and a lathed haft per instance, shaded as polished metal with engraved grooves that hold the glow.',
     'The path is an Archimedean spiral (three turns, 0.55 to 2.9 m) with a speed profile halfway between constant angular and constant linear speed, so the hammers whirl near the caster and sweep wide at the edge.',
@@ -28465,9 +27602,9 @@ const arr=(f,t)=>`${t}[7](${B.map(f).join(',')})`;
 LAB.add({
   id:'arpg-fireball-volley', name:'Fireball Volley', set:'ARPG', cat:'Fire', sub:'Projectile', level:6, legacy:false,
   duration:4.6, stage:'full',
-  src:'One cast throws a shotgun fan of fireballs that detonate on everything in front of the caster.',
+  src:'One cast throws a wide fan of fireballs that detonate on everything in front of the caster.',
   tags:['projectile fan','staggered impacts','soot erosion','scorch decals','hex-tiled ground'],
-  blurb:'A single throw splits a ball of fire into seven, fanning out like buckshot; they burst on three mannequins and the floor in a rippling wall of explosions that leaves soot, embers and scorch marks.',
+  blurb:'A single throw splits a ball of fire into seven, fanning out like a handful of thrown stones; they burst on three mannequins and the floor in a rippling wall of explosions that leaves soot, embers and scorch marks.',
   notes:[
     'The read is one gesture, many projectiles: one fire mass gathers in the hand and splits on the release frame into seven balls with their own launch jitter, speed and arc, so the impacts ripple instead of landing together.',
     'Each ball is a displaced sphere with a fire-to-soot trail; the explosions are alpha puffs whose hot core cools into soot lit by the impact lights (no additive stacking to white).',
@@ -29257,11 +28394,11 @@ if(!LAB.GEO.p707_sabre)LAB.GEO.p707_sabre=()=>{const U=LAB.GEOU,G=LAB.GEO,rows=2
 LAB.add({
   id:'arpg-blade-vortex', name:'Blade Vortex', set:'ARPG', cat:'Martial', sub:'Area', level:4, legacy:false, duration:DUR, stage:'full',
   src:'Each cast adds another translucent blade to the storm orbiting the caster; the blades cut everything they pass and expire one by one.',
-  tags:['instanced sabre mesh','fresnel ghost material','analytic ribbons','lit mist vortex','alpha erosion'],
-  blurb:'Twelve pale green-cyan sabres stream from the casting hand and settle on three orbit rings around the caster, each drawing a thin circling trail, while a green-grey mist whirls at the centre; they expire one at a time in the order they were cast.',
+  tags:['instanced curved blade mesh','fresnel ghost material','analytic ribbons','lit mist vortex','alpha erosion'],
+  blurb:'Twelve pale green-cyan curved blades stream from the casting hand and settle on three orbit rings around the caster, each drawing a thin circling trail, while a green-grey mist whirls at the centre; they expire one at a time in the order they were cast.',
   notes:[
-    'Reference: the Blade Vortex wiki screenshot (research/refs/poe_blade_vortex_wiki.png): curved sabre silhouettes on two or three radii, flat to their orbit, thin ring trails, a mist vortex at the centre.',
-    'The sabre is a custom lens-section mesh (curved centre line, widening belly, tapered tip, short hilt) registered as a GEO builder and drawn instanced. Each instance is placed in the vertex shader on an analytic orbit: three radii at three angular speeds, slot angles spread per ring, with radius wobble, height weave and a slow roll so no ring is a rigid wheel.',
+    'Reference: the Blade Vortex wiki screenshot (research/refs/poe_blade_vortex_wiki.png): curved blade silhouettes on two or three radii, flat to their orbit, thin ring trails, a mist vortex at the centre.',
+    'The blade is a custom lens-section mesh (curved centre line, widening belly, tapered tip, short hilt) registered as a GEO builder and drawn instanced. Each instance is placed in the vertex shader on an analytic orbit: three radii at three angular speeds, slot angles spread per ring, with radius wobble, height weave and a slow roll so no ring is a rigid wheel.',
     'The ghost material is two passes: an alpha body (tint plus env() reflection scaled by fresnel, streak noise) and an additive shell (hot cutting edge, dimmer spine, fresnel rim, simplex flicker) plus a faint billboard halo per blade. Blades materialise and expire by soft alpha erosion of 3D simplex noise with a glowing rim, shedding motes.',
     'Trails are camera-facing ribbons that resample the orbit function over nearly one full turn into the past, so every blade draws its own thin circle; the ribbon holds and fades after its blade expires, so the rings are the residue that goes last.',
     'The centre vortex is lit vapour sprites (puffLit under the effect lights, green-grey albedo, a touch of tint) spiralling in with the stack count, plus thin additive wisps and five tumbling blade ghosts inside it. Four quickly rigged casts keep the hand out while the blades stack from it.'
@@ -29793,16 +28930,16 @@ vec4 flGlass(vec3 n,vec3 v,vec3 p,float back){
 `;
 LAB.add({
   id:'potion', name:'Potion Flask', cat:'Items', stage:'ground',
-  tags:['glass','liquid clip','fresnel','parallax swirl','bubbles'],
-  blurb:'A corked glass flask with a sloshing, softly glowing liquid, rising bubbles and thick glass reflections.',
+  tags:['faience','liquid clip','fresnel','parallax swirl','bubbles'],
+  blurb:'A stoppered faience flask with a sloshing, softly glowing liquid, rising bubbles and thick glazed reflections.',
   notes:[
     'The liquid is a slightly smaller copy of the flask, alpha clipped at a tilting plane. Back faces seen through the cut are shaded as the flat liquid surface.',
     'Liquid depth is faked by stepping a refracted ray through 3D noise in object space, so the swirl shifts with parallax like a volume.',
-    'Glass is two alpha passes, back faces then front faces. Opacity and reflection both follow fresnel, so the silhouette is thick and the centre is clear.',
+    'The flask shell is two alpha passes, back faces then front faces. Opacity and reflection both follow fresnel, so the silhouette is thick and the centre is clear.',
     'Bubbles follow the flask profile and stop at the fill line. They skip the depth test because they live inside the opaque liquid.',
     'A point light inside the flask tints the floor, which grounds the glow.'
   ],
-  port:'Unreal: liquid as a masked material with a world-aligned plane clip and two-sided shading that swaps the normal on back faces. Glass as a separate translucent mesh with a reflection capture. Bubbles in Niagara, killed at the fill height.',
+  port:'Unreal: liquid as a masked material with a world-aligned plane clip and two-sided shading that swaps the normal on back faces. The flask shell as a separate translucent mesh with a reflection capture. Bubbles in Niagara, killed at the fill height.',
   cam:{yaw:.5,pitch:.17,dist:2.5,target:[0,.5,0]},
   params:[
     {id:'tint',label:'Liquid',type:'color',value:'#ff1a24'},
@@ -29868,7 +29005,7 @@ LAB.add({
       col=glow(m*.4,P_tint);a=1.;`},
     {name:'Back halo',geo:'quad',billboard:true,blend:'add',xf:{p:[0,.36,0],s:.85},fs:`
       col=glow(softDot(uv)*.22,P_tint);a=1.;`},
-    {name:'Glass back',geo:'flask',blend:'alpha',cull:'front',xf:{s:S},fs:`
+    {name:'Flask back',geo:'flask',blend:'alpha',cull:'front',xf:{s:S},fs:`
       vec4 g=flGlass(N,V,P,1.);col=g.rgb/g.a;a=g.a;`},
     {name:'Bubbles',type:'particles',count:46,life:2.6,blend:'add',soft:0,depthTest:false,xf:{s:S},sim:`
       float top=(${OY}+flLvl()*${S*IY})/${S}-.012;
@@ -29880,7 +29017,7 @@ LAB.add({
       float d=length(uv-.5)*2.;float ring=smoothstep(1.,.8,d)*smoothstep(.45,.85,d);
       float hl=softDot((uv-vec2(.32,.66))*2.6+.5);
       col=(P_tint*.9+itTn(P_tint)*.25+.1)*ring*.8+vec3(1.)*hl*.9;a=1.;`},
-    {name:'Glass front',geo:'flask',blend:'alpha',cull:'back',xf:{s:S},fs:`
+    {name:'Flask front',geo:'flask',blend:'alpha',cull:'back',xf:{s:S},fs:`
       vec4 g=flGlass(N,V,P,0.);
       float lip=smoothstep(.72,.735,OP.y);g.rgb+=vec3(.25,.3,.3)*lip*.15;g.a+=lip*.12;
       col=g.rgb/g.a;a=g.a;
