@@ -29642,7 +29642,7 @@ LAB.add({
     'Nodes and links live in constant arrays. A Points spent parameter allocates nodes in order, so every state of the tree can be reviewed with one slider.',
     'Link energy is a pulse train in the segment parameter, moving from the earlier node to the later one, over a slower noise shimmer.',
     'A link with only one allocated end shows a faint marching dash: it tells the player where the next point can go.',
-    'Keystones add an eight point star plate and a second ring behind the standard socket, so importance reads from silhouette before colour.',
+    'Keystones add a wider round plate and a second ring behind the standard socket, so importance reads from silhouette before colour.',
     'Hover is a distance test against u_mouse. It scales the node, brightens the rim and adds a halo, the same response a controller focus would get.'
   ],
   port:'UMG: nodes are widgets with one shared material (Allocated, Hover, Keystone scalars). Links are a spline or stretched image widget with a panning material whose U runs from parent to child. Batch by atlas so a 1000 node tree stays cheap.',
@@ -29684,7 +29684,7 @@ float stHover(int i,vec2 m){return step(length(m-STP[i]),stRad(i)+.03);}
       vec3 gold=vec3(.62,.45,.18),iron=vec3(.3,.29,.3);vec3 fa=mix(iron,gold,on)*(1.+.6*hv);
       float mN=0.;vec3 nc=vec3(0.);
       if(ks>.5){
-        float dS=sdStar(rot(.3927)*lq,r0+.125,8.,4.6);nc=uiPlate(q,dS,.03,fa*.85);mN=aa(dS);
+        float dS=length(lq)-(r0+.125);nc=uiPlate(q,dS,.03,fa*.85);mN=aa(dS);
         float dO=sdNgon(lq,r0+.062,8.);nc=mix(nc,vec3(.004),aa(dO-.008)*.8);nc=mix(nc,uiPlate(q,dO,.022,fa),aa(dO));
         nc=mix(nc,vec3(.006),stroke(dO+.022,.003)*.7);
       }
@@ -29716,87 +29716,6 @@ float stHover(int i,vec2 m){return step(length(m-STP[i]),stRad(i)+.03);}
       float x=max(r-r0-.03-.1*ks,0.);float halo=exp(-x/.04)*smoothstep(.16,.02,x)*smoothstep(0.,.012,r-r0-.03-.1*ks)*(on*(.22+.1*ks)*(.8+.2*sin(u_time*2.+float(i)))+hv*.45);
       float ring=stroke(r-r0-.05,.004)*hv*(1.-ks);
       col=glow((e+halo)*P_power,P_tint)*1.25+glow(ring,mix(P_tint,vec3(1.),.5));a=1.;`}
-  ]
-});
-LAB.add({
-  id:'crit-number', name:'Critical Hit Number', cat:'UI', stage:'ui', duration:1.6, markers:{release:.11,impact:.14},
-  tags:['sdf digits','scale punch','star burst','erosion','one-shot'],
-  blurb:'Damage number pop: seven-segment SDF digits slam in over a crit star burst, overshoot, float up and burn away.',
-  notes:[
-    'Three beats in 1.6 s: a converging glint (anticipation), a two frame white flash with the number at 2.6 times scale (impact), then float and erosion (dissipation).',
-    'Digits are seven hex-ended segments chosen by a bitmask, so any integer up to five digits is drawn with no font texture.',
-    'The punch is easeOutBack on scale. It overshoots below final size and settles, which sells weight better than a linear shrink.',
-    'A dark outline and offset shadow keep the number readable over the burst. The burst itself is kept below bloom threshold behind the digits.',
-    'The exit is noise erosion with a hot burn line on the dissolve front, not an alpha fade.'
-  ],
-  port:'UMG: a text block with an SDF font and a material that adds the outline, gradient and erosion (Dissolve scalar), animated by a widget animation for scale and translation. Spawn the burst as a second image or a Niagara UI particle behind it.',
-  params:[
-    {id:'tint',label:'Damage type',type:'color',value:'#ffc61a'},
-    {id:'amount',label:'Damage',min:1,max:99999,value:7342,step:1},
-    {id:'punch',label:'Scale punch',min:0,max:2,value:1},
-    {id:'burst',label:'Burst size',min:.3,max:1.6,value:1}
-  ],
-  variants:[
-    {name:'Blue, large',set:{tint:'#3fb0ff',amount:48211,burst:1.3}},
-    {name:'Violet',set:{tint:'#c56bff',amount:913}},
-    {name:'Poison tick',set:{tint:'#6de03a',amount:86,punch:.5,burst:.55}},
-    {name:'Execute',set:{tint:'#ff3a2a',amount:99999,punch:1.6,burst:1.5}}
-  ],
-  glsl:UI+`
-#ifdef FRAG
-const float CNT0=.07;
-float cnX(){return (u_life-CNT0)/(1.-CNT0);}
-vec2 cnO(float x){return vec2(0.,-.1+easeOut(x)*.3);}
-vec2 cnXf(vec2 q){float x=cnX();float sc=1.+1.6*P_punch*(1.-easeOutBack(sat(x/.17)));
-  vec2 l=rot(.06)*(q-cnO(x))/sc;l.x-=l.y*.15;return l/.36;}
-float cnNoise(vec2 q){return nz(q*.6+vec2(0.,-u_age*.12)).r*.7+nz(q*1.9+.3).b*.3;}
-float cnTh(){return smoothstep(.56,1.,cnX())*1.2-.12;}
-#endif`,
-  layers:[
-    {name:'Crit burst',type:'screen',blend:'add',fs:`
-      float k=uiFit();vec2 q=p/k;float x=cnX();float ta=u_age-CNT0*u_dur;
-      vec2 d=q-vec2(0.,-.1+easeOut(x)*.1);vec2 pc=polar(d);vec3 g=vec3(0.);
-      if(x<0.){float pre=sat(u_life/CNT0);g=(P_tint+vec3(.4))*glint(d/(1.4*(1.2-pre))*.5+.5)*pre*pre*1.5;}
-      else{
-        float R=(.25+.75*easeOutExpo(sat(x/.14)))*.56*P_burst;
-        float n=nz(vec2(pc.x*4.,pc.y*.7-u_age*.25)).r;
-        float dS=min(sdStar(rot(.25+x*.35)*d,R,12.,7.),sdStar(rot(-.5-x*.25)*d,R*.66,7.,4.2));
-        float eth=smoothstep(.08,.5,x)*1.1;float keepm=erode(n*.55+.45*sat(1.-pc.y/R),eth,.12);
-        float fill=aa(dS)*keepm;float edge=stroke(dS,.007)*keepm;
-        float rays=pow(nz(vec2(pc.x*9.,.2)).r,4.)*smoothstep(R*.7,R*1.1,pc.y)*smoothstep(R*2.4,R*1.1,pc.y)*pow(1.-sat(x/.4),2.)*2.;
-        float ring=smoothstep(.02,0.,abs(pc.y-(.2+easeOut(x/.4)*.85)*P_burst))*pow(1.-sat(x/.4),2.);
-        g=glow(fill*(.36-.16*x)*(.75+.5*n)+edge*.7+rays*.45+ring*.5,P_tint)*1.15;
-        g+=(P_tint*.6+vec3(.6))*exp(-ta*26.)*exp(-pc.y*4.5)*1.2;
-      }
-      col=g;a=1.;`},
-    {name:'Digits',type:'screen',blend:'alpha',fs:`
-      float k=uiFit();vec2 q=p/k;float x=cnX();
-      vec2 l=cnXf(q);float w=fwidth(l.y)*1.1;float vis=step(0.,x);
-      float d=uiNumber(l,P_amount,.8);float dsd=uiNumber(l-vec2(.06,-.09),P_amount,.8);
-      float n=cnNoise(q);float th=cnTh();float er=erode(n,th,.08);float burn=er*(1.-erode(n,th+.1,.08))*step(.001,th+.12);
-      float mF=uiAA(d,w)*er,mO=uiAA(d-.085,w)*er,mS=uiAA(dsd-.06,w+.08)*er*.6;
-      vec3 fc=mix(P_tint*.5,mix(P_tint,vec3(1.),.8)*1.15,smoothstep(-.55,.5,l.y));
-      fc*=.72+.28*smoothstep(-.012,-.05,d);
-      fc+=vec3(1.)*smoothstep(.03,0.,abs(d+.035))*.25*step(0.,l.y);
-      fc=mix(fc,vec3(1.8),exp(-x*45.));
-      fc+=glow(burn*1.2,P_tint)*2.;
-      vec3 oc=P_tint*P_tint*.06+vec3(.003)+glow(burn,P_tint);
-      vec3 c=mix(oc,fc,mF);float m=max(mO,mS);
-      col=c*mO/max(m,1e-3);a=m*vis;`},
-    {name:'Number glow and sparks',type:'screen',blend:'add',fs:`
-      float k=uiFit();vec2 q=p/k;float x=cnX();float ta=max(u_age-CNT0*u_dur,0.);
-      vec2 l=cnXf(q);float d=uiNumber(l,P_amount,.8);
-      float n=cnNoise(q);float er=erode(n,cnTh(),.08);
-      float halo=exp(-max(d-.085,0.)/.16)*step(.085,d)*.3*er*(1.+2.*exp(-x*20.));
-      float sp=0.;
-      for(int j=0;j<16;j++){float fj=float(j);vec4 h=hash41(fj*3.1+7.);float an=h.x*TAU;float spd=mix(.8,2.6,h.y)*P_burst;
-        float dd2=(1.-exp(-ta*4.5))/4.5;vec2 o=vec2(0.,-.1)+vec2(cos(an),sin(an)*.8)*spd*dd2+vec2(0.,-.5*ta*ta);
-        float lf=sat(ta/(.5+.6*h.z));sp+=glint((q-o)/(.07*(.4+h.w))*.5+.5)*(1.-lf)*(1.-lf);}
-      // ash rising off the dissolve front
-      float ash=0.;float th=cnTh();
-      for(int j=0;j<10;j++){float fj=float(j);vec4 h=hash41(fj*5.7+1.);float ph=sat((x-.5-.3*h.x)/.3);
-        vec2 o=cnO(x)+vec2((h.y-.5)*1.1,(h.z-.5)*.3+ph*.25);ash+=glint((q-o)/(.045*(.5+h.w))*.5+.5)*sin(ph*PI);}
-      col=(glow(halo,P_tint)+(P_tint+vec3(.35))*(sp*1.6+ash*1.2))*step(0.,x);a=1.;`}
   ]
 });
 LAB.add({

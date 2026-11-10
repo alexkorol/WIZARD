@@ -13447,7 +13447,7 @@
    "Nodes and links live in constant arrays. A Points spent parameter allocates nodes in order, so every state of the tree can be reviewed with one slider.",
    "Link energy is a pulse train in the segment parameter, moving from the earlier node to the later one, over a slower noise shimmer.",
    "A link with only one allocated end shows a faint marching dash: it tells the player where the next point can go.",
-   "Keystones add an eight point star plate and a second ring behind the standard socket, so importance reads from silhouette before colour.",
+   "Keystones add a wider round plate and a second ring behind the standard socket, so importance reads from silhouette before colour.",
    "Hover is a distance test against u_mouse. It scales the node, brightens the rim and adds a halo, the same response a controller focus would get."
   ],
   "params": [
@@ -13484,66 +13484,6 @@
   ],
   "layers": [],
   "chars": 5592
- },
- {
-  "id": "crit-number",
-  "name": "Critical Hit Number",
-  "set": null,
-  "cat": "UI",
-  "sub": null,
-  "stage": "ui",
-  "src": null,
-  "blurb": "Damage number pop: seven-segment SDF digits slam in over a crit star burst, overshoot, float up and burn away.",
-  "port": "UMG: a text block with an SDF font and a material that adds the outline, gradient and erosion (Dissolve scalar), animated by a widget animation for scale and translation. Spawn the burst as a second image or a Niagara UI particle behind it.",
-  "level": null,
-  "tags": [
-   "sdf digits",
-   "scale punch",
-   "star burst",
-   "erosion",
-   "one-shot"
-  ],
-  "notes": [
-   "Three beats in 1.6 s: a converging glint (anticipation), a two frame white flash with the number at 2.6 times scale (impact), then float and erosion (dissipation).",
-   "Digits are seven hex-ended segments chosen by a bitmask, so any integer up to five digits is drawn with no font texture.",
-   "The punch is easeOutBack on scale. It overshoots below final size and settles, which sells weight better than a linear shrink.",
-   "A dark outline and offset shadow keep the number readable over the burst. The burst itself is kept below bloom threshold behind the digits.",
-   "The exit is noise erosion with a hot burn line on the dissolve front, not an alpha fade."
-  ],
-  "params": [
-   {
-    "id": "tint",
-    "label": "Damage type",
-    "type": "color",
-    "value": "'#ffc61a'"
-   },
-   {
-    "id": "amount",
-    "label": "Damage",
-    "type": "range",
-    "value": "7342"
-   },
-   {
-    "id": "punch",
-    "label": "Scale punch",
-    "type": "range",
-    "value": "1"
-   },
-   {
-    "id": "burst",
-    "label": "Burst size",
-    "type": "range",
-    "value": "1"
-   }
-  ],
-  "variants": [
-   "Blue, large",
-   "Violet",
-   "Poison tick",
-   "Execute"
-  ],
-  "layers": [],
-  "chars": 5330
  },
  {
   "id": "boss-bar",
