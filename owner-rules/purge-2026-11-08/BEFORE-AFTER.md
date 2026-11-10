@@ -368,6 +368,16 @@ Owner: crafting follows "the blueprint that PoE and PoE 2 laid out", adapted, wi
 
 Still open as an owner choice (no rule settles it): which rarity, if any, earns a loot beam in the ARPG (beams only ever marked the removed set and unique drops).
 
+## Vetoable defaults (2026-11-09 night)
+
+Calls the rules did not settle outright. Each was applied; reverse any by saying so.
+
+- **Loot beams (ARPG):** beams marked only the removed set and unique drops. Now each house recovery (a fallen character's belongings) gets one beam, so it can be found in the world. Loot Beam · Unique → Loot Beam · House Recovery; Loot Beam · Set removed.
+- **Art era:** the art pipeline follows rule 12 ("Bronze Age and earlier"). 94 targets anchored in later Old World cultures are held; the list with their previous actions is tools/rpg_inventory/core/expansion_ready/held-after-bronze-age.tsv. The taxonomy's AD 600 ceiling was an agent draft from before the rule. The Americas count by technology (stone, obsidian, copper).
+- **Iron in effects:** effect text says "metal" where it said iron or steel; the shaders still draw dark metal.
+- **Side tools:** account creator icons scroll → flame, book → history or crown, coins → gem; GUI demo Hammered Iron Khopesh → Bronze Dagger.
+- **Kept:** the pixel sandbox's Glass and Gunpowder (a physics toy outside the setting); "scroll to zoom" (the mouse wheel); review records of past art generations (they record what was generated).
+
 ## Kept because the owner introduced it
 
 Ward, Mana ("health and mana orb"), brands and bonds, crafting and enchantments, flask/remedy, refund points, the spell lattice and its canon (Source, Manifestation, Body, Mind, Plane, Vessel, Tesseract, Schism, Paradigm Shift), weave, House, WIZARD. Evidence per term: GLOSSARY.md.
