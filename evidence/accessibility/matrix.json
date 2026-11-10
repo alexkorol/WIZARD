@@ -1,0 +1,1115 @@
+{
+  "schema": "wizard.accessibility-matrix.v1",
+  "generatedBy": "scripts/accessibility-layout-check.mjs",
+  "viewports": {
+    "narrow": {
+      "width": 375,
+      "height": 900
+    },
+    "wide": {
+      "width": 1280,
+      "height": 800
+    }
+  },
+  "surfaces": [
+    {
+      "id": "wizard.dashboard",
+      "slug": "dashboard",
+      "title": "WIZARD dashboard",
+      "path": "/index.html",
+      "reached": true,
+      "checks": {
+        "keyboard-reachability": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "candidates": 20,
+            "tabsPressed": 26,
+            "focusedDistinct": 26
+          }
+        },
+        "focus-visibility": {
+          "status": "pass",
+          "findings": [],
+          "notes": [
+            "heuristic: own outline/box-shadow, or computed style delta on the element or its card/collection host"
+          ],
+          "measured": {
+            "focusedSampled": 26,
+            "withoutIndicator": 0
+          }
+        },
+        "landmarks-names": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "lang": "en",
+            "titleChars": 37,
+            "main": 1,
+            "header": 1,
+            "footer": 1,
+            "nav": 0,
+            "h1": 1,
+            "images": 2,
+            "imgsMissingAlt": 0,
+            "interactive": 20,
+            "unnamedInteractive": 0,
+            "canvases": 0,
+            "canvasesUnlabelled": 0
+          }
+        },
+        "reduced-motion": {
+          "status": "pass",
+          "findings": [],
+          "notes": [
+            "every sampled animated element reports <= 0.05s duration under reduce",
+            ".reveal elements fully visible under reduce"
+          ],
+          "measured": {
+            "domAnimatedSampled": "nonzero",
+            "reducedMaxDurationBucket": "<=0.05s"
+          }
+        },
+        "overflow-375": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 375,
+            "innerHeight": 900,
+            "scrollWidth": 375
+          }
+        },
+        "layout-1280": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 1280,
+            "scrollWidth": 1280,
+            "gridColumns": 3,
+            "dashboardCards": 9,
+            "contentHeight": 2984
+          }
+        },
+        "screen-reader semantics (AT pass)": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "requires account-level assistive technology; not automatable here"
+          ]
+        },
+        "color contrast ratios": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "computed-style pair sampling is false-positive prone on canvas/shader art; kept manual"
+          ]
+        },
+        "focus order sensibility beyond reachability": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "reachability is automated; whether tab order matches visual logic needs human judgment"
+          ]
+        }
+      }
+    },
+    {
+      "id": "wizard.arcane-lattice",
+      "slug": "arcane_lattice",
+      "title": "Arcane Lattice",
+      "path": "/tools/arcane_lattice/index.html",
+      "reached": true,
+      "checks": {
+        "keyboard-reachability": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "candidates": 4,
+            "tabsPressed": 9,
+            "focusedDistinct": 9
+          }
+        },
+        "focus-visibility": {
+          "status": "pass",
+          "findings": [],
+          "notes": [
+            "heuristic: own outline/box-shadow, or computed style delta on the element or its card/collection host"
+          ],
+          "measured": {
+            "focusedSampled": 9,
+            "withoutIndicator": 0
+          }
+        },
+        "landmarks-names": {
+          "status": "fail",
+          "findings": [
+            "no <main> or [role=main] landmark"
+          ],
+          "notes": [],
+          "measured": {
+            "lang": "en",
+            "titleChars": 50,
+            "main": 0,
+            "header": 0,
+            "footer": 0,
+            "nav": 0,
+            "h1": 1,
+            "images": 0,
+            "imgsMissingAlt": 0,
+            "interactive": 4,
+            "unnamedInteractive": 0,
+            "canvases": 1,
+            "canvasesUnlabelled": 1
+          }
+        },
+        "reduced-motion": {
+          "status": "fail",
+          "findings": [
+            "motion persists under reduce; sampled elements declare durations > 0.05s"
+          ],
+          "notes": [
+            "sampled animated elements declare durations exceeding 0.05s under reduce"
+          ],
+          "measured": {
+            "domAnimatedSampled": "nonzero",
+            "reducedMaxDurationBucket": ">0.05s"
+          }
+        },
+        "overflow-375": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 375,
+            "innerHeight": 900,
+            "scrollWidth": 375
+          }
+        },
+        "layout-1280": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 1280,
+            "scrollWidth": 1280,
+            "gridColumns": 0,
+            "dashboardCards": null,
+            "contentHeight": 800
+          }
+        },
+        "screen-reader semantics (AT pass)": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "requires account-level assistive technology; not automatable here"
+          ]
+        },
+        "color contrast ratios": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "computed-style pair sampling is false-positive prone on canvas/shader art; kept manual"
+          ]
+        },
+        "focus order sensibility beyond reachability": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "reachability is automated; whether tab order matches visual logic needs human judgment"
+          ]
+        }
+      }
+    },
+    {
+      "id": "wizard.cartographer",
+      "slug": "cartographer",
+      "title": "Cartographer",
+      "path": "/tools/cartographer/index.html",
+      "reached": true,
+      "checks": {
+        "keyboard-reachability": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "candidates": 16,
+            "tabsPressed": 22,
+            "focusedDistinct": 22
+          }
+        },
+        "focus-visibility": {
+          "status": "pass",
+          "findings": [],
+          "notes": [
+            "heuristic: own outline/box-shadow, or computed style delta on the element or its card/collection host"
+          ],
+          "measured": {
+            "focusedSampled": 22,
+            "withoutIndicator": 0
+          }
+        },
+        "landmarks-names": {
+          "status": "fail",
+          "findings": [
+            "interactive element without accessible name: input#texFile",
+            "interactive element without accessible name: input#packFile",
+            "form control without label association: input[type=file]#texFile",
+            "form control without label association: input[type=file]#packFile"
+          ],
+          "notes": [],
+          "measured": {
+            "lang": "en",
+            "titleChars": 44,
+            "main": 1,
+            "header": 0,
+            "footer": 0,
+            "nav": 0,
+            "h1": 1,
+            "images": 0,
+            "imgsMissingAlt": 0,
+            "interactive": 18,
+            "unnamedInteractive": 2,
+            "canvases": 1,
+            "canvasesUnlabelled": 1
+          }
+        },
+        "reduced-motion": {
+          "status": "fail",
+          "findings": [
+            "motion persists under reduce; sampled elements declare durations > 0.05s"
+          ],
+          "notes": [
+            "sampled animated elements declare durations exceeding 0.05s under reduce"
+          ],
+          "measured": {
+            "domAnimatedSampled": "nonzero",
+            "reducedMaxDurationBucket": ">0.05s"
+          }
+        },
+        "overflow-375": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 375,
+            "innerHeight": 900,
+            "scrollWidth": 375
+          }
+        },
+        "layout-1280": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 1280,
+            "scrollWidth": 1280,
+            "gridColumns": 0,
+            "dashboardCards": null,
+            "contentHeight": 800
+          }
+        },
+        "screen-reader semantics (AT pass)": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "requires account-level assistive technology; not automatable here"
+          ]
+        },
+        "color contrast ratios": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "computed-style pair sampling is false-positive prone on canvas/shader art; kept manual"
+          ]
+        },
+        "focus order sensibility beyond reachability": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "reachability is automated; whether tab order matches visual logic needs human judgment"
+          ]
+        }
+      }
+    },
+    {
+      "id": "wizard.geometric-skilltree",
+      "slug": "geometric_skilltree",
+      "title": "Geometric Passive Tree",
+      "path": "/tools/geometric_skilltree/index.html",
+      "reached": true,
+      "checks": {
+        "keyboard-reachability": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "candidates": 17,
+            "tabsPressed": 23,
+            "focusedDistinct": 23
+          }
+        },
+        "focus-visibility": {
+          "status": "fail",
+          "findings": [
+            "no visible focus indicator: button \"Verdigris\""
+          ],
+          "notes": [
+            "heuristic: own outline/box-shadow, or computed style delta on the element or its card/collection host"
+          ],
+          "measured": {
+            "focusedSampled": 23,
+            "withoutIndicator": 1
+          }
+        },
+        "landmarks-names": {
+          "status": "fail",
+          "findings": [
+            "no <main> or [role=main] landmark",
+            "interactive element without accessible name: textarea#note-editor-text",
+            "form control without label association: textarea[type=textarea]#note-editor-text"
+          ],
+          "notes": [],
+          "measured": {
+            "lang": "en",
+            "titleChars": 22,
+            "main": 0,
+            "header": 0,
+            "footer": 0,
+            "nav": 0,
+            "h1": 2,
+            "images": 0,
+            "imgsMissingAlt": 0,
+            "interactive": 50,
+            "unnamedInteractive": 1,
+            "canvases": 0,
+            "canvasesUnlabelled": 0
+          }
+        },
+        "reduced-motion": {
+          "status": "fail",
+          "findings": [
+            "motion persists under reduce; sampled elements declare durations > 0.05s"
+          ],
+          "notes": [
+            "sampled animated elements declare durations exceeding 0.05s under reduce"
+          ],
+          "measured": {
+            "domAnimatedSampled": "nonzero",
+            "reducedMaxDurationBucket": ">0.05s"
+          }
+        },
+        "overflow-375": {
+          "status": "fail",
+          "findings": [
+            "horizontal overflow at 375px: g#viewport-group right=787 w=1199",
+            "horizontal overflow at 375px: g#background-layer right=762 w=1149",
+            "horizontal overflow at 375px: line right=762 w=575",
+            "horizontal overflow at 375px: g#conduit-layer right=644 w=912",
+            "horizontal overflow at 375px: g right=412 w=45"
+          ],
+          "notes": [],
+          "measured": {
+            "innerWidth": 375,
+            "innerHeight": 900,
+            "scrollWidth": 390
+          }
+        },
+        "layout-1280": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 1280,
+            "scrollWidth": 1280,
+            "gridColumns": 0,
+            "dashboardCards": null,
+            "contentHeight": 800
+          }
+        },
+        "screen-reader semantics (AT pass)": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "requires account-level assistive technology; not automatable here"
+          ]
+        },
+        "color contrast ratios": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "computed-style pair sampling is false-positive prone on canvas/shader art; kept manual"
+          ]
+        },
+        "focus order sensibility beyond reachability": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "reachability is automated; whether tab order matches visual logic needs human judgment"
+          ]
+        }
+      }
+    },
+    {
+      "id": "wizard.mason",
+      "slug": "mason",
+      "title": "Mason Terrain Forge",
+      "path": "/tools/mason/index.html",
+      "reached": true,
+      "checks": {
+        "keyboard-reachability": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "candidates": 24,
+            "tabsPressed": 30,
+            "focusedDistinct": 30
+          }
+        },
+        "focus-visibility": {
+          "status": "pass",
+          "findings": [],
+          "notes": [
+            "heuristic: own outline/box-shadow, or computed style delta on the element or its card/collection host"
+          ],
+          "measured": {
+            "focusedSampled": 30,
+            "withoutIndicator": 0
+          }
+        },
+        "landmarks-names": {
+          "status": "fail",
+          "findings": [
+            "interactive element without accessible name: input#fileInput",
+            "form control without label association: input[type=file]#fileInput"
+          ],
+          "notes": [],
+          "measured": {
+            "lang": "en",
+            "titleChars": 37,
+            "main": 1,
+            "header": 0,
+            "footer": 0,
+            "nav": 0,
+            "h1": 1,
+            "images": 0,
+            "imgsMissingAlt": 0,
+            "interactive": 25,
+            "unnamedInteractive": 1,
+            "canvases": 1,
+            "canvasesUnlabelled": 1
+          }
+        },
+        "reduced-motion": {
+          "status": "fail",
+          "findings": [
+            "motion persists under reduce; sampled elements declare durations > 0.05s"
+          ],
+          "notes": [
+            "sampled animated elements declare durations exceeding 0.05s under reduce"
+          ],
+          "measured": {
+            "domAnimatedSampled": "nonzero",
+            "reducedMaxDurationBucket": ">0.05s"
+          }
+        },
+        "overflow-375": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 375,
+            "innerHeight": 900,
+            "scrollWidth": 375
+          }
+        },
+        "layout-1280": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 1280,
+            "scrollWidth": 1280,
+            "gridColumns": 0,
+            "dashboardCards": null,
+            "contentHeight": 800
+          }
+        },
+        "screen-reader semantics (AT pass)": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "requires account-level assistive technology; not automatable here"
+          ]
+        },
+        "color contrast ratios": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "computed-style pair sampling is false-positive prone on canvas/shader art; kept manual"
+          ]
+        },
+        "focus order sensibility beyond reachability": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "reachability is automated; whether tab order matches visual logic needs human judgment"
+          ]
+        }
+      }
+    },
+    {
+      "id": "wizard.chronicles",
+      "slug": "rp_account_creator",
+      "title": "Chronicles: Houses & Scions",
+      "path": "/tools/rp_account_creator/index.html",
+      "reached": true,
+      "checks": {
+        "keyboard-reachability": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "candidates": 2,
+            "tabsPressed": 7,
+            "focusedDistinct": 7
+          }
+        },
+        "focus-visibility": {
+          "status": "pass",
+          "findings": [],
+          "notes": [
+            "heuristic: own outline/box-shadow, or computed style delta on the element or its card/collection host"
+          ],
+          "measured": {
+            "focusedSampled": 7,
+            "withoutIndicator": 0
+          }
+        },
+        "landmarks-names": {
+          "status": "fail",
+          "findings": [
+            "no <main> or [role=main] landmark",
+            "heading levels skip"
+          ],
+          "notes": [],
+          "measured": {
+            "lang": "en",
+            "titleChars": 37,
+            "main": 0,
+            "header": 0,
+            "footer": 0,
+            "nav": 0,
+            "h1": 1,
+            "images": 0,
+            "imgsMissingAlt": 0,
+            "interactive": 2,
+            "unnamedInteractive": 0,
+            "canvases": 0,
+            "canvasesUnlabelled": 0
+          }
+        },
+        "reduced-motion": {
+          "status": "pass",
+          "findings": [],
+          "notes": [
+            "every sampled animated element reports <= 0.05s duration under reduce"
+          ],
+          "measured": {
+            "domAnimatedSampled": "nonzero",
+            "reducedMaxDurationBucket": "<=0.05s"
+          }
+        },
+        "overflow-375": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 375,
+            "innerHeight": 900,
+            "scrollWidth": 375
+          }
+        },
+        "layout-1280": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 1280,
+            "scrollWidth": 1280,
+            "gridColumns": 0,
+            "dashboardCards": null,
+            "contentHeight": 800
+          }
+        },
+        "screen-reader semantics (AT pass)": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "requires account-level assistive technology; not automatable here"
+          ]
+        },
+        "color contrast ratios": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "computed-style pair sampling is false-positive prone on canvas/shader art; kept manual"
+          ]
+        },
+        "focus order sensibility beyond reachability": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "reachability is automated; whether tab order matches visual logic needs human judgment"
+          ]
+        }
+      }
+    },
+    {
+      "id": "wizard.rpg-inventory",
+      "slug": "rpg_inventory",
+      "title": "Vesselforge & Inventory",
+      "path": "/tools/rpg_inventory/index.html",
+      "reached": true,
+      "checks": {
+        "keyboard-reachability": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "candidates": 14,
+            "tabsPressed": 20,
+            "focusedDistinct": 20
+          }
+        },
+        "focus-visibility": {
+          "status": "pass",
+          "findings": [],
+          "notes": [
+            "heuristic: own outline/box-shadow, or computed style delta on the element or its card/collection host"
+          ],
+          "measured": {
+            "focusedSampled": 20,
+            "withoutIndicator": 0
+          }
+        },
+        "landmarks-names": {
+          "status": "fail",
+          "findings": [
+            "no <h1> heading"
+          ],
+          "notes": [],
+          "measured": {
+            "lang": "en",
+            "titleChars": 37,
+            "main": 1,
+            "header": 0,
+            "footer": 0,
+            "nav": 0,
+            "h1": 0,
+            "images": 13,
+            "imgsMissingAlt": 0,
+            "interactive": 20,
+            "unnamedInteractive": 0,
+            "canvases": 0,
+            "canvasesUnlabelled": 0
+          }
+        },
+        "reduced-motion": {
+          "status": "pass",
+          "findings": [],
+          "notes": [
+            "every sampled animated element reports <= 0.05s duration under reduce"
+          ],
+          "measured": {
+            "domAnimatedSampled": "nonzero",
+            "reducedMaxDurationBucket": "<=0.05s"
+          }
+        },
+        "overflow-375": {
+          "status": "fail",
+          "findings": [
+            "horizontal overflow at 375px: div right=1094 w=954.top-actions",
+            "horizontal overflow at 375px: button right=409 w=79.btn",
+            "horizontal overflow at 375px: button right=509 w=93.btn",
+            "horizontal overflow at 375px: button right=596 w=81.btn",
+            "horizontal overflow at 375px: button right=663 w=61.btn"
+          ],
+          "notes": [],
+          "measured": {
+            "innerWidth": 375,
+            "innerHeight": 900,
+            "scrollWidth": 508
+          }
+        },
+        "layout-1280": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 1280,
+            "scrollWidth": 1280,
+            "gridColumns": 0,
+            "dashboardCards": null,
+            "contentHeight": 1317
+          }
+        },
+        "screen-reader semantics (AT pass)": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "requires account-level assistive technology; not automatable here"
+          ]
+        },
+        "color contrast ratios": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "computed-style pair sampling is false-positive prone on canvas/shader art; kept manual"
+          ]
+        },
+        "focus order sensibility beyond reachability": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "reachability is automated; whether tab order matches visual logic needs human judgment"
+          ]
+        }
+      }
+    },
+    {
+      "id": "wizard.systems-bench",
+      "slug": "systems_bench",
+      "title": "Verdigris Systems Bench",
+      "path": "/tools/systems_bench/index.html",
+      "reached": true,
+      "checks": {
+        "keyboard-reachability": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "candidates": 13,
+            "tabsPressed": 15,
+            "focusedDistinct": 15
+          }
+        },
+        "focus-visibility": {
+          "status": "fail",
+          "findings": [
+            "no visible focus indicator: iframe#module-frame \"\"",
+            "no visible focus indicator: iframe#module-frame \"\""
+          ],
+          "notes": [
+            "heuristic: own outline/box-shadow, or computed style delta on the element or its card/collection host"
+          ],
+          "measured": {
+            "focusedSampled": 15,
+            "withoutIndicator": 2
+          }
+        },
+        "landmarks-names": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "lang": "en",
+            "titleChars": 23,
+            "main": 1,
+            "header": 1,
+            "footer": 0,
+            "nav": 0,
+            "h1": 1,
+            "images": 0,
+            "imgsMissingAlt": 0,
+            "interactive": 7,
+            "unnamedInteractive": 0,
+            "canvases": 0,
+            "canvasesUnlabelled": 0
+          }
+        },
+        "reduced-motion": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "no DOM-animated elements detected at sample time; canvas/WebGL loops are out of scope for an automated pass"
+          ],
+          "measured": {
+            "domAnimatedSampled": "none-at-sample-time",
+            "reducedMaxDurationBucket": "<=0.05s"
+          }
+        },
+        "overflow-375": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 375,
+            "innerHeight": 900,
+            "scrollWidth": 375
+          }
+        },
+        "layout-1280": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 1280,
+            "scrollWidth": 1280,
+            "gridColumns": 0,
+            "dashboardCards": null,
+            "contentHeight": 823
+          }
+        },
+        "screen-reader semantics (AT pass)": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "requires account-level assistive technology; not automatable here"
+          ]
+        },
+        "color contrast ratios": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "computed-style pair sampling is false-positive prone on canvas/shader art; kept manual"
+          ]
+        },
+        "focus order sensibility beyond reachability": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "reachability is automated; whether tab order matches visual logic needs human judgment"
+          ]
+        }
+      }
+    },
+    {
+      "id": "wizard.verdigris-splash",
+      "slug": "verdigris_splash",
+      "title": "Verdigris World Presentation",
+      "path": "/tools/verdigris_splash/index.html",
+      "reached": true,
+      "checks": {
+        "keyboard-reachability": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "candidates": 8,
+            "tabsPressed": 14,
+            "focusedDistinct": 14
+          }
+        },
+        "focus-visibility": {
+          "status": "pass",
+          "findings": [],
+          "notes": [
+            "heuristic: own outline/box-shadow, or computed style delta on the element or its card/collection host"
+          ],
+          "measured": {
+            "focusedSampled": 14,
+            "withoutIndicator": 0
+          }
+        },
+        "landmarks-names": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "lang": "en",
+            "titleChars": 33,
+            "main": 1,
+            "header": 1,
+            "footer": 0,
+            "nav": 1,
+            "h1": 1,
+            "images": 0,
+            "imgsMissingAlt": 0,
+            "interactive": 8,
+            "unnamedInteractive": 0,
+            "canvases": 1,
+            "canvasesUnlabelled": 1
+          }
+        },
+        "reduced-motion": {
+          "status": "pass",
+          "findings": [],
+          "notes": [
+            "every sampled animated element reports <= 0.05s duration under reduce"
+          ],
+          "measured": {
+            "domAnimatedSampled": "nonzero",
+            "reducedMaxDurationBucket": "<=0.05s"
+          }
+        },
+        "overflow-375": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 375,
+            "innerHeight": 900,
+            "scrollWidth": 375
+          }
+        },
+        "layout-1280": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 1280,
+            "scrollWidth": 1280,
+            "gridColumns": 0,
+            "dashboardCards": null,
+            "contentHeight": 800
+          }
+        },
+        "screen-reader semantics (AT pass)": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "requires account-level assistive technology; not automatable here"
+          ]
+        },
+        "color contrast ratios": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "computed-style pair sampling is false-positive prone on canvas/shader art; kept manual"
+          ]
+        },
+        "focus order sensibility beyond reachability": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "reachability is automated; whether tab order matches visual logic needs human judgment"
+          ]
+        }
+      }
+    },
+    {
+      "id": "wizard.orbs",
+      "slug": "wizard_orbs",
+      "title": "Vessels of Life & Mana",
+      "path": "/tools/wizard_orbs/index.html",
+      "reached": true,
+      "checks": {
+        "keyboard-reachability": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "candidates": 20,
+            "tabsPressed": 26,
+            "focusedDistinct": 26
+          }
+        },
+        "focus-visibility": {
+          "status": "fail",
+          "findings": [
+            "no visible focus indicator: input#hpSlider \"\"",
+            "no visible focus indicator: input#mpSlider \"\"",
+            "no visible focus indicator: input#hpSlider \"\""
+          ],
+          "notes": [
+            "heuristic: own outline/box-shadow, or computed style delta on the element or its card/collection host"
+          ],
+          "measured": {
+            "focusedSampled": 26,
+            "withoutIndicator": 3
+          }
+        },
+        "landmarks-names": {
+          "status": "fail",
+          "findings": [
+            "no <main> or [role=main] landmark",
+            "no <h1> heading"
+          ],
+          "notes": [],
+          "measured": {
+            "lang": "en",
+            "titleChars": 16,
+            "main": 0,
+            "header": 0,
+            "footer": 0,
+            "nav": 0,
+            "h1": 0,
+            "images": 0,
+            "imgsMissingAlt": 0,
+            "interactive": 20,
+            "unnamedInteractive": 0,
+            "canvases": 1,
+            "canvasesUnlabelled": 1
+          }
+        },
+        "reduced-motion": {
+          "status": "fail",
+          "findings": [
+            "motion persists under reduce; sampled elements declare durations > 0.05s"
+          ],
+          "notes": [
+            "sampled animated elements declare durations exceeding 0.05s under reduce"
+          ],
+          "measured": {
+            "domAnimatedSampled": "nonzero",
+            "reducedMaxDurationBucket": ">0.05s"
+          }
+        },
+        "overflow-375": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 375,
+            "innerHeight": 900,
+            "scrollWidth": 375
+          }
+        },
+        "layout-1280": {
+          "status": "pass",
+          "findings": [],
+          "notes": [],
+          "measured": {
+            "innerWidth": 1280,
+            "scrollWidth": 1280,
+            "gridColumns": 0,
+            "dashboardCards": null,
+            "contentHeight": 983
+          }
+        },
+        "screen-reader semantics (AT pass)": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "requires account-level assistive technology; not automatable here"
+          ]
+        },
+        "color contrast ratios": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "computed-style pair sampling is false-positive prone on canvas/shader art; kept manual"
+          ]
+        },
+        "focus order sensibility beyond reachability": {
+          "status": "manual",
+          "findings": [],
+          "notes": [
+            "reachability is automated; whether tab order matches visual logic needs human judgment"
+          ]
+        }
+      }
+    }
+  ],
+  "summary": {
+    "pass": 42,
+    "fail": 17,
+    "manual": 31
+  }
+}
