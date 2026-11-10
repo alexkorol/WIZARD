@@ -1904,7 +1904,7 @@
     };
 
     const resetVault = () => {
-      if (!window.confirm('Reset the vault? All items, bonds and chronicle entries are lost.')) return;
+      if (!window.confirm('Reset all saved data? All items, bonds and chronicle entries are lost.')) return;
       setState(seedState());
       setBenchOpen(false);
     };

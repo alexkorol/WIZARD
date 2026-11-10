@@ -50,7 +50,6 @@
       max-width: 88%; max-height: 88%; object-fit: contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,0.7)); position: relative; z-index: 1;
     }
-    .art-well .sigil { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 0; }
     .art-well .glyph { font-size: 64px; color: var(--dim); }
     .tt-name { font-family: 'Cinzel', serif; font-size: 1.15rem; line-height: 1.25; text-align: center; }
     .tt-base { font-family: 'Cinzel', serif; font-size: 0.86rem; color: var(--muted); text-align: center; }
@@ -92,12 +91,6 @@
     const pack = VerdigrisPack;
     const forge = VesselForge.createForge(pack);
     const ART_ALIASES = pack.artAliases || {};
-    const SIGIL_PATHS = {
-      slaughter: 'M6 3c2 6 2 12-1 18 M12 2c2.5 6.5 2.5 13.5 0 20 M18 3c-2 6-2 12 1 18',
-      warding: 'M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z M9 10h6l-3 5z',
-      spiritwork: 'M2 12c3-5.5 17-5.5 20 0-3 5.5-17 5.5-20 0z',
-      wayfaring: 'M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z',
-    };
 
     const decodeShare = (hash) => {
       const raw = decodeURIComponent(escape(atob(hash.replace(/-/g, '+').replace(/_/g, '/'))));
@@ -151,7 +144,6 @@
     const lines = forge.tooltip(item);
     const artId = `${item.formId}_${item.materialId}`;
     const artPath = item.artOverride || `assets/${ART_ALIASES[artId] || artId}.png`;
-    const sigilTheme = item.bonds.length ? forge.dominantBondTheme(item) : null;
 
     const rows = [];
     let dividerShown = false;
@@ -173,22 +165,17 @@
     const showAtt = forge.isCraftable(item) && !forge.isSated(item);
     const attPct = showAtt ? Math.min(100, Math.round((item.att.xp / item.att.next) * 100)) : 0;
     const archName = pack.archetypes[payload.archetype] ? pack.archetypes[payload.archetype].name : null;
-    const sigilSvg = sigilTheme && SIGIL_PATHS[sigilTheme]
-      ? `<div class="sigil" style="color:${pack.themes[sigilTheme].color};opacity:${item.awakened ? 0.18 : 0.11}">
-           <svg viewBox="0 0 24 24" width="130" height="130" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="${SIGIL_PATHS[sigilTheme]}"/></svg>
-         </div>` : '';
 
     document.getElementById('card').innerHTML = `
       <div class="art-well" style="box-shadow: inset 0 0 22px rgba(0,0,0,0.6), ${tint.glow}">
-        ${sigilSvg}
         <img class="item-art" src="${esc(artPath)}" alt="" onerror="this.outerHTML='<span class=&quot;glyph&quot;>&#9672;</span>'">
       </div>
       ${rows.join('')}
       ${showAtt ? `<div class="att"><div class="lbl">Bond XP ${item.att.xp}/${item.att.next}</div><div class="bar"><div class="fill" style="width:${attPct}%"></div></div></div>` : ''}
-      ${payload.bearer ? `<div class="bearer">Borne by <b>${esc(payload.bearer)}</b>${archName ? ` the ${esc(archName)}` : ''}.<br>Brands are crafted. Bonds grow from use.</div>` : ''}
+      ${payload.bearer ? `<div class="bearer">Carried by <b>${esc(payload.bearer)}</b>${archName ? ` (${esc(archName)})` : ''}.<br>Brands are crafted. Bonds grow from use.</div>` : ''}
       <div class="actions">
         <button class="btn" id="copyBtn">Copy Link</button>
-        <a class="btn" href="index.html">Enter the Vault</a>
+        <a class="btn" href="index.html">Open Item Crafting</a>
       </div>`;
 
     document.getElementById('note').innerHTML = isSample
