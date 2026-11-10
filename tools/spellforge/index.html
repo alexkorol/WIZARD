@@ -447,10 +447,13 @@ vec4 hexGrid(vec2 p){const vec2 s=vec2(1.,1.7320508);vec4 hc=floor(vec4(p,p-vec2
 float rune(vec2 p,float id){float d=1e3;
   for(int i=0;i<5;i++){vec4 h=hash41(id*7.31+float(i)*3.7+1.);vec2 a=(floor(h.xy*3.)-1.)*vec2(.5,.78),b=(floor(h.zw*3.)-1.)*vec2(.5,.78);d=min(d,sdSeg(p,a,b));}
   return d;}
-// ring of n runes at radius r (p centred). returns stroke mask 0..1
-float runeRing(vec2 p,float r,float n,float size,float seed){vec2 pc=polar(p);float k=pc.x*n;float i=floor(k);
+// plain tick: p in [-1,1]^2, returns distance to one radial stroke whose length varies per id, with a dot above every other one
+float tick(vec2 p,float id){vec2 h=hash41(id*7.31+1.).xy;float l=.35+.5*h.x;float d=sdSeg(p,vec2(0.,-l),vec2(0.,l));
+  if(h.y>.5)d=min(d,length(p-vec2(0.,min(l+.3,.86)))-.1);return d;}
+// ring of n ticks at radius r (p centred). returns stroke mask 0..1
+float tickRing(vec2 p,float r,float n,float size,float seed){vec2 pc=polar(p);float k=pc.x*n;float i=floor(k);
   vec2 q=vec2((fract(k)-.5)*TAU*r/n,pc.y-r)/size;if(abs(q.x)>1.||abs(q.y)>1.)return 0.;
-  return smoothstep(.16,.06,rune(q,i+seed*13.));}
+  return smoothstep(.16,.06,tick(q,i+seed*13.));}
 
 // ---------- sprites (uv 0..1) ----------
 float softDot(vec2 uv){float d=length(uv-.5)*2.;return sat(1.-d)*sat(1.-d);}
@@ -2741,10 +2744,11 @@ const DECALS={name:'Decals',geo:['ground',1],blend:'alpha',count:()=>state.n?sta
   }else if(k<5.5){ // frost: rime with radial needles
     float g=easeOut(sat(age/.2));vec2 pc=polar(q);float nd=pow(nz(vec2(pc.x*14.,pc.y*2.)).r,3.)*2.;float n=nz(q*1.4+sd).r;
     cov=smoothstep(1.,.5,r/(g+.01)+(n-.5)*.4)*(.45+.4*nd)*fade;base=vec3(.55,.72,.85);rough=.25;em=vec3(.2,.4,.7)*.05*cov;
-  }else if(k<6.5){ // spinning glyph circle
+  }else if(k<6.5){ // spinning ring circle: two rings, a ring of dots and a tick ring
     float g=sat(age/.3);vec2 s=rot(age*E.z)*q;float d=stroke(sdRing(s,.93,0.),.012)+stroke(sdRing(s,.7,0.),.008);
-    for(int i=0;i<6;i++){vec2 o=vec2(cos(float(i)/6.*TAU),sin(float(i)/6.*TAU))*.46;d+=stroke(sdRing(s-o,.46,0.),.007)*step(float(i)*.08,g*1.5);}
-    d+=runeRing(s,.82,18.,.06,sd)*.8;d*=step(fract(polar(s).x),g+.001)*.5+.5*g;
+    vec2 sp=polar(s);for(int i=0;i<6;i++){vec2 o=vec2(cos(float(i)/6.*TAU),sin(float(i)/6.*TAU))*.46;d+=stroke(length(s-o)-.035,.012)*step(float(i)*.08,g*1.5);}
+    d+=stroke(sdRing(s,.46,0.),.005)*.6;
+    d+=tickRing(s,.82,18.,.06,sd)*.8;d*=step(fract(sp.x),g+.001)*.5+.5*g;
     cov=sat(d)*.0;em=c*sat(d)*.65*fade*E.w;
   }else if(k<7.5){ // shocked ground: flickering arcs
     float fl=floor(u_time*20.);float m=0.;for(int i=0;i<5;i++){vec2 a0=(hash22(vec2(fl,float(i))+sd)-.5)*1.6;vec2 dir=normalize(hash22(vec2(float(i),fl*1.3))-.5);
@@ -4039,7 +4043,7 @@ float rfClump(float ang){return .5+.5*cos(8.*(ang-rfSpin()));}`,
       float cr=nz(q*1.1).a;float heat=smoothstep(.3,.85,cr)*smoothstep(.45,.05,abs(rr-RF_R))*(.5+.4*rfClump(atan(q.y,q.x)*-1.))*(.75+.25*sin(u_time*3.+n*20.));
       col=vec3(.004)+blackbody(heat*.95)*mix(vec3(1.),P_tint*2.,.4)*1.5;a=m*(.8+.15*n2);`},
     {name:'Ward circle',geo:['ground',1],blend:'add',xf:(t,a,l,P)=>({p:[0,.02,0],s:RR*P.radius*.62}),fs:`
-      vec2 q=uv*2.-1.;float m=stroke(sdRing(q,.93,0.),.01)+stroke(sdRing(q,.72,0.),.006)+runeRing(rot(-u_time*.12)*q,.825,14.,.07,3.);
+      vec2 q=uv*2.-1.;float m=stroke(sdRing(q,.93,0.),.01)+stroke(sdRing(q,.72,0.),.006)+tickRing(rot(-u_time*.12)*q,.825,14.,.07,3.);
       col=flame(sat(m)*(.5+.12*sin(u_time*2.)),P_tint)*.9;a=1.;`},
     {name:'Fire ring',type:'ray',blend:'alpha',fn:`
 float rfDens(vec3 q,out float heat){
@@ -6596,9 +6600,9 @@ float lqH(vec2 g){float rr=length(g);
       float front=smoothstep(.5,.7,LQA)*(1.-smoothstep(1.1,1.9,LQA));
       col+=glow(band(rr,ed,.12)*front*(.3+.6*n2)*.8,mix(P_tint,vec3(luma(P_tint)),.35))*.55;
       a=ins*(1.-smoothstep(.96,1.,u_life));`},
-    {name:'Front and sigil',geo:['ground',1],blend:'add',xf:{p:[0,.03,0],s:3.6},fs:`
+    {name:'Front and ring',geo:['ground',1],blend:'add',xf:{p:[0,.03,0],s:3.6},fs:`
       vec2 g=P.xz;float rr=length(g);float tell=smoothstep(-.3,.4,LQA)*(1.-smoothstep(.45,.75,LQA));
-      vec2 c=g/.95;float m=(stroke(sdRing(c,.9,0.),.014)+runeRing(rot(-LQA)*c,.72,9.,.1,4.)+stroke(sdNgon(rot(LQA*.5)*c,.5,5.),.008)*.7)*tell;
+      vec2 c=g/.95;float m=(stroke(sdRing(c,.9,0.),.014)+tickRing(rot(-LQA)*c,.72,9.,.1,4.)+stroke(sdRing(c,.5,0.),.008)*.7)*tell;
       float ed=lqEdge(g);float front=smoothstep(.5,.6,LQA)*(1.-smoothstep(1.,1.6,LQA));
       vec3 vo=voronoi(g*.85+3.);float seam=smoothstep(.045,.0,vo.y-vo.x);
       float fl=seam*smoothstep(.35,.0,abs(rr-ed-.1))*front;
@@ -8705,9 +8709,9 @@ float cgMap(vec3 q){
       m*=.45+.75*smoothstep(.3,.7,grain*.5+clump*.5);
       float pre=u_age<CG_T0?smoothstep(.5,.0,pc.y)*pow(u_age/CG_T0,2.)*.5*nz(P.xz*3.+u_time*.2).r:0.;
       col=cgSand(P)*(.3+u_amb*6.+fxLight(P)*.6+u_keyCol*.4);a=sat(m+pre)*.7*P_sand*cgFade();`},
-    {name:'Sigil and burst',geo:['ground',1],blend:'add',xf:{p:[C[0],.03,C[2]],s:2.6},fs:`
+    {name:'Ring and burst',geo:['ground',1],blend:'add',xf:{p:[C[0],.03,C[2]],s:2.6},fs:`
       vec2 q=uv*2.-1.;vec2 pc=polar(q);float k=u_age<CG_T0?pow(u_age/CG_T0,1.5):exp(-cgT()*2.5);
-      float ring=band(pc.y,.62,.012)+band(pc.y,.5,.008)+runeRing(q,.56,14.,.045,3.)*.9;
+      float ring=band(pc.y,.62,.012)+band(pc.y,.5,.008)+tickRing(q,.56,14.,.045,3.)*.9;
       float sw=nzL(vec2(pc.x*3.-u_time*.4-pc.y*2.,pc.y*1.5)).r;
       float e=step(CG_T0,u_age)*exp(-cgT()*14.);
       float spikes=smoothstep(.55,.9,pow(nzL(vec2(pc.x*7.,.37)).a,.6)+.5*(1.-pc.y))*smoothstep(1.,.2,pc.y)*smoothstep(.05,.25,pc.y);
@@ -9124,22 +9128,22 @@ LAB.add({
   id:'dc-monstrous-menagerie', name:'Manticore from a pit', set:'Crawl', cat:'Summonings', sub:'Summon', level:7, legacy:true, duration:DUR, stage:'full',
   src:'Summons one or more large beasts such as a manticore or a sphinx.',
   tags:['raymarched creature','solid depth','sdf rig','lit dust','instanced debris'],
-  blurb:'A scratched ochre circle opens into a pit of sand-coloured light and a manticore hauls itself out, lands hard and stands over the cooling sigil with its sting raised.',
+  blurb:'A scratched ochre circle opens into a pit of sand-coloured light and a manticore hauls itself out, lands hard and stands over the cooling ring with its sting raised.',
   notes:[
     'The beast is one signed distance field: ellipsoids and tapered capsules blended with smooth minimum, marched inside a bounding sphere and written to the depth buffer so dust and debris sort against it.',
     'Its fur is a bumped normal and a streaked albedo from the 3D noise volume, lit by shade() with a four-tap ambient occlusion so the belly and the leg pits go dark.',
     'The rig is driven by one lunge scalar: the body pitches up out of the pit, the forelegs reach, and everything settles with a damped bounce when the paws land.',
     'The pit is only a decal. The floor depth clips the body, which is all the eye needs to read a creature climbing out of a hole.',
-    'Residue: the sigil cools to pale scratches in the flagstones, rim chips stay where they bounced and the dust hangs in the moonlight.'
+    'Residue: the ring cools to pale scratches in the flagstones, rim chips stay where they bounced and the dust hangs in the moonlight.'
   ],
-  port:'In Unreal the beast is a skeletal mesh with a spawn montage and the pit is a decal with a depth-fade card under it. Dust uses six-way lit flipbooks, rim chips are a Niagara mesh emitter with collision, and the sigil is an emissive decal whose reveal angle and heat are two scalar curves.',
+  port:'In Unreal the beast is a skeletal mesh with a spawn montage and the pit is a decal with a depth-fade card under it. Dust uses six-way lit flipbooks, rim chips are a Niagara mesh emitter with collision, and the ring is an emissive decal whose reveal angle and heat are two scalar curves.',
   cam:{yaw:.42,pitch:.1,dist:10.2,target:[-.3,1.8,0]},
   actors:[{p:[-3.4,0,.5],ry:1.35,pose:'cast'}],
   caster:{kind:'big',release:T0,at:[-2.75,1.7,.8]},
   markers:{release:T0,impact:T1},
   shadows:(t,age)=>age>T0+.3?[[CX+.9*BS,0,2.6,.85*p220_sat((age-T0-.3)*2.5)]]:[],
   params:[
-    {id:'tint',label:'Sigil light',type:'color',value:'#e0a04a'},
+    {id:'tint',label:'Ring light',type:'color',value:'#e0a04a'},
     {id:'hide',label:'Hide',type:'color',value:'#96683a'},
     {id:'mane',label:'Mane',min:0,max:1.3,value:1},
     {id:'wings',label:'Wings',min:0,max:1.2,value:1}
@@ -9213,12 +9217,12 @@ float p220a_mapv(vec3 p){return u_age<P220A_T0?1.:p220a_map(p);}`,
       {p:[CX+1.9,1.1,1.6],c:[3.4*land+(age>T1?1.3*Math.exp(-(age-T1)*.45):0),3.*land+(age>T1?1.05*Math.exp(-(age-T1)*.45):0),2.4*land+(age>T1?.75*Math.exp(-(age-T1)*.45):0)],r:7},
       {p:mmHand(),c:p220_mul(c,3*tell*tell*(pre+(1-pre)*Math.exp(-(age-T0)*4))),r:3}];},
   layers:[
-    {name:'Sigil and pit',geo:['ground',1],blend:'alpha',xf:{p:[CX,.014,0],s:1.95},fs:`
+    {name:'Ring and pit',geo:['ground',1],blend:'alpha',xf:{p:[CX,.014,0],s:1.95},fs:`
       vec2 q=uv*2.-1.;vec2 pc=polar(rot(1.3)*q);float r=pc.y;
       float draw=sat(u_age/P220A_T0*1.2);float rev=smoothstep(draw,draw-.02,pc.x);
       float brk=.45+.9*nz(uv*7.).b;
-      float ln=stroke(sdRing(q,.93,0.),.013)+stroke(sdRing(q,.74,0.),.009)+runeRing(q,.835,13.,.07,3.)*1.1;
-      ln+=stroke(sdNgon(rot(.3)*q,.66,3.),.008)*step(r,.74)*.8;
+      float ln=stroke(sdRing(q,.93,0.),.013)+stroke(sdRing(q,.74,0.),.009)+tickRing(q,.835,13.,.07,3.)*1.1;
+      ln+=stroke(sdRing(q,.6,0.),.008)*step(r,.74)*.8;
       ln=sat(ln)*brk*rev*smoothstep(1.,.96,r);
       float T=max(u_age-P220A_T1,0.);float close=sat((T-.2)/1.3);
       float pn=nz(uv*1.6+.2).r;float pit=smoothstep(.71,.66,r+(pn-.5)*.1)*smoothstep(.25,.9,draw);
@@ -9287,10 +9291,10 @@ float p220a_mapv(vec3 p){return u_age<P220A_T0?1.:p220a_map(p);}`,
       pos=P220A_C+vec3(cos(ang)*rad,.04+T*mix(.3,1.5,q.x)*(1.+2.*p220a_on()),sin(ang)*rad)+curl3(vec3(id,T*.6,0.))*.12*t;
       size=.022*(.5+q.y)*k;alpha=sin(t*PI);`,
       fs:`col=glow(1.,P_tint)*hotDot(uv)*2.2;a=1.;`},
-    {name:'Hand sigil',geo:'quad',billboard:true,blend:'add',xf:()=>({p:mmHand(),s:.34}),fs:`
+    {name:'Hand ring',geo:'quad',billboard:true,blend:'add',xf:()=>({p:mmHand(),s:.34}),fs:`
       float k=smoothstep(.2,P220A_T0,u_age);k=k*k*step(u_age,P220A_T0)+step(P220A_T0,u_age)*exp(-(u_age-P220A_T0)*6.);
       vec2 q=uv*2.-1.;q=rot(u_time*.8)*q;float d=length(q);
-      float m=(stroke(sdRing(q,.62,0.),.05)+stroke(sdNgon(q,.42,3.),.04))*.8+exp(-d*d*8.)*.6;
+      float m=(stroke(sdRing(q,.62,0.),.05)+stroke(sdRing(q,.38,0.),.04))*.8+exp(-d*d*8.)*.6;
       col=glow(min(m*k,1.1),P_tint)*1.1;a=1.;`},
     {name:'Claw flash',geo:'quad',billboard:true,blend:'add',depthTest:false,xf:{p:[CX+.3,1.7,0],s:1.75},fs:`
       float tt=u_age-P220A_T0;float e=step(0.,tt)*exp(-tt*15.);vec2 q=uv*2.-1.;q=rot(-.5)*q;float m=0.;
@@ -10220,7 +10224,7 @@ vec3 p223_chs(){return u_chest.y>-5.?u_chest:vec3(-.6,1.25,.2);}`,
       vec2 q=uv*2.-1.;vec2 pc=polar(q);float n=nz(uv*1.4).r;
       float on=smoothstep(.15,.7,u_age);float cool=u_age<p223_LINK?1.:exp(-(u_age-p223_LINK)*.9);
       float teeth=step(.5,fract(pc.x*24.))*step(.8,pc.y)*step(pc.y,.845);
-      float m=stroke(sdRing(q,.8,0.),.006)+teeth*.5+stroke(sdRing(q,.56,0.),.004)*.7+stroke(sdNgon(rot(u_age*.3)*q,.4,6.),.004)*.7;
+      float m=stroke(sdRing(q,.8,0.),.006)+teeth*.5+stroke(sdRing(q,.56,0.),.004)*.7+stroke(sdRing(q,.4,0.),.004)*.7;
       m*=smoothstep(.0,.25,on-pc.x*.6);
       float scorch=smoothstep(.95,.3,pc.y+(n-.5)*.5)*on;
       float lip=band(pc.y+(n-.5)*.5,.78,.14)*nz(uv*5.).b;
@@ -10382,7 +10386,7 @@ float p223_fEnd(){return 1.-smoothstep(.9,.99,u_life);}`,
       vec3 alb=P_stone*.55*(.45+.9*k)*(.75+.5*k2)*(1.-chip*.45);
       float bandm=step(abs(dp.y-.35),.09)+step(abs(dp.y+.55),.07);float metal=bandm*.85;alb=mix(alb,vec3(.16,.15,.14)*(.6+.8*k2),bandm);
       col=shade(alb,mix(.9,.5,bandm),metal,N,V,P);
-      float face=step(.99,abs(dp.z));float g=smoothstep(.13,.05,rune(vec2(dp.x*2.2,dp.y*3.2+.5),data.w+3.))*face*step(dp.y,.2)*step(-.45,dp.y);
+      float face=step(.99,abs(dp.z));float g=smoothstep(.13,.05,tick(vec2(dp.x*2.2,dp.y*3.2+.5),data.w+3.))*face*step(dp.y,.2)*step(-.45,dp.y);
       float ch=u_age<p223_FB?p223_fCh()*smoothstep(0.,.5,u_age-.6-data.w*.12):exp(-p223_fT()*3.5);
       col+=glow(g*ch*.9,P_tint)*1.2;a=1.;`},
     {name:'Rubble',geo:'rock',blend:'opaque',count:70,vs:`
@@ -10443,9 +10447,9 @@ LAB.add({
   id:'dc-platinum-paragon', name:'Platinum knight construct', set:'Crawl', cat:'Constructs', sub:'Construct', level:9, legacy:false, duration:DUR, stage:'full',
   src:'Builds a powerful metal champion wielding a copy of the caster\'s weapon; it can later be overloaded for a wide flurry of attacks.',
   tags:['custom mannequin shader','cooling metal','instanced rubble','graphic arcs','lit dust'],
-  blurb:'A white-hot platinum knight drops out of the dark onto a sigil, cracks the floor, cools to polished metal and then overloads into a four-cut flurry.',
+  blurb:'A white-hot platinum knight drops out of the dark onto a ring mark, cracks the floor, cools to polished metal and then overloads into a four-cut flurry.',
   notes:[
-    'Tell: the caster raises a hand and a rune circle burns into the floor where the champion will land. The fall itself is a third of a second with a thin descent streak above it.',
+    'Tell: the caster raises a hand and a ring of ticks burns into the floor where the champion will land. The fall itself is a third of a second with a thin descent streak above it.',
     'The knight is the stage mannequin with its own material: polished platinum with engraved plate seams, a heat term that starts blackbody white and cools over two seconds, and steam lifting off its surface.',
     'Landing is pressure, not magic: a hard white floor ring for three frames, a refraction ring, thrown rubble that bounces and stays, and a dust skirt lit by the cooling body.',
     'The overload is the second beat. Seams and the replica greatsword charge in the tint, the knight sinks slightly, then four bold crescents cut around it in 0.3 seconds and leave hot gouges in the stone.'
@@ -10488,10 +10492,10 @@ vec3 p223_ry(vec3 v,float b){float c=cos(b),s=sin(b);return vec3(v.x*c+v.z*s,v.y
       {p:[PG[0]-.2,1.3,PG[2]+.6],c:[imp+fl,imp*.96+fl*.97,imp*.9+fl*.95],r:10},
       {p:[PG[0]-.4,2.,PG[2]+.5],c:p223_mul(c,1.6*ch*(age>.8*LAND?1:0)),r:5}];},
   layers:[
-    {name:'Sigil and crater',geo:['ground',1],blend:'alpha',xf:{p:[PG[0],.012,PG[2]],s:3},fs:`
+    {name:'Ring and crater',geo:['ground',1],blend:'alpha',xf:{p:[PG[0],.012,PG[2]],s:3},fs:`
       vec2 q=(uv*2.-1.)*3.;float d=length(q);vec2 pc=polar(q);float T=p223_pT();float on=p223_pOn();float n=nz(uv*1.6).r;
       float pre=smoothstep(.15,1.2,u_age)*(1.-on)+on*exp(-T*5.);float draw=smoothstep(0.,.15,smoothstep(.1,1.1,u_age)-pc.x);
-      float sig=(stroke(d-1.2,.012)+stroke(d-.93,.007)+runeRing(q,1.065,18.,.09,7.)*.9+stroke(sdNgon(rot(.3)*q,.9,8.),.006)*.6)*draw;
+      float sig=(stroke(d-1.2,.012)+stroke(d-.93,.007)+tickRing(q,1.065,18.,.09,7.)*.9+stroke(d-.8,.006)*.6)*draw;
       float dc=d+(n-.5)*.35;float crater=smoothstep(.95,.55,dc)*on;
       float lip=band(dc,1.,.16)*on*(.5+.5*nz(uv*6.).b);
       float cr=nzL(vec2(pc.x*7.,d*.22+.4)).a;float reach=smoothstep(2.9,1.,d)*smoothstep(.6,.9,d);
@@ -10509,7 +10513,7 @@ vec3 p223_ry(vec3 v,float b){float c=cos(b),s=sin(b);return vec3(v.x*c+v.z*s,v.y
       vec4 tx=tri(OP*2.5,N);
       float ly=abs(fract(OP.y*6.5)-.5)*2.;float seam=smoothstep(.9,.97,ly)*step(.88,OP.y)*step(OP.y,1.5)*step(abs(OP.x),.26);
       seam=max(seam,smoothstep(.012,.004,abs(OP.x))*step(.85,OP.y)*step(OP.y,1.5)*step(0.,OP.z));
-      float fil=smoothstep(.12,.04,rune(vec2(OP.x*8.,(OP.y-1.2)*8.),5.))*step(.06,OP.z)*step(abs(OP.x),.14)*step(abs(OP.y-1.2),.12);
+      float fil=smoothstep(.12,.04,tick(vec2(OP.x*8.,(OP.y-1.2)*8.),5.))*step(.06,OP.z)*step(abs(OP.x),.14)*step(abs(OP.y-1.2),.12);
       vec3 alb=P_metal*(.82+.3*tx.r)*(1.-seam*.55);float rough=.14+.2*tx.b+seam*.3;
       vec3 nn=normalize(N+(tx.rgb-.5)*.12);
       col=shade(alb,rough,1.,nn,V,P);
@@ -11193,7 +11197,7 @@ LAB.add({
   notes:[
     'The undead are instanced mannequins with their own bone and rot material and alpha-clipped tears, hunched and shambling in until the ring reaches them.',
     'Each corpse is hit at the exact moment the ring radius passes it. It is shoved outward with drag, rocks back and settles into a cowering lean outside the circle.',
-    'The ring is a bright leading edge on the floor with a low wall of light above it. It stops at a fixed radius and cools into a line of scribed runes.',
+    'The ring is a bright leading edge on the floor with a low wall of light above it. It stops at a fixed radius and cools into a line of scribed ticks.',
     'The scorched corpses smoke and shed embers from the side facing the priest, and their cold eye glints gutter out.'
   ],
   port:'Corpses are skeletal meshes with a hit reaction driven by the ring radius crossing their distance. The ring is a scaled decal and cylinder mesh from one radius curve. Smoke is a Niagara emitter attached to each corpse, spawned by the same event.',
@@ -11257,10 +11261,10 @@ float p227u_T(int i,float l){return (l-p227u_hit(length(p227u_U[i])))*u_dur;}`,
       float grow=sat((u_life-${R0L.toFixed(3)})/${RL.toFixed(3)});float lead=band(d,R,.05+.08*(1.-grow))*(1.-grow*.55)*on;
       float wash=smoothstep(R-.9,R,d)*step(d,R)*(1.-grow*.7)*.14*on*(.4+.6*nzL(vec2(pc.x*38.,.5)).r);
       float kk=pc.x*30.;vec2 q2=vec2((fract(kk)-.5)*2.4,(d-(P227U_RMAX-.17))/.09);
-      float rn=smoothstep(.17,.07,rune(q2,floor(kk)+5.))*step(abs(q2.x),1.)*step(abs(q2.y),1.);
+      float rn=smoothstep(.17,.07,tick(q2,floor(kk)+5.))*step(abs(q2.x),1.)*step(abs(q2.y),1.);
       float line=band(d,P227U_RMAX,.02)+band(d,P227U_RMAX-.34,.012)*.6;
       float wk=smoothstep(.55,.62,u_life)*(.35+.65*exp(-max(u_life-.6,0.)*u_dur*.8))*(1.-smoothstep(.93,.99,u_life))*P_ward;
-      float sig=runeRing(P.xz,.62,9.,.12,2.)*smoothstep(.0,${R0L.toFixed(3)},u_life)*(1.-sat((u_life-${R0L.toFixed(3)})/.1))+band(d,.62,.012)*smoothstep(.05,${R0L.toFixed(3)},u_life)*(1.-sat((u_life-${R0L.toFixed(3)})/.1));
+      float sig=tickRing(P.xz,.62,9.,.12,2.)*smoothstep(.0,${R0L.toFixed(3)},u_life)*(1.-sat((u_life-${R0L.toFixed(3)})/.1))+band(d,.62,.012)*smoothstep(.05,${R0L.toFixed(3)},u_life)*(1.-sat((u_life-${R0L.toFixed(3)})/.1));
       float m=lead*(.55+.6*br)*(.6+.6*cr)+wash*(.5+br)+(rn*.7+line)*wk+sig*.8;
       col=glow(min(m,1.2),P_tint)*1.1*P_power;a=1.;`},
     {name:'Light wall',geo:'tube',blend:'add',soft:.25,xf:(t,age,l)=>{const R=Math.max(ringR(l),.01);const h=l<R0L+RL?.75:.75-.5*p227_sat((l-R0L-RL)/.12);return {p:[0,0,0],s:[R,h,R]};},fs:`
@@ -12070,7 +12074,7 @@ vec3 p303_bronze(vec3 w,vec3 n){float k=tri(w*2.,n).r,k2=tri(w*9.,n).b;return ve
 vec3 p303_steel(vec3 w,vec3 n){float k=tri(w*vec3(2.,7.,2.),n).b;return vec3(.55,.56,.59)*(.75+.35*k);}`;
 const P303_MK=`
 float p303_mSig(vec2 q,float seed){float r=length(q);float an=atan(q.x,q.y);
-  float d=abs(sdStar(q,.66,7.,3.2));
+  float d=abs(r-.66);
   float ring=abs(r-.86);float gap=step(.9,fract(an/TAU*3.+.07+seed*.13));d=min(d,ring+gap*.2);
   float sec=TAU/7.;float a1=mod(an+sec*.5,sec)-sec*.5;vec2 l=vec2(sin(a1),cos(a1))*r;
   d=min(d,sdSeg(l,vec2(0.,.62),vec2(0.,1.))+ .02*smoothstep(.62,1.,l.y));
@@ -12350,7 +12354,7 @@ vec2 p303jMap(vec3 w){float s=p303jS();vec3 q=(w+vec3(0.,p303jSink(),0.))/s;vec3
       size=.011*(.6+q.y)*(1.-t);alpha=1.;`,
       fs:`col=blackbody(1.05-rnd.x*.3-pt*.5)*hotDot(uv)*2.;a=1.;`},
     {name:'Barbed flash',geo:'quad',billboard:true,blend:'add',depthTest:false,xf:{p:[0,1.3,.3],s:1.05},fs:`
-      float tt=u_age-P303J_HIT;float e=step(0.,tt)*smoothstep(.14,.06,tt)*.7;vec2 q=uv*2.-1.;float sd=sdStar(q,.95,7.,4.4);
+      float tt=u_age-P303J_HIT;float e=step(0.,tt)*smoothstep(.14,.06,tt)*.7;vec2 q=uv*2.-1.;float sd=length(q)-.95;
       col=(mix(vec3(1.,.85,.75),P_hell,.4)*(smoothstep(.02,0.,abs(sd))*1.2+smoothstep(0.,-.1,sd)*.3*smoothstep(.15,.45,length(q)))+p303_hf(hotDot(uv)*1.2,P_hell))*e;a=1.;`}
   ]
 });
@@ -12394,10 +12398,10 @@ float p304_mkSig(vec2 q,float grow){
 vec3 p304_hide(vec3 q,vec3 nn){float k=tri(q*1.7,nn).r,k2=tri(q*5.,nn).b;return vec3(.11,.065,.055)*(.55+.8*k)*(.7+.5*k2);}
 float p304_seam(vec3 q,vec3 nn,float th){return smoothstep(th,th+.1,tri(q*1.3,nn).a);}`;
 const P304_SIF=P304_COMMON+`
-float p304_text(vec2 p,float r,float n,float h,float seed){ // a ring of tiny written glyphs: one line of text
+float p304_text(vec2 p,float r,float n,float h,float seed){ // a ring of tiny tick marks: one line of script
   vec2 pc=polar(p);float k=pc.x*n;float i=floor(k);vec2 g=vec2((fract(k)-.5)*TAU*r/n,pc.y-r)/h;
   if(abs(g.x)>1.||abs(g.y)>1.)return 0.;float gap=step(.18,hash11(floor(i/5.3)+seed*3.1));
-  return smoothstep(.2,.07,rune(g*vec2(1.25,1.),i+seed*17.))*gap;}
+  return smoothstep(.2,.07,tick(g*vec2(1.25,1.),i+seed*17.))*gap;}
 float p304_sfSig(vec2 q,float grow){
   vec2 pc=polar(q);float sw=smoothstep(grow*1.06-.06,grow*1.06,pc.x);sw=1.-sw;
   float m=band(pc.y,.98,.008)+band(pc.y,.84,.006)+band(pc.y,.56,.006)+band(pc.y,.45,.005);
@@ -12485,7 +12489,7 @@ const P304_BOLT_LAYERS=[
     float on=step(.0005,hd-tl)*step(0.,u_age-p304_bt(i));
     p=c+normalize(cross(tg,u_cam-c))*p.x*.035*on;data=vec4(ss,s,i,-1.);}`,
     fs:`if(data.w>-.5){float x=uv.x*2.-1.;float core=inv(x,.12)*smoothstep(1.,.6,abs(x));float n=nz(vec2(data.x*6.-u_time*3.,uv.x)).r;
-    col=glow(min(core*(.4+.9*data.y)*(.7+.5*n),1.4),P_tint)*2.*P_power;a=1.;}else{float tx=fract(data.x*30.);float gl=smoothstep(.22,.07,rune(vec2((tx-.5)*2.2,(uv.x*2.-1.)*1.1),floor(data.x*30.)+data.z*9.));
+    col=glow(min(core*(.4+.9*data.y)*(.7+.5*n),1.4),P_tint)*2.*P_power;a=1.;}else{float tx=fract(data.x*30.);float gl=smoothstep(.22,.07,tick(vec2((tx-.5)*2.2,(uv.x*2.-1.)*1.1),floor(data.x*30.)+data.z*9.));
     col=glow(min(gl*(.3+data.y),1.2),P_tint)*1.4*P_power;a=1.;}`},
   {name:'Ink spatter',type:'particles',count:110,life:3.5,blend:'alpha',soft:0,stretch:.02,sim:`
     float i=mod(id,P304_NB);float T2=p304_hitT(i);float on=step(0.,T2);T2=max(T2,0.);
@@ -13217,7 +13221,7 @@ float p306_nsig(vec2 q){
   for(int i=0;i<4;i++){float an=float(i)*1.5708+.785;vec2 c=vec2(cos(an)*.42,sin(an)*.62);m=max(m,smoothstep(.05,.03,abs(c.x-q.x)/.7+abs(c.y-q.y)));}
   return m;}
 float p306_emblem(vec2 e,int kind){
-  if(kind==0){float d=sdStar(e,.78,7.,2.6);d=min(d,sdCircle(e,.3));return d;}
+  if(kind==0){float d=abs(sdCircle(e,.78))-.06;d=min(d,sdCircle(e,.3));return d;}
   if(kind==1){float c1=max(sdCircle(e-vec2(-.1,0.),.62),-sdCircle(e-vec2(.12,.1),.56));float c2=max(sdCircle(e-vec2(.2,-.15),.38),-sdCircle(e-vec2(.32,-.05),.34));
     return min(c1,c2);}
   if(kind==2){float d=sdEllipsoid(vec3(e-vec2(0.,-.1),0.),vec3(.4,.48,1.));
@@ -13283,7 +13287,7 @@ void p307_cardMat(vec2 xy,float face,float seed,out vec3 alb,out float rgh,out f
     alb=vec3(.5,.41,.27)*(.5+.55*stain)*(.9+.2*fib);alb*=mix(.5,1.,smoothstep(0.,.08,de));rgh=.8;mtl=0.;
     float sg=p307_nemSig((m-vec2(0.,.03))/.19);float sgm=smoothstep(.06,.0,sg);
     vec2 pm=abs(m)-vec2(.225,.385);float pip=smoothstep(.012,0.,p307_lozD(pm,.034));
-    float rn=smoothstep(.2,.08,rune((m-vec2(0.,-.3))/.055,floor(seed*7.)+1.))*step(abs(m.x),.06)*step(abs(m.y+.3),.06);
+    float rn=smoothstep(.2,.08,tick((m-vec2(0.,-.3))/.055,floor(seed*7.)+1.))*step(abs(m.x),.06)*step(abs(m.y+.3),.06);
     float line=band(de,.045,.004);
     alb=mix(alb,vec3(.16,.035,.03),max(pip,line*.8));
     alb=mix(alb,vec3(.1,.03,.12),max(sgm,rn*.7));ink=sgm;
@@ -13369,7 +13373,7 @@ float p307t_field(vec2 xy,float i){float k=i-1.;vec2 dir=normalize(vec2(-k,-.6))
     {name:'Branded floor',geo:['ground',1],blend:'alpha',xf:{p:[.2,.011,.9],s:1.5},fs:`
       vec2 q=(uv*2.-1.)*1.5;float tt=u_age-p307t_LAND;float on=step(0.,tt)*(1.-smoothstep(.95,1.,u_life));
       float sg=p307_nemSig(p307_rz(vec3(q,0.),.35).xy/.62);float ring=abs(length(q)-1.05)-.02;
-      float rr=runeRing(q,.88,14.,.08,3.);
+      float rr=tickRing(q,.88,14.,.08,3.);
       float burnt=max(smoothstep(.07,.0,sg),max(smoothstep(.03,0.,ring),rr));
       float n=nz(q*.8).r;float halo=smoothstep(1.4,.3,length(q)+(n-.5)*.5)*.5;
       col=mix(vec3(.02,.016,.018),vec3(.32,.3,.28)*(.4+u_amb*5.+fxLight(P)*.3),smoothstep(.02,.05,abs(sg)+.0)*(1.-burnt)*.0+.0);
@@ -13377,7 +13381,7 @@ float p307t_field(vec2 xy,float i){float k=i-1.;vec2 dir=normalize(vec2(-k,-.6))
       a=on*sat(burnt*.85+halo*.45*smoothstep(0.,.5,tt));`},
     {name:'Sigil heat',geo:['ground',1],blend:'add',xf:{p:[.2,.014,.9],s:1.5},fs:`
       vec2 q=(uv*2.-1.)*1.5;float tt=u_age-p307t_LAND;
-      float sg=p307_nemSig(p307_rz(vec3(q,0.),.35).xy/.62);float ring=abs(length(q)-1.05)-.02;float rr=runeRing(q,.88,14.,.08,3.);
+      float sg=p307_nemSig(p307_rz(vec3(q,0.),.35).xy/.62);float ring=abs(length(q)-1.05)-.02;float rr=tickRing(q,.88,14.,.08,3.);
       float m=max(smoothstep(.05,.0,sg),max(smoothstep(.025,0.,ring)*.7,rr*.8));float hot=step(0.,tt)*(exp(-tt*5.)*.7+.42*exp(-tt*.9))*(1.-smoothstep(.93,1.,u_life));
       float flick=.8+.2*nz(q*.6+u_time*.2).r;
       col=flame(m*hot*flick*1.05,P_tint)*1.05*P_flare;
@@ -14075,7 +14079,7 @@ float p309CheSig(vec2 q,float w,float grow,float hand){
   float m=(smoothstep(w,0.,abs(r-.93))+smoothstep(w*.7,0.,abs(r-.82))*.7)*on;
   float k=a01*12.;float f=abs(fract(k)-.5)*TAU*r/12.;float mj=step(mod(floor(k),3.),.5);
   m+=smoothstep(w*1.3,0.,f)*step(mix(.86,.7,mj),r)*step(r,.9)*on*(.55+.45*mj);
-  vec4 h=hexGrid(q*2.4);m+=smoothstep(w*2.6,0.,h.z)*step(r,.64)*smoothstep(.1,.8,grow)*.75;
+  float dk=a01*18.;float dd=length(vec2((fract(dk)-.5)*TAU*.5/18.,r-.5))-.03;m+=smoothstep(w*2.6,0.,dd)*step(r,.64)*smoothstep(.1,.8,grow)*.75;m+=smoothstep(w*1.5,0.,abs(r-.32))*smoothstep(.1,.8,grow)*.5;
   m+=smoothstep(w*1.2,0.,sdSeg(rot(hand)*q,vec2(0.),vec2(0.,.56)))*smoothstep(.5,1.,grow);
   return sat(m);}
 vec3 p309Bronze(vec3 P,vec3 n){vec4 k=tri(P*3.,n);vec3 b=vec3(.5,.33,.16)*(.6+.6*k.r);float vg=smoothstep(.55,.8,k.g);return mix(b,vec3(.17,.28,.24),vg*.55);}
@@ -14310,16 +14314,16 @@ void cfPit(inout vec3 p,inout vec3 n,inout vec2 uv,inout float id){
 });
 LAB.add({
   id:'brazier', name:'Brazier', cat:'Fire', stage:'ground',
-  tags:['lathe mesh','stylised flame','banded ramp','rune emissive'],
+  tags:['lathe mesh','stylised flame','banded ramp','carved band emissive'],
   blurb:'A carved stone brazier holding a tall stylised flame with a readable silhouette and banded colour.',
   notes:[
     'The bowl is one lathe profile that runs up the outside, over the lip and back down to a coal bed, so the interior needs no second mesh.',
     'The flame heat field is quantised into four soft bands. That gives the hand painted look of a stylised ARPG flame while the motion stays procedural.',
     'A narrow inner card with its own seed slides against the outer card, which reads as depth even though both are flat.',
-    'The rune band on the bowl is lit by the same tint and breathes slowly, tying the prop to the element of the fire.',
+    'The carved tick band on the bowl is lit by the same tint and breathes slowly, tying the prop to the element of the fire.',
     'Variants only change the tint and proportions. Every colour comes from one ramp, so blue and green need no retuning.'
   ],
-  port:'Unreal: static mesh for the bowl with an emissive mask for runes and coals. The flame is two cards with a banded curve atlas lookup driven by the heat value, plus a small Niagara emitter for licks and embers.',
+  port:'Unreal: static mesh for the bowl with an emissive mask for the carved band and coals. The flame is two cards with a banded curve atlas lookup driven by the heat value, plus a small Niagara emitter for licks and embers.',
   cam:{yaw:.5,pitch:.12,dist:6.2,target:[0,1.48,0]},
   params:[
     {id:'tint',label:'Flame',type:'color',value:'#ff7a1e'},
@@ -14344,9 +14348,9 @@ vec3 bzCol(float h,vec3 tint){float hb=mix(h,bzBand(h),P_bands);return flameC(hb
       float rad=length(OP.xz);float inside=step(rad,.5)*step(.96,OP.y)*step(N.y,2.)*smoothstep(.535,.5,rad);
       float g=nz(vec2(uv.x*2.,OP.y*.8)).r;float g2=nz(vec2(uv.x*6.,OP.y*2.4)).b;float cr=nz(vec2(uv.x*1.5,OP.y*.55)).a;
       vec3 alb=vec3(.13,.125,.13)*(.45+.9*g)*(.75+.5*g2)*(1.-cr*.55);
-      // carved rune band
+      // carved tick band
       float k=uv.x*14.;vec2 rq=vec2((fract(k)-.5)*2.4,(OP.y-.925)/.05);
-      float ru=smoothstep(.2,.08,rune(rq,floor(k)+3.))*step(abs(rq.x),1.)*step(abs(rq.y),1.)*step(.45,rad);
+      float ru=smoothstep(.2,.08,tick(rq,floor(k)+3.))*step(abs(rq.x),1.)*step(abs(rq.y),1.)*step(.45,rad);
       float trim=smoothstep(.012,.0,abs(abs(OP.y-.925)-.075))*step(.4,rad);
       alb*=1.-ru*.8-trim*.5;
       float soot=smoothstep(.9,1.1,OP.y);alb*=mix(1.,.35,soot);
@@ -15425,7 +15429,7 @@ float p311_seal(vec2 q,float spin){vec2 pc=polar(q);float r=pc.y;
   vec2 qr=rot(spin)*q;
   m+=tick*.8+stroke(sdBox(qr,vec2(.17)),.012)+stroke(sdBox(qr,vec2(.25)),.006);
   vec2 aq=abs(qr);m+=stroke(sdSeg(aq,vec2(.25),vec2(.52)),.008);
-  m+=runeRing(rot(-spin*.6)*q,.66,10.,.075,3.)*.9;
+  m+=tickRing(rot(-spin*.6)*q,.66,10.,.075,3.)*.9;
   return sat(m);}
 #endif
 `;
@@ -15944,7 +15948,7 @@ float p312i_heart(){return smoothstep(.2,P312I_T0,u_age)*(1.-smoothstep(P312I_TF
 #ifdef FRAG
 vec3 p312i_gild(vec3 op,vec3 nn,vec3 V,vec3 P,float glowK){
   vec4 tx=tri(op*2.6,nn);
-  float eng=smoothstep(.13,.05,rune(vec2(op.x*7.,op.y*5.5)+vec2(op.z*3.,0.),floor(op.y*3.)+3.));
+  float eng=smoothstep(.13,.05,tick(vec2(op.x*7.,op.y*5.5)+vec2(op.z*3.,0.),floor(op.y*3.)+3.));
   float band2=0.;
   vec3 alb=P_gold*(.78+.35*tx.r);float rough=.18+.18*tx.b;
   vec3 c=shade(alb,rough,1.,normalize(nn+(tx.rgb-.5)*.08),V,P)+alb*u_amb*1.5;
@@ -16845,7 +16849,7 @@ LAB.add({
     'The wall is 36 instanced stone blocks. A sphere of erosion grows from the beam point; each fragment is alpha-clipped by triplanar noise against it, with a white-violet cut line that cools to a pale ash lip.',
     'The beam is a two-pixel white core inside a thin violet halo, held for about a second with a sub-frame jitter, so it reads as force rather than fire.',
     'Dust is emitted on the moving erosion front and falls as a sand stream; two lathe mounds grow at the wall foot as it lands.',
-    'The wand is a four-sided lathe (square section) in blackened metal with a violet crystal; its rune band charges before the shot.'
+    'The wand is a four-sided lathe (square section) in blackened metal with a violet crystal; its carved band charges before the shot.'
   ],
   port:'Unreal: wall as instanced static meshes with a sphere-mask dissolve driven by a material parameter, sand as a Niagara emitter sampling the mask edge, mounds as a world-position-offset mesh scaled by a curve.',
   cam:{yaw:-.22,pitch:.11,dist:7.9,target:[-.15,1.1,.45]},
@@ -16886,11 +16890,11 @@ vec3 p402d_stone(vec3 p,vec3 n){float k=tri(p*.9,n).r,k2=tri(p*3.1,n).b;return P
     {name:'Metal wand',geo:['lathe',[[0,-.17],[.034,-.17],[.04,-.15],[.028,-.135],[.03,-.02],[.04,0],[.028,.025],[.023,.25],[.028,.275],[.028,.31],[.02,.335],[.017,.45],[.03,.475],[.04,.5],[.014,.506],[0,.506]],4],blend:'opaque',
       xf:(t,age)=>{const s=pose(age);return {p:s.p,r:s.r};},
       fs:`vec3 nn=flatN(P);if(dot(nn,V)<0.)nn=-nn;float n=nz(vec2(OP.y*6.,OP.x*20.+OP.z*13.)).r;
-      float rb=step(.25,OP.y)*step(OP.y,.31);float runes=rb*step(.55,nz(vec2(OP.y*40.,(OP.x+OP.z)*30.)).a);
+      float rb=step(.25,OP.y)*step(OP.y,.31);float carved=rb*step(.55,nz(vec2(OP.y*40.,(OP.x+OP.z)*30.)).a);
       vec3 alb=vec3(.07,.065,.07)*(.7+.6*n);alb=mix(alb,vec3(.4,.37,.33),rb*.4);
       col=shade(alb,.38+.25*n,1.,nn,V,P)+fresnel(nn,V,3.)*u_amb*2.;
       float ch=sat(u_age/(P402D_FIRE*u_dur));float on=u_life<P402D_OFF?max(ch*ch,step(P402D_FIRE,u_life)):p402_e(u_age-P402D_OFF*u_dur,3.);
-      col+=glow(runes*on*.9,P_tint)*1.5;a=1.;`},
+      col+=glow(carved*on*.9,P_tint)*1.5;a=1.;`},
     {name:'Crystal claw',geo:'crystal',blend:'opaque',xf:(t,age)=>{const s=pose(age);return {p:p402_add(s.p,p402_n(p402_sub(s.tip,s.p)),.48),r:s.r,s:[.045,.1,.045]};},fs:`
       vec3 nn=flatN(P);if(dot(nn,V)<0.)nn=-nn;float fr=fresnel(nn,V,3.);
       float on=u_life<P402D_OFF?max(pow(sat(u_age/(P402D_FIRE*u_dur)),2.),step(P402D_FIRE,u_life)):p402_e(u_age-P402D_OFF*u_dur,2.);
@@ -17336,10 +17340,10 @@ float zgOpen(){return smoothstep(.56,.66,u_life);}`,
       float rim=smoothstep(.12,.0,edgeD)*(.6+.4*nz(uv*vec2(6.,10.)+u_time*.3).r);
       col=bg+glow(rim*1.,P_tint)*1.*o;a=sat(rv+rim*o)*step(.001,o);
       dist=q*.012*smoothstep(.2,.0,edgeD)*o;`},
-    {name:'Rune frame',geo:'quad',blend:'add',vs:`
+    {name:'Carved frame',geo:'quad',blend:'add',vs:`
       vec3 lp=vec3(p.x*.62,1.52+p.y*1.1,.02);p=ZG_F+zgW(lp);`,
       fs:`vec2 q=(uv*2.-1.)*vec2(.62,1.1);float o=smoothstep(.5,.6,u_life);float d=sdBox(q,vec2(.585,1.065));
-      float lane=step(abs(d+.03),.025);float r=rune(vec2(fract((q.x+q.y)*7.)*2.-1.,(d+.03)/.025),floor((q.x+q.y)*7.));
+      float lane=step(abs(d+.03),.025);float r=tick(vec2(fract((q.x+q.y)*7.)*2.-1.,(d+.03)/.025),floor((q.x+q.y)*7.));
       float m=lane*smoothstep(.18,.08,r);col=glow(m*o*(.6+.4*sin(u_time*4.+q.y*9.)),P_tint)*1.1;a=1.;`},
     {name:'Shed grit',type:'particles',count:180,life:DUR-.1,burst:true,blend:'alpha',soft:.2,stretch:.02,sim:`
       float i=mod(id,15.);int ii=int(i+.5);vec3 C=ZG_C[ii],S=ZG_S[ii];float t0=(ZG_G0+C.y/3.4*.075+i*.004)*u_dur;float tt=T-t0-.15-r.x*.4;
@@ -17823,7 +17827,7 @@ float p405_burn(){return sat((u_life-p405_BURN)/(p405_STRIKE-p405_BURN+.02));}
 float p405_ts(){return u_age-p405_STRIKE*u_dur;}
 #ifdef FRAG
 float p405_sigil(vec2 q){float d=stroke(length(q)-.82,.025)+stroke(length(q)-.62,.015);
-  d+=stroke(sdStar(q,.6,5.,2.3),.02);d+=runeRing(q,.72,12.,.07,3.)*.8;return sat(d);}
+  vec2 pc=polar(q);d+=stroke(length(vec2((fract(pc.x*5.)-.5)*TAU*.45/5.,pc.y-.45))-.05,.02);d+=stroke(length(q)-.2,.015);d+=tickRing(q,.72,12.,.07,3.)*.8;return sat(d);}
 #endif`,
   lights:(t,age,life,P)=>{const c=P.tint,ac=P.accent;const L=[];
     if(life<HOV){L.push({p:deckP(),c:c.map(v=>v*1.5*Math.pow(p405_cl(life/DRAW),2)),r:2});}
@@ -17887,7 +17891,7 @@ float p405_sigil(vec2 q){float d=stroke(length(q)-.82,.025)+stroke(length(q)-.62
     {name:'Strike flash',geo:'quad',billboard:true,blend:'add',depthTest:false,xf:{p:[F[0],.7,F[2]],s:[1.1,1.9,1]},fs:`
       float h=p405_ts();vec2 q=uv*2.-1.;float hold=step(0.,h)*step(h,.05)*(1.-h*6.)*.6;
       float col0=smoothstep(.22,.0,abs(q.x)*(1.+q.y*.4))*smoothstep(1.,.6,q.y)*smoothstep(-1.,-.7,q.y);
-      float st=sat(-sdStar(q*vec2(1.,1.7)+vec2(0.,1.2),.9,6.,2.8)*5.);
+      float st=sat(-sdStar(q*vec2(1.,1.7)+vec2(0.,1.2),.9,4.,2.8)*5.);
       col=mix(vec3(1.),P_accent,.25)*(col0*1.2+st)*hold+glow(hotDot(uv*vec2(1.,.6)+vec2(0.,.2))*step(0.,h)*exp(-h*12.)*.7,P_accent);a=1.;`},
     {name:'Floor smoke',type:'particles',count:40,life:2.8,burst:true,delay:STRIKE*D+.05,spread:.3,blend:'alpha',soft:.6,sim:`
       float ang=r.y*TAU;float d=(1.-exp(-T*2.))/2.;
@@ -18172,21 +18176,21 @@ float hrD(vec2 w){float s=w.y/1.6;float x=w.x-hrCx(s);float hw=hrHalf(s,step(0.,
 LAB.add({
   id:'void-gate', name:'Stone arch onto a starfield', cat:'Portals', stage:'ground', duration:7.,
   markers:{release:1.2,impact:1.55},
-  tags:['view parallax','interior mapping','starfield','lit mesh','rune sdf'],
-  blurb:'A rune-cut stone arch holding a membrane that is a real window: stars, a nebula and an eclipsed sun shift behind it as the camera moves.',
+  tags:['view parallax','interior mapping','starfield','lit mesh','carved tick sdf'],
+  blurb:'A carved stone arch holding a membrane that is a real window: stars, a nebula and an eclipsed sun shift behind it as the camera moves.',
   notes:[
     'The membrane never samples its own UVs for the far world. It projects the view ray through the quad, so the sky behaves like a place at infinity.',
     'Drifting rock silhouettes are intersected at two finite depths behind the surface. They slide faster than the stars, which is what sells the depth.',
     'The arch is one torus mesh reshaped in the vertex shader into legs, capitals, plinths and a keystone with a square section, then flat shaded and lit.',
-    'Runes are carved per stone block from the same block id that draws the mortar joints, and a slow wave of light travels around the arch.',
+    'Marks are carved per stone block from the same block id that draws the mortar joints, and a slow wave of light travels around the arch.',
     'A thin film of noise, a fresnel sheen and a little refraction keep the surface readable as a membrane and not as a hole.'
   ],
-  port:'Unreal: the arch is a static mesh with an emissive rune mask. The membrane is an unlit material that feeds the camera vector into a cubemap or star texture lookup, plus two BumpOffset layers for the debris.',
+  port:'Unreal: the arch is a static mesh with an emissive carving mask. The membrane is an unlit material that feeds the camera vector into a cubemap or star texture lookup, plus two BumpOffset layers for the debris.',
   cam:{yaw:.3,pitch:.06,dist:6.8,target:[0,1.65,0]},
   params:[
     {id:'tint',label:'Window light',type:'color',value:'#8a4cff'},
     {id:'nebula',label:'Nebula',type:'color',value:'#1fb6c9'},
-    {id:'power',label:'Rune power',min:0,max:2,value:1},
+    {id:'power',label:'Mark glow',min:0,max:2,value:1},
     {id:'debris',label:'Debris',min:0,max:1,value:.7},
     {id:'stars',label:'Star density',min:.2,max:2,value:1}
   ],
@@ -18198,7 +18202,7 @@ LAB.add({
   ],
   glsl:`
 #define VG_R 1.15
-// timeline: runes wake from the plinths up (0..1.2), the membrane tears open from the centre (climax ~1.55), holds, collapses 5.5..6.2, runes cool last
+// timeline: carvings wake from the plinths up (0..1.2), the membrane tears open from the centre (climax ~1.55), holds, collapses 5.5..6.2, carvings cool last
 float vgOpen(){return easeOutBack(sat((u_age-1.2)/.5))*(1.-easeIn(sat((u_age-5.5)/.7)));}
 float vgWake(float h){return smoothstep(0.,.5,u_age*2.9-h)*(1.-.75*smoothstep(5.9,6.9,u_age));}
 #define VG_L 1.9
@@ -18246,7 +18250,7 @@ vec3 vgCell(vec2 x){vec2 n=floor(x),f=fract(x);float md=8.;vec3 res=vec3(0.);
       float g=nz(P.xy*.55+P.z*.31).r;float g2=nz(P.xy*2.1+P.z).b;
       vec3 alb=vec3(.1,.096,.108)*(.5+.75*g)*(.8+.35*g2)*(.72+.5*hash11(bid+3.));
       alb*=mix(.28,1.,joint);
-      vec2 rq=vec2((fb-.5)*.4,rr)/.15;float rd0=rune(rq,bid+7.);
+      vec2 rq=vec2((fb-.5)*.4,rr)/.15;float rd0=tick(rq,bid+7.);
       float face=step(.7,abs(n.z))*step(abs(rq.x),1.15)*step(abs(rr),.17);
       float groove=smoothstep(.22,.1,rd0)*face;float core=smoothstep(.13,.04,rd0)*face;
       alb*=1.-.75*groove;
@@ -22827,8 +22831,8 @@ float p513smT(float te){return min(u_age,P513SM_TI)-te;}`,
       vec2 hq=vec2(abs(q.x),q.y);float hg=min(sdSeg(hq,vec2(0.,0.),vec2(.55,.7)),sdSeg(hq,vec2(0.,0.),vec2(.55,-.7)));
       hg=min(hg,min(abs(q.y-.7),abs(q.y+.7))+step(.55,abs(q.x)));
       float glass=stroke(hg,.008)*smoothstep(.1,.6,dr);
-      float runes=runeRing(q,.975,20.,.05,7.)*sweep;
-      float sig=sat(ring+glass+runes);float tt=u_age-P513SM_TI;
+      float ticks=tickRing(q,.975,20.,.05,7.)*sweep;
+      float sig=sat(ring+glass+ticks);float tt=u_age-P513SM_TI;
       float heat=u_age<P513SM_TI?.6+.4*dr:.6*p513_ex(tt,.6)+.25;
       float n=nz(uv*4.).b;float dust=smoothstep(.6,1.,n+.3)*smoothstep(1.2,.4,d)*smoothstep(P513SM_TI,P513SM_TI+2.,u_age);
       vec3 lit=u_amb*5.+fxLight(P)*.3+u_keyCol*.15;
@@ -23376,7 +23380,7 @@ float p515stSeal(vec2 q,float fill){
   float m=stroke(sdRing(q,.88,0.),.02)+stroke(sdRing(q,.7,0.),.012)*.8+stroke(sdRing(q,.3,0.),.01)*.7;
   float sa=fract(pc.x*3.);float sp=min(sa,1.-sa)*rr*TAU/3.;
   m+=smoothstep(.022,.008,sp)*step(.3,rr)*step(rr,.88);
-  m+=runeRing(q,.79,15.,.055,4.2)*.8;
+  m+=tickRing(q,.79,15.,.055,4.2)*.8;
   float wedge=step(pc.x,fill/3.)*smoothstep(.71,.69,rr)*smoothstep(.29,.31,rr);
   return sat(m)+wedge*.55;}
 #endif`,
@@ -24536,7 +24540,7 @@ mat3 p518j_ringR(float k,out vec3 c){float rs=p518j_rise();float tl=p518j_tl();f
     {name:'Bronze rings',geo:['torus',.07],blend:'opaque',count:2,vs:`
       vec3 c;mat3 R=p518j_ringR(inst,c);float sc=(inst<.5?.62:.72)*smoothstep(.04,.14,u_life);data=vec4(p,inst);p=R*(p*sc)+c;n=R*n;`,fs:`
       vec3 nn=normalize(N);vec3 op=data.xyz;float an=atan(op.z,op.x)/TAU;float tk=smoothstep(.04,.0,abs(fract(an*24.)-.5)-.44)*smoothstep(.0,.03,op.y+.0)*0.+smoothstep(.04,.0,abs(fract(an*24.)-.5)-.45);
-      float rune=step(.5,fract(an*48.+.25))*step(abs(op.y),.03);
+      float notch=step(.5,fract(an*48.+.25))*step(abs(op.y),.03);
       vec3 alb=P_metal*(.75+.5*nz(op.xz*3.+data.w).r);float tl=p518j_tl();float lk=step(P518J_LK,u_life);
       alb=mix(vec3(luma(alb)),alb,.7);col=shade(alb*(1.-.3*tk),.28,1.,nn,V,P);
       float fl=lk*exp(-tl*10.);col+=glow(tk*(.2+.4*exp(-tl*1.5)*lk)+fl*.25,P_tint)*(.3+fl*.45);a=1.;`},
@@ -24679,16 +24683,16 @@ const head=(ph,name)=>({name,geo:'quad',billboard:true,blend:'add',xf:(t)=>({p:h
       col=glow(hotDot(uv)*1.1+glint(uv)*.4,P_tint)*P_power;a=1.;`});
 LAB.add({
   id:'weapon-enchant', name:'Weapon Enchant', cat:'Cosmetics', stage:'full',
-  tags:['lit mesh','vertex shell','axis billboard','analytic ribbon','rune sdf'],
-  blurb:'A floating blade with glowing runes and edges, an elemental shell, a camera-facing aura, two orbiting ribbons and sparks or drips.',
+  tags:['lit mesh','vertex shell','axis billboard','analytic ribbon','tick sdf'],
+  blurb:'A floating blade with glowing tick marks and edges, an elemental shell, a camera-facing aura, two orbiting ribbons and sparks or drips.',
   notes:[
-    'The sword is lit and opaque. Runes from rune() sit on the ridge and the cutting edges glow, both fed by noise that scrolls from guard to tip.',
+    'The sword is lit and opaque. Marks from tick() sit on the ridge and the cutting edges glow, both fed by noise that scrolls from guard to tip.',
     'The shell is a second copy of the blade scaled outward in the vertex shader and eroded with fast noise, so the element hugs the metal.',
     'The big silhouette comes from a strip billboarded around the blade axis. It never shows an edge and carries the flames, mist or lightning arcs.',
     'Flow sets whether the element rises like fire or sinks like frost, and the same value drives the particles into embers or drips.',
     'Two ribbons follow a closed-form helix around the blade, so the trail needs no history buffer.'
   ],
-  port:'Unreal: weapon material layer for runes and edge glow, a shell mesh with World Position Offset, and a Niagara system attached to weapon sockets for the aura ribbon and sparks. Expose element colour and flow direction as user parameters.',
+  port:'Unreal: weapon material layer for the tick marks and edge glow, a shell mesh with World Position Offset, and a Niagara system attached to weapon sockets for the aura ribbon and sparks. Expose element colour and flow direction as user parameters.',
   cam:{yaw:.66,pitch:.08,dist:3.5,target:[.1,1.22,.55]},
   params:[
     {id:'tint',label:'Element',type:'color',value:'#ff6a1a'},
@@ -24719,7 +24723,7 @@ vec3 wePath(float t,float ph){float an=t*2.7+ph;float h=.6+.5*sin(t*.83+ph*.5);f
         float fl=nz(vec2(e*.25,uv.y*1.3-u_time*.5*sign(P_flow+.001))).r;
         float edge=smoothstep(.72,1.,e);
         vec2 g=vec2(OP.x/.036,(fract(OP.y*7.5)-.5)*2.1);
-        float rn=smoothstep(.2,.06,rune(g,floor(OP.y*7.5)+3.))*step(.1,OP.y)*step(OP.y,.88);
+        float rn=smoothstep(.2,.06,tick(g,floor(OP.y*7.5)+3.))*step(.1,OP.y)*step(OP.y,.88);
         float sweep=band(uv.y,fract(u_time*.3)*1.5-.25,.14);
         col+=glow(edge*(.25+fl*.8)+rn*(.5+fl*.8+sweep*.5)+sweep*.12,P_tint)*1.3*P_power;
       }else col+=P_tint*.05*P_power;
@@ -27706,7 +27710,7 @@ WEAPONS.forEach(W => LAB.add(LAB.Combat.make({ id: 'tb-' + W[0], name: 'Testbed 
 })();
 /* ---- 701_arpg_lightning.js ---- */
 (function(){
-/* Pack 701: ARPG archetypes, Lightning. Spark (a spray of wandering lightning knots) and Shock Nova (a rune ring and an
+/* Pack 701: ARPG archetypes, Lightning. Spark (a spray of wandering lightning knots) and Shock Nova (a tick ring and an
    outer ring of lightning). Rebuilt against research/refs/poe_spark_wiki.png and research/refs/poe_shock_nova_wiki.png
    (read in research/REFERENCES.md). Shared bolt technique: closed-form recursive midpoint displacement (the Schauder hat
    sum of the classic subdivision, as in three.js LightningStrike), reseeded every 1 to 2 frames, hairline hot core, soft halo. */
@@ -27968,30 +27972,30 @@ float p701n_R1(){return ${p701_F(R1)}*P_radius;}
 float p701n_R2(){return ${p701_F(R2)}*P_radius;}
 float p701n_R0(){return ${p701_F(R1+.35)}*P_radius;}
 float p701n_x(float ag){return sat((ag-P701N_TR-P701N_T2)/P701N_EXP);}
-// outer ring radius: leaves the rune band T2 after release, eases out to R2 (impact), analytic inverse for pass times
+// outer ring radius: leaves the tick band T2 after release, eases out to R2 (impact), analytic inverse for pass times
 float p701n_R(float ag){float x=p701n_x(ag);return mix(p701n_R0(),p701n_R2(),1.-pow(1.-x,2.4));}
 float p701n_tPass(float r){float x=sat((r-p701n_R0())/(p701n_R2()-p701n_R0()));return x>=.999?99.:P701N_TR+P701N_T2+P701N_EXP*(1.-pow(1.-x,1./2.4));}
 // outer ring energy: full while expanding, a short hold at the rim, then decays
 float p701n_E(float ag){float tr=ag-P701N_TR-P701N_T2;return step(0.,tr)*(tr<P701N_EXP+.1?1.:exp(-(tr-P701N_EXP-.1)*2.8));}
-// rune band energy: ignites at release with a bloom, burns, fades last
+// tick band energy: ignites at release with a bloom, burns, fades last
 float p701n_RE(float ag){float tr=ag-P701N_TR;return sat(tr/.08)*(1.+.5*exp(-max(tr,0.)*6.))*exp(-max(tr-.6,0.)*.9);}
-// glyph distance in a ring: x = distance to the strokes (glyph units), y = glyph index, z = 1 inside the glyph cell
-vec3 p701n_glyph(vec2 q,float r,float n,float size,float seed){vec2 pc=polar(q);float k=pc.x*n;float i=floor(k);
+// tick distance in a ring: x = distance to the stroke (cell units), y = tick index, z = 1 inside the tick cell
+vec3 p701n_tick(vec2 q,float r,float n,float size,float seed){vec2 pc=polar(q);float k=pc.x*n;float i=floor(k);
   vec2 g=vec2((fract(k)-.5)*TAU*r/n,pc.y-r)/size;if(abs(g.x)>1.||abs(g.y)>1.)return vec3(9.,i,0.);
-  return vec3(rune(g,i+seed*13.),i,1.);}
+  return vec3(tick(g,i+seed*13.),i,1.);}
 `;
 LAB.add({
   id:'arpg-shock-nova', name:'Shock Nova', set:'ARPG', cat:'Lightning', sub:'Nova', level:1, legacy:false, duration:DUR, stage:'full',
   src:'Casts a ring of lightning around the caster: an inner ring of glowing runes and a larger outer ring of lightning that shocks everything on its edge. Reference: research/refs/poe_shock_nova_wiki.png.',
-  tags:['rune ring','midpoint displacement','ring bolts','two-band nova','cooling glyphs'],
-  blurb:'The caster slams the charge into the stone and a ring of burning orange-white runes ignites around them between two thin blue-white circles; a beat later a thin outer ring of white-violet lightning races out to four metres, throwing short arcs in and out from its edge, and dies back while the runes burn down last.',
+  tags:['tick ring','midpoint displacement','ring bolts','two-band nova','cooling ticks'],
+  blurb:'The caster slams the charge into the stone and a ring of burning orange-white ticks ignites around them between two thin blue-white circles; a beat later a thin outer ring of white-violet lightning races out to four metres, throwing short arcs in and out from its edge, and dies back while the ticks burn down last.',
   notes:[
-    'Matches the PoE read: the energy lives in two ring bands, a rune band at 2 m (runeRing glyph script between two thin circles, warm orange-white against the blue-white bolts) and a thin lightning ring at 4 m; the floor inside is left dark.',
+    'Matches the PoE read: the energy lives in two ring bands, a tick band at 2 m (tickRing radial ticks and dots between two thin circles, warm orange-white against the blue-white bolts) and a thin lightning ring at 4 m; the floor inside is left dark.',
     'The outer ring is circumferential midpoint displacement bolts overlapping around the rim plus short in-and-out arcs that leave the rim only, all reseeding every 1 or 2 frames; its radius is an ease-out curve with an analytic inverse so sparks, haze and the shock on each target fire as the rim passes.',
-    'The rune band ignites in a quick sweep on the release frame with a bloom, flickers per glyph while it burns, and fades last; a faint ash glyph decal is left under it.',
-    'A bright core at the caster (chest glow, hand static before the slam) and eight lights: core, three on the outer rim, two warm on the rune band and one per shocked target.'
+    'The tick band ignites in a quick sweep on the release frame with a bloom, flickers per tick while it burns, and fades last; a faint ash tick decal is left under it.',
+    'A bright core at the caster (chest glow, hand static before the slam) and eight lights: core, three on the outer rim, two warm on the tick band and one per shocked target.'
   ],
-  port:'Niagara: a ring emitter on a radius curve spawning beam emitters along the rim (circumferential) and a second set of short radial beams with random sign, a rune-band decal material with a polar glyph atlas driven by an ignite sweep and a burn curve, and a core light. The slam is a montage notify.',
+  port:'Niagara: a ring emitter on a radius curve spawning beam emitters along the rim (circumferential) and a second set of short radial beams with random sign, a tick-band decal material with a polar tick strip driven by an ignite sweep and a burn curve, and a core light. The slam is a montage notify.',
   cam:{yaw:.15,pitch:.62,dist:11.5,target:[0,.2,-.3]},
   actors:[{p:[0,0,0],ry:.15},{p:[TGS[0][0],0,TGS[0][1]],ry:tryOf(TGS[0])},{p:[TGS[1][0],0,TGS[1][1]],ry:tryOf(TGS[1])}],
   caster:{kind:'slamcast',release:TR,at:[.05,.25,.5]},
@@ -27999,12 +28003,12 @@ LAB.add({
   params:[
     {id:'tint',label:'Arc colour',type:'color',value:'#8ea4ff'},
     {id:'radius',label:'Radius',min:.7,max:1.3,value:1},
-    {id:'rune',label:'Rune glow',min:0,max:2,value:1}
+    {id:'rune',label:'Ring glow',min:0,max:2,value:1}
   ],
   variants:[
     {name:'Violet',set:{tint:'#a57cff',rune:.7}},
     {name:'Wide nova',set:{radius:1.25,rune:1.2}},
-    {name:'Orange runes',set:{tint:'#ffd9a0',rune:1.6}}
+    {name:'Orange ring',set:{tint:'#ffd9a0',rune:1.6}}
   ],
   glsl:P701_LIB+NG,
   lights:(t,age,life,P)=>{const c=P.tint,L=[];const fl=k=>.7+.6*p701_hash(Math.floor(age*30)+k*13.1);
@@ -28019,18 +28023,18 @@ LAB.add({
     TGS.forEach((g,k)=>{const tp=tPassJ(Math.hypot(g[0],g[1])-.2,P);const lt=age-tp;if(lt>0&&lt<.6)L.push({p:[g[0],1,g[1]],c:c.map(v=>(v*.8+.2)*4*Math.exp(-lt*4)*fl(k+8)),r:2.5});});
     return L.slice(0,8);},
   layers:[
-    // residue: a faint ash copy of the glyphs, revealed as they burn, fading last
-    {name:'Rune ash',geo:['ground',1],blend:'alpha',xf:(t,a,l,P)=>({p:[0,.011,0],s:(R1+.7)*P.radius}),fs:`
+    // residue: a faint ash copy of the ticks, revealed as they burn, fading last
+    {name:'Ring ash',geo:['ground',1],blend:'alpha',xf:(t,a,l,P)=>({p:[0,.011,0],s:(R1+.7)*P.radius}),fs:`
       float RS=(${p701_F(R1)}+.7)*P_radius;vec2 q=(uv*2.-1.)*RS;float rr=length(q);
-      vec3 g=p701n_glyph(q,p701n_R1(),P701N_NR,.24*P_radius,1.);float gm=smoothstep(.2,.06,g.x);float lip=smoothstep(.34,.14,g.x)*(1.-gm);
+      vec3 g=p701n_tick(q,p701n_R1(),P701N_NR,.24*P_radius,1.);float gm=smoothstep(.2,.06,g.x);float lip=smoothstep(.34,.14,g.x)*(1.-gm);
       float n1=nzH(uv*3.).r;float tr=u_age-P701N_TR;float rev=smoothstep(.3,1.2,tr);
       col=mix(vec3(.004),vec3(.1,.095,.09)*(.6+.6*n1),lip/max(gm+lip,1e-3));
       a=sat(gm*.8+lip*.45)*rev*p701_endFade()*(1.-smoothstep(.75,1.,u_life)*.5);`},
-    // the rune band: glyph script between two thin circles, ignite sweep, per-glyph flicker, long burn
-    {name:'Rune band',geo:['ground',1],blend:'add',xf:(t,a,l,P)=>({p:[0,.014,0],s:(R1+.7)*P.radius}),fs:`
+    // the tick band: radial ticks and dots between two thin circles, ignite sweep, per-tick flicker, long burn
+    {name:'Ring band',geo:['ground',1],blend:'add',xf:(t,a,l,P)=>({p:[0,.014,0],s:(R1+.7)*P.radius}),fs:`
       float RS=(${p701_F(R1)}+.7)*P_radius;vec2 q=(uv*2.-1.)*RS;float rr=length(q);vec2 pc=polar(q);
       float tr=u_age-P701N_TR;float RE=p701n_RE(u_age);
-      vec3 g=p701n_glyph(q,p701n_R1(),P701N_NR,.24*P_radius,1.);
+      vec3 g=p701n_tick(q,p701n_R1(),P701N_NR,.24*P_radius,1.);
       float tk=fract(g.y/P701N_NR+.3)*.22;float lit=smoothstep(0.,.05,tr-tk);
       float fk=(.78+.3*hash11(g.y*3.1+floor(u_age*22.))+.12*sin(u_age*31.+g.y*2.))*step(hash11(g.y*5.7+floor(u_age*9.)*.31),RE*2.2+.08);
       float core=smoothstep(.1,.02,g.x);float halo=smoothstep(.42,.08,g.x);
@@ -29113,7 +29117,7 @@ float p704_dis(float s){return max(1.-smoothstep(0.,.14,s),smoothstep(BH_FL-.38,
       else{float db=min(1.-abs(f.x),1.-abs(f.y)*.92);g=band(db,.17,.045)*step(.2,abs(f.x));
         vec2 c=f*vec2(1.,.55);float cr=min(sdBox(c-vec2(0.,0.),vec2(.05,.42)),sdBox(c,vec2(.28,.05)));
         g=max(g,smoothstep(.035,0.,cr)*step(abs(f.x),.3)+band(abs(f.x),.2,.025)*.8);
-        float rn=smoothstep(.07,.02,rune(vec2(abs(f.x)-.58,f.y*.55)*2.2,floor(face+i*3.+step(0.,f.x)*7.)));g=max(g,rn*step(.35,abs(f.x))*step(abs(f.x),.8));}
+        float rn=smoothstep(.07,.02,tick(vec2(abs(f.x)-.58,f.y*.55)*2.2,floor(face+i*3.+step(0.,f.x)*7.)));g=max(g,rn*step(.35,abs(f.x))*step(abs(f.x),.8));}
       g=sat(g);float mic=nz3(b*vec3(1.6,.9,.9)+i*.3).b;float scr=smoothstep(.55,.8,nz(b.xy*vec2(3.,.4)+b.z).b);
       vec3 alb=mix(vec3(.46,.47,.5),vec3(.05,.055,.065),g)*(.8+.35*mic)*(1.-scr*.25);float rough=mix(.2,.6,g)+scr*.15;
       vec3 hm=nz3(b*vec3(2.2,1.3,1.3)+i).rgb-.5;vec3 nn=normalize(normalize(N)+hm*.35);vec3 c=shade(alb,rough,.95,nn,V,P);
@@ -29182,8 +29186,9 @@ float p704_dis(float s){return max(1.-smoothstep(0.,.14,s),smoothstep(BH_FL-.38,
 
 /* ============================== Righteous Fire ============================== */
 // Reference: research/refs/poe_righteous_fire_wiki.png (poewiki.net). Read: a thin bright orange flame ring at the AoE edge
-// (~3.5 m) that reads like a drawn circle, a burning magic circle (glyph ring + pentagram, orange with violet lines)
-// ~1.2 m under the caster, and two hot points on the hands. The floor in between is barely touched.
+// (~3.5 m) that reads like a drawn circle, a burning inner circle ~1.2 m under the caster (the reference draws a glyph ring
+// and a pentagram; here it is rings, ticks and violet dots, owner rule 13), and two hot points on the hands. The floor in
+// between is barely touched.
 {
 const REL=.75,IMP=1.25,D0=5.0,D1=5.75,G0=5.5,G1=6.35,H0=5.4,H1=6.3,DUR=7.4,RY=.35;
 const RRk=3.5,RGk=1.2;
@@ -29194,23 +29199,23 @@ const front=(a,P)=>{const x=p704clamp((a-REL)/(IMP-REL));const e=1-(1-x)*(1-x)*(
 LAB.add({
   id:'arpg-righteous-fire', name:'Righteous Fire', set:'ARPG', cat:'Fire', sub:'Aura', level:8, legacy:false, duration:DUR, stage:'full',
   src:'A sustained self-immolation aura: the caster burns, a magic circle ignites under their feet and a ring of fire marks the edge of the area that burns every enemy inside it.',
-  tags:['floor decal ring','procedural magic circle','rune ring','hand-anchored flames','heat shimmer'],
-  blurb:'Fire kindles in both palms, a glyph circle with a violet pentagram draws itself under the caster and a thin orange ring races out to the edge of the aura; the three burn steadily, then the ring gutters, the glyph goes last and a scorch ring remains.',
+  tags:['floor decal ring','procedural ring circle','tick ring','hand-anchored flames','heat shimmer'],
+  blurb:'Fire kindles in both palms, a ring circle with violet dots draws itself under the caster and a thin orange ring races out to the edge of the aura; the three burn steadily, then the ring gutters, the inner circle goes last and a scorch ring remains.',
   notes:[
     'Built against the Path of Exile wiki screenshot: three elements and almost nothing in between. The outer ring is one ground decal, a thin band on the front radius with a doubled inner line, a feathered flame fringe scrolling outward and a soft halo, so it reads as a drawn circle at gameplay distance.',
-    'The magic circle is procedural: two orange fire rings and a rune ring (library rune and runeRing) that rotate slowly one way, a violet pentagram and two thin violet circles that rotate the other way. Rings draw by an angular sweep and the pentagram line by line at release.',
-    'Low licking flames and embers are soft particles born on the ring and on the glyph edge; a tube of noise-driven refraction above the outer ring is the heat shimmer. Fire on the caster uses the hand uniforms and handAt, with short forearm, shoulder and head licks and a hot white core sprite on each palm; the channel pose gets an at point so the right hand is raised to the side and the two hot points stay apart, as in the reference.',
-    'Eight lights: the glyph centre, four on the ring, both hands and one rim light placed opposite the camera so the body carries a red-orange rim. Fall-off is staggered: ring first, then hands, glyph last, and a soot ring with a pale ash lip and cooling embers stays on the floor.',
+    'The inner circle is procedural: two orange fire rings and a tick ring (library tick and tickRing) that rotate slowly one way, a ring of violet dots and two thin violet circles that rotate the other way. Rings draw by an angular sweep and the dots light one after another at release.',
+    'Low licking flames and embers are soft particles born on the ring and on the inner circle edge; a tube of noise-driven refraction above the outer ring is the heat shimmer. Fire on the caster uses the hand uniforms and handAt, with short forearm, shoulder and head licks and a hot white core sprite on each palm; the channel pose gets an at point so the right hand is raised to the side and the two hot points stay apart, as in the reference.',
+    'Eight lights: the circle centre, four on the ring, both hands and one rim light placed opposite the camera so the body carries a red-orange rim. Fall-off is staggered: ring first, then hands, inner circle last, and a soot ring with a pale ash lip and cooling embers stays on the floor.',
     'Ground noise is hex-tiled (nzH); polar lookups use nzL with integer repeats so the rings have no seam. Hold motion runs on absolute time so the sustained phase loops.'
   ],
-  port:'Niagara: two decal materials (ring and magic circle) driven by a front radius and a draw parameter, with the circle built from SDF rings, a star polyline and a rune atlas; a torus-shaped emitter for ring flames and embers; a skeletal-socket emitter on both hands and forearms for body flames; a refraction ring mesh for the shimmer. Sustained phase is a looping state with staggered fade curves per element.',
+  port:'Niagara: two decal materials (outer ring and inner circle) driven by a front radius and a draw parameter, with the circle built from SDF rings, ticks and dots; a torus-shaped emitter for ring flames and embers; a skeletal-socket emitter on both hands and forearms for body flames; a refraction ring mesh for the shimmer. Sustained phase is a looping state with staggered fade curves per element.',
   cam:{yaw:.3,pitch:.6,dist:10.4,target:[0,.3,0]},
   actors:[{p:[0,0,0],ry:RY}],
   caster:{kind:'channel',release:REL,channel:D0-REL,at:[.58,1.56,.22]},
   markers:{release:REL,impact:IMP},
   params:[
     {id:'tint',label:'Flame',type:'color',value:'#ff9636'},
-    {id:'lines',label:'Glyph lines',type:'color',value:'#9a5cff'},
+    {id:'lines',label:'Ring lines',type:'color',value:'#9a5cff'},
     {id:'radius',label:'Radius',min:.7,max:1.4,value:1},
     {id:'heat',label:'Intensity',min:.5,max:1.6,value:1}
   ],
@@ -29236,14 +29241,14 @@ float p704_dieG(float ag){return smoothstep(RF_G0,RF_G1,ag);}
 float p704_envR(float ag){return smoothstep(RF_REL,RF_REL+.1,ag)*(1.-p704_dieR(ag));}
 float p704_envG(float ag){return smoothstep(RF_REL,RF_REL+.3,ag)*(1.-p704_dieG(ag));}
 float p704_envH(float ag){return smoothstep(RF_REL-.45,RF_REL+.05,ag)*(1.-smoothstep(RF_H0,RF_H1,ag));}
-// ring front: leaves the glyph edge at release and reaches the aura edge on the impact marker
+// ring front: leaves the inner circle edge at release and reaches the aura edge on the impact marker
 float p704_front(float ag){return mix(RF_RG,RF_RR,easeOut((ag-RF_REL)/(RF_IMP-RF_REL)));}
 // gaps that open along a ring as it dies (die 0..1); a01 is the angle 0..1, integer repeats keep the lookup seamless
 float p704_gap(float a01,float die,float rep,float seed){float n=nzL(vec2(a01*rep,seed)).g+.1;return smoothstep(die*1.25-.08,die*1.25+.04,n);}
-// pentagram: five chords between points on radius rr, drawn one chord after another as drw goes 0..1
-float p704_pent(vec2 q,float rr,float drw,float w){float d=1e3;float best=0.;
-  for(int k=0;k<5;k++){float i=float(k);float a0=i*TAU/5.,a1=mod(i+2.,5.)*TAU/5.;vec2 A=vec2(cos(a0),sin(a0))*rr,B=vec2(cos(a1),sin(a1))*rr;
-    float u=sat(dot(q-A,B-A)/dot(B-A,B-A));float lim=sat(drw*5.-i);float dd2=length(q-A-(B-A)*min(u,lim));
+// dot ring: ten dots on radius rr, each with a short radial tick inside it, lit one after another as drw goes 0..1
+float p704_dots(vec2 q,float rr,float drw,float w){float d=1e3;float best=0.;
+  for(int k=0;k<10;k++){float i=float(k);float a0=i*TAU/10.;vec2 A=vec2(cos(a0),sin(a0));
+    float lim=sat(drw*10.-i);float dd2=min(length(q-A*rr)-w*1.6,sdSeg(q,A*(rr-.11),A*(rr-.04)));
     if(dd2<d){d=dd2;best=lim;}}
   return smoothstep(w,w*.3,d)*step(.001,best);}
 `,
@@ -29268,7 +29273,7 @@ float p704_pent(vec2 q,float rr,float drw,float w){float d=1e3;float best=0.;
       vec3 sc=vec3(.012,.01,.009);vec3 ash=vec3(.22,.2,.18);
       float aa2=sat(max(dk,lip*.65)+cool*.6);
       col=mix(sc,ash,lip*.6/(dk+lip*.6+1e-3))+blackbody(.5+.35*n2)*cool*.45/max(aa2,.05);a=aa2*p704_endFade();`},
-    {name:'Magic circle',geo:['ground',1],blend:'add',xf:(t,a,l,P)=>({p:[0,.013,0],s:RGk*P.radius*1.3}),fs:`
+    {name:'Inner circle',geo:['ground',1],blend:'add',xf:(t,a,l,P)=>({p:[0,.013,0],s:RGk*P.radius*1.3}),fs:`
       vec2 w=P.xz;vec2 q=w/RF_RG;float rh=length(q);float ag=u_age;
       float G=sat((ag-RF_REL)/.42);float Gp=sat((ag-RF_REL-.15)/.5);float dieG=p704_dieG(ag);float envG=p704_envG(ag);
       float a01=fract(atan(q.y,q.x)/TAU+.25);
@@ -29279,11 +29284,11 @@ float p704_pent(vec2 q,float rr,float drw,float w){float d=1e3;float best=0.;
       float o1=band(rh,1.,.038)*(.7+1.*fl)*sw+band(rh,1.,.09)*tip*2.;
       float o2=band(rh,.56,.026)*(.6+.9*fl)*sw;
       float lk=exp(-max(rh-1.,0.)*9.)*step(1.,rh)*smoothstep(.5,.95,nzL(vec2(a01*6.,rh*3.-u_time*1.2)).g)*sw*.9;
-      float rn=runeRing(rot(u_time*.07)*q,.86,14.,.07,3.)*sw*(.85+.5*fl2);
+      float rn=tickRing(rot(u_time*.07)*q,.86,14.,.07,3.)*sw*(.85+.5*fl2);
       float v1=(band(rh,.74,.011)+band(rh,.98,.009)*.7)*sw;
-      float pent=p704_pent(rot(-u_time*.05)*q,.74,Gp,.012)*(.8+.4*fl2);
+      float dts=p704_dots(rot(-u_time*.05)*q,.74,Gp,.012)*(.8+.4*fl2);
       float hz=(.1+.07*fl2)*smoothstep(.62,.0,rh)*sw;
-      float org=(o1+o2+lk+rn*.95)*gapG;float vio=(v1+pent)*gapG;
+      float org=(o1+o2+lk+rn*.95)*gapG;float vio=(v1+dts)*gapG;
       org=org/(1.+org*.35);col=(flame(min(org,.82),P_tint)*1.25*P_heat+glow(min(vio*1.05,1.),P_lines)*.6+flame(hz,P_tint)*.5)*envG*p704_endFade();a=1.;`},
     {name:'Outer ring',geo:['ground',1],blend:'add',xf:(t,a,l,P)=>({p:[0,.014,0],s:RRk*P.radius*1.14}),fs:`
       vec2 w=P.xz;float rh=length(w);float RR=RF_RR;float F=p704_front(u_age);float die=p704_dieR(u_age);float on=smoothstep(RF_REL,RF_REL+.04,u_age);
@@ -29309,7 +29314,7 @@ float p704_pent(vec2 q,float rr,float drw,float w){float d=1e3;float best=0.;
       pos=o*(rr-T*.12)+vec3(0.,rise+.04,0.)+curl3(o*2.+id*.13+u_time*.25)*.05*t;
       size=mix(.05,.11,q.y*q.y)*sin(sat(t*1.1)*PI)*env*gap*P_heat*(.5+.7*q.z)*(1.-die*.5);spin=(q.w-.5)*.4;`,
       fs:`float m=p704_lick(uv,rnd,pt);col=flame(min(m*.85,1.),P_tint)*.75;a=sat(m*1.6);`},
-    {name:'Glyph flames',type:'particles',count:110,life:.45,blend:'add',additive:.65,soft:.08,stretch:.4,sim:`
+    {name:'Inner circle flames',type:'particles',count:110,life:.45,blend:'add',additive:.65,soft:.08,stretch:.4,sim:`
       float ba=u_age-T;float env=p704_envG(ba)*smoothstep(RF_REL+.1,RF_REL+.5,ba);float an=r.y*TAU;float inner=step(.75,q.w);
       float rr=RF_RG*(inner<.5?1.:.55)+(r.z-.5)*.04;vec3 o=vec3(cos(an),0.,sin(an));
       pos=o*rr+vec3(0.,T*mix(.45,.9,q.x)+.03,0.)+curl3(o*3.+id*.1+u_time*.3)*.04*t;
@@ -29541,15 +29546,15 @@ LAB.add({
   id:'arpg-meteor', name:'Meteor', set:'ARPG', cat:'Fire', sub:'Area', level:9, legacy:false,
   duration:DUR, stage:'full',
   src:'Calls a burning rock down from the sky onto a marked spot after a short delay, leaving the ground on fire.',
-  tags:['telegraph glyph','instanced molten debris','crater decal','flame ribbon','cooling residue'],
-  blurb:'A raised arm marks the ground with a glyph and a growing shadow; a burning rock streaks down at a steep angle, detonates, flings molten debris and leaves a cracked crater of burning ground that slowly cools.',
+  tags:['telegraph target mark','instanced molten debris','crater decal','flame ribbon','cooling residue'],
+  blurb:'A raised arm marks the ground with a ring target mark and a growing shadow; a burning rock streaks down at a steep angle, detonates, flings molten debris and leaves a cracked crater of burning ground that slowly cools.',
   notes:[
-    'The read is a telegraph then a payoff: the glyph and a darkening shadow show where it will land, and the meteor light reaches the floor before the rock enters the frame.',
+    'The read is a telegraph then a payoff: the target mark (rings and ticks) and a darkening shadow show where it will land, and the meteor light reaches the floor before the rock enters the frame.',
     'The rock is a lit mesh with an ablating white-hot leading face and glowing fissures, wrapped in a camera-facing flame ribbon and a fire-to-soot particle trail that stays hanging in the air.',
     'Impact: a spiked graphic burst for three frames, alpha explosion puffs that cool into lit soot, a shock ring, and instanced molten chunks with gravity and one bounce that keep glowing where they land.',
     'Residue: a hex-tiled crater decal with a shaded rim, radial ejecta streaks and molten cracks that cool from white to red to black, with flames licking over it while the heat lasts.'
   ],
-  port:'Sequencer or timeline: a decal plus a ground-projected material for the glyph and shadow, a falling mesh with a ribbon emitter, then a collision event that spawns the burst emitters, a mesh-particle debris emitter with collision, and a deferred crater decal whose heat parameter is driven by a curve.',
+  port:'Sequencer or timeline: a decal plus a ground-projected material for the target mark and shadow, a falling mesh with a ribbon emitter, then a collision event that spawns the burst emitters, a mesh-particle debris emitter with collision, and a deferred crater decal whose heat parameter is driven by a curve.',
   cam:{yaw:-.62,pitch:.36,dist:10.4,target:[-.5,1.4,.2]},
   actors:[{p:CP,ry:2.2}],
   caster:{kind:'big',release:TR,to:[C[0],C[2]],at:[CP[0]+.25,2.25,CP[2]-.2]},
@@ -29610,17 +29615,17 @@ float m5h(float x){float rim=.28*exp(-(x-1.)*(x-1.)/(x<1.?.017:.06));return x<1.
       cc=mix(cc,vec3(.005),rays*.75);
       float cm=(max(bowl,lip*.95)+halo*.55+rays*.8)*m5on();
       col=cc;a=sat(max(sh,sat(cm)*.95))*p705end();`},
-    {name:'Glyph and shock',geo:['ground',1],blend:'add',xf:(t,a,l,P)=>({p:[C[0],.02,C[2]],s:4.2*P.size}),fs:`
+    {name:'Target mark and shock',geo:['ground',1],blend:'add',xf:(t,a,l,P)=>({p:[C[0],.02,C[2]],s:4.2*P.size}),fs:`
       vec2 q2=(uv*2.-1.)*4.2*P_size;float r=length(q2);float ag=u_age;
       float draw=sat((ag-(M5_R-.25))/.45);float ap=sat((ag-M5_R)/(M5_I-M5_R));float off=1.-sat((ag-M5_I+.03)/.06);
       vec2 pc=polar(q2);float sweep=step(pc.x,draw);float R0=1.75*P_size;
       float ring=(stroke(r-R0,.018)+stroke(r-R0*.86,.01)*.8)*sweep;
-      float runes=runeRing(rot(-ag*.25)*q2/R0,.93,16.,.055,3.)*step(pc.x,draw*1.1-.1);
-      float runes2=runeRing(rot(ag*.4+1.)*q2/(R0*.55),.9,9.,.08,7.)*step(pc.x,draw*1.2-.2)*.7;
+      float outerTicks=tickRing(rot(-ag*.25)*q2/R0,.93,16.,.055,3.)*step(pc.x,draw*1.1-.1);
+      float innerTicks=tickRing(rot(ag*.4+1.)*q2/(R0*.55),.9,9.,.08,7.)*step(pc.x,draw*1.2-.2)*.7;
       float ticks=stroke(abs(fract(pc.x*48.)-.5)/48.*r*6.2832,.006)*band(r,R0*.66,.035)*sweep;
-      float spokes=runes2+ticks*.8+stroke(r-R0*.6,.007)*sweep*.7+stroke(r-R0*.72,.006)*sweep*.5;
+      float spokes=innerTicks+ticks*.8+stroke(r-R0*.6,.007)*sweep*.7+stroke(r-R0*.72,.006)*sweep*.5;
       float fl=.75+.25*sin(ag*21.)*sin(ag*13.7);float pul=.35+.65*ap*ap;
-      float gm=(ring+runes*.9+spokes)*pul*fl*off*smoothstep(M5_R-.25,M5_R-.1,ag);
+      float gm=(ring+outerTicks*.9+spokes)*pul*fl*off*smoothstep(M5_R-.25,M5_R-.1,ag);
       // shock ring on the stone after impact
       float tt=p705ev(M5_I);float sr=.6+tt*14.;float nn=nzL(vec2(pc.x*9.,.33)).r;
       float shock=band(r,sr,.05+.14*nn)*exp(-tt*8.)*m5on()*smoothstep(4.2,3.,r);
@@ -30823,11 +30828,11 @@ LAB.add({
 LAB.add({
   id:'holo-card', name:'Holographic Item Card', cat:'Items', stage:'ground',
   tags:['iridescence','foil flakes','emboss','view dependent','mouse tilt'],
-  blurb:'A rare item card floating upright with a holographic foil frame, an embossed rune and a sweeping sheen. Move the pointer to tilt it.',
+  blurb:'A rare item card floating upright with a holographic foil frame, an embossed ring mark and a sweeping sheen. Move the pointer to tilt it.',
   notes:[
     'Foil colour is a cosine palette indexed by the view vector in card tangent space, so the rainbow slides as the card tilts.',
     'A voronoi layer gives each foil flake its own grating direction. Flakes flash at different angles, which is what sells real holo print.',
-    'Frame and rune are one height field. It bends the normal for lighting and also offsets the foil lookup, so bevels pick up different hues.',
+    'Frame and mark are one height field. It bends the normal for lighting and also offsets the foil lookup, so bevels pick up different hues.',
     'The art window uses the same tangent view vector as a parallax offset, which puts the nebula behind the card surface.',
     'Pointer position drives the tilt in the vertex shader. A slow idle sway keeps it alive when nobody touches it.'
   ],
@@ -30836,7 +30841,7 @@ LAB.add({
   params:[
     {id:'tint',label:'Rarity',type:'color',value:'#ffb030'},
     {id:'foil',label:'Foil strength',min:0,max:2,value:1},
-    {id:'icon',label:'Rune',min:0,max:12,value:4},
+    {id:'icon',label:'Mark',min:0,max:12,value:4},
     {id:'sway',label:'Idle sway',min:0,max:2,value:1}
   ],
   variants:[
@@ -30893,8 +30898,10 @@ vec3 hcPal(float x){return pal(x,vec3(.5),vec3(.5),vec3(1.),vec3(0.,.33,.67));}`
       float frame=smoothstep(-.012,.003,dWin)*smoothstep(0.,-.014,dC);
       float inl=stroke(dC+.028,.0035)+stroke(dWin-.016,.0025);
       float dRing=abs(length(e)-.265)-.011;
-      float dRune=rune(e/.2,floor(P_icon))*.2-.021;
-      float dTri=abs(sdNgon(rot(u_time*.1)*e,.165,3.)-.03)-.004;
+      // embossed mark: a ring of dots (count set by the Mark slider) around a centre dot
+      float mk=3.+floor(mod(P_icon,6.));vec2 pe=polar(e);float mkc=TAU*.15/mk;
+      float dRune=min(length(vec2((fract(pe.x*mk)-.5)*mkc,pe.y-.15))-.024,length(e)-.04);
+      vec2 eo=rot(u_time*.1)*e;vec2 po=polar(eo);float dTri=length(vec2((fract(po.x*3.)-.5)*TAU*.165/3.,po.y-.165))-.012;
       float em=smoothstep(.004,-.004,min(dRing,dRune))*step(dArt,0.);
       float h=max(frame-inl*.5,em*.9);
       vec3 n=itBump(N,P,h,.007);
@@ -30924,7 +30931,7 @@ vec3 hcPal(float x){return pal(x,vec3(.5),vec3(.5),vec3(1.),vec3(0.,.33,.67));}`
         cw=mix(cw,art,step(dArt,0.));
         float k=(q.x+.33)/.07;float gi=floor(k);
         vec2 lq=vec2((fract(k)-.5)*1.365,(q.y-.575)/.04*.78);
-        float dG=rune(lq,gi+floor(P_icon)*3.)*.0513-.0045;
+        float dG=tick(lq,gi+floor(P_icon)*3.)*.0513-.0045;
         float gl=smoothstep(.003,-.002,dG)*step(0.,gi)*step(gi,7.5)*step(dTi,-.01);
         float ly=(-.345-q.y)/.062;float li=floor(ly);float len=.34*(.55+.45*hash11(li+floor(P_icon)*1.7));
         float ln=smoothstep(.007,.004,abs(fract(ly)-.5)*.062)*step(abs(q.x+.35-len),len)*step(0.,li)*step(li,3.5)*step(.14,fract((q.x+li*.13)*4.3));
@@ -31126,7 +31133,7 @@ const IT_SWORD=`
 #ifdef FRAG
 float itBladeRunes(vec3 op,float seed){
   float k=op.y*8.;vec2 q=vec2(op.x/.022,(fract(k)-.5)*2.);
-  float m=smoothstep(.2,.07,rune(q,floor(k)+seed));
+  float m=smoothstep(.2,.07,tick(q,floor(k)+seed));
   return m*smoothstep(.1,.16,op.y)*smoothstep(.9,.8,op.y);}
 vec3 itSword(float pid,vec3 n,vec3 v,vec3 p,vec3 op,vec3 tint){
   vec3 alb;float rough;float metal=1.;
@@ -31226,7 +31233,7 @@ vec3 uiGem(vec2 q,vec3 tint){
 `;
 LAB.add({
   id:'skill-button', name:'Skill Bar Slots', cat:'UI', stage:'ui',
-  tags:['sdf','radial sweep','state machine','hover','rune icon'],
+  tags:['sdf','radial sweep','state machine','hover','tick icon'],
   blurb:'Four action bar slots showing idle, cooling down, ready flash and proc states at once, with hover glow and a press ripple.',
   notes:[
     'Each slot is one rounded box SDF. The same distance drives the icon mask, the bevelled metal frame, the socket shadow and every glow.',
@@ -31259,9 +31266,9 @@ vec3 sbIcon(vec2 ip,float i,vec3 ti){
   float r=length(ip);
   float n=nz(ip*.21+i*.37+vec2(0.,-u_time*.012)).r,n2=nz(ip*.5-i*.21+vec2(u_time*.008,0.)).g;
   vec3 c=vec3(.006,.006,.01)+ti*ti*(.05+.55*n*n*n2*2.*sat(1.25-r));
-  float dn=i<.5?sdNgon(vec2(ip.x,-ip.y-.1),.4,3.):i<1.5?sdCircle(ip,.66):i<2.5?sdNgon(rot(.7854)*ip,.5,4.):sdHex(ip,.62);
+  float dn=i<.5?sdNgon(vec2(ip.x,-ip.y-.1),.4,3.):i<1.5?sdCircle(ip,.66):i<2.5?sdNgon(rot(.7854)*ip,.5,4.):sdCircle(ip,.58);
   c+=glow(aa(dn)*.16*(1.-r*.6)+stroke(dn,.016)*.5+stroke(dn-.09,.006)*.25,ti)*.8;
-  float rd=rune(ip*1.3,i*5.+4.);
+  float rd=tick(ip*1.3,i*5.+4.);
   c+=glow(inv(rd,.16)*.3*sat(1.1-r),ti);
   vec3 gc=mix(ti,vec3(1.),.55)*(1.05+.35*ip.y);
   c=mix(c,vec3(0.),smoothstep(.2,.12,rd)*.6);
@@ -31436,21 +31443,21 @@ float xpBurst(){return step(.999,P_fill);}
 });
 LAB.add({
   id:'loading-sigil', name:'Loading indicator', cat:'UI', stage:'ui',
-  tags:['rune ring','polar sdf','progress arc','draw on','pulse'],
-  blurb:'Loading indicator: rune rings that write themselves in and out, a forged progress track and a core that beats in time.',
+  tags:['tick ring','polar sdf','progress arc','draw on','pulse'],
+  blurb:'Loading indicator: ring segments of ticks and dots that draw themselves in and out, a forged progress track and a core that beats in time.',
   notes:[
-    'Each ring owns an angular window with a moving head and a breathing length, like a spinner. Runes and guide circles are masked by it, so they draw on and wipe off.',
+    'Each ring owns an angular window with a moving head and a breathing length, like a spinner. Ticks and guide circles are masked by it, so they draw on and wipe off.',
     'The head of each window is brighter than its tail, which gives direction without any particles.',
     'Progress lives in a channel cut into a metal bezel. The fill is an angle test with a round cap and a hot bead on the leading end.',
-    'The core beat sends a faint ring outward through the whole sigil so the layers feel connected.',
+    'The core beat sends a faint ring outward through the whole indicator so the layers feel connected.',
     'At 100 percent every window opens fully and the core flares: the indicator resolves instead of just stopping.'
   ],
-  port:'UMG: one material with Progress as a scalar parameter fed by the streaming level load. Bake runes to a strip texture and scroll the window mask in polar UVs. In UI Toolkit drive the same shader graph from the scene load operation progress.',
+  port:'UMG: one material with Progress as a scalar parameter fed by the streaming level load. Bake the ticks to a strip texture and scroll the window mask in polar UVs. In UI Toolkit drive the same shader graph from the scene load operation progress.',
   params:[
     {id:'tint',label:'Energy',type:'color',value:'#49c8ff'},
     {id:'progress',label:'Progress',min:0,max:1,value:.68},
     {id:'speed',label:'Speed',min:.2,max:2.5,value:1},
-    {id:'runes',label:'Rune glow',min:.3,max:2,value:1}
+    {id:'runes',label:'Ring glow',min:.3,max:2,value:1}
   ],
   variants:[
     {name:'Orange',set:{tint:'#ff5a1e',progress:.86,speed:1.5}},
@@ -31502,15 +31509,15 @@ float lsBeat(){float b=fract(u_time*P_speed*.8);return exp(-b*5.)*smoothstep(0.,
       c=mix(c,pc,aa(dN));m=max(m,aa(dN));
       float sh=uiSh(r-LSR-.045,.06)*.5;
       a=max(m,sh);col=c*m/max(a,1e-3);`},
-    {name:'Rune rings',type:'screen',blend:'add',fs:`
+    {name:'Ring segments',type:'screen',blend:'add',fs:`
       float k=uiFit();vec2 q=p/k-LSC;float r=length(q);float t=u_time*P_speed;float bt=lsBeat();
       float e=0.;
       vec2 q1=rot(t*.25)*q;float a1=fract(atan(q1.x,q1.y)/TAU);vec2 w1=lsWin(a1,0.,1.);
-      e+=(runeRing(q1,.475,16.,.05,2.)*1.1+stroke(r-.535,.004)*.7+stroke(r-.415,.003)*.5)*w1.x*(.55+1.3*w1.y);
+      e+=(tickRing(q1,.475,16.,.05,2.)*1.1+stroke(r-.535,.004)*.7+stroke(r-.415,.003)*.5)*w1.x*(.55+1.3*w1.y);
       vec2 q2=rot(-t*.4)*q;float a2=fract(atan(q2.x,q2.y)/TAU);vec2 w2=lsWin(1.-a2,2.1,-1.3);
-      e+=(runeRing(q2,.335,10.,.048,7.)*1.+stroke(r-.275,.003)*.6)*w2.x*(.55+1.3*w2.y);
-      vec2 q3=rot(t*.15)*q;float tri=min(abs(sdNgon(q3,.118,3.)),abs(sdNgon(q3*vec2(1.,-1.),.118,3.)));
-      e+=smoothstep(.006,.002,tri)*.55*smoothstep(.1,.13,r);
+      e+=(tickRing(q2,.335,10.,.048,7.)*1.+stroke(r-.275,.003)*.6)*w2.x*(.55+1.3*w2.y);
+      vec2 q3=rot(t*.15)*q;float a3=fract(atan(q3.x,q3.y)/TAU);float inner=min(abs(r-.118)-.003,length(vec2((fract(a3*6.)-.5)*TAU*.15/6.,r-.15))-.007);
+      e+=smoothstep(.006,.002,inner)*.55*smoothstep(.1,.13,r);
       float dots=aa(length(vec2((fract(a1*24.)-.5)*TAU*.575/24.,r-.575))-.006)*w1.x;e+=dots*.6;
       float wave=smoothstep(.03,0.,abs(r-fract(u_time*P_speed*.8)*.62))*(1.-fract(u_time*P_speed*.8))*.35;
       col=glow((e*(.75+.35*bt)+wave)*P_runes*(1.+.5*lsFull()),P_tint)*1.25;a=1.;`},
@@ -31581,7 +31588,7 @@ float stHover(int i,vec2 m){return step(length(m-STP[i]),stRad(i)+.03);}
       }
       float dC=r-r0;
       vec3 ic=vec3(.008,.008,.012)+P_tint*(.02+.3*on*pow(sat(1.-r/r0),1.5));
-      float rd=rune(lq/(r0*.62),float(i)*3.+1.);
+      float rd=tick(lq/(r0*.62),float(i)*3.+1.);
       ic+=glow(inv(rd,.25)*.3*on,P_tint);
       ic=mix(ic,mix(vec3(.2,.2,.22),mix(P_tint,vec3(1.),.5)*1.15,on)*(1.+.5*hv),smoothstep(.16,.1,rd));
       ic*=.4+.6*smoothstep(0.,-.03,dC);
@@ -31774,7 +31781,7 @@ float bbHorn(vec2 s){s.x=abs(s.x);float d=max(length(s-vec2(.95,.75))-.62,-(leng
       float dH=bbHorn(s)*BBK;vec3 hcol=uiPlate(q,dH,.03,vec3(.3,.27,.25));
       hcol=mix(hcol,vec3(.6,.44,.18)*.8,smoothstep(.9,1.5,s.y));
       o=mix(o,vec3(.004),aa(dH-.008)*.7);m=max(m,aa(dH-.008)*.7);o=mix(o,hcol,aa(dH));m=max(m,aa(dH));
-      float dPl=sdNgon(q-BBS-vec2(0.,-.02),.235,6.);
+      float dPl=sdCircle(q-BBS-vec2(0.,-.02),.225);
       vec3 plc=uiPlate(q,dPl,.03,vec3(.3,.27,.25));plc=mix(plc,uiMetal(q,dPl+.014,.012,vec3(.62,.45,.18)),aa(abs(dPl+.014)-.01));
       o=mix(o,plc,aa(dPl));m=max(m,aa(dPl));
       float dS=bbSkull(s)*BBK;float dSo=uiSmin(length((s-vec2(0.,.2))*vec2(1.,1.1))-.78,sdRBox(s-vec2(0.,-.55),vec2(.36,.3),.12),.22)*BBK;
@@ -31975,7 +31982,7 @@ float thBeat(){return .8+.2*sin(u_time*3.*P_pulse);}`,
       float ph=fract(t*.4*P_pulse);m+=band(r,easeOut(ph)*.95,.05)*(1.-ph)*(1.-ph)*.7;
       m+=smoothstep(1.,.15,r)*.05+inv(r-1.,.05)*.08*smoothstep(1.4,1.1,r);
       vec2 qe=rot(-t*.2)*q;float ae=mod(atan(qe.y,qe.x)+PI*.125,PI*.25)-PI*.125;vec2 fe=vec2(cos(ae),sin(ae))*r;
-      float el=aa(max(abs(fe.y)*2.6-(1.42-fe.x),1.25-fe.x))+stroke(sdRing(q,1.25,0.),.01)+runeRing(rot(t*.12)*q,.72,14.,.06,3.)*.8;
+      float el=aa(max(abs(fe.y)*2.6-(1.42-fe.x),1.25-fe.x))+stroke(sdRing(q,1.25,0.),.01)+tickRing(rot(t*.12)*q,.72,14.,.06,3.)*.8;
       m+=el*P_rank;
       col=glow(sat(m)*thBeat()*.9,P_tint)*1.25;a=smoothstep(1.45,1.4,r);`},
     {name:'Outline hull',geo:'dummy',blend:'alpha',vs:`p+=n*.0032*P_width*length(u_cam-p);`,fs:`

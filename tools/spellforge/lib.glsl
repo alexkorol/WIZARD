@@ -192,10 +192,13 @@ vec4 hexGrid(vec2 p){const vec2 s=vec2(1.,1.7320508);vec4 hc=floor(vec4(p,p-vec2
 float rune(vec2 p,float id){float d=1e3;
   for(int i=0;i<5;i++){vec4 h=hash41(id*7.31+float(i)*3.7+1.);vec2 a=(floor(h.xy*3.)-1.)*vec2(.5,.78),b=(floor(h.zw*3.)-1.)*vec2(.5,.78);d=min(d,sdSeg(p,a,b));}
   return d;}
-// ring of n runes at radius r (p centred). returns stroke mask 0..1
-float runeRing(vec2 p,float r,float n,float size,float seed){vec2 pc=polar(p);float k=pc.x*n;float i=floor(k);
+// plain tick: p in [-1,1]^2, returns distance to one radial stroke whose length varies per id, with a dot above every other one
+float tick(vec2 p,float id){vec2 h=hash41(id*7.31+1.).xy;float l=.35+.5*h.x;float d=sdSeg(p,vec2(0.,-l),vec2(0.,l));
+  if(h.y>.5)d=min(d,length(p-vec2(0.,min(l+.3,.86)))-.1);return d;}
+// ring of n ticks at radius r (p centred). returns stroke mask 0..1
+float tickRing(vec2 p,float r,float n,float size,float seed){vec2 pc=polar(p);float k=pc.x*n;float i=floor(k);
   vec2 q=vec2((fract(k)-.5)*TAU*r/n,pc.y-r)/size;if(abs(q.x)>1.||abs(q.y)>1.)return 0.;
-  return smoothstep(.16,.06,rune(q,i+seed*13.));}
+  return smoothstep(.16,.06,tick(q,i+seed*13.));}
 
 // ---------- sprites (uv 0..1) ----------
 float softDot(vec2 uv){float d=length(uv-.5)*2.;return sat(1.-d)*sat(1.-d);}

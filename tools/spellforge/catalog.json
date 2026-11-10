@@ -2373,7 +2373,7 @@
     "count": null
    },
    {
-    "name": "Front and sigil",
+    "name": "Front and ring",
     "geo": "['ground',1]",
     "blend": "add",
     "count": null
@@ -3612,7 +3612,7 @@
     "count": null
    },
    {
-    "name": "Sigil and burst",
+    "name": "Ring and burst",
     "geo": "['ground',1]",
     "blend": "add",
     "count": null
@@ -3794,8 +3794,8 @@
   "sub": "Summon",
   "stage": "full",
   "src": "Summons one or more large beasts such as a manticore or a sphinx.",
-  "blurb": "A scratched ochre circle opens into a pit of sand-coloured light and a manticore hauls itself out, lands hard and stands over the cooling sigil with its sting raised.",
-  "port": "In Unreal the beast is a skeletal mesh with a spawn montage and the pit is a decal with a depth-fade card under it. Dust uses six-way lit flipbooks, rim chips are a Niagara mesh emitter with collision, and the sigil is an emissive decal whose reveal angle and heat are two scalar curves.",
+  "blurb": "A scratched ochre circle opens into a pit of sand-coloured light and a manticore hauls itself out, lands hard and stands over the cooling ring with its sting raised.",
+  "port": "In Unreal the beast is a skeletal mesh with a spawn montage and the pit is a decal with a depth-fade card under it. Dust uses six-way lit flipbooks, rim chips are a Niagara mesh emitter with collision, and the ring is an emissive decal whose reveal angle and heat are two scalar curves.",
   "level": "7",
   "tags": [
    "raymarched creature",
@@ -3809,12 +3809,12 @@
    "Its fur is a bumped normal and a streaked albedo from the 3D noise volume, lit by shade() with a four-tap ambient occlusion so the belly and the leg pits go dark.",
    "The rig is driven by one lunge scalar: the body pitches up out of the pit, the forelegs reach, and everything settles with a damped bounce when the paws land.",
    "The pit is only a decal. The floor depth clips the body, which is all the eye needs to read a creature climbing out of a hole.",
-   "Residue: the sigil cools to pale scratches in the flagstones, rim chips stay where they bounced and the dust hangs in the moonlight."
+   "Residue: the ring cools to pale scratches in the flagstones, rim chips stay where they bounced and the dust hangs in the moonlight."
   ],
   "params": [
    {
     "id": "tint",
-    "label": "Sigil light",
+    "label": "Ring light",
     "type": "color",
     "value": "'#e0a04a'"
    },
@@ -3844,7 +3844,7 @@
   ],
   "layers": [
    {
-    "name": "Sigil and pit",
+    "name": "Ring and pit",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
@@ -4560,7 +4560,7 @@
   "sub": "Construct",
   "stage": "full",
   "src": "Builds a powerful metal champion wielding a copy of the caster's weapon; it can later be overloaded for a wide flurry of attacks.",
-  "blurb": "A white-hot platinum knight drops out of the dark onto a sigil, cracks the floor, cools to polished metal and then overloads into a four-cut flurry.",
+  "blurb": "A white-hot platinum knight drops out of the dark onto a ring mark, cracks the floor, cools to polished metal and then overloads into a four-cut flurry.",
   "port": "A skeletal mesh with a heat and charge scalar in its material, landing driven by a Sequencer track. Rubble and sparks are Niagara mesh and sprite emitters with collision, the crescents are four slash meshes with an erode material and the crater is a decal with a cooling emissive curve.",
   "level": "9",
   "tags": [
@@ -4571,7 +4571,7 @@
    "lit dust"
   ],
   "notes": [
-   "Tell: the caster raises a hand and a rune circle burns into the floor where the champion will land. The fall itself is a third of a second with a thin descent streak above it.",
+   "Tell: the caster raises a hand and a ring of ticks burns into the floor where the champion will land. The fall itself is a third of a second with a thin descent streak above it.",
    "The knight is the stage mannequin with its own material: polished platinum with engraved plate seams, a heat term that starts blackbody white and cools over two seconds, and steam lifting off its surface.",
    "Landing is pressure, not magic: a hard white floor ring for three frames, a refraction ring, thrown rubble that bounces and stays, and a dust skirt lit by the cooling body.",
    "The overload is the second beat. Seams and the replica greatsword charge in the tint, the knight sinks slightly, then four bold crescents cut around it in 0.3 seconds and leave hot gouges in the stone."
@@ -4609,7 +4609,7 @@
   ],
   "layers": [
    {
-    "name": "Sigil and crater",
+    "name": "Ring and crater",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
@@ -4988,7 +4988,7 @@
   "notes": [
    "The undead are instanced mannequins with their own bone and rot material and alpha-clipped tears, hunched and shambling in until the ring reaches them.",
    "Each corpse is hit at the exact moment the ring radius passes it. It is shoved outward with drag, rocks back and settles into a cowering lean outside the circle.",
-   "The ring is a bright leading edge on the floor with a low wall of light above it. It stops at a fixed radius and cools into a line of scribed runes.",
+   "The ring is a bright leading edge on the floor with a low wall of light above it. It stops at a fixed radius and cools into a line of scribed ticks.",
    "The scorched corpses smoke and shed embers from the side facing the priest, and their cold eye glints gutter out."
   ],
   "params": [
@@ -6566,19 +6566,19 @@
   "stage": "ground",
   "src": null,
   "blurb": "A carved stone brazier holding a tall stylised flame with a readable silhouette and banded colour.",
-  "port": "Unreal: static mesh for the bowl with an emissive mask for runes and coals. The flame is two cards with a banded curve atlas lookup driven by the heat value, plus a small Niagara emitter for licks and embers.",
+  "port": "Unreal: static mesh for the bowl with an emissive mask for the carved band and coals. The flame is two cards with a banded curve atlas lookup driven by the heat value, plus a small Niagara emitter for licks and embers.",
   "level": null,
   "tags": [
    "lathe mesh",
    "stylised flame",
    "banded ramp",
-   "rune emissive"
+   "carved band emissive"
   ],
   "notes": [
    "The bowl is one lathe profile that runs up the outside, over the lip and back down to a coal bed, so the interior needs no second mesh.",
    "The flame heat field is quantised into four soft bands. That gives the hand painted look of a stylised ARPG flame while the motion stays procedural.",
    "A narrow inner card with its own seed slides against the outer card, which reads as depth even though both are flat.",
-   "The rune band on the bowl is lit by the same tint and breathes slowly, tying the prop to the element of the fire.",
+   "The carved tick band on the bowl is lit by the same tint and breathes slowly, tying the prop to the element of the fire.",
    "Variants only change the tint and proportions. Every colour comes from one ramp, so blue and green need no retuning."
   ],
   "params": [
@@ -8072,7 +8072,7 @@
    "The wall is 36 instanced stone blocks. A sphere of erosion grows from the beam point; each fragment is alpha-clipped by triplanar noise against it, with a white-violet cut line that cools to a pale ash lip.",
    "The beam is a two-pixel white core inside a thin violet halo, held for about a second with a sub-frame jitter, so it reads as force rather than fire.",
    "Dust is emitted on the moving erosion front and falls as a sand stream; two lathe mounds grow at the wall foot as it lands.",
-   "The wand is a four-sided lathe (square section) in blackened metal with a violet crystal; its rune band charges before the shot."
+   "The wand is a four-sided lathe (square section) in blackened metal with a violet crystal; its carved band charges before the shot."
   ],
   "params": [
    {
@@ -8344,7 +8344,7 @@
     "count": null
    },
    {
-    "name": "Rune frame",
+    "name": "Carved frame",
     "geo": "'quad'",
     "blend": "add",
     "count": null
@@ -8824,21 +8824,21 @@
   "sub": null,
   "stage": "ground",
   "src": null,
-  "blurb": "A rune-cut stone arch holding a membrane that is a real window: stars, a nebula and an eclipsed sun shift behind it as the camera moves.",
-  "port": "Unreal: the arch is a static mesh with an emissive rune mask. The membrane is an unlit material that feeds the camera vector into a cubemap or star texture lookup, plus two BumpOffset layers for the debris.",
+  "blurb": "A carved stone arch holding a membrane that is a real window: stars, a nebula and an eclipsed sun shift behind it as the camera moves.",
+  "port": "Unreal: the arch is a static mesh with an emissive carving mask. The membrane is an unlit material that feeds the camera vector into a cubemap or star texture lookup, plus two BumpOffset layers for the debris.",
   "level": null,
   "tags": [
    "view parallax",
    "interior mapping",
    "starfield",
    "lit mesh",
-   "rune sdf"
+   "carved tick sdf"
   ],
   "notes": [
    "The membrane never samples its own UVs for the far world. It projects the view ray through the quad, so the sky behaves like a place at infinity.",
    "Drifting rock silhouettes are intersected at two finite depths behind the surface. They slide faster than the stars, which is what sells the depth.",
    "The arch is one torus mesh reshaped in the vertex shader into legs, capitals, plinths and a keystone with a square section, then flat shaded and lit.",
-   "Runes are carved per stone block from the same block id that draws the mortar joints, and a slow wave of light travels around the arch.",
+   "Marks are carved per stone block from the same block id that draws the mortar joints, and a slow wave of light travels around the arch.",
    "A thin film of noise, a fresnel sheen and a little refraction keep the surface readable as a membrane and not as a hole."
   ],
   "params": [
@@ -8856,7 +8856,7 @@
    },
    {
     "id": "power",
-    "label": "Rune power",
+    "label": "Mark glow",
     "type": "range",
     "value": "1"
    },
@@ -12665,18 +12665,18 @@
   "sub": null,
   "stage": "full",
   "src": null,
-  "blurb": "A floating blade with glowing runes and edges, an elemental shell, a camera-facing aura, two orbiting ribbons and sparks or drips.",
-  "port": "Unreal: weapon material layer for runes and edge glow, a shell mesh with World Position Offset, and a Niagara system attached to weapon sockets for the aura ribbon and sparks. Expose element colour and flow direction as user parameters.",
+  "blurb": "A floating blade with glowing tick marks and edges, an elemental shell, a camera-facing aura, two orbiting ribbons and sparks or drips.",
+  "port": "Unreal: weapon material layer for the tick marks and edge glow, a shell mesh with World Position Offset, and a Niagara system attached to weapon sockets for the aura ribbon and sparks. Expose element colour and flow direction as user parameters.",
   "level": null,
   "tags": [
    "lit mesh",
    "vertex shell",
    "axis billboard",
    "analytic ribbon",
-   "rune sdf"
+   "carved tick sdf"
   ],
   "notes": [
-   "The sword is lit and opaque. Runes from rune() sit on the ridge and the cutting edges glow, both fed by noise that scrolls from guard to tip.",
+   "The sword is lit and opaque. Marks from tick() sit on the ridge and the cutting edges glow, both fed by noise that scrolls from guard to tip.",
    "The shell is a second copy of the blade scaled outward in the vertex shader and eroded with fast noise, so the element hugs the metal.",
    "The big silhouette comes from a strip billboarded around the blade axis. It never shows an edge and carries the flames, mist or lightning arcs.",
    "Flow sets whether the element rises like fire or sinks like frost, and the same value drives the particles into embers or drips.",
@@ -12801,21 +12801,21 @@
   "sub": "Nova",
   "stage": "full",
   "src": "Casts a ring of lightning around the caster: an inner ring of glowing runes and a larger outer ring of lightning that shocks everything on its edge. Reference: research/refs/poe_shock_nova_wiki.png.",
-  "blurb": "The caster slams the charge into the stone and a ring of burning orange-white runes ignites around them between two thin blue-white circles; a beat later a thin outer ring of white-violet lightning races out to four metres, throwing short arcs in and out from its edge, and dies back while the runes burn down last.",
-  "port": "Niagara: a ring emitter on a radius curve spawning beam emitters along the rim (circumferential) and a second set of short radial beams with random sign, a rune-band decal material with a polar glyph atlas driven by an ignite sweep and a burn curve, and a core light. The slam is a montage notify.",
+  "blurb": "The caster slams the charge into the stone and a ring of burning orange-white ticks ignites around them between two thin blue-white circles; a beat later a thin outer ring of white-violet lightning races out to four metres, throwing short arcs in and out from its edge, and dies back while the ticks burn down last.",
+  "port": "Niagara: a ring emitter on a radius curve spawning beam emitters along the rim (circumferential) and a second set of short radial beams with random sign, a tick-band decal material with a polar tick strip driven by an ignite sweep and a burn curve, and a core light. The slam is a montage notify.",
   "level": "1",
   "tags": [
-   "rune ring",
+   "tick ring",
    "midpoint displacement",
    "ring bolts",
    "two-band nova",
-   "cooling glyphs"
+   "cooling ticks"
   ],
   "notes": [
-   "Matches the PoE read: the energy lives in two ring bands, a rune band at 2 m (runeRing glyph script between two thin circles, warm orange-white against the blue-white bolts) and a thin lightning ring at 4 m; the floor inside is left dark.",
+   "Matches the PoE read: the energy lives in two ring bands, a tick band at 2 m (tickRing radial ticks and dots between two thin circles, warm orange-white against the blue-white bolts) and a thin lightning ring at 4 m; the floor inside is left dark.",
    "The outer ring is circumferential midpoint displacement bolts overlapping around the rim plus short in-and-out arcs that leave the rim only, all reseeding every 1 or 2 frames; its radius is an ease-out curve with an analytic inverse so sparks, haze and the shock on each target fire as the rim passes.",
-   "The rune band ignites in a quick sweep on the release frame with a bloom, flickers per glyph while it burns, and fades last; a faint ash glyph decal is left under it.",
-   "A bright core at the caster (chest glow, hand static before the slam) and eight lights: core, three on the outer rim, two warm on the rune band and one per shocked target."
+   "The tick band ignites in a quick sweep on the release frame with a bloom, flickers per tick while it burns, and fades last; a faint ash tick decal is left under it.",
+   "A bright core at the caster (chest glow, hand static before the slam) and eight lights: core, three on the outer rim, two warm on the tick band and one per shocked target."
   ],
   "params": [
    {
@@ -12832,7 +12832,7 @@
    },
    {
     "id": "rune",
-    "label": "Rune glow",
+    "label": "Ring glow",
     "type": "range",
     "value": "1"
    }
@@ -12840,17 +12840,17 @@
   "variants": [
    "Violet",
    "Wide nova",
-   "Orange runes"
+   "Orange ring"
   ],
   "layers": [
    {
-    "name": "Rune ash",
+    "name": "Ring ash",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
    },
    {
-    "name": "Rune band",
+    "name": "Ring band",
     "geo": "['ground',1]",
     "blend": "add",
     "count": null
@@ -13333,21 +13333,21 @@
   "sub": "Aura",
   "stage": "full",
   "src": "A sustained self-immolation aura: the caster burns, a magic circle ignites under their feet and a ring of fire marks the edge of the area that burns every enemy inside it.",
-  "blurb": "Fire kindles in both palms, a glyph circle with a violet pentagram draws itself under the caster and a thin orange ring races out to the edge of the aura; the three burn steadily, then the ring gutters, the glyph goes last and a scorch ring remains.",
-  "port": "Niagara: two decal materials (ring and magic circle) driven by a front radius and a draw parameter, with the circle built from SDF rings, a star polyline and a rune atlas; a torus-shaped emitter for ring flames and embers; a skeletal-socket emitter on both hands and forearms for body flames; a refraction ring mesh for the shimmer. Sustained phase is a looping state with staggered fade curves per element.",
+  "blurb": "Fire kindles in both palms, a ring circle with violet dots draws itself under the caster and a thin orange ring races out to the edge of the aura; the three burn steadily, then the ring gutters, the inner circle goes last and a scorch ring remains.",
+  "port": "Niagara: two decal materials (outer ring and inner circle) driven by a front radius and a draw parameter, with the circle built from SDF rings, ticks and dots; a torus-shaped emitter for ring flames and embers; a skeletal-socket emitter on both hands and forearms for body flames; a refraction ring mesh for the shimmer. Sustained phase is a looping state with staggered fade curves per element.",
   "level": "8",
   "tags": [
    "floor decal ring",
-   "procedural magic circle",
-   "rune ring",
+   "procedural ring circle",
+   "tick ring",
    "hand-anchored flames",
    "heat shimmer"
   ],
   "notes": [
    "Built against the Path of Exile wiki screenshot: three elements and almost nothing in between. The outer ring is one ground decal, a thin band on the front radius with a doubled inner line, a feathered flame fringe scrolling outward and a soft halo, so it reads as a drawn circle at gameplay distance.",
-   "The magic circle is procedural: two orange fire rings and a rune ring (library rune and runeRing) that rotate slowly one way, a violet pentagram and two thin violet circles that rotate the other way. Rings draw by an angular sweep and the pentagram line by line at release.",
-   "Low licking flames and embers are soft particles born on the ring and on the glyph edge; a tube of noise-driven refraction above the outer ring is the heat shimmer. Fire on the caster uses the hand uniforms and handAt, with short forearm, shoulder and head licks and a hot white core sprite on each palm; the channel pose gets an at point so the right hand is raised to the side and the two hot points stay apart, as in the reference.",
-   "Eight lights: the glyph centre, four on the ring, both hands and one rim light placed opposite the camera so the body carries a red-orange rim. Fall-off is staggered: ring first, then hands, glyph last, and a soot ring with a pale ash lip and cooling embers stays on the floor.",
+   "The inner circle is procedural: two orange fire rings and a tick ring (library tick and tickRing) that rotate slowly one way, a ring of violet dots and two thin violet circles that rotate the other way. Rings draw by an angular sweep and the dots light one after another at release.",
+   "Low licking flames and embers are soft particles born on the ring and on the inner circle edge; a tube of noise-driven refraction above the outer ring is the heat shimmer. Fire on the caster uses the hand uniforms and handAt, with short forearm, shoulder and head licks and a hot white core sprite on each palm; the channel pose gets an at point so the right hand is raised to the side and the two hot points stay apart, as in the reference.",
+   "Eight lights: the circle centre, four on the ring, both hands and one rim light placed opposite the camera so the body carries a red-orange rim. Fall-off is staggered: ring first, then hands, inner circle last, and a soot ring with a pale ash lip and cooling embers stays on the floor.",
    "Ground noise is hex-tiled (nzH); polar lookups use nzL with integer repeats so the rings have no seam. Hold motion runs on absolute time so the sustained phase loops."
   ],
   "params": [
@@ -13359,7 +13359,7 @@
    },
    {
     "id": "lines",
-    "label": "Glyph lines",
+    "label": "Ring lines",
     "type": "color",
     "value": "'#9a5cff'"
    },
@@ -13389,7 +13389,7 @@
     "count": null
    },
    {
-    "name": "Magic circle",
+    "name": "Inner circle",
     "geo": "['ground',1]",
     "blend": "add",
     "count": null
@@ -13494,18 +13494,18 @@
   "sub": "Area",
   "stage": "full",
   "src": "Calls a burning rock down from the sky onto a marked spot after a short delay, leaving the ground on fire.",
-  "blurb": "A raised arm marks the ground with a glyph and a growing shadow; a burning rock streaks down at a steep angle, detonates, flings molten debris and leaves a cracked crater of burning ground that slowly cools.",
-  "port": "Sequencer or timeline: a decal plus a ground-projected material for the glyph and shadow, a falling mesh with a ribbon emitter, then a collision event that spawns the burst emitters, a mesh-particle debris emitter with collision, and a deferred crater decal whose heat parameter is driven by a curve.",
+  "blurb": "A raised arm marks the ground with a ring target mark and a growing shadow; a burning rock streaks down at a steep angle, detonates, flings molten debris and leaves a cracked crater of burning ground that slowly cools.",
+  "port": "Sequencer or timeline: a decal plus a ground-projected material for the target mark and shadow, a falling mesh with a ribbon emitter, then a collision event that spawns the burst emitters, a mesh-particle debris emitter with collision, and a deferred crater decal whose heat parameter is driven by a curve.",
   "level": "9",
   "tags": [
-   "telegraph glyph",
+   "telegraph target mark",
    "instanced molten debris",
    "crater decal",
    "flame ribbon",
    "cooling residue"
   ],
   "notes": [
-   "The read is a telegraph then a payoff: the glyph and a darkening shadow show where it will land, and the meteor light reaches the floor before the rock enters the frame.",
+   "The read is a telegraph then a payoff: the target mark (rings and ticks) and a darkening shadow show where it will land, and the meteor light reaches the floor before the rock enters the frame.",
    "The rock is a lit mesh with an ablating white-hot leading face and glowing fissures, wrapped in a camera-facing flame ribbon and a fire-to-soot particle trail that stays hanging in the air.",
    "Impact: a spiked graphic burst for three frames, alpha explosion puffs that cool into lit soot, a shock ring, and instanced molten chunks with gravity and one bounce that keep glowing where they land.",
    "Residue: a hex-tiled crater decal with a shaded rim, radial ejecta streaks and molten cracks that cool from white to red to black, with flames licking over it while the heat lasts."
@@ -13549,7 +13549,7 @@
     "count": null
    },
    {
-    "name": "Glyph and shock",
+    "name": "Target mark and shock",
     "geo": "['ground',1]",
     "blend": "add",
     "count": null
@@ -14100,7 +14100,7 @@
   "sub": null,
   "stage": "ground",
   "src": null,
-  "blurb": "A rare item card floating upright with a holographic foil frame, an embossed rune and a sweeping sheen. Move the pointer to tilt it.",
+  "blurb": "A rare item card floating upright with a holographic foil frame, an embossed ring mark and a sweeping sheen. Move the pointer to tilt it.",
   "port": "UMG or UI Toolkit material for inventory tooltips, or a mesh card in world space. Feed the tilt from cursor position or a gyroscope. The foil needs only the camera vector in tangent space plus one noise texture.",
   "level": null,
   "tags": [
@@ -14113,7 +14113,7 @@
   "notes": [
    "Foil colour is a cosine palette indexed by the view vector in card tangent space, so the rainbow slides as the card tilts.",
    "A voronoi layer gives each foil flake its own grating direction. Flakes flash at different angles, which is what sells real holo print.",
-   "Frame and rune are one height field. It bends the normal for lighting and also offsets the foil lookup, so bevels pick up different hues.",
+   "Frame and mark are one height field. It bends the normal for lighting and also offsets the foil lookup, so bevels pick up different hues.",
    "The art window uses the same tangent view vector as a parallax offset, which puts the nebula behind the card surface.",
    "Pointer position drives the tilt in the vertex shader. A slow idle sway keeps it alive when nobody touches it."
   ],
@@ -14327,7 +14327,7 @@
    "radial sweep",
    "state machine",
    "hover",
-   "rune icon"
+   "tick icon"
   ],
   "notes": [
    "Each slot is one rounded box SDF. The same distance drives the icon mask, the bevelled metal frame, the socket shadow and every glow.",
@@ -14439,21 +14439,21 @@
   "sub": null,
   "stage": "ui",
   "src": null,
-  "blurb": "Loading indicator: rune rings that write themselves in and out, a forged progress track and a core that beats in time.",
-  "port": "UMG: one material with Progress as a scalar parameter fed by the streaming level load. Bake runes to a strip texture and scroll the window mask in polar UVs. In UI Toolkit drive the same shader graph from the scene load operation progress.",
+  "blurb": "Loading indicator: ring segments of ticks and dots that draw themselves in and out, a forged progress track and a core that beats in time.",
+  "port": "UMG: one material with Progress as a scalar parameter fed by the streaming level load. Bake the ticks to a strip texture and scroll the window mask in polar UVs. In UI Toolkit drive the same shader graph from the scene load operation progress.",
   "level": null,
   "tags": [
-   "rune ring",
+   "tick ring",
    "polar sdf",
    "progress arc",
    "draw on",
    "pulse"
   ],
   "notes": [
-   "Each ring owns an angular window with a moving head and a breathing length, like a spinner. Runes and guide circles are masked by it, so they draw on and wipe off.",
+   "Each ring owns an angular window with a moving head and a breathing length, like a spinner. Ticks and guide circles are masked by it, so they draw on and wipe off.",
    "The head of each window is brighter than its tail, which gives direction without any particles.",
    "Progress lives in a channel cut into a metal bezel. The fill is an angle test with a round cap and a hot bead on the leading end.",
-   "The core beat sends a faint ring outward through the whole sigil so the layers feel connected.",
+   "The core beat sends a faint ring outward through the whole indicator so the layers feel connected.",
    "At 100 percent every window opens fully and the core flares: the indicator resolves instead of just stopping."
   ],
   "params": [
@@ -14477,7 +14477,7 @@
    },
    {
     "id": "runes",
-    "label": "Rune glow",
+    "label": "Ring glow",
     "type": "range",
     "value": "1"
    }
