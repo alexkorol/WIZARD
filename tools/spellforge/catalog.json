@@ -1035,18 +1035,18 @@
   "sub": "Construct/Ice",
   "stage": "full",
   "src": "Builds a half-circle barricade of ice in front of the caster that fires icy shards when segments are destroyed.",
-  "blurb": "Iron stakes punch out of the floor, ice slabs grow between them into a banded barricade, and the segment an attacker breaks answers with a volley of shards.",
+  "blurb": "Metal stakes punch out of the floor, ice slabs grow between them into a banded barricade, and the segment an attacker breaks answers with a volley of shards.",
   "port": "Niagara mesh renderers for slabs, shards and chunks with a collision module for the embedded shards. The slab growth and break are two scalar parameters on a masked ice material. Mist uses six-way lit flipbooks.",
   "level": "7",
   "tags": [
    "instanced ice slabs",
-   "forged iron",
+   "forged metal",
    "shard volley",
    "alpha clip",
    "lit mist"
   ],
   "notes": [
-   "The build reads as construction. Six forged stakes rise in a sweep, then the ice grows between them and iron straps bind each block.",
+   "The build reads as construction. Six forged stakes rise in a sweep, then the ice grows between them and metal straps bind each block.",
    "Every slab is a cluster of three faceted crystals shaded with the shared ice material: wrapped light, parallax crack veils and a frost mask.",
    "The broken segment is alpha clipped to a ragged stump in one frame. Its strap stays hanging between the stakes.",
    "The volley is forty instanced shards flying point first. They stick in the floor where they land and stay as residue, while chunks bounce and settle near the stump.",
@@ -1085,7 +1085,7 @@
   ],
   "layers": [
    {
-    "name": "Iron straps",
+    "name": "Metal straps",
     "geo": "'box'",
     "blend": "opaque",
     "count": "5"
@@ -2626,13 +2626,13 @@
  },
  {
   "id": "dc-orb-of-fragmentation",
-  "name": "Exploding iron ball",
+  "name": "Exploding metal ball",
   "set": "Crawl",
   "cat": "Earth",
   "sub": "Direct damage/Earth",
   "stage": "full",
   "src": "Hurls an orb that bursts into a blast of metal fragments.",
-  "blurb": "A fist-sized ball of dark iron crosses the room with its seams glowing, then bursts into a fan of blades that bury themselves in the flagstones.",
+  "blurb": "A fist-sized ball of dark metal crosses the room with its seams glowing, then bursts into a fan of blades that bury themselves in the flagstones.",
   "port": "Niagara mesh renderer with velocity-aligned orientation and a collision event that kills motion and spawns a stuck mesh. The orb is a material with a cell-border emissive driven by a charge scalar.",
   "level": "7",
   "tags": [
@@ -2644,7 +2644,7 @@
   ],
   "notes": [
    "The orb is a lit metal sphere whose plates come from a 3D voronoi. The plate borders heat up in flight so the break is announced before it happens.",
-   "The burst is a white spiked shape held for two frames. Everything after it is matter: 120 instanced steel blades on ballistic arcs.",
+   "The burst is a white spiked shape held for two frames. Everything after it is matter: 120 instanced metal blades on ballistic arcs.",
    "Blades fly point first along their velocity and stop dead where they meet the floor, tilted at the entry angle and half buried.",
    "A small dark smoke knot and gouge marks stay behind. The only saturated colour is the heat in the seams and on fresh edges."
   ],
@@ -2675,13 +2675,13 @@
    }
   ],
   "variants": [
-   "Cold iron",
+   "Cold metal",
    "Brass shot",
    "Overcharged"
   ],
   "layers": [
    {
-    "name": "Iron orb",
+    "name": "Metal orb",
     "geo": "'sphere'",
     "blend": "opaque",
     "count": null
@@ -3392,7 +3392,7 @@
   "notes": [
    "Two foes make the rule readable: the caster shoots the far one, and a twin bolt leaves a rift beside the marked one a few frames later.",
    "The reticle is mostly refraction. Thin rings and ticks are drawn with screen-space derivatives, and the lens inside them magnifies the armour behind.",
-   "Bolts are lit steel meshes that stay embedded after the hit. The copies are clipped against the rift plane, so they slide out of nothing.",
+   "Bolts are lit metal meshes that stay embedded after the hit. The copies are clipped against the rift plane, so they slide out of nothing.",
    "A hard hairline joins the bolt in flight to its rift for two frames. The rift then closes into a jagged scar of light that fades slowly."
   ],
   "params": [
@@ -3717,7 +3717,7 @@
   "sub": "Summon/Curse",
   "stage": "full",
   "src": "Summons a golem that absorbs damage dealt to the caster's allies and explodes when overloaded.",
-  "blurb": "Rubble flies in and stacks into a squat iron-banded golem that takes its allies' damage through pale tethers until its cracks run white and it bursts.",
+  "blurb": "Rubble flies in and stacks into a squat metal-banded golem that takes its allies' damage through pale tethers until its cracks run white and it bursts.",
   "port": "Unreal: a skeletal golem with a dissolve plane and an emissive crack mask driven by a heat parameter. Tethers are Niagara ribbons with a travelling pulse in the material, and the burst swaps to a Chaos or mesh-particle debris system with six-way lit dust.",
   "level": "3",
   "tags": [
@@ -3993,7 +3993,7 @@
   ],
   "variants": [
    "Sandstone hall",
-   "Cold iron",
+   "Cold metal",
    "Dry run"
   ],
   "layers": [
@@ -4221,7 +4221,7 @@
    "floor residue"
   ],
   "notes": [
-   "The hook is real lit geometry: a steel shank and three prongs that open as it bites. It stays embedded in the armour, still cooling, for the rest of the shot.",
+   "The hook is real lit geometry: a metal shank and three prongs that open as it bites. It stays embedded in the armour, still cooling, for the rest of the shot.",
    "The filament is an analytic ribbon. It flies slack with a travelling wave, snaps straight on impact and rings as a decaying standing wave, then rings again on the yank.",
    "Impact gives metal-on-metal sparks with gravity and floor bounce plus a few dark flecks of armour that land and stay.",
    "The yank is the second beat: the target is dragged half a metre and leaves two pale scrape marks and a puff of dust at its heels."
@@ -4253,7 +4253,7 @@
    }
   ],
   "variants": [
-   "Cold iron",
+   "Cold metal",
    "Bronze barb",
    "Light touch"
   ],
@@ -4287,7 +4287,7 @@
   "sub": "Construct",
   "stage": "full",
   "src": "A magic hammer strikes one of the caster's constructs, repairing and empowering it and damaging adjacent enemies.",
-  "blurb": "A translucent sledgehammer assembles from embers above a cracked iron construct, swings back and falls in one stroke; the cracks weld shut, temper colours run down the hull and molten slag spatters the floor while the shock throws back everyone beside it.",
+  "blurb": "A translucent sledgehammer assembles from embers above a cracked metal construct, swings back and falls in one stroke; the cracks weld shut, temper colours run down the hull and molten slag spatters the floor while the shock throws back everyone beside it.",
   "port": "Construct material with a temper gradient driven by a world-space front parameter and a crack mask that lerps closed. The hammer is a translucent mesh with fresnel emissive and a dissolve. Slag is a Niagara mesh emitter with collision that switches to a flattened splat mesh on impact.",
   "level": "5",
   "tags": [
@@ -4376,13 +4376,13 @@
  },
  {
   "id": "dc-forge-phalanx-beetle",
-  "name": "Iron beetle construct",
+  "name": "Metal beetle construct",
   "set": "Crawl",
   "cat": "Constructs",
   "sub": "Construct",
   "stage": "full",
   "src": "Builds a mechanical beetle that stays beside the caster and boosts their armour class.",
-  "blurb": "Five white-hot forgings fly in and lock into an iron beetle at the caster's side, which cools, opens its eyes and draws a plate pattern over the caster.",
+  "blurb": "Five white-hot forgings fly in and lock into an metal beetle at the caster's side, which cools, opens its eyes and draws a plate pattern over the caster.",
   "port": "Build the beetle as five skeletal mesh parts with a heat material parameter and animate the assembly in Sequencer or a Niagara mesh emitter. The ward is an overlay material on the character driven by one sweep scalar.",
   "level": "6",
   "tags": [
@@ -4394,7 +4394,7 @@
   ],
   "notes": [
    "The beetle is one solid raymarched SDF made of five parts. Each part has its own arrival time, offset and heat, so the construct visibly assembles instead of fading in.",
-   "Heat is a per-part scalar that feeds an emissive ramp and the scene light. Parts arrive glowing and cool to dark hammered iron with brass trim over about two seconds.",
+   "Heat is a per-part scalar that feeds an emissive ramp and the scene light. Parts arrive glowing and cool to dark hammered metal with brass trim over about two seconds.",
    "Every lock throws a small fan of sparks that fall and bounce. The forge circle under the beetle stays behind as a cooling scorch with a pale ash lip.",
    "The armour bonus is a plate lattice drawn on a shell of the caster mesh. It sweeps up the body once when the last part locks, then settles to a faint rim."
   ],
@@ -4425,7 +4425,7 @@
    }
   ],
   "variants": [
-   "Cold iron",
+   "Cold metal",
    "Brass works",
    "Slag"
   ],
@@ -4508,7 +4508,7 @@
    }
   ],
   "variants": [
-   "Iron bulwark",
+   "Metal bulwark",
    "Sandstone keep",
    "Overpressure"
   ],
@@ -4604,7 +4604,7 @@
   ],
   "variants": [
    "Gold",
-   "Blackened steel",
+   "Blackened metal",
    "Cold forged"
   ],
   "layers": [
@@ -4655,7 +4655,7 @@
   "sub": "Shape change",
   "stage": "full",
   "src": "Temporarily grows horns or talons for an extra melee attack.",
-  "blurb": "Glowing veins spread over the helmet and gauntlets, then keratin horns and hooked talons punch out through the steel in a spray of metal and blood, steaming as they cool.",
+  "blurb": "Glowing veins spread over the helmet and gauntlets, then keratin horns and hooked talons punch out through the metal in a spray of metal and blood, steaming as they cool.",
   "port": "Horn and talon meshes on head and hand sockets with a morph or scale curve and a dissolve-in mask; the armour material gets a vein emissive driven by distance from the sockets. Niagara bursts for splinters (mesh renderer with collision), sparks and steam, plus a spatter decal.",
   "level": "1",
   "tags": [
@@ -4668,7 +4668,7 @@
   "notes": [
    "Horns and talons are tube meshes bent along cubic splines in the vertex shader. Growth evaluates the spline only up to a growth scalar with a back-eased overshoot, so they punch out and settle.",
    "The anticipation is in the body material: crack veins crawl outward from the scalp and the hands with an accelerating pulse while the figure trembles.",
-   "At the snap the armour gives way: 44 instanced steel splinters fly from the roots on ballistic arcs with one bounce and stay on the floor beside a wet spatter decal.",
+   "At the snap the armour gives way: 44 instanced metal splinters fly from the roots on ballistic arcs with one bounce and stay on the floor beside a wet spatter decal.",
    "Fresh keratin carries a cooling orange core near the root and a steam plume, so the growth reads as hot living matter rather than a glowing prop."
   ],
   "params": [
@@ -4728,7 +4728,7 @@
     "count": null
    },
    {
-    "name": "Steel splinters",
+    "name": "Metal splinters",
     "geo": "'rock'",
     "blend": "opaque",
     "count": "44"
@@ -4744,7 +4744,7 @@
   "sub": "Shape change",
   "stage": "full",
   "src": "Transforms the caster's hands into long blades for strong unarmed attacks.",
-  "blurb": "Iron filings stream up off the flagstones into the raised hands, steel creeps down the forearms, and two curved blades are drawn out of the fists with a single ringing snap.",
+  "blurb": "Metal filings stream up off the flagstones into the raised hands, metal creeps down the forearms, and two curved blades are drawn out of the fists with a single ringing snap.",
   "port": "Blades are static meshes scaled along a spline with a metal material, the forearm creep is a mask in the character material driven by one scalar. Filings are Niagara ribbons with a point attractor, then a collision burst for the fallout.",
   "level": "5",
   "tags": [
@@ -4755,9 +4755,9 @@
    "graphic glint"
   ],
   "notes": [
-   "The steel has a source. Filings are pulled off the floor along arcs into each hand before any metal appears, and the excess is thrown off and falls when the blades lock.",
-   "Blades are the sword mesh bent and flared in the vertex shader and grown along their length. They use the metal BRDF and the room reflection, so they read as steel and not as light.",
-   "The forearms are re-skinned in the body material: a noise edged front converts armour to polished steel from the fist toward the elbow, with a thin hot seam at the boundary.",
+   "The metal has a source. Filings are pulled off the floor along arcs into each hand before any metal appears, and the excess is thrown off and falls when the blades lock.",
+   "Blades are the sword mesh bent and flared in the vertex shader and grown along their length. They use the metal BRDF and the room reflection, so they read as metal and not as light.",
+   "The forearms are re-skinned in the body material: a noise edged front converts armour to polished metal from the fist toward the elbow, with a thin hot seam at the boundary.",
    "The snap is two frames of white along both edges and a four point glint on each tip. Afterwards the caster turns and a slow highlight runs down the blades."
   ],
   "params": [
@@ -4769,7 +4769,7 @@
    },
    {
     "id": "steel",
-    "label": "Steel",
+    "label": "Metal",
     "type": "color",
     "value": "'#aab2c0'"
    },
@@ -4787,7 +4787,7 @@
    }
   ],
   "variants": [
-   "Black iron",
+   "Black metal",
    "Bronze sickles",
    "Long silver"
   ],
@@ -5141,7 +5141,7 @@
   ],
   "notes": [
    "Tell: the sword rises and turns with a slight wobble while a sunburst is burned into the altar top. Impact: a hard sunburst flash and the blade ignites from the guard to the point.",
-   "The fire is tinted flame sprites with real alpha, rising off sample points along the blade, with lit smoke above. The steel underneath heats through the same flame ramp.",
+   "The fire is tinted flame sprites with real alpha, rising off sample points along the blade, with lit smoke above. The metal underneath heats through the same flame ramp.",
    "Second beat: the fire collapses into the blade and its cutting edges and fuller stay lit with a steady light line. The light then calms to a slow breath.",
    "Third beat: the sword drops and plants itself in the altar with a jolt, throwing stone chips and dust. Scorch, ash and the gold sigil remain on the stone."
   ],
@@ -5887,7 +5887,7 @@
   "sub": "Weapon buff",
   "stage": "ground",
   "src": "Permanently gives a melee weapon a chance to teleport what it hits.",
-  "blurb": "A sword hangs over a broken spiral drawn on the floor while a ring of black glass splinters winds in and drives into the steel; the blade splits into three phase-shifted copies, snaps back, and is left dark, veined and slightly blurred.",
+  "blurb": "A sword hangs over a broken spiral drawn on the floor while a ring of black glass splinters winds in and drives into the metal; the blade splits into three phase-shifted copies, snaps back, and is left dark, veined and slightly blurred.",
   "port": "Unreal: the effect is a material parameter blend on the weapon (emissive veins, fresnel, darkened base) plus a distortion mesh parented to the blade. Ghost copies are two extra mesh renders with world position offset driven by a damped spring curve.",
   "level": null,
   "tags": [
@@ -5899,9 +5899,9 @@
   ],
   "notes": [
    "Tell: the sigil burns into the floor from the centre out and sixteen black glass splinters spiral inward on a tightening helix. The blade already shivers: three additive copies jitter a few millimetres apart.",
-   "Impact: the splinters reach the steel in the same frame. A jagged slit and the spiked burst hold for two frames, the copies jump apart by a hand's width and ring back with a damped oscillation.",
-   "The brand is a material change on the real sword mesh: the steel darkens toward black glass with a violet fresnel and crawling vein cracks. The copies never fully settle, so the weapon keeps a faint double outline.",
-   "Residue: a refraction field shimmers along the blade for the rest of the clip, flakes of glass shed from the steel and lie on the floor, and the sigil cools to a dim pulse."
+   "Impact: the splinters reach the metal in the same frame. A jagged slit and the spiked burst hold for two frames, the copies jump apart by a hand's width and ring back with a damped oscillation.",
+   "The brand is a material change on the real sword mesh: the metal darkens toward black glass with a violet fresnel and crawling vein cracks. The copies never fully settle, so the weapon keeps a faint double outline.",
+   "Residue: a refraction field shimmers along the blade for the rest of the clip, flakes of glass shed from the metal and lie on the floor, and the sigil cools to a dim pulse."
   ],
   "params": [
    {
@@ -5924,7 +5924,7 @@
    },
    {
     "id": "steel",
-    "label": "Steel",
+    "label": "Metal",
     "type": "color",
     "value": "'#8e939c'"
    }
@@ -6078,7 +6078,7 @@
   "notes": [
    "The standard is three instanced boxes, two crystal horns and a vertex animated banner; it drops in, bites the floor, shudders and stays as residue.",
    "The horn call is a ground ring and a dust wave keyed to the banner sigil igniting, so the summons has a source before any orc appears.",
-   "Each follower arrives under a hair thin jagged bolt that lives for three frames, then cools from a bronze silhouette glow into its iron and hide material.",
+   "Each follower arrives under a hair thin jagged bolt that lives for three frames, then cools from a bronze silhouette glow into its metal and hide material.",
    "Arrivals are deliberately uneven in time and space so the five reads as a muster, not a pattern; each leaves a scorch star on the floor."
   ],
   "params": [
@@ -6989,7 +6989,7 @@
   "sub": "Remove curse",
   "stage": "full",
   "src": "Destroys a chosen cursed item to remove the curse.",
-  "blurb": "Three loops of tarnished iron chain cinch around an amulet, burst link by link across the floor, and the amulet crumbles to dust in the caster's hands.",
+  "blurb": "Three loops of tarnished metal chain cinch around an amulet, burst link by link across the floor, and the amulet crumbles to dust in the caster's hands.",
   "port": "Niagara mesh renderer for the links with a collision module and a sleep state, the amulet as a dissolve material driven by one scalar, and a mesh decal for the sigil with an emissive curve.",
   "level": null,
   "tags": [
@@ -7065,7 +7065,7 @@
    "eclipse sigil"
   ],
   "notes": [
-   "Tell: crack lines from the triplanar noise sheet climb the armour as an indigo front with the steel darkening below it, while dark motes are drawn into the body.",
+   "Tell: crack lines from the triplanar noise sheet climb the armour as an indigo front with the metal darkening below it, while dark motes are drawn into the body.",
    "Impact: 36 instanced armour plates are thrown off on ballistic arcs with tumble and a bounce, and an eclipse corona flashes behind the head.",
    "The form is the same mannequin with an ink material whose silhouette is alpha clipped by fresnel and rising noise, wrapped in a displaced smoke shell and a stream of lit wisps.",
    "Residue: the shed plates stay on the floor around a soft umbra stain, and the room stays dimmer while the form holds."
@@ -7982,7 +7982,7 @@
   "sub": "Wand",
   "stage": "full",
   "src": "Drills a tunnel through rock walls in a line.",
-  "blurb": "A stubby iron wand tipped with a fluted stone drill bit spins up and throws a grinding bore of grit into a wall of rock; three wall blocks crack and collapse one after another into rubble and hanging dust, leaving a tunnel.",
+  "blurb": "A stubby metal wand tipped with a fluted stone drill bit spins up and throws a grinding bore of grit into a wall of rock; three wall blocks crack and collapse one after another into rubble and hanging dust, leaving a tunnel.",
   "port": "Chaos or pre-fractured geometry collections per wall cell triggered in sequence by a line trace, a beam mesh with a scrolling grit material, and Niagara mesh rubble plus six-way lit dust per cell.",
   "level": null,
   "tags": [
@@ -7993,7 +7993,7 @@
    "sequenced events"
   ],
   "notes": [
-   "The wand is short and heavy on purpose: a leather grip, iron bands and a fluted conical bit whose flutes scroll in the shader while it charges, so it reads as a tool.",
+   "The wand is short and heavy on purpose: a leather grip, metal bands and a fluted conical bit whose flutes scroll in the shader while it charges, so it reads as a tool.",
    "The bore is a camera-facing strip whose length is driven by a keyed front: it stalls at each block face, the block lights up with stress cracks, and then the bore pushes through.",
    "Each block is a displaced box that alpha-clips away on a noise threshold in a quarter second while 120 instanced rubble meshes for that block fly, bounce and settle.",
    "Dust is timed per block from one particle layer and lingers, lit by a flickering bore light, and the untouched back row of blocks stays as context for the tunnel."
@@ -8059,7 +8059,7 @@
   "sub": "Wand",
   "stage": "full",
   "src": "Blasts a target with disintegrating force and breaks walls.",
-  "blurb": "A square-forged iron wand with a violet crystal claw holds a hair-thin white beam on a masonry wall until a ragged hole crumbles out of it and pours away as fine dust.",
+  "blurb": "A square-forged metal wand with a violet crystal claw holds a hair-thin white beam on a masonry wall until a ragged hole crumbles out of it and pours away as fine dust.",
   "port": "Unreal: wall as instanced static meshes with a sphere-mask dissolve driven by a material parameter, sand as a Niagara emitter sampling the mask edge, mounds as a world-position-offset mesh scaled by a curve.",
   "level": null,
   "tags": [
@@ -8072,7 +8072,7 @@
    "The wall is 36 instanced stone blocks. A sphere of erosion grows from the beam point; each fragment is alpha-clipped by triplanar noise against it, with a white-violet cut line that cools to a pale ash lip.",
    "The beam is a two-pixel white core inside a thin violet halo, held for about a second with a sub-frame jitter, so it reads as force rather than fire.",
    "Dust is emitted on the moving erosion front and falls as a sand stream; two lathe mounds grow at the wall foot as it lands.",
-   "The wand is a four-sided lathe (square section) in blackened iron with a violet crystal; its rune band charges before the shot."
+   "The wand is a four-sided lathe (square section) in blackened metal with a violet crystal; its rune band charges before the shot."
   ],
   "params": [
    {
@@ -9302,7 +9302,7 @@
   "sub": "Fire/Metallic/Direct damage",
   "stage": "full",
   "src": "Detonates a wall, dealing fire damage nearby and shooting shards that deal physical damage to random tiles.",
-  "blurb": "A brick wall glows at the mortar and bulges, then blows apart in a ball of fire that fires iron and stone splinters across the room, where they stick in the floor still glowing.",
+  "blurb": "A brick wall glows at the mortar and bulges, then blows apart in a ball of fire that fires metal and stone splinters across the room, where they stick in the floor still glowing.",
   "port": "Fractured wall mesh with per-brick dissolve, a Niagara mesh emitter for the shards with a collision event that spawns spark and dust bursts and freezes each shard in place, and lit flipbooks for fire and smoke.",
   "level": "3",
   "tags": [
@@ -10143,18 +10143,18 @@
   "sub": "Lightning/Buff or curse/Metallic",
   "stage": "full",
   "src": "Magnetizes a metallic unit so nearby enemies are pulled toward it each turn and stunned/shocked when adjacent.",
-  "blurb": "A spark lands on an armoured foe and iron filings in the dust snap into its field; scrap slides in and clings, two enemies are dragged across the floor, and the moment they touch it they are shocked rigid.",
+  "blurb": "A spark lands on an armoured foe and metal filings in the dust snap into its field; scrap slides in and clings, two enemies are dragged across the floor, and the moment they touch it they are shocked rigid.",
   "port": "Niagara: filings are a mesh emitter on a grid whose orientation is sampled from a vector field (a dipole formula or a baked VectorField asset). Enemy pull is gameplay; drag trails are decals spawned per footstep. Field loops are ribbon emitters along analytic splines.",
   "level": "2",
   "tags": [
-   "iron filings",
+   "metal filings",
    "dipole field",
    "instanced metal",
    "drag scuffs",
    "contact shock"
   ],
   "notes": [
-   "The field is shown with matter, not rings: seven hundred instanced iron filings on the floor rotate from random into the field of a vertical dipole, in a wave that spreads outward, and stand up near the target.",
+   "The field is shown with matter, not rings: seven hundred instanced metal filings on the floor rotate from random into the field of a vertical dipole, in a wave that spreads outward, and stand up near the target.",
    "Glowing loops follow the real dipole field line equation r = L sin squared theta around the target, with flowing dashes that run pole to pole.",
    "The pull accelerates as distance closes, the dragged foes lean back against it, and their feet leave pale scuff trails and kicked dust.",
    "Adjacency triggers a short double stroke between the target and each foe, a needle burst, sparks and stun twitching. Filings and scuffs stay as residue."
@@ -10198,7 +10198,7 @@
     "count": null
    },
    {
-    "name": "Iron filings",
+    "name": "Metal filings",
     "geo": "'box'",
     "blend": "opaque",
     "count": "720"
@@ -10240,7 +10240,7 @@
    "The coil is a subdivided plane bent into a wire-thin helix in the vertex shader. It grows from the feet up, then cinches inward as it takes hold.",
    "The copy reads as cause and effect: one strike from above, the coil flashes white along its length, then an identical strike lands again a few frames later.",
    "The floor keeps a fern-shaped Lichtenberg burn from both strikes, cooling from tint to char, and the copper stays heat-tinted and smoking.",
-   "Colour is copper and steel with a cold blue halo only on the bolts, so the second strike is the brightest moment in the shot."
+   "Colour is copper and metal with a cold blue halo only on the bolts, so the second strike is the brightest moment in the shot."
   ],
   "params": [
    {
@@ -11651,7 +11651,7 @@
    "lit fire and smoke"
   ],
   "notes": [
-   "Tell: the floor sigil unwinds in a spiral, an iron crown with hanging hooks erodes into being above the group and barbed wires drop from it to every shoulder, then sag between the chests.",
+   "Tell: the floor sigil unwinds in a spiral, an metal crown with hanging hooks erodes into being above the group and barbed wires drop from it to every shoulder, then sag between the chests.",
    "Impact: the caster triggers it with an ordinary firebolt. On the hit a crimson bead runs along the links and lands on the neighbours a beat later as a black crescent with a red rim, held for three frames.",
    "The wires are camera-facing strips with a parabolic sag that snaps taut when the pulse passes, and a barbed width profile so they read as wire, not light.",
    "Residue: the burnt target smokes, the wheel keeps turning, the wires keep trembling and blood sprays onto the flagstones under the victims."
@@ -12252,7 +12252,7 @@
    }
   ],
   "variants": [
-   "White steel",
+   "White metal",
    "Orange",
    "Pale yellow"
   ],
@@ -12381,27 +12381,27 @@
  },
  {
   "id": "rw-ironize",
-  "name": "Allies turned to iron",
+  "name": "Allies turned to metal",
   "set": "Rift Wizard",
   "cat": "Metallic",
   "sub": "Metallic/Buff or curse/Summon",
   "stage": "full",
   "src": "All allies gain physical, fire and lightning resistance and become metallic.",
-  "blurb": "Iron filings crawl across the floor from the caster to each ally, then a white-hot forging seam climbs every body from boots to helm, leaving riveted iron plate that glows, cools to dark steel and steams.",
-  "port": "A character material layer with a world height mask driven by one scalar per pawn, blending to a tileable riveted iron material with an emissive temperature curve. Niagara handles filings (spline-follow), seam sparks (skeletal mesh surface sampling above the mask height) and steam.",
+  "blurb": "Metal filings crawl across the floor from the caster to each ally, then a white-hot forging seam climbs every body from boots to helm, leaving riveted metal plate that glows, cools to dark metal and steams.",
+  "port": "A character material layer with a world height mask driven by one scalar per pawn, blending to a tileable riveted metal material with an emissive temperature curve. Niagara handles filings (spline-follow), seam sparks (skeletal mesh surface sampling above the mask height) and steam.",
   "level": "3",
   "tags": [
    "forging seam",
    "metal shell",
-   "iron filings",
+   "metal filings",
    "cooling blackbody",
    "slag drips"
   ],
   "notes": [
    "Tell: dark filings stream along curved field lines on the floor and gather at each ally boots, drawn as lit metallic specks.",
-   "The iron shell is an opaque copy of each mannequin, alpha clipped above a noisy seam line that rises over one second; the plate pattern, rivets and hammered normals are procedural in object space.",
+   "The metal shell is an opaque copy of each mannequin, alpha clipped above a noisy seam line that rises over one second; the plate pattern, rivets and hammered normals are procedural in object space.",
    "The seam front is a thin blackbody band that throws stretched sparks and slag drips, and its light rides up the body so the floor and neighbours change colour.",
-   "Residue: plates cool from orange to grey iron over three seconds, steam lifts off the shoulders, and slag splashes harden on the floor around the feet. A hard glint pops on each helm as it completes."
+   "Residue: plates cool from orange to grey metal over three seconds, steam lifts off the shoulders, and slag splashes harden on the floor around the feet. A hard glint pops on each helm as it completes."
   ],
   "params": [
    {
@@ -12442,7 +12442,7 @@
     "count": null
    },
    {
-    "name": "Iron shells",
+    "name": "Metal shells",
     "geo": "'dummy'",
     "blend": "opaque",
     "count": "3"
@@ -12677,7 +12677,7 @@
   ],
   "notes": [
    "The sword is lit and opaque. Runes from rune() sit on the ridge and the cutting edges glow, both fed by noise that scrolls from guard to tip.",
-   "The shell is a second copy of the blade scaled outward in the vertex shader and eroded with fast noise, so the element hugs the steel.",
+   "The shell is a second copy of the blade scaled outward in the vertex shader and eroded with fast noise, so the element hugs the metal.",
    "The big silhouette comes from a strip billboarded around the blade axis. It never shows an edge and carries the flames, mist or lightning arcs.",
    "Flow sets whether the element rises like fire or sinks like frost, and the same value drives the particles into embers or drips.",
    "Two ribbons follow a closed-form helix around the blade, so the trail needs no history buffer."
@@ -13795,7 +13795,7 @@
    }
   ],
   "variants": [
-   "Steel-blue",
+   "Metal-blue",
    "Red"
   ],
   "layers": [
