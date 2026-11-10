@@ -2,14 +2,14 @@
 
 This release contains exactly 50 rows arranged as ten named five-rung ladders.
 Five ladders contain 25 shields, bucklers, and one narrow defensive guard. Five
-ladders contain 25 substantial held rite foci. Every ladder has one row at each
+ladders contain 25 substantial held spell foci. Every ladder has one row at each
 tier and every rung equals its tier.
 
 ## Release decisions
 
 - Full shields use portrait art and 2x3 or 2x4 footprints. Bucklers use square
   art and 2x2 footprints. The single narrow parrying guard uses the documented
-  1x2 defensive-offhand exception. Held rite foci use only 1x3 portrait or 2x2
+  1x2 defensive-offhand exception. Held spell foci use only 1x3 portrait or 2x2
   square footprints; no undocumented 1x2 focus remains.
 - Adjacent ladder rungs change silhouette and mechanical thesis. Removed rows
   include the duplicate oval scutum, the T5 scutum material reskin, the
@@ -19,7 +19,7 @@ tier and every rung equals its tier.
 - The final historical corrections are preserved: protected jade and amber
   insets, explicitly drilled shell plates, the direct Nimrud ivory wax-board
   construction, the documented ring-handled bell, the Vermand officer boss, and
-  the Battersea-derived red-glass boss cells. No turtleshell shield, speciesless
+  the Battersea-derived red-glass boss cells. No turtle shell shield, speciesless
   carapace, unsupported shell-bone laminate, invented seal case, merchant
   balance, solar motif, or material skin survives.
 - All descriptions remain paleolithic-to-ancient in manufacturing language.

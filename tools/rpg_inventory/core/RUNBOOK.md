@@ -91,7 +91,7 @@ loop. Filesystem is the only state; no memory required.
 | backless helmet / facade | flat front view | 3/4 hero angle is in the style; if it still fails, add "showing the full dome and back of the helm" |
 | single boot/glove | pair not stated | DESC must say "a pair of, shown as a pair" |
 | stubby dagger/spear, shortened polearm, short cords | model over-focuses on the head/pendant and collapses long objects into one-handed props | state proportions: "tip to butt", "shaft at least five times the head length", "steep diagonal corner to corner", "cord forming a full wearable neck-loop" |
-| glowing/magical skymetal | fantasy prior | describe material only: "raw dark meteoric iron"; NEVER stack "not magical" negations (desaturates) |
+| iron, steel or glass item | owner rule 12 (2026-11-09: "Just no iron for now") | do not generate; the row's action is `hold_owner_rule`. Hammered Iron (skymetal) and Riveted Mail are retired materials |
 | composite primitive item | over-composed DESC | primitive = ONE material + minimal parts |
 | museum-photo stiffness | flat lighting/view | v2 style handles it; if not, "dynamic three-quarter view" reminder |
 | spiral ornaments | old vocabulary | banned; sunbursts/chevrons/friezes/meander instead |

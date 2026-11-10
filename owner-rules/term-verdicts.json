@@ -3714,6 +3714,1692 @@
    "verdict": "keep",
    "after": null,
    "note": "replacement word"
+  },
+  "abydos": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "akhmim": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "akinakes": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "aksumite": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "amarna": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "ashurnasirpal": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "badari": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "battersea": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "bulgaria": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "caligae": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "cesti": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "chertsey": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "coolus": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "corbridge": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "courtenay": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "cypriot": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "cyprus": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "deve": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "dubitatus": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "gallo": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "getty": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "goodmanham": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "gorytos": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "graeco": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "heqreshu": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "heraklion": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "holmegaard": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "huyuk": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "karabitsu": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "kew": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "kiltubbrid": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "kushan": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "lachish": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "landesmuseum": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "luristan": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "mainz": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "manfalut": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "manica": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "manikyala": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "meketre": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "mesoamerican": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "montefortino": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "negau": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "newstead": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "nimrud": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "oldowan": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "oxus": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "pernik": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "persepolis": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "peschiera": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "pilos": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "plumbata": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "pugio": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "rhomphaia": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "rhyd": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "romano": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "runnymede": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "sagaris": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "salisbury": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "sasanian": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "sica": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "snowshill": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "spangenhelm": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "subeixi": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "sutton": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "tene": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "thames": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "trajan": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "urartian": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "vermand": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "vikso": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "vindolanda": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "wien": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "witham": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "yetholm": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "zhou": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "ouroboros": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "fibonacci": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "sobel": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "rubin": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "rhys": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "aseprite": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "godot": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "phaser": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "pixelorama": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "renoise": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "pinterest": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "jekyll": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "vite": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "snes": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "gomadan": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "bm": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "oa": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "wg": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "mv": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "bce": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "corslet": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "bardiche": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "longsword": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "sabre": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "flatbow": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "throwstick": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "groundstone": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "headload": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "jul": {
+   "origin": "real-world",
+   "verdict": "keep",
+   "after": null,
+   "note": "real place, collection, person, product or artefact type named in research docs (2026-11-09 review)"
+  },
+  "aaa": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "af": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "ci": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "cdn": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "csv": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "descs": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "dpr": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "ehp": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "ev": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "faq": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "filesystem": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "fx": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "gpt": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "hcl": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "html": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "iife": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "img": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "inc": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "jpgs": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "kb": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "mmorpg": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "mvp": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "nano": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "orbl": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "orbr": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "pngs": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "pr": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "prs": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "readmes": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "rf": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "rl": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "rng": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "runbook": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "sc": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "sn": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "sp": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "swd": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "svg": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "tsv": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "tsvs": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "umd": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "urls": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "urp": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "uuid": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "wc": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "todo": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "todos": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "quickstart": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "roadmap": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "tilemap": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "workflow": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "workspace": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "moodboard": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "paperdoll": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "skilltree": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "subtree": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "modpool": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "modpools": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "namebank": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "seedable": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "toggleable": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "dockable": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "configurable": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "equippable": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "prepend": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "inline": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "standalone": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "lineup": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "checkpoint": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "clipboard": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "multi": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "multiplayer": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "retro": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "embedding": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "tradeoff": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "tradeoffs": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "tooltips": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "endgame": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "misc": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "conf": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "bpm": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "cowork": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "arpgs": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "numeric": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "code, file, tool or table-header jargon in docs (2026-11-09 review)"
+  },
+  "vaal": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "foulborn": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "hubris": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "warlord": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "demonhide": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "ggg": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "devilution": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "gd": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "le": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "lp": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "tq": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "fp": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "greatclub": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "greatclubs": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "delaford": {
+   "origin": "other-game",
+   "verdict": "keep",
+   "after": null,
+   "note": "other-game reference in design notes (PoE, D2, Grim Dawn, Last Epoch, Titan Quest, D&D, Devilution, Delaford); never game text (2026-11-09 review)"
+  },
+  "allocating": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "calibrated": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "clearest": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "completed": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "consumed": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "contributing": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "coordinated": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "curated": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "customisation": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "customization": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "customize": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "debugged": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "deleted": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "deleting": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "deterministically": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "displaced": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "download": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "dyed": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "enclosed": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "excavated": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "fibre": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "flared": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "grooved": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "ignored": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "inclined": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "influenced": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "integrated": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "jewellery": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "knives": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "muted": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "observed": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "padded": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "promoted": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "reconceived": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "rescaling": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "reused": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "rewriting": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "scheduled": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "smallest": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "sourced": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "typing": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "unallocated": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "unisex": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "venturing": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "warring": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "im": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "plain English inflection the dictionary check missed (2026-11-09 review)"
+  },
+  "blackline": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Dark Hide Trap Case",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "bodyshield": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Body Shield",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "broadblade": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Bronze Dagger",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "clayweight": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Clay Weight",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "footbags": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Foot Bags",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "forksword": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Forked Copper Sword",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "greatblade": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Two-handed Blade",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "leafblade": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Leaf Sword",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "longblade": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Long Flint Blade",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "nightglass": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Obsidian",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "overflap": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "over-flap (doc)",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "redglass": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Red-Stud",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "ringblade": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Ring-Pommel Sword",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "roundshield": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Round Shield",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "shortblade": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Short Blade",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "snareline": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Snare Packet",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "turtleshell": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Turtle Shell",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "warbanner": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "War banner",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "warcrown": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Crown",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "silkroad": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Silk Road",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "spiritwork": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": null,
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "spellcrafter": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Spell Builder",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "farwalker": {
+   "origin": "agent-invented",
+   "verdict": "purge",
+   "after": "Movement",
+   "note": "compound coinage (rule 7) in art-pipeline names or tool docs; renamed via rename-map.json (2026-11-09)"
+  },
+  "forked": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "replacement word (2026-11-09)"
+  },
+  "foot": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "replacement word (2026-11-09)"
+  },
+  "pommel": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "replacement word (2026-11-09)"
+  },
+  "stud": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "replacement word (2026-11-09)"
+  },
+  "builder": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "replacement word (2026-11-09)"
+  },
+  "silk": {
+   "origin": "plain",
+   "verdict": "keep",
+   "after": null,
+   "note": "replacement word (2026-11-09)"
+  },
+  "cdr": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "abbreviation in design docs (CDR cooldown recovery, RT ray tracing) (2026-11-09 review)"
+  },
+  "rt": {
+   "origin": "technical",
+   "verdict": "keep",
+   "after": null,
+   "note": "abbreviation in design docs (CDR cooldown recovery, RT ray tracing) (2026-11-09 review)"
   }
  },
  "proposalsMerged": {

@@ -1,6 +1,6 @@
 {
  "rule": "Keep a term only if (a) the owner introduced it, (b) it is a plain English description of what it does, or (c) it is the standard PoE1/PoE2 term used in the same meaning. Everything else is purged (renamed plainly, or removed with its mechanic if that mechanic was invented and does nothing). 'Spirit' and 'blood' were named by the owner as made up (2026-11-08).",
- "generated": "2026-11-09",
+ "generated": "2026-11-10",
  "howToAdd": "A new term enters only with its origin: owner (quote the owner), poe (same meaning as in PoE), or plain (plain English used plainly). Edit term-verdicts.json and rerun term-inventory.mjs --glossary.",
  "terms": [
   {
@@ -404,11 +404,6 @@
    "origin": "plain"
   },
   {
-   "term": "anim",
-   "origin": "technical",
-   "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
-  },
-  {
    "term": "animal",
    "origin": "plain"
   },
@@ -650,11 +645,6 @@
    "origin": "plain"
   },
   {
-   "term": "assembling",
-   "origin": "plain",
-   "note": "Ordinary English word used in its normal meaning."
-  },
-  {
    "term": "assembly",
    "origin": "plain"
   },
@@ -836,6 +826,11 @@
    "origin": "plain"
   },
   {
+   "term": "bags",
+   "origin": "plain",
+   "note": "replacement word (Meteor-Cuff Footbags -> Cuffed Foot Bags)"
+  },
+  {
    "term": "bake",
    "origin": "plain"
   },
@@ -897,10 +892,6 @@
   },
   {
    "term": "barred",
-   "origin": "plain"
-  },
-  {
-   "term": "barricade",
    "origin": "plain"
   },
   {
@@ -1472,15 +1463,6 @@
    "origin": "plain"
   },
   {
-   "term": "brick",
-   "origin": "plain"
-  },
-  {
-   "term": "bricks",
-   "origin": "other-game",
-   "note": "Arcomage resource name in TownCards.cs; owner asked for an \"arcomage -like minigame\" (rule (a) via owner request)."
-  },
-  {
    "term": "bridge",
    "origin": "plain"
   },
@@ -1590,8 +1572,9 @@
    "origin": "plain"
   },
   {
-   "term": "building",
-   "origin": "plain"
+   "term": "builder",
+   "origin": "plain",
+   "note": "replacement word (Hyperdimensional Spellcrafter -> Spell Builder)"
   },
   {
    "term": "builds",
@@ -1817,6 +1800,11 @@
    "term": "carved",
    "origin": "plain",
    "note": "Ordinary English word used in its normal meaning."
+  },
+  {
+   "term": "case",
+   "origin": "plain",
+   "note": "replacement word (Clayweight Trigger Case -> Clay Weight Trigger Case)"
   },
   {
    "term": "casket",
@@ -2312,6 +2300,11 @@
    "origin": "plain"
   },
   {
+   "term": "clubs",
+   "origin": "plain",
+   "note": "replacement word (Greatclubs -> Two-handed clubs)"
+  },
+  {
    "term": "cluster",
    "origin": "plain"
   },
@@ -2387,10 +2380,6 @@
   },
   {
    "term": "collar",
-   "origin": "plain"
-  },
-  {
-   "term": "collection",
    "origin": "plain"
   },
   {
@@ -2591,10 +2580,6 @@
   },
   {
    "term": "contact",
-   "origin": "plain"
-  },
-  {
-   "term": "contains",
    "origin": "plain"
   },
   {
@@ -2904,6 +2889,11 @@
    "origin": "plain"
   },
   {
+   "term": "crowns",
+   "origin": "plain",
+   "note": "replacement word (warcrowns -> crowns)"
+  },
+  {
    "term": "crumble",
    "origin": "plain"
   },
@@ -2952,6 +2942,11 @@
   {
    "term": "cueva",
    "origin": "plain"
+  },
+  {
+   "term": "cuffed",
+   "origin": "plain",
+   "note": "replacement word (Meteor-Cuff Footbags -> Cuffed Foot Bags)"
   },
   {
    "term": "cuffs",
@@ -3142,10 +3137,6 @@
    "term": "deck",
    "origin": "owner",
    "note": "Owner: \"build-a-deck menu\"."
-  },
-  {
-   "term": "decks",
-   "origin": "plain"
   },
   {
    "term": "declared",
@@ -3447,10 +3438,6 @@
    "origin": "plain"
   },
   {
-   "term": "dismantle",
-   "origin": "plain"
-  },
-  {
    "term": "disp",
    "origin": "technical",
    "note": "Code token / file format (Disp = \"disputed\" confidence class in skill-zone-items.html)."
@@ -3473,10 +3460,6 @@
   },
   {
    "term": "dispose",
-   "origin": "plain"
-  },
-  {
-   "term": "disrupt",
    "origin": "plain"
   },
   {
@@ -3915,10 +3898,6 @@
    "origin": "plain"
   },
   {
-   "term": "eighteen",
-   "origin": "plain"
-  },
-  {
    "term": "element",
    "origin": "plain"
   },
@@ -4275,10 +4254,6 @@
    "term": "ext",
    "origin": "technical",
    "note": "graphics or tooling term in a WIZARD lab page"
-  },
-  {
-   "term": "extension",
-   "origin": "plain"
   },
   {
    "term": "extent",
@@ -4667,6 +4642,11 @@
    "origin": "plain"
   },
   {
+   "term": "flange",
+   "origin": "plain",
+   "note": "replacement word (Flange-Hilt Leafblade -> Flange-Hilt Leaf Sword)"
+  },
+  {
    "term": "flanked",
    "origin": "plain"
   },
@@ -4823,7 +4803,8 @@
   },
   {
    "term": "foot",
-   "origin": "plain"
+   "origin": "plain",
+   "note": "replacement word (2026-11-09)"
   },
   {
    "term": "footfinger",
@@ -4867,12 +4848,13 @@
    "origin": "plain"
   },
   {
-   "term": "forfeit",
+   "term": "forge",
    "origin": "plain"
   },
   {
-   "term": "forge",
-   "origin": "plain"
+   "term": "forked",
+   "origin": "plain",
+   "note": "replacement word (Copper Forksword -> Forked Copper Sword)"
   },
   {
    "term": "forks",
@@ -6202,10 +6184,6 @@
    "origin": "plain"
   },
   {
-   "term": "increase",
-   "origin": "plain"
-  },
-  {
    "term": "increases",
    "origin": "plain"
   },
@@ -6413,10 +6391,6 @@
   },
   {
    "term": "islands",
-   "origin": "plain"
-  },
-  {
-   "term": "isolated",
    "origin": "plain"
   },
   {
@@ -7477,10 +7451,6 @@
    "origin": "plain"
   },
   {
-   "term": "meditation",
-   "origin": "plain"
-  },
-  {
    "term": "medium",
    "origin": "plain"
   },
@@ -7590,11 +7560,6 @@
   {
    "term": "meter",
    "origin": "plain"
-  },
-  {
-   "term": "metre",
-   "origin": "plain",
-   "note": "Ordinary English word used in its normal meaning."
   },
   {
    "term": "miasma",
@@ -8292,10 +8257,6 @@
    "origin": "plain"
   },
   {
-   "term": "opponent",
-   "origin": "plain"
-  },
-  {
    "term": "optimized",
    "origin": "plain",
    "note": "Ordinary English word used in its normal meaning."
@@ -8492,6 +8453,11 @@
   {
    "term": "packed",
    "origin": "plain"
+  },
+  {
+   "term": "packet",
+   "origin": "plain",
+   "note": "replacement word (Snareline Packet -> Snare Packet)"
   },
   {
    "term": "packing",
@@ -8994,7 +8960,8 @@
   },
   {
    "term": "pommel",
-   "origin": "plain"
+   "origin": "plain",
+   "note": "replacement word (2026-11-09)"
   },
   {
    "term": "pool",
@@ -9331,10 +9298,6 @@
    "origin": "plain"
   },
   {
-   "term": "raid",
-   "origin": "plain"
-  },
-  {
    "term": "raider",
    "origin": "plain"
   },
@@ -9549,10 +9512,6 @@
    "origin": "poe"
   },
   {
-   "term": "recruit",
-   "origin": "plain"
-  },
-  {
    "term": "rectangular",
    "origin": "plain"
   },
@@ -9651,10 +9610,6 @@
    "origin": "plain"
   },
   {
-   "term": "reinforce",
-   "origin": "plain"
-  },
-  {
    "term": "rejected",
    "origin": "plain"
   },
@@ -9731,10 +9686,6 @@
   },
   {
    "term": "repaint",
-   "origin": "plain"
-  },
-  {
-   "term": "repair",
    "origin": "plain"
   },
   {
@@ -9880,10 +9831,6 @@
    "origin": "plain"
   },
   {
-   "term": "resupply",
-   "origin": "plain"
-  },
-  {
    "term": "retain",
    "origin": "plain"
   },
@@ -9976,6 +9923,11 @@
    "term": "rgba",
    "origin": "technical",
    "note": "Code identifier, file format, hex colour, acronym, bone or asset name; not game vocabulary."
+  },
+  {
+   "term": "rhomphaia",
+   "origin": "real-world",
+   "note": "replacement word (Rhomphaia Greatblade -> Rhomphaia)"
   },
   {
    "term": "rhythm",
@@ -10100,6 +10052,11 @@
   {
    "term": "roach",
    "origin": "plain"
+  },
+  {
+   "term": "road",
+   "origin": "plain",
+   "note": "replacement word (Silkroad -> Silk Road)"
   },
   {
    "term": "roar",
@@ -10929,10 +10886,6 @@
    "origin": "plain"
   },
   {
-   "term": "siege",
-   "origin": "plain"
-  },
-  {
    "term": "sigil",
    "origin": "plain"
   },
@@ -10959,7 +10912,8 @@
   },
   {
    "term": "silk",
-   "origin": "plain"
+   "origin": "plain",
+   "note": "replacement word (2026-11-09)"
   },
   {
    "term": "silver",
@@ -11179,6 +11133,11 @@
   {
    "term": "snapshots",
    "origin": "plain"
+  },
+  {
+   "term": "snare",
+   "origin": "plain",
+   "note": "replacement word (Snareline Packet -> Snare Packet)"
   },
   {
    "term": "snow",
@@ -11894,6 +11853,11 @@
    "origin": "plain"
   },
   {
+   "term": "stud",
+   "origin": "plain",
+   "note": "replacement word (Redglass Boss Shield -> Red-Stud Boss Shield)"
+  },
+  {
    "term": "studded",
    "origin": "plain",
    "note": "Ordinary English word used in its normal meaning."
@@ -12461,10 +12425,6 @@
    "origin": "plain"
   },
   {
-   "term": "tile",
-   "origin": "plain"
-  },
-  {
    "term": "tiles",
    "origin": "plain"
   },
@@ -12635,10 +12595,6 @@
    "term": "toward",
    "origin": "plain",
    "note": "replacement word (The Kiln Line -> the fire and ignite wedge (STR toward STR/INT))"
-  },
-  {
-   "term": "tower",
-   "origin": "plain"
   },
   {
    "term": "town",
@@ -12845,6 +12801,11 @@
   {
    "term": "turquoise",
    "origin": "plain"
+  },
+  {
+   "term": "turtle",
+   "origin": "plain",
+   "note": "replacement word (Turtleshell Shield -> Turtle Shell Shield)"
   },
   {
    "term": "tusk",
@@ -13065,10 +13026,6 @@
   },
   {
    "term": "unmapped",
-   "origin": "plain"
-  },
-  {
-   "term": "unmodified",
    "origin": "plain"
   },
   {
@@ -13335,10 +13292,6 @@
    "term": "verdigris",
    "origin": "owner",
    "note": "Rule 47: the game name is dropped from player-facing text; lowercase \"verdigris\" (bronze patina) and internal ids (VerdigrisStats, verdigris-pack.js) stay. geometric_skilltree/index.html:1542 theme label \"Verdigris\" is a palette name (patina) and may stay."
-  },
-  {
-   "term": "verification",
-   "origin": "plain"
   },
   {
    "term": "verified",
@@ -13680,6 +13633,11 @@
    "note": "replacement word (The Kiln Line -> the fire and ignite wedge (STR toward STR/INT))"
   },
   {
+   "term": "weight",
+   "origin": "plain",
+   "note": "replacement word (Clayweight Trigger Case -> Clay Weight Trigger Case)"
+  },
+  {
    "term": "weighty",
    "origin": "plain"
   },
@@ -13794,10 +13752,6 @@
   },
   {
    "term": "wiltshire",
-   "origin": "plain"
-  },
-  {
-   "term": "win",
    "origin": "plain"
   },
   {

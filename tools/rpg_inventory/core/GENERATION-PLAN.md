@@ -8,7 +8,7 @@ target is roughly 500-600 usable inventory images.
 
 | Bucket | Count | Notes |
 |---|---:|---|
-| Equipment base items | 420 | Named base ladders across weapons, armour, off-hands, jewellery, rite gear, and relics. The former currency/crafting-art budget is redistributed here, mostly to non-weapon slots. |
+| Equipment base items | 420 | Named base ladders across weapons, armour, off-hands, jewellery, spell gear, and relics. The former currency/crafting-art budget is redistributed here, mostly to non-weapon slots. |
 | Uniques / upgraded relics | 100 | 25 per theme: slaughter, warding, spiritwork, wayfaring. |
 | Animal parts / fragments / hunt relics | 40 | Monster parts, ancestor fragments, shrine offerings. |
 | Sets / faction variants | 40 | Small 3-5 piece visual families, not full material grids. |
@@ -38,13 +38,13 @@ base vocabulary to mutate.
 | Short blades / sickle swords | 18 | Cleavers, falchions, khopeshes, sabres, hooked blades. |
 | Axes / adzes | 18 | Hatchets, adzes, war-axes, cleavers, bardiches; vary head shape aggressively. |
 | Clubs / maces | 18 | Femur clubs, cudgels, copper maces, star-maces, mauls. |
-| Two-hand heavy weapons | 18 | Greatclubs, greataxes, macuahuitls, execution blades, temple mauls. |
+| Two-hand heavy weapons | 18 | Two-handed clubs, greataxes, macuahuitls, execution blades, temple mauls. |
 | Spears / polearms | 18 | Spears, harpoons, pikes, glaives, warspears; keep full weapon visible. |
-| Rite tools / sceptres | 18 | Off-hand ritual tools with real mass: heavy hand bells, pronged hand-sceptres, mace-like idol-staves, handled reliquaries, offering bowls, priest tools. Not main-hand weapon damage bases unless explicitly weaponized. |
+| Spell tools / sceptres | 18 | Off-hand ritual tools with real mass: heavy hand bells, pronged hand-sceptres, mace-like idol-staves, handled reliquaries, offering bowls, priest tools. Not main-hand weapon damage bases unless explicitly weaponized. |
 | Caster rods / wands | 12 | Short heavy rods distinct from sceptres; thick grips, blunt finials, sockets, or capped heads. Avoid pencil-thin wands. |
 | Throwing / sidearms | 12 | Throwing knives, heavy javelins, throwing clubs; avoid bows/slings, tiny darts, and hand stones. |
 | Body armour | 24 | Hide wraps, linen, boiled leather, studded jerkins, scale vests, sheet-bronze corslets. |
-| Helmets / crowns | 24 | Caps, crests, helms, masks, warcrowns, greathelms; distinct silhouettes. |
+| Helmets / crowns | 24 | Caps, crests, helms, masks, crowns, greathelms; distinct silhouettes. |
 | Bracers / gloves | 18 | Bracers/vambraces/gauntlets; avoid ambiguous handwraps. |
 | Boots / greaves | 18 | Sandals, boots, shin guards, greaves; pair shown as pair. |
 | Belts / girdles | 18 | Cords, sashes, girdles, plated belts, warbelts; landscape canvas. |
@@ -57,7 +57,7 @@ base vocabulary to mutate.
 | Quick rigs | 12 | 2x2 back/flank-worn quivers, gorytoi, weighted-dart racks, sling-bullet side carriers, and framed knife/fletching/medicine/pigment/trap/fire kits; show the complete backboard and harness without a body, never a handheld purse, satchel, briefcase, or off-hand object. |
 | Extra focus foci | 12 | 2x2 hands-free magical reinterpretations of polycandelon lamp wheels, chained censers, suspended lamps, backed mirrors, bells, pyxides, seal-cylinder spindles, vessels, rings, and scale cages. Overt magic is allowed; cap bare-orb silhouettes. |
 | Alias / reuse pool | 12 | D2-style renamed tiers using already-good art where acceptable. |
-| Non-weapon expansion reserve | 24 | Extra armour, shields, wearable jewellery, belts, greaves/bracers, rite foci, auxiliary gear, relic gear, and trophies. Do not spend this reserve on weapons or abstract currency. |
+| Non-weapon expansion reserve | 24 | Extra armour, shields, wearable jewellery, belts, greaves/bracers, spell foci, auxiliary gear, relic gear, and trophies. Do not spend this reserve on weapons or abstract currency. |
 | **Total** | **420** |  |
 
 ## Uniques and upgraded relics
@@ -205,7 +205,7 @@ upgraded relics, shrine loot, or faction prestige sets.
   are fine; do not make mail/rivetmail/riveted iron strips a class.
 - Prompt-candidate batches must be slot-diverse. In a 12-candidate roast batch:
   max 2 weapons, min 2 armour/helmets, min 2 shields/off-hands, min 2 limb or
-  waist wearables, min 2 jewellery/neck/ring items, and min 2 rite foci,
+  waist wearables, min 2 jewellery/neck/ring items, and min 2 spell foci,
   relics, curios, or trophies. For smaller batches, weapons stay below 25%.
   Never let axes/daggers become the default sample set.
 - Prompt-candidate batches must be no-repeat by default. When Alexei asks for
@@ -228,7 +228,7 @@ upgraded relics, shrine loot, or faction prestige sets.
   symbols/lore marks.
 - At least 20% of equipment bases should have implicit/mechanical identity:
   socket, vessel, patience, trophy affinity, theme bias, block, speed, ward,
-  spirit, reach, crit, or carry capacity.
+  mana, reach, crit, or carry capacity.
 
 ## Auxiliary slot and specialty-pack system
 
@@ -278,7 +278,7 @@ Retire these unless reconceived into a reliable icon:
   orbs used as Relic pack filler, symbol-covered plaques, flat tablets, ward plates, carved slabs,
   generic hand-held boards, smoky amulets, tiny charm clusters, and decorative
   stands. Relic gear needs one strong held/worn/handled object.
-- Weak base-item concepts: wicker shields, rite batons, pencil-thin wands,
+- Weak base-item concepts: wicker shields, spell batons, pencil-thin wands,
   hand stones, tiny darts, shrine miniatures, reed baskets, reed maps, road
   charms, loose feather markers, and other one-off props that do not read as
   credible loot. Wicker/reed can be hidden construction under hide or leather,

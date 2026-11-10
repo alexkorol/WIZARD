@@ -20,21 +20,21 @@ warclub_obsidian	mace	4	Obsidian Star-Mace	P	a war-mace whose stone head bristle
 warclub_jade	mace	4	Jade Cudgel	P	a heavy blunt war club carved entirely from dark green jade, blocky squared striking head, thick grip, the entire weapon visible on a strong diagonal
 warclub_skymetal	mace	5	Meteoric iron Maul	P	a heavy maul with a raw dark meteoric-iron head, hammer-textured faces, on a thick leather-wrapped haft
 greataxe_bone	great2h	1	Bone Maul	P	a massive two-handed club carved from a single whale bone, sinew-wrapped grip, the entire weapon visible on a slight diagonal
-greataxe_copper	great2h	2	Copper Greatclub	P	-
+greataxe_copper	great2h	2	Copper Two-handed Club	P	-
 greataxe_bronze	great2h	3	Bronze Two-handed Axe	P	-
 macuahuitl_obsidian	great2h	4	Obsidian Macuahuitl	P	-
-greataxe_skymetal	great2h	5	Meteoric iron Greatblade	P	-
+greataxe_skymetal	great2h	5	Meteoric iron Two-handed Blade	P	-
 spear_flint	polearm	1	Flint Spear	P	-
 spear_bone	polearm	1	Bone Harpoon	P	-
 spear_copper	polearm	2	Copper Spear	P	-
 spear_bronze	polearm	3	Bronze Pike	P	-
 spear_obsidian	polearm	4	Obsidian Spear	P	-
 spear_skymetal	polearm	5	Meteoric iron Spear	P	-
-fetish_bone	ritefocus	1	Bone Idol-Cudgel	S	a heavy bone idol-head rite cudgel carved from one large bone, thick central grip, blunt striking head, compact and solid
+fetish_bone	ritefocus	1	Bone Idol-Cudgel	S	a heavy bone idol-head spell cudgel carved from one large bone, thick central grip, blunt striking head, compact and solid
 rattle_copper	ritefocus	2	Copper Hand Bell	S	a clean hammered copper hand bell with thick rounded bell body, short central handle, and simple raised rim bands
 sceptre_bronze	ritefocus	3	Bronze Sceptre	S	a plain bronze sceptre with a rounded mace-like finial and a leather-wrapped grip
 idolstaff_jade	ritefocus	4	Jade Idol-Staff	P	a tall dark-wood staff topped with a simple carved jade idol head
-starwand_skymetal	ritefocus	5	Meteoric iron Rite Rod	S	a short heavy rod of raw dark meteoric iron with a socketed blunt finial and rawhide-wrapped grip
+starwand_skymetal	ritefocus	5	Meteoric iron Spell Rod	S	a short heavy rod of raw dark meteoric iron with a socketed blunt finial and rawhide-wrapped grip
 wrap_hide	body	1	Hide Wrap	P	-
 wrap_quilted	body	2	Quilted Vest	P	-
 wrap_studded	body	3	Bronze-Studded Jerkin	P	a plain boiled-leather jerkin reinforced with rows of domed bronze studs
@@ -43,7 +43,7 @@ wrap_rivetmail	body	5	Riveted Mail Shirt (retired: mail is after the Bronze Age)
 crest_hide	helmet	1	Hide Cap	S	a boiled dark leather war cap with a domed skull, broad cheek guards, and complete wearable head protection, clean plain leather surface
 crest_bone	helmet	1	Bone Crest	S	-
 helm_bronze	helmet	3	Bronze Helmet	S	-
-crest_jade	helmet	4	Feathered Warcrown	S	-
+crest_jade	helmet	4	Feathered Crown	S	-
 helm_bronzescale	helmet	4	Bronze-Scale Helm	S	-
 helm_rivetmail	helmet	5	Meteoric iron Large helmet	S	-
 grips_hide	bracers	1	Rawhide Wraps	S	-
@@ -63,7 +63,7 @@ girdle_copper	belt	3	Copper-Plated Belt	L	-
 girdle_bronzeplate	belt	4	Bronze War-Girdle	L	a wide war-belt of clean bronze plates on plain leather laid out horizontally, a large plain central plate
 girdle_skymetal	belt	5	Meteoric iron War belt	L	a wide belt of raw dark meteoric-iron plates on plain leather laid out horizontally
 buckler_hide	shield	2	Hide Buckler	P	-
-buckler_bronze	shield	3	Bronze Roundshield	P	-
+buckler_bronze	shield	3	Bronze Round Shield	P	-
 hideshield_bronzescale	shield	4	Bronze-Scale Shield	P	-
 hideshield_rivetmail	shield	5	Riveted Tower Shield (retired: rivets in mail and shields are after the Bronze Age)	P	-
 gorget_bone	amulet	1	Bone Pendant	S	-
@@ -91,13 +91,13 @@ lunula_bronze	amulet	3	Bronze Lunula	S	a broad crescent neck collar of clean ham
 signet_bronze	ring	3	Bronze Signet	S	a heavy bronze signet ring with a plain flat oval face and clean hammered bronze surface
 dagger_tusk	dagger	1	Tusk Shank	P	a dagger ground from a single boar tusk, its natural crescent curve tapering to a sharp point, the root end bound in rawhide as a grip
 warclub_stone	mace	1	Stone Disc-Mace	P	a war-mace with a wide flat ground grey-stone disc head set horizontally atop a straight dark wooden haft, sinew lashing at the joint, the entire weapon visible
-hideshield_oxhide	shield	1	Oxhide Bodyshield	P	a tall body shield of stretched mottled brown-and-cream oxhide over a bent wood frame, its outline pinched at the middle into a deep figure-eight waist
+hideshield_oxhide	shield	1	Oxhide Body Shield	P	a tall body shield of stretched mottled brown-and-cream oxhide over a bent wood frame, its outline pinched at the middle into a deep figure-eight waist
 boots_fur	boots	2	Fur-Lined Boots	S	a pair of sturdy boiled-leather boots with thick cream-tan scruffy fur rolled over the cuffs, rawhide lacing up the front, shown as a pair
 mirror_obsidian	ritefocus	4	Obsidian Mirror	S	a caster focus: a round polished black obsidian scrying mirror set in a dark carved wooden ring with a short handle, glassy surface with faint teal glints
 river_pearl	curio	-	River Pearl Curio	S	a strange small curio: a large baroque river pearl held in a small woven reed cage, its lustrous white surface showing through the weave
 necklace_claw	amulet	1	Claw Necklace	S	a necklace of curved dark-tipped animal claws strung side by side on a knotted rawhide cord, forming a full wearable loop
 wand_antler	ritefocus	1	Antler Wand	S	a caster focus: a forked antler tine with two natural prongs, fine carved notch rings along one prong, the base wrapped in rawhide as a grip
-shield_turtleshell	shield	1	Turtleshell Shield	P	a shield made from the domed shell of a giant turtle, its ridged oval plates worn smooth at the crown, shown from the front
+shield_turtleshell	shield	1	Turtle Shell Shield	P	a shield made from the domed shell of a giant turtle, its ridged oval plates worn smooth at the crown, shown from the front
 mantle_feather	body	4	Feathered Mantle	P	a shoulder mantle of layered glossy black-dyed feathers falling in overlapping rows from a plain hide yoke
 girdle_shell	belt	1	Shell Girdle	L	a belt of overlapping round white shell discs stitched onto a rawhide band, laid out horizontally
 curio_turquoise	curio	-	Turquoise Beetle Curio	S	a strange small curio: a beetle carved from bright blue-green turquoise, its wing cases incised with fine straight lines

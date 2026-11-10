@@ -105,7 +105,7 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
 9. PROMPT BATCH DIVERSITY (2026-07-07). Candidate batches must cover the
    inventory, not only reliable weapons. Default roast batches cap weapons at
    two and include armour/helmets, shields/off-hands, limb/waist wearables,
-   jewellery, and rite/relic/curio/trophy objects.
+   jewellery, and spell/relic/curio/trophy objects.
 10. NO ABSTRACT CURRENCY IDEATION (2026-07-07; revised 2026-07-12). Do not
    propose crafting currencies, omen symbols, ingots, molds, seal weights,
    interchangeable glowing reagent stones, or abstract bench-tool tokens.
@@ -122,7 +122,7 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    look worth looting before tooltip context: enough mass, construction, and
    silhouette authority to block, strike, ward, carry, bind, or focus power.
    Retire weak/toy-like prompt ideas as positive examples: wicker shields,
-   rite batons, pencil-thin wands, hand stones, tiny darts, shrine miniatures,
+   spell batons, pencil-thin wands, hand stones, tiny darts, shrine miniatures,
    reed baskets or maps, road charms, loose feather markers, and other one-off
    props. If reed or wicker appears, it is hidden backing under hide/leather,
    not the named shield face or item thesis.
@@ -287,7 +287,7 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
    poverty through fewer components, cheaper materials, simple joins, repairs,
    and incomplete matching. Tier 2 introduces larger saturated textile fields;
    Tier 3 introduces the most vivid bounded dyes, brightest polish, and strongest
-   pale/dark separation. Northern, Cedar, and Silkroad production palettes do
+   pale/dark separation. Northern, Cedar, and Silk Road production palettes do
    not use blue-family palette drivers. Only Nile Intelligence may use one
    bounded saturated true-lapis ultramarine field. This is a source-character
    rendering rule and does not replace isolated-item matte/extraction blocks.
@@ -339,7 +339,7 @@ fallback swap live in status.py. Rules below apply when Alexei tunes it
   crafting-material image ideation paused.
 - 2026-07-07: relic gear guidance added: concrete ritual implements over vague
   AI mystic trinkets.
-- 2026-07-07: weak-prop scan added: no wicker shields, rite batons, tiny
+- 2026-07-07: weak-prop scan added: no wicker shields, spell batons, tiny
   darts/hand stones, shrine miniatures, reed props, or other joke-loot bases.
 - 2026-07-07: no-repeat test-prompt rule added and extended to style
   calibration. Test prompts now mean novel item concepts unless Alexei

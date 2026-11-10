@@ -51,7 +51,7 @@ defaults.
   awkward one-off novelties, redundant accessories, and weak joke-loot
   silhouettes in the source image.
 - A taxonomy label is not automatic approval. A visible object proposed as an
-  offhand, mobility rig, trap kit, war-call, preparation, relic, or other
+  offhand, mobility rig, trap kit, war horn, preparation, relic, or other
   auxiliary still has to earn its roster slot against PoE/D2-style base-item
   usefulness and readability.
 - First inspect an actual visible object:

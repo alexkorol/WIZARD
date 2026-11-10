@@ -1,4 +1,4 @@
-# The Arcane Lattice — Hyperdimensional Spellcrafter
+# The Arcane Lattice — Spell Builder
 
 Self-contained Three.js (r128) spellcrafting interface. Players weave a connected
 path through a diamond-shaped node lattice (strata 1-2-3-4-3-2-1, 16 nodes) to

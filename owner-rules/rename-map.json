@@ -1563,6 +1563,131 @@
       "category": "place",
       "before": "Infernal",
       "after": "Volcanic"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Ivory-Butt Broadblade",
+      "after": "Ivory-Butt Bronze Dagger"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Copper Forksword",
+      "after": "Forked Copper Sword"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Flange-Hilt Leafblade",
+      "after": "Flange-Hilt Leaf Sword"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Clayweight Trigger Case",
+      "after": "Clay Weight Trigger Case"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Snareline Packet",
+      "after": "Snare Packet"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Oxhide Bodyshield",
+      "after": "Oxhide Body Shield"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Feathered Warcrown",
+      "after": "Feathered Crown"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Turtleshell Shield",
+      "after": "Turtle Shell Shield"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "turtleshell shield",
+      "after": "turtle shell shield"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Nightglass-Inset Mirror",
+      "after": "Obsidian-Inset Mirror"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Meteoric Ringblade",
+      "after": "Ring-Pommel Sword"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Rhomphaia Greatblade",
+      "after": "Rhomphaia"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Redglass Boss Shield",
+      "after": "Red-Stud Boss Shield"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Blackline Trap Case",
+      "after": "Dark Hide Trap Case"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Meteor-Cuff Footbags",
+      "after": "Cuffed Foot Bags"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Copper Greatclub",
+      "after": "Copper Two-handed Club"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Greatclubs",
+      "after": "Two-handed clubs"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "warcrowns",
+      "after": "crowns"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Obsidian Shortblade",
+      "after": "Obsidian Short Blade"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Meteoric iron Greatblade",
+      "after": "Meteoric iron Two-handed Blade"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Roundshield",
+      "after": "Round Shield"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "roundshield",
+      "after": "round shield"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Warbanner",
+      "after": "War banner"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Silkroad",
+      "after": "Silk Road"
+    },
+    {
+      "category": "item name (art pipeline)",
+      "before": "Hyperdimensional Spellcrafter",
+      "after": "Spell Builder"
     }
   ],
   "scopes": {

@@ -48,6 +48,7 @@ mechanical_identity
 `action` is one of:
 
 - `generate_new`
+- `hold_owner_rule` (never generated while an owner rule forbids the item: rule 12, no iron in any form and no glass, 2026-11-09; the validator rejects iron, steel or glass descriptions under any generate or reuse action)
 - `review_reuse`
 - `alias_existing`
 - `reference_only_generate`

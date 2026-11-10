@@ -60,12 +60,12 @@ Not every class needs all five rungs; 3–5 each is fine (like D2's three).
 
 ### Weapons (kind: weapon; sub-class by tag)
 - **Dagger** (blade/swift): Bone Shiv · Copper Knife · Bronze Dirk · Obsidian Fang · Meteoric iron Kris
-- **Sword / one-hand blade** (blade): Flint Cleaver · Copper Falchion · Bronze Khopesh · Obsidian Shortblade · Meteoric iron Longsword
+- **Sword / one-hand blade** (blade): Flint Cleaver · Copper Falchion · Bronze Khopesh · Obsidian Short Blade · Meteoric iron Longsword
 - **Axe** (blade/blunt): Flint Hatchet · Copper Adze · Bronze War-Axe · Obsidian Cleaver · Meteoric iron Bardiche
 - **Mace / club** (blunt): Driftwood Cudgel · Copper Mace · Bronze War-Mace · Jade Hammer · Meteoric iron Maul
-- **Two-hand great** (blade/blunt): Bone Maul · Copper Greatclub · Bronze Two-handed Axe · Obsidian Macuahuitl · Meteoric iron Greatblade
+- **Two-hand great** (blade/blunt): Bone Maul · Copper Two-handed Club · Bronze Two-handed Axe · Obsidian Macuahuitl · Meteoric iron Two-handed Blade
 - **Reach / polearm** (reach): Flint Spear · Bone Harpoon · Bronze Pike · Obsidian Spear · Meteoric iron Spear
-- **Rite-focus** (spirit caster): Bone Idol-Cudgel · Copper Hand Bell · Bronze Pronged Sceptre · Jade Idol-Staff · Meteoric iron Rite Rod
+- **Rite-focus** (mana caster): Bone Idol-Cudgel · Copper Hand Bell · Bronze Pronged Sceptre · Jade Idol-Staff · Meteoric iron Spell Rod
 
 ### Armour
 - **Body** (life/ward line): Hide Wrap · Boiled Vest · Bronze-Studded Jerkin · Bronze-Scale Vest · Sheet-Bronze Corslet
@@ -73,12 +73,12 @@ Not every class needs all five rungs; 3–5 each is fine (like D2's three).
 - **Gloves/bracers**: Rawhide Wraps · Boiled Bracers · Bronze-Scale Bracers · Bronze Vambraces · Meteoric iron Gauntlets
 - **Boots**: Bark Sandals · Hide Sandals · Bronze-Shod Sandals · Jade Greaves · Meteoric iron Greaves
 - **Belt**: Sinew Cord · Woven Girdle · Bronze-Plated Belt · Bronze War-Girdle · Meteoric iron War belt
-- **Shield**: Hide Roundshield · Hide Buckler · Bronze Roundshield · Bronze-Scale Shield · Sheet-Bronze Tower
+- **Shield**: Hide Round Shield · Hide Buckler · Bronze Round Shield · Bronze-Scale Shield · Sheet-Bronze Tower
 
 ### Jewellery
 - **Amulet / neckpiece**: Bone Pendant · Copper Torc · Jade Gorget · Amber Talisman · Meteoric iron Sigil
 - **Ring**: Bone Ring · Copper Coil · Jade Band · Amber Ring · Meteoric iron Ring
-- **Curio / relic** (spirit flavour): use substantial relic pack boxes,
+- **Curio / relic** (mana flavour): use substantial relic pack boxes,
   offering bowls, forked standards, and trophy settings. Do not build a tier
   ladder out of flat tablets, plaques, tiny trinkets, shrine miniatures, or
   loose charms. Finished socketable trophy settings in this curio lane are

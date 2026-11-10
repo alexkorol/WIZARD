@@ -313,7 +313,7 @@ FACTIONS = {
         ],
     },
     "faction_dustwind": {
-        "title": "Silkroad Plateau Nomads",
+        "title": "Silk Road Plateau Nomads",
         "accent": "#d0a23f",
         "note": (
             "Portable, ridden-in construction. Organic carry gear stays organic-led: "

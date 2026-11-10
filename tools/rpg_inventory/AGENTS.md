@@ -690,7 +690,7 @@ every material with the same slate cast. Tier 1 communicates low cost through
 fewer components, simple seams, cheap materials, repairs, and incomplete
 matching, not faded color. Tier 2 adds larger clear dyed fields. Tier 3 adds the
 most vivid bounded dyes, brightest polish, and strongest pale/dark separation.
-Blue is not a shared faction signal: Northern, Cedar, and Silkroad production
+Blue is not a shared faction signal: Northern, Cedar, and Silk Road production
 palettes avoid blue-family palette drivers. Only Nile Intelligence may use one
 bounded, saturated true-lapis ultramarine field. This exception applies to
 source-character generation; isolated item matte and extraction rules remain
@@ -794,7 +794,7 @@ When asked for roastable prompt candidates, apply the pipeline rules in
   valid Extra focus equipment, not currency.
 - Default 12-candidate batches cap weapons at two and must include armour or
   helmets, shields/off-hands, limb or waist wearables, jewellery, and
-  rite/relic/curio/trophy objects. Smaller batches keep weapons below 25%.
+  spell/relic/curio/trophy objects. Smaller batches keep weapons below 25%.
 - Do not let axes/daggers become the default sample set. If weapons appear,
   vary class and construction, then move back to non-weapon slots.
 - Relic gear candidates should be concrete ritual implements, not vague magic
@@ -803,7 +803,7 @@ When asked for roastable prompt candidates, apply the pipeline rules in
   vajra/dorje-like forms as structural inspiration, not direct sacred-symbol
   copies or literal default names.
 - Screen prompt candidates for weak/toy-like base reads. Avoid wicker shields,
-  rite batons, pencil-thin wands, hand stones, tiny darts, shrine miniatures,
+  spell batons, pencil-thin wands, hand stones, tiny darts, shrine miniatures,
   reed baskets or maps, road charms, loose feather markers, and generic small
   foci. If the item would read as a prop or joke loot before the tooltip
   explains it, replace it with a heavier credible base.

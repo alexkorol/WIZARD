@@ -17,7 +17,7 @@ Exactly 50 bases are drafted as ten complete five-rung ladders:
 
 This is intended as a real PoE1/D2-style base economy. Every adjacent rung changes its macro silhouette or construction, not only its material. Grid footprints follow `INVENTORY-FOOTPRINTS.md`: quivers/gorytoi are 2x3; compact war-calls are 2x2; the straight Etruscan trumpet is 1x3; all full-length warbanners are 2x4 except genuinely narrow finial poles at 1x4; Tool-slot items, trap rigs, and Extra foci are 2x2; compact pack contents are 1x1; and the long red-deer antler stock is 2x1. No 3x3 auxiliary footprint remains.
 
-Quiver and gorytos art is isolation-safe: every description requires an empty standalone container and explicitly excludes bows, bow limbs, bowstrings, arrows, and loose missiles. Warbanners stay compact and non-weapon-length. Tool-slot items always preserve the backboard/frame, shoulder harness, and flank straps; none may read as a handbag, satchel, briefcase, suitcase, or handled box.
+Quiver and gorytos art is isolation-safe: every description requires an empty standalone container and explicitly excludes bows, bow limbs, bowstrings, arrows, and loose missiles. War banners stay compact and non-weapon-length. Tool-slot items always preserve the backboard/frame, shoulder harness, and flank straps; none may read as a handbag, satchel, briefcase, suitcase, or handled box.
 
 ## Intake triage: sorted indices 217-260
 

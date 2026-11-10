@@ -35,6 +35,9 @@ MAP_FIELDS = (
     "assigned_art_id", "reason",
 )
 ACTIONS = {
+    # hold_owner_rule: never generated while an owner rule forbids it (rule 12, 2026-11-09:
+    # no iron in any form, no glass). Re-open only by owner decision.
+    "hold_owner_rule",
     "generate_new", "review_reuse", "alias_existing",
     "reference_only_generate", "hold_redesign", "retire",
 }
@@ -211,6 +214,11 @@ def main() -> int:
             errors.append(f"{where}: invalid source_verdict")
         if row["qa_status"] not in QA_STATUSES:
             errors.append(f"{where}: invalid qa_status")
+        if row["action"] in {"generate_new", "reference_only_generate", "review_reuse"} and any(
+            not re.search(r"\b(no|not|never|without|nor|avoid)\b[^.;]{0,60}$", row["desc"][:m.start()][-80:], re.I)
+            for m in re.finditer(r"\b(iron|skymetal|meteoric|steel|glass)\b", row["desc"], re.I)
+        ):
+            errors.append(f"{where}: iron, steel or glass art is held by owner rule 12; use action hold_owner_rule")
         if row["action"] in {"generate_new", "reference_only_generate"}:
             if row["qa_status"] != "unreviewed":
                 errors.append(

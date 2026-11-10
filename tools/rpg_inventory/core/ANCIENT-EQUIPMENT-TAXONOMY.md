@@ -170,7 +170,7 @@ coverage at family level.
 | W-BLUNT-15 | bronze hammer-pick | A2-A4 | short hammer face opposed by a compact pick | P3 |
 | W-BLUNT-16 | double-lobed club | A0/L | one-piece wood club with two balanced striking lobes | P3 |
 | W-BLUNT-17 | ball-head war club | A0-A4/L | round heavy wood/stone head on a narrow handle | P2 |
-| W-BLUNT-18 | ceremonial mace-scepter | A1-A4 | authoritative handled object with a compact heavy head, combat-capable silhouette | P2; rite focus crossover |
+| W-BLUNT-18 | ceremonial mace-scepter | A1-A4 | authoritative handled object with a compact heavy head, combat-capable silhouette | P2; spell focus crossover |
 | W-BLUNT-19 | double-ended pronged rod | A2-A4 | short substantial symmetrical rod with opposed pronged ends and central grip | P3; ritual/offhand |
 
 ### F. Spears, polearms, and reach weapons
@@ -227,10 +227,10 @@ coverage at family level.
 
 | ID | Family | Era | Prompt-facing visual definition | Priority/risk |
 |---|---|---:|---|---|
-| S-01 | hide roundshield | A0-A4/L | round hide face stretched over a wood frame, plain front | P1 |
-| S-02 | solid wood roundshield | A0-A4 | joined or single-board round face with a center grip/boss | P2 |
-| S-03 | sheet-bronze roundshield | A2-A3 | shallow bronze disc with concentric ribs and central stepped boss | P3 |
-| S-04 | bossed center-grip roundshield | A3-A4 | wood/hide round face with prominent metal hand boss | P2 |
+| S-01 | hide round shield | A0-A4/L | round hide face stretched over a wood frame, plain front | P1 |
+| S-02 | solid wood round shield | A0-A4 | joined or single-board round face with a center grip/boss | P2 |
+| S-03 | sheet-bronze round shield | A2-A3 | shallow bronze disc with concentric ribs and central stepped boss | P3 |
+| S-04 | bossed center-grip round shield | A3-A4 | wood/hide round face with prominent metal hand boss | P2 |
 | S-05 | aspis/hoplon type | A3 | large deep round bowl shield with broad rim | P2 |
 | S-06 | parma/clipeus type | A3-A4 | smaller round or oval infantry/cavalry shield | P2 |
 | S-07 | crescent pelta | A2-A3 | light crescent or clipped-round shield with horned upper outline | P3 |
@@ -245,7 +245,7 @@ coverage at family level.
 | S-16 | bronze buckler | A2-A4 | small metal-faced round/oval hand shield | P2 |
 | S-17 | bark shield | A0-A4/L | light bark face with wood edging and center grip | P3; avoid toy read |
 | S-18 | woven reed/cane shield | A0-A4/L | tightly woven structural face with hard rim | P2; avoid basket appearance |
-| S-19 | turtleshell shield | A0-A4/L | one large shell forming a compact convex fighting face | P3 |
+| S-19 | turtle shell shield | A0-A4/L | one large shell forming a compact convex fighting face | P3 |
 | S-20 | shell/bone-faced shield | L | wood/hide core with selected shell or bone face plates | P3 |
 | S-21 | parrying guard | A0-A4/L | elongated small offhand guard, baton-shield, or wrist shield | P3 |
 | S-22 | ceremonial shield | A1-A4 | impractical prestige shield with clear ritual/status role | P3; relic/unique, not base default |

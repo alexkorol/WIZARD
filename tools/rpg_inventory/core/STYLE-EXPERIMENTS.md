@@ -183,7 +183,7 @@ light, and strictly neutral daylight/studio white balance. Do not use a
 blue-gray backdrop, cool rim light, neutral-to-cool grading, or global
 desaturation in character ladder prompts. Those shared cues become an unwanted
 slate-blue material color on every item, tier, and faction. Blue is not a shared
-faction signal: Northern, Cedar, and Silkroad prompt palettes avoid blue-family
+faction signal: Northern, Cedar, and Silk Road prompt palettes avoid blue-family
 drivers. Nile Intelligence alone may receive one bounded, saturated true-lapis
 ultramarine field; Nile Strength and Dexterity use different hardstone accent
 families. This correction applies to source-character renders, not the separate

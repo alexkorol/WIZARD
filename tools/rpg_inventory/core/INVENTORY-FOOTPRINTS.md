@@ -17,7 +17,7 @@ equipment family when the silhouette materially changes.
 | Bow | 2x4 | 2x3 for a genuinely compact short or composite bow | tall portrait |
 | Buckler, hand guard, compact defensive off-hand | 2x2 | 1x2 for a very narrow guard | square or portrait |
 | Full shield | 2x3 | 2x4 for tower or body-length shields | portrait |
-| Held rite focus or substantial ritual implement | 1x3 | 2x2 for broad bowls, drums, or handled vessels | portrait or square |
+| Held spell focus or substantial ritual implement | 1x3 | 2x2 for broad bowls, drums, or handled vessels | portrait or square |
 | Body armour | 2x3 | 2x4 only for a visibly long integrated coat or robe assembly | portrait |
 | Cloak or mantle | 2x3 | 2x4 for a full-length heavy outer layer | tall portrait |
 | Helm, crown, mask | 2x2 | - | square |
@@ -28,7 +28,7 @@ equipment family when the silhouette materially changes.
 | Substantial curio, coffer, vessel, relic | 1x1 | 2x2 when the object is visibly bulky | square |
 | Standalone quiver, gorytos, arrow case | 2x3 | 2x2 only for a compact flank case | portrait |
 | War Horn instrument | 2x2 | 1x3 for a straight trumpet; 2x3 for a large drum | square or portrait |
-| Warbanner or weapon-length standard | 2x4 | 1x4 for a narrow pole with a compact finial | tall portrait |
+| War banner or weapon-length standard | 2x4 | 1x4 for a narrow pole with a compact finial | tall portrait |
 | Tool slot, mobility kit, trap rig, extra focus | 2x2 | - | square |
 | Spoil, prepared reagent, reliquary-pack content | 1x1 | 2x1 for a long bundle or roll | square or landscape |
 

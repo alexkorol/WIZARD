@@ -48,7 +48,7 @@ handwear has no individual finger articulation, while forearm defenses contain
 no generated hands or anatomy.
 
 The final footwear audit removed the rigid instep-scale concept. Its replacement,
-`Meteor-Cuff Footbags`, keeps the complete foot as flexible Oetzi-family
+`Cuffed Foot Bags`, keeps the complete foot as flexible Oetzi-family
 deerskin, bast net, grass fill, and flat leather sole; one narrow skymetal band
 is isolated on a short padded ankle cuff above the foot flex zone.
 

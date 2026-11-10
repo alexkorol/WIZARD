@@ -1,14 +1,14 @@
-# Offhands, shields, and rite tools expansion notes
+# Offhands, shields, and spell tools expansion notes
 
 ## Portfolio summary
 
-- Exactly 50 proposed bases: 23 shields, 6 bucklers, 1 narrow defensive offhand, and 20 substantial rite foci.
+- Exactly 50 proposed bases: 23 shields, 6 bucklers, 1 narrow defensive offhand, and 20 substantial spell foci.
 - Tier distribution is even: ten bases at each of T1 through T5. Shield/offhand coverage contributes six bases per tier; rite-focus coverage contributes four per tier.
-- Grid footprints follow `INVENTORY-FOOTPRINTS.md`: every buckler and compact hand guard is 2x2, the one narrow elongated guard is 1x2, ordinary full shields are 2x3, body-covering shields are 2x4, compact handled rite tools are 1x2, long sceptres are 1x3, and substantial vessels are 2x2.
+- Grid footprints follow `INVENTORY-FOOTPRINTS.md`: every buckler and compact hand guard is 2x2, the one narrow elongated guard is 1x2, ordinary full shields are 2x3, body-covering shields are 2x4, compact handled spell tools are 1x2, long sceptres are 1x3, and substantial vessels are 2x2.
 - Every row has an official museum or museum-publication anchor. The anchor controls geometry and construction, not excavated surface condition, copied sacred imagery, or modern display styling.
 - The T5 material remains raw dark meteoritic iron. It never glows and does not introduce crystal, modern steelwork, machine tooling, or medieval plate language.
 - The base-economy mix deliberately limits ordinary round shields. It prioritizes figure-eight, crescent, Dipylon, tall oval, tower, scutum, natural-shell, and parrying silhouettes.
-- Rite tools are weighty readable equipment: sceptres, hand bells, rigid rattles, offering vessels, censers, a seal case, and a handled diptych. There are no mirrors, floating orbs, pencil-thin wands, shrine miniatures, or generic magic stones.
+- Spell tools are weighty readable equipment: sceptres, hand bells, rigid rattles, offering vessels, censers, a seal case, and a handled diptych. There are no mirrors, floating orbs, pencil-thin wands, shrine miniatures, or generic magic stones.
 
 ## Dedupe against `items_multi_context_balanced_v1`
 
@@ -74,7 +74,7 @@ it as too thin for combat, and removed the Laminated Nile Shield because it
 repeated lower-tier organic laminate logic. Vermand Officer Shield now supplies
 a combat-functional late Roman officer role with silver and glass confined to
 the protective iron boss. The final frozen audit then replaced the historically
-sound but materially plain Iron-Band Shield with Redglass Boss Shield: five
+sound but materially plain Iron-Band Shield with Red-Stud Boss Shield: five
 small opaque red-glass studs sit in deep bronze cells on the functional boss and
 short spine, leaving the rawhide fighting face plain and avoiding both a material
 skin and any radial or solar motif.
@@ -98,7 +98,7 @@ Indices are zero-based after case-insensitive filename sorting of `C:\Users\Alex
 | 53 | ChatGPT Image Jul 10, 2026, 11_24_03 PM (2).png | reuse | Strong tall rounded-rectangle shield with coherent hide, wood, central rib, bosses, and active-service finish. Assigned to T2 Oxhide Tower Shield. |
 | 54 | ChatGPT Image Jul 10, 2026, 11_24_04 PM (10).png | out of portfolio | Boots. |
 | 55 | ChatGPT Image Jul 10, 2026, 11_24_04 PM (3).png | out of portfolio | Helmet. |
-| 56 | ChatGPT Image Jul 10, 2026, 11_24_04 PM (4).png | reject for this portfolio | Jade pendant with long danglers; too jewelry-like and too small to become a rite offhand. |
+| 56 | ChatGPT Image Jul 10, 2026, 11_24_04 PM (4).png | reject for this portfolio | Jade pendant with long danglers; too jewelry-like and too small to become a spell offhand. |
 | 57 | ChatGPT Image Jul 10, 2026, 11_24_04 PM (5).png | out of portfolio | Body armor. |
 | 58 | ChatGPT Image Jul 10, 2026, 11_24_04 PM (6).png | out of portfolio | Fur mantle. |
 | 59 | ChatGPT Image Jul 10, 2026, 11_24_04 PM (7).png | out of portfolio | Belt. |
@@ -116,7 +116,7 @@ Indices are zero-based after case-insensitive filename sorting of `C:\Users\Alex
 | 71 | ChatGPT Image Jul 10, 2026, 11_24_35 PM (9).png | out of portfolio | Paired bracers. |
 | 72 | ChatGPT Image Jul 10, 2026, 11_25_02 PM (1).png | out of portfolio | Bundle of darts. |
 | 73 | ChatGPT Image Jul 10, 2026, 11_25_02 PM (10).png | out of portfolio | Wrapped boots. |
-| 74 | ChatGPT Image Jul 10, 2026, 11_25_02 PM (2).png | reject for this portfolio | Studded wooden club is readable as a weapon, not a defensive or rite offhand; converting it would create the banned rite-baton/toy-prop problem. |
+| 74 | ChatGPT Image Jul 10, 2026, 11_25_02 PM (2).png | reject for this portfolio | Studded wooden club is readable as a weapon, not a defensive or spell offhand; converting it would create the banned rite-baton/toy-prop problem. |
 | 75 | ChatGPT Image Jul 10, 2026, 11_25_02 PM (3).png | out of portfolio | Soft hood. |
 | 76 | ChatGPT Image Jul 10, 2026, 11_25_02 PM (4).png | reject for this portfolio | Shield-like pendant, but neck cord, scale, and radial face make it jewelry rather than equipment. |
 | 77 | ChatGPT Image Jul 10, 2026, 11_25_02 PM (5).png | out of portfolio | Body armor. |
@@ -126,7 +126,7 @@ Indices are zero-based after case-insensitive filename sorting of `C:\Users\Alex
 | 81 | ChatGPT Image Jul 10, 2026, 11_25_02 PM (9).png | out of portfolio | Paired bracers. |
 | 82 | ChatGPT Image Jul 10, 2026, 11_25_30 PM (1).png | out of portfolio | Long spear. |
 | 83 | ChatGPT Image Jul 10, 2026, 11_25_30 PM (10).png | out of portfolio | Boots. |
-| 84 | ChatGPT Image Jul 10, 2026, 11_25_30 PM (2).png | reuse | Clean, plain hide roundshield with convincing hide, edge binding, stitching, and small boss. Assigned to T1 Hide Roundshield. |
+| 84 | ChatGPT Image Jul 10, 2026, 11_25_30 PM (2).png | reuse | Clean, plain hide round shield with convincing hide, edge binding, stitching, and small boss. Assigned to T1 Hide Round Shield. |
 | 85 | ChatGPT Image Jul 10, 2026, 11_25_30 PM (3).png | out of portfolio | Hide helmet. |
 | 86 | ChatGPT Image Jul 10, 2026, 11_25_30 PM (4).png | out of portfolio | Tooth or bone pendant. |
 

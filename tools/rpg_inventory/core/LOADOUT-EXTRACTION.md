@@ -104,7 +104,7 @@ grading was found to contaminate every faction and tier with subdued slate-blue
 equipment. Low tier should be cheap because its components, joins, and materials
 are simple, not because its colors are faded. Reserve blue-family palette
 drivers for the one explicitly assigned Nile Intelligence true-lapis field;
-Northern, Cedar, and Silkroad source-character ladders use other local colors.
+Northern, Cedar, and Silk Road source-character ladders use other local colors.
 This source-character rule does not replace the later isolated-item matte block.
 
 ## Slot Set
