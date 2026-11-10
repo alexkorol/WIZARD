@@ -1,5 +1,5 @@
 {
-  "url": "http://127.0.0.1:54846/",
+  "url": "http://127.0.0.1:58558/",
   "requestedViewport": {
     "width": 1280,
     "height": 800
@@ -13,12 +13,12 @@
     "maxTop": 800
   },
   "measured": {
-    "groupsTop": 933,
+    "groupsTop": 703,
     "groupsFound": true,
     "bodyScrollWidth": 1280,
     "identity": [
       {
-        "token": "Verdigris Systems Laboratory",
+        "token": "Systems Laboratory",
         "found": true
       },
       {
@@ -28,16 +28,14 @@
     ]
   },
   "capture": {
-    "path": "/Users/alexkorol/Code/WIZARD/evidence/visual/first-screen/dashboard-1280x800.png",
+    "path": "/Users/alexkorol/Code/.worktrees/wizard-item-zones/main/evidence/visual/first-screen/dashboard-1280x800.png",
     "width": 1280,
     "height": 800
   },
   "browser": {
-    "description": "Chrome/150.0.7871.115",
-    "revision": "@25f5b661e5b08141ec24b17d1ce96c5ceb5828da"
+    "description": "Chrome/157.0.8103.50",
+    "revision": "@049750111b1e5c11565c792b2aeed5541f332bad"
   },
-  "verdict": "FAIL",
-  "reasons": [
-    "GROUPS_BELOW_FOLD"
-  ]
+  "verdict": "PASS",
+  "reasons": []
 }

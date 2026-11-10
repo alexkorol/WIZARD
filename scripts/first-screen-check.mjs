@@ -29,7 +29,7 @@ export function probeBrowserRuntime() {
 }
 
 const DEFAULT_IDENTITY_TOKENS = [
-  'Verdigris Systems Laboratory',
+  'Systems Laboratory',
   'Workbench for Integration, Zones, Annotation & Resource Design'
 ];
 

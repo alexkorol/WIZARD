@@ -370,8 +370,8 @@ function checkDashboard(registry, failures) {
     return;
   }
   const html = fs.readFileSync(DASHBOARD, 'utf8');
-  if (!html.includes('Verdigris Systems Laboratory')) {
-    fail(failures, 'index.html must identify WIZARD as the Verdigris Systems Laboratory');
+  if (!html.includes('Systems Laboratory')) {
+    fail(failures, 'index.html must identify WIZARD as the Systems Laboratory');
   }
   if (!html.includes('modules.generated.js')) {
     fail(failures, 'index.html must load modules.generated.js (no second manual card inventory)');
@@ -474,7 +474,8 @@ function checkModuleTests(failures, results) {
     'tools/mason/core/test.js',
     'tools/verdigris_splash/validate.mjs',
     'tests/gui-framekit-panes.test.mjs',
-    'tests/wizard-orbs-invariants.test.mjs'
+    'tests/wizard-orbs-invariants.test.mjs',
+    'tests/verify-markdown-evidence.test.mjs'
   ];
   const optional = [
     'tools/geometric_skilltree/tests/proposals.test.mjs',

@@ -80,7 +80,7 @@ try {
   git('init', '--initial-branch=gh-pages');
   git('config', 'user.name', 'WIZARD fixture');
   git('config', 'user.email', 'fixture@example.invalid');
-  write('index.html', '<title>WIZARD</title><h1>WIZARD</h1><p>Verdigris Systems Laboratory</p><script src="shared/runtime.js?v=7"></script>\n');
+  write('index.html', '<title>WIZARD</title><h1>WIZARD</h1><p>Systems Laboratory</p><script src="shared/runtime.js?v=7"></script>\n');
   write('modules.json', JSON.stringify({
     generatedBy: 'scripts/wizard-lab.mjs',
     schemaVersion: 1,
@@ -121,7 +121,7 @@ try {
   assert.equal(success.status, 0);
   assert.match(success.stdout, new RegExp(`expected_sha=${expectedSha} local_head=${expectedSha}`));
   assert.match(success.stdout, /header_resolution .*etag="fixture-etag" .*last_modified=Fri, 21 Aug 2026 00:00:00 GMT/);
-  assert.match(success.stdout, /identity: WIZARD — Verdigris Systems Laboratory/);
+  assert.match(success.stdout, /identity: WIZARD — Systems Laboratory/);
   assert.match(success.stdout, /generated_registry modules=3 active_launches=2/);
   assert.match(success.stdout, /RETRY attempt=1\/3 delay_ms=25 .*HTTP 503/);
   assert.match(success.stdout, /checked_resources total=8 active_launches=2 shared_assets=1 cache_pinned_assets=3/);

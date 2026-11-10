@@ -44,7 +44,7 @@ Negative grades were checked against each launch's actual script loads and regis
 ### A2. Cartographer
 
 - **Retained claim:** every capability is false in [`wizard.module.json`](../tools/cartographer/wizard.module.json); scenarios, annotations, and time control remain explicitly unsupported.
-- **Executable seam:** [`MapGen.generate`](../tools/cartographer/core/mapgen.js#L1662), [`toJSON`](../tools/cartographer/core/mapgen.js#L1707), and [`fromJSON`](../tools/cartographer/core/mapgen.js#L1735) provide deterministic generation and a raw map serialization format. The launch's [`Export JSON` handler](../tools/cartographer/index.html#L1522) calls that core API, but does not register WIZARD state methods.
+- **Executable seam:** [`MapGen.generate`](../tools/cartographer/core/mapgen.js#L1662), [`toJSON`](../tools/cartographer/core/mapgen.js#L1707), and [`fromJSON`](../tools/cartographer/core/mapgen.js#L1735) provide deterministic generation and a raw map serialization format. The launch's [`Export JSON` handler](../tools/cartographer/index.html#L4) calls that core API, but does not register WIZARD state methods.
 - **Test result:** [`core/test.js`](../tools/cartographer/core/test.js#L60) checks same-seed tile/entity determinism and [`JSON round-trip`](../tools/cartographer/core/test.js#L153). It does not test adapter registration, calibration envelopes, scenarios, or snapshots.
 - **Honesty verdict:** all `—` cells are correct. A working JSON download is not `stateExport` until it is connected to the shared adapter contract.
 

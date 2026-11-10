@@ -56,7 +56,7 @@ function writeFixture(dir, name, html) {
 const BELOW_FOLD_FIXTURE = `<!doctype html>
 <html><head><meta charset="utf-8"><title>below-fold fixture</title></head>
 <body style="margin:0">
-<p>Verdigris Systems Laboratory</p>
+<p>Systems Laboratory</p>
 <p>Workbench for Integration, Zones, Annotation &amp; Resource Design</p>
 <div style="height:1400px"></div>
 <section id="module-groups"><p>late grid</p></section>

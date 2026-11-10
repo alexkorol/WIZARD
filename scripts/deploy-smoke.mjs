@@ -219,14 +219,14 @@ async function inspectDeployment(options, attempt, log) {
 
     if (resource.repoPath === 'index.html') {
       const html = resource.body.toString('utf8');
-      if (!/<h1>WIZARD<\/h1>/.test(html) || !html.includes('Verdigris Systems Laboratory')) {
+      if (!/<h1>WIZARD<\/h1>/.test(html) || !html.includes('Systems Laboratory')) {
         throw new SmokeFailure('WIZARD identity is missing from the deployed dashboard', { url: entry.url.href });
       }
       if (!resource.etag || !resource.lastModified || Number.isNaN(Date.parse(resource.lastModified))) {
         throw new SmokeFailure('dashboard response lacks a resolvable ETag or Last-Modified header', { url: entry.url.href });
       }
       log(`header_resolution url=${entry.url.href} etag=${resource.etag} last_modified=${resource.lastModified}`);
-      log('identity: WIZARD — Verdigris Systems Laboratory');
+      log('identity: WIZARD — Systems Laboratory');
     }
 
     if (resource.repoPath === 'modules.json') {

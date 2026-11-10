@@ -79,12 +79,26 @@ documents must not restate or contradict these rules.
     and seals. No iron or steel, books, scrolls, paper, glass, lanterns, candles, coins, plate
     armour, closed or crested helmets, longswords, crossbows or later objects in tree text
     and icons. *Why:* "pre-iron age. No 'iron taste' skill, no books and high tech".
-    Open owner questions: item art may still use meteorite-sourced "Hammered Iron"
-    (2026-10-02 ruling), and the Ritualist's "Reliquary" pack (an inventory item name used
+    No iron in any form for now, including "Hammered Iron" and riveted mail (2026-11-09:
+    "Just no iron for now please although we could add meteoric iron at some point. I don't
+    think riveted mail fits either"); meteoric iron comes back only by owner decision.
+    Open owner question: the Ritualist's "Reliquary" pack (an inventory item name used
     by the protected item prompt) is unrenamed, until the owner settles them.
 13. **No pentagram, hexagram, heptagram, pentacle or rune-glyph decoration** (2026-10-16) in
     effects, HUD, items or props; use rings, ticks, dots, light and material. Real runes come
-    later through the spell lattice as a system. *Why:* they read as medieval fantasy.
+    later through the spell lattice as a system. Auras carry no runes, hexagons or other
+    drawn geometric figures at all (2026-11-09: "no runes and no hexagons and other stuff for
+    auras, to keep the pre-medieval vibe"). *Why:* they read as medieval fantasy.
+52. **Crafting follows the PoE blueprint, adapted; loot comes from houses** (2026-11-09).
+    Crafting adopts and adapts PoE1/PoE2 crafting without copying it whole: brands and bonds
+    take the place of prefixes and suffixes. Agents build a temporary, clearly provisional
+    system; the owner tunes it in playtest. There are no pre-made set or unique items: an item
+    becomes special only through a character's development and play. Items are tied to houses
+    as relics and can be found out in the world when a character permadies in battle; loot
+    pools follow from that. *Why:* owner: "I need the ai codes to invent a temporary system for
+    now and I will manually tune it as I playtest"; "no pre-made set or unique items, unless
+    they emerged thru player character development and interaction". (Numbered 52 to keep
+    earlier rule numbers stable.)
 14. **New places are proposals until approved** (2026-10-01). Test-slice stand-ins (pasture,
     slate village, rock-cut cellars) are not canon. *Why:* the owner invited new location
     ideas, not extension of placeholders.
