@@ -40,7 +40,7 @@
     },
 
     retiredForms: ['atlatl', 'sling'],
-    retiredMaterials: ['rivetmail'],
+    retiredMaterials: ['rivetmail', 'skymetal'],  // no iron in any form for now (owner 2026-11-09, rule 12); definitions stay so old saves load
     retiredArtIds: [
       'handaxe_copper', 'spear_bronze',
       'atlatl_bone', 'atlatl_copper', 'atlatl_bronze',
@@ -70,7 +70,7 @@
                   weights: { ward: 1.3, life: 1.3, blade: 0.6 } },
       copper:   { name: 'Copper',   tier: 2, statMult: 1.25, vessel: [2, 4], patience: [3, 5], dropWeight: 18, ascendsTo: 'bronze',
                   weights: { river: 1.3, fortune: 1.3 } },
-      bronze:   { name: 'Bronze',   tier: 3, statMult: 1.6, vessel: [3, 5], patience: [4, 6], dropWeight: 9, ascendsTo: 'skymetal',
+      bronze:   { name: 'Bronze',   tier: 3, statMult: 1.6, vessel: [3, 5], patience: [4, 6], dropWeight: 9, ascendsTo: null,
                   weights: { blade: 1.2, ward: 1.2, blunt: 1.2 } },
       obsidian: { name: 'Obsidian', tier: 3, statMult: 1.55, vessel: [3, 5], patience: [2, 4], dropWeight: 8, ascendsTo: null,
                   weights: { blade: 1.8, blood: 1.8, ward: 0.4 } },
@@ -78,7 +78,7 @@
                   weights: { spirit: 1.8, ward: 1.5, blood: 0.5 } },
       amber:    { name: 'Amber',    tier: 4, statMult: 1.65, vessel: [4, 5], patience: [4, 6], dropWeight: 4, ascendsTo: null,
                   weights: { ember: 1.7, fortune: 1.5, spirit: 1.3 } },
-      bronzescale: { name: 'Bronze-scale', tier: 4, statMult: 1.9, vessel: [4, 5], patience: [4, 6], dropWeight: 3, ascendsTo: 'rivetmail',
+      bronzescale: { name: 'Bronze-scale', tier: 4, statMult: 1.9, vessel: [4, 5], patience: [4, 6], dropWeight: 3, ascendsTo: null,
                   weights: { ward: 1.6, life: 1.3 } },
       skymetal: { name: 'Hammered Iron', tier: 5, statMult: 2.3, vessel: [4, 6], patience: [5, 7], dropWeight: 1, ascendsTo: null,
                   weights: { blade: 1.4, spirit: 1.4, ember: 1.3 } },

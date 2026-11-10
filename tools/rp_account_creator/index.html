@@ -167,18 +167,17 @@
       quilted: { name: 'Quilted', tier: 2 }, copper: { name: 'Copper', tier: 2 },
       bronze: { name: 'Bronze', tier: 3 }, obsidian: { name: 'Obsidian', tier: 3 },
       jade: { name: 'Jade', tier: 4 }, amber: { name: 'Amber', tier: 4 }, bronzescale: { name: 'Bronze-scale', tier: 4 },
-      skymetal: { name: 'Hammered Iron', tier: 5 },
     };
     const FORMS = {
-      Handaxe: ['flint', 'copper', 'bronze', 'obsidian', 'skymetal'],
-      Spear: ['flint', 'bone', 'copper', 'bronze', 'obsidian', 'skymetal'],
-      Macuahuitl: ['obsidian', 'flint', 'bone'],
+      Handaxe: ['flint', 'copper', 'bronze', 'obsidian'],
+      Spear: ['flint', 'bone', 'copper', 'bronze', 'obsidian'],
+      'Obsidian-edged Club': ['obsidian', 'flint', 'bone'],
       Atlatl: ['bone', 'copper', 'bronze'],
-      Khopesh: ['copper', 'bronze', 'skymetal'],
+      Khopesh: ['copper', 'bronze'],
       Sling: ['hide', 'quilted'],
       Shield: ['hide', 'bronze', 'bronzescale'],
       Wrap: ['hide', 'quilted', 'bronzescale'],
-      Crest: ['bone', 'hide', 'copper', 'bronze', 'jade'],
+      Cap: ['bone', 'hide', 'copper', 'bronze', 'jade'],
       Gorget: ['jade', 'amber', 'bone', 'copper'],
       Ring: ['bone', 'copper', 'jade', 'amber'],
       Curio: ['bone', 'jade', 'amber'],
@@ -407,14 +406,12 @@
     // ============================================================
     const TICK_MS = 1600;
     // Material tier weighted by zone danger; DEX (fortune) tilts toward better materials.
-    // Hammered iron (tier 5) only drops at danger 4+.
     function rollLootItem(danger, lootMod) {
       const w = {
         1: Math.max(5, 55 - danger * 9),
         2: 24,
         3: (6 + danger * 3) * lootMod,
         4: (1.5 + danger * 1.5) * lootMod,
-        5: danger >= 4 ? danger * 0.7 * lootMod : 0,
       };
       let r = Math.random() * Object.values(w).reduce((a, b) => a + b, 0);
       let tier = 1;
