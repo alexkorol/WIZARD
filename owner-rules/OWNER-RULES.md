@@ -10,7 +10,8 @@ documents must not restate or contradict these rules.
 - **Canonical copy:** WIZARD `owner-rules/` (gh-pages). The ARPG carries a synced copy;
   never edit that copy. To add or change a rule, see "Changing a rule" at the end.
 - **Enforced by:** `owner-rules/lint.mjs` with `owner-rules/terms.json` (rules 5–8, 12, 47), run by WIZARD
-  `scripts/wizard-lab.mjs verify` (and CI) and by the ARPG build gate.
+  `scripts/wizard-lab.mjs verify` (and CI); in the ARPG by hand, `node tools/sync-owner-rules.mjs --check`
+  (its build gate and test suite were retired in the 2026-11-09 deslop).
 
 ## North star
 
@@ -198,7 +199,8 @@ Details and implementation notes live in ARPG `the ARPG/Documentation/DESIGN-DIR
     missed that the game had no life recovery.
 40. **Evidence stays disposable** (2026-10-14). QA captures and builds go in ignored
     `output/`; no baselines or capture packets in `Documentation/` or `ArtSource/`; run
-    `tools/hygiene.sh` (ARPG) before shipping. *Why:* the 407 GB evidence pile.
+    keep the ARPG's `output/` under 10 GB, moving superseded runs to `~/Code/arpg-archive` before
+    shipping (the hygiene script was retired in the 2026-11-09 deslop). *Why:* the 407 GB evidence pile.
 41. **Commit and push what you ship** (2026-10-26). Never leave an owner-requested
     correction as uncommitted edits; a fix exists only once it is committed in the source of
     record (and, for WIZARD, pushed to gh-pages). *Why:* the September 21 terminology fix sat
@@ -229,7 +231,6 @@ Details and implementation notes live in ARPG `the ARPG/Documentation/DESIGN-DIR
 These hold detailed, domain-specific requirements and must open by pointing here:
 
 - ARPG `the ARPG/Documentation/DESIGN-DIRECTION.md`: game design decisions and their history.
-- ARPG `.claude/skills/passive-icon-art/`: passive icon art (variety, noise gate, era props).
 - WIZARD `tools/rpg_inventory/AGENTS.md`: item-art pipeline, factions, prompt and QA rules.
 - WIZARD `tools/wizard_orbs/AGENTS.md` and `CLAUDE.md`: orb shader and mask invariants.
 - WIZARD `tools/geometric_skilltree/NAMING.md` and root `NAMING.md`: rename records.
@@ -240,7 +241,8 @@ These hold detailed, domain-specific requirements and must open by pointing here
    WIZARD only. Give the date, the owner's words where available and one line of why.
 2. Run `node owner-rules/lint.mjs wizard` and `node scripts/wizard-lab.mjs verify`, commit,
    and push to gh-pages.
-3. In the ARPG, run `node tools/sync-owner-rules.mjs` and commit the updated copy. The ARPG
-   gate fails while its copy differs from the published one or has been edited locally.
+3. In the ARPG, run `node tools/sync-owner-rules.mjs` and commit the updated copy;
+   `node tools/sync-owner-rules.mjs --check` reports a copy that differs from the published one or
+   was edited locally (the ARPG has had no build gate since 2026-11-09).
 4. Remove any older wording of the same rule from AGENTS.md, CLAUDE.md, skills or docs;
    those files point here instead of repeating rules.
