@@ -17,13 +17,12 @@ coverage at family level.
 
 ## Boundaries and evidence rules
 
-- Historical ceiling: AD 600. Late Antique here includes Late Roman, Early
-  Byzantine, Sasanian, Migration-period, Aksumite, and comparable material
-  cultures through the 6th century.
-- Lore-archaic survivals: Stone Age, Neolithic, Copper Age, and isolated
-  craft traditions can coexist with later states through geography, scarcity,
-  ritual conservatism, or faction history. This is a lore device, not a claim
-  that all forms below were contemporary.
+- Historical ceiling: the end of the Bronze Age (owner rule 12: "Bronze Age and earlier",
+  "pre-iron age", no later objects). Eras A3 and A4 below are out of scope: their rows stay
+  for reference, and expansion_ready rows anchored in them are held (action
+  `hold_owner_rule`, listed in expansion_ready/held-after-bronze-age.tsv; vetoable default,
+  2026-11-09). The Americas count by technology (stone, obsidian, copper), not calendar date.
+  An earlier draft set an AD 600 ceiling; it predates the owner's rule.
 - Named archaeological types are research anchors. Final image prompts must
   also spell out visible construction and silhouette; never rely on a specialist
   name alone.

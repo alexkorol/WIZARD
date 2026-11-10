@@ -1,0 +1,95 @@
+file	art_id	display_name	matched	previous_action	historical_anchor
+armor_helms.tsv	body_corselet_riverhide	River-Hide Corselet	Roman	generate_new	Roman Egypt crocodile-skin armor, 3rd-4th century, BM EA5473
+armor_helms.tsv	body_cuirass_heroic	Heroic Bronze Cuirass	Greek	generate_new	Greek Apulian bronze cuirass, 4th century BCE, Met 1992.180.3a,b
+armor_helms.tsv	helmet_light_copper_point	Copper Point Helm	Urartian	review_reuse	Ancient Urartian pointed sheet-metal helmet geometry
+armor_helms.tsv	helmet_light_riverhide	River-Hide War Hood	Roman	generate_new	Roman Egypt crocodile-skin helmet, 3rd-4th century, BM EA5473
+armor_helms.tsv	helmet_ridged_bronze_illyrian	Bronze Illyrian Helm	Illyrian	review_reuse	A3 Illyrian helmet, Met 1989.281.49
+armor_helms.tsv	helmet_neckguard_bronze_montefortino	Bronze Montefortino Helm	Montefortino	generate_new	A3-A4 Montefortino helmet; taxonomy H-20
+armor_helms.tsv	helmet_neckguard_amber_coolus	Amber-Brow Coolus Helm	Roman	generate_new	A4 Roman Coolus helmet with bounded T4 amber allocation
+armor_helms.tsv	outer_full_linen	Linen Travel Mantle	Roman	review_reuse	Ancient rectangular mantle construction; BM Roman-Coptic wool mantle fragment
+armor_helms.tsv	outer_full_dyed_long	Dyed Long Cloak	Hellenistic	review_reuse	Hellenistic-Roman purple wool cloak textile
+armor_helms.tsv	outer_full_paludamentum	River-Purple Paludamentum	Roman	generate_new	Roman paludamentum drape and ancient purple wool construction
+armor_helms.tsv	outer_short_chlamys	Short Chlamys	Greek	review_reuse	Ancient Greek chlamys geometry
+armor_helms.tsv	outer_short_command	Command Mantle	Roman	generate_new	Ancient command-cloak drape; Roman portrait evidence
+auxiliary.tsv	quiver_bark_tube	Bark Tube Quiver	Scythian	review_reuse	Archaic organic quiver construction; silhouette constrained by the Subeixi/Scythian leather quiver, 8th-3rd century BC.
+auxiliary.tsv	quiver_rawhide_cap	Rawhide Cap Quiver	Scythian	review_reuse	Leather quiver and carrying equipment preserved with the Subeixi/Scythian panoply, 8th-3rd century BC.
+auxiliary.tsv	quiver_copper_mouth	Copper-Mouthed Quiver	Achaemenid	review_reuse	Achaemenid gorytos copper fitting from Deve Huyuk, 5th-4th century BC, adapted to a separate quiver mouth and base.
+auxiliary.tsv	quiver_lacquered_reed	Lacquered Reed Quiver	Scythian	generate_new	Scythian and Achaemenid structured quiver evidence; organic body is a conservative reconstruction around surviving fittings and depictions.
+auxiliary.tsv	gorytos_sewn_hide	Sewn-Hide Gorytos	Achaemenid	review_reuse	Early steppe combined bowcase-quiver form shown in art and surviving fittings; Achaemenid example from Deve Huyuk.
+auxiliary.tsv	gorytos_copper_beak	Copper-Beak Gorytos	Achaemenid	review_reuse	Achaemenid copper beak fitting pierced for stitching to a gorytos, 5th-4th century BC.
+auxiliary.tsv	gorytos_steppe	Steppe Gorytos	Scythian	review_reuse	Scythian/Achaemenid gorytos construction evidenced by the Deve Huyuk fitting and contemporary depictions.
+auxiliary.tsv	gorytos_nightglass	Obsidian Gorytos	Achaemenid	generate_new	Ritual/exotic extrapolation from Achaemenid stitched gorytos geometry, with brittle stone restricted to protected inset fields.
+auxiliary.tsv	warcall_etruscan_trumpet	Etruscan War Trumpet	Etruscan	review_reuse	Etruscan straight bronze trumpet, 4th-3rd century BC.
+auxiliary.tsv	warbanner_hide_tab	Hide Crossbar Standard	vexillum	generate_new	Conservative perishable-material reconstruction based on the ancient vexillum crossbar-and-bounded-panel form documented in Roman stone depiction.
+auxiliary.tsv	warbanner_bronze_finial	Bronze Finial Standard	Iron Age	generate_new	Iron Age Luristan socketed bronze standard-finial, 9th-8th century BC.
+auxiliary.tsv	warbanner_vexillum	Bounded Vexillum	Roman	generate_new	Roman vexillum crossbar construction documented by an AD 138-161 stone depiction from Corbridge.
+auxiliary.tsv	mobility_sarcina_furca	Sarcina Marching Pole	Roman	generate_new	Roman sarcina carried from a shoulder furca is depicted on the AD 113 Trajan Column relief; the V&A preserves a full-size cast of that ancient monument.
+auxiliary.tsv	attendant_bell_yoke	Bronze Bell-Yoke	Greek	review_reuse	Greek leaded-bronze bell with surviving internal clapper, 3rd-4th century BC; Extra focus family AT-14.
+auxiliary.tsv	reliquary_domed_copper	Domed Copper Relic Box	Kushan	generate_new	Kushan copper-alloy relic box from the Manikyala Great Stupa foundation deposit, probably 2nd century AD; the British Museum record documents its cylindrical body, slightly convex base, long domed lid
+auxiliary.tsv	reliquary_jade_ampulla	Jade-Seal Ampulla	Byzantine	generate_new	Early Byzantine pierced-shoulder clay pilgrim ampulla, 5th-6th century AD; the T4 exotic material is limited to one protected non-structural inset.
+auxiliary.tsv	spoils_crocodile_scutes	Nile-Crocodile Scute Patch	Roman	generate_new	Roman-period sewn crocodile-skin armor from Manfalut, 3rd-4th century AD, demonstrates the specific hide material in equipment use.
+jewelry_relics.tsv	ring_bone_plain	Plain Bone Ring	Hellenistic	generate_new	Late Hellenistic to early Roman bone finger-ring tradition
+jewelry_relics.tsv	ring_copper_open	Copper Open Ring	Iron Age	generate_new	Iron Age V-shaped open finger-ring, 400-200 BC
+jewelry_relics.tsv	ring_bronze_v	Bent-V Ring	Iron Age	review_reuse	Iron Age V-shaped finger-ring, 400-200 BC
+jewelry_relics.tsv	ring_bone_shouldered	Shouldered Bone Ring	Hellenistic	generate_new	Late Hellenistic to early Roman bone finger-ring tradition
+jewelry_relics.tsv	ring_bronze_geometric_panel	Geometric Panel Ring	Iron Age	review_reuse	Archaic and Iron Age bronze band-ring construction
+jewelry_relics.tsv	ring_copper_ridge	Ridged Copper Band	Archaic Greek	generate_new	Archaic Greek bronze finger-ring
+jewelry_relics.tsv	ring_amber_socket	Amber Socket Ring	Iron Age	generate_new	Iron Age copper-alloy finger-ring with glass in bezel
+jewelry_relics.tsv	amulet_bronze_capsule	Bronze Capsule Amulet	Etruscan	generate_new	Etruscan bulla necklace pendants, 400-350 BC
+jewelry_relics.tsv	amulet_bronze_bell	Bronze Bell Amulet	Ptolemaic	generate_new	Ptolemaic copper-alloy bell of likely amuletic function
+jewelry_relics.tsv	amulet_copper_cowrie	Bronze Cowrie Amulet	Roman	generate_new	Roman (?) bronze cowrie-form amulet; exact date is uncertain
+jewelry_relics.tsv	amulet_bronze_tooth	Mounted Tusk Amulet	Roman	generate_new	Romano-British mounted boar-tusk amulet
+jewelry_relics.tsv	amulet_gold_bulla	Gold Bulla Pendant	Classical	generate_new	Classical-Hellenistic Greek gold bulla-pendant, 400-300 BC
+jewelry_relics.tsv	relic_earthenware_ampulla	Earthenware Ampulla	Byzantine	generate_new	Early Byzantine earthenware ampulla, 6th century
+jewelry_relics.tsv	relic_bronze_censer	Bronze Chain Censer	Roman	generate_new	Late Roman and Early Byzantine chained censer
+jewelry_relics.tsv	relic_obsidian_inset_mirror	Obsidian-Inset Mirror	Classical	generate_new	Classical Greek free-standing bronze mirror as direct structural anchor
+jewelry_relics.tsv	relic_bronze_cista	Bronze Spell Cista	Etruscan	generate_new	Etruscan or Praenestine bronze cista, early 3rd century BC
+jewelry_relics.tsv	relic_obsidian_brazier	Obsidian Brazier	Roman	generate_new	Late Roman and Early Byzantine chained censer bowl construction
+jewelry_relics.tsv	relic_bronze_bell	Bronze Hand Bell	Greek	generate_new	Greek or Roman bronze bell
+jewelry_relics.tsv	relic_copper_ampulla	Pierced-Shoulder Ampulla	Byzantine	generate_new	Sixth-century Early Byzantine pierced-shoulder ampulla
+jewelry_relics.tsv	relic_bronze_hand_mirror	Bronze Hand Mirror	Classical	generate_new	Classical Greek free-standing bronze mirror
+offhands.tsv	shield_hide_round	Hide Round Shield	Iron Age	review_reuse	Iron Age hide-shaped shield model from the Salisbury Hoard and its organic binding logic
+offhands.tsv	shield_oxhide_tower	Oxhide Tower Shield	Roman	generate_new	Ancient Near Eastern tower-shield silhouette with Romano-British metal binding as assembly evidence
+offhands.tsv	shield_shell_pelta	Shell-Plate Pelta	Hellenistic	generate_new	Ancient Hellenistic pelta silhouette with explicit drilled rigid-plate attachment over an organic shield
+offhands.tsv	shield_reed_pelta	Reed Pelta	Hellenistic	review_reuse	Ancient crescent pelta silhouette documented in Hellenistic art and built with ancient cane-and-hide methods
+offhands.tsv	shield_hide_dipylon	Open-Side Body Shield	Iron Age	review_reuse	Bronze and Early Iron Age Dipylon shield silhouette documented in Greek material culture
+offhands.tsv	shield_coral_spine	Coral Spine Shield	Iron Age	generate_new	Iron Age Witham shield bronze spine, organic backing, and directly preserved pinned coral settings
+offhands.tsv	shield_wood_round	Plank Round Shield	Iron Age	review_reuse	Bronze or Iron Age Kiltubbrid one-piece wooden round shield provides the direct wood-body and boss precedent
+offhands.tsv	shield_cane_oval	Cane Oval Shield	Iron Age	review_reuse	Iron Age long oval shield proportions and organic backing evidence from the Witham shield family
+offhands.tsv	shield_wood_hexagonal	Hexagonal Hide Shield	Roman	generate_new	Romano-British binding identified with rectangular or hexagonal shield construction
+offhands.tsv	shield_celtic_spine	Spined Oval Shield	Iron Age	generate_new	Iron Age Chertsey shield provides complete oval facing, central spine, and boss geometry
+offhands.tsv	focus_copper_bell	Copper Ring Bell	Greek	generate_new	Greek and Roman bronze hand bell with documented integral ring suspension
+offhands.tsv	focus_bronze_censer	Bronze Tripod Censer	Roman	review_reuse	Late Roman or Early Byzantine open-bowl bronze censer with tripod feet
+offhands.tsv	focus_ivory_waxboards	Handled Ivory Diptych	Neo-Assyrian	generate_new	Neo-Assyrian ivory writing set from Nimrud, whose surviving thick hinged waxed leaves date to 720-710 BC, adapted only with a prominent carrying grip for held-item readability
+offhands.tsv	focus_stone_bowl	Serpentine Offering Bowl	Classical	generate_new	Prehistoric through Classical stone vessel tradition anchored by ancient libation bowls
+offhands.tsv	focus_copper_sistrum	Copper Bar Sistrum	Roman	generate_new	Late Period Egyptian and Roman sistrum structure with culture-specific sacred imagery suppressed
+offhands.tsv	focus_bronze_prongs	Bronze Pronged Sceptre	Classical	review_reuse	Ancient double-ended pronged spell implements and Classical bronze sceptre casting
+offhands.tsv	focus_ram_rhyton	Ram-Head Rhyton	Greek	review_reuse	Ancient Greek and Near Eastern libation-vessel tradition with one bounded animal terminal
+offhands.tsv	focus_copper_ewer	Copper Libation Ewer	Greek	generate_new	Ancient libation-vessel tradition documented by Greek and Near Eastern ritual vessels
+offhands.tsv	focus_amber_bell	Amber-Terminal Bell	Greek	generate_new	Ancient Greek and Roman hand-bell construction with amber restricted to one protected non-impact inset
+offhands.tsv	focus_copper_ladle	Copper Dipper Ladle	Neo-Assyrian	generate_new	Neo-Assyrian bronze side-spouted dipper ladle excavated at Nimrud
+offhands.tsv	focus_bronze_phiale	Bronze Libation Bowl	Greek	generate_new	Greek fourth-century BC bronze phiale or libation bowl
+offhands.tsv	focus_bronze_standard_head	Bronze Yoke Standard	Iron Age	generate_new	Iron Age II Luristan paired-feline socketed standard finial, reduced to abstract opposed structural curves
+wave-01.tsv	offhands	Shell-Plate Pelta	Hellenistic	generate_new	Ancient Hellenistic pelta silhouette with explicit drilled rigid-plate attachment over an organic shield
+wave-01.tsv	jewelry_relics	Plain Bone Ring	Hellenistic	generate_new	Late Hellenistic to early Roman bone finger-ring tradition
+wave-02-chroma.tsv	jewelry_relics	Copper Open Ring	Iron Age	generate_new	Iron Age V-shaped open finger-ring, 400-200 BC
+wave-02-chroma.tsv	auxiliary	Lacquered Reed Quiver	Scythian	generate_new	Scythian and Achaemenid structured quiver evidence; organic body is a conservative reconstruction around surviving fittings and depictions.
+weapons.tsv	wpn_bow_assyrian_angular	Assyrian Angle Bow	Neo-Assyrian	generate_new	Neo-Assyrian military bows shown directly on the Ashurnasirpal II river-campaign relief, British Museum 1849,1222.10
+weapons.tsv	wpn_bow_achaemenid_birdtip	Achaemenid Bird-Tip Bow	Achaemenid	generate_new	Achaemenid recurved composite bow with bird-head tips on the Persepolis guard relief, British Museum 1861,0524.7
+wearables.tsv	hands_lacquered_hide_mitts	Lacquered Hide Mitts	Scythian	reference_only_generate	Pre-AD Scythian and Subeixi hard-leather armor directly anchors shaped lacquered hide as a coherent organic shell.
+wearables.tsv	hands_stuffed_boxing_guards	Stuffed Boxing Guards	Roman	generate_new	Roman leather boxing guards from Vindolanda establish a complete enclosed striking hand family.
+wearables.tsv	hands_copper_laminar_guards	Copper Laminar Guards	Roman	generate_new	Roman laminated bronze arm defense establishes a genuine transverse-lame forearm construction.
+wearables.tsv	hands_bronze_splint_manica	Bronze-Splint Manica	manica	generate_new	The Newstead laminated arm guard directly anchors the long segmented manica family.
+wearables.tsv	hands_lacquer_scale_manica	Lacquer-Scale Manica	Scythian	generate_new	Pre-AD Scythian and Subeixi hard-leather scale armor supports this long organic manica.
+wearables.tsv	feet_hobnail_low_shoes	Hobnail Low Shoes	Roman	generate_new	Roman British leather footwear directly supports an openwork upper and hobnailed sole.
+wearables.tsv	feet_embossed_fur_shoes	Embossed Fur Shoes	Graeco	generate_new	A Graeco-Roman leather shoe from Akhmim directly anchors fur lining and embossed geometry.
+wearables.tsv	feet_marching_caligae	Marching Caligae	Roman	generate_new	Roman caligae establish the open military sandal and studded flat sole.
+wearables.tsv	feet_closed_heel_sandals	Closed-Heel Sandals	Late Antique	generate_new	A Late Antique Egyptian layered sandal directly anchors the closed heel and divided upper.
+wearables.tsv	feet_bronze_greave_shoes	Bronze Greave Shoes	Classical	reference_only_generate	Classical Greek bronze greaves directly anchor the shaped shin shells.
+wearables.tsv	feet_classical_overflap_boots	Classical Flap Boots	Classical	reference_only_generate	The Parthenon rider relief records long leather boots with broad overflaps.
+wearables.tsv	belt_woven_linen_girdle	Woven Linen Girdle	Roman	generate_new	Roman Egyptian linen plain weave with narrow wool stripe fields supplies the textile construction.
+wearables.tsv	belt_folded_wool_sash	Folded Wool Sash	Roman	review_reuse	Roman Egyptian wool plain weave directly supports the dense folded textile body.
+wearables.tsv	belt_sword_suspension_girdle	Sword-Suspension Girdle	Roman	generate_new	A pre-Roman Iron Age sword scabbard supplies the broad rectangular suspension geometry.
+wearables.tsv	belt_copper_terminal_band	Copper-Terminal Band	Etruscan	generate_new	An Etruscan long bronze belt fitting supplies the bounded terminal geometry.
+wearables.tsv	belt_bronze_plaque_belt	Bronze Plaque Belt	Etruscan	generate_new	An Etruscan bronze belt fitting anchors the ancient plaque-belt family.
+wearables.tsv	belt_gilt_bronze_warbelt	Gilt-Bronze War belt	Roman	generate_new	A fifth-century Late Roman gilt copper-alloy belt plate supports the bounded prestige facing.

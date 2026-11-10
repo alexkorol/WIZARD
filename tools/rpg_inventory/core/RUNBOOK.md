@@ -92,6 +92,7 @@ loop. Filesystem is the only state; no memory required.
 | single boot/glove | pair not stated | DESC must say "a pair of, shown as a pair" |
 | stubby dagger/spear, shortened polearm, short cords | model over-focuses on the head/pendant and collapses long objects into one-handed props | state proportions: "tip to butt", "shaft at least five times the head length", "steep diagonal corner to corner", "cord forming a full wearable neck-loop" |
 | iron, steel or glass item | owner rule 12 (2026-11-09: "Just no iron for now") | do not generate; the row's action is `hold_owner_rule`. Hammered Iron (skymetal) and Riveted Mail are retired materials |
+| item anchored after the Bronze Age (Roman, Iron Age, Classical, Achaemenid, Scythian ...) | owner rule 12 ("Bronze Age and earlier", "pre-iron age") | do not generate; held rows are listed in expansion_ready/held-after-bronze-age.tsv (vetoable default 2026-11-09) |
 | composite primitive item | over-composed DESC | primitive = ONE material + minimal parts |
 | museum-photo stiffness | flat lighting/view | v2 style handles it; if not, "dynamic three-quarter view" reminder |
 | spiral ornaments | old vocabulary | banned; sunbursts/chevrons/friezes/meander instead |
