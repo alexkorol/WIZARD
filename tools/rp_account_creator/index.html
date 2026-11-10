@@ -141,7 +141,7 @@
     const CLASSES = [
       { id: 'warrior', name: 'Warrior', icon: 'shield', attr: 'str', desc: 'Strength class. Takes less damage.', attrs: { str: 8, dex: 4, int: 3 }, outfitItem: { form: 'Spear', material: 'copper' } },
       { id: 'rogue', name: 'Rogue', icon: 'sword', attr: 'dex', desc: 'Dexterity class. Finds better items.', attrs: { str: 4, dex: 8, int: 3 }, outfitItem: { form: 'Handaxe', material: 'copper' } },
-      { id: 'mage', name: 'Mage', icon: 'scroll', attr: 'int', desc: 'Intelligence class. Gains more experience.', attrs: { str: 3, dex: 4, int: 8 }, outfitItem: { form: 'Ring', material: 'copper' } },
+      { id: 'mage', name: 'Mage', icon: 'flame', attr: 'int', desc: 'Intelligence class. Gains more experience.', attrs: { str: 3, dex: 4, int: 8 }, outfitItem: { form: 'Ring', material: 'copper' } },
     ];
 
     const ZONES = [
@@ -202,7 +202,7 @@
 
     // Legacy boons: unlocked permanently at renown thresholds.
     const BOONS = [
-      { id: 'oral_tradition', renown: 150, icon: 'book', name: '+15% Experience', desc: 'New characters gain 15% more experience.' },
+      { id: 'oral_tradition', renown: 150, icon: 'history', name: '+15% Experience', desc: 'New characters gain 15% more experience.' },
       { id: 'ancestral_arms', renown: 400, icon: 'sword', name: 'Starting Relic', desc: 'New characters start with one of the House\'s circulating relics.' },
       { id: 'hardened_blood', renown: 800, icon: 'heart', name: '+25 Life', desc: 'New characters start with +25 maximum Life.' },
       { id: 'grave_whispers', renown: 1500, icon: 'ghost', name: 'Double Relic Chance', desc: 'Relics drop twice as often.' },
@@ -588,7 +588,7 @@
                     <p className="text-stone-500">Character death is permanent.</p>
                   </div>
                   <div className="glass rounded-lg p-5 text-center">
-                    <Icon name="book" size={28} className="mx-auto text-amber-400 mb-2" />
+                    <Icon name="history" size={28} className="mx-auto text-amber-400 mb-2" />
                     <h3 className="font-serif text-stone-200 mb-1">Legacy</h3>
                     <p className="text-stone-500">Earn house renown to unlock bonuses for new characters.</p>
                   </div>
@@ -764,7 +764,7 @@
               </div>
             </div>
             <div className="flex items-center gap-5">
-              <div className="flex items-center gap-2 text-orange-300" title="House copper"><Icon name="coins" /> <span className="font-mono">{house.copper}</span></div>
+              <div className="flex items-center gap-2 text-orange-300" title="House copper"><Icon name="gem" /> <span className="font-mono">{house.copper}</span></div>
               <div className="flex items-center gap-2 text-purple-300" title="Renown: earned when a character dies; never spent"><Icon name="crown" /> <span className="font-mono">{house.renown}</span></div>
               <button onClick={onSwitchHouse} className="p-2 rounded hover:bg-stone-800 text-stone-500 hover:text-stone-200" title="Switch house"><Icon name="logout" /></button>
             </div>
@@ -831,7 +831,7 @@
 
               {/* Legacy boons */}
               <div className="bg-stone-900 border border-stone-800 rounded-lg p-5 mt-6">
-                <h3 className={`text-lg font-serif flex items-center gap-2 mb-1 ${accent}`}><Icon name="book" /> House Bonuses</h3>
+                <h3 className={`text-lg font-serif flex items-center gap-2 mb-1 ${accent}`}><Icon name="crown" /> House Bonuses</h3>
                 <p className="text-xs text-stone-600 mb-4">Renown is earned when a character dies and is never spent. Bonuses unlock at renown thresholds and apply to new characters.</p>
                 {nextBoon && (
                   <div className="mb-4">
@@ -1131,7 +1131,7 @@
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between items-center"><span className="text-[10px] text-stone-500 uppercase">Kills</span><span className="text-red-400 font-bold flex items-center gap-1"><Icon name="skull" size={15} />{sim.kills}</span></div>
-                  <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between items-center"><span className="text-[10px] text-stone-500 uppercase">Copper</span><span className="text-orange-300 font-bold flex items-center gap-1"><Icon name="coins" size={15} />{sim.copperFound}</span></div>
+                  <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between items-center"><span className="text-[10px] text-stone-500 uppercase">Copper</span><span className="text-orange-300 font-bold flex items-center gap-1"><Icon name="gem" size={15} />{sim.copperFound}</span></div>
                   <div className="bg-stone-900/60 border border-stone-800 rounded p-3 flex justify-between items-center"><span className="text-[10px] text-stone-500 uppercase">Relics</span><span className="text-purple-300 font-bold flex items-center gap-1"><Icon name="gem" size={15} />{sim.foundRelics.length}</span></div>
                 </div>
                 <div>

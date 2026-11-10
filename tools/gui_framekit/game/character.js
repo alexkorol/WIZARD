@@ -12,7 +12,7 @@ const I = (icon, name, rarity, type, opts = {}) =>
     round: !/^items\//.test(icon) && !/gem_|pennant|sq_|tri_|chev/.test(icon) }, opts);
 
 const ITEMS = FK.ITEMS = {
-  khopesh:  I("items/khopesh_skymetal", "Hammered Iron Khopesh", "legendary", "Main Hand · Sword",
+  khopesh:  I("items/dagger_bronze", "Bronze Dagger", "legendary", "Main Hand · Dagger",
               { equip: "weapon", stats: ["112–186 damage", "+12% attack speed", "+34 Dexterity"], flavor: "" }),
   scaleshield: I("items/hideshield_bronzescale", "Bronze Scale Shield", "rare", "Off Hand · Shield",
               { equip: "offhand", stats: ["+52 Armor", "+11% block"], flavor: "" }),
