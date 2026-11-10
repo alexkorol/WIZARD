@@ -4,7 +4,7 @@ Single-file WebGL2 laboratory for spell, aura, fire, atmosphere, item and HUD ef
 
 ## What it holds
 
-- 189 layered effects in sets: Spell set A (100), Spell set B (43), ARPG (14) and the Lab set (props, UI, items, portals, atmosphere and materials), plus 17 Combat reels that are not in `catalog.json`.
+- 181 layered effects in sets: Spell set A (94), Spell set B (42), ARPG (14) and the Lab set (31: props, UI, items, portals, atmosphere and materials), plus 17 Combat reels that are not in `catalog.json`.
 - Spell sets A and B recreate spell visuals from two roguelike games, named by what they show. Their data keys stay `Crawl` and `Rift Wizard` (in `set` here and in both catalogs); the page maps them, and old category keys such as `Invocations`, to plain display labels (`SET_LABEL`, `CAT_LABEL`).
 - Each effect declares parameters (colour, radius, density and similar), variants, a breakdown of how it is built, and a `port` note describing how to rebuild it in a game engine.
 - Layers are instanced meshes, particles, raymarched volumes or screen passes; every layer snippet runs inside a shared template with the library below.

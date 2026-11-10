@@ -5143,7 +5143,7 @@
    "Tell: the sword rises and turns with a slight wobble while a sunburst is burned into the altar top. Impact: a hard sunburst flash and the blade ignites from the guard to the point.",
    "The fire is tinted flame sprites with real alpha, rising off sample points along the blade, with lit smoke above. The metal underneath heats through the same flame ramp.",
    "Second beat: the fire collapses into the blade and its cutting edges and fuller stay lit with a steady light line. The light then calms to a slow breath.",
-   "Third beat: the sword drops and plants itself in the altar with a jolt, throwing stone chips and dust. Scorch, ash and the gold sigil remain on the stone."
+   "Third beat: the sword drops and plants itself in the altar with a jolt, throwing stone chips and dust. Scorch, ash and the gold mark remain on the stone."
   ],
   "params": [
    {
@@ -5210,7 +5210,7 @@
   "port": "Three world-space sprite meshes with an SDF material and a stamp curve, Niagara drip and smoke emitters on a socket above each marked enemy, a deferred decal for the ring and crack.",
   "level": null,
   "tags": [
-   "sdf sigil",
+   "sdf floor mark",
    "instanced billboards",
    "lit drip smoke",
    "ground crack",
@@ -5256,77 +5256,6 @@
    }
   ],
   "chars": 8289
- },
- {
-  "id": "inv-kikubaaqudgh-receive-forbidden-knowledge",
-  "name": "Book of spells absorbed",
-  "set": "Crawl",
-  "cat": "Invocations",
-  "sub": "Learn spells",
-  "stage": "full",
-  "src": "Teaches the caster four spells at once.",
-  "blurb": "A black book with a mark on its cover bursts open in a cold wind, its pages riffle and four great glyphs tear loose and pour into the caster, then the spent book slams shut and drops smoking to the floor.",
-  "port": "A skeletal book mesh with an open and riffle animation, a Niagara ribbon of glyph sprites to a head socket, mesh particles for the four hero glyphs and a physics drop at the end.",
-  "level": null,
-  "tags": [
-   "rigid book rig",
-   "instanced page flips",
-   "glyph stream",
-   "sdf glyphs",
-   "ballistic drop"
-  ],
-  "notes": [
-   "The book is a small rig in one GLSL function: two covers and two page blocks hinge on the spine, and eight instanced pages flip across with a curl while the wind holds it open.",
-   "Small glyphs stream along curved paths from the pages to the head; four large glyphs, one per granted spell, follow on their own timings so the spells read as a count.",
-   "The impact is the mark flashing over the caster for three frames, after which the visor keeps a faint violet glint.",
-   "Afterwards the book shuts, falls under gravity, bounces once and lies flat, shedding scorched page scraps and a little smoke."
-  ],
-  "params": [
-   {
-    "id": "tint",
-    "label": "Glyph light",
-    "type": "color",
-    "value": "'#a46aff'"
-   },
-   {
-    "id": "wind",
-    "label": "Cold wind",
-    "type": "range",
-    "value": "1"
-   },
-   {
-    "id": "glyphs",
-    "label": "Glyph stream",
-    "type": "range",
-    "value": "1"
-   }
-  ],
-  "variants": [
-   "Yellow",
-   "Green",
-   "Quiet"
-  ],
-  "layers": [
-   {
-    "name": "Landing scorch",
-    "geo": "['ground',1]",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Covers and page blocks",
-    "geo": "'box'",
-    "blend": "opaque",
-    "count": "4"
-   },
-   {
-    "name": "Riffling pages",
-    "geo": "['plane',6,2]",
-    "blend": "opaque",
-    "count": "8"
-   }
-  ],
-  "chars": 14104
  },
  {
   "id": "inv-yredelemnul-drain-life",
@@ -5430,10 +5359,10 @@
    "lit debris"
   ],
   "notes": [
-   "Anticipation: a shield-boss sigil is burned into the floor by one clockwise sweep while four light shafts open and each lights its own pool of floor.",
+   "Anticipation: a shield-boss ring is burned into the floor by one clockwise sweep while four light shafts open and each lights its own pool of floor.",
    "The weapons are real lit meshes: two swords from the sword mesh and a spear and flanged mace reshaped from one cylinder in the vertex shader, all with bronze fittings.",
    "Impact: the refused weapons erode from the point upward into rising gold ash, the chosen one lifts, then slams into the stone with a held eight-point flash, chips and a dust ring.",
-   "Residue: the blade stays embedded and quivers to rest, cracks and pale dust ring its foot and the sigil cools to a dull engraved glow."
+   "Residue: the blade stays embedded and quivers to rest, cracks and pale dust ring its foot and the floor ring cools to a dull engraved glow."
   ],
   "params": [
    {
@@ -5468,7 +5397,7 @@
   ],
   "layers": [
    {
-    "name": "Sigil and cracks",
+    "name": "Ring and cracks",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
@@ -5729,7 +5658,7 @@
    "Tell: a hairline crack lengthens in the air while black glass shards orbit in the violet haze. The floor is black plate glass, shaded with real reflections.",
    "The tear opens to a different light. Its inside is a warm torchlit glimpse of the dungeon and a warm point light spills out over the caster and the floor, the only warm note in the frame.",
    "The caster is a custom mannequin whose vertex shader drags each vertex into the tear with a delay by distance, so the near arm goes first and the body unravels into it.",
-   "Impact is the snap: the tear closes in four frames behind a jagged slit and the broken spiral sigil. The orbiting shards lose their hold and fall, bounce and stay, and a cooling seam keeps dripping sparks."
+   "Impact is the snap: the tear closes in four frames behind a jagged slit and the broken spiral. The orbiting shards lose their hold and fall, bounce and stay, and a cooling seam keeps dripping sparks."
   ],
   "params": [
    {
@@ -5895,13 +5824,13 @@
    "instanced black glass",
    "heat haze distortion",
    "branded material",
-   "floor sigil"
+   "floor mark"
   ],
   "notes": [
-   "Tell: the sigil burns into the floor from the centre out and sixteen black glass splinters spiral inward on a tightening helix. The blade already shivers: three additive copies jitter a few millimetres apart.",
+   "Tell: the floor mark burns in from the centre out and sixteen black glass splinters spiral inward on a tightening helix. The blade already shivers: three additive copies jitter a few millimetres apart.",
    "Impact: the splinters reach the metal in the same frame. A jagged slit and the spiked burst hold for two frames, the copies jump apart by a hand's width and ring back with a damped oscillation.",
    "The brand is a material change on the real sword mesh: the metal darkens toward black glass with a violet fresnel and crawling vein cracks. The copies never fully settle, so the weapon keeps a faint double outline.",
-   "Residue: a refraction field shimmers along the blade for the rest of the clip, flakes of glass shed from the metal and lie on the floor, and the sigil cools to a dim pulse."
+   "Residue: a refraction field shimmers along the blade for the rest of the clip, flakes of glass shed from the metal and lie on the floor, and the floor mark cools to a dim pulse."
   ],
   "params": [
    {
@@ -5936,13 +5865,13 @@
   ],
   "layers": [
    {
-    "name": "Sigil scorch",
+    "name": "Mark scorch",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
    },
    {
-    "name": "Sigil",
+    "name": "Floor mark",
     "geo": "['ground',1]",
     "blend": "add",
     "count": null
@@ -5969,95 +5898,6 @@
   "chars": 14386
  },
  {
-  "id": "inv-nemelex-xobe-triple-draw",
-  "name": "Three cards, one chosen",
-  "set": "Crawl",
-  "cat": "Invocations",
-  "sub": "Card draw",
-  "stage": "full",
-  "src": "Draws three cards from a deck and lets the user choose one to play.",
-  "blurb": "Three oversized vellum cards spring from the hand and flip face up; one is chosen, the other two burn away in violet edged fire, and the chosen card is slapped down onto the floor where its sigil brands the stone.",
-  "port": "Niagara mesh renderer for the cards with a dynamic material parameter for the burn threshold and per card timing; ash as a sprite emitter spawned from a skeletal-less static mesh location module on the card. The floor sigil is a deferred decal with a cooling emissive curve.",
-  "level": null,
-  "tags": [
-   "instanced cards",
-   "burn erosion",
-   "lit ash",
-   "floor decal",
-   "graphic flash"
-  ],
-  "notes": [
-   "Every card is one instanced box with a procedural vellum face, a gilt edge and a lacquered lattice back, all lit with shade(), so the lights read across the paper.",
-   "The discarded cards burn with an alpha clip front that starts at their outer corners; a thin violet ember band sits just ahead of a charred margin.",
-   "Ash flakes and charred scraps spawn where the burn front was at their birth time, rise on the heat, then flutter down and stay on the floor.",
-   "The impact frame is a hard lozenge burst behind the chosen card, and the second beat is the slap: a ring of dust and a sigil burned into the floor."
-  ],
-  "params": [
-   {
-    "id": "tint",
-    "label": "Ink fire",
-    "type": "color",
-    "value": "'#a65cff'"
-   },
-   {
-    "id": "ash",
-    "label": "Ash",
-    "type": "range",
-    "value": "1"
-   },
-   {
-    "id": "flare",
-    "label": "Flare",
-    "type": "range",
-    "value": "1"
-   }
-  ],
-  "variants": [
-   "Gold",
-   "Red",
-   "Blue, faint"
-  ],
-  "layers": [
-   {
-    "name": "Branded floor",
-    "geo": "['ground',1]",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Sigil heat",
-    "geo": "['ground',1]",
-    "blend": "add",
-    "count": null
-   },
-   {
-    "name": "Cards",
-    "geo": "'box'",
-    "blend": "opaque",
-    "count": "3"
-   },
-   {
-    "name": "Charred scraps",
-    "geo": "'box'",
-    "blend": "opaque",
-    "count": "26"
-   },
-   {
-    "name": "Tusks",
-    "geo": "'crystal'",
-    "blend": "opaque",
-    "count": "2"
-   },
-   {
-    "name": "Cleavers",
-    "geo": "'sword'",
-    "blend": "opaque",
-    "count": null
-   }
-  ],
-  "chars": 17424
- },
- {
   "id": "inv-beogh-recall-orcish-followers",
   "name": "Recall followers to a banner",
   "set": "Crawl",
@@ -6065,7 +5905,7 @@
   "sub": "Recall allies",
   "stage": "full",
   "src": "Calls the caster's followers back to their side.",
-  "blurb": "The priest drives a horned war standard into the floor, its sigil flares with a horn call that rolls across the stones, and each follower is struck down beside it by a bronze bolt and steps out of the flash.",
+  "blurb": "The priest drives a horned war standard into the floor, its painted mark flares with a horn call that rolls across the stones, and each follower is struck down beside it by a bronze bolt and steps out of the flash.",
   "port": "Unreal: a static mesh standard with a cloth simulation, a beam emitter with jitter for the bolts, and per character dynamic material overlay for the arrival glow. Scorch stars are decals.",
   "level": null,
   "tags": [
@@ -6077,7 +5917,7 @@
   ],
   "notes": [
    "The standard is three instanced boxes, two crystal horns and a vertex animated banner; it drops in, bites the floor, shudders and stays as residue.",
-   "The horn call is a ground ring and a dust wave keyed to the banner sigil igniting, so the summons has a source before any orc appears.",
+   "The horn call is a ground ring and a dust wave keyed to the banner mark igniting, so the summons has a source before any orc appears.",
    "Each follower arrives under a hair thin jagged bolt that lives for three frames, then cools from a bronze silhouette glow into its metal and hide material.",
    "Arrivals are deliberately uneven in time and space so the five reads as a muster, not a pattern; each leaves a scorch star on the floor."
   ],
@@ -6363,7 +6203,7 @@
     "count": null
    },
    {
-    "name": "Spiral sigil",
+    "name": "Spiral and rings",
     "geo": "['ground',1]",
     "blend": "add",
     "count": null
@@ -6982,71 +6822,6 @@
   "chars": 10979
  },
  {
-  "id": "inv-ashenzari-shatter-the-chains",
-  "name": "Chains break, amulet crumbles",
-  "set": "Crawl",
-  "cat": "Invocations",
-  "sub": "Remove curse",
-  "stage": "full",
-  "src": "Destroys a chosen cursed item to remove the curse.",
-  "blurb": "Three loops of tarnished metal chain cinch around an amulet, burst link by link across the floor, and the amulet crumbles to dust in the caster's hands.",
-  "port": "Niagara mesh renderer for the links with a collision module and a sleep state, the amulet as a dissolve material driven by one scalar, and a mesh decal for the sigil with an emissive curve.",
-  "level": null,
-  "tags": [
-   "instanced chain links",
-   "ballistic debris",
-   "alpha erosion",
-   "lit dust",
-   "sigil decal"
-  ],
-  "notes": [
-   "Tell: 45 instanced torus links tighten in three tilted loops while their etched glyphs and the curse gem heat up in teal and the floor sigil burns in.",
-   "Impact: every link becomes a ballistic body with tumble and one bounce, then settles flat on the floor. A broken ring flash holds for two frames.",
-   "The amulet is alpha eroded from the rim inward with a pale ash edge, shedding chip sprites that fall under gravity and pile into a dust decal.",
-   "Residue: scattered links, a dust pile and the cooled sigil lines stay on the floor until the loop ends."
-  ],
-  "params": [
-   {
-    "id": "tint",
-    "label": "Light",
-    "type": "color",
-    "value": "'#5fe0c4'"
-   },
-   {
-    "id": "force",
-    "label": "Burst force",
-    "type": "range",
-    "value": "1"
-   },
-   {
-    "id": "dust",
-    "label": "Dust",
-    "type": "range",
-    "value": "1"
-   }
-  ],
-  "variants": [
-   "Heavy chains",
-   "Red",
-   "Pale blue"
-  ],
-  "layers": [
-   {
-    "name": "Floor sigil and dust pile",
-    "geo": "['ground',1]",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Chain links",
-    "geo": "['torus',.28]",
-    "blend": "opaque",
-    "count": "45"
-   }
-  ],
-  "chars": 10567
- },
- {
   "id": "inv-dithmenos-shadow-form",
   "name": "Black smoke body",
   "set": "Crawl",
@@ -7062,7 +6837,7 @@
    "instanced armour plates",
    "smoke shell",
    "light sink",
-   "eclipse sigil"
+   "eclipse ring"
   ],
   "notes": [
    "Tell: crack lines from the triplanar noise sheet climb the armour as an indigo front with the metal darkening below it, while dark motes are drawn into the body.",
@@ -7207,83 +6982,6 @@
   "chars": 9349
  },
  {
-  "id": "inv-gozag-call-merchant",
-  "name": "Merchant stall from coins",
-  "set": "Crawl",
-  "cat": "Invocations",
-  "sub": "Shop",
-  "stage": "full",
-  "src": "Pays gold to have a shop set up at the caster's location.",
-  "blurb": "A shower of gold coins rattles onto the flagstones, a stamped coin sigil flares under them, and a gold-trimmed merchant stall springs up out of the pile with its lantern already lit.",
-  "port": "Coins as a Niagara mesh emitter with collision and sleep. The stall as a prefab whose pieces animate in with a scale curve and a Sequencer stagger, a decal for the stamp and a point light with a flicker curve in the lantern.",
-  "level": null,
-  "tags": [
-   "instanced coins",
-   "pop-in assembly",
-   "stamped sigil",
-   "lit dust",
-   "lantern light"
-  ],
-  "notes": [
-   "Tell: the caster flicks a purse of coins forward while 70 more fall from above. Every coin is a lit metal mesh with a stamped face that tumbles, bounces once and settles flat.",
-   "Impact: a coin face sigil stamps into the floor for two frames, then the stall pieces pop up in sequence with overshoot and throw a ring of lit dust.",
-   "The stall is one instanced box layer with a per-piece transform table: posts, counter, back panel, slanted roof, crates and a sign that swings on a damped spring.",
-   "Residue: coins stay scattered around the stall, dust settles, and the lantern keeps warm light on the counter."
-  ],
-  "params": [
-   {
-    "id": "tint",
-    "label": "Gold light",
-    "type": "color",
-    "value": "'#ffb040'"
-   },
-   {
-    "id": "cloth",
-    "label": "Awning",
-    "type": "color",
-    "value": "'#6a2a24'"
-   },
-   {
-    "id": "coins",
-    "label": "Coins",
-    "type": "range",
-    "value": "1"
-   }
-  ],
-  "variants": [
-   "Black cloth",
-   "Blue and gold",
-   "Fewer coins"
-  ],
-  "layers": [
-   {
-    "name": "Stamp and dust",
-    "geo": "['ground',1]",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Stall",
-    "geo": "['box',2]",
-    "blend": "opaque",
-    "count": "12"
-   },
-   {
-    "name": "Awning",
-    "geo": "['plane',16,6]",
-    "blend": "opaque",
-    "count": null
-   },
-   {
-    "name": "Coins",
-    "geo": "['lathe',P310_COIN,20]",
-    "blend": "opaque",
-    "count": "90"
-   }
-  ],
-  "chars": 11566
- },
- {
   "id": "inv-qazlal-upheaval",
   "name": "Upheaval",
   "set": "Crawl",
@@ -7299,7 +6997,7 @@
    "instanced debris",
    "lightning strip",
    "lit smoke",
-   "floor sigil"
+   "floor mark"
   ],
   "notes": [
    "The tell: dark lit cloud gathering overhead with lightning flickering inside, and the quartered storm ring cracking into the stone.",
@@ -7340,7 +7038,7 @@
   ],
   "layers": [
    {
-    "name": "Storm sigil",
+    "name": "Storm ring",
     "geo": "['ground',1]",
     "blend": "add",
     "count": null
@@ -7391,7 +7089,7 @@
    "cloth confetti"
   ],
   "notes": [
-   "Two taps print the drum sigil, then the dive is a hip-pivoted arc that shrinks the dancer into the target chest while three silk ribbons trail and then bind the body.",
+   "Two taps print the drum ring, then the dive is a hip-pivoted arc that shrinks the dancer into the target chest while three silk ribbons trail and then bind the body.",
    "The held beat is three accelerating heartbeats swell the armour and leak crimson light through noise cracks before the burst.",
    "The burst frame is an eight-point crimson star held for three frames; chunks are wet lit flesh and armour shards on ballistic arcs that bounce and stay.",
    "Silk scraps and brass foil flutter down with drag and sway and settle flat; a wet specular blood pool spreads under the arrival pose."
@@ -7423,7 +7121,7 @@
   ],
   "layers": [
    {
-    "name": "Sigil, blood pool and splats",
+    "name": "Ring, blood pool and splats",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
@@ -7470,20 +7168,20 @@
   "stage": "full",
   "src": "Recalls an ally to the caster's side.",
   "blurb": "A branching circle burns into the floor, pale ash spirals up out of it and settles into a robed figure, which solidifies from the hem upward around a slow amber glow.",
-  "port": "Niagara: converging particles use a Skeletal Mesh Location target with a lerp-to-target module. The ghost is an overlay material with a height reveal parameter; the sigil is a decal with a radial grow parameter.",
+  "port": "Niagara: converging particles use a Skeletal Mesh Location target with a lerp-to-target module. The ghost is an overlay material with a height reveal parameter; the ring is a decal with a radial grow parameter.",
   "level": null,
   "tags": [
-   "branching sigil",
+   "branching ring",
    "converging particles",
    "fresnel ghost",
    "erosion reveal",
    "lit ash"
   ],
   "notes": [
-   "The look is shared with the next effect: a verdigris-teal fresnel ghost with layered strata, an amber glow at the centre, a branching sigil and pale ash.",
-   "Anticipation is a thread of light from the caster to the sigil while it draws outward ring by ring; ash particles lift from the sigil and converge on points sampled over the body surface.",
+   "The look is shared with the next effect: a verdigris-teal fresnel ghost with layered strata, an amber glow at the centre, a branching ring and pale ash.",
+   "Anticipation is a thread of light from the caster to the ring while it draws outward ring by ring; ash particles lift from the ring and converge on points sampled over the body surface.",
    "The reveal is a noise-broken height front that climbs from the robe hem to the crown with a bright band, then a short shaft of light and a ring flash mark the arrival.",
-   "Residue is pale rime left in the sigil, ash that keeps shedding from the ghost and a cold mist that pools around its hem."
+   "Residue is pale rime left in the ring, ash that keeps shedding from the ghost and a cold mist that pools around its hem."
   ],
   "params": [
    {
@@ -7512,7 +7210,7 @@
   ],
   "layers": [
    {
-    "name": "Branching sigil and rime",
+    "name": "Branching ring and rime",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
@@ -7553,13 +7251,13 @@
    "height reveal",
    "gilded metal",
    "peeling particles",
-   "halo sigil",
+   "halo ring",
    "lit dust"
   ],
   "notes": [
    "Anticipation is the amber heart swelling while motes flow in from the caster.",
    "The transformation is one height front shared by four layers: the gilded body and robe are alpha clipped below it, the ghost body and robe draw above it, and the front itself burns teal white.",
-   "The old ghost skin peels off at the front as pale flakes that drift up; gold dust falls and settles in the sigil afterwards.",
+   "The old ghost skin peels off at the front as pale flakes that drift up; gold dust falls and settles in the ring afterwards.",
    "The impact is a hard ring behind the head held for three frames, which then stays as a dim residual ring while the engravings breathe."
   ],
   "params": [
@@ -7595,7 +7293,7 @@
   ],
   "layers": [
    {
-    "name": "Sigil and settled gold",
+    "name": "Ring and settled gold",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
@@ -7637,7 +7335,7 @@
    "whip timing",
    "afterimages",
    "instanced gold leaf",
-   "brush sigil"
+   "brush mark"
   ],
   "notes": [
    "The serpent is one camera-facing strip with a fake cylindrical normal, so its hex scales are lit as gold metal with ink-dark seams; the head carries two hot eyes.",
@@ -7714,7 +7412,7 @@
    "self-shadowed volume",
    "instanced gold leaf",
    "strike flashes",
-   "brush sigil"
+   "brush mark"
   ],
   "notes": [
    "The cloud is a raymarched torus of 3D noise, swirled faster near the centre, with one shadow tap toward the inner light and one toward the key so it reads as lit vapour rather than glow.",
@@ -7771,7 +7469,7 @@
   "sub": "Movement",
   "stage": "full",
   "src": "After a short delay the caster is blasted upward to the level above.",
-  "blurb": "A sigil burns open under the caster, fire gathers at their feet and lifts them, then a column of flame fires them straight up through the ceiling, which rains broken stone back down into the smoke.",
+  "blurb": "A ring mark burns open under the caster, fire gathers at their feet and lifts them, then a column of flame fires them straight up through the ceiling, which rains broken stone back down into the smoke.",
   "port": "A sequencer shot: a root-motion launch on the character, a Niagara cylinder mesh with an erosion material for the column, and a Chaos or pre-simulated debris cache for the ceiling. The crater is a decal whose emissive cools on a curve.",
   "level": null,
   "tags": [
@@ -7782,10 +7480,10 @@
    "ember residue"
   ],
   "notes": [
-   "The delay is the anticipation: the sigil cracks in, flames lick up in a ring, and the body rises half a metre while it shakes before the launch.",
+   "The delay is the anticipation: the ring mark cracks in, flames lick up around it, and the body rises half a metre while it shakes before the launch.",
    "The launch is a single bright frame: a hard vertical spike and a floor ring, then a tube of scrolling fire that erodes away from the bottom once the caster is gone.",
    "The ceiling is never shown. It is implied by forty instanced rocks that fall from above the frame, bounce once and stay, with a warm shaft of light and dust falling through the hole.",
-   "The sigil is left as a cooling crater: glowing cracks under a pale ash lip, with ash drifting down."
+   "The ring mark is left as a cooling crater: glowing cracks under a pale ash lip, with ash drifting down."
   ],
   "params": [
    {
@@ -7820,7 +7518,7 @@
   ],
   "layers": [
    {
-    "name": "Crater sigil",
+    "name": "Crater ring",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
@@ -7880,7 +7578,7 @@
    "The gate interior is one quad that ray-intersects three planes behind itself (lantern strings, striped canopy and stalls, warm haze), so the market has real parallax as the camera moves.",
    "The gold frame carries chasing marquee bulbs for the carnival note; colour stays muted reds, creams and brass rather than neon.",
    "Coins are instanced lit meshes that stream from the body into the gate, and a few are spat back out to tumble, land and lie flat.",
-   "The pinch is the impact: the caster spins down to nothing in the gate, the grin flashes and paper confetti flutters down onto an oily ring. The look: a thin-film iridescent sheen, a crooked grin sigil on the impact frame and an oily iridescent stain left on the floor."
+   "The pinch is the impact: the caster spins down to nothing in the gate, the grin flashes and paper confetti flutters down onto an oily ring. The look: a thin-film iridescent sheen, a crooked grin mark on the impact frame and an oily iridescent stain left on the floor."
   ],
   "params": [],
   "variants": [
@@ -7915,64 +7613,6 @@
    }
   ],
   "chars": 9689
- },
- {
-  "id": "inv-pakellas-supercharge",
-  "name": "Wand charged by a column",
-  "set": "Crawl",
-  "cat": "Invocations",
-  "sub": "Item upgrade",
-  "stage": "full",
-  "src": "Permanently strengthens a wand or rod.",
-  "blurb": "The wand rises out of the caster\u2019s hands and turns upright over a cog sigil that engraves itself in the floor; a column of blue-white energy slams into it, and it comes back down with its brass etched with light.",
-  "port": "Unreal: a lightning beam system (core ribbon plus branch ribbons) with a short-lived cylinder flash, a floor decal whose engraving mask is revealed by a radial-angle parameter, and a material parameter on the wand for the permanent etch. Pebbles and dust are Niagara mesh and lit sprite emitters.",
-  "level": null,
-  "tags": [
-   "lightning column",
-   "floor sigil engraving",
-   "instanced debris",
-   "lit dust",
-   "permanent glow"
-  ],
-  "notes": [
-   "Anticipation: the wand lifts and stands upright while the cog sigil draws itself into the stone tick by tick and pebbles lift on the static charge.",
-   "Impact: a hard white column holds for three frames, then resolves into a few hair-thin jagged bolts and a soft halo that thin out over half a second; a grounding arc runs from the wand to the sigil.",
-   "Dust blasts out along the floor and lifted pebbles are thrown and settle; the wand keeps a strong tip glow and newly etched filigree on its brass.",
-   "Residue: the sigil stays burned into the floor as charred grooves with a pale ash lip and a faint cooling glow, with smoke curling off it. The look: brass and ebony devices, hair-thin blue-white arcs, and a cog-dial sigil with tick marks that fill like a gauge."
-  ],
-  "params": [],
-  "variants": [
-   "Copper",
-   "Violet",
-   "Gold"
-  ],
-  "layers": [
-   {
-    "name": "Floor sigil",
-    "geo": "['ground',1]",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Column halo",
-    "geo": "'tube'",
-    "blend": "add",
-    "count": null
-   },
-   {
-    "name": "Pebbles",
-    "geo": "'rock'",
-    "blend": "opaque",
-    "count": "28"
-   },
-   {
-    "name": "Strike flash",
-    "geo": "'quad'",
-    "blend": "add",
-    "count": null
-   }
-  ],
-  "chars": 11462
  },
  {
   "id": "evo-wand-of-digging",
@@ -8564,77 +8204,6 @@
    }
   ],
   "chars": 8862
- },
- {
-  "id": "evo-deck-of-cards",
-  "name": "Deck of Cards",
-  "set": "Crawl",
-  "cat": "Evocations",
-  "sub": "Device",
-  "stage": "full",
-  "src": "Draws a card with a random effect.",
-  "blurb": "A gilt-edged deck fans five faint cards, one real card flips out of it, grows in the air, shows its burning sigil and is consumed, and the sigil is hammered into the floor in a column of gold-violet fire.",
-  "port": "Unreal: the card is a skeletal mesh with a burn dissolve driven by a Dynamic Material Instance; ash is a Niagara mesh emitter of paper flakes with drag. The sigil is a decal with an emissive cooling curve.",
-  "level": null,
-  "tags": [
-   "alpha-clip burn",
-   "paper ash",
-   "sigil decal",
-   "spectral fan",
-   "flame column"
-  ],
-  "notes": [
-   "The deck is a box mesh with a lacquered red back, gilt edges and stacked page lines on the sides; the drawn card is a thin box with a painted ivory face.",
-   "The random draw is shown by five faint cards fanning above the deck before one solid card leaves it.",
-   "The card burns with an alpha-clip erosion from its edges, an ember rim and paper ash chips that tumble and drift down.",
-   "The effect lands as a flame column and a branded sigil decal that keeps a cooling glow, with lit smoke rolling off the floor."
-  ],
-  "params": [
-   {
-    "id": "tint",
-    "label": "Card magic",
-    "type": "color",
-    "value": "'#ffb85a'"
-   },
-   {
-    "id": "accent",
-    "label": "Sigil fire",
-    "type": "color",
-    "value": "'#b06cff'"
-   },
-   {
-    "id": "size",
-    "label": "Blast size",
-    "type": "range",
-    "value": "1"
-   }
-  ],
-  "variants": [
-   "Red",
-   "Blue, small",
-   "Magenta"
-  ],
-  "layers": [
-   {
-    "name": "Branded sigil",
-    "geo": "['ground',1]",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Deck",
-    "geo": "'box'",
-    "blend": "opaque",
-    "count": null
-   },
-   {
-    "name": "Drawn card",
-    "geo": "'box'",
-    "blend": "opaque",
-    "count": null
-   }
-  ],
-  "chars": 11779
  },
  {
   "id": "evo-staff-of-olgreb",
@@ -11404,7 +10973,7 @@
   "stage": "full",
   "src": "Curses a target to take chaos damage each turn for many turns, healing the caster for the same amount.",
   "blurb": "A thorn of light marks the target, then every turn a clot of blood is wrung out of the body and thrown across the room into the caster, spattering the floor along the arc.",
-  "port": "Niagara: the clot is a mesh particle on a projectile path with child droplet emitters that spawn decals on collision. The thorn sigil is a decal with an emissive mask pulsed by a turn event, and the victim pall is a material parameter on the character.",
+  "port": "Niagara: the clot is a mesh particle on a projectile path with child droplet emitters that spawn decals on collision. The thorn ring is a decal with an emissive mask pulsed by a turn event, and the victim pall is a material parameter on the character.",
   "level": "1",
   "tags": [
    "wet blood shader",
@@ -11417,7 +10986,7 @@
    "Built as three beats that repeat, one per game turn: the victim flinches, blood beads out of the armour and gathers into a trembling clot, and the clot is thrown on a true ballistic arc into the caster chest.",
    "The clot is a displaced sphere with a wet blood material: dark albedo, tight specular, environment reflection and a thin warm scatter at grazing angles.",
    "Droplets that shed from the clot in flight fall under gravity, and the floor spatter decal uses the same closed-form landing points, so every stain lines up with a falling drop.",
-   "The caster gets a warm heartbeat pulse on each catch while the victim slowly greys under an accumulating pall. A thorned sigil under the victim marks it for the whole duration."
+   "The caster gets a warm heartbeat pulse on each catch while the victim slowly greys under an accumulating pall. A thorned ring under the victim marks it for the whole duration."
   ],
   "params": [
    {
@@ -11452,7 +11021,7 @@
   ],
   "layers": [
    {
-    "name": "Sigil and spatter",
+    "name": "Ring and spatter",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
@@ -11556,83 +11125,6 @@
   "chars": 8442
  },
  {
-  "id": "rw-suspend-mortality",
-  "name": "Spare life copy",
-  "set": "Rift Wizard",
-  "cat": "Dark",
-  "sub": "Dark/Light/Buff or curse",
-  "stage": "full",
-  "src": "Target ally gains an extra reincarnation (revives on death) for many turns.",
-  "blurb": "Grey dust pours down around an ally like sand through an hourglass, then stops dead in the air; a pale gold double of the ally steps half a pace out of their body and a ring locks over its head.",
-  "port": "Niagara with a scalar that scales particle velocity to zero at the freeze, plus a light renderer on a few grains. The double is a second skeletal mesh with a translucent fresnel material driven by a copy-pose; the halo is a torus mesh with an emissive.",
-  "level": "3",
-  "tags": [
-   "frozen particles",
-   "ghost double",
-   "halo torus",
-   "dust sigil",
-   "fresnel shell"
-  ],
-  "notes": [
-   "Tell: a column of ash falls around the ally while an hourglass sigil draws itself on the floor in pale gold.",
-   "Impact: every falling grain stops in place at the same instant and catches a gold rim, the halo snaps shut as one bright ring held for three frames, and a warm grey light comes up from the sigil.",
-   "The double is a second mannequin drawn as a fresnel shell with drifting noise, offset behind the body and swaying on a slower phase, so it reads as the life held in reserve.",
-   "Residue: the suspended grains hang and barely drift, a few gold sparks climb the double, and the sigil cools to a ring of pale dust."
-  ],
-  "params": [
-   {
-    "id": "tint",
-    "label": "Light colour",
-    "type": "color",
-    "value": "'#ffd28a'"
-   },
-   {
-    "id": "dust",
-    "label": "Dust",
-    "type": "color",
-    "value": "'#8a8580'"
-   },
-   {
-    "id": "double",
-    "label": "Double strength",
-    "type": "range",
-    "value": "1"
-   },
-   {
-    "id": "grains",
-    "label": "Grains",
-    "type": "range",
-    "value": "1"
-   }
-  ],
-  "variants": [
-   "Pale blue",
-   "Bone grey",
-   "Dark orange"
-  ],
-  "layers": [
-   {
-    "name": "Hourglass sigil",
-    "geo": "['ground',1]",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Double",
-    "geo": "'dummy'",
-    "blend": "alpha",
-    "count": null
-   },
-   {
-    "name": "Halo",
-    "geo": "['torus',.06]",
-    "blend": "add",
-    "count": null
-   }
-  ],
-  "chars": 8414
- },
- {
   "id": "rw-carnival-of-pain",
   "name": "Linked pain wires",
   "set": "Rift Wizard",
@@ -11645,13 +11137,13 @@
   "level": "4",
   "tags": [
    "marionette threads",
-   "striped polar sigil",
+   "striped polar disc",
    "pulse propagation",
    "alpha graphic crescent",
    "lit fire and smoke"
   ],
   "notes": [
-   "Tell: the floor sigil unwinds in a spiral, an metal crown with hanging hooks erodes into being above the group and barbed wires drop from it to every shoulder, then sag between the chests.",
+   "Tell: the floor disc unwinds in a spiral, an metal crown with hanging hooks erodes into being above the group and barbed wires drop from it to every shoulder, then sag between the chests.",
    "Impact: the caster triggers it with an ordinary firebolt. On the hit a crimson bead runs along the links and lands on the neighbours a beat later as a black crescent with a red rim, held for three frames.",
    "The wires are camera-facing strips with a parabolic sag that snaps taut when the pulse passes, and a barbed width profile so they read as wire, not light.",
    "Residue: the burnt target smokes, the wheel keeps turning, the wires keep trembling and blood sprays onto the flagstones under the victims."
@@ -11689,7 +11181,7 @@
   ],
   "layers": [
    {
-    "name": "Carousel sigil",
+    "name": "Carousel disc",
     "geo": "['ground',1]",
     "blend": "alpha",
     "count": null
@@ -12800,7 +12292,7 @@
   "cat": "Lightning",
   "sub": "Nova",
   "stage": "full",
-  "src": "Casts a ring of lightning around the caster: an inner ring of glowing runes and a larger outer ring of lightning that shocks everything on its edge. Reference: research/refs/poe_shock_nova_wiki.png.",
+  "src": "Casts a ring of lightning around the caster: an inner ring of glowing marks and a larger outer ring of lightning that shocks everything on its edge. Reference: research/refs/poe_shock_nova_wiki.png.",
   "blurb": "The caster slams the charge into the stone and a ring of burning orange-white ticks ignites around them between two thin blue-white circles; a beat later a thin outer ring of white-violet lightning races out to four metres, throwing short arcs in and out from its edge, and dies back while the ticks burn down last.",
   "port": "Niagara: a ring emitter on a radius curve spawning beam emitters along the rim (circumferential) and a second set of short radial beams with random sign, a tick-band decal material with a polar tick strip driven by an ignite sweep and a burn curve, and a core light. The slam is a montage notify.",
   "level": "1",
@@ -14132,7 +13624,7 @@
    },
    {
     "id": "icon",
-    "label": "Rune",
+    "label": "Mark",
     "type": "range",
     "value": "4"
    },
@@ -14170,79 +13662,6 @@
    }
   ],
   "chars": 7313
- },
- {
-  "id": "runestone",
-  "name": "Carved standing stone",
-  "set": null,
-  "cat": "Items",
-  "sub": null,
-  "stage": "ground",
-  "src": null,
-  "blurb": "A standing stone with a carved rune whose grooves pulse with light, shedding sparks and colouring the floor.",
-  "port": "Unreal: a mesh decal or a second UV channel carries the rune SDF texture. Use it for normal, AO and emissive in one material and drive the pulse with a panner along V. Sparks spawn from the mesh surface filtered by the emissive mask.",
-  "level": null,
-  "tags": [
-   "projected sdf",
-   "carved normal",
-   "emissive pulse",
-   "stone",
-   "floor light"
-  ],
-  "notes": [
-   "The glyph is the rune() SDF projected through the slab along its depth axis, so both faces are carved from one function.",
-   "The same distance field does three jobs: it darkens the groove, bends the normal at the groove walls and drives the emissive core.",
-   "The pulse travels up the strokes instead of blinking, and a wide falloff of the SDF fakes light spilling onto the stone next to the cut.",
-   "Stone is flat shaded with per-facet value variation, crack lines and moss on upward faces, so it stays stone under coloured light.",
-   "Two point lights sit just off each face. They are what actually colours the floor."
-  ],
-  "params": [
-   {
-    "id": "tint",
-    "label": "Rune light",
-    "type": "color",
-    "value": "'#35c8ff'"
-   },
-   {
-    "id": "power",
-    "label": "Intensity",
-    "type": "range",
-    "value": "1"
-   },
-   {
-    "id": "pulse",
-    "label": "Pulse speed",
-    "type": "range",
-    "value": "1"
-   },
-   {
-    "id": "glyph",
-    "label": "Glyph",
-    "type": "range",
-    "value": "3"
-   }
-  ],
-  "variants": [
-   "Orange",
-   "Green",
-   "Red",
-   "Violet"
-  ],
-  "layers": [
-   {
-    "name": "Base rocks",
-    "geo": "'rock'",
-    "blend": "opaque",
-    "count": null
-   },
-   {
-    "name": "Floor light",
-    "geo": "['ground',1]",
-    "blend": "add",
-    "count": null
-   }
-  ],
-  "chars": 5935
  },
  {
   "id": "crystal-cluster",

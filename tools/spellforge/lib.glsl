@@ -188,10 +188,6 @@ float sdHex(vec2 p,float r){const vec3 k=vec3(-.866025404,.5,.577350269);p=abs(p
 vec4 hexGrid(vec2 p){const vec2 s=vec2(1.,1.7320508);vec4 hc=floor(vec4(p,p-vec2(.5,1.))/s.xyxy)+.5;
   vec4 h=vec4(p-hc.xy*s,p-(hc.zw+.5)*s);vec4 r=dot(h.xy,h.xy)<dot(h.zw,h.zw)?vec4(h.xy,hc.xy):vec4(h.zw,hc.zw+.5);
   vec2 q=abs(r.xy);float e=.5-max(dot(q,s*.5),q.x);return vec4(r.xy,e,hash21(r.zw));}
-// procedural rune glyph: p in [-1,1]^2, returns distance to strokes
-float rune(vec2 p,float id){float d=1e3;
-  for(int i=0;i<5;i++){vec4 h=hash41(id*7.31+float(i)*3.7+1.);vec2 a=(floor(h.xy*3.)-1.)*vec2(.5,.78),b=(floor(h.zw*3.)-1.)*vec2(.5,.78);d=min(d,sdSeg(p,a,b));}
-  return d;}
 // plain tick: p in [-1,1]^2, returns distance to one radial stroke whose length varies per id, with a dot above every other one
 float tick(vec2 p,float id){vec2 h=hash41(id*7.31+1.).xy;float l=.35+.5*h.x;float d=sdSeg(p,vec2(0.,-l),vec2(0.,l));
   if(h.y>.5)d=min(d,length(p-vec2(0.,min(l+.3,.86)))-.1);return d;}
