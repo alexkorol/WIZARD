@@ -16,7 +16,7 @@ don't go: **items that remember their bearer**.
 The rules follow [`docs/CRAFTING-PROVISIONAL.md`](../../../docs/CRAFTING-PROVISIONAL.md):
 the PoE crafting blueprint, adapted; the owner tunes the numbers in playtest.
 Rarity sets the room: **Normal** holds no modifiers, **Magic** one or two,
-**Rare** up to two brands and four modifiers in all.
+**Rare** up to four (at most two brands, up to three bonds).
 
 | Power | Origin | Shape |
 |---|---|---|
@@ -24,7 +24,7 @@ Rarity sets the room: **Normal** holds no modifiers, **Magic** one or two,
 | **Bond** ◈ (suffix) | grown while equipped, through play (Bond I → III) | named, conditional, triggered effects |
 | **Animal part** ✧ | collected fragments, attached | hybrid |
 
-Crafting currencies: `addModifier` (Augmentation / Exalted), `upgradeToRare`
+Crafting currencies: `addModifier` (Transmutation + Augmentation / Exalted; a Normal item becomes Magic), `upgradeToRare`
 (Regal), `rerollValues` (Divine), `removeLastModifier` (Annulment, adapted).
 Nothing else limits crafting. Bonds work the same for every class. When an
 item's three bonds reach Bond III it becomes an upgraded item named after the

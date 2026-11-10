@@ -10,7 +10,8 @@
    stat lines); bonds ◈ take the place of suffixes (they grow with the
    character's deeds: bond XP, Bond I → III). Animal parts ✧ also take a
    modifier place. Rarity sets the room: Normal holds no modifiers, Magic one
-   or two, Rare up to two brands and four modifiers in all. Crafting is
+   or two, Rare up to four (at most two brands, up to three bonds). Add
+   Modifier on a Normal item makes it Magic. Crafting is
    limited only by that room. The owner tunes all numbers in playtest.
    ============================================================================= */
 (function (root, factory) {
@@ -332,19 +333,23 @@
     const brandText = (b) => `${fmt(brandMod(b).label, b.value)} (T${b.tier})`;
 
     /* ---------------- crafting currencies (PoE analogues) ---------------- */
-    /* Add Modifier (Augmentation / Exalted Orb): adds one brand while the
-       rarity has room. Pigments and guaranteed-brand items steer the brand. */
+    /* Add Modifier (Transmutation + Augmentation / Exalted Orb, merged): on a
+       Normal item it makes the item Magic and adds one brand; otherwise it
+       adds one brand while the rarity has room. Bonds are not crafted: they
+       form from bond XP once the item is Magic or Rare. Pigments and
+       guaranteed-brand items steer the brand. */
     function addModifier(srcItem, o = {}) {
       const item = clone(srcItem);
       if (!isCraftable(item)) return err('This item holds no modifiers');
-      if (item.rarity === 'normal') return err('Normal items hold no modifiers');
+      const wasNormal = item.rarity === 'normal';
+      if (wasNormal) item.rarity = 'magic';
       if (freeSlots(item) <= 0) return err(`No room for another modifier on a ${rarityName(item)} item`);
       if (!canAddBrand(item)) return err(`A ${rarityName(item)} item holds no more brands`);
       const toolErr = checkTools(o);
       if (toolErr) return err(toolErr);
       const brand = addBrand(item, o);
       if (!brand) return err(o.omenId ? 'No brand with that tag fits this item' : 'No brand fits this item');
-      return { item, event: { kind: 'craft', text: `Added brand: ${brandText(brand)}` } };
+      return { item, event: { kind: 'craft', text: `${wasNormal ? 'Made Magic. ' : ''}Added brand: ${brandText(brand)}` } };
     }
 
     /* Upgrade to Rare (Regal Orb): makes a Magic item Rare and adds one brand. */

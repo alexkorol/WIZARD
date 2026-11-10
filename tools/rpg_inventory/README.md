@@ -20,7 +20,7 @@ Rarity sets how many modifiers it holds:
 |---|---|
 | Normal | no modifiers |
 | Magic | one or two modifiers |
-| Rare | up to two brands, four modifiers in all |
+| Rare | up to four modifiers: at most two brands, up to three bonds |
 
 Nothing else limits crafting: no per-item crafting budget, no material-upgrade
 gamble, no locked slots, no class penalty on bonds. Animal parts ✧ attached to
@@ -98,7 +98,7 @@ Current generation queue and paste-ready prompts:
 
 | Currency | PoE analogue | Effect |
 |---|---|---|
-| Add Modifier | Augmentation / Exalted Orb | Adds one brand while the rarity has room |
+| Add Modifier | Transmutation + Augmentation / Exalted Orb | Turns a Normal item Magic and adds one brand; otherwise adds one brand while the rarity has room |
 | Upgrade to Rare | Regal Orb | Makes a Magic item Rare and adds one brand |
 | Reroll Values | Divine Orb | Rerolls brand values within their tiers and bond values within their ranges |
 | Remove Last Modifier | Annulment Orb (adapted: last, not random) | Removes the most recently added brand, bond or animal part |

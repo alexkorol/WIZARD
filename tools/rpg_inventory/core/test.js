@@ -647,7 +647,7 @@ t('Add Modifier adds a brand on a Magic item and needs no crafting uses', () => 
 });
 t('rarity room: Normal holds none, Magic two, Rare two brands and four modifiers', () => {
   const normal = forge.generateItem({ ilvl: 40, formId: 'wrap', materialId: 'quilted', rarity: 'normal' });
-  assert(/Normal/.test(forge.addModifier(normal).error || ''), 'Normal refuses Add Modifier');
+  eq(normal.brands.length, 0, 'Normal holds no modifiers');
   let magic = forge.generateItem({ ilvl: 40, formId: 'wrap', materialId: 'quilted', rarity: 'magic', brands: 2 });
   eq(magic.brands.length, 2);
   assert(forge.addModifier(magic).error, 'Magic holds two');
@@ -659,6 +659,23 @@ t('rarity room: Normal holds none, Magic two, Rare two brands and four modifiers
   assert(/brands/.test(forge.addModifier(rare.item).error || ''), 'Rare holds two brands');
   assert(forge.upgradeToRare(rare.item).error, 'only Magic items upgrade to Rare');
   assert(forge.upgradeToRare(normal).error, 'Normal items do not upgrade to Rare');
+});
+t('Add Modifier on a Normal item makes it Magic and adds one brand; bonds can then form', () => {
+  let it = forge.generateItem({ ilvl: 40, formId: 'hideshield', materialId: 'bronze', rarity: 'normal' });
+  eq(it.rarity, 'normal');
+  const r = forge.addModifier(it, { omenId: 'entrail_omen' });
+  assert(!r.error, r.error);
+  eq(r.item.rarity, 'magic');
+  eq(r.item.brands.length, 1);
+  assert(pack.brandMods[r.item.brands[0].modId].tags.includes('ward'), 'guaranteed brand applies');
+  assert(/Made Magic/.test(r.event.text), r.event.text);
+  eq(it.rarity, 'normal', 'input not mutated');
+  it = r.item;
+  for (let i = 0; i < 12 && !it.bonds.length; i++) it = forge.attune(it, 60, { warding: 3 }, { charName: 'X' }).item;
+  eq(it.bonds.length, 1, 'the now-Magic item forms a bond in its free place');
+  eq(it.bonds.length + it.brands.length, 2, 'Magic holds two');
+  const curio = forge.generateItem({ ilvl: 20, formId: 'curio', materialId: 'bone' });
+  assert(forge.addModifier(curio).error, 'items without modifiers stay uncraftable');
 });
 t('Reroll Values keeps tiers and rerolls within them', () => {
   let it = forge.generateItem({ ilvl: 70, formId: 'wrap', materialId: 'quilted', rarity: 'rare', brands: 2 });

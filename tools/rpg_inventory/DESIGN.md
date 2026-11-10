@@ -179,7 +179,7 @@ there is no automatic inheritance.
 
 | PoE/LE original | item crafting system | Flavor |
 |---|---|---|
-| augmentation / exalted | **Add Modifier** | |
+| transmutation + augmentation / exalted | **Add Modifier** (Normal becomes Magic) | |
 | regal | **Upgrade to Rare** | |
 | divine | **Reroll Values** | |
 | annulment | **Remove Last Modifier** (last, not random) | |
