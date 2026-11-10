@@ -12,10 +12,10 @@
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="core/vesselforge.js?v=20261026"></script>
+  <script src="core/vesselforge.js?v=20261109"></script>
   <script src="core/verdigris-stats.js?v=20260921"></script>
-  <script src="core/verdigris-pack.js?v=20261030"></script>
-  <script src="core/verdigris-combat.js"></script>
+  <script src="core/verdigris-pack.js?v=20261109"></script>
+  <script src="core/verdigris-combat.js?v=20261109"></script>
   <script src="core/character-item-taxonomy.js"></script>
   <script src="core/post-calib-wave2-taxonomy.js?v=20261026"></script>
 
@@ -219,7 +219,6 @@
       padding: 1px 9px; margin: 2px 3px 2px 0;
       color: var(--trophy); font-size: 0.7rem; font-family: 'JetBrains Mono', monospace;
     }
-    .panoply-line { color: var(--awake); font-size: 0.76rem; width: 100%; }
 
     .silhouette {
       position: absolute; inset: 24px; opacity: 0.04; pointer-events: none;
@@ -504,7 +503,6 @@
     .pips { display: flex; gap: 5px; font-size: 0.85rem; }
     .pip-brand { color: var(--brand); }
     .pip-trophy { color: var(--trophy); }
-    .pip-scar { color: var(--scar); }
     .pip-empty { color: rgba(233,228,216,0.22); }
     .pips-legend { color: var(--dim); font-size: 0.7rem; }
     .pips-legend span { margin-right: 12px; }
@@ -561,12 +559,10 @@
     .tooltip .tt-implicit { color: #8fb7e8; font-style: italic; margin-bottom: 2px; }
     .tooltip .tt-brand { color: var(--brand); margin-bottom: 3px; }
     .tooltip .tt-trophy { color: var(--trophy); margin-bottom: 3px; }
-    .tooltip .tt-scar { color: var(--scar); margin-bottom: 3px; }
     .tooltip .tt-bond { margin-bottom: 3px; }
     .tooltip .tt-power { color: var(--awake); margin: 6px 0 3px; }
     .tooltip .tt-flavor { color: #b7a98a; font-style: italic; text-align: center; margin: 8px 0 2px; line-height: 1.4; font-size: 0.8rem; }
     .tooltip .foot { color: var(--dim); font-size: 0.72rem; margin-top: 8px; border-top: 1px solid var(--hairline); padding-top: 6px; line-height: 1.4; }
-    .estranged { opacity: 0.55; font-style: italic; }
 
     /* ---------- Panel banner (PoE header) ---------- */
     .panel-banner {
@@ -769,11 +765,12 @@
   };
   syncInventoryScale();
   const SAVE_KEY = 'wizard_vesselforge_v3';
-  const LEGACY_KEY = 'wizard_vesselforge_legacy_v1';
+  /* Earlier inheritance store; read once on load and turned into a house recovery. */
+  const OLD_INHERITANCE_KEY = 'wizard_vesselforge_legacy_v1';
   const ROMAN = ['I', 'II', 'III'];
 
-  /* Demo economy: craft operations & tools priced in gold. */
-  const OP_COST = { sear: 60, efface: 40, chisel: 150, fire: 100, resonate: 200, sever: 80 };
+  /* Demo economy: crafting currencies & tools priced in gold (provisional). */
+  const OP_COST = { addModifier: 60, upgradeToRare: 120, rerollValues: 100, removeLastModifier: 40 };
   const TOOL_PRICES = { red_ochre: 80, woad: 80, soot: 80, marsh_ochre: 80, entrail_omen: 120, bird_omen: 120, smoke_omen: 120, blood_omen: 120 };
   const TOOL_DESC = {
     red_ochre: 'Pigment: the next added brand favours blade, bleed and blunt.',
@@ -1110,7 +1107,7 @@
   };
 
   const itemTint = (item) => {
-    if (!item.vessel) return { color: '#d6d0c2', border: '#5d574c', shadow: 'none' };
+    if (!forge.isCraftable(item)) return { color: '#d6d0c2', border: '#5d574c', shadow: 'none' };
     if (item.awakened) return { color: '#fb923c', border: '#f97316', shadow: '0 0 16px rgba(249,115,22,0.4)' };
     const nb = item.brands.length + item.trophies.length, nd = item.bonds.length;
     if (nd > nb) {
@@ -1142,38 +1139,32 @@
       if (row) put(generateTaxonomyLoot(36 + i * 4, row));
     });
 
-    // Second-hand sandals bonded under another class: their bonds work at half strength.
-    const sandals = forge.generateItem({ ilvl: 40, formId: 'sandals', materialId: 'quilted', brands: 0 });
-    sandals.vessel = Math.max(sandals.vessel, 3);
+    // Magic sandals with two bonds already formed.
+    const sandals = forge.generateItem({ ilvl: 40, formId: 'sandals', materialId: 'quilted', rarity: 'magic', brands: 0 });
     sandals.bonds = [
-      { id: 'seedb1', modId: 'dead_sprint', themeId: 'wayfaring', base: 13, tier: 2, kinship: 'farwalker' },
-      { id: 'seedb2', modId: 'sidestep', themeId: 'wayfaring', base: 12, tier: 1, kinship: 'farwalker' },
+      { id: 'seedb1', modId: 'dead_sprint', themeId: 'wayfaring', base: 13, tier: 2, seq: 1 },
+      { id: 'seedb2', modId: 'sidestep', themeId: 'wayfaring', base: 12, tier: 1, seq: 2 },
     ];
     sandals.att = { xp: 40, next: 190, tc: { wayfaring: 9 } };
     sandals.evolutions = 3;
     sandals.epithetName = null;
     put(sandals);
 
-    // A fully awakened relic to show where the road ends.
-    const relic = forge.generateItem({ ilvl: 62, formId: 'hideshield', materialId: 'bronze', brands: 0 });
-    relic.vessel = 4;
-    relic.brands = [{ id: 'seedbr', modId: 'hale', tier: 2, value: 32 }];
-    relic.bonds = [
-      { id: 'seedr1', modId: 'shieldwall', themeId: 'warding', base: 12, tier: 3, kinship: 'shieldbearer' },
-      { id: 'seedr2', modId: 'stand_ground', themeId: 'warding', base: 4, tier: 3, kinship: 'shieldbearer' },
-      { id: 'seedr3', modId: 'old_grudge', themeId: 'warding', base: 26, tier: 3, kinship: 'shieldbearer' },
+    // A Rare shield whose three bonds are at Bond III. It is not upgraded yet:
+    // equip it and simulate a fight, and it upgrades, named after the character.
+    const shield = forge.generateItem({ ilvl: 62, formId: 'hideshield', materialId: 'bronze', rarity: 'rare', brands: 0 });
+    shield.brands = [{ id: 'seedbr', modId: 'hale', tier: 2, value: 32, seq: 1 }];
+    shield.bonds = [
+      { id: 'seedr1', modId: 'shieldwall', themeId: 'warding', base: 12, tier: 3, seq: 2 },
+      { id: 'seedr2', modId: 'stand_ground', themeId: 'warding', base: 4, tier: 3, seq: 3 },
+      { id: 'seedr3', modId: 'old_grudge', themeId: 'warding', base: 26, tier: 3, seq: 4 },
     ];
-    relic.evolutions = 9;
-    relic.att = { xp: 0, next: 575, tc: { warding: 22 } };
-    relic.awakened = {
-      name: 'Bronze Hide Shield', themeId: 'warding',
-      power: pack.themes.warding.power,
-    };
-    put(relic);
+    shield.evolutions = 8;
+    shield.att = { xp: 510, next: 520, tc: { warding: 22 } };
+    put(shield);
 
     const character = forge.createCharacter({ name: 'Test Character', archetype: 'shieldbearer', gold: 600 });
     character.fragments = { boar_tusk: 3, river_pearl: 1 };
-    character.generation = 1;
 
     return {
       character,
@@ -1181,6 +1172,7 @@
       equipment: { ...DEFAULT_EQUIPMENT },
       atelierItem: null,
       hp: null,
+      recoveries: [],
       satchel: { red_ochre: 2, woad: 1, soot: 1, marsh_ochre: 0, entrail_omen: 1, bird_omen: 0, smoke_omen: 0, blood_omen: 1 },
       log: [
         { kind: 'sys', text: 'Add brands, grow bonds and bind trophies on your items.' },
@@ -1198,18 +1190,32 @@
       if (satchel[id] == null) satchel[id] = 0;
     });
 
+    // Old saves: strip removed item fields (crafting uses, locked slots, class tag on bonds).
+    const fix = (item) => (isKnownRuntimeItem(item) ? forge.normalizeItem(item) : null);
     const equipment = { ...DEFAULT_EQUIPMENT };
     Object.keys(DEFAULT_EQUIPMENT).forEach(slotId => {
-      const item = state.equipment ? state.equipment[slotId] : null;
-      equipment[slotId] = isKnownRuntimeItem(item) ? item : null;
+      equipment[slotId] = fix(state.equipment ? state.equipment[slotId] : null);
     });
+    const recoveries = (Array.isArray(state.recoveries) ? state.recoveries : [])
+      .map(r => ({ ...r, items: (r.items || []).map(fix).filter(Boolean) }))
+      .filter(r => r.items.length);
+    // An earlier inheritance entry becomes a house recovery; nothing is handed over automatically.
+    try {
+      const old = JSON.parse(localStorage.getItem(OLD_INHERITANCE_KEY));
+      if (old && Array.isArray(old.relics) && old.relics.length) {
+        recoveries.push({ id: `old${Date.now()}`, fallen: old.fallen || null, items: old.relics.map(fix).filter(Boolean) });
+      }
+      localStorage.removeItem(OLD_INHERITANCE_KEY);
+    } catch (err) { /* storage blocked */ }
+    const { generation, ...character } = state.character;
 
     return {
       ...state,
-      character: { generation: 1, ...state.character },
-      inventory: reflowInventory(state.inventory || []),
+      character,
+      inventory: reflowInventory((state.inventory || []).map(forge.normalizeItem)),
       equipment,
-      atelierItem: isKnownRuntimeItem(state.atelierItem) ? state.atelierItem : null,
+      atelierItem: fix(state.atelierItem),
+      recoveries,
       satchel,
       hp: typeof state.hp === 'number' ? Math.max(0, state.hp) : null,
     };
@@ -1229,32 +1235,31 @@
 
   /* ---------------- presentational bits ---------------- */
   const VesselPips = ({ item, size }) => {
-    if (!item.vessel) return null;
+    if (!forge.isCraftable(item)) return null;
     const pips = [];
     item.brands.forEach((b, i) => pips.push(<span key={`b${i}`} className="pip-brand">✦</span>));
     item.bonds.forEach((b, i) => pips.push(<span key={`d${i}`} style={{ color: pack.themes[b.themeId].color }}>◈</span>));
     item.trophies.forEach((t, i) => pips.push(<span key={`t${i}`} className="pip-trophy">✧</span>));
-    for (let i = 0; i < item.scars; i++) pips.push(<span key={`s${i}`} className="pip-scar">✕</span>);
     for (let i = 0; i < forge.freeSlots(item); i++) pips.push(<span key={`e${i}`} className="pip-empty">○</span>);
     return <div className="pips" style={size ? { fontSize: size } : null}>{pips}</div>;
   };
 
   /* Renders the engine's structured tooltip lines. */
   const SECTION_CLS = {
-    name: 'tt-name', base: 'tt-base', kind: 'tt-kind', vessel: 'tt-vessel',
+    name: 'tt-name', base: 'tt-base', kind: 'tt-kind', rarity: 'tt-vessel',
     stat: 'tt-stat', implicit: 'tt-implicit', brand: 'tt-brand', bond: 'tt-bond',
-    trophy: 'tt-trophy', scar: 'tt-scar', power: 'tt-power', flavor: 'tt-flavor',
+    trophy: 'tt-trophy', power: 'tt-power', flavor: 'tt-flavor',
   };
   const TONE_COLOR = { plain: '#d6d0c2', branded: '#e0b84f', bonded: null, awakened: '#fb923c' };
 
-  const Tooltip = ({ item, position, equipped, archetype }) => {
+  const Tooltip = ({ item, position, equipped }) => {
     if (!item) return null;
     const tint = itemTint(item);
     const style = { left: position.x + 16, top: position.y + 16 };
     if (style.left + 315 > window.innerWidth) style.left = Math.max(6, position.x - 315);
     if (style.top + 430 > window.innerHeight) style.top = Math.max(6, window.innerHeight - 440);
 
-    const lines = forge.tooltip(item, { archetype });
+    const lines = forge.tooltip(item);
     const row = taxonomyRowFor(item);
     const tooltipLines = lines.map(l => (
       l.section === 'name' && item.displayName && !item.awakened ? { ...l, text: item.displayName } : l
@@ -1266,7 +1271,7 @@
         text: `${row.id} · ${row.slot} · ${row.visualLane}`,
       });
     }
-    const showAtt = item.vessel > 0 && !forge.isSated(item);
+    const showAtt = forge.isCraftable(item) && !forge.isSated(item);
     const attPct = Math.min(100, Math.round((item.att.xp / item.att.next) * 100));
     let dividerShown = false;
 
@@ -1274,7 +1279,7 @@
       <div className="tooltip" style={{ ...style, boxShadow: `0 12px 35px rgba(0,0,0,0.6), ${tint.shadow}` }}>
         {tooltipLines.map((l, i) => {
           if (l.section === 'attune') return null; // custom bar below
-          if (l.section === 'vessel') {
+          if (l.section === 'rarity') {
             return (
               <div key={i}>
                 <div className="tt-vessel">{l.text}</div>
@@ -1284,13 +1289,13 @@
           }
           const cls = SECTION_CLS[l.section] || 'tt-stat';
           const color = l.section === 'name' ? (TONE_COLOR[l.tone] || tint.color)
-            : l.section === 'bond' && l.tone !== 'estranged' ? tint.border && undefined : undefined;
+            : undefined;
           const needDivider = l.section === 'implicit' && !dividerShown && (dividerShown = true);
           return (
             <React.Fragment key={i}>
               {needDivider && <div className="tt-divider" />}
               <div
-                className={`${cls} ${l.tone === 'estranged' ? 'estranged' : ''}`}
+                className={cls}
                 style={l.section === 'name' ? { color: tint.color }
                   : l.section === 'bond' && l.tone === 'bond' ? { color: (pack.themes[(item.bonds.find(b => l.text.includes(pack.themes[b.themeId].mods[b.modId].name)) || {}).themeId] || {}).color } : null}
               >{l.text}</div>
@@ -1308,7 +1313,7 @@
         )}
         <div className="foot">
           Drag to move · sell for {forge.sellValue(item)}g
-          {item.vessel > 0 && ' · craft at the Crafting Bench'}
+          {forge.isCraftable(item) && ' · craft at the Crafting Bench'}
         </div>
       </div>
     );
@@ -1337,12 +1342,11 @@
         onPointerLeave={() => onHover && onHover(null, null)}
       >
         <ArtImg src={artSrc(item)} fallbackIcon={itemIcon(item)} size={Math.max(22, Math.min(item.w, item.h) * 18)} />
-        {item.vessel > 0 && (item.brands.length || item.bonds.length || item.trophies.length || item.scars) > 0 && (
+        {forge.isCraftable(item) && (item.brands.length || item.bonds.length || item.trophies.length) > 0 && (
           <div className="pip-strip">
             {item.brands.map((b, i) => <span key={`b${i}`} style={{ color: 'var(--brand)' }}>✦</span>)}
             {item.bonds.map((b, i) => <span key={`d${i}`} style={{ color: pack.themes[b.themeId].color }}>◈</span>)}
             {item.trophies.map((t, i) => <span key={`t${i}`} style={{ color: 'var(--trophy)' }}>✧</span>)}
-            {Array.from({ length: item.scars }).map((_, i) => <span key={`s${i}`} style={{ color: 'var(--scar)' }}>✕</span>)}
           </div>
         )}
         <div className="item-gloss" />
@@ -1367,51 +1371,36 @@
     );
   };
 
-  const DeathOverlay = ({ legacy, onMantle }) => {
-    const fallenInfo = legacy && legacy.fallen;
-    const relics = (legacy && legacy.relics) || [];
-    const [heirName, setHeirName] = useState('');
-    const [heirArch, setHeirArch] = useState(fallenInfo ? fallenInfo.archetype : Object.keys(pack.archetypes)[0]);
+  /* Permadeath: everything the character carried stays at the death site as a
+     house recovery. A later character of the house takes it back from the
+     Character Record. Nothing passes to the next character automatically. */
+  const DeathOverlay = ({ fallen, carried, defaultArchetype, onNext }) => {
+    const [nextName, setNextName] = useState('');
+    const [nextArch, setNextArch] = useState(defaultArchetype || Object.keys(pack.archetypes)[0]);
     return (
       <div className="death-overlay">
         <div className="death-panel">
-          <div className="death-title">{fallenInfo ? fallenInfo.name : 'The character'} died</div>
+          <div className="death-title">{fallen.name} died</div>
           <div className="death-sub">
-            {fallenInfo ? `Level ${fallenInfo.level} · ${pack.archetypes[fallenInfo.archetype] ? pack.archetypes[fallenInfo.archetype].name : ''} · ${fallenInfo.text}` : ''}
+            Level {fallen.level} · {pack.archetypes[fallen.archetype] ? pack.archetypes[fallen.archetype].name : ''} · {fallen.text}
             <br />
-            {relics.length
-              ? 'Upgraded items and the item with the most bond history pass to the next character. Everything else is lost.'
-              : 'No item qualifies to pass on. The next character starts with no items.'}
+            {carried.length
+              ? `The ${carried.length} item${carried.length > 1 ? 's' : ''} they carried stay at the death site as a house recovery. A later character of the house can take them back from the Character Record.`
+              : 'They carried no items.'}
           </div>
-          {relics.map((rel, i) => {
-            const kin = rel.bonds && rel.bonds[0] && rel.bonds[0].kinship;
-            const tint = itemTint(rel);
-            return (
-              <div key={i} className="relic-row" style={{ borderColor: tint.border }}>
-                <ArtImg src={artSrc(rel)} fallbackIcon={itemIcon(rel)} size={30} />
-                <div>
-                  <div className="r-name" style={{ color: tint.color }}>{displayItemName(rel)}</div>
-                  <div className="r-kin">
-                    {rel.awakened ? 'Upgraded item' : 'Item history'}
-                    {kin && pack.archetypes[kin] ? ` · bonds at full strength for the ${pack.archetypes[kin].name} class` : ''}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
           <div className="heir-form">
             <input
-              placeholder="Name the heir"
-              value={heirName}
-              onChange={(e) => setHeirName(e.target.value)}
-              aria-label="Heir name"
+              placeholder="Next character name"
+              value={nextName}
+              onChange={(e) => setNextName(e.target.value)}
+              aria-label="Next character name"
               spellCheck="false"
             />
-            <select className="arch-select" value={heirArch} onChange={(e) => setHeirArch(e.target.value)} aria-label="Heir archetype">
+            <select className="arch-select" value={nextArch} onChange={(e) => setNextArch(e.target.value)} aria-label="Next character class">
               {Object.entries(pack.archetypes).map(([id, a]) => <option key={id} value={id}>{a.name}</option>)}
             </select>
-            <button className="btn primary" onClick={() => onMantle(heirName.trim() || 'Nameless', heirArch)}>
-              Take up the mantle
+            <button className="btn primary" onClick={() => onNext(nextName.trim() || 'Nameless', nextArch)}>
+              Start next character
             </button>
           </div>
         </div>
@@ -1590,7 +1579,7 @@
       const elements = document.elementsFromPoint(e.clientX, e.clientY);
       const moved = Math.hypot(e.clientX - drag.startX, e.clientY - drag.startY) > 5;
 
-      if (!moved && benchOpen && source !== 'atelier' && item.vessel > 0) {
+      if (!moved && benchOpen && source !== 'atelier' && forge.isCraftable(item)) {
         setState(prev => {
           let next = prev;
           if (prev.atelierItem) {
@@ -1617,7 +1606,7 @@
       }
 
       if (elements.some(el => el.getAttribute && el.getAttribute('data-atelier-socket'))) {
-        if (!item.vessel) { showToast('A curio holds no vessel'); setState(prev => returnToSource(prev, drag)); return; }
+        if (!forge.isCraftable(item)) { showToast('This item holds no modifiers'); setState(prev => returnToSource(prev, drag)); return; }
         setState(prev => {
           if (!prev.atelierItem) return { ...prev, atelierItem: item };
           const pos = findFreeSpotAnyPack(prev.inventory, prev.atelierItem);
@@ -1744,23 +1733,12 @@
       return { x: targetX, y: targetY, packId: def.id, isValid };
     };
 
-    /* -------- legacy (permadeath heirlooms) -------- */
-    const readLegacy = () => {
-      try { return JSON.parse(localStorage.getItem(LEGACY_KEY)) || null; } catch (err) { return null; }
-    };
-    const harvestRelics = (st) => {
-      const all = [
-        ...st.inventory,
-        ...Object.values(st.equipment).filter(Boolean),
-        ...(st.atelierItem ? [st.atelierItem] : []),
-      ];
-      const relics = all.filter(it => it.awakened);
-      const memento = all
-        .filter(it => !it.awakened && (it.bonds || []).length > 0)
-        .sort((a, b) => (b.evolutions || 0) - (a.evolutions || 0))[0];
-      if (memento) relics.push(memento);
-      return relics.map(({ x, y, packId, ...rest }) => rest);
-    };
+    /* -------- house recoveries (permadeath) -------- */
+    const carriedItems = (st) => [
+      ...st.inventory,
+      ...Object.values(st.equipment).filter(Boolean),
+      ...(st.atelierItem ? [st.atelierItem] : []),
+    ].map(({ x, y, packId, ...rest }) => rest);
 
     /* -------- actions -------- */
     const ventureForth = () => {
@@ -1779,20 +1757,15 @@
         const events = [{ kind: 'deed', text: `${prev.character.name} ${enc.text}.` }, ...battle.log];
 
         if (!battle.survived) {
-          const legacy = {
-            generation: prev.character.generation || 1,
-            fallen: {
-              name: prev.character.name, archetype: prev.character.archetype,
-              level: lvl, text: enc.text, when: Date.now(),
-            },
-            relics: harvestRelics(prev),
-          };
-          try { localStorage.setItem(LEGACY_KEY, JSON.stringify(legacy)); } catch (err) { /* storage blocked */ }
-          setTimeout(() => setToast({ msg: `${prev.character.name} has fallen.`, tone: 'err' }), 0);
-          return pushLog(events)({ ...prev, hp: 0 });
+          setTimeout(() => setToast({ msg: `${prev.character.name} died.`, tone: 'err' }), 0);
+          return pushLog(events)({
+            ...prev, hp: 0,
+            fallen: { name: prev.character.name, archetype: prev.character.archetype, level: lvl, text: enc.text },
+          });
         }
 
-        const r = forge.venture(prev.character, prev.equipment, { encounter: enc });
+        // Item Rarity on the character sheet raises the Magic/Rare share of drops.
+        const r = forge.venture(prev.character, prev.equipment, { encounter: enc, itemRarity: agg.sheet.goods || 0 });
         const spoils = Math.round(battle.kills * (12 + 2 * lvl) * battle.spoilsMult);
         r.character.gold += spoils;
         const ventureGold = r.character.gold - prev.character.gold;
@@ -1831,34 +1804,59 @@
       });
     };
 
-    const takeUpMantle = (heirName, heirArchetype) => {
-      const legacy = readLegacy() || { generation: character.generation || 1, relics: [], fallen: null };
-      const heir = forge.createCharacter({ name: heirName || 'Nameless', archetype: heirArchetype, gold: 150 });
-      heir.generation = (legacy.generation || 1) + 1;
-      const inv = [];
-      const put = (item) => {
-        const pos = findFreeSpotAnyPack(inv, item);
-        if (pos) inv.push({ ...item, ...pos });
-      };
-      put(forge.generateItem({ ilvl: 6, brands: 1 }));
-      put(forge.generateItem({ ilvl: 6, brands: 0 }));
-      (legacy.relics || []).forEach(put);
-      const entries = (legacy.relics || []).map(rel => ({
-        kind: 'bond',
-        text: `Inherited: ${displayItemName(rel)} — it remembers ${legacy.fallen ? legacy.fallen.name : 'another hand'}.`,
-      }));
-      entries.unshift({ kind: 'awake', text: `Generation ${heir.generation}. ${heir.name} takes up the mantle.` });
-      try { localStorage.removeItem(LEGACY_KEY); } catch (err) { /* storage blocked */ }
-      setState({
-        character: heir,
-        inventory: inv,
-        equipment: { ...DEFAULT_EQUIPMENT },
-        atelierItem: null,
-        satchel: { red_ochre: 1, woad: 0, soot: 0, marsh_ochre: 0, entrail_omen: 0, bird_omen: 0, smoke_omen: 0, blood_omen: 1 },
-        hp: null,
-        log: entries,
+    /* After a death: the carried items become a house recovery; the next
+       character starts with two plain items and no inherited ones. */
+    const startNextCharacter = (name, archetype) => {
+      setState(prev => {
+        const carried = carriedItems(prev);
+        const fallenInfo = prev.fallen || { name: prev.character.name, archetype: prev.character.archetype, level: forge.charLevel(prev.character), text: '' };
+        const recoveries = [...(prev.recoveries || [])];
+        if (carried.length) recoveries.push({ id: `rec${Date.now()}`, fallen: fallenInfo, items: carried });
+        const next = forge.createCharacter({ name, archetype, gold: 150 });
+        const inv = [];
+        const put = (item) => {
+          const pos = findFreeSpotAnyPack(inv, item);
+          if (pos) inv.push({ ...item, ...pos });
+        };
+        put(forge.generateItem({ ilvl: 6, rarity: 'magic', brands: 1 }));
+        put(forge.generateItem({ ilvl: 6, rarity: 'normal' }));
+        const entries = [{ kind: 'sys', text: `${next.name} starts. ${fallenInfo.name}'s ${carried.length} item${carried.length === 1 ? '' : 's'} wait as a house recovery.` }];
+        return {
+          character: next,
+          inventory: inv,
+          equipment: { ...DEFAULT_EQUIPMENT },
+          atelierItem: null,
+          satchel: { red_ochre: 1, woad: 0, soot: 0, marsh_ochre: 0, entrail_omen: 0, bird_omen: 0, smoke_omen: 0, blood_omen: 1 },
+          hp: null,
+          recoveries,
+          log: entries,
+        };
       });
       setBenchOpen(false);
+    };
+
+    /* A later character of the house takes a recovery back into the pack.
+       Items that do not fit stay in the recovery. */
+    const takeBackRecovery = (recId) => {
+      setState(prev => {
+        if (prev.hp === 0) return prev;
+        const rec = (prev.recoveries || []).find(r => r.id === recId);
+        if (!rec) return prev;
+        let nextInv = prev.inventory;
+        const left = [];
+        rec.items.forEach(item => {
+          const pos = findFreeSpotAnyPack(nextInv, item);
+          if (pos) nextInv = [...nextInv, { ...item, ...pos }];
+          else left.push(item);
+        });
+        const taken = rec.items.length - left.length;
+        if (!taken) { showToast('Backpack full'); return prev; }
+        const recoveries = prev.recoveries
+          .map(r => (r.id === recId ? { ...r, items: left } : r))
+          .filter(r => r.items.length);
+        const text = `${prev.character.name} took back ${taken} of ${rec.fallen ? rec.fallen.name : 'a fallen character'}'s items${left.length ? `; ${left.length} did not fit` : ''}.`;
+        return pushLog([{ kind: 'sys', text }])({ ...prev, inventory: nextInv, recoveries });
+      });
     };
 
     const spawnLoot = () => {
@@ -1919,7 +1917,7 @@
         if (prev.character.gold < cost) { showToast(`Needs ${cost}g`); return prev; }
 
         let usePigment = null, useOmen = null;
-        if (opId === 'sear') {
+        if (opId === 'addModifier' || opId === 'upgradeToRare') {
           if (pigmentId) {
             if ((prev.satchel[pigmentId] || 0) <= 0) { showToast(`No ${pack.pigments[pigmentId].name} left`); return prev; }
             usePigment = pigmentId;
@@ -1930,13 +1928,12 @@
           }
         }
 
+        const tools = { pigmentId: usePigment || undefined, omenId: useOmen || undefined };
         const r =
-          opId === 'sear' ? forge.sear(prev.atelierItem, { pigmentId: usePigment || undefined, omenId: useOmen || undefined }) :
-          opId === 'efface' ? forge.efface(prev.atelierItem) :
-          opId === 'chisel' ? forge.chisel(prev.atelierItem) :
-          opId === 'fire' ? forge.fire(prev.atelierItem) :
-          opId === 'resonate' ? forge.resonate(prev.atelierItem) :
-          forge.sever(prev.atelierItem);
+          opId === 'addModifier' ? forge.addModifier(prev.atelierItem, tools) :
+          opId === 'upgradeToRare' ? forge.upgradeToRare(prev.atelierItem, tools) :
+          opId === 'rerollValues' ? forge.rerollValues(prev.atelierItem) :
+          forge.removeLastModifier(prev.atelierItem);
 
         if (r.error) { showToast(r.error); return prev; }
         setTimeout(() => setToast({ msg: r.event.text, tone: toneOf(r.event) }), 0);
@@ -1947,7 +1944,7 @@
 
         return pushLog([r.event])({
           ...prev,
-          atelierItem: r.destroyed ? null : r.item,
+          atelierItem: r.item,
           satchel: satchelNext,
           character: { ...prev.character, gold: prev.character.gold - cost },
         });
@@ -2015,7 +2012,7 @@
         if (prev.character.archetype === archId) return prev;
         return pushLog([{
           kind: 'sys',
-          text: `${prev.character.name} walks the ${pack.archetypes[archId].name}'s path. Bonds of other kinships answer at half strength.`,
+          text: `${prev.character.name} class: ${pack.archetypes[archId].name}.`,
         }])({ ...prev, character: { ...prev.character, archetype: archId } });
       });
     };
@@ -2068,7 +2065,7 @@
     };
 
     const slotProps = { onPointerDown: (e, item, slot) => startDrag(e, item, slot), draggingItem: dragState?.item, onHover: handleHover };
-    const odds = atelierItem && atelierItem.vessel
+    const odds = atelierItem && forge.isCraftable(atelierItem)
       ? forge.explainOdds(atelierItem, { pigmentId: pigmentId || undefined, omenId: omenId || undefined }).slice(0, 5)
       : [];
     const sheet = agg.sheet;
@@ -2079,7 +2076,7 @@
 
     return (
       <div className="app-shell" data-render-count={renderCount.current}>
-        {tooltip && <Tooltip item={tooltip.item} position={tooltip} equipped={tooltip.equipped} archetype={character.archetype} />}
+        {tooltip && <Tooltip item={tooltip.item} position={tooltip} equipped={tooltip.equipped} />}
 
         {dragState && (
           <ItemComponent
@@ -2095,7 +2092,14 @@
           />
         )}
 
-        {fallen && <DeathOverlay legacy={readLegacy()} onMantle={takeUpMantle} />}
+        {fallen && (
+          <DeathOverlay
+            fallen={state.fallen || { name: character.name, archetype: character.archetype, level, text: '' }}
+            carried={carriedItems(state)}
+            defaultArchetype={character.archetype}
+            onNext={startNextCharacter}
+          />
+        )}
 
         <div className="top-bar">
           <div>
@@ -2149,13 +2153,11 @@
               <div>Evasion <strong>{sheet.evasion}</strong></div>
               <div>Block <strong>{sheet.block ? `${sheet.block}%` : '—'}</strong></div>
               <div>Move <strong>{sheet.move ? `+${sheet.move}%` : '—'}</strong></div>
-              <div>Goods <strong>{sheet.goods ? `+${sheet.goods}%` : '—'}</strong></div>
+              <div>Item Rarity <strong>{sheet.goods ? `+${sheet.goods}%` : '—'}</strong></div>
               <div style={{ gridColumn: '1 / -1' }}>
                 Res <strong style={{ color: '#f87171' }}>{sheet.resEmber}</strong> Fire / <strong style={{ color: '#93c5fd' }}>{sheet.resRiver}</strong> Cold / <strong>{sheet.resStorm}</strong> Lightning / <strong>{sheet.resGloam}</strong> Chaos
               </div>
             </div>
-
-            {agg.panoplies.map((p, i) => <div key={i} className="panoply-line">{p.bonus.label}</div>)}
 
             <div className="silhouette">
               <svg viewBox="0 0 200 320" width="260" height="260" stroke="currentColor" strokeWidth="8" fill="none">
@@ -2170,7 +2172,7 @@
               <div className="panel-banner"><span>Crafting Bench</span></div>
               <div className="atelier">
                 <div className="atelier-top">
-                  <div data-atelier-socket="true" className={`atelier-socket ${dragState && dragState.item.vessel ? 'highlight' : ''}`}>
+                  <div data-atelier-socket="true" className={`atelier-socket ${dragState && forge.isCraftable(dragState.item) ? 'highlight' : ''}`}>
                     {atelierItem ? (
                       <React.Fragment>
                         <div className="socket-item-frame" style={{ width: atelierItem.w * 44, height: atelierItem.h * 44, position: 'relative' }}>
@@ -2189,13 +2191,14 @@
                         <div className="row-name" style={{ color: itemTint(atelierItem).color }}>
                           {displayItemName(atelierItem)}
                           <span style={{ color: 'var(--dim)', fontSize: '0.72rem', marginLeft: 8 }}>
-                            {pack.materials[atelierItem.materialId].name} · Crafting uses left {atelierItem.patience}/{atelierItem.patienceMax}
+                            {pack.materials[atelierItem.materialId].name} · {forge.rarityName(atelierItem)}
                           </span>
                         </div>
                         <VesselPips item={atelierItem} size="1rem" />
 
                         <div className="tool-row">
-                          <button className="btn small" onClick={() => runOp('sear')}>Add Brand · {OP_COST.sear}g</button>
+                          <button className="btn small" onClick={() => runOp('addModifier')}>Add Modifier · {OP_COST.addModifier}g</button>
+                          <button className="btn small" onClick={() => runOp('upgradeToRare')}>Upgrade to Rare · {OP_COST.upgradeToRare}g</button>
                           <select className="tool-select" value={pigmentId} onChange={e => setPigmentId(e.target.value)} aria-label="Pigment">
                             <option value="">no pigment</option>
                             {Object.entries(pack.pigments).map(([id, p]) => (
@@ -2210,18 +2213,15 @@
                           </select>
                         </div>
                         <div className="tool-row">
-                          <button className="btn small" onClick={() => runOp('efface')}>Remove Brand · {OP_COST.efface}g</button>
-                          <button className="btn small" onClick={() => runOp('chisel')}>Add Modifier Slot · {OP_COST.chisel}g</button>
-                          <button className="btn small" onClick={() => runOp('fire')}>Material Upgrade · {OP_COST.fire}g</button>
-                          <button className="btn small" onClick={() => runOp('resonate')}>Upgrade Bond · {OP_COST.resonate}g</button>
-                          <button className="btn small" onClick={() => runOp('sever')}>Remove Bond · {OP_COST.sever}g</button>
+                          <button className="btn small" onClick={() => runOp('rerollValues')}>Reroll Values · {OP_COST.rerollValues}g</button>
+                          <button className="btn small" onClick={() => runOp('removeLastModifier')}>Remove Last Modifier · {OP_COST.removeLastModifier}g</button>
                           <button className="btn small" disabled={!trophyReady} onClick={bindTrophy}>Attach Animal Part</button>
                           <button className="btn small" onClick={shareSocketed}>Share Card</button>
                         </div>
 
                         {odds.length > 0 && (
                           <div className="odds-mini">
-                            next sear: {odds.map(o => `${o.label.replace('#', '·')} <b>${Math.round(o.p * 100)}%</b>`).join(' · ').split('<b>').map((part, i) =>
+                            next brand: {odds.map(o => `${o.label.replace('#', '·')} <b>${Math.round(o.p * 100)}%</b>`).join(' · ').split('<b>').map((part, i) =>
                               i === 0 ? part : <React.Fragment key={i}><b>{part.split('</b>')[0]}</b>{part.split('</b>')[1]}</React.Fragment>
                             )}
                           </div>
@@ -2236,9 +2236,9 @@
                       </React.Fragment>
                     ) : (
                       <div style={{ color: 'var(--dim)', fontSize: '0.82rem', lineHeight: 1.5 }}>
-                        <p style={{ margin: '0 0 8px' }}><span style={{ color: 'var(--brand)' }}>✦ Brands</span> are flat modifiers added at the bench; pigments and guaranteed-brand items steer which one. Each item allows a limited number of <b>crafting uses</b>.</p>
-                        <p style={{ margin: '0 0 8px' }}><span style={{ color: 'var(--bond)' }}>◈ Bonds</span> are conditional modifiers gained by using the item; they work at half strength for another class. <span style={{ color: 'var(--trophy)' }}>✧ Animal parts</span> drop from fights and attach to an item.</p>
-                        <p style={{ margin: 0 }}>All three share the same slots. <span style={{ color: 'var(--awake)' }}>Material upgrade</span>: a gamble that can raise the material tier, lock a slot or break the item.</p>
+                        <p style={{ margin: '0 0 8px' }}><span style={{ color: 'var(--brand)' }}>✦ Brands</span> are fixed modifiers added at the bench; pigments and guaranteed-brand items steer which one.</p>
+                        <p style={{ margin: '0 0 8px' }}><span style={{ color: 'var(--bond)' }}>◈ Bonds</span> grow with bond XP from fights (Bond I to III). Three bonds at Bond III upgrade the item, named after the character, with one power. <span style={{ color: 'var(--trophy)' }}>✧ Animal parts</span> drop from fights and attach to an item.</p>
+                        <p style={{ margin: 0 }}>Rarity sets the room: Normal holds no modifiers, Magic one or two, Rare up to two brands and four modifiers. Provisional numbers.</p>
                       </div>
                     )}
                   </div>
@@ -2394,11 +2394,19 @@
             ))}
             {!Object.values(character.fragments).some(n => n > 0) && <span style={{ color: 'var(--dim)', fontSize: '0.75rem' }}>none yet</span>}
           </div>
-          <div className="section-title">Inheritance</div>
+          <div className="section-title">House recoveries</div>
           <div style={{ color: 'var(--dim)', fontSize: '0.75rem', lineHeight: 1.5 }}>
-            Generation {character.generation || 1}. When a character dies, upgraded items and the item with the most
-            bond history pass to the next character; bonds from another class work at half strength.
+            When a character dies, the items they carried stay at the death site. A later character of the house can take them back.
           </div>
+          {(state.recoveries || []).map(rec => (
+            <div key={rec.id} className="relic-row">
+              <div style={{ flex: 1 }}>
+                <div className="r-name">{rec.fallen ? rec.fallen.name : 'Fallen character'} · {rec.items.length} item{rec.items.length === 1 ? '' : 's'}</div>
+                <div className="r-kin">{rec.fallen && rec.fallen.text ? `Death: ${rec.fallen.text}` : ''}</div>
+              </div>
+              <button className="btn small" disabled={fallen} onClick={() => takeBackRecovery(rec.id)}>Take back</button>
+            </div>
+          ))}
           <div className="section-title">Log</div>
           <div className="chronicle">
             {log.map((entry, i) => <div key={i} className={`entry ${entry.kind}`}>{entry.text}</div>)}
@@ -2407,12 +2415,7 @@
             <span><span className="pip-brand">✦</span> Brand</span>
             <span><span style={{ color: 'var(--bond)' }}>◈</span> Bond</span>
             <span><span className="pip-trophy">✧</span> Trophy</span>
-            <span><span className="pip-scar">✕</span> Scar</span>
             <span><span className="pip-empty">○</span> Empty</span>
-          </div>
-          <div className="drawer-quote">
-            "A spear is only wood and flint until someone carries it through a winter."
-            <div style={{ color: '#57503f' }}>— Bondwright's Primer, first page</div>
           </div>
         </div>
 

@@ -41,10 +41,10 @@
     const maxHp = Math.max(1, agg.sheet.life || 1);
     let hp = Math.min(opts.hp != null ? opts.hp : maxHp, maxHp);
 
-    /* live bond values by modId (summed across items, estrangement applied) */
+    /* live bond values by modId (summed across items) */
     const bonds = {};
     items.forEach(it => (it.bonds || []).forEach(b => {
-      const v = forge.bondValue(b, forge.isEstranged(b, archetype));
+      const v = forge.bondValue(b);
       bonds[b.modId] = (bonds[b.modId] || 0) + v;
     }));
     const bond = (id) => bonds[id] || 0;

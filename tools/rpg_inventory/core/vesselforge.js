@@ -1,14 +1,17 @@
 /* =============================================================================
-   VESSELFORGE — modular ARPG item-system engine
+   Item crafting engine (file name kept for links: vesselforge.js)
    -----------------------------------------------------------------------------
-   Zero dependencies. UMD: browser global `item crafting system` or Node require().
+   Zero dependencies. UMD: browser global `VesselForge` or Node require().
    All game content lives in a pack (see verdigris-pack.js); the engine is
    only rules. Items are plain JSON. RNG is seedable for reproducible tests.
 
-   Power model: every item is a VESSEL with N slots. Slots hold power with
-   provenance — Brands ✦ (crafted), Bonds ◈ (lived), Animal parts ✧ (hunted) —
-   or are Scars ✕ (lost). Crafting spends the vessel's finite Patience.
-   See ../DESIGN.md for the full design rationale.
+   PROVISIONAL (docs/CRAFTING-PROVISIONAL.md, owner rule 52): the PoE crafting
+   blueprint, adapted. Brands ✦ take the place of prefixes (crafted, fixed
+   stat lines); bonds ◈ take the place of suffixes (they grow with the
+   character's deeds: bond XP, Bond I → III). Animal parts ✧ also take a
+   modifier place. Rarity sets the room: Normal holds no modifiers, Magic one
+   or two, Rare up to two brands and four modifiers in all. Crafting is
+   limited only by that room. The owner tunes all numbers in playtest.
    ============================================================================= */
 (function (root, factory) {
   if (typeof module !== 'undefined' && module.exports) module.exports = factory();
@@ -29,6 +32,12 @@
 
   const fmt = (tpl, v) => String(tpl).replace(/\{v\}/g, v);
   const ROMAN = ['I', 'II', 'III'];
+  const RARITIES = ['normal', 'magic', 'rare'];
+  const RARITY_NAMES = { normal: 'Normal', magic: 'Magic', rare: 'Rare' };
+  /* Fields from the earlier draft (crafting uses, locked slots, material
+     upgrade count, fixed slot count). Old saves carry them; normalizeItem
+     strips them so they never reach the rules or the UI. */
+  const REMOVED_ITEM_FIELDS = ['patience', 'patienceMax', 'scars', 'fired', 'vessel'];
 
   /* ---------------- Pack validation ---------------- */
   function validatePack(pack) {
@@ -46,7 +55,6 @@
     });
     Object.entries(pack.materials).forEach(([id, m]) => {
       need(m.tier >= 1, `material ${id}: tier missing`);
-      if (m.ascendsTo) need(pack.materials[m.ascendsTo], `material ${id}: unknown ascendsTo ${m.ascendsTo}`);
     });
     Object.entries(pack.brandMods).forEach(([id, mod]) => {
       need(Array.isArray(mod.tiers) && mod.tiers.length, `brandMod ${id}: tiers missing`);
@@ -77,13 +85,21 @@
     if (issues.length) throw new Error('invalid pack: ' + issues.join('; '));
 
     const S = Object.assign({
-      maxVessel: 6,
       tierMults: [1, 1.6, 2.2],
       brandTierWeights: [10, 5, 2],   // weight of tier index 0/1/2 when gated in
       attuneBase: 80, attuneStep: 55,
-      estrangedFactor: 0.5,
-      fireOutcomes: { ascend: 40, scar: 30, silent: 20, shatter: 10 },
-      brandCountWeights: [30, 25, 25, 15, 5], // 0..4 brands at drop
+      /* Room per rarity (provisional). Rare: up to two brands and four
+         modifiers in all; bonds may reach three (with one brand) so that three
+         bonds at Bond III can upgrade the item. */
+      rarityLimits: {
+        normal: { brands: 0, bonds: 0, total: 0 },
+        magic: { brands: 2, bonds: 2, total: 2 },
+        rare: { brands: 2, bonds: 3, total: 4 },
+      },
+      bondsToUpgrade: 3,
+      /* Drop rarity weights before Item Rarity (provisional). */
+      dropRarityWeights: { normal: 70, magic: 25, rare: 5 },
+      dropBrands: { magic: [1, 2], rare: [1, 2] },
       sellBase: 25,
     }, pack.settings);
 
@@ -110,24 +126,58 @@
     /* ---------------- basic queries ---------------- */
     const material = (item) => pack.materials[item.materialId];
     const form = (item) => pack.forms[item.formId];
-    const usedSlots = (item) => item.brands.length + item.bonds.length + item.trophies.length + item.scars;
-    const freeSlots = (item) => item.vessel - usedSlots(item);
+    const isCraftable = (item) => !!(item && form(item) && !form(item).noVessel);
+    const limits = (item) => S.rarityLimits[item.rarity] || S.rarityLimits.normal;
+    const usedSlots = (item) => item.brands.length + item.bonds.length + item.trophies.length;
+    const freeSlots = (item) => (isCraftable(item) ? Math.max(0, limits(item).total - usedSlots(item)) : 0);
+    const canAddBrand = (item) => freeSlots(item) > 0 && item.brands.length < limits(item).brands;
+    const canAddBond = (item) => freeSlots(item) > 0 && item.bonds.length < limits(item).bonds;
     const brandMod = (b) => pack.brandMods[b.modId];
     const bondMod = (b) => pack.themes[b.themeId].mods[b.modId];
-    const bondValue = (bond, estranged) => {
-      let v = bond.base * S.tierMults[bond.tier - 1];
-      if (estranged) v *= S.estrangedFactor;
+    const bondValue = (bond) => {
+      const v = bond.base * S.tierMults[bond.tier - 1];
       return v < 4 ? Math.round(v * 10) / 10 : Math.round(v);
     };
-    const isEstranged = (bond, archetype) => !!bond.kinship && bond.kinship !== archetype;
-    const displayName = (item) => item.awakened ? item.awakened.name
-      : (item.epithetName || `${material(item).name} ${form(item).name}`);
+    const baseName = (item) => item.epithetName || `${material(item).name} ${form(item).name}`;
+    const displayName = (item) => item.awakened ? item.awakened.name : baseName(item);
+    const rarityName = (item) => RARITY_NAMES[item.rarity] || RARITY_NAMES.normal;
     const dominantBondTheme = (item) => {
       if (!item.bonds.length) return null;
       const counts = {};
       item.bonds.forEach(b => { counts[b.themeId] = (counts[b.themeId] || 0) + b.tier; });
       return Object.keys(pack.themes).sort((a, b) => (counts[b] || 0) - (counts[a] || 0))[0];
     };
+    const nextSeq = (item) => {
+      const all = [...item.brands, ...item.bonds, ...item.trophies];
+      return all.reduce((m, x) => Math.max(m, x.seq || 0), 0) + 1;
+    };
+
+    /* ---------------- old saves ---------------- */
+    /* Loads an item from any earlier save: strips removed fields (crafting
+       uses, locked slots, class tag on bonds), assigns a rarity from what the
+       item holds, and orders modifiers so Remove Last Modifier works. Items
+       over their rarity's room keep every modifier; only adding is blocked. */
+    function normalizeItem(src) {
+      if (!src || typeof src !== 'object') return src;
+      const item = JSON.parse(JSON.stringify(src));
+      item.brands = Array.isArray(item.brands) ? item.brands : [];
+      item.bonds = Array.isArray(item.bonds) ? item.bonds : [];
+      item.trophies = Array.isArray(item.trophies) ? item.trophies : [];
+      item.bonds.forEach(b => { delete b.kinship; });
+      REMOVED_ITEM_FIELDS.forEach(k => { delete item[k]; });
+      if (!item.att) item.att = { xp: 0, next: S.attuneBase, tc: {} };
+      if (item.evolutions == null) item.evolutions = 0;
+      if (!RARITIES.includes(item.rarity)) {
+        const n = item.brands.length + item.bonds.length + item.trophies.length;
+        item.rarity = !isCraftable(item) || n === 0 ? 'normal'
+          : (n <= S.rarityLimits.magic.total ? 'magic' : 'rare');
+      }
+      let seq = 0;
+      [...item.brands, ...item.bonds, ...item.trophies].forEach(m => {
+        if (m.seq == null) m.seq = ++seq; else seq = Math.max(seq, m.seq);
+      });
+      return item;
+    }
 
     /* ---------------- item generation ---------------- */
     function materialPoolFor(formRef, ilvl) {
@@ -141,6 +191,26 @@
         .map(id => ({ id, m: pack.materials[id] }))
         .filter(e => e.m.tier <= maxTier && !isRetiredCombo(formId, e.id))
         .map(e => ({ w: e.m.dropWeight || 10, id: e.id }));
+    }
+
+    /* Item Rarity (PoE "increased Rarity of Items found"), PROVISIONAL:
+       X% increased Item Rarity multiplies the Magic and Rare drop weights by
+       (1 + X/100); the Normal weight is unchanged. More Item Rarity therefore
+       means a larger share of Magic and Rare drops; it does not change how
+       many items drop. The owner tunes the weights in playtest. */
+    function rarityOdds(itemRarity = 0) {
+      const mult = 1 + Math.max(0, Number(itemRarity) || 0) / 100;
+      const w = {
+        normal: S.dropRarityWeights.normal,
+        magic: S.dropRarityWeights.magic * mult,
+        rare: S.dropRarityWeights.rare * mult,
+      };
+      const total = w.normal + w.magic + w.rare;
+      return { normal: w.normal / total, magic: w.magic / total, rare: w.rare / total };
+    }
+    function rollRarity(itemRarity) {
+      const odds = rarityOdds(itemRarity);
+      return pickWeighted(RARITIES.map(r => ({ w: odds[r], r }))).r;
     }
 
     function generateItem(genOpts = {}) {
@@ -167,29 +237,32 @@
       const mat = pack.materials[materialId];
       if (!mat) throw new Error(`unknown material ${materialId}`);
       const item = {
-        v: 1, id: genId(), formId, materialId,
+        v: 2, id: genId(), formId, materialId,
         kind: formDef.kind, w: formDef.w, h: formDef.h, ilvl,
-        vessel: Math.min(S.maxVessel, rint(mat.vessel[0], mat.vessel[1])),
-        scars: 0,
-        patienceMax: rint(mat.patience[0], mat.patience[1]),
-        patience: 0, // set below
+        rarity: 'normal',
         brands: [], bonds: [], trophies: [],
         att: { xp: 0, next: S.attuneBase, tc: {} },
-        evolutions: 0, fired: 0,
+        evolutions: 0,
         epithetName: null, awakened: null,
       };
-      item.patience = item.patienceMax;
-      if (!formDef.noVessel) {
-        let n = genOpts.brands != null ? genOpts.brands
-          : pickWeighted(S.brandCountWeights.map((w, i) => ({ w, n: i }))).n;
-        n = Math.min(n, item.vessel);
-        for (let i = 0; i < n; i++) {
-          const rolled = rollBrand(item, {});
-          if (rolled) item.brands.push(rolled);
-        }
-      } else {
-        item.vessel = 0; item.patience = 0; item.patienceMax = 0;
+      if (formDef.noVessel) return item;
+
+      // rarity: explicit, else implied by a requested brand count, else rolled
+      let rarity = genOpts.rarity;
+      if (!RARITIES.includes(rarity)) {
+        if (genOpts.brands != null) rarity = genOpts.brands <= 0 ? 'normal' : 'magic';
+        else rarity = rollRarity(genOpts.itemRarity);
       }
+      item.rarity = rarity;
+      let n = genOpts.brands != null ? genOpts.brands
+        : (S.dropBrands[rarity] ? rint(S.dropBrands[rarity][0], S.dropBrands[rarity][1]) : 0);
+      n = Math.min(n, limits(item).brands, limits(item).total);
+      for (let i = 0; i < n; i++) {
+        const rolled = rollBrand(item, {});
+        if (rolled) item.brands.push(rolled);
+      }
+      // a rolled drop whose base has no brand pool (jewels) stays Normal
+      if (!genOpts.rarity && genOpts.brands == null && !item.brands.length) item.rarity = 'normal';
       maybeName(item);
       return item;
     }
@@ -230,6 +303,7 @@
       return {
         id: genId(), modId: entry.id, tier: tierPick.e.i + 1,
         value: rint(tierDef.roll[0], tierDef.roll[1]),
+        seq: nextSeq(item),
       };
     }
 
@@ -241,75 +315,87 @@
         .sort((a, b) => b.p - a.p);
     }
 
-    const spendPatience = (item, cost) => {
-      if (item.patience < cost) return false;
-      item.patience -= cost;
-      return true;
-    };
     const clone = (item) => JSON.parse(JSON.stringify(item));
     const err = (error) => ({ error });
-
-    function sear(srcItem, o = {}) {
-      const item = clone(srcItem);
-      if (!item.vessel) return err('This item has no modifier slots');
-      if (freeSlots(item) <= 0) return err('No free modifier slot');
-      if (!spendPatience(item, 1)) return err('No crafting uses left on this item');
-      if (o.omenId && !pack.omens[o.omenId]) return err('Unknown guaranteed-brand item');
-      if (o.pigmentId && !pack.pigments[o.pigmentId]) return err('Unknown pigment');
+    const checkTools = (o) => {
+      if (o.omenId && !pack.omens[o.omenId]) return 'Unknown guaranteed-brand item';
+      if (o.pigmentId && !pack.pigments[o.pigmentId]) return 'Unknown pigment';
+      return null;
+    };
+    const addBrand = (item, o) => {
       const brand = rollBrand(item, o);
-      if (!brand) return err(o.omenId ? 'No brand with that tag fits this item' : 'No brand fits this item');
+      if (!brand) return null;
       item.brands.push(brand);
       maybeName(item);
-      return { item, event: { kind: 'craft', text: `Added brand: ${fmt(brandMod(brand).label, brand.value)} (T${brand.tier})` } };
-    }
+      return brand;
+    };
+    const brandText = (b) => `${fmt(brandMod(b).label, b.value)} (T${b.tier})`;
 
-    function efface(srcItem) {
+    /* ---------------- crafting currencies (PoE analogues) ---------------- */
+    /* Add Modifier (Augmentation / Exalted Orb): adds one brand while the
+       rarity has room. Pigments and guaranteed-brand items steer the brand. */
+    function addModifier(srcItem, o = {}) {
       const item = clone(srcItem);
-      if (!item.brands.length) return err('No brand to remove');
-      if (!spendPatience(item, 1)) return err('No crafting uses left on this item');
-      const removed = item.brands.pop();
-      return { item, event: { kind: 'craft', text: `Removed brand: ${fmt(brandMod(removed).label, removed.value)}` } };
+      if (!isCraftable(item)) return err('This item holds no modifiers');
+      if (item.rarity === 'normal') return err('Normal items hold no modifiers');
+      if (freeSlots(item) <= 0) return err(`No room for another modifier on a ${rarityName(item)} item`);
+      if (!canAddBrand(item)) return err(`A ${rarityName(item)} item holds no more brands`);
+      const toolErr = checkTools(o);
+      if (toolErr) return err(toolErr);
+      const brand = addBrand(item, o);
+      if (!brand) return err(o.omenId ? 'No brand with that tag fits this item' : 'No brand fits this item');
+      return { item, event: { kind: 'craft', text: `Added brand: ${brandText(brand)}` } };
     }
 
-    function chisel(srcItem) {
+    /* Upgrade to Rare (Regal Orb): makes a Magic item Rare and adds one brand. */
+    function upgradeToRare(srcItem, o = {}) {
       const item = clone(srcItem);
-      if (!item.vessel) return err('This item has no modifier slots');
-      if (item.vessel >= S.maxVessel) return err('This item has the most modifier slots it can have');
-      if (!spendPatience(item, 2)) return err('Adding a slot needs 2 crafting uses');
-      item.vessel += 1;
-      return { item, event: { kind: 'craft', text: `Added a modifier slot (${item.vessel}/${S.maxVessel})` } };
+      if (!isCraftable(item)) return err('This item holds no modifiers');
+      if (item.rarity !== 'magic') return err('Only a Magic item can be upgraded to Rare');
+      const toolErr = checkTools(o);
+      if (toolErr) return err(toolErr);
+      item.rarity = 'rare';
+      if (!canAddBrand(item)) return err('A Rare item holds no more brands; remove one first');
+      const brand = addBrand(item, o);
+      if (!brand) return err(o.omenId ? 'No brand with that tag fits this item' : 'No brand fits this item');
+      return { item, event: { kind: 'craft', text: `Upgraded to Rare. Added brand: ${brandText(brand)}` } };
     }
 
-    /* ---------------- firing (material ascension gamble) ---------------- */
-    function fire(srcItem) {
+    /* Reroll Values (Divine Orb): rerolls every brand value within its tier and
+       every bond's base value within its range. Tiers and Bond levels stay. */
+    function rerollValues(srcItem) {
       const item = clone(srcItem);
-      if (!item.vessel) return err('This item has no modifier slots');
-      const mat = material(item);
-      if (!mat.ascendsTo) return err(`${mat.name} cannot be fired higher`);
-      if (retiredMaterials.has(mat.ascendsTo)) return err(`${pack.materials[mat.ascendsTo].name} is not available yet`);
-      if (!spendPatience(item, 2)) return err('A material upgrade needs 2 crafting uses');
-      const outcomes = Object.entries(S.fireOutcomes).map(([k, w]) => ({ w, k }));
-      const res = pickWeighted(outcomes).k;
-      if (res === 'ascend') {
-        item.materialId = mat.ascendsTo;
-        item.fired += 1;
-        const nm = material(item);
-        item.vessel = Math.min(S.maxVessel, Math.max(item.vessel, nm.vessel[0]));
-        return { item, event: { kind: 'awake', text: `Material upgrade succeeded: ${mat.name} became ${nm.name}.` } };
-      }
-      if (res === 'scar') {
-        if (freeSlots(item) > 0) item.scars += 1;
-        item.fired += 1;
-        return { item, event: { kind: 'craft', text: 'Material upgrade failed: one slot is locked.' } };
-      }
-      if (res === 'shatter') {
-        return { destroyed: true, event: { kind: 'craft', text: `Material upgrade failed: the ${mat.name} ${form(item).name.toLowerCase()} breaks.` } };
-      }
-      item.fired += 1;
-      return { item, event: { kind: 'sys', text: 'Material upgrade had no effect.' } };
+      if (!item.brands.length && !item.bonds.length) return err('No modifier values to reroll');
+      item.brands.forEach(b => {
+        const tierDef = brandMod(b).tiers[b.tier - 1];
+        if (tierDef) b.value = rint(tierDef.roll[0], tierDef.roll[1]);
+      });
+      item.bonds.forEach(b => {
+        const m = bondMod(b);
+        b.base = rint(m.roll[0], m.roll[1]);
+      });
+      return { item, event: { kind: 'craft', text: 'Modifier values rerolled' } };
     }
 
-    /* ---------------- trophies ---------------- */
+    /* Remove Last Modifier (Annulment Orb, adapted: last, not random): removes
+       the most recently added brand, bond or animal part. Rarity stays. */
+    function removeLastModifier(srcItem) {
+      const item = clone(srcItem);
+      const all = [
+        ...item.brands.map((m, i) => ({ list: 'brands', m, i })),
+        ...item.bonds.map((m, i) => ({ list: 'bonds', m, i })),
+        ...item.trophies.map((m, i) => ({ list: 'trophies', m, i })),
+      ];
+      if (!all.length) return err('No modifier to remove');
+      const last = all.reduce((best, e) => ((e.m.seq || 0) >= (best.m.seq || 0) ? e : best));
+      item[last.list].splice(last.i, 1);
+      const text = last.list === 'brands' ? `Removed brand: ${fmt(brandMod(last.m).label, last.m.value)}`
+        : last.list === 'bonds' ? `Removed bond: ${bondMod(last.m).name}`
+        : `Removed ${pack.trophies[last.m.trophyId].name}; it is destroyed.`;
+      return { item, event: { kind: 'craft', text } };
+    }
+
+    /* ---------------- animal parts ---------------- */
     function addFragment(stash, trophyId) {
       const t = pack.trophies[trophyId];
       if (!t) return err('Unknown animal part');
@@ -324,25 +410,18 @@
       if (!t) return err('Unknown animal part');
       if ((stash[trophyId] || 0) < t.fragments) return err(`Needs ${t.fragments} fragments`);
       const item = clone(srcItem);
-      if (!item.vessel) return err('This item has no modifier slots');
-      if (!t.kinds.includes(item.kind)) return err(`A ${t.name} will not bind to this`);
+      if (!isCraftable(item)) return err('This item holds no modifiers');
+      if (!t.kinds.includes(item.kind)) return err(`A ${t.name} will not attach to this`);
       if (item.trophies.some(x => x.trophyId === trophyId)) return err('This animal part is already attached');
-      if (freeSlots(item) <= 0) return err('No free modifier slot');
-      item.trophies.push({ id: genId(), trophyId });
+      if (freeSlots(item) <= 0) return err(`No room for another modifier on a ${rarityName(item)} item`);
+      item.trophies.push({ id: genId(), trophyId, seq: nextSeq(item) });
       const nextStash = Object.assign({}, stash);
       nextStash[trophyId] -= t.fragments;
       return { item, stash: nextStash, event: { kind: 'craft', text: `Attached animal part: ${t.name}` } };
     }
 
-    function pryTrophy(srcItem) {
-      const item = clone(srcItem);
-      if (!item.trophies.length) return err('No animal part to remove');
-      const removed = item.trophies.pop();
-      return { item, event: { kind: 'craft', text: `Removed ${pack.trophies[removed.trophyId].name}; it is destroyed.` } };
-    }
-
     /* ---------------- bonds ---------------- */
-    function rollBond(item, kinship) {
+    function rollBond(item) {
       const used = new Set(item.bonds.map(b => b.modId));
       const order = Object.keys(pack.themes)
         .filter(t => (item.att.tc[t] || 0) > 0)
@@ -353,7 +432,7 @@
         const pool = Object.entries(pack.themes[themeId].mods).filter(([id]) => !used.has(id));
         if (pool.length) {
           const [modId, m] = pick(pool);
-          return { id: genId(), modId, themeId, base: rint(m.roll[0], m.roll[1]), tier: 1, kinship };
+          return { id: genId(), modId, themeId, base: rint(m.roll[0], m.roll[1]), tier: 1, seq: nextSeq(item) };
         }
       }
       return null;
@@ -366,32 +445,37 @@
       }
     }
 
+    /* The upgraded item is named after the character who raised it and gains
+       its dominant bond theme's one power. */
     function awaken(item, charName) {
       const themeId = dominantBondTheme(item) || pick(Object.keys(pack.themes));
       const t = pack.themes[themeId];
       item.awakened = {
-        name: displayName(item),
+        name: charName ? `${charName}'s ${baseName(item)}` : baseName(item),
         themeId, power: t.power,
       };
     }
 
+    const canUpgrade = (item) => !item.awakened && item.bonds.length >= S.bondsToUpgrade
+      && item.bonds.every(b => b.tier === 3);
+
     const isSated = (item) => {
-      if (!item.vessel) return true;
-      if (freeSlots(item) > 0) return false;
+      if (!isCraftable(item)) return true;
+      if (canAddBond(item)) return false;
       if (item.bonds.some(b => b.tier < 3)) return false;
-      if (!item.awakened && item.bonds.length >= 3) return false;
+      if (canUpgrade(item)) return false;
       return true;
     };
 
     function evolve(item, ctx) {
-      if (freeSlots(item) > 0) {
-        const bond = rollBond(item, ctx.archetype);
+      if (canAddBond(item)) {
+        const bond = rollBond(item);
         if (bond) {
           item.bonds.push(bond);
           item.evolutions += 1;
           maybeName(item);
           const m = bondMod(bond);
-          return { kind: 'bond', text: `Bond formed on ${displayName(item)}: ${m.name} — ${fmt(m.label, bondValue(bond, false))}` };
+          return { kind: 'bond', text: `Bond formed on ${displayName(item)}: ${m.name} — ${fmt(m.label, bondValue(bond))}` };
         }
       }
       const weakest = item.bonds.filter(b => b.tier < 3).sort((a, b) => a.tier - b.tier)[0];
@@ -400,8 +484,8 @@
         item.evolutions += 1;
         return { kind: 'bond', text: `Bond upgraded on ${displayName(item)}: ${bondMod(weakest).name} → ${ROMAN[weakest.tier - 1]}` };
       }
-      if (!item.awakened && item.bonds.length >= 3 && item.bonds.every(b => b.tier === 3)) {
-        awaken(item, ctx.charName);
+      if (canUpgrade(item)) {
+        awaken(item, ctx && ctx.charName);
         item.evolutions += 1;
         return { kind: 'awake', text: `${displayName(item)} is upgraded: ${item.awakened.power}` };
       }
@@ -428,25 +512,7 @@
       return { item, events };
     }
 
-    function resonate(srcItem) {
-      const item = clone(srcItem);
-      const weakest = item.bonds.filter(b => b.tier < 3).sort((a, b) => a.tier - b.tier)[0];
-      if (!weakest) return err(item.bonds.length ? 'All bonds are at tier III' : 'No bond to deepen');
-      weakest.tier += 1;
-      item.evolutions += 1;
-      return { item, event: { kind: 'bond', text: `Bond upgraded: ${bondMod(weakest).name} → ${ROMAN[weakest.tier - 1]}` } };
-    }
-
-    function sever(srcItem) {
-      const item = clone(srcItem);
-      if (!item.bonds.length) return err('No bond to remove');
-      const weakest = [...item.bonds].sort((a, b) => a.tier - b.tier)[0];
-      item.bonds = item.bonds.filter(b => b.id !== weakest.id);
-      item.scars += 1;
-      return { item, event: { kind: 'craft', text: `Removed ${bondMod(weakest).name}. The slot is locked.` } };
-    }
-
-    /* ---------------- character & ventures ---------------- */
+    /* ---------------- character & simulated fights ---------------- */
     function createCharacter(o = {}) {
       return {
         v: 1, name: o.name || 'Unnamed',
@@ -455,6 +521,13 @@
       };
     }
     const charLevel = (c) => 1 + Math.floor(c.xp / 100);
+
+    /* Summed Item Rarity of the given items (the sheet's Item Rarity line). */
+    function itemRarityOf(items, ctx = {}) {
+      const agg = aggregate(items, ctx);
+      if (agg.sheet && typeof agg.sheet.goods === 'number') return agg.sheet.goods;
+      return (agg.sums.wealthy || 0) + (agg.sums.fortune || 0);
+    }
 
     function venture(character, equipment, opts = {}) {
       const c = JSON.parse(JSON.stringify(character));
@@ -472,15 +545,18 @@
       const eq = {};
       const ctx = { charName: c.name, archetype: c.archetype };
       Object.entries(equipment).forEach(([slot, it]) => {
-        if (!it || !it.vessel || isSated(it)) { eq[slot] = it; return; }
+        if (!it || !isCraftable(it) || isSated(it)) { eq[slot] = it; return; }
         const res = attune(it, rint(16, 30), themes, ctx);
         eq[slot] = res.item;
         events.push(...res.events);
       });
 
+      // Item Rarity of the equipped items (or the caller's sheet value) sets drop rarity odds.
+      const itemRarity = opts.itemRarity != null ? opts.itemRarity
+        : itemRarityOf(Object.values(equipment), { level: charLevel(character) });
       const drops = [];
       if (rnd() < 0.4) {
-        drops.push(generateItem({ ilvl: Math.min(80, 10 + charLevel(c) * 3 + rint(0, 15)) }));
+        drops.push(generateItem({ ilvl: Math.min(80, 10 + charLevel(c) * 3 + rint(0, 15)), itemRarity }));
       }
       const fragments = [];
       if (pack.trophies && rnd() < (enc.trophyChance != null ? enc.trophyChance : 0.35)) {
@@ -490,7 +566,7 @@
         fragments.push(tid);
         events.push(res.event);
       }
-      return { character: c, equipment: eq, drops, fragments, events, encounter: enc };
+      return { character: c, equipment: eq, drops, fragments, events, encounter: enc, itemRarity };
     }
 
     /* ---------------- aggregation ---------------- */
@@ -507,11 +583,9 @@
         });
         item.bonds.forEach(b => {
           const m = bondMod(b);
-          const est = isEstranged(b, ctx.archetype);
           conditionals.push({
             source: displayName(item), name: m.name, shape: m.shape || 'conditional',
-            text: fmt(m.label, bondValue(b, est)), themeId: b.themeId,
-            tier: b.tier, estranged: est,
+            text: fmt(m.label, bondValue(b)), themeId: b.themeId, tier: b.tier,
           });
         });
         item.trophies.forEach(tr => {
@@ -528,30 +602,12 @@
           conditionals.push({ source: displayName(item), name: 'Upgraded', shape: 'trigger', text: item.awakened.power, themeId: item.awakened.themeId });
         }
       });
-      const panoplies = panoply(items);
       const sheet = pack.derive ? pack.derive(sums, items.filter(Boolean), ctx) : sums;
-      return { sums, sheet, conditionals, panoplies };
-    }
-
-    function panoply(items) {
-      const groups = {};
-      items.filter(Boolean).forEach(it => {
-        if (!it.awakened) return;
-        const kin = it.bonds[0] && it.bonds[0].kinship;
-        if (!kin) return;
-        groups[kin] = (groups[kin] || 0) + 1;
-      });
-      const out = [];
-      Object.entries(groups).forEach(([kin, n]) => {
-        const defs = pack.panoply || {};
-        const best = Object.keys(defs).map(Number).filter(k => k <= n).sort((a, b) => b - a)[0];
-        if (best) out.push({ kinship: kin, count: n, bonus: defs[best] });
-      });
-      return out;
+      return { sums, sheet, conditionals };
     }
 
     /* ---------------- presentation (UI-agnostic tooltip) ---------------- */
-    function tooltip(item, ctx = {}) {
+    function tooltip(item) {
       const lines = [];
       const mat = material(item);
       const f = form(item);
@@ -559,17 +615,16 @@
       push('name', displayName(item), item.awakened ? 'awakened' : (item.bonds.length > item.brands.length ? 'bonded' : (item.brands.length ? 'branded' : 'plain')));
       if (item.epithetName || item.awakened) push('base', `${mat.name} ${f.name}`);
       push('kind', `${f.kindLabel || item.kind} · ${mat.name} (tier ${mat.tier}) · Item Level ${item.ilvl}`);
-      if (item.vessel) {
-        push('vessel', `Vessel ${item.vessel} · Patience ${item.patience}/${item.patienceMax}`);
+      if (isCraftable(item)) {
+        push('rarity', `${rarityName(item)} · ${usedSlots(item)}/${limits(item).total} modifiers`);
       }
       if (f.weapon) push('stat', `Damage ${Math.round(f.weapon.dmg[0] * mat.statMult)}–${Math.round(f.weapon.dmg[1] * mat.statMult)} · Speed ${f.weapon.aps}`);
       if (f.armor) push('stat', `Ward ${Math.round(f.armor * mat.statMult)}`);
       if (f.implicit) push('implicit', f.implicit.label);
-      item.brands.forEach(b => push('brand', `✦ ${fmt(brandMod(b).label, b.value)} (T${b.tier})`));
+      item.brands.forEach(b => push('brand', `✦ ${brandText(b)}`));
       item.bonds.forEach(b => {
-        const est = isEstranged(b, ctx.archetype);
         const m = bondMod(b);
-        push('bond', `◈ ${m.name} — ${fmt(m.label, bondValue(b, est))} · ${pack.archetypes[b.kinship] ? pack.archetypes[b.kinship].name : ''} ${ROMAN[b.tier - 1]}${est ? ' · estranged' : ''}`, est ? 'estranged' : 'bond');
+        push('bond', `◈ ${m.name} — ${fmt(m.label, bondValue(b))} · Bond ${ROMAN[b.tier - 1]}`, 'bond');
       });
       item.trophies.forEach(tr => {
         const t = pack.trophies[tr.trophyId];
@@ -577,18 +632,18 @@
         t.mods.forEach(m => push('trophy', `   ${fmt(m.label, m.v)}`));
         if (t.completionBonus) push('trophy', `   ${t.completionBonus.label}`, 'bonus');
       });
-      if (item.scars) push('scar', `✕ ${item.scars} locked slot${item.scars > 1 ? 's' : ''}`);
       if (item.awakened) {
         push('power', item.awakened.power, 'awakened');
       }
-      if (item.vessel && !isSated(item)) push('attune', `Bond XP ${item.att.xp}/${item.att.next}`);
+      if (isCraftable(item) && !isSated(item)) push('attune', `Bond XP ${item.att.xp}/${item.att.next}`);
       return lines;
     }
 
     function sellValue(item) {
-      if (!item.vessel) return 40;
+      if (!isCraftable(item)) return 40;
       const mat = material(item);
       return S.sellBase * mat.tier
+        + Math.max(0, RARITIES.indexOf(item.rarity)) * 30
         + item.brands.length * 40
         + item.bonds.reduce((s, b) => s + b.tier * 25, 0)
         + item.trophies.length * 60
@@ -606,23 +661,24 @@
     return {
       pack, settings: S,
       reseed: (seed) => { rand = mulberry32(seed >>> 0); },
-      // generation
-      generateItem, materialPoolFor,
-      // crafting
-      sear, efface, chisel, fire, explainOdds,
+      // generation & loot
+      generateItem, materialPoolFor, rarityOdds, itemRarityOf,
+      // crafting currencies
+      addModifier, upgradeToRare, rerollValues, removeLastModifier, explainOdds,
       // bonds
-      attune, resonate, sever, isSated,
-      // trophies
-      addFragment, socketTrophy, pryTrophy,
+      attune, isSated,
+      // animal parts
+      addFragment, socketTrophy,
       // play loop
       createCharacter, charLevel, venture,
       // reading
-      aggregate, panoply, tooltip, sellValue,
-      displayName, dominantBondTheme, bondValue, isEstranged, freeSlots,
+      aggregate, tooltip, sellValue,
+      displayName, rarityName, dominantBondTheme, bondValue, freeSlots, isCraftable,
+      canAddBrand, canAddBond,
       // persistence
-      serialize, deserialize,
+      normalizeItem, serialize, deserialize,
     };
   }
 
-  return { createForge, validatePack, version: '1.0.0' };
+  return { createForge, validatePack, version: '2.0.0-provisional' };
 }));
